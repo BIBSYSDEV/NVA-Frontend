@@ -19,6 +19,7 @@ import { StyledSelectWrapper } from '../../../../../../components/styled/Wrapper
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import {
   ArtisticRegistration,
+  LiteraryArtsOutput,
   LiteraryArtsType,
   VisualArtType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
@@ -87,58 +88,62 @@ export const ArtisticLiteraryArtForm = () => {
           {t('registration.resource_type.artistic.announcements')}
         </Typography>
         <FieldArray name={ResourceFieldNames.PublicationInstanceManifestations}>
-          {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
-            <>
-              {manifestations.length > 0 && (
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>{t('common.type')}</TableCell>
-                      <TableCell>{t('registration.resource_type.artistic.publisher')}</TableCell>
-                      <TableCell>{t('common.order')}</TableCell>
-                      <TableCell>{t('common.actions')}</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {manifestations.map((venue, index) => (
-                      <OutputRow
-                        key={index}
-                        item={venue}
-                        updateItem={(newVenue) => replace(index, newVenue)}
-                        removeItem={() => remove(index)}
-                        moveItem={(newIndex) => move(index, newIndex)}
-                        index={index}
-                        maxIndex={manifestations.length - 1}
-                        showTypeColumn
-                      />
-                    ))}
-                  </TableBody>
-                </Table>
-              )}
-              {!!touched.entityDescription?.reference?.publicationInstance?.manifestations &&
-                typeof errors.entityDescription?.reference?.publicationInstance?.manifestations === 'string' && (
-                  <Box mt="1rem">
-                    <FormHelperText error>
-                      <ErrorMessage name={name} />
-                    </FormHelperText>
-                  </Box>
-                )}
+          {({ push, replace, remove, move, name }: FieldArrayRenderProps) => {
+            const onAddManifestation = (manifestation: LiteraryArtsOutput) => push(manifestation);
 
-              <Button
-                data-testid={dataTestId.registrationWizard.resourceType.addBookButton}
-                onClick={() => setOpenNewManifestationModal('LiteraryArtsMonograph')}
-                variant="outlined"
-                sx={{ mt: '1rem' }}
-                startIcon={<AddCircleOutlineIcon />}>
-                {t('registration.resource_type.artistic.add_book')}
-              </Button>
-              <LiteraryArtsMonographModal
-                onSubmit={(newBook) => push(newBook)}
-                open={openManifestationModal === 'LiteraryArtsMonograph'}
-                closeModal={() => setOpenNewManifestationModal('')}
-              />
-            </>
-          )}
+            return (
+              <>
+                {manifestations.length > 0 && (
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>{t('common.type')}</TableCell>
+                        <TableCell>{t('registration.resource_type.artistic.publisher')}</TableCell>
+                        <TableCell>{t('common.order')}</TableCell>
+                        <TableCell>{t('common.actions')}</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {manifestations.map((venue, index) => (
+                        <OutputRow
+                          key={index}
+                          item={venue}
+                          updateItem={(newVenue) => replace(index, newVenue)}
+                          removeItem={() => remove(index)}
+                          moveItem={(newIndex) => move(index, newIndex)}
+                          index={index}
+                          maxIndex={manifestations.length - 1}
+                          showTypeColumn
+                        />
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+                {!!touched.entityDescription?.reference?.publicationInstance?.manifestations &&
+                  typeof errors.entityDescription?.reference?.publicationInstance?.manifestations === 'string' && (
+                    <Box mt="1rem">
+                      <FormHelperText error>
+                        <ErrorMessage name={name} />
+                      </FormHelperText>
+                    </Box>
+                  )}
+
+                <Button
+                  data-testid={dataTestId.registrationWizard.resourceType.addBookButton}
+                  onClick={() => setOpenNewManifestationModal('LiteraryArtsMonograph')}
+                  variant="outlined"
+                  sx={{ mt: '1rem' }}
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('registration.resource_type.artistic.add_book')}
+                </Button>
+                <LiteraryArtsMonographModal
+                  onSubmit={onAddManifestation}
+                  open={openManifestationModal === 'LiteraryArtsMonograph'}
+                  closeModal={() => setOpenNewManifestationModal('')}
+                />
+              </>
+            );
+          }}
         </FieldArray>
       </div>
     </>
