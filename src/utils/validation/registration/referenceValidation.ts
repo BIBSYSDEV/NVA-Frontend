@@ -435,7 +435,7 @@ const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicatio
     }
   }),
   manifestations: Yup.array().when('$publicationInstanceType', {
-    is: ArtisticType.MusicPerformance,
+    is: (value: ArtisticType) => value === ArtisticType.MusicPerformance || value === ArtisticType.LiteraryArts,
     then: Yup.array()
       .min(1, resourceErrorMessage.announcementsRequired)
       .required(resourceErrorMessage.announcementsRequired),

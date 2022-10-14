@@ -1,6 +1,6 @@
 import { Instant, Period, Place } from '../common.types';
 import { ArtisticType, PublicationType } from '../publicationFieldNames';
-import { BaseRegistration, BaseReference, BaseEntityDescription } from '../registration.types';
+import { BaseRegistration, BaseReference, BaseEntityDescription, RegistrationDate } from '../registration.types';
 import { PagesMonograph } from './pages.types';
 
 export interface ArtisticRegistration extends BaseRegistration {
@@ -55,6 +55,11 @@ interface UnconfirmedPublisher {
   name: string;
 }
 
+export const emptyUnconfirmedPublisher: UnconfirmedPublisher = {
+  type: 'UnconfirmedPublisher',
+  name: '',
+};
+
 export interface Broadcast extends ArtisticOutputBase {
   type: 'Broadcast';
   publisher: UnconfirmedPublisher;
@@ -95,10 +100,7 @@ export interface MusicScore extends ArtisticOutputBase {
 export interface LiteraryArtsMonograph {
   type: 'LiteraryArtsMonograph';
   publisher: UnconfirmedPublisher;
-  publicationDate: {
-    type: 'PublicationDate';
-    year: string;
-  };
+  publicationDate: RegistrationDate;
   isbn: string;
   pages: PagesMonograph;
 }
@@ -115,10 +117,7 @@ export interface LiteraryArtsAudioVisual {
   type: 'LiteraryArtsAudioVisual';
   subtype: LiteraryArtsAudioVisualSubtype;
   publisher: UnconfirmedPublisher;
-  publicationDate: {
-    type: 'PublicationDate';
-    year: string;
-  };
+  publicationDate: RegistrationDate;
   isbn: string;
   extent: string;
 }
@@ -133,20 +132,14 @@ export interface LiteraryArtsPerformance {
   type: 'LiteraryArtsPerformance';
   subtype: LiteraryArtsPerformanceSubtype;
   place: Place;
-  publicationDate: {
-    type: 'PublicationDate';
-    year: string;
-  };
+  publicationDate: RegistrationDate;
 }
 
 export interface LiteraryArtsWeb {
   type: 'LiteraryArtsWeb';
   id: string;
   publisher: UnconfirmedPublisher;
-  publicationDate: {
-    type: 'PublicationDate';
-    year: string;
-  };
+  publicationDate: RegistrationDate;
 }
 
 export interface MusicalWorkPerformance {

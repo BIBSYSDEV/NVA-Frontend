@@ -1030,6 +1030,7 @@
       "artistic": {
         "add_audio_visual_publication": "Legg til audio-/videoutgivelse",
         "add_award": "Legg til pris/utmerkelse",
+        "add_book": "Legg til bok/trykksak",
         "add_broadcast": "Legg til TV/web/streaming",
         "add_cinematic_release": "Legg til festival/kino",
         "add_competition": "Legg til konkurranse",
@@ -1077,6 +1078,7 @@
         },
         "edit_audio_visual_publication": "Endre audio-/videoutgivelse",
         "edit_award": "Endre pris/utmerkelse",
+        "edit_book": "Endre bok/trykksak",
         "edit_broadcast": "Endre TV/web/streaming",
         "edit_cinematic_release": "Endre festival/kino",
         "edit_competition": "Endre konkurranse",
@@ -1154,6 +1156,7 @@
         },
         "premiere": "Premiære",
         "premiere_date": "Premiæredato",
+        "publisher": "Utgiver/forlag",
         "remove_announcement": "Fjern offentliggjøring",
         "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
         "remove_music_work": "Fjern verk",

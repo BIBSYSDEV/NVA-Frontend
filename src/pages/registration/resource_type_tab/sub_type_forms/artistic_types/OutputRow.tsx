@@ -74,6 +74,10 @@ export const OutputRow = ({
     case 'AudioVisualPublication':
     case 'Concert':
     case 'OtherPerformance':
+    case 'LiteraryArtsMonograph':
+    case 'LiteraryArtsPerformance':
+    case 'LiteraryArtsAudioVisual':
+    case 'LiteraryArtsWeb':
       removeItemTitle = t('registration.resource_type.artistic.remove_announcement');
       removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
       break;

@@ -1030,6 +1030,7 @@
       "artistic": {
         "add_audio_visual_publication": "Add audio/video publication",
         "add_award": "Add prize/award",
+        "add_book": "Add book/printed matter",
         "add_broadcast": "Add TV/web/streaming",
         "add_cinematic_release": "Add festival/cinema",
         "add_competition": "Add competition",
@@ -1077,6 +1078,7 @@
         },
         "edit_audio_visual_publication": "Edit audio/video publication",
         "edit_award": "Edit prize/award",
+        "edit_book": "Edit book/printed matter",
         "edit_broadcast": "Edit TV/web/streaming",
         "edit_cinematic_release": "Edit festival/cinema",
         "edit_competition": "Edit competition",
@@ -1154,6 +1156,7 @@
         },
         "premiere": "Premiere",
         "premiere_date": "Premiere date",
+        "publisher": "Publisher",
         "remove_announcement": "Remove announcement",
         "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?",
         "remove_music_work": "Remove work",

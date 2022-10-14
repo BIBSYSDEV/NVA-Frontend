@@ -23,17 +23,18 @@ import {
   VisualArtType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { VenueModal } from '../design/VenueModal';
 import { OutputRow } from '../OutputRow';
+import { LiteraryArtsMonographModal } from './LiteraryArtsMonographModalModal';
 
 const literaryArtTypes = Object.values(LiteraryArtsType);
+type ArtisticArchitectureModalType = '' | 'LiteraryArtsMonograph';
 
 export const ArtisticLiteraryArtForm = () => {
   const { t } = useTranslation();
   const { values, touched, errors } = useFormikContext<ArtisticRegistration>();
   const manifestations = values.entityDescription.reference.publicationInstance.manifestations ?? [];
 
-  const [openNewVenueModal, setOpenNewVenueModal] = useState(false);
+  const [openManifestationModal, setOpenNewManifestationModal] = useState<ArtisticArchitectureModalType>('');
 
   return (
     <>
@@ -82,7 +83,7 @@ export const ArtisticLiteraryArtForm = () => {
 
       <div>
         <Typography variant="h3" component="h2" gutterBottom>
-          {t('registration.resource_type.artistic.exhibition_places')}
+          {t('registration.resource_type.artistic.announcements')}
         </Typography>
         <FieldArray name={ResourceFieldNames.PublicationInstanceManifestations}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
@@ -91,7 +92,7 @@ export const ArtisticLiteraryArtForm = () => {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('registration.resource_type.artistic.exhibition_place')}</TableCell>
+                      <TableCell>{t('registration.resource_type.artistic.publisher')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
@@ -121,17 +122,17 @@ export const ArtisticLiteraryArtForm = () => {
                 )}
 
               <Button
-                data-testid={dataTestId.registrationWizard.resourceType.addVenueButton}
-                onClick={() => setOpenNewVenueModal(true)}
+                data-testid={dataTestId.registrationWizard.resourceType.addBookButton}
+                onClick={() => setOpenNewManifestationModal('LiteraryArtsMonograph')}
                 variant="outlined"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('registration.resource_type.artistic.add_exhibition_place')}
+                {t('registration.resource_type.artistic.add_book')}
               </Button>
-              <VenueModal
-                onSubmit={(newVenue) => push({ ...newVenue, type: 'Venue' })}
-                open={openNewVenueModal}
-                closeModal={() => setOpenNewVenueModal(false)}
+              <LiteraryArtsMonographModal
+                onSubmit={(newBook) => push(newBook)}
+                open={openManifestationModal === 'LiteraryArtsMonograph'}
+                closeModal={() => setOpenNewManifestationModal('')}
               />
             </>
           )}
