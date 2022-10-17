@@ -1041,6 +1041,7 @@
         "add_other_performance": "Legg til annen fremføring",
         "add_other_release": "Legg til annen offentliggjøring",
         "add_publication_mention": "Legg til publisering/omtale",
+        "add_web_publication": "Legg til webutgivelse",
         "announcements": "Offentliggjøringer",
         "architecture_type": {
           "Building": "Bygg",
@@ -1089,6 +1090,7 @@
         "edit_other_performance": "Endre annen fremføringsform",
         "edit_other_release": "Endre annen offentliggjøring",
         "edit_publication_mention": "Endre publisering/omtale",
+        "edit_web_publication": "Endre webutgivelse",
         "exhibition_place": "Visningssted",
         "exhibition_places": "Visningssteder",
         "exhibition_title": "Utstillingstittel",
@@ -1142,7 +1144,10 @@
           "Competition": "Konkurranse",
           "Concert": "Konsert/forestilling",
           "Exhibition": "Utstilling",
+          "LiteraryArtsAudioVisual": "Audio/videoutgivelse",
           "LiteraryArtsMonograph": "Bok/trykksak",
+          "LiteraryArtsPerformance": "Fremføring/forestilling",
+          "LiteraryArtsWeb": "Webutgivelse",
           "MentionInPublication": "Publisering/omtale",
           "MusicScore": "Partitur/manuscript",
           "OtherPerformance": "Annen fremføring",
@@ -1173,7 +1178,8 @@
           "Installation": "Installasjon",
           "Other": "Annet",
           "Performance": "Performance"
-        }
+        },
+        "web_link": "Lenke"
       },
       "change_registration_type": "Bytte registreringstype?",
       "change_registration_type_description": "Merk at dette kan føre til at du mister noe av dataen du har lagt inn i de tilfellene hvor eksisterende data ikke er gyldig for den nye typen. Er du sikker på at du vil bytte registreringstype?",

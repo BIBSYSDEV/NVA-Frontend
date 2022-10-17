@@ -26,9 +26,10 @@ import {
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { LiteraryArtsMonographModal } from './LiteraryArtsMonographModalModal';
+import { LiteraryArtsWebPublicationModal } from './LiteraryArtsWebPublicationModal';
 
 const literaryArtTypes = Object.values(LiteraryArtsType);
-type ArtisticArchitectureModalType = '' | 'LiteraryArtsMonograph';
+type ArtisticArchitectureModalType = '' | 'LiteraryArtsMonograph' | 'LiteraryArtsWeb';
 
 export const ArtisticLiteraryArtForm = () => {
   const { t } = useTranslation();
@@ -128,17 +129,30 @@ export const ArtisticLiteraryArtForm = () => {
                     </Box>
                   )}
 
-                <Button
-                  data-testid={dataTestId.registrationWizard.resourceType.addBookButton}
-                  onClick={() => setOpenNewManifestationModal('LiteraryArtsMonograph')}
-                  variant="outlined"
-                  sx={{ mt: '1rem' }}
-                  startIcon={<AddCircleOutlineIcon />}>
-                  {t('registration.resource_type.artistic.add_book')}
-                </Button>
+                <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+                  <Button
+                    data-testid={dataTestId.registrationWizard.resourceType.addBookButton}
+                    onClick={() => setOpenNewManifestationModal('LiteraryArtsMonograph')}
+                    variant="outlined"
+                    startIcon={<AddCircleOutlineIcon />}>
+                    {t('registration.resource_type.artistic.add_book')}
+                  </Button>
+                  <Button
+                    data-testid={dataTestId.registrationWizard.resourceType.addWebPublicationButton}
+                    onClick={() => setOpenNewManifestationModal('LiteraryArtsWeb')}
+                    variant="outlined"
+                    startIcon={<AddCircleOutlineIcon />}>
+                    {t('registration.resource_type.artistic.add_web_publication')}
+                  </Button>
+                </Box>
                 <LiteraryArtsMonographModal
                   onSubmit={onAddManifestation}
                   open={openNewManifestationModal === 'LiteraryArtsMonograph'}
+                  closeModal={() => setOpenNewManifestationModal('')}
+                />
+                <LiteraryArtsWebPublicationModal
+                  onSubmit={onAddManifestation}
+                  open={openNewManifestationModal === 'LiteraryArtsWeb'}
                   closeModal={() => setOpenNewManifestationModal('')}
                 />
               </>

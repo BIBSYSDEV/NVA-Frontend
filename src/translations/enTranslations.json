@@ -1041,6 +1041,7 @@
         "add_other_performance": "Add other performance",
         "add_other_release": "Add other announcement",
         "add_publication_mention": "Add publication/mention",
+        "add_web_publication": "Add web publication",
         "announcements": "Announcements",
         "architecture_type": {
           "Building": "Building",
@@ -1089,6 +1090,7 @@
         "edit_other_performance": "Edit other performance",
         "edit_other_release": "Edit other announcement",
         "edit_publication_mention": "Edit publication/mention",
+        "edit_web_publication": "Edit web publication",
         "exhibition_place": "Exhibition place",
         "exhibition_places": "Exhibition places",
         "exhibition_title": "Exhibition title",
@@ -1142,7 +1144,10 @@
           "Competition": "Competition",
           "Concert": "Concert/show",
           "Exhibition": "Exhibition",
+          "LiteraryArtsAudioVisual": "Audio/video publication",
           "LiteraryArtsMonograph": "Book/printed matter",
+          "LiteraryArtsPerformance": "Performance",
+          "LiteraryArtsWeb": "Web publication",
           "MentionInPublication": "Publication/mention",
           "MusicScore": "Score/manuscript",
           "OtherPerformance": "Other performance",
@@ -1173,7 +1178,8 @@
           "Installation": "Installation",
           "Other": "Other",
           "Performance": "Performance"
-        }
+        },
+        "web_link": "Link"
       },
       "change_registration_type": "Change registration type?",
       "change_registration_type_description": "Note that this can lead to some data getting lost in the case where existing data are not valid for the new type. Are you sure you want to change the registration type?",
