@@ -21,6 +21,7 @@ import {
   OtherMusicPerformance,
   LiteraryArtsMonograph,
   LiteraryArtsWeb,
+  LiteraryArtsPerformance,
 } from '../../../../../types/publication_types/artisticRegistration.types';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { CompetitionModal } from './architecture/CompetitionModal';
@@ -38,6 +39,7 @@ import { ConcertModal } from './music_performance/ConcertModal';
 import { OtherPerformanceModal } from './music_performance/OtherPerformanceModal';
 import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModalModal';
 import { LiteraryArtsWebPublicationModal } from './literary_art/LiteraryArtsWebPublicationModal';
+import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerformanceModal';
 
 interface OutputRowProps {
   item: ArtisticOutputItem;
@@ -225,6 +227,13 @@ export const OutputRow = ({
       ) : item.type === 'LiteraryArtsWeb' ? (
         <LiteraryArtsWebPublicationModal
           webPublication={item as LiteraryArtsWeb}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'LiteraryArtsPerformance' ? (
+        <LiteraryArtsPerformanceModal
+          performance={item as LiteraryArtsPerformance}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

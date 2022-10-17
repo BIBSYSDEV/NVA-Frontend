@@ -1040,6 +1040,7 @@
         "add_music_score": "Add score/manuscript",
         "add_other_performance": "Add other performance",
         "add_other_release": "Add other announcement",
+        "add_performance": "Add performance",
         "add_publication_mention": "Add publication/mention",
         "add_web_publication": "Add web publication",
         "announcements": "Announcements",
@@ -1089,6 +1090,7 @@
         "edit_music_score": "Edit score/manuscript",
         "edit_other_performance": "Edit other performance",
         "edit_other_release": "Edit other announcement",
+        "edit_performance": "Edit performance",
         "edit_publication_mention": "Edit publication/mention",
         "edit_web_publication": "Edit web publication",
         "exhibition_place": "Exhibition place",
@@ -1155,6 +1157,11 @@
           "Venue": "Venue"
         },
         "performance_type": "Type/performance form",
+        "performance_types": {
+          "Other": "Other",
+          "Play": "Play",
+          "Reading": "Reading"
+        },
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
           "Other": "Other",

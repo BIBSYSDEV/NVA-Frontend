@@ -188,6 +188,7 @@ export const dataTestId = {
       addTvWebStreamingButton: 'add-tv-web-streaming-button',
       addFestivalCinemaButton: 'add-festival-cinema-button',
       addOtherButton: 'add-other-button',
+      addPerformanceButton: 'add-performance-button',
       addBookButton: 'add-book-button',
       addConcertShowButton: 'add-concert-show-button',
       addAudioVideoPublicationButton: 'add-audio-video-publication-button',
