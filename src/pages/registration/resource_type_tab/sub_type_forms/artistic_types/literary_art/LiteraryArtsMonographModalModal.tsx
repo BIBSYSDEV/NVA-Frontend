@@ -123,7 +123,7 @@ export const LiteraryArtsMonographModal = ({
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationDateField}
+                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
                   />
                 )}
               </Field>

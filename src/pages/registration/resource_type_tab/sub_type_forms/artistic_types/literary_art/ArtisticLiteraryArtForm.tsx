@@ -27,9 +27,10 @@ import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
 import { LiteraryArtsMonographModal } from './LiteraryArtsMonographModalModal';
 import { LiteraryArtsWebPublicationModal } from './LiteraryArtsWebPublicationModal';
+import { LiteraryArtsPerformanceModal } from './LiteraryArtsPerformanceModal';
 
 const literaryArtTypes = Object.values(LiteraryArtsType);
-type ArtisticArchitectureModalType = '' | 'LiteraryArtsMonograph' | 'LiteraryArtsWeb';
+type ArtisticArchitectureModalType = '' | 'LiteraryArtsMonograph' | 'LiteraryArtsWeb' | 'LiteraryArtsPerformance';
 
 export const ArtisticLiteraryArtForm = () => {
   const { t } = useTranslation();
@@ -138,6 +139,13 @@ export const ArtisticLiteraryArtForm = () => {
                     {t('registration.resource_type.artistic.add_book')}
                   </Button>
                   <Button
+                    data-testid={dataTestId.registrationWizard.resourceType.addPerformanceButton}
+                    onClick={() => setOpenNewManifestationModal('LiteraryArtsPerformance')}
+                    variant="outlined"
+                    startIcon={<AddCircleOutlineIcon />}>
+                    {t('registration.resource_type.artistic.add_performance')}
+                  </Button>
+                  <Button
                     data-testid={dataTestId.registrationWizard.resourceType.addWebPublicationButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsWeb')}
                     variant="outlined"
@@ -148,6 +156,11 @@ export const ArtisticLiteraryArtForm = () => {
                 <LiteraryArtsMonographModal
                   onSubmit={onAddManifestation}
                   open={openNewManifestationModal === 'LiteraryArtsMonograph'}
+                  closeModal={() => setOpenNewManifestationModal('')}
+                />
+                <LiteraryArtsPerformanceModal
+                  onSubmit={onAddManifestation}
+                  open={openNewManifestationModal === 'LiteraryArtsPerformance'}
                   closeModal={() => setOpenNewManifestationModal('')}
                 />
                 <LiteraryArtsWebPublicationModal

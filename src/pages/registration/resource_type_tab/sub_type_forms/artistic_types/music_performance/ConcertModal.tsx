@@ -200,7 +200,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                           error={touched && !!error}
                           onBlur={() => !touched && setFieldTouched(field.name)}
                           helperText={<ErrorMessage name={field.name} />}
-                          data-testid={dataTestId.registrationWizard.resourceType.concertDate}
+                          data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
                         />
                       )}
                     />

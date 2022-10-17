@@ -76,7 +76,7 @@ export const PresentationTypeForm = ({ onChangeSubType }: RegistrationTypeFormPr
                 id={field.name}
                 value={field.value ?? ''}
                 required
-                data-testid={dataTestId.registrationWizard.resourceType.eventPlaceField}
+                data-testid={dataTestId.registrationWizard.resourceType.placeField}
                 variant="filled"
                 fullWidth
                 label={t('registration.resource_type.place_for_event')}

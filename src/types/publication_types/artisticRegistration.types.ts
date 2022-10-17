@@ -130,7 +130,7 @@ export enum LiteraryArtsPerformanceSubtype {
 
 export interface LiteraryArtsPerformance {
   type: 'LiteraryArtsPerformance';
-  subtype: LiteraryArtsPerformanceSubtype;
+  subtype: LiteraryArtsPerformanceSubtype | '';
   place: Place;
   publicationDate: RegistrationDate;
 }

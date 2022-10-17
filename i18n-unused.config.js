@@ -20,6 +20,7 @@ module.exports = {
     'registration.resource_type.artistic.moving_picture_type.',
     'registration.resource_type.artistic.music_media_type.',
     'registration.resource_type.artistic.output_type.',
+    'registration.resource_type.artistic.performance_types.',
     'registration.resource_type.artistic.performing_arts_type.',
     'registration.resource_type.artistic.visual_arts_type.',
     'registration.resource_type.content_types.',

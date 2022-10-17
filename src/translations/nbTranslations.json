@@ -1040,6 +1040,7 @@
         "add_music_score": "Legg til partitur/manuscript",
         "add_other_performance": "Legg til annen fremføring",
         "add_other_release": "Legg til annen offentliggjøring",
+        "add_performance": "Legg til fremføring/forestilling",
         "add_publication_mention": "Legg til publisering/omtale",
         "add_web_publication": "Legg til webutgivelse",
         "announcements": "Offentliggjøringer",
@@ -1089,6 +1090,7 @@
         "edit_music_score": "Endre partitur/manuscript",
         "edit_other_performance": "Endre annen fremføringsform",
         "edit_other_release": "Endre annen offentliggjøring",
+        "edit_performance": "Endre fremføring/forestilling",
         "edit_publication_mention": "Endre publisering/omtale",
         "edit_web_publication": "Endre webutgivelse",
         "exhibition_place": "Visningssted",
@@ -1155,6 +1157,11 @@
           "Venue": "Visningssted"
         },
         "performance_type": "Type/formidlingsform",
+        "performance_types": {
+          "Other": "Annet",
+          "Play": "Skuespill/drama",
+          "Reading": "Lesing"
+        },
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
           "Other": "Annet",
