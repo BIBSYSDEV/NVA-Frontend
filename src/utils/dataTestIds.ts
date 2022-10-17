@@ -180,6 +180,7 @@ export const dataTestId = {
       startRegistrationButton: 'registration-start-button',
     },
     resourceType: {
+      addAudioVideoButton: 'add-audio-video-button',
       addCompetitionButton: 'add-competition-button',
       addExhibitionButton: 'add-exhibition-button',
       addMentionInPublicationButton: 'add-mention-in-publication-button',

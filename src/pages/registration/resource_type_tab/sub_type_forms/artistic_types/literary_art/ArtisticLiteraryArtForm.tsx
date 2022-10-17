@@ -28,9 +28,15 @@ import { OutputRow } from '../OutputRow';
 import { LiteraryArtsMonographModal } from './LiteraryArtsMonographModalModal';
 import { LiteraryArtsWebPublicationModal } from './LiteraryArtsWebPublicationModal';
 import { LiteraryArtsPerformanceModal } from './LiteraryArtsPerformanceModal';
+import { LiteraryArtsAudioVisualModal } from './LiteraryArtsAudioVisualModal';
 
 const literaryArtTypes = Object.values(LiteraryArtsType);
-type ArtisticArchitectureModalType = '' | 'LiteraryArtsMonograph' | 'LiteraryArtsWeb' | 'LiteraryArtsPerformance';
+type ArtisticArchitectureModalType =
+  | ''
+  | 'LiteraryArtsMonograph'
+  | 'LiteraryArtsWeb'
+  | 'LiteraryArtsPerformance'
+  | 'LiteraryArtsAudioVisual';
 
 export const ArtisticLiteraryArtForm = () => {
   const { t } = useTranslation();
@@ -139,6 +145,13 @@ export const ArtisticLiteraryArtForm = () => {
                     {t('registration.resource_type.artistic.add_book')}
                   </Button>
                   <Button
+                    data-testid={dataTestId.registrationWizard.resourceType.addAudioVideoButton}
+                    onClick={() => setOpenNewManifestationModal('LiteraryArtsAudioVisual')}
+                    variant="outlined"
+                    startIcon={<AddCircleOutlineIcon />}>
+                    {t('registration.resource_type.artistic.add_audio_visual_publication')}
+                  </Button>
+                  <Button
                     data-testid={dataTestId.registrationWizard.resourceType.addPerformanceButton}
                     onClick={() => setOpenNewManifestationModal('LiteraryArtsPerformance')}
                     variant="outlined"
@@ -161,6 +174,11 @@ export const ArtisticLiteraryArtForm = () => {
                 <LiteraryArtsPerformanceModal
                   onSubmit={onAddManifestation}
                   open={openNewManifestationModal === 'LiteraryArtsPerformance'}
+                  closeModal={() => setOpenNewManifestationModal('')}
+                />
+                <LiteraryArtsAudioVisualModal
+                  onSubmit={onAddManifestation}
+                  open={openNewManifestationModal === 'LiteraryArtsAudioVisual'}
                   closeModal={() => setOpenNewManifestationModal('')}
                 />
                 <LiteraryArtsWebPublicationModal
