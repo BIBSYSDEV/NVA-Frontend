@@ -55,8 +55,8 @@ export const LiteraryArtsPerformanceModal = ({
     <Dialog open={open} onClose={closeModal} fullWidth>
       <DialogTitle>
         {performance
-          ? t('registration.resource_type.artistic.edit_web_publication')
-          : t('registration.resource_type.artistic.add_web_publication')}
+          ? t('registration.resource_type.artistic.edit_performance')
+          : t('registration.resource_type.artistic.add_performance')}
       </DialogTitle>
       <Formik
         initialValues={performance ?? emptyLiteraryArtsPerformance}
@@ -116,10 +116,11 @@ export const LiteraryArtsPerformanceModal = ({
                       'aria-label': t('common.date'),
                     }}
                     value={field.value.year ? new Date(+field.value.year, +field.value.month, +field.value.day) : null}
-                    onChange={(date: Date | null) => {
+                    onChange={(date, keyboardInput) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      // TODO: handle text input
-                      if (date) {
+                      const isTriggeredByInvalidKeyboardInput = keyboardInput && keyboardInput.length !== 10;
+
+                      if (date && !isTriggeredByInvalidKeyboardInput) {
                         setFieldValue('publicationDate', {
                           ...emptyRegistrationDate,
                           year: date.getFullYear(),
