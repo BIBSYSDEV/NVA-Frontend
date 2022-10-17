@@ -628,7 +628,7 @@ const PublicLiteraryArtsMonographDialogContent = ({
       <Typography variant="overline">{t('registration.resource_type.isbn')}</Typography>
       <Typography paragraph>{hyphenate(literaryArtsMonograph.isbn)}</Typography>
       <Typography variant="overline">{t('registration.resource_type.number_of_pages')}</Typography>
-      <Typography>{literaryArtsMonograph.pages.pages}</Typography>
+      <Typography>{literaryArtsMonograph.pages.pages ?? '-'}</Typography>
     </DialogContent>
   );
 };
