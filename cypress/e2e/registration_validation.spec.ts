@@ -218,7 +218,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventOrganizerField}] input`).type(
       'My Organization'
     );
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventPlaceField}] input`).type('My Place');
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.placeField}] input`).type('My Place');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventCountryField}] input`).click();
     cy.get('[id$=-option-1]').click();
 
