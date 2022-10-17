@@ -145,7 +145,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.otherReleaseDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"
                         required

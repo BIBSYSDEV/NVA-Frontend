@@ -71,7 +71,7 @@ export const LiteraryArtsPerformanceModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ isSubmitting, values, errors, touched }: FormikProps<LiteraryArtsPerformance>) => (
+        {({ isSubmitting, errors, touched }: FormikProps<LiteraryArtsPerformance>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="subtype">
@@ -85,8 +85,7 @@ export const LiteraryArtsPerformanceModal = ({
                     {...field}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    // data-testid={dataTestId.registrationWizard.resourceType.audioVideoType}
-                  >
+                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
                     {Object.values(LiteraryArtsPerformanceSubtype).map((performanceType) => (
                       <MenuItem key={performanceType} value={performanceType}>
                         {t(`registration.resource_type.artistic.performance_types.${performanceType}`)}
@@ -105,7 +104,7 @@ export const LiteraryArtsPerformanceModal = ({
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.eventPlaceField} // TODO: rename
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>
@@ -138,7 +137,7 @@ export const LiteraryArtsPerformanceModal = ({
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.competitionDate} // TODO: rename
+                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
                         variant="filled"
                         required
                         onBlur={() => !touched && setFieldTouched(field.name)}

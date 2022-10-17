@@ -104,7 +104,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                         required
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.cinemaDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
                       />
                     )}
                   />

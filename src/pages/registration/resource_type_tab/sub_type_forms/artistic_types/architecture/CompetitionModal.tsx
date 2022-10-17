@@ -129,7 +129,7 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.competitionDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
                         variant="filled"
                         required
                         onBlur={() => !touched && setFieldTouched(field.name)}
