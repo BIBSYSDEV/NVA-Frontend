@@ -157,7 +157,7 @@ export const emptyStringToNull = (value: string, originalValue: string) => (orig
 // Common Fields
 export const isbnField = Yup.string()
   .min(13, resourceErrorMessage.isbnTooShort)
-  .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !!parseIsbn(isbn ?? '')?.isIsbn13());
+  .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? '')?.isIsbn13());
 
 const isbnListField = Yup.array().of(isbnField);
 

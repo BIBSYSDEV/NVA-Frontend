@@ -13,6 +13,7 @@ import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { isbnField } from '../../../../../../utils/validation/registration/referenceValidation';
 
 interface LiteraryArtsAudioVisualModalProps {
   audioVisual?: LiteraryArtsAudioVisual;
@@ -70,7 +71,7 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsAudioVisual>>({
         })
       ),
   }),
-  isbn: Yup.string(), // TODO: validate optional isbn
+  isbn: isbnField,
 });
 
 export const LiteraryArtsAudioVisualModal = ({

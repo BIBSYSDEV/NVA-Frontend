@@ -65,7 +65,11 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
         })
       ),
   }),
-  isbn: isbnField,
+  isbn: isbnField.required(
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.isbn'),
+    })
+  ),
   pages: Yup.object<YupShape<PagesMonograph>>({
     pages: Yup.number().typeError(
       i18n.t('feedback.validation.has_invalid_format', {
