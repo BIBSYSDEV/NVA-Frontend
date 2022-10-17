@@ -40,7 +40,13 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsPerformance>>({
       })
     ),
   }),
-  publicationDate: Yup.object<YupShape<RegistrationDate>>({}),
+  publicationDate: Yup.object<YupShape<RegistrationDate>>({
+    year: Yup.string().required(
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.date'),
+      })
+    ),
+  }),
 });
 
 export const LiteraryArtsPerformanceModal = ({
@@ -65,7 +71,7 @@ export const LiteraryArtsPerformanceModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ isSubmitting }: FormikProps<LiteraryArtsPerformance>) => (
+        {({ isSubmitting, values, errors, touched }: FormikProps<LiteraryArtsPerformance>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="subtype">
@@ -105,11 +111,7 @@ export const LiteraryArtsPerformanceModal = ({
               </Field>
 
               <Field name="publicationDate">
-                {({
-                  field,
-                  form: { setFieldTouched, setFieldValue },
-                  meta: { error, touched },
-                }: FieldProps<RegistrationDate>) => (
+                {({ field, form: { setFieldTouched, setFieldValue } }: FieldProps<RegistrationDate>) => (
                   <DatePicker
                     label={t('common.date')}
                     PopperProps={{
@@ -119,7 +121,6 @@ export const LiteraryArtsPerformanceModal = ({
                     onChange={(date, keyboardInput) => {
                       !touched && setFieldTouched(field.name, true, false);
                       const isTriggeredByInvalidKeyboardInput = keyboardInput && keyboardInput.length !== 10;
-
                       if (date && !isTriggeredByInvalidKeyboardInput) {
                         setFieldValue('publicationDate', {
                           ...emptyRegistrationDate,
@@ -127,6 +128,8 @@ export const LiteraryArtsPerformanceModal = ({
                           month: date.getMonth(),
                           day: date.getDate(),
                         });
+                      } else if (!date) {
+                        setFieldValue('publicationDate', emptyRegistrationDate);
                       }
                     }}
                     inputFormat="dd.MM.yyyy"
@@ -139,8 +142,8 @@ export const LiteraryArtsPerformanceModal = ({
                         variant="filled"
                         required
                         onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
+                        error={touched.publicationDate && !!errors.publicationDate?.year}
+                        helperText={touched.publicationDate && errors.publicationDate?.year}
                       />
                     )}
                   />
