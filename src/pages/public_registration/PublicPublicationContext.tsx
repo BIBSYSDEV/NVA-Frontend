@@ -47,6 +47,7 @@ import {
   OtherMusicPerformance,
   LiteraryArtsMonograph,
   LiteraryArtsWeb,
+  LiteraryArtsPerformance,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
@@ -294,6 +295,8 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicLiteraryArtsMonographDialogContent literaryArtsMonograph={output as LiteraryArtsMonograph} />
           ) : output.type === 'LiteraryArtsWeb' ? (
             <PublicLiteraryArtsWebPublicationDialogContent webPublication={output as LiteraryArtsWeb} />
+          ) : output.type === 'LiteraryArtsPerformance' ? (
+            <PublicLiteraryArtsPerformanceDialogContent performance={output as LiteraryArtsPerformance} />
           ) : null}
         </ErrorBoundary>
 
@@ -649,6 +652,32 @@ const PublicLiteraryArtsWebPublicationDialogContent = ({ webPublication }: { web
       <Typography paragraph>{webPublication.publisher.name}</Typography>
       <Typography variant="overline">{t('common.year')}</Typography>
       <Typography paragraph>{webPublication.publicationDate.year}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicLiteraryArtsPerformanceDialogContent = ({ performance }: { performance: LiteraryArtsPerformance }) => {
+  const { t } = useTranslation();
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${performance.type}`)}</Typography>
+      <Typography variant="overline">{t('registration.resource_type.type_work')}</Typography>
+      {performance.subtype && (
+        <Typography paragraph>
+          {t(`registration.resource_type.artistic.performance_types.${performance.subtype}`)}
+        </Typography>
+      )}
+      <Typography variant="overline">{t('common.place')}</Typography>
+      <Typography paragraph>{performance.place.label}</Typography>
+      <Typography variant="overline">{t('common.date')}</Typography>
+      <Typography paragraph>
+        {new Date(
+          +performance.publicationDate.year,
+          +performance.publicationDate.month,
+          +performance.publicationDate.day
+        ).toLocaleDateString()}
+      </Typography>
     </DialogContent>
   );
 };
