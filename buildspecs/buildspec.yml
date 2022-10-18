@@ -9,7 +9,7 @@ phases:
       - npm ci
   build:
     commands:
-      - npm run deploy
+      - npm run build:dev
 artifacts:
   files:
     - '**/*'
