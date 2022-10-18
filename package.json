@@ -8,7 +8,7 @@
     "build:sandbox": "env-cmd -f .env.sandbox npm run build",
     "deploy_prod": "BUILD_PATH='./builds/prod' react-scripts build",
     "deploy_test": "BUILD_PATH='./builds/test' react-scripts build",
-    "deploy_sandbox": "BUILD_PATH='./builds/sandbox' react-scripts build",
+    "deploy_sandbox": "BUILD_PATH='./builds/sandbox' && npm run build:sandbox",
     "pre-commit": "npx pretty-quick --staged && npm run unused-i18n-keys",
     "prepare": "husky install",
     "start": "react-scripts -r @cypress/instrument-cra start",
