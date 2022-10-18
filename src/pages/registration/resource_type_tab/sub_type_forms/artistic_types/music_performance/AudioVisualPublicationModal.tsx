@@ -222,7 +222,7 @@ export const AudioVisualPublicationModal = ({
                                 required
                                 error={touched && !!error}
                                 helperText={<ErrorMessage name={field.name} />}
-                                data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentDuration}-${index}`}
+                                data-testid={`${dataTestId.registrationWizard.resourceType.artisticOutputDuration}-${index}`}
                               />
                             )}
                           </Field>

@@ -156,7 +156,7 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.scoreDuration}
+                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
                   />
                 )}
               </Field>

@@ -1,36 +1,42 @@
-import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, TextField, MenuItem } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
 import {
   emptyUnconfirmedPublisher,
-  LiteraryArtsMonograph,
+  LiteraryArtsAudioVisual,
+  LiteraryArtsAudioVisualSubtype,
   UnconfirmedPublisher,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { emptyPagesMonograph, PagesMonograph } from '../../../../../../types/publication_types/pages.types';
 import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { isbnField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
+import { isbnField } from '../../../../../../utils/validation/registration/referenceValidation';
 
-interface LiteraryArtsMonographModalProps {
-  literaryArtsMonograph?: LiteraryArtsMonograph;
-  onSubmit: (literaryArtsMonograph: LiteraryArtsMonograph) => void;
+interface LiteraryArtsAudioVisualModalProps {
+  audioVisual?: LiteraryArtsAudioVisual;
+  onSubmit: (audioVisual: LiteraryArtsAudioVisual) => void;
   open: boolean;
   closeModal: () => void;
 }
 
-const emptyLiteraryArtsMonograph: LiteraryArtsMonograph = {
-  type: 'LiteraryArtsMonograph',
+const emptyLiteraryArtsAudioVisual: LiteraryArtsAudioVisual = {
+  type: 'LiteraryArtsAudioVisual',
+  subtype: '',
   publisher: emptyUnconfirmedPublisher,
   publicationDate: emptyRegistrationDate,
   isbn: '',
-  pages: emptyPagesMonograph,
+  extent: '',
 };
 
-const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
+const validationSchema = Yup.object<YupShape<LiteraryArtsAudioVisual>>({
+  subtype: Yup.string().required(
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.type_work'),
+    })
+  ),
   publisher: Yup.object<YupShape<UnconfirmedPublisher>>({
     name: Yup.string().required(
       i18n.t('feedback.validation.is_required', {
@@ -41,10 +47,10 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
   publicationDate: Yup.object<YupShape<RegistrationDate>>({
     year: Yup.number()
       .min(
-        1800,
+        1950,
         i18n.t('feedback.validation.must_be_bigger_than', {
           field: i18n.t('common.year'),
-          limit: 1800,
+          limit: 1950,
         })
       )
       .max(
@@ -65,45 +71,55 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
         })
       ),
   }),
-  isbn: isbnField.required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.isbn'),
-    })
-  ),
-  pages: Yup.object<YupShape<PagesMonograph>>({
-    pages: Yup.number().typeError(
-      i18n.t('feedback.validation.has_invalid_format', {
-        field: i18n.t('registration.resource_type.number_of_pages'),
-      })
-    ),
-  }),
+  isbn: isbnField,
 });
 
-export const LiteraryArtsMonographModal = ({
-  literaryArtsMonograph,
+export const LiteraryArtsAudioVisualModal = ({
+  audioVisual,
   onSubmit,
   open,
   closeModal,
-}: LiteraryArtsMonographModalProps) => {
+}: LiteraryArtsAudioVisualModalProps) => {
   const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={closeModal} fullWidth>
       <DialogTitle>
-        {literaryArtsMonograph
-          ? t('registration.resource_type.artistic.edit_book')
-          : t('registration.resource_type.artistic.add_book')}
+        {audioVisual
+          ? t('registration.resource_type.artistic.edit_audio_visual_publication')
+          : t('registration.resource_type.artistic.add_audio_visual_publication')}
       </DialogTitle>
       <Formik
-        initialValues={literaryArtsMonograph ?? emptyLiteraryArtsMonograph}
+        initialValues={audioVisual ?? emptyLiteraryArtsAudioVisual}
         validationSchema={validationSchema}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
         }}>
-        {({ isSubmitting }: FormikProps<LiteraryArtsMonograph>) => (
+        {({ isSubmitting }: FormikProps<LiteraryArtsAudioVisual>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Field name="subtype">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    select
+                    required
+                    label={t('registration.resource_type.type_work')}
+                    fullWidth
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    {Object.values(LiteraryArtsAudioVisualSubtype).map((audioVideoType) => (
+                      <MenuItem key={audioVideoType} value={audioVideoType}>
+                        {t(`registration.resource_type.artistic.audio_video_type.${audioVideoType}`)}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+              </Field>
+
               <Field name="publisher.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
@@ -118,6 +134,7 @@ export const LiteraryArtsMonographModal = ({
                   />
                 )}
               </Field>
+
               <Field name="publicationDate.year">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
@@ -131,6 +148,7 @@ export const LiteraryArtsMonographModal = ({
                   />
                 )}
               </Field>
+
               <Field name="isbn">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
@@ -138,32 +156,28 @@ export const LiteraryArtsMonographModal = ({
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.isbn')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.isbnField}
                   />
                 )}
               </Field>
-              <Field name="pages.pages">
+
+              <Field name="extent">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('registration.resource_type.number_of_pages')}
+                    label={t('registration.resource_type.artistic.extent_in_minutes')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.pagesField}
+                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
                   />
                 )}
               </Field>
             </DialogContent>
-            <OutputModalActions
-              isSubmitting={isSubmitting}
-              closeModal={closeModal}
-              isAddAction={!literaryArtsMonograph}
-            />
+            <OutputModalActions isSubmitting={isSubmitting} closeModal={closeModal} isAddAction={!audioVisual} />
           </Form>
         )}
       </Formik>

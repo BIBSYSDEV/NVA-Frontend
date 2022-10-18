@@ -1044,6 +1044,13 @@
         "add_publication_mention": "Legg til publisering/omtale",
         "add_web_publication": "Legg til webutgivelse",
         "announcements": "Offentliggjøringer",
+        "audio_video_type": {
+          "Audiobook": "Lydbok",
+          "Other": "Annet",
+          "Podcast": "Podkast",
+          "RadioPlay": "Hørespill",
+          "ShortFilm": "Kortfilm"
+        },
         "architecture_type": {
           "Building": "Bygg",
           "Interior": "Interiør",

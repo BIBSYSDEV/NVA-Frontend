@@ -1044,6 +1044,13 @@
         "add_publication_mention": "Add publication/mention",
         "add_web_publication": "Add web publication",
         "announcements": "Announcements",
+        "audio_video_type": {
+          "Audiobook": "Audio book",
+          "Other": "Other",
+          "Podcast": "Podcast",
+          "RadioPlay": "Radio play",
+          "ShortFilm": "Short film"
+        },
         "architecture_type": {
           "Building": "Building",
           "Interior": "Interior",

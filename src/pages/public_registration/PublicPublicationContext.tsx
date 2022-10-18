@@ -48,6 +48,7 @@ import {
   LiteraryArtsMonograph,
   LiteraryArtsWeb,
   LiteraryArtsPerformance,
+  LiteraryArtsAudioVisual,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
@@ -297,6 +298,8 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicLiteraryArtsWebPublicationDialogContent webPublication={output as LiteraryArtsWeb} />
           ) : output.type === 'LiteraryArtsPerformance' ? (
             <PublicLiteraryArtsPerformanceDialogContent performance={output as LiteraryArtsPerformance} />
+          ) : output.type === 'LiteraryArtsAudioVisual' ? (
+            <PublicLiteraryArtsAudioVisualDialogContent audioVisual={output as LiteraryArtsAudioVisual} />
           ) : null}
         </ErrorBoundary>
 
@@ -678,6 +681,30 @@ const PublicLiteraryArtsPerformanceDialogContent = ({ performance }: { performan
           +performance.publicationDate.day
         ).toLocaleDateString()}
       </Typography>
+    </DialogContent>
+  );
+};
+
+const PublicLiteraryArtsAudioVisualDialogContent = ({ audioVisual }: { audioVisual: LiteraryArtsAudioVisual }) => {
+  const { t } = useTranslation();
+  return (
+    <DialogContent>
+      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${audioVisual.type}`)}</Typography>
+      <Typography variant="overline">{t('registration.resource_type.type_work')}</Typography>
+      {audioVisual.subtype && (
+        <Typography paragraph>
+          {t(`registration.resource_type.artistic.audio_video_type.${audioVisual.subtype}`)}
+        </Typography>
+      )}
+      <Typography variant="overline">{t('registration.resource_type.artistic.publisher')}</Typography>
+      <Typography paragraph>{audioVisual.publisher.name}</Typography>
+      <Typography variant="overline">{t('common.year')}</Typography>
+      <Typography paragraph>{audioVisual.publicationDate.year ?? '-'}</Typography>
+      <Typography variant="overline">{t('registration.resource_type.isbn')}</Typography>
+      <Typography paragraph>{hyphenate(audioVisual.isbn) ?? '-'}</Typography>
+      <Typography variant="overline">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
+      <Typography paragraph>{audioVisual.extent ?? '-'}</Typography>
     </DialogContent>
   );
 };
