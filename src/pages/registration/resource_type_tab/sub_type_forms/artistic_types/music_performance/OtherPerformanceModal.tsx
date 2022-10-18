@@ -145,7 +145,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.otherPerformanceDuration}
+                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
                   />
                 )}
               </Field>

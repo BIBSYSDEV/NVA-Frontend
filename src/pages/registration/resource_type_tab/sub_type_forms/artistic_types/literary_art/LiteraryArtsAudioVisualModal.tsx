@@ -172,7 +172,7 @@ export const LiteraryArtsAudioVisualModal = ({
                     label={t('registration.resource_type.artistic.extent_in_minutes')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.audioVideoContentDuration}
+                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDuration}
                   />
                 )}
               </Field>
