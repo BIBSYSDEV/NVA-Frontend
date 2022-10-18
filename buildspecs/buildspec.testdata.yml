@@ -18,14 +18,14 @@ phases:
   pre_build:
     commands:
       - wget https://github.com/BIBSYSDEV/NVA-end-to-end-testing/archive/refs/heads/test-deploy.zip
-      - unzip test-deploy.zip
-      - cd NVA-end-to-end-testing-test-deploy
-      - aws sts assume-role --role-arn $ROLE_ARN --role-session-name test > Credentials
-      - export CYPRESS_AWS_ACCESS_KEY_ID=$(cat Credentials | jq -r '.Credentials.AccessKeyId')
-      - export CYPRESS_AWS_SECRET_ACCESS_KEY=$(cat Credentials | jq -r '.Credentials.SecretAccessKey')
-      - export CYPRESS_AWS_SESSION_TOKEN=$(cat Credentials | jq -r '.Credentials.SessionToken')
-      - export CYPRESS_AWS_REGION=${AWS_REGION}
+      # - unzip test-deploy.zip
+      # - cd NVA-end-to-end-testing-test-deploy
+      # - aws sts assume-role --role-arn $ROLE_ARN --role-session-name test > Credentials
+      # - export CYPRESS_AWS_ACCESS_KEY_ID=$(cat Credentials | jq -r '.Credentials.AccessKeyId')
+      # - export CYPRESS_AWS_SECRET_ACCESS_KEY=$(cat Credentials | jq -r '.Credentials.SecretAccessKey')
+      # - export CYPRESS_AWS_SESSION_TOKEN=$(cat Credentials | jq -r '.Credentials.SessionToken')
+      # - export CYPRESS_AWS_REGION=${AWS_REGION}
   build:
     commands:
       - cd test_data
-      - python create_test_data.py
+      # - python create_test_data.py
