@@ -9,6 +9,7 @@ batch:
       env:
         variables:
           image: public.ecr.aws/cypress-io/cypress/browsers:node14.17.0-chrome88-ff89
+      ignore-failure: true
 
 phases:
   install:
