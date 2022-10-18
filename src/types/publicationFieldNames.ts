@@ -71,6 +71,7 @@ export enum MediaType {
   MediaBlogPost = 'MediaBlogPost',
   MediaPodcast = 'MediaPodcast',
   MediaParticipationInRadioOrTv = 'MediaParticipationInRadioOrTv',
+  FeatureArticle = 'FeatureArticle',
 }
 
 export enum ResearchDataType {

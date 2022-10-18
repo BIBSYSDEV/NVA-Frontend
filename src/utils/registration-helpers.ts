@@ -375,6 +375,10 @@ export const contributorConfig: ContributorConfig = {
     primaryRoles: [ContributorRole.ProgrammeLeader, ContributorRole.ProgrammeParticipant, ContributorRole.Other],
     secondaryRoles: [],
   },
+  [MediaType.FeatureArticle]: {
+    primaryRoles: [ContributorRole.Other],
+    secondaryRoles: [],
+  },
   // ResearchData
   [ResearchDataType.DataManagementPlan]: {
     primaryRoles: [ContributorRole.Creator],
