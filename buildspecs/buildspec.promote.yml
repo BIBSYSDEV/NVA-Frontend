@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      - env
+      - npm ci
+  build:
+    commands:
+      - npm run deploy_prod
+      - npm run deploy_test
+      - npm run deploy_sandbox
+      - VERSION=v$(date +%Y%m%d)
+      - BUILDS_BUCKET=frontend-builds-$(aws sts get-caller-identity --query Account --output text)
+      - FROM=s3://$S3_BUCKET/builds
+      - TO=s3://$BUILDS_BUCKET/builds/$VERSION
+      - aws s3 mv ${FROM}/prod ${TO}/prod --recursive
+      - aws s3 mv ${FROM}/test ${TO}/test --recursive
+      - aws s3 mv ${FROM}/sandbox ${TO}/sandbox --recursive
+artifacts:
+  files:
+    - '**/*'
+  base-directory: build
+  name: nva-frontend
