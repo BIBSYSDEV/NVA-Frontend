@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "react-scripts build",
+    "build:dev": "env-cmd -f .env.development npm run build",
+    "build:sandbox": "env-cmd -f .env.sandbox npm run build",
     "pre-commit": "npx pretty-quick --staged && npm run unused-i18n-keys",
     "prepare": "husky install",
     "start": "react-scripts -r @cypress/instrument-cra start",
@@ -48,6 +50,7 @@
     "axios": "^0.27.2",
     "date-fns": "^2.29.3",
     "deepmerge": "^4.2.2",
+    "env-cmd": "^10.1.0",
     "formik": "^2.2.9",
     "i18n-iso-countries": "^7.5.0",
     "i18next": "^21.9.2",
