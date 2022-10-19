@@ -9,16 +9,15 @@ phases:
       - npm ci
   build:
     commands:
-      # - npm run deploy_prod
-      # - npm run deploy_test
       - VERSION=v$(date +%Y%m%d)
       - BUILDS_BUCKET=frontend-builds-$(aws sts get-caller-identity --query Account --output text)
       - TO=s3://$BUILDS_BUCKET/builds/$VERSION
       - npm run deploy_sandbox
-      - ls -l /
       - aws s3 mv ./build ${TO}/sandbox --recursive
-      # - aws s3 mv ${FROM}/prod ${TO}/prod --recursive
-      # - aws s3 mv ${FROM}/test ${TO}/test --recursive
+      # - npm run deploy_prod
+      # - aws s3 mv ./build ${TO}/prod --recursive
+      # - npm run deploy_test
+      # - aws s3 mv ./build ${TO}/test --recursive
 artifacts:
   files:
     - '**/*'

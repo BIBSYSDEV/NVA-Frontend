@@ -1,0 +1,14 @@
+version: 0.2
+
+env:
+  variables:
+    ENVIRONMENT: 'test'
+  parameter-store:
+    VERSION: /NVA/FrontendVersion/test
+
+build:
+  commands:
+    - ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+    - FROM=s3://frontend-builds-$ACCOUNT_ID/builds/$VERSION/$ENVIRONMENT
+    - TO=s3://frontend-$ENVIRONMENT-$ACCOUNT_ID
+    - aws s3 cp $FROM $TO --recursive
