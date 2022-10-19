@@ -16,6 +16,8 @@ phases:
       - TO=s3://$BUILDS_BUCKET/builds/$VERSION
       - echo $TO
       - npm run deploy_sandbox
+      - ls -l
+      - ls build
       - aws s3 mv /build ${TO}/sandbox --recursive
       # - aws s3 mv ${FROM}/prod ${TO}/prod --recursive
       # - aws s3 mv ${FROM}/test ${TO}/test --recursive
