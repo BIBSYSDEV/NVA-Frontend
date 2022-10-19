@@ -15,7 +15,9 @@ phases:
       - VERSION=v$(date +%Y%m%d)
       - BUILDS_BUCKET=frontend-builds-$(aws sts get-caller-identity --query Account --output text)
       - FROM=s3://$S3_BUCKET/build/builds
+      - echo $FROM
       - TO=s3://$BUILDS_BUCKET/build/builds/$VERSION
+      - echo $TO
       - aws s3 mv ${FROM}/prod ${TO}/prod --recursive
       - aws s3 mv ${FROM}/test ${TO}/test --recursive
       - aws s3 mv ${FROM}/sandbox ${TO}/sandbox --recursive
