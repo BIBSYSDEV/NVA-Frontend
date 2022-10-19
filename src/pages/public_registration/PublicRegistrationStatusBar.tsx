@@ -314,7 +314,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                   <>
                     <LoadingButton
                       variant="contained"
-                      // data-testid={dataTestId.registrationLandingPage.acceptPublishingRequestButton}
+                      data-testid={dataTestId.registrationLandingPage.publishingRequestAcceptButton}
                       endIcon={<CheckIcon />}
                       loadingPosition="end"
                       onClick={() => updatePendingPublishingRequest('Completed')}
@@ -324,7 +324,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                     </LoadingButton>
                     <LoadingButton
                       variant="contained"
-                      // data-testid={dataTestId.registrationLandingPage.rejectPublishingRequestButton}
+                      data-testid={dataTestId.registrationLandingPage.publishingRequestRejectButton}
                       endIcon={<CloseIcon />}
                       loadingPosition="end"
                       onClick={() => updatePendingPublishingRequest('Closed')}

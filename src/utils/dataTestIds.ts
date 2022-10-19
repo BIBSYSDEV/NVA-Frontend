@@ -112,6 +112,8 @@ export const dataTestId = {
     publicationDate: 'public-registration-publication-date',
     publicationsUsingDatasetAccordion: 'publications-using-dataset-accordion',
     publishButton: 'button-publish-registration',
+    publishingRequestAcceptButton: 'publishing-request-accept-button',
+    publishingRequestRejectButton: 'publishing-request-reject-button',
     registrationSubtype: 'public-registration-registration-subtype',
     rejectDoiButton: 'button-reject-doi',
     relatedPublicationsAccordion: 'related-publications-accordion',
