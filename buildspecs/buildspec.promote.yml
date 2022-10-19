@@ -11,17 +11,14 @@ phases:
     commands:
       # - npm run deploy_prod
       # - npm run deploy_test
-      - npm run deploy_sandbox
       - VERSION=v$(date +%Y%m%d)
       - BUILDS_BUCKET=frontend-builds-$(aws sts get-caller-identity --query Account --output text)
-      - FROM=/builds
-      - echo $FROM
-      - TO=s3://$BUILDS_BUCKET/build/builds/$VERSION
+      - TO=s3://$BUILDS_BUCKET/builds/$VERSION
       - echo $TO
-      - ls -l
+      - npm run deploy_sandbox
+      - aws s3 mv /build ${TO}/sandbox --recursive
       # - aws s3 mv ${FROM}/prod ${TO}/prod --recursive
       # - aws s3 mv ${FROM}/test ${TO}/test --recursive
-      - aws s3 mv ${FROM}/sandbox ${TO}/sandbox --recursive
 artifacts:
   files:
     - '**/*'
