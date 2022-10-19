@@ -36,6 +36,8 @@ enum LoadingState {
   RequestDoi,
   RejectDoi,
   ApproveDoi,
+  ApprovePublishRequest,
+  RejectPublishRequest,
 }
 
 export const PublicRegistrationStatusBar = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
@@ -59,6 +61,9 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
 
   const pendingDoiRequestTicket = registrationTickets.find(
     (ticket) => ticket.type === 'DoiRequest' && ticket.status === 'Pending'
+  );
+  const pendingPublishingRequestTicket = registrationTickets.find(
+    (ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Pending'
   );
 
   const sendDoiRequest = async () => {
@@ -106,16 +111,50 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
   };
 
+  const onClickUpdatePublishingRequest = async (status: TicketStatus) => {
+    if (pendingPublishingRequestTicket) {
+      if (status === 'Completed') {
+        setIsLoading(LoadingState.ApprovePublishRequest);
+      } else {
+        setIsLoading(LoadingState.RejectPublishRequest);
+      }
+
+      const updateTicketStatusResponse = await updateTicketStatus(
+        pendingPublishingRequestTicket.id,
+        'PublishingRequest',
+        status
+      );
+      if (isErrorStatus(updateTicketStatusResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.update_publishing_request'), variant: 'error' }));
+        setIsLoading(LoadingState.None);
+      } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
+        // TODO: Updating status of PublishingRequest can take some time, so wait 10 sec before refetching
+        setTimeout(() => {
+          if (status === 'Completed') {
+            dispatch(
+              setNotification({ message: t('feedback.success.publishing_request_approved'), variant: 'success' })
+            );
+          } else {
+            dispatch(
+              setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' })
+            );
+          }
+          refetchRegistration();
+        }, 10_000);
+      }
+    }
+  };
+
   const onClickPublish = async () => {
     setIsLoading(LoadingState.Publish);
     const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.publish_registration'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
       setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      // TODO: Setting Publish Request to Completed can take some time, so wait 10 sec before refetching
+      // TODO: Creating PublishingRequest can take some time, so wait 10 sec before refetching
       setTimeout(() => {
-        dispatch(setNotification({ message: t('feedback.success.published_registration'), variant: 'success' }));
+        dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
         refetchRegistration();
       }, 10_000);
     }
@@ -195,19 +234,21 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           </Typography>
         )}
         <Box sx={{ display: 'flex', gap: '1rem' }}>
-          {registration.status === RegistrationStatus.Draft && (
-            <LoadingButton
-              disabled={!!isLoading || !registrationIsValid}
-              data-testid={dataTestId.registrationLandingPage.publishButton}
-              color="secondary"
-              variant="contained"
-              endIcon={<CloudUploadIcon />}
-              loadingPosition="end"
-              onClick={onClickPublish}
-              loading={isLoading === LoadingState.Publish}>
-              {t('common.publish')}
-            </LoadingButton>
-          )}
+          {registration.status === RegistrationStatus.Draft &&
+            !isLoadingRegistrationTicketCollection &&
+            !pendingPublishingRequestTicket && (
+              <LoadingButton
+                disabled={!!isLoading || !registrationIsValid}
+                data-testid={dataTestId.registrationLandingPage.publishButton}
+                color="secondary"
+                variant="contained"
+                endIcon={<CloudUploadIcon />}
+                loadingPosition="end"
+                onClick={onClickPublish}
+                loading={isLoading === LoadingState.Publish}>
+                {t('common.publish')}
+              </LoadingButton>
+            )}
 
           <Button
             component={RouterLink}
@@ -264,36 +305,62 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             </>
           )}
 
-          {isCurator &&
-            isPublishedRegistration &&
-            (isLoadingRegistrationTicketCollection ? (
+          {isCurator ? (
+            isLoadingRegistrationTicketCollection ? (
               <CircularProgress />
             ) : (
-              pendingDoiRequestTicket && (
-                <>
-                  <LoadingButton
-                    variant="contained"
-                    data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
-                    endIcon={<CloseIcon />}
-                    loadingPosition="end"
-                    onClick={() => onClickUpdateDoiRequest('Closed')}
-                    loading={isLoading === LoadingState.RejectDoi}
-                    disabled={!!isLoading}>
-                    {t('common.reject_doi')}
-                  </LoadingButton>
-                  <LoadingButton
-                    variant="contained"
-                    data-testid={dataTestId.registrationLandingPage.createDoiButton}
-                    endIcon={<CheckIcon />}
-                    loadingPosition="end"
-                    onClick={() => onClickUpdateDoiRequest('Completed')}
-                    loading={isLoading === LoadingState.ApproveDoi}
-                    disabled={!!isLoading || !registrationIsValid}>
-                    {t('common.create_doi')}
-                  </LoadingButton>
-                </>
-              )
-            ))}
+              <>
+                {!isPublishedRegistration && pendingPublishingRequestTicket && (
+                  <>
+                    <LoadingButton
+                      variant="contained"
+                      // data-testid={dataTestId.registrationLandingPage.acceptPublishingRequestButton}
+                      endIcon={<CheckIcon />}
+                      loadingPosition="end"
+                      onClick={() => onClickUpdatePublishingRequest('Completed')}
+                      loading={isLoading === LoadingState.ApprovePublishRequest}
+                      disabled={!!isLoading || !registrationIsValid}>
+                      {t('registration.public_page.approve_publish_request')}
+                    </LoadingButton>
+                    <LoadingButton
+                      variant="contained"
+                      // data-testid={dataTestId.registrationLandingPage.rejectPublishingRequestButton}
+                      endIcon={<CloseIcon />}
+                      loadingPosition="end"
+                      onClick={() => onClickUpdatePublishingRequest('Closed')}
+                      loading={isLoading === LoadingState.RejectPublishRequest}
+                      disabled={!!isLoading}>
+                      {t('registration.public_page.reject_publish_request')}
+                    </LoadingButton>
+                  </>
+                )}
+                {isPublishedRegistration && pendingDoiRequestTicket && (
+                  <>
+                    <LoadingButton
+                      variant="contained"
+                      data-testid={dataTestId.registrationLandingPage.createDoiButton}
+                      endIcon={<CheckIcon />}
+                      loadingPosition="end"
+                      onClick={() => onClickUpdateDoiRequest('Completed')}
+                      loading={isLoading === LoadingState.ApproveDoi}
+                      disabled={!!isLoading || !registrationIsValid}>
+                      {t('common.create_doi')}
+                    </LoadingButton>
+                    <LoadingButton
+                      variant="contained"
+                      data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
+                      endIcon={<CloseIcon />}
+                      loadingPosition="end"
+                      onClick={() => onClickUpdateDoiRequest('Closed')}
+                      loading={isLoading === LoadingState.RejectDoi}
+                      disabled={!!isLoading}>
+                      {t('common.reject_doi')}
+                    </LoadingButton>
+                  </>
+                )}
+              </>
+            )
+          ) : null}
         </Box>
       </Box>
     </Box>
