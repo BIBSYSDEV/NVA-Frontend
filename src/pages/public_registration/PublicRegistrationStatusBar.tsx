@@ -92,7 +92,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
   };
 
-  const onClickUpdateDoiRequest = async (status: TicketStatus) => {
+  const updatePendingDoiRequest = async (status: TicketStatus) => {
     if (pendingDoiRequestTicket) {
       if (status === 'Completed') {
         setIsLoading(LoadingState.ApproveDoi);
@@ -111,7 +111,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
     }
   };
 
-  const onClickUpdatePublishingRequest = async (status: TicketStatus) => {
+  const updatePendingPublishingRequest = async (status: TicketStatus) => {
     if (pendingPublishingRequestTicket) {
       if (status === 'Completed') {
         setIsLoading(LoadingState.ApprovePublishRequest);
@@ -317,7 +317,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                       // data-testid={dataTestId.registrationLandingPage.acceptPublishingRequestButton}
                       endIcon={<CheckIcon />}
                       loadingPosition="end"
-                      onClick={() => onClickUpdatePublishingRequest('Completed')}
+                      onClick={() => updatePendingPublishingRequest('Completed')}
                       loading={isLoading === LoadingState.ApprovePublishRequest}
                       disabled={!!isLoading || !registrationIsValid}>
                       {t('registration.public_page.approve_publish_request')}
@@ -327,7 +327,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                       // data-testid={dataTestId.registrationLandingPage.rejectPublishingRequestButton}
                       endIcon={<CloseIcon />}
                       loadingPosition="end"
-                      onClick={() => onClickUpdatePublishingRequest('Closed')}
+                      onClick={() => updatePendingPublishingRequest('Closed')}
                       loading={isLoading === LoadingState.RejectPublishRequest}
                       disabled={!!isLoading}>
                       {t('registration.public_page.reject_publish_request')}
@@ -341,7 +341,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                       data-testid={dataTestId.registrationLandingPage.createDoiButton}
                       endIcon={<CheckIcon />}
                       loadingPosition="end"
-                      onClick={() => onClickUpdateDoiRequest('Completed')}
+                      onClick={() => updatePendingDoiRequest('Completed')}
                       loading={isLoading === LoadingState.ApproveDoi}
                       disabled={!!isLoading || !registrationIsValid}>
                       {t('common.create_doi')}
@@ -351,7 +351,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                       data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
                       endIcon={<CloseIcon />}
                       loadingPosition="end"
-                      onClick={() => onClickUpdateDoiRequest('Closed')}
+                      onClick={() => updatePendingDoiRequest('Closed')}
                       loading={isLoading === LoadingState.RejectDoi}
                       disabled={!!isLoading}>
                       {t('common.reject_doi')}
