@@ -45,6 +45,7 @@ import {
   PresentationPublicationInstance,
 } from '../../../types/publication_types/presentationRegistration.types';
 import {
+  MediaContributionPeriodicalPublicationContext,
   MediaContributionPublicationContext,
   MediaContributionPublicationInstance,
 } from '../../../types/publication_types/mediaContributionRegistration.types';
@@ -448,29 +449,35 @@ export const artisticDesignReference = baseReference.shape({
 });
 
 // Media Contribution
-const mediaContributionPublicationContext = Yup.object<YupShape<MediaContributionPublicationContext>>({
-  format: Yup.string()
-    .nullable()
-    .required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.media_contribution.format'),
+const mediaContributionPublicationContext = Yup.object().when('$publicationInstanceType', (type: string) =>
+  type === MediaType.MediaFeatureArticle || type === MediaType.MediaReaderOpinion
+    ? Yup.object<YupShape<MediaContributionPeriodicalPublicationContext>>({
+        id: Yup.string().required(resourceErrorMessage.journalRequired),
       })
-    ),
-  medium: Yup.string()
-    .nullable()
-    .required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.media_contribution.medium'),
+    : Yup.object<YupShape<MediaContributionPublicationContext>>({
+        format: Yup.string()
+          .nullable()
+          .required(
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('registration.resource_type.media_contribution.format'),
+            })
+          ),
+        medium: Yup.string()
+          .nullable()
+          .required(
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('registration.resource_type.media_contribution.medium'),
+            })
+          ),
+        disseminationChannel: Yup.string()
+          .nullable()
+          .required(
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('registration.resource_type.media_contribution.channel'),
+            })
+          ),
       })
-    ),
-  disseminationChannel: Yup.string()
-    .nullable()
-    .required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.media_contribution.channel'),
-      })
-    ),
-});
+);
 
 const mediaContributionPublicationInstance = Yup.object<YupShape<MediaContributionPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
