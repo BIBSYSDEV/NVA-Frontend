@@ -1,5 +1,6 @@
 import { MediaType, PublicationType } from '../publicationFieldNames';
 import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
+import { JournalPublicationContext, JournalPublicationInstance } from './journalRegistration.types';
 
 export enum MediaFormat {
   Text = 'Text',
@@ -34,6 +35,11 @@ export const emptyMediaContributionPublicationContext: MediaContributionPublicat
   },
 };
 
+export const emptyMediaContributionPeriodicalPublicationContext: MediaContributionPeriodicalPublicationContext = {
+  type: 'MediaContributionPeriodical',
+  id: '',
+};
+
 export interface MediaContributionPublicationContext {
   type: PublicationType | '';
   format: MediaFormat | '';
@@ -45,13 +51,27 @@ export interface MediaContributionPublicationContext {
   };
 }
 
+interface MediaContributionPeriodicalPublicationContext extends Omit<JournalPublicationContext, 'type'> {
+  type: 'MediaContributionPeriodical' | 'UnconfirmedMediaContributionPeriodical';
+}
+
+interface MediaContributionPeriodicalPublicationInstance
+  extends Omit<JournalPublicationInstance, 'type' | 'corrigendumFor'> {
+  type: MediaType.MediaFeatureArticle | MediaType.MediaReaderOpinion;
+}
+
 interface MediaContributionReference extends BaseReference {
   publicationContext: MediaContributionPublicationContext;
   publicationInstance: MediaContributionPublicationInstance;
 }
 
+interface MediaContributionPeriodical extends BaseReference {
+  publicationContext: MediaContributionPeriodicalPublicationContext;
+  publicationInstance: MediaContributionPeriodicalPublicationInstance;
+}
+
 export interface MediaContributionEntityDescription extends BaseEntityDescription {
-  reference: MediaContributionReference;
+  reference: MediaContributionReference | MediaContributionPeriodical;
 }
 
 export interface MediaRegistration extends BaseRegistration {
