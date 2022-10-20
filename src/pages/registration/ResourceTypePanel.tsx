@@ -33,7 +33,6 @@ import {
 } from '../../types/publication_types/presentationRegistration.types';
 import { ArtisticTypeForm } from './resource_type_tab/ArtisticTypeForm';
 import { emptyArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
-import { MediaTypeForm } from './resource_type_tab/MediaTypeForm';
 import {
   emptyMediaContributionPublicationContext,
   emptyMediaContributionPublicationInstance,
@@ -44,6 +43,7 @@ import {
   emptyResearchDataPublicationInstance,
   emptyResearchDataPublicationContext,
 } from '../../types/publication_types/researchDataRegistration.types';
+import { MediaTypeForm } from './resource_type_tab/sub_type_forms/media_types/MediaContributionForm';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation();

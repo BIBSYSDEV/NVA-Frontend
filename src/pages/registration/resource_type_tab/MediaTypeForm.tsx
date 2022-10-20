@@ -2,23 +2,15 @@ import { Box, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { MediaType, ResourceFieldNames } from '../../../types/publicationFieldNames';
+import { ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { MediaFormat, MediaMedium } from '../../../types/publication_types/mediaContributionRegistration.types';
-import { SelectTypeField } from './components/SelectTypeField';
-import { RegistrationTypeFormProps } from './JournalTypeForm';
 
-export const MediaTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps) => {
+export const MediaContributionForm = () => {
   const { t } = useTranslation();
 
   return (
     <StyledSelectWrapper>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <SelectTypeField
-          fieldName={ResourceFieldNames.SubType}
-          onChangeType={onChangeSubType}
-          options={Object.values(MediaType)}
-        />
-
         <Field name={ResourceFieldNames.PublicationContextMediaMedium}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
