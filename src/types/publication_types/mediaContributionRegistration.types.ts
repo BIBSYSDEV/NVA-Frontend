@@ -28,9 +28,12 @@ export const emptyMediaContributionPublicationInstance: MediaContributionPublica
 export const emptyMediaContributionPublicationContext: MediaContributionPublicationContext = {
   type: PublicationType.MediaContribution,
   format: '',
-  medium: '',
+  medium: {
+    type: '',
+  },
   disseminationChannel: '',
   partOf: {
+    type: 'SeriesEpisode',
     series: '',
     seriesPart: '',
   },
@@ -52,9 +55,13 @@ export const emptyMediaContributionPeriodicalPublicationInstance: MediaContribut
 export interface MediaContributionPublicationContext {
   type: PublicationType | '';
   format: MediaFormat | '';
-  medium: MediaMedium | '';
+  medium: {
+    type: MediaMedium | '';
+    description?: string;
+  };
   disseminationChannel: string;
   partOf?: {
+    type: 'SeriesEpisode';
     series: string;
     seriesPart: string;
   };
@@ -66,7 +73,7 @@ export interface MediaContributionPeriodicalPublicationContext extends Omit<Jour
     | PublicationChannelType.UnconfirmedMediaContributionPeriodical;
 }
 
-interface MediaContributionPeriodicalPublicationInstance
+export interface MediaContributionPeriodicalPublicationInstance
   extends Omit<JournalPublicationInstance, 'type' | 'corrigendumFor' | 'contentType' | 'peerReviewed'> {
   type: MediaType.MediaFeatureArticle | MediaType.MediaReaderOpinion | '';
 }

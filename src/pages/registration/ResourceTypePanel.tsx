@@ -116,7 +116,7 @@ export const ResourceTypePanel = () => {
         setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
         break;
       case PublicationType.MediaContribution:
-        setFieldValue(instanceTypeBaseFieldName, {}, false);
+        setFieldValue(instanceTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationInstance, false);
         setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
         break;
       case PublicationType.ResearchData:

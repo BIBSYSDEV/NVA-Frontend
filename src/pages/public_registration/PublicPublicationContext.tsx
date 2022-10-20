@@ -719,10 +719,10 @@ export const PublicPublicationContextMediaContribution = ({ publicationContext }
 
   return (
     <>
-      {medium && (
+      {medium.type && (
         <Typography>
           {t('registration.resource_type.media_contribution.medium')}:{' '}
-          {t(`registration.resource_type.media_contribution.medium_types.${medium}`)}
+          {t(`registration.resource_type.media_contribution.medium_types.${medium.type}`)}
         </Typography>
       )}
       {format && (

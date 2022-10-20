@@ -11,7 +11,7 @@ export const MediaContributionForm = () => {
   return (
     <StyledSelectWrapper>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <Field name={ResourceFieldNames.PublicationContextMediaMedium}>
+        <Field name={ResourceFieldNames.PublicationContextMediaMediumType}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               variant="filled"

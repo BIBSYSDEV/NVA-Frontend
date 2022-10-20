@@ -120,7 +120,7 @@ export enum ResourceFieldNames {
   PublicationContextLevel = 'entityDescription.reference.publicationContext.level',
   PublicationContextMediaChannel = 'entityDescription.reference.publicationContext.disseminationChannel',
   PublicationContextMediaFormat = 'entityDescription.reference.publicationContext.format',
-  PublicationContextMediaMedium = 'entityDescription.reference.publicationContext.medium',
+  PublicationContextMediaMediumType = 'entityDescription.reference.publicationContext.medium.type',
   PublicationContextMediaPartOfSeries = 'entityDescription.reference.publicationContext.partOf.series',
   PublicationContextMediaPartOfSeriesPart = 'entityDescription.reference.publicationContext.partOf.seriesPart',
   PublicationContextPlaceLabel = 'entityDescription.reference.publicationContext.place.label',
