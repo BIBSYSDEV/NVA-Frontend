@@ -9,6 +9,7 @@ import { API_URL } from '../../../../../utils/constants';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 
 interface RelatedResourceRowRowProps {
   uri: string;
@@ -28,16 +29,26 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
       ) : (
         <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           {isInternalRegistration ? (
-            <Link component={RouterLink} to={getRegistrationLandingPagePath(registration?.identifier ?? '')}>
+            <Link
+              data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationLink(
+                registration?.identifier ?? ''
+              )}
+              component={RouterLink}
+              to={getRegistrationLandingPagePath(registration?.identifier ?? '')}>
               {getTitleString(registration?.entityDescription?.mainTitle)}
             </Link>
           ) : (
-            <Link href={uri}>{uri}</Link>
+            <Link data-testid={dataTestId.registrationWizard.resourceType.externalLink} href={uri}>
+              {uri}
+            </Link>
           )}
           <Button
             size="small"
             variant="outlined"
             color="error"
+            data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(
+              registration?.identifier ?? ''
+            )}
             onClick={() => setConfirmRemoveRelation(true)}
             startIcon={<RemoveCircleOutlineIcon />}>
             {t('registration.resource_type.research_data.remove_relation')}
