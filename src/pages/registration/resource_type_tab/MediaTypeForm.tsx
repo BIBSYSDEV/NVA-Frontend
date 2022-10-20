@@ -3,7 +3,7 @@ import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
 import { MediaType, ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { MediaFormat, MediaMedium } from '../../../types/publication_types/mediaContributionRegistration';
+import { MediaFormat, MediaMedium } from '../../../types/publication_types/mediaContributionRegistration.types';
 import { SelectTypeField } from './components/SelectTypeField';
 import { RegistrationTypeFormProps } from './JournalTypeForm';
 

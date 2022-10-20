@@ -51,7 +51,7 @@ import {
   LiteraryArtsAudioVisual,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
+import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration.types';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
 import { getPeriodString } from '../../utils/general-helpers';
 

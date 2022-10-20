@@ -11,7 +11,7 @@ import { ChapterEntityDescription } from './publication_types/chapterRegistratio
 import { Contributor } from './contributor.types';
 import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
-import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration';
+import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration.types';
 import {
   JournalType,
   BookType,

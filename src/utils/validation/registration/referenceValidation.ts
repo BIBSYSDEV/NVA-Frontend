@@ -47,7 +47,7 @@ import {
 import {
   MediaContributionPublicationContext,
   MediaContributionPublicationInstance,
-} from '../../../types/publication_types/mediaContributionRegistration';
+} from '../../../types/publication_types/mediaContributionRegistration.types';
 import {
   ResearchDataPublicationContext,
   ResearchDataPublicationInstance,

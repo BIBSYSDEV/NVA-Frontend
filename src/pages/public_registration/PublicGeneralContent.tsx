@@ -61,7 +61,7 @@ import { displayDate } from '../../utils/date-helpers';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
-import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
+import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();

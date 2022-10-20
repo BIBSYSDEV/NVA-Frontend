@@ -37,7 +37,7 @@ import { MediaTypeForm } from './resource_type_tab/MediaTypeForm';
 import {
   emptyMediaContributionPublicationContext,
   emptyMediaContributionPublicationInstance,
-} from '../../types/publication_types/mediaContributionRegistration';
+} from '../../types/publication_types/mediaContributionRegistration.types';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ResearchDataTypeForm } from './resource_type_tab/ResearchDataTypeForm';
 import {
