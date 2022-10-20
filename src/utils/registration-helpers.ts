@@ -343,11 +343,16 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [],
   },
   [ArtisticType.VisualArts]: {
-    primaryRoles: [ContributorRole.Consultant, ContributorRole.Other], // TODO: Add Artist and Curator (NP-15736)
+    primaryRoles: [ContributorRole.Artist, ContributorRole.Curator, ContributorRole.Consultant, ContributorRole.Other],
     secondaryRoles: [],
   },
   [ArtisticType.LiteraryArts]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Editor, ContributorRole.Other], // TODO: Add Translator (NP-15736)
+    primaryRoles: [
+      ContributorRole.Creator,
+      ContributorRole.TranslatorAdapter,
+      ContributorRole.Editor,
+      ContributorRole.Other,
+    ],
     secondaryRoles: [],
   },
   // Media
