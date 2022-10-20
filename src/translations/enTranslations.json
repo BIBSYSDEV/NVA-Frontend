@@ -838,6 +838,7 @@
         "Actor": "Actor",
         "Architect": "Architect",
         "ArchitecturalPlanner": "Planner",
+        "Artist": "Artist",
         "ArtisticDirector": "Artistic director",
         "Choreographer": "Choreographer",
         "Composer": "Composer",
@@ -846,6 +847,7 @@
         "ContactPerson": "Contact person",
         "CostumeDesigner": "Costume designer",
         "Creator": "Author",
+        "Curator": "Curator",
         "CuratorOrganizer": "Curator/organizer",
         "Dancer": "Dancer",
         "DataCollector": "Data collector",
@@ -879,6 +881,7 @@
         "Soloist": "Soloist",
         "SoundDesigner": "Sound designer",
         "Supervisor": "Supervisor",
+        "TranslatorAdapter": "Translator/adapter",
         "VfxSupervisor": "VFX supervisor",
         "VideoEditor": "Video editor",
         "Writer": "Writer"
