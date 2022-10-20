@@ -236,7 +236,7 @@ export const dataTestId = {
       exhibitionOrganizer: 'artistic-exhibition-organizer',
       exhibitionOther: 'artistic-exhibition-other',
       externalLinkField: 'external-link-field',
-      externalLink: '',
+      externalLink: 'external-link',
       geographicDescriptionField: 'geographic-description-field',
       dateFromField: 'date-from-field',
       dateToField: 'date-to-field',
