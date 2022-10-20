@@ -5,6 +5,7 @@ import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { DoiField } from '../../components/DoiField';
 import { JournalField } from '../../components/JournalField';
+import { PublicationChannelType } from '../../../../../types/registration.types';
 
 export const MediaContributionPeriodicalForm = () => {
   const { t } = useTranslation();
@@ -13,7 +14,10 @@ export const MediaContributionPeriodicalForm = () => {
     <>
       <DoiField />
 
-      <JournalField />
+      <JournalField
+        confirmedContextType={PublicationChannelType.MediaContributionPeriodical}
+        unconfirmedContextType={PublicationChannelType.UnconfirmedMediaContributionPeriodical}
+      />
 
       <Box
         sx={{

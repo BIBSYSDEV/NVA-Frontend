@@ -15,6 +15,7 @@ import { emptyReportPublicationInstance } from '../../types/publication_types/re
 import {
   contextTypeBaseFieldName,
   instanceTypeBaseFieldName,
+  MediaType,
   PublicationType,
   ResearchDataType,
   ResourceFieldNames,
@@ -25,7 +26,7 @@ import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
 import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
 import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
 import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
-import { getMainRegistrationType, isArtistic, isChapter } from '../../utils/registration-helpers';
+import { getMainRegistrationType, isArtistic, isChapter, isMediaContribution } from '../../utils/registration-helpers';
 import { PresentationTypeForm } from './resource_type_tab/PresentationTypeForm';
 import {
   emptyPresentationPublicationContext,
@@ -34,6 +35,8 @@ import {
 import { ArtisticTypeForm } from './resource_type_tab/ArtisticTypeForm';
 import { emptyArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import {
+  emptyMediaContributionPeriodicalPublicationContext,
+  emptyMediaContributionPeriodicalPublicationInstance,
   emptyMediaContributionPublicationContext,
   emptyMediaContributionPublicationInstance,
 } from '../../types/publication_types/mediaContributionRegistration.types';
@@ -113,8 +116,8 @@ export const ResourceTypePanel = () => {
         setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
         break;
       case PublicationType.MediaContribution:
-        setFieldValue(instanceTypeBaseFieldName, emptyMediaContributionPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
+        setFieldValue(instanceTypeBaseFieldName, {}, false);
+        setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
         break;
       case PublicationType.ResearchData:
         setFieldValue(instanceTypeBaseFieldName, emptyResearchDataPublicationInstance, false);
@@ -150,6 +153,21 @@ export const ResourceTypePanel = () => {
       setFieldValue(ResourceFieldNames.PartOf, undefined);
     } else if (isArtistic(newInstanceType)) {
       setFieldValue(instanceTypeBaseFieldName, { ...emptyArtisticPublicationInstance, type: newInstanceType });
+    } else if (isMediaContribution(newInstanceType)) {
+      if (newInstanceType === MediaType.MediaFeatureArticle || newInstanceType === MediaType.MediaReaderOpinion) {
+        setFieldValue(
+          instanceTypeBaseFieldName,
+          { ...emptyMediaContributionPeriodicalPublicationInstance, type: newInstanceType },
+          false
+        );
+      } else {
+        setFieldValue(
+          instanceTypeBaseFieldName,
+          { ...emptyMediaContributionPublicationInstance, type: newInstanceType },
+          false
+        );
+        setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
+      }
     }
   };
 

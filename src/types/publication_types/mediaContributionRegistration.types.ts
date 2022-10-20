@@ -1,6 +1,7 @@
 import { MediaType, PublicationType } from '../publicationFieldNames';
-import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, PublicationChannelType } from '../registration.types';
 import { JournalPublicationContext, JournalPublicationInstance } from './journalRegistration.types';
+import { emptyPagesRange } from './pages.types';
 
 export enum MediaFormat {
   Text = 'Text',
@@ -36,8 +37,16 @@ export const emptyMediaContributionPublicationContext: MediaContributionPublicat
 };
 
 export const emptyMediaContributionPeriodicalPublicationContext: MediaContributionPeriodicalPublicationContext = {
-  type: 'MediaContributionPeriodical',
+  type: PublicationChannelType.UnconfirmedMediaContributionPeriodical,
   id: '',
+};
+
+export const emptyMediaContributionPeriodicalPublicationInstance: MediaContributionPeriodicalPublicationInstance = {
+  type: '',
+  articleNumber: '',
+  issue: '',
+  pages: emptyPagesRange,
+  volume: '',
 };
 
 export interface MediaContributionPublicationContext {
@@ -52,12 +61,14 @@ export interface MediaContributionPublicationContext {
 }
 
 interface MediaContributionPeriodicalPublicationContext extends Omit<JournalPublicationContext, 'type'> {
-  type: 'MediaContributionPeriodical' | 'UnconfirmedMediaContributionPeriodical';
+  type:
+    | PublicationChannelType.MediaContributionPeriodical
+    | PublicationChannelType.UnconfirmedMediaContributionPeriodical;
 }
 
 interface MediaContributionPeriodicalPublicationInstance
-  extends Omit<JournalPublicationInstance, 'type' | 'corrigendumFor'> {
-  type: MediaType.MediaFeatureArticle | MediaType.MediaReaderOpinion;
+  extends Omit<JournalPublicationInstance, 'type' | 'corrigendumFor' | 'contentType' | 'peerReviewed'> {
+  type: MediaType.MediaFeatureArticle | MediaType.MediaReaderOpinion | '';
 }
 
 interface MediaContributionReference extends BaseReference {

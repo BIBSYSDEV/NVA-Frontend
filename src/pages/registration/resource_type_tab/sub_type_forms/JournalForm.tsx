@@ -11,6 +11,7 @@ import { JournalRegistration } from '../../../../types/publication_types/journal
 import { JournalField } from '../components/JournalField';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
+import { PublicationChannelType } from '../../../../types/registration.types';
 
 export const JournalForm = () => {
   const { t } = useTranslation();
@@ -32,7 +33,10 @@ export const JournalForm = () => {
             fetchErrorMessage={t('feedback.error.get_journal_article')}
           />
         ) : (
-          <JournalField />
+          <JournalField
+            confirmedContextType={PublicationChannelType.Journal}
+            unconfirmedContextType={PublicationChannelType.UnconfirmedJournal}
+          />
         )}
 
         <Box

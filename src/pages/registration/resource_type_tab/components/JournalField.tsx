@@ -21,7 +21,12 @@ import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
-export const JournalField = () => {
+interface JournalFieldProps {
+  confirmedContextType: PublicationChannelType;
+  unconfirmedContextType: PublicationChannelType;
+}
+
+export const JournalField = ({ confirmedContextType, unconfirmedContextType }: JournalFieldProps) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
   const { reference, date } = values.entityDescription as JournalEntityDescription;
@@ -56,11 +61,11 @@ export const JournalField = () => {
   useEffect(() => {
     // Set Journal with matching ISSN
     if (journalsByIssn?.length === 1) {
-      setFieldValue(ResourceFieldNames.PublicationContextType, PublicationChannelType.Journal, false);
+      setFieldValue(ResourceFieldNames.PublicationContextType, confirmedContextType, false);
       setFieldValue(ResourceFieldNames.PublicationContextId, journalsByIssn[0].id);
       setQuery('');
     }
-  }, [setFieldValue, journalsByIssn]);
+  }, [setFieldValue, journalsByIssn, confirmedContextType]);
 
   // Fetch selected journal
   const [journal, isLoadingJournal] = useFetchResource<Journal>(
@@ -85,7 +90,7 @@ export const JournalField = () => {
               setQuery(newInputValue);
             }
             if (reason === 'input' && !newInputValue && reference?.publicationContext.title) {
-              setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedSeries });
+              setFieldValue(contextTypeBaseFieldName, { type: unconfirmedContextType });
             }
           }}
           onBlur={() => setFieldTouched(field.name, true, false)}
@@ -95,11 +100,11 @@ export const JournalField = () => {
           onChange={(_, inputValue, reason) => {
             if (reason === 'selectOption') {
               setFieldValue(contextTypeBaseFieldName, {
-                type: PublicationChannelType.Journal,
+                type: confirmedContextType,
                 id: inputValue.pop()?.id,
               });
             } else if (reason === 'removeOption') {
-              setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal });
+              setFieldValue(contextTypeBaseFieldName, { type: unconfirmedContextType });
             }
             setQuery('');
           }}

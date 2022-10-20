@@ -124,9 +124,11 @@ export type PublicationInstanceType =
 
 export enum PublicationChannelType {
   Journal = 'Journal',
+  MediaContributionPeriodical = 'MediaContributionPeriodical',
   Publisher = 'Publisher',
   Series = 'Series',
   UnconfirmedJournal = 'UnconfirmedJournal',
+  UnconfirmedMediaContributionPeriodical = 'UnconfirmedMediaContributionPeriodical',
   UnconfirmedPublisher = 'UnconfirmedPublisher',
   UnconfirmedSeries = 'UnconfirmedSeries',
 }
