@@ -43,7 +43,7 @@ import {
   emptyResearchDataPublicationInstance,
   emptyResearchDataPublicationContext,
 } from '../../types/publication_types/researchDataRegistration.types';
-import { MediaTypeForm } from './resource_type_tab/sub_type_forms/media_types/MediaContributionForm';
+import { MediaTypeForm } from './resource_type_tab/sub_type_forms/media_types/MediaTypeForm';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation();

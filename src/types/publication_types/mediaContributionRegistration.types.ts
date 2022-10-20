@@ -1,5 +1,5 @@
 import { MediaType, PublicationType } from '../publicationFieldNames';
-import { BaseEntityDescription, BaseReference } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 
 export enum MediaFormat {
   Text = 'Text',
@@ -52,4 +52,8 @@ interface MediaContributionReference extends BaseReference {
 
 export interface MediaContributionEntityDescription extends BaseEntityDescription {
   reference: MediaContributionReference;
+}
+
+export interface MediaRegistration extends BaseRegistration {
+  entityDescription: MediaContributionEntityDescription;
 }
