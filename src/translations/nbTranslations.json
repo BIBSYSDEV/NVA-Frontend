@@ -838,6 +838,7 @@
         "Actor": "Skuespiller",
         "Architect": "Arkitekt",
         "ArchitecturalPlanner": "Planlegger",
+        "Artist": "Artist",
         "ArtisticDirector": "Kunstnerisk leder",
         "Choreographer": "Koreograf",
         "Composer": "Komponist",
@@ -846,6 +847,7 @@
         "ContactPerson": "Kontaktperson",
         "CostumeDesigner": "Kostymedesigner",
         "Creator": "Forfatter",
+        "Curator": "Kurator",
         "CuratorOrganizer": "Kurator/arrangør",
         "Dancer": "Danser",
         "DataCollector": "Datainnsamler",
@@ -879,6 +881,7 @@
         "Soloist": "Solist",
         "SoundDesigner": "Lyddesigner",
         "Supervisor": "Veileder",
+        "TranslatorAdapter": "Oversetter/gjendikter",
         "VfxSupervisor": "VFX supervisor",
         "VideoEditor": "Klipper",
         "Writer": "Tekstforfatter"
