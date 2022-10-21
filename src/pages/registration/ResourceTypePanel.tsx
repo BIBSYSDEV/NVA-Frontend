@@ -160,6 +160,7 @@ export const ResourceTypePanel = () => {
           { ...emptyMediaContributionPeriodicalPublicationInstance, type: newInstanceType },
           false
         );
+        setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
       } else {
         setFieldValue(
           instanceTypeBaseFieldName,
