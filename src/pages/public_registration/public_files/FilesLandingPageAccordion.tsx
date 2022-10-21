@@ -14,7 +14,7 @@ const maxFileSizeForPreview = 10_000_000; //10 MB
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const files = registration.fileSet?.files ?? [];
+  const files = registration.associatedArtifacts ?? [];
 
   const userIsOwner = userIsOwnerOfRegistration(user, registration);
   const userIsCurator = userIsCuratorForRegistration(user, registration);
