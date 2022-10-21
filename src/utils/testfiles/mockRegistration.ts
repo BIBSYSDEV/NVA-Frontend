@@ -22,22 +22,6 @@ export const mockRegistration: JournalRegistration = {
     { type: 'ResearchProject', id: 'https://api.dev.nva.aws.unit.no/cristin/project/1', name: 'A dummy project' },
   ],
   publisher: { id: mockCustomerInstitution.id },
-  fileSet: {
-    type: 'FileSet',
-    files: [
-      {
-        type: 'File',
-        identifier: '3214324',
-        name: 'filename.pdf',
-        size: 10,
-        mimeType: '',
-        administrativeAgreement: false,
-        publisherAuthority: false,
-        embargoDate: null,
-        license: null,
-      },
-    ],
-  },
   associatedArtifacts: [
     {
       type: 'File',

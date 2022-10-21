@@ -168,11 +168,10 @@ export enum DescriptionFieldNames {
 }
 
 export enum FileFieldNames {
-  Files = 'fileSet.files',
-  FileSet = 'fileSet',
+  AssociatedArtifacts = 'associatedArtifacts',
 }
 
-// The following fields should be present in "fileSet.files[index].<KEY>"
+// The following fields should be present in "associatedArtifacts[index].<KEY>"
 export enum SpecificFileFieldNames {
   AdministrativeAgreement = 'administrativeAgreement',
   PublisherAuthority = 'publisherAuthority',

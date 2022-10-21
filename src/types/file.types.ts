@@ -79,15 +79,6 @@ interface License {
   link: string;
 }
 
-export interface FileSet {
-  type: 'FileSet';
-  files: File[];
-}
-
-export interface RegistrationFileSet {
-  fileSet: FileSet | null;
-}
-
 export interface File {
   type: 'File' | 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
   identifier: string;
