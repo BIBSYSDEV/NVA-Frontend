@@ -2,6 +2,7 @@ import { useFormikContext } from 'formik';
 import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
 import { ResourceFieldNames, MediaType } from '../../../../../types/publicationFieldNames';
 import { MediaRegistration } from '../../../../../types/publication_types/mediaContributionRegistration.types';
+import { isPeriodicalMediaContribution } from '../../../../../utils/registration-helpers';
 import { SelectTypeField } from '../../components/SelectTypeField';
 import { RegistrationTypeFormProps } from '../../JournalTypeForm';
 import { MediaContributionForm } from './MediaContributionForm';
@@ -22,11 +23,7 @@ export const MediaTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps) =>
       </StyledSelectWrapper>
 
       {subType &&
-        (subType === MediaType.MediaFeatureArticle || subType === MediaType.MediaReaderOpinion ? (
-          <MediaContributionPeriodicalForm />
-        ) : (
-          <MediaContributionForm />
-        ))}
+        (isPeriodicalMediaContribution(subType) ? <MediaContributionPeriodicalForm /> : <MediaContributionForm />)}
     </>
   );
 };

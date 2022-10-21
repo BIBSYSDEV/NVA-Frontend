@@ -75,6 +75,9 @@ export const isMediaContribution = (instanceType: any) => Object.values(MediaTyp
 
 export const isResearchData = (instanceType: any) => Object.values(ResearchDataType).includes(instanceType);
 
+export const isPeriodicalMediaContribution = (instanceType: any) =>
+  instanceType === MediaType.MediaFeatureArticle || instanceType === MediaType.MediaReaderOpinion;
+
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;
 

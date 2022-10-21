@@ -54,6 +54,7 @@ import {
   ResearchDataPublicationContext,
   ResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
+import { isPeriodicalMediaContribution } from '../../registration-helpers';
 
 const resourceErrorMessage = {
   announcementsRequired: i18n.t('feedback.validation.announcement_required'),
@@ -451,7 +452,7 @@ export const artisticDesignReference = baseReference.shape({
 
 // Media Contribution
 const mediaContributionPublicationContext = Yup.object().when('$publicationInstanceType', (type: string) => {
-  if (type === MediaType.MediaFeatureArticle || type === MediaType.MediaReaderOpinion) {
+  if (isPeriodicalMediaContribution(type)) {
     return Yup.object<YupShape<MediaContributionPeriodicalPublicationContext>>({
       id: Yup.string().required(resourceErrorMessage.journalRequired),
     });
@@ -485,7 +486,7 @@ const mediaContributionPublicationContext = Yup.object().when('$publicationInsta
 });
 
 const mediaContributionPublicationInstance = Yup.object().when('$publicationInstanceType', (type: string) => {
-  if (type === MediaType.MediaFeatureArticle || type === MediaType.MediaReaderOpinion) {
+  if (isPeriodicalMediaContribution(type)) {
     return Yup.object<YupShape<MediaContributionPeriodicalPublicationInstance>>({
       type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
       articleNumber: Yup.string().nullable(),

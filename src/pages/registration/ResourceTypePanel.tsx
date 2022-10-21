@@ -15,7 +15,6 @@ import { emptyReportPublicationInstance } from '../../types/publication_types/re
 import {
   contextTypeBaseFieldName,
   instanceTypeBaseFieldName,
-  MediaType,
   PublicationType,
   ResearchDataType,
   ResourceFieldNames,
@@ -26,7 +25,13 @@ import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
 import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
 import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
 import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
-import { getMainRegistrationType, isArtistic, isChapter, isMediaContribution } from '../../utils/registration-helpers';
+import {
+  getMainRegistrationType,
+  isArtistic,
+  isChapter,
+  isMediaContribution,
+  isPeriodicalMediaContribution,
+} from '../../utils/registration-helpers';
 import { PresentationTypeForm } from './resource_type_tab/PresentationTypeForm';
 import {
   emptyPresentationPublicationContext,
@@ -154,7 +159,7 @@ export const ResourceTypePanel = () => {
     } else if (isArtistic(newInstanceType)) {
       setFieldValue(instanceTypeBaseFieldName, { ...emptyArtisticPublicationInstance, type: newInstanceType });
     } else if (isMediaContribution(newInstanceType)) {
-      if (newInstanceType === MediaType.MediaFeatureArticle || newInstanceType === MediaType.MediaReaderOpinion) {
+      if (isPeriodicalMediaContribution(newInstanceType)) {
         setFieldValue(
           instanceTypeBaseFieldName,
           { ...emptyMediaContributionPeriodicalPublicationInstance, type: newInstanceType },
