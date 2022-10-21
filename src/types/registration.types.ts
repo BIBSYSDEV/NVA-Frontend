@@ -1,4 +1,4 @@
-import { RegistrationFileSet } from './file.types';
+import { AssociatedArtifact, RegistrationFileSet } from './file.types';
 import { ResearchProject } from './project.types';
 import {
   JournalEntityDescription,
@@ -87,6 +87,7 @@ export interface BaseRegistration extends RegistrationFileSet {
   readonly publisher: RegistrationPublisher;
   subjects: string[];
   projects: ResearchProject[];
+  associatedArtifacts?: AssociatedArtifact[];
 }
 
 export interface BaseEntityDescription {
@@ -193,6 +194,7 @@ export const emptyRegistration: Registration = {
   projects: [],
   publisher: { id: '' },
   subjects: [],
+  associatedArtifacts: [],
 };
 
 export interface Series {

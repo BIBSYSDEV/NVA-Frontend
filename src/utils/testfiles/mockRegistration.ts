@@ -38,6 +38,19 @@ export const mockRegistration: JournalRegistration = {
       },
     ],
   },
+  associatedArtifacts: [
+    {
+      type: 'File',
+      identifier: '3214324',
+      name: 'filename.pdf',
+      size: 10,
+      mimeType: '',
+      administrativeAgreement: false,
+      publisherAuthority: false,
+      embargoDate: null,
+      license: null,
+    },
+  ],
   subjects: [],
   entityDescription: {
     type: 'EntityDescription',
