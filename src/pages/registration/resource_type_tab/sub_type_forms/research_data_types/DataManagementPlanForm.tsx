@@ -10,6 +10,7 @@ import { RegistrationFieldName, ResourceFieldNames } from '../../../../../types/
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
 import { Registration } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../../utils/registration-helpers';
@@ -84,6 +85,7 @@ export const DataManagementPlanForm = () => {
                   variant="filled"
                   label={t('registration.resource_type.research_data.search_for_related_registrations')}
                   helperText={t('registration.resource_type.research_data.search_for_related_registrations_helper')}
+                  data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationField}
                 />
               )}
             />
