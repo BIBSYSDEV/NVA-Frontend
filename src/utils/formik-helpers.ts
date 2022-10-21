@@ -345,13 +345,14 @@ const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched
   },
 });
 
-const touchedFilesTabFields = (files: AssociatedArtifact[]): FormikTouched<unknown> =>
-  files.map((file) => ({
+const touchedFilesTabFields = (files: AssociatedArtifact[]): FormikTouched<unknown> => ({
+  associatedArtifacts: files.map((file) => ({
     administrativeAgreement: true,
     publisherAuthority: !file.administrativeAgreement,
     embargoDate: !file.administrativeAgreement,
     license: !file.administrativeAgreement,
-  }));
+  })),
+});
 
 export const getTouchedTabFields = (
   tabToTouch: HighestTouchedTab,
