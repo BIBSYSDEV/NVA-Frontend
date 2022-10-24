@@ -230,3 +230,4 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     </StyledGeneralInfo>
   );
 };
+//test
