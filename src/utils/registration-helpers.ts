@@ -6,6 +6,7 @@ import {
   DegreeType,
   JournalType,
   MediaType,
+  OtherRegistrationType,
   PresentationType,
   PublicationType,
   ReportType,
@@ -55,6 +56,8 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.MediaContribution
     : isResearchData(instanceType)
     ? PublicationType.ResearchData
+    : isOtherRegistration(instanceType)
+    ? PublicationType.GeographicalContent
     : '';
 
 export const isJournal = (instanceType: any) => Object.values(JournalType).includes(instanceType);
@@ -74,6 +77,8 @@ export const isArtistic = (instanceType: any) => Object.values(ArtisticType).inc
 export const isMediaContribution = (instanceType: any) => Object.values(MediaType).includes(instanceType);
 
 export const isResearchData = (instanceType: any) => Object.values(ResearchDataType).includes(instanceType);
+
+export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;

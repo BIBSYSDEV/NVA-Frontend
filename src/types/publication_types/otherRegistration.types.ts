@@ -1,4 +1,10 @@
-import { BaseEntityDescription, BaseReference, BaseRegistration, ContextPublisher } from '../registration.types';
+import {
+  BaseEntityDescription,
+  BaseReference,
+  BaseRegistration,
+  ContextPublisher,
+  emptyContextPublisher,
+} from '../registration.types';
 import { OtherRegistrationType, PublicationType } from '../publicationFieldNames';
 
 export interface MapRegistration extends BaseRegistration {
@@ -17,6 +23,11 @@ export interface MapPublicationContext {
   type: PublicationType.GeographicalContent;
   publisher: ContextPublisher;
 }
+
+export const emptyMapPublicationContext: MapPublicationContext = {
+  type: PublicationType.GeographicalContent,
+  publisher: emptyContextPublisher,
+};
 
 interface MapReference extends BaseReference {
   publicationContext: MapPublicationContext;
