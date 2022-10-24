@@ -418,6 +418,11 @@ export const contributorConfig: ContributorConfig = {
     ],
     secondaryRoles: [],
   },
+  // Other
+  [OtherRegistrationType.Map]: {
+    primaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [],
+  },
 };
 
 export const groupContributors = (contributors: Contributor[], registrationType: PublicationInstanceType) => {
