@@ -52,6 +52,11 @@ import {
   emptyResearchDataPublicationContext,
 } from '../../types/publication_types/researchDataRegistration.types';
 import { MediaTypeForm } from './resource_type_tab/sub_type_forms/media_types/MediaTypeForm';
+import {
+  emptyMapPublicationContext,
+  emptyMapPublicationInstance,
+} from '../../types/publication_types/otherRegistration.types';
+import { OtherTypeForm } from './resource_type_tab/OtherTypeForm';
 
 export const ResourceTypePanel = () => {
   const { t } = useTranslation();
@@ -127,6 +132,10 @@ export const ResourceTypePanel = () => {
       case PublicationType.ResearchData:
         setFieldValue(instanceTypeBaseFieldName, emptyResearchDataPublicationInstance, false);
         setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
+        break;
+      case PublicationType.GeographicalContent:
+        setFieldValue(instanceTypeBaseFieldName, emptyMapPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
         break;
     }
 
@@ -245,6 +254,8 @@ export const ResourceTypePanel = () => {
         <MediaTypeForm onChangeSubType={onChangeSubType} />
       ) : mainType === PublicationType.ResearchData ? (
         <ResearchDataTypeForm onChangeSubType={onChangeSubType} />
+      ) : mainType === PublicationType.GeographicalContent ? (
+        <OtherTypeForm onChangeSubType={onChangeSubType} />
       ) : null}
 
       <ConfirmDialog

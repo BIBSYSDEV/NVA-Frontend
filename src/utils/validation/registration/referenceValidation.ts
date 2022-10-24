@@ -7,6 +7,7 @@ import {
   DegreeType,
   JournalType,
   MediaType,
+  OtherRegistrationType,
   PresentationType,
   ReportType,
   ResearchDataType,
@@ -55,6 +56,10 @@ import {
   ResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
 import { isPeriodicalMediaContribution } from '../../registration-helpers';
+import {
+  MapPublicationContext,
+  MapPublicationInstance,
+} from '../../../types/publication_types/otherRegistration.types';
 
 const resourceErrorMessage = {
   announcementsRequired: i18n.t('feedback.validation.announcement_required'),
@@ -528,4 +533,18 @@ const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicat
 export const researchDataReference = baseReference.shape({
   publicationContext: researchDataPublicationContext,
   publicationInstance: researchDataPublicationInstance,
+});
+
+// Map
+const mapPublicationContext = Yup.object<YupShape<MapPublicationContext>>({
+  publisher: publisherField,
+});
+
+const mapPublicationInstance = Yup.object<YupShape<MapPublicationInstance>>({
+  type: Yup.string().oneOf(Object.values(OtherRegistrationType)).required(resourceErrorMessage.typeRequired),
+});
+
+export const mapReference = baseReference.shape({
+  publicationContext: mapPublicationContext,
+  publicationInstance: mapPublicationInstance,
 });

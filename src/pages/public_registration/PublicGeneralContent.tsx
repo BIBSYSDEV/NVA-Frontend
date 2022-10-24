@@ -33,6 +33,7 @@ import {
   isJournal,
   isMediaContribution,
   isPeriodicalMediaContribution,
+  isOtherRegistration,
   isPresentation,
   isReport,
 } from '../../utils/registration-helpers';
@@ -66,6 +67,7 @@ import {
   MediaContributionPeriodicalPublicationContext,
   MediaContributionPublicationContext,
 } from '../../types/publication_types/mediaContributionRegistration.types';
+import { MapPublicationContext } from '../../types/publication_types/otherRegistration.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
@@ -229,6 +231,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 publicationContext={publicationContext as MediaContributionPublicationContext}
               />
             )
+          ) : isOtherRegistration(publicationInstance.type) ? (
+            <PublicPublisher publisher={(publicationContext as MapPublicationContext).publisher} />
           ) : null)}
       </div>
     </StyledGeneralInfo>

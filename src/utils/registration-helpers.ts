@@ -6,6 +6,7 @@ import {
   DegreeType,
   JournalType,
   MediaType,
+  OtherRegistrationType,
   PresentationType,
   PublicationType,
   ReportType,
@@ -55,6 +56,8 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.MediaContribution
     : isResearchData(instanceType)
     ? PublicationType.ResearchData
+    : isOtherRegistration(instanceType)
+    ? PublicationType.GeographicalContent
     : '';
 
 export const isJournal = (instanceType: any) => Object.values(JournalType).includes(instanceType);
@@ -77,6 +80,8 @@ export const isResearchData = (instanceType: any) => Object.values(ResearchDataT
 
 export const isPeriodicalMediaContribution = (instanceType: string) =>
   instanceType === MediaType.MediaFeatureArticle || instanceType === MediaType.MediaReaderOpinion;
+
+export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;
@@ -414,6 +419,11 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.Supervisor,
       ContributorRole.Other,
     ],
+    secondaryRoles: [],
+  },
+  // Other
+  [OtherRegistrationType.Map]: {
+    primaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
     secondaryRoles: [],
   },
 };
