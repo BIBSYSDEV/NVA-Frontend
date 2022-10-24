@@ -58,11 +58,7 @@ export const getTabErrors = (
       errors,
       touched
     ),
-    [RegistrationTab.FilesAndLicenses]: getErrorMessages(
-      getAllFileFields(values.associatedArtifacts ?? []),
-      errors,
-      touched
-    ),
+    [RegistrationTab.FilesAndLicenses]: getErrorMessages(getAllFileFields(values.associatedArtifacts), errors, touched),
   };
 
   return tabErrors;
@@ -362,7 +358,7 @@ export const getTouchedTabFields = (
     [RegistrationTab.Description]: () => touchedDescriptionTabFields,
     [RegistrationTab.ResourceType]: () => touchedResourceTabFields(values),
     [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription?.contributors ?? []),
-    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.associatedArtifacts ?? []),
+    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.associatedArtifacts),
   };
 
   // Set all fields on previous tabs to touched

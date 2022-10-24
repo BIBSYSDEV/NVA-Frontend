@@ -29,7 +29,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   } = useFormikContext<Registration>();
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
-  const files = useMemo(() => associatedArtifacts ?? [], [associatedArtifacts]);
+  const files = useMemo(() => associatedArtifacts, [associatedArtifacts]);
 
   const filesRef = useRef(files);
   useEffect(() => {

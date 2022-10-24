@@ -87,7 +87,7 @@ export interface BaseRegistration {
   readonly publisher: RegistrationPublisher;
   subjects: string[];
   projects: ResearchProject[];
-  associatedArtifacts?: AssociatedArtifact[];
+  associatedArtifacts: AssociatedArtifact[];
 }
 
 export interface BaseEntityDescription {
