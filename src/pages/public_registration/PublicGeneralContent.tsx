@@ -32,6 +32,7 @@ import {
   isDegree,
   isJournal,
   isMediaContribution,
+  isOtherRegistration,
   isPresentation,
   isReport,
 } from '../../utils/registration-helpers';
@@ -62,6 +63,7 @@ import { PresentationPublicationContext } from '../../types/publication_types/pr
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
+import { MapPublicationContext } from '../../types/publication_types/otherRegistration.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
@@ -221,6 +223,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPublicationContextMediaContribution
               publicationContext={publicationContext as MediaContributionPublicationContext}
             />
+          ) : isOtherRegistration(publicationInstance.type) ? (
+            <PublicPublisher publisher={(publicationContext as MapPublicationContext).publisher} />
           ) : null)}
       </div>
     </StyledGeneralInfo>
