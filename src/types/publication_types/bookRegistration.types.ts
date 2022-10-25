@@ -23,7 +23,6 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
   type: '',
   pages: emptyPagesMonograph,
   contentType: null,
-  peerReviewed: null,
 };
 
 export interface BookPublicationContext {

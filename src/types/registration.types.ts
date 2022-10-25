@@ -105,7 +105,6 @@ export interface BaseEntityDescription {
 
 export interface NviApplicableBase<T> {
   contentType: T | null;
-  peerReviewed: boolean | null;
 }
 
 export interface BaseReference {
