@@ -25,10 +25,3 @@ export enum ChapterContentType {
   Introduction = 'Introduction',
   ExhibitionCatalogChapter = 'ExhibitionCatalogChapter',
 }
-
-export const nviApplicableContentTypes: string[] = [
-  JournalArticleContentType.AcademicArticle,
-  JournalArticleContentType.AcademicLiteratureReview,
-  BookMonographContentType.AcademicMonograph,
-  ChapterContentType.AcademicChapter,
-];

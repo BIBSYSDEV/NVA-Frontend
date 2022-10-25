@@ -95,7 +95,6 @@ export const mockRegistration: JournalRegistration = {
           begin: '',
           end: '',
         },
-        peerReviewed: false,
         articleNumber: '1',
         issue: '2',
         volume: '3',

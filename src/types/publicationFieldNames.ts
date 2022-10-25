@@ -118,7 +118,6 @@ export enum ResourceFieldNames {
   PagesType = 'entityDescription.reference.publicationInstance.pages.type',
   PagesPages = 'entityDescription.reference.publicationInstance.pages.pages',
   PartOf = 'entityDescription.reference.publicationContext.partOf',
-  PeerReviewed = 'entityDescription.reference.publicationInstance.peerReviewed',
   PublicationContextAgentName = 'entityDescription.reference.publicationContext.agent.name',
   PublicationContextId = 'entityDescription.reference.publicationContext.id',
   PublicationContextLabel = 'entityDescription.reference.publicationContext.label',
