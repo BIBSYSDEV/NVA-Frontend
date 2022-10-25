@@ -7,10 +7,10 @@ import { BookType, ChapterType, ReportType, ResourceFieldNames } from '../../../
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
-import { NviFields } from '../components/nvi_fields/NviFields';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { ChapterContentType } from '../../../../types/publication_types/content.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { ContentTypeField } from '../components/ContentTypeField';
 
 export const ChapterForm = () => {
   const { t } = useTranslation();
@@ -105,7 +105,7 @@ export const ChapterForm = () => {
 
       {instanceType === ChapterType.AnthologyChapter && (
         <>
-          <NviFields contentTypes={Object.values(ChapterContentType)} />
+          <ContentTypeField contentTypes={Object.values(ChapterContentType)} />
           <NviValidation registration={values} />
         </>
       )}

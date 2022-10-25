@@ -1,14 +1,14 @@
 import { TextField, MenuItem } from '@mui/material';
 import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
-import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
+import { StyledSelectWrapper } from '../../../../components/styled/Wrappers';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import {
   BookMonographContentType,
   ChapterContentType,
   JournalArticleContentType,
-} from '../../../../../types/publication_types/content.types';
-import { dataTestId } from '../../../../../utils/dataTestIds';
+} from '../../../../types/publication_types/content.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface ContentTypeFieldProps {
   contentTypes: JournalArticleContentType[] | BookMonographContentType[] | ChapterContentType[];
