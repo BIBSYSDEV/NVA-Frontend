@@ -10,6 +10,7 @@ import {
   degreeReference,
   emptyStringToNull,
   journalReference,
+  mapReference,
   mediaContributionReference,
   presentationReference,
   reportReference,
@@ -75,6 +76,8 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
           return mediaContributionReference;
         case PublicationType.ResearchData:
           return researchDataReference;
+        case PublicationType.GeographicalContent:
+          return mapReference;
         default:
           return baseReference;
       }

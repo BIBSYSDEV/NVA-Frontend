@@ -13,6 +13,7 @@ import {
   SpecificFileFieldNames,
 } from '../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
+import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import { Registration, RegistrationTab } from '../types/registration.types';
 import { getMainRegistrationType } from './registration-helpers';
 
@@ -315,6 +316,22 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
         },
       };
       return touchedResearchData;
+    }
+    case PublicationType.GeographicalContent: {
+      const touchedMap: FormikTouched<MapRegistration> = {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+              publisher: { id: true },
+            },
+            publicationInstance: {
+              type: true,
+            },
+          },
+        },
+      };
+      return touchedMap;
     }
     default:
       return {
