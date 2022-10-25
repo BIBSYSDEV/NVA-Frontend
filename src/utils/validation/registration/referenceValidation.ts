@@ -17,7 +17,6 @@ import {
   BookMonographContentType,
   ChapterContentType,
   JournalArticleContentType,
-  nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
 import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../validationHelpers';
@@ -133,9 +132,6 @@ const resourceErrorMessage = {
   partOfRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.chapter.published_in'),
   }),
-  peerReviewedRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.peer_reviewed'),
-  }),
   placeRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.place_for_event'),
   }),
@@ -168,13 +164,6 @@ export const isbnField = Yup.string()
   .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? '')?.isIsbn13());
 
 const isbnListField = Yup.array().of(isbnField);
-
-const peerReviewedField = Yup.boolean()
-  .nullable()
-  .when('$contentType', {
-    is: (contentType: string) => nviApplicableContentTypes.includes(contentType),
-    then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
-  });
 
 const pagesMonographField = Yup.object()
   .nullable()
@@ -274,7 +263,6 @@ const journalPublicationInstance = Yup.object<YupShape<JournalPublicationInstanc
         .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentTypeRequired)
         .required(resourceErrorMessage.contentTypeRequired),
     }),
-  peerReviewed: peerReviewedField,
 });
 
 const journalPublicationContext = Yup.object<YupShape<JournalPublicationContext>>({
@@ -307,7 +295,6 @@ const bookPublicationInstance = Yup.object<YupShape<BookPublicationInstance>>({
         .oneOf(Object.values(BookMonographContentType), resourceErrorMessage.contentTypeRequired)
         .required(resourceErrorMessage.contentTypeRequired),
     }),
-  peerReviewed: peerReviewedField,
 });
 
 const bookPublicationContext = Yup.object<YupShape<BookPublicationContext>>({
@@ -366,7 +353,6 @@ const chapterPublicationInstance = Yup.object<YupShape<ChapterPublicationInstanc
         .oneOf(Object.values(ChapterContentType), resourceErrorMessage.contentTypeRequired)
         .required(resourceErrorMessage.contentTypeRequired),
     }),
-  peerReviewed: peerReviewedField,
 });
 
 const chapterPublicationContext = Yup.object<YupShape<ChapterPublicationContext>>({

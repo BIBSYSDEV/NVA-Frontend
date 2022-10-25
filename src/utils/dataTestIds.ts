@@ -262,7 +262,6 @@ export const dataTestId = {
       pagesFromField: 'pages-from-field',
       pagesToField: 'pages-to-field',
       partOfField: 'part-of-field',
-      peerReviewed: 'peer-review-field',
       placeField: 'place-field',
       publicationMentionTitle: 'artistic-publication-mention-title',
       publicationMentionIssue: 'artistic-publication-mention-issue',

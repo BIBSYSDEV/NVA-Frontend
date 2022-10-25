@@ -94,10 +94,6 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </Typography>
         )}
 
-        {journalPublicationInstance?.peerReviewed && (
-          <Typography>{t('registration.resource_type.peer_reviewed')}</Typography>
-        )}
-
         {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
             {t('common.language')}: {i18n.language === 'nob' ? language.nob : language.eng}

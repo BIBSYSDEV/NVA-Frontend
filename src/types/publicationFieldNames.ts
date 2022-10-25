@@ -118,7 +118,6 @@ export enum ResourceFieldNames {
   PagesType = 'entityDescription.reference.publicationInstance.pages.type',
   PagesPages = 'entityDescription.reference.publicationInstance.pages.pages',
   PartOf = 'entityDescription.reference.publicationContext.partOf',
-  PeerReviewed = 'entityDescription.reference.publicationInstance.peerReviewed',
   PublicationContextAgentName = 'entityDescription.reference.publicationContext.agent.name',
   PublicationContextId = 'entityDescription.reference.publicationContext.id',
   PublicationContextLabel = 'entityDescription.reference.publicationContext.label',
@@ -173,11 +172,10 @@ export enum DescriptionFieldNames {
 }
 
 export enum FileFieldNames {
-  Files = 'fileSet.files',
-  FileSet = 'fileSet',
+  AssociatedArtifacts = 'associatedArtifacts',
 }
 
-// The following fields should be present in "fileSet.files[index].<KEY>"
+// The following fields should be present in "associatedArtifacts[index].<KEY>"
 export enum SpecificFileFieldNames {
   AdministrativeAgreement = 'administrativeAgreement',
   PublisherAuthority = 'publisherAuthority',

@@ -21,7 +21,6 @@ export const emptyChapterPublicationInstance: ChapterPublicationInstance = {
   type: '',
   pages: emptyPagesRange,
   contentType: null,
-  peerReviewed: null,
 };
 
 interface ChapterReference extends BaseReference {

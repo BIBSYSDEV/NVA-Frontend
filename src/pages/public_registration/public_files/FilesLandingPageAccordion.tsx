@@ -14,7 +14,6 @@ const maxFileSizeForPreview = 10_000_000; //10 MB
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const files = registration.fileSet?.files ?? [];
 
   const userIsOwner = userIsOwnerOfRegistration(user, registration);
   const userIsCurator = userIsCuratorForRegistration(user, registration);
@@ -23,9 +22,9 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const showRegistrationHasFilesAwaitingApproval =
     registration.status === RegistrationStatus.Published &&
     userIsRegistrationAdmin &&
-    files.some((file) => file.type === 'UnpublishedFile');
+    registration.associatedArtifacts.some((file) => file.type === 'UnpublishedFile');
 
-  const filesToShow = files.filter(
+  const filesToShow = registration.associatedArtifacts.filter(
     (file) => file.type === 'PublishedFile' || (file.type === 'UnpublishedFile' && userIsRegistrationAdmin)
   );
 

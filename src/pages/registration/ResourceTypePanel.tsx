@@ -151,7 +151,6 @@ export const ResourceTypePanel = () => {
     const commonValues = {
       type: newInstanceType,
       contentType: null,
-      peerReviewed: null,
     };
     const newValues = values.entityDescription?.reference
       ? {
