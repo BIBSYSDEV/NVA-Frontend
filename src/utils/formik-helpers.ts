@@ -153,7 +153,6 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
               volume: true,
               corrigendumFor: true,
               contentType: true,
-              peerReviewed: true,
             },
           },
         },
@@ -206,7 +205,6 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
                 pages: true,
               },
               contentType: true,
-              peerReviewed: true,
             },
           },
         },
@@ -222,7 +220,6 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
             publicationInstance: {
               type: true,
               contentType: true,
-              peerReviewed: true,
             },
           },
         },
