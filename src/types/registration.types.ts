@@ -1,4 +1,4 @@
-import { RegistrationFileSet } from './file.types';
+import { AssociatedArtifact } from './file.types';
 import { ResearchProject } from './project.types';
 import {
   JournalEntityDescription,
@@ -73,7 +73,7 @@ interface RegistrationPublisher {
   id: string;
 }
 
-export interface BaseRegistration extends RegistrationFileSet {
+export interface BaseRegistration {
   readonly type: 'Publication';
   readonly id: string;
   readonly identifier: string;
@@ -89,6 +89,7 @@ export interface BaseRegistration extends RegistrationFileSet {
   readonly publisher: RegistrationPublisher;
   subjects: string[];
   projects: ResearchProject[];
+  associatedArtifacts: AssociatedArtifact[];
 }
 
 export interface BaseEntityDescription {
@@ -189,13 +190,10 @@ export const emptyRegistration: Registration = {
   },
   status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
-  fileSet: {
-    type: 'FileSet',
-    files: [],
-  },
   projects: [],
   publisher: { id: '' },
   subjects: [],
+  associatedArtifacts: [],
 };
 
 export interface Series {
