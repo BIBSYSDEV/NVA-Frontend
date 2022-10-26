@@ -22,17 +22,17 @@ import { Registration, EntityDescription, RegistrationDate } from '../../../type
 import { YupShape } from '../validationHelpers';
 
 const registrationErrorMessage = {
-  titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.title') }),
-  npiSubjectRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.description.npi_disciplines'),
+  titleRequired: i18n.t('translation:feedback.validation.is_required', { field: i18n.t('translation:common.title') }),
+  npiSubjectRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.description.npi_disciplines'),
   }),
-  publishedDateRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.description.date_published'),
+  publishedDateRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.description.date_published'),
   }),
-  publishedDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
-    field: i18n.t('registration.description.date_published'),
+  publishedDateInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
+    field: i18n.t('translation:registration.description.date_published'),
   }),
-  fileRequired: i18n.t('feedback.validation.minimum_one_file'),
+  fileRequired: i18n.t('translation:feedback.validation.minimum_one_file'),
 };
 
 export const registrationValidationSchema = Yup.object<YupShape<Registration>>({

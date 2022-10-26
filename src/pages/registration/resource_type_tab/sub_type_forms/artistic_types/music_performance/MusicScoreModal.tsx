@@ -39,26 +39,26 @@ const emptyMusicScore: MusicScore = {
 
 const validationSchema = Yup.object<YupShape<MusicScore>>({
   ensemble: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.music_score_ensemble'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.music_score_ensemble'),
     })
   ),
   movements: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.music_score_movements'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.music_score_movements'),
     })
   ),
   extent: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.extent'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.extent'),
     })
   ),
   publisher: Yup.object().shape({
     name: Yup.string()
       .nullable()
       .required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('common.publisher'),
+        i18n.t('translation:feedback.validation.is_required', {
+          field: i18n.t('translation:common.publisher'),
         })
       ),
   }),
@@ -67,13 +67,13 @@ const validationSchema = Yup.object<YupShape<MusicScore>>({
       .nullable()
       .matches(
         /^9790\d{9}$/,
-        i18n.t('feedback.validation.has_invalid_format', {
-          field: i18n.t('registration.resource_type.artistic.music_score_ismn'),
+        i18n.t('translation:feedback.validation.has_invalid_format', {
+          field: i18n.t('translation:registration.resource_type.artistic.music_score_ismn'),
         })
       )
       .required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('registration.resource_type.artistic.music_score_ismn'),
+        i18n.t('translation:feedback.validation.is_required', {
+          field: i18n.t('translation:registration.resource_type.artistic.music_score_ismn'),
         })
       ),
   }),
@@ -82,13 +82,13 @@ const validationSchema = Yup.object<YupShape<MusicScore>>({
       .nullable()
       .matches(
         /^[A-Z]{2}[A-Z\d]{3}\d{7}$/,
-        i18n.t('feedback.validation.has_invalid_format', {
-          field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
+        i18n.t('translation:feedback.validation.has_invalid_format', {
+          field: i18n.t('translation:registration.resource_type.artistic.music_score_isrc'),
         })
       )
       .required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
+        i18n.t('translation:feedback.validation.is_required', {
+          field: i18n.t('translation:registration.resource_type.artistic.music_score_isrc'),
         })
       ),
   }),

@@ -1,7 +1,8 @@
 import { Typography, CircularProgress, Box } from '@mui/material';
+import { TFunction } from 'i18next';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { TFunction, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { setNotification } from '../../redux/notificationSlice';

@@ -1,6 +1,7 @@
 import { TextField, MenuItem } from '@mui/material';
+import { TFuncKey } from 'i18next';
 import { ChangeEvent } from 'react';
-import { TFuncKey, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';

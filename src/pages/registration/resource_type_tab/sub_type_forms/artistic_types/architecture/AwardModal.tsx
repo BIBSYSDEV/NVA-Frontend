@@ -29,19 +29,19 @@ const emptyAward: Award = {
 
 const validationSchema = Yup.object<YupShape<Award>>({
   name: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.award_name'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.award_name'),
     })
   ),
   organizer: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.award_organizer'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.award_organizer'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.year'),
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:common.year'),
       })
     ),
   }),

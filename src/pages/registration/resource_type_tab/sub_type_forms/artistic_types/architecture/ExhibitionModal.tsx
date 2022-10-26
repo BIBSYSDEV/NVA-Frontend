@@ -30,19 +30,19 @@ const emptyExhibition: Exhibition = {
 
 const validationSchema = Yup.object<YupShape<Exhibition>>({
   name: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.exhibition_title'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.exhibition_title'),
     })
   ),
   organizer: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.organizer'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.organizer'),
     })
   ),
   place: Yup.object().shape({
     label: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.place'),
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:common.place'),
       })
     ),
   }),
