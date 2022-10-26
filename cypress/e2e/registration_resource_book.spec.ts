@@ -35,8 +35,6 @@ describe('Registration: Resource type: Book', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
     cy.get(`[data-value="${BookMonographContentType.AcademicMonograph}"]`).click();
 
-    // choose peer review value and show NVI status
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.nviFailed}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
       .click()

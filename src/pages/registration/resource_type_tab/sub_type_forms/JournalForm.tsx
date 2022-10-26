@@ -5,12 +5,12 @@ import { JournalType, ResourceFieldNames } from '../../../../types/publicationFi
 import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
-import { NviFields } from '../components/nvi_fields/NviFields';
 import { JournalArticleContentType } from '../../../../types/publication_types/content.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
 import { JournalField } from '../components/JournalField';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
+import { ContentTypeField } from '../components/ContentTypeField';
 
 export const JournalForm = () => {
   const { t } = useTranslation();
@@ -123,7 +123,7 @@ export const JournalForm = () => {
 
       {instanceType === JournalType.Article && (
         <>
-          <NviFields contentTypes={Object.values(JournalArticleContentType)} />
+          <ContentTypeField contentTypes={Object.values(JournalArticleContentType)} />
           <NviValidation registration={values} />
         </>
       )}

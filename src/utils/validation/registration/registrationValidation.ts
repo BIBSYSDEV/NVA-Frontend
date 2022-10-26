@@ -10,6 +10,7 @@ import {
   degreeReference,
   emptyStringToNull,
   journalReference,
+  mapReference,
   mediaContributionReference,
   presentationReference,
   reportReference,
@@ -19,7 +20,6 @@ import i18n from '../../../translations/i18n';
 import { getMainRegistrationType, isBook } from '../../registration-helpers';
 import { Registration, EntityDescription, RegistrationDate } from '../../../types/registration.types';
 import { YupShape } from '../validationHelpers';
-import { FileSet } from '../../../types/file.types';
 
 const registrationErrorMessage = {
   titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.title') }),
@@ -76,16 +76,16 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
           return mediaContributionReference;
         case PublicationType.ResearchData:
           return researchDataReference;
+        case PublicationType.GeographicalContent:
+          return mapReference;
         default:
           return baseReference;
       }
     }),
   }),
-  fileSet: Yup.object<YupShape<FileSet>>({
-    files: Yup.array()
-      .of(fileValidationSchema)
-      .min(1, registrationErrorMessage.fileRequired)
-      .required(registrationErrorMessage.fileRequired),
-  }),
+  associatedArtifacts: Yup.array()
+    .of(fileValidationSchema)
+    .min(1, registrationErrorMessage.fileRequired)
+    .required(registrationErrorMessage.fileRequired),
   projects: Yup.array().of(Yup.object()),
 });

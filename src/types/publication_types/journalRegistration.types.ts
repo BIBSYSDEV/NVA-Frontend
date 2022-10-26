@@ -44,7 +44,6 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   articleNumber: '',
   issue: '',
   pages: emptyPagesRange,
-  peerReviewed: null,
   volume: '',
   corrigendumFor: '',
   contentType: null,

@@ -1,10 +1,10 @@
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, useFormikContext } from 'formik';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, FormHelperText, Link, Paper, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { Modal } from '../../components/Modal';
-import { File, FileSet, licenses, Uppy } from '../../types/file.types';
+import { File, licenses, Uppy } from '../../types/file.types';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { FileUploader } from './files_and_license_tab/FileUploader';
@@ -22,14 +22,14 @@ interface FilesAndLicensePanelProps {
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const {
-    values: { fileSet, entityDescription },
+    values: { associatedArtifacts, entityDescription },
     setFieldTouched,
     errors,
     touched,
   } = useFormikContext<Registration>();
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
-  const files = useMemo(() => fileSet?.files ?? [], [fileSet?.files]);
+  const files = useMemo(() => associatedArtifacts, [associatedArtifacts]);
 
   const filesRef = useRef(files);
   useEffect(() => {
@@ -93,7 +93,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         </Paper>
       )}
 
-      <FieldArray name={FileFieldNames.Files}>
+      <FieldArray name={FileFieldNames.AssociatedArtifacts}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
             {files.length > 0 && (
@@ -124,13 +124,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
             <Paper elevation={5}>
               <FileUploader uppy={uppy} addFile={push} />
-              {files.length === 0 &&
-                typeof (errors.fileSet as FormikErrors<FileSet>)?.files === 'string' &&
-                touched.fileSet && (
-                  <FormHelperText error sx={{ p: '1rem' }}>
-                    <ErrorMessage name={name} />
-                  </FormHelperText>
-                )}
+              {files.length === 0 && typeof errors.associatedArtifacts === 'string' && touched.associatedArtifacts && (
+                <FormHelperText error sx={{ p: '1rem' }}>
+                  <ErrorMessage name={name} />
+                </FormHelperText>
+              )}
             </Paper>
           </>
         )}

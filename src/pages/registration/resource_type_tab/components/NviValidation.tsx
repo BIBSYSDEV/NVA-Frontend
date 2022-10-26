@@ -59,7 +59,7 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
   const resourceState = useSelector((store: RootState) => store.resources);
   const journal = reference?.publicationContext.id ? (resourceState[reference.publicationContext.id] as Journal) : null;
 
-  return <NviStatus level={journal?.level} isPeerReviewed={!!reference?.publicationInstance.peerReviewed} />;
+  return <NviStatus level={journal?.level} />;
 };
 
 const NviValidationBookMonograph = ({ registration }: { registration: BookRegistration }) => {
@@ -73,12 +73,7 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
     ? (resourceState[reference.publicationContext.series.id] as Journal)
     : null;
 
-  return (
-    <NviStatus
-      level={series?.level ?? publisher?.level}
-      isPeerReviewed={!!reference?.publicationInstance.peerReviewed}
-    />
-  );
+  return <NviStatus level={series?.level ?? publisher?.level} />;
 };
 
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
@@ -101,20 +96,14 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     t('feedback.error.get_series')
   );
 
-  return (
-    <NviStatus
-      level={series?.level ?? publisher?.level}
-      isPeerReviewed={!!reference?.publicationInstance.peerReviewed}
-    />
-  );
+  return <NviStatus level={series?.level ?? publisher?.level} />;
 };
 
 interface NviStatusProps {
   level?: string;
-  isPeerReviewed?: boolean;
 }
 
-const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
+const NviStatus = ({ level = '' }: NviStatusProps) => {
   const { t } = useTranslation();
 
   const isRated = parseInt(level) > 0;
@@ -124,14 +113,12 @@ const NviStatus = ({ level = '', isPeerReviewed = false }: NviStatusProps) => {
       <InfoIcon color="primary" fontSize="large" />
       <Typography
         data-testid={
-          isRated && isPeerReviewed
+          isRated
             ? dataTestId.registrationWizard.resourceType.nviSuccess
             : dataTestId.registrationWizard.resourceType.nviFailed
         }>
         {isRated
-          ? isPeerReviewed
-            ? t('registration.resource_type.nvi.applicable')
-            : t('registration.resource_type.nvi.not_peer_reviewed')
+          ? t('registration.resource_type.nvi.applicable')
           : t('registration.resource_type.nvi.channel_not_rated')}
       </Typography>
     </Paper>
