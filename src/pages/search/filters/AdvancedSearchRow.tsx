@@ -1,6 +1,7 @@
 import { Box, MenuItem, Button, TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
-import { TFuncKey, useTranslation } from 'react-i18next';
+import { TFuncKey } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import {
   DescriptionFieldNames,
   ResourceFieldNames,

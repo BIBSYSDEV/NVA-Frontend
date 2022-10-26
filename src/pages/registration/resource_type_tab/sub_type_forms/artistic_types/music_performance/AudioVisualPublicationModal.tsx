@@ -50,51 +50,51 @@ const emptyMusicTrack: MusicTrack = {
 
 const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
   mediaType: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.media_type'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.media_type'),
     })
   ),
   publisher: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('common.publisher'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:common.publisher'),
     })
   ),
   catalogueNumber: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.catalogue_number'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.catalogue_number'),
     })
   ),
   trackList: Yup.array()
     .of(
       Yup.object<YupShape<MusicTrack>>({
         title: Yup.string().required(
-          i18n.t('feedback.validation.is_required', {
-            field: i18n.t('common.title'),
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:common.title'),
           })
         ),
         composer: Yup.string().required(
-          i18n.t('feedback.validation.is_required', {
-            field: i18n.t('registration.resource_type.artistic.composer'),
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:registration.resource_type.artistic.composer'),
           })
         ),
         extent: Yup.number()
           .typeError(
-            i18n.t('feedback.validation.has_invalid_format', {
-              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+            i18n.t('translation:feedback.validation.has_invalid_format', {
+              field: i18n.t('translation:registration.resource_type.artistic.extent_in_minutes'),
             })
           )
           .required(
-            i18n.t('feedback.validation.is_required', {
-              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+            i18n.t('translation:feedback.validation.is_required', {
+              field: i18n.t('translation:registration.resource_type.artistic.extent_in_minutes'),
             })
           ),
       })
     )
     .min(
       1,
-      i18n.t('feedback.validation.must_have_minimum', {
+      i18n.t('translation:feedback.validation.must_have_minimum', {
         min: 1,
-        field: i18n.t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
+        field: i18n.t('translation:registration.resource_type.artistic.content_track').toLocaleLowerCase(),
       })
     ),
 });

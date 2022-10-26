@@ -33,8 +33,8 @@ const emptyLiteraryArtsMonograph: LiteraryArtsMonograph = {
 const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
   publisher: Yup.object<YupShape<UnconfirmedPublisher>>({
     name: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.artistic.publisher'),
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:registration.resource_type.artistic.publisher'),
       })
     ),
   }),
@@ -42,38 +42,38 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
     year: Yup.number()
       .min(
         1800,
-        i18n.t('feedback.validation.must_be_bigger_than', {
-          field: i18n.t('common.year'),
+        i18n.t('translation:feedback.validation.must_be_bigger_than', {
+          field: i18n.t('translation:common.year'),
           limit: 1800,
         })
       )
       .max(
         2100,
-        i18n.t('feedback.validation.must_be_smaller_than', {
-          field: i18n.t('common.year'),
+        i18n.t('translation:feedback.validation.must_be_smaller_than', {
+          field: i18n.t('translation:common.year'),
           limit: 2100,
         })
       )
       .typeError(
-        i18n.t('feedback.validation.has_invalid_format', {
-          field: i18n.t('common.year'),
+        i18n.t('translation:feedback.validation.has_invalid_format', {
+          field: i18n.t('translation:common.year'),
         })
       )
       .required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('common.year'),
+        i18n.t('translation:feedback.validation.is_required', {
+          field: i18n.t('translation:common.year'),
         })
       ),
   }),
   isbn: isbnField.required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.isbn'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.isbn'),
     })
   ),
   pages: Yup.object<YupShape<PagesMonograph>>({
     pages: Yup.number().typeError(
-      i18n.t('feedback.validation.has_invalid_format', {
-        field: i18n.t('registration.resource_type.number_of_pages'),
+      i18n.t('translation:feedback.validation.has_invalid_format', {
+        field: i18n.t('translation:registration.resource_type.number_of_pages'),
       })
     ),
   }),

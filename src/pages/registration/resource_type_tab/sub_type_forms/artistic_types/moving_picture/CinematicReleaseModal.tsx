@@ -30,15 +30,15 @@ const emptyCinematicRelease: CinematicRelease = {
 const validationSchema = Yup.object<YupShape<CinematicRelease>>({
   place: Yup.object().shape({
     label: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.place'),
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:common.place'),
       })
     ),
   }),
   date: Yup.object().shape({
     value: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.artistic.premiere_date'),
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:registration.resource_type.artistic.premiere_date'),
       })
     ),
   }),
