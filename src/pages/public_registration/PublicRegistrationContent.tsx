@@ -26,11 +26,8 @@ import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrat
 export interface PublicRegistrationContentProps {
   registration: Registration;
 }
-export interface PublicRegistrationProps extends PublicRegistrationContentProps {
-  refetchRegistration: () => void;
-}
 
-export const PublicRegistrationContent = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
+export const PublicRegistrationContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
 
   const { identifier, entityDescription, projects, subjects } = registration;
@@ -45,8 +42,7 @@ export const PublicRegistrationContent = ({ registration, refetchRegistration }:
   });
 
   return (
-    <BackgroundDiv>
-      <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
+    <BackgroundDiv sx={{ gridArea: 'center' }}>
       <ItalicPageHeader
         superHeader={{
           title: entityDescription?.reference?.publicationInstance.type ? (

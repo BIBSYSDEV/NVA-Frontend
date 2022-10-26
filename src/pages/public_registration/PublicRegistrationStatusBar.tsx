@@ -11,7 +11,7 @@ import { validateYupSchema, yupToFormErrors } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { RootState } from '../../redux/store';
-import { PublicRegistrationProps } from './PublicRegistrationContent';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus, Registration } from '../../types/registration.types';
@@ -40,7 +40,14 @@ enum LoadingState {
   RejectPublishRequest,
 }
 
-export const PublicRegistrationStatusBar = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
+interface PublicRegistrationStatusBarProps extends PublicRegistrationContentProps {
+  refetchRegistration: () => void;
+}
+
+export const PublicRegistrationStatusBar = ({
+  registration,
+  refetchRegistration,
+}: PublicRegistrationStatusBarProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -187,7 +194,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const editRegistrationUrl = getRegistrationPath(identifier);
 
   return isOwner || isCurator ? (
-    <Box>
+    <Box sx={{ gridArea: 'right' }}>
       {!registrationIsValid && tabErrors && (
         <ErrorList
           tabErrors={tabErrors}
@@ -214,9 +221,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           }
         />
       )}
-      <Box
-        sx={{ bgcolor: 'background.paper', p: '1rem', mb: '1rem', borderBottom: '2px dotted' }}
-        data-testid={dataTestId.registrationLandingPage.status}>
+      <Box sx={{ bgcolor: 'background.paper', p: '1rem' }} data-testid={dataTestId.registrationLandingPage.status}>
         {!isPublishedRegistration && registrationIsValid && (
           <>
             <Typography variant="h4" component="h1">

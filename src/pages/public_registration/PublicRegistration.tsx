@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { SyledPageContent } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
@@ -13,6 +12,8 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RegistrationParams } from '../../utils/urlPaths';
+import { Box } from '@mui/material';
+import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
@@ -29,13 +30,24 @@ const PublicRegistration = () => {
     userIsRegistrationCurator(user, registration);
 
   return (
-    <SyledPageContent>
+    <>
       {isLoadingRegistration ? (
         <PageSpinner aria-label={t('common.registration')} />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
           <ErrorBoundary>
-            <PublicRegistrationContent registration={registration} refetchRegistration={refetchRegistration} />
+            <Box
+              sx={{
+                width: '100%',
+                display: 'grid',
+                gridTemplateColumns: '1fr 4fr 1fr',
+                gridTemplateAreas: "'left center right'",
+                gap: '0.5rem',
+                p: '0.5rem',
+              }}>
+              <PublicRegistrationContent registration={registration} />
+              <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
+            </Box>
           </ErrorBoundary>
         ) : (
           <NotPublished />
@@ -43,7 +55,7 @@ const PublicRegistration = () => {
       ) : (
         <NotFound />
       )}
-    </SyledPageContent>
+    </>
   );
 };
 
