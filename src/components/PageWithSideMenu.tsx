@@ -18,7 +18,7 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   },
 }));
 
-const StyledSideMenuHeader = styled(Box)({
+export const StyledSideMenuHeader = styled(Box)({
   display: 'flex',
   alignItems: 'center',
   gap: '0.5rem',

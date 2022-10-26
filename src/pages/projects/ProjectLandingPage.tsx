@@ -1,4 +1,3 @@
-import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import { useTranslation } from 'react-i18next';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { CristinProject } from '../../types/project.types';
@@ -19,11 +18,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
   return (
     <BackgroundDiv>
-      <ItalicPageHeader
-        superHeader={{
-          title: `${t('project.project')} - ${t(`project.status.${project.status}`)}`,
-          icon: <AccountTreeIcon />,
-        }}>
+      <ItalicPageHeader superHeader={`${t('project.project')} - ${t(`project.status.${project.status}`)}`}>
         {project.title}
       </ItalicPageHeader>
 

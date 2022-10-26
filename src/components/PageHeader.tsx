@@ -7,10 +7,7 @@ import { TruncatableTypography } from './TruncatableTypography';
 interface PageHeaderProps extends TypographyProps {
   children: string;
   htmlTitle?: string;
-  superHeader?: {
-    title: string | ReactNode;
-    icon?: ReactNode;
-  };
+  superHeader?: string | ReactNode;
 }
 
 export const PageHeader = ({ children, superHeader, htmlTitle, ...props }: PageHeaderProps) => (
@@ -20,12 +17,9 @@ export const PageHeader = ({ children, superHeader, htmlTitle, ...props }: PageH
     </Helmet>
 
     {superHeader && (
-      <Box sx={{ display: 'flex', flexDirection: 'column', color: 'primary.dark' }}>
-        {superHeader.icon}
-        <Typography variant="overline" color="inherit">
-          {superHeader.title}
-        </Typography>
-      </Box>
+      <Typography variant="overline" color="primary.dark">
+        {superHeader}
+      </Typography>
     )}
 
     <Box

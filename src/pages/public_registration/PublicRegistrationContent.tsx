@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { Box, Typography } from '@mui/material';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { Registration } from '../../types/registration.types';
@@ -7,7 +6,6 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { PublicGeneralContent } from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
-import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { PublicSummaryContent } from './PublicSummaryContent';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { ShareOptions } from './ShareOptions';
@@ -44,8 +42,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   return (
     <BackgroundDiv sx={{ gridArea: 'center' }}>
       <ItalicPageHeader
-        superHeader={{
-          title: entityDescription?.reference?.publicationInstance.type ? (
+        superHeader={
+          entityDescription?.reference?.publicationInstance.type ? (
             <>
               <span data-testid={dataTestId.registrationLandingPage.registrationSubtype}>
                 {t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)}
@@ -59,9 +57,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
                 </Box>
               )}
             </>
-          ) : null,
-          icon: <MenuBookIcon />,
-        }}
+          ) : null
+        }
         data-testid={dataTestId.registrationLandingPage.title}>
         {mainTitle}
       </ItalicPageHeader>
