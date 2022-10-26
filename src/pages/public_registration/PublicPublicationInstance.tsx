@@ -13,7 +13,7 @@ import { ArtisticType } from '../../types/publicationFieldNames';
 
 const getPageInterval = (pages: PagesRange | null) => {
   return pages?.begin || pages?.end
-    ? `${i18n.t('registration.resource_type.pages')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`
+    ? `${i18n.t('translation:registration.resource_type.pages')} ${pages.begin ?? '?'}-${pages.end ?? '?'}`
     : '';
 };
 

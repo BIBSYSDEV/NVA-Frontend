@@ -4,14 +4,14 @@ import { YupShape } from '../validationHelpers';
 import { File } from '../../../types/file.types';
 
 const fileErrorMessage = {
-  fileVersionRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('common.version'),
+  fileVersionRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:common.version'),
   }),
-  licenseRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.files_and_license.conditions_for_using_file'),
+  licenseRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.files_and_license.conditions_for_using_file'),
   }),
-  embargoDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
-    field: i18n.t('registration.files_and_license.file_publish_date'),
+  embargoDateInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
+    field: i18n.t('translation:registration.files_and_license.file_publish_date'),
   }),
 };
 

@@ -33,25 +33,25 @@ const emptyCompetition: Competition = {
 
 const validationSchema = Yup.object<YupShape<Competition>>({
   name: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.competition_name'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.competition_name'),
     })
   ),
   description: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.competition_rank'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.competition_rank'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date()
       .required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('registration.resource_type.artistic.competition_date'),
+        i18n.t('translation:feedback.validation.is_required', {
+          field: i18n.t('translation:registration.resource_type.artistic.competition_date'),
         })
       )
       .typeError(
-        i18n.t('feedback.validation.has_invalid_format', {
-          field: i18n.t('registration.resource_type.artistic.competition_date'),
+        i18n.t('translation:feedback.validation.has_invalid_format', {
+          field: i18n.t('translation:registration.resource_type.artistic.competition_date'),
         })
       ),
   }),
