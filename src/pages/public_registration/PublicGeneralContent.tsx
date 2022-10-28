@@ -108,7 +108,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         )}
 
         {publicationInstance &&
-          (isJournal(publicationInstance.type) && journalPublicationInstance ? (
+          ((isJournal(publicationInstance.type) || isPeriodicalMediaContribution(publicationInstance.type)) &&
+          journalPublicationInstance ? (
             <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
           ) : isBook(publicationInstance.type) ? (
             <>
