@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@mui/material';
+import { Box, IconButton, Paper, Typography } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import { Link as RouterLink } from 'react-router-dom';
 import { ItalicPageHeader } from '../../components/PageHeader';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -15,11 +17,16 @@ import { RegistrationFieldName, ResearchDataType } from '../../types/publication
 import { SearchResponse } from '../../types/common.types';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
-import { getTitleString, isResearchData } from '../../utils/registration-helpers';
+import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
 import { API_URL } from '../../utils/constants';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
 import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
+import { StyledPaperHeader } from '../../components/PageWithSideMenu';
+import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { getRegistrationPath } from '../../utils/urlPaths';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -27,6 +34,7 @@ export interface PublicRegistrationContentProps {
 
 export const PublicRegistrationContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
 
   const { identifier, entityDescription, projects, subjects } = registration;
   const contributors = entityDescription?.contributors ?? [];
@@ -40,29 +48,24 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   });
 
   return (
-    <BackgroundDiv sx={{ gridArea: 'center' }}>
-      <ItalicPageHeader
-        superHeader={
-          entityDescription?.reference?.publicationInstance.type ? (
-            <>
-              <span data-testid={dataTestId.registrationLandingPage.registrationSubtype}>
-                {t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)}
-              </span>
-              {entityDescription?.date?.year && (
-                <Box
-                  data-testid={dataTestId.registrationLandingPage.publicationDate}
-                  component="span"
-                  sx={{ pl: '1rem' }}>
-                  {entityDescription.date.year}
-                </Box>
-              )}
-            </>
-          ) : null
-        }
-        data-testid={dataTestId.registrationLandingPage.title}>
-        {mainTitle}
-      </ItalicPageHeader>
-      <div>
+    <Paper sx={{ gridArea: 'center' }}>
+      <StyledPaperHeader sx={{ gap: '1rem', p: '0.5rem' }}>
+        {entityDescription?.reference?.publicationInstance.type ? (
+          <Typography data-testid={dataTestId.registrationLandingPage.registrationSubtype}>
+            {t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)}
+          </Typography>
+        ) : null}
+        <TruncatableTypography variant="h2" variantMapping={{ h2: 'h1' }}>
+          {mainTitle}
+        </TruncatableTypography>
+        {userCanEditRegistration(user, registration) && (
+          <IconButton sx={{ ml: 'auto' }} component={RouterLink} to={getRegistrationPath(identifier)}>
+            <EditIcon />
+          </IconButton>
+        )}
+      </StyledPaperHeader>
+
+      <Box sx={{ m: '2rem' }}>
         {contributors.length > 0 && entityDescription?.reference?.publicationInstance.type && (
           <PublicRegistrationContributors
             contributors={contributors}
@@ -179,8 +182,9 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <ListRegistrationRelations registrations={relatedRegistrations.hits} />
           </LandingPageAccordion>
         )}
-      </div>
-      <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
-    </BackgroundDiv>
+
+        <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
+      </Box>
+    </Paper>
   );
 };

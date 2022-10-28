@@ -476,6 +476,9 @@ export const userIsOwnerOfRegistration = (user: User | null, registration: Regis
 export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
   !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
+export const userCanEditRegistration = (user: User | null, registration: Registration) =>
+  userIsOwnerOfRegistration(user, registration) || userIsCuratorForRegistration(user, registration);
+
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
 

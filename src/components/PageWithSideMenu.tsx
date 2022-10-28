@@ -18,11 +18,15 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const StyledSideMenuHeader = styled(Box)({
+export const StyledPaperHeader = styled(Box)({
+  background: '#e3e0dd',
   display: 'flex',
   alignItems: 'center',
+});
+
+export const StyledSideMenuHeader = styled(StyledPaperHeader)({
+  alignItems: 'center',
   gap: '0.5rem',
-  background: '#e3e0dd',
   padding: '0.5rem 1rem 0.5rem 1rem',
 });
 
