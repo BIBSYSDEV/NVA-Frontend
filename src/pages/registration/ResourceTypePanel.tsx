@@ -25,7 +25,13 @@ import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
 import { DegreeTypeForm } from './resource_type_tab/DegreeTypeForm';
 import { JournalTypeForm } from './resource_type_tab/JournalTypeForm';
 import { ReportTypeForm } from './resource_type_tab/ReportTypeForm';
-import { getMainRegistrationType, isArtistic, isChapter } from '../../utils/registration-helpers';
+import {
+  getMainRegistrationType,
+  isArtistic,
+  isChapter,
+  isMediaContribution,
+  isPeriodicalMediaContribution,
+} from '../../utils/registration-helpers';
 import { PresentationTypeForm } from './resource_type_tab/PresentationTypeForm';
 import {
   emptyPresentationPublicationContext,
@@ -33,17 +39,19 @@ import {
 } from '../../types/publication_types/presentationRegistration.types';
 import { ArtisticTypeForm } from './resource_type_tab/ArtisticTypeForm';
 import { emptyArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
-import { MediaTypeForm } from './resource_type_tab/MediaTypeForm';
 import {
+  emptyMediaContributionPeriodicalPublicationContext,
+  emptyMediaContributionPeriodicalPublicationInstance,
   emptyMediaContributionPublicationContext,
   emptyMediaContributionPublicationInstance,
-} from '../../types/publication_types/mediaContributionRegistration';
+} from '../../types/publication_types/mediaContributionRegistration.types';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ResearchDataTypeForm } from './resource_type_tab/ResearchDataTypeForm';
 import {
   emptyResearchDataPublicationInstance,
   emptyResearchDataPublicationContext,
 } from '../../types/publication_types/researchDataRegistration.types';
+import { MediaTypeForm } from './resource_type_tab/sub_type_forms/media_types/MediaTypeForm';
 import {
   emptyMapPublicationContext,
   emptyMapPublicationInstance,
@@ -118,8 +126,8 @@ export const ResourceTypePanel = () => {
         setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
         break;
       case PublicationType.MediaContribution:
-        setFieldValue(instanceTypeBaseFieldName, emptyMediaContributionPublicationInstance, false);
-        setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
+        setFieldValue(instanceTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationInstance, false);
+        setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
         break;
       case PublicationType.ResearchData:
         setFieldValue(instanceTypeBaseFieldName, emptyResearchDataPublicationInstance, false);
@@ -158,6 +166,22 @@ export const ResourceTypePanel = () => {
       setFieldValue(ResourceFieldNames.PartOf, undefined);
     } else if (isArtistic(newInstanceType)) {
       setFieldValue(instanceTypeBaseFieldName, { ...emptyArtisticPublicationInstance, type: newInstanceType });
+    } else if (isMediaContribution(newInstanceType)) {
+      if (isPeriodicalMediaContribution(newInstanceType)) {
+        setFieldValue(
+          instanceTypeBaseFieldName,
+          { ...emptyMediaContributionPeriodicalPublicationInstance, type: newInstanceType },
+          false
+        );
+        setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
+      } else {
+        setFieldValue(
+          instanceTypeBaseFieldName,
+          { ...emptyMediaContributionPublicationInstance, type: newInstanceType },
+          false
+        );
+        setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
+      }
     }
   };
 
