@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, IconButton, Paper, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
-import { ItalicPageHeader } from '../../components/PageHeader';
+import { useSelector } from 'react-redux';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicGeneralContent } from './PublicGeneralContent';
@@ -15,7 +15,6 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RegistrationFieldName, ResearchDataType } from '../../types/publicationFieldNames';
 import { SearchResponse } from '../../types/common.types';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
 import { API_URL } from '../../utils/constants';
@@ -24,7 +23,6 @@ import { ListRegistrationRelations } from './public_links/ListRegistrationRelati
 import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
-import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { getRegistrationPath } from '../../utils/urlPaths';
 
@@ -49,17 +47,17 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
   return (
     <Paper sx={{ gridArea: 'center' }}>
-      <StyledPaperHeader sx={{ gap: '1rem', p: '0.5rem' }}>
+      <StyledPaperHeader sx={{ gap: '1.5rem', p: '0.5rem' }}>
         {entityDescription?.reference?.publicationInstance.type ? (
-          <Typography data-testid={dataTestId.registrationLandingPage.registrationSubtype}>
+          <Typography data-testid={dataTestId.registrationLandingPage.registrationSubtype} sx={{ color: 'inherit' }}>
             {t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)}
           </Typography>
         ) : null}
-        <TruncatableTypography variant="h2" variantMapping={{ h2: 'h1' }}>
+        <TruncatableTypography variant="h2" variantMapping={{ h2: 'h1' }} sx={{ color: 'inherit' }}>
           {mainTitle}
         </TruncatableTypography>
         {userCanEditRegistration(user, registration) && (
-          <IconButton sx={{ ml: 'auto' }} component={RouterLink} to={getRegistrationPath(identifier)}>
+          <IconButton sx={{ ml: 'auto', color: 'inherit' }} component={RouterLink} to={getRegistrationPath(identifier)}>
             <EditIcon />
           </IconButton>
         )}

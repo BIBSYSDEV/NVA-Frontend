@@ -14,6 +14,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RegistrationParams } from '../../utils/urlPaths';
 import { Box } from '@mui/material';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
+import { SyledPageContent } from '../../components/styled/Wrappers';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
@@ -30,7 +31,7 @@ const PublicRegistration = () => {
     userIsRegistrationCurator(user, registration);
 
   return (
-    <>
+    <SyledPageContent>
       {isLoadingRegistration ? (
         <PageSpinner aria-label={t('common.registration')} />
       ) : registration ? (
@@ -38,15 +39,12 @@ const PublicRegistration = () => {
           <ErrorBoundary>
             <Box
               sx={{
-                width: '100%',
-                display: 'grid',
-                gridTemplateColumns: '1fr 4fr 1fr',
-                gridTemplateAreas: "'left center right'",
-                gap: '0.5rem',
-                p: '0.5rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
               }}>
-              <PublicRegistrationContent registration={registration} />
               <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
+              <PublicRegistrationContent registration={registration} />
             </Box>
           </ErrorBoundary>
         ) : (
@@ -55,7 +53,7 @@ const PublicRegistration = () => {
       ) : (
         <NotFound />
       )}
-    </>
+    </SyledPageContent>
   );
 };
 
