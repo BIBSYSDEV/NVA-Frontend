@@ -32,7 +32,7 @@
   "dependencies": {
     "@aws-amplify/auth": "^4.6.12",
     "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
+    "@emotion/styled": "^11.10.5",
     "@fontsource/barlow": "^4.5.9",
     "@fontsource/crimson-text": "^4.5.5",
     "@mui/icons-material": "^5.10.9",
@@ -50,7 +50,7 @@
     "deepmerge": "^4.2.2",
     "formik": "^2.2.9",
     "i18n-iso-countries": "^7.5.0",
-    "i18next": "^22.0.2",
+    "i18next": "^22.0.3",
     "i18next-browser-languagedetector": "^7.0.0",
     "isbn-utils": "^1.1.0",
     "nva-language": "^1.0.11",
