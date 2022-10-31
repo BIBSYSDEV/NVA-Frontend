@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Box, IconButton, Paper, Typography } from '@mui/material';
+import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -57,9 +57,15 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           {mainTitle}
         </TruncatableTypography>
         {userCanEditRegistration(user, registration) && (
-          <IconButton sx={{ ml: 'auto', color: 'inherit' }} component={RouterLink} to={getRegistrationPath(identifier)}>
-            <EditIcon />
-          </IconButton>
+          <Tooltip title={t('registration.edit_registration')}>
+            <IconButton
+              data-testid={dataTestId.registrationLandingPage.editButton}
+              sx={{ ml: 'auto', color: 'inherit' }}
+              component={RouterLink}
+              to={getRegistrationPath(identifier)}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
         )}
       </StyledPaperHeader>
 

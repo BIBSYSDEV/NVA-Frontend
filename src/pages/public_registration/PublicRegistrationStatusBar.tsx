@@ -191,7 +191,6 @@ export const PublicRegistrationStatusBar = ({
   const isCurator = userIsRegistrationCurator(user, registration);
   const hasNvaDoi = !!doi;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
-  const editRegistrationUrl = getRegistrationPath(identifier);
 
   return isOwner || isCurator ? (
     <Box sx={{ gridArea: 'right' }}>
@@ -213,7 +212,7 @@ export const PublicRegistrationStatusBar = ({
               variant="contained"
               color="inherit"
               component={RouterLink}
-              to={`${editRegistrationUrl}?tab=${firstErrorTab}`}
+              to={`${getRegistrationPath(identifier)}?tab=${firstErrorTab}`}
               endIcon={<EditIcon />}
               data-testid={dataTestId.registrationLandingPage.backToWizard}>
               {t('registration.public_page.go_back_to_wizard')}
@@ -254,15 +253,6 @@ export const PublicRegistrationStatusBar = ({
                 {t('common.publish')}
               </LoadingButton>
             )}
-
-          <Button
-            component={RouterLink}
-            to={editRegistrationUrl}
-            variant="outlined"
-            endIcon={<EditIcon />}
-            data-testid={dataTestId.registrationLandingPage.editButton}>
-            {t('registration.edit_registration')}
-          </Button>
 
           {!hasNvaDoi && (
             <>
