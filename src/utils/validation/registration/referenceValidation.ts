@@ -45,13 +45,16 @@ import {
   PresentationPublicationInstance,
 } from '../../../types/publication_types/presentationRegistration.types';
 import {
+  MediaContributionPeriodicalPublicationContext,
+  MediaContributionPeriodicalPublicationInstance,
   MediaContributionPublicationContext,
   MediaContributionPublicationInstance,
-} from '../../../types/publication_types/mediaContributionRegistration';
+} from '../../../types/publication_types/mediaContributionRegistration.types';
 import {
   ResearchDataPublicationContext,
   ResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
+import { isPeriodicalMediaContribution } from '../../registration-helpers';
 import {
   MapPublicationContext,
   MapPublicationInstance,
@@ -439,32 +442,54 @@ export const artisticDesignReference = baseReference.shape({
 });
 
 // Media Contribution
-const mediaContributionPublicationContext = Yup.object<YupShape<MediaContributionPublicationContext>>({
-  format: Yup.string()
-    .nullable()
-    .required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.media_contribution.format'),
-      })
-    ),
-  medium: Yup.string()
-    .nullable()
-    .required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.media_contribution.medium'),
-      })
-    ),
-  disseminationChannel: Yup.string()
-    .nullable()
-    .required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.media_contribution.channel'),
-      })
-    ),
+const mediaContributionPublicationContext = Yup.object().when('$publicationInstanceType', (type: string) => {
+  if (isPeriodicalMediaContribution(type)) {
+    return Yup.object<YupShape<MediaContributionPeriodicalPublicationContext>>({
+      id: Yup.string().required(resourceErrorMessage.journalRequired),
+    });
+  } else {
+    return Yup.object<YupShape<MediaContributionPublicationContext>>({
+      format: Yup.string()
+        .nullable()
+        .required(
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:registration.resource_type.media_contribution.format'),
+          })
+        ),
+      medium: Yup.object().shape({
+        type: Yup.string()
+          .nullable()
+          .required(
+            i18n.t('translation:feedback.validation.is_required', {
+              field: i18n.t('translation:registration.resource_type.media_contribution.medium'),
+            })
+          ),
+      }),
+      disseminationChannel: Yup.string()
+        .nullable()
+        .required(
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:registration.resource_type.media_contribution.channel'),
+          })
+        ),
+    });
+  }
 });
 
-const mediaContributionPublicationInstance = Yup.object<YupShape<MediaContributionPublicationInstance>>({
-  type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
+const mediaContributionPublicationInstance = Yup.object().when('$publicationInstanceType', (type: string) => {
+  if (isPeriodicalMediaContribution(type)) {
+    return Yup.object<YupShape<MediaContributionPeriodicalPublicationInstance>>({
+      type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
+      articleNumber: Yup.string().nullable(),
+      volume: Yup.string().nullable(),
+      issue: Yup.string().nullable(),
+      pages: pagesRangeField,
+    });
+  } else {
+    return Yup.object<YupShape<MediaContributionPublicationInstance>>({
+      type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
+    });
+  }
 });
 
 export const mediaContributionReference = baseReference.shape({

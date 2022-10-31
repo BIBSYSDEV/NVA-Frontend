@@ -32,6 +32,7 @@ import {
   isDegree,
   isJournal,
   isMediaContribution,
+  isPeriodicalMediaContribution,
   isOtherRegistration,
   isPresentation,
   isReport,
@@ -62,7 +63,10 @@ import { displayDate } from '../../utils/date-helpers';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
-import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
+import {
+  MediaContributionPeriodicalPublicationContext,
+  MediaContributionPublicationContext,
+} from '../../types/publication_types/mediaContributionRegistration.types';
 import { MapPublicationContext } from '../../types/publication_types/otherRegistration.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
@@ -104,7 +108,8 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
         )}
 
         {publicationInstance &&
-          (isJournal(publicationInstance.type) && journalPublicationInstance ? (
+          ((isJournal(publicationInstance.type) || isPeriodicalMediaContribution(publicationInstance.type)) &&
+          journalPublicationInstance ? (
             <PublicPublicationInstanceJournal publicationInstance={journalPublicationInstance} />
           ) : isBook(publicationInstance.type) ? (
             <>
@@ -216,9 +221,13 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               />
             ) : null
           ) : isMediaContribution(publicationInstance.type) ? (
-            <PublicPublicationContextMediaContribution
-              publicationContext={publicationContext as MediaContributionPublicationContext}
-            />
+            isPeriodicalMediaContribution(publicationInstance.type) ? (
+              <PublicJournal publicationContext={publicationContext as MediaContributionPeriodicalPublicationContext} />
+            ) : (
+              <PublicPublicationContextMediaContribution
+                publicationContext={publicationContext as MediaContributionPublicationContext}
+              />
+            )
           ) : isOtherRegistration(publicationInstance.type) ? (
             <PublicPublisher publisher={(publicationContext as MapPublicationContext).publisher} />
           ) : null)}

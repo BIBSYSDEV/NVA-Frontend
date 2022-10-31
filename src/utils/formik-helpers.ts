@@ -277,8 +277,9 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
           reference: {
             publicationContext: {
               type: true,
+              id: true,
               format: true,
-              medium: true,
+              medium: { type: true },
               disseminationChannel: true,
               partOf: {
                 series: true,
@@ -287,6 +288,13 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
             },
             publicationInstance: {
               type: true,
+              articleNumber: true,
+              issue: true,
+              pages: {
+                begin: true,
+                end: true,
+              },
+              volume: true,
             },
           },
         },
