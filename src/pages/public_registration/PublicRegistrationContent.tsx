@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import { IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet-async';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicGeneralContent } from './PublicGeneralContent';
@@ -25,6 +26,7 @@ import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
 import { getRegistrationPath } from '../../utils/urlPaths';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -47,7 +49,10 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
   return (
     <Paper sx={{ gridArea: 'center' }} elevation={0}>
-      <StyledPaperHeader sx={{ gap: '1.5rem', p: '0.5rem' }}>
+      <Helmet>
+        <title>{mainTitle}</title>
+      </Helmet>
+      <StyledPaperHeader>
         {entityDescription?.reference?.publicationInstance.type ? (
           <Typography data-testid={dataTestId.registrationLandingPage.registrationSubtype} sx={{ color: 'inherit' }}>
             {t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)}
@@ -69,7 +74,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         )}
       </StyledPaperHeader>
 
-      <Box sx={{ m: '2rem' }}>
+      <BackgroundDiv>
         {contributors.length > 0 && entityDescription?.reference?.publicationInstance.type && (
           <PublicRegistrationContributors
             contributors={contributors}
@@ -188,7 +193,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         )}
 
         <ShareOptions title={mainTitle} description={abstract ?? description ?? ''} />
-      </Box>
+      </BackgroundDiv>
     </Paper>
   );
 };

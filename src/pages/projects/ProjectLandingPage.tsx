@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import { ItalicPageHeader } from '../../components/PageHeader';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
@@ -8,6 +7,10 @@ import { ProjectGeneralInfo } from './ProjectGeneralInfo';
 import { ProjectSummary } from './ProjectSummary';
 import { ProjectResultsAccordion } from './ProjectResultsAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { Paper, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
+import { StyledPaperHeader } from '../../components/PageWithSideMenu';
+import { TruncatableTypography } from '../../components/TruncatableTypography';
 
 interface ProjectLandingPageProps {
   project: CristinProject;
@@ -17,29 +20,37 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
   const { t } = useTranslation();
 
   return (
-    <BackgroundDiv>
-      <ItalicPageHeader superHeader={`${t('project.project')} - ${t(`project.status.${project.status}`)}`}>
-        {project.title}
-      </ItalicPageHeader>
+    <Paper elevation={0}>
+      <Helmet>
+        <title>{project.title}</title>
+      </Helmet>
+      <StyledPaperHeader>
+        <Typography sx={{ color: 'inherit' }}>{t('project.project')}</Typography>
 
-      <ProjectGeneralInfo project={project} />
+        <TruncatableTypography variant="h2" variantMapping={{ h2: 'h1' }} sx={{ color: 'inherit' }}>
+          {project.title}
+        </TruncatableTypography>
+      </StyledPaperHeader>
+      <BackgroundDiv>
+        <ProjectGeneralInfo project={project} />
 
-      <LandingPageAccordion
-        heading={t('project.summary')}
-        dataTestId={dataTestId.projectLandingPage.scientificSummaryAccordion}>
-        <ProjectSummary
-          academicSummary={project.academicSummary}
-          popularScienceSummary={project.popularScientificSummary}
-        />
-      </LandingPageAccordion>
+        <LandingPageAccordion
+          heading={t('project.summary')}
+          dataTestId={dataTestId.projectLandingPage.scientificSummaryAccordion}>
+          <ProjectSummary
+            academicSummary={project.academicSummary}
+            popularScienceSummary={project.popularScientificSummary}
+          />
+        </LandingPageAccordion>
 
-      <LandingPageAccordion
-        dataTestId={dataTestId.projectLandingPage.participantsAccordion}
-        heading={`${t('project.project_participants')} (${project.contributors.length})`}>
-        <ProjectContributors contributors={project.contributors} />
-      </LandingPageAccordion>
+        <LandingPageAccordion
+          dataTestId={dataTestId.projectLandingPage.participantsAccordion}
+          heading={`${t('project.project_participants')} (${project.contributors.length})`}>
+          <ProjectContributors contributors={project.contributors} />
+        </LandingPageAccordion>
 
-      <ProjectResultsAccordion projectId={project.id} />
-    </BackgroundDiv>
+        <ProjectResultsAccordion projectId={project.id} />
+      </BackgroundDiv>
+    </Paper>
   );
 };
