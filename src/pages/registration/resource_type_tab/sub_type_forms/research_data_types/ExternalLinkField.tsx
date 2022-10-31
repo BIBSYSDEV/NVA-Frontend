@@ -44,6 +44,7 @@ export const ExternalLinkField = ({ onAddClick }: ExternalLinkFieldProps) => {
         error={showErrorMessage}
       />
       <Button
+        data-testid={dataTestId.registrationWizard.resourceType.externalLinkAddButton}
         variant="outlined"
         sx={{ height: 'fit-content', mt: '0.5rem' }}
         disabled={!isValidInput}
