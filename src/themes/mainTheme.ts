@@ -114,11 +114,6 @@ export const mainTheme = createTheme(
           variant: 'outlined',
         },
       },
-      MuiPaper: {
-        defaultProps: {
-          elevation: 0,
-        },
-      },
       MuiLink: {
         styleOverrides: {
           root: {

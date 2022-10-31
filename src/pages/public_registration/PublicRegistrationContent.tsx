@@ -46,7 +46,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   });
 
   return (
-    <Paper sx={{ gridArea: 'center' }}>
+    <Paper sx={{ gridArea: 'center' }} elevation={0}>
       <StyledPaperHeader sx={{ gap: '1.5rem', p: '0.5rem' }}>
         {entityDescription?.reference?.publicationInstance.type ? (
           <Typography data-testid={dataTestId.registrationLandingPage.registrationSubtype} sx={{ color: 'inherit' }}>
