@@ -1,9 +1,10 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Box } from '@mui/material';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
-import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
+import { userCanEditRegistration } from '../../utils/registration-helpers';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -12,7 +13,6 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RegistrationParams } from '../../utils/urlPaths';
-import { Box } from '@mui/material';
 import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { SyledPageContent } from '../../components/styled/Wrappers';
 
@@ -25,10 +25,8 @@ const PublicRegistration = () => {
   });
   const user = useSelector((store: RootState) => store.user);
 
-  const isAllowedToSeePublicRegistration =
-    registration?.status === RegistrationStatus.Published ||
-    userIsRegistrationOwner(user, registration) ||
-    userIsRegistrationCurator(user, registration);
+  const isRegistrationAdmin = !!registration && userCanEditRegistration(user, registration);
+  const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
 
   return (
     <SyledPageContent>
@@ -43,7 +41,9 @@ const PublicRegistration = () => {
                 flexDirection: 'column',
                 gap: '1rem',
               }}>
-              <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
+              {isRegistrationAdmin && (
+                <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
+              )}
               <PublicRegistrationContent registration={registration} />
             </Box>
           </ErrorBoundary>

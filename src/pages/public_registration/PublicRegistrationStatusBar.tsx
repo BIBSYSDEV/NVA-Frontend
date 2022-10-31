@@ -22,13 +22,10 @@ import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-he
 import { ErrorList } from '../registration/ErrorList';
 import { dataTestId } from '../../utils/dataTestIds';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import {
-  userIsCuratorForRegistration,
-  userIsRegistrationCurator,
-  userIsRegistrationOwner,
-} from '../../utils/registration-helpers';
+import { userIsCuratorForRegistration, userIsRegistrationCurator } from '../../utils/registration-helpers';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { TicketCollection, TicketStatus } from '../../types/publication_types/messages.types';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 enum LoadingState {
   None,
@@ -187,13 +184,12 @@ export const PublicRegistrationStatusBar = ({
   const firstErrorTab = getFirstErrorTab(tabErrors);
   const registrationIsValid = !tabErrors || firstErrorTab === -1;
 
-  const isOwner = userIsRegistrationOwner(user, registration);
   const isCurator = userIsRegistrationCurator(user, registration);
   const hasNvaDoi = !!doi;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
 
-  return isOwner || isCurator ? (
-    <Box sx={{ gridArea: 'right' }}>
+  return (
+    <div>
       {!registrationIsValid && tabErrors && (
         <ErrorList
           tabErrors={tabErrors}
@@ -220,7 +216,7 @@ export const PublicRegistrationStatusBar = ({
           }
         />
       )}
-      <Box sx={{ bgcolor: 'background.paper', p: '1rem' }} data-testid={dataTestId.registrationLandingPage.status}>
+      <BackgroundDiv data-testid={dataTestId.registrationLandingPage.status}>
         {!isPublishedRegistration && registrationIsValid && (
           <>
             <Typography variant="h4" component="h1">
@@ -357,7 +353,7 @@ export const PublicRegistrationStatusBar = ({
             )
           ) : null}
         </Box>
-      </Box>
-    </Box>
-  ) : null;
+      </BackgroundDiv>
+    </div>
+  );
 };

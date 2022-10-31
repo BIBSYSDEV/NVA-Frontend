@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { Paper, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet-async';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
@@ -7,8 +9,6 @@ import { ProjectGeneralInfo } from './ProjectGeneralInfo';
 import { ProjectSummary } from './ProjectSummary';
 import { ProjectResultsAccordion } from './ProjectResultsAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { Paper, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 

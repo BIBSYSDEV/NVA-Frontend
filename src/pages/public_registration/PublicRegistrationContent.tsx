@@ -48,7 +48,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   });
 
   return (
-    <Paper sx={{ gridArea: 'center' }} elevation={0}>
+    <Paper elevation={0}>
       <Helmet>
         <title>{mainTitle}</title>
       </Helmet>
