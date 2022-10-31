@@ -25,7 +25,7 @@ export const StyledPaperHeader = styled(Box)(({ theme }) => ({
   alignItems: 'center',
 }));
 
-export const StyledSideMenuHeader = styled(StyledPaperHeader)({
+const StyledSideMenuHeader = styled(StyledPaperHeader)({
   alignItems: 'center',
   gap: '0.5rem',
   padding: '0.5rem 1rem 0.5rem 1rem',
