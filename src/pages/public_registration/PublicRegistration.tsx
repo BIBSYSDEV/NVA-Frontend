@@ -13,7 +13,6 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RegistrationParams } from '../../utils/urlPaths';
-import { PublicRegistrationStatusBar } from './PublicRegistrationStatusBar';
 import { SyledPageContent } from '../../components/styled/Wrappers';
 import { ActionPanel } from './ActionPanel';
 
@@ -42,9 +41,8 @@ const PublicRegistration = () => {
                 flexDirection: 'column',
                 gap: '1rem',
               }}>
-              {isRegistrationAdmin && <ActionPanel registration={registration} />}
               {isRegistrationAdmin && (
-                <PublicRegistrationStatusBar registration={registration} refetchRegistration={refetchRegistration} />
+                <ActionPanel registration={registration} refetchRegistration={refetchRegistration} />
               )}
               <PublicRegistrationContent registration={registration} />
             </Box>
