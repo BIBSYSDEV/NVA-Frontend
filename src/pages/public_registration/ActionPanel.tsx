@@ -49,6 +49,8 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
   });
   const registrationTickets = registrationTicketCollection?.tickets ?? [];
 
+  // const registrationIsValid = !tabErrors;
+
   return (
     <Paper elevation={0}>
       <StyledPaperHeader>
@@ -66,7 +68,7 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
               <DoiRequestAccordion
                 refetchRegistration={refetchRegistration}
                 registration={registration}
-                doiRequest={registrationTickets.find((ticket) => ticket.type === 'DoiRequest') ?? null}
+                doiRequestTicket={registrationTickets.find((ticket) => ticket.type === 'DoiRequest') ?? null}
               />
             )}
           </>

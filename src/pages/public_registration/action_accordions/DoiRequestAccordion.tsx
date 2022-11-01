@@ -13,38 +13,52 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
-import { Ticket } from '../../../types/publication_types/messages.types';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import { Ticket, TicketStatus } from '../../../types/publication_types/messages.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
-import { addTicketMessage, createTicket } from '../../../api/registrationApi';
+import { addTicketMessage, createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { ActionPanelProps } from '../ActionPanel';
 
 interface DoiRequestAccordionProps extends ActionPanelProps {
-  doiRequest: Ticket | null;
+  doiRequestTicket: Ticket | null;
 }
 
-export const DoiRequestAccordion = ({ registration, doiRequest, refetchRegistration }: DoiRequestAccordionProps) => {
+enum LoadingState {
+  None,
+  RequestDoi,
+  RejectDoi,
+  ApproveDoi,
+}
+
+export const DoiRequestAccordion = ({
+  registration,
+  doiRequestTicket,
+  refetchRegistration,
+}: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((open) => !open);
 
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
+  const isPendingDoiRequest = doiRequestTicket?.status === 'Pending';
 
   const sendDoiRequest = async () => {
-    setIsLoading(true);
+    setIsLoading(LoadingState.RequestDoi);
     const message = isPublishedRegistration ? messageToCurator : t('registration.public_page.reserve_doi_message');
 
     const createDoiRequestResponse = await createTicket(registration.id, 'DoiRequest');
     if (isErrorStatus(createDoiRequestResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_doi_request'), variant: 'error' }));
-      setIsLoading(false);
+      setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
       const ticketId = createDoiRequestResponse.data.id;
       // Add message
@@ -63,17 +77,36 @@ export const DoiRequestAccordion = ({ registration, doiRequest, refetchRegistrat
     }
   };
 
+  const updatePendingDoiRequest = async (status: TicketStatus) => {
+    if (doiRequestTicket) {
+      if (status === 'Completed') {
+        setIsLoading(LoadingState.ApproveDoi);
+      } else {
+        setIsLoading(LoadingState.RejectDoi);
+      }
+
+      const updateTicketStatusResponse = await updateTicketStatus(doiRequestTicket.id, 'DoiRequest', status);
+      if (isErrorStatus(updateTicketStatusResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.update_doi_request'), variant: 'error' }));
+        setIsLoading(LoadingState.None);
+      } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
+        refetchRegistration();
+      }
+    }
+  };
+
   return (
     <Accordion elevation={3}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>DOI</AccordionSummary>
       <AccordionDetails>
-        {!doiRequest && (
+        {!doiRequestTicket && (
           <>
             <LoadingButton
               variant="outlined"
               endIcon={<LocalOfferIcon />}
               loadingPosition="end"
-              loading={isLoading}
+              loading={isLoading !== LoadingState.None}
               data-testid={
                 isPublishedRegistration
                   ? dataTestId.registrationLandingPage.requestDoiButton
@@ -106,13 +139,40 @@ export const DoiRequestAccordion = ({ registration, doiRequest, refetchRegistrat
                   variant="contained"
                   data-testid={dataTestId.registrationLandingPage.sendDoiButton}
                   onClick={sendDoiRequest}
-                  loading={isLoading}>
+                  loading={isLoading !== LoadingState.None}>
                   {t('common.send')}
                 </LoadingButton>
               </DialogActions>
             </Modal>
           </>
         )}
+
+        {isPublishedRegistration && isPendingDoiRequest && (
+          <>
+            <LoadingButton
+              variant="contained"
+              data-testid={dataTestId.registrationLandingPage.createDoiButton}
+              endIcon={<CheckIcon />}
+              loadingPosition="end"
+              onClick={() => updatePendingDoiRequest('Completed')}
+              loading={isLoading === LoadingState.ApproveDoi}
+              disabled={!!isLoading}>
+              {t('common.create_doi')}
+            </LoadingButton>
+            <LoadingButton
+              variant="contained"
+              data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
+              endIcon={<CloseIcon />}
+              loadingPosition="end"
+              onClick={() => updatePendingDoiRequest('Closed')}
+              loading={isLoading === LoadingState.RejectDoi}
+              disabled={!!isLoading}>
+              {t('common.reject_doi')}
+            </LoadingButton>
+          </>
+        )}
+
+        {/* TODO: Handle (pending) reserved DOI for draft Registration? */}
       </AccordionDetails>
     </Accordion>
   );

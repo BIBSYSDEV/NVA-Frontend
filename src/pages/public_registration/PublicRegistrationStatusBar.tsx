@@ -52,31 +52,9 @@ export const PublicRegistrationStatusBar = ({
   });
   const registrationTickets = registrationTicketCollection?.tickets ?? [];
 
-  const pendingDoiRequestTicket = registrationTickets.find(
-    (ticket) => ticket.type === 'DoiRequest' && ticket.status === 'Pending'
-  );
   const pendingPublishingRequestTicket = registrationTickets.find(
     (ticket) => ticket.type === 'PublishingRequest' && ticket.status === 'Pending'
   );
-
-  const updatePendingDoiRequest = async (status: TicketStatus) => {
-    if (pendingDoiRequestTicket) {
-      if (status === 'Completed') {
-        setIsLoading(LoadingState.ApproveDoi);
-      } else {
-        setIsLoading(LoadingState.RejectDoi);
-      }
-
-      const updateTicketStatusResponse = await updateTicketStatus(pendingDoiRequestTicket.id, 'DoiRequest', status);
-      if (isErrorStatus(updateTicketStatusResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.update_doi_request'), variant: 'error' }));
-        setIsLoading(LoadingState.None);
-      } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
-        refetchRegistration();
-      }
-    }
-  };
 
   const updatePendingPublishingRequest = async (status: TicketStatus) => {
     if (pendingPublishingRequestTicket) {
@@ -126,23 +104,6 @@ export const PublicRegistrationStatusBar = ({
       }, 10_000);
     }
   };
-
-  useEffect(() => {
-    const publicationInstance = registration.entityDescription?.reference?.publicationInstance;
-    const contentType =
-      publicationInstance && 'contentType' in publicationInstance ? publicationInstance.contentType : null;
-    try {
-      validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
-        publicationInstanceType: publicationInstance?.type ?? '',
-        publicationStatus: registration.status,
-        contentType,
-      });
-    } catch (error) {
-      const formErrors = yupToFormErrors(error);
-      const customErrors = getTabErrors(registration, formErrors);
-      setTabErrors(customErrors);
-    }
-  }, [registration]);
 
   const firstErrorTab = getFirstErrorTab(tabErrors);
   const registrationIsValid = !tabErrors || firstErrorTab === -1;
@@ -212,30 +173,6 @@ export const PublicRegistrationStatusBar = ({
                       loading={isLoading === LoadingState.RejectPublishRequest}
                       disabled={!!isLoading}>
                       {t('registration.public_page.reject_publish_request')}
-                    </LoadingButton>
-                  </>
-                )}
-                {isPublishedRegistration && pendingDoiRequestTicket && (
-                  <>
-                    <LoadingButton
-                      variant="contained"
-                      data-testid={dataTestId.registrationLandingPage.createDoiButton}
-                      endIcon={<CheckIcon />}
-                      loadingPosition="end"
-                      onClick={() => updatePendingDoiRequest('Completed')}
-                      loading={isLoading === LoadingState.ApproveDoi}
-                      disabled={!!isLoading || !registrationIsValid}>
-                      {t('common.create_doi')}
-                    </LoadingButton>
-                    <LoadingButton
-                      variant="contained"
-                      data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
-                      endIcon={<CloseIcon />}
-                      loadingPosition="end"
-                      onClick={() => updatePendingDoiRequest('Closed')}
-                      loading={isLoading === LoadingState.RejectDoi}
-                      disabled={!!isLoading}>
-                      {t('common.reject_doi')}
                     </LoadingButton>
                   </>
                 )}
