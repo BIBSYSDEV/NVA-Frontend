@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Button, CircularProgress, DialogActions, TextField, Typography } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import { useTranslation } from 'react-i18next';
 import { validateYupSchema, yupToFormErrors } from 'formik';
-import { Link as RouterLink } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { RootState } from '../../redux/store';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
@@ -17,9 +15,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus, Registration } from '../../types/registration.types';
 import { addTicketMessage, createTicket, updateTicketStatus } from '../../api/registrationApi';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
-import { getRegistrationPath } from '../../utils/urlPaths';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-helpers';
-import { ErrorList } from '../registration/ErrorList';
 import { dataTestId } from '../../utils/dataTestIds';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { userIsCuratorForRegistration, userIsRegistrationCurator } from '../../utils/registration-helpers';
@@ -48,7 +44,7 @@ export const PublicRegistrationStatusBar = ({
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const { identifier, doi } = registration;
+  const { doi } = registration;
 
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -190,32 +186,6 @@ export const PublicRegistrationStatusBar = ({
 
   return (
     <div>
-      {!registrationIsValid && tabErrors && (
-        <ErrorList
-          tabErrors={tabErrors}
-          description={
-            <>
-              <Typography variant="h4" component="h1">
-                {registration.status === RegistrationStatus.Published
-                  ? t('registration.public_page.published')
-                  : t('registration.public_page.not_published')}
-              </Typography>
-              <Typography>{t('registration.public_page.error_description')}</Typography>
-            </>
-          }
-          actions={
-            <Button
-              variant="contained"
-              color="inherit"
-              component={RouterLink}
-              to={`${getRegistrationPath(identifier)}?tab=${firstErrorTab}`}
-              endIcon={<EditIcon />}
-              data-testid={dataTestId.registrationLandingPage.backToWizard}>
-              {t('registration.public_page.go_back_to_wizard')}
-            </Button>
-          }
-        />
-      )}
       <BackgroundDiv data-testid={dataTestId.registrationLandingPage.status}>
         {!isPublishedRegistration && registrationIsValid && (
           <>
