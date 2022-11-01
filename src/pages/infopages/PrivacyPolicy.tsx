@@ -329,7 +329,7 @@ const PrivacyPolicy = () => {
           </Typography>
           <Typography>
             <Trans t={t} i18nKey="privacy.contact.section2.email">
-              <a target="_blank" rel="noreferrer" href="mailto:support@sikt.no">
+              <a target="_blank" rel="noreferrer" href="mailto:kontakt@sikt.no">
                 support@sikt.no
               </a>
             </Trans>
