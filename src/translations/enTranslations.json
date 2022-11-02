@@ -1120,7 +1120,7 @@
           "Essay": "Essay",
           "Novel": "Novel",
           "Novella": "Novella",
-          "Other": "Other",
+          "Other": "Other literary arts",
           "Play": "Play",
           "Poetry": "Poetry",
           "Retelling": "Retelling",
@@ -1134,7 +1134,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Long film",
           "InteractiveFilm": "Interactive production",
-          "Other": "Other",
+          "Other": "Other film",
           "SerialFilmProduction": "Serial production",
           "ShortFilm": "Short film"
         },
@@ -1176,7 +1176,7 @@
         },
         "performance_type": "Type/performance form",
         "performance_types": {
-          "Other": "Other",
+          "Other": "Other performing arts",
           "Play": "Play",
           "Reading": "Reading"
         },
@@ -1201,7 +1201,7 @@
           "CollectiveExhibition": "Collective exhibition",
           "IndividualExhibition": "Individual exhibition",
           "Installation": "Installation",
-          "Other": "Other",
+          "Other": "Other visual arts",
           "Performance": "Performance"
         },
         "web_link": "Link"
