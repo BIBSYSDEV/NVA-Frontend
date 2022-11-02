@@ -13,6 +13,8 @@ interface PositionFieldProps {
   includeDisabledPositions?: boolean;
 }
 
+const getPositionCode = (url: string) => url.split('#').pop() ?? '';
+
 export const PositionField = ({
   fieldName,
   disabled = false,
@@ -36,6 +38,14 @@ export const PositionField = ({
     <Field name={fieldName}>
       {({ field, form: { setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
         <Autocomplete
+          filterOptions={(options, state) => {
+            const inputValueLowerCase = state.inputValue.toLowerCase();
+            return options.filter(
+              (option) =>
+                getLanguageString(option.name).toLowerCase().includes(inputValueLowerCase) ||
+                getPositionCode(option.id).toLowerCase().includes(inputValueLowerCase)
+            );
+          }}
           disabled={disabled}
           value={sortedPositions.find((option) => option.id === field.value) ?? null}
           options={sortedPositions}
@@ -44,7 +54,7 @@ export const PositionField = ({
               <div>
                 <Typography>{getLanguageString(option.name)}</Typography>
                 <Typography variant="body2" color="textSecondary">
-                  {option.id.split('#').pop()}
+                  {getPositionCode(option.id)}
                 </Typography>
               </div>
             </li>
