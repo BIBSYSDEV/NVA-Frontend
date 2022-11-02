@@ -157,6 +157,7 @@
     "save": "Lagre",
     "save_and_present": "Lagre og presenter",
     "search": "Søk",
+    "search_by_name": "Søk på navn",
     "search_placeholder": "Navn Navnesen",
     "search_summary_one": "{{count}} treff for \"{{searchTerm}}\"",
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
