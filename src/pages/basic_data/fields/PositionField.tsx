@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, TextField, Typography } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -41,7 +41,12 @@ export const PositionField = ({
           options={sortedPositions}
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
-              {getLanguageString(option.name)}
+              <div>
+                <Typography>{getLanguageString(option.name)}</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {option.id.split('#').pop()}
+                </Typography>
+              </div>
             </li>
           )}
           getOptionDisabled={(option) => !option.enabled}
