@@ -1120,7 +1120,7 @@
           "Essay": "Essay",
           "Novel": "Roman",
           "Novella": "Novelle",
-          "Other": "Annen",
+          "Other": "Annen skrivekunst",
           "Play": "Drama/scenetekster",
           "Poetry": "Poesi",
           "Retelling": "Gjendikting",
@@ -1134,7 +1134,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Langfilm",
           "InteractiveFilm": "Interaktiv produksjon",
-          "Other": "Annet",
+          "Other": "Annen film",
           "SerialFilmProduction": "Seriell produksjon",
           "ShortFilm": "Kortfilm"
         },
@@ -1176,7 +1176,7 @@
         },
         "performance_type": "Type/formidlingsform",
         "performance_types": {
-          "Other": "Annet",
+          "Other": "Annen scenekunst",
           "Play": "Skuespill/drama",
           "Reading": "Lesing"
         },
@@ -1201,7 +1201,7 @@
           "CollectiveExhibition": "Gruppe-/kollektivutstilling",
           "IndividualExhibition": "Separatutstilling",
           "Installation": "Installasjon",
-          "Other": "Annet",
+          "Other": "Annen visuell kunst",
           "Performance": "Performance"
         },
         "web_link": "Lenke"
