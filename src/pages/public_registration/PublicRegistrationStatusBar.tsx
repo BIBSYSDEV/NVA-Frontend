@@ -11,7 +11,7 @@ import { validateYupSchema, yupToFormErrors } from 'formik';
 import { Link as RouterLink } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { RootState } from '../../redux/store';
-import { PublicRegistrationProps } from './PublicRegistrationContent';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus, Registration } from '../../types/registration.types';
@@ -22,13 +22,10 @@ import { getFirstErrorTab, getTabErrors, TabErrors } from '../../utils/formik-he
 import { ErrorList } from '../registration/ErrorList';
 import { dataTestId } from '../../utils/dataTestIds';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import {
-  userIsCuratorForRegistration,
-  userIsRegistrationCurator,
-  userIsRegistrationOwner,
-} from '../../utils/registration-helpers';
+import { userIsCuratorForRegistration, userIsRegistrationCurator } from '../../utils/registration-helpers';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { TicketCollection, TicketStatus } from '../../types/publication_types/messages.types';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 enum LoadingState {
   None,
@@ -40,7 +37,14 @@ enum LoadingState {
   RejectPublishRequest,
 }
 
-export const PublicRegistrationStatusBar = ({ registration, refetchRegistration }: PublicRegistrationProps) => {
+interface PublicRegistrationStatusBarProps extends PublicRegistrationContentProps {
+  refetchRegistration: () => void;
+}
+
+export const PublicRegistrationStatusBar = ({
+  registration,
+  refetchRegistration,
+}: PublicRegistrationStatusBarProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -180,14 +184,12 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
   const firstErrorTab = getFirstErrorTab(tabErrors);
   const registrationIsValid = !tabErrors || firstErrorTab === -1;
 
-  const isOwner = userIsRegistrationOwner(user, registration);
   const isCurator = userIsRegistrationCurator(user, registration);
   const hasNvaDoi = !!doi;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
-  const editRegistrationUrl = getRegistrationPath(identifier);
 
-  return isOwner || isCurator ? (
-    <Box>
+  return (
+    <div>
       {!registrationIsValid && tabErrors && (
         <ErrorList
           tabErrors={tabErrors}
@@ -206,7 +208,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
               variant="contained"
               color="inherit"
               component={RouterLink}
-              to={`${editRegistrationUrl}?tab=${firstErrorTab}`}
+              to={`${getRegistrationPath(identifier)}?tab=${firstErrorTab}`}
               endIcon={<EditIcon />}
               data-testid={dataTestId.registrationLandingPage.backToWizard}>
               {t('registration.public_page.go_back_to_wizard')}
@@ -214,9 +216,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
           }
         />
       )}
-      <Box
-        sx={{ bgcolor: 'background.paper', p: '1rem', mb: '1rem', borderBottom: '2px dotted' }}
-        data-testid={dataTestId.registrationLandingPage.status}>
+      <BackgroundDiv data-testid={dataTestId.registrationLandingPage.status}>
         {!isPublishedRegistration && registrationIsValid && (
           <>
             <Typography variant="h4" component="h1">
@@ -249,15 +249,6 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
                 {t('common.publish')}
               </LoadingButton>
             )}
-
-          <Button
-            component={RouterLink}
-            to={editRegistrationUrl}
-            variant="outlined"
-            endIcon={<EditIcon />}
-            data-testid={dataTestId.registrationLandingPage.editButton}>
-            {t('registration.edit_registration')}
-          </Button>
 
           {!hasNvaDoi && (
             <>
@@ -362,7 +353,7 @@ export const PublicRegistrationStatusBar = ({ registration, refetchRegistration 
             )
           ) : null}
         </Box>
-      </Box>
-    </Box>
-  ) : null;
+      </BackgroundDiv>
+    </div>
+  );
 };
