@@ -109,7 +109,6 @@ export const dataTestId = {
     primaryLanguage: 'public-registration-primary-language',
     projectsAccordion: 'projects-accordion',
     projectTitle: 'project-title',
-    publicationDate: 'public-registration-publication-date',
     publicationsUsingDatasetAccordion: 'publications-using-dataset-accordion',
     publishButton: 'button-publish-registration',
     publishingRequestAcceptButton: 'publishing-request-accept-button',

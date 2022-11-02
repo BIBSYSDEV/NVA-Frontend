@@ -47,7 +47,7 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
 
   return (
     <ErrorBoundary>
-      <Accordion data-testid={`message-${registrationIdentifier}`}>
+      <Accordion data-testid={`message-${registrationIdentifier}`} elevation={2}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon fontSize="large" />}
           sx={{

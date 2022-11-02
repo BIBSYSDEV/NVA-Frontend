@@ -39,6 +39,7 @@ export const mainTheme = createTheme(
     palette: {
       primary: {
         main: Color.PrimaryMain,
+        contrastText: Color.White,
       },
       secondary: {
         main: Color.SecondaryMain,
