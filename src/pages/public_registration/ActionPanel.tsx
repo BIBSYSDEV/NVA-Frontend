@@ -13,7 +13,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { userIsCuratorForRegistration } from '../../utils/registration-helpers';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
-import { ValidationAccordion } from './action_accordions/ValidationAccordion';
+import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 export interface ActionPanelProps extends PublicRegistrationContentProps {
@@ -49,13 +49,11 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
   });
   const registrationTickets = registrationTicketCollection?.tickets ?? [];
 
-  // const registrationIsValid = !tabErrors;
-
   return (
     <Paper elevation={0}>
       <StyledPaperHeader>
         <Typography color="inherit" variant="h2" component="h1">
-          Handlinger
+          {t('common.tasks')}
         </Typography>
       </StyledPaperHeader>
       <BackgroundDiv>
@@ -63,7 +61,14 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
           <CircularProgress />
         ) : (
           <>
-            {tabErrors && <ValidationAccordion errors={tabErrors} />}
+            <PublishingAccordion
+              refetchRegistration={refetchRegistration}
+              registration={registration}
+              errors={tabErrors}
+              publishingRequestTicket={
+                registrationTickets.find((ticket) => ticket.type === 'PublishingRequest') ?? null
+              }
+            />
             {!registration.entityDescription?.reference?.doi && (
               <DoiRequestAccordion
                 refetchRegistration={refetchRegistration}

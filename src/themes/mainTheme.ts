@@ -90,6 +90,11 @@ export const mainTheme = createTheme(
       },
     },
     components: {
+      MuiAccordionSummary: {
+        styleOverrides: {
+          root: { fontWeight: 700 },
+        },
+      },
       MuiAutocomplete: {
         styleOverrides: {
           tag: {

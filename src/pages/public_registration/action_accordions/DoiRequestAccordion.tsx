@@ -98,7 +98,7 @@ export const DoiRequestAccordion = ({
 
   return (
     <Accordion elevation={3}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>DOI</AccordionSummary>
+      <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>{t('common.doi_long')}</AccordionSummary>
       <AccordionDetails>
         {!doiRequestTicket && (
           <>
