@@ -103,9 +103,9 @@ export const PublishingAccordion = ({
   const hasPendingPublishingRequest = publishingRequestTicket?.status === 'Pending';
 
   return (
-    <Accordion elevation={3}>
+    <Accordion elevation={3} defaultExpanded={registration.status === RegistrationStatus.Draft}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {t('registration.public_page.publishing_request')}
+        {t('registration.public_page.publishing_request')} - {t(`registration.status.${registration.status}`)}
         {!registrationIsValid && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
             <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
@@ -138,12 +138,11 @@ export const PublishingAccordion = ({
             })}
           </Typography>
         )}
-
         {registration.status === RegistrationStatus.Draft && (
-          <Box sx={{ mt: '1rem' }}>
+          <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
             {!hasPendingPublishingRequest ? (
               <LoadingButton
-                disabled={!!isLoading || !registrationIsValid}
+                disabled={isLoading !== LoadingState.None || !registrationIsValid}
                 data-testid={dataTestId.registrationLandingPage.publishButton}
                 color="secondary"
                 variant="contained"
@@ -163,7 +162,7 @@ export const PublishingAccordion = ({
                     loadingPosition="end"
                     onClick={() => updatePendingPublishingRequest('Completed')}
                     loading={isLoading === LoadingState.ApprovePulishingRequest}
-                    disabled={!!isLoading || !registrationIsValid}>
+                    disabled={isLoading !== LoadingState.None || !registrationIsValid}>
                     {t('registration.public_page.approve_publish_request')}
                   </LoadingButton>
                   <LoadingButton
@@ -173,7 +172,7 @@ export const PublishingAccordion = ({
                     loadingPosition="end"
                     onClick={() => updatePendingPublishingRequest('Closed')}
                     loading={isLoading === LoadingState.RejectPublishingRequest}
-                    disabled={!!isLoading}>
+                    disabled={isLoading !== LoadingState.None}>
                     {t('registration.public_page.reject_publish_request')}
                   </LoadingButton>
                 </>

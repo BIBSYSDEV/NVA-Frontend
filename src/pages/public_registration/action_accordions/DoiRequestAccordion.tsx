@@ -7,6 +7,7 @@ import {
   Button,
   DialogActions,
   TextField,
+  Box,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -90,8 +91,11 @@ export const DoiRequestAccordion = ({
         dispatch(setNotification({ message: t('feedback.error.update_doi_request'), variant: 'error' }));
         setIsLoading(LoadingState.None);
       } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
-        refetchRegistration();
+        // TODO: Adding DOI can take some extra time, so wait 10 sec before refetching
+        setTimeout(() => {
+          dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
+          refetchRegistration();
+        }, 10_000);
       }
     }
   };
@@ -148,7 +152,7 @@ export const DoiRequestAccordion = ({
         )}
 
         {isPublishedRegistration && isPendingDoiRequest && (
-          <>
+          <Box sx={{ display: 'flex', gap: '1rem' }}>
             <LoadingButton
               variant="contained"
               data-testid={dataTestId.registrationLandingPage.createDoiButton}
@@ -156,7 +160,7 @@ export const DoiRequestAccordion = ({
               loadingPosition="end"
               onClick={() => updatePendingDoiRequest('Completed')}
               loading={isLoading === LoadingState.ApproveDoi}
-              disabled={!!isLoading}>
+              disabled={isLoading !== LoadingState.None}>
               {t('common.create_doi')}
             </LoadingButton>
             <LoadingButton
@@ -166,13 +170,11 @@ export const DoiRequestAccordion = ({
               loadingPosition="end"
               onClick={() => updatePendingDoiRequest('Closed')}
               loading={isLoading === LoadingState.RejectDoi}
-              disabled={!!isLoading}>
+              disabled={isLoading !== LoadingState.None}>
               {t('common.reject_doi')}
             </LoadingButton>
-          </>
+          </Box>
         )}
-
-        {/* TODO: Handle (pending) reserved DOI for draft Registration? */}
       </AccordionDetails>
     </Accordion>
   );

@@ -48,6 +48,7 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
     errorMessage: t('feedback.error.get_tickets'),
   });
   const registrationTickets = registrationTicketCollection?.tickets ?? [];
+  const doiRequestTicket = registrationTickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
 
   return (
     <Paper elevation={0}>
@@ -69,11 +70,11 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
                 registrationTickets.find((ticket) => ticket.type === 'PublishingRequest') ?? null
               }
             />
-            {!registration.entityDescription?.reference?.doi && (
+            {!registration.entityDescription?.reference?.doi && doiRequestTicket?.status !== 'Completed' && (
               <DoiRequestAccordion
                 refetchRegistration={refetchRegistration}
                 registration={registration}
-                doiRequestTicket={registrationTickets.find((ticket) => ticket.type === 'DoiRequest') ?? null}
+                doiRequestTicket={doiRequestTicket}
               />
             )}
           </>
