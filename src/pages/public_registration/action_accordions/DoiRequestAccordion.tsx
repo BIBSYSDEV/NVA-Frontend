@@ -101,7 +101,7 @@ export const DoiRequestAccordion = ({
   };
 
   return (
-    <Accordion elevation={3}>
+    <Accordion data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion} elevation={3}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>{t('common.doi_long')}</AccordionSummary>
       <AccordionDetails>
         {!doiRequestTicket && (
@@ -113,8 +113,8 @@ export const DoiRequestAccordion = ({
               loading={isLoading !== LoadingState.None}
               data-testid={
                 isPublishedRegistration
-                  ? dataTestId.registrationLandingPage.requestDoiButton
-                  : dataTestId.registrationLandingPage.reserveDoiButton
+                  ? dataTestId.registrationLandingPage.tasksPanel.requestDoiButton
+                  : dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton
               }
               onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
               {isPublishedRegistration
@@ -126,7 +126,7 @@ export const DoiRequestAccordion = ({
               open={openRequestDoiModal}
               onClose={toggleRequestDoiModal}
               headingText={t('registration.public_page.request_doi')}
-              dataTestId={dataTestId.registrationLandingPage.requestDoiModal}>
+              dataTestId={dataTestId.registrationLandingPage.tasksPanel.requestDoiModal}>
               <Typography paragraph>{t('registration.public_page.request_doi_description')}</Typography>
               <TextField
                 variant="outlined"
@@ -141,7 +141,7 @@ export const DoiRequestAccordion = ({
                 <Button onClick={toggleRequestDoiModal}>{t('common.cancel')}</Button>
                 <LoadingButton
                   variant="contained"
-                  data-testid={dataTestId.registrationLandingPage.sendDoiButton}
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.sendDoiButton}
                   onClick={sendDoiRequest}
                   loading={isLoading !== LoadingState.None}>
                   {t('common.send')}
@@ -155,7 +155,7 @@ export const DoiRequestAccordion = ({
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <LoadingButton
               variant="contained"
-              data-testid={dataTestId.registrationLandingPage.createDoiButton}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
               endIcon={<CheckIcon />}
               loadingPosition="end"
               onClick={() => updatePendingDoiRequest('Completed')}

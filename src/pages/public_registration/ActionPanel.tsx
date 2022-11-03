@@ -53,13 +53,13 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
   return (
     <Paper elevation={0}>
       <StyledPaperHeader>
-        <Typography color="inherit" variant="h2" component="h1">
+        <Typography color="inherit" variant="h2" component="h1" id="tasks-header">
           {t('common.tasks')}
         </Typography>
       </StyledPaperHeader>
       <BackgroundDiv>
         {isLoadingRegistrationTicketCollection ? (
-          <CircularProgress />
+          <CircularProgress aria-labelledby="tasks-header" />
         ) : (
           <>
             <PublishingAccordion

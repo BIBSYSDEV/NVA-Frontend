@@ -103,7 +103,10 @@ export const PublishingAccordion = ({
   const hasPendingPublishingRequest = publishingRequestTicket?.status === 'Pending';
 
   return (
-    <Accordion elevation={3} defaultExpanded={registration.status === RegistrationStatus.Draft}>
+    <Accordion
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
+      elevation={3}
+      defaultExpanded={registration.status === RegistrationStatus.Draft}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('registration.public_page.publishing_request')} - {t(`registration.status.${registration.status}`)}
         {!registrationIsValid && (
@@ -123,7 +126,7 @@ export const PublishingAccordion = ({
                 component={RouterLink}
                 to={`${getRegistrationPath(registration.identifier)}?tab=${firstErrorTab}`}
                 endIcon={<EditIcon />}
-                data-testid={dataTestId.registrationLandingPage.backToWizard}>
+                data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
                 {t('registration.public_page.go_back_to_wizard')}
               </Button>
             }
@@ -143,7 +146,7 @@ export const PublishingAccordion = ({
             {!hasPendingPublishingRequest ? (
               <LoadingButton
                 disabled={isLoading !== LoadingState.None || !registrationIsValid}
-                data-testid={dataTestId.registrationLandingPage.publishButton}
+                data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
                 color="secondary"
                 variant="contained"
                 endIcon={<CloudUploadIcon />}
@@ -157,7 +160,7 @@ export const PublishingAccordion = ({
                 <>
                   <LoadingButton
                     variant="contained"
-                    data-testid={dataTestId.registrationLandingPage.publishingRequestAcceptButton}
+                    data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
                     endIcon={<CheckIcon />}
                     loadingPosition="end"
                     onClick={() => updatePendingPublishingRequest('Completed')}
@@ -167,7 +170,7 @@ export const PublishingAccordion = ({
                   </LoadingButton>
                   <LoadingButton
                     variant="contained"
-                    data-testid={dataTestId.registrationLandingPage.publishingRequestRejectButton}
+                    data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
                     endIcon={<CloseIcon />}
                     loadingPosition="end"
                     onClick={() => updatePendingPublishingRequest('Closed')}
