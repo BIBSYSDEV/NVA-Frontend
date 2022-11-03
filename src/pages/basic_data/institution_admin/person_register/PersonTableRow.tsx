@@ -141,7 +141,7 @@ export const PersonTableRow = ({
   const employmentBaseFieldName = `employments[${employmentIndex}]`;
 
   return (
-    <TableRow>
+    <TableRow onClick={toggleDialog} sx={{ cursor: 'pointer' }}>
       <TableCell>{cristinIdentifier}</TableCell>
       <TableCell>{getMaskedNationalIdentityNumber(nationalId)}</TableCell>
       <TableCell width="25%">
