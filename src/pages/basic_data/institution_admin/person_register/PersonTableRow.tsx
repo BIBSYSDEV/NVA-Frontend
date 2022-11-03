@@ -18,6 +18,8 @@ import {
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
@@ -64,6 +66,7 @@ export const PersonTableRow = ({
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
   const [employmentIndex, setEmploymentIndex] = useState(0);
+  const [showFullNin, setShowFullNin] = useState(false);
 
   const { cristinIdentifier, firstName, lastName, employments, orcid, nationalId } =
     convertToFlatCristinPerson(cristinPerson);
@@ -192,8 +195,15 @@ export const PersonTableRow = ({
                     <TextField
                       variant="filled"
                       disabled
-                      value={getMaskedNationalIdentityNumber(nationalId)}
+                      value={showFullNin ? nationalId : getMaskedNationalIdentityNumber(nationalId)}
                       label={t('basic_data.person_register.national_identity_number')}
+                      InputProps={{
+                        endAdornment: (
+                          <IconButton onClick={() => setShowFullNin((prevShowFullNin) => !prevShowFullNin)}>
+                            {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                          </IconButton>
+                        ),
+                      }}
                     />
                     {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
                     {employmentsInOtherInstitutions.some(isActiveEmployment) && (
