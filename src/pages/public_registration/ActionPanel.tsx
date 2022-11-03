@@ -8,6 +8,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { TicketCollection } from '../../types/publication_types/messages.types';
 import { Registration } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { TabErrors, getTabErrors } from '../../utils/formik-helpers';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { userIsCuratorForRegistration } from '../../utils/registration-helpers';
@@ -51,7 +52,7 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
   const doiRequestTicket = registrationTickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
 
   return (
-    <Paper elevation={0}>
+    <Paper elevation={0} data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
       <StyledPaperHeader>
         <Typography color="inherit" variant="h2" component="h1" id="tasks-header">
           {t('common.tasks')}

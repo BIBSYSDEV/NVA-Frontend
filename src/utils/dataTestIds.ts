@@ -117,6 +117,7 @@ export const dataTestId = {
       backToWizard: 'back-to-wizard-button',
       createDoiButton: 'button-create-doi',
       doiRequestAccordion: 'doi-request-accordion',
+      panelRoot: 'tasks-panel',
       publishButton: 'button-publish-registration',
       publishingRequestAcceptButton: 'publishing-request-accept-button',
       publishingRequestAccordion: 'publishing-request-accordion',
