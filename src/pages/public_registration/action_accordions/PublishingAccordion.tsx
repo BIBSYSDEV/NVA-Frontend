@@ -8,23 +8,24 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import { LoadingButton } from '@mui/lab';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { validateYupSchema, yupToFormErrors } from 'formik';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getFirstErrorTab, TabErrors } from '../../../utils/formik-helpers';
+import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
 import { getRegistrationPath } from '../../../utils/urlPaths';
 import { ErrorList } from '../../registration/ErrorList';
 import { Ticket, TicketStatus } from '../../../types/publication_types/messages.types';
 import { ActionPanelProps } from '../ActionPanel';
-import { RegistrationStatus } from '../../../types/registration.types';
+import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { userIsRegistrationCurator } from '../../../utils/registration-helpers';
 import { RootState } from '../../../redux/store';
+import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 
 interface PublishingAccordionProps extends ActionPanelProps {
-  errors: TabErrors | undefined;
   publishingRequestTicket: Ticket | null;
 }
 
@@ -36,7 +37,6 @@ enum LoadingState {
 }
 
 export const PublishingAccordion = ({
-  errors,
   publishingRequestTicket,
   registration,
   refetchRegistration,
@@ -45,10 +45,28 @@ export const PublishingAccordion = ({
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
 
-  const firstErrorTab = getFirstErrorTab(errors);
-  const registrationIsValid = firstErrorTab === -1;
-
   const [isLoading, setIsLoading] = useState(LoadingState.None);
+
+  const [tabErrors, setTabErrors] = useState<TabErrors>();
+  useEffect(() => {
+    const publicationInstance = registration.entityDescription?.reference?.publicationInstance;
+    const contentType =
+      publicationInstance && 'contentType' in publicationInstance ? publicationInstance.contentType : null;
+    try {
+      validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
+        publicationInstanceType: publicationInstance?.type ?? '',
+        publicationStatus: registration.status,
+        contentType,
+      });
+    } catch (error) {
+      const formErrors = yupToFormErrors(error);
+      const customErrors = getTabErrors(registration, formErrors);
+      setTabErrors(customErrors);
+    }
+  }, [registration]);
+
+  const firstErrorTab = getFirstErrorTab(tabErrors);
+  const registrationIsValid = firstErrorTab === -1;
 
   const onClickPublish = async () => {
     setIsLoading(LoadingState.CreatePublishingREquest);
@@ -116,9 +134,9 @@ export const PublishingAccordion = ({
         )}
       </AccordionSummary>
       <AccordionDetails>
-        {errors && (
+        {tabErrors && (
           <ErrorList
-            tabErrors={errors}
+            tabErrors={tabErrors}
             description={<Typography>{t('registration.public_page.error_description')}</Typography>}
             actions={
               <Button
