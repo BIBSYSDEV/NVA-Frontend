@@ -18,6 +18,8 @@ import {
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
@@ -40,8 +42,7 @@ import { createUser } from '../../../../api/roleApi';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+
 export interface PersonData {
   employments: Employment[];
   roles: RoleName[];
@@ -198,7 +199,7 @@ export const PersonTableRow = ({
                       label={t('basic_data.person_register.national_identity_number')}
                       InputProps={{
                         endAdornment: (
-                          <IconButton onClick={() => setShowFullNin((prevShowFullNIN) => !prevShowFullNIN)}>
+                          <IconButton onClick={() => setShowFullNin((prevShowFullNin) => !prevShowFullNin)}>
                             {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
                           </IconButton>
                         ),
