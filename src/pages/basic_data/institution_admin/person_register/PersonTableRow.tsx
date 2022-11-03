@@ -40,7 +40,8 @@ import { createUser } from '../../../../api/roleApi';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
-
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 export interface PersonData {
   employments: Employment[];
   roles: RoleName[];
@@ -64,6 +65,7 @@ export const PersonTableRow = ({
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
   const [employmentIndex, setEmploymentIndex] = useState(0);
+  const [showFullNin, setShowFullNin] = useState(false);
 
   const { cristinIdentifier, firstName, lastName, employments, orcid, nationalId } =
     convertToFlatCristinPerson(cristinPerson);
@@ -192,8 +194,15 @@ export const PersonTableRow = ({
                     <TextField
                       variant="filled"
                       disabled
-                      value={getMaskedNationalIdentityNumber(nationalId)}
+                      value={showFullNin ? nationalId : getMaskedNationalIdentityNumber(nationalId)}
                       label={t('basic_data.person_register.national_identity_number')}
+                      InputProps={{
+                        endAdornment: (
+                          <IconButton onClick={() => setShowFullNin((prevShowFullNIN) => !prevShowFullNIN)}>
+                            {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                          </IconButton>
+                        ),
+                      }}
                     />
                     {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
                     {employmentsInOtherInstitutions.some(isActiveEmployment) && (
