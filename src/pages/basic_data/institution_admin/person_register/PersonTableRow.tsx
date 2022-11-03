@@ -18,6 +18,8 @@ import {
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
@@ -64,6 +66,7 @@ export const PersonTableRow = ({
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
   const [employmentIndex, setEmploymentIndex] = useState(0);
+  const [showFullNin, setShowFullNin] = useState(false);
 
   const { cristinIdentifier, firstName, lastName, employments, orcid, nationalId } =
     convertToFlatCristinPerson(cristinPerson);
@@ -141,39 +144,41 @@ export const PersonTableRow = ({
   const employmentBaseFieldName = `employments[${employmentIndex}]`;
 
   return (
-    <TableRow>
-      <TableCell>{cristinIdentifier}</TableCell>
-      <TableCell>{getMaskedNationalIdentityNumber(nationalId)}</TableCell>
-      <TableCell width="25%">
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography>
-            {firstName} {lastName}
-          </Typography>
-          {orcidUrl && (
-            <Tooltip title={t('common.orcid_profile')}>
-              <IconButton size="small" href={orcidUrl} target="_blank">
-                <img src={OrcidLogo} height="20" alt="orcid" />
-              </IconButton>
-            </Tooltip>
-          )}
-        </Box>
-      </TableCell>
-      <TableCell width="60%">
-        <Box component="ul" sx={{ p: 0 }}>
-          {activeEmployments.map((employment, index) => (
-            <Box key={`${employment.organization}-${index}`} component="li" sx={{ display: 'flex' }}>
-              <AffiliationHierarchy unitUri={employment.organization} commaSeparated />
-            </Box>
-          ))}
-        </Box>
-      </TableCell>
-      <TableCell>
-        <Tooltip title={t('common.edit')}>
-          <IconButton onClick={toggleDialog}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-      </TableCell>
+    <>
+      <TableRow onClick={toggleDialog} sx={{ cursor: 'pointer' }}>
+        <TableCell>{cristinIdentifier}</TableCell>
+        <TableCell>{getMaskedNationalIdentityNumber(nationalId)}</TableCell>
+        <TableCell width="25%">
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography>
+              {firstName} {lastName}
+            </Typography>
+            {orcidUrl && (
+              <Tooltip title={t('common.orcid_profile')}>
+                <IconButton size="small" href={orcidUrl} target="_blank">
+                  <img src={OrcidLogo} height="20" alt="orcid" />
+                </IconButton>
+              </Tooltip>
+            )}
+          </Box>
+        </TableCell>
+        <TableCell width="60%">
+          <Box component="ul" sx={{ p: 0 }}>
+            {activeEmployments.map((employment, index) => (
+              <Box key={`${employment.organization}-${index}`} component="li" sx={{ display: 'flex' }}>
+                <AffiliationHierarchy unitUri={employment.organization} commaSeparated />
+              </Box>
+            ))}
+          </Box>
+        </TableCell>
+        <TableCell>
+          <Tooltip title={t('common.edit')}>
+            <IconButton>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+        </TableCell>
+      </TableRow>
 
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
@@ -192,8 +197,15 @@ export const PersonTableRow = ({
                     <TextField
                       variant="filled"
                       disabled
-                      value={getMaskedNationalIdentityNumber(nationalId)}
+                      value={showFullNin ? nationalId : getMaskedNationalIdentityNumber(nationalId)}
                       label={t('basic_data.person_register.national_identity_number')}
+                      InputProps={{
+                        endAdornment: (
+                          <IconButton onClick={() => setShowFullNin((prevShowFullNin) => !prevShowFullNin)}>
+                            {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                          </IconButton>
+                        ),
+                      }}
                     />
                     {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
                     {employmentsInOtherInstitutions.some(isActiveEmployment) && (
@@ -341,6 +353,6 @@ export const PersonTableRow = ({
           )}
         </Formik>
       </Dialog>
-    </TableRow>
+    </>
   );
 };
