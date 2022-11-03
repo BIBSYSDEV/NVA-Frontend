@@ -144,39 +144,41 @@ export const PersonTableRow = ({
   const employmentBaseFieldName = `employments[${employmentIndex}]`;
 
   return (
-    <TableRow onClick={toggleDialog} sx={{ cursor: 'pointer' }}>
-      <TableCell>{cristinIdentifier}</TableCell>
-      <TableCell>{getMaskedNationalIdentityNumber(nationalId)}</TableCell>
-      <TableCell width="25%">
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography>
-            {firstName} {lastName}
-          </Typography>
-          {orcidUrl && (
-            <Tooltip title={t('common.orcid_profile')}>
-              <IconButton size="small" href={orcidUrl} target="_blank">
-                <img src={OrcidLogo} height="20" alt="orcid" />
-              </IconButton>
-            </Tooltip>
-          )}
-        </Box>
-      </TableCell>
-      <TableCell width="60%">
-        <Box component="ul" sx={{ p: 0 }}>
-          {activeEmployments.map((employment, index) => (
-            <Box key={`${employment.organization}-${index}`} component="li" sx={{ display: 'flex' }}>
-              <AffiliationHierarchy unitUri={employment.organization} commaSeparated />
-            </Box>
-          ))}
-        </Box>
-      </TableCell>
-      <TableCell>
-        <Tooltip title={t('common.edit')}>
-          <IconButton>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-      </TableCell>
+    <>
+      <TableRow onClick={toggleDialog} sx={{ cursor: 'pointer' }}>
+        <TableCell>{cristinIdentifier}</TableCell>
+        <TableCell>{getMaskedNationalIdentityNumber(nationalId)}</TableCell>
+        <TableCell width="25%">
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography>
+              {firstName} {lastName}
+            </Typography>
+            {orcidUrl && (
+              <Tooltip title={t('common.orcid_profile')}>
+                <IconButton size="small" href={orcidUrl} target="_blank">
+                  <img src={OrcidLogo} height="20" alt="orcid" />
+                </IconButton>
+              </Tooltip>
+            )}
+          </Box>
+        </TableCell>
+        <TableCell width="60%">
+          <Box component="ul" sx={{ p: 0 }}>
+            {activeEmployments.map((employment, index) => (
+              <Box key={`${employment.organization}-${index}`} component="li" sx={{ display: 'flex' }}>
+                <AffiliationHierarchy unitUri={employment.organization} commaSeparated />
+              </Box>
+            ))}
+          </Box>
+        </TableCell>
+        <TableCell>
+          <Tooltip title={t('common.edit')}>
+            <IconButton>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+        </TableCell>
+      </TableRow>
 
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
@@ -351,6 +353,6 @@ export const PersonTableRow = ({
           )}
         </Formik>
       </Dialog>
-    </TableRow>
+    </>
   );
 };
