@@ -71,7 +71,7 @@ export const PersonRegisterPage = () => {
         variant="filled"
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}
-        label={t('common.search')}
+        label={t('common.search_by_name')}
         fullWidth
         sx={{ mb: '1rem', maxWidth: '25rem' }}
       />

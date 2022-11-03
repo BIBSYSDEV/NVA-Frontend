@@ -18,7 +18,7 @@ export const AboutContent = () => {
       <Typography paragraph>{t('about.description.paragraph4')}</Typography>
       <Typography paragraph>
         <Trans t={t} i18nKey="about.description.paragraph5">
-          <MuiLink href={'mailto:support@sikt.no'} target="_blank" rel="noopener noreferrer">
+          <MuiLink href={'mailto:kontakt@sikt.no'} target="_blank" rel="noopener noreferrer">
             (i18n content: support email)
           </MuiLink>
         </Trans>

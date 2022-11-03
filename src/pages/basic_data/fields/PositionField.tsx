@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, TextField, Typography } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +12,8 @@ interface PositionFieldProps {
   disabled?: boolean;
   includeDisabledPositions?: boolean;
 }
+
+const getPositionCode = (url: string) => url.split('#').pop() ?? '';
 
 export const PositionField = ({
   fieldName,
@@ -36,12 +38,25 @@ export const PositionField = ({
     <Field name={fieldName}>
       {({ field, form: { setFieldValue }, meta: { error, touched } }: FieldProps<string>) => (
         <Autocomplete
+          filterOptions={(options, state) => {
+            const inputValueLowerCase = state.inputValue.toLowerCase();
+            return options.filter(
+              (option) =>
+                getLanguageString(option.name).toLowerCase().includes(inputValueLowerCase) ||
+                getPositionCode(option.id).toLowerCase().includes(inputValueLowerCase)
+            );
+          }}
           disabled={disabled}
           value={sortedPositions.find((option) => option.id === field.value) ?? null}
           options={sortedPositions}
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
-              {getLanguageString(option.name)}
+              <div>
+                <Typography>{getLanguageString(option.name)}</Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {getPositionCode(option.id)}
+                </Typography>
+              </div>
             </li>
           )}
           getOptionDisabled={(option) => !option.enabled}

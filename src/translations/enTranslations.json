@@ -6,14 +6,14 @@
         "bullet_point1": "Publish reports, student theses and other material produced at the institution",
         "intro": "By using NVA, Norwegian research institutions are able to:"
       },
-      "paragraph1": "NVA will also be developed for use in reporting scientific publication to the Ministry of Education and Research and the Ministry of Health and Care Services (NVI reporting), and for other administrative tasks.",
-      "paragraph2": "The institution is responsible for the processing and registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also receives content from other data sources.",
+      "paragraph1": "NVA is also being developed for use in reporting scientific publication to the Ministry of Education and Research and the Ministry of Health and Care Services (NVI reporting), and for other administrative tasks.",
+      "paragraph2": "Sikt is the data processor. The individual institution is the data controller and registers and maintains its own content in the service, and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also receives content from other data sources.",
       "paragraph3": "NVA supports postponed publication of resources. This means that a registration can be completed so that metadata about the resource is published, while the resource itself is not open until the specified date. The service does not allow the processing of sensitive personal data.",
       "paragraph4": "NVA will make the institution's open content available via open interfaces, with the intention of making this known and searchable to the outside world and promoting indexing in search engines and search portals.",
-      "paragraph5": "Although NVA is established, the service is still under development. Institutions that do not have an open research archive can contact <0>Sikt</0> to use NVA as a pilot institution."
+      "paragraph5": "Although NVA is established and in use by several institutions, the service will be in continous development throughout its lifetime. Institutions that do not have a research archive can contact <0>Sikt</0> to use NVA as a pilot institution."
     },
     "footer_text": "$t(about.short_description) The service is delivered by Sikt.",
-    "short_description": "Nasjonalt Vitenarkiv collects information about Norwegian research and makes research results openly available."
+    "short_description": "The national research archive (NVA) collects information about Norwegian research and makes research results and research information openly available."
   },
   "authorization": {
     "accept_terms_to_create_user": "I accept to be created as a user in NVA",
@@ -158,6 +158,7 @@
     "save": "Save",
     "save_and_present": "Save and present",
     "search": "Search",
+    "search_by_name": "Search by name",
     "search_placeholder": "Name Nameson",
     "search_summary_one": "{{count}} result for \"{{searchTerm}}\"",
     "search_summary_other": "{{count}} results for \"{{searchTerm}}\"",
@@ -942,8 +943,8 @@
     "modal_unsaved_changes_heading": "Leave without saving?",
     "new_registration": "New registration",
     "public_page": {
-      "approve_publish_request": "Approve publishing request",
       "about_registration": "About this registration",
+      "approve_publish_request": "Approve publishing request",
       "error_description": "To publish you must fix the following errors:",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",
       "go_back_to_wizard": "Go back to form",
@@ -1057,19 +1058,19 @@
         "add_publication_mention": "Add publication/mention",
         "add_web_publication": "Add web publication",
         "announcements": "Announcements",
-        "audio_video_type": {
-          "Audiobook": "Audio book",
-          "Other": "Other",
-          "Podcast": "Podcast",
-          "RadioPlay": "Radio play",
-          "ShortFilm": "Short film"
-        },
         "architecture_type": {
           "Building": "Building",
           "Interior": "Interior",
           "LandscapeArchitecture": "Landscape architecture",
           "Other": "Other architecture",
           "PlanningProposal": "Planning proposal"
+        },
+        "audio_video_type": {
+          "Audiobook": "Audio book",
+          "Other": "Other",
+          "Podcast": "Podcast",
+          "RadioPlay": "Radio play",
+          "ShortFilm": "Short film"
         },
         "award_name": "Award name",
         "award_organizer": "Award giver/organizer",
@@ -1122,7 +1123,7 @@
           "Essay": "Essay",
           "Novel": "Novel",
           "Novella": "Novella",
-          "Other": "Other",
+          "Other": "Other literary arts",
           "Play": "Play",
           "Poetry": "Poetry",
           "Retelling": "Retelling",
@@ -1136,7 +1137,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Long film",
           "InteractiveFilm": "Interactive production",
-          "Other": "Other",
+          "Other": "Other film",
           "SerialFilmProduction": "Serial production",
           "ShortFilm": "Short film"
         },
@@ -1178,7 +1179,7 @@
         },
         "performance_type": "Type/performance form",
         "performance_types": {
-          "Other": "Other",
+          "Other": "Other performing arts",
           "Play": "Play",
           "Reading": "Reading"
         },
@@ -1203,7 +1204,7 @@
           "CollectiveExhibition": "Collective exhibition",
           "IndividualExhibition": "Individual exhibition",
           "Installation": "Installation",
-          "Other": "Other",
+          "Other": "Other visual arts",
           "Performance": "Performance"
         },
         "web_link": "Link"
