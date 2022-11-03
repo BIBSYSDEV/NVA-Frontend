@@ -948,6 +948,8 @@
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
+      "has_pending_doi_request": "Registreringen har en DOI-forespørsel under behandling.",
+      "has_pending_publishing_request": "Registreringen har en publiseringsforespørsel under behandling.",
       "in_progress": "Under behandling",
       "message_to_curator": "Melding til kurator",
       "other_contributors_one": "(+{{count}} annen)",

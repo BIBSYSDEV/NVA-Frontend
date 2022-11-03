@@ -104,6 +104,10 @@ export const DoiRequestAccordion = ({
     <Accordion data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion} elevation={3}>
       <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>{t('common.doi_long')}</AccordionSummary>
       <AccordionDetails>
+        {isPendingDoiRequest && (
+          <Typography paragraph>{t('registration.public_page.has_pending_doi_request')}</Typography>
+        )}
+
         {!doiRequestTicket && (
           <>
             <LoadingButton

@@ -100,7 +100,7 @@ export const PublishingAccordion = ({
   };
 
   const isCurator = userIsRegistrationCurator(user, registration);
-  const hasPendingPublishingRequest = publishingRequestTicket?.status === 'Pending';
+  const isPendingPublishingRequest = publishingRequestTicket?.status === 'Pending';
 
   return (
     <Accordion
@@ -133,6 +133,10 @@ export const PublishingAccordion = ({
           />
         )}
 
+        {isPendingPublishingRequest && (
+          <Typography paragraph>{t('registration.public_page.has_pending_publishing_request')}</Typography>
+        )}
+
         {registration.status === RegistrationStatus.Draft && registrationIsValid && (
           <>
             <Typography>{t('registration.public_page.ready_to_be_published')}</Typography>
@@ -151,7 +155,7 @@ export const PublishingAccordion = ({
 
         {registration.status === RegistrationStatus.Draft && (
           <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
-            {!hasPendingPublishingRequest ? (
+            {!isPendingPublishingRequest ? (
               <LoadingButton
                 disabled={isLoading !== LoadingState.None || !registrationIsValid}
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
