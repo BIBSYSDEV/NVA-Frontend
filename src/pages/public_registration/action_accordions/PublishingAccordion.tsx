@@ -46,6 +46,7 @@ export const PublishingAccordion = ({
   const user = useSelector((store: RootState) => store.user);
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
+  const [registrationIsValid, setRegistrationIsValid] = useState(false);
 
   const [tabErrors, setTabErrors] = useState<TabErrors>();
   useEffect(() => {
@@ -58,6 +59,7 @@ export const PublishingAccordion = ({
         publicationStatus: registration.status,
         contentType,
       });
+      setRegistrationIsValid(true);
     } catch (error) {
       const formErrors = yupToFormErrors(error);
       const customErrors = getTabErrors(registration, formErrors);
@@ -66,7 +68,6 @@ export const PublishingAccordion = ({
   }, [registration]);
 
   const firstErrorTab = getFirstErrorTab(tabErrors);
-  const registrationIsValid = firstErrorTab === -1;
 
   const onClickPublish = async () => {
     setIsLoading(LoadingState.CreatePublishingREquest);

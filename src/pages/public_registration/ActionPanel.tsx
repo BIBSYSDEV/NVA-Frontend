@@ -1,6 +1,7 @@
 import { CircularProgress, Paper, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
@@ -27,6 +28,7 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
   });
   const registrationTickets = registrationTicketCollection?.tickets ?? [];
   const doiRequestTicket = registrationTickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
+  const publishingRequestTicket = registrationTickets.find((ticket) => ticket.type === 'PublishingRequest') ?? null;
 
   return (
     <Paper elevation={0} data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
@@ -40,20 +42,22 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
           <CircularProgress aria-labelledby="tasks-header" />
         ) : (
           <>
-            <PublishingAccordion
-              refetchRegistration={refetchRegistration}
-              registration={registration}
-              publishingRequestTicket={
-                registrationTickets.find((ticket) => ticket.type === 'PublishingRequest') ?? null
-              }
-            />
-            {!registration.entityDescription?.reference?.doi && doiRequestTicket?.status !== 'Completed' && (
-              <DoiRequestAccordion
+            <ErrorBoundary>
+              <PublishingAccordion
                 refetchRegistration={refetchRegistration}
                 registration={registration}
-                doiRequestTicket={doiRequestTicket}
+                publishingRequestTicket={publishingRequestTicket}
               />
-            )}
+            </ErrorBoundary>
+            <ErrorBoundary>
+              {!registration.entityDescription?.reference?.doi && doiRequestTicket?.status !== 'Completed' && (
+                <DoiRequestAccordion
+                  refetchRegistration={refetchRegistration}
+                  registration={registration}
+                  doiRequestTicket={doiRequestTicket}
+                />
+              )}
+            </ErrorBoundary>
           </>
         )}
       </BackgroundDiv>
