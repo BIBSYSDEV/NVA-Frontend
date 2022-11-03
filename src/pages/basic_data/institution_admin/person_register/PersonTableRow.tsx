@@ -169,7 +169,7 @@ export const PersonTableRow = ({
       </TableCell>
       <TableCell>
         <Tooltip title={t('common.edit')}>
-          <IconButton onClick={toggleDialog}>
+          <IconButton>
             <EditIcon />
           </IconButton>
         </Tooltip>
