@@ -133,6 +133,13 @@ export const PublishingAccordion = ({
           />
         )}
 
+        {registration.status === RegistrationStatus.Draft && registrationIsValid && (
+          <>
+            <Typography>{t('registration.public_page.ready_to_be_published')}</Typography>
+            <Typography gutterBottom>{t('registration.public_page.ready_to_be_published_description')}</Typography>
+          </>
+        )}
+
         {registration.status === RegistrationStatus.Published && (
           <Typography>
             {t('registration.public_page.published_date', {
@@ -141,6 +148,7 @@ export const PublishingAccordion = ({
             })}
           </Typography>
         )}
+
         {registration.status === RegistrationStatus.Draft && (
           <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
             {!hasPendingPublishingRequest ? (

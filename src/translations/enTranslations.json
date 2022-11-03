@@ -959,7 +959,7 @@
       "published": "Published",
       "published_date": "Published: {{date}}",
       "publishing_request": "Publishing request",
-      "ready_to_be_published": "Ready to be published",
+      "ready_to_be_published": "Ready to be published.",
       "ready_to_be_published_description": "Review content before publishing.",
       "reject_publish_request": "Reject publishing request",
       "request_doi": "Request a DOI",

@@ -959,7 +959,7 @@
       "published": "Publisert",
       "published_date": "Publisert: {{date}}",
       "publishing_request": "Publiseringsgodkjenning",
-      "ready_to_be_published": "Klar for publisering",
+      "ready_to_be_published": "Klar for publisering.",
       "ready_to_be_published_description": "Se over utkast før du publiserer.",
       "reject_publish_request": "Avvis publisering",
       "request_doi": "Be om en DOI",

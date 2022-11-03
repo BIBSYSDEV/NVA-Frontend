@@ -112,7 +112,6 @@ export const dataTestId = {
     rejectDoiButton: 'button-reject-doi',
     relatedPublicationsAccordion: 'related-publications-accordion',
     relatedRegistrationsAccordion: 'related-registrations-accordion',
-    status: 'public-registration-status',
     subtypeFields: 'public-registration-subtype-fields',
     tasksPanel: {
       backToWizard: 'back-to-wizard-button',
