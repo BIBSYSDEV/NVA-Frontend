@@ -68,6 +68,7 @@
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
     "person_register": {
+      "current_employments": "Nåværende ansettelser",
       "edit_person": "Rediger person",
       "employee_table_caption": "Liste over alle ansatte",
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
@@ -75,7 +76,8 @@
       "no_employees_found": "Ingen ansatte funnet",
       "other_employments": "Andre aktive ansettelser",
       "person_id": "PersonID",
-      "person_register": "Personregister"
+      "person_register": "Personregister",
+      "previous_employments": "Tidligere ansettelser"
     },
     "users": {
       "add_role_info": "Om du ikke finner brukeren, så må du sjekke at vedkommende er tilknyttet din institusjon og har logget på tjenesten tidligere.",
