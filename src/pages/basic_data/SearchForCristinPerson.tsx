@@ -132,19 +132,37 @@ export const SearchForCristinPerson = ({
             value={getMaskedNationalIdentityNumber(selectedPerson.nationalId)}
           />
           <div>
-            <Typography variant="overline">{t('common.employments')}</Typography>
+            <Typography variant="overline">{t('basic_data.person_register.current_employments')}</Typography>
             <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
-              {selectedPerson.affiliations.map((affiliation) => {
-                const roleString = getLanguageString(affiliation.role.labels);
-                return (
-                  <li key={affiliation.organization}>
-                    <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                      {roleString && <Typography>{roleString}:</Typography>}
-                      <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
-                    </Box>
-                  </li>
-                );
-              })}
+              {selectedPerson.affiliations
+                .filter((affiliation) => affiliation.active)
+                .map((affiliation) => {
+                  const roleString = getLanguageString(affiliation.role.labels);
+                  return (
+                    <li key={affiliation.organization}>
+                      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                        {roleString && <Typography>{roleString}:</Typography>}
+                        <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
+                      </Box>
+                    </li>
+                  );
+                })}
+            </Box>
+            <Typography variant="overline">{t('basic_data.person_register.previous_employments')}</Typography>
+            <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
+              {selectedPerson.affiliations
+                .filter((affiliation) => !affiliation.active)
+                .map((affiliation) => {
+                  const roleString = getLanguageString(affiliation.role.labels);
+                  return (
+                    <li key={affiliation.organization}>
+                      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                        {roleString && <Typography>{roleString}:</Typography>}
+                        <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
+                      </Box>
+                    </li>
+                  );
+                })}
             </Box>
           </div>
           <Button
