@@ -69,8 +69,9 @@
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
-      "delete_employment_title": "Slett ansettelse?",
-      "delete_employment_text": "Er du sikker på ar du ønsker å slette denne ansettelsen?",
+      "remove_employment": "Remove employment",
+      "remove_employment_title": "Fjern ansettelse?",
+      "remove_employment_text": "Er du sikker på ar du ønsker å fjerne denne ansettelsen?",
       "edit_person": "Rediger person",
       "employee_table_caption": "Liste over alle ansatte",
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
