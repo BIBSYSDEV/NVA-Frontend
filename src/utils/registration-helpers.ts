@@ -36,6 +36,7 @@ import {
   LiteraryArtsWeb,
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
+import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/file.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -487,3 +488,15 @@ export const hyphenateIsrc = (isrc: string) =>
 
 export const getTitleString = (title: string | undefined) =>
   title || `[${i18n.t('translation:registration.missing_title')}]`;
+
+export const associatedArtifactIsFile = (associatedArtifact: AssociatedArtifact) =>
+  associatedArtifact.type === 'File' ||
+  associatedArtifact.type === 'UnpublishedFile' ||
+  associatedArtifact.type === 'PublishedFile' ||
+  associatedArtifact.type === 'UnpublishableFile';
+
+export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  associatedArtifacts.filter(associatedArtifactIsFile) as AssociatedFile[];
+
+export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
+  associatedArtifacts.filter((artifact) => artifact.type === 'AssociatedLink') as AssociatedLink[];

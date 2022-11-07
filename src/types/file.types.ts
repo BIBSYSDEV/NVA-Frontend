@@ -79,7 +79,7 @@ interface License {
   link: string;
 }
 
-export interface File {
+export interface AssociatedFile {
   type: 'File' | 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
   identifier: string;
   name: string;
@@ -91,7 +91,7 @@ export interface File {
   license: License | null;
 }
 
-export const emptyFile: File = {
+export const emptyFile: AssociatedFile = {
   type: 'File',
   identifier: '',
   name: '',
@@ -103,8 +103,15 @@ export const emptyFile: File = {
   license: null,
 };
 
+export interface AssociatedLink {
+  type: 'AssociatedLink';
+  id: string;
+  name?: string;
+  description?: string;
+}
+
 export interface Uppy extends UppyType<StrictTypes> {
   hasUploadSuccessEventListener?: boolean;
 }
 
-export type AssociatedArtifact = File;
+export type AssociatedArtifact = AssociatedFile | AssociatedLink;

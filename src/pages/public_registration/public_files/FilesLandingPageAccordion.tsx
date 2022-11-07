@@ -5,7 +5,11 @@ import { LandingPageAccordion } from '../../../components/landing_page/LandingPa
 import { RootState } from '../../../redux/store';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { userIsOwnerOfRegistration, userIsCuratorForRegistration } from '../../../utils/registration-helpers';
+import {
+  userIsOwnerOfRegistration,
+  userIsCuratorForRegistration,
+  getAssociatedFiles,
+} from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 
@@ -24,7 +28,8 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     userIsRegistrationAdmin &&
     registration.associatedArtifacts.some((file) => file.type === 'UnpublishedFile');
 
-  const filesToShow = registration.associatedArtifacts.filter(
+  const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
+  const filesToShow = associatedFiles.filter(
     (file) => file.type === 'PublishedFile' || (file.type === 'UnpublishedFile' && userIsRegistrationAdmin)
   );
 

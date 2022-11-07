@@ -26,13 +26,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import LockIcon from '@mui/icons-material/LockOutlined';
 import { DatePicker } from '@mui/x-date-pickers';
-import { File, LicenseNames, licenses } from '../../../types/file.types';
+import { AssociatedFile, LicenseNames, licenses } from '../../../types/file.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface FileCardProps {
-  file: File;
+  file: AssociatedFile;
   removeFile: () => void;
   baseFieldName: string;
   toggleLicenseModal?: () => void;

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, FormHelperText, Link, Paper, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { Modal } from '../../components/Modal';
-import { File, licenses, Uppy } from '../../types/file.types';
+import { licenses, Uppy } from '../../types/file.types';
 import { FileFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { FileUploader } from './files_and_license_tab/FileUploader';
@@ -14,6 +14,7 @@ import {
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getAssociatedFiles } from '../../utils/registration-helpers';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -29,7 +30,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   } = useFormikContext<Registration>();
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
-  const files = useMemo(() => associatedArtifacts, [associatedArtifacts]);
+  const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
 
   const filesRef = useRef(files);
   useEffect(() => {
@@ -41,7 +42,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     // since files could have been uploaded in another session without being in uppy's current state
     uppy.setOptions({
       onBeforeFileAdded: (currentFile: UppyFile) => {
-        if (filesRef.current.some((file: File) => file.name === currentFile.name)) {
+        if (filesRef.current.some((file) => file.name === currentFile.name)) {
           uppy.info(t('registration.files_and_license.no_duplicates', { fileName: currentFile.name }), 'info', 6000);
           return false;
         }
