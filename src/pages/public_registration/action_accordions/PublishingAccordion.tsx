@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
@@ -21,12 +21,11 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { userIsRegistrationCurator } from '../../../utils/registration-helpers';
-import { RootState } from '../../../redux/store';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 
 interface PublishingAccordionProps extends ActionPanelProps {
   publishingRequestTicket: Ticket | null;
+  userIsCurator: boolean;
 }
 
 enum LoadingState {
@@ -40,10 +39,10 @@ export const PublishingAccordion = ({
   publishingRequestTicket,
   registration,
   refetchRegistration,
+  userIsCurator,
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const user = useSelector((store: RootState) => store.user);
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
@@ -118,7 +117,6 @@ export const PublishingAccordion = ({
     }
   };
 
-  const isCurator = userIsRegistrationCurator(user, registration);
   const isPendingPublishingRequest = publishingRequestTicket?.status === 'Pending';
 
   return (
@@ -187,7 +185,7 @@ export const PublishingAccordion = ({
                 {t('common.publish')}
               </LoadingButton>
             ) : (
-              isCurator && (
+              userIsCurator && (
                 <>
                   <LoadingButton
                     variant="contained"

@@ -27,6 +27,7 @@ import { ActionPanelProps } from '../ActionPanel';
 
 interface DoiRequestAccordionProps extends ActionPanelProps {
   doiRequestTicket: Ticket | null;
+  userIsCurator: boolean;
 }
 
 enum LoadingState {
@@ -40,6 +41,7 @@ export const DoiRequestAccordion = ({
   registration,
   doiRequestTicket,
   refetchRegistration,
+  userIsCurator,
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -108,7 +110,7 @@ export const DoiRequestAccordion = ({
           <Typography paragraph>{t('registration.public_page.has_pending_doi_request')}</Typography>
         )}
 
-        {!doiRequestTicket && (
+        {!doiRequestTicket && !registration.doi && (
           <>
             <LoadingButton
               variant="outlined"
@@ -155,7 +157,7 @@ export const DoiRequestAccordion = ({
           </>
         )}
 
-        {isPublishedRegistration && isPendingDoiRequest && (
+        {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <LoadingButton
               variant="contained"

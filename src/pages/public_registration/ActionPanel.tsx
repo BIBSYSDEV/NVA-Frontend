@@ -8,7 +8,7 @@ import { RootState } from '../../redux/store';
 import { TicketCollection } from '../../types/publication_types/messages.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { userIsCuratorForRegistration } from '../../utils/registration-helpers';
+import { userCanEditRegistration, userIsCuratorForRegistration } from '../../utils/registration-helpers';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
@@ -20,9 +20,10 @@ export interface ActionPanelProps extends PublicRegistrationContentProps {
 export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const userIsCurator = userIsCuratorForRegistration(user, registration);
 
   const [registrationTicketCollection, isLoadingRegistrationTicketCollection] = useFetch<TicketCollection>({
-    url: userIsCuratorForRegistration(user, registration) ? `${registration.id}/tickets` : '',
+    url: userCanEditRegistration(user, registration) ? `${registration.id}/tickets` : '',
     withAuthentication: true,
     errorMessage: t('feedback.error.get_tickets'),
   });
@@ -47,6 +48,7 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
                 refetchRegistration={refetchRegistration}
                 registration={registration}
                 publishingRequestTicket={publishingRequestTicket}
+                userIsCurator={userIsCurator}
               />
             </ErrorBoundary>
             <ErrorBoundary>
@@ -55,6 +57,7 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
                   refetchRegistration={refetchRegistration}
                   registration={registration}
                   doiRequestTicket={doiRequestTicket}
+                  userIsCurator={userIsCurator}
                 />
               )}
             </ErrorBoundary>
