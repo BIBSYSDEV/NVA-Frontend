@@ -20,7 +20,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps, validateYupSchema } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -42,6 +42,7 @@ import { createUser } from '../../../../api/roleApi';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 
 export interface PersonData {
   employments: Employment[];
@@ -65,6 +66,8 @@ export const PersonTableRow = ({
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
+  const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(false);
+  const toggleConfirmDeleteDialog = () => setOpenConfirmDeleteDialog(!openConfirmDeleteDialog);
   const [employmentIndex, setEmploymentIndex] = useState(0);
   const [showFullNin, setShowFullNin] = useState(false);
 
@@ -267,7 +270,6 @@ export const PersonTableRow = ({
                           )}
                         </Field>
                       </Box>
-                      {console.log(values.employments, employmentIndex)}
                       <Box display={{ display: 'flex', gap: '1rem' }}>
                         <StartDateField
                           fieldName={`${employmentBaseFieldName}.startDate`}
@@ -313,11 +315,7 @@ export const PersonTableRow = ({
                         color="error"
                         variant="outlined"
                         onClick={() => {
-                          const filteredEmployments = values.employments.filter(
-                            (_, index) => index !== employmentIndex
-                          );
-                          setFieldValue('employments', filteredEmployments);
-                          setEmploymentIndex(0);
+                          toggleConfirmDeleteDialog();
                         }}>
                         {t('common.delete')}
                       </Button>
@@ -369,6 +367,18 @@ export const PersonTableRow = ({
                   {t('common.save')}
                 </LoadingButton>
               </DialogActions>
+              <ConfirmDialog
+                open={openConfirmDeleteDialog}
+                title={t('basic_data.person_register.delete_employment_title')}
+                onAccept={() => {
+                  const filteredEmployments = values.employments.filter((_, index) => index !== employmentIndex);
+                  setFieldValue('employments', filteredEmployments);
+                  setEmploymentIndex(0);
+                  toggleConfirmDeleteDialog();
+                }}
+                onCancel={() => toggleConfirmDeleteDialog()}>
+                <Typography>{t('basic_data.person_register.delete_employment_text')}</Typography>
+              </ConfirmDialog>
             </Form>
           )}
         </Formik>
