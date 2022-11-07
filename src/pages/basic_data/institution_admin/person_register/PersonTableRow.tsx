@@ -20,7 +20,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps, validateYupSchema } from 'formik';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -267,6 +267,7 @@ export const PersonTableRow = ({
                           )}
                         </Field>
                       </Box>
+                      {console.log(values.employments, employmentIndex)}
                       <Box display={{ display: 'flex', gap: '1rem' }}>
                         <StartDateField
                           fieldName={`${employmentBaseFieldName}.startDate`}
@@ -308,7 +309,19 @@ export const PersonTableRow = ({
                           )}
                         </Field>
                       </Box>
-                      {employmentsInThisInstitution.length > 1 && (
+                      <Button
+                        color="error"
+                        variant="outlined"
+                        onClick={() => {
+                          const filteredEmployments = values.employments.filter(
+                            (_, index) => index !== employmentIndex
+                          );
+                          setFieldValue('employments', filteredEmployments);
+                          setEmploymentIndex(0);
+                        }}>
+                        {t('common.delete')}
+                      </Button>
+                      {values.employments.length > 1 && (
                         <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'center' }}>
                           <IconButton
                             title={t('common.previous')}
@@ -319,12 +332,12 @@ export const PersonTableRow = ({
                           <Typography>
                             {t('basic_data.person_register.employment_x_of_y', {
                               selected: employmentIndex + 1,
-                              total: employmentsInThisInstitution.length,
+                              total: values.employments.length,
                             })}
                           </Typography>
                           <IconButton
                             title={t('common.next')}
-                            disabled={employmentIndex === employmentsInThisInstitution.length - 1}
+                            disabled={employmentIndex === values.employments.length - 1}
                             onClick={() => setEmploymentIndex(employmentIndex + 1)}>
                             <NavigateNextIcon />
                           </IconButton>
