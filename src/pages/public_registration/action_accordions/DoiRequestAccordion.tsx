@@ -123,7 +123,7 @@ export const DoiRequestAccordion = ({
                   ? dataTestId.registrationLandingPage.tasksPanel.requestDoiButton
                   : dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton
               }
-              onClick={() => (isPublishedRegistration ? toggleRequestDoiModal() : sendDoiRequest())}>
+              onClick={isPublishedRegistration ? toggleRequestDoiModal : sendDoiRequest}>
               {isPublishedRegistration
                 ? t('registration.public_page.request_doi')
                 : t('registration.public_page.reserve_doi')}
