@@ -124,7 +124,7 @@ export const PublishingAccordion = ({
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
       elevation={3}
       defaultExpanded={registration.status === RegistrationStatus.Draft}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon fontSize="large" />}>
+      <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('registration.public_page.publishing_request')} - {t(`registration.status.${registration.status}`)}
         {!registrationIsValid && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
