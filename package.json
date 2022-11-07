@@ -39,7 +39,7 @@
     "@mui/lab": "5.0.0-alpha.106",
     "@mui/material": "^5.10.12",
     "@mui/x-date-pickers": "^5.0.7",
-    "@reduxjs/toolkit": "^1.8.6",
+    "@reduxjs/toolkit": "^1.9.0",
     "@uppy/aws-s3-multipart": "^1.8.18",
     "@uppy/core": "^1.20.1",
     "@uppy/dashboard": "^1.21.1",
