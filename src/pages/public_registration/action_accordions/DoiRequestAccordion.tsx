@@ -116,7 +116,8 @@ export const DoiRequestAccordion = ({
               variant="outlined"
               endIcon={<LocalOfferIcon />}
               loadingPosition="end"
-              loading={isLoading !== LoadingState.None}
+              loading={isLoading === LoadingState.RequestDoi}
+              disabled={isLoading !== LoadingState.None}
               data-testid={
                 isPublishedRegistration
                   ? dataTestId.registrationLandingPage.tasksPanel.requestDoiButton
