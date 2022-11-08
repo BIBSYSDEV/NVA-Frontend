@@ -69,15 +69,20 @@
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
+      "remove_employment": "Fjern ansettelse",
+      "remove_employment_title": "Fjern ansettelse?",
+      "remove_employment_text": "Er du sikker på ar du ønsker å fjerne denne ansettelsen?",
       "edit_person": "Rediger person",
       "employee_table_caption": "Liste over alle ansatte",
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
+      "hide_full_nin": "Skjul personnummer",
       "national_identity_number": "Fødselsnummer",
       "no_employees_found": "Ingen ansatte funnet",
       "other_employments": "Andre aktive ansettelser",
       "person_id": "PersonID",
       "person_register": "Personregister",
-      "previous_employments": "Tidligere ansettelser"
+      "previous_employments": "Tidligere ansettelser",
+      "show_full_nin": "Vis personnummer"
     },
     "users": {
       "add_role_info": "Om du ikke finner brukeren, så må du sjekke at vedkommende er tilknyttet din institusjon og har logget på tjenesten tidligere.",
