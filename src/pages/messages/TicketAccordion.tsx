@@ -23,7 +23,7 @@ interface TicketAccordionProps {
 export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const username = useSelector((store: RootState) => store.user?.username);
+  const username = useSelector((store: RootState) => store.user?.nvaUsername);
 
   const registrationIdentifier = getRegistrationIdentifier(ticket.publication.id);
 

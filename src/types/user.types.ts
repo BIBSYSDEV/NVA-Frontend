@@ -18,14 +18,14 @@ export interface User {
   topOrgCristinId?: string;
   familyName: string;
   givenName: string;
-  id: string;
+  feideId: string;
   isAppAdmin: boolean;
   isCurator: boolean;
   isInstitutionAdmin: boolean;
   isCreator: boolean;
   isEditor: boolean;
   roles: RoleName[];
-  username: string;
+  nvaUsername: string;
   orcid?: string;
   allowedCustomers: string[];
 }

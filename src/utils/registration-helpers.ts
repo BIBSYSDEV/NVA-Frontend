@@ -84,7 +84,7 @@ export const isPeriodicalMediaContribution = (instanceType: string) =>
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;
+  !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCurator && user.customerId === registration.publisher.id;
@@ -474,7 +474,7 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
 };
 
 export const userIsOwnerOfRegistration = (user: User | null, registration: Registration) =>
-  !!user?.isCreator && !!user.username && user.username === registration.resourceOwner.owner;
+  !!user?.isCreator && !!user.nvaUsername && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
   !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
