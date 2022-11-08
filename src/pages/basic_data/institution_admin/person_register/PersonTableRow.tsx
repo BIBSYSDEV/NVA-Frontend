@@ -201,9 +201,16 @@ export const PersonTableRow = ({
                       label={t('basic_data.person_register.national_identity_number')}
                       InputProps={{
                         endAdornment: (
-                          <IconButton onClick={() => setShowFullNin((prevShowFullNin) => !prevShowFullNin)}>
-                            {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                          </IconButton>
+                          <Tooltip
+                            title={
+                              showFullNin
+                                ? t('basic_data.person_register.hide_full_nin')
+                                : t('basic_data.person_register.show_full_nin')
+                            }>
+                            <IconButton onClick={() => setShowFullNin((prevShowFullNin) => !prevShowFullNin)}>
+                              {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                            </IconButton>
+                          </Tooltip>
                         ),
                       }}
                     />
