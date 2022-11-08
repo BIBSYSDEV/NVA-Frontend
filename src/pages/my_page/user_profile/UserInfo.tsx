@@ -19,7 +19,7 @@ export const UserInfo = ({ user }: UserInfoProps) => {
         {user.name}
       </LabelTextLine>
       <LabelTextLine dataTestId="user-id" label={t('my_page.my_profile.id')}>
-        {user.id}
+        {user.feideId}
       </LabelTextLine>
     </div>
   );

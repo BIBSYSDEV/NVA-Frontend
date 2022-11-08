@@ -15,9 +15,9 @@ const userSlice = createSlice({
       const customerId = getStringValue(action.payload['custom:customerId']);
       const cristinId = getStringValue(action.payload['custom:cristinId']);
       const nationalIdNumber = action.payload['custom:feideIdNin'] ?? action.payload['custom:nin'] ?? '';
-      const username = getStringValue(action.payload['custom:nvaUsername']);
+      const nvaUsername = getStringValue(action.payload['custom:nvaUsername']);
       const topOrgCristinId = getStringValue(action.payload['custom:topOrgCristinId']);
-      const id = getStringValue(action.payload['custom:feideId']);
+      const feideId = getStringValue(action.payload['custom:feideId']);
 
       const roleItems =
         action.payload['custom:roles']?.split(',').map((roleItem) => roleItem.split('@') as [RoleName, string]) ?? [];
@@ -30,9 +30,9 @@ const userSlice = createSlice({
         givenName: firstName,
         familyName: lastName,
         nationalIdNumber,
-        id,
+        feideId,
         cristinId,
-        username,
+        nvaUsername,
         customerId,
         roles,
         topOrgCristinId,
