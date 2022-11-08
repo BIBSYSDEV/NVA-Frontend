@@ -495,8 +495,11 @@ export const associatedArtifactIsFile = (associatedArtifact: AssociatedArtifact)
   associatedArtifact.type === 'PublishedFile' ||
   associatedArtifact.type === 'UnpublishableFile';
 
+export const associatedArtifactIsLink = (associatedArtifact: AssociatedArtifact) =>
+  associatedArtifact.type === 'AssociatedLink';
+
 export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsFile) as AssociatedFile[];
 
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
-  associatedArtifacts.filter((artifact) => artifact.type === 'AssociatedLink') as AssociatedLink[];
+  associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];

@@ -11,11 +11,12 @@ import {
   ResourceFieldNames,
   SpecificContributorFieldNames,
   SpecificFileFieldNames,
+  SpecificLinkFieldNames,
 } from '../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
 import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import { Registration, RegistrationTab } from '../types/registration.types';
-import { associatedArtifactIsFile, getMainRegistrationType } from './registration-helpers';
+import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -88,6 +89,7 @@ const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] =
   } else {
     associatedArtifacts.forEach((artifact, index) => {
       const baseFieldName = `${FileFieldNames.AssociatedArtifacts}[${index}]`;
+      fieldNames.push(`${baseFieldName}.type`);
 
       if (associatedArtifactIsFile(artifact)) {
         const file = artifact as AssociatedFile;
@@ -97,8 +99,8 @@ const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] =
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
           fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.License}`);
         }
-      } else {
-        // TODO: return link fields
+      } else if (associatedArtifactIsLink(artifact)) {
+        fieldNames.push(`${baseFieldName}.${SpecificLinkFieldNames.Id}`);
       }
     });
   }

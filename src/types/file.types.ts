@@ -110,8 +110,12 @@ export interface AssociatedLink {
   description?: string;
 }
 
+export interface NullAssociatedArtifact {
+  type: 'NullAssociatedArtifact';
+}
+
 export interface Uppy extends UppyType<StrictTypes> {
   hasUploadSuccessEventListener?: boolean;
 }
 
-export type AssociatedArtifact = AssociatedFile | AssociatedLink;
+export type AssociatedArtifact = AssociatedFile | AssociatedLink | NullAssociatedArtifact;
