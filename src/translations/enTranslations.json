@@ -69,7 +69,7 @@
     },
     "person_register": {
       "current_employments": "Current employments",
-      "remvoe_employment": "Remove employment",
+      "remove_employment": "Remove employment",
       "remove_employment_title": "Remove employment?",
       "remove_employment_text": "Are you sure you want to remove this employment?",
       "edit_person": "Edit person",

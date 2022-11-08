@@ -377,10 +377,10 @@ export const PersonTableRow = ({
                 onAccept={() => {
                   const filteredEmployments = values.employments.filter((_, index) => index !== employmentIndex);
                   setFieldValue('employments', filteredEmployments);
-                  setEmploymentIndex(0);
+                  setEmploymentIndex(employmentIndex !== 0 ? employmentIndex - 1 : 0);
                   toggleConfirmDeleteDialog();
                 }}
-                onCancel={() => toggleConfirmDeleteDialog()}>
+                onCancel={toggleConfirmDeleteDialog}>
                 <Typography>{t('basic_data.person_register.remove_employment_text')}</Typography>
               </ConfirmDialog>
             </Form>
