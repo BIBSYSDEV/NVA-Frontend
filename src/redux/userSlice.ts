@@ -18,12 +18,12 @@ const userSlice = createSlice({
       const nvaUsername = getStringValue(action.payload['custom:nvaUsername']);
       const topOrgCristinId = getStringValue(action.payload['custom:topOrgCristinId']);
       const feideId = getStringValue(action.payload['custom:feideId']);
+      const rolesString = getStringValue(action.payload['custom:roles']);
+      const allowedCustomersString = getStringValue(action.payload['custom:allowedCustomers']);
 
-      const roleItems =
-        action.payload['custom:roles']?.split(',').map((roleItem) => roleItem.split('@') as [RoleName, string]) ?? [];
+      const roleItems = rolesString.split(',').map((roleItem) => roleItem.split('@') as [RoleName, string]);
       const roles = roleItems.filter(([_, thisCustomerId]) => thisCustomerId === customerId).map(([role]) => role);
-      const allowedCustomers =
-        action.payload['custom:allowedCustomers']?.split(',').filter((customerId) => customerId !== 'null') ?? [];
+      const allowedCustomers = allowedCustomersString.split(',').filter((customer) => customer);
 
       const user: User = {
         name: `${firstName} ${lastName}`.trim(),
