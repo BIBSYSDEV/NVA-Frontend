@@ -138,20 +138,24 @@ export const SearchForCristinPerson = ({
             value={getMaskedNationalIdentityNumber(selectedPerson.nationalId)}
           />
           <div>
-            <Typography variant="overline">{t('basic_data.person_register.current_employments')}</Typography>
-            <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
-              {selectedPersonActiveAffiliations.map((affiliation) => {
-                const roleString = getLanguageString(affiliation.role.labels);
-                return (
-                  <li key={affiliation.organization}>
-                    <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                      {roleString && <Typography>{roleString}:</Typography>}
-                      <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
-                    </Box>
-                  </li>
-                );
-              })}
-            </Box>
+            {selectedPersonActiveAffiliations.length > 0 && (
+              <>
+                <Typography variant="overline">{t('basic_data.person_register.current_employments')}</Typography>
+                <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
+                  {selectedPersonActiveAffiliations.map((affiliation) => {
+                    const roleString = getLanguageString(affiliation.role.labels);
+                    return (
+                      <li key={affiliation.organization}>
+                        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+                          {roleString && <Typography>{roleString}:</Typography>}
+                          <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
+                        </Box>
+                      </li>
+                    );
+                  })}
+                </Box>
+              </>
+            )}
             {selectedPersonInactiveAffiliations.length > 0 && (
               <>
                 <Typography variant="overline">{t('basic_data.person_register.previous_employments')}</Typography>
