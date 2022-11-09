@@ -1,6 +1,5 @@
 import { useFormikContext } from 'formik';
 import { BookType } from '../../../../types/publicationFieldNames';
-import { DoiField } from '../components/DoiField';
 import { NpiDisciplineField } from '../components/NpiDisciplineField';
 import { NviValidation } from '../components/NviValidation';
 import { SeriesFields } from '../components/SeriesFields';
@@ -16,7 +15,6 @@ export const BookForm = () => {
 
   return (
     <>
-      <DoiField />
       <PublisherField />
 
       <NpiDisciplineField />

@@ -1,7 +1,7 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, FormHelperText, Link, Paper, Typography } from '@mui/material';
+import { Box, FormHelperText, Link, Paper, TextField, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { Modal } from '../../components/Modal';
 import { licenses, Uppy } from '../../types/file.types';
@@ -15,6 +15,8 @@ import {
 } from '../public_registration/PublicPublicationContext';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getAssociatedFiles } from '../../utils/registration-helpers';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { DoiField } from './resource_type_tab/components/DoiField';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -67,69 +69,93 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   return (
-    <>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <Paper sx={{ p: '1rem', mb: '1rem', bgcolor: 'background.default' }} elevation={5}>
-          <Typography variant="h6" component="h2" gutterBottom>
-            {t('registration.files_and_license.info_from_channel_register')}
-          </Typography>
-          {journalIdentifier && (
-            <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
-              <Typography paragraph>{t('registration.files_and_license.find_journal_in_channel_register')}</Typography>
-            </Link>
-          )}
-          {publisherIdentifier && (
-            <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
-              <Typography gutterBottom>
-                {t('registration.files_and_license.find_publisher_in_channel_register')}
-              </Typography>
-            </Link>
-          )}
+        <Paper elevation={5}>
+          <BackgroundDiv>
+            <Typography variant="h6" component="h2" gutterBottom>
+              {t('registration.files_and_license.info_from_channel_register')}
+            </Typography>
+            {journalIdentifier && (
+              <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
+                <Typography paragraph>
+                  {t('registration.files_and_license.find_journal_in_channel_register')}
+                </Typography>
+              </Link>
+            )}
+            {publisherIdentifier && (
+              <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
+                <Typography gutterBottom>
+                  {t('registration.files_and_license.find_publisher_in_channel_register')}
+                </Typography>
+              </Link>
+            )}
 
-          {seriesIdentifier && (
-            <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
-              <Typography paragraph>{t('registration.files_and_license.find_series_in_channel_register')}</Typography>
-            </Link>
-          )}
+            {seriesIdentifier && (
+              <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
+                <Typography paragraph>{t('registration.files_and_license.find_series_in_channel_register')}</Typography>
+              </Link>
+            )}
+          </BackgroundDiv>
         </Paper>
       )}
 
       <FieldArray name={FileFieldNames.AssociatedArtifacts}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
-            {files.length > 0 && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
-                {files.map((file, index) => (
-                  <FileCard
-                    key={file.identifier}
-                    file={file}
-                    removeFile={() => {
-                      const remainingFiles = uppy
-                        .getFiles()
-                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                      uppy.setState({ files: remainingFiles });
-                      remove(index);
+            <Paper elevation={5}>
+              <BackgroundDiv>
+                {files.length > 0 && (
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
+                    <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
+                    {files.map((file, index) => (
+                      <FileCard
+                        key={file.identifier}
+                        file={file}
+                        removeFile={() => {
+                          const remainingFiles = uppy
+                            .getFiles()
+                            .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                          uppy.setState({ files: remainingFiles });
+                          remove(index);
 
-                      if (remainingFiles.length === 0) {
-                        // Ensure field is set to touched even if it's empty
-                        setFieldTouched(name);
-                      }
-                    }}
-                    toggleLicenseModal={toggleLicenseModal}
-                    baseFieldName={`${name}[${index}]`}
-                  />
-                ))}
-              </Box>
-            )}
+                          if (remainingFiles.length === 0) {
+                            // Ensure field is set to touched even if it's empty
+                            setFieldTouched(name);
+                          }
+                        }}
+                        toggleLicenseModal={toggleLicenseModal}
+                        baseFieldName={`${name}[${index}]`}
+                      />
+                    ))}
+                  </Box>
+                )}
+
+                <FileUploader uppy={uppy} addFile={push} />
+                {files.length === 0 && typeof errors.associatedArtifacts === 'string' && touched.associatedArtifacts && (
+                  <FormHelperText error sx={{ p: '1rem' }}>
+                    <ErrorMessage name={name} />
+                  </FormHelperText>
+                )}
+              </BackgroundDiv>
+            </Paper>
 
             <Paper elevation={5}>
-              <FileUploader uppy={uppy} addFile={push} />
-              {files.length === 0 && typeof errors.associatedArtifacts === 'string' && touched.associatedArtifacts && (
-                <FormHelperText error sx={{ p: '1rem' }}>
-                  <ErrorMessage name={name} />
-                </FormHelperText>
-              )}
+              <BackgroundDiv>
+                <Typography variant="h2" paragraph>
+                  {t('common.link')}
+                </Typography>
+                {entityDescription?.reference?.doi ? (
+                  <DoiField />
+                ) : (
+                  <TextField
+                    sx={{ minWidth: '40%' }}
+                    label={t('registration.files_and_license.link_to_resource')}
+                    type="url"
+                    onChange={(event) => console.log(event.target)}
+                  />
+                )}
+              </BackgroundDiv>
             </Paper>
           </>
         )}
@@ -154,6 +180,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           </Box>
         ))}
       </Modal>
-    </>
+    </Box>
   );
 };
