@@ -190,7 +190,9 @@ export const PersonTableRow = ({
       </TableRow>
 
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
-        <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
+        <DialogTitle>
+          <span id="edit-person-label">{t('basic_data.person_register.edit_person')}</span>
+        </DialogTitle>
         <Formik
           initialValues={initialValues}
           enableReinitialize // Needed to update roles values when the institutionUser is recieved
@@ -241,7 +243,7 @@ export const PersonTableRow = ({
                   </Box>
                   <Divider flexItem orientation="vertical" />
                   {isLoadingInstitutionUser ? (
-                    <CircularProgress sx={{ margin: 'auto' }} />
+                    <CircularProgress sx={{ margin: 'auto' }} aria-labelledby="edit-person-label" />
                   ) : (
                     values.employments.length > 0 && (
                       <div>
@@ -362,7 +364,7 @@ export const PersonTableRow = ({
                           <UserRolesSelector
                             selectedRoles={values.roles}
                             updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || !hasFetchedPositions}
                           />
                         </Box>
                       </div>
