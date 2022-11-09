@@ -247,7 +247,7 @@ export const PersonTableRow = ({
                   ) : (
                     values.employments.length > 0 && (
                       <div>
-                        <Typography variant="overline" display="block" gutterBottom>
+                        <Typography variant="overline" gutterBottom>
                           {t('common.employments')}
                         </Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

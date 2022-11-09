@@ -26,7 +26,7 @@ export const UserRolesSelector = ({ selectedRoles, updateRoles, disabled = false
         }
       }}
       disabled={disabled}>
-      <Typography id="role-label" component="legend" variant="overline">
+      <Typography component="legend" variant="overline">
         {t('my_page.my_profile.heading.roles')}
       </Typography>
 
