@@ -23,7 +23,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 import { DatePicker } from '@mui/x-date-pickers';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
@@ -45,6 +45,7 @@ import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
+import { RootState } from '../../../../redux/store';
 
 export interface PersonData {
   employments: Employment[];
@@ -66,12 +67,15 @@ export const PersonTableRow = ({
 }: PersonTableRowProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const reduxResources = useSelector((store: RootState) => store.resources);
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
   const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(false);
   const toggleConfirmDeleteDialog = () => setOpenConfirmDeleteDialog(!openConfirmDeleteDialog);
   const [employmentIndex, setEmploymentIndex] = useState(0);
   const [showFullNin, setShowFullNin] = useState(false);
+
+  const hasFetchedPositions = !!reduxResources['https://api.dev.nva.aws.unit.no/cristin/position'];
 
   const { cristinIdentifier, firstName, lastName, employments, orcid, nationalId } =
     convertToFlatCristinPerson(cristinPerson);
@@ -254,7 +258,7 @@ export const PersonTableRow = ({
                           <Box display={{ display: 'flex', gap: '1rem' }}>
                             <PositionField
                               fieldName={`${employmentBaseFieldName}.type`}
-                              disabled={isSubmitting}
+                              disabled={isSubmitting || !hasFetchedPositions}
                               includeDisabledPositions
                             />
 
@@ -264,7 +268,7 @@ export const PersonTableRow = ({
                                   {...field}
                                   value={field.value ?? ''}
                                   required
-                                  disabled={isSubmitting}
+                                  disabled={isSubmitting || !hasFetchedPositions}
                                   fullWidth
                                   type="number"
                                   inputProps={{ min: '0', max: '100' }}
@@ -279,7 +283,7 @@ export const PersonTableRow = ({
                           <Box display={{ display: 'flex', gap: '1rem' }}>
                             <StartDateField
                               fieldName={`${employmentBaseFieldName}.startDate`}
-                              disabled={isSubmitting}
+                              disabled={isSubmitting || !hasFetchedPositions}
                               maxDate={
                                 values.employments[employmentIndex].endDate
                                   ? new Date(values.employments[employmentIndex].endDate)
@@ -290,7 +294,7 @@ export const PersonTableRow = ({
                             <Field name={`${employmentBaseFieldName}.endDate`}>
                               {({ field, meta: { error, touched } }: FieldProps<string>) => (
                                 <DatePicker
-                                  disabled={isSubmitting}
+                                  disabled={isSubmitting || !hasFetchedPositions}
                                   label={t('common.end_date')}
                                   PopperProps={{
                                     'aria-label': t('common.end_date'),
@@ -318,6 +322,7 @@ export const PersonTableRow = ({
                             </Field>
                           </Box>
                           <Button
+                            disabled={isSubmitting || !hasFetchedPositions}
                             color="error"
                             variant="outlined"
                             onClick={() => {
@@ -369,7 +374,7 @@ export const PersonTableRow = ({
                 <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
                 <LoadingButton
                   loading={isSubmitting}
-                  disabled={isLoadingInstitutionUser}
+                  disabled={isLoadingInstitutionUser || !hasFetchedPositions}
                   variant="contained"
                   type="submit">
                   {t('common.save')}
