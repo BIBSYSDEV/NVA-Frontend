@@ -36,7 +36,7 @@ import {
 } from '../../../../utils/user-helpers';
 import { CristinPerson, Employment, emptyEmployment, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
-import { RoleApiPath } from '../../../../api/apiPaths';
+import { CristinApiPath, RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
 import { authenticatedApiRequest } from '../../../../api/apiRequest';
 import { setNotification } from '../../../../redux/notificationSlice';
@@ -75,7 +75,7 @@ export const PersonTableRow = ({
   const [employmentIndex, setEmploymentIndex] = useState(0);
   const [showFullNin, setShowFullNin] = useState(false);
 
-  const hasFetchedPositions = !!reduxResources['https://api.dev.nva.aws.unit.no/cristin/position'];
+  const hasFetchedPositions = Object.keys(reduxResources).some((id) => id.endsWith(CristinApiPath.Position));
 
   const { cristinIdentifier, firstName, lastName, employments, orcid, nationalId } =
     convertToFlatCristinPerson(cristinPerson);
