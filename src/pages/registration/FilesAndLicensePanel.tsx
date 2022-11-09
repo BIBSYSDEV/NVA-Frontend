@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Box, FormHelperText, Link, Paper, TextField, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { Modal } from '../../components/Modal';
-import { licenses, Uppy } from '../../types/file.types';
-import { FileFieldNames } from '../../types/publicationFieldNames';
+import { AssociatedLink, licenses, Uppy } from '../../types/file.types';
+import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { FileCard } from './files_and_license_tab/FileCard';
@@ -14,7 +14,7 @@ import {
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getAssociatedFiles } from '../../utils/registration-helpers';
+import { getAssociatedFiles, getAssociatedLinks } from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
 
@@ -27,6 +27,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const {
     values: { associatedArtifacts, entityDescription },
     setFieldTouched,
+    setFieldValue,
     errors,
     touched,
   } = useFormikContext<Registration>();
@@ -105,29 +106,36 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           <>
             <Paper elevation={5}>
               <BackgroundDiv>
+                <Typography variant="h2" gutterBottom>
+                  {t('registration.files_and_license.files')}
+                </Typography>
                 {files.length > 0 && (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                    <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
-                    {files.map((file, index) => (
-                      <FileCard
-                        key={file.identifier}
-                        file={file}
-                        removeFile={() => {
-                          const remainingFiles = uppy
-                            .getFiles()
-                            .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                          uppy.setState({ files: remainingFiles });
-                          remove(index);
+                    {files.map((file) => {
+                      const associatedFileIndex = associatedArtifacts.findIndex(
+                        (artifact) => artifact.type === 'AssociatedLink'
+                      );
+                      return (
+                        <FileCard
+                          key={file.identifier}
+                          file={file}
+                          removeFile={() => {
+                            const remainingFiles = uppy
+                              .getFiles()
+                              .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                            uppy.setState({ files: remainingFiles });
+                            remove(associatedFileIndex);
 
-                          if (remainingFiles.length === 0) {
-                            // Ensure field is set to touched even if it's empty
-                            setFieldTouched(name);
-                          }
-                        }}
-                        toggleLicenseModal={toggleLicenseModal}
-                        baseFieldName={`${name}[${index}]`}
-                      />
-                    ))}
+                            if (remainingFiles.length === 0) {
+                              // Ensure field is set to touched even if it's empty
+                              setFieldTouched(name);
+                            }
+                          }}
+                          toggleLicenseModal={toggleLicenseModal}
+                          baseFieldName={`${name}[${associatedFileIndex}]`}
+                        />
+                      );
+                    })}
                   </Box>
                 )}
 
@@ -149,10 +157,29 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <DoiField />
                 ) : (
                   <TextField
-                    sx={{ minWidth: '40%' }}
+                    fullWidth
+                    variant="filled"
                     label={t('registration.files_and_license.link_to_resource')}
-                    type="url"
-                    onChange={(event) => console.log(event.target)}
+                    value={getAssociatedLinks(associatedArtifacts)[0]?.id ?? ''}
+                    onChange={(event) => {
+                      const associatedLinkIndex = associatedArtifacts.findIndex(
+                        (artifact) => artifact.type === 'AssociatedLink'
+                      );
+
+                      const inputValue = event.target.value;
+
+                      if (inputValue) {
+                        if (associatedLinkIndex < 0) {
+                          const newAssociatedLink: AssociatedLink = { type: 'AssociatedLink', id: inputValue };
+                          push(newAssociatedLink);
+                        } else {
+                          const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
+                          setFieldValue(fieldName, inputValue);
+                        }
+                      } else {
+                        remove(associatedLinkIndex);
+                      }
+                    }}
                   />
                 )}
               </BackgroundDiv>
