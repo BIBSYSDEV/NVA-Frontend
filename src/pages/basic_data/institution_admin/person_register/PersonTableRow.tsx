@@ -14,6 +14,7 @@ import {
   TextField,
   Divider,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -235,129 +236,132 @@ export const PersonTableRow = ({
                     )}
                   </Box>
                   <Divider flexItem orientation="vertical" />
-                  {values.employments.length > 0 && (
-                    <div>
-                      <Typography variant="overline" display="block" gutterBottom>
-                        {t('common.employments')}
-                      </Typography>
-                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        <Field name={`${employmentBaseFieldName}.organization`}>
-                          {({ field }: FieldProps<string>) => (
-                            <AffiliationHierarchy unitUri={field.value} commaSeparated />
-                          )}
-                        </Field>
-
-                        <Box display={{ display: 'flex', gap: '1rem' }}>
-                          <PositionField
-                            fieldName={`${employmentBaseFieldName}.type`}
-                            disabled={isSubmitting}
-                            includeDisabledPositions
-                          />
-
-                          <Field name={`${employmentBaseFieldName}.fullTimeEquivalentPercentage`}>
-                            {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                              <TextField
-                                {...field}
-                                value={field.value ?? ''}
-                                required
-                                disabled={isSubmitting}
-                                fullWidth
-                                type="number"
-                                inputProps={{ min: '0', max: '100' }}
-                                variant="filled"
-                                label={t('basic_data.add_employee.position_percent')}
-                                error={touched && !!error}
-                                helperText={touched && error}
-                              />
+                  {isLoadingInstitutionUser ? (
+                    <CircularProgress sx={{ margin: 'auto' }} />
+                  ) : (
+                    values.employments.length > 0 && (
+                      <div>
+                        <Typography variant="overline" display="block" gutterBottom>
+                          {t('common.employments')}
+                        </Typography>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                          <Field name={`${employmentBaseFieldName}.organization`}>
+                            {({ field }: FieldProps<string>) => (
+                              <AffiliationHierarchy unitUri={field.value} commaSeparated />
                             )}
                           </Field>
-                        </Box>
-                        <Box display={{ display: 'flex', gap: '1rem' }}>
-                          <StartDateField
-                            fieldName={`${employmentBaseFieldName}.startDate`}
-                            disabled={isSubmitting}
-                            maxDate={
-                              values.employments[employmentIndex].endDate
-                                ? new Date(values.employments[employmentIndex].endDate)
-                                : undefined
-                            }
-                          />
 
-                          <Field name={`${employmentBaseFieldName}.endDate`}>
-                            {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                              <DatePicker
-                                disabled={isSubmitting}
-                                label={t('common.end_date')}
-                                PopperProps={{
-                                  'aria-label': t('common.end_date'),
-                                }}
-                                value={field.value ? field.value : null}
-                                onChange={(date) => setFieldValue(field.name, date ?? '')}
-                                inputFormat="dd.MM.yyyy"
-                                views={['year', 'month', 'day']}
-                                mask="__.__.____"
-                                minDate={
-                                  values.employments[employmentIndex].startDate
-                                    ? new Date(values.employments[employmentIndex].startDate)
-                                    : undefined
-                                }
-                                renderInput={(params) => (
-                                  <TextField
-                                    {...params}
-                                    variant="filled"
-                                    error={touched && !!error}
-                                    helperText={<ErrorMessage name={field.name} />}
-                                  />
-                                )}
-                              />
-                            )}
-                          </Field>
-                        </Box>
-                        <Button
-                          color="error"
-                          variant="outlined"
-                          onClick={() => {
-                            toggleConfirmDeleteDialog();
-                          }}
-                          endIcon={<DeleteIcon />}>
-                          {t('basic_data.person_register.remove_employment')}
-                        </Button>
-                        {values.employments.length > 1 && (
-                          <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'center' }}>
-                            <IconButton
-                              title={t('common.previous')}
-                              disabled={employmentIndex === 0}
-                              onClick={() => setEmploymentIndex(employmentIndex - 1)}>
-                              <NavigateBeforeIcon />
-                            </IconButton>
-                            <Typography>
-                              {t('basic_data.person_register.employment_x_of_y', {
-                                selected: employmentIndex + 1,
-                                total: values.employments.length,
-                              })}
-                            </Typography>
-                            <IconButton
-                              title={t('common.next')}
-                              disabled={employmentIndex === values.employments.length - 1}
-                              onClick={() => setEmploymentIndex(employmentIndex + 1)}>
-                              <NavigateNextIcon />
-                            </IconButton>
+                          <Box display={{ display: 'flex', gap: '1rem' }}>
+                            <PositionField
+                              fieldName={`${employmentBaseFieldName}.type`}
+                              disabled={isSubmitting}
+                              includeDisabledPositions
+                            />
+
+                            <Field name={`${employmentBaseFieldName}.fullTimeEquivalentPercentage`}>
+                              {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                                <TextField
+                                  {...field}
+                                  value={field.value ?? ''}
+                                  required
+                                  disabled={isSubmitting}
+                                  fullWidth
+                                  type="number"
+                                  inputProps={{ min: '0', max: '100' }}
+                                  variant="filled"
+                                  label={t('basic_data.add_employee.position_percent')}
+                                  error={touched && !!error}
+                                  helperText={touched && error}
+                                />
+                              )}
+                            </Field>
                           </Box>
-                        )}
-                      </Box>
-                      {!!errors.employments && touched.employments && (
-                        <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
-                      )}
+                          <Box display={{ display: 'flex', gap: '1rem' }}>
+                            <StartDateField
+                              fieldName={`${employmentBaseFieldName}.startDate`}
+                              disabled={isSubmitting}
+                              maxDate={
+                                values.employments[employmentIndex].endDate
+                                  ? new Date(values.employments[employmentIndex].endDate)
+                                  : undefined
+                              }
+                            />
 
-                      <Box sx={{ mt: '1rem' }}>
-                        <UserRolesSelector
-                          selectedRoles={values.roles}
-                          updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                          isLoading={isLoadingInstitutionUser}
-                          disabled={isSubmitting}
-                        />
-                      </Box>
-                    </div>
+                            <Field name={`${employmentBaseFieldName}.endDate`}>
+                              {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                                <DatePicker
+                                  disabled={isSubmitting}
+                                  label={t('common.end_date')}
+                                  PopperProps={{
+                                    'aria-label': t('common.end_date'),
+                                  }}
+                                  value={field.value ? field.value : null}
+                                  onChange={(date) => setFieldValue(field.name, date ?? '')}
+                                  inputFormat="dd.MM.yyyy"
+                                  views={['year', 'month', 'day']}
+                                  mask="__.__.____"
+                                  minDate={
+                                    values.employments[employmentIndex].startDate
+                                      ? new Date(values.employments[employmentIndex].startDate)
+                                      : undefined
+                                  }
+                                  renderInput={(params) => (
+                                    <TextField
+                                      {...params}
+                                      variant="filled"
+                                      error={touched && !!error}
+                                      helperText={<ErrorMessage name={field.name} />}
+                                    />
+                                  )}
+                                />
+                              )}
+                            </Field>
+                          </Box>
+                          <Button
+                            color="error"
+                            variant="outlined"
+                            onClick={() => {
+                              toggleConfirmDeleteDialog();
+                            }}
+                            endIcon={<DeleteIcon />}>
+                            {t('basic_data.person_register.remove_employment')}
+                          </Button>
+                          {values.employments.length > 1 && (
+                            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'center' }}>
+                              <IconButton
+                                title={t('common.previous')}
+                                disabled={employmentIndex === 0}
+                                onClick={() => setEmploymentIndex(employmentIndex - 1)}>
+                                <NavigateBeforeIcon />
+                              </IconButton>
+                              <Typography>
+                                {t('basic_data.person_register.employment_x_of_y', {
+                                  selected: employmentIndex + 1,
+                                  total: values.employments.length,
+                                })}
+                              </Typography>
+                              <IconButton
+                                title={t('common.next')}
+                                disabled={employmentIndex === values.employments.length - 1}
+                                onClick={() => setEmploymentIndex(employmentIndex + 1)}>
+                                <NavigateNextIcon />
+                              </IconButton>
+                            </Box>
+                          )}
+                        </Box>
+                        {!!errors.employments && touched.employments && (
+                          <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
+                        )}
+
+                        <Box sx={{ mt: '1rem' }}>
+                          <UserRolesSelector
+                            selectedRoles={values.roles}
+                            updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                            disabled={isSubmitting}
+                          />
+                        </Box>
+                      </div>
+                    )
                   )}
                 </Box>
               </DialogContent>
