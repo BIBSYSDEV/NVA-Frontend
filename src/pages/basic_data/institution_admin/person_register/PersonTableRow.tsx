@@ -327,9 +327,7 @@ export const PersonTableRow = ({
                             disabled={isSubmitting || !hasFetchedPositions}
                             color="error"
                             variant="outlined"
-                            onClick={() => {
-                              toggleConfirmDeleteDialog();
-                            }}
+                            onClick={toggleConfirmDeleteDialog}
                             endIcon={<DeleteIcon />}>
                             {t('basic_data.person_register.remove_employment')}
                           </Button>
