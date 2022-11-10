@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { YupShape } from '../validationHelpers';
-import { AssociatedFile, AssociatedLink } from '../../../types/file.types';
+import { AssociatedFile } from '../../../types/file.types';
 
 const associatedArtifactErrorMessage = {
   fileVersionRequired: i18n.t('translation:feedback.validation.is_required', {
@@ -35,8 +35,4 @@ export const associatedFileValidationSchema = Yup.object<YupShape<AssociatedFile
       is: false,
       then: Yup.object().nullable().required(associatedArtifactErrorMessage.licenseRequired),
     }),
-});
-
-export const associatedLinkValidationSchema = Yup.object<YupShape<AssociatedLink>>({
-  id: Yup.string().url(),
 });
