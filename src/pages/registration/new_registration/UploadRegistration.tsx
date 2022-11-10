@@ -58,10 +58,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       <AccordionDetails>
         {uppy && (
           <>
-            <FileUploader
-              uppy={uppy}
-              addFile={(newFile: AssociatedFile) => setUploadedFiles((files) => [newFile, ...files])}
-            />
+            <FileUploader uppy={uppy} addFile={(newFile) => setUploadedFiles((files) => [newFile, ...files])} />
             {uploadedFiles.length > 0 && (
               <>
                 <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>
