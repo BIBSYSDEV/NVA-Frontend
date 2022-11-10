@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { PublicationType } from '../../../types/publicationFieldNames';
 import { contributorsValidationSchema } from './contributorValidation';
-import { fileValidationSchema } from './fileValidation';
+import { associatedFileValidationSchema } from './fileValidation';
 import {
   artisticDesignReference,
   baseReference,
@@ -32,7 +32,7 @@ const registrationErrorMessage = {
   publishedDateInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
     field: i18n.t('translation:registration.description.date_published'),
   }),
-  fileRequired: i18n.t('translation:feedback.validation.minimum_one_file'),
+  associatedArtifactRequired: i18n.t('translation:feedback.validation.must_have_associated_artifact'),
 };
 
 export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
@@ -84,8 +84,12 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
     }),
   }),
   associatedArtifacts: Yup.array()
-    .of(fileValidationSchema)
-    .min(1, registrationErrorMessage.fileRequired)
-    .required(registrationErrorMessage.fileRequired),
+    .of(associatedFileValidationSchema)
+    .when('entityDescription', (entityDescription: EntityDescription, schema) =>
+      entityDescription.reference?.doi
+        ? schema.min(0)
+        : schema.min(1, registrationErrorMessage.associatedArtifactRequired)
+    )
+    .required(registrationErrorMessage.associatedArtifactRequired),
   projects: Yup.array().of(Yup.object()),
 });

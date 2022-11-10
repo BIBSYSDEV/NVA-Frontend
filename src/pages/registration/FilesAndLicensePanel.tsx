@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, FormHelperText, Link, Paper, TextField, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { Modal } from '../../components/Modal';
-import { AssociatedLink, licenses, Uppy } from '../../types/file.types';
+import { AssociatedFile, AssociatedLink, licenses, Uppy } from '../../types/file.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { FileUploader } from './files_and_license_tab/FileUploader';
@@ -14,7 +14,12 @@ import {
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getAssociatedFiles, getAssociatedLinks } from '../../utils/registration-helpers';
+import {
+  associatedArtifactIsFile,
+  associatedArtifactIsLink,
+  getAssociatedFiles,
+  getAssociatedLinks,
+} from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
 
@@ -112,9 +117,15 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 {files.length > 0 && (
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
                     {files.map((file) => {
-                      const associatedFileIndex = associatedArtifacts.findIndex(
-                        (artifact) => artifact.type === 'AssociatedLink'
-                      );
+                      const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
+                        if (associatedArtifactIsFile(artifact)) {
+                          const thisFile = file as AssociatedFile;
+                          const associatedFile = artifact as AssociatedFile;
+                          return associatedFile.identifier === thisFile.identifier;
+                        }
+                        return false;
+                      });
+
                       return (
                         <FileCard
                           key={file.identifier}
@@ -140,11 +151,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 )}
 
                 <FileUploader uppy={uppy} addFile={push} />
-                {files.length === 0 && typeof errors.associatedArtifacts === 'string' && touched.associatedArtifacts && (
-                  <FormHelperText error sx={{ p: '1rem' }}>
-                    <ErrorMessage name={name} />
-                  </FormHelperText>
-                )}
               </BackgroundDiv>
             </Paper>
 
@@ -162,8 +168,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     label={t('registration.files_and_license.link_to_resource')}
                     value={getAssociatedLinks(associatedArtifacts)[0]?.id ?? ''}
                     onChange={(event) => {
-                      const associatedLinkIndex = associatedArtifacts.findIndex(
-                        (artifact) => artifact.type === 'AssociatedLink'
+                      const associatedLinkIndex = associatedArtifacts.findIndex((artifact) =>
+                        associatedArtifactIsLink(artifact)
                       );
 
                       const inputValue = event.target.value;
@@ -184,6 +190,12 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                 )}
               </BackgroundDiv>
             </Paper>
+
+            {files.length === 0 && typeof errors.associatedArtifacts === 'string' && touched.associatedArtifacts && (
+              <FormHelperText error>
+                <ErrorMessage name={name} />
+              </FormHelperText>
+            )}
           </>
         )}
       </FieldArray>
