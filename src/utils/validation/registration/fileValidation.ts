@@ -16,23 +16,23 @@ const associatedArtifactErrorMessage = {
 };
 
 export const associatedFileValidationSchema = Yup.object<YupShape<AssociatedFile>>({
-  administrativeAgreement: Yup.boolean(),
+  administrativeAgreement: Yup.boolean().nullable(),
   embargoDate: Yup.date()
     .nullable()
     .when('administrativeAgreement', {
       is: false,
-      then: Yup.date().nullable().typeError(associatedArtifactErrorMessage.embargoDateInvalid),
+      then: (schema) => schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid),
     }),
   publisherAuthority: Yup.boolean()
     .nullable()
     .when('administrativeAgreement', {
       is: false,
-      then: Yup.boolean().nullable().required(associatedArtifactErrorMessage.fileVersionRequired),
+      then: (schema) => schema.required(associatedArtifactErrorMessage.fileVersionRequired),
     }),
   license: Yup.object()
     .nullable()
     .when('administrativeAgreement', {
       is: false,
-      then: Yup.object().nullable().required(associatedArtifactErrorMessage.licenseRequired),
+      then: (schema) => schema.required(associatedArtifactErrorMessage.licenseRequired),
     }),
 });
