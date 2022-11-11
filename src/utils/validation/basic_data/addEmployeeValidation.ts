@@ -10,7 +10,13 @@ const employeeErrorMessage = {
   firstNameRequired: i18n.t('translation:feedback.validation.is_required', {
     field: i18n.t('translation:common.first_name'),
   }),
+  firstNameInvalidFormat: i18n.t('translation:feedback.validation.invalid_symbol_in_name', {
+    field: i18n.t('translation:common.first_name'),
+  }),
   lastNameRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:common.last_name'),
+  }),
+  lastNameInvalidFormat: i18n.t('translation:feedback.validation.invalid_symbol_in_name', {
     field: i18n.t('translation:common.last_name'),
   }),
   affiliationTypeRequired: i18n.t('translation:feedback.validation.is_required', {
@@ -52,9 +58,18 @@ const employeeErrorMessage = {
   }),
 };
 
+// Ensures there are no numbers or special characters in the string
+const nameRegexp = new RegExp(/^[^0-9&/\\#,+()$~%'":*?<>{}!@[\]]+$/);
+
 export const userValidationSchema = Yup.object<YupShape<FlatCristinPerson>>({
-  firstName: Yup.string().required(employeeErrorMessage.firstNameRequired),
-  lastName: Yup.string().required(employeeErrorMessage.lastNameRequired),
+  firstName: Yup.string()
+    .matches(nameRegexp, employeeErrorMessage.firstNameInvalidFormat)
+    .min(2, employeeErrorMessage.firstNameRequired)
+    .required(employeeErrorMessage.firstNameRequired),
+  lastName: Yup.string()
+    .matches(nameRegexp, employeeErrorMessage.lastNameInvalidFormat)
+    .min(2, employeeErrorMessage.lastNameRequired)
+    .required(employeeErrorMessage.lastNameRequired),
   nationalId: Yup.string()
     .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat)
     .required(employeeErrorMessage.nationalIdInvalid),
