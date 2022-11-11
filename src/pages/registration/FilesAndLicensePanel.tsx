@@ -119,9 +119,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     {files.map((file) => {
                       const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
                         if (associatedArtifactIsFile(artifact)) {
-                          const thisFile = file as AssociatedFile;
                           const associatedFile = artifact as AssociatedFile;
-                          return associatedFile.identifier === thisFile.identifier;
+                          return associatedFile.identifier === file.identifier;
                         }
                         return false;
                       });

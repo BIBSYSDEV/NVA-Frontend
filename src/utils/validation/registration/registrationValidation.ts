@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { PublicationType } from '../../../types/publicationFieldNames';
 import { contributorsValidationSchema } from './contributorValidation';
-import { associatedFileValidationSchema } from './fileValidation';
+import { associatedFileValidationSchema } from './associatedArtifactValidation';
 import {
   artisticDesignReference,
   baseReference,
