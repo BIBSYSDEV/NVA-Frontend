@@ -496,7 +496,6 @@
       "creator_description": "Can register publications and other resources.",
       "curator": "Curator",
       "curator_description": "Can edit the institution's registrations, answer user support inquiries and possibly also assign DOIs.",
-      "curators": "Curators",
       "editor": "Editor",
       "editor_description": "Determines access to controlled vocabularies and publication strategy for the institution.",
       "institution_admin": "Administrator",

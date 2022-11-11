@@ -496,7 +496,6 @@
       "creator_description": "Kan registrere publikasjoner og andre ressurser.",
       "curator": "Kurator",
       "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
-      "curators": "Kuratorer",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "institution_admin": "Administrator",
