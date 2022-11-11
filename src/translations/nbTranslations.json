@@ -85,13 +85,11 @@
       "show_full_nin": "Vis personnummer"
     },
     "users": {
-      "add_role_info": "Om du ikke finner brukeren, så må du sjekke at vedkommende er tilknyttet din institusjon og har logget på tjenesten tidligere.",
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgresninger",
       "no_users_found": "Ingen brukere funnet",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
-      "search_for_user": "Søk blant eksisterende brukere",
       "username": "Brukernavn"
     }
   },
