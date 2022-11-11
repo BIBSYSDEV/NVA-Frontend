@@ -406,7 +406,6 @@
       "has_invalid_format": "{{field}} har ugyldig format",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
       "invalid_symbol_in_name": "{{field}} kan ikke inneholde tall eller spesialtegn",
-
       "is_required": "{{-field}} er obligatorisk",
       "isbn_too_short": "ISBN må ha 13 siffer",
       "minimum_one_file": "Du må laste opp minst en fil for denne registreringen",
