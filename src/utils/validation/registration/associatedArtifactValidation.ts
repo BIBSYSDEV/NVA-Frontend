@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
+import { associatedArtifactIsFile, associatedArtifactIsLink } from '../../registration-helpers';
 import { YupShape } from '../validationHelpers';
-import { AssociatedFile } from '../../../types/associatedArtifact.types';
 
 const associatedArtifactErrorMessage = {
   fileVersionRequired: i18n.t('translation:feedback.validation.is_required', {
@@ -13,26 +13,43 @@ const associatedArtifactErrorMessage = {
   embargoDateInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
     field: i18n.t('translation:registration.files_and_license.file_publish_date'),
   }),
+  linkInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
+    field: i18n.t('translation:registration.files_and_license.link_to_resource'),
+  }),
 };
 
-export const associatedFileValidationSchema = Yup.object<YupShape<AssociatedFile>>({
+export const associatedFileValidationSchema = Yup.object<YupShape<unknown>>({
+  type: Yup.string(),
+
+  // File validation
   administrativeAgreement: Yup.boolean().nullable(),
   embargoDate: Yup.date()
     .nullable()
-    .when('administrativeAgreement', {
-      is: false,
+    .when(['type', 'administrativeAgreement'], {
+      is: (type: string, administrativeAgreement: boolean) =>
+        associatedArtifactIsFile({ type }) && administrativeAgreement === false,
       then: (schema) => schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid),
     }),
   publisherAuthority: Yup.boolean()
     .nullable()
-    .when('administrativeAgreement', {
-      is: false,
+    .when(['type', 'administrativeAgreement'], {
+      is: (type: string, administrativeAgreement: boolean) =>
+        associatedArtifactIsFile({ type }) && administrativeAgreement === false,
       then: (schema) => schema.required(associatedArtifactErrorMessage.fileVersionRequired),
     }),
   license: Yup.object()
     .nullable()
-    .when('administrativeAgreement', {
-      is: false,
+    .when(['type', 'administrativeAgreement'], {
+      is: (type: string, administrativeAgreement: boolean) =>
+        associatedArtifactIsFile({ type }) && administrativeAgreement === false,
       then: (schema) => schema.required(associatedArtifactErrorMessage.licenseRequired),
+    }),
+
+  // Link validation
+  id: Yup.string()
+    .nullable()
+    .when('type', {
+      is: (type: string) => associatedArtifactIsLink({ type }),
+      then: (schema) => schema.url(associatedArtifactErrorMessage.linkInvalid),
     }),
 });

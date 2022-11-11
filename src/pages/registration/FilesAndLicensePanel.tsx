@@ -1,4 +1,4 @@
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, FormHelperText, Link, Paper, TextField, Typography } from '@mui/material';
@@ -18,7 +18,6 @@ import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
   getAssociatedFiles,
-  getAssociatedLinks,
 } from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
@@ -39,6 +38,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
+  const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
+  const associatedLinkHasError =
+    associatedLinkIndex >= 0 &&
+    !!(touched.associatedArtifacts?.[associatedLinkIndex] as FormikTouched<AssociatedLink>) &&
+    !!(errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>);
 
   const filesRef = useRef(files);
   useEffect(() => {
@@ -166,14 +170,17 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     fullWidth
                     variant="filled"
                     label={t('registration.files_and_license.link_to_resource')}
-                    value={getAssociatedLinks(associatedArtifacts)[0]?.id ?? ''}
+                    value={
+                      associatedLinkIndex >= 0 ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id : ''
+                    }
+                    error={associatedLinkHasError}
+                    helperText={
+                      associatedLinkHasError
+                        ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
+                        : null
+                    }
                     onChange={(event) => {
-                      const associatedLinkIndex = associatedArtifacts.findIndex((artifact) =>
-                        associatedArtifactIsLink(artifact)
-                      );
-
                       const inputValue = event.target.value;
-
                       if (inputValue) {
                         if (associatedLinkIndex < 0) {
                           const newAssociatedLink: AssociatedLink = { type: 'AssociatedLink', id: inputValue };
@@ -181,6 +188,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         } else {
                           const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
                           setFieldValue(fieldName, inputValue);
+                          setFieldTouched(fieldName);
                         }
                       } else {
                         const associatedArtifactsBeforeRemoval = associatedArtifacts.length;

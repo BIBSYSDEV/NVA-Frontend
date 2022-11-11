@@ -489,10 +489,10 @@ export const hyphenateIsrc = (isrc: string) =>
 export const getTitleString = (title: string | undefined) =>
   title || `[${i18n.t('translation:registration.missing_title')}]`;
 
-export const associatedArtifactIsFile = ({ type }: AssociatedArtifact) =>
+export const associatedArtifactIsFile = ({ type }: { type: string }) =>
   type === 'File' || type === 'UnpublishedFile' || type === 'PublishedFile' || type === 'UnpublishableFile';
 
-export const associatedArtifactIsLink = ({ type }: AssociatedArtifact) => type === 'AssociatedLink';
+export const associatedArtifactIsLink = ({ type }: { type: string }) => type === 'AssociatedLink';
 
 export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsFile) as AssociatedFile[];
