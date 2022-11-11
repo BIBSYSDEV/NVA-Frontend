@@ -59,14 +59,16 @@ const employeeErrorMessage = {
 };
 
 // Ensures there are no numbers or special characters in the string
-const nameRegexp = new RegExp(/^[^\d&/\\#,+()$~%.'":*?<>{}!@[\]]{2,}$/);
+const nameRegexp = new RegExp(/^[^0-9&/\\#,+()$~%'":*?<>{}!@[\]]+$/);
 
 export const userValidationSchema = Yup.object<YupShape<FlatCristinPerson>>({
   firstName: Yup.string()
     .matches(nameRegexp, employeeErrorMessage.firstNameInvalidFormat)
+    .min(2, employeeErrorMessage.firstNameRequired)
     .required(employeeErrorMessage.firstNameRequired),
   lastName: Yup.string()
     .matches(nameRegexp, employeeErrorMessage.lastNameInvalidFormat)
+    .min(2, employeeErrorMessage.lastNameRequired)
     .required(employeeErrorMessage.lastNameRequired),
   nationalId: Yup.string()
     .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat)
