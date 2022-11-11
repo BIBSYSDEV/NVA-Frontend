@@ -88,13 +88,10 @@
       "add_role_info": "Om du ikke finner brukeren, så må du sjekke at vedkommende er tilknyttet din institusjon og har logget på tjenesten tidligere.",
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgresninger",
-      "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
-      "creator_info": "Hvem skal få tilgang til å registrere?",
       "no_users_found": "Ingen brukere funnet",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "search_for_user": "Søk blant eksisterende brukere",
-      "user_administration": "Brukeradministrasjon",
       "username": "Brukernavn"
     }
   },
@@ -502,7 +499,6 @@
       "curators": "Kuratorer",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
-      "editors": "Redaktører",
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "institution_admins": "Administratorer",

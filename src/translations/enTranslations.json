@@ -88,13 +88,10 @@
       "add_role_info": "If you don't find the user, you must check that they are affiliated with your institution and have previously logged in.",
       "area_of_responsibility": "Area of responsibility",
       "area_of_responsibility_placeholder": "No limitations",
-      "auto_assign_creators": "Employees are automatically assigned role as creator at login if they are registered as this in 'eduPersonAffiliation': Employee, Staff, Member",
-      "creator_info": "Who is able to publish?",
       "no_users_found": "No users found",
       "remove_role_text": "Are you sure you want to remove this role?",
       "remove_role_title": "Remove role?",
       "search_for_user": "Search among existing users",
-      "user_administration": "User administration",
       "username": "Username"
     }
   },
@@ -502,7 +499,6 @@
       "curators": "Curators",
       "editor": "Editor",
       "editor_description": "Determines access to controlled vocabularies and publication strategy for the institution.",
-      "editors": "Editors",
       "institution_admin": "Administrator",
       "institution_admin_description": "Maintains the institution's information in the person registery and assigns roles in the service.",
       "institution_admins": "Administrators",
