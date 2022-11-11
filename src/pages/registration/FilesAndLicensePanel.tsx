@@ -131,13 +131,14 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                           key={file.identifier}
                           file={file}
                           removeFile={() => {
+                            const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                             const remainingFiles = uppy
                               .getFiles()
                               .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
                             uppy.setState({ files: remainingFiles });
                             remove(associatedFileIndex);
 
-                            if (remainingFiles.length === 0) {
+                            if (associatedArtifactsBeforeRemoval === 1) {
                               // Ensure field is set to touched even if it's empty
                               setFieldTouched(name);
                             }
@@ -183,7 +184,12 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                           setFieldValue(fieldName, inputValue);
                         }
                       } else {
+                        const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                         remove(associatedLinkIndex);
+                        if (associatedArtifactsBeforeRemoval === 1) {
+                          // Ensure field is set to touched even if it's empty
+                          setFieldTouched(name);
+                        }
                       }
                     }}
                   />
@@ -191,11 +197,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
               </BackgroundDiv>
             </Paper>
 
-            {files.length === 0 && typeof errors.associatedArtifacts === 'string' && touched.associatedArtifacts && (
-              <FormHelperText error>
-                <ErrorMessage name={name} />
-              </FormHelperText>
-            )}
+            {associatedArtifacts.length === 0 &&
+              typeof errors.associatedArtifacts === 'string' &&
+              touched.associatedArtifacts && (
+                <FormHelperText error>
+                  <ErrorMessage name={name} />
+                </FormHelperText>
+              )}
           </>
         )}
       </FieldArray>
