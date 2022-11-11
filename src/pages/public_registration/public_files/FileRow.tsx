@@ -18,7 +18,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { downloadPrivateFile, downloadPublicFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, licenses } from '../../../types/file.types';
+import { AssociatedFile, licenses } from '../../../types/associatedArtifact.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { PreviewFile } from './preview_file/PreviewFile';
 

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { AssociatedFile, emptyFile, Uppy } from '../../../types/file.types';
+import { AssociatedFile, emptyFile, Uppy } from '../../../types/associatedArtifact.types';
 import { UppyDashboard } from '../../../components/UppyDashboard';
 
 interface FileUploaderProps {

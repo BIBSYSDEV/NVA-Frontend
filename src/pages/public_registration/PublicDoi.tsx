@@ -6,7 +6,7 @@ import { RootState } from '../../redux/store';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { associatedArtifactIsLink, userCanEditRegistration } from '../../utils/registration-helpers';
-import { AssociatedLink } from '../../types/file.types';
+import { AssociatedLink } from '../../types/associatedArtifact.types';
 
 interface PublicDoiProps {
   registration: Registration;

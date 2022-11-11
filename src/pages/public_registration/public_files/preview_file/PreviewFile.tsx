@@ -1,4 +1,4 @@
-import { AssociatedFile } from '../../../../types/file.types';
+import { AssociatedFile } from '../../../../types/associatedArtifact.types';
 import { PreviewImg } from './PreviewImg';
 import { PreviewOfficeFile } from './PreviewOfficeFile';
 import { PreviewPdf } from './PreviewPdf';

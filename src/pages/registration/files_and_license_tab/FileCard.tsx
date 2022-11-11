@@ -26,7 +26,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import LockIcon from '@mui/icons-material/LockOutlined';
 import { DatePicker } from '@mui/x-date-pickers';
-import { AssociatedFile, LicenseNames, licenses } from '../../../types/file.types';
+import { AssociatedFile, LicenseNames, licenses } from '../../../types/associatedArtifact.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';

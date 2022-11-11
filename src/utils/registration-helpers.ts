@@ -36,7 +36,7 @@ import {
   LiteraryArtsWeb,
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
-import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/file.types';
+import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)

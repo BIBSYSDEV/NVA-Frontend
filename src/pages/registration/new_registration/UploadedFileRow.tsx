@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Box, Button, Typography } from '@mui/material';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { AssociatedFile } from '../../../types/file.types';
+import { AssociatedFile } from '../../../types/associatedArtifact.types';
 
 interface UploadedFileRowProps {
   file: AssociatedFile;

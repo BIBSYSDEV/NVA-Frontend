@@ -2,7 +2,7 @@ import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn } from 'formik';
 import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import { Contributor } from '../types/contributor.types';
-import { AssociatedArtifact, AssociatedFile } from '../types/file.types';
+import { AssociatedArtifact, AssociatedFile } from '../types/associatedArtifact.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,

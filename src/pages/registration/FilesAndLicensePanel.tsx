@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, FormHelperText, Link, Paper, TextField, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { Modal } from '../../components/Modal';
-import { AssociatedFile, AssociatedLink, licenses, Uppy } from '../../types/file.types';
+import { AssociatedFile, AssociatedLink, licenses, Uppy } from '../../types/associatedArtifact.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { FileUploader } from './files_and_license_tab/FileUploader';

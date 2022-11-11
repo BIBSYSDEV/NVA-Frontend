@@ -110,7 +110,7 @@ export interface AssociatedLink {
   description?: string;
 }
 
-export interface NullAssociatedArtifact {
+interface NullAssociatedArtifact {
   type: 'NullAssociatedArtifact';
 }
 

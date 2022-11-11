@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useUppy } from '@uppy/react';
 import { LoadingButton } from '@mui/lab';
 import { RegistrationAccordion } from './RegistrationAccordion';
-import { AssociatedFile } from '../../../types/file.types';
+import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { FileUploader } from '../files_and_license_tab/FileUploader';
