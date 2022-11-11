@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 import { RootState } from '../../redux/store';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { associatedArtifactIsLink, userCanEditRegistration } from '../../utils/registration-helpers';
-import { AssociatedLink } from '../../types/associatedArtifact.types';
+import { getAssociatedLinks, userCanEditRegistration } from '../../utils/registration-helpers';
 
 interface PublicDoiProps {
   registration: Registration;
@@ -19,8 +18,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
 
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';
   const nvaDoi = registration.doi;
-  const associatedLink = (registration.associatedArtifacts.find(associatedArtifactIsLink) as AssociatedLink | undefined)
-    ?.id;
+  const associatedLink = getAssociatedLinks(registration.associatedArtifacts)[0]?.id;
 
   useEffect(() => {
     const lookupNvaDoi = async () => {
