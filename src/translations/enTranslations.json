@@ -405,6 +405,7 @@
       "exhibition_place_required": "Must have at least one exhibition place",
       "has_invalid_format": "{{field}} has invalid format",
       "invalid_number_of_digits": "{{field}} must have {{digits}} digits",
+      "invalid_symbol_in_name": "{{field}} must not include numbers or special characters",
       "is_required": "{{-field}} is required",
       "isbn_too_short": "ISBN must have 13 digits",
       "minimum_one_file": "You need to upload at least one file for this registration",
