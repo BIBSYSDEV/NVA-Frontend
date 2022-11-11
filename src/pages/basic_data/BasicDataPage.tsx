@@ -13,7 +13,6 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
-import { MyInstitutionUsersPage } from './institution_admin/MyInstitutionUsersPage';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 import {
@@ -110,7 +109,6 @@ const BasicDataPage = () => {
               component={CentralImportDuplicationCheckPage}
             />
             <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
-            <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataUsers} component={MyInstitutionUsersPage} />
             <InstitutionAdminRoute
               exact
               path={UrlPathTemplate.BasicDataPersonRegister}
