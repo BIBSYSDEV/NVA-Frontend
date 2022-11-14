@@ -4,7 +4,6 @@ import { Box, TextField, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { BookType, ChapterType, ReportType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
@@ -20,8 +19,6 @@ export const ChapterForm = () => {
 
   return (
     <>
-      <DoiField />
-
       <div>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
           <InfoIcon color="primary" />

@@ -175,12 +175,17 @@ export enum FileFieldNames {
   AssociatedArtifacts = 'associatedArtifacts',
 }
 
-// The following fields should be present in "associatedArtifacts[index].<KEY>"
+// The following fields should be present in "associatedArtifacts[index].<KEY> for files"
 export enum SpecificFileFieldNames {
   AdministrativeAgreement = 'administrativeAgreement',
   PublisherAuthority = 'publisherAuthority',
   EmbargoDate = 'embargoDate',
   License = 'license',
+}
+
+// The following fields should be present in "associatedArtifacts[index].<KEY> for links"
+export enum SpecificLinkFieldNames {
+  Id = 'id',
 }
 
 export enum ContributorFieldNames {
