@@ -24,6 +24,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
+  associatedArtifactIsNullArtifact,
   getAssociatedFiles,
 } from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
@@ -52,8 +53,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     !!(errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink> | undefined)?.id;
 
   const isNullAssociatedArtifact =
-    associatedArtifacts.length === 1 &&
-    associatedArtifacts.find((artifact) => artifact.type === 'NullAssociatedArtifact');
+    associatedArtifacts.length === 1 && associatedArtifacts.some(associatedArtifactIsNullArtifact);
 
   const filesRef = useRef(files);
   useEffect(() => {
