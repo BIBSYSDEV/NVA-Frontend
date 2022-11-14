@@ -48,7 +48,6 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
         locationState.highestValidatedTab = tabNumber; // Validate current tab
       }
       const touchedFieldsOnUnmount = getTouchedTabFields(tabNumber, valuesRef.current);
-
       setTouched(
         deepmerge.all([touchedRef.current, touchedFieldsOnUnmount], {
           // associatedArtifacts must keep sourceArray in cases where it contains both files and link
