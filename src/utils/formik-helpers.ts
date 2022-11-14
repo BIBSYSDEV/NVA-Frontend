@@ -376,25 +376,29 @@ const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched
   },
 });
 
-const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): FormikTouched<Registration> => ({
-  associatedArtifacts: associatedArtifacts.map((artifact) => {
-    if (associatedArtifactIsFile(artifact)) {
-      const touched: FormikTouched<AssociatedFile> = {
-        administrativeAgreement: true,
-        publisherAuthority: true,
-        embargoDate: true,
-        license: true,
-      };
-      return touched;
-    } else if (associatedArtifactIsLink(artifact)) {
-      const touched: FormikTouched<AssociatedLink> = { id: true };
-      return touched;
-    } else {
-      const touched: FormikTouched<NullAssociatedArtifact> = { type: true };
-      return touched;
-    }
-  }),
-});
+const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]) => {
+  const touchedArtifacts: FormikTouched<Registration> = {
+    associatedArtifacts: associatedArtifacts.map((artifact) => {
+      if (associatedArtifactIsFile(artifact)) {
+        const touched: FormikTouched<AssociatedFile> = {
+          administrativeAgreement: true,
+          publisherAuthority: true,
+          embargoDate: true,
+          license: true,
+        };
+        return touched;
+      } else if (associatedArtifactIsLink(artifact)) {
+        const touched: FormikTouched<AssociatedLink> = { id: true };
+        return touched;
+      } else {
+        const touched: FormikTouched<NullAssociatedArtifact> = { type: true };
+        return touched;
+      }
+    }),
+  };
+
+  return touchedArtifacts;
+};
 
 export const getTouchedTabFields = (
   tabToTouch: HighestTouchedTab,
