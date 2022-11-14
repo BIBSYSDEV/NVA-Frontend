@@ -64,15 +64,6 @@ const BasicDataPage = () => {
                 icon={<PersonAddIcon />}
               />
             </LinkButtonRow>,
-            <BetaFunctionality key={dataTestId.basicData.adminUsersLink}>
-              <LinkButton
-                key={dataTestId.basicData.adminUsersLink}
-                data-testid={dataTestId.basicData.adminUsersLink}
-                isSelected={currentPath === UrlPathTemplate.BasicDataUsers}
-                to={UrlPathTemplate.BasicDataUsers}>
-                {t('common.users')}
-              </LinkButton>
-            </BetaFunctionality>,
           ]}
           {user?.isAppAdmin && [
             <BetaFunctionality key={dataTestId.basicData.centralImportLink}>

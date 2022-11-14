@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import {
+  Box,
   CircularProgress,
   Table,
   TableBody,
@@ -22,7 +23,7 @@ import { RoleApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { UserList } from '../../types/user.types';
 
-export const AreaOfResponsibility = () => {
+export const EditorCurators = () => {
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [page, setPage] = useState(0);
@@ -48,7 +49,9 @@ export const AreaOfResponsibility = () => {
   return (
     <>
       {isLoading ? (
-        <CircularProgress sx={{ margin: 'auto' }} />
+        <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+          <CircularProgress />
+        </Box>
       ) : (
         <>
           {sortedList.length === 0 ? (
@@ -58,14 +61,13 @@ export const AreaOfResponsibility = () => {
           ) : (
             <>
               <Table size="small" sx={alternatingTableRowColor}>
-                {/* <caption style={visuallyHidden}>{tableCaption}</caption> */}
                 <TableHead>
                   <TableRow>
                     <TableCell>
                       <Typography fontWeight="bold">{t('common.name')}</Typography>
                     </TableCell>
                     <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
-                      <Typography fontWeight="bold">{t('basic_data.users.area_of_responsibility')}</Typography>
+                      <Typography fontWeight="bold">{t('editor.curators.area_of_responsibility')}</Typography>
                     </TableCell>
                   </TableRow>
                 </TableHead>

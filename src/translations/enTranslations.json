@@ -183,7 +183,6 @@
     "title": "Title",
     "type": "Type",
     "update": "Update",
-    "users": "Users",
     "version": "Version",
     "will_be_available": "Will be available",
     "x_others_one": "+ {{count}} other",
@@ -292,6 +291,10 @@
     "disabled_description": "$t(editor.disabled): Is not available",
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
+    "curators": {
+      "area_of_responsibility": "Area of responsibility",
+      "areas_of_responsibility": "Areas of responsibility"
+    },
     "institution": {
       "institution_code": "Institution's code",
       "institution_helper_text": "Contact <0>Sikt</0> if changes are needed.",

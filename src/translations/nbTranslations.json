@@ -86,7 +86,7 @@
     },
     "users": {
       "area_of_responsibility": "Ansvarsområde",
-      "area_of_responsibility_placeholder": "Ingen avgresninger",
+      "area_of_responsibility_placeholder": "Ingen avgrensninger",
       "no_users_found": "Ingen brukere funnet",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
@@ -183,7 +183,6 @@
     "title": "Tittel",
     "type": "Type",
     "update": "Oppdater",
-    "users": "Brukere",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
     "x_others_one": "+ {{count}} annen",
@@ -292,6 +291,10 @@
     "disabled_description": "$t(editor.disabled): Er ikke tilgjengelig",
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
+    "curators": {
+      "area_of_responsibility": "Ansvarsområde",
+      "areas_of_responsibility": "Ansvarsområder"
+    },
     "institution": {
       "institution_code": "Institusjonens kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",

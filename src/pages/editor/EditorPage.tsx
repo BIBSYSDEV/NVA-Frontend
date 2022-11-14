@@ -16,7 +16,7 @@ import {
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { RootState } from '../../redux/store';
-import { AreaOfResponsibility } from './AreaOfResponsibility';
+import { EditorCurators } from './EditorCurators';
 
 const EditorPage = () => {
   const { t } = useTranslation();
@@ -51,10 +51,8 @@ const EditorPage = () => {
             to={UrlPathTemplate.EditorPublishStrategy}>
             {t('editor.publish_strategy.publish_strategy')}
           </LinkButton>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorAreaOfResponsibility}
-            to={UrlPathTemplate.EditorAreaOfResponsibility}>
-            {t('basic_data.users.area_of_responsibility')}
+          <LinkButton isSelected={currentPath === UrlPathTemplate.EditorCurators} to={UrlPathTemplate.EditorCurators}>
+            {t('editor.curators.areas_of_responsibility')}
           </LinkButton>
         </NavigationList>
       </SideNav>
@@ -63,7 +61,7 @@ const EditorPage = () => {
           <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />
           <EditorRoute exact path={UrlPathTemplate.EditorPublishStrategy} component={PublishStrategySettings} />
           <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
-          <EditorRoute exact path={UrlPathTemplate.EditorAreaOfResponsibility} component={AreaOfResponsibility} />
+          <EditorRoute exact path={UrlPathTemplate.EditorCurators} component={EditorCurators} />
         </Switch>
       </BackgroundDiv>
     </StyledPageWithSideMenu>

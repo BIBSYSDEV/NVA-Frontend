@@ -2,7 +2,6 @@ export const dataTestId = {
   basicData: {
     addEmployeeLink: 'add-employee-link',
     adminInstitutionsLink: 'admin-institutions-link',
-    adminUsersLink: 'admin-users-link',
     centralImportLink: 'central-import-link',
     centralImport: {
       checkboxAuthor: 'duplicate-search-author-checkbox',

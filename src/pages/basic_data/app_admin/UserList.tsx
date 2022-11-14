@@ -37,14 +37,7 @@ interface UserListProps {
   showScope?: boolean;
 }
 
-export const UserList = ({
-  userList,
-  tableCaption,
-  roleToRemove,
-  roleToAdd,
-  refetchUsers,
-  showScope = false,
-}: UserListProps) => {
+export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refetchUsers }: UserListProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -53,7 +46,7 @@ export const UserList = ({
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
   const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
-    showScope ? user?.topOrgCristinId ?? '' : ''
+    user?.topOrgCristinId ?? ''
   );
 
   const handleAddRoleToUser = async (user: InstitutionUser) => {
@@ -124,11 +117,9 @@ export const UserList = ({
                 <TableCell>
                   <Typography fontWeight="bold">{t('common.name')}</Typography>
                 </TableCell>
-                {showScope && (
-                  <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
-                    <Typography fontWeight="bold">{t('basic_data.users.area_of_responsibility')}</Typography>
-                  </TableCell>
-                )}
+                <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
+                  <Typography fontWeight="bold">{t('basic_data.users.area_of_responsibility')}</Typography>
+                </TableCell>
                 <TableCell width="150">
                   <Typography fontWeight="bold">{t('common.actions')}</Typography>
                 </TableCell>
@@ -144,18 +135,16 @@ export const UserList = ({
                     <TableCell>
                       {user.givenName} {user.familyName}
                     </TableCell>
-                    {showScope && (
-                      <TableCell>
-                        {isLoadingCurrentOrganization ? (
-                          <CircularProgress />
-                        ) : (
-                          <ViewingScopeCell
-                            user={user}
-                            options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
-                          />
-                        )}
-                      </TableCell>
-                    )}
+                    <TableCell>
+                      {isLoadingCurrentOrganization ? (
+                        <CircularProgress />
+                      ) : (
+                        <ViewingScopeCell
+                          user={user}
+                          options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
+                        />
+                      )}
+                    </TableCell>
                     <TableCell>
                       {roleToRemove && (
                         <Button
