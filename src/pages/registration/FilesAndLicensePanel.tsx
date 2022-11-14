@@ -3,7 +3,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, FormHelperText, Link, Paper, TextField, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
-import BlockIcon from '@mui/icons-material/Block';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Modal } from '../../components/Modal';
 import {
@@ -127,12 +126,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           <>
             {isNullAssociatedArtifact ? (
               <Box sx={{ my: '1rem' }}>
-                <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                  <BlockIcon />
-                  <Typography paragraph fontWeight={600}>
-                    {t('registration.files_and_license.resource_has_no_files_or_links')}
-                  </Typography>
-                </Box>
+                <Typography paragraph fontWeight={600}>
+                  {t('registration.files_and_license.resource_has_no_files_or_links')}
+                </Typography>
                 <Typography paragraph>
                   {t('registration.files_and_license.resource_has_no_files_or_links_paragraph0')}
                 </Typography>
@@ -254,7 +250,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <Button
                     sx={{ width: 'fit-content', m: 'auto' }}
                     variant="outlined"
-                    startIcon={<BlockIcon />}
                     onClick={() => {
                       const nullAssociatedArtifact: NullAssociatedArtifact = { type: 'NullAssociatedArtifact' };
                       push(nullAssociatedArtifact);
