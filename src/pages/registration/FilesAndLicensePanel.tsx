@@ -41,8 +41,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =
     associatedLinkIndex >= 0 &&
-    !!(touched.associatedArtifacts?.[associatedLinkIndex] as FormikTouched<AssociatedLink>) &&
-    !!(errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>);
+    !!(touched.associatedArtifacts?.[associatedLinkIndex] as FormikTouched<AssociatedLink> | undefined)?.id &&
+    !!(errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink> | undefined)?.id;
 
   const filesRef = useRef(files);
   useEffect(() => {
