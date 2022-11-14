@@ -1,7 +1,6 @@
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { DoiField } from '../components/DoiField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { JournalArticleContentType } from '../../../../types/publication_types/content.types';
@@ -21,8 +20,6 @@ export const JournalForm = () => {
   return (
     <>
       <InputContainerBox>
-        <DoiField />
-
         {instanceType === JournalType.Corrigendum ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.CorrigendumFor}

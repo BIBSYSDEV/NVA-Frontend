@@ -4,15 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { MediaFormat, MediaMedium } from '../../../../../types/publication_types/mediaContributionRegistration.types';
-import { DoiField } from '../../components/DoiField';
 
 export const MediaContributionForm = () => {
   const { t } = useTranslation();
 
   return (
     <>
-      <DoiField />
-
       <StyledSelectWrapper>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <Field name={ResourceFieldNames.PublicationContextMediaMediumType}>

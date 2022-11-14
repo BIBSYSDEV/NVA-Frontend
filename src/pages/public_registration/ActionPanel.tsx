@@ -8,7 +8,11 @@ import { RootState } from '../../redux/store';
 import { TicketCollection } from '../../types/publication_types/messages.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { userCanEditRegistration, userIsCuratorForRegistration } from '../../utils/registration-helpers';
+import {
+  associatedArtifactIsLink,
+  userCanEditRegistration,
+  userIsCuratorForRegistration,
+} from '../../utils/registration-helpers';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
@@ -52,14 +56,16 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
               />
             </ErrorBoundary>
             <ErrorBoundary>
-              {!registration.entityDescription?.reference?.doi && doiRequestTicket?.status !== 'Completed' && (
-                <DoiRequestAccordion
-                  refetchRegistration={refetchRegistration}
-                  registration={registration}
-                  doiRequestTicket={doiRequestTicket}
-                  userIsCurator={userIsCurator}
-                />
-              )}
+              {!registration.entityDescription?.reference?.doi &&
+                !registration.associatedArtifacts.some(associatedArtifactIsLink) &&
+                doiRequestTicket?.status !== 'Completed' && (
+                  <DoiRequestAccordion
+                    refetchRegistration={refetchRegistration}
+                    registration={registration}
+                    doiRequestTicket={doiRequestTicket}
+                    userIsCurator={userIsCurator}
+                  />
+                )}
             </ErrorBoundary>
           </>
         )}

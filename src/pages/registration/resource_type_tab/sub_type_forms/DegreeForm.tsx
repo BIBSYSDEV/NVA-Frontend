@@ -1,4 +1,3 @@
-import { DoiField } from '../components/DoiField';
 import { SeriesFields } from '../components/SeriesFields';
 import { DegreeType } from '../../../../types/publicationFieldNames';
 import { PublisherField } from '../components/PublisherField';
@@ -10,7 +9,6 @@ interface DegreeFormProps {
 
 export const DegreeForm = ({ subType }: DegreeFormProps) => (
   <>
-    <DoiField />
     <PublisherField />
     <IsbnAndPages />
 

@@ -1,4 +1,4 @@
-import { AssociatedArtifact } from './file.types';
+import { AssociatedArtifact } from './associatedArtifact.types';
 import { ResearchProject } from './project.types';
 import {
   JournalEntityDescription,
