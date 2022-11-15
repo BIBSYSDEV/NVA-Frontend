@@ -29,14 +29,12 @@ export const EditorCurators = () => {
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [page, setPage] = useState(0);
 
-  const curator = useSelector((store: RootState) => store.user);
+  const user = useSelector((store: RootState) => store.user);
   const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
-    curator?.topOrgCristinId ?? ''
+    user?.topOrgCristinId ?? ''
   );
   const [institutionUsers, isLoading] = useFetch<UserList>({
-    url: curator?.customerId
-      ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(curator.customerId)}`
-      : '',
+    url: user?.customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(user.customerId)}` : '',
     errorMessage: t('feedback.error.get_users_for_institution'),
     withAuthentication: true,
   });
