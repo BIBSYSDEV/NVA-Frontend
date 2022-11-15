@@ -2,7 +2,6 @@ export const dataTestId = {
   basicData: {
     addEmployeeLink: 'add-employee-link',
     adminInstitutionsLink: 'admin-institutions-link',
-    adminUsersLink: 'admin-users-link',
     centralImportLink: 'central-import-link',
     centralImport: {
       checkboxAuthor: 'duplicate-search-author-checkbox',
@@ -36,6 +35,10 @@ export const dataTestId = {
     subSearchField: 'sub-organization-search-field',
   },
   editor: {
+    areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
+    institutionsNameLinkButton: 'institutions-name-link-button',
+    publishStrategyLinkButton: 'publishing-strategy-link-button',
+    vocabularyLinkButton: 'vocabulary-link-button',
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',
     hrcsCategoryButtonGroup: 'hrcs-category-button-group',
   },
