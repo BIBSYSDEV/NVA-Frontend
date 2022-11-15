@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { VocabularySettings } from './VocabularySettings';
 import { PublishStrategySettings } from './PublishStrategySettings';
+import { dataTestId } from '../../utils/dataTestIds';
 import { EditorRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { EditorInstitution } from './EditorInstitution';
@@ -38,20 +39,26 @@ const EditorPage = () => {
         <NavigationList>
           <LinkButton
             isSelected={currentPath === UrlPathTemplate.EditorInstitution}
+            data-testid={dataTestId.editor.institutionsNameLinkButton}
             to={UrlPathTemplate.EditorInstitution}>
             {t('editor.institution.institution_name')}
           </LinkButton>
           <LinkButton
             isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
+            data-testid={dataTestId.editor.vocabularyLinkButton}
             to={UrlPathTemplate.EditorVocabulary}>
             {t('editor.vocabulary')}
           </LinkButton>
           <LinkButton
             isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
+            data-testid={dataTestId.editor.publishStrategyLinkButton}
             to={UrlPathTemplate.EditorPublishStrategy}>
             {t('editor.publish_strategy.publish_strategy')}
           </LinkButton>
-          <LinkButton isSelected={currentPath === UrlPathTemplate.EditorCurators} to={UrlPathTemplate.EditorCurators}>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.EditorCurators}
+            data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
+            to={UrlPathTemplate.EditorCurators}>
             {t('editor.curators.areas_of_responsibility')}
           </LinkButton>
         </NavigationList>

@@ -35,6 +35,10 @@ export const dataTestId = {
     subSearchField: 'sub-organization-search-field',
   },
   editor: {
+    areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
+    institutionsNameLinkButton: 'institutions-name-link-button',
+    publishStrategyLinkButton: 'publishing-strategy-link-button',
+    vocabularyLinkButton: 'vocabulary-link-button',
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',
     hrcsCategoryButtonGroup: 'hrcs-category-button-group',
   },
