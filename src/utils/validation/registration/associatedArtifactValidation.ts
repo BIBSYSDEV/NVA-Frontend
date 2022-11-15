@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { associatedArtifactIsFile, associatedArtifactIsLink } from '../../registration-helpers';
-import { YupShape } from '../validationHelpers';
 
 const associatedArtifactErrorMessage = {
   fileVersionRequired: i18n.t('translation:feedback.validation.is_required', {
@@ -18,7 +17,7 @@ const associatedArtifactErrorMessage = {
   }),
 };
 
-export const associatedFileValidationSchema = Yup.object<YupShape<unknown>>({
+export const associatedFileValidationSchema = Yup.object({
   type: Yup.string(),
 
   // File validation

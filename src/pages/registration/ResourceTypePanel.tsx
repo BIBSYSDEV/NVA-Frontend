@@ -297,7 +297,8 @@ export const ResourceTypePanel = () => {
           setPublicationInstanceType(ResearchDataType.Dataset);
           setShowDatasetConditions(false);
           setFieldValue(ResourceFieldNames.PublicationInstanceAgreeTerms, true, false); // Set validation to false to avoid Form and Type fields shown as errors
-        }}>
+        }}
+        dialogDataTestId="research-data-confirm-dialog">
         <Typography fontWeight={500}>
           {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data')}
         </Typography>

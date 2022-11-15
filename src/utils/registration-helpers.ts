@@ -494,6 +494,8 @@ export const associatedArtifactIsFile = ({ type }: { type: string }) =>
 
 export const associatedArtifactIsLink = ({ type }: { type: string }) => type === 'AssociatedLink';
 
+export const associatedArtifactIsNullArtifact = ({ type }: { type: string }) => type === 'NullAssociatedArtifact';
+
 export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsFile) as AssociatedFile[];
 
