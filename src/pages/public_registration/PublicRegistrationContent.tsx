@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import { Registration } from '../../types/registration.types';
+import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicGeneralContent } from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
@@ -27,6 +27,7 @@ import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
 import { getRegistrationPath } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { StructuredSeoData } from '../../components/StructuredSeoData';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -49,6 +50,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
   return (
     <Paper elevation={0}>
+      {registration.status === RegistrationStatus.Published && <StructuredSeoData uri={registration.id} />}
       <Helmet>
         <title>{mainTitle}</title>
       </Helmet>
@@ -73,7 +75,6 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </Tooltip>
         )}
       </StyledPaperHeader>
-
       <BackgroundDiv>
         {contributors.length > 0 && entityDescription?.reference?.publicationInstance.type && (
           <PublicRegistrationContributors
