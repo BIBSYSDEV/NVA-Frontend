@@ -64,6 +64,8 @@
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Organisasjonens domene i Feide",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
+      "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
+      "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -83,14 +85,6 @@
       "person_register": "Personregister",
       "previous_employments": "Tidligere ansettelser",
       "show_full_nin": "Vis personnummer"
-    },
-    "users": {
-      "area_of_responsibility": "Ansvarsområde",
-      "area_of_responsibility_placeholder": "Ingen avgrensninger",
-      "no_users_found": "Ingen brukere funnet",
-      "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
-      "remove_role_title": "Fjern rolle?",
-      "username": "Brukernavn"
     }
   },
   "common": {
@@ -184,6 +178,7 @@
     "title": "Tittel",
     "type": "Type",
     "update": "Oppdater",
+    "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
     "x_others_one": "+ {{count}} annen",
@@ -294,7 +289,9 @@
     "hrcs_categories": "Health Research Classification System - Categories",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
-      "areas_of_responsibility": "Ansvarsområder"
+      "area_of_responsibility_placeholder": "Ingen avgrensninger",
+      "areas_of_responsibility": "Ansvarsområder",
+      "no_users_found": "Ingen brukere funnet"
     },
     "institution": {
       "institution_code": "Institusjonens kode",

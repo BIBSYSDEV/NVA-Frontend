@@ -50,13 +50,13 @@ export const EditorCurators = () => {
     <>
       {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-          <CircularProgress />
+          <CircularProgress aria-label={t('editor.curators.areas_of_responsibility')} />
         </Box>
       ) : (
         <>
           {sortedList.length === 0 ? (
             <Typography>
-              <i>{t('basic_data.users.no_users_found')}</i>
+              <i>{t('editor.curators.no_users_found')}</i>
             </Typography>
           ) : (
             <>

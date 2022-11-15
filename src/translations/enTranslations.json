@@ -64,6 +64,8 @@
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
+      "remove_role_text": "Are you sure you want to remove this role?",
+      "remove_role_title": "Remove role?",
       "ror": "Research Organization Registry (ROR)",
       "short_name": "Shortened display name"
     },
@@ -83,14 +85,6 @@
       "person_register": "Person Register",
       "previous_employments": "Previous employments",
       "show_full_nin": "Show national identity number"
-    },
-    "users": {
-      "area_of_responsibility": "Area of responsibility",
-      "area_of_responsibility_placeholder": "No limitations",
-      "no_users_found": "No users found",
-      "remove_role_text": "Are you sure you want to remove this role?",
-      "remove_role_title": "Remove role?",
-      "username": "Username"
     }
   },
   "common": {
@@ -184,6 +178,7 @@
     "title": "Title",
     "type": "Type",
     "update": "Update",
+    "username": "Username",
     "version": "Version",
     "will_be_available": "Will be available",
     "x_others_one": "+ {{count}} other",
@@ -294,7 +289,9 @@
     "hrcs_categories": "Health Research Classification System - Categories",
     "curators": {
       "area_of_responsibility": "Area of responsibility",
-      "areas_of_responsibility": "Areas of responsibility"
+      "area_of_responsibility_placeholder": "No limitations",
+      "areas_of_responsibility": "Areas of responsibility",
+      "no_users_found": "No users found"
     },
     "institution": {
       "institution_code": "Institution's code",

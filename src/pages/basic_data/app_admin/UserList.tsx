@@ -1,17 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  Button,
-  CircularProgress,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { Button, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
@@ -22,11 +12,6 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
-import { ViewingScopeCell } from '../institution_admin/ViewingScopeCell';
-import { RootState } from '../../../redux/store';
-import { useFetchResource } from '../../../utils/hooks/useFetchResource';
-import { Organization } from '../../../types/organization.types';
-import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 
 interface UserListProps {
   userList: InstitutionUser[];
@@ -44,10 +29,6 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
   const [page, setPage] = useState(0);
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
-  const user = useSelector((store: RootState) => store.user);
-  const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
-    user?.topOrgCristinId ?? ''
-  );
 
   const handleAddRoleToUser = async (user: InstitutionUser) => {
     if (roleToAdd) {
@@ -103,7 +84,7 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
     <>
       {sortedList.length === 0 ? (
         <Typography>
-          <i>{t('basic_data.users.no_users_found')}</i>
+          <i>{t('editor.curators.no_users_found')}</i>
         </Typography>
       ) : (
         <>
@@ -112,13 +93,10 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Typography fontWeight="bold">{t('basic_data.users.username')}</Typography>
+                  <Typography fontWeight="bold">{t('common.username')}</Typography>
                 </TableCell>
                 <TableCell>
                   <Typography fontWeight="bold">{t('common.name')}</Typography>
-                </TableCell>
-                <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
-                  <Typography fontWeight="bold">{t('basic_data.users.area_of_responsibility')}</Typography>
                 </TableCell>
                 <TableCell width="150">
                   <Typography fontWeight="bold">{t('common.actions')}</Typography>
@@ -134,16 +112,6 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
                     <TableCell>{user.username}</TableCell>
                     <TableCell>
                       {user.givenName} {user.familyName}
-                    </TableCell>
-                    <TableCell>
-                      {isLoadingCurrentOrganization ? (
-                        <CircularProgress />
-                      ) : (
-                        <ViewingScopeCell
-                          user={user}
-                          options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
-                        />
-                      )}
                     </TableCell>
                     <TableCell>
                       {roleToRemove && (
@@ -194,12 +162,12 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
           {roleToRemove && (
             <ConfirmDialog
               open={!!removeRoleForUser}
-              title={t('basic_data.users.remove_role_title')}
+              title={t('basic_data.institutions.remove_role_title')}
               isLoading={updatedRoleForUsers.length > 0}
               onCancel={() => setRemoveRoleForUser('')}
               onAccept={handleRemoveRoleFromUser}
               dialogDataTestId="confirm-remove-role-dialog">
-              {t('basic_data.users.remove_role_text')}
+              {t('basic_data.institutions.remove_role_text')}
             </ConfirmDialog>
           )}
         </>
