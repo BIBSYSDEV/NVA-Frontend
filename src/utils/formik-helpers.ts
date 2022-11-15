@@ -2,7 +2,12 @@ import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn } from 'formik';
 import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
 import { Contributor } from '../types/contributor.types';
-import { File, FileSet } from '../types/file.types';
+import {
+  AssociatedArtifact,
+  AssociatedFile,
+  AssociatedLink,
+  NullAssociatedArtifact,
+} from '../types/associatedArtifact.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,
@@ -11,11 +16,12 @@ import {
   ResourceFieldNames,
   SpecificContributorFieldNames,
   SpecificFileFieldNames,
+  SpecificLinkFieldNames,
 } from '../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
 import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import { Registration, RegistrationTab } from '../types/registration.types';
-import { getMainRegistrationType } from './registration-helpers';
+import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -59,11 +65,7 @@ export const getTabErrors = (
       errors,
       touched
     ),
-    [RegistrationTab.FilesAndLicenses]: getErrorMessages(
-      getAllFileFields(values.fileSet?.files ?? []),
-      errors,
-      touched
-    ),
+    [RegistrationTab.FilesAndLicenses]: getErrorMessages(getAllFileFields(values.associatedArtifacts), errors, touched),
   };
 
   return tabErrors;
@@ -85,19 +87,25 @@ export const getFirstErrorTab = (tabErrors?: TabErrors) =>
 const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const resourceFieldNames = Object.values(ResourceFieldNames);
 
-const getAllFileFields = (files: File[]): string[] => {
+const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] => {
   const fieldNames: string[] = [];
-  if (files.length === 0) {
-    fieldNames.push(FileFieldNames.Files);
-    fieldNames.push(FileFieldNames.FileSet);
+  if (associatedArtifacts.length === 0) {
+    fieldNames.push(FileFieldNames.AssociatedArtifacts);
   } else {
-    files.forEach((file, index) => {
-      const baseFieldName = `${FileFieldNames.Files}[${index}]`;
-      fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`);
-      if (!file.administrativeAgreement) {
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`);
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
-        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.License}`);
+    associatedArtifacts.forEach((artifact, index) => {
+      const baseFieldName = `${FileFieldNames.AssociatedArtifacts}[${index}]`;
+      fieldNames.push(`${baseFieldName}.type`);
+
+      if (associatedArtifactIsFile(artifact)) {
+        const file = artifact as AssociatedFile;
+        fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`);
+        if (!file.administrativeAgreement) {
+          fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`);
+          fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
+          fieldNames.push(`${baseFieldName}.${SpecificFileFieldNames.License}`);
+        }
+      } else if (associatedArtifactIsLink(artifact)) {
+        fieldNames.push(`${baseFieldName}.${SpecificLinkFieldNames.Id}`);
       }
     });
   }
@@ -153,7 +161,6 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
               volume: true,
               corrigendumFor: true,
               contentType: true,
-              peerReviewed: true,
             },
           },
         },
@@ -206,7 +213,6 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
                 pages: true,
               },
               contentType: true,
-              peerReviewed: true,
             },
           },
         },
@@ -222,7 +228,6 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
             publicationInstance: {
               type: true,
               contentType: true,
-              peerReviewed: true,
             },
           },
         },
@@ -285,8 +290,9 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
           reference: {
             publicationContext: {
               type: true,
+              id: true,
               format: true,
-              medium: true,
+              medium: { type: true },
               disseminationChannel: true,
               partOf: {
                 series: true,
@@ -295,6 +301,13 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
             },
             publicationInstance: {
               type: true,
+              articleNumber: true,
+              issue: true,
+              pages: {
+                begin: true,
+                end: true,
+              },
+              volume: true,
             },
           },
         },
@@ -363,15 +376,24 @@ const touchedContributorTabFields = (contributors: Contributor[]): FormikTouched
   },
 });
 
-const touchedFilesTabFields = (fileSet: FileSet | null): FormikTouched<unknown> => ({
-  fileSet: {
-    files: (fileSet?.files ?? []).map((file) => ({
-      administrativeAgreement: true,
-      publisherAuthority: !file.administrativeAgreement,
-      embargoDate: !file.administrativeAgreement,
-      license: !file.administrativeAgreement,
-    })),
-  },
+const touchedFilesTabFields = (associatedArtifacts: AssociatedArtifact[]): FormikTouched<Registration> => ({
+  associatedArtifacts: associatedArtifacts.map((artifact) => {
+    if (associatedArtifactIsFile(artifact)) {
+      const touched: FormikTouched<AssociatedFile> = {
+        administrativeAgreement: true,
+        publisherAuthority: true,
+        embargoDate: true,
+        license: true,
+      };
+      return touched;
+    } else if (associatedArtifactIsLink(artifact)) {
+      const touched: FormikTouched<AssociatedLink> = { id: true };
+      return touched;
+    } else {
+      const touched: FormikTouched<NullAssociatedArtifact> = { type: true };
+      return touched;
+    }
+  }),
 });
 
 export const getTouchedTabFields = (
@@ -382,7 +404,7 @@ export const getTouchedTabFields = (
     [RegistrationTab.Description]: () => touchedDescriptionTabFields,
     [RegistrationTab.ResourceType]: () => touchedResourceTabFields(values),
     [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription?.contributors ?? []),
-    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.fileSet),
+    [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.associatedArtifacts),
   };
 
   // Set all fields on previous tabs to touched

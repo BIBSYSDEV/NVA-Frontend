@@ -1,11 +1,18 @@
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, useFormikContext } from 'formik';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, FormHelperText, Link, Paper, Typography } from '@mui/material';
+import { Box, Button, FormHelperText, Link, Paper, TextField, Typography } from '@mui/material';
 import { UppyFile } from '@uppy/core';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Modal } from '../../components/Modal';
-import { File, FileSet, licenses, Uppy } from '../../types/file.types';
-import { FileFieldNames } from '../../types/publicationFieldNames';
+import {
+  AssociatedFile,
+  AssociatedLink,
+  licenses,
+  NullAssociatedArtifact,
+  Uppy,
+} from '../../types/associatedArtifact.types';
+import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { FileCard } from './files_and_license_tab/FileCard';
@@ -14,6 +21,14 @@ import {
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
 import { dataTestId } from '../../utils/dataTestIds';
+import {
+  associatedArtifactIsFile,
+  associatedArtifactIsLink,
+  associatedArtifactIsNullArtifact,
+  getAssociatedFiles,
+} from '../../utils/registration-helpers';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { DoiField } from './resource_type_tab/components/DoiField';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -22,14 +37,23 @@ interface FilesAndLicensePanelProps {
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const {
-    values: { fileSet, entityDescription },
+    values: { associatedArtifacts, entityDescription },
     setFieldTouched,
+    setFieldValue,
     errors,
     touched,
   } = useFormikContext<Registration>();
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
-  const files = useMemo(() => fileSet?.files ?? [], [fileSet?.files]);
+  const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
+  const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
+  const associatedLinkHasError =
+    associatedLinkIndex >= 0 &&
+    !!(touched.associatedArtifacts?.[associatedLinkIndex] as FormikTouched<AssociatedLink> | undefined)?.id &&
+    !!(errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink> | undefined)?.id;
+
+  const isNullAssociatedArtifact =
+    associatedArtifacts.length === 1 && associatedArtifacts.some(associatedArtifactIsNullArtifact);
 
   const filesRef = useRef(files);
   useEffect(() => {
@@ -41,7 +65,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     // since files could have been uploaded in another session without being in uppy's current state
     uppy.setOptions({
       onBeforeFileAdded: (currentFile: UppyFile) => {
-        if (filesRef.current.some((file: File) => file.name === currentFile.name)) {
+        if (filesRef.current.some((file) => file.name === currentFile.name)) {
           uppy.info(t('registration.files_and_license.no_duplicates', { fileName: currentFile.name }), 'info', 6000);
           return false;
         }
@@ -66,76 +90,178 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   return (
-    <>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
-        <Paper sx={{ p: '1rem', mb: '1rem', bgcolor: 'background.default' }} elevation={5}>
-          <Typography variant="h6" component="h2" gutterBottom>
-            {t('registration.files_and_license.info_from_channel_register')}
-          </Typography>
-          {journalIdentifier && (
-            <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
-              <Typography paragraph>{t('registration.files_and_license.find_journal_in_channel_register')}</Typography>
-            </Link>
-          )}
-          {publisherIdentifier && (
-            <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
-              <Typography gutterBottom>
-                {t('registration.files_and_license.find_publisher_in_channel_register')}
-              </Typography>
-            </Link>
-          )}
+        <Paper elevation={5}>
+          <BackgroundDiv>
+            <Typography variant="h6" component="h2" gutterBottom>
+              {t('registration.files_and_license.info_from_channel_register')}
+            </Typography>
+            {journalIdentifier && (
+              <Link href={getChannelRegisterJournalUrl(journalIdentifier)} target="_blank">
+                <Typography paragraph>
+                  {t('registration.files_and_license.find_journal_in_channel_register')}
+                </Typography>
+              </Link>
+            )}
+            {publisherIdentifier && (
+              <Link href={getChannelRegisterPublisherUrl(publisherIdentifier)} target="_blank">
+                <Typography gutterBottom>
+                  {t('registration.files_and_license.find_publisher_in_channel_register')}
+                </Typography>
+              </Link>
+            )}
 
-          {seriesIdentifier && (
-            <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
-              <Typography paragraph>{t('registration.files_and_license.find_series_in_channel_register')}</Typography>
-            </Link>
-          )}
+            {seriesIdentifier && (
+              <Link href={getChannelRegisterJournalUrl(seriesIdentifier)} target="_blank">
+                <Typography paragraph>{t('registration.files_and_license.find_series_in_channel_register')}</Typography>
+              </Link>
+            )}
+          </BackgroundDiv>
         </Paper>
       )}
 
-      <FieldArray name={FileFieldNames.Files}>
+      <FieldArray name={FileFieldNames.AssociatedArtifacts}>
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
-            {files.length > 0 && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                <Typography variant="h2">{t('registration.files_and_license.files')}</Typography>
-                {files.map((file, index) => (
-                  <FileCard
-                    key={file.identifier}
-                    file={file}
-                    removeFile={() => {
-                      const remainingFiles = uppy
-                        .getFiles()
-                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                      uppy.setState({ files: remainingFiles });
-                      remove(index);
-
-                      if (remainingFiles.length === 0) {
-                        // Ensure field is set to touched even if it's empty
-                        setFieldTouched(name);
-                      }
-                    }}
-                    toggleLicenseModal={toggleLicenseModal}
-                    baseFieldName={`${name}[${index}]`}
-                  />
-                ))}
+            {isNullAssociatedArtifact ? (
+              <Box sx={{ my: '1rem' }}>
+                <Typography paragraph fontWeight={600}>
+                  {t('registration.files_and_license.resource_has_no_files_or_links')}
+                </Typography>
+                <Typography paragraph>
+                  {t('registration.files_and_license.resource_has_no_files_or_links_paragraph0')}
+                </Typography>
+                <Typography paragraph>
+                  {t('registration.files_and_license.resource_has_no_files_or_links_paragraph1')}
+                </Typography>
+                <Button
+                  sx={{ width: 'fit-content' }}
+                  variant="outlined"
+                  startIcon={<AttachFileIcon />}
+                  onClick={() => remove(0)}>
+                  {t('registration.files_and_license.add_files_or_link')}
+                </Button>
               </Box>
-            )}
+            ) : (
+              <>
+                <Paper elevation={5}>
+                  <BackgroundDiv>
+                    <Typography variant="h2" gutterBottom>
+                      {t('registration.files_and_license.files')}
+                    </Typography>
+                    {files.length > 0 && (
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
+                        {files.map((file) => {
+                          const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
+                            if (associatedArtifactIsFile(artifact)) {
+                              const associatedFile = artifact as AssociatedFile;
+                              return associatedFile.identifier === file.identifier;
+                            }
+                            return false;
+                          });
 
-            <Paper elevation={5}>
-              <FileUploader uppy={uppy} addFile={push} />
-              {files.length === 0 &&
-                typeof (errors.fileSet as FormikErrors<FileSet>)?.files === 'string' &&
-                touched.fileSet && (
-                  <FormHelperText error sx={{ p: '1rem' }}>
-                    <ErrorMessage name={name} />
-                  </FormHelperText>
+                          return (
+                            <FileCard
+                              key={file.identifier}
+                              file={file}
+                              removeFile={() => {
+                                const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                                const remainingFiles = uppy
+                                  .getFiles()
+                                  .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                                uppy.setState({ files: remainingFiles });
+                                remove(associatedFileIndex);
+
+                                if (associatedArtifactsBeforeRemoval === 1) {
+                                  // Ensure field is set to touched even if it's empty
+                                  setFieldTouched(name);
+                                }
+                              }}
+                              toggleLicenseModal={toggleLicenseModal}
+                              baseFieldName={`${name}[${associatedFileIndex}]`}
+                            />
+                          );
+                        })}
+                      </Box>
+                    )}
+
+                    <FileUploader uppy={uppy} addFile={push} />
+                  </BackgroundDiv>
+                </Paper>
+
+                <Paper elevation={5}>
+                  <BackgroundDiv>
+                    <Typography variant="h2" paragraph>
+                      {t('common.link')}
+                    </Typography>
+                    {entityDescription?.reference?.doi ? (
+                      <DoiField />
+                    ) : (
+                      <TextField
+                        fullWidth
+                        variant="filled"
+                        label={t('registration.files_and_license.link_to_resource')}
+                        value={
+                          associatedLinkIndex >= 0
+                            ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id
+                            : ''
+                        }
+                        error={associatedLinkHasError}
+                        helperText={
+                          associatedLinkHasError
+                            ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
+                            : null
+                        }
+                        onChange={(event) => {
+                          const inputValue = event.target.value;
+                          if (inputValue) {
+                            if (associatedLinkIndex < 0) {
+                              const newAssociatedLink: AssociatedLink = { type: 'AssociatedLink', id: inputValue };
+                              push(newAssociatedLink);
+                            } else {
+                              const fieldName = `${name}[${associatedLinkIndex}].${SpecificLinkFieldNames.Id}`;
+                              setFieldValue(fieldName, inputValue);
+                              setFieldTouched(fieldName);
+                            }
+                          } else {
+                            const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                            remove(associatedLinkIndex);
+                            if (associatedArtifactsBeforeRemoval === 1) {
+                              // Ensure field is set to touched even if it's empty
+                              setFieldTouched(name);
+                            }
+                          }
+                        }}
+                      />
+                    )}
+                  </BackgroundDiv>
+                </Paper>
+
+                {associatedArtifacts.length === 0 &&
+                  typeof errors.associatedArtifacts === 'string' &&
+                  touched.associatedArtifacts && (
+                    <FormHelperText error>
+                      <ErrorMessage name={name} />
+                    </FormHelperText>
+                  )}
+
+                {associatedArtifacts.length === 0 && (
+                  <Button
+                    sx={{ width: 'fit-content', m: 'auto' }}
+                    variant="outlined"
+                    onClick={() => {
+                      const nullAssociatedArtifact: NullAssociatedArtifact = { type: 'NullAssociatedArtifact' };
+                      push(nullAssociatedArtifact);
+                    }}>
+                    {t('registration.files_and_license.resource_has_no_files_or_links')}
+                  </Button>
                 )}
-            </Paper>
+              </>
+            )}
           </>
         )}
       </FieldArray>
-
       <Modal
         headingText={t('registration.files_and_license.licenses')}
         open={isLicenseModalOpen}
@@ -155,6 +281,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           </Box>
         ))}
       </Modal>
-    </>
+    </Box>
   );
 };

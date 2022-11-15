@@ -82,19 +82,18 @@ export const App = () => {
     }
   }, [dispatch]);
 
+  const mustCreateperson = user && !user.cristinId;
+  const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
+
   return (
     <>
       <Helmet defaultTitle={t('common.page_title')} titleTemplate={`%s - ${t('common.page_title')}`}>
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
-      {user &&
-        (user.cristinId ? (
-          user.allowedCustomers.length > 1 && (
-            <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />
-          )
-        ) : (
-          <CreateCristinPersonDialog user={user} />
-        ))}
+
+      {mustCreateperson && <CreateCristinPersonDialog user={user} />}
+      {mustSelectCustomer && <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />}
+
       {isLoadingUserAttributes ? (
         <PageSpinner aria-label={t('common.page_title')} />
       ) : (

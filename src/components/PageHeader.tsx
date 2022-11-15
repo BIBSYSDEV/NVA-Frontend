@@ -1,32 +1,17 @@
-import { ReactNode, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Box, Typography, TypographyProps } from '@mui/material';
-import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
+import { Box, TypographyProps } from '@mui/material';
 import { TruncatableTypography } from './TruncatableTypography';
 
 interface PageHeaderProps extends TypographyProps {
   children: string;
   htmlTitle?: string;
-  superHeader?: {
-    title: string | ReactNode;
-    icon?: ReactNode;
-  };
 }
 
-export const PageHeader = ({ children, superHeader, htmlTitle, ...props }: PageHeaderProps) => (
+export const PageHeader = ({ children, htmlTitle, ...props }: PageHeaderProps) => (
   <Box sx={{ width: '100%', marginBottom: '2rem', wordBreak: 'break-word' }}>
     <Helmet>
       <title>{htmlTitle ?? children}</title>
     </Helmet>
-
-    {superHeader && (
-      <Box sx={{ display: 'flex', flexDirection: 'column', color: 'primary.dark' }}>
-        {superHeader.icon}
-        <Typography variant="overline" color="inherit">
-          {superHeader.title}
-        </Typography>
-      </Box>
-    )}
 
     <Box
       sx={{
@@ -39,15 +24,3 @@ export const PageHeader = ({ children, superHeader, htmlTitle, ...props }: PageH
     </Box>
   </Box>
 );
-
-export const ItalicPageHeader = (props: PageHeaderProps) => {
-  useEffect(() => {
-    if (stringIncludesMathJax(props.children)) {
-      typesetMathJax();
-    }
-  }, [props.children]);
-
-  return (
-    <PageHeader variant="h2" variantMapping={{ h2: 'h1' }} sx={{ fontWeight: '700', fontStyle: 'italic' }} {...props} />
-  );
-};

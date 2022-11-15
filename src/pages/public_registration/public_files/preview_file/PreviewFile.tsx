@@ -1,4 +1,4 @@
-import { File } from '../../../../types/file.types';
+import { AssociatedFile } from '../../../../types/associatedArtifact.types';
 import { PreviewImg } from './PreviewImg';
 import { PreviewOfficeFile } from './PreviewOfficeFile';
 import { PreviewPdf } from './PreviewPdf';
@@ -10,7 +10,7 @@ export interface CommonPreviewProps {
 }
 
 interface PreviewFileProps extends CommonPreviewProps {
-  file: File;
+  file: AssociatedFile;
 }
 
 const isImage = (mimeType: string) => mimeType.startsWith('image/');

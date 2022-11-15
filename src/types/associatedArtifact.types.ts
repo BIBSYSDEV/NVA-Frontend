@@ -23,50 +23,50 @@ interface LicenseInfo {
 export const licenses: LicenseInfo[] = [
   {
     identifier: LicenseNames.RightsReserved,
-    description: i18n.t('licenses.description.rights_reserved'),
+    description: i18n.t('translation:licenses.description.rights_reserved'),
     logo: LicenseImages.rightsReservedLogo,
   },
   {
     identifier: LicenseNames.CC_BY,
-    description: i18n.t('licenses.description.cc_by'),
+    description: i18n.t('translation:licenses.description.cc_by'),
     logo: LicenseImages.ccByLogo,
-    link: i18n.t('licenses.links.cc_by'),
+    link: i18n.t('translation:licenses.links.cc_by'),
   },
   {
     identifier: LicenseNames.CC_BY_SA,
-    description: i18n.t('licenses.description.cc_by_sa'),
+    description: i18n.t('translation:licenses.description.cc_by_sa'),
     logo: LicenseImages.ccBySaLogo,
-    link: i18n.t('licenses.links.cc_by_sa'),
+    link: i18n.t('translation:licenses.links.cc_by_sa'),
   },
   {
     identifier: LicenseNames.CC_BY_ND,
-    description: i18n.t('licenses.description.cc_by_nd'),
+    description: i18n.t('translation:licenses.description.cc_by_nd'),
     logo: LicenseImages.ccByNdLogo,
-    link: i18n.t('licenses.links.cc_by_nd'),
+    link: i18n.t('translation:licenses.links.cc_by_nd'),
   },
   {
     identifier: LicenseNames.CC_BY_NC,
-    description: i18n.t('licenses.description.cc_by_nc'),
+    description: i18n.t('translation:licenses.description.cc_by_nc'),
     logo: LicenseImages.ccByNcLogo,
-    link: i18n.t('licenses.links.cc_by_nc'),
+    link: i18n.t('translation:licenses.links.cc_by_nc'),
   },
   {
     identifier: LicenseNames.CC_BY_NC_SA,
-    description: i18n.t('licenses.description.cc_by_nc_sa'),
+    description: i18n.t('translation:licenses.description.cc_by_nc_sa'),
     logo: LicenseImages.ccByNcSaLogo,
-    link: i18n.t('licenses.links.cc_by_nc_sa'),
+    link: i18n.t('translation:licenses.links.cc_by_nc_sa'),
   },
   {
     identifier: LicenseNames.CC_BY_NC_ND,
-    description: i18n.t('licenses.description.cc_by_nc_nd'),
+    description: i18n.t('translation:licenses.description.cc_by_nc_nd'),
     logo: LicenseImages.ccByNcNdLogo,
-    link: i18n.t('licenses.links.cc_by_nc_nd'),
+    link: i18n.t('translation:licenses.links.cc_by_nc_nd'),
   },
   {
     identifier: LicenseNames.CC0,
-    description: i18n.t('licenses.description.cc0'),
+    description: i18n.t('translation:licenses.description.cc0'),
     logo: LicenseImages.cc0Logo,
-    link: i18n.t('licenses.links.cc0'),
+    link: i18n.t('translation:licenses.links.cc0'),
   },
 ];
 
@@ -79,16 +79,7 @@ interface License {
   link: string;
 }
 
-export interface FileSet {
-  type: 'FileSet';
-  files: File[];
-}
-
-export interface RegistrationFileSet {
-  fileSet: FileSet | null;
-}
-
-export interface File {
+export interface AssociatedFile {
   type: 'File' | 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
   identifier: string;
   name: string;
@@ -100,7 +91,7 @@ export interface File {
   license: License | null;
 }
 
-export const emptyFile: File = {
+export const emptyFile: AssociatedFile = {
   type: 'File',
   identifier: '',
   name: '',
@@ -112,6 +103,19 @@ export const emptyFile: File = {
   license: null,
 };
 
+export interface AssociatedLink {
+  type: 'AssociatedLink';
+  id: string;
+  name?: string;
+  description?: string;
+}
+
+export interface NullAssociatedArtifact {
+  type: 'NullAssociatedArtifact';
+}
+
 export interface Uppy extends UppyType<StrictTypes> {
   hasUploadSuccessEventListener?: boolean;
 }
+
+export type AssociatedArtifact = AssociatedFile | AssociatedLink | NullAssociatedArtifact;

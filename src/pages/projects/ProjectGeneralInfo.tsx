@@ -16,6 +16,8 @@ interface ProjectGeneralInfoProps {
 
 export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
   const { t } = useTranslation();
+  const projectPeriodString = getProjectPeriod(project);
+  const projectStatusString = t(`project.status.${project.status}`);
 
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
@@ -31,7 +33,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography variant="overline" component="h2">
           {t('project.period')}
         </Typography>
-        <Typography>{getProjectPeriod(project) ?? '-'}</Typography>
+        <Typography>{projectPeriodString ? `${projectPeriodString} (${projectStatusString})` : '-'}</Typography>
       </div>
       <div>
         <Typography variant="overline" component="h2">

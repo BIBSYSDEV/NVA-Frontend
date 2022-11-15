@@ -1,7 +1,10 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockPublishedRegistration } from '../../src/utils/testfiles/mockRegistration';
 const {
-  registrationLandingPage: { projectTitle, status },
+  registrationLandingPage: {
+    projectTitle,
+    tasksPanel: { panelRoot, publishingRequestAccordion, doiRequestAccordion },
+  },
   projectLandingPage: { generalInfoBox, participantsAccordion, resultsAccordion, scientificSummaryAccordion },
 } = dataTestId;
 
@@ -16,7 +19,7 @@ describe('User opens Landing Page for Registration', () => {
     cy.visit(pathToLandingPage);
     cy.injectAxe();
     cy.get(`[data-testid=${dataTestId.header.logInButton}]`).should('be.visible');
-    cy.get(`[data-testid=${status}]`).should('not.exist');
+    cy.get(`[data-testid=${panelRoot}]`).should('not.exist');
     cy.checkA11y();
   });
 
@@ -28,7 +31,8 @@ describe('User opens Landing Page for Registration', () => {
     cy.get('[data-testid^=open-registration]').eq(0).click();
 
     cy.url().should('include', '/public');
-    cy.get(`[data-testid=${status}]`).should('be.visible');
+    cy.get(`[data-testid=${publishingRequestAccordion}]`).should('be.visible');
+    cy.get(`[data-testid=${doiRequestAccordion}]`).should('be.visible');
     cy.checkA11y();
   });
 

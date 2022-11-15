@@ -17,7 +17,6 @@ import {
   BookMonographContentType,
   ChapterContentType,
   JournalArticleContentType,
-  nviApplicableContentTypes,
 } from '../../../types/publication_types/content.types';
 import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../validationHelpers';
@@ -46,114 +45,114 @@ import {
   PresentationPublicationInstance,
 } from '../../../types/publication_types/presentationRegistration.types';
 import {
+  MediaContributionPeriodicalPublicationContext,
+  MediaContributionPeriodicalPublicationInstance,
   MediaContributionPublicationContext,
   MediaContributionPublicationInstance,
-} from '../../../types/publication_types/mediaContributionRegistration';
+} from '../../../types/publication_types/mediaContributionRegistration.types';
 import {
   ResearchDataPublicationContext,
   ResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
+import { isPeriodicalMediaContribution } from '../../registration-helpers';
 import {
   MapPublicationContext,
   MapPublicationInstance,
 } from '../../../types/publication_types/otherRegistration.types';
 
 const resourceErrorMessage = {
-  announcementsRequired: i18n.t('feedback.validation.announcement_required'),
-  contentTypeRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.content'),
+  announcementsRequired: i18n.t('translation:feedback.validation.announcement_required'),
+  contentTypeRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.resource_type.content'),
   }),
-  corrigendumForRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.original_article'),
+  corrigendumForRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.resource_type.original_article'),
   }),
-  corrigendumForInvalid: i18n.t('feedback.validation.has_invalid_format', {
-    field: i18n.t('registration.resource_type.original_article'),
+  corrigendumForInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
+    field: i18n.t('translation:registration.resource_type.original_article'),
   }),
-  countryRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('common.country'),
+  countryRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:common.country'),
   }),
-  dateToBeforeDateFrom: i18n.t('feedback.validation.cannot_be_before', {
-    field: i18n.t('common.end_date'),
-    limitField: i18n.t('common.start_date'),
+  dateToBeforeDateFrom: i18n.t('translation:feedback.validation.cannot_be_before', {
+    field: i18n.t('translation:common.end_date'),
+    limitField: i18n.t('translation:common.start_date'),
   }),
-  dateFromInvalid: i18n.t('feedback.validation.has_invalid_format', {
-    field: i18n.t('registration.resource_type.date_from'),
+  dateFromInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
+    field: i18n.t('translation:registration.resource_type.date_from'),
   }),
-  dateFromRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.date_from'),
+  dateFromRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.resource_type.date_from'),
   }),
-  dateToInvalid: i18n.t('feedback.validation.has_invalid_format', {
-    field: i18n.t('registration.resource_type.date_to'),
+  dateToInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
+    field: i18n.t('translation:registration.resource_type.date_to'),
   }),
-  dateToRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.date_to'),
+  dateToRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.resource_type.date_to'),
   }),
-  doiInvalid: i18n.t('feedback.validation.has_invalid_format', {
-    field: i18n.t('registration.registration.link_to_resource'),
+  doiInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
+    field: i18n.t('translation:registration.registration.link_to_resource'),
   }),
-  eventTitleRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.title_of_event'),
+  eventTitleRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.resource_type.title_of_event'),
   }),
-  exhibitionRequired: i18n.t('feedback.validation.exhibition_place_required'),
-  fromMustBeBeforeTo: i18n.t('feedback.validation.cannot_be_after', {
-    field: i18n.t('registration.resource_type.date_from'),
-    limitField: i18n.t('registration.resource_type.date_to').toLowerCase(),
+  exhibitionRequired: i18n.t('translation:feedback.validation.exhibition_place_required'),
+  fromMustBeBeforeTo: i18n.t('translation:feedback.validation.cannot_be_after', {
+    field: i18n.t('translation:registration.resource_type.date_from'),
+    limitField: i18n.t('translation:registration.resource_type.date_to').toLowerCase(),
   }),
-  isbnInvalid: i18n.t('feedback.validation.has_invalid_format', {
-    field: i18n.t('registration.resource_type.isbn'),
+  isbnInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
+    field: i18n.t('translation:registration.resource_type.isbn'),
   }),
-  isbnTooShort: i18n.t('feedback.validation.isbn_too_short'),
-  journalNotSelected: i18n.t('feedback.validation.not_selected', {
-    field: i18n.t('registration.resource_type.journal'),
+  isbnTooShort: i18n.t('translation:feedback.validation.isbn_too_short'),
+  journalNotSelected: i18n.t('translation:feedback.validation.not_selected', {
+    field: i18n.t('translation:registration.resource_type.journal'),
   }),
-  journalRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.journal'),
+  journalRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.resource_type.journal'),
   }),
-  organizerRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.organizer'),
+  organizerRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.resource_type.organizer'),
   }),
-  pageBeginMustBeSmallerThanEnd: i18n.t('feedback.validation.must_be_smaller_than', {
-    field: i18n.t('registration.resource_type.pages_from'),
-    limit: i18n.t('registration.resource_type.pages_to'),
+  pageBeginMustBeSmallerThanEnd: i18n.t('translation:feedback.validation.must_be_smaller_than', {
+    field: i18n.t('translation:registration.resource_type.pages_from'),
+    limit: i18n.t('translation:registration.resource_type.pages_to'),
   }),
-  pageEndMustBeBiggerThanBegin: i18n.t('feedback.validation.must_be_bigger_than', {
-    field: i18n.t('registration.resource_type.pages_to'),
-    limit: i18n.t('registration.resource_type.pages_from'),
+  pageEndMustBeBiggerThanBegin: i18n.t('translation:feedback.validation.must_be_bigger_than', {
+    field: i18n.t('translation:registration.resource_type.pages_to'),
+    limit: i18n.t('translation:registration.resource_type.pages_from'),
   }),
-  pagesInvalid: i18n.t('feedback.validation.has_invalid_format', {
-    field: i18n.t('registration.resource_type.number_of_pages'),
+  pagesInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
+    field: i18n.t('translation:registration.resource_type.number_of_pages'),
   }),
-  pagesMustBeBigger: i18n.t('feedback.validation.must_be_bigger_than', {
-    field: i18n.t('registration.resource_type.number_of_pages'),
+  pagesMustBeBigger: i18n.t('translation:feedback.validation.must_be_bigger_than', {
+    field: i18n.t('translation:registration.resource_type.number_of_pages'),
     limit: 1,
   }),
-  partOfRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.chapter.published_in'),
+  partOfRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.resource_type.chapter.published_in'),
   }),
-  peerReviewedRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.peer_reviewed'),
+  placeRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.resource_type.place_for_event'),
   }),
-  placeRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.place_for_event'),
+  publisherNotSelected: i18n.t('translation:feedback.validation.not_selected', {
+    field: i18n.t('translation:common.publisher'),
   }),
-  publisherNotSelected: i18n.t('feedback.validation.not_selected', {
-    field: i18n.t('common.publisher'),
+  publisherRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:common.publisher'),
   }),
-  publisherRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('common.publisher'),
+  seriesNotSelected: i18n.t('translation:feedback.validation.not_selected', {
+    field: i18n.t('translation:registration.resource_type.series'),
   }),
-  seriesNotSelected: i18n.t('feedback.validation.not_selected', {
-    field: i18n.t('registration.resource_type.series'),
+  toMustBeAfterFrom: i18n.t('translation:feedback.validation.cannot_be_before', {
+    field: i18n.t('translation:registration.resource_type.date_to'),
+    limitField: i18n.t('translation:registration.resource_type.date_from').toLowerCase(),
   }),
-  toMustBeAfterFrom: i18n.t('feedback.validation.cannot_be_before', {
-    field: i18n.t('registration.resource_type.date_to'),
-    limitField: i18n.t('registration.resource_type.date_from').toLowerCase(),
+  typeRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:common.type'),
   }),
-  typeRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('common.type'),
-  }),
-  typeWorkRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.type_work'),
+  typeWorkRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.resource_type.type_work'),
   }),
 };
 
@@ -165,13 +164,6 @@ export const isbnField = Yup.string()
   .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? '')?.isIsbn13());
 
 const isbnListField = Yup.array().of(isbnField);
-
-const peerReviewedField = Yup.boolean()
-  .nullable()
-  .when('$contentType', {
-    is: (contentType: string) => nviApplicableContentTypes.includes(contentType),
-    then: Yup.boolean().nullable().required(resourceErrorMessage.peerReviewedRequired),
-  });
 
 const pagesMonographField = Yup.object()
   .nullable()
@@ -271,7 +263,6 @@ const journalPublicationInstance = Yup.object<YupShape<JournalPublicationInstanc
         .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentTypeRequired)
         .required(resourceErrorMessage.contentTypeRequired),
     }),
-  peerReviewed: peerReviewedField,
 });
 
 const journalPublicationContext = Yup.object<YupShape<JournalPublicationContext>>({
@@ -304,7 +295,6 @@ const bookPublicationInstance = Yup.object<YupShape<BookPublicationInstance>>({
         .oneOf(Object.values(BookMonographContentType), resourceErrorMessage.contentTypeRequired)
         .required(resourceErrorMessage.contentTypeRequired),
     }),
-  peerReviewed: peerReviewedField,
 });
 
 const bookPublicationContext = Yup.object<YupShape<BookPublicationContext>>({
@@ -363,7 +353,6 @@ const chapterPublicationInstance = Yup.object<YupShape<ChapterPublicationInstanc
         .oneOf(Object.values(ChapterContentType), resourceErrorMessage.contentTypeRequired)
         .required(resourceErrorMessage.contentTypeRequired),
     }),
-  peerReviewed: peerReviewedField,
 });
 
 const chapterPublicationContext = Yup.object<YupShape<ChapterPublicationContext>>({
@@ -453,32 +442,54 @@ export const artisticDesignReference = baseReference.shape({
 });
 
 // Media Contribution
-const mediaContributionPublicationContext = Yup.object<YupShape<MediaContributionPublicationContext>>({
-  format: Yup.string()
-    .nullable()
-    .required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.media_contribution.format'),
-      })
-    ),
-  medium: Yup.string()
-    .nullable()
-    .required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.media_contribution.medium'),
-      })
-    ),
-  disseminationChannel: Yup.string()
-    .nullable()
-    .required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('registration.resource_type.media_contribution.channel'),
-      })
-    ),
+const mediaContributionPublicationContext = Yup.object().when('$publicationInstanceType', (type: string) => {
+  if (isPeriodicalMediaContribution(type)) {
+    return Yup.object<YupShape<MediaContributionPeriodicalPublicationContext>>({
+      id: Yup.string().required(resourceErrorMessage.journalRequired),
+    });
+  } else {
+    return Yup.object<YupShape<MediaContributionPublicationContext>>({
+      format: Yup.string()
+        .nullable()
+        .required(
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:registration.resource_type.media_contribution.format'),
+          })
+        ),
+      medium: Yup.object().shape({
+        type: Yup.string()
+          .nullable()
+          .required(
+            i18n.t('translation:feedback.validation.is_required', {
+              field: i18n.t('translation:registration.resource_type.media_contribution.medium'),
+            })
+          ),
+      }),
+      disseminationChannel: Yup.string()
+        .nullable()
+        .required(
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:registration.resource_type.media_contribution.channel'),
+          })
+        ),
+    });
+  }
 });
 
-const mediaContributionPublicationInstance = Yup.object<YupShape<MediaContributionPublicationInstance>>({
-  type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
+const mediaContributionPublicationInstance = Yup.object().when('$publicationInstanceType', (type: string) => {
+  if (isPeriodicalMediaContribution(type)) {
+    return Yup.object<YupShape<MediaContributionPeriodicalPublicationInstance>>({
+      type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
+      articleNumber: Yup.string().nullable(),
+      volume: Yup.string().nullable(),
+      issue: Yup.string().nullable(),
+      pages: pagesRangeField,
+    });
+  } else {
+    return Yup.object<YupShape<MediaContributionPublicationInstance>>({
+      type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
+    });
+  }
 });
 
 export const mediaContributionReference = baseReference.shape({
@@ -500,7 +511,7 @@ const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicat
     .nullable()
     .when('$publicationInstanceType', {
       is: ResearchDataType.Dataset,
-      then: Yup.boolean().equals([true], i18n.t('feedback.validation.must_accept_terms_for_dataset')),
+      then: Yup.boolean().equals([true], i18n.t('translation:feedback.validation.must_accept_terms_for_dataset')),
     }),
   related: Yup.array(),
 });

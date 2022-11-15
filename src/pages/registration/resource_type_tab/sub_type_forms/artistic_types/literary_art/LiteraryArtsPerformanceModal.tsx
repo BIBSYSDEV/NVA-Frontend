@@ -29,21 +29,21 @@ const emptyLiteraryArtsPerformance: LiteraryArtsPerformance = {
 
 const validationSchema = Yup.object<YupShape<LiteraryArtsPerformance>>({
   subtype: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.type_work'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.type_work'),
     })
   ),
   place: Yup.object({
     label: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.place'),
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:common.place'),
       })
     ),
   }),
   publicationDate: Yup.object<YupShape<RegistrationDate>>({
     year: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.date'),
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:common.date'),
       })
     ),
   }),

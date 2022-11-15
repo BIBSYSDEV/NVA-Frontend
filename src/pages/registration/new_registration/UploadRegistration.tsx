@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { useUppy } from '@uppy/react';
 import { LoadingButton } from '@mui/lab';
 import { RegistrationAccordion } from './RegistrationAccordion';
-import { File, RegistrationFileSet } from '../../../types/file.types';
+import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { FileUploader } from '../files_and_license_tab/FileUploader';
@@ -19,10 +19,11 @@ import { UploadedFileRow } from './UploadedFileRow';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
+import { BaseRegistration } from '../../../types/registration.types';
 
 export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t, i18n } = useTranslation();
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadedFiles, setUploadedFiles] = useState<AssociatedFile[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -30,11 +31,8 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
 
   const createRegistrationWithFiles = async () => {
     setIsLoading(true);
-    const registrationPayload: RegistrationFileSet = {
-      fileSet: {
-        type: 'FileSet',
-        files: uploadedFiles,
-      },
+    const registrationPayload: Partial<BaseRegistration> = {
+      associatedArtifacts: uploadedFiles,
     };
     const createRegistrationResponse = await createRegistration(registrationPayload);
     if (isErrorStatus(createRegistrationResponse.status)) {
@@ -60,7 +58,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       <AccordionDetails>
         {uppy && (
           <>
-            <FileUploader uppy={uppy} addFile={(newFile: File) => setUploadedFiles((files) => [newFile, ...files])} />
+            <FileUploader uppy={uppy} addFile={(newFile) => setUploadedFiles((files) => [newFile, ...files])} />
             {uploadedFiles.length > 0 && (
               <>
                 <Typography variant="h3">{t('registration.files_and_license.files')}:</Typography>

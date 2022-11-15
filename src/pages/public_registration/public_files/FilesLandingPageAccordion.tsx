@@ -5,7 +5,11 @@ import { LandingPageAccordion } from '../../../components/landing_page/LandingPa
 import { RootState } from '../../../redux/store';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { userIsOwnerOfRegistration, userIsCuratorForRegistration } from '../../../utils/registration-helpers';
+import {
+  userIsOwnerOfRegistration,
+  userIsCuratorForRegistration,
+  getAssociatedFiles,
+} from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 
@@ -14,7 +18,6 @@ const maxFileSizeForPreview = 10_000_000; //10 MB
 export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const files = registration.fileSet?.files ?? [];
 
   const userIsOwner = userIsOwnerOfRegistration(user, registration);
   const userIsCurator = userIsCuratorForRegistration(user, registration);
@@ -23,9 +26,10 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const showRegistrationHasFilesAwaitingApproval =
     registration.status === RegistrationStatus.Published &&
     userIsRegistrationAdmin &&
-    files.some((file) => file.type === 'UnpublishedFile');
+    registration.associatedArtifacts.some((file) => file.type === 'UnpublishedFile');
 
-  const filesToShow = files.filter(
+  const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
+  const filesToShow = associatedFiles.filter(
     (file) => file.type === 'PublishedFile' || (file.type === 'UnpublishedFile' && userIsRegistrationAdmin)
   );
 

@@ -14,7 +14,7 @@ export const ErrorList = ({ tabErrors, description, actions }: ErrorSummaryProps
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ bgcolor: 'error.light', padding: { xs: '0.5rem', sm: '0.5rem 2rem' } }} data-testid="error-list-div">
+    <Box sx={{ padding: { xs: '0.5rem', sm: '0.5rem 2rem' } }} data-testid="error-list-div">
       {description}
       <dl>
         <ErrorListGroup

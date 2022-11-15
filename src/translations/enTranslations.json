@@ -6,14 +6,14 @@
         "bullet_point1": "Publish reports, student theses and other material produced at the institution",
         "intro": "By using NVA, Norwegian research institutions are able to:"
       },
-      "paragraph1": "NVA will also be developed for use in reporting scientific publication to the Ministry of Education and Research and the Ministry of Health and Care Services (NVI reporting), and for other administrative tasks.",
-      "paragraph2": "The institution is responsible for the processing and registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also receives content from other data sources.",
+      "paragraph1": "NVA is also being developed for use in reporting scientific publication to the Ministry of Education and Research and the Ministry of Health and Care Services (NVI reporting), and for other administrative tasks.",
+      "paragraph2": "Sikt is the data processor. The individual institution is the data controller and registers and maintains its own content in the service, and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also receives content from other data sources.",
       "paragraph3": "NVA supports postponed publication of resources. This means that a registration can be completed so that metadata about the resource is published, while the resource itself is not open until the specified date. The service does not allow the processing of sensitive personal data.",
       "paragraph4": "NVA will make the institution's open content available via open interfaces, with the intention of making this known and searchable to the outside world and promoting indexing in search engines and search portals.",
-      "paragraph5": "Although NVA is established, the service is still under development. Institutions that do not have an open research archive can contact <0>Sikt</0> to use NVA as a pilot institution."
+      "paragraph5": "Although NVA is established and in use by several institutions, the service will be in continous development throughout its lifetime. Institutions that do not have a research archive can contact <0>Sikt</0> to use NVA as a pilot institution."
     },
     "footer_text": "$t(about.short_description) The service is delivered by Sikt.",
-    "short_description": "Nasjonalt Vitenarkiv collects information about Norwegian research and makes research results openly available."
+    "short_description": "The national research archive (NVA) collects information about Norwegian research and makes research results and research information openly available."
   },
   "authorization": {
     "accept_terms_to_create_user": "I accept to be created as a user in NVA",
@@ -68,14 +68,21 @@
       "short_name": "Shortened display name"
     },
     "person_register": {
+      "current_employments": "Current employments",
+      "remove_employment": "Remove employment",
+      "remove_employment_title": "Remove employment?",
+      "remove_employment_text": "Are you sure you want to remove this employment?",
       "edit_person": "Edit person",
       "employee_table_caption": "List of all employees",
       "employment_x_of_y": "Employment {{selected}} of {{total}}",
+      "hide_full_nin": "Hide national identity number",
       "national_identity_number": "National identity number",
       "no_employees_found": "No employees found",
       "other_employments": "Other active employments",
       "person_id": "PersonID",
-      "person_register": "Person Register"
+      "person_register": "Person Register",
+      "previous_employments": "Previous employments",
+      "show_full_nin": "Show national identity number"
     },
     "users": {
       "add_role_info": "If you don't find the user, you must check that they are affiliated with your institution and have previously logged in.",
@@ -108,8 +115,9 @@
     "created_date": "Created",
     "date": "Date",
     "delete": "Delete",
-    "description": "Beskrivelse",
+    "description": "Description",
     "doi": "DOI",
+    "doi_long": "Digital object identifier (DOI)",
     "edit": "Edit",
     "employments": "Employments",
     "end_date": "End date",
@@ -120,6 +128,7 @@
     "institutions": "Institutions",
     "language": "Language",
     "last_name": "Last name",
+    "link": "Link",
     "loading": "Loading",
     "menu": "Menu",
     "message": "Message",
@@ -157,6 +166,7 @@
     "save": "Save",
     "save_and_present": "Save and present",
     "search": "Search",
+    "search_by_name": "Search by name",
     "search_placeholder": "Name Nameson",
     "search_summary_one": "{{count}} result for \"{{searchTerm}}\"",
     "search_summary_other": "{{count}} results for \"{{searchTerm}}\"",
@@ -175,6 +185,7 @@
     "start_page": "Start page",
     "status": "Status",
     "support": "Support",
+    "tasks": "Tasks",
     "title": "Title",
     "type": "Type",
     "update": "Update",
@@ -395,9 +406,10 @@
       "exhibition_place_required": "Must have at least one exhibition place",
       "has_invalid_format": "{{field}} has invalid format",
       "invalid_number_of_digits": "{{field}} must have {{digits}} digits",
+      "invalid_symbol_in_name": "{{field}} must not include numbers or special characters",
       "is_required": "{{-field}} is required",
       "isbn_too_short": "ISBN must have 13 digits",
-      "minimum_one_file": "You need to upload at least one file for this registration",
+      "must_have_associated_artifact": "You need to upload at least one file or a link for this registration",
       "must_accept_terms_for_dataset": "You must accept terms for dataset",
       "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
       "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",
@@ -906,12 +918,13 @@
       "project_association": "Project association",
       "remove_vocabulary": "Remove vocabulary",
       "search_for_npi_discipline": "Search for scientific field",
-      "search_for_project": "Search in Norwegian project catalogs",
+      "search_for_project": "Search in Cristin project catalogue",
       "year_only": "Year only"
     },
     "edit_registration": "Edit registration",
     "files_and_license": {
       "accepted_version": "Accepted version",
+      "add_files_or_link": "Add files or link",
       "administrative_contract": "Internal file that should never be published. E.g. author agreement or other documentation for the registered result",
       "conditions_for_using_file": "Terms of use",
       "file_locked": "File is locked",
@@ -924,10 +937,14 @@
       "find_series_in_channel_register": "See information about the series in the Norwegian Register",
       "info_from_channel_register": "More information about the selected publication channel",
       "licenses": "Licenses",
+      "link_to_resource": "Link to resource",
       "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
       "published_version": "Published version",
       "remove_file": "Remove file",
-      "remove_file_description": "Do you want to remove {{fileName}}?"
+      "remove_file_description": "Do you want to remove {{fileName}}?",
+      "resource_has_no_files_or_links": "The resource does not have any file or links to publish",
+      "resource_has_no_files_or_links_paragraph0": "Without files or links the published resource is harder to reuse and may give less value for others. If data is not shared, information about data and how they can be accessed should be shared.",
+      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), is a set of principles to support reuse of digital resources. NFR and EC sets clear requirements for data to be available and deposited together with metadata that clarifies any potential conditions for access."
     },
     "heading": {
       "contributors": "Contributors",
@@ -940,14 +957,15 @@
     "modal_unsaved_changes_heading": "Leave without saving?",
     "new_registration": "New registration",
     "public_page": {
-      "approve_publish_request": "Approve publishing request",
       "about_registration": "About this registration",
+      "approve_publish_request": "Approve publishing request",
       "error_description": "To publish you must fix the following errors:",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",
       "go_back_to_wizard": "Go back to form",
+      "has_pending_doi_request": "The registration has a pending DOI request.",
+      "has_pending_publishing_request": "The registration has a pending publishing request.",
       "in_progress": "In progress",
       "message_to_curator": "Message to curator",
-      "not_published": "Not published",
       "other_contributors_one": "(+{{count}} other)",
       "other_contributors_other": "(+{{count}} others)",
       "other_related_registrations": "Andre related registrations",
@@ -957,13 +975,15 @@
       "preview_unavailable": "Preview not available. Open file in suited program.",
       "published": "Published",
       "published_date": "Published: {{date}}",
-      "ready_to_be_published": "Ready to be published",
+      "publishing_request": "Publishing request",
+      "ready_to_be_published": "Ready to be published.",
       "ready_to_be_published_description": "Review content before publishing.",
       "reject_publish_request": "Reject publishing request",
       "request_doi": "Request a DOI",
       "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated.",
       "reserve_doi": "Reserve a DOI",
-      "reserve_doi_message": "Auto-generated message: User wants to reserve a DOI."
+      "reserve_doi_message": "Auto-generated message: User wants to reserve a DOI.",
+      "validation_errors": "Validation errors"
     },
     "publication_types": {
       "Architecture": "Architecture",
@@ -1054,19 +1074,19 @@
         "add_publication_mention": "Add publication/mention",
         "add_web_publication": "Add web publication",
         "announcements": "Announcements",
-        "audio_video_type": {
-          "Audiobook": "Audio book",
-          "Other": "Other",
-          "Podcast": "Podcast",
-          "RadioPlay": "Radio play",
-          "ShortFilm": "Short film"
-        },
         "architecture_type": {
           "Building": "Building",
           "Interior": "Interior",
           "LandscapeArchitecture": "Landscape architecture",
           "Other": "Other architecture",
           "PlanningProposal": "Planning proposal"
+        },
+        "audio_video_type": {
+          "Audiobook": "Audio book",
+          "Other": "Other",
+          "Podcast": "Podcast",
+          "RadioPlay": "Radio play",
+          "ShortFilm": "Short film"
         },
         "award_name": "Award name",
         "award_organizer": "Award giver/organizer",
@@ -1119,7 +1139,7 @@
           "Essay": "Essay",
           "Novel": "Novel",
           "Novella": "Novella",
-          "Other": "Other",
+          "Other": "Other literary arts",
           "Play": "Play",
           "Poetry": "Poetry",
           "Retelling": "Retelling",
@@ -1133,7 +1153,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Long film",
           "InteractiveFilm": "Interactive production",
-          "Other": "Other",
+          "Other": "Other film",
           "SerialFilmProduction": "Serial production",
           "ShortFilm": "Short film"
         },
@@ -1175,7 +1195,7 @@
         },
         "performance_type": "Type/performance form",
         "performance_types": {
-          "Other": "Other",
+          "Other": "Other performing arts",
           "Play": "Play",
           "Reading": "Reading"
         },
@@ -1200,7 +1220,7 @@
           "CollectiveExhibition": "Collective exhibition",
           "IndividualExhibition": "Individual exhibition",
           "Installation": "Installation",
-          "Other": "Other",
+          "Other": "Other visual arts",
           "Performance": "Performance"
         },
         "web_link": "Link"
@@ -1268,9 +1288,8 @@
       "more_info_about_work": "More information about the work",
       "number_of_pages": "Total number of pages",
       "nvi": {
-        "applicable": "The publication can be included in the Norwegian Science Index if it is both peer reviewed and presents new original research",
-        "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (Level can be changed before this year's reporting deadline so that the publication can be included in the Norwegian Science Index, provided that it is both peer reviewed and presents new original research)",
-        "not_peer_reviewed": "The publication can not be included in the Norwegian Science Index since it is not both peer-reviewed and presents new original research"
+        "applicable": "The publication can be included in the Norwegian Science Index",
+        "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (Level can be changed before this year's reporting deadline so that the publication can be included in the Norwegian Science Index)"
       },
       "online_issn": "Online ISSN",
       "or": "Or",
@@ -1280,8 +1299,6 @@
       "pages": "Pages",
       "pages_from": "Pages from",
       "pages_to": "to",
-      "peer_review": "Is peer reviewed and presents new original research?",
-      "peer_reviewed": "Peer reviewed and presents new original research",
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
       "remove_doi": "Remove DOI",

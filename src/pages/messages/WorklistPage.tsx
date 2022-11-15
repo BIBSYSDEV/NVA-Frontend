@@ -20,7 +20,7 @@ const WorklistPage = () => {
   const user = useSelector((store: RootState) => store.user);
 
   const [institutionUser] = useFetch<InstitutionUser>({
-    url: user?.username ? `${RoleApiPath.Users}/${user.username}` : '',
+    url: user?.nvaUsername ? `${RoleApiPath.Users}/${user.nvaUsername}` : '',
     errorMessage: t('feedback.error.get_roles'),
     withAuthentication: true,
   });

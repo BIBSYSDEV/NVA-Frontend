@@ -32,7 +32,5 @@ describe('Registration: Resource type: Chapter', () => {
     cy.get(
       `[data-testid=${dataTestId.registrationWizard.resourceType.contentValue(ChapterContentType.AcademicChapter)}]`
     ).click();
-
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.peerReviewed}] input`).eq(0).click();
   });
 });

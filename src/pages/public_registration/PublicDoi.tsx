@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { RootState } from '../../redux/store';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getAssociatedLinks, userCanEditRegistration } from '../../utils/registration-helpers';
 
 interface PublicDoiProps {
   registration: Registration;
@@ -17,6 +18,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
 
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';
   const nvaDoi = registration.doi;
+  const associatedLink = getAssociatedLinks(registration.associatedArtifacts)[0]?.id;
 
   useEffect(() => {
     const lookupNvaDoi = async () => {
@@ -38,23 +40,21 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
     lookupNvaDoi();
   }, [nvaDoi]);
 
-  const canSeeDraftDoi =
-    user &&
-    ((user.isCurator && registration.publisher.id === user.customerId) || user.id === registration.resourceOwner.owner);
+  const canSeeDraftDoi = userCanEditRegistration(user, registration);
   const canSeeNvaDoi = nvaDoi && (nvaDoiIsFindable || canSeeDraftDoi);
 
-  return !originalDoi && !canSeeNvaDoi ? null : (
+  return !originalDoi && !associatedLink && !canSeeNvaDoi ? null : (
     <>
-      {originalDoi && (
+      {(originalDoi || associatedLink) && (
         <>
           <Typography variant="overline">{t('registration.registration.link_to_resource')}</Typography>
           <Typography>
             <Link
               data-testid={dataTestId.registrationLandingPage.doiOriginalLink}
-              href={originalDoi}
+              href={originalDoi || associatedLink}
               target="_blank"
               rel="noopener noreferrer">
-              {originalDoi}
+              {originalDoi || associatedLink}
             </Link>
           </Typography>
         </>

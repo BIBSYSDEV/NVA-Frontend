@@ -1,4 +1,4 @@
-import { RegistrationFileSet } from './file.types';
+import { AssociatedArtifact } from './associatedArtifact.types';
 import { ResearchProject } from './project.types';
 import {
   JournalEntityDescription,
@@ -11,7 +11,7 @@ import { ChapterEntityDescription } from './publication_types/chapterRegistratio
 import { Contributor } from './contributor.types';
 import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
 import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
-import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration';
+import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration.types';
 import {
   JournalType,
   BookType,
@@ -73,7 +73,7 @@ interface RegistrationPublisher {
   id: string;
 }
 
-export interface BaseRegistration extends RegistrationFileSet {
+export interface BaseRegistration {
   readonly type: 'Publication';
   readonly id: string;
   readonly identifier: string;
@@ -89,6 +89,7 @@ export interface BaseRegistration extends RegistrationFileSet {
   readonly publisher: RegistrationPublisher;
   subjects: string[];
   projects: ResearchProject[];
+  associatedArtifacts: AssociatedArtifact[];
 }
 
 export interface BaseEntityDescription {
@@ -105,7 +106,6 @@ export interface BaseEntityDescription {
 
 export interface NviApplicableBase<T> {
   contentType: T | null;
-  peerReviewed: boolean | null;
 }
 
 export interface BaseReference {
@@ -127,9 +127,11 @@ export type PublicationInstanceType =
 
 export enum PublicationChannelType {
   Journal = 'Journal',
+  MediaContributionPeriodical = 'MediaContributionPeriodical',
   Publisher = 'Publisher',
   Series = 'Series',
   UnconfirmedJournal = 'UnconfirmedJournal',
+  UnconfirmedMediaContributionPeriodical = 'UnconfirmedMediaContributionPeriodical',
   UnconfirmedPublisher = 'UnconfirmedPublisher',
   UnconfirmedSeries = 'UnconfirmedSeries',
 }
@@ -190,13 +192,10 @@ export const emptyRegistration: Registration = {
   },
   status: RegistrationStatus.New,
   entityDescription: emptyRegistrationEntityDescription,
-  fileSet: {
-    type: 'FileSet',
-    files: [],
-  },
   projects: [],
   publisher: { id: '' },
   subjects: [],
+  associatedArtifacts: [],
 };
 
 export interface Series {

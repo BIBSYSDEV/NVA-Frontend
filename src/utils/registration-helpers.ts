@@ -36,6 +36,7 @@ import {
   LiteraryArtsWeb,
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
+import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -78,10 +79,13 @@ export const isMediaContribution = (instanceType: any) => Object.values(MediaTyp
 
 export const isResearchData = (instanceType: any) => Object.values(ResearchDataType).includes(instanceType);
 
+export const isPeriodicalMediaContribution = (instanceType: string) =>
+  instanceType === MediaType.MediaFeatureArticle || instanceType === MediaType.MediaReaderOpinion;
+
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCreator && user.username === registration.resourceOwner.owner;
+  !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCurator && user.customerId === registration.publisher.id;
@@ -93,8 +97,8 @@ const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?:
   const issnString =
     printIssn || onlineIssn
       ? [
-          printIssn ? `${i18n.t('registration.resource_type.print_issn')}: ${printIssn}` : '',
-          onlineIssn ? `${i18n.t('registration.resource_type.online_issn')}: ${onlineIssn}` : '',
+          printIssn ? `${i18n.t('translation:registration.resource_type.print_issn')}: ${printIssn}` : '',
+          onlineIssn ? `${i18n.t('translation:registration.resource_type.online_issn')}: ${onlineIssn}` : '',
         ]
           .filter((issn) => issn)
           .join(', ')
@@ -119,9 +123,6 @@ export const getFormattedRegistration = (registration: Registration) => {
   }
   if (formattedRegistration.entityDescription?.reference && !formattedRegistration.entityDescription.reference.type) {
     formattedRegistration.entityDescription.reference.type = 'Reference';
-  }
-  if (formattedRegistration.fileSet && !formattedRegistration.fileSet?.type) {
-    formattedRegistration.fileSet.type = 'FileSet';
   }
 
   if (isJournal(type)) {
@@ -474,12 +475,29 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
 };
 
 export const userIsOwnerOfRegistration = (user: User | null, registration: Registration) =>
-  !!user?.isCreator && !!user.username && user.username === registration.resourceOwner.owner;
+  !!user?.isCreator && !!user.nvaUsername && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
   !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
+export const userCanEditRegistration = (user: User | null, registration: Registration) =>
+  userIsOwnerOfRegistration(user, registration) || userIsCuratorForRegistration(user, registration);
+
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
 
-export const getTitleString = (title: string | undefined) => title || `[${i18n.t('registration.missing_title')}]`;
+export const getTitleString = (title: string | undefined) =>
+  title || `[${i18n.t('translation:registration.missing_title')}]`;
+
+export const associatedArtifactIsFile = ({ type }: { type: string }) =>
+  type === 'File' || type === 'UnpublishedFile' || type === 'PublishedFile' || type === 'UnpublishableFile';
+
+export const associatedArtifactIsLink = ({ type }: { type: string }) => type === 'AssociatedLink';
+
+export const associatedArtifactIsNullArtifact = ({ type }: { type: string }) => type === 'NullAssociatedArtifact';
+
+export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
+  associatedArtifacts.filter(associatedArtifactIsFile) as AssociatedFile[];
+
+export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
+  associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];

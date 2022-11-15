@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { PublicationType } from '../../../types/publicationFieldNames';
 import { contributorsValidationSchema } from './contributorValidation';
-import { fileValidationSchema } from './fileValidation';
+import { associatedFileValidationSchema } from './associatedArtifactValidation';
 import {
   artisticDesignReference,
   baseReference,
@@ -20,20 +20,19 @@ import i18n from '../../../translations/i18n';
 import { getMainRegistrationType, isBook } from '../../registration-helpers';
 import { Registration, EntityDescription, RegistrationDate } from '../../../types/registration.types';
 import { YupShape } from '../validationHelpers';
-import { FileSet } from '../../../types/file.types';
 
 const registrationErrorMessage = {
-  titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.title') }),
-  npiSubjectRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.description.npi_disciplines'),
+  titleRequired: i18n.t('translation:feedback.validation.is_required', { field: i18n.t('translation:common.title') }),
+  npiSubjectRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.description.npi_disciplines'),
   }),
-  publishedDateRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.description.date_published'),
+  publishedDateRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:registration.description.date_published'),
   }),
-  publishedDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
-    field: i18n.t('registration.description.date_published'),
+  publishedDateInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
+    field: i18n.t('translation:registration.description.date_published'),
   }),
-  fileRequired: i18n.t('feedback.validation.minimum_one_file'),
+  associatedArtifactRequired: i18n.t('translation:feedback.validation.must_have_associated_artifact'),
 };
 
 export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
@@ -84,11 +83,13 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
       }
     }),
   }),
-  fileSet: Yup.object<YupShape<FileSet>>({
-    files: Yup.array()
-      .of(fileValidationSchema)
-      .min(1, registrationErrorMessage.fileRequired)
-      .required(registrationErrorMessage.fileRequired),
-  }),
+  associatedArtifacts: Yup.array()
+    .of(associatedFileValidationSchema) // TODO: Should validate AssociatedLink as well
+    .when('entityDescription', (entityDescription: EntityDescription, schema) =>
+      entityDescription.reference?.doi
+        ? schema.min(0)
+        : schema.min(1, registrationErrorMessage.associatedArtifactRequired)
+    )
+    .required(registrationErrorMessage.associatedArtifactRequired),
   projects: Yup.array().of(Yup.object()),
 });

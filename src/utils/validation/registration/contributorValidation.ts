@@ -11,9 +11,9 @@ import {
 } from '../../registration-helpers';
 
 const contributorErrorMessage = {
-  authorRequired: i18n.t('feedback.validation.author_required'),
-  contributorRequired: i18n.t('feedback.validation.contributor_required'),
-  editorRequired: i18n.t('feedback.validation.editor_required'),
+  authorRequired: i18n.t('translation:feedback.validation.author_required'),
+  contributorRequired: i18n.t('translation:feedback.validation.contributor_required'),
+  editorRequired: i18n.t('translation:feedback.validation.editor_required'),
 };
 
 const contributorValidationSchema = Yup.object().shape({
