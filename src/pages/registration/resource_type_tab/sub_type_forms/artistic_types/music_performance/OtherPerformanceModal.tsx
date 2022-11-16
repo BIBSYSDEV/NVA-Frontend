@@ -43,41 +43,41 @@ const emptyMusicalWork: MusicalWork = {
 const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
   place: Yup.object().shape({
     label: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.place'),
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:common.place'),
       })
     ),
   }),
   performanceType: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.performance_type'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.performance_type'),
     })
   ),
   extent: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.extent_in_minutes'),
     })
   ),
   musicalWorks: Yup.array()
     .of(
       Yup.object<YupShape<MusicalWork>>({
         title: Yup.string().required(
-          i18n.t('feedback.validation.is_required', {
-            field: i18n.t('common.title'),
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:common.title'),
           })
         ),
         composer: Yup.string().required(
-          i18n.t('feedback.validation.is_required', {
-            field: i18n.t('registration.resource_type.artistic.composer'),
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:registration.resource_type.artistic.composer'),
           })
         ),
       })
     )
     .min(
       1,
-      i18n.t('feedback.validation.must_have_minimum', {
+      i18n.t('translation:feedback.validation.must_have_minimum', {
         min: 1,
-        field: i18n.t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
+        field: i18n.t('translation:registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
       })
     ),
 });

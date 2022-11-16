@@ -18,11 +18,18 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   },
 }));
 
-const StyledSideMenuHeader = styled(Box)({
+export const StyledPaperHeader = styled(Box)(({ theme }) => ({
+  color: theme.palette.primary.contrastText,
+  backgroundColor: theme.palette.primary.main,
   display: 'flex',
   alignItems: 'center',
+  gap: '1.5rem',
+  padding: '1rem',
+}));
+
+const StyledSideMenuHeader = styled(StyledPaperHeader)({
+  alignItems: 'center',
   gap: '0.5rem',
-  background: '#e3e0dd',
   padding: '0.5rem 1rem 0.5rem 1rem',
 });
 
@@ -43,7 +50,7 @@ export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
   return (
     <StyledSideMenuHeader>
       {IconComponent && <IconComponent fontSize="large" />}
-      <Typography component="h1" variant="h2" id={id}>
+      <Typography component="h1" variant="h2" id={id} sx={{ color: 'inherit' }}>
         {text}
       </Typography>
     </StyledSideMenuHeader>

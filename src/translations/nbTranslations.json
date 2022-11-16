@@ -2,18 +2,18 @@
   "about": {
     "description": {
       "paragraph0": {
-        "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent forskningsarkiv",
+        "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent vitenarkiv",
         "bullet_point1": "Selv publisere rapporter, studentoppgaver og annet materiale produsert ved institusjonen",
         "intro": "Med NVA får norske forskningsinstitusjoner en tjeneste for å:"
       },
-      "paragraph1": "NVA skal også utvikles til bruk ved rapportering av vitenskapelig publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskningsadministrative oppgaver.",
-      "paragraph2": "Institusjonen er behandlingsansvarlig og registrer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold fra andre datakilder.",
+      "paragraph1": "NVA utvikles også til bruk ved rapportering av vitenskapelig publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskningsadministrative oppgaver.",
+      "paragraph2": "Sikt er databehandler. Den enkelte Institusjon er behandlingsansvarlig og registrer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold fra andre datakilder.",
       "paragraph3": "NVA har støtte for utsatt publisering av ressurser. Det betyr at en registrering kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato. Tjenesten tillater ikke behandling av sensitive personopplysninger.",
       "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
-      "paragraph5": "Selv om NVA er etablert, er tjenesten er fortsatt under utvikling. Institusjoner som ikke har et åpent forskningsarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
+      "paragraph5": "Selv om NVA er etablert og i bruk av flere institusjoner, vil tjenesten være i kontinuerlig utvikling i hele sin levetid. Institusjoner som ikke har et vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
     },
     "footer_text": "$t(about.short_description) Tjenesten er levert av Sikt.",
-    "short_description": "Nasjonalt Vitenarkiv samler informasjon om norsk forskning og gjør forskningsresultater åpent tilgjengelige."
+    "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig."
   },
   "authorization": {
     "accept_terms_to_create_user": "Jeg samtykker i å bli opprettet som bruker i NVA",
@@ -64,31 +64,27 @@
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Organisasjonens domene i Feide",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
+      "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
+      "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
     "person_register": {
+      "current_employments": "Nåværende ansettelser",
+      "remove_employment": "Fjern ansettelse",
+      "remove_employment_title": "Fjern ansettelse?",
+      "remove_employment_text": "Er du sikker på ar du ønsker å fjerne denne ansettelsen?",
       "edit_person": "Rediger person",
       "employee_table_caption": "Liste over alle ansatte",
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
+      "hide_full_nin": "Skjul personnummer",
       "national_identity_number": "Fødselsnummer",
       "no_employees_found": "Ingen ansatte funnet",
       "other_employments": "Andre aktive ansettelser",
       "person_id": "PersonID",
-      "person_register": "Personregister"
-    },
-    "users": {
-      "add_role_info": "Om du ikke finner brukeren, så må du sjekke at vedkommende er tilknyttet din institusjon og har logget på tjenesten tidligere.",
-      "area_of_responsibility": "Ansvarsområde",
-      "area_of_responsibility_placeholder": "Ingen avgresninger",
-      "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
-      "creator_info": "Hvem skal få tilgang til å registrere?",
-      "no_users_found": "Ingen brukere funnet",
-      "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
-      "remove_role_title": "Fjern rolle?",
-      "search_for_user": "Søk blant eksisterende brukere",
-      "user_administration": "Brukeradministrasjon",
-      "username": "Brukernavn"
+      "person_register": "Personregister",
+      "previous_employments": "Tidligere ansettelser",
+      "show_full_nin": "Vis personnummer"
     }
   },
   "common": {
@@ -110,6 +106,7 @@
     "delete": "Slett",
     "description": "Beskrivelse",
     "doi": "DOI",
+    "doi_long": "Digital objektidentifikator (DOI)",
     "edit": "Endre",
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
@@ -120,6 +117,7 @@
     "institutions": "Institusjoner",
     "language": "Språk",
     "last_name": "Etternavn",
+    "link": "Lenke",
     "loading": "Laster",
     "menu": "Meny",
     "message": "Melding",
@@ -157,6 +155,7 @@
     "save": "Lagre",
     "save_and_present": "Lagre og presenter",
     "search": "Søk",
+    "search_by_name": "Søk på navn",
     "search_placeholder": "Navn Navnesen",
     "search_summary_one": "{{count}} treff for \"{{searchTerm}}\"",
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
@@ -175,10 +174,11 @@
     "start_page": "Startside",
     "status": "Status",
     "support": "Brukerstøtte",
+    "tasks": "Oppgaver",
     "title": "Tittel",
     "type": "Type",
     "update": "Oppdater",
-    "users": "Brukere",
+    "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
     "x_others_one": "+ {{count}} annen",
@@ -287,6 +287,12 @@
     "disabled_description": "$t(editor.disabled): Er ikke tilgjengelig",
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
+    "curators": {
+      "area_of_responsibility": "Ansvarsområde",
+      "area_of_responsibility_placeholder": "Ingen avgrensninger",
+      "areas_of_responsibility": "Ansvarsområder",
+      "no_users_found": "Ingen brukere funnet"
+    },
     "institution": {
       "institution_code": "Institusjonens kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
@@ -395,9 +401,10 @@
       "exhibition_place_required": "Må ha minst ett visningssted",
       "has_invalid_format": "{{field}} har ugyldig format",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
+      "invalid_symbol_in_name": "{{field}} kan ikke inneholde tall eller spesialtegn",
       "is_required": "{{-field}} er obligatorisk",
       "isbn_too_short": "ISBN må ha 13 siffer",
-      "minimum_one_file": "Du må laste opp minst en fil for denne registreringen",
+      "must_have_associated_artifact": "Du må laste opp minst en fil eller en lenke for denne registreringen",
       "must_accept_terms_for_dataset": "Du må godta vilkårene for datasett",
       "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
@@ -488,10 +495,8 @@
       "creator_description": "Kan registrere publikasjoner og andre ressurser.",
       "curator": "Kurator",
       "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
-      "curators": "Kuratorer",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
-      "editors": "Redaktører",
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "institution_admins": "Administratorer",
@@ -906,12 +911,13 @@
       "project_association": "Prosjekttilknytning",
       "remove_vocabulary": "Fjern vokabular",
       "search_for_npi_discipline": "Søk etter fagfelt",
-      "search_for_project": "Søk i norske prosjektkataloger",
+      "search_for_project": "Søk i Cristins prosjektkatalog",
       "year_only": "Kun årstall"
     },
     "edit_registration": "Endre registrering",
     "files_and_license": {
       "accepted_version": "Akseptert versjon",
+      "add_files_or_link": "Legg til filer eller lenke",
       "administrative_contract": "Intern fil som ikke aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
       "file_locked": "Filen er låst",
@@ -924,10 +930,14 @@
       "find_series_in_channel_register": "Se informasjon om serien i Kanalregisteret",
       "info_from_channel_register": "Mer informasjon om valgt publiseringskanal",
       "licenses": "Lisenser",
+      "link_to_resource": "Lenke til ressurs",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "published_version": "Publisert versjon",
       "remove_file": "Fjern fil",
-      "remove_file_description": "Ønsker du å fjerne {{fileName}}?"
+      "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
+      "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
+      "resource_has_no_files_or_links_paragraph0": "Uten filer eller lenker er den publiserte ressursen vanskeligere å gjenbruke og kan gi mindre verdi for andre. Om ikke data kan deles, så bør informasjon om data og hvordan tilgang kan oppnås, deles.",
+      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er et sett med prinsipper for å støtte gjenbruk av digitale ressurser. NFR og EC stiller klare krav til at data skal være tilgjengelig og deponert sammen med metadata som avklarer eventuelle betingelser for tilgang."
     },
     "heading": {
       "contributors": "Bidragsytere",
@@ -940,14 +950,15 @@
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
     "new_registration": "Ny registrering",
     "public_page": {
-      "approve_publish_request": "Godkjenn publisering",
       "about_registration": "Om registreringen",
+      "approve_publish_request": "Godkjenn publisering",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
+      "has_pending_doi_request": "Registreringen har en DOI-forespørsel under behandling.",
+      "has_pending_publishing_request": "Registreringen har en publiseringsforespørsel under behandling.",
       "in_progress": "Under behandling",
       "message_to_curator": "Melding til kurator",
-      "not_published": "Ikke publisert",
       "other_contributors_one": "(+{{count}} annen)",
       "other_contributors_other": "(+{{count}} andre)",
       "other_related_registrations": "Andre relaterte registreringer",
@@ -957,13 +968,15 @@
       "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
       "published": "Publisert",
       "published_date": "Publisert: {{date}}",
-      "ready_to_be_published": "Klar for publisering",
+      "publishing_request": "Publiseringsgodkjenning",
+      "ready_to_be_published": "Klar for publisering.",
       "ready_to_be_published_description": "Se over utkast før du publiserer.",
       "reject_publish_request": "Avvis publisering",
       "request_doi": "Be om en DOI",
       "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
       "reserve_doi": "Reserver en DOI",
-      "reserve_doi_message": "Autogenerert melding: Bruker ønsker å reservere en DOI."
+      "reserve_doi_message": "Autogenerert melding: Bruker ønsker å reservere en DOI.",
+      "validation_errors": "Valideringsfeil"
     },
     "publication_types": {
       "Architecture": "Arkitektur",
@@ -1054,19 +1067,19 @@
         "add_publication_mention": "Legg til publisering/omtale",
         "add_web_publication": "Legg til webutgivelse",
         "announcements": "Offentliggjøringer",
-        "audio_video_type": {
-          "Audiobook": "Lydbok",
-          "Other": "Annet",
-          "Podcast": "Podkast",
-          "RadioPlay": "Hørespill",
-          "ShortFilm": "Kortfilm"
-        },
         "architecture_type": {
           "Building": "Bygg",
           "Interior": "Interiør",
           "LandscapeArchitecture": "Landskapsarkitektur",
           "Other": "Annen arkitektur",
           "PlanningProposal": "Planforsalg"
+        },
+        "audio_video_type": {
+          "Audiobook": "Lydbok",
+          "Other": "Annet",
+          "Podcast": "Podkast",
+          "RadioPlay": "Hørespill",
+          "ShortFilm": "Kortfilm"
         },
         "award_name": "Prisnavn",
         "award_organizer": "Prisutdeler/arrangør",
@@ -1119,7 +1132,7 @@
           "Essay": "Essay",
           "Novel": "Roman",
           "Novella": "Novelle",
-          "Other": "Annen",
+          "Other": "Annen skrivekunst",
           "Play": "Drama/scenetekster",
           "Poetry": "Poesi",
           "Retelling": "Gjendikting",
@@ -1133,7 +1146,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Langfilm",
           "InteractiveFilm": "Interaktiv produksjon",
-          "Other": "Annet",
+          "Other": "Annen film",
           "SerialFilmProduction": "Seriell produksjon",
           "ShortFilm": "Kortfilm"
         },
@@ -1175,7 +1188,7 @@
         },
         "performance_type": "Type/formidlingsform",
         "performance_types": {
-          "Other": "Annet",
+          "Other": "Annen scenekunst",
           "Play": "Skuespill/drama",
           "Reading": "Lesing"
         },
@@ -1200,7 +1213,7 @@
           "CollectiveExhibition": "Gruppe-/kollektivutstilling",
           "IndividualExhibition": "Separatutstilling",
           "Installation": "Installasjon",
-          "Other": "Annet",
+          "Other": "Annen visuell kunst",
           "Performance": "Performance"
         },
         "web_link": "Lenke"
@@ -1268,9 +1281,8 @@
       "more_info_about_work": "Mer informasjon om verket",
       "number_of_pages": "Totalt antall sider",
       "nvi": {
-        "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks hvis den både er fagfellevurdert og presenterer ny original forskning",
-        "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks, forutsatt at den både er fagfellevurdert og presenterer ny original forskning)",
-        "not_peer_reviewed": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden den ikke er både fagfellevurdert og presenterer ny original forskning"
+        "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks",
+        "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)"
       },
       "online_issn": "Online ISSN",
       "or": "Eller",
@@ -1280,8 +1292,6 @@
       "pages": "Sidetall",
       "pages_from": "Sidetall fra",
       "pages_to": "til",
-      "peer_review": "Er fagfellevurdert og presenterer ny original forskning?",
-      "peer_reviewed": "Er fagfellevurdert og presenterer ny original forskning",
       "place_for_event": "Sted for arrangement",
       "print_issn": "Print ISSN",
       "remove_doi": "Fjern DOI",

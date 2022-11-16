@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { useUppy } from '@uppy/react';
-import { ItalicPageHeader } from '../../components/PageHeader';
+import { PageHeader } from '../../components/PageHeader';
 import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootState } from '../../redux/store';
@@ -93,7 +93,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               modalHeading={t('registration.modal_unsaved_changes_heading')}
               shouldBlockNavigation={dirty}
             />
-            <ItalicPageHeader>{getTitleString(values.entityDescription?.mainTitle)}</ItalicPageHeader>
+            <PageHeader variant="h2" variantMapping={{ h2: 'h1' }} sx={{ fontWeight: '700' }}>
+              {getTitleString(values.entityDescription?.mainTitle)}
+            </PageHeader>
             <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />
             <BackgroundDiv>

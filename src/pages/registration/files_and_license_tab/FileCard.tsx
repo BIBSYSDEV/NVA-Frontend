@@ -26,13 +26,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import LockIcon from '@mui/icons-material/LockOutlined';
 import { DatePicker } from '@mui/x-date-pickers';
-import { File, LicenseNames, licenses } from '../../../types/file.types';
+import { AssociatedFile, LicenseNames, licenses } from '../../../types/associatedArtifact.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface FileCardProps {
-  file: File;
+  file: AssociatedFile;
   removeFile: () => void;
   baseFieldName: string;
   toggleLicenseModal?: () => void;
@@ -45,7 +45,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
-    <Paper sx={{ padding: '1rem' }} elevation={5} data-testid={dataTestId.registrationWizard.files.fileCard}>
+    <Paper sx={{ padding: '1rem' }} elevation={3} data-testid={dataTestId.registrationWizard.files.fileCard}>
       <Box sx={{ display: 'flex', alignItems: 'start', gap: '2rem' }}>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`}>
           {({ field, meta: { error, touched } }: FieldProps) => (

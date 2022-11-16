@@ -16,11 +16,6 @@ export const DoiField = () => {
     setOpenConfirmDialog(!openConfirmDialog);
   };
 
-  const removeDoi = () => {
-    setFieldValue(ResourceFieldNames.Doi, '');
-    toggleConfirmDialog();
-  };
-
   const doi = values.doi;
   const referenceDoi = values.entityDescription?.reference?.doi ?? '';
 
@@ -33,23 +28,28 @@ export const DoiField = () => {
         fullWidth
         label={t('registration.registration.link_to_resource')}
         disabled
-        value={doi ?? referenceDoi}
+        value={doi || referenceDoi}
         multiline
       />
 
       {referenceDoi && (
-        <Button color="error" variant="outlined" endIcon={<DeleteIcon />} onClick={toggleConfirmDialog}>
-          {t('registration.resource_type.remove_doi')}
-        </Button>
+        <>
+          <Button color="error" variant="outlined" endIcon={<DeleteIcon />} onClick={toggleConfirmDialog}>
+            {t('registration.resource_type.remove_doi')}
+          </Button>
+          <ConfirmDialog
+            open={openConfirmDialog}
+            title={t('registration.resource_type.remove_doi')}
+            onAccept={() => {
+              setFieldValue(ResourceFieldNames.Doi, '');
+              toggleConfirmDialog();
+            }}
+            onCancel={toggleConfirmDialog}
+            dialogDataTestId="confirm-delete-doi-dialog">
+            <Typography>{t('registration.resource_type.remove_doi_text')}</Typography>
+          </ConfirmDialog>
+        </>
       )}
-      <ConfirmDialog
-        open={openConfirmDialog}
-        title={t('registration.resource_type.remove_doi')}
-        onAccept={removeDoi}
-        onCancel={toggleConfirmDialog}
-        dialogDataTestId="confirm-delete-doi-dialog">
-        <Typography>{t('registration.resource_type.remove_doi_text')}</Typography>
-      </ConfirmDialog>
     </Box>
   ) : null;
 };

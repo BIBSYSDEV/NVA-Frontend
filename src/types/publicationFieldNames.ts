@@ -118,14 +118,13 @@ export enum ResourceFieldNames {
   PagesType = 'entityDescription.reference.publicationInstance.pages.type',
   PagesPages = 'entityDescription.reference.publicationInstance.pages.pages',
   PartOf = 'entityDescription.reference.publicationContext.partOf',
-  PeerReviewed = 'entityDescription.reference.publicationInstance.peerReviewed',
   PublicationContextAgentName = 'entityDescription.reference.publicationContext.agent.name',
   PublicationContextId = 'entityDescription.reference.publicationContext.id',
   PublicationContextLabel = 'entityDescription.reference.publicationContext.label',
   PublicationContextLevel = 'entityDescription.reference.publicationContext.level',
   PublicationContextMediaChannel = 'entityDescription.reference.publicationContext.disseminationChannel',
   PublicationContextMediaFormat = 'entityDescription.reference.publicationContext.format',
-  PublicationContextMediaMedium = 'entityDescription.reference.publicationContext.medium',
+  PublicationContextMediaMediumType = 'entityDescription.reference.publicationContext.medium.type',
   PublicationContextMediaPartOfSeries = 'entityDescription.reference.publicationContext.partOf.series',
   PublicationContextMediaPartOfSeriesPart = 'entityDescription.reference.publicationContext.partOf.seriesPart',
   PublicationContextPlaceLabel = 'entityDescription.reference.publicationContext.place.label',
@@ -173,16 +172,20 @@ export enum DescriptionFieldNames {
 }
 
 export enum FileFieldNames {
-  Files = 'fileSet.files',
-  FileSet = 'fileSet',
+  AssociatedArtifacts = 'associatedArtifacts',
 }
 
-// The following fields should be present in "fileSet.files[index].<KEY>"
+// The following fields should be present in "associatedArtifacts[index].<KEY> for files"
 export enum SpecificFileFieldNames {
   AdministrativeAgreement = 'administrativeAgreement',
   PublisherAuthority = 'publisherAuthority',
   EmbargoDate = 'embargoDate',
   License = 'license',
+}
+
+// The following fields should be present in "associatedArtifacts[index].<KEY> for links"
+export enum SpecificLinkFieldNames {
+  Id = 'id',
 }
 
 export enum ContributorFieldNames {

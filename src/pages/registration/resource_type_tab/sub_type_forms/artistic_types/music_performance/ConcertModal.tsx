@@ -59,8 +59,8 @@ const validationSchema = Yup.object<YupShape<Concert>>({
   partOfSeries: Yup.boolean(),
   place: Yup.object().shape({
     label: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.place'),
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:common.place'),
       })
     ),
   }),
@@ -70,34 +70,34 @@ const validationSchema = Yup.object<YupShape<Concert>>({
       : schema.shape({
           value: Yup.date()
             .required(
-              i18n.t('feedback.validation.is_required', {
-                field: i18n.t('common.date'),
+              i18n.t('translation:feedback.validation.is_required', {
+                field: i18n.t('translation:common.date'),
               })
             )
             .typeError(
-              i18n.t('feedback.validation.has_invalid_format', {
-                field: i18n.t('common.date'),
+              i18n.t('translation:feedback.validation.has_invalid_format', {
+                field: i18n.t('translation:common.date'),
               })
             ),
         })
   ),
 
   extent: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
+    i18n.t('translation:feedback.validation.is_required', {
+      field: i18n.t('translation:registration.resource_type.artistic.extent_in_minutes'),
     })
   ),
   concertProgramme: Yup.array()
     .of(
       Yup.object<YupShape<MusicalWorkPerformance>>({
         title: Yup.string().required(
-          i18n.t('feedback.validation.is_required', {
-            field: i18n.t('common.title'),
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:common.title'),
           })
         ),
         composer: Yup.string().required(
-          i18n.t('feedback.validation.is_required', {
-            field: i18n.t('registration.resource_type.artistic.composer'),
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:registration.resource_type.artistic.composer'),
           })
         ),
         premiere: Yup.boolean(),
@@ -105,9 +105,9 @@ const validationSchema = Yup.object<YupShape<Concert>>({
     )
     .min(
       1,
-      i18n.t('feedback.validation.must_have_minimum', {
+      i18n.t('translation:feedback.validation.must_have_minimum', {
         min: 1,
-        field: i18n.t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
+        field: i18n.t('translation:registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
       })
     ),
 });

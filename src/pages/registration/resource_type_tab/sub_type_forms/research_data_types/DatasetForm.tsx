@@ -90,7 +90,7 @@ export const DatasetForm = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  data-testid={dataTestId.registrationWizard.resourceType.geographicDescriptionField}
+                  data-testid={dataTestId.registrationWizard.resourceType.relatedRegistrationField}
                   sx={{ maxWidth: '40rem' }}
                   onChange={(event) => {
                     setRelatedRegistrationsQuery(event.target.value);

@@ -51,12 +51,15 @@ import {
   LiteraryArtsAudioVisual,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { MediaContributionPublicationContext } from '../../types/publication_types/mediaContributionRegistration';
+import {
+  MediaContributionPeriodicalPublicationContext,
+  MediaContributionPublicationContext,
+} from '../../types/publication_types/mediaContributionRegistration.types';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
 import { getPeriodString } from '../../utils/general-helpers';
 
 interface PublicJournalProps {
-  publicationContext: JournalPublicationContext;
+  publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
 }
 
 const channelRegisterBaseUrl = 'https://kanalregister.hkdir.no/publiseringskanaler';
@@ -719,10 +722,10 @@ export const PublicPublicationContextMediaContribution = ({ publicationContext }
 
   return (
     <>
-      {medium && (
+      {medium.type && (
         <Typography>
           {t('registration.resource_type.media_contribution.medium')}:{' '}
-          {t(`registration.resource_type.media_contribution.medium_types.${medium}`)}
+          {t(`registration.resource_type.media_contribution.medium_types.${medium.type}`)}
         </Typography>
       )}
       {format && (
