@@ -1,9 +1,6 @@
 import { useFormikContext } from 'formik';
-import { StyledSelectWrapper } from '../../../components/styled/Wrappers';
-import { ArtisticType, ResourceFieldNames } from '../../../types/publicationFieldNames';
+import { ArtisticType } from '../../../types/publicationFieldNames';
 import { ArtisticRegistration } from '../../../types/publication_types/artisticRegistration.types';
-import { SelectTypeField } from './components/SelectTypeField';
-import { RegistrationTypeFormProps } from './JournalTypeForm';
 import { ArtisticArchitectureForm } from './sub_type_forms/artistic_types/architecture/ArtisticArchitectureForm';
 import { ArtisticDesignForm } from './sub_type_forms/artistic_types/design/ArtisticDesignForm';
 import { ArtisticLiteraryArtForm } from './sub_type_forms/artistic_types/literary_art/ArtisticLiteraryArtForm';
@@ -12,35 +9,23 @@ import { ArtisticMusicPerformanceForm } from './sub_type_forms/artistic_types/mu
 import { ArtisticPerformingArtsForm } from './sub_type_forms/artistic_types/performing_arts/ArtisticPerformingArtsForm';
 import { ArtisticVisualArtForm } from './sub_type_forms/artistic_types/visual_arts/ArtisticVisualArtForm';
 
-export const ArtisticTypeForm = ({ onChangeSubType }: RegistrationTypeFormProps) => {
+export const ArtisticTypeForm = () => {
   const { values } = useFormikContext<ArtisticRegistration>();
   const subType = values.entityDescription.reference.publicationInstance.type;
 
-  return (
-    <>
-      <StyledSelectWrapper>
-        <SelectTypeField
-          fieldName={ResourceFieldNames.SubType}
-          onChangeType={onChangeSubType}
-          options={Object.values(ArtisticType)}
-        />
-      </StyledSelectWrapper>
-
-      {subType === ArtisticType.ArtisticDesign ? (
-        <ArtisticDesignForm />
-      ) : subType === ArtisticType.ArtisticArchitecture ? (
-        <ArtisticArchitectureForm />
-      ) : subType === ArtisticType.PerformingArts ? (
-        <ArtisticPerformingArtsForm />
-      ) : subType === ArtisticType.MovingPicture ? (
-        <ArtisticMovingPictureForm />
-      ) : subType === ArtisticType.MusicPerformance ? (
-        <ArtisticMusicPerformanceForm />
-      ) : subType === ArtisticType.VisualArts ? (
-        <ArtisticVisualArtForm />
-      ) : subType === ArtisticType.LiteraryArts ? (
-        <ArtisticLiteraryArtForm />
-      ) : null}
-    </>
-  );
+  return subType === ArtisticType.ArtisticDesign ? (
+    <ArtisticDesignForm />
+  ) : subType === ArtisticType.ArtisticArchitecture ? (
+    <ArtisticArchitectureForm />
+  ) : subType === ArtisticType.PerformingArts ? (
+    <ArtisticPerformingArtsForm />
+  ) : subType === ArtisticType.MovingPicture ? (
+    <ArtisticMovingPictureForm />
+  ) : subType === ArtisticType.MusicPerformance ? (
+    <ArtisticMusicPerformanceForm />
+  ) : subType === ArtisticType.VisualArts ? (
+    <ArtisticVisualArtForm />
+  ) : subType === ArtisticType.LiteraryArts ? (
+    <ArtisticLiteraryArtForm />
+  ) : null;
 };
