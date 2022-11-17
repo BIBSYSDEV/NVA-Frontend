@@ -60,82 +60,116 @@ export const ResourceTypePanel = () => {
 
   const updatePublicationInstance = (newInstanceType: string) => {
     const newContextType = getMainRegistrationType(newInstanceType);
-    if (newContextType !== values.entityDescription?.reference?.publicationContext?.type) {
+    const newMainType = newContextType !== values.entityDescription?.reference?.publicationContext?.type;
+
+    if (newInstanceType !== instanceType) {
       switch (newContextType) {
         case PublicationType.PublicationInJournal:
-          setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyJournalPublicationInstance, type: newInstanceType });
+          newMainType &&
+            setFieldValue(contextTypeBaseFieldName, { type: PublicationChannelType.UnconfirmedJournal }, false);
+          setFieldValue(
+            instanceTypeBaseFieldName,
+            { ...emptyJournalPublicationInstance, type: newInstanceType },
+            false
+          );
           break;
         case PublicationType.Book:
-          setFieldValue(
-            contextTypeBaseFieldName,
-            {
-              type: PublicationType.Book,
-              publisher: { type: PublicationChannelType.UnconfirmedPublisher },
-              series: { type: PublicationChannelType.UnconfirmedSeries },
-            },
-            false
-          );
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType });
+          newMainType &&
+            setFieldValue(
+              contextTypeBaseFieldName,
+              {
+                type: PublicationType.Book,
+                publisher: { type: PublicationChannelType.UnconfirmedPublisher },
+                series: { type: PublicationChannelType.UnconfirmedSeries },
+              },
+              false
+            );
+          setFieldValue(instanceTypeBaseFieldName, { ...emptyBookPublicationInstance, type: newInstanceType }, false);
           break;
         case PublicationType.Report:
-          setFieldValue(
-            contextTypeBaseFieldName,
-            {
-              type: PublicationType.Report,
-              publisher: { type: PublicationChannelType.UnconfirmedPublisher },
-              series: { type: PublicationChannelType.UnconfirmedSeries },
-            },
-            false
-          );
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyReportPublicationInstance, type: newInstanceType });
+          newMainType &&
+            setFieldValue(
+              contextTypeBaseFieldName,
+              {
+                type: PublicationType.Report,
+                publisher: { type: PublicationChannelType.UnconfirmedPublisher },
+                series: { type: PublicationChannelType.UnconfirmedSeries },
+              },
+              false
+            );
+          setFieldValue(instanceTypeBaseFieldName, { ...emptyReportPublicationInstance, type: newInstanceType }, false);
           break;
         case PublicationType.Degree:
-          setFieldValue(
-            contextTypeBaseFieldName,
-            {
-              type: PublicationType.Degree,
-              publisher: { type: PublicationChannelType.UnconfirmedPublisher },
-              series: { type: PublicationChannelType.UnconfirmedSeries },
-            },
-            false
-          );
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType });
+          newMainType &&
+            setFieldValue(
+              contextTypeBaseFieldName,
+              {
+                type: PublicationType.Degree,
+                publisher: { type: PublicationChannelType.UnconfirmedPublisher },
+                series: { type: PublicationChannelType.UnconfirmedSeries },
+              },
+              false
+            );
+          setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType }, false);
           break;
         case PublicationType.Chapter:
-          setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Chapter }, false);
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyChapterPublicationInstance, type: newInstanceType });
+          newMainType && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Chapter }, false);
+          setFieldValue(
+            instanceTypeBaseFieldName,
+            { ...emptyChapterPublicationInstance, type: newInstanceType },
+            false
+          );
           break;
         case PublicationType.Presentation:
-          setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyPresentationPublicationInstance, type: newInstanceType });
+          newMainType && setFieldValue(contextTypeBaseFieldName, emptyPresentationPublicationContext, false);
+          setFieldValue(
+            instanceTypeBaseFieldName,
+            { ...emptyPresentationPublicationInstance, type: newInstanceType },
+            false
+          );
           break;
         case PublicationType.Artistic:
-          setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyArtisticPublicationInstance, type: newInstanceType });
+          newMainType && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Artistic, venues: [] }, false);
+          setFieldValue(
+            instanceTypeBaseFieldName,
+            { ...emptyArtisticPublicationInstance, type: newInstanceType },
+            false
+          );
           break;
         case PublicationType.MediaContribution:
           if (isPeriodicalMediaContribution(newInstanceType)) {
             setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
-            setFieldValue(instanceTypeBaseFieldName, {
-              ...emptyMediaContributionPeriodicalPublicationInstance,
-              type: newInstanceType,
-            });
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              {
+                ...emptyMediaContributionPeriodicalPublicationInstance,
+                type: newInstanceType,
+              },
+              false
+            );
           } else {
-            setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
-            setFieldValue(instanceTypeBaseFieldName, {
-              ...emptyMediaContributionPublicationInstance,
-              type: newInstanceType,
-            });
+            newMainType && setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
+            setFieldValue(
+              instanceTypeBaseFieldName,
+              {
+                ...emptyMediaContributionPublicationInstance,
+                type: newInstanceType,
+              },
+              false
+            );
           }
           break;
         case PublicationType.ResearchData:
-          setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyResearchDataPublicationInstance, type: newInstanceType });
+          newMainType && setFieldValue(contextTypeBaseFieldName, emptyResearchDataPublicationContext, false);
+          setFieldValue(
+            instanceTypeBaseFieldName,
+            { ...emptyResearchDataPublicationInstance, type: newInstanceType },
+            false
+          );
           break;
         case PublicationType.GeographicalContent:
-          setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType });
-          setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
+          newMainType && setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
+          setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
           break;
       }
     }
