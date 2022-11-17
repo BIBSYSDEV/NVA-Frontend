@@ -10,7 +10,7 @@ enum Color {
   ErrorLight = '#FF8888',
   ErrorMain = '#C2363D',
   Paper = '#faf7f4',
-  PrimaryMain = '#0e6d82',
+  PrimaryMain = '#0F0035',
   SecondaryMain = '#FFB546',
   SuccessMain = '#08B677',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
@@ -150,7 +150,7 @@ export const mainTheme = createTheme(
           },
         },
       },
-      MuiTableHead: { styleOverrides: { root: { th: { background: Color.AlternativeBackground } } } },
+      MuiTableHead: { styleOverrides: { root: { th: { background: Color.White } } } },
       MuiTablePagination: {
         defaultProps: {
           showFirstButton: true,
