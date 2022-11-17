@@ -1,7 +1,6 @@
-import { ErrorMessage, useFormikContext } from 'formik';
-import { FormHelperText } from '@mui/material';
+import { useFormikContext } from 'formik';
 import { InputContainerBox } from '../../components/styled/Wrappers';
-import { PublicationType, ResourceFieldNames } from '../../types/publicationFieldNames';
+import { PublicationType } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { BookTypeForm } from './resource_type_tab/BookTypeForm';
 import { ChapterTypeForm } from './resource_type_tab/ChapterTypeForm';
@@ -24,9 +23,6 @@ export const ResourceTypePanel = () => {
   return (
     <InputContainerBox>
       <SelectRegistrationTypeField />
-      <FormHelperText error>
-        <ErrorMessage name={ResourceFieldNames.SubType} />
-      </FormHelperText>
 
       {mainType === PublicationType.PublicationInJournal ? (
         <JournalTypeForm />

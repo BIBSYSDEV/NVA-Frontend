@@ -1,5 +1,5 @@
 import { Box, Chip, FormHelperText, FormLabel, IconButton, Paper, Typography } from '@mui/material';
-import { useFormikContext } from 'formik';
+import { ErrorMessage, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
@@ -49,7 +49,7 @@ import { getMainRegistrationType, isPeriodicalMediaContribution } from '../../..
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
-  const { values, setFieldValue } = useFormikContext<Registration>();
+  const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance.type ?? '';
 
   const [openSelectType, setOpenSelectType] = useState(!currentInstanceType);
@@ -169,6 +169,7 @@ export const SelectRegistrationTypeField = () => {
           setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
           break;
       }
+      validateForm();
     }
   };
 
@@ -264,6 +265,11 @@ export const SelectRegistrationTypeField = () => {
             onChangeType={onChangeType}
           />
         </Box>
+        {!currentInstanceType && (
+          <FormHelperText error sx={{ mt: '1rem' }}>
+            <ErrorMessage name={ResourceFieldNames.SubType} />
+          </FormHelperText>
+        )}
       </Paper>
       <ConfirmDialog
         open={!!confirmNewType}
