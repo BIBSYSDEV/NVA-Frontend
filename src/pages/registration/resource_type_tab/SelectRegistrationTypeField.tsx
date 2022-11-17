@@ -1,7 +1,8 @@
-import { Box, Chip, FormHelperText, FormLabel, Typography } from '@mui/material';
+import { Box, Chip, FormHelperText, FormLabel, IconButton, Paper, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import CloseIcon from '@mui/icons-material/Close';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import {
   ArtisticType,
@@ -175,6 +176,8 @@ export const SelectRegistrationTypeField = () => {
     if (currentInstanceType) {
       if (newInstanceType !== currentInstanceType) {
         setConfirmNewType(newInstanceType);
+      } else {
+        setOpenSelectType(false);
       }
     } else {
       if (newInstanceType === ResearchDataType.Dataset) {
@@ -189,68 +192,79 @@ export const SelectRegistrationTypeField = () => {
 
   return openSelectType || !currentInstanceType ? (
     <>
-      <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem', alignItems: 'center' }}>
-        <TypeRow
-          mainType={PublicationType.PublicationInJournal}
-          subTypes={Object.values(JournalType)}
-          value={currentInstanceType}
-          onChangeType={onChangeType}
-        />
-        <TypeRow
-          mainType={PublicationType.Book}
-          subTypes={Object.values(BookType)}
-          value={currentInstanceType}
-          onChangeType={onChangeType}
-        />
-        <TypeRow
-          mainType={PublicationType.Report}
-          subTypes={Object.values(ReportType)}
-          value={currentInstanceType}
-          onChangeType={onChangeType}
-        />
-        <TypeRow
-          mainType={PublicationType.Degree}
-          subTypes={Object.values(DegreeType)}
-          value={currentInstanceType}
-          onChangeType={onChangeType}
-        />
-        <TypeRow
-          mainType={PublicationType.Chapter}
-          subTypes={Object.values(ChapterType)}
-          value={currentInstanceType}
-          onChangeType={onChangeType}
-        />
-        <TypeRow
-          mainType={PublicationType.Presentation}
-          subTypes={Object.values(PresentationType)}
-          value={currentInstanceType}
-          onChangeType={onChangeType}
-        />
-        <TypeRow
-          mainType={PublicationType.Artistic}
-          subTypes={Object.values(ArtisticType)}
-          value={currentInstanceType}
-          onChangeType={onChangeType}
-        />
-        <TypeRow
-          mainType={PublicationType.MediaContribution}
-          subTypes={Object.values(MediaType)}
-          value={currentInstanceType}
-          onChangeType={onChangeType}
-        />
-        <TypeRow
-          mainType={PublicationType.ResearchData}
-          subTypes={Object.values(ResearchDataType)}
-          value={currentInstanceType}
-          onChangeType={onChangeType}
-        />
-        <TypeRow
-          mainType={PublicationType.GeographicalContent}
-          subTypes={Object.values(OtherRegistrationType)}
-          value={currentInstanceType}
-          onChangeType={onChangeType}
-        />
-      </Box>
+      <Paper sx={{ p: '1rem' }} elevation={10}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <FormLabel>Velg ressurstype</FormLabel>
+
+          {currentInstanceType && (
+            <IconButton title={t('common.close')} onClick={() => setOpenSelectType(false)}>
+              <CloseIcon />
+            </IconButton>
+          )}
+        </Box>
+        <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem', alignItems: 'center' }}>
+          <TypeRow
+            mainType={PublicationType.PublicationInJournal}
+            subTypes={Object.values(JournalType)}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <TypeRow
+            mainType={PublicationType.Book}
+            subTypes={Object.values(BookType)}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <TypeRow
+            mainType={PublicationType.Report}
+            subTypes={Object.values(ReportType)}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <TypeRow
+            mainType={PublicationType.Degree}
+            subTypes={Object.values(DegreeType)}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <TypeRow
+            mainType={PublicationType.Chapter}
+            subTypes={Object.values(ChapterType)}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <TypeRow
+            mainType={PublicationType.Presentation}
+            subTypes={Object.values(PresentationType)}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <TypeRow
+            mainType={PublicationType.Artistic}
+            subTypes={Object.values(ArtisticType)}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <TypeRow
+            mainType={PublicationType.MediaContribution}
+            subTypes={Object.values(MediaType)}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <TypeRow
+            mainType={PublicationType.ResearchData}
+            subTypes={Object.values(ResearchDataType)}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <TypeRow
+            mainType={PublicationType.GeographicalContent}
+            subTypes={Object.values(OtherRegistrationType)}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+        </Box>
+      </Paper>
       <ConfirmDialog
         open={!!confirmNewType}
         title={t('registration.resource_type.change_registration_type')}
