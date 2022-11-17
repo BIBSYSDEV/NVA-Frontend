@@ -93,9 +93,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
               modalHeading={t('registration.modal_unsaved_changes_heading')}
               shouldBlockNavigation={dirty}
             />
-            <PageHeader variant="h2" variantMapping={{ h2: 'h1' }} sx={{ fontWeight: '700' }}>
-              {getTitleString(values.entityDescription?.mainTitle)}
-            </PageHeader>
+            <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
             <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />
             <BackgroundDiv>

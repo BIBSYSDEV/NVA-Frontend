@@ -60,7 +60,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             {t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)}
           </Typography>
         ) : null}
-        <TruncatableTypography variant="h2" variantMapping={{ h2: 'h1' }} sx={{ color: 'inherit' }}>
+        <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
           {mainTitle}
         </TruncatableTypography>
         {userCanEditRegistration(user, registration) && (
