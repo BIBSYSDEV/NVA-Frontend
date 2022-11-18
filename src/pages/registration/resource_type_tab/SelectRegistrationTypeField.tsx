@@ -203,7 +203,7 @@ export const SelectRegistrationTypeField = () => {
     <>
       <Paper sx={{ p: '1rem' }} elevation={10}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <FormLabel>Velg ressurstype</FormLabel>
+          <FormLabel>{t('registration.resource_type.select_resource_type')}</FormLabel>
 
           {currentInstanceType && (
             <IconButton title={t('common.close')} onClick={() => setOpenSelectType(false)}>
@@ -338,7 +338,7 @@ export const SelectRegistrationTypeField = () => {
     </>
   ) : (
     <Box>
-      <FormLabel>Valgt ressurstype</FormLabel>
+      <FormLabel>{t('registration.resource_type.resource_type')}</FormLabel>
       <Chip
         variant="filled"
         color="primary"
@@ -346,7 +346,7 @@ export const SelectRegistrationTypeField = () => {
         onClick={() => setOpenSelectType(!openSelectType)}
         sx={{ display: 'block', mt: '0.5rem', width: 'max-content' }}
       />
-      <FormHelperText>Trykk på valgt ressurstype om du vil endre</FormHelperText>
+      <FormHelperText>{t('registration.resource_type.click_to_change_resource_type')}</FormHelperText>
     </Box>
   );
 };
