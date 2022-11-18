@@ -5,13 +5,13 @@ import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
-  AlternativeBackground = '#f3f0ed',
+  AlternativeBackground = '#C2D3EA',
   Black = '#222',
   ErrorLight = '#FF8888',
   ErrorMain = '#C2363D',
   Paper = '#faf7f4',
   PrimaryMain = '#0F0035',
-  SecondaryMain = '#FFB546',
+  SecondaryMain = '#EDE2C7',
   SuccessMain = '#08B677',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
@@ -33,11 +33,14 @@ export const mainTheme = createTheme(
     },
     palette: {
       primary: {
+        light: Color.AlternativeBackground,
         main: Color.PrimaryMain,
         contrastText: Color.White,
       },
       secondary: {
-        main: Color.SecondaryMain,
+        light: '#FEFBF3',
+        main: '#F9F4E6',
+        dark: '#EDE2C7',
       },
       error: {
         main: Color.ErrorMain,
@@ -150,7 +153,7 @@ export const mainTheme = createTheme(
           },
         },
       },
-      MuiTableHead: { styleOverrides: { root: { th: { background: Color.White } } } },
+      MuiTableHead: { styleOverrides: { root: { th: { background: 'secondary.light' } } } },
       MuiTablePagination: {
         defaultProps: {
           showFirstButton: true,
@@ -205,9 +208,9 @@ export const mainTheme = createTheme(
 
 export const alternatingTableRowColor: SxProps = {
   tr: {
-    background: Color.AlternativeBackground,
+    bgcolor: 'secondary.dark',
     '&:nth-of-type(odd)': {
-      background: Color.White,
+      bgcolor: 'secondary.main',
     },
   },
 };

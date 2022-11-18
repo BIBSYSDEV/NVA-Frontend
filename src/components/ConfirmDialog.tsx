@@ -30,7 +30,7 @@ export const ConfirmDialog = ({
   return (
     <Dialog open={open} onClose={!ignoreBackdropClick ? onCancel : undefined} data-testid={dialogDataTestId}>
       <DialogTitle>{title}</DialogTitle>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent sx={{ bgcolor: 'secondary.light' }}>{children}</DialogContent>
       <DialogActions>
         <Button data-testid={dataTestId.confirmDialog.cancelButton} variant="outlined" onClick={onCancel}>
           {t('common.no')}

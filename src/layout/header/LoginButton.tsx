@@ -41,7 +41,7 @@ export const LoginButton = () => {
     </LoadingButton>
   ) : (
     <Button
-      variant="contained"
+      variant="outlined"
       color="secondary"
       data-testid={dataTestId.header.logInButton}
       component={RouterLink}

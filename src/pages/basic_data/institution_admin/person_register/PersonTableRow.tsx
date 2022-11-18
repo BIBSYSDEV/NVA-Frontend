@@ -190,7 +190,7 @@ export const PersonTableRow = ({
       </TableRow>
 
       <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
-        <DialogTitle>
+        <DialogTitle sx={{ bgcolor: 'primary.light' }}>
           <span id="edit-person-label">{t('basic_data.person_register.edit_person')}</span>
         </DialogTitle>
         <Formik
@@ -200,7 +200,7 @@ export const PersonTableRow = ({
           validationSchema={personDataValidationSchema}>
           {({ values, isSubmitting, setFieldValue, errors, touched }: FormikProps<PersonData>) => (
             <Form noValidate>
-              <DialogContent>
+              <DialogContent sx={{ bgcolor: 'primary.light' }}>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <TextField variant="filled" disabled value={firstName} label={t('common.first_name')} />
@@ -326,7 +326,7 @@ export const PersonTableRow = ({
                           <Button
                             disabled={isSubmitting || !hasFetchedPositions}
                             color="error"
-                            variant="outlined"
+                            variant="contained"
                             onClick={toggleConfirmDeleteDialog}
                             endIcon={<DeleteIcon />}>
                             {t('basic_data.person_register.remove_employment')}
@@ -358,7 +358,7 @@ export const PersonTableRow = ({
                           <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
                         )}
 
-                        <Box sx={{ mt: '1rem' }}>
+                        <Box sx={{ mt: '1rem', bgcolor: 'secondary.main', padding: '0.5rem' }}>
                           <UserRolesSelector
                             selectedRoles={values.roles}
                             updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
@@ -370,7 +370,7 @@ export const PersonTableRow = ({
                   )}
                 </Box>
               </DialogContent>
-              <DialogActions>
+              <DialogActions sx={{ bgcolor: 'primary.light' }}>
                 <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
                 <LoadingButton
                   loading={isSubmitting}
