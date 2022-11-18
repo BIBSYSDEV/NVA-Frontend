@@ -38,7 +38,7 @@ export const ActionPanel = ({ registration, refetchRegistration }: ActionPanelPr
   return (
     <Paper elevation={0} data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
       <StyledPaperHeader>
-        <Typography color="inherit" variant="h2" component="h1" id="tasks-header">
+        <Typography color="inherit" variant="h1" id="tasks-header">
           {t('common.tasks')}
         </Typography>
       </StyledPaperHeader>

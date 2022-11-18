@@ -51,7 +51,7 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
 
   return (
     <Autocomplete
-      aria-label={t('basic_data.users.area_of_responsibility')}
+      aria-label={t('editor.curators.area_of_responsibility')}
       data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
       options={options}
       value={selectedOption}
@@ -68,7 +68,7 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
           {...params}
           disabled={isUpdating}
           fullWidth
-          placeholder={t('basic_data.users.area_of_responsibility_placeholder')}
+          placeholder={t('editor.curators.area_of_responsibility_placeholder')}
         />
       )}
     />

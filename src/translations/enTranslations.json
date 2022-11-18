@@ -64,6 +64,8 @@
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
+      "remove_role_text": "Are you sure you want to remove this role?",
+      "remove_role_title": "Remove role?",
       "ror": "Research Organization Registry (ROR)",
       "short_name": "Shortened display name"
     },
@@ -83,19 +85,6 @@
       "person_register": "Person Register",
       "previous_employments": "Previous employments",
       "show_full_nin": "Show national identity number"
-    },
-    "users": {
-      "add_role_info": "If you don't find the user, you must check that they are affiliated with your institution and have previously logged in.",
-      "area_of_responsibility": "Area of responsibility",
-      "area_of_responsibility_placeholder": "No limitations",
-      "auto_assign_creators": "Employees are automatically assigned role as creator at login if they are registered as this in 'eduPersonAffiliation': Employee, Staff, Member",
-      "creator_info": "Who is able to publish?",
-      "no_users_found": "No users found",
-      "remove_role_text": "Are you sure you want to remove this role?",
-      "remove_role_title": "Remove role?",
-      "search_for_user": "Search among existing users",
-      "user_administration": "User administration",
-      "username": "Username"
     }
   },
   "common": {
@@ -189,7 +178,7 @@
     "title": "Title",
     "type": "Type",
     "update": "Update",
-    "users": "Users",
+    "username": "Username",
     "version": "Version",
     "will_be_available": "Will be available",
     "x_others_one": "+ {{count}} other",
@@ -298,6 +287,12 @@
     "disabled_description": "$t(editor.disabled): Is not available",
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
+    "curators": {
+      "area_of_responsibility": "Area of responsibility",
+      "area_of_responsibility_placeholder": "No limitations",
+      "areas_of_responsibility": "Areas of responsibility",
+      "no_users_found": "No users found"
+    },
     "institution": {
       "institution_code": "Institution's code",
       "institution_helper_text": "Contact <0>Sikt</0> if changes are needed.",
@@ -500,10 +495,8 @@
       "creator_description": "Can register publications and other resources.",
       "curator": "Curator",
       "curator_description": "Can edit the institution's registrations, answer user support inquiries and possibly also assign DOIs.",
-      "curators": "Curators",
       "editor": "Editor",
       "editor_description": "Determines access to controlled vocabularies and publication strategy for the institution.",
-      "editors": "Editors",
       "institution_admin": "Administrator",
       "institution_admin_description": "Maintains the institution's information in the person registery and assigns roles in the service.",
       "institution_admins": "Administrators",

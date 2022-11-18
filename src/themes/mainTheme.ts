@@ -17,11 +17,6 @@ enum Color {
   White = '#fff',
 }
 
-enum Font {
-  Barlow = 'Barlow, sans-serif',
-  Crimson = 'Crimson Text, serif',
-}
-
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
 const pickersLocale = i18n.language === 'eng' ? pickersEnUs : pickersNbNo;
 
@@ -57,33 +52,48 @@ export const mainTheme = createTheme(
       },
     },
     typography: {
-      fontFamily: Font.Barlow,
       h1: {
-        fontFamily: Font.Crimson,
-        fontSize: '3rem',
-        fontWeight: 400,
-      },
-      h2: {
-        fontFamily: Font.Crimson,
-        fontSize: '2.25rem',
-        fontWeight: 400,
-      },
-      h3: {
-        fontFamily: Font.Crimson,
-        fontSize: '1.5rem',
-        fontWeight: 400,
-      },
-      h4: {
         fontSize: '1.25rem',
         fontWeight: 700,
+        textTransform: 'uppercase',
+      },
+      h2: {
+        fontSize: '1rem',
+        fontWeight: 700,
+      },
+      h3: {
+        fontSize: '1rem',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+      },
+      h4: {
+        fontSize: '1rem',
+        fontWeight: 400,
       },
       overline: {
         fontSize: '0.75rem',
-        fontWeight: 600,
+        fontWeight: 700,
+      },
+      subtitle1: {
+        fontSize: '0.875rem',
+        fontWeight: 700,
       },
       subtitle2: {
         fontSize: '0.875rem',
         fontWeight: 700,
+        textDecoration: 'underline',
+      },
+      body1: {
+        fontSize: '0.875rem',
+        fontWeight: 400,
+      },
+      body2: {
+        fontSize: '0.875rem',
+        fontWeight: 400,
+      },
+      button: {
+        fontSize: '0.875rem',
+        fontWeight: 400,
       },
       caption: {
         fontSize: '0.875rem',
