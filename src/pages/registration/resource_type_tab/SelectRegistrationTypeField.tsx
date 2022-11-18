@@ -135,25 +135,33 @@ export const SelectRegistrationTypeField = () => {
           break;
         case PublicationType.MediaContribution:
           if (isPeriodicalMediaContribution(newInstanceType)) {
-            setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
-            setFieldValue(
-              instanceTypeBaseFieldName,
-              {
-                ...emptyMediaContributionPeriodicalPublicationInstance,
-                type: newInstanceType,
-              },
-              false
-            );
+            if (!isPeriodicalMediaContribution(currentInstanceType)) {
+              setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
+              setFieldValue(
+                instanceTypeBaseFieldName,
+                {
+                  ...emptyMediaContributionPeriodicalPublicationInstance,
+                  type: newInstanceType,
+                },
+                false
+              );
+            } else {
+              setFieldValue(ResourceFieldNames.SubType, newInstanceType, false);
+            }
           } else {
-            newMainType && setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
-            setFieldValue(
-              instanceTypeBaseFieldName,
-              {
-                ...emptyMediaContributionPublicationInstance,
-                type: newInstanceType,
-              },
-              false
-            );
+            if (isPeriodicalMediaContribution(currentInstanceType)) {
+              setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
+              setFieldValue(
+                instanceTypeBaseFieldName,
+                {
+                  ...emptyMediaContributionPublicationInstance,
+                  type: newInstanceType,
+                },
+                false
+              );
+            } else {
+              setFieldValue(ResourceFieldNames.SubType, newInstanceType, false);
+            }
           }
           break;
         case PublicationType.ResearchData:
