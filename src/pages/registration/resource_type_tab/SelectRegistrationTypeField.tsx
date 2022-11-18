@@ -216,61 +216,61 @@ export const SelectRegistrationTypeField = () => {
           )}
         </Box>
         <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem', alignItems: 'center' }}>
-          <TypeRow
+          <RegistrationTypesRow
             mainType={PublicationType.PublicationInJournal}
             subTypes={Object.values(JournalType)}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
-          <TypeRow
+          <RegistrationTypesRow
             mainType={PublicationType.Book}
             subTypes={Object.values(BookType)}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
-          <TypeRow
+          <RegistrationTypesRow
             mainType={PublicationType.Report}
             subTypes={Object.values(ReportType)}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
-          <TypeRow
+          <RegistrationTypesRow
             mainType={PublicationType.Degree}
             subTypes={Object.values(DegreeType)}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
-          <TypeRow
+          <RegistrationTypesRow
             mainType={PublicationType.Chapter}
             subTypes={Object.values(ChapterType)}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
-          <TypeRow
+          <RegistrationTypesRow
             mainType={PublicationType.Presentation}
             subTypes={Object.values(PresentationType)}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
-          <TypeRow
+          <RegistrationTypesRow
             mainType={PublicationType.Artistic}
             subTypes={Object.values(ArtisticType)}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
-          <TypeRow
+          <RegistrationTypesRow
             mainType={PublicationType.MediaContribution}
             subTypes={Object.values(MediaType)}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
-          <TypeRow
+          <RegistrationTypesRow
             mainType={PublicationType.ResearchData}
             subTypes={Object.values(ResearchDataType)}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
-          <TypeRow
+          <RegistrationTypesRow
             mainType={PublicationType.GeographicalContent}
             subTypes={Object.values(OtherRegistrationType)}
             value={currentInstanceType}
@@ -356,14 +356,14 @@ export const SelectRegistrationTypeField = () => {
   );
 };
 
-interface TypeRowProps {
+interface RegistrationTypesRowProps {
   onChangeType: (type: PublicationInstanceType) => void;
   mainType: PublicationType;
   subTypes: PublicationInstanceType[];
   value: string;
 }
 
-export const TypeRow = ({ mainType, subTypes, value, onChangeType }: TypeRowProps) => {
+const RegistrationTypesRow = ({ mainType, subTypes, value, onChangeType }: RegistrationTypesRowProps) => {
   const { t } = useTranslation();
 
   return (

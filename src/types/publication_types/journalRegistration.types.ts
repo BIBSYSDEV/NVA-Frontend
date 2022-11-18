@@ -30,7 +30,7 @@ export interface JournalPublicationContext {
   printIssn?: string;
 }
 
-export interface JournalReference extends BaseReference {
+interface JournalReference extends BaseReference {
   publicationContext: JournalPublicationContext;
   publicationInstance: JournalPublicationInstance;
 }
