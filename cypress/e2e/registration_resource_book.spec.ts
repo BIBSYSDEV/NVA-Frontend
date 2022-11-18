@@ -2,6 +2,7 @@ import { dataTestId } from '../../src/utils/dataTestIds';
 import { BookMonographContentType } from '../../src/types/publication_types/content.types';
 import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
 import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
+import { BookType, JournalType } from '../../src/types/publicationFieldNames';
 
 describe('Registration: Resource type: Book', () => {
   beforeEach(() => {
@@ -17,14 +18,12 @@ describe('Registration: Resource type: Book', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').click();
 
     // choose Book type
-    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
-    cy.get('[data-testid=publication-context-type-Book]').should('be.visible');
-    cy.get('[data-testid=publication-context-type-Book]').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.Article)}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.Monograph)}]`).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
-    cy.get('[data-testid=publication-context-type] input').should('have.value', 'Book');
-
-    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-BookMonograph]').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.Monograph)}]`).should(
+      'be.visible'
+    );
 
     // NPI Subject
     cy.selectNpiDiscipline('Linguistics');

@@ -46,6 +46,7 @@ import {
 } from '../../../types/publication_types/researchDataRegistration.types';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { getMainRegistrationType, isPeriodicalMediaContribution } from '../../../utils/registration-helpers';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
@@ -206,7 +207,10 @@ export const SelectRegistrationTypeField = () => {
           <FormLabel>{t('registration.resource_type.select_resource_type')}</FormLabel>
 
           {currentInstanceType && (
-            <IconButton title={t('common.close')} onClick={() => setOpenSelectType(false)}>
+            <IconButton
+              data-testid={dataTestId.registrationWizard.resourceType.closeResourceTypeSelectorButton}
+              title={t('common.close')}
+              onClick={() => setOpenSelectType(false)}>
               <CloseIcon />
             </IconButton>
           )}
@@ -337,9 +341,10 @@ export const SelectRegistrationTypeField = () => {
       </ConfirmDialog>
     </>
   ) : (
-    <Box>
+    <div>
       <FormLabel>{t('registration.resource_type.resource_type')}</FormLabel>
       <Chip
+        data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(currentInstanceType)}
         variant="filled"
         color="primary"
         label={t(`registration.publication_types.${currentInstanceType}`)}
@@ -347,7 +352,7 @@ export const SelectRegistrationTypeField = () => {
         sx={{ display: 'block', mt: '0.5rem', width: 'max-content' }}
       />
       <FormHelperText>{t('registration.resource_type.click_to_change_resource_type')}</FormHelperText>
-    </Box>
+    </div>
   );
 };
 
@@ -367,6 +372,7 @@ export const TypeRow = ({ mainType, subTypes, value, onChangeType }: TypeRowProp
       <Box sx={{ display: 'flex', gap: '0.5rem' }}>
         {subTypes.map((subType) => (
           <Chip
+            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(subType)}
             key={subType}
             variant={value === subType ? 'filled' : 'outlined'}
             color="primary"
