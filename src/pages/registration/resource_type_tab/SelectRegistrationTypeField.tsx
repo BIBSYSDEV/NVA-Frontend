@@ -322,7 +322,7 @@ export const SelectRegistrationTypeField = () => {
           setFieldValue(ResourceFieldNames.PublicationInstanceAgreeTerms, true, false); // Set validation to false to avoid Form and Type fields shown as errors
           setOpenSelectType(false);
         }}
-        dialogDataTestId="research-data-confirm-dialog">
+        dialogDataTestId={dataTestId.registrationWizard.resourceType.confirmDatasetTypeDialog}>
         <Typography fontWeight={500}>
           {t('registration.resource_type.research_data.accept_dataset_terms.contains_personal_data')}
         </Typography>

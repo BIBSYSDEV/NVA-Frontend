@@ -234,6 +234,7 @@ export const dataTestId = {
       concertProgramComposer: 'concert-program-composer',
       concertProgramIsPremiere: 'concert-program-is-premiere',
       concertProgramRemove: 'concert-program-remove',
+      confirmDatasetTypeDialog: 'research-data-confirm-dialog',
       contentField: 'content-field',
       contentValue: (value: string) => `content-value-${value.toLowerCase()}`,
       corrigendumForField: 'corrigendum-for-field',
