@@ -1,3 +1,4 @@
+import { JournalType, ReportType } from '../../src/types/publicationFieldNames';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
 import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
@@ -16,14 +17,12 @@ describe('Registration: Resource type: Report', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').click();
 
     // choose Report type
-    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' '); //makes the select options open
-    cy.get('[data-testid=publication-context-type-Report]').should('be.visible');
-    cy.get('[data-testid=publication-context-type-Report]').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.Article)}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Research)}]`).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
-    cy.get('[data-testid=publication-context-type] input').should('have.value', 'Report');
-
-    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-ReportResearch]').click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Research)}]`).should(
+      'be.visible'
+    );
 
     // search for and select a publisher
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
