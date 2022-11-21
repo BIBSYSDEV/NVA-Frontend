@@ -9,7 +9,6 @@ enum Color {
   Black = '#222',
   ErrorLight = '#FF8888',
   ErrorMain = '#C2363D',
-  Paper = '#faf7f4',
   PrimaryMain = '#0F0035',
   SecondaryMain = '#EDE2C7',
   SuccessMain = '#08B677',
@@ -51,7 +50,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.White,
-        paper: Color.Paper,
+        paper: '#FEFBF3',
       },
     },
     typography: {
