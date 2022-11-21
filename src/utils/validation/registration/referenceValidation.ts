@@ -149,7 +149,7 @@ const resourceErrorMessage = {
     limitField: i18n.t('translation:registration.resource_type.date_from').toLowerCase(),
   }),
   typeRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:common.type'),
+    field: i18n.t('translation:registration.resource_type.resource_type'),
   }),
   typeWorkRequired: i18n.t('translation:feedback.validation.is_required', {
     field: i18n.t('translation:registration.resource_type.type_work'),
