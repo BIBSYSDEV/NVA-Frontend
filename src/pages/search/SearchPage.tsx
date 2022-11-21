@@ -19,7 +19,7 @@ const SearchPage = () => {
 
   return (
     <SyledPageContent>
-      <BackgroundDiv>
+      <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
         <PageHeader>{t('common.registrations')}</PageHeader>
         <Formik
           initialValues={initialSearchParams}
