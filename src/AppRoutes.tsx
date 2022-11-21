@@ -15,7 +15,7 @@ const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const PublicProfile = lazy(() => import('./pages/research_profile/ResearchProfile'));
 const MyPagePage = lazy(() => import('./pages/my_page/MyPagePage'));
-const WorklistPage = lazy(() => import('./pages/messages/TasksPage'));
+const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
 
@@ -39,7 +39,7 @@ export const AppRoutes = () => {
         <CreatorRoute exact path={UrlPathTemplate.Registration} component={EditRegistration} />
 
         {/* CuratorRoutes */}
-        <CuratorRoute exact path={UrlPathTemplate.Tasks} component={WorklistPage} />
+        <CuratorRoute exact path={UrlPathTemplate.Tasks} component={TasksPage} />
 
         {/* BasicDataRoutes */}
         <BasicDataRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} />
