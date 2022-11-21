@@ -39,12 +39,13 @@ export const ContributorsPanel = () => {
                   />
                 ))
               ) : (
-                <Contributors push={push} replace={replace} primaryColorAddButton contributorRoles={primaryRoles} />
+                <Contributors
+                  push={push}
+                  replace={replace}
+                  primaryColorAddButton
+                  contributorRoles={[...primaryRoles, ...secondaryRoles]}
+                />
               )}
-              {secondaryRoles.length > 0 && (
-                <Contributors push={push} replace={replace} contributorRoles={secondaryRoles} />
-              )}
-              {/* TODO: Show contributors with roles that are not valid for this instanceType? */}
             </>
           ) : (
             <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem' }}>

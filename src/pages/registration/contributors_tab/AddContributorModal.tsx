@@ -29,9 +29,7 @@ export const AddContributorModal = ({
 }: AddContributorModalProps) => {
   const { t } = useTranslation();
   const [openAddUnverifiedContributor, setOpenAddUnverifiedContributor] = useState(false);
-  const [selectedContributorRole, setSelectedContributorRole] = useState<ContributorRole | ''>(
-    contributorRoles.length === 1 ? contributorRoles[0] : ''
-  );
+  const [selectedContributorRole, setSelectedContributorRole] = useState(contributorRoles[0]);
 
   const addContributor = (newContributor: CristinPerson) => {
     onContributorSelected(newContributor, selectedContributorRole as ContributorRole);
@@ -40,9 +38,6 @@ export const AddContributorModal = ({
 
   const handleCloseModal = () => {
     toggleModal();
-    if (contributorRoles.length > 1) {
-      setSelectedContributorRole('');
-    }
     setOpenAddUnverifiedContributor(false);
   };
 

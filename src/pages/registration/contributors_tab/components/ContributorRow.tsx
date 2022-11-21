@@ -50,8 +50,6 @@ export const ContributorRow = ({
     setSequenceValue(`${contributor.sequence}`);
   };
 
-  const showContributorRole = contributorRoles.length > 1;
-
   return (
     <TableRow>
       <TableCell width="1">
@@ -90,23 +88,22 @@ export const ContributorRow = ({
           )}
         </Box>
       </TableCell>
-      <TableCell align={showContributorRole ? 'left' : 'center'} width="1">
-        {showContributorRole ? (
-          <Typography>{t(`registration.contributors.types.${contributor.role}`)}</Typography>
-        ) : (
-          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
-            {({ field }: FieldProps) => (
-              <Tooltip title={t('registration.contributors.corresponding')}>
-                <Checkbox
-                  data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
-                  checked={!!field.value}
-                  {...field}
-                  inputProps={{ 'aria-label': t('registration.contributors.corresponding') }}
-                />
-              </Tooltip>
-            )}
-          </Field>
-        )}
+      <TableCell align="left" width="1">
+        <Typography>{t(`registration.contributors.types.${contributor.role}`)}</Typography>
+      </TableCell>
+      <TableCell align="center" width="1">
+        <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
+          {({ field }: FieldProps) => (
+            <Tooltip title={t('registration.contributors.corresponding')}>
+              <Checkbox
+                data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
+                checked={!!field.value}
+                {...field}
+                inputProps={{ 'aria-label': t('registration.contributors.corresponding') }}
+              />
+            </Tooltip>
+          )}
+        </Field>
       </TableCell>
       <TableCell align="center" width="1">
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
