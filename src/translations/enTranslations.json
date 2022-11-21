@@ -1229,6 +1229,7 @@
         "search_for_book_of_abstracts": "Search for the book of abstracts where the abstract is published",
         "search_for_report": "Search for the report where the chapter is published"
       },
+      "click_to_change_resource_type": "Click on selected resource type to change it",
       "content": "Content",
       "content_types": {
         "AcademicArticle": "Academic article",
@@ -1253,7 +1254,6 @@
       },
       "date_from": "Date from",
       "date_to": "Date to",
-      "form": "Form",
       "isbn": "ISBN",
       "issn": "ISSN",
       "issue": "Issue",
@@ -1324,10 +1324,12 @@
         "search_for_related_registrations": "Search for related registrations",
         "search_for_related_registrations_helper": "Choose among published registrations"
       },
+      "resource_type": "Resource type",
       "search_for_journal": "Search for journals",
       "search_for_original_article": "Search for original article",
       "search_for_publisher": "Search for publisher",
       "search_for_series": "Search for series",
+      "select_resource_type": "Select ressurstype",
       "series": "Series",
       "series_info": "If the publication is part of a series",
       "series_number": "Series number",

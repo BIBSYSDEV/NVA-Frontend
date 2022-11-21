@@ -1229,6 +1229,7 @@
         "search_for_book_of_abstracts": "Søk etter abstraktsamlingen hor abstraktet er publisert",
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
+      "click_to_change_resource_type": "Trykk på valgt ressurstype om du vil endre",
       "content": "Innhold",
       "content_types": {
         "AcademicArticle": "Vitenskapelig artikkel",
@@ -1253,7 +1254,6 @@
       },
       "date_from": "Dato fra",
       "date_to": "Dato til",
-      "form": "Form",
       "isbn": "ISBN",
       "issn": "ISSN",
       "issue": "Hefte",
@@ -1324,10 +1324,12 @@
         "search_for_related_registrations": "Søk etter relaterte registreringer",
         "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
       },
+      "resource_type": "Ressurstype",
       "search_for_journal": "Søk etter tidsskrift",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
       "search_for_series": "Søk etter serie",
+      "select_resource_type": "Velg ressurstype",
       "series": "Serie",
       "series_info": "Hvis publikasjonen inngår i en serie",
       "series_number": "Serienummer",
