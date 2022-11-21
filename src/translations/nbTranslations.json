@@ -1366,7 +1366,7 @@
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
   },
-  "worklist": {
+  "tasks": {
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "tasks": "Oppgaver"
   }

@@ -15,7 +15,7 @@ import { getLanguageString } from '../../utils/translation-helpers';
 import { TicketAccordionList } from './TicketAccordionList';
 import { InstitutionUser } from '../../types/user.types';
 
-const WorklistPage = () => {
+const TasksPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -39,7 +39,7 @@ const WorklistPage = () => {
 
   return (
     <SyledPageContent>
-      <PageHeader>{t('worklist.tasks')}</PageHeader>
+      <PageHeader>{t('tasks.tasks')}</PageHeader>
       {isLoadingTicketsSearch ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
@@ -50,7 +50,7 @@ const WorklistPage = () => {
             ) : (
               viewingScopeOrganization && (
                 <Typography paragraph sx={{ fontWeight: 'bold' }}>
-                  {t('worklist.limited_to', {
+                  {t('tasks.limited_to', {
                     name: getLanguageString(viewingScopeOrganization.name),
                   })}
                 </Typography>
@@ -64,4 +64,4 @@ const WorklistPage = () => {
   );
 };
 
-export default WorklistPage;
+export default TasksPage;

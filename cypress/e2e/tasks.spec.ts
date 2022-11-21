@@ -3,7 +3,7 @@ import { mockTicketCollection } from '../../src/utils/testfiles/mockRegistration
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { getRegistrationIdentifier } from '../../src/utils/registration-helpers';
 
-describe('Worklist', () => {
+describe('Tasks', () => {
   before(() => {
     cy.visit('/my-profile');
     cy.mocklogin();
@@ -11,8 +11,8 @@ describe('Worklist', () => {
     cy.get(`[data-testid=${dataTestId.header.tasksLink}]`).click();
   });
 
-  it('The Curator should be able to view worklist', () => {
-    cy.url().should('include', '/worklist');
+  it('The Curator should be able to view tasks', () => {
+    cy.url().should('include', '/tasks');
   });
 
   it('The Curator should be able to open an item in the DOI request list and see the summary of the registration', () => {

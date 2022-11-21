@@ -15,7 +15,7 @@ const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const PublicProfile = lazy(() => import('./pages/research_profile/ResearchProfile'));
 const MyPagePage = lazy(() => import('./pages/my_page/MyPagePage'));
-const WorklistPage = lazy(() => import('./pages/messages/WorklistPage'));
+const WorklistPage = lazy(() => import('./pages/messages/TasksPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
 
