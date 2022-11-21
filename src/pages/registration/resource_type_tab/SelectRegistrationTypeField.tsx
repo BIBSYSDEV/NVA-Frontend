@@ -202,7 +202,7 @@ export const SelectRegistrationTypeField = () => {
 
   return openSelectType || !currentInstanceType ? (
     <>
-      <Paper sx={{ p: '1rem' }} elevation={10}>
+      <Paper sx={{ p: '1rem', bgcolor: 'secondary.main' }} elevation={10}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <FormLabel>{t('registration.resource_type.select_resource_type')}</FormLabel>
 
