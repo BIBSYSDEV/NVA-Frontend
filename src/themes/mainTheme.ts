@@ -8,10 +8,11 @@ enum Color {
   AlternativeBackground = '#C2D3EA',
   Black = '#222',
   ErrorLight = '#FF8888',
-  ErrorMain = '#C2363D',
+  ErrorMain = '#AC0303',
   PrimaryMain = '#0F0035',
   SecondaryMain = '#EDE2C7',
-  SuccessMain = '#08B677',
+  SuccessMain = '#025810',
+  InfoMain = '#4367F6',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
 }
