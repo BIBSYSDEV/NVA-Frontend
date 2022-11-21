@@ -73,7 +73,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               data-testid={dataTestId.header.worklistLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.Worklist}>
+              to={UrlPathTemplate.Tasks}>
               <Typography>{t('worklist.tasks')}</Typography>
             </MenuItem>
           ),

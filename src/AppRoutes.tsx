@@ -39,7 +39,7 @@ export const AppRoutes = () => {
         <CreatorRoute exact path={UrlPathTemplate.Registration} component={EditRegistration} />
 
         {/* CuratorRoutes */}
-        <CuratorRoute exact path={UrlPathTemplate.Worklist} component={WorklistPage} />
+        <CuratorRoute exact path={UrlPathTemplate.Tasks} component={WorklistPage} />
 
         {/* BasicDataRoutes */}
         <BasicDataRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} />

@@ -137,7 +137,7 @@ export const Header = () => {
                   color="inherit"
                   component={RouterLink}
                   data-testid={dataTestId.header.worklistLink}
-                  to={UrlPathTemplate.Worklist}
+                  to={UrlPathTemplate.Tasks}
                   startIcon={<AssignmentIcon />}>
                   {t('worklist.tasks')}
                 </Button>
