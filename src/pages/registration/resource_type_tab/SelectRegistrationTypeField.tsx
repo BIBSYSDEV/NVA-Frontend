@@ -57,7 +57,7 @@ export const SelectRegistrationTypeField = () => {
   const [confirmNewType, setConfirmNewType] = useState('');
   const [showDatasetConditions, setShowDatasetConditions] = useState(false);
 
-  const updatePublicationInstance = (newInstanceType: string) => {
+  const updateRegistrationData = (newInstanceType: string) => {
     if (newInstanceType !== currentInstanceType) {
       const newContextType = getMainRegistrationType(newInstanceType);
       const newMainType = newContextType !== values.entityDescription?.reference?.publicationContext?.type;
@@ -194,7 +194,7 @@ export const SelectRegistrationTypeField = () => {
         // User must confirm that the dataset does not include any sensitive data
         setShowDatasetConditions(true);
       } else {
-        updatePublicationInstance(newInstanceType);
+        updateRegistrationData(newInstanceType);
         setOpenSelectType(false);
       }
     }
@@ -291,7 +291,7 @@ export const SelectRegistrationTypeField = () => {
             if (confirmNewType === ResearchDataType.Dataset) {
               setShowDatasetConditions(true);
             } else {
-              updatePublicationInstance(confirmNewType);
+              updateRegistrationData(confirmNewType);
               setOpenSelectType(false);
             }
           }
@@ -317,7 +317,7 @@ export const SelectRegistrationTypeField = () => {
         }}
         ignoreBackdropClick // Force user to click Yes or No
         onCancel={() => {
-          updatePublicationInstance(ResearchDataType.Dataset);
+          updateRegistrationData(ResearchDataType.Dataset);
           setShowDatasetConditions(false);
           setFieldValue(ResourceFieldNames.PublicationInstanceAgreeTerms, true, false); // Set validation to false to avoid Form and Type fields shown as errors
           setOpenSelectType(false);

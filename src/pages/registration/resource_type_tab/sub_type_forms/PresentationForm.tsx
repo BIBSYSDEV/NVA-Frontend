@@ -4,25 +4,24 @@ import { useTranslation } from 'react-i18next';
 import countries from 'i18n-iso-countries';
 import enCountries from 'i18n-iso-countries/langs/en.json';
 import nbCountries from 'i18n-iso-countries/langs/nb.json';
-import { ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { PresentationRegistration } from '../../../types/publication_types/presentationRegistration.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getPreferredLanguageCode } from '../../../utils/translation-helpers';
-import { PeriodFields } from './components/PeriodFields';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { PresentationRegistration } from '../../../../types/publication_types/presentationRegistration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { getPreferredLanguageCode } from '../../../../utils/translation-helpers';
+import { PeriodFields } from '../components/PeriodFields';
 
 countries.registerLocale(enCountries);
 countries.registerLocale(nbCountries);
 
-export const PresentationTypeForm = () => {
+export const PresentationForm = () => {
   const { t, i18n } = useTranslation();
-  const { values, setFieldValue } = useFormikContext<PresentationRegistration>();
-  const subType = values.entityDescription.reference.publicationInstance.type;
+  const { setFieldValue } = useFormikContext<PresentationRegistration>();
 
   const countryOptions = Object.entries(countries.getNames(getPreferredLanguageCode(i18n.language))).map(
     ([code, label]) => ({ code, label })
   );
 
-  return subType ? (
+  return (
     <>
       <Field name={ResourceFieldNames.PublicationContextLabel}>
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -119,5 +118,5 @@ export const PresentationTypeForm = () => {
         />
       </Box>
     </>
-  ) : null;
+  );
 };
