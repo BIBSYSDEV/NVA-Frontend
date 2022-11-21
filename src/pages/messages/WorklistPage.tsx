@@ -39,7 +39,7 @@ const WorklistPage = () => {
 
   return (
     <SyledPageContent>
-      <PageHeader>{t('worklist.worklist')}</PageHeader>
+      <PageHeader>{t('worklist.tasks')}</PageHeader>
       {isLoadingTicketsSearch ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (

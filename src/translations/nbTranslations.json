@@ -1367,6 +1367,6 @@
   },
   "worklist": {
     "limited_to": "Avgrenset til: \"{{name}}\"",
-    "worklist": "Oppgaver"
+    "tasks": "Oppgaver"
   }
 }

@@ -1367,6 +1367,6 @@
   },
   "worklist": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "worklist": "Worklist"
+    "tasks": "Tasks"
   }
 }

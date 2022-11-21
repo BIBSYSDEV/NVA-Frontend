@@ -139,7 +139,7 @@ export const Header = () => {
                   data-testid={dataTestId.header.worklistLink}
                   to={UrlPathTemplate.Worklist}
                   startIcon={<AssignmentIcon />}>
-                  {t('worklist.worklist')}
+                  {t('worklist.tasks')}
                 </Button>
               )}
               {user && (
