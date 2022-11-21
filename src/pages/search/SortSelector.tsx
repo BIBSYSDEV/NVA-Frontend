@@ -63,7 +63,7 @@ export const SortSelector = () => {
       select
       value={selectedSortingValue}
       label={t('search.sort_by')}
-      variant="outlined"
+      variant="filled"
       fullWidth
       onChange={updateSortQuery}>
       {sortOptions.map((option) => (

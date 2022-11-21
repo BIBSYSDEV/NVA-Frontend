@@ -208,9 +208,9 @@ export const mainTheme = createTheme(
 
 export const alternatingTableRowColor: SxProps = {
   tr: {
-    bgcolor: 'secondary.dark',
+    bgcolor: 'secondary.main',
     '&:nth-of-type(odd)': {
-      bgcolor: 'secondary.main',
+      bgcolor: 'secondary.light',
     },
   },
 };
