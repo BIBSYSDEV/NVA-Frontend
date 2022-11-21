@@ -8,7 +8,7 @@ describe('Worklist', () => {
     cy.visit('/my-profile');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.Curator]);
-    cy.get(`[data-testid=${dataTestId.header.worklistLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.header.tasksLink}]`).click();
   });
 
   it('The Curator should be able to view worklist', () => {
