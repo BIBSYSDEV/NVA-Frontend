@@ -54,10 +54,10 @@ export const SelectRegistrationTypeField = () => {
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance.type ?? '';
 
   const [openSelectType, setOpenSelectType] = useState(!currentInstanceType);
-  const [confirmNewType, setConfirmNewType] = useState('');
+  const [confirmNewType, setConfirmNewType] = useState<PublicationInstanceType | ''>('');
   const [showDatasetConditions, setShowDatasetConditions] = useState(false);
 
-  const updateRegistrationData = (newInstanceType: string) => {
+  const updateRegistrationData = (newInstanceType: PublicationInstanceType) => {
     if (newInstanceType !== currentInstanceType) {
       const newContextType = getMainRegistrationType(newInstanceType);
       const newMainType = newContextType !== values.entityDescription?.reference?.publicationContext?.type;
@@ -287,7 +287,7 @@ export const SelectRegistrationTypeField = () => {
         open={!!confirmNewType}
         title={t('registration.resource_type.change_registration_type')}
         onAccept={() => {
-          if (confirmNewType !== values.entityDescription?.reference?.publicationInstance.type) {
+          if (confirmNewType && confirmNewType !== values.entityDescription?.reference?.publicationInstance.type) {
             if (confirmNewType === ResearchDataType.Dataset) {
               setShowDatasetConditions(true);
             } else {
