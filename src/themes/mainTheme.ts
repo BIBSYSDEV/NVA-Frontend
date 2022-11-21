@@ -51,7 +51,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.White,
-        paper: '#EDE2C7',
+        paper: '#FEFBF3',
       },
     },
     typography: {

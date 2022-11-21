@@ -23,7 +23,7 @@ export const SearchBar = () => {
             id={field.name}
             data-testid={dataTestId.startPage.searchField}
             fullWidth
-            variant="filled"
+            variant="outlined"
             label={t('common.search')}
             placeholder={t('search.search_placeholder')}
             InputProps={{
