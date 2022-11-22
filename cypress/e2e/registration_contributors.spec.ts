@@ -1,4 +1,4 @@
-import { dataTestId } from "../../src/utils/dataTestIds";
+import { dataTestId } from '../../src/utils/dataTestIds';
 
 describe('Registration: Contributors', () => {
   beforeEach(() => {
@@ -9,14 +9,14 @@ describe('Registration: Contributors', () => {
     cy.mocklogin();
 
     // navigate to Contributors
-    cy.get('[data-testid=new-registration]').click({ force: true });
+    cy.get('[data-testid=new-registration]').click();
 
     cy.startRegistrationWithDoi();
 
-    cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
+    cy.get('[data-testid=nav-tabpanel-contributors]').click();
 
     // click Add Contributor button
-    cy.get('[data-testid=add-Creator]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.addContributorButton}]`).click();
 
     // verify that there is a search field
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).should('be.visible');
