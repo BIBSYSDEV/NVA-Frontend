@@ -358,7 +358,7 @@ export const PersonTableRow = ({
                           <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
                         )}
 
-                        <Box sx={{ mt: '1rem', padding: '0.5rem' }}>
+                        <Box sx={{ mt: '1rem' }}>
                           <UserRolesSelector
                             selectedRoles={values.roles}
                             updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
