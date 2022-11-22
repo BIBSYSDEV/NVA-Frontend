@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components/PageHeader';
 import { SearchBar } from './SearchBar';
-import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
+import { SyledPageContent } from '../../components/styled/Wrappers';
 import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
 import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
