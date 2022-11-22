@@ -151,7 +151,6 @@ export const mainTheme = createTheme(
           },
         },
       },
-      MuiTableHead: { styleOverrides: { root: { th: { background: 'secondary.light' } } } },
       MuiTablePagination: {
         defaultProps: {
           showFirstButton: true,
