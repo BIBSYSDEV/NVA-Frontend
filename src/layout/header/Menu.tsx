@@ -69,12 +69,12 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           ),
           user?.isCurator && (
             <MenuItem
-              key={dataTestId.header.worklistLink}
-              data-testid={dataTestId.header.worklistLink}
+              key={dataTestId.header.tasksLink}
+              data-testid={dataTestId.header.tasksLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.Worklist}>
-              <Typography>{t('worklist.worklist')}</Typography>
+              to={UrlPathTemplate.Tasks}>
+              <Typography>{t('tasks.tasks')}</Typography>
             </MenuItem>
           ),
           user?.isCreator && [
