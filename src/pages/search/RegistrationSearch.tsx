@@ -34,7 +34,7 @@ export const RegistrationSearch = () => {
   };
 
   return (
-    <Box gridArea="results" /* sx={{ bgcolor: 'white', padding: '0.5rem' }} */>
+    <Box gridArea="results">
       {isLoadingSearch && !searchResults ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
