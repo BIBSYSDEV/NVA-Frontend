@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Switch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import StoreIcon from '@mui/icons-material/Store';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { VocabularySettings } from './VocabularySettings';
 import { PublishStrategySettings } from './PublishStrategySettings';
@@ -34,7 +35,7 @@ const EditorPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideNav aria-labelledby="editor-title">
-        <SideNavHeader text={customerShortName} id="editor-title" />
+        <SideNavHeader text={customerShortName} id="editor-title" icon={StoreIcon} />
 
         <NavigationList>
           <LinkButton

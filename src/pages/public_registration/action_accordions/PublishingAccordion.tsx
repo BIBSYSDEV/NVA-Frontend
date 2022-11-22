@@ -176,7 +176,7 @@ export const PublishingAccordion = ({
               <LoadingButton
                 disabled={isLoading !== LoadingState.None || !registrationIsValid}
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
-                color="secondary"
+                color="primary"
                 variant="contained"
                 endIcon={<CloudUploadIcon />}
                 loadingPosition="end"
