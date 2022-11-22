@@ -823,7 +823,6 @@
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "corresponding": "Korresponderende",
       "department": "Enhet",
-      "filter": "Filtrer {{role}}",
       "invalid_role": "Denne rollen er ikke gyldig for denne ressurstypen",
       "known_author_identity": "Har tilknyttet forfatteridentitet",
       "must_select_type_first": "Du må velge ressurstype før du kan legge til bidragsytere.",

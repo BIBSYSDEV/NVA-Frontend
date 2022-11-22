@@ -157,13 +157,11 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       {contributors.length > 5 && (
         <TextField
           sx={{ display: 'block', mb: '1rem' }}
-          label={t('registration.contributors.filter', {
-            role: t('registration.heading.contributors').toLocaleLowerCase(),
-          })}
+          label={t('common.search_by_name')}
           variant="filled"
           InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
+            endAdornment: (
+              <InputAdornment position="end">
                 <SearchIcon />
               </InputAdornment>
             ),

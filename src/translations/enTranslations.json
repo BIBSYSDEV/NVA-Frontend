@@ -823,7 +823,6 @@
       "contributor_already_added": "Chosen contributor is already added",
       "corresponding": "Corresponding",
       "department": "Department",
-      "filter": "Filter {{role}}",
       "invalid_role": "This role is not valid for this resource type",
       "known_author_identity": "Connected author identity",
       "must_select_type_first": "You must select resource type before you can add contributors.",
