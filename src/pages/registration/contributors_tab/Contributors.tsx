@@ -13,9 +13,11 @@ import {
   TablePagination,
   TableRow,
   TextField,
+  Tooltip,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { setNotification } from '../../../redux/notificationSlice';
 import {
   Contributor,
@@ -178,7 +180,11 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
               <TableRow>
                 <TableCell>{t('common.order')}</TableCell>
                 <TableCell>{t('common.role')}</TableCell>
-                <TableCell>{t('registration.contributors.corresponding')}</TableCell>
+                <TableCell align="center">
+                  <Tooltip title={t('registration.contributors.corresponding')}>
+                    <MailOutlineIcon />
+                  </Tooltip>
+                </TableCell>
                 <TableCell>{t('registration.contributors.confirmed')}</TableCell>
                 <TableCell>{t('common.name')}</TableCell>
                 <TableCell>{t('common.institution')}</TableCell>
