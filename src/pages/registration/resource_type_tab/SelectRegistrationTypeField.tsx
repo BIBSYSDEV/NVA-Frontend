@@ -3,6 +3,7 @@ import { ErrorMessage, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import {
   ArtisticType,
@@ -47,6 +48,12 @@ import {
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { getMainRegistrationType, isPeriodicalMediaContribution } from '../../../utils/registration-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
+
+const nviApplicableTypes: PublicationInstanceType[] = [
+  JournalType.Article,
+  BookType.Monograph,
+  ChapterType.AnthologyChapter,
+];
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
@@ -202,8 +209,8 @@ export const SelectRegistrationTypeField = () => {
 
   return openSelectType || !currentInstanceType ? (
     <>
-      <Paper sx={{ p: '1rem', bgcolor: 'secondary.main' }} elevation={10}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Paper sx={{ p: '1rem' }} elevation={10}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <FormLabel>{t('registration.resource_type.select_resource_type')}</FormLabel>
 
           {currentInstanceType && (
@@ -214,6 +221,14 @@ export const SelectRegistrationTypeField = () => {
               <CloseIcon />
             </IconButton>
           )}
+        </Box>
+        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'end', mb: '1rem' }}>
+          <SettingsIcon
+            color="primary"
+            titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+            fontSize="small"
+          />
+          <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
         </Box>
         <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem', alignItems: 'center' }}>
           <RegistrationTypesRow
@@ -342,14 +357,22 @@ export const SelectRegistrationTypeField = () => {
     </>
   ) : (
     <div>
-      <FormLabel>{t('registration.resource_type.resource_type')}</FormLabel>
+      <FormLabel sx={{ display: 'block' }}>{t('registration.resource_type.resource_type')}</FormLabel>
       <Chip
         data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(currentInstanceType)}
+        icon={
+          nviApplicableTypes.includes(currentInstanceType) ? (
+            <SettingsIcon
+              titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+              fontSize="small"
+            />
+          ) : undefined
+        }
         variant="filled"
         color="primary"
         label={t(`registration.publication_types.${currentInstanceType}`)}
         onClick={() => setOpenSelectType(!openSelectType)}
-        sx={{ display: 'block', mt: '0.5rem', width: 'max-content' }}
+        sx={{ mt: '0.5rem', width: 'max-content' }}
       />
       <FormHelperText>{t('registration.resource_type.click_to_change_resource_type')}</FormHelperText>
     </div>
@@ -374,6 +397,14 @@ const RegistrationTypesRow = ({ mainType, subTypes, value, onChangeType }: Regis
           <Chip
             data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(subType)}
             key={subType}
+            icon={
+              nviApplicableTypes.includes(subType) ? (
+                <SettingsIcon
+                  titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+                  fontSize="small"
+                />
+              ) : undefined
+            }
             variant={value === subType ? 'filled' : 'outlined'}
             color="primary"
             onClick={() => onChangeType(subType)}
