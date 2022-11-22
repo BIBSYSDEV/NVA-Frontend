@@ -18,7 +18,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const user = useSelector((store: RootState) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const name = user?.name ?? '';
+  const name = user?.givenName ?? '';
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
