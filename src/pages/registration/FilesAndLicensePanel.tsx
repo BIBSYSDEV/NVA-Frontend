@@ -89,6 +89,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const journalIdentifier =
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
+  const originalDoi = entityDescription?.reference?.doi;
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       {(publisherIdentifier || seriesIdentifier || journalIdentifier) && (
@@ -195,7 +197,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     <Typography variant="h2" paragraph>
                       {t('common.link')}
                     </Typography>
-                    {entityDescription?.reference?.doi ? (
+                    {originalDoi ? (
                       <DoiField />
                     ) : (
                       <TextField
@@ -246,7 +248,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     </FormHelperText>
                   )}
 
-                {associatedArtifacts.length === 0 && (
+                {associatedArtifacts.length === 0 && !originalDoi && (
                   <Button
                     sx={{ width: 'fit-content', m: 'auto' }}
                     variant="outlined"
