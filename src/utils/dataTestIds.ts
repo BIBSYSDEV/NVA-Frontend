@@ -55,7 +55,7 @@ export const dataTestId = {
     myPageLink: 'my-page-link',
     newRegistrationLink: 'new-registration',
     privacyLink: 'privacy-link',
-    worklistLink: 'worklist-link',
+    tasksLink: 'tasks-link',
   },
   institutionAdmin: {
     archiveNameField: 'archive-field',

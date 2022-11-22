@@ -20,7 +20,7 @@ export const mockSearchResults: SearchResponse<Registration> = {
   ],
 };
 
-export const mockSearchWorklist: SearchResponse<Ticket> = {
+export const mockSearchTasks: SearchResponse<Ticket> = {
   processingTime: 2,
   size: 1,
   hits: mockTicketCollection.tickets,
