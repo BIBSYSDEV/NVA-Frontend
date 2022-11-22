@@ -150,8 +150,6 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     }
   };
 
-  const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
-
   return (
     <>
       {contributors.length > 5 && (
@@ -243,7 +241,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         onClick={() => setOpenAddContributor(true)}
         variant="contained"
         startIcon={<AddIcon />}
-        data-testid={dataTestId.registrationWizard.contributors.addContributorButton(contributorRole)}>
+        data-testid={dataTestId.registrationWizard.contributors.addContributorButton}>
         {t('registration.contributors.add_contributor')}
       </Button>
     </>

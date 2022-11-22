@@ -136,7 +136,7 @@ export const dataTestId = {
   registrationWizard: {
     contributors: {
       addAffiliationButton: 'button-add-affiliation',
-      addContributorButton: (role: string) => `add-${role}`,
+      addContributorButton: 'add-contributor',
       addSelfButton: 'add-self-button',
       addUnverifiedContributorButton: 'add-unverified-contributor-button',
       authorRadioButton: 'author-radio-button',
