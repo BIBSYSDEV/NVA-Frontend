@@ -55,7 +55,6 @@ export const CreateCristinPersonDialog = ({ user }: CreateCristinPersonDialogPro
           cristinId: flatCristinPerson.id,
           givenName: flatCristinPerson.firstName,
           familyName: flatCristinPerson.lastName,
-          name: `${flatCristinPerson.firstName} ${flatCristinPerson.lastName}`,
         })
       );
     }

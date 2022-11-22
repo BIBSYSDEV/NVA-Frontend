@@ -26,7 +26,6 @@ const userSlice = createSlice({
       const allowedCustomers = allowedCustomersString.split(',').filter((customer) => customer);
 
       const user: User = {
-        name: `${firstName} ${lastName}`.trim(),
         givenName: firstName,
         familyName: lastName,
         nationalIdNumber,
