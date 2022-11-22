@@ -810,9 +810,9 @@
   "registration": {
     "contributors": {
       "add_affiliation": "Add affiliation",
-      "add_as_role": "Add {{role}}",
+      "add_contributor": "Add contributor",
       "add_duplicate_affiliation": "Affiliation is already added",
-      "add_self_as_role": "Add me as {{- role}}",
+      "add_self_as_contributor": "Add me as contributor",
       "add_unverified_contributor": "Add a non-verified contributor.",
       "authors": "Authors",
       "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
@@ -823,8 +823,7 @@
       "contributor_already_added": "Chosen contributor is already added",
       "corresponding": "Corresponding",
       "department": "Department",
-      "editors": "Editors",
-      "filter": "Filter {{role}}",
+      "invalid_role": "This role is not valid for this resource type",
       "known_author_identity": "Connected author identity",
       "must_select_type_first": "You must select resource type before you can add contributors.",
       "no_affiliations_found": "No affiliations found",
@@ -834,9 +833,8 @@
       "prefilled_affiliation": "Prefilled affiliation",
       "prefilled_name": "Prefilled name",
       "remove_affiliation": "Remove affiliation",
-      "remove_role": "Remove {{- role}}",
+      "remove_contributor": "Remove contributor",
       "select_contributor_type": "Select contributor type",
-      "supervisors": "Supervisors",
       "type": "Contributor type",
       "types": {
         "AcademicCoordinator": "Academic coordinator",

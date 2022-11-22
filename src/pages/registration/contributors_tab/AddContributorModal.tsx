@@ -14,7 +14,6 @@ interface AddContributorModalProps {
   open: boolean;
   toggleModal: () => void;
   contributorRoles: ContributorRole[];
-  contributorRole: string;
   initialSearchTerm?: string;
 }
 
@@ -24,14 +23,11 @@ export const AddContributorModal = ({
   toggleModal,
   open,
   contributorRoles,
-  contributorRole,
   initialSearchTerm,
 }: AddContributorModalProps) => {
   const { t } = useTranslation();
   const [openAddUnverifiedContributor, setOpenAddUnverifiedContributor] = useState(false);
-  const [selectedContributorRole, setSelectedContributorRole] = useState<ContributorRole | ''>(
-    contributorRoles.length === 1 ? contributorRoles[0] : ''
-  );
+  const [selectedContributorRole, setSelectedContributorRole] = useState(contributorRoles[0]);
 
   const addContributor = (newContributor: CristinPerson) => {
     onContributorSelected(newContributor, selectedContributorRole as ContributorRole);
@@ -40,9 +36,6 @@ export const AddContributorModal = ({
 
   const handleCloseModal = () => {
     toggleModal();
-    if (contributorRoles.length > 1) {
-      setSelectedContributorRole('');
-    }
     setOpenAddUnverifiedContributor(false);
   };
 
@@ -51,12 +44,7 @@ export const AddContributorModal = ({
       headingText={
         initialSearchTerm
           ? t('registration.contributors.verify_person')
-          : t('registration.contributors.add_as_role', {
-              role:
-                contributorRole === 'OtherContributor'
-                  ? t('registration.contributors.contributor').toLowerCase()
-                  : t(`registration.contributors.types.${contributorRole}` as any).toLowerCase(),
-            })
+          : t('registration.contributors.add_contributor')
       }
       onClose={handleCloseModal}
       open={open}

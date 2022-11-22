@@ -318,7 +318,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').within(() => cy.get('[data-testid=error-tab]').should('exist'));
 
     // Add author
-    cy.get('[data-testid=add-Creator]').first().click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.addContributorButton}]`).first().click();
     cy.get('[data-testid=contributor-modal]').should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).type('test');
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)

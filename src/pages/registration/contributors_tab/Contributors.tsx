@@ -13,10 +13,11 @@ import {
   TablePagination,
   TableRow,
   TextField,
-  Typography,
+  Tooltip,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { setNotification } from '../../../redux/notificationSlice';
 import {
   Contributor,
@@ -37,10 +38,9 @@ import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../..
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
-  primaryColorAddButton?: boolean;
 }
 
-export const Contributors = ({ contributorRoles, push, replace, primaryColorAddButton }: ContributorsProps) => {
+export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
@@ -50,29 +50,20 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
   const [filterInput, setFilterInput] = useState('');
 
   const contributors = values.entityDescription?.contributors ?? [];
-  const relevantContributors = contributors.filter((contributor) =>
-    contributorRoles.some((role) => role === contributor.role)
-  );
-  const filteredRelevantContributors = !filterInput
-    ? relevantContributors
-    : relevantContributors.filter((contributor) =>
+
+  const filteredContributors = !filterInput
+    ? contributors
+    : contributors.filter((contributor) =>
         contributor.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
       );
-  const contributorsToShow = filteredRelevantContributors.slice(
-    rowsPerPage * currentPage,
-    rowsPerPage * (currentPage + 1)
-  );
-  const otherContributors = contributors.filter(
-    (contributor) => !contributorRoles.some((role) => role === contributor.role)
-  );
+  const contributorsToShow = filteredContributors.slice(rowsPerPage * currentPage, rowsPerPage * (currentPage + 1));
 
   const handleOnRemove = (indexToRemove: number) => {
-    const nextRelevantContributors = relevantContributors
+    const nextContributors = contributors
       .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
-    const nextContributors = [...nextRelevantContributors, ...otherContributors];
     setFieldValue(ContributorFieldNames.Contributors, nextContributors);
-    const maxValidPage = Math.ceil(nextRelevantContributors.length / rowsPerPage) - 1;
+    const maxValidPage = Math.ceil(nextContributors.length / rowsPerPage) - 1;
 
     if (currentPage > maxValidPage) {
       setCurrentPage(maxValidPage);
@@ -85,30 +76,30 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
   };
 
   const handleMoveContributor = (newSequence: number, oldSequence: number) => {
-    const oldIndex = relevantContributors.findIndex((c) => c.sequence === oldSequence);
+    const oldIndex = contributors.findIndex((c) => c.sequence === oldSequence);
     const minNewIndex = 0;
-    const maxNewIndex = relevantContributors.length - 1;
+    const maxNewIndex = contributors.length - 1;
 
     const newIndex =
       newSequence - 1 > maxNewIndex
         ? maxNewIndex
         : newSequence < minNewIndex
         ? minNewIndex
-        : relevantContributors.findIndex((c) => c.sequence === newSequence);
+        : contributors.findIndex((c) => c.sequence === newSequence);
 
     const orderedContributors =
-      newIndex >= 0 ? (move(relevantContributors, oldIndex, newIndex) as Contributor[]) : relevantContributors;
+      newIndex >= 0 ? (move(contributors, oldIndex, newIndex) as Contributor[]) : contributors;
 
     // Ensure incrementing sequence values
     const newContributors = orderedContributors.map((contributor, index) => ({
       ...contributor,
       sequence: index + 1,
     }));
-    setFieldValue(ContributorFieldNames.Contributors, [...otherContributors, ...newContributors]);
+    setFieldValue(ContributorFieldNames.Contributors, newContributors);
   };
 
   const goToLastPage = () => {
-    const maxValidPage = Math.floor(relevantContributors.length / rowsPerPage);
+    const maxValidPage = Math.floor(contributors.length / rowsPerPage);
     setCurrentPage(maxValidPage);
   };
 
@@ -117,7 +108,7 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
     role: ContributorRole,
     contributorIndex?: number
   ) => {
-    if (relevantContributors.some((contributor) => contributor.identity.id === selectedContributor.id)) {
+    if (contributors.some((contributor) => contributor.identity.id === selectedContributor.id)) {
       dispatch(setNotification({ message: t('registration.contributors.contributor_already_added'), variant: 'info' }));
       return;
     }
@@ -141,12 +132,12 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
         identity,
         affiliations: existingAffiliations,
         role,
-        sequence: relevantContributors.length + 1,
+        sequence: contributors.length + 1,
       };
       push(newContributor);
       goToLastPage();
     } else {
-      const relevantContributor = relevantContributors[contributorIndex];
+      const relevantContributor = contributors[contributorIndex];
       const relevantAffiliations = relevantContributor.affiliations ?? [];
 
       relevantAffiliations.push(...existingAffiliations);
@@ -161,30 +152,16 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
     }
   };
 
-  const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
-  const roleText =
-    contributorRole === ContributorRole.Creator
-      ? t('registration.contributors.authors')
-      : contributorRole === ContributorRole.Editor
-      ? t('registration.contributors.editors')
-      : contributorRole === ContributorRole.Supervisor
-      ? t('registration.contributors.supervisors')
-      : t('registration.heading.contributors');
-
   return (
-    <div data-testid={contributorRole}>
-      <Typography variant="h2" paragraph>
-        {roleText}
-      </Typography>
-
-      {relevantContributors.length > 5 && (
+    <>
+      {contributors.length > 5 && (
         <TextField
-          sx={{ mb: '1rem' }}
-          label={t('registration.contributors.filter', { role: roleText.toLocaleLowerCase() })}
+          sx={{ display: 'block', mb: '1rem' }}
+          label={t('common.search_by_name')}
           variant="filled"
           InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
+            endAdornment: (
+              <InputAdornment position="end">
                 <SearchIcon />
               </InputAdornment>
             ),
@@ -202,8 +179,11 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
             <TableHead>
               <TableRow>
                 <TableCell>{t('common.order')}</TableCell>
-                <TableCell>
-                  {contributorRoles.length > 1 ? t('common.role') : t('registration.contributors.corresponding')}
+                <TableCell>{t('common.role')}</TableCell>
+                <TableCell align="center">
+                  <Tooltip title={t('registration.contributors.corresponding')}>
+                    <MailOutlineIcon />
+                  </Tooltip>
                 </TableCell>
                 <TableCell>{t('registration.contributors.confirmed')}</TableCell>
                 <TableCell>{t('common.name')}</TableCell>
@@ -226,7 +206,7 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
                     onMoveContributor={handleMoveContributor}
                     onRemoveContributor={handleOnRemove}
                     onVerifyContributor={onContributorSelected}
-                    isLastElement={relevantContributors.length === contributor.sequence}
+                    isLastElement={contributors.length === contributor.sequence}
                     contributorRoles={contributorRoles}
                     contributorIndex={contributorIndex}
                   />
@@ -239,12 +219,11 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
 
       <AddContributorModal
         contributorRoles={contributorRoles}
-        contributorRole={contributorRole}
         open={openAddContributor}
         toggleModal={() => setOpenAddContributor(false)}
         onContributorSelected={onContributorSelected}
         addUnverifiedContributor={(contributor) => {
-          contributor.sequence = relevantContributors.length + 1;
+          contributor.sequence = contributors.length + 1;
           push(contributor);
           goToLastPage();
         }}
@@ -253,7 +232,7 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
         <TablePagination
           rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
           component="div"
-          count={filteredRelevantContributors.length}
+          count={filteredContributors.length}
           rowsPerPage={rowsPerPage}
           page={currentPage}
           onPageChange={(_, newPage) => setCurrentPage(newPage)}
@@ -267,16 +246,10 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => setOpenAddContributor(true)}
         variant="contained"
-        color={primaryColorAddButton ? 'primary' : 'inherit'}
         startIcon={<AddIcon />}
-        data-testid={dataTestId.registrationWizard.contributors.addContributorButton(contributorRole)}>
-        {t('registration.contributors.add_as_role', {
-          role:
-            contributorRole === 'OtherContributor'
-              ? t('registration.contributors.contributor')
-              : t(`registration.contributors.types.${contributorRole}`),
-        })}
+        data-testid={dataTestId.registrationWizard.contributors.addContributorButton}>
+        {t('registration.contributors.add_contributor')}
       </Button>
-    </div>
+    </>
   );
 };

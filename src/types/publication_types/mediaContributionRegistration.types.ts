@@ -1,5 +1,5 @@
 import { MediaType, PublicationType } from '../publicationFieldNames';
-import { BaseEntityDescription, BaseReference, BaseRegistration, PublicationChannelType } from '../registration.types';
+import { BaseEntityDescription, BaseReference, PublicationChannelType } from '../registration.types';
 import { JournalPublicationContext, JournalPublicationInstance } from './journalRegistration.types';
 import { emptyPagesRange } from './pages.types';
 
@@ -90,8 +90,4 @@ interface MediaContributionPeriodical extends BaseReference {
 
 export interface MediaContributionEntityDescription extends BaseEntityDescription {
   reference: MediaContributionReference | MediaContributionPeriodical;
-}
-
-export interface MediaRegistration extends BaseRegistration {
-  entityDescription: MediaContributionEntityDescription;
 }
