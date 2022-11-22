@@ -19,46 +19,44 @@ const SearchPage = () => {
 
   return (
     <SyledPageContent>
-      <BackgroundDiv sx={{ bgcolor: 'background.default' }}>
-        <PageHeader>{t('common.registrations')}</PageHeader>
-        <Formik
-          initialValues={initialSearchParams}
-          onSubmit={(values) => {
-            const queryString = createSearchQuery(values);
-            params.set(SearchParam.From, '0');
-            if (queryString) {
-              params.set(SearchParam.Query, queryString);
-            } else {
-              params.delete(SearchParam.Query);
-            }
-            history.push({ search: params.toString() });
-          }}>
-          <Form>
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateRows: 'auto auto 1fr',
-                gridTemplateColumns: { xs: '1fr', md: '2fr auto 5fr 2fr' },
-                gridTemplateAreas: {
-                  xs: "'searchbar' 'sorting' 'filters' 'advanced' 'results'",
-                  md: "'filters divider searchbar sorting' 'filters divider advanced advanced' 'filters divider results results'",
-                },
-                columnGap: '2rem',
-                rowGap: '1rem',
-              }}>
-              <>
-                <List sx={{ gridArea: 'filters' }}>
-                  <RegistrationTypeFilter />
-                </List>
-                <Divider orientation="vertical" sx={{ gridArea: 'divider' }} />
-              </>
-              <SearchBar />
-              <SortSelector />
-              <RegistrationSearch />
-            </Box>
-          </Form>
-        </Formik>
-      </BackgroundDiv>
+      <PageHeader>{t('common.registrations')}</PageHeader>
+      <Formik
+        initialValues={initialSearchParams}
+        onSubmit={(values) => {
+          const queryString = createSearchQuery(values);
+          params.set(SearchParam.From, '0');
+          if (queryString) {
+            params.set(SearchParam.Query, queryString);
+          } else {
+            params.delete(SearchParam.Query);
+          }
+          history.push({ search: params.toString() });
+        }}>
+        <Form>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateRows: 'auto auto 1fr',
+              gridTemplateColumns: { xs: '1fr', md: '2fr auto 5fr 2fr' },
+              gridTemplateAreas: {
+                xs: "'searchbar' 'sorting' 'filters' 'advanced' 'results'",
+                md: "'filters divider searchbar sorting' 'filters divider advanced advanced' 'filters divider results results'",
+              },
+              columnGap: '2rem',
+              rowGap: '1rem',
+            }}>
+            <>
+              <List sx={{ gridArea: 'filters' }}>
+                <RegistrationTypeFilter />
+              </List>
+              <Divider orientation="vertical" sx={{ gridArea: 'divider' }} />
+            </>
+            <SearchBar />
+            <SortSelector />
+            <RegistrationSearch />
+          </Box>
+        </Form>
+      </Formik>
     </SyledPageContent>
   );
 };
