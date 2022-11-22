@@ -13,7 +13,6 @@ import {
   TablePagination,
   TableRow,
   TextField,
-  Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
@@ -37,10 +36,9 @@ import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../..
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
-  primaryColorAddButton?: boolean;
 }
 
-export const Contributors = ({ contributorRoles, push, replace, primaryColorAddButton }: ContributorsProps) => {
+export const Contributors = ({ contributorRoles, push, replace }: ContributorsProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
@@ -153,25 +151,15 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
   };
 
   const contributorRole = contributorRoles.length === 1 ? contributorRoles[0] : 'OtherContributor';
-  const roleText =
-    contributorRole === ContributorRole.Creator
-      ? t('registration.contributors.authors')
-      : contributorRole === ContributorRole.Editor
-      ? t('registration.contributors.editors')
-      : contributorRole === ContributorRole.Supervisor
-      ? t('registration.contributors.supervisors')
-      : t('registration.heading.contributors');
 
   return (
-    <div data-testid={contributorRole}>
-      <Typography variant="h2" paragraph>
-        {roleText}
-      </Typography>
-
+    <>
       {contributors.length > 5 && (
         <TextField
-          sx={{ mb: '1rem' }}
-          label={t('registration.contributors.filter', { role: roleText.toLocaleLowerCase() })}
+          sx={{ display: 'block', mb: '1rem' }}
+          label={t('registration.contributors.filter', {
+            role: t('registration.heading.contributors').toLocaleLowerCase(),
+          })}
           variant="filled"
           InputProps={{
             startAdornment: (
@@ -229,7 +217,6 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
 
       <AddContributorModal
         contributorRoles={contributorRoles}
-        contributorRole={contributorRole}
         open={openAddContributor}
         toggleModal={() => setOpenAddContributor(false)}
         onContributorSelected={onContributorSelected}
@@ -257,16 +244,10 @@ export const Contributors = ({ contributorRoles, push, replace, primaryColorAddB
         sx={{ marginBottom: '1rem', borderRadius: '1rem' }}
         onClick={() => setOpenAddContributor(true)}
         variant="contained"
-        color={primaryColorAddButton ? 'primary' : 'inherit'}
         startIcon={<AddIcon />}
         data-testid={dataTestId.registrationWizard.contributors.addContributorButton(contributorRole)}>
-        {t('registration.contributors.add_as_role', {
-          role:
-            contributorRole === 'OtherContributor'
-              ? t('registration.contributors.contributor')
-              : t(`registration.contributors.types.${contributorRole}`),
-        })}
+        {t('registration.contributors.add_contributor')}
       </Button>
-    </div>
+    </>
   );
 };

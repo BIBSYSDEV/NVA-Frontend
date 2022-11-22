@@ -14,7 +14,6 @@ interface AddContributorModalProps {
   open: boolean;
   toggleModal: () => void;
   contributorRoles: ContributorRole[];
-  contributorRole: string;
   initialSearchTerm?: string;
 }
 
@@ -24,7 +23,6 @@ export const AddContributorModal = ({
   toggleModal,
   open,
   contributorRoles,
-  contributorRole,
   initialSearchTerm,
 }: AddContributorModalProps) => {
   const { t } = useTranslation();
@@ -46,12 +44,7 @@ export const AddContributorModal = ({
       headingText={
         initialSearchTerm
           ? t('registration.contributors.verify_person')
-          : t('registration.contributors.add_as_role', {
-              role:
-                contributorRole === 'OtherContributor'
-                  ? t('registration.contributors.contributor').toLowerCase()
-                  : t(`registration.contributors.types.${contributorRole}` as any).toLowerCase(),
-            })
+          : t('registration.contributors.add_contributor')
       }
       onClose={handleCloseModal}
       open={open}
