@@ -65,7 +65,7 @@ export const CentralImportDuplicationCheckPage = () => {
                 href={registration.entityDescription.reference.doi}
                 target="_blank"
                 rel="noopener noreferrer">
-                <Typography gutterBottom variant="body2" sx={{ color: 'primary.dark' }}>
+                <Typography gutterBottom variant="body2" sx={{ color: 'primary.main' }}>
                   {registration.entityDescription.reference.doi}
                 </Typography>
               </MuiLink>

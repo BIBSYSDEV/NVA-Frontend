@@ -34,7 +34,7 @@ const StyledSideMenuHeader = styled(StyledPaperHeader)({
 });
 
 export const SideNav = ({ children, ...props }: PropsWithChildren<Record<never, never>>) => (
-  <Box component="nav" sx={{ bgcolor: 'background.paper' }} {...props}>
+  <Box component="nav" sx={{ bgcolor: 'secondary.main' }} {...props}>
     {children}
   </Box>
 );

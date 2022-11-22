@@ -30,8 +30,8 @@ export enum UrlPathTemplate {
   RegistrationLandingPage = '/registration/:identifier/public',
   ResearchProfile = '/research-profile',
   Search = '/search',
+  Tasks = '/tasks',
   Wildcard = '*',
-  Worklist = '/worklist',
 }
 
 export const getRegistrationLandingPagePath = (identifier: string) =>

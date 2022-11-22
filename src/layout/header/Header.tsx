@@ -136,10 +136,10 @@ export const Header = () => {
                 <Button
                   color="inherit"
                   component={RouterLink}
-                  data-testid={dataTestId.header.worklistLink}
-                  to={UrlPathTemplate.Worklist}
+                  data-testid={dataTestId.header.tasksLink}
+                  to={UrlPathTemplate.Tasks}
                   startIcon={<AssignmentIcon />}>
-                  {t('worklist.worklist')}
+                  {t('tasks.tasks')}
                 </Button>
               )}
               {user && (

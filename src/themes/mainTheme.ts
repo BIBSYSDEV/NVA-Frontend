@@ -5,14 +5,14 @@ import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
-  AlternativeBackground = '#f3f0ed',
   Black = '#222',
-  ErrorLight = '#FF8888',
-  ErrorMain = '#C2363D',
-  Paper = '#faf7f4',
-  PrimaryMain = '#0e6d82',
-  SecondaryMain = '#FFB546',
-  SuccessMain = '#08B677',
+  ErrorMain = '#AC0303',
+  PrimaryMain = '#0F0035',
+  SecondaryLight = '#FEFBF3',
+  SecondaryMain = '#F9F4E6',
+  SecondaryDark = '#EDE2C7',
+  SuccessMain = '#025810',
+  InfoMain = '#4367F6',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
 }
@@ -37,18 +37,19 @@ export const mainTheme = createTheme(
         contrastText: Color.White,
       },
       secondary: {
+        light: Color.SecondaryLight,
         main: Color.SecondaryMain,
+        dark: Color.SecondaryDark,
       },
       error: {
         main: Color.ErrorMain,
-        light: Color.ErrorLight,
       },
       success: {
         main: Color.SuccessMain,
       },
       background: {
         default: Color.White,
-        paper: Color.Paper,
+        paper: Color.SecondaryLight,
       },
     },
     typography: {
@@ -130,7 +131,7 @@ export const mainTheme = createTheme(
             color: `${Color.TextPrimary} !important`,
           },
           underlineAlways: {
-            textDecorationColor: Color.SecondaryMain,
+            textDecorationColor: Color.PrimaryMain,
           },
         },
       },
@@ -150,7 +151,6 @@ export const mainTheme = createTheme(
           },
         },
       },
-      MuiTableHead: { styleOverrides: { root: { th: { background: Color.AlternativeBackground } } } },
       MuiTablePagination: {
         defaultProps: {
           showFirstButton: true,
@@ -205,9 +205,9 @@ export const mainTheme = createTheme(
 
 export const alternatingTableRowColor: SxProps = {
   tr: {
-    background: Color.AlternativeBackground,
+    bgcolor: 'secondary.main',
     '&:nth-of-type(odd)': {
-      background: Color.White,
+      bgcolor: 'secondary.light',
     },
   },
 };

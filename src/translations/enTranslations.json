@@ -959,7 +959,7 @@
       "message_to_curator": "Message to curator",
       "other_contributors_one": "(+{{count}} other)",
       "other_contributors_other": "(+{{count}} others)",
-      "other_related_registrations": "Andre related registrations",
+      "other_related_registrations": "Other related registrations",
       "participants_one": "{{count}} participant",
       "participants_other": "{{count}} participants",
       "preview_of": "Preview of {{fileName}}",
@@ -1364,8 +1364,8 @@
     "sort_by_published_date_asc": "Publish date (oldest first)",
     "sort_by_published_date_desc": "Publish date (newest first)"
   },
-  "worklist": {
+  "tasks": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "worklist": "Worklist"
+    "tasks": "Tasks"
   }
 }

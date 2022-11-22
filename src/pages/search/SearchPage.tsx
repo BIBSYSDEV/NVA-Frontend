@@ -1,4 +1,4 @@
-import { Box, List } from '@mui/material';
+import { Box, Divider, List } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -37,17 +37,23 @@ const SearchPage = () => {
             sx={{
               display: 'grid',
               gridTemplateRows: 'auto auto 1fr',
-              gridTemplateColumns: { xs: '1fr', md: '2fr 5fr 2fr' },
+              gridTemplateColumns: { xs: '1fr', md: '2fr auto 5fr 2fr' },
               gridTemplateAreas: {
                 xs: "'searchbar' 'sorting' 'filters' 'advanced' 'results'",
-                md: "'filters searchbar sorting' 'filters advanced advanced' 'filters results results'",
+                md: "'filters divider searchbar sorting' 'filters divider advanced advanced' 'filters divider results results'",
               },
               columnGap: '2rem',
               rowGap: '1rem',
             }}>
-            <List sx={{ gridArea: 'filters' }}>
-              <RegistrationTypeFilter />
-            </List>
+            <>
+              <List sx={{ gridArea: 'filters' }}>
+                <RegistrationTypeFilter />
+              </List>
+              <Divider
+                orientation="vertical"
+                sx={{ gridArea: 'divider', display: { xs: 'none', md: 'inline-flex' } }}
+              />
+            </>
             <SearchBar />
             <SortSelector />
             <RegistrationSearch />
