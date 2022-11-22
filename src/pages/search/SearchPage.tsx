@@ -49,7 +49,10 @@ const SearchPage = () => {
               <List sx={{ gridArea: 'filters' }}>
                 <RegistrationTypeFilter />
               </List>
-              <Divider orientation="vertical" sx={{ gridArea: 'divider' }} />
+              <Divider
+                orientation="vertical"
+                sx={{ gridArea: 'divider', display: { xs: 'none', md: 'inline-flex' } }}
+              />
             </>
             <SearchBar />
             <SortSelector />

@@ -5,9 +5,7 @@ import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
-  AlternativeBackground = '#C2D3EA',
   Black = '#222',
-  ErrorLight = '#FF8888',
   ErrorMain = '#AC0303',
   PrimaryMain = '#0F0035',
   SecondaryMain = '#EDE2C7',
@@ -33,7 +31,6 @@ export const mainTheme = createTheme(
     },
     palette: {
       primary: {
-        light: Color.AlternativeBackground,
         main: Color.PrimaryMain,
         contrastText: Color.White,
       },
@@ -44,7 +41,6 @@ export const mainTheme = createTheme(
       },
       error: {
         main: Color.ErrorMain,
-        light: Color.ErrorLight,
       },
       success: {
         main: Color.SuccessMain,
@@ -133,7 +129,7 @@ export const mainTheme = createTheme(
             color: `${Color.TextPrimary} !important`,
           },
           underlineAlways: {
-            textDecorationColor: Color.SecondaryMain,
+            textDecorationColor: Color.PrimaryMain,
           },
         },
       },
