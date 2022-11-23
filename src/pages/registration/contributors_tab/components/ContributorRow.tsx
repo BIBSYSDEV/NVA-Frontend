@@ -106,7 +106,7 @@ export const ContributorRow = ({
             </Tooltip>
           )}
           <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Role}`}>
-            {({ field }: FieldProps<string>) => (
+            {({ field }: FieldProps<ContributorRole>) => (
               <TextField {...field} select variant="standard" fullWidth>
                 {contributorRoles.map((role) => (
                   <MenuItem key={role} value={role}>
