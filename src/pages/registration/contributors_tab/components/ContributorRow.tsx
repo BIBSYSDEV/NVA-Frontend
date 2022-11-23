@@ -106,7 +106,7 @@ export const ContributorRow = ({
             </Tooltip>
           )}
           <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Role}`}>
-            {({ field }: FieldProps) => (
+            {({ field }: FieldProps<string>) => (
               <TextField {...field} select variant="standard" fullWidth>
                 {contributorRoles.map((role) => (
                   <MenuItem key={role} value={role}>
@@ -120,7 +120,7 @@ export const ContributorRow = ({
       </TableCell>
       <TableCell align="center" width="1">
         <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
-          {({ field }: FieldProps) => (
+          {({ field }: FieldProps<boolean>) => (
             <Tooltip title={t('registration.contributors.corresponding')}>
               <Checkbox
                 data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
