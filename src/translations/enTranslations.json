@@ -918,6 +918,7 @@
       "add_files_or_link": "Add files or link",
       "administrative_contract": "Internal file that should never be published. E.g. author agreement or other documentation for the registered result",
       "conditions_for_using_file": "Terms of use",
+      "embargo": "Embargo",
       "file_locked": "File is locked",
       "file_publish_date": "Postponed publication",
       "file_publish_date_helper_text": "File is locked until the specified date",
@@ -927,6 +928,7 @@
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
       "find_series_in_channel_register": "See information about the series in the Norwegian Register",
       "info_from_channel_register": "More information about the selected publication channel",
+      "licens": "Licens",
       "licenses": "Licenses",
       "link_to_resource": "Link to resource",
       "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
@@ -935,7 +937,8 @@
       "remove_file_description": "Do you want to remove {{fileName}}?",
       "resource_has_no_files_or_links": "The resource does not have any file or links to publish",
       "resource_has_no_files_or_links_paragraph0": "Without files or links the published resource is harder to reuse and may give less value for others. If data is not shared, information about data and how they can be accessed should be shared.",
-      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), is a set of principles to support reuse of digital resources. NFR and EC sets clear requirements for data to be available and deposited together with metadata that clarifies any potential conditions for access."
+      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), is a set of principles to support reuse of digital resources. NFR and EC sets clear requirements for data to be available and deposited together with metadata that clarifies any potential conditions for access.",
+      "size": "Size"
     },
     "heading": {
       "contributors": "Contributors",

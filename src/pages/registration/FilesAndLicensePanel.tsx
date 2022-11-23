@@ -29,6 +29,7 @@ import {
 } from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
+import { FilesTable } from './files_and_license_tab/FilesTable';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -152,6 +153,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     <Typography variant="h2" gutterBottom>
                       {t('registration.files_and_license.files')}
                     </Typography>
+                    <FilesTable />
                     {files.length > 0 && (
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
                         {files.map((file) => {
