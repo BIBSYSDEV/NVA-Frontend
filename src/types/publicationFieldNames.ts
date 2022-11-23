@@ -198,5 +198,6 @@ export enum SpecificContributorFieldNames {
   Corresponding = 'correspondingAuthor',
   Id = 'identity.id',
   Name = 'identity.name',
+  Role = 'role',
   Sequence = 'sequence',
 }
