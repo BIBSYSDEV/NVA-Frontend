@@ -16,6 +16,7 @@ import { Registration } from '../../../../types/registration.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { getDistinctContributorUnits } from '../../../../utils/institutions-helpers';
 
 interface AffiliationsCellProps {
   affiliations?: Institution[];
@@ -23,10 +24,10 @@ interface AffiliationsCellProps {
   baseFieldName: string;
 }
 
-export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: AffiliationsCellProps) => {
+export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName }: AffiliationsCellProps) => {
   const { t } = useTranslation();
   const disptach = useDispatch();
-  const { setFieldValue } = useFormikContext<Registration>();
+  const { setFieldValue, values } = useFormikContext<Registration>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
   const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
@@ -150,7 +151,13 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
               {t('registration.contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
             </Typography>
           )}
-          <SelectInstitutionForm onSubmit={addAffiliation} onClose={toggleAffiliationModal} />
+          <SelectInstitutionForm
+            onSubmit={addAffiliation}
+            onClose={toggleAffiliationModal}
+            suggestedInstitutions={getDistinctContributorUnits(values.entityDescription?.contributors ?? []).filter(
+              (suggestion) => !affiliations.some((affiliation) => affiliation.id === suggestion)
+            )}
+          />
         </>
       </Modal>
 

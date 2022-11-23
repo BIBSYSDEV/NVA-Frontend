@@ -833,7 +833,9 @@
       "prefilled_name": "Prefilled name",
       "remove_affiliation": "Remove affiliation",
       "remove_contributor": "Remove contributor",
+      "search_for_institution": "Search for institution",
       "select_contributor_type": "Select contributor type",
+      "suggested_affiliations": "Suggested affiliations",
       "type": "Contributor type",
       "types": {
         "AcademicCoordinator": "Academic coordinator",
