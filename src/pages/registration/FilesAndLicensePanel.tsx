@@ -1,7 +1,21 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, FormHelperText, Link, Paper, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormHelperText,
+  Link,
+  Paper,
+  TextField,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Modal } from '../../components/Modal';
@@ -15,7 +29,6 @@ import {
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { FileUploader } from './files_and_license_tab/FileUploader';
-import { FileCard } from './files_and_license_tab/FileCard';
 import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
@@ -30,6 +43,7 @@ import {
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
 import { FilesTable } from './files_and_license_tab/FilesTable';
+import { alternatingTableRowColor } from '../../themes/mainTheme';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -153,40 +167,67 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     <Typography variant="h2" gutterBottom>
                       {t('registration.files_and_license.files')}
                     </Typography>
-                    <FilesTable />
+
                     {files.length > 0 && (
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                        {files.map((file) => {
-                          const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
-                            if (associatedArtifactIsFile(artifact)) {
-                              const associatedFile = artifact as AssociatedFile;
-                              return associatedFile.identifier === file.identifier;
-                            }
-                            return false;
-                          });
+                        <TableContainer component={Paper}>
+                          <Table sx={alternatingTableRowColor}>
+                            <TableHead sx={{ fontWeight: 'bold' }}>
+                              <TableRow>
+                                <TableCell>
+                                  <Typography>{t('common.name')}</Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography>{t('registration.files_and_license.size')}</Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography>{t('common.version')}</Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography>{t('registration.files_and_license.embargo')}</Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography>{t('registration.files_and_license.licens')}</Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography>{t('common.actions')}</Typography>
+                                </TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {files.map((file) => {
+                                const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
+                                  if (associatedArtifactIsFile(artifact)) {
+                                    const associatedFile = artifact as AssociatedFile;
+                                    return associatedFile.identifier === file.identifier;
+                                  }
+                                  return false;
+                                });
 
-                          return (
-                            <FileCard
-                              key={file.identifier}
-                              file={file}
-                              removeFile={() => {
-                                const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                                const remainingFiles = uppy
-                                  .getFiles()
-                                  .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                                uppy.setState({ files: remainingFiles });
-                                remove(associatedFileIndex);
+                                return (
+                                  <>
+                                    <FilesTable
+                                      file={file}
+                                      removeFile={() => {
+                                        const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                                        const remainingFiles = uppy
+                                          .getFiles()
+                                          .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                                        uppy.setState({ files: remainingFiles });
+                                        remove(associatedFileIndex);
 
-                                if (associatedArtifactsBeforeRemoval === 1) {
-                                  // Ensure field is set to touched even if it's empty
-                                  setFieldTouched(name);
-                                }
-                              }}
-                              toggleLicenseModal={toggleLicenseModal}
-                              baseFieldName={`${name}[${associatedFileIndex}]`}
-                            />
-                          );
-                        })}
+                                        if (associatedArtifactsBeforeRemoval === 1) {
+                                          // Ensure field is set to touched even if it's empty
+                                          setFieldTouched(name);
+                                        }
+                                      }}
+                                    />
+                                  </>
+                                );
+                              })}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
                       </Box>
                     )}
 
