@@ -11,6 +11,7 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  Paper,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDebounce } from '../../utils/hooks/useDebounce';
@@ -63,10 +64,11 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
       {({ isSubmitting, values, setFieldValue, resetForm }: FormikProps<OrganizationForm>) => (
         <Form noValidate>
           {suggestedInstitutions.length > 0 && (
-            <>
+            <Paper sx={{ p: '1rem', maxHeight: '50vh', overflow: 'auto' }}>
               <FormControl>
                 <FormLabel>{t('registration.contributors.suggested_affiliations')}</FormLabel>
                 <RadioGroup
+                  sx={{ gap: '0.25rem' }}
                   value={selectedSuggestedAffiliation}
                   onChange={(event) => {
                     setSelectedSuggestedAffiliation(event.target.value);
@@ -82,7 +84,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                   ))}
                 </RadioGroup>
               </FormControl>
-            </>
+            </Paper>
           )}
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <Field name={FormikInstitutionUnitFieldNames.Unit}>
