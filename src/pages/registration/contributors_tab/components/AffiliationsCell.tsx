@@ -87,7 +87,6 @@ export const AffiliationsCell = ({ affiliations, authorName, baseFieldName }: Af
           sx={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
             gap: '0.5rem',
           }}>
           {affiliation.id ? (
