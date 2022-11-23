@@ -332,7 +332,6 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.SoundDesigner,
       ContributorRole.VfxSupervisor,
       ContributorRole.VideoEditor,
-      ContributorRole.Other,
     ],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
