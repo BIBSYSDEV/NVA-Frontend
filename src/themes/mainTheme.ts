@@ -138,12 +138,12 @@ export const mainTheme = createTheme(
       MuiStepLabel: {
         styleOverrides: {
           label: {
+            opacity: 0.6,
             textTransform: 'uppercase',
-
             fontSize: '1rem',
             color: Color.PrimaryMain,
             '&.Mui-active': {
-              color: Color.PrimaryMain,
+              fontWeight: 600,
               opacity: 1,
             },
             '&.Mui-error': {
@@ -151,9 +151,9 @@ export const mainTheme = createTheme(
             },
           },
           iconContainer: {
-            opacity: 0.65,
+            opacity: 0.6,
+            color: Color.PrimaryMain,
             '&.Mui-active': {
-              color: Color.PrimaryMain,
               opacity: 1,
             },
           },
