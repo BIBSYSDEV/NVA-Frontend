@@ -914,6 +914,7 @@
     },
     "edit_registration": "Endre registrering",
     "files_and_license": {
+      "accepted": "Akseptert",
       "accepted_version": "Akseptert versjon",
       "add_files_or_link": "Legg til filer eller lenke",
       "administrative_contract": "Intern fil som ikke aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
@@ -932,6 +933,7 @@
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
+      "published": "Publisert",
       "published_version": "Publisert versjon",
       "remove_file": "Fjern fil",
       "remove_file_description": "Ønsker du å fjerne {{fileName}}?",

@@ -914,6 +914,7 @@
     },
     "edit_registration": "Edit registration",
     "files_and_license": {
+      "accepted": "Accepted",
       "accepted_version": "Accepted version",
       "add_files_or_link": "Add files or link",
       "administrative_contract": "Internal file that should never be published. E.g. author agreement or other documentation for the registered result",
@@ -932,6 +933,7 @@
       "licenses": "Licenses",
       "link_to_resource": "Link to resource",
       "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
+      "published": "Published",
       "published_version": "Published version",
       "remove_file": "Remove file",
       "remove_file_description": "Do you want to remove {{fileName}}?",

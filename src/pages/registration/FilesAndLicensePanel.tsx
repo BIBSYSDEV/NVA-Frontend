@@ -15,9 +15,12 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  IconButton,
+  Tooltip,
 } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Modal } from '../../components/Modal';
 import {
   AssociatedFile,
@@ -42,7 +45,7 @@ import {
 } from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
-import { FilesTable } from './files_and_license_tab/FilesTable';
+import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 
 interface FilesAndLicensePanelProps {
@@ -172,25 +175,48 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
                         <TableContainer component={Paper}>
                           <Table sx={alternatingTableRowColor}>
-                            <TableHead sx={{ fontWeight: 'bold' }}>
+                            <TableHead sx={{ fontWeight: 600 }}>
                               <TableRow>
                                 <TableCell>
-                                  <Typography>{t('common.name')}</Typography>
+                                  <Typography fontWeight="bold">{t('common.name')}</Typography>
+                                </TableCell>
+                                <TableCell></TableCell>
+                                <TableCell>
+                                  <Typography fontWeight="bold">{t('registration.files_and_license.size')}</Typography>
                                 </TableCell>
                                 <TableCell>
-                                  <Typography>{t('registration.files_and_license.size')}</Typography>
+                                  <Typography fontWeight="bold">{'Administrative agreement'}</Typography>
                                 </TableCell>
                                 <TableCell>
-                                  <Typography>{t('common.version')}</Typography>
+                                  <Typography fontWeight="bold">{t('common.version')}</Typography>
                                 </TableCell>
                                 <TableCell>
-                                  <Typography>{t('registration.files_and_license.embargo')}</Typography>
+                                  <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                    <Typography fontWeight="bold">
+                                      {t('registration.files_and_license.embargo')}
+                                    </Typography>
+                                    <Tooltip title={t('common.help')}>
+                                      <IconButton
+                                        data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
+                                        onClick={toggleLicenseModal}>
+                                        <HelpOutlineIcon />
+                                      </IconButton>
+                                    </Tooltip>
+                                  </Box>
                                 </TableCell>
                                 <TableCell>
-                                  <Typography>{t('registration.files_and_license.licens')}</Typography>
-                                </TableCell>
-                                <TableCell>
-                                  <Typography>{t('common.actions')}</Typography>
+                                  <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                    <Typography fontWeight="bold">
+                                      {t('registration.files_and_license.licens')}
+                                    </Typography>
+                                    <Tooltip title={t('common.help')}>
+                                      <IconButton
+                                        data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
+                                        onClick={toggleLicenseModal}>
+                                        <HelpOutlineIcon />
+                                      </IconButton>
+                                    </Tooltip>
+                                  </Box>
                                 </TableCell>
                               </TableRow>
                             </TableHead>
@@ -206,7 +232,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
                                 return (
                                   <>
-                                    <FilesTable
+                                    <FilesTableRow
                                       file={file}
                                       removeFile={() => {
                                         const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
@@ -221,6 +247,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                           setFieldTouched(name);
                                         }
                                       }}
+                                      toggleLicenseModal={toggleLicenseModal}
+                                      baseFieldName={`${name}[${associatedFileIndex}]`}
                                     />
                                   </>
                                 );
