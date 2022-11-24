@@ -1,6 +1,16 @@
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
-import { Box, TableRow, TableCell, Tooltip, Typography, Checkbox, TextField, IconButton } from '@mui/material';
+import {
+  Box,
+  TableRow,
+  TableCell,
+  Tooltip,
+  Typography,
+  Checkbox,
+  TextField,
+  IconButton,
+  MenuItem,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -89,18 +99,28 @@ export const ContributorRow = ({
         </Box>
       </TableCell>
       <TableCell align="left" width="1">
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography>{t(`registration.contributors.types.${contributor.role}`)}</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'end' }}>
           {!contributorRoles.includes(contributor.role) && (
             <Tooltip title={t('registration.contributors.invalid_role')}>
               <WarningIcon color="warning" />
             </Tooltip>
           )}
+          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Role}`}>
+            {({ field }: FieldProps<ContributorRole>) => (
+              <TextField {...field} select variant="standard" fullWidth>
+                {contributorRoles.map((role) => (
+                  <MenuItem key={role} value={role}>
+                    {t(`registration.contributors.types.${role}`)}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          </Field>
         </Box>
       </TableCell>
       <TableCell align="center" width="1">
         <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
-          {({ field }: FieldProps) => (
+          {({ field }: FieldProps<boolean>) => (
             <Tooltip title={t('registration.contributors.corresponding')}>
               <Checkbox
                 data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}

@@ -137,6 +137,7 @@ export const dataTestId = {
     contributors: {
       addAffiliationButton: 'button-add-affiliation',
       addContributorButton: 'add-contributor',
+      addSelectedAffiliationButton: 'add-selected-affiliation-button',
       addSelfButton: 'add-self-button',
       addUnverifiedContributorButton: 'add-unverified-contributor-button',
       authorRadioButton: 'author-radio-button',

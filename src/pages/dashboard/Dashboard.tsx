@@ -51,9 +51,6 @@ const Dashboard = () => {
             <Typography
               variant="h1"
               sx={{
-                fontFamily: "'Barlow', sans-serif",
-                fontWeight: 'bold',
-                maxWidth: '40rem',
                 gridArea: 'text-tagline',
                 fontSize: { xs: '2rem', sm: '3rem' },
               }}>
