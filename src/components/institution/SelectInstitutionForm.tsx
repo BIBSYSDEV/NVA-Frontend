@@ -24,16 +24,22 @@ import { SearchResponse } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
 import { AffiliationHierarchy } from './AffiliationHierarchy';
 
+enum SelectOrganizationFormField {
+  Unit = 'unit',
+  Subunit = 'subunit',
+  selectedSuggestedAffiliationId = 'selectedSuggestedAffiliationId',
+}
+
 interface OrganizationForm {
-  unit: Organization | null;
-  subunit: Organization | null;
-  sselectedSuggestedAffiliationId: string;
+  [SelectOrganizationFormField.Unit]: Organization | null;
+  [SelectOrganizationFormField.Subunit]: Organization | null;
+  [SelectOrganizationFormField.selectedSuggestedAffiliationId]: string;
 }
 
 const initialValuesOrganizationForm: OrganizationForm = {
   unit: null,
   subunit: null,
-  sselectedSuggestedAffiliationId: '',
+  selectedSuggestedAffiliationId: '',
 };
 
 interface SelectInstitutionFormProps {
@@ -57,8 +63,8 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
     <Formik
       initialValues={initialValuesOrganizationForm}
       onSubmit={(values) => {
-        if (values.sselectedSuggestedAffiliationId) {
-          onSubmit(values.sselectedSuggestedAffiliationId);
+        if (values.selectedSuggestedAffiliationId) {
+          onSubmit(values.selectedSuggestedAffiliationId);
         } else if (values.subunit?.id) {
           onSubmit(values.subunit.id);
         } else if (values.unit?.id) {
@@ -71,7 +77,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
             <Paper elevation={4} sx={{ p: '1rem', maxHeight: '35vh', overflow: 'auto', mb: '1.5rem' }}>
               <FormControl>
                 <FormLabel>{t('registration.contributors.suggested_affiliations')}</FormLabel>
-                <Field name="suggestedAffiliationId">
+                <Field name={SelectOrganizationFormField.selectedSuggestedAffiliationId}>
                   {({ field }: FieldProps<Organization>) => (
                     <RadioGroup
                       sx={{ gap: '0.25rem' }}
@@ -96,7 +102,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
             </Paper>
           )}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Field name="unit">
+            <Field name={SelectOrganizationFormField.Unit}>
               {({ field }: FieldProps<Organization>) => (
                 <Autocomplete
                   {...field}
@@ -135,7 +141,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
               )}
             </Field>
             {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
-              <Field name="subunit">
+              <Field name={SelectOrganizationFormField.Subunit}>
                 {({ field }: FieldProps<Organization>) => (
                   <Autocomplete
                     options={getSortedSubUnits(values.unit?.hasPart)}
@@ -170,13 +176,13 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                 variant="contained"
                 type="submit"
                 loading={isSubmitting}
-                disabled={!values.unit && !values.sselectedSuggestedAffiliationId}
-                data-testid="institution-add-button">
+                disabled={!values.unit && !values.selectedSuggestedAffiliationId}
+                data-testid={dataTestId.registrationWizard.contributors.addSelectedAffiliationButton}>
                 {t('common.add')}
               </LoadingButton>
 
               {onClose && (
-                <Button onClick={onClose} data-testid="institution-cancel-button">
+                <Button onClick={onClose} data-testid={dataTestId.confirmDialog.cancelButton}>
                   {t('common.cancel')}
                 </Button>
               )}
