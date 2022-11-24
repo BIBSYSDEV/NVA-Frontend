@@ -66,7 +66,6 @@ export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldN
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
           {({ field }: FieldProps) => (
             <FormControlLabel
-              sx={{ maxWidth: '30rem', pt: '1.25rem' }}
               data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
               control={
                 <Tooltip title={t('registration.files_and_license.administrative_contract')}>
