@@ -1,5 +1,6 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockPublishedRegistration } from '../../src/utils/testfiles/mockRegistration';
+import { getRegistrationLandingPagePath } from '../../src/utils/urlPaths';
 const {
   registrationLandingPage: {
     projectTitle,
@@ -8,7 +9,7 @@ const {
   projectLandingPage: { generalInfoBox, participantsAccordion, resultsAccordion, scientificSummaryAccordion },
 } = dataTestId;
 
-const pathToLandingPage = `/registration/${mockPublishedRegistration.identifier}/public`;
+const pathToLandingPage = getRegistrationLandingPagePath(mockPublishedRegistration.identifier);
 
 describe('User opens Landing Page for Registration', () => {
   beforeEach(() => {
@@ -30,7 +31,6 @@ describe('User opens Landing Page for Registration', () => {
     cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).click();
     cy.get('[data-testid^=open-registration]').eq(0).click();
 
-    cy.url().should('include', '/public');
     cy.get(`[data-testid=${publishingRequestAccordion}]`).should('be.visible');
     cy.get(`[data-testid=${doiRequestAccordion}]`).should('be.visible');
     cy.checkA11y();

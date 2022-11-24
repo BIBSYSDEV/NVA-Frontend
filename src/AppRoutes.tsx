@@ -36,7 +36,8 @@ export const AppRoutes = () => {
         <LoggedInRoute path={UrlPathTemplate.MyPage} component={MyPagePage} />
 
         {/* CreatorRoutes */}
-        <CreatorRoute exact path={UrlPathTemplate.Registration} component={EditRegistration} />
+        <CreatorRoute exact path={UrlPathTemplate.RegistrationWizard} component={EditRegistration} />
+        <CreatorRoute exact path={UrlPathTemplate.RegistrationNew} component={EditRegistration} />
 
         {/* CuratorRoutes */}
         <CuratorRoute exact path={UrlPathTemplate.Tasks} component={TasksPage} />

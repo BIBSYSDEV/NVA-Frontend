@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
-import { getRegistrationPath } from '../../../utils/urlPaths';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { ErrorList } from '../../registration/ErrorList';
 import { Ticket, TicketStatus } from '../../../types/publication_types/messages.types';
 import { ActionPanelProps } from '../ActionPanel';
@@ -141,7 +141,7 @@ export const PublishingAccordion = ({
               <Button
                 variant="outlined"
                 component={RouterLink}
-                to={`${getRegistrationPath(registration.identifier)}?tab=${firstErrorTab}`}
+                to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
                 endIcon={<EditIcon />}
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
                 {t('registration.public_page.go_back_to_wizard')}

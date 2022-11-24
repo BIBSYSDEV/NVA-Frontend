@@ -169,4 +169,8 @@ export const mockTicketCollection: TicketCollection = {
   ],
 };
 
-export const mockPublishedRegistration = { ...mockRegistration, identifier: 123, status: RegistrationStatus.Published };
+export const mockPublishedRegistration = {
+  ...mockRegistration,
+  identifier: '123',
+  status: RegistrationStatus.Published,
+};

@@ -2,6 +2,7 @@ import { RoleName } from '../../src/types/user.types';
 import { mockTicketCollection } from '../../src/utils/testfiles/mockRegistration';
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { getRegistrationIdentifier } from '../../src/utils/registration-helpers';
+import { getRegistrationLandingPagePath, getRegistrationWizardPath } from '../../src/utils/urlPaths';
 
 describe('Tasks', () => {
   before(() => {
@@ -20,6 +21,7 @@ describe('Tasks', () => {
     const identifier = getRegistrationIdentifier(id);
     cy.get(`[data-testid=message-${identifier}]`).click();
     cy.get(`[data-testid=go-to-registration-${identifier}]`).click();
-    cy.url().should('include', `/registration/${identifier}/public`);
+    cy.url().should('not.include', getRegistrationWizardPath(identifier));
+    cy.url().should('include', getRegistrationLandingPagePath(identifier));
   });
 });

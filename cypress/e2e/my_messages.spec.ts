@@ -1,7 +1,7 @@
 import { RoleName } from '../../src/types/user.types';
 import { mockTicketCollection } from '../../src/utils/testfiles/mockRegistration';
 import { dataTestId } from '../../src/utils/dataTestIds';
-import { UrlPathTemplate } from '../../src/utils/urlPaths';
+import { getRegistrationLandingPagePath, getRegistrationWizardPath, UrlPathTemplate } from '../../src/utils/urlPaths';
 import { getRegistrationIdentifier } from '../../src/utils/registration-helpers';
 
 describe('My messages', () => {
@@ -24,6 +24,7 @@ describe('My messages', () => {
 
     cy.get(`[data-testid=message-${identifier}]`).click();
     cy.get(`[data-testid=go-to-registration-${identifier}]`).click();
-    cy.url().should('include', `/registration/${identifier}/public`);
+    cy.url().should('not.include', getRegistrationWizardPath(identifier));
+    cy.url().should('include', getRegistrationLandingPagePath(identifier));
   });
 });

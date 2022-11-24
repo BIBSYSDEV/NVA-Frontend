@@ -83,7 +83,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               data-testid={dataTestId.header.newRegistrationLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.NewRegistration}>
+              to={UrlPathTemplate.RegistrationNew}>
               <Typography>{t('registration.new_registration')}</Typography>
             </MenuItem>,
             <MenuItem
