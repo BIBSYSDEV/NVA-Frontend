@@ -159,6 +159,13 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiTableHead: {
+        styleOverrides: {
+          root: {
+            fontWeight: 'bold',
+          },
+        },
+      },
       MuiTablePagination: {
         defaultProps: {
           showFirstButton: true,

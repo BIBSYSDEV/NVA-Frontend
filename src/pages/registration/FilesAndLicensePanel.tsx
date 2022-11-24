@@ -180,7 +180,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
                         <TableContainer component={Paper}>
                           <Table sx={alternatingTableRowColor}>
-                            <TableHead sx={{ fontWeight: 600 }}>
+                            <TableHead>
                               <TableRow>
                                 <TableCell>
                                   <Typography fontWeight="bold">{t('common.name')}</Typography>
