@@ -63,6 +63,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   } = useFormikContext<Registration>();
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+  const [isEmbargoModalOpen, setIsEmbargoModalOpen] = useState(false);
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =
@@ -94,6 +95,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const toggleLicenseModal = () => {
     setIsLicenseModalOpen(!isLicenseModalOpen);
+  };
+
+  const toggleEmbargoModal = () => {
+    setIsEmbargoModalOpen(!isEmbargoModalOpen);
   };
 
   const publisherIdentifier =
@@ -198,7 +203,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                     <Tooltip title={t('common.help')}>
                                       <IconButton
                                         data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
-                                        onClick={toggleLicenseModal}>
+                                        onClick={toggleEmbargoModal}>
                                         <HelpOutlineIcon />
                                       </IconButton>
                                     </Tooltip>
@@ -353,6 +358,16 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             )}
           </Box>
         ))}
+      </Modal>
+
+      <Modal
+        headingText={t('registration.files_and_license.embargo')}
+        open={isEmbargoModalOpen}
+        onClose={toggleEmbargoModal}
+        maxWidth="sm">
+        <Box>
+          <Typography>{t('registration.files_and_license.file_publish_date_helper_text')}</Typography>
+        </Box>
       </Modal>
     </Box>
   );

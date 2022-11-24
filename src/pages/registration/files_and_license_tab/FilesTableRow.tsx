@@ -139,13 +139,7 @@ export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldN
                     variant="filled"
                     onBlur={() => !touched && setFieldTouched(field.name)}
                     error={!!error && touched}
-                    helperText={
-                      error && touched ? (
-                        <ErrorMessage name={field.name} />
-                      ) : (
-                        t('registration.files_and_license.file_publish_date_helper_text')
-                      )
-                    }
+                    helperText={<ErrorMessage name={field.name} />}
                   />
                 )}
               />
