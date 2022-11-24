@@ -24,19 +24,16 @@ import { SearchResponse } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
 import { AffiliationHierarchy } from './AffiliationHierarchy';
 
-enum FormikInstitutionUnitFieldNames {
-  SubUnit = 'subunit',
-  Unit = 'unit',
-}
-
 interface OrganizationForm {
   unit: Organization | null;
   subunit: Organization | null;
+  sselectedSuggestedAffiliationId: string;
 }
 
 const initialValuesOrganizationForm: OrganizationForm = {
   unit: null,
   subunit: null,
+  sselectedSuggestedAffiliationId: '',
 };
 
 interface SelectInstitutionFormProps {
@@ -53,41 +50,53 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
     url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('feedback.error.get_institutions'),
   });
-  const [selectedSuggestedAffiliation, setSelectedSuggestedAffiliation] = useState('');
 
   const options = isLoadingInstitutions || !institutions ? [] : institutions.hits;
 
   return (
     <Formik
       initialValues={initialValuesOrganizationForm}
-      onSubmit={(values) => onSubmit((selectedSuggestedAffiliation || values.subunit?.id || values.unit?.id) ?? '')}>
+      onSubmit={(values) => {
+        if (values.sselectedSuggestedAffiliationId) {
+          onSubmit(values.sselectedSuggestedAffiliationId);
+        } else if (values.subunit?.id) {
+          onSubmit(values.subunit.id);
+        } else if (values.unit?.id) {
+          onSubmit(values.unit?.id);
+        }
+      }}>
       {({ isSubmitting, values, setFieldValue, resetForm }: FormikProps<OrganizationForm>) => (
         <Form noValidate>
           {suggestedInstitutions.length > 0 && (
-            <Paper sx={{ p: '1rem', maxHeight: '50vh', overflow: 'auto' }}>
+            <Paper elevation={4} sx={{ p: '1rem', maxHeight: '35vh', overflow: 'auto', mb: '1.5rem' }}>
               <FormControl>
                 <FormLabel>{t('registration.contributors.suggested_affiliations')}</FormLabel>
-                <RadioGroup
-                  sx={{ gap: '0.25rem' }}
-                  value={selectedSuggestedAffiliation}
-                  onChange={(event) => {
-                    setSelectedSuggestedAffiliation(event.target.value);
-                    resetForm();
-                  }}>
-                  {suggestedInstitutions.map((suggestedInstitution) => (
-                    <FormControlLabel
-                      key={suggestedInstitution}
-                      value={suggestedInstitution}
-                      control={<Radio size="small" />}
-                      label={<AffiliationHierarchy unitUri={suggestedInstitution} />}
-                    />
-                  ))}
-                </RadioGroup>
+                <Field name="suggestedAffiliationId">
+                  {({ field }: FieldProps<Organization>) => (
+                    <RadioGroup
+                      sx={{ gap: '0.25rem' }}
+                      {...field}
+                      onChange={(event) => {
+                        setSearchTerm('');
+                        resetForm();
+                        field.onChange(event);
+                      }}>
+                      {suggestedInstitutions.map((suggestedInstitution) => (
+                        <FormControlLabel
+                          key={suggestedInstitution}
+                          value={suggestedInstitution}
+                          control={<Radio size="small" />}
+                          label={<AffiliationHierarchy unitUri={suggestedInstitution} />}
+                        />
+                      ))}
+                    </RadioGroup>
+                  )}
+                </Field>
               </FormControl>
             </Paper>
           )}
-          <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Field name={FormikInstitutionUnitFieldNames.Unit}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <Field name="unit">
               {({ field }: FieldProps<Organization>) => (
                 <Autocomplete
                   {...field}
@@ -109,8 +118,8 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                     }
                   }}
                   onChange={(_, value) => {
+                    resetForm();
                     setFieldValue(field.name, value);
-                    setSelectedSuggestedAffiliation('');
                   }}
                   loading={isLoadingInstitutions}
                   renderInput={(params) => (
@@ -126,7 +135,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
               )}
             </Field>
             {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
-              <Field name={FormikInstitutionUnitFieldNames.SubUnit}>
+              <Field name="subunit">
                 {({ field }: FieldProps<Organization>) => (
                   <Autocomplete
                     options={getSortedSubUnits(values.unit?.hasPart)}
@@ -161,7 +170,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                 variant="contained"
                 type="submit"
                 loading={isSubmitting}
-                disabled={!values.unit && !selectedSuggestedAffiliation}
+                disabled={!values.unit && !values.sselectedSuggestedAffiliationId}
                 data-testid="institution-add-button">
                 {t('common.add')}
               </LoadingButton>
