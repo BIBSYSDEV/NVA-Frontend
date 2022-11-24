@@ -62,7 +62,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
   return (
     <Formik
       initialValues={initialValuesOrganizationForm}
-      onSubmit={(values) => {
+      onSubmit={(values, { setSubmitting }) => {
         if (values.selectedSuggestedAffiliationId) {
           onSubmit(values.selectedSuggestedAffiliationId);
         } else if (values.subunit?.id) {
@@ -78,7 +78,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
               <FormControl>
                 <FormLabel>{t('registration.contributors.suggested_affiliations')}</FormLabel>
                 <Field name={SelectOrganizationFormField.selectedSuggestedAffiliationId}>
-                  {({ field }: FieldProps<Organization>) => (
+                  {({ field }: FieldProps<string>) => (
                     <RadioGroup
                       sx={{ gap: '0.25rem' }}
                       {...field}

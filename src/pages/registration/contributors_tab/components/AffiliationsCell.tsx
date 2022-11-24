@@ -38,23 +38,23 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
     toggleAffiliationModal();
   };
 
-  const addAffiliation = (id: string) => {
-    if (!id) {
+  const addAffiliation = (newAffiliationId: string) => {
+    if (!newAffiliationId) {
       return;
     }
 
     // Avoid adding same unit twice
-    if (affiliations?.some((affiliation) => affiliation.id === id)) {
+    if (affiliations.some((affiliation) => affiliation.id === newAffiliationId)) {
       disptach(setNotification({ message: t('registration.contributors.add_duplicate_affiliation'), variant: 'info' }));
       return;
     }
 
     const addedAffiliation: Institution = {
       type: 'Organization',
-      id,
+      id: newAffiliationId,
     };
 
-    let updatedAffiliations = affiliations ? [...affiliations] : []; // Must spread affiliations in order to keep changes when switching tab
+    let updatedAffiliations = [...affiliations]; // Must spread affiliations in order to keep changes when switching tab
     if (affiliationToVerify) {
       // Verify affiliation
       const affiliationIndex = updatedAffiliations.findIndex(
@@ -82,7 +82,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
         flexDirection: 'column',
         gap: '0.5rem',
       }}>
-      {affiliations?.map((affiliation, index) => (
+      {affiliations.map((affiliation, index) => (
         <Box
           key={affiliation.id ?? index}
           sx={{
@@ -166,12 +166,10 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
         open={!!affiliationToRemove}
         title={t('registration.contributors.confirm_remove_affiliation_title')}
         onAccept={() => {
-          if (affiliations) {
-            setFieldValue(
-              `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
-              affiliations.filter((affiliation) => affiliation.id !== affiliationToRemove?.id)
-            );
-          }
+          setFieldValue(
+            `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
+            affiliations.filter((affiliation) => affiliation.id !== affiliationToRemove?.id)
+          );
           setAffiliationToRemove(null);
         }}
         onCancel={() => setAffiliationToRemove(null)}
