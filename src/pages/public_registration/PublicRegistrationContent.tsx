@@ -25,7 +25,7 @@ import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrat
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
-import { getRegistrationPath } from '../../utils/urlPaths';
+import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 
@@ -69,7 +69,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               data-testid={dataTestId.registrationLandingPage.editButton}
               sx={{ ml: 'auto', color: 'inherit' }}
               component={RouterLink}
-              to={getRegistrationPath(identifier)}>
+              to={getRegistrationWizardPath(identifier)}>
               <EditIcon />
             </IconButton>
           </Tooltip>

@@ -22,7 +22,7 @@ import { deleteRegistration } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
-import { getRegistrationLandingPagePath, getRegistrationPath } from '../../utils/urlPaths';
+import { getRegistrationLandingPagePath, getRegistrationWizardPath } from '../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
@@ -125,7 +125,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                       <Button
                         variant="outlined"
                         component={RouterLink}
-                        to={getRegistrationPath(identifier)}
+                        to={getRegistrationWizardPath(identifier)}
                         startIcon={<EditIcon />}
                         data-testid={`edit-registration-${identifier}`}>
                         {t('common.edit')}
