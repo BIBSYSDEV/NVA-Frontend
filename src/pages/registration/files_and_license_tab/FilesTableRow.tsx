@@ -1,10 +1,10 @@
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
   FormHelperText,
+  IconButton,
   ListItemIcon,
   ListItemText,
   MenuItem,
@@ -26,6 +26,7 @@ import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { DatePicker } from '@mui/x-date-pickers';
+import { TruncatableTypography } from '../../../components/TruncatableTypography';
 
 interface FilesTableProps {
   file: AssociatedFile;
@@ -42,10 +43,14 @@ export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldN
 
   return (
     <TableRow key={file.identifier}>
-      <TableCell>{file.name}</TableCell>
+      <TableCell sx={{ wordBreak: 'break-word' }}>
+        <TruncatableTypography lines={3}>{file.name}</TruncatableTypography>
+      </TableCell>
       <TableCell align="center">
         <Tooltip title={t('common.delete')}>
-          <Button color="error" startIcon={<CancelIcon />} onClick={toggleOpenConfirmDialog} />
+          <IconButton onClick={toggleOpenConfirmDialog}>
+            <CancelIcon color="error" />
+          </IconButton>
         </Tooltip>
         <ConfirmDialog
           open={openConfirmDialog}
