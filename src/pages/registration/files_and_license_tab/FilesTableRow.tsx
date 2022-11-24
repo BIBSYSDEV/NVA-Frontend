@@ -119,10 +119,10 @@ export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldN
       <TableCell>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
           {({ field, meta: { error, touched } }: FieldProps) => (
-            <Box sx={{ gridArea: 'date', minWidth: '6rem' }}>
+            <Box sx={{ gridArea: 'date', minWidth: '7.5rem' }}>
               <DatePicker
                 {...field}
-                label={'dd.mm.yyyy'}
+                label={t('registration.files_and_license.date_month_year')}
                 PopperProps={{
                   'aria-label': t('registration.files_and_license.file_publish_date'),
                 }}

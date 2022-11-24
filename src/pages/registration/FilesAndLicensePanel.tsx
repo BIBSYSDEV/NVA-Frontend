@@ -190,7 +190,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   <Typography fontWeight="bold">{t('registration.files_and_license.size')}</Typography>
                                 </TableCell>
                                 <TableCell>
-                                  <Typography fontWeight="bold">{'Administrative agreement'}</Typography>
+                                  <Typography fontWeight="bold">
+                                    {t('registration.files_and_license.administrative_agreement')}
+                                  </Typography>
                                 </TableCell>
                                 <TableCell>
                                   <Typography fontWeight="bold">{t('common.version')}</Typography>
