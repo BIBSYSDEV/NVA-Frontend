@@ -147,7 +147,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
             {t('common.name')}: <b>{authorName}</b>
           </Typography>
           {affiliationToVerify && (
-            <Typography>
+            <Typography paragraph>
               {t('registration.contributors.prefilled_affiliation')}: <b>{affiliationToVerify}</b>
             </Typography>
           )}
