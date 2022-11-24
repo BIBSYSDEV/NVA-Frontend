@@ -70,6 +70,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
         } else if (values.unit?.id) {
           onSubmit(values.unit?.id);
         }
+        setSubmitting(false);
       }}>
       {({ isSubmitting, values, setFieldValue, resetForm }: FormikProps<OrganizationForm>) => (
         <Form noValidate>
