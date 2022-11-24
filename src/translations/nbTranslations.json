@@ -833,7 +833,9 @@
       "prefilled_name": "Forhåndsutfylt navn",
       "remove_affiliation": "Fjern tilhørighet",
       "remove_contributor": "Fjern bidragsyter",
+      "search_for_institution": "Søk etter institusjon",
       "select_contributor_type": "Velg type bidragsyter",
+      "suggested_affiliations": "Foreslåtte tilhørigheter",
       "type": "Bidragstype",
       "types": {
         "AcademicCoordinator": "Faglig ansvarlig",
