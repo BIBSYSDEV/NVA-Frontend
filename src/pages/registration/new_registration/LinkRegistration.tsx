@@ -11,7 +11,7 @@ import { LinkRegistrationForm } from './LinkRegistrationForm';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { Doi } from '../../../types/registration.types';
 import { setNotification } from '../../../redux/notificationSlice';
-import { getRegistrationPath } from '../../../utils/urlPaths';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
@@ -32,7 +32,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     if (!doi) {
       return;
     }
-    history.push(getRegistrationPath(doi.identifier), { highestValidatedTab: -1 });
+    history.push(getRegistrationWizardPath(doi.identifier), { highestValidatedTab: -1 });
   };
 
   const handleSearch = async (doiUrl: string) => {

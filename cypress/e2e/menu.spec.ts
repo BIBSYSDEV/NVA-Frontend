@@ -89,7 +89,7 @@ describe('Menu', () => {
   });
 
   it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
-    cy.visit(UrlPathTemplate.NewRegistration);
+    cy.visit(UrlPathTemplate.RegistrationNew);
     cy.mocklogin();
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');

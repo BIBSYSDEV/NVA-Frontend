@@ -9,7 +9,7 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { RootState } from '../../redux/store';
-import { getRegistrationPath, UrlPathTemplate } from '../../utils/urlPaths';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { GeneralMenu } from './GeneralMenu';
@@ -77,7 +77,7 @@ export const Header = () => {
             color="inherit"
             component={RouterLink}
             data-testid={dataTestId.header.newRegistrationLink}
-            to={getRegistrationPath()}
+            to={UrlPathTemplate.RegistrationNew}
             startIcon={<AddCircleIcon />}>
             {t('registration.new_registration')}
           </Button>
