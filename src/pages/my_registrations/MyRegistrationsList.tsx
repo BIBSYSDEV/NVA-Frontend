@@ -27,6 +27,7 @@ import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { getRegistrationIdentifier, getTitleString } from '../../utils/registration-helpers';
+import { TruncatableTypography } from '../../components/TruncatableTypography';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -104,7 +105,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
               return (
                 <TableRow key={identifier}>
                   <TableCell component="th" scope="row" data-testid={`registration-title-${identifier}`}>
-                    <Typography>{getTitleString(registration.mainTitle)}</Typography>
+                    <TruncatableTypography>{getTitleString(registration.mainTitle)}</TruncatableTypography>
                   </TableCell>
                   <TableCell data-testid={`registration-status-${identifier}`}>
                     <Typography>{t(`registration.status.${registration.status}` as any)}</Typography>
