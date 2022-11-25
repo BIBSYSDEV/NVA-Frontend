@@ -5,11 +5,7 @@ import { LandingPageAccordion } from '../../../components/landing_page/LandingPa
 import { RootState } from '../../../redux/store';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import {
-  userIsOwnerOfRegistration,
-  userIsCuratorForRegistration,
-  getAssociatedFiles,
-} from '../../../utils/registration-helpers';
+import { getAssociatedFiles, userCanEditRegistration } from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 
@@ -19,9 +15,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
-  const userIsOwner = userIsOwnerOfRegistration(user, registration);
-  const userIsCurator = userIsCuratorForRegistration(user, registration);
-  const userIsRegistrationAdmin = userIsOwner || userIsCurator;
+  const userIsRegistrationAdmin = userCanEditRegistration(user, registration);
 
   const showRegistrationHasFilesAwaitingApproval =
     registration.status === RegistrationStatus.Published &&

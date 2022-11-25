@@ -72,10 +72,10 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
 
       <AccordionDetails>
         <LinkRegistrationForm handleSearch={handleSearch} />
-        {noHit && <Typography>{t('common.no_hits')}</Typography>}
+        {noHit && <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>}
         {doi && (
           <div data-testid={dataTestId.registrationWizard.new.linkMetadata}>
-            <Typography variant="h3" gutterBottom>
+            <Typography sx={{ mt: '1rem' }} variant="h3" gutterBottom>
               {t('common.registration')}:
             </Typography>
             <Typography>{doi.title}</Typography>
