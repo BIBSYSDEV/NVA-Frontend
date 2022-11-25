@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Button,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -78,7 +79,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
 
   return (
     <>
-      <TableContainer>
+      <TableContainer component={Paper}>
         <Table sx={alternatingTableRowColor}>
           <caption>
             <span style={visuallyHidden}>{t('common.registrations')}</span>

@@ -1,6 +1,16 @@
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { visuallyHidden } from '@mui/utils';
 import { SimpleCustomerInstitution } from '../../../types/customerInstitution.types';
@@ -16,11 +26,9 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
   const { t } = useTranslation();
 
   return (
-    <TableContainer>
+    <TableContainer component={Paper}>
       <Table data-testid={dataTestId.basicData.customers.customerList} sx={alternatingTableRowColor}>
-        <caption>
-          <span style={visuallyHidden}>{t('basic_data.institutions.admin_institutions')}</span>
-        </caption>
+        <caption style={visuallyHidden}>{t('basic_data.institutions.admin_institutions')}</caption>
         <TableHead>
           <TableRow>
             <TableCell>

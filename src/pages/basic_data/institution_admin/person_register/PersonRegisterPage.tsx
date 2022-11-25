@@ -1,4 +1,5 @@
 import {
+  Paper,
   Skeleton,
   Table,
   TableBody,
@@ -80,7 +81,7 @@ export const PersonRegisterPage = () => {
         <Typography>{t('basic_data.person_register.no_employees_found')}</Typography>
       ) : (
         <>
-          <TableContainer>
+          <TableContainer component={Paper}>
             <Table size="small" sx={alternatingTableRowColor}>
               <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
               <TableHead>
