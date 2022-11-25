@@ -35,7 +35,7 @@ interface FilesTableRowProps {
   baseFieldName: string;
 }
 
-export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldName }: FilesTableRowProps) => {
+export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
