@@ -42,7 +42,7 @@ export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldN
   const { setFieldValue, setFieldTouched } = useFormikContext();
 
   return (
-    <TableRow key={file.identifier} data-testid={dataTestId.registrationWizard.files.fileRow}>
+    <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
       <TableCell sx={{ wordBreak: 'break-word' }}>
         <TruncatableTypography>{file.name}</TruncatableTypography>
       </TableCell>

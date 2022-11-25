@@ -239,6 +239,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
                                 return (
                                   <FilesTableRow
+                                    key={file.identifier}
                                     file={file}
                                     removeFile={() => {
                                       const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
