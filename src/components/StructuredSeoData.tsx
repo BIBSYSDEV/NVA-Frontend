@@ -10,11 +10,15 @@ export const StructuredSeoData = ({ uri }: StructuredSeoDataProps) => {
 
   useEffect(() => {
     const fetchSeoData = async () => {
-      const fetchedSeoData = await fetch(uri, {
-        headers: { Accept: 'application/vnd.schemaorg.ld+json' },
-      });
-      const structuredDataText = await fetchedSeoData.text();
-      setSeoData(structuredDataText);
+      try {
+        const fetchedSeoData = await fetch(uri, {
+          headers: { Accept: 'application/vnd.schemaorg.ld+json' },
+        });
+        const structuredDataText = await fetchedSeoData.text();
+        setSeoData(structuredDataText);
+      } catch {
+        // Ignore errors
+      }
     };
 
     if (uri) {
