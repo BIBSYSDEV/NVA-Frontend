@@ -28,24 +28,25 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { DatePicker } from '@mui/x-date-pickers';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 
-interface FilesTableProps {
+interface FilesTableRowProps {
   file: AssociatedFile;
   removeFile: () => void;
   toggleLicenseModal: () => void;
   baseFieldName: string;
 }
 
-export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldName }: FilesTableProps) => {
+export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldName }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
   const { setFieldValue, setFieldTouched } = useFormikContext();
 
   return (
-    <TableRow key={file.identifier}>
+    <TableRow key={file.identifier} data-testid={dataTestId.registrationWizard.files.fileRow}>
       <TableCell sx={{ wordBreak: 'break-word' }}>
-        <TruncatableTypography lines={3}>{file.name}</TruncatableTypography>
+        <TruncatableTypography>{file.name}</TruncatableTypography>
       </TableCell>
+
       <TableCell align="center">
         <Tooltip title={t('common.delete')}>
           <IconButton onClick={toggleOpenConfirmDialog}>
@@ -65,7 +66,8 @@ export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldN
           </Typography>
         </ConfirmDialog>
       </TableCell>
-      <TableCell>{prettyBytes(file.size)}</TableCell>
+
+      <TableCell align="center">{prettyBytes(file.size)}</TableCell>
 
       <TableCell align="center">
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
@@ -123,7 +125,7 @@ export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldN
       <TableCell>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
           {({ field, meta: { error, touched } }: FieldProps) => (
-            <Box sx={{ gridArea: 'date', minWidth: '7.5rem' }}>
+            <Box sx={{ minWidth: '7.5rem' }}>
               <DatePicker
                 {...field}
                 label={t('registration.files_and_license.date_month_year')}

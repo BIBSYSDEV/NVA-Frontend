@@ -348,7 +348,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.fixture('img.jpg').as('file');
     cy.get('input[type=file]').first().selectFile('@file', { force: true });
-    cy.get('[data-testid=uploaded-file-card]').should('be.visible');
+    cy.get('[data-testid=uploaded-file-row]').should('be.visible');
     cy.get('p.Mui-error').should('not.exist');
 
     // Lincense field

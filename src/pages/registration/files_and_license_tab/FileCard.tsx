@@ -45,7 +45,7 @@ export const FileCard = ({ file, removeFile, baseFieldName, toggleLicenseModal }
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   return (
-    <Paper sx={{ padding: '1rem' }} elevation={3} data-testid={dataTestId.registrationWizard.files.fileCard}>
+    <Paper sx={{ padding: '1rem' }} elevation={3} /* data-testid={dataTestId.registrationWizard.files.fileCard} */>
       <Box sx={{ display: 'flex', alignItems: 'start', gap: '2rem' }}>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`}>
           {({ field, meta: { error, touched } }: FieldProps) => (

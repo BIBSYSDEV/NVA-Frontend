@@ -238,26 +238,24 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                 });
 
                                 return (
-                                  <>
-                                    <FilesTableRow
-                                      file={file}
-                                      removeFile={() => {
-                                        const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                                        const remainingFiles = uppy
-                                          .getFiles()
-                                          .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                                        uppy.setState({ files: remainingFiles });
-                                        remove(associatedFileIndex);
+                                  <FilesTableRow
+                                    file={file}
+                                    removeFile={() => {
+                                      const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                                      const remainingFiles = uppy
+                                        .getFiles()
+                                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                                      uppy.setState({ files: remainingFiles });
+                                      remove(associatedFileIndex);
 
-                                        if (associatedArtifactsBeforeRemoval === 1) {
-                                          // Ensure field is set to touched even if it's empty
-                                          setFieldTouched(name);
-                                        }
-                                      }}
-                                      toggleLicenseModal={toggleLicenseModal}
-                                      baseFieldName={`${name}[${associatedFileIndex}]`}
-                                    />
-                                  </>
+                                      if (associatedArtifactsBeforeRemoval === 1) {
+                                        // Ensure field is set to touched even if it's empty
+                                        setFieldTouched(name);
+                                      }
+                                    }}
+                                    toggleLicenseModal={toggleLicenseModal}
+                                    baseFieldName={`${name}[${associatedFileIndex}]`}
+                                  />
                                 );
                               })}
                             </TableBody>
