@@ -86,20 +86,10 @@ export const PersonRegisterPage = () => {
               <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
               <TableHead>
                 <TableRow>
-                  <TableCell>
-                    <Typography fontWeight="bold">{t('basic_data.person_register.person_id')}</Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography fontWeight="bold">
-                      {t('basic_data.person_register.national_identity_number')}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography fontWeight="bold">{t('common.name')}</Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography fontWeight="bold">{t('common.employments')}</Typography>
-                  </TableCell>
+                  <TableCell>{t('basic_data.person_register.person_id')}</TableCell>
+                  <TableCell>{t('basic_data.person_register.national_identity_number')}</TableCell>
+                  <TableCell>{t('common.name')}</TableCell>
+                  <TableCell>{t('common.employments')}</TableCell>
                   <TableCell />
                 </TableRow>
               </TableHead>

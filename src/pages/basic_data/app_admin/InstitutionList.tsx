@@ -31,15 +31,9 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
         <caption style={visuallyHidden}>{t('basic_data.institutions.admin_institutions')}</caption>
         <TableHead>
           <TableRow>
-            <TableCell>
-              <Typography fontWeight="bold">{t('common.name')}</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography fontWeight="bold">{t('common.date')}</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography fontWeight="bold">{t('common.actions')}</Typography>
-            </TableCell>
+            <TableCell>{t('common.name')}</TableCell>
+            <TableCell>{t('common.date')}</TableCell>
+            <TableCell>{t('common.actions')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
