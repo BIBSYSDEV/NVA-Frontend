@@ -48,7 +48,7 @@ export const FilesTableRow = ({ file, removeFile, toggleLicenseModal, baseFieldN
       </TableCell>
 
       <TableCell align="center">
-        <Tooltip title={t('common.delete')}>
+        <Tooltip title={t('registration.files_and_license.remove_file')}>
           <IconButton onClick={toggleOpenConfirmDialog}>
             <CancelIcon color="error" />
           </IconButton>
