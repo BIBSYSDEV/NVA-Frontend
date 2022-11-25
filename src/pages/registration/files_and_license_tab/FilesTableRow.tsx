@@ -17,15 +17,15 @@ import {
   Typography,
 } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
-import prettyBytes from 'pretty-bytes';
+import { DatePicker } from '@mui/x-date-pickers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import prettyBytes from 'pretty-bytes';
+import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
 import { AssociatedFile, LicenseNames, licenses } from '../../../types/associatedArtifact.types';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
-import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { DatePicker } from '@mui/x-date-pickers';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 
 interface FilesTableRowProps {
