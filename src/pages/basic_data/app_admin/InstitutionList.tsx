@@ -6,6 +6,7 @@ import { visuallyHidden } from '@mui/utils';
 import { SimpleCustomerInstitution } from '../../../types/customerInstitution.types';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { alternatingTableRowColor } from '../../../themes/mainTheme';
 
 interface InstitutionListProps {
   institutions: SimpleCustomerInstitution[];
@@ -16,7 +17,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
 
   return (
     <TableContainer>
-      <Table data-testid={dataTestId.basicData.customers.customerList}>
+      <Table data-testid={dataTestId.basicData.customers.customerList} sx={alternatingTableRowColor}>
         <caption>
           <span style={visuallyHidden}>{t('basic_data.institutions.admin_institutions')}</span>
         </caption>

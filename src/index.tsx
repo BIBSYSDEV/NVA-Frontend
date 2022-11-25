@@ -14,11 +14,8 @@ import { USE_MOCK_DATA } from './utils/constants';
 import { BasicErrorBoundary } from './components/ErrorBoundary';
 
 // Fonts
-import '@fontsource/barlow/400.css';
-import '@fontsource/barlow/500.css';
-import '@fontsource/barlow/600.css';
-import '@fontsource/barlow/700.css';
-import '@fontsource/crimson-text/400.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/700.css';
 
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();

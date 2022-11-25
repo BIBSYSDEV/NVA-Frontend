@@ -12,7 +12,6 @@ export interface User {
   nationalIdNumber: string;
   createdDate?: string;
   cristinId?: string;
-  name: string;
   customerId?: string;
   customerShortName?: string;
   topOrgCristinId?: string;

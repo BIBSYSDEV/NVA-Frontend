@@ -34,7 +34,7 @@ const StyledSideMenuHeader = styled(StyledPaperHeader)({
 });
 
 export const SideNav = ({ children, ...props }: PropsWithChildren<Record<never, never>>) => (
-  <Box component="nav" sx={{ bgcolor: 'background.paper' }} {...props}>
+  <Box component="nav" sx={{ bgcolor: 'secondary.main' }} {...props}>
     {children}
   </Box>
 );
@@ -50,7 +50,7 @@ export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
   return (
     <StyledSideMenuHeader>
       {IconComponent && <IconComponent fontSize="large" />}
-      <Typography component="h1" variant="h2" id={id} sx={{ color: 'inherit' }}>
+      <Typography component="h1" variant="h3" id={id} sx={{ color: 'inherit' }}>
         {text}
       </Typography>
     </StyledSideMenuHeader>

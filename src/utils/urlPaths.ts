@@ -23,15 +23,15 @@ export enum UrlPathTemplate {
   MyPageMyProfile = '/my-page/my-profile',
   MyPageRegistrations = '/my-page/registrations',
   MyPageResearchProfile = '/my-page/research-profile',
-  NewRegistration = '/registration',
   PrivacyPolicy = '/privacy-policy',
   Projects = '/projects',
-  Registration = '/registration/:identifier?',
-  RegistrationLandingPage = '/registration/:identifier/public',
+  RegistrationLandingPage = '/registration/:identifier',
+  RegistrationNew = '/registration',
+  RegistrationWizard = '/registration/:identifier/edit',
   ResearchProfile = '/research-profile',
   Search = '/search',
+  Tasks = '/tasks',
   Wildcard = '*',
-  Worklist = '/worklist',
 }
 
 export const getRegistrationLandingPagePath = (identifier: string) =>
@@ -40,10 +40,8 @@ export const getRegistrationLandingPagePath = (identifier: string) =>
 export const getDuplicateCheckPagePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportDuplicateCheck.replace(':identifier', encodeURIComponent(identifier));
 
-export const getRegistrationPath = (identifier?: string) =>
-  identifier
-    ? UrlPathTemplate.Registration.replace(':identifier?', encodeURIComponent(identifier))
-    : UrlPathTemplate.Registration.replace('/:identifier?', '');
+export const getRegistrationWizardPath = (identifier: string) =>
+  UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
 
 export const getResearchProfilePath = (userId: string) =>
   `${UrlPathTemplate.ResearchProfile}?id=${encodeURIComponent(userId)}`;

@@ -115,7 +115,6 @@
     "help": "Help",
     "institution": "Institution",
     "institutions": "Institutions",
-    "language": "Language",
     "last_name": "Last name",
     "link": "Link",
     "loading": "Loading",
@@ -810,9 +809,9 @@
   "registration": {
     "contributors": {
       "add_affiliation": "Add affiliation",
-      "add_as_role": "Add {{role}}",
+      "add_contributor": "Add contributor",
       "add_duplicate_affiliation": "Affiliation is already added",
-      "add_self_as_role": "Add me as {{- role}}",
+      "add_self_as_contributor": "Add me as contributor",
       "add_unverified_contributor": "Add a non-verified contributor.",
       "authors": "Authors",
       "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
@@ -823,8 +822,7 @@
       "contributor_already_added": "Chosen contributor is already added",
       "corresponding": "Corresponding",
       "department": "Department",
-      "editors": "Editors",
-      "filter": "Filter {{role}}",
+      "invalid_role": "The contributor must have a role that is valid for this resource type to be displayed for other users",
       "known_author_identity": "Connected author identity",
       "must_select_type_first": "You must select resource type before you can add contributors.",
       "no_affiliations_found": "No affiliations found",
@@ -834,9 +832,10 @@
       "prefilled_affiliation": "Prefilled affiliation",
       "prefilled_name": "Prefilled name",
       "remove_affiliation": "Remove affiliation",
-      "remove_role": "Remove {{- role}}",
+      "remove_contributor": "Remove contributor",
+      "search_for_institution": "Search for institution",
       "select_contributor_type": "Select contributor type",
-      "supervisors": "Supervisors",
+      "suggested_affiliations": "Suggested affiliations",
       "type": "Contributor type",
       "types": {
         "AcademicCoordinator": "Academic coordinator",
@@ -961,7 +960,7 @@
       "message_to_curator": "Message to curator",
       "other_contributors_one": "(+{{count}} other)",
       "other_contributors_other": "(+{{count}} others)",
-      "other_related_registrations": "Andre related registrations",
+      "other_related_registrations": "Other related registrations",
       "participants_one": "{{count}} participant",
       "participants_other": "{{count}} participants",
       "preview_of": "Preview of {{fileName}}",
@@ -1229,6 +1228,7 @@
         "search_for_book_of_abstracts": "Search for the book of abstracts where the abstract is published",
         "search_for_report": "Search for the report where the chapter is published"
       },
+      "click_to_change_resource_type": "Click on selected resource type to change it",
       "content": "Content",
       "content_types": {
         "AcademicArticle": "Academic article",
@@ -1253,7 +1253,6 @@
       },
       "date_from": "Date from",
       "date_to": "Date to",
-      "form": "Form",
       "isbn": "ISBN",
       "issn": "ISSN",
       "issue": "Issue",
@@ -1282,14 +1281,15 @@
       "number_of_pages": "Total number of pages",
       "nvi": {
         "applicable": "The publication can be included in the Norwegian Science Index",
-        "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (Level can be changed before this year's reporting deadline so that the publication can be included in the Norwegian Science Index)"
+        "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (Level can be changed before this year's reporting deadline so that the publication can be included in the Norwegian Science Index)",
+        "can_give_publication_points": "Can give publication points"
       },
       "online_issn": "Online ISSN",
       "or": "Or",
       "organizer": "Organizer",
       "original_article": "Original article",
       "original_article_title": "Title on article",
-      "pages": "Pages",
+      "page": "Page",
       "pages_from": "Pages from",
       "pages_to": "to",
       "place_for_event": "Place for event",
@@ -1324,10 +1324,12 @@
         "search_for_related_registrations": "Search for related registrations",
         "search_for_related_registrations_helper": "Choose among published registrations"
       },
+      "resource_type": "Resource type",
       "search_for_journal": "Search for journals",
       "search_for_original_article": "Search for original article",
       "search_for_publisher": "Search for publisher",
       "search_for_series": "Search for series",
+      "select_resource_type": "Select resource type",
       "series": "Series",
       "series_info": "If the publication is part of a series",
       "series_number": "Series number",
@@ -1363,8 +1365,8 @@
     "sort_by_published_date_asc": "Publish date (oldest first)",
     "sort_by_published_date_desc": "Publish date (newest first)"
   },
-  "worklist": {
+  "tasks": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "worklist": "Worklist"
+    "tasks": "Tasks"
   }
 }

@@ -4,7 +4,7 @@ import { PublisherField } from '../components/PublisherField';
 import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
 
 interface DegreeFormProps {
-  subType: DegreeType;
+  subType: string;
 }
 
 export const DegreeForm = ({ subType }: DegreeFormProps) => (

@@ -16,7 +16,7 @@ export const UserInfo = ({ user }: UserInfoProps) => {
         {t('my_page.my_profile.heading.user_info')}
       </Typography>
       <LabelTextLine dataTestId="user-name" label={t('common.name')}>
-        {user.name}
+        {user.givenName} {user.familyName}
       </LabelTextLine>
       <LabelTextLine dataTestId="user-id" label={t('my_page.my_profile.id')}>
         {user.feideId}

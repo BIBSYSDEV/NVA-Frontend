@@ -37,7 +37,7 @@ const Dashboard = () => {
         <title>{t('common.start_page')}</title>
       </Helmet>
       {showBanner && (
-        <Box sx={{ bgcolor: 'primary.dark', p: '1rem 0.5rem', 'h1,p,li,a,svg': { color: 'white' }, width: '100%' }}>
+        <Box sx={{ bgcolor: 'secondary.dark', p: '1rem 0.5rem', width: '100%' }}>
           <Box
             sx={{
               gridArea: 'tagline',
@@ -51,9 +51,6 @@ const Dashboard = () => {
             <Typography
               variant="h1"
               sx={{
-                fontFamily: "'Barlow', sans-serif",
-                fontWeight: 'bold',
-                maxWidth: '40rem',
                 gridArea: 'text-tagline',
                 fontSize: { xs: '2rem', sm: '3rem' },
               }}>
@@ -91,11 +88,7 @@ const Dashboard = () => {
               <AboutContent />
             </Collapse>
             <Box sx={{ mt: '1rem', gridArea: 'button' }}>
-              <Button
-                color="secondary"
-                variant="contained"
-                data-testid={dataTestId.startPage.readMoreButton}
-                onClick={toggleReadMore}>
+              <Button variant="contained" data-testid={dataTestId.startPage.readMoreButton} onClick={toggleReadMore}>
                 {readMore ? t('common.read_less_about_nva') : t('common.read_more_about_nva')}
               </Button>
             </Box>

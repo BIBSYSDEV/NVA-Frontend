@@ -55,7 +55,7 @@ export const dataTestId = {
     myPageLink: 'my-page-link',
     newRegistrationLink: 'new-registration',
     privacyLink: 'privacy-link',
-    worklistLink: 'worklist-link',
+    tasksLink: 'tasks-link',
   },
   institutionAdmin: {
     archiveNameField: 'archive-field',
@@ -136,7 +136,8 @@ export const dataTestId = {
   registrationWizard: {
     contributors: {
       addAffiliationButton: 'button-add-affiliation',
-      addContributorButton: (role: string) => `add-${role}`,
+      addContributorButton: 'add-contributor',
+      addSelectedAffiliationButton: 'add-selected-affiliation-button',
       addSelfButton: 'add-self-button',
       addUnverifiedContributorButton: 'add-unverified-contributor-button',
       authorRadioButton: 'author-radio-button',
@@ -223,6 +224,7 @@ export const dataTestId = {
       awardRanking: 'artistic-award-ranking',
       broadcastPublisher: 'artistic-broadcast-publisher',
       cinemaPlace: 'artistic-cinema-place',
+      closeResourceTypeSelectorButton: 'close-resource-type-selector-button',
       competitionDescription: 'artistic-competition-description',
       competitionName: 'artistic-competition-name',
       compliesWithField: 'complies-with-field',
@@ -233,6 +235,7 @@ export const dataTestId = {
       concertProgramComposer: 'concert-program-composer',
       concertProgramIsPremiere: 'concert-program-is-premiere',
       concertProgramRemove: 'concert-program-remove',
+      confirmDatasetTypeDialog: 'research-data-confirm-dialog',
       contentField: 'content-field',
       contentValue: (value: string) => `content-value-${value.toLowerCase()}`,
       corrigendumForField: 'corrigendum-for-field',
@@ -280,6 +283,7 @@ export const dataTestId = {
       relatedRegistrationLink: (value: string) => `related-registration-link-${value}`,
       removePublisherButton: 'remove-publisher-button',
       removeRelationButton: (value: string) => (value ? `remove-relation-button-${value}` : 'remove-relation-button'),
+      resourceTypeChip: (type: string) => `resource-type-chip-${type}`,
       scientificSubjectField: 'scientific-subject-field',
       scoreEnsemble: 'score-ensemble',
       scoreMovements: 'score-movements',
