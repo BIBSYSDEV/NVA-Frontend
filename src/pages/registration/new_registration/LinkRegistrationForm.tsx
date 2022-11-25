@@ -3,14 +3,23 @@ import { useTranslation } from 'react-i18next';
 import { TextField, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { LoadingButton } from '@mui/lab';
-import { doiValidationSchema, isValidUrl } from '../../../utils/validation/doiSearchValidation';
+import * as Yup from 'yup';
+import { isValidUrl } from '../../../utils/general-helpers';
+
+enum LinkRegistrationFormFieldName {
+  Doi = 'doi',
+}
+
+const doiValidationSchema = Yup.object({
+  [LinkRegistrationFormFieldName.Doi]: Yup.string().trim().required(),
+});
 
 interface DoiFormValues {
-  doiUrl: string;
+  [LinkRegistrationFormFieldName.Doi]: string;
 }
 
 const emptyDoiFormValues: DoiFormValues = {
-  doiUrl: '',
+  [LinkRegistrationFormFieldName.Doi]: '',
 };
 
 const doiUrlBase = 'https://doi.org/';
@@ -25,14 +34,14 @@ export const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps
   const { t } = useTranslation();
 
   const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
-    let doiUrl = values.doiUrl.trim().toLowerCase();
+    let doiUrl = values.doi.trim().toLowerCase();
     if (!isValidUrl(doiUrl)) {
       const regexMatch = doiRegExp.exec(doiUrl);
       if (regexMatch && regexMatch.length > 0) {
         doiUrl = `${doiUrlBase}${regexMatch[0]}`;
       }
     }
-    setValues({ doiUrl });
+    setValues({ doi: doiUrl });
     await handleSearch(doiUrl);
   };
 
@@ -41,7 +50,7 @@ export const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps
       {({ isSubmitting }) => (
         <Form noValidate>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Field name="doiUrl">
+            <Field name={LinkRegistrationFormFieldName.Doi}>
               {({ field, meta: { error, touched } }: FieldProps<string>) => (
                 <TextField
                   sx={{ mr: '1rem' }}
