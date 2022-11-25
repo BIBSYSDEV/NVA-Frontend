@@ -473,7 +473,7 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
   }
 };
 
-export const userIsOwnerOfRegistration = (user: User | null, registration: Registration) =>
+const userIsOwnerOfRegistration = (user: User | null, registration: Registration) =>
   !!user?.isCreator && !!user.nvaUsername && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
