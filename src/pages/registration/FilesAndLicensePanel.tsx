@@ -195,7 +195,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   </Typography>
                                 </TableCell>
                                 <TableCell>
-                                  <Typography fontWeight="bold">{t('common.version')}</Typography>
+                                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                    <Typography fontWeight="bold">{t('common.version')}</Typography>
+                                    <Typography sx={{ color: 'error.main' }}>*</Typography>
+                                  </Box>
                                 </TableCell>
                                 <TableCell>
                                   <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>

@@ -43,7 +43,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
 
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
-      <TableCell sx={{ wordBreak: 'break-word' }}>
+      <TableCell sx={{ wordBreak: 'break-word', minWidth: '8rem' }}>
         <TruncatableTypography>{file.name}</TruncatableTypography>
       </TableCell>
 
@@ -125,10 +125,10 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
       <TableCell>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
           {({ field, meta: { error, touched } }: FieldProps) => (
-            <Box sx={{ minWidth: '7.5rem' }}>
+            <Box sx={{ minWidth: '12rem' }}>
               <DatePicker
                 {...field}
-                label={t('registration.files_and_license.date_month_year')}
+                label={t('registration.files_and_license.file_publish_date')}
                 PopperProps={{
                   'aria-label': t('registration.files_and_license.file_publish_date'),
                 }}
