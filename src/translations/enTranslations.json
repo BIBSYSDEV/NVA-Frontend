@@ -921,7 +921,6 @@
       "administrative_agreement": "Administrative agreement",
       "administrative_contract": "Internal file that should never be published. E.g. author agreement or other documentation for the registered result",
       "conditions_for_using_file": "Terms of use",
-      "date_month_year": "dd.mm.yyyy",
       "embargo": "Embargo",
       "file_publish_date": "Postponed publication",
       "file_publish_date_helper_text": "File is locked until the specified date",
