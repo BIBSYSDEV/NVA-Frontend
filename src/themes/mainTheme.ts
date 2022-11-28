@@ -166,7 +166,9 @@ export const mainTheme = createTheme(
       MuiTableHead: {
         styleOverrides: {
           root: {
-            fontWeight: 'bold',
+            th: {
+              fontWeight: 600,
+            },
           },
         },
       },
