@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
+import { AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink } from '../../registration-helpers';
 
 const associatedArtifactErrorMessage = {
@@ -21,26 +22,22 @@ export const associatedFileValidationSchema = Yup.object({
   type: Yup.string(),
 
   // File validation
-  administrativeAgreement: Yup.boolean().nullable(),
   embargoDate: Yup.date()
     .nullable()
-    .when(['type', 'administrativeAgreement'], {
-      is: (type: string, administrativeAgreement: boolean) =>
-        associatedArtifactIsFile({ type }) && administrativeAgreement === false,
+    .when('type', {
+      is: (type: AssociatedFileType) => associatedArtifactIsFile({ type }) && type !== 'UnpublishableFile',
       then: (schema) => schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid),
     }),
   publisherAuthority: Yup.boolean()
     .nullable()
-    .when(['type', 'administrativeAgreement'], {
-      is: (type: string, administrativeAgreement: boolean) =>
-        associatedArtifactIsFile({ type }) && administrativeAgreement === false,
+    .when('type', {
+      is: (type: AssociatedFileType) => associatedArtifactIsFile({ type }) && type !== 'UnpublishableFile',
       then: (schema) => schema.required(associatedArtifactErrorMessage.fileVersionRequired),
     }),
   license: Yup.object()
     .nullable()
-    .when(['type', 'administrativeAgreement'], {
-      is: (type: string, administrativeAgreement: boolean) =>
-        associatedArtifactIsFile({ type }) && administrativeAgreement === false,
+    .when('type', {
+      is: (type: AssociatedFileType) => associatedArtifactIsFile({ type }) && type !== 'UnpublishableFile',
       then: (schema) => schema.required(associatedArtifactErrorMessage.licenseRequired),
     }),
 

@@ -29,7 +29,6 @@ export const mockRegistration: JournalRegistration = {
       name: 'filename.pdf',
       size: 10,
       mimeType: '',
-      administrativeAgreement: false,
       publisherAuthority: false,
       embargoDate: null,
       license: null,

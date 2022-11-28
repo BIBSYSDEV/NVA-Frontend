@@ -79,13 +79,14 @@ interface License {
   link: string;
 }
 
+export type AssociatedFileType = 'File' | 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
+
 export interface AssociatedFile {
-  type: 'File' | 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
+  type: AssociatedFileType;
   identifier: string;
   name: string;
   size: number;
   mimeType: string;
-  administrativeAgreement: boolean;
   publisherAuthority: boolean | null;
   embargoDate: Date | null;
   license: License | null;
@@ -97,7 +98,6 @@ export const emptyFile: AssociatedFile = {
   name: '',
   size: 0,
   mimeType: '',
-  administrativeAgreement: false,
   publisherAuthority: null,
   embargoDate: null,
   license: null,

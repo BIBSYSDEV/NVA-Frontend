@@ -177,7 +177,7 @@ export enum FileFieldNames {
 
 // The following fields should be present in "associatedArtifacts[index].<KEY> for files"
 export enum SpecificFileFieldNames {
-  AdministrativeAgreement = 'administrativeAgreement',
+  Type = 'type',
   PublisherAuthority = 'publisherAuthority',
   EmbargoDate = 'embargoDate',
   License = 'license',

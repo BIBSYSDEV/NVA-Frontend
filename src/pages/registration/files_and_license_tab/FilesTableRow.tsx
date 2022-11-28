@@ -22,11 +22,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import prettyBytes from 'pretty-bytes';
 import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
-import { AssociatedFile, LicenseNames, licenses } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, AssociatedFileType, LicenseNames, licenses } from '../../../types/associatedArtifact.types';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
+import { Registration } from '../../../types/registration.types';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -39,7 +40,9 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
-  const { setFieldValue, setFieldTouched } = useFormikContext();
+  const { setFieldValue, setFieldTouched } = useFormikContext<Registration>();
+
+  const isUnpublishableFile = file.type === 'UnpublishableFile';
 
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
@@ -72,17 +75,19 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
       </TableCell>
 
       <TableCell align="center">
-        <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
-          {({ field }: FieldProps) => (
+        <Field name={`${baseFieldName}.${SpecificFileFieldNames.Type}`}>
+          {({ field }: FieldProps<AssociatedFileType>) => (
             <FormControlLabel
               data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
               control={
                 <Tooltip title={t('registration.files_and_license.administrative_contract')}>
                   <Checkbox
                     {...field}
-                    checked={field.value}
-                    onChange={(event) => {
-                      field.onChange(event);
+                    checked={field.value === 'UnpublishableFile'}
+                    onChange={() => {
+                      const newAssociatedFileType: AssociatedFileType =
+                        field.value === 'UnpublishableFile' ? 'File' : 'UnpublishableFile';
+                      setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.Type}`, newAssociatedFileType);
                       setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`, null);
                       setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.License}`, null);
                       setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`, null);
@@ -102,7 +107,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
             <FormControl
               data-testid={dataTestId.registrationWizard.files.version}
               required
-              disabled={file.administrativeAgreement}>
+              disabled={isUnpublishableFile}>
               <RadioGroup
                 {...field}
                 row
@@ -139,7 +144,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
                 inputFormat="dd.MM.yyyy"
                 maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
                 mask="__.__.____"
-                disabled={file.administrativeAgreement}
+                disabled={isUnpublishableFile}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -188,7 +193,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
                   labels: { nb: value },
                 })
               }
-              disabled={file.administrativeAgreement}>
+              disabled={isUnpublishableFile}>
               {licenses.map((license) => (
                 <MenuItem
                   data-testid={dataTestId.registrationWizard.files.licenseItem}
