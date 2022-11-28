@@ -13,6 +13,7 @@ export const TabButton = ({ isSelected, children, ...props }: TabButtonProps) =>
       fontSize: '1.2rem',
       color: isSelected ? 'primary' : 'text.primary',
       borderBottom: isSelected ? '0.2rem solid' : null,
+      textTransform: 'none',
     }}
     {...props}>
     {children}
