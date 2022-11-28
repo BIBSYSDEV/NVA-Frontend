@@ -930,7 +930,7 @@
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
       "find_series_in_channel_register": "Se informasjon om serien i Kanalregisteret",
       "info_from_channel_register": "Mer informasjon om valgt publiseringskanal",
-      "licens": "Lisens",
+      "license": "Lisens",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",

@@ -178,7 +178,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                             <TableHead>
                               <TableRow>
                                 <TableCell>{t('common.name')}</TableCell>
-                                <TableCell></TableCell>
                                 <TableCell>{t('registration.files_and_license.size')}</TableCell>
                                 <TableCell>{t('registration.files_and_license.administrative_agreement')}</TableCell>
                                 <TableCell>
@@ -201,7 +200,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                 </TableCell>
                                 <TableCell>
                                   <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                    {t('registration.files_and_license.licens')}
+                                    {t('registration.files_and_license.license')}
                                     <Tooltip title={t('common.help')}>
                                       <IconButton
                                         data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
@@ -352,9 +351,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         open={isEmbargoModalOpen}
         onClose={toggleEmbargoModal}
         maxWidth="sm">
-        <Box>
-          <Typography>{t('registration.files_and_license.file_publish_date_helper_text')}</Typography>
-        </Box>
+        <Typography>{t('registration.files_and_license.file_publish_date_helper_text')}</Typography>
       </Modal>
     </Box>
   );

@@ -930,7 +930,7 @@
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
       "find_series_in_channel_register": "See information about the series in the Norwegian Register",
       "info_from_channel_register": "More information about the selected publication channel",
-      "licens": "Licens",
+      "license": "License",
       "licenses": "Licenses",
       "link_to_resource": "Link to resource",
       "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
