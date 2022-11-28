@@ -47,7 +47,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
       <TableCell sx={{ minWidth: '13rem' }}>
-        <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
           <Tooltip title={t('registration.files_and_license.remove_file')}>
             <IconButton onClick={toggleOpenConfirmDialog}>
