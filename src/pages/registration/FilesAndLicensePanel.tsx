@@ -200,7 +200,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                 </TableCell>
                                 <TableCell>
                                   <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                    {t('registration.files_and_license.licens')}
+                                    {t('registration.files_and_license.license')}
                                     <Tooltip title={t('common.help')}>
                                       <IconButton
                                         data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
