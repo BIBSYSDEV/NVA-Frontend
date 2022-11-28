@@ -177,29 +177,19 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                           <Table sx={alternatingTableRowColor}>
                             <TableHead>
                               <TableRow>
-                                <TableCell>
-                                  <Typography fontWeight="bold">{t('common.name')}</Typography>
-                                </TableCell>
+                                <TableCell>{t('common.name')}</TableCell>
                                 <TableCell></TableCell>
-                                <TableCell>
-                                  <Typography fontWeight="bold">{t('registration.files_and_license.size')}</Typography>
-                                </TableCell>
-                                <TableCell>
-                                  <Typography fontWeight="bold">
-                                    {t('registration.files_and_license.administrative_agreement')}
-                                  </Typography>
-                                </TableCell>
+                                <TableCell>{t('registration.files_and_license.size')}</TableCell>
+                                <TableCell>{t('registration.files_and_license.administrative_agreement')}</TableCell>
                                 <TableCell>
                                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    <Typography fontWeight="bold">{t('common.version')}</Typography>
+                                    {t('common.version')}
                                     <Typography color="error">*</Typography>
                                   </Box>
                                 </TableCell>
                                 <TableCell>
                                   <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                    <Typography fontWeight="bold">
-                                      {t('registration.files_and_license.embargo')}
-                                    </Typography>
+                                    {t('registration.files_and_license.embargo')}
                                     <Tooltip title={t('common.help')}>
                                       <IconButton
                                         data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
@@ -211,9 +201,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                 </TableCell>
                                 <TableCell>
                                   <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                    <Typography fontWeight="bold">
-                                      {t('registration.files_and_license.licens')}
-                                    </Typography>
+                                    {t('registration.files_and_license.licens')}
                                     <Tooltip title={t('common.help')}>
                                       <IconButton
                                         data-testid={dataTestId.registrationWizard.files.licenseHelpButton}

@@ -43,7 +43,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
 
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
-      <TableCell sx={{ wordBreak: 'break-word', minWidth: '8rem' }}>
+      <TableCell sx={{ minWidth: '8rem' }}>
         <TruncatableTypography>{file.name}</TruncatableTypography>
       </TableCell>
 
@@ -67,7 +67,9 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
         </ConfirmDialog>
       </TableCell>
 
-      <TableCell align="center">{prettyBytes(file.size)}</TableCell>
+      <TableCell align="center" sx={{ minWidth: '5.5rem' }}>
+        {prettyBytes(file.size)}
+      </TableCell>
 
       <TableCell align="center">
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
