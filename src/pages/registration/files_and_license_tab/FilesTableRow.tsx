@@ -76,26 +76,21 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
       <TableCell align="center">
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.Type}`}>
           {({ field }: FieldProps<AssociatedFileType>) => (
-            <FormControlLabel
-              data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
-              control={
-                <Tooltip title={t('registration.files_and_license.administrative_contract')}>
-                  <Checkbox
-                    {...field}
-                    checked={field.value === 'UnpublishableFile'}
-                    onChange={() => {
-                      const newAssociatedFileType: AssociatedFileType =
-                        field.value === 'UnpublishableFile' ? 'File' : 'UnpublishableFile';
-                      setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.Type}`, newAssociatedFileType);
-                      setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`, null);
-                      setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.License}`, null);
-                      setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`, null);
-                    }}
-                  />
-                </Tooltip>
-              }
-              label=""
-            />
+            <Tooltip title={t('registration.files_and_license.administrative_contract')}>
+              <Checkbox
+                data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
+                {...field}
+                checked={field.value === 'UnpublishableFile'}
+                onChange={() => {
+                  const newAssociatedFileType: AssociatedFileType =
+                    field.value === 'UnpublishableFile' ? 'File' : 'UnpublishableFile';
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.Type}`, newAssociatedFileType);
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`, null);
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.License}`, null);
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`, null);
+                }}
+              />
+            </Tooltip>
           )}
         </Field>
       </TableCell>
