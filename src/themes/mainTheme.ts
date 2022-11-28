@@ -56,7 +56,6 @@ export const mainTheme = createTheme(
       h1: {
         fontSize: '1.25rem',
         fontWeight: 700,
-        textTransform: 'uppercase',
       },
       h2: {
         fontSize: '1rem',
