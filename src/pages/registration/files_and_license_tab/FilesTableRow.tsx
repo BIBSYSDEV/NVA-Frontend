@@ -43,28 +43,27 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
 
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
-      <TableCell sx={{ minWidth: '8rem' }}>
-        <TruncatableTypography>{file.name}</TruncatableTypography>
-      </TableCell>
-
-      <TableCell align="center">
-        <Tooltip title={t('registration.files_and_license.remove_file')}>
-          <IconButton onClick={toggleOpenConfirmDialog}>
-            <CancelIcon color="error" />
-          </IconButton>
-        </Tooltip>
-        <ConfirmDialog
-          open={openConfirmDialog}
-          title={t('registration.files_and_license.remove_file')}
-          onAccept={() => {
-            removeFile();
-            toggleOpenConfirmDialog();
-          }}
-          onCancel={toggleOpenConfirmDialog}>
-          <Typography>
-            {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
-          </Typography>
-        </ConfirmDialog>
+      <TableCell sx={{ minWidth: '13rem' }}>
+        <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
+          <TruncatableTypography>{file.name}</TruncatableTypography>
+          <Tooltip title={t('registration.files_and_license.remove_file')}>
+            <IconButton onClick={toggleOpenConfirmDialog}>
+              <CancelIcon color="error" />
+            </IconButton>
+          </Tooltip>
+          <ConfirmDialog
+            open={openConfirmDialog}
+            title={t('registration.files_and_license.remove_file')}
+            onAccept={() => {
+              removeFile();
+              toggleOpenConfirmDialog();
+            }}
+            onCancel={toggleOpenConfirmDialog}>
+            <Typography>
+              {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
+            </Typography>
+          </ConfirmDialog>
+        </Box>
       </TableCell>
 
       <TableCell align="center" sx={{ minWidth: '5.5rem' }}>
