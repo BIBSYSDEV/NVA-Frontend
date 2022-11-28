@@ -4,9 +4,11 @@ import { useSelector } from 'react-redux';
 import {
   Box,
   CircularProgress,
+  Paper,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -62,40 +64,40 @@ export const EditorCurators = () => {
             </Typography>
           ) : (
             <>
-              <Table size="small" sx={alternatingTableRowColor}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>
-                      <Typography fontWeight="bold">{t('common.name')}</Typography>
-                    </TableCell>
-                    <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
-                      <Typography fontWeight="bold">{t('editor.curators.area_of_responsibility')}</Typography>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
+              <TableContainer component={Paper}>
+                <Table size="small" sx={alternatingTableRowColor}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{t('common.name')}</TableCell>
+                      <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
+                        {t('editor.curators.area_of_responsibility')}
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
 
-                <TableBody>
-                  {sortedList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((curator) => {
-                    return (
-                      <TableRow key={curator.username}>
-                        <TableCell>
-                          {curator.givenName} {curator.familyName}
-                        </TableCell>
-                        <TableCell>
-                          {isLoadingCurrentOrganization ? (
-                            <CircularProgress />
-                          ) : (
-                            <ViewingScopeCell
-                              user={curator}
-                              options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
-                            />
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
+                  <TableBody>
+                    {sortedList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((curator) => {
+                      return (
+                        <TableRow key={curator.username}>
+                          <TableCell>
+                            {curator.givenName} {curator.familyName}
+                          </TableCell>
+                          <TableCell>
+                            {isLoadingCurrentOrganization ? (
+                              <CircularProgress />
+                            ) : (
+                              <ViewingScopeCell
+                                user={curator}
+                                options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
+                              />
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
               {sortedList.length > ROWS_PER_PAGE_OPTIONS[0] && (
                 <TablePagination
                   rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}

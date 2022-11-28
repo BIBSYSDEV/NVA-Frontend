@@ -56,7 +56,6 @@ export const mainTheme = createTheme(
       h1: {
         fontSize: '1.25rem',
         fontWeight: 700,
-        textTransform: 'uppercase',
       },
       h2: {
         fontSize: '1rem',
@@ -143,8 +142,12 @@ export const mainTheme = createTheme(
             fontSize: '1rem',
             color: Color.PrimaryMain,
             '&.Mui-active': {
+              color: Color.PrimaryMain,
               fontWeight: 600,
               opacity: 1,
+            },
+            '&.Mui-completed': {
+              color: Color.PrimaryMain,
             },
             '&.Mui-error': {
               color: Color.ErrorMain,
@@ -155,6 +158,15 @@ export const mainTheme = createTheme(
             color: Color.PrimaryMain,
             '&.Mui-active': {
               opacity: 1,
+            },
+          },
+        },
+      },
+      MuiTableHead: {
+        styleOverrides: {
+          root: {
+            th: {
+              fontWeight: 600,
             },
           },
         },
