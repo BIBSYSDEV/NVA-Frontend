@@ -41,10 +41,12 @@ const PrivacyPolicy = () => {
         <Typography paragraph>{t('privacy.service_in_brief.paragraph2')}</Typography>
 
         <Typography variant="h2">{t('privacy.purpose.heading')}</Typography>
-        <Typography>{t('privacy.purpose.paragraph')}</Typography>
-        <TableContainer sx={{ mb: '2rem' }}>
+        <Typography paragraph>{t('privacy.purpose.paragraph')}</Typography>
+        <TableContainer>
           <Table size="small">
-            <caption style={visuallyHidden}>{t('privacy.purpose.heading')}</caption>
+            <caption>
+              <span style={visuallyHidden}>{t('privacy.purpose.heading')}</span>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>{t('privacy.purpose.table.header.col0')}</TableCell>
@@ -93,9 +95,11 @@ const PrivacyPolicy = () => {
         <Typography paragraph>{t('privacy.registered_personal_data.paragraph4')}</Typography>
 
         <Typography variant="h3">{t('privacy.registered_personal_data.table.user_data.heading')}</Typography>
-        <TableContainer sx={{ mb: '2rem' }}>
+        <TableContainer>
           <Table size="small">
-            <caption style={visuallyHidden}>{t('privacy.registered_personal_data.table.user_data.heading')}</caption>
+            <caption>
+              <span style={visuallyHidden}>{t('privacy.registered_personal_data.table.user_data.heading')}</span>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>{t('privacy.registered_personal_data.table.header.col0')}</TableCell>
@@ -116,10 +120,12 @@ const PrivacyPolicy = () => {
         </TableContainer>
 
         <Typography variant="h3">{t('privacy.registered_personal_data.table.techincal_user_data.heading')}</Typography>
-        <TableContainer sx={{ mb: '2rem' }}>
+        <TableContainer>
           <Table size="small">
-            <caption style={visuallyHidden}>
-              {t('privacy.registered_personal_data.table.techincal_user_data.heading')}
+            <caption>
+              <span style={visuallyHidden}>
+                {t('privacy.registered_personal_data.table.techincal_user_data.heading')}
+              </span>
             </caption>
             <TableHead>
               <TableRow>
@@ -147,10 +153,10 @@ const PrivacyPolicy = () => {
         </TableContainer>
 
         <Typography variant="h3">{t('privacy.registered_personal_data.table.other_user_data.heading')}</Typography>
-        <TableContainer sx={{ mb: '2rem' }}>
+        <TableContainer>
           <Table size="small">
-            <caption style={visuallyHidden}>
-              {t('privacy.registered_personal_data.table.other_user_data.heading')}
+            <caption>
+              <span style={visuallyHidden}>{t('privacy.registered_personal_data.table.other_user_data.heading')}</span>
             </caption>
             <TableHead>
               <TableRow>
@@ -198,9 +204,11 @@ const PrivacyPolicy = () => {
         <Typography paragraph>{t('privacy.disclosure_of_data.paragraph1')}</Typography>
         <Typography paragraph>{t('privacy.disclosure_of_data.paragraph2')}</Typography>
         <Typography>{t('privacy.disclosure_of_data.paragraph3.intro')}</Typography>
-        <TableContainer sx={{ mb: '2rem' }}>
+        <TableContainer>
           <Table size="small">
-            <caption style={visuallyHidden}>{t('privacy.disclosure_of_data.paragraph3.table.caption')}</caption>
+            <caption>
+              <span style={visuallyHidden}>{t('privacy.disclosure_of_data.paragraph3.table.caption')}</span>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>{t('privacy.disclosure_of_data.paragraph3.table.header.col0')}</TableCell>
@@ -220,9 +228,11 @@ const PrivacyPolicy = () => {
         <Typography paragraph>{t('privacy.disclosure_of_data.paragraph4')}</Typography>
         <Typography paragraph>{t('privacy.disclosure_of_data.paragraph5')}</Typography>
         <Typography>{t('privacy.disclosure_of_data.paragraph6.intro')}</Typography>
-        <TableContainer sx={{ mb: '2rem' }}>
+        <TableContainer>
           <Table size="small">
-            <caption style={visuallyHidden}>{t('privacy.disclosure_of_data.paragraph6.table.caption')}</caption>
+            <caption>
+              <span style={visuallyHidden}>{t('privacy.disclosure_of_data.paragraph6.table.caption')}</span>
+            </caption>
             <TableHead>
               <TableRow>
                 <TableCell>{t('privacy.disclosure_of_data.paragraph6.table.header.col0')}</TableCell>
@@ -240,91 +250,91 @@ const PrivacyPolicy = () => {
               ))}
             </TableBody>
           </Table>
+
+          <Typography variant="h2">{t('privacy.security_for_personal_data.heading')}</Typography>
+          <Typography paragraph>{t('privacy.security_for_personal_data.paragraph0')}</Typography>
+          <Typography paragraph>{t('privacy.security_for_personal_data.paragraph1')}</Typography>
+
+          <Typography variant="h2">{t('privacy.your_rights.heading')}</Typography>
+          <Typography variant="h3">{t('privacy.your_rights.section0.heading')}</Typography>
+          <Typography paragraph>{t('privacy.your_rights.section0.paragraph0')}</Typography>
+          <Typography paragraph>{t('privacy.your_rights.section0.paragraph1')}</Typography>
+
+          <Typography variant="h3">{t('privacy.your_rights.section1.heading')}</Typography>
+          <Typography paragraph>{t('privacy.your_rights.section1.paragraph0')}</Typography>
+          <Typography paragraph>{t('privacy.your_rights.section1.paragraph1')}</Typography>
+
+          <Typography variant="h3">{t('privacy.your_rights.section2.heading')}</Typography>
+          <Typography>
+            <Trans t={t} i18nKey="privacy.your_rights.section2.paragraph0.intro">
+              <a target="_blank" rel="noreferrer" href="https://lovdata.no/lov/2018-06-15-38/gdpr/a18">
+                (i18n content: GDPR Article 18)
+              </a>
+            </Trans>
+          </Typography>
+          <ul>
+            <Typography component="li">{t('privacy.your_rights.section2.paragraph0.bullet_point0')}</Typography>
+            <Typography component="li">{t('privacy.your_rights.section2.paragraph0.bullet_point1')}</Typography>
+            <Typography component="li">{t('privacy.your_rights.section2.paragraph0.bullet_point2')}</Typography>
+          </ul>
+          <Typography paragraph>{t('privacy.your_rights.section2.paragraph1')}</Typography>
+
+          <Typography variant="h3">{t('privacy.your_rights.section3.heading')}</Typography>
+          <Typography paragraph>{t('privacy.your_rights.section3.paragraph0')}</Typography>
+          <Typography paragraph>{t('privacy.your_rights.section3.paragraph1')}</Typography>
+          <Typography paragraph>{t('privacy.your_rights.section3.paragraph2')}</Typography>
+
+          <Typography variant="h3">{t('privacy.your_rights.section4.heading')}</Typography>
+          <Typography>
+            <Trans t={t} i18nKey="privacy.your_rights.section4.paragraph0.intro">
+              <a target="_blank" rel="noreferrer" href="https://lovdata.no/lov/2018-06-15-38/gdpr/a21">
+                (i18n content: GDPR Article 21)
+              </a>
+            </Trans>
+          </Typography>
+          <ul>
+            <Typography component="li">{t('privacy.your_rights.section4.paragraph0.bullet_point0')}</Typography>
+            <Typography component="li">{t('privacy.your_rights.section4.paragraph0.bullet_point1')}</Typography>
+            <Typography component="li">{t('privacy.your_rights.section4.paragraph0.bullet_point2')}</Typography>
+          </ul>
+          <Typography paragraph>{t('privacy.your_rights.section4.paragraph1')}</Typography>
+          <Typography>{t('privacy.your_rights.section4.paragraph2.intro')}</Typography>
+          <ul>
+            <Typography component="li">{t('privacy.your_rights.section4.paragraph2.bullet_point0')}</Typography>
+            <Typography component="li">{t('privacy.your_rights.section4.paragraph2.bullet_point1')}</Typography>
+          </ul>
+
+          <Typography variant="h3">{t('privacy.your_rights.section5.heading')}</Typography>
+          <Typography paragraph>{t('privacy.your_rights.section5.paragraph0')}</Typography>
+          <Typography paragraph>{t('privacy.your_rights.section5.paragraph1')}</Typography>
+
+          <Typography variant="h2">{t('privacy.contact.heading')}</Typography>
+          <Typography variant="h3">{t('privacy.contact.section0.heading')}</Typography>
+          <Typography paragraph>{t('privacy.contact.section0.paragraph')}</Typography>
+          <Typography variant="h3">{t('privacy.contact.section1.heading')}</Typography>
+          <Typography paragraph>{t('privacy.contact.section1.paragraph')}</Typography>
+
+          <Typography>{t('privacy.contact.section2.intro')}</Typography>
+          <Typography>
+            <a target="_blank" rel="noreferrer" href="https://support.bibsys.no">
+              https://support.bibsys.no
+            </a>
+          </Typography>
+          <Typography>
+            <Trans t={t} i18nKey="privacy.contact.section2.telephone">
+              <a target="_blank" rel="noreferrer" href="tel:+4773984040">
+                +47 73 98 40 40
+              </a>
+            </Trans>
+          </Typography>
+          <Typography>
+            <Trans t={t} i18nKey="privacy.contact.section2.email">
+              <a target="_blank" rel="noreferrer" href="mailto:kontakt@sikt.no">
+                kontakt@sikt.no
+              </a>
+            </Trans>
+          </Typography>
         </TableContainer>
-
-        <Typography variant="h2">{t('privacy.security_for_personal_data.heading')}</Typography>
-        <Typography paragraph>{t('privacy.security_for_personal_data.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.security_for_personal_data.paragraph1')}</Typography>
-
-        <Typography variant="h2">{t('privacy.your_rights.heading')}</Typography>
-        <Typography variant="h3">{t('privacy.your_rights.section0.heading')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section0.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section0.paragraph1')}</Typography>
-
-        <Typography variant="h3">{t('privacy.your_rights.section1.heading')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section1.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section1.paragraph1')}</Typography>
-
-        <Typography variant="h3">{t('privacy.your_rights.section2.heading')}</Typography>
-        <Typography>
-          <Trans t={t} i18nKey="privacy.your_rights.section2.paragraph0.intro">
-            <a target="_blank" rel="noreferrer" href="https://lovdata.no/lov/2018-06-15-38/gdpr/a18">
-              (i18n content: GDPR Article 18)
-            </a>
-          </Trans>
-        </Typography>
-        <ul>
-          <Typography component="li">{t('privacy.your_rights.section2.paragraph0.bullet_point0')}</Typography>
-          <Typography component="li">{t('privacy.your_rights.section2.paragraph0.bullet_point1')}</Typography>
-          <Typography component="li">{t('privacy.your_rights.section2.paragraph0.bullet_point2')}</Typography>
-        </ul>
-        <Typography paragraph>{t('privacy.your_rights.section2.paragraph1')}</Typography>
-
-        <Typography variant="h3">{t('privacy.your_rights.section3.heading')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section3.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section3.paragraph1')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section3.paragraph2')}</Typography>
-
-        <Typography variant="h3">{t('privacy.your_rights.section4.heading')}</Typography>
-        <Typography>
-          <Trans t={t} i18nKey="privacy.your_rights.section4.paragraph0.intro">
-            <a target="_blank" rel="noreferrer" href="https://lovdata.no/lov/2018-06-15-38/gdpr/a21">
-              (i18n content: GDPR Article 21)
-            </a>
-          </Trans>
-        </Typography>
-        <ul>
-          <Typography component="li">{t('privacy.your_rights.section4.paragraph0.bullet_point0')}</Typography>
-          <Typography component="li">{t('privacy.your_rights.section4.paragraph0.bullet_point1')}</Typography>
-          <Typography component="li">{t('privacy.your_rights.section4.paragraph0.bullet_point2')}</Typography>
-        </ul>
-        <Typography paragraph>{t('privacy.your_rights.section4.paragraph1')}</Typography>
-        <Typography>{t('privacy.your_rights.section4.paragraph2.intro')}</Typography>
-        <ul>
-          <Typography component="li">{t('privacy.your_rights.section4.paragraph2.bullet_point0')}</Typography>
-          <Typography component="li">{t('privacy.your_rights.section4.paragraph2.bullet_point1')}</Typography>
-        </ul>
-
-        <Typography variant="h3">{t('privacy.your_rights.section5.heading')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section5.paragraph0')}</Typography>
-        <Typography paragraph>{t('privacy.your_rights.section5.paragraph1')}</Typography>
-
-        <Typography variant="h2">{t('privacy.contact.heading')}</Typography>
-        <Typography variant="h3">{t('privacy.contact.section0.heading')}</Typography>
-        <Typography paragraph>{t('privacy.contact.section0.paragraph')}</Typography>
-        <Typography variant="h3">{t('privacy.contact.section1.heading')}</Typography>
-        <Typography paragraph>{t('privacy.contact.section1.paragraph')}</Typography>
-
-        <Typography>{t('privacy.contact.section2.intro')}</Typography>
-        <Typography>
-          <a target="_blank" rel="noreferrer" href="https://support.bibsys.no">
-            https://support.bibsys.no
-          </a>
-        </Typography>
-        <Typography>
-          <Trans t={t} i18nKey="privacy.contact.section2.telephone">
-            <a target="_blank" rel="noreferrer" href="tel:+4773984040">
-              +47 73 98 40 40
-            </a>
-          </Trans>
-        </Typography>
-        <Typography>
-          <Trans t={t} i18nKey="privacy.contact.section2.email">
-            <a target="_blank" rel="noreferrer" href="mailto:kontakt@sikt.no">
-              kontakt@sikt.no
-            </a>
-          </Trans>
-        </Typography>
       </Box>
     </SyledPageContent>
   );

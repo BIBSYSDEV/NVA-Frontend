@@ -8,7 +8,7 @@ interface PageHeaderProps extends TypographyProps {
 }
 
 export const PageHeader = ({ children, htmlTitle, ...props }: PageHeaderProps) => (
-  <Box sx={{ width: '100%', marginBottom: '2rem' }}>
+  <Box sx={{ width: '100%', marginBottom: '2rem', wordBreak: 'break-word' }}>
     <Helmet>
       <title>{htmlTitle ?? children}</title>
     </Helmet>

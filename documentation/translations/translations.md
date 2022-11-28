@@ -61,13 +61,13 @@ Even though these keys are given with best intentions at the time they are imple
 
 Example:
 
-- https://dev.nva.sikt.no/?lng=cimode
-- https://dev.nva.sikt.no/projects?id=https%3A%2F%2Fapi.dev.nva.aws.unit.no%2Fcristin%2Fproject%2F404031&lng=cimode
+- https://frontend.dev.nva.aws.unit.no/?lng=cimode
+- https://frontend.dev.nva.aws.unit.no/projects?id=https%3A%2F%2Fapi.dev.nva.aws.unit.no%2Fcristin%2Fproject%2F404031&lng=cimode
 
 Note: this means one can send a link with a predefined language selection by setting `lng` to either `nob` (Norwegian, bokmål) or `eng` (English) as well. (This works due to the `i18next-browser-languagedetector` package used in the frontend app.)
 
 ![](./images/cimode.png?raw=true)
-_App showing keys instead of translations (https://dev.nva.sikt.no/?lng=cimode)_
+_App showing keys instead of translations (https://frontend.dev.nva.aws.unit.no/?lng=cimode)_
 
 ![](./images/key_search.png?raw=true)
 _One can find the translations for `common.search` by searching for `common::search` in Lokalise. Simply replace every `.` (dot) with `::` (double colon)._

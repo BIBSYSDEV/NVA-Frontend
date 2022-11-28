@@ -16,7 +16,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
 } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useState } from 'react';
@@ -491,7 +490,7 @@ const PublicAudioVisualPublicationDialogContent = ({
         {t('registration.resource_type.artistic.content_track')}
       </Typography>
 
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table aria-labelledby="tracks-heading">
           <caption style={visuallyHidden}>
             {t('registration.resource_type.artistic.content_track_table_caption')}
@@ -546,7 +545,7 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       <Typography variant="overline" id="program-heading">
         {t('registration.resource_type.artistic.concert_program')}
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table aria-labelledby="program-heading">
           <caption style={visuallyHidden}>
             {t('registration.resource_type.artistic.concert_program_table_caption')}
@@ -594,7 +593,7 @@ const PublicOtherPerformanceDialogContent = ({ otherPerformance }: { otherPerfor
       <Typography variant="overline" id="works-heading">
         {t('registration.resource_type.artistic.musical_works')}
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table aria-labelledby="works-heading">
           <caption style={visuallyHidden}>
             {t('registration.resource_type.artistic.musical_works_table_caption')}

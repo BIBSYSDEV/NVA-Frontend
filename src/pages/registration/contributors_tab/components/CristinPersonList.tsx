@@ -1,14 +1,4 @@
-import {
-  Typography,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Radio,
-  Paper,
-} from '@mui/material';
+import { Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Radio } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
@@ -43,7 +33,7 @@ export const CristinPersonList = ({
         </Typography>
       )}
 
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table size="medium">
           <caption style={visuallyHidden}>{t('registration.contributors.authors')}</caption>
           <TableHead>

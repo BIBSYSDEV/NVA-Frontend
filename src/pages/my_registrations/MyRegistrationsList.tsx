@@ -5,7 +5,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Button,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -28,7 +27,6 @@ import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { getRegistrationIdentifier, getTitleString } from '../../utils/registration-helpers';
-import { TruncatableTypography } from '../../components/TruncatableTypography';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -79,17 +77,25 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer>
         <Table sx={alternatingTableRowColor}>
-          <caption style={visuallyHidden}>{t('common.registrations')}</caption>
+          <caption>
+            <span style={visuallyHidden}>{t('common.registrations')}</span>
+          </caption>
           <TableHead>
             <TableRow>
-              <TableCell data-testid="header-registration-title" sx={{ minWidth: '12rem' }}>
-                {t('common.title')}
+              <TableCell data-testid="header-registration-title">
+                <Typography sx={{ fontWeight: 'bold', minWidth: '12rem' }}>{t('common.title')}</Typography>
               </TableCell>
-              <TableCell data-testid="header-registration-status">{t('common.status')}</TableCell>
-              <TableCell data-testid="header-registration-created">{t('common.created_date')}</TableCell>
-              <TableCell>{t('common.actions')}</TableCell>
+              <TableCell data-testid="header-registration-status">
+                <Typography fontWeight="bold">{t('common.status')}</Typography>
+              </TableCell>
+              <TableCell data-testid="header-registration-created">
+                <Typography fontWeight="bold">{t('common.created_date')}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight="bold">{t('common.actions')}</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -98,10 +104,10 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
               return (
                 <TableRow key={identifier}>
                   <TableCell component="th" scope="row" data-testid={`registration-title-${identifier}`}>
-                    <TruncatableTypography>{getTitleString(registration.mainTitle)}</TruncatableTypography>
+                    <Typography>{getTitleString(registration.mainTitle)}</Typography>
                   </TableCell>
                   <TableCell data-testid={`registration-status-${identifier}`}>
-                    <Typography>{t(`registration.status.${registration.status}`)}</Typography>
+                    <Typography>{t(`registration.status.${registration.status}` as any)}</Typography>
                   </TableCell>
                   <TableCell data-testid={`registration-created-${identifier}`}>
                     <Typography>{new Date(registration.createdDate).toLocaleString()}</Typography>
