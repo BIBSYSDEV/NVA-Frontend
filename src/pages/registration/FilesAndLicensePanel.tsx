@@ -93,13 +93,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     });
   }, [t, uppy, filesRef]);
 
-  const toggleLicenseModal = () => {
-    setIsLicenseModalOpen(!isLicenseModalOpen);
-  };
-
-  const toggleEmbargoModal = () => {
-    setIsEmbargoModalOpen(!isEmbargoModalOpen);
-  };
+  const toggleLicenseModal = () => setIsLicenseModalOpen(!isLicenseModalOpen);
+  const toggleEmbargoModal = () => setIsEmbargoModalOpen(!isEmbargoModalOpen);
 
   const publisherIdentifier =
     (publicationContext &&
@@ -197,7 +192,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                 <TableCell>
                                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                     <Typography fontWeight="bold">{t('common.version')}</Typography>
-                                    <Typography sx={{ color: 'error.main' }}>*</Typography>
+                                    <Typography color="error">*</Typography>
                                   </Box>
                                 </TableCell>
                                 <TableCell>
