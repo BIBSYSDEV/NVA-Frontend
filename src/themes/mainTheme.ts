@@ -143,8 +143,12 @@ export const mainTheme = createTheme(
             fontSize: '1rem',
             color: Color.PrimaryMain,
             '&.Mui-active': {
+              color: Color.PrimaryMain,
               fontWeight: 600,
               opacity: 1,
+            },
+            '&.Mui-completed': {
+              color: Color.PrimaryMain,
             },
             '&.Mui-error': {
               color: Color.ErrorMain,
