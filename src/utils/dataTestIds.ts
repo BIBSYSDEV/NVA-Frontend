@@ -173,7 +173,7 @@ export const dataTestId = {
     files: {
       administrativeAgreement: 'administrative-agreement-checkbox',
       embargoDateField: 'embargo-date-field',
-      fileRow: 'uploaded-file-row',
+      fileCard: 'uploaded-file-card',
       licenseHelpButton: 'license-help-button',
       licenseItem: 'license-item',
       licenseModal: 'license-modal',

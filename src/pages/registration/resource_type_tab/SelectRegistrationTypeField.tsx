@@ -3,7 +3,7 @@ import { ErrorMessage, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
-import FilterVintageIcon from '@mui/icons-material/FilterVintage';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import {
   ArtisticType,
@@ -223,7 +223,7 @@ export const SelectRegistrationTypeField = () => {
           )}
         </Box>
         <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'end', mb: '1rem' }}>
-          <FilterVintageIcon
+          <SettingsIcon
             color="primary"
             titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
             fontSize="small"
@@ -362,7 +362,7 @@ export const SelectRegistrationTypeField = () => {
         data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(currentInstanceType)}
         icon={
           nviApplicableTypes.includes(currentInstanceType) ? (
-            <FilterVintageIcon
+            <SettingsIcon
               titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
               fontSize="small"
             />
@@ -399,7 +399,7 @@ const RegistrationTypesRow = ({ mainType, subTypes, value, onChangeType }: Regis
             key={subType}
             icon={
               nviApplicableTypes.includes(subType) ? (
-                <FilterVintageIcon
+                <SettingsIcon
                   titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
                   fontSize="small"
                 />

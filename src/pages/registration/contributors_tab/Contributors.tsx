@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import {
   Button,
   InputAdornment,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -175,7 +174,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       )}
 
       {contributorsToShow.length > 0 && (
-        <TableContainer component={Paper}>
+        <TableContainer>
           <Table size="small" sx={alternatingTableRowColor}>
             <TableHead>
               <TableRow>

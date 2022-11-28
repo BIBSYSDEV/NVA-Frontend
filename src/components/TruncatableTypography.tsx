@@ -18,7 +18,6 @@ const StyledTruncatableTypography = styled(Typography, {
   WebkitLineClamp: lineClamp,
   lineClamp: lineClamp,
   cursor: isExpandable ? 'pointer' : 'auto',
-  wordBreak: 'break-word',
 }));
 
 interface TruncatableTypographyProps extends TypographyProps {

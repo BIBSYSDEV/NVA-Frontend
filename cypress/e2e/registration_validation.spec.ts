@@ -348,13 +348,13 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.fixture('img.jpg').as('file');
     cy.get('input[type=file]').first().selectFile('@file', { force: true });
-    cy.get('[data-testid=uploaded-file-row]').should('be.visible');
+    cy.get('[data-testid=uploaded-file-card]').should('be.visible');
     cy.get('p.Mui-error').should('not.exist');
 
     // Lincense field
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
-    cy.get('[data-testid=uploaded-file-select-license] p.Mui-error').should('exist');
+    cy.get('[data-testid=uploaded-file-select-license] p.Mui-error').should('be.visible');
     cy.get('[data-testid=uploaded-file-select-license]').click({ force: true }).type(' ');
     cy.get('[data-testid=license-item]').eq(0).click({ force: true });
     cy.get('[data-testid=uploaded-file-select-license] p.Mui-error').should('not.exist');

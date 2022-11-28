@@ -1,18 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import {
-  Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Button, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { visuallyHidden } from '@mui/utils';
@@ -99,59 +88,62 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
         </Typography>
       ) : (
         <>
-          <TableContainer component={Paper}>
-            <Table size="small" sx={alternatingTableRowColor}>
-              <caption style={visuallyHidden}>{tableCaption}</caption>
-              <TableHead>
-                <TableRow>
-                  <TableCell>{t('common.username')}</TableCell>
-                  <TableCell>{t('common.name')}</TableCell>
-                  <TableCell width="150">{t('common.actions')}</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {sortedList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user, index) => {
-                  const isLoading = updatedRoleForUsers.includes(user.username);
-                  const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
-                  return (
-                    <TableRow key={user.username}>
-                      <TableCell>{user.username}</TableCell>
-                      <TableCell>
-                        {user.givenName} {user.familyName}
-                      </TableCell>
-                      <TableCell>
-                        {roleToRemove && (
-                          <Button
-                            color="error"
-                            variant="outlined"
-                            startIcon={<DeleteIcon />}
-                            disabled={isLastInstitutionAdmin}
-                            data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
-                            onClick={() => setRemoveRoleForUser(user.username)}>
-                            {t('common.remove')}
-                          </Button>
-                        )}
-                        {roleToAdd && (
-                          <LoadingButton
-                            variant="contained"
-                            size="small"
-                            startIcon={<AddIcon />}
-                            loadingPosition="start"
-                            disabled={disableAddButton}
-                            loading={!disableAddButton && isLoading}
-                            data-testid={`button-add-role-${roleToAdd}-${user.username}`}
-                            onClick={() => handleAddRoleToUser(user)}>
-                            {t('common.add')}
-                          </LoadingButton>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-
+          <Table size="small" sx={alternatingTableRowColor}>
+            <caption style={visuallyHidden}>{tableCaption}</caption>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Typography fontWeight="bold">{t('common.username')}</Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography fontWeight="bold">{t('common.name')}</Typography>
+                </TableCell>
+                <TableCell width="150">
+                  <Typography fontWeight="bold">{t('common.actions')}</Typography>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {sortedList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user, index) => {
+                const isLoading = updatedRoleForUsers.includes(user.username);
+                const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
+                return (
+                  <TableRow key={user.username}>
+                    <TableCell>{user.username}</TableCell>
+                    <TableCell>
+                      {user.givenName} {user.familyName}
+                    </TableCell>
+                    <TableCell>
+                      {roleToRemove && (
+                        <Button
+                          color="error"
+                          variant="outlined"
+                          startIcon={<DeleteIcon />}
+                          disabled={isLastInstitutionAdmin}
+                          data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
+                          onClick={() => setRemoveRoleForUser(user.username)}>
+                          {t('common.remove')}
+                        </Button>
+                      )}
+                      {roleToAdd && (
+                        <LoadingButton
+                          variant="contained"
+                          size="small"
+                          startIcon={<AddIcon />}
+                          loadingPosition="start"
+                          disabled={disableAddButton}
+                          loading={!disableAddButton && isLoading}
+                          data-testid={`button-add-role-${roleToAdd}-${user.username}`}
+                          onClick={() => handleAddRoleToUser(user)}>
+                          {t('common.add')}
+                        </LoadingButton>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
           {sortedList.length > ROWS_PER_PAGE_OPTIONS[0] && (
             <TablePagination
               rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
