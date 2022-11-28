@@ -1,7 +1,18 @@
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Autocomplete, Button, Box, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Button,
+  Box,
+  TextField,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Paper,
+} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -11,28 +22,33 @@ import { CristinApiPath } from '../../api/apiPaths';
 import { dataTestId } from '../../utils/dataTestIds';
 import { SearchResponse } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
+import { AffiliationHierarchy } from './AffiliationHierarchy';
 
-enum FormikInstitutionUnitFieldNames {
-  SubUnit = 'subunit',
+enum SelectOrganizationFormField {
   Unit = 'unit',
+  Subunit = 'subunit',
+  selectedSuggestedAffiliationId = 'selectedSuggestedAffiliationId',
 }
 
 interface OrganizationForm {
-  unit: Organization | null;
-  subunit: Organization | null;
+  [SelectOrganizationFormField.Unit]: Organization | null;
+  [SelectOrganizationFormField.Subunit]: Organization | null;
+  [SelectOrganizationFormField.selectedSuggestedAffiliationId]: string;
 }
 
 const initialValuesOrganizationForm: OrganizationForm = {
   unit: null,
   subunit: null,
+  selectedSuggestedAffiliationId: '',
 };
 
 interface SelectInstitutionFormProps {
   onSubmit: (id: string) => void;
   onClose?: () => void;
+  suggestedInstitutions: string[];
 }
 
-export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFormProps) => {
+export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions }: SelectInstitutionFormProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
@@ -46,11 +62,48 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
   return (
     <Formik
       initialValues={initialValuesOrganizationForm}
-      onSubmit={(values) => onSubmit(values.subunit?.id ?? values.unit?.id ?? '')}>
-      {({ isSubmitting, values, setFieldValue }: FormikProps<OrganizationForm>) => (
+      onSubmit={(values, { setSubmitting }) => {
+        if (values.selectedSuggestedAffiliationId) {
+          onSubmit(values.selectedSuggestedAffiliationId);
+        } else if (values.subunit?.id) {
+          onSubmit(values.subunit.id);
+        } else if (values.unit?.id) {
+          onSubmit(values.unit?.id);
+        }
+        setSubmitting(false);
+      }}>
+      {({ isSubmitting, values, setFieldValue, resetForm }: FormikProps<OrganizationForm>) => (
         <Form noValidate>
+          {suggestedInstitutions.length > 0 && (
+            <Paper elevation={4} sx={{ p: '1rem', maxHeight: '35vh', overflow: 'auto', mb: '1.5rem' }}>
+              <FormControl>
+                <FormLabel>{t('registration.contributors.suggested_affiliations')}</FormLabel>
+                <Field name={SelectOrganizationFormField.selectedSuggestedAffiliationId}>
+                  {({ field }: FieldProps<string>) => (
+                    <RadioGroup
+                      sx={{ gap: '0.25rem' }}
+                      {...field}
+                      onChange={(event) => {
+                        setSearchTerm('');
+                        resetForm();
+                        field.onChange(event);
+                      }}>
+                      {suggestedInstitutions.map((suggestedInstitution) => (
+                        <FormControlLabel
+                          key={suggestedInstitution}
+                          value={suggestedInstitution}
+                          control={<Radio size="small" />}
+                          label={<AffiliationHierarchy unitUri={suggestedInstitution} />}
+                        />
+                      ))}
+                    </RadioGroup>
+                  )}
+                </Field>
+              </FormControl>
+            </Paper>
+          )}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <Field name={FormikInstitutionUnitFieldNames.Unit}>
+            <Field name={SelectOrganizationFormField.Unit}>
               {({ field }: FieldProps<Organization>) => (
                 <Autocomplete
                   {...field}
@@ -71,13 +124,16 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                       setSearchTerm(value);
                     }
                   }}
-                  onChange={(_, value) => setFieldValue(field.name, value)}
+                  onChange={(_, value) => {
+                    resetForm();
+                    setFieldValue(field.name, value);
+                  }}
                   loading={isLoadingInstitutions}
                   renderInput={(params) => (
                     <TextField
                       {...params}
                       data-testid={dataTestId.organization.searchField}
-                      label={t('common.institution')}
+                      label={t('registration.contributors.search_for_institution')}
                       variant="filled"
                       fullWidth
                     />
@@ -86,7 +142,7 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
               )}
             </Field>
             {values.unit?.hasPart && values.unit.hasPart.length > 0 && (
-              <Field name={FormikInstitutionUnitFieldNames.SubUnit}>
+              <Field name={SelectOrganizationFormField.Subunit}>
                 {({ field }: FieldProps<Organization>) => (
                   <Autocomplete
                     options={getSortedSubUnits(values.unit?.hasPart)}
@@ -121,13 +177,13 @@ export const SelectInstitutionForm = ({ onSubmit, onClose }: SelectInstitutionFo
                 variant="contained"
                 type="submit"
                 loading={isSubmitting}
-                disabled={!values.unit}
-                data-testid="institution-add-button">
+                disabled={!values.unit && !values.selectedSuggestedAffiliationId}
+                data-testid={dataTestId.registrationWizard.contributors.addSelectedAffiliationButton}>
                 {t('common.add')}
               </LoadingButton>
 
               {onClose && (
-                <Button onClick={onClose} data-testid="institution-cancel-button">
+                <Button onClick={onClose} data-testid={dataTestId.confirmDialog.cancelButton}>
                   {t('common.cancel')}
                 </Button>
               )}

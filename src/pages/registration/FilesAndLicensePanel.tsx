@@ -1,9 +1,26 @@
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, FormHelperText, Link, Paper, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormHelperText,
+  Link,
+  Paper,
+  TextField,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+  Tooltip,
+} from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Modal } from '../../components/Modal';
 import {
   AssociatedFile,
@@ -15,7 +32,6 @@ import {
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { FileUploader } from './files_and_license_tab/FileUploader';
-import { FileCard } from './files_and_license_tab/FileCard';
 import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
@@ -29,6 +45,8 @@ import {
 } from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
+import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
+import { alternatingTableRowColor } from '../../themes/mainTheme';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -45,6 +63,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   } = useFormikContext<Registration>();
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+  const [isEmbargoModalOpen, setIsEmbargoModalOpen] = useState(false);
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =
@@ -74,9 +93,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     });
   }, [t, uppy, filesRef]);
 
-  const toggleLicenseModal = () => {
-    setIsLicenseModalOpen(!isLicenseModalOpen);
-  };
+  const toggleLicenseModal = () => setIsLicenseModalOpen(!isLicenseModalOpen);
+  const toggleEmbargoModal = () => setIsEmbargoModalOpen(!isEmbargoModalOpen);
 
   const publisherIdentifier =
     (publicationContext &&
@@ -88,6 +106,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     '';
   const journalIdentifier =
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
+
+  const originalDoi = entityDescription?.reference?.doi;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -150,39 +170,83 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     <Typography variant="h2" gutterBottom>
                       {t('registration.files_and_license.files')}
                     </Typography>
+
                     {files.length > 0 && (
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                        {files.map((file) => {
-                          const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
-                            if (associatedArtifactIsFile(artifact)) {
-                              const associatedFile = artifact as AssociatedFile;
-                              return associatedFile.identifier === file.identifier;
-                            }
-                            return false;
-                          });
+                        <TableContainer component={Paper}>
+                          <Table sx={alternatingTableRowColor}>
+                            <TableHead>
+                              <TableRow>
+                                <TableCell>{t('common.name')}</TableCell>
+                                <TableCell>{t('registration.files_and_license.size')}</TableCell>
+                                <TableCell>{t('registration.files_and_license.administrative_agreement')}</TableCell>
+                                <TableCell>
+                                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                    {t('common.version')}
+                                    <Typography color="error">*</Typography>
+                                  </Box>
+                                </TableCell>
+                                <TableCell>
+                                  <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                    {t('registration.files_and_license.embargo')}
+                                    <Tooltip title={t('common.help')}>
+                                      <IconButton
+                                        data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
+                                        onClick={toggleEmbargoModal}>
+                                        <HelpOutlineIcon />
+                                      </IconButton>
+                                    </Tooltip>
+                                  </Box>
+                                </TableCell>
+                                <TableCell>
+                                  <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                    {t('registration.files_and_license.license')}
+                                    <Tooltip title={t('common.help')}>
+                                      <IconButton
+                                        data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
+                                        onClick={toggleLicenseModal}>
+                                        <HelpOutlineIcon />
+                                      </IconButton>
+                                    </Tooltip>
+                                  </Box>
+                                </TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {files.map((file) => {
+                                const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
+                                  if (associatedArtifactIsFile(artifact)) {
+                                    const associatedFile = artifact as AssociatedFile;
+                                    return associatedFile.identifier === file.identifier;
+                                  }
+                                  return false;
+                                });
 
-                          return (
-                            <FileCard
-                              key={file.identifier}
-                              file={file}
-                              removeFile={() => {
-                                const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                                const remainingFiles = uppy
-                                  .getFiles()
-                                  .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                                uppy.setState({ files: remainingFiles });
-                                remove(associatedFileIndex);
+                                return (
+                                  <FilesTableRow
+                                    key={file.identifier}
+                                    file={file}
+                                    removeFile={() => {
+                                      const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                                      const remainingFiles = uppy
+                                        .getFiles()
+                                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                                      uppy.setState({ files: remainingFiles });
+                                      remove(associatedFileIndex);
 
-                                if (associatedArtifactsBeforeRemoval === 1) {
-                                  // Ensure field is set to touched even if it's empty
-                                  setFieldTouched(name);
-                                }
-                              }}
-                              toggleLicenseModal={toggleLicenseModal}
-                              baseFieldName={`${name}[${associatedFileIndex}]`}
-                            />
-                          );
-                        })}
+                                      if (associatedArtifactsBeforeRemoval === 1) {
+                                        // Ensure field is set to touched even if it's empty
+                                        setFieldTouched(name);
+                                      }
+                                    }}
+                                    toggleLicenseModal={toggleLicenseModal}
+                                    baseFieldName={`${name}[${associatedFileIndex}]`}
+                                  />
+                                );
+                              })}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
                       </Box>
                     )}
 
@@ -195,7 +259,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     <Typography variant="h2" paragraph>
                       {t('common.link')}
                     </Typography>
-                    {entityDescription?.reference?.doi ? (
+                    {originalDoi ? (
                       <DoiField />
                     ) : (
                       <TextField
@@ -246,7 +310,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     </FormHelperText>
                   )}
 
-                {associatedArtifacts.length === 0 && (
+                {associatedArtifacts.length === 0 && !originalDoi && (
                   <Button
                     sx={{ width: 'fit-content', m: 'auto' }}
                     variant="outlined"
@@ -280,6 +344,14 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             )}
           </Box>
         ))}
+      </Modal>
+
+      <Modal
+        headingText={t('registration.files_and_license.embargo')}
+        open={isEmbargoModalOpen}
+        onClose={toggleEmbargoModal}
+        maxWidth="sm">
+        <Typography>{t('registration.files_and_license.file_publish_date_helper_text')}</Typography>
       </Modal>
     </Box>
   );

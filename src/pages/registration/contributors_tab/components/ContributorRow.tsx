@@ -1,6 +1,16 @@
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
-import { Box, TableRow, TableCell, Tooltip, Typography, Checkbox, TextField, IconButton } from '@mui/material';
+import {
+  Box,
+  TableRow,
+  TableCell,
+  Tooltip,
+  Typography,
+  Checkbox,
+  TextField,
+  IconButton,
+  MenuItem,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
@@ -50,8 +60,6 @@ export const ContributorRow = ({
     setSequenceValue(`${contributor.sequence}`);
   };
 
-  const showContributorRole = contributorRoles.length > 1;
-
   return (
     <TableRow>
       <TableCell width="1">
@@ -90,23 +98,39 @@ export const ContributorRow = ({
           )}
         </Box>
       </TableCell>
-      <TableCell align={showContributorRole ? 'left' : 'center'} width="1">
-        {showContributorRole ? (
-          <Typography>{t(`registration.contributors.types.${contributor.role}`)}</Typography>
-        ) : (
-          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
-            {({ field }: FieldProps) => (
-              <Tooltip title={t('registration.contributors.corresponding')}>
-                <Checkbox
-                  data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
-                  checked={!!field.value}
-                  {...field}
-                  inputProps={{ 'aria-label': t('registration.contributors.corresponding') }}
-                />
-              </Tooltip>
+      <TableCell align="left" width="1">
+        <Box sx={{ display: 'flex', alignItems: 'end' }}>
+          {!contributorRoles.includes(contributor.role) && (
+            <Tooltip title={t('registration.contributors.invalid_role')}>
+              <WarningIcon color="warning" />
+            </Tooltip>
+          )}
+          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Role}`}>
+            {({ field }: FieldProps<ContributorRole>) => (
+              <TextField {...field} select variant="standard" fullWidth>
+                {contributorRoles.map((role) => (
+                  <MenuItem key={role} value={role}>
+                    {t(`registration.contributors.types.${role}`)}
+                  </MenuItem>
+                ))}
+              </TextField>
             )}
           </Field>
-        )}
+        </Box>
+      </TableCell>
+      <TableCell align="center" width="1">
+        <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Corresponding}`}>
+          {({ field }: FieldProps<boolean>) => (
+            <Tooltip title={t('registration.contributors.corresponding')}>
+              <Checkbox
+                data-testid={dataTestId.registrationWizard.contributors.correspondingCheckbox}
+                checked={!!field.value}
+                {...field}
+                inputProps={{ 'aria-label': t('registration.contributors.corresponding') }}
+              />
+            </Tooltip>
+          )}
+        </Field>
       </TableCell>
       <TableCell align="center" width="1">
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -148,10 +172,7 @@ export const ContributorRow = ({
         )}
       </TableCell>
       <TableCell width="1">
-        <Tooltip
-          title={t('registration.contributors.remove_role', {
-            role: t(`registration.contributors.types.${contributor.role}`),
-          })}>
+        <Tooltip title={t('registration.contributors.remove_contributor')}>
           <IconButton
             data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
             onClick={() => setOpenRemoveContributor(true)}>
@@ -163,7 +184,6 @@ export const ContributorRow = ({
       {/* Verify contributor */}
       <AddContributorModal
         contributorRoles={contributorRoles}
-        contributorRole={contributor.role}
         initialSearchTerm={contributor.identity.name}
         open={openVerifyContributor}
         toggleModal={() => setOpenVerifyContributor(false)}
@@ -175,9 +195,7 @@ export const ContributorRow = ({
       {/* Remove contributor */}
       <ConfirmDialog
         open={!!openRemoveContributor}
-        title={t('registration.contributors.remove_role', {
-          role: t(`registration.contributors.types.${contributor.role}`).toLowerCase(),
-        })}
+        title={t('registration.contributors.remove_contributor')}
         onAccept={() => {
           onRemoveContributor(contributor.sequence - 1);
           setOpenRemoveContributor(false);

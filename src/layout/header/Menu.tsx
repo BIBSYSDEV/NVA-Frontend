@@ -18,7 +18,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const user = useSelector((store: RootState) => store.user);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const name = user?.name ?? '';
+  const name = user?.givenName ?? '';
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -69,12 +69,12 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           ),
           user?.isCurator && (
             <MenuItem
-              key={dataTestId.header.worklistLink}
-              data-testid={dataTestId.header.worklistLink}
+              key={dataTestId.header.tasksLink}
+              data-testid={dataTestId.header.tasksLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.Worklist}>
-              <Typography>{t('worklist.worklist')}</Typography>
+              to={UrlPathTemplate.Tasks}>
+              <Typography>{t('tasks.tasks')}</Typography>
             </MenuItem>
           ),
           user?.isCreator && [
@@ -83,7 +83,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               data-testid={dataTestId.header.newRegistrationLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.NewRegistration}>
+              to={UrlPathTemplate.RegistrationNew}>
               <Typography>{t('registration.new_registration')}</Typography>
             </MenuItem>,
             <MenuItem

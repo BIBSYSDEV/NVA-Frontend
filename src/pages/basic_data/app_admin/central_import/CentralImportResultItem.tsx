@@ -40,7 +40,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
                 href={publication.entityDescription.reference.doi}
                 target="_blank"
                 rel="noopener noreferrer">
-                <Typography gutterBottom variant="body2" sx={{ color: 'primary.dark', wordBreak: 'break-word' }}>
+                <Typography gutterBottom variant="body2" sx={{ color: 'primary.main', wordBreak: 'break-word' }}>
                   {publication.entityDescription.reference.doi}
                 </Typography>
               </MuiLink>

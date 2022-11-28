@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   Button,
-  CircularProgress,
+  Paper,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -22,11 +23,6 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
-import { ViewingScopeCell } from '../institution_admin/ViewingScopeCell';
-import { RootState } from '../../../redux/store';
-import { useFetchResource } from '../../../utils/hooks/useFetchResource';
-import { Organization } from '../../../types/organization.types';
-import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 
 interface UserListProps {
   userList: InstitutionUser[];
@@ -37,24 +33,13 @@ interface UserListProps {
   showScope?: boolean;
 }
 
-export const UserList = ({
-  userList,
-  tableCaption,
-  roleToRemove,
-  roleToAdd,
-  refetchUsers,
-  showScope = false,
-}: UserListProps) => {
+export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refetchUsers }: UserListProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [page, setPage] = useState(0);
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
-  const user = useSelector((store: RootState) => store.user);
-  const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
-    showScope ? user?.topOrgCristinId ?? '' : ''
-  );
 
   const handleAddRoleToUser = async (user: InstitutionUser) => {
     if (roleToAdd) {
@@ -110,83 +95,63 @@ export const UserList = ({
     <>
       {sortedList.length === 0 ? (
         <Typography>
-          <i>{t('basic_data.users.no_users_found')}</i>
+          <i>{t('editor.curators.no_users_found')}</i>
         </Typography>
       ) : (
         <>
-          <Table size="small" sx={alternatingTableRowColor}>
-            <caption style={visuallyHidden}>{tableCaption}</caption>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <Typography fontWeight="bold">{t('basic_data.users.username')}</Typography>
-                </TableCell>
-                <TableCell>
-                  <Typography fontWeight="bold">{t('common.name')}</Typography>
-                </TableCell>
-                {showScope && (
-                  <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
-                    <Typography fontWeight="bold">{t('basic_data.users.area_of_responsibility')}</Typography>
-                  </TableCell>
-                )}
-                <TableCell width="150">
-                  <Typography fontWeight="bold">{t('common.actions')}</Typography>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {sortedList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user, index) => {
-                const isLoading = updatedRoleForUsers.includes(user.username);
-                const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
-                return (
-                  <TableRow key={user.username}>
-                    <TableCell>{user.username}</TableCell>
-                    <TableCell>
-                      {user.givenName} {user.familyName}
-                    </TableCell>
-                    {showScope && (
+          <TableContainer component={Paper}>
+            <Table size="small" sx={alternatingTableRowColor}>
+              <caption style={visuallyHidden}>{tableCaption}</caption>
+              <TableHead>
+                <TableRow>
+                  <TableCell>{t('common.username')}</TableCell>
+                  <TableCell>{t('common.name')}</TableCell>
+                  <TableCell width="150">{t('common.actions')}</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {sortedList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user, index) => {
+                  const isLoading = updatedRoleForUsers.includes(user.username);
+                  const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
+                  return (
+                    <TableRow key={user.username}>
+                      <TableCell>{user.username}</TableCell>
                       <TableCell>
-                        {isLoadingCurrentOrganization ? (
-                          <CircularProgress />
-                        ) : (
-                          <ViewingScopeCell
-                            user={user}
-                            options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
-                          />
+                        {user.givenName} {user.familyName}
+                      </TableCell>
+                      <TableCell>
+                        {roleToRemove && (
+                          <Button
+                            color="error"
+                            variant="outlined"
+                            startIcon={<DeleteIcon />}
+                            disabled={isLastInstitutionAdmin}
+                            data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
+                            onClick={() => setRemoveRoleForUser(user.username)}>
+                            {t('common.remove')}
+                          </Button>
+                        )}
+                        {roleToAdd && (
+                          <LoadingButton
+                            variant="contained"
+                            size="small"
+                            startIcon={<AddIcon />}
+                            loadingPosition="start"
+                            disabled={disableAddButton}
+                            loading={!disableAddButton && isLoading}
+                            data-testid={`button-add-role-${roleToAdd}-${user.username}`}
+                            onClick={() => handleAddRoleToUser(user)}>
+                            {t('common.add')}
+                          </LoadingButton>
                         )}
                       </TableCell>
-                    )}
-                    <TableCell>
-                      {roleToRemove && (
-                        <Button
-                          color="error"
-                          variant="outlined"
-                          startIcon={<DeleteIcon />}
-                          disabled={isLastInstitutionAdmin}
-                          data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
-                          onClick={() => setRemoveRoleForUser(user.username)}>
-                          {t('common.remove')}
-                        </Button>
-                      )}
-                      {roleToAdd && (
-                        <LoadingButton
-                          variant="contained"
-                          size="small"
-                          startIcon={<AddIcon />}
-                          loadingPosition="start"
-                          disabled={disableAddButton}
-                          loading={!disableAddButton && isLoading}
-                          data-testid={`button-add-role-${roleToAdd}-${user.username}`}
-                          onClick={() => handleAddRoleToUser(user)}>
-                          {t('common.add')}
-                        </LoadingButton>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
           {sortedList.length > ROWS_PER_PAGE_OPTIONS[0] && (
             <TablePagination
               rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
@@ -205,12 +170,12 @@ export const UserList = ({
           {roleToRemove && (
             <ConfirmDialog
               open={!!removeRoleForUser}
-              title={t('basic_data.users.remove_role_title')}
+              title={t('basic_data.institutions.remove_role_title')}
               isLoading={updatedRoleForUsers.length > 0}
               onCancel={() => setRemoveRoleForUser('')}
               onAccept={handleRemoveRoleFromUser}
               dialogDataTestId="confirm-remove-role-dialog">
-              {t('basic_data.users.remove_role_text')}
+              {t('basic_data.institutions.remove_role_text')}
             </ConfirmDialog>
           )}
         </>

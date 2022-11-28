@@ -27,7 +27,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
       <StyledPaperHeader>
         <Typography sx={{ color: 'inherit' }}>{t('project.project')}</Typography>
 
-        <TruncatableTypography variant="h2" variantMapping={{ h2: 'h1' }} sx={{ color: 'inherit' }}>
+        <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
           {project.title}
         </TruncatableTypography>
       </StyledPaperHeader>

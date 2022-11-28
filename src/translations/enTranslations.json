@@ -64,6 +64,8 @@
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
+      "remove_role_text": "Are you sure you want to remove this role?",
+      "remove_role_title": "Remove role?",
       "ror": "Research Organization Registry (ROR)",
       "short_name": "Shortened display name"
     },
@@ -83,19 +85,6 @@
       "person_register": "Person Register",
       "previous_employments": "Previous employments",
       "show_full_nin": "Show national identity number"
-    },
-    "users": {
-      "add_role_info": "If you don't find the user, you must check that they are affiliated with your institution and have previously logged in.",
-      "area_of_responsibility": "Area of responsibility",
-      "area_of_responsibility_placeholder": "No limitations",
-      "auto_assign_creators": "Employees are automatically assigned role as creator at login if they are registered as this in 'eduPersonAffiliation': Employee, Staff, Member",
-      "creator_info": "Who is able to publish?",
-      "no_users_found": "No users found",
-      "remove_role_text": "Are you sure you want to remove this role?",
-      "remove_role_title": "Remove role?",
-      "search_for_user": "Search among existing users",
-      "user_administration": "User administration",
-      "username": "Username"
     }
   },
   "common": {
@@ -126,7 +115,6 @@
     "help": "Help",
     "institution": "Institution",
     "institutions": "Institutions",
-    "language": "Language",
     "last_name": "Last name",
     "link": "Link",
     "loading": "Loading",
@@ -189,7 +177,7 @@
     "title": "Title",
     "type": "Type",
     "update": "Update",
-    "users": "Users",
+    "username": "Username",
     "version": "Version",
     "will_be_available": "Will be available",
     "x_others_one": "+ {{count}} other",
@@ -298,6 +286,12 @@
     "disabled_description": "$t(editor.disabled): Is not available",
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
+    "curators": {
+      "area_of_responsibility": "Area of responsibility",
+      "area_of_responsibility_placeholder": "No limitations",
+      "areas_of_responsibility": "Areas of responsibility",
+      "no_users_found": "No users found"
+    },
     "institution": {
       "institution_code": "Institution's code",
       "institution_helper_text": "Contact <0>Sikt</0> if changes are needed.",
@@ -500,10 +494,8 @@
       "creator_description": "Can register publications and other resources.",
       "curator": "Curator",
       "curator_description": "Can edit the institution's registrations, answer user support inquiries and possibly also assign DOIs.",
-      "curators": "Curators",
       "editor": "Editor",
       "editor_description": "Determines access to controlled vocabularies and publication strategy for the institution.",
-      "editors": "Editors",
       "institution_admin": "Administrator",
       "institution_admin_description": "Maintains the institution's information in the person registery and assigns roles in the service.",
       "institution_admins": "Administrators",
@@ -817,9 +809,9 @@
   "registration": {
     "contributors": {
       "add_affiliation": "Add affiliation",
-      "add_as_role": "Add {{role}}",
+      "add_contributor": "Add contributor",
       "add_duplicate_affiliation": "Affiliation is already added",
-      "add_self_as_role": "Add me as {{- role}}",
+      "add_self_as_contributor": "Add me as contributor",
       "add_unverified_contributor": "Add a non-verified contributor.",
       "authors": "Authors",
       "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
@@ -830,8 +822,7 @@
       "contributor_already_added": "Chosen contributor is already added",
       "corresponding": "Corresponding",
       "department": "Department",
-      "editors": "Editors",
-      "filter": "Filter {{role}}",
+      "invalid_role": "The contributor must have a role that is valid for this resource type to be displayed for other users",
       "known_author_identity": "Connected author identity",
       "must_select_type_first": "You must select resource type before you can add contributors.",
       "no_affiliations_found": "No affiliations found",
@@ -841,9 +832,10 @@
       "prefilled_affiliation": "Prefilled affiliation",
       "prefilled_name": "Prefilled name",
       "remove_affiliation": "Remove affiliation",
-      "remove_role": "Remove {{- role}}",
+      "remove_contributor": "Remove contributor",
+      "search_for_institution": "Search for institution",
       "select_contributor_type": "Select contributor type",
-      "supervisors": "Supervisors",
+      "suggested_affiliations": "Suggested affiliations",
       "type": "Contributor type",
       "types": {
         "AcademicCoordinator": "Academic coordinator",
@@ -923,11 +915,13 @@
     },
     "edit_registration": "Edit registration",
     "files_and_license": {
+      "accepted": "Accepted",
       "accepted_version": "Accepted version",
       "add_files_or_link": "Add files or link",
+      "administrative_agreement": "Administrative agreement",
       "administrative_contract": "Internal file that should never be published. E.g. author agreement or other documentation for the registered result",
       "conditions_for_using_file": "Terms of use",
-      "file_locked": "File is locked",
+      "embargo": "Embargo",
       "file_publish_date": "Postponed publication",
       "file_publish_date_helper_text": "File is locked until the specified date",
       "files": "Files",
@@ -936,15 +930,18 @@
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
       "find_series_in_channel_register": "See information about the series in the Norwegian Register",
       "info_from_channel_register": "More information about the selected publication channel",
+      "license": "License",
       "licenses": "Licenses",
       "link_to_resource": "Link to resource",
       "no_duplicates": "Cannot add \"{{fileName}}\", because a file with the same name already exists",
+      "published": "Published",
       "published_version": "Published version",
       "remove_file": "Remove file",
       "remove_file_description": "Do you want to remove {{fileName}}?",
       "resource_has_no_files_or_links": "The resource does not have any file or links to publish",
       "resource_has_no_files_or_links_paragraph0": "Without files or links the published resource is harder to reuse and may give less value for others. If data is not shared, information about data and how they can be accessed should be shared.",
-      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), is a set of principles to support reuse of digital resources. NFR and EC sets clear requirements for data to be available and deposited together with metadata that clarifies any potential conditions for access."
+      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), is a set of principles to support reuse of digital resources. NFR and EC sets clear requirements for data to be available and deposited together with metadata that clarifies any potential conditions for access.",
+      "size": "Size"
     },
     "heading": {
       "contributors": "Contributors",
@@ -968,7 +965,7 @@
       "message_to_curator": "Message to curator",
       "other_contributors_one": "(+{{count}} other)",
       "other_contributors_other": "(+{{count}} others)",
-      "other_related_registrations": "Andre related registrations",
+      "other_related_registrations": "Other related registrations",
       "participants_one": "{{count}} participant",
       "participants_other": "{{count}} participants",
       "preview_of": "Preview of {{fileName}}",
@@ -1236,6 +1233,7 @@
         "search_for_book_of_abstracts": "Search for the book of abstracts where the abstract is published",
         "search_for_report": "Search for the report where the chapter is published"
       },
+      "click_to_change_resource_type": "Click on selected resource type to change it",
       "content": "Content",
       "content_types": {
         "AcademicArticle": "Academic article",
@@ -1260,7 +1258,6 @@
       },
       "date_from": "Date from",
       "date_to": "Date to",
-      "form": "Form",
       "isbn": "ISBN",
       "issn": "ISSN",
       "issue": "Issue",
@@ -1289,14 +1286,15 @@
       "number_of_pages": "Total number of pages",
       "nvi": {
         "applicable": "The publication can be included in the Norwegian Science Index",
-        "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (Level can be changed before this year's reporting deadline so that the publication can be included in the Norwegian Science Index)"
+        "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (Level can be changed before this year's reporting deadline so that the publication can be included in the Norwegian Science Index)",
+        "can_give_publication_points": "Can give publication points"
       },
       "online_issn": "Online ISSN",
       "or": "Or",
       "organizer": "Organizer",
       "original_article": "Original article",
       "original_article_title": "Title on article",
-      "pages": "Pages",
+      "page": "Page",
       "pages_from": "Pages from",
       "pages_to": "to",
       "place_for_event": "Place for event",
@@ -1331,10 +1329,12 @@
         "search_for_related_registrations": "Search for related registrations",
         "search_for_related_registrations_helper": "Choose among published registrations"
       },
+      "resource_type": "Resource type",
       "search_for_journal": "Search for journals",
       "search_for_original_article": "Search for original article",
       "search_for_publisher": "Search for publisher",
       "search_for_series": "Search for series",
+      "select_resource_type": "Select resource type",
       "series": "Series",
       "series_info": "If the publication is part of a series",
       "series_number": "Series number",
@@ -1370,8 +1370,8 @@
     "sort_by_published_date_asc": "Publish date (oldest first)",
     "sort_by_published_date_desc": "Publish date (newest first)"
   },
-  "worklist": {
+  "tasks": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "worklist": "Worklist"
+    "tasks": "Tasks"
   }
 }

@@ -25,7 +25,7 @@ import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrat
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
-import { getRegistrationPath } from '../../utils/urlPaths';
+import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 
@@ -60,7 +60,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             {t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)}
           </Typography>
         ) : null}
-        <TruncatableTypography variant="h2" variantMapping={{ h2: 'h1' }} sx={{ color: 'inherit' }}>
+        <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
           {mainTitle}
         </TruncatableTypography>
         {userCanEditRegistration(user, registration) && (
@@ -69,7 +69,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               data-testid={dataTestId.registrationLandingPage.editButton}
               sx={{ ml: 'auto', color: 'inherit' }}
               component={RouterLink}
-              to={getRegistrationPath(identifier)}>
+              to={getRegistrationWizardPath(identifier)}>
               <EditIcon />
             </IconButton>
           </Tooltip>

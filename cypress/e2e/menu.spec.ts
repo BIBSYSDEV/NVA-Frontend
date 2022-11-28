@@ -76,8 +76,20 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).should('not.exist');
   });
 
+  it('User sees Editor Page menu options', () => {
+    cy.visit(UrlPathTemplate.Home);
+    cy.mocklogin();
+    cy.setUserRolesInRedux([RoleName.Editor]);
+    cy.get(`[data-testid=${dataTestId.header.editorLink}]`).click();
+
+    cy.get(`[data-testid=${dataTestId.editor.institutionsNameLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.vocabularyLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.publishStrategyLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.areaOfResponsibilityLinkButton}]`).should('be.visible');
+  });
+
   it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
-    cy.visit(UrlPathTemplate.NewRegistration);
+    cy.visit(UrlPathTemplate.RegistrationNew);
     cy.mocklogin();
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
@@ -87,17 +99,12 @@ describe('Menu', () => {
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
-    cy.visit(UrlPathTemplate.Worklist);
+    cy.visit(UrlPathTemplate.Tasks);
     cy.mocklogin();
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
     cy.visit(UrlPathTemplate.BasicData);
-    cy.mocklogin();
-    cy.setUserRolesInRedux([]);
-    cy.get('[data-testid=forbidden]').should('be.visible');
-
-    cy.visit(UrlPathTemplate.BasicDataUsers);
     cy.mocklogin();
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');

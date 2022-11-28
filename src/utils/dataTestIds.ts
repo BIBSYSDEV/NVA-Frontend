@@ -2,7 +2,6 @@ export const dataTestId = {
   basicData: {
     addEmployeeLink: 'add-employee-link',
     adminInstitutionsLink: 'admin-institutions-link',
-    adminUsersLink: 'admin-users-link',
     centralImportLink: 'central-import-link',
     centralImport: {
       checkboxAuthor: 'duplicate-search-author-checkbox',
@@ -36,6 +35,10 @@ export const dataTestId = {
     subSearchField: 'sub-organization-search-field',
   },
   editor: {
+    areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
+    institutionsNameLinkButton: 'institutions-name-link-button',
+    publishStrategyLinkButton: 'publishing-strategy-link-button',
+    vocabularyLinkButton: 'vocabulary-link-button',
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',
     hrcsCategoryButtonGroup: 'hrcs-category-button-group',
   },
@@ -52,7 +55,7 @@ export const dataTestId = {
     myPageLink: 'my-page-link',
     newRegistrationLink: 'new-registration',
     privacyLink: 'privacy-link',
-    worklistLink: 'worklist-link',
+    tasksLink: 'tasks-link',
   },
   institutionAdmin: {
     archiveNameField: 'archive-field',
@@ -133,7 +136,8 @@ export const dataTestId = {
   registrationWizard: {
     contributors: {
       addAffiliationButton: 'button-add-affiliation',
-      addContributorButton: (role: string) => `add-${role}`,
+      addContributorButton: 'add-contributor',
+      addSelectedAffiliationButton: 'add-selected-affiliation-button',
       addSelfButton: 'add-self-button',
       addUnverifiedContributorButton: 'add-unverified-contributor-button',
       authorRadioButton: 'author-radio-button',
@@ -169,7 +173,7 @@ export const dataTestId = {
     files: {
       administrativeAgreement: 'administrative-agreement-checkbox',
       embargoDateField: 'embargo-date-field',
-      fileCard: 'uploaded-file-card',
+      fileRow: 'uploaded-file-row',
       licenseHelpButton: 'license-help-button',
       licenseItem: 'license-item',
       licenseModal: 'license-modal',
@@ -220,6 +224,7 @@ export const dataTestId = {
       awardRanking: 'artistic-award-ranking',
       broadcastPublisher: 'artistic-broadcast-publisher',
       cinemaPlace: 'artistic-cinema-place',
+      closeResourceTypeSelectorButton: 'close-resource-type-selector-button',
       competitionDescription: 'artistic-competition-description',
       competitionName: 'artistic-competition-name',
       compliesWithField: 'complies-with-field',
@@ -230,6 +235,7 @@ export const dataTestId = {
       concertProgramComposer: 'concert-program-composer',
       concertProgramIsPremiere: 'concert-program-is-premiere',
       concertProgramRemove: 'concert-program-remove',
+      confirmDatasetTypeDialog: 'research-data-confirm-dialog',
       contentField: 'content-field',
       contentValue: (value: string) => `content-value-${value.toLowerCase()}`,
       corrigendumForField: 'corrigendum-for-field',
@@ -277,6 +283,7 @@ export const dataTestId = {
       relatedRegistrationLink: (value: string) => `related-registration-link-${value}`,
       removePublisherButton: 'remove-publisher-button',
       removeRelationButton: (value: string) => (value ? `remove-relation-button-${value}` : 'remove-relation-button'),
+      resourceTypeChip: (type: string) => `resource-type-chip-${type}`,
       scientificSubjectField: 'scientific-subject-field',
       scoreEnsemble: 'score-ensemble',
       scoreMovements: 'score-movements',

@@ -3,6 +3,14 @@ import { JournalArticleContentType, BookMonographContentType } from '../../src/t
 import { DesignType } from '../../src/types/publication_types/artisticRegistration.types';
 import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
 import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
+import {
+  ArtisticType,
+  BookType,
+  DegreeType,
+  JournalType,
+  PresentationType,
+  ReportType,
+} from '../../src/types/publicationFieldNames';
 
 describe('User opens registration form and can see validation errors', () => {
   before('Given that the user is logged in as Creator:', () => {
@@ -55,17 +63,12 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.resourceStepButton}]`).click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.resourceStepButton}]`).click({ force: true });
-    cy.get('[data-testid=publication-context-type] .Mui-error').should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.resourceStepButton}]`).within(() =>
       cy.get('[data-testid=error-tab]').should('exist')
     );
 
-    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-context-type-Journal]').click({ force: true });
-
     // No errors should be displayed when user has just selected new context type
-    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-JournalArticle]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.Article)}]`).click();
     cy.get('p.Mui-error').should('not.exist');
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click({ force: true });
@@ -119,13 +122,13 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on resource tab (Book)', () => {
-    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
-    cy.get(`[data-testid=publication-context-type-Book]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.Article)}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.Monograph)}]`).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.Monograph)}]`).should(
+      'be.visible'
+    );
 
-    // publicationInstance type
-    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-BookMonograph]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
@@ -169,13 +172,14 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on resource tab (Report)', () => {
-    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
-    cy.get(`[data-testid=publication-context-type-Report]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.Monograph)}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Report)}]`).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Report)}]`).should(
+      'be.visible'
+    );
 
     // publicationInstance type
-    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-ReportResearch]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
@@ -196,13 +200,16 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on resource tab (Presentation)', () => {
-    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-context-type-Event]').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Report)}]`).click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(PresentationType.ConferenceLecture)}]`
+    ).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(PresentationType.ConferenceLecture)}]`
+    ).should('be.visible');
 
     // publicationInstance type
-    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-ConferenceLecture]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('be.visible')
@@ -235,13 +242,18 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on resource tab (Artistic)', () => {
-    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-context-type-Artistic]').click({ force: true });
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(PresentationType.ConferenceLecture)}]`
+    ).click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ArtisticType.ArtisticDesign)}]`
+    ).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ArtisticType.ArtisticDesign)}]`
+    ).should('be.visible');
 
     // publicationInstance type
-    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-ArtisticDesign]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('be.visible')
@@ -271,13 +283,16 @@ describe('User opens registration form and can see validation errors', () => {
   });
 
   it('The User should be able to see validation errors on resource tab (Degree)', () => {
-    cy.get('[data-testid=publication-context-type]').click({ force: true }).type(' ');
-    cy.get(`[data-testid=publication-context-type-Degree]`).click({ force: true });
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ArtisticType.ArtisticDesign)}]`
+    ).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(DegreeType.Bachelor)}]`).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(DegreeType.Bachelor)}]`).should(
+      'be.visible'
+    );
 
     // publicationInstance type
-    cy.get('[data-testid=publication-instance-type]').click({ force: true }).type(' ');
-    cy.get('[data-testid=publication-instance-type-DegreeBachelor]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
@@ -303,7 +318,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').within(() => cy.get('[data-testid=error-tab]').should('exist'));
 
     // Add author
-    cy.get('[data-testid=add-Creator]').first().click();
+    cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.addContributorButton}]`).first().click();
     cy.get('[data-testid=contributor-modal]').should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.searchField}] input`).type('test');
     cy.get(`[data-testid=${dataTestId.registrationWizard.contributors.authorRadioButton}]`)
@@ -333,13 +348,13 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.fixture('img.jpg').as('file');
     cy.get('input[type=file]').first().selectFile('@file', { force: true });
-    cy.get('[data-testid=uploaded-file-card]').should('be.visible');
+    cy.get('[data-testid=uploaded-file-row]').should('be.visible');
     cy.get('p.Mui-error').should('not.exist');
 
     // Lincense field
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-files-and-license]').click({ force: true });
-    cy.get('[data-testid=uploaded-file-select-license] p.Mui-error').should('be.visible');
+    cy.get('[data-testid=uploaded-file-select-license] p.Mui-error').should('exist');
     cy.get('[data-testid=uploaded-file-select-license]').click({ force: true }).type(' ');
     cy.get('[data-testid=license-item]').eq(0).click({ force: true });
     cy.get('[data-testid=uploaded-file-select-license] p.Mui-error').should('not.exist');

@@ -11,7 +11,7 @@ import { LinkRegistrationForm } from './LinkRegistrationForm';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { Doi } from '../../../types/registration.types';
 import { setNotification } from '../../../redux/notificationSlice';
-import { getRegistrationPath } from '../../../utils/urlPaths';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
@@ -32,7 +32,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     if (!doi) {
       return;
     }
-    history.push(getRegistrationPath(doi.identifier), { highestValidatedTab: -1 });
+    history.push(getRegistrationWizardPath(doi.identifier), { highestValidatedTab: -1 });
   };
 
   const handleSearch = async (doiUrl: string) => {
@@ -72,10 +72,10 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
 
       <AccordionDetails>
         <LinkRegistrationForm handleSearch={handleSearch} />
-        {noHit && <Typography>{t('common.no_hits')}</Typography>}
+        {noHit && <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>}
         {doi && (
           <div data-testid={dataTestId.registrationWizard.new.linkMetadata}>
-            <Typography variant="h3" gutterBottom>
+            <Typography sx={{ mt: '1rem' }} variant="h3" gutterBottom>
               {t('common.registration')}:
             </Typography>
             <Typography>{doi.title}</Typography>

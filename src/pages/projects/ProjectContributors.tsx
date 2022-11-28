@@ -59,7 +59,7 @@ const ContributorList = ({ contributors }: ContributorListProps) => (
     }}>
     {contributors.map((contributor, index) => (
       <div key={index}>
-        <Typography variant="subtitle2" component="p">
+        <Typography variant="subtitle1" component="p">
           {contributor.identity.firstName} {contributor.identity.lastName}
         </Typography>
         <Typography variant="body2">{getLanguageString(contributor.affiliation?.name)}</Typography>

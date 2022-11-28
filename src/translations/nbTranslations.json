@@ -64,6 +64,8 @@
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Organisasjonens domene i Feide",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
+      "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
+      "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -83,19 +85,6 @@
       "person_register": "Personregister",
       "previous_employments": "Tidligere ansettelser",
       "show_full_nin": "Vis personnummer"
-    },
-    "users": {
-      "add_role_info": "Om du ikke finner brukeren, så må du sjekke at vedkommende er tilknyttet din institusjon og har logget på tjenesten tidligere.",
-      "area_of_responsibility": "Ansvarsområde",
-      "area_of_responsibility_placeholder": "Ingen avgresninger",
-      "auto_assign_creators": "Ansatte får automatisk rolle som registrator ved pålogging hvis de er registrert med dette i 'eduPersonAffiliation': Employee, Staff, Member",
-      "creator_info": "Hvem skal få tilgang til å registrere?",
-      "no_users_found": "Ingen brukere funnet",
-      "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
-      "remove_role_title": "Fjern rolle?",
-      "search_for_user": "Søk blant eksisterende brukere",
-      "user_administration": "Brukeradministrasjon",
-      "username": "Brukernavn"
     }
   },
   "common": {
@@ -126,7 +115,6 @@
     "help": "Hjelp",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
-    "language": "Språk",
     "last_name": "Etternavn",
     "link": "Lenke",
     "loading": "Laster",
@@ -189,7 +177,7 @@
     "title": "Tittel",
     "type": "Type",
     "update": "Oppdater",
-    "users": "Brukere",
+    "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
     "x_others_one": "+ {{count}} annen",
@@ -298,6 +286,12 @@
     "disabled_description": "$t(editor.disabled): Er ikke tilgjengelig",
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
+    "curators": {
+      "area_of_responsibility": "Ansvarsområde",
+      "area_of_responsibility_placeholder": "Ingen avgrensninger",
+      "areas_of_responsibility": "Ansvarsområder",
+      "no_users_found": "Ingen brukere funnet"
+    },
     "institution": {
       "institution_code": "Institusjonens kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
@@ -500,10 +494,8 @@
       "creator_description": "Kan registrere publikasjoner og andre ressurser.",
       "curator": "Kurator",
       "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
-      "curators": "Kuratorer",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
-      "editors": "Redaktører",
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "institution_admins": "Administratorer",
@@ -817,9 +809,9 @@
   "registration": {
     "contributors": {
       "add_affiliation": "Legg til tilhørighet",
-      "add_as_role": "Legg til {{role}}",
+      "add_contributor": "Legg til bidragsyter",
       "add_duplicate_affiliation": "Tilhørigheten er allerede lagt til",
-      "add_self_as_role": "Legg meg til som {{- role}}",
+      "add_self_as_contributor": "Legg meg til som bidragsyter",
       "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
       "authors": "Forfattere",
       "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
@@ -830,8 +822,7 @@
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "corresponding": "Korresponderende",
       "department": "Enhet",
-      "editors": "Redaktører",
-      "filter": "Filtrer {{role}}",
+      "invalid_role": "Bidragsyteren må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
       "known_author_identity": "Har tilknyttet forfatteridentitet",
       "must_select_type_first": "Du må velge ressurstype før du kan legge til bidragsytere.",
       "no_affiliations_found": "Ingen tilhørigheter funnet",
@@ -841,9 +832,10 @@
       "prefilled_affiliation": "Forhåndsutfylt tilhørighet",
       "prefilled_name": "Forhåndsutfylt navn",
       "remove_affiliation": "Fjern tilhørighet",
-      "remove_role": "Fjern {{- role}}",
+      "remove_contributor": "Fjern bidragsyter",
+      "search_for_institution": "Søk etter institusjon",
       "select_contributor_type": "Velg type bidragsyter",
-      "supervisors": "Veiledere",
+      "suggested_affiliations": "Foreslåtte tilhørigheter",
       "type": "Bidragstype",
       "types": {
         "AcademicCoordinator": "Faglig ansvarlig",
@@ -923,11 +915,13 @@
     },
     "edit_registration": "Endre registrering",
     "files_and_license": {
+      "accepted": "Akseptert",
       "accepted_version": "Akseptert versjon",
       "add_files_or_link": "Legg til filer eller lenke",
+      "administrative_agreement": "Administrativ avtale",
       "administrative_contract": "Intern fil som ikke aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
-      "file_locked": "Filen er låst",
+      "embargo": "Embargo",
       "file_publish_date": "Utsatt publisering",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "files": "Filer",
@@ -936,15 +930,18 @@
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
       "find_series_in_channel_register": "Se informasjon om serien i Kanalregisteret",
       "info_from_channel_register": "Mer informasjon om valgt publiseringskanal",
+      "license": "Lisens",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
+      "published": "Publisert",
       "published_version": "Publisert versjon",
       "remove_file": "Fjern fil",
       "remove_file_description": "Ønsker du å fjerne {{fileName}}?",
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_has_no_files_or_links_paragraph0": "Uten filer eller lenker er den publiserte ressursen vanskeligere å gjenbruke og kan gi mindre verdi for andre. Om ikke data kan deles, så bør informasjon om data og hvordan tilgang kan oppnås, deles.",
-      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er et sett med prinsipper for å støtte gjenbruk av digitale ressurser. NFR og EC stiller klare krav til at data skal være tilgjengelig og deponert sammen med metadata som avklarer eventuelle betingelser for tilgang."
+      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er et sett med prinsipper for å støtte gjenbruk av digitale ressurser. NFR og EC stiller klare krav til at data skal være tilgjengelig og deponert sammen med metadata som avklarer eventuelle betingelser for tilgang.",
+      "size": "Størrelse"
     },
     "heading": {
       "contributors": "Bidragsytere",
@@ -1236,6 +1233,7 @@
         "search_for_book_of_abstracts": "Søk etter abstraktsamlingen hor abstraktet er publisert",
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
+      "click_to_change_resource_type": "Trykk på valgt ressurstype om du vil endre",
       "content": "Innhold",
       "content_types": {
         "AcademicArticle": "Vitenskapelig artikkel",
@@ -1260,7 +1258,6 @@
       },
       "date_from": "Dato fra",
       "date_to": "Dato til",
-      "form": "Form",
       "isbn": "ISBN",
       "issn": "ISSN",
       "issue": "Hefte",
@@ -1289,14 +1286,15 @@
       "number_of_pages": "Totalt antall sider",
       "nvi": {
         "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks",
-        "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)"
+        "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)",
+        "can_give_publication_points": "Kan gi publiseringspoeng"
       },
       "online_issn": "Online ISSN",
       "or": "Eller",
       "organizer": "Arrangør",
       "original_article": "Original artikkel",
       "original_article_title": "Tittel på artikkel",
-      "pages": "Sidetall",
+      "page": "Side",
       "pages_from": "Sidetall fra",
       "pages_to": "til",
       "place_for_event": "Sted for arrangement",
@@ -1331,10 +1329,12 @@
         "search_for_related_registrations": "Søk etter relaterte registreringer",
         "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
       },
+      "resource_type": "Ressurstype",
       "search_for_journal": "Søk etter tidsskrift",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
       "search_for_series": "Søk etter serie",
+      "select_resource_type": "Velg ressurstype",
       "series": "Serie",
       "series_info": "Hvis publikasjonen inngår i en serie",
       "series_number": "Serienummer",
@@ -1370,8 +1370,8 @@
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
   },
-  "worklist": {
+  "tasks": {
     "limited_to": "Avgrenset til: \"{{name}}\"",
-    "worklist": "Arbeidsliste"
+    "tasks": "Oppgaver"
   }
 }

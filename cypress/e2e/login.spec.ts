@@ -9,6 +9,6 @@ describe('Login', () => {
     cy.get(`[data-testid=${dataTestId.header.logInButton}]`).click({ force: true });
 
     cy.get(`[data-testid=${dataTestId.header.menuButton}]`).should('be.visible');
-    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).contains('Test User');
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).contains('Test');
   });
 });

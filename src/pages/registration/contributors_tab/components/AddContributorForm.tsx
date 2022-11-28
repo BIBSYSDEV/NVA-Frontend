@@ -134,9 +134,7 @@ export const AddContributorForm = ({
             data-testid={dataTestId.registrationWizard.contributors.addSelfButton}
             onClick={addSelfAsContributor}
             loading={isAddingSelf}>
-            {t('registration.contributors.add_self_as_role', {
-              role: t(`registration.contributors.types.${roleToAdd}`),
-            })}
+            {t('registration.contributors.add_self_as_contributor')}
           </LoadingButton>
         )}
         {!initialSearchTerm && (

@@ -5,21 +5,16 @@ import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
-  AlternativeBackground = '#f3f0ed',
   Black = '#222',
-  ErrorLight = '#FF8888',
-  ErrorMain = '#C2363D',
-  Paper = '#faf7f4',
-  PrimaryMain = '#0e6d82',
-  SecondaryMain = '#FFB546',
-  SuccessMain = '#08B677',
+  ErrorMain = '#AC0303',
+  PrimaryMain = '#0F0035',
+  SecondaryLight = '#FEFBF3',
+  SecondaryMain = '#F9F4E6',
+  SecondaryDark = '#EDE2C7',
+  SuccessMain = '#025810',
+  InfoMain = '#4367F6',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
-}
-
-enum Font {
-  Barlow = 'Barlow, sans-serif',
-  Crimson = 'Crimson Text, serif',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
@@ -42,48 +37,63 @@ export const mainTheme = createTheme(
         contrastText: Color.White,
       },
       secondary: {
+        light: Color.SecondaryLight,
         main: Color.SecondaryMain,
+        dark: Color.SecondaryDark,
       },
       error: {
         main: Color.ErrorMain,
-        light: Color.ErrorLight,
       },
       success: {
         main: Color.SuccessMain,
       },
       background: {
         default: Color.White,
-        paper: Color.Paper,
+        paper: Color.SecondaryLight,
       },
     },
     typography: {
-      fontFamily: Font.Barlow,
       h1: {
-        fontFamily: Font.Crimson,
-        fontSize: '3rem',
-        fontWeight: 400,
-      },
-      h2: {
-        fontFamily: Font.Crimson,
-        fontSize: '2.25rem',
-        fontWeight: 400,
-      },
-      h3: {
-        fontFamily: Font.Crimson,
-        fontSize: '1.5rem',
-        fontWeight: 400,
-      },
-      h4: {
         fontSize: '1.25rem',
         fontWeight: 700,
       },
+      h2: {
+        fontSize: '1rem',
+        fontWeight: 700,
+      },
+      h3: {
+        fontSize: '1rem',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+      },
+      h4: {
+        fontSize: '1rem',
+        fontWeight: 400,
+      },
       overline: {
         fontSize: '0.75rem',
-        fontWeight: 600,
+        fontWeight: 700,
+      },
+      subtitle1: {
+        fontSize: '0.875rem',
+        fontWeight: 700,
       },
       subtitle2: {
         fontSize: '0.875rem',
         fontWeight: 700,
+        textDecoration: 'underline',
+      },
+      body1: {
+        fontSize: '0.875rem',
+        fontWeight: 400,
+      },
+      body2: {
+        fontSize: '0.875rem',
+        fontWeight: 400,
+      },
+      button: {
+        fontSize: '0.875rem',
+        fontWeight: 400,
       },
       caption: {
         fontSize: '0.875rem',
@@ -120,27 +130,47 @@ export const mainTheme = createTheme(
             color: `${Color.TextPrimary} !important`,
           },
           underlineAlways: {
-            textDecorationColor: Color.SecondaryMain,
+            textDecorationColor: Color.PrimaryMain,
           },
         },
       },
       MuiStepLabel: {
         styleOverrides: {
           label: {
-            opacity: 0.65,
+            opacity: 0.6,
             textTransform: 'uppercase',
             fontSize: '1rem',
+            color: Color.PrimaryMain,
             '&.Mui-active': {
               color: Color.PrimaryMain,
+              fontWeight: 600,
               opacity: 1,
+            },
+            '&.Mui-completed': {
+              color: Color.PrimaryMain,
             },
             '&.Mui-error': {
               color: Color.ErrorMain,
             },
           },
+          iconContainer: {
+            opacity: 0.6,
+            color: Color.PrimaryMain,
+            '&.Mui-active': {
+              opacity: 1,
+            },
+          },
         },
       },
-      MuiTableHead: { styleOverrides: { root: { th: { background: Color.AlternativeBackground } } } },
+      MuiTableHead: {
+        styleOverrides: {
+          root: {
+            th: {
+              fontWeight: 600,
+            },
+          },
+        },
+      },
       MuiTablePagination: {
         defaultProps: {
           showFirstButton: true,
@@ -195,9 +225,9 @@ export const mainTheme = createTheme(
 
 export const alternatingTableRowColor: SxProps = {
   tr: {
-    background: Color.AlternativeBackground,
+    bgcolor: 'secondary.main',
     '&:nth-of-type(odd)': {
-      background: Color.White,
+      bgcolor: 'secondary.light',
     },
   },
 };
