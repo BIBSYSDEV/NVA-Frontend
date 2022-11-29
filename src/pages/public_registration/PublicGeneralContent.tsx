@@ -84,7 +84,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   return (
     <StyledGeneralInfo>
       <div data-testid={dataTestId.registrationLandingPage.generalInfo}>
-        <Typography variant="overline">{t('registration.public_page.about_registration')}</Typography>
+        <Typography variant="h3">{t('registration.public_page.about_registration')}</Typography>
 
         <Typography>{displayDate(entityDescription?.date)}</Typography>
 

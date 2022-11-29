@@ -228,7 +228,7 @@ export const PersonTableRow = ({
                     {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
                     {employmentsInOtherInstitutions.some(isActiveEmployment) && (
                       <div>
-                        <Typography variant="overline">{t('basic_data.person_register.other_employments')}</Typography>
+                        <Typography variant="h3">{t('basic_data.person_register.other_employments')}</Typography>
                         <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
                           {employmentsInOtherInstitutions.filter(isActiveEmployment).map((affiliation) => (
                             <li key={affiliation.organization}>
@@ -247,7 +247,7 @@ export const PersonTableRow = ({
                   ) : (
                     values.employments.length > 0 && (
                       <div>
-                        <Typography variant="overline" gutterBottom>
+                        <Typography variant="h3" gutterBottom>
                           {t('common.employments')}
                         </Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

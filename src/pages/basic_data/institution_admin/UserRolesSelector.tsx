@@ -26,7 +26,7 @@ export const UserRolesSelector = ({ selectedRoles, updateRoles, disabled = false
         }
       }}
       disabled={disabled}>
-      <Typography component="legend" variant="overline">
+      <Typography component="legend" variant="h3">
         {t('my_page.my_profile.heading.roles')}
       </Typography>
 
@@ -67,7 +67,7 @@ interface RoleLabelProps {
 
 const RoleLabel = ({ title, description }: RoleLabelProps) => (
   <>
-    <Typography variant="overline" sx={{ fontSize: '0.9rem', lineHeight: '1' }}>
+    <Typography variant="h4" sx={{ fontWeight: 600, lineHeight: '1' }}>
       {title}
     </Typography>
     <Typography>{description}</Typography>
