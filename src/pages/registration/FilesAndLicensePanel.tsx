@@ -47,6 +47,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
+import { AdminstrativeAgreementFilesRow } from './files_and_license_tab/AdministrativeAgreementFilesRow';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -222,27 +223,30 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   return false;
                                 });
 
-                                return (
-                                  <FilesTableRow
-                                    key={file.identifier}
-                                    file={file}
-                                    removeFile={() => {
-                                      const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                                      const remainingFiles = uppy
-                                        .getFiles()
-                                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                                      uppy.setState({ files: remainingFiles });
-                                      remove(associatedFileIndex);
+                                if (!file.administrativeAgreement) {
+                                  return (
+                                    <FilesTableRow
+                                      key={file.identifier}
+                                      file={file}
+                                      removeFile={() => {
+                                        const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                                        const remainingFiles = uppy
+                                          .getFiles()
+                                          .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                                        uppy.setState({ files: remainingFiles });
+                                        remove(associatedFileIndex);
 
-                                      if (associatedArtifactsBeforeRemoval === 1) {
-                                        // Ensure field is set to touched even if it's empty
-                                        setFieldTouched(name);
-                                      }
-                                    }}
-                                    toggleLicenseModal={toggleLicenseModal}
-                                    baseFieldName={`${name}[${associatedFileIndex}]`}
-                                  />
-                                );
+                                        if (associatedArtifactsBeforeRemoval === 1) {
+                                          // Ensure field is set to touched even if it's empty
+                                          setFieldTouched(name);
+                                        }
+                                      }}
+                                      toggleLicenseModal={toggleLicenseModal}
+                                      baseFieldName={`${name}[${associatedFileIndex}]`}
+                                    />
+                                  );
+                                }
+                                return null;
                               })}
                             </TableBody>
                           </Table>
@@ -250,11 +254,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       </Box>
                     )}
 
-                    <FileUploader uppy={uppy} addFile={push} />
-
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '2rem' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
                       <Typography variant="h3">
-                        {t('registration.files_and_license.administrative_agreement')}
+                        {t('registration.files_and_license.files_are_not_published')}
                       </Typography>
                       <TableContainer component={Paper}>
                         <TableHead>
@@ -264,9 +266,46 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                             <TableCell>{t('registration.files_and_license.administrative_agreement')}</TableCell>
                           </TableRow>
                         </TableHead>
-                        <TableBody></TableBody>
+                        <TableBody>
+                          {files.map((file) => {
+                            const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
+                              if (associatedArtifactIsFile(artifact)) {
+                                const associatedFile = artifact as AssociatedFile;
+                                return associatedFile.identifier === file.identifier;
+                              }
+                              return false;
+                            });
+
+                            if (file.administrativeAgreement) {
+                              return (
+                                <AdminstrativeAgreementFilesRow
+                                  key={file.identifier}
+                                  file={file}
+                                  removeFile={() => {
+                                    const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                                    const remainingFiles = uppy
+                                      .getFiles()
+                                      .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                                    uppy.setState({ files: remainingFiles });
+                                    remove(associatedFileIndex);
+
+                                    if (associatedArtifactsBeforeRemoval === 1) {
+                                      // Ensure field is set to touched even if it's empty
+                                      setFieldTouched(name);
+                                    }
+                                  }}
+                                  toggleLicenseModal={toggleLicenseModal}
+                                  baseFieldName={`${name}[${associatedFileIndex}]`}
+                                />
+                              );
+                            }
+                            return null;
+                          })}
+                        </TableBody>
                       </TableContainer>
                     </Box>
+
+                    <FileUploader uppy={uppy} addFile={push} />
                   </BackgroundDiv>
                 </Paper>
 

@@ -925,6 +925,7 @@
       "file_publish_date": "Postponed publication",
       "file_publish_date_helper_text": "File is locked until the specified date",
       "files": "Files",
+      "files_are_not_published": "Files are not published",
       "files_awaits_approval": "Files (awaits approval)",
       "find_journal_in_channel_register": "See information about the journal in the Norwegian Register",
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
