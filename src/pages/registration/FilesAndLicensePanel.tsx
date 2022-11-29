@@ -251,6 +251,22 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                     )}
 
                     <FileUploader uppy={uppy} addFile={push} />
+
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '2rem' }}>
+                      <Typography variant="h3">
+                        {t('registration.files_and_license.administrative_agreement')}
+                      </Typography>
+                      <TableContainer component={Paper}>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>{t('common.name')}</TableCell>
+                            <TableCell>{t('registration.files_and_license.size')}</TableCell>
+                            <TableCell>{t('registration.files_and_license.administrative_agreement')}</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody></TableBody>
+                      </TableContainer>
+                    </Box>
                   </BackgroundDiv>
                 </Paper>
 
