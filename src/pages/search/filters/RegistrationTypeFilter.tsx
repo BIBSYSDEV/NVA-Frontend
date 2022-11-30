@@ -1,25 +1,15 @@
 import { ListItemButton } from '@mui/material';
 import { useFormikContext } from 'formik';
-import { useHistory } from 'react-router-dom';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { BaseFilterItem } from './BaseFilterItem';
-import { useEffect, useState } from 'react';
-import { Aggregations, SearchResponse } from '../../../types/common.types';
-import { Registration } from '../../../types/registration.types';
+import { Aggregations } from '../../../types/common.types';
 
-export const RegistrationTypeFilter = () => {
-  const history = useHistory();
+interface RegistrationTypeFilterProps {
+  aggregations: Aggregations;
+}
+
+export const RegistrationTypeFilter = ({ aggregations }: RegistrationTypeFilterProps) => {
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
-
-  const [facets, setFacets] = useState<Aggregations>({});
-  useEffect(() => {
-    const fetchFacets = async () => {
-      const response = await fetch(`https://api.sandbox.nva.aws.unit.no/search/resources${history.location.search}`);
-      const facetsJson = (await response.json()) as SearchResponse<Registration>;
-      setFacets(facetsJson.aggregations ?? {});
-    };
-    fetchFacets();
-  }, [history.location.search]);
 
   const properties = values.properties ?? [];
 
@@ -45,7 +35,7 @@ export const RegistrationTypeFilter = () => {
 
   return (
     <>
-      {Object.entries(facets).map(([fieldName, facet]) => (
+      {Object.entries(aggregations).map(([fieldName, facet]) => (
         <BaseFilterItem title={fieldName}>
           {facet.buckets.map((bucket) => (
             <li key={bucket.key}>

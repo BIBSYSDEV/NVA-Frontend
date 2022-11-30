@@ -9,11 +9,20 @@ import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } fr
 import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
 import { RegistrationSearch } from './RegistrationSearch';
 import { SortSelector } from './SortSelector';
+import { SearchResponse } from '../../types/common.types';
+import { Registration } from '../../types/registration.types';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { SearchApiPath } from '../../api/apiPaths';
 
 const SearchPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
+
+  const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration>>({
+    url: `${SearchApiPath.Registrations}?${params.toString()}`,
+    errorMessage: t('feedback.error.search'),
+  });
 
   const initialSearchParams = createSearchConfigFromSearchParams(params);
 
@@ -47,7 +56,7 @@ const SearchPage = () => {
             }}>
             <>
               <List sx={{ gridArea: 'filters' }}>
-                <RegistrationTypeFilter />
+                <RegistrationTypeFilter aggregations={searchResults?.aggregations ?? {}} />
               </List>
               <Divider
                 orientation="vertical"
@@ -56,7 +65,7 @@ const SearchPage = () => {
             </>
             <SearchBar />
             <SortSelector />
-            <RegistrationSearch />
+            <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
           </Box>
         </Form>
       </Formik>
