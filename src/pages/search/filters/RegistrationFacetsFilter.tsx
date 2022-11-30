@@ -4,11 +4,11 @@ import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../util
 import { BaseFilterItem } from './BaseFilterItem';
 import { Aggregations } from '../../../types/common.types';
 
-interface RegistrationTypeFilterProps {
+interface RegistrationFacetsFilterProps {
   aggregations: Aggregations;
 }
 
-export const RegistrationTypeFilter = ({ aggregations }: RegistrationTypeFilterProps) => {
+export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFilterProps) => {
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
 
   const properties = values.properties ?? [];

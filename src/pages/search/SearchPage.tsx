@@ -6,7 +6,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { SearchBar } from './SearchBar';
 import { SyledPageContent } from '../../components/styled/Wrappers';
 import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
-import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
+import { RegistrationFacetsFilter } from './filters/RegistrationFacetsFilter';
 import { RegistrationSearch } from './RegistrationSearch';
 import { SortSelector } from './SortSelector';
 import { SearchResponse } from '../../types/common.types';
@@ -56,7 +56,7 @@ const SearchPage = () => {
             }}>
             <>
               <List sx={{ gridArea: 'filters' }}>
-                <RegistrationTypeFilter aggregations={searchResults?.aggregations ?? {}} />
+                <RegistrationFacetsFilter aggregations={searchResults?.aggregations ?? {}} />
               </List>
               <Divider
                 orientation="vertical"
