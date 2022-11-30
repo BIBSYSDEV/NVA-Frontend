@@ -33,7 +33,7 @@ export const AdminstrativeAgreementFilesRow = ({
         <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
           <Tooltip title={t('registration.files_and_license.remove_file')}>
-            <IconButton onClick={toggleOpenConfirmDialog}>
+            <IconButton onClick={toggleOpenConfirmDialog} sx={{ mr: '0.5rem' }}>
               <CancelIcon color="error" />
             </IconButton>
           </Tooltip>
@@ -52,11 +52,9 @@ export const AdminstrativeAgreementFilesRow = ({
         </Box>
       </TableCell>
 
-      <TableCell align="center" sx={{ minWidth: '5.5rem' }}>
-        {prettyBytes(file.size)}
-      </TableCell>
+      <TableCell sx={{ minWidth: '5.5rem' }}>{prettyBytes(file.size)}</TableCell>
 
-      <TableCell align="center">
+      <TableCell>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
           {({ field }: FieldProps) => (
             <Tooltip title={t('registration.files_and_license.administrative_contract')}>
