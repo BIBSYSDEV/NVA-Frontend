@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { SearchResults } from './SearchResults';
-import { SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { dataTestId } from '../../utils/dataTestIds';
 import { SearchParam } from '../../utils/searchHelpers';
@@ -23,7 +22,7 @@ export const RegistrationSearch = () => {
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}?${params.toString()}`,
+    url: `https://api.sandbox.nva.aws.unit.no/search/resources?${params.toString()}`,
     errorMessage: t('feedback.error.search'),
   });
 

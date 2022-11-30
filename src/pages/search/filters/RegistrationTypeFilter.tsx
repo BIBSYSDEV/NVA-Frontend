@@ -1,165 +1,63 @@
 import { ListItemButton } from '@mui/material';
 import { useFormikContext } from 'formik';
-import { useTranslation } from 'react-i18next';
-import { styled as muiStyled } from '@mui/system';
-import {
-  ArtisticType,
-  BookType,
-  ChapterType,
-  DegreeType,
-  JournalType,
-  MediaType,
-  OtherRegistrationType,
-  PresentationType,
-  PublicationType,
-  ReportType,
-  ResearchDataType,
-  ResourceFieldNames,
-} from '../../../types/publicationFieldNames';
+import { useHistory } from 'react-router-dom';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { BaseFilterItem } from './BaseFilterItem';
-
-interface StyledIndentedListItemProps {
-  isSelected: boolean;
-}
-
-const StyledIndentedListItem = muiStyled(ListItemButton, { shouldForwardProp: (prop) => prop !== 'isSelected' })(
-  ({ isSelected }: StyledIndentedListItemProps) => ({
-    paddingLeft: '1.5rem',
-    border: isSelected ? '2px solid' : 'none',
-  })
-);
+import { useEffect, useState } from 'react';
+import { Aggregations, SearchResponse } from '../../../types/common.types';
+import { Registration } from '../../../types/registration.types';
 
 export const RegistrationTypeFilter = () => {
-  const { t } = useTranslation();
+  const history = useHistory();
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
+
+  const [facets, setFacets] = useState<Aggregations>({});
+  useEffect(() => {
+    const fetchFacets = async () => {
+      const response = await fetch(`https://api.sandbox.nva.aws.unit.no/search/resources${history.location.search}`);
+      const facetsJson = (await response.json()) as SearchResponse<Registration>;
+      setFacets(facetsJson.aggregations ?? {});
+    };
+    fetchFacets();
+  }, [history.location.search]);
 
   const properties = values.properties ?? [];
 
-  const typeFilterIndex = properties.findIndex(
-    (property) =>
-      property.fieldName === ResourceFieldNames.SubType && property.operator === ExpressionStatement.Contains
-  );
-  const currentValue = typeFilterIndex > -1 ? properties[typeFilterIndex].value : '';
+  const updateFilter = (fieldName: string, value: string) => {
+    const existingFilter = [...properties];
+    const shouldRemoveThisSearchParam = existingFilter.some((searchProperty) => searchProperty.value === value);
 
-  const updateFilter = (type: string) => {
-    const newFilter: PropertySearch = {
-      fieldName: ResourceFieldNames.SubType,
-      value: currentValue !== type ? type : '',
-      operator: ExpressionStatement.Contains,
-    };
+    if (shouldRemoveThisSearchParam) {
+      const updatedFilter = existingFilter.filter((filter) => filter.fieldName !== fieldName || filter.value !== value);
+      setFieldValue(`properties`, updatedFilter);
+    } else {
+      const newFilter: PropertySearch = {
+        fieldName,
+        value,
+        operator: ExpressionStatement.Contains,
+      };
+      const updatedFilter = [...existingFilter, newFilter];
 
-    const index = typeFilterIndex > -1 ? typeFilterIndex : properties.length ?? 0;
-
-    setFieldValue(`properties[${index}]`, newFilter);
+      setFieldValue(`properties`, updatedFilter);
+    }
     submitForm();
   };
 
   return (
-    <BaseFilterItem title={t('search.registration_type')}>
-      <BaseFilterItem
-        title={t(`registration.publication_types.${PublicationType.PublicationInJournal}`)}
-        fontWeight={500}>
-        {Object.values(JournalType).map((type) => (
-          <li key={type}>
-            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-              {t(`registration.publication_types.${type}`)}
-            </StyledIndentedListItem>
-          </li>
-        ))}
-      </BaseFilterItem>
-
-      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Book}`)} fontWeight={500}>
-        {Object.values(BookType).map((type) => (
-          <li key={type}>
-            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-              {t(`registration.publication_types.${type}`)}
-            </StyledIndentedListItem>
-          </li>
-        ))}
-      </BaseFilterItem>
-
-      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Report}`)} fontWeight={500}>
-        {Object.values(ReportType).map((type) => (
-          <li key={type}>
-            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-              {t(`registration.publication_types.${type}`)}
-            </StyledIndentedListItem>
-          </li>
-        ))}
-      </BaseFilterItem>
-
-      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Degree}`)} fontWeight={500}>
-        {Object.values(DegreeType).map((type) => (
-          <li key={type}>
-            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-              {t(`registration.publication_types.${type}`)}
-            </StyledIndentedListItem>
-          </li>
-        ))}
-      </BaseFilterItem>
-
-      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Chapter}`)} fontWeight={500}>
-        {Object.values(ChapterType).map((type) => (
-          <li key={type}>
-            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-              {t(`registration.publication_types.${type}`)}
-            </StyledIndentedListItem>
-          </li>
-        ))}
-      </BaseFilterItem>
-
-      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Presentation}`)} fontWeight={500}>
-        {Object.values(PresentationType).map((type) => (
-          <li key={type}>
-            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-              {t(`registration.publication_types.${type}`)}
-            </StyledIndentedListItem>
-          </li>
-        ))}
-      </BaseFilterItem>
-
-      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.Artistic}`)} fontWeight={500}>
-        {Object.values(ArtisticType).map((type) => (
-          <li key={type}>
-            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-              {t(`registration.publication_types.${type}`)}
-            </StyledIndentedListItem>
-          </li>
-        ))}
-      </BaseFilterItem>
-
-      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.MediaContribution}`)} fontWeight={500}>
-        {Object.values(MediaType).map((type) => (
-          <li key={type}>
-            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-              {t(`registration.publication_types.${type}`)}
-            </StyledIndentedListItem>
-          </li>
-        ))}
-      </BaseFilterItem>
-
-      <BaseFilterItem title={t(`registration.publication_types.${PublicationType.ResearchData}`)} fontWeight={500}>
-        {Object.values(ResearchDataType).map((type) => (
-          <li key={type}>
-            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-              {t(`registration.publication_types.${type}`)}
-            </StyledIndentedListItem>
-          </li>
-        ))}
-      </BaseFilterItem>
-
-      <BaseFilterItem
-        title={t(`registration.publication_types.${PublicationType.GeographicalContent}`)}
-        fontWeight={500}>
-        {Object.values(OtherRegistrationType).map((type) => (
-          <li key={type}>
-            <StyledIndentedListItem onClick={() => updateFilter(type)} isSelected={type === currentValue}>
-              {t(`registration.publication_types.${type}`)}
-            </StyledIndentedListItem>
-          </li>
-        ))}
-      </BaseFilterItem>
-    </BaseFilterItem>
+    <>
+      {Object.entries(facets).map(([fieldName, facet]) => (
+        <BaseFilterItem title={fieldName}>
+          {facet.buckets.map((bucket) => (
+            <li key={bucket.key}>
+              <ListItemButton
+                onClick={() => updateFilter(fieldName, bucket.key)}
+                selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
+                {bucket.key} ({bucket.doc_count})
+              </ListItemButton>
+            </li>
+          ))}
+        </BaseFilterItem>
+      ))}
+    </>
   );
 };
