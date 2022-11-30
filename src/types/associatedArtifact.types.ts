@@ -79,8 +79,10 @@ interface License {
   link: string;
 }
 
+export type AssociatedFileType = 'File' | 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
+
 export interface AssociatedFile {
-  type: 'File' | 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
+  type: AssociatedFileType;
   identifier: string;
   name: string;
   size: number;
