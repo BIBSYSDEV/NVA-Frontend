@@ -159,6 +159,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   sx={{ width: 'fit-content' }}
                   variant="outlined"
                   startIcon={<AttachFileIcon />}
+                  data-testid={dataTestId.registrationWizard.files.addFilesOrLinksButton}
                   onClick={() => remove(0)}>
                   {t('registration.files_and_license.add_files_or_link')}
                 </Button>

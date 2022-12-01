@@ -171,6 +171,7 @@ export const dataTestId = {
       vocabularyRow: (vocabulary: string) => `vocabulary-row-${vocabulary}`,
     },
     files: {
+      addFilesOrLinksButton: 'add-files-or-links-button',
       administrativeAgreement: 'administrative-agreement-checkbox',
       embargoDateField: 'embargo-date-field',
       fileRow: 'uploaded-file-row',
