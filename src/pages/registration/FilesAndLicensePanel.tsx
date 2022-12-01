@@ -246,8 +246,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                     baseFieldName={`${name}[${associatedFileIndex}]`}
                                   />
                                 );
-
-                                return null;
                               })}
                             </TableBody>
                           </Table>
