@@ -1,4 +1,3 @@
-import { List } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -13,7 +12,7 @@ import { SearchResponse } from '../../types/common.types';
 import { Registration } from '../../types/registration.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchApiPath } from '../../api/apiPaths';
-import { SideNav, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 
 const SearchPage = () => {
   const { t } = useTranslation();
@@ -42,12 +41,10 @@ const SearchPage = () => {
       }}>
       <Form>
         <StyledPageWithSideMenu>
-          <SideNav>
+          <SidePanel>
             <SideNavHeader icon={SearchIcon} text={t('common.search')} />
-            <List disablePadding>
-              <RegistrationFacetsFilter aggregations={searchResults?.aggregations ?? {}} />
-            </List>
-          </SideNav>
+            <RegistrationFacetsFilter aggregations={searchResults?.aggregations ?? {}} />
+          </SidePanel>
           <BackgroundDiv
             sx={{
               display: 'grid',
