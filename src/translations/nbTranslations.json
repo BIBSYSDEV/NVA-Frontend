@@ -1361,7 +1361,6 @@
     "hits_other": "{{count}} treff",
     "not_containing": "Inneholder ikke",
     "operator": "Operator",
-    "registration_type": "Registreringstype",
     "remove_filter": "Fjern filter",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",

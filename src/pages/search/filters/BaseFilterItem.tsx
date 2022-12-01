@@ -23,16 +23,7 @@ export const BaseFilterItem = ({ title, fontWeight = 600, children }: BaseFilter
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
-        <List
-          disablePadding
-          sx={{
-            pl: '1rem',
-            '.MuiListSubheader-root': {
-              lineHeight: '1.5rem',
-            },
-          }}>
-          {children}
-        </List>
+        <List disablePadding>{children}</List>
       </Collapse>
     </li>
   );

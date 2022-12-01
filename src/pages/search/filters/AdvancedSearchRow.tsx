@@ -23,7 +23,7 @@ interface FilterItem {
 export const registrationFilters: FilterItem[] = [
   { field: DescriptionFieldNames.Title, i18nKey: 'common.title' },
   { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract' },
-  { field: ResourceFieldNames.SubType, i18nKey: 'search.registration_type' },
+  { field: ResourceFieldNames.SubType, i18nKey: 'registration.resource_type.resource_type' },
   { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords' },
   {
     field: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`,
