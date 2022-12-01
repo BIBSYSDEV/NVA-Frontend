@@ -47,7 +47,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
-import { AdminstrativeAgreementFilesRow } from './files_and_license_tab/AdministrativeAgreementFilesRow';
+import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -278,7 +278,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                 });
 
                                 return (
-                                  <AdminstrativeAgreementFilesRow
+                                  <UnpublishableFileRow
                                     key={file.identifier}
                                     file={file}
                                     removeFile={() => {
