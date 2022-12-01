@@ -1,10 +1,10 @@
 import { Box, ListItemButton } from '@mui/material';
 import { useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { BaseFilterItem } from './BaseFilterItem';
 import { Aggregations } from '../../../types/common.types';
 import { ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { useTranslation } from 'react-i18next';
 import { PublicationInstanceType } from '../../../types/registration.types';
 
 interface RegistrationFacetsFilterProps {
@@ -18,11 +18,10 @@ export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFil
   const properties = values.properties ?? [];
 
   const updateFilter = (fieldName: string, value: string) => {
-    const existingFilter = [...properties];
-    const shouldRemoveThisSearchParam = existingFilter.some((searchProperty) => searchProperty.value === value);
+    const shouldRemoveThisSearchParam = properties.some((searchProperty) => searchProperty.value === value);
 
     if (shouldRemoveThisSearchParam) {
-      const updatedFilter = existingFilter.filter((filter) => filter.fieldName !== fieldName || filter.value !== value);
+      const updatedFilter = properties.filter((filter) => filter.fieldName !== fieldName || filter.value !== value);
       setFieldValue('properties', updatedFilter);
     } else {
       const newFilter: PropertySearch = {
@@ -30,8 +29,7 @@ export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFil
         value,
         operator: ExpressionStatement.Contains,
       };
-      const updatedFilter = [...existingFilter, newFilter];
-
+      const updatedFilter = [...properties, newFilter];
       setFieldValue('properties', updatedFilter);
     }
     submitForm();
