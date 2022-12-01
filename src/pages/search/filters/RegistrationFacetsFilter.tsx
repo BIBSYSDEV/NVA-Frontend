@@ -1,14 +1,18 @@
-import { ListItemButton } from '@mui/material';
+import { Box, ListItemButton } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { BaseFilterItem } from './BaseFilterItem';
 import { Aggregations } from '../../../types/common.types';
+import { ResourceFieldNames } from '../../../types/publicationFieldNames';
+import { useTranslation } from 'react-i18next';
+import { PublicationInstanceType } from '../../../types/registration.types';
 
 interface RegistrationFacetsFilterProps {
   aggregations: Aggregations;
 }
 
 export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFilterProps) => {
+  const { t } = useTranslation();
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
 
   const properties = values.properties ?? [];
@@ -19,7 +23,7 @@ export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFil
 
     if (shouldRemoveThisSearchParam) {
       const updatedFilter = existingFilter.filter((filter) => filter.fieldName !== fieldName || filter.value !== value);
-      setFieldValue(`properties`, updatedFilter);
+      setFieldValue('properties', updatedFilter);
     } else {
       const newFilter: PropertySearch = {
         fieldName,
@@ -28,26 +32,33 @@ export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFil
       };
       const updatedFilter = [...existingFilter, newFilter];
 
-      setFieldValue(`properties`, updatedFilter);
+      setFieldValue('properties', updatedFilter);
     }
     submitForm();
   };
 
+  const aggregationEntries = Object.entries(aggregations);
+  const registrationTypeFacet = aggregationEntries.find(([fieldName]) => fieldName === ResourceFieldNames.SubType)?.[1];
+
   return (
     <>
-      {Object.entries(aggregations).map(([fieldName, facet]) => (
-        <BaseFilterItem title={fieldName}>
-          {facet.buckets.map((bucket) => (
+      {registrationTypeFacet && (
+        <BaseFilterItem title={t('registration.resource_type.resource_type')}>
+          {registrationTypeFacet.buckets.map((bucket) => (
             <li key={bucket.key}>
               <ListItemButton
-                onClick={() => updateFilter(fieldName, bucket.key)}
+                sx={{ display: 'flex', justifyContent: 'space-between' }}
+                onClick={() => updateFilter(ResourceFieldNames.SubType, bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
-                {bucket.key} ({bucket.doc_count})
+                <Box component="span">
+                  {t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}
+                </Box>
+                <Box component="span">({bucket.doc_count})</Box>
               </ListItemButton>
             </li>
           ))}
         </BaseFilterItem>
-      ))}
+      )}
     </>
   );
 };

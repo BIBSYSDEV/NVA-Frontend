@@ -1,5 +1,5 @@
 export interface LanguageString {
-  [key: string]: string;
+  [languageCode: string]: string;
 }
 
 export interface Place {
@@ -37,13 +37,13 @@ export interface SearchResponse<T> {
   aggregations?: Aggregations;
 }
 
-export interface Aggregations {
-  [key: string]: {
+export type Aggregations = {
+  [fieldName: string]: {
     doc_count_error_upper_bound: number;
     sum_other_doc_count: number;
     buckets: AggregationBucket[];
   };
-}
+};
 
 interface AggregationBucket {
   key: string;

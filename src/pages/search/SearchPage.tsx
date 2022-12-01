@@ -55,7 +55,7 @@ const SearchPage = () => {
               rowGap: '1rem',
             }}>
             <>
-              <List sx={{ gridArea: 'filters' }}>
+              <List sx={{ gridArea: 'filters' }} disablePadding>
                 <RegistrationFacetsFilter aggregations={searchResults?.aggregations ?? {}} />
               </List>
               <Divider
