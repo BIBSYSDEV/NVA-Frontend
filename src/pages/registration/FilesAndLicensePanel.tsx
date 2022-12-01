@@ -145,7 +145,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         {({ name, remove, push }: FieldArrayRenderProps) => (
           <>
             {isNullAssociatedArtifact ? (
-              <Box sx={{ my: '1rem' }}>
+              <Box sx={{ my: '1rem' }} data-testid={dataTestId.registrationWizard.files.noFilesOrLinksWarning}>
                 <Typography paragraph fontWeight={600}>
                   {t('registration.files_and_license.resource_has_no_files_or_links')}
                 </Typography>
@@ -277,6 +277,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                             ? (errors.associatedArtifacts?.[associatedLinkIndex] as FormikErrors<AssociatedLink>).id
                             : null
                         }
+                        data-testid={dataTestId.registrationWizard.files.linkToResourceField}
                         onChange={(event) => {
                           const inputValue = event.target.value;
                           if (inputValue) {
@@ -314,6 +315,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <Button
                     sx={{ width: 'fit-content', m: 'auto' }}
                     variant="outlined"
+                    data-testid={dataTestId.registrationWizard.files.noFilesOrLinksButton}
                     onClick={() => {
                       const nullAssociatedArtifact: NullAssociatedArtifact = { type: 'NullAssociatedArtifact' };
                       push(nullAssociatedArtifact);
