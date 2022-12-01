@@ -71,9 +71,6 @@
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
-      "remove_employment": "Fjern ansettelse",
-      "remove_employment_title": "Fjern ansettelse?",
-      "remove_employment_text": "Er du sikker på ar du ønsker å fjerne denne ansettelsen?",
       "edit_person": "Rediger person",
       "employee_table_caption": "Liste over alle ansatte",
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
@@ -84,6 +81,9 @@
       "person_id": "PersonID",
       "person_register": "Personregister",
       "previous_employments": "Tidligere ansettelser",
+      "remove_employment": "Fjern ansettelse",
+      "remove_employment_text": "Er du sikker på ar du ønsker å fjerne denne ansettelsen?",
+      "remove_employment_title": "Fjern ansettelse?",
       "show_full_nin": "Vis personnummer"
     }
   },
@@ -280,18 +280,18 @@
   "editor": {
     "allowed": "Tillatt",
     "allowed_description": "$t(editor.allowed): Kan legges til av brukeren selv",
-    "default": "Standard",
-    "default_description": "$t(editor.default): Vises som standard for alle registreringer",
-    "disabled": "Ikke tillatt",
-    "disabled_description": "$t(editor.disabled): Er ikke tilgjengelig",
-    "hrcs_activity": "Health Research Classification System - Activity",
-    "hrcs_categories": "Health Research Classification System - Categories",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensninger",
       "areas_of_responsibility": "Ansvarsområder",
       "no_users_found": "Ingen brukere funnet"
     },
+    "default": "Standard",
+    "default_description": "$t(editor.default): Vises som standard for alle registreringer",
+    "disabled": "Ikke tillatt",
+    "disabled_description": "$t(editor.disabled): Er ikke tilgjengelig",
+    "hrcs_activity": "Health Research Classification System - Activity",
+    "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
       "institution_code": "Institusjonens kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
@@ -403,10 +403,10 @@
       "invalid_symbol_in_name": "{{field}} kan ikke inneholde tall eller spesialtegn",
       "is_required": "{{-field}} er obligatorisk",
       "isbn_too_short": "ISBN må ha 13 siffer",
-      "must_have_associated_artifact": "Du må laste opp minst en fil eller en lenke for denne registreringen",
       "must_accept_terms_for_dataset": "Du må godta vilkårene for datasett",
       "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
+      "must_have_associated_artifact": "Du må laste opp minst en fil eller en lenke for denne registreringen",
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
       "not_selected": "{{field}} er ikke valgt"
     }
@@ -1007,7 +1007,7 @@
       "FeatureArticle": "Kronikk",
       "GeographicalContent": "Annen publikasjon",
       "Journal": "Tidsskriftspublikasjon",
-      "JournalArticle": "Artikkel i tidsskrift",
+      "JournalArticle": "Artikkel i tidsskrift versjon 2",
       "JournalCorrigendum": "Korrigendum",
       "JournalIssue": "Hefte i tidsskrift",
       "JournalLeader": "Leder",
@@ -1286,8 +1286,8 @@
       "number_of_pages": "Totalt antall sider",
       "nvi": {
         "applicable": "Publikasjonen kan inngå i Norsk vitenskapsindeks",
-        "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)",
-        "can_give_publication_points": "Kan gi publiseringspoeng"
+        "can_give_publication_points": "Kan gi publiseringspoeng",
+        "channel_not_rated": "Publikasjonen kan ikke inngå i Norsk vitenskapsindeks siden publiseringskanalen ikke er på nivå 1 eller 2. (Nivå kan bli endret før årets rapporteringsfrist slik at publikasjonen kan inngå i Norsk vitenskapsindeks)"
       },
       "online_issn": "Online ISSN",
       "or": "Eller",
