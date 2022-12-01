@@ -66,6 +66,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const [isEmbargoModalOpen, setIsEmbargoModalOpen] = useState(false);
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
+  const filesToPublish = files.filter((file) => !file.administrativeAgreement);
   const filesNotToPublish = files.filter((file) => file.administrativeAgreement);
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =
@@ -215,7 +216,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {files.map((file) => {
+                              {filesToPublish.map((file) => {
                                 const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
                                   if (associatedArtifactIsFile(artifact)) {
                                     const associatedFile = artifact as AssociatedFile;
@@ -224,29 +225,28 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   return false;
                                 });
 
-                                if (!file.administrativeAgreement) {
-                                  return (
-                                    <FilesTableRow
-                                      key={file.identifier}
-                                      file={file}
-                                      removeFile={() => {
-                                        const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                                        const remainingFiles = uppy
-                                          .getFiles()
-                                          .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                                        uppy.setState({ files: remainingFiles });
-                                        remove(associatedFileIndex);
+                                return (
+                                  <FilesTableRow
+                                    key={file.identifier}
+                                    file={file}
+                                    removeFile={() => {
+                                      const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                                      const remainingFiles = uppy
+                                        .getFiles()
+                                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                                      uppy.setState({ files: remainingFiles });
+                                      remove(associatedFileIndex);
 
-                                        if (associatedArtifactsBeforeRemoval === 1) {
-                                          // Ensure field is set to touched even if it's empty
-                                          setFieldTouched(name);
-                                        }
-                                      }}
-                                      toggleLicenseModal={toggleLicenseModal}
-                                      baseFieldName={`${name}[${associatedFileIndex}]`}
-                                    />
-                                  );
-                                }
+                                      if (associatedArtifactsBeforeRemoval === 1) {
+                                        // Ensure field is set to touched even if it's empty
+                                        setFieldTouched(name);
+                                      }
+                                    }}
+                                    toggleLicenseModal={toggleLicenseModal}
+                                    baseFieldName={`${name}[${associatedFileIndex}]`}
+                                  />
+                                );
+
                                 return null;
                               })}
                             </TableBody>
@@ -270,7 +270,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {files.map((file) => {
+                              {filesNotToPublish.map((file) => {
                                 const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
                                   if (associatedArtifactIsFile(artifact)) {
                                     const associatedFile = artifact as AssociatedFile;
@@ -279,30 +279,27 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   return false;
                                 });
 
-                                if (file.administrativeAgreement) {
-                                  return (
-                                    <AdminstrativeAgreementFilesRow
-                                      key={file.identifier}
-                                      file={file}
-                                      removeFile={() => {
-                                        const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
-                                        const remainingFiles = uppy
-                                          .getFiles()
-                                          .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
-                                        uppy.setState({ files: remainingFiles });
-                                        remove(associatedFileIndex);
+                                return (
+                                  <AdminstrativeAgreementFilesRow
+                                    key={file.identifier}
+                                    file={file}
+                                    removeFile={() => {
+                                      const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                                      const remainingFiles = uppy
+                                        .getFiles()
+                                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                                      uppy.setState({ files: remainingFiles });
+                                      remove(associatedFileIndex);
 
-                                        if (associatedArtifactsBeforeRemoval === 1) {
-                                          // Ensure field is set to touched even if it's empty
-                                          setFieldTouched(name);
-                                        }
-                                      }}
-                                      toggleLicenseModal={toggleLicenseModal}
-                                      baseFieldName={`${name}[${associatedFileIndex}]`}
-                                    />
-                                  );
-                                }
-                                return null;
+                                      if (associatedArtifactsBeforeRemoval === 1) {
+                                        // Ensure field is set to touched even if it's empty
+                                        setFieldTouched(name);
+                                      }
+                                    }}
+                                    toggleLicenseModal={toggleLicenseModal}
+                                    baseFieldName={`${name}[${associatedFileIndex}]`}
+                                  />
+                                );
                               })}
                             </TableBody>
                           </Table>
