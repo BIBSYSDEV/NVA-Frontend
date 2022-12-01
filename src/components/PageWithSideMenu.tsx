@@ -5,7 +5,7 @@ import { PropsWithChildren } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
-  width: '100%',
+  width: '100vw',
   minHeight: '40vh',
   display: 'grid',
   gap: '1rem',

@@ -1,11 +1,10 @@
-import { Box, Divider, List } from '@mui/material';
+import { List } from '@mui/material';
 import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import { PageHeader } from '../../components/PageHeader';
 import { SearchBar } from './SearchBar';
-import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
 import { RegistrationFacetsFilter } from './filters/RegistrationFacetsFilter';
 import { RegistrationSearch } from './RegistrationSearch';
@@ -29,8 +28,6 @@ const SearchPage = () => {
   const initialSearchParams = createSearchConfigFromSearchParams(params);
 
   return (
-    // <SyledPageContent>
-    //   <PageHeader>{t('common.registrations')}</PageHeader>
     <Formik
       initialValues={initialSearchParams}
       onSubmit={(values) => {
@@ -51,35 +48,25 @@ const SearchPage = () => {
               <RegistrationFacetsFilter aggregations={searchResults?.aggregations ?? {}} />
             </List>
           </SideNav>
-          <BackgroundDiv>
+          <BackgroundDiv
+            sx={{
+              display: 'grid',
+              gridTemplateRows: 'auto auto 1fr',
+              gridTemplateColumns: { xs: '1fr', md: '5fr 2fr' },
+              gridTemplateAreas: {
+                xs: "'searchbar' 'sorting' 'advanced' 'results'",
+                md: "'searchbar sorting' 'advanced advanced' 'results results'",
+              },
+              columnGap: '2rem',
+              rowGap: '1rem',
+            }}>
             <SearchBar />
             <SortSelector />
             <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
           </BackgroundDiv>
         </StyledPageWithSideMenu>
-
-        {/* <Box
-          sx={{
-            display: 'grid',
-            gridTemplateRows: 'auto auto 1fr',
-            gridTemplateColumns: { xs: '1fr', md: '2fr auto 5fr 2fr' },
-            gridTemplateAreas: {
-              xs: "'searchbar' 'sorting' 'filters' 'advanced' 'results'",
-              md: "'filters divider searchbar sorting' 'filters divider advanced advanced' 'filters divider results results'",
-            },
-            columnGap: '2rem',
-            rowGap: '1rem',
-          }}>
-          <>
-            <Divider orientation="vertical" sx={{ gridArea: 'divider', display: { xs: 'none', md: 'inline-flex' } }} />
-          </>
-          <SearchBar />
-          <SortSelector />
-          <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
-        </Box> */}
       </Form>
     </Formik>
-    // </SyledPageContent>
   );
 };
 
