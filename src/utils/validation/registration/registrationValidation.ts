@@ -84,7 +84,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
     }),
   }),
   associatedArtifacts: Yup.array()
-    .of(associatedFileValidationSchema) // TODO: Should validate AssociatedLink as well
+    .of(associatedFileValidationSchema)
     .when('entityDescription', (entityDescription: EntityDescription, schema) =>
       entityDescription.reference?.doi
         ? schema.min(0)
