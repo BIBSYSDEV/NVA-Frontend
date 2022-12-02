@@ -17,7 +17,7 @@ export const MessageList = ({ messages }: MessageListProps) => (
       <Fragment key={message.identifier}>
         <Typography>
           <b data-testid="message-author">{message.sender}</b>{' '}
-          <span data-testid="message-timestamp">({new Date(message.date).toLocaleDateString()})</span>:
+          <span data-testid="message-timestamp">({new Date(message.createdDate).toLocaleDateString()})</span>:
         </Typography>
         <Typography data-testid="message-text">{message.text}</Typography>
       </Fragment>

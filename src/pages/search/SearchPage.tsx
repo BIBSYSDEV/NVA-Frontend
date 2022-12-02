@@ -6,14 +6,23 @@ import { PageHeader } from '../../components/PageHeader';
 import { SearchBar } from './SearchBar';
 import { SyledPageContent } from '../../components/styled/Wrappers';
 import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
-import { RegistrationTypeFilter } from './filters/RegistrationTypeFilter';
+import { RegistrationFacetsFilter } from './filters/RegistrationFacetsFilter';
 import { RegistrationSearch } from './RegistrationSearch';
 import { SortSelector } from './SortSelector';
+import { SearchResponse } from '../../types/common.types';
+import { Registration } from '../../types/registration.types';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { SearchApiPath } from '../../api/apiPaths';
 
 const SearchPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
+
+  const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration>>({
+    url: `${SearchApiPath.Registrations}?${params.toString()}`,
+    errorMessage: t('feedback.error.search'),
+  });
 
   const initialSearchParams = createSearchConfigFromSearchParams(params);
 
@@ -46,8 +55,8 @@ const SearchPage = () => {
               rowGap: '1rem',
             }}>
             <>
-              <List sx={{ gridArea: 'filters' }}>
-                <RegistrationTypeFilter />
+              <List sx={{ gridArea: 'filters' }} disablePadding>
+                <RegistrationFacetsFilter aggregations={searchResults?.aggregations ?? {}} />
               </List>
               <Divider
                 orientation="vertical"
@@ -56,7 +65,7 @@ const SearchPage = () => {
             </>
             <SearchBar />
             <SortSelector />
-            <RegistrationSearch />
+            <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
           </Box>
         </Form>
       </Formik>
