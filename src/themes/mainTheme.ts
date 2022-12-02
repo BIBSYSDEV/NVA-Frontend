@@ -222,7 +222,7 @@ export const mainTheme = createTheme(
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: '4px',
+            borderRadius: '0.25rem',
           },
         },
       },
