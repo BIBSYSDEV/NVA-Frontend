@@ -47,6 +47,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
+import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -65,6 +66,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const [isEmbargoModalOpen, setIsEmbargoModalOpen] = useState(false);
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
+  const filesToPublish = files.filter((file) => !file.administrativeAgreement);
+  const filesNotToPublish = files.filter((file) => file.administrativeAgreement);
   const associatedLinkIndex = associatedArtifacts.findIndex(associatedArtifactIsLink);
   const associatedLinkHasError =
     associatedLinkIndex >= 0 &&
@@ -214,7 +217,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {files.map((file) => {
+                              {filesToPublish.map((file) => {
                                 const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
                                   if (associatedArtifactIsFile(artifact)) {
                                     const associatedFile = artifact as AssociatedFile;
@@ -225,6 +228,58 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
                                 return (
                                   <FilesTableRow
+                                    key={file.identifier}
+                                    file={file}
+                                    removeFile={() => {
+                                      const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
+                                      const remainingFiles = uppy
+                                        .getFiles()
+                                        .filter((uppyFile) => uppyFile.response?.uploadURL !== file.identifier);
+                                      uppy.setState({ files: remainingFiles });
+                                      remove(associatedFileIndex);
+
+                                      if (associatedArtifactsBeforeRemoval === 1) {
+                                        // Ensure field is set to touched even if it's empty
+                                        setFieldTouched(name);
+                                      }
+                                    }}
+                                    toggleLicenseModal={toggleLicenseModal}
+                                    baseFieldName={`${name}[${associatedFileIndex}]`}
+                                  />
+                                );
+                              })}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                      </Box>
+                    )}
+
+                    {filesNotToPublish.length > 0 && (
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
+                        <Typography variant="h2">
+                          {t('registration.files_and_license.files_are_not_published')}
+                        </Typography>
+                        <TableContainer component={Paper}>
+                          <Table sx={alternatingTableRowColor}>
+                            <TableHead>
+                              <TableRow>
+                                <TableCell>{t('common.name')}</TableCell>
+                                <TableCell>{t('registration.files_and_license.size')}</TableCell>
+                                <TableCell>{t('registration.files_and_license.administrative_agreement')}</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {filesNotToPublish.map((file) => {
+                                const associatedFileIndex = associatedArtifacts.findIndex((artifact) => {
+                                  if (associatedArtifactIsFile(artifact)) {
+                                    const associatedFile = artifact as AssociatedFile;
+                                    return associatedFile.identifier === file.identifier;
+                                  }
+                                  return false;
+                                });
+
+                                return (
+                                  <UnpublishableFileRow
                                     key={file.identifier}
                                     file={file}
                                     removeFile={() => {
