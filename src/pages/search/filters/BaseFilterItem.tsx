@@ -15,7 +15,7 @@ export const BaseFilterItem = ({ title, fontWeight = 600, children }: BaseFilter
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
-    <li>
+    <>
       <ListItemButton onClick={toggleOpen}>
         <ListItemText disableTypography>
           <Typography fontWeight={fontWeight}>{title}</Typography>
@@ -25,6 +25,6 @@ export const BaseFilterItem = ({ title, fontWeight = 600, children }: BaseFilter
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <List disablePadding>{children}</List>
       </Collapse>
-    </li>
+    </>
   );
 };

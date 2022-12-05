@@ -1,11 +1,10 @@
 import { ReactNode } from 'react';
 import { SvgIconComponent } from '@mui/icons-material';
-import { Box, Button, ButtonProps, styled, Typography } from '@mui/material';
-import { PropsWithChildren } from 'react';
+import { Box, BoxProps, Button, ButtonProps, styled, Typography } from '@mui/material';
 import { Link, LinkProps } from 'react-router-dom';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
-  width: '100%',
+  width: '100vw',
   minHeight: '40vh',
   display: 'grid',
   gap: '1rem',
@@ -33,11 +32,7 @@ const StyledSideMenuHeader = styled(StyledPaperHeader)({
   padding: '0.5rem 1rem 0.5rem 1rem',
 });
 
-export const SideNav = ({ children, ...props }: PropsWithChildren<Record<never, never>>) => (
-  <Box component="nav" sx={{ bgcolor: 'secondary.main' }} {...props}>
-    {children}
-  </Box>
-);
+export const SidePanel = (props: BoxProps) => <Box component="section" sx={{ bgcolor: 'secondary.main' }} {...props} />;
 
 interface SideNavHeaderProps {
   icon?: SvgIconComponent;
@@ -57,18 +52,21 @@ export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
   );
 };
 
-export const NavigationList = ({ children }: PropsWithChildren<Record<never, never>>) => (
-  <Box
-    component="ul"
-    sx={{
-      listStyle: 'none',
-      px: '1rem',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '1rem',
-    }}>
-    {children}
-  </Box>
+export const NavigationList = ({ sx, ...props }: BoxProps) => (
+  <nav>
+    <Box
+      component="ul"
+      sx={{
+        listStyle: 'none',
+        px: '1rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        ...sx,
+      }}
+      {...props}
+    />
+  </nav>
 );
 
 interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
@@ -91,7 +89,7 @@ export const LinkIconButton = ({ sx = {}, icon, ...rest }: LinkIconButtonProps) 
   </LinkButton>
 );
 
-export const LinkButtonRow = ({ children }: PropsWithChildren<Record<never, never>>) => (
+export const LinkButtonRow = ({ sx, ...props }: BoxProps) => (
   <li>
     <Box
       component="ul"
@@ -101,8 +99,9 @@ export const LinkButtonRow = ({ children }: PropsWithChildren<Record<never, neve
         display: 'flex',
         gap: '0.75rem',
         alignItems: 'center',
-      }}>
-      {children}
-    </Box>
+        ...sx,
+      }}
+      {...props}
+    />
   </li>
 );

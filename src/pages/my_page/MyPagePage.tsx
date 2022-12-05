@@ -18,7 +18,7 @@ import {
   LinkButtonRow,
   LinkIconButton,
   NavigationList,
-  SideNav,
+  SidePanel,
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
@@ -42,7 +42,7 @@ const MyPagePage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SideNav aria-labelledby="my-page-title">
+      <SidePanel aria-labelledby="my-page-title">
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} id="my-page-title" />
 
         <NavigationList>
@@ -82,7 +82,7 @@ const MyPagePage = () => {
             {t('my_page.my_profile.user_profile')}
           </LinkButton>
         </NavigationList>
-      </SideNav>
+      </SidePanel>
       <BackgroundDiv>
         <Switch>
           <ErrorBoundary>
