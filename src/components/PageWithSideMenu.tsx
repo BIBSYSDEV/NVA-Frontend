@@ -30,7 +30,7 @@ export const StyledPaperHeader = styled(Box)(({ theme }) => ({
 const StyledSideMenuHeader = styled(StyledPaperHeader)({
   alignItems: 'center',
   gap: '0.5rem',
-  padding: '0.5rem 1rem 0.5rem 1rem',
+  padding: '0.5rem',
 });
 
 export const SideNav = ({ children, ...props }: PropsWithChildren<Record<never, never>>) => (
@@ -49,7 +49,7 @@ export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
   const IconComponent = icon;
   return (
     <StyledSideMenuHeader>
-      {IconComponent && <IconComponent fontSize="medium" />}
+      {IconComponent && <IconComponent sx={{ height: '1.25rem' }} />}
       <Typography component="h1" variant="h3" id={id} sx={{ color: 'inherit' }}>
         {text}
       </Typography>
