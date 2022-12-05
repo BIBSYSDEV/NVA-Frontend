@@ -9,12 +9,12 @@ export const Footer = () => {
       component="footer"
       sx={{
         padding: '1rem',
-        bgcolor: 'primary.main',
+        bgcolor: 'info.light',
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
       }}>
-      <Typography sx={{ color: 'primary.contrastText' }}>{t('about.footer_text')}</Typography>
+      <Typography sx={{ color: 'primary.main' }}>{t('about.footer_text')}</Typography>
     </Box>
   );
 };

@@ -2,7 +2,7 @@ import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField, Typography, Button, Box } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
@@ -34,7 +34,7 @@ export const DoiField = () => {
 
       {referenceDoi && (
         <>
-          <Button color="error" variant="outlined" endIcon={<DeleteIcon />} onClick={toggleConfirmDialog}>
+          <Button color="error" variant="outlined" endIcon={<CancelIcon />} onClick={toggleConfirmDialog}>
             {t('registration.resource_type.remove_doi')}
           </Button>
           <ConfirmDialog

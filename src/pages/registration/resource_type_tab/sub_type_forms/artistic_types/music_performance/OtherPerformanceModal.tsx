@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import {
@@ -194,7 +194,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                             onClick={() => setRemoveWorkItemIndex(index)}
                             sx={{ px: '2rem' }}
                             data-testid={dataTestId.registrationWizard.resourceType.otherPerformanceWorkRemove}
-                            startIcon={<DeleteIcon />}>
+                            startIcon={<CancelIcon />}>
                             {t('common.remove')}
                           </Button>
                         </Box>

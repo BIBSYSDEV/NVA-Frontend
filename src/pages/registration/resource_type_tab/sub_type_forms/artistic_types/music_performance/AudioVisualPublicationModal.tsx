@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import {
@@ -232,7 +232,7 @@ export const AudioVisualPublicationModal = ({
                             title={t('registration.resource_type.artistic.remove_music_work')}
                             onClick={() => setRemoveTrackIndex(index)}
                             sx={{ px: '2rem' }}
-                            startIcon={<DeleteIcon />}
+                            startIcon={<CancelIcon />}
                             data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentRemove}-${index}`}>
                             {t('common.remove')}
                           </Button>
