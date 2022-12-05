@@ -49,7 +49,7 @@ export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
   const IconComponent = icon;
   return (
     <StyledSideMenuHeader>
-      {IconComponent && <IconComponent fontSize="large" />}
+      {IconComponent && <IconComponent fontSize="medium" />}
       <Typography component="h1" variant="h3" id={id} sx={{ color: 'inherit' }}>
         {text}
       </Typography>
