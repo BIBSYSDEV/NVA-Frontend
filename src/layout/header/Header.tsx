@@ -73,12 +73,15 @@ export const Header = () => {
               gridArea: 'new-result',
               fontSize: '1.5rem',
               display: { xs: 'none', md: 'inline-flex' },
+              '.MuiButton-startIcon > :nth-of-type(1)': {
+                fontSize: '2rem',
+              },
             }}
             color="inherit"
             component={RouterLink}
             data-testid={dataTestId.header.newRegistrationLink}
             to={UrlPathTemplate.RegistrationNew}
-            startIcon={<AddCircleIcon />}>
+            startIcon={<AddCircleIcon color="info" />}>
             {t('registration.new_registration')}
           </Button>
         )}

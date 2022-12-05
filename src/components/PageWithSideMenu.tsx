@@ -29,7 +29,7 @@ export const StyledPaperHeader = styled(Box)(({ theme }) => ({
 const StyledSideMenuHeader = styled(StyledPaperHeader)({
   alignItems: 'center',
   gap: '0.5rem',
-  padding: '0.5rem 1rem 0.5rem 1rem',
+  padding: '0.5rem',
 });
 
 export const SidePanel = (props: BoxProps) => <Box component="section" sx={{ bgcolor: 'secondary.main' }} {...props} />;
@@ -44,7 +44,7 @@ export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
   const IconComponent = icon;
   return (
     <StyledSideMenuHeader>
-      {IconComponent && <IconComponent fontSize="large" />}
+      {IconComponent && <IconComponent sx={{ fontSize: '1.5rem' }} />}
       <Typography component="h1" variant="h3" id={id} sx={{ color: 'inherit' }}>
         {text}
       </Typography>

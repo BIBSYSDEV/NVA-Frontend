@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { TextField, Typography } from '@mui/material';
-import SaveIcon from '@mui/icons-material/Save';
 import { LoadingButton } from '@mui/lab';
 import {
   CustomerInstitution,
@@ -126,7 +125,6 @@ export const CustomerInstitutionMetadataForm = ({
                 <LoadingButton
                   data-testid={dataTestId.institutionAdmin.saveButton}
                   variant="contained"
-                  startIcon={<SaveIcon />}
                   loadingPosition="start"
                   loading={isSubmitting}
                   type="submit">

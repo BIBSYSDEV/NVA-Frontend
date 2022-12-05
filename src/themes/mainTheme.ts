@@ -13,6 +13,7 @@ enum Color {
   SecondaryDark = '#EDE2C7',
   SuccessMain = '#025810',
   InfoMain = '#4367F6',
+  InfoLight = '#C2D3EA',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
 }
@@ -47,6 +48,10 @@ export const mainTheme = createTheme(
       success: {
         main: Color.SuccessMain,
       },
+      info: {
+        main: Color.InfoMain,
+        light: Color.InfoLight,
+      },
       background: {
         default: Color.White,
         paper: Color.SecondaryLight,
@@ -64,7 +69,6 @@ export const mainTheme = createTheme(
       h3: {
         fontSize: '1rem',
         fontWeight: 700,
-        textTransform: 'uppercase',
       },
       h4: {
         fontSize: '1rem',
@@ -214,6 +218,13 @@ export const mainTheme = createTheme(
           },
           gutters: {
             paddingRight: '2rem',
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius: '0.25rem',
           },
         },
       },
