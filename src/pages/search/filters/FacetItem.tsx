@@ -3,13 +3,13 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { ReactNode, useState } from 'react';
 
-interface BaseFilterItemProps {
+interface FacetItemProps {
   title: string;
   fontWeight?: number;
   children: ReactNode;
 }
 
-export const BaseFilterItem = ({ title, fontWeight = 600, children }: BaseFilterItemProps) => {
+export const FacetItem = ({ title, fontWeight = 600, children }: FacetItemProps) => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'), { noSsr: true });
   const [isOpen, setIsOpen] = useState(!isMobile);
   const toggleOpen = () => setIsOpen(!isOpen);

@@ -2,7 +2,7 @@ import { Box, ListItemButton } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
-import { BaseFilterItem } from './BaseFilterItem';
+import { FacetItem } from './FacetItem';
 import { Aggregations } from '../../../types/common.types';
 import { ResourceFieldNames } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
@@ -41,7 +41,7 @@ export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFil
   return (
     <>
       {registrationTypeFacet && (
-        <BaseFilterItem title={t('registration.resource_type.resource_type')}>
+        <FacetItem title={t('registration.resource_type.resource_type')}>
           {registrationTypeFacet.buckets.map((bucket) => (
             <Box key={bucket.key} component="li" sx={{ ':last-of-type': { pb: '0.5em' } }}>
               <ListItemButton
@@ -61,7 +61,7 @@ export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFil
               </ListItemButton>
             </Box>
           ))}
-        </BaseFilterItem>
+        </FacetItem>
       )}
     </>
   );
