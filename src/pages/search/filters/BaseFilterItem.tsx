@@ -17,7 +17,7 @@ export const BaseFilterItem = ({ title, fontWeight = 600, children }: BaseFilter
   return (
     <Box
       sx={{
-        m: '1rem 1.5rem',
+        m: '1rem',
         bgcolor: 'background.default',
         borderRadius: '10px',
         border: '2px solid',

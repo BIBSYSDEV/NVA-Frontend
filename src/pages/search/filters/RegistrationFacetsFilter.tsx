@@ -43,9 +43,15 @@ export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFil
       {registrationTypeFacet && (
         <BaseFilterItem title={t('registration.resource_type.resource_type')}>
           {registrationTypeFacet.buckets.map((bucket) => (
-            <li key={bucket.key}>
+            <Box key={bucket.key} component="li" sx={{ ':last-of-type': { pb: '0.5em' } }}>
               <ListItemButton
-                sx={{ display: 'flex', justifyContent: 'space-between' }}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  '&.Mui-selected': {
+                    bgcolor: 'info.light',
+                  },
+                }}
                 onClick={() => updateFilter(ResourceFieldNames.SubType, bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
                 <Box component="span">
@@ -53,7 +59,7 @@ export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFil
                 </Box>
                 <Box component="span">({bucket.doc_count})</Box>
               </ListItemButton>
-            </li>
+            </Box>
           ))}
         </BaseFilterItem>
       )}
