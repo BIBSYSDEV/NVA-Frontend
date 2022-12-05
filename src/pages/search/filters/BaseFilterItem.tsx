@@ -1,4 +1,4 @@
-import { Collapse, List, ListItemText, Typography, Theme, useMediaQuery, ListItemButton } from '@mui/material';
+import { Collapse, List, ListItemText, Typography, Theme, useMediaQuery, ListItemButton, Box } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { ReactNode, useState } from 'react';
@@ -15,7 +15,14 @@ export const BaseFilterItem = ({ title, fontWeight = 600, children }: BaseFilter
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
-    <>
+    <Box
+      sx={{
+        m: '1rem 1.5rem',
+        bgcolor: 'background.default',
+        borderRadius: '10px',
+        border: '2px solid',
+        borderColor: 'primary.main',
+      }}>
       <ListItemButton onClick={toggleOpen}>
         <ListItemText disableTypography>
           <Typography fontWeight={fontWeight}>{title}</Typography>
@@ -25,6 +32,6 @@ export const BaseFilterItem = ({ title, fontWeight = 600, children }: BaseFilter
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <List disablePadding>{children}</List>
       </Collapse>
-    </>
+    </Box>
   );
 };
