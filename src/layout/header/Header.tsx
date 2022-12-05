@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { AppBar, Box, Button, Divider, IconButton, Theme, Typography, useMediaQuery } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
@@ -74,14 +74,16 @@ export const Header = () => {
               fontSize: '1.5rem',
               display: { xs: 'none', md: 'inline-flex' },
               '.MuiButton-startIcon > :nth-of-type(1)': {
-                fontSize: '2rem',
+                fontSize: '1.5rem',
               },
             }}
             color="inherit"
             component={RouterLink}
             data-testid={dataTestId.header.newRegistrationLink}
             to={UrlPathTemplate.RegistrationNew}
-            startIcon={<AddCircleIcon color="info" />}>
+            startIcon={
+              <AddIcon sx={{ color: 'white', bgcolor: 'info.main', borderRadius: '50%', padding: '0.1rem' }} />
+            }>
             {t('registration.new_registration')}
           </Button>
         )}
