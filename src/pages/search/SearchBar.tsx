@@ -59,7 +59,10 @@ export const SearchBar = () => {
             {properties.map((_, index) => (
               <AdvancedSearchRow
                 key={index}
-                removeFilter={() => remove(index)}
+                removeFilter={() => {
+                  remove(index);
+                  submitForm();
+                }}
                 baseFieldName={`properties[${index}]`}
               />
             ))}
