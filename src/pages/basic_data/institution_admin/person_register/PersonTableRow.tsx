@@ -21,7 +21,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
@@ -328,7 +328,7 @@ export const PersonTableRow = ({
                             color="error"
                             variant="outlined"
                             onClick={toggleConfirmDeleteDialog}
-                            endIcon={<DeleteIcon />}>
+                            endIcon={<CancelIcon />}>
                             {t('basic_data.person_register.remove_employment')}
                           </Button>
                           {values.employments.length > 1 && (

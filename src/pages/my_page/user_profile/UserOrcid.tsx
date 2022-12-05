@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { Button, IconButton, Typography, Link as MuiLink, Box, CircularProgress } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { useHistory } from 'react-router-dom';
@@ -132,7 +132,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             color="error"
             data-testid="button-confirm-delete-orcid"
             onClick={toggleConfirmDialog}
-            startIcon={<DeleteIcon />}
+            startIcon={<CancelIcon />}
             variant="outlined">
             {t('common.remove')}
           </Button>
