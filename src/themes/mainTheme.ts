@@ -5,7 +5,6 @@ import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
-  LightBlue = '#C2D3EA',
   Black = '#222',
   ErrorMain = '#AC0303',
   PrimaryMain = '#0F0035',
@@ -14,6 +13,7 @@ enum Color {
   SecondaryDark = '#EDE2C7',
   SuccessMain = '#025810',
   InfoMain = '#4367F6',
+  InfoLight = '#C2D3EA',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
 }
@@ -48,10 +48,13 @@ export const mainTheme = createTheme(
       success: {
         main: Color.SuccessMain,
       },
+      info: {
+        main: Color.InfoMain,
+        light: Color.InfoLight,
+      },
       background: {
         default: Color.White,
         paper: Color.SecondaryLight,
-        footer: Color.LightBlue,
       },
     },
     typography: {

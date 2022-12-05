@@ -9,7 +9,7 @@ export const Footer = () => {
       component="footer"
       sx={{
         padding: '1rem',
-        bgcolor: 'background.footer',
+        bgcolor: 'info.light',
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
