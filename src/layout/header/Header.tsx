@@ -1,7 +1,7 @@
 import { useState, MouseEvent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { AppBar, Box, Button, Divider, IconButton, Theme, Typography, useMediaQuery } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -18,9 +18,12 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { setPartialUser } from '../../redux/userSlice';
+import { MenuButton } from './MenuButton';
 
 export const Header = () => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const [customer] = useFetch<CustomerInstitution>({
@@ -125,36 +128,34 @@ export const Header = () => {
               />
               <LanguageSelector />
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
-                <Button
-                  sx={{ whiteSpace: 'nowrap' }}
+                <MenuButton
                   color="inherit"
-                  component={RouterLink}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.BasicData)}
                   data-testid={dataTestId.header.basicDataLink}
                   to={UrlPathTemplate.BasicData}
                   startIcon={<BusinessCenterIcon />}>
                   {t('basic_data.basic_data')}
-                </Button>
+                </MenuButton>
               )}
               {user?.isCurator && (
-                <Button
+                <MenuButton
                   color="inherit"
-                  component={RouterLink}
                   data-testid={dataTestId.header.tasksLink}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
                   to={UrlPathTemplate.Tasks}
                   startIcon={<AssignmentIcon />}>
                   {t('tasks.tasks')}
-                </Button>
+                </MenuButton>
               )}
               {user && (
-                <Button
-                  sx={{ whiteSpace: 'nowrap' }}
+                <MenuButton
                   color="inherit"
-                  component={RouterLink}
                   data-testid={dataTestId.header.myPageLink}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
                   to={UrlPathTemplate.MyPage}
                   startIcon={<FavoriteBorderIcon />}>
                   {t('my_page.my_page')}
-                </Button>
+                </MenuButton>
               )}
             </>
           )}
