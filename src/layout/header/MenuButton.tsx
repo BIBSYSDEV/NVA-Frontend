@@ -2,7 +2,7 @@ import { Button, ButtonProps } from '@mui/material';
 import { Link, LinkProps } from 'react-router-dom';
 
 interface MenuButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
-  isSelected?: boolean;
+  isSelected: boolean;
 }
 
 export const MenuButton = ({ isSelected, ...rest }: MenuButtonProps) => (
