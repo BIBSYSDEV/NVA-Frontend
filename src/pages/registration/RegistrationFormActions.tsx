@@ -101,7 +101,6 @@ export const RegistrationFormActions = ({
               variant="outlined"
               loading={isSaving}
               data-testid="button-save-registration"
-              loadingPosition="end"
               onClick={async () => {
                 await saveRegistration(values);
                 // Set all fields with error to touched to ensure error messages are shown
@@ -124,7 +123,6 @@ export const RegistrationFormActions = ({
             variant="contained"
             loading={isSaving}
             data-testid="button-save-registration"
-            loadingPosition="end"
             onClick={onClickSaveAndPresent}
             sx={{ gridArea: 'save-next-button' }}>
             {t('common.save_and_present')}
