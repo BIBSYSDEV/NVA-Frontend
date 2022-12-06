@@ -164,8 +164,8 @@ export const mainTheme = createTheme(
               color: Color.StepperBlue,
               fontWeight: 600,
               borderBottom: '0.06rem solid',
-              mb: '-0.06rem',
-              boxShadow: '-1px 7px 4px -3px rgba(161,161,161,0.49)',
+              mb: '-0.06rem', //prevents text from 'popping'
+              boxShadow: '-1px 7px 4px -3px rgba(0,0,0,0.3)',
               opacity: 1,
             },
             '&.Mui-completed': {
