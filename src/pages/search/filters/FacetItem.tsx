@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 interface FacetItemProps {
   title: string;
   fontWeight?: number;
-  children: ReactNode;
+  children: ReactNode[];
 }
 
 const itemsToShowByDefault = 5;
@@ -18,19 +18,22 @@ export const FacetItem = ({ title, fontWeight = 600, children }: FacetItemProps)
   const [isOpen, setIsOpen] = useState(!isMobile);
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  const childrenIsArray = Array.isArray(children);
-  const [showAll, setShowAll] = useState(childrenIsArray && children.length <= itemsToShowByDefault);
-
-  const itemsToShow = !showAll && childrenIsArray ? children.slice(0, itemsToShowByDefault) : children;
+  const [showAll, setShowAll] = useState(children.length <= itemsToShowByDefault);
+  const itemsToShow = !showAll ? children.slice(0, itemsToShowByDefault) : children;
 
   return (
     <Box
       sx={{
         m: '1rem',
         bgcolor: 'background.default',
-        borderRadius: '10px',
         border: '2px solid',
         borderColor: 'primary.main',
+        borderRadius: '10px',
+        'li:last-of-type': {
+          div: {
+            borderRadius: '0 0 10px 10px', // Ensure last item does not exeed rounded corner
+          },
+        },
       }}>
       <ListItemButton onClick={toggleOpen}>
         <ListItemText disableTypography>
@@ -41,14 +44,16 @@ export const FacetItem = ({ title, fontWeight = 600, children }: FacetItemProps)
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <List disablePadding>
           {itemsToShow}
-          {!showAll && (
-            <ListItemButton
-              title={t('common.show_more')}
-              dense
-              sx={{ justifyContent: 'space-around' }}
-              onClick={() => setShowAll(true)}>
-              <ExpandMore />
-            </ListItemButton>
+          {!showAll && children.length > itemsToShowByDefault && (
+            <li>
+              <ListItemButton
+                title={t('common.show_more')}
+                dense
+                sx={{ justifyContent: 'space-around' }}
+                onClick={() => setShowAll(true)}>
+                <ExpandMore />
+              </ListItemButton>
+            </li>
           )}
         </List>
       </Collapse>

@@ -43,7 +43,7 @@ export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFil
       {registrationTypeFacet && (
         <FacetItem title={t('registration.resource_type.resource_type')}>
           {registrationTypeFacet.buckets.map((bucket) => (
-            <Box key={bucket.key} component="li" sx={{ ':last-of-type': { pb: '0.5em' } }}>
+            <Box key={bucket.key} component="li">
               <ListItemButton
                 sx={{
                   display: 'flex',
