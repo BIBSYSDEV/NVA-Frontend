@@ -9,9 +9,10 @@ import { PublicationInstanceType } from '../../../types/registration.types';
 
 interface RegistrationFacetsFilterProps {
   aggregations: Aggregations;
+  isLoadingSearch: boolean;
 }
 
-export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFilterProps) => {
+export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: RegistrationFacetsFilterProps) => {
   const { t } = useTranslation();
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
 
@@ -45,6 +46,7 @@ export const RegistrationFacetsFilter = ({ aggregations }: RegistrationFacetsFil
           {registrationTypeFacet.buckets.map((bucket) => (
             <Box key={bucket.key} component="li">
               <ListItemButton
+                disabled={isLoadingSearch}
                 sx={{
                   display: 'flex',
                   justifyContent: 'space-between',

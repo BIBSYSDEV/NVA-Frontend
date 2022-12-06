@@ -6,13 +6,12 @@ import { useTranslation } from 'react-i18next';
 
 interface FacetItemProps {
   title: string;
-  fontWeight?: number;
   children: ReactNode[];
 }
 
 const itemsToShowByDefault = 5;
 
-export const FacetItem = ({ title, fontWeight = 600, children }: FacetItemProps) => {
+export const FacetItem = ({ title, children }: FacetItemProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'), { noSsr: true });
   const [isOpen, setIsOpen] = useState(!isMobile);
@@ -36,8 +35,8 @@ export const FacetItem = ({ title, fontWeight = 600, children }: FacetItemProps)
         },
       }}>
       <ListItemButton onClick={toggleOpen}>
-        <ListItemText disableTypography>
-          <Typography fontWeight={fontWeight}>{title}</Typography>
+        <ListItemText>
+          <Typography fontWeight={600}>{title}</Typography>
         </ListItemText>
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
