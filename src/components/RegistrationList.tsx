@@ -18,6 +18,7 @@ import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
 import { dataTestId } from '../utils/dataTestIds';
 import { getTitleString } from '../utils/registration-helpers';
+import { ContributorIndicators } from './ContributorIndicators';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -30,7 +31,7 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => {
     <TableContainer component={Paper}>
       <Table>
         <caption style={visuallyHidden}>{t('common.registrations')}</caption>
-        <TableHead sx={{ fontSize: 400 }}>
+        <TableHead>
           <TableRow>
             <TableCell width={1}>{t('registration.resource_type.resource_type')}</TableCell>
             <TableCell width={1}>{t('common.year')}</TableCell>
@@ -63,6 +64,7 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => {
                         flexWrap: 'wrap',
                         columnGap: '1rem',
                         whiteSpace: 'nowrap',
+                        alignItems: 'flex-end',
                       }}>
                       {focusedContributors.map((contributor, index) => (
                         <Typography key={index} variant="body2">
@@ -73,6 +75,7 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => {
                           ) : (
                             contributor.identity.name
                           )}
+                          <ContributorIndicators contributor={contributor} />
                         </Typography>
                       ))}
                       {countRestContributors > 0 && (
