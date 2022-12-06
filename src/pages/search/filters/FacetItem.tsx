@@ -5,11 +5,10 @@ import { ReactNode, useState } from 'react';
 
 interface FacetItemProps {
   title: string;
-  fontWeight?: number;
   children: ReactNode;
 }
 
-export const FacetItem = ({ title, fontWeight = 600, children }: FacetItemProps) => {
+export const FacetItem = ({ title, children }: FacetItemProps) => {
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'), { noSsr: true });
   const [isOpen, setIsOpen] = useState(!isMobile);
   const toggleOpen = () => setIsOpen(!isOpen);
@@ -24,8 +23,8 @@ export const FacetItem = ({ title, fontWeight = 600, children }: FacetItemProps)
         borderColor: 'primary.main',
       }}>
       <ListItemButton onClick={toggleOpen}>
-        <ListItemText disableTypography>
-          <Typography fontWeight={fontWeight}>{title}</Typography>
+        <ListItemText>
+          <Typography fontWeight={600}>{title}</Typography>
         </ListItemText>
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
