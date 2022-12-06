@@ -128,8 +128,8 @@ const ContributorsRow = ({
             .sort();
 
           return (
-            <Box component="li" sx={{ display: 'flex', alignItems: 'end' }}>
-              <Typography key={index}>
+            <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
+              <Typography>
                 {id ? (
                   <Link
                     component={RouterLink}

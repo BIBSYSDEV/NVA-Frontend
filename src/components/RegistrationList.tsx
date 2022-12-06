@@ -70,8 +70,8 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => {
                         gap: '1rem',
                       }}>
                       {focusedContributors.map((contributor, index) => (
-                        <Box component="li" sx={{ display: 'flex', alignItems: 'end' }}>
-                          <Typography key={index} variant="body2">
+                        <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
+                          <Typography variant="body2">
                             {contributor.identity.id ? (
                               <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                                 {contributor.identity.name}
