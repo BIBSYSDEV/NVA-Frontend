@@ -67,16 +67,18 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => {
                         alignItems: 'flex-end',
                       }}>
                       {focusedContributors.map((contributor, index) => (
-                        <Typography key={index} variant="body2">
-                          {contributor.identity.id ? (
-                            <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-                              {contributor.identity.name}
-                            </MuiLink>
-                          ) : (
-                            contributor.identity.name
-                          )}
+                        <Box sx={{ display: 'flex', alignItems: 'end' }}>
+                          <Typography key={index} variant="body2">
+                            {contributor.identity.id ? (
+                              <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+                                {contributor.identity.name}
+                              </MuiLink>
+                            ) : (
+                              contributor.identity.name
+                            )}
+                          </Typography>
                           <ContributorIndicators contributor={contributor} />
-                        </Typography>
+                        </Box>
                       ))}
                       {countRestContributors > 0 && (
                         <Typography variant="body2">

@@ -128,23 +128,25 @@ const ContributorsRow = ({
             .sort();
 
           return (
-            <Typography key={index} component="li">
-              {id ? (
-                <Link
-                  component={RouterLink}
-                  to={getResearchProfilePath(id)}
-                  data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
-                  {name}
-                </Link>
-              ) : (
-                name
-              )}
-              {showRole && ` (${t(`registration.contributors.types.${contributor.role}`)})`}
-              {affiliationIndexes && affiliationIndexes.length > 0 && (
-                <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
-              )}
+            <Box sx={{ display: 'flex', alignItems: 'end' }}>
+              <Typography key={index} component="li">
+                {id ? (
+                  <Link
+                    component={RouterLink}
+                    to={getResearchProfilePath(id)}
+                    data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
+                    {name}
+                  </Link>
+                ) : (
+                  name
+                )}
+                {showRole && ` (${t(`registration.contributors.types.${contributor.role}`)})`}
+                {affiliationIndexes && affiliationIndexes.length > 0 && (
+                  <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
+                )}
+              </Typography>
               <ContributorIndicators contributor={contributor} />
-            </Typography>
+            </Box>
           );
         })}
         {hiddenCount && hiddenCount > 0 ? (
