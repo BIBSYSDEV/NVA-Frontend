@@ -59,15 +59,18 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => {
                       </MuiLink>
                     </Typography>
                     <Box
+                      component="ul"
                       sx={{
-                        display: 'flex',
+                        listStyleType: 'none',
+                        margin: 0,
+                        padding: 0,
+                        display: 'inline-flex',
                         flexWrap: 'wrap',
-                        columnGap: '1rem',
-                        whiteSpace: 'nowrap',
                         alignItems: 'flex-end',
+                        gap: '1rem',
                       }}>
                       {focusedContributors.map((contributor, index) => (
-                        <Box sx={{ display: 'flex', alignItems: 'end' }}>
+                        <Box component="li" sx={{ display: 'flex', alignItems: 'end' }}>
                           <Typography key={index} variant="body2">
                             {contributor.identity.id ? (
                               <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
@@ -81,7 +84,7 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => {
                         </Box>
                       ))}
                       {countRestContributors > 0 && (
-                        <Typography variant="body2">
+                        <Typography component="li" variant="body2">
                           ({t('common.x_others', { count: countRestContributors })})
                         </Typography>
                       )}
