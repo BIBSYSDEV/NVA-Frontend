@@ -23,7 +23,7 @@ import { MenuButton } from './MenuButton';
 export const Header = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const currentPath = location.pathname.replace(/\/$/, '').toLowerCase(); // Remove trailing slash
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const [customer] = useFetch<CustomerInstitution>({
