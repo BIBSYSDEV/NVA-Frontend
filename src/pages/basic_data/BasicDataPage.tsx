@@ -20,7 +20,7 @@ import {
   LinkButtonRow,
   LinkIconButton,
   NavigationList,
-  SideNav,
+  SidePanel,
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
@@ -44,7 +44,7 @@ const BasicDataPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SideNav aria-labelledby="basic-data-title">
+      <SidePanel aria-labelledby="basic-data-title">
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
 
         <NavigationList>
@@ -84,7 +84,7 @@ const BasicDataPage = () => {
             </LinkButton>,
           ]}
         </NavigationList>
-      </SideNav>
+      </SidePanel>
       <BackgroundDiv>
         <Switch>
           <ErrorBoundary>
