@@ -7,7 +7,12 @@ interface MenuButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
 
 export const MenuButton = ({ isSelected, ...rest }: MenuButtonProps) => (
   <Button
-    sx={{ whiteSpace: 'nowrap', borderBottom: isSelected ? '4px solid white' : 'none', borderRadius: '0px' }}
+    sx={{
+      whiteSpace: 'nowrap',
+      borderBottom: isSelected ? '0.375rem solid white' : 'none',
+      borderRadius: '0px',
+      mb: isSelected ? '-0.375rem' : '0rem',
+    }}
     LinkComponent={Link}
     {...rest}
   />
