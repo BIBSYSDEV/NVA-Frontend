@@ -43,10 +43,9 @@ const SearchPage = () => {
         <StyledPageWithSideMenu>
           <SidePanel>
             <SideNavHeader icon={SearchIcon} text={t('common.search')} />
-            <RegistrationFacetsFilter
-              aggregations={searchResults?.aggregations ?? {}}
-              isLoadingSearch={isLoadingSearch}
-            />
+            {searchResults?.aggregations && (
+              <RegistrationFacetsFilter aggregations={searchResults.aggregations} isLoadingSearch={isLoadingSearch} />
+            )}
           </SidePanel>
           <BackgroundDiv
             sx={{
