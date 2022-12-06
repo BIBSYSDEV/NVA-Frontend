@@ -21,10 +21,7 @@ describe('Search', () => {
 
   it('The user should see formulas correctly formatted with MathJax', () => {
     cy.get(`[data-testid=${dataTestId.startPage.searchResultItem}]`).eq(0).should('not.contain', '$');
-    cy.get(`[data-testid=${dataTestId.startPage.searchResultItem}]`)
-      .eq(0)
-      .get('mjx-container')
-      .should('have.length', 4);
+    cy.get(`[data-testid=${dataTestId.startPage.searchResultItem}]`).eq(0).get('mjx-container').should('be.visible');
   });
 
   it('The user should see a result-list when searching', () => {
