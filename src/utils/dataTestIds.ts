@@ -59,6 +59,7 @@ export const dataTestId = {
   },
   institutionAdmin: {
     archiveNameField: 'archive-field',
+    canAssignDoiCheckbox: 'can-assign-doi-checkbox',
     displayNameField: 'display-name-field',
     dataCiteMemberField: 'data-cite-member-field',
     doiPrefixField: 'doi-prefix-field',

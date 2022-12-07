@@ -27,8 +27,6 @@ export const CustomerInstitutionAdminsForm = ({
     setOpenAddAdminModal((state) => !state);
   };
 
-  const addAdminText = t('common.add_custom', { name: t('my_page.roles.institution_admin') });
-
   return (
     <>
       <Typography variant="h2" gutterBottom>
@@ -50,7 +48,7 @@ export const CustomerInstitutionAdminsForm = ({
               startIcon={<AddIcon />}
               data-testid="button-open-add-admin"
               onClick={toggleOpenAddAdminModal}>
-              {addAdminText}
+              {t('common.add_custom', { name: t('my_page.roles.institution_admin') })}
             </Button>
           </StyledRightAlignedWrapper>
           <AddAdminDialog

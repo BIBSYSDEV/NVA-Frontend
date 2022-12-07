@@ -137,7 +137,14 @@ export const CustomerInstitutionMetadataForm = ({
                   {({ field }: FieldProps<boolean>) => (
                     <FormControlLabel
                       label={t('basic_data.institutions.can_assign_doi')}
-                      control={<Checkbox required {...field} checked={field.value} />}
+                      control={
+                        <Checkbox
+                          data-testid={dataTestId.institutionAdmin.canAssignDoiCheckbox}
+                          required
+                          {...field}
+                          checked={field.value}
+                        />
+                      }
                     />
                   )}
                 </Field>
