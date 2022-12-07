@@ -74,10 +74,12 @@ export const Header = () => {
           <Button
             sx={{
               gridArea: 'new-result',
-              fontSize: '1.5rem',
+              fontSize: '1.1rem',
+              fontWeight: 700,
+              gap: '0.5rem',
               display: { xs: 'none', md: 'inline-flex' },
               '.MuiButton-startIcon > :nth-of-type(1)': {
-                fontSize: '1.5rem',
+                fontSize: '1.875rem',
               },
             }}
             color="inherit"
@@ -85,7 +87,7 @@ export const Header = () => {
             data-testid={dataTestId.header.newRegistrationLink}
             to={UrlPathTemplate.RegistrationNew}
             startIcon={
-              <AddIcon sx={{ color: 'white', bgcolor: 'info.main', borderRadius: '50%', padding: '0.1rem' }} />
+              <AddIcon sx={{ color: 'white', bgcolor: 'primary.light', borderRadius: '50%', padding: '0.1rem' }} />
             }>
             {t('registration.new_registration')}
           </Button>
@@ -107,18 +109,20 @@ export const Header = () => {
             <>
               {customer?.shortName &&
                 (user?.isEditor ? (
-                  <Button
-                    sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
+                  <MenuButton
+                    sx={{
+                      fontSize: '1rem',
+                      fontWeight: 700,
+                      textTransform: 'none',
+                    }}
                     color="inherit"
-                    variant="outlined"
-                    size="small"
-                    component={RouterLink}
                     data-testid={dataTestId.header.editorLink}
-                    to={UrlPathTemplate.Editor}>
+                    to={UrlPathTemplate.Editor}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}>
                     {user?.customerShortName}
-                  </Button>
+                  </MenuButton>
                 ) : (
-                  <Typography variant="button" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
+                  <Typography variant="h1" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
                     {user?.customerShortName}
                   </Typography>
                 ))}
