@@ -108,28 +108,28 @@ export const CustomerInstitutionMetadataForm = ({
                 name={CustomerInstitutionFieldNames.DisplayName}
                 label={t('basic_data.institutions.display_name')}
                 required
-                dataTestId={dataTestId.institutionAdmin.displayNameField}
+                dataTestId={dataTestId.basicData.institutionAdmin.displayNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ShortName}
                 label={t('basic_data.institutions.short_name')}
                 required
-                dataTestId={dataTestId.institutionAdmin.shortNameField}
+                dataTestId={dataTestId.basicData.institutionAdmin.shortNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.ArchiveName}
                 label={t('basic_data.institutions.archive_name')}
-                dataTestId={dataTestId.institutionAdmin.archiveNameField}
+                dataTestId={dataTestId.basicData.institutionAdmin.archiveNameField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
                 label={t('basic_data.institutions.feide_organization_domain')}
-                dataTestId={dataTestId.institutionAdmin.feideField}
+                dataTestId={dataTestId.basicData.institutionAdmin.feideField}
               />
               <CustomerInstitutionTextField
                 name={CustomerInstitutionFieldNames.RorId}
                 label={t('basic_data.institutions.ror')}
-                dataTestId={dataTestId.institutionAdmin.rorField}
+                dataTestId={dataTestId.basicData.institutionAdmin.rorField}
               />
 
               <div>
@@ -139,7 +139,7 @@ export const CustomerInstitutionMetadataForm = ({
                       label={t('basic_data.institutions.can_assign_doi')}
                       control={
                         <Checkbox
-                          data-testid={dataTestId.institutionAdmin.canAssignDoiCheckbox}
+                          data-testid={dataTestId.basicData.institutionAdmin.canAssignDoiCheckbox}
                           required
                           {...field}
                           checked={field.value}
@@ -154,20 +154,20 @@ export const CustomerInstitutionMetadataForm = ({
                       required
                       name={CustomerInstitutionFieldNames.DoiName}
                       label={t('basic_data.institutions.doi_name')}
-                      dataTestId={dataTestId.institutionAdmin.dataCiteMemberField}
+                      dataTestId={dataTestId.basicData.institutionAdmin.dataCiteMemberField}
                     />
                     <CustomerInstitutionTextField
                       required
                       name={CustomerInstitutionFieldNames.DoiPrefix}
                       label={t('basic_data.institutions.doi_prefix')}
-                      dataTestId={dataTestId.institutionAdmin.doiPrefixField}
+                      dataTestId={dataTestId.basicData.institutionAdmin.doiPrefixField}
                     />
                   </Box>
                 )}
               </div>
               <StyledRightAlignedWrapper>
                 <LoadingButton
-                  data-testid={dataTestId.institutionAdmin.saveButton}
+                  data-testid={dataTestId.basicData.institutionAdmin.saveButton}
                   variant="contained"
                   loading={isSubmitting}
                   type="submit">
