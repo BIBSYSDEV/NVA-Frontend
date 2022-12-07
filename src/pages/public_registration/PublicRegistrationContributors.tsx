@@ -1,17 +1,17 @@
 import { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, IconButton, Link, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useTranslation } from 'react-i18next';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import OrcidLogo from '../../resources/images/orcid_logo.svg';
 import { Contributor } from '../../types/contributor.types';
 import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { contributorConfig, groupContributors } from '../../utils/registration-helpers';
 import { getResearchProfilePath } from '../../utils/urlPaths';
 import { PublicationInstanceType } from '../../types/registration.types';
+import { ContributorIndicators } from '../../components/ContributorIndicators';
 
 interface PublicRegistrationContributorsProps {
   contributors: Contributor[];
@@ -120,7 +120,7 @@ const ContributorsRow = ({
         }}>
         {contributors.map((contributor, index) => {
           const {
-            identity: { id, name, orcId },
+            identity: { id, name },
           } = contributor;
           const affiliationIndexes = contributor.affiliations
             ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
@@ -128,31 +128,25 @@ const ContributorsRow = ({
             .sort();
 
           return (
-            <Typography key={index} component="li">
-              {id ? (
-                <Link
-                  component={RouterLink}
-                  to={getResearchProfilePath(id)}
-                  data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
-                  {name}
-                </Link>
-              ) : (
-                name
-              )}
-              {showRole && ` (${t(`registration.contributors.types.${contributor.role}`)})`}
-              {(orcId || (affiliationIndexes && affiliationIndexes.length > 0)) && (
-                <sup>
-                  {affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}
-                  {orcId && (
-                    <Tooltip title={t('common.orcid_profile')}>
-                      <IconButton size="small" href={orcId} target="_blank">
-                        <img src={OrcidLogo} height="20" alt="orcid" />
-                      </IconButton>
-                    </Tooltip>
-                  )}
-                </sup>
-              )}
-            </Typography>
+            <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'end' }}>
+              <Typography>
+                {id ? (
+                  <Link
+                    component={RouterLink}
+                    to={getResearchProfilePath(id)}
+                    data-testid={dataTestId.registrationLandingPage.authorLink(id)}>
+                    {name}
+                  </Link>
+                ) : (
+                  name
+                )}
+                {showRole && ` (${t(`registration.contributors.types.${contributor.role}`)})`}
+                {affiliationIndexes && affiliationIndexes.length > 0 && (
+                  <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
+                )}
+              </Typography>
+              <ContributorIndicators contributor={contributor} />
+            </Box>
           );
         })}
         {hiddenCount && hiddenCount > 0 ? (
