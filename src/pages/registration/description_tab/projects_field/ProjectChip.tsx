@@ -17,7 +17,9 @@ export const ProjectChip = ({ id, fallbackName, ...rest }: ProjectChipProps) => 
       data-testid={`project-chip-${id}`}
       label={
         <>
-          <Typography variant="subtitle1">{project?.title ?? fallbackName}</Typography>
+          <Typography variant="h3" component="h2">
+            {project?.title ?? fallbackName}
+          </Typography>
           {project && (
             <Typography variant="body2" color="textSecondary">
               {getLanguageString(project.coordinatingInstitution.name)}
