@@ -130,7 +130,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
                 data-testid={dataTestId.registrationWizard.resourceType.journalChip}
                 label={
                   <>
-                    <Typography variant="subtitle1">
+                    <Typography variant="subtitle1" component="h2">
                       {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
                     </Typography>
                     <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
