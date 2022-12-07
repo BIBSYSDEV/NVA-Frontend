@@ -11,7 +11,7 @@ export const MenuButton = ({ isSelected, ...rest }: MenuButtonProps) => (
       whiteSpace: 'nowrap',
       borderBottom: isSelected ? '0.375rem solid white' : 'none',
       borderRadius: '0px',
-      mb: isSelected ? '-0.375rem' : '0rem',
+      mb: isSelected ? '-0.375rem' : '0rem', // Negates element re-size when border appears
     }}
     LinkComponent={Link}
     {...rest}
