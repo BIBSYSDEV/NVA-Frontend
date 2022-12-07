@@ -60,6 +60,8 @@ export const dataTestId = {
   institutionAdmin: {
     archiveNameField: 'archive-field',
     displayNameField: 'display-name-field',
+    dataCiteMemberField: 'data-cite-member-field',
+    doiPrefixField: 'doi-prefix-field',
     feideField: 'feide-field',
     nameField: 'institution-name-field',
     rorField: 'ror-field',

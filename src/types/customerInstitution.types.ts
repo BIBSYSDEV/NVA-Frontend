@@ -23,6 +23,10 @@ export interface CustomerInstitution extends SimpleCustomerInstitution {
   vocabularies: CustomerVocabulary[];
   publicationWorkflow: PublishStrategy;
   rorId?: string;
+  doiAgent: {
+    name: string;
+    prefix: string;
+  };
 }
 
 export enum VocabularyStatus {
@@ -54,6 +58,10 @@ export const emptyCustomerInstitution: CustomerInstitution = {
   vocabularies: [],
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   rorId: '',
+  doiAgent: {
+    name: '',
+    prefix: '',
+  },
 };
 
 export enum CustomerInstitutionFieldNames {
@@ -61,6 +69,8 @@ export enum CustomerInstitutionFieldNames {
   CName = 'cname',
   CristinId = 'cristinId',
   DisplayName = 'displayName',
+  DoiName = 'doiAgent.name',
+  DoiPrefix = 'doiAgent.prefix',
   FeideOrganizationDomain = 'feideOrganizationDomain',
   Identifier = 'identifier',
   InstitutionDns = 'institutionDns',

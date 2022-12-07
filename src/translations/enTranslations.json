@@ -60,6 +60,8 @@
       "admin_institutions": "Administer institutions",
       "administrators": "Administrators",
       "archive_name": "Archive name",
+      "doi_name": "Data Cite Member ID",
+      "doi_prefix": "DOI prefix",
       "display_name": "Display name for the institution",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",

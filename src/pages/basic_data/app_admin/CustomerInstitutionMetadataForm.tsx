@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { TextField, Typography } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import {
   CustomerInstitution,
@@ -54,9 +54,6 @@ export const CustomerInstitutionMetadataForm = ({
 
   return (
     <>
-      <Typography variant="h2" paragraph>
-        {t('common.institution')}
-      </Typography>
       <Formik
         enableReinitialize
         initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
@@ -121,6 +118,18 @@ export const CustomerInstitutionMetadataForm = ({
                 label={t('basic_data.institutions.ror')}
                 dataTestId={dataTestId.institutionAdmin.rorField}
               />
+              <Box sx={{ display: 'flex', gap: '1rem' }}>
+                <CustomerInstitutionTextField
+                  name={CustomerInstitutionFieldNames.DoiName}
+                  label={t('basic_data.institutions.doi_name')}
+                  dataTestId={dataTestId.institutionAdmin.dataCiteMemberField}
+                />
+                <CustomerInstitutionTextField
+                  name={CustomerInstitutionFieldNames.DoiPrefix}
+                  label={t('basic_data.institutions.doi_prefix')}
+                  dataTestId={dataTestId.institutionAdmin.doiPrefixField}
+                />
+              </Box>
               <StyledRightAlignedWrapper>
                 <LoadingButton
                   data-testid={dataTestId.institutionAdmin.saveButton}
