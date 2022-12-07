@@ -29,19 +29,29 @@ export const EditorInstitution = () => {
         <CircularProgress />
       ) : (
         <>
-          <Typography variant="h3">{t('editor.institution.institution_name_norwegian')}</Typography>
+          <Typography variant="h3" component="h2">
+            {t('editor.institution.institution_name_norwegian')}
+          </Typography>
           <Typography paragraph>{institution?.name.nb ?? '-'}</Typography>
 
-          <Typography variant="h3">{t('editor.institution.institution_name_english')}</Typography>
+          <Typography variant="h3" component="h2">
+            {t('editor.institution.institution_name_english')}
+          </Typography>
           <Typography paragraph>{institution?.name.en ?? '-'}</Typography>
 
-          <Typography variant="h3">{t('editor.institution.institution_short_name')}</Typography>
+          <Typography variant="h3" component="h2">
+            {t('editor.institution.institution_short_name')}
+          </Typography>
           <Typography paragraph>{customer?.shortName ?? '-'}</Typography>
 
-          <Typography variant="h3">{t('editor.institution.institution_code')}</Typography>
+          <Typography variant="h3" component="h2">
+            {t('editor.institution.institution_code')}
+          </Typography>
           <Typography paragraph>{institution?.id.split('/').pop() ?? '-'}</Typography>
 
-          <Typography variant="h3">{t('basic_data.institutions.ror')}</Typography>
+          <Typography variant="h3" component="h2">
+            {t('basic_data.institutions.ror')}
+          </Typography>
           <Typography paragraph>
             {customer?.rorId ? (
               <Link href={customer.rorId} target="_blank" rel="noopener noreferrer">
