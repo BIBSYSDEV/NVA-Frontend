@@ -134,7 +134,6 @@ export const CustomerInstitutionMetadataForm = ({
                 <LoadingButton
                   data-testid={dataTestId.institutionAdmin.saveButton}
                   variant="contained"
-                  loadingPosition="start"
                   loading={isSubmitting}
                   type="submit">
                   {editMode ? t('common.save') : t('common.create')}

@@ -45,10 +45,12 @@ export const DatePickerField = () => {
   };
 
   const touchedYear = (
-    (touched.entityDescription as FormikTouched<EntityDescription>)?.date as FormikTouched<RegistrationDate>
+    (touched.entityDescription as unknown as FormikTouched<EntityDescription>)
+      ?.date as unknown as FormikTouched<RegistrationDate>
   )?.year;
   const errorYear = (
-    (errors.entityDescription as FormikErrors<EntityDescription>)?.date as FormikErrors<RegistrationDate>
+    (errors.entityDescription as unknown as FormikErrors<EntityDescription>)
+      ?.date as unknown as FormikErrors<RegistrationDate>
   )?.year;
   const hasError = !!errorYear && touchedYear;
 
