@@ -6,6 +6,7 @@ import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { UserList } from './UserList';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { AddAdminDialog } from './AddAdminDialog';
+import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 
 interface CustomerInstitutionAdminsFormProps {
   admins: InstitutionUser[];
@@ -30,9 +31,11 @@ export const CustomerInstitutionAdminsForm = ({
 
   return (
     <>
-      <Typography variant="h2">{t('basic_data.institutions.administrators')}</Typography>
+      <Typography variant="h2" gutterBottom>
+        {t('basic_data.institutions.administrators')}
+      </Typography>
       {isLoadingUsers ? (
-        <ListSkeleton maxWidth={25} />
+        <ListSkeleton />
       ) : (
         <>
           <UserList
@@ -41,14 +44,15 @@ export const CustomerInstitutionAdminsForm = ({
             refetchUsers={refetchInstitutionUsers}
             tableCaption={t('my_page.roles.institution_admins')}
           />
-          <Button
-            sx={{ mt: '1rem' }}
-            variant="contained"
-            startIcon={<AddIcon />}
-            data-testid="button-open-add-admin"
-            onClick={toggleOpenAddAdminModal}>
-            {addAdminText}
-          </Button>
+          <StyledRightAlignedWrapper>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              data-testid="button-open-add-admin"
+              onClick={toggleOpenAddAdminModal}>
+              {addAdminText}
+            </Button>
+          </StyledRightAlignedWrapper>
           <AddAdminDialog
             open={openAddAdminModal}
             toggleOpen={toggleOpenAddAdminModal}

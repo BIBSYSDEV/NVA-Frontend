@@ -23,10 +23,16 @@ export interface CustomerInstitution extends SimpleCustomerInstitution {
   vocabularies: CustomerVocabulary[];
   publicationWorkflow: PublishStrategy;
   rorId?: string;
-  doiAgent: {
-    name: string;
-    prefix: string;
-  };
+  doiAgent?: DoiAgent;
+}
+
+export interface DoiAgent {
+  name: string;
+  prefix: string;
+}
+
+export interface CustomerInstitutionFormData extends CustomerInstitution {
+  canAssignDoi: boolean;
 }
 
 export enum VocabularyStatus {
@@ -77,6 +83,7 @@ export enum CustomerInstitutionFieldNames {
   Name = 'name',
   RorId = 'rorId',
   ShortName = 'shortName',
+  CanAssignDoi = 'canAssignDoi',
 }
 
 export interface CustomerList {

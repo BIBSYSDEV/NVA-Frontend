@@ -2,12 +2,13 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { Box, TextField } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import {
   CustomerInstitution,
   emptyCustomerInstitution,
   CustomerInstitutionFieldNames,
+  CustomerInstitutionFormData,
 } from '../../../types/customerInstitution.types';
 import { setNotification } from '../../../redux/notificationSlice';
 import { createCustomerInstitution, updateCustomerInstitution } from '../../../api/customerInstitutionsApi';
@@ -33,9 +34,16 @@ export const CustomerInstitutionMetadataForm = ({
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const handleSubmit = async (values: CustomerInstitution) => {
+  const handleSubmit = async (values: CustomerInstitutionFormData) => {
+    const { canAssignDoi, ...rest } = values;
+
+    const customerData: CustomerInstitution = {
+      ...rest,
+      doiAgent: canAssignDoi ? rest.doiAgent : { name: '', prefix: '' },
+    };
+
     if (!editMode) {
-      const createCustomerResponse = await createCustomerInstitution(values);
+      const createCustomerResponse = await createCustomerInstitution(customerData);
       if (isErrorStatus(createCustomerResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_customer'), variant: 'error' }));
       } else if (isSuccessStatus(createCustomerResponse.status)) {
@@ -43,7 +51,7 @@ export const CustomerInstitutionMetadataForm = ({
         dispatch(setNotification({ message: t('feedback.success.created_customer'), variant: 'success' }));
       }
     } else {
-      const updateCustomerResponse = await updateCustomerInstitution(values);
+      const updateCustomerResponse = await updateCustomerInstitution(customerData);
       if (isErrorStatus(updateCustomerResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' }));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
@@ -56,11 +64,15 @@ export const CustomerInstitutionMetadataForm = ({
     <>
       <Formik
         enableReinitialize
-        initialValues={{ ...emptyCustomerInstitution, ...customerInstitution }}
+        initialValues={{
+          ...emptyCustomerInstitution,
+          ...customerInstitution,
+          canAssignDoi: !!customerInstitution.doiAgent?.name || !!customerInstitution.doiAgent?.prefix,
+        }}
         validateOnChange
         validationSchema={customerInstitutionValidationSchema}
         onSubmit={handleSubmit}>
-        {({ isSubmitting, setValues }: FormikProps<CustomerInstitution>) => (
+        {({ values, isSubmitting, setValues }: FormikProps<CustomerInstitutionFormData>) => (
           <Form noValidate>
             <InputContainerBox>
               <Field name={CustomerInstitutionFieldNames.Name}>
@@ -74,6 +86,7 @@ export const CustomerInstitutionMetadataForm = ({
                           [CustomerInstitutionFieldNames.Name]: name,
                           [CustomerInstitutionFieldNames.DisplayName]: name,
                           [CustomerInstitutionFieldNames.CristinId]: selectedInstitution?.id ?? '',
+                          canAssignDoi: values.canAssignDoi,
                         });
                       }}
                       errorMessage={touched && !!error ? error : undefined}
@@ -118,18 +131,33 @@ export const CustomerInstitutionMetadataForm = ({
                 label={t('basic_data.institutions.ror')}
                 dataTestId={dataTestId.institutionAdmin.rorField}
               />
-              <Box sx={{ display: 'flex', gap: '1rem' }}>
-                <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.DoiName}
-                  label={t('basic_data.institutions.doi_name')}
-                  dataTestId={dataTestId.institutionAdmin.dataCiteMemberField}
-                />
-                <CustomerInstitutionTextField
-                  name={CustomerInstitutionFieldNames.DoiPrefix}
-                  label={t('basic_data.institutions.doi_prefix')}
-                  dataTestId={dataTestId.institutionAdmin.doiPrefixField}
-                />
-              </Box>
+
+              <div>
+                <Field name={CustomerInstitutionFieldNames.CanAssignDoi}>
+                  {({ field }: FieldProps<boolean>) => (
+                    <FormControlLabel
+                      label={t('basic_data.institutions.can_assign_doi')}
+                      control={<Checkbox required {...field} checked={field.value} />}
+                    />
+                  )}
+                </Field>
+                {values.canAssignDoi && (
+                  <Box sx={{ display: 'flex', gap: '1rem' }}>
+                    <CustomerInstitutionTextField
+                      required
+                      name={CustomerInstitutionFieldNames.DoiName}
+                      label={t('basic_data.institutions.doi_name')}
+                      dataTestId={dataTestId.institutionAdmin.dataCiteMemberField}
+                    />
+                    <CustomerInstitutionTextField
+                      required
+                      name={CustomerInstitutionFieldNames.DoiPrefix}
+                      label={t('basic_data.institutions.doi_prefix')}
+                      dataTestId={dataTestId.institutionAdmin.doiPrefixField}
+                    />
+                  </Box>
+                )}
+              </div>
               <StyledRightAlignedWrapper>
                 <LoadingButton
                   data-testid={dataTestId.institutionAdmin.saveButton}

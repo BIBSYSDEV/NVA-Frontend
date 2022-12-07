@@ -60,6 +60,7 @@
       "admin_institutions": "Administrer institusjoner",
       "administrators": "Administratorer",
       "archive_name": "Arkivnavn",
+      "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
       "doi_name": "Data Cite Member ID",
       "doi_prefix": "DOI prefiks",
       "display_name": "Visningsnavn på institusjonen",

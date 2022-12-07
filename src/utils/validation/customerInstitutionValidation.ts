@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { CustomerInstitution, CustomerInstitutionFieldNames } from '../../types/customerInstitution.types';
+import { CustomerInstitution, CustomerInstitutionFieldNames, DoiAgent } from '../../types/customerInstitution.types';
 import i18n from '../../translations/i18n';
 import { YupShape } from './validationHelpers';
 
@@ -14,6 +14,12 @@ const customerErrorMessage = {
     field: i18n.t('translation:basic_data.institutions.short_name'),
   }),
   rorInvalid: i18n.t('translation:basic_data.institutions.invalid_ror_format'),
+  doiNameRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:basic_data.institutions.doi_name'),
+  }),
+  doiPrefixRequired: i18n.t('translation:feedback.validation.is_required', {
+    field: i18n.t('translation:basic_data.institutions.doi_prefix'),
+  }),
 };
 
 export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerInstitution>>({
@@ -26,4 +32,13 @@ export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerI
     /^https?:\/\/ror\.org\/([a-z0-9]{9})/,
     customerErrorMessage.rorInvalid
   ),
+  doiAgent: Yup.object()
+    .nullable()
+    .when(CustomerInstitutionFieldNames.CanAssignDoi, {
+      is: true,
+      then: Yup.object<YupShape<DoiAgent>>({
+        name: Yup.string().required(customerErrorMessage.doiNameRequired),
+        prefix: Yup.string().required(customerErrorMessage.doiPrefixRequired),
+      }),
+    }),
 });

@@ -60,6 +60,7 @@
       "admin_institutions": "Administer institutions",
       "administrators": "Administrators",
       "archive_name": "Archive name",
+      "can_assign_doi": "Institution can assign Digital Object Identifier (DOI)",
       "doi_name": "Data Cite Member ID",
       "doi_prefix": "DOI prefix",
       "display_name": "Display name for the institution",
