@@ -61,18 +61,18 @@ export const mainTheme = createTheme(
     typography: {
       h1: {
         fontSize: '1.25rem',
-        fontWeight: 700,
+        fontWeight: 600,
       },
       h2: {
         fontSize: '1rem',
-        fontWeight: 700,
+        fontWeight: 600,
       },
       h3: {
         fontSize: '1rem',
         fontWeight: 700,
       },
       h4: {
-        fontSize: '1rem',
+        fontSize: '0.9rem',
         fontWeight: 400,
       },
       overline: {
@@ -163,8 +163,8 @@ export const mainTheme = createTheme(
             '&.Mui-active': {
               color: Color.StepperBlue,
               fontWeight: 600,
-              borderBottom: '0.06rem solid',
-              mb: '-0.06rem', //prevents text from 'popping'
+              borderBottom: '0.1875rem solid',
+              mb: '-0.1875rem', //prevents text from 'popping'
               boxShadow: '-1px 7px 4px -3px rgba(0,0,0,0.3)',
               opacity: 1,
             },
