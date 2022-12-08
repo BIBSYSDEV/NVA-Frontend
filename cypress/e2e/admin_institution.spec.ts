@@ -21,11 +21,11 @@ describe('User administers institutions ', () => {
 
     cy.get(`[data-testid=${dataTestId.organization.searchField}]`).click({ force: true }).type('sikt');
     cy.get('[class^=MuiAutocomplete-option]').contains('Sikt').click({ force: true });
-    cy.get(`[data-testid=${dataTestId.institutionAdmin.shortNameField}] input`).type('Sikt');
-    cy.get(`[data-testid=${dataTestId.institutionAdmin.archiveNameField}] input`).type('Sikt arkiv');
-    cy.get(`[data-testid=${dataTestId.institutionAdmin.feideField}] input`).type('NO123');
+    cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.shortNameField}] input`).type('Sikt');
+    cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.archiveNameField}] input`).type('Sikt arkiv');
+    cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.feideField}] input`).type('NO123');
 
-    cy.get(`[data-testid=${dataTestId.institutionAdmin.saveButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.saveButton}]`).click({ force: true });
     cy.get('[data-testid=snackbar-success]').contains('Created customer institution');
   });
 
@@ -34,9 +34,9 @@ describe('User administers institutions ', () => {
       `[data-testid=${dataTestId.basicData.customers.editInstitutionButton(mockCustomerInstitution.displayName)}]`
     ).click();
 
-    cy.get(`[data-testid=${dataTestId.institutionAdmin.archiveNameField}] input`).type(' Archive');
+    cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.archiveNameField}] input`).type(' Archive');
 
-    cy.get(`[data-testid=${dataTestId.institutionAdmin.saveButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.saveButton}]`).click({ force: true });
     cy.get('[data-testid=snackbar-success]').contains('Updated customer institution');
   });
 });
