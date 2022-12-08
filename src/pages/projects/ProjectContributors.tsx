@@ -26,17 +26,13 @@ export const ProjectContributors = ({ contributors }: ProjectContributorsProps) 
         <>
           {projectManagers.length > 0 && (
             <div>
-              <Typography variant="overline" component="h3">
-                {t('project.project_manager')}
-              </Typography>
+              <Typography variant="h3">{t('project.project_manager')}</Typography>
               <ContributorList contributors={projectManagers} />
             </div>
           )}
           {projectParticipants.length > 0 && (
             <div>
-              <Typography variant="overline" component="h3">
-                {t('project.project_participants')}
-              </Typography>
+              <Typography variant="h3">{t('project.project_participants')}</Typography>
               <ContributorList contributors={projectParticipants} />
             </div>
           )}
