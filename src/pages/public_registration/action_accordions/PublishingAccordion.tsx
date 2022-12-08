@@ -75,11 +75,8 @@ export const PublishingAccordion = ({
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
       setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      // TODO: Creating PublishingRequest can take some time, so wait 10 sec before refetching
-      setTimeout(() => {
-        dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
-        refetchRegistration();
-      }, 10_000);
+      dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
+      refetchRegistration();
     }
   };
 
@@ -100,19 +97,12 @@ export const PublishingAccordion = ({
         dispatch(setNotification({ message: t('feedback.error.update_publishing_request'), variant: 'error' }));
         setIsLoading(LoadingState.None);
       } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
-        // TODO: Updating status of PublishingRequest can take some time, so wait 10 sec before refetching
-        setTimeout(() => {
-          if (status === 'Completed') {
-            dispatch(
-              setNotification({ message: t('feedback.success.publishing_request_approved'), variant: 'success' })
-            );
-          } else {
-            dispatch(
-              setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' })
-            );
-          }
-          refetchRegistration();
-        }, 10_000);
+        if (status === 'Completed') {
+          dispatch(setNotification({ message: t('feedback.success.publishing_request_approved'), variant: 'success' }));
+        } else {
+          dispatch(setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' }));
+        }
+        refetchRegistration();
       }
     }
   };

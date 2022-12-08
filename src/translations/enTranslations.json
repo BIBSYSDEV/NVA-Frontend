@@ -981,7 +981,6 @@
       "request_doi": "Request a DOI",
       "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated.",
       "reserve_doi": "Reserve a DOI",
-      "reserve_doi_message": "Auto-generated message: User wants to reserve a DOI.",
       "validation_errors": "Validation errors"
     },
     "publication_types": {

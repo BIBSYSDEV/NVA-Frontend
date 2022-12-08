@@ -56,7 +56,7 @@ export const DoiRequestAccordion = ({
 
   const sendDoiRequest = async () => {
     setIsLoading(LoadingState.RequestDoi);
-    const message = isPublishedRegistration ? messageToCurator : t('registration.public_page.reserve_doi_message');
+    const message = isPublishedRegistration ? messageToCurator : '';
 
     const createDoiRequestResponse = await createTicket(registration.id, 'DoiRequest');
     if (isErrorStatus(createDoiRequestResponse.status)) {
@@ -69,14 +69,12 @@ export const DoiRequestAccordion = ({
         await addTicketMessage(ticketId, message);
         // No need to show potential error message, since Ticket with actual DoiRequest is created anyway
       }
-      // TODO: Adding DOI can take some extra time, so wait 10 sec before refetching
-      setTimeout(() => {
-        if (openRequestDoiModal) {
-          toggleRequestDoiModal();
-        }
-        dispatch(setNotification({ message: t('feedback.success.doi_request_sent'), variant: 'success' }));
-        refetchRegistration();
-      }, 10_000);
+
+      if (openRequestDoiModal) {
+        toggleRequestDoiModal();
+      }
+      dispatch(setNotification({ message: t('feedback.success.doi_request_sent'), variant: 'success' }));
+      refetchRegistration();
     }
   };
 
@@ -93,11 +91,8 @@ export const DoiRequestAccordion = ({
         dispatch(setNotification({ message: t('feedback.error.update_doi_request'), variant: 'error' }));
         setIsLoading(LoadingState.None);
       } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
-        // TODO: Adding DOI can take some extra time, so wait 10 sec before refetching
-        setTimeout(() => {
-          dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
-          refetchRegistration();
-        }, 10_000);
+        dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
+        refetchRegistration();
       }
     }
   };
