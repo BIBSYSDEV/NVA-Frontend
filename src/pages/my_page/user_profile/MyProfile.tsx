@@ -7,6 +7,7 @@ import { UserInfo } from './UserInfo';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
 import { UserAffiliations } from './UserAffiliations';
+import { ResearchProfileSummary } from './ResearchProfileSummary';
 
 export const MyProfile = () => {
   const { t } = useTranslation();
@@ -23,10 +24,10 @@ export const MyProfile = () => {
           display: 'grid',
           columnGap: '3rem',
           gridTemplateAreas: {
-            xs: '"primary-info" "roles"',
-            md: '"roles primary-info"',
+            xs: '"primary-info" "roles" "summary"',
+            md: '"roles primary-info summary"',
           },
-          gridTemplateColumns: { xs: '1fr', md: '1fr 3fr' },
+          gridTemplateColumns: { xs: '1fr', md: '1fr 2fr 1fr' },
         }}>
         <Box sx={{ gridArea: 'roles' }}>
           <UserRoles user={user} />
@@ -38,6 +39,9 @@ export const MyProfile = () => {
           <UserOrcid user={user} />
           <Divider />
           <UserAffiliations user={user} />
+        </Box>
+        <Box sx={{ gridArea: 'summary' }}>
+          <ResearchProfileSummary />
         </Box>
       </Box>
     </>
