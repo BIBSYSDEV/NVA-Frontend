@@ -15,7 +15,7 @@ interface MenuProps {
 
 export const Menu = ({ handleLogout }: MenuProps) => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
+  const { user, customer } = useSelector((store: RootState) => store);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const name = user?.givenName ?? '';
@@ -64,7 +64,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.Editor}>
-              <Typography>{user.customerShortName}</Typography>
+              <Typography>{customer?.shortName}</Typography>
             </MenuItem>
           ),
           user?.isCurator && (

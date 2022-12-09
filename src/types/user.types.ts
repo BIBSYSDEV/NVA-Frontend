@@ -13,7 +13,6 @@ export interface User {
   createdDate?: string;
   cristinId?: string;
   customerId?: string;
-  customerShortName?: string;
   topOrgCristinId?: string;
   familyName: string;
   givenName: string;
