@@ -49,7 +49,7 @@
     "deepmerge": "^4.2.2",
     "formik": "^2.2.9",
     "i18n-iso-countries": "^7.5.0",
-    "i18next": "^22.1.4",
+    "i18next": "^22.1.5",
     "i18next-browser-languagedetector": "^7.0.1",
     "isbn-utils": "^1.1.0",
     "nva-language": "^1.0.15",
