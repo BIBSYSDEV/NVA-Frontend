@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
@@ -22,6 +22,7 @@ import { createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
+import { RootState } from '../../../redux/store';
 
 interface PublishingAccordionProps extends ActionPanelProps {
   publishingRequestTicket: Ticket | null;
@@ -43,6 +44,7 @@ export const PublishingAccordion = ({
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const customer = useSelector((store: RootState) => store.customer);
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
@@ -141,13 +143,34 @@ export const PublishingAccordion = ({
         )}
 
         {isPendingPublishingRequest && (
-          <Typography paragraph>{t('registration.public_page.has_pending_publishing_request')}</Typography>
+          <Typography paragraph>
+            {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles'
+              ? 'Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.'
+              : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly'
+              ? 'Metadata er synlig for andre brukere, men en kurator må godkjenne filene som er lastet opp før de blir synlige. Gå til Meldinger for å se oppdatert status.'
+              : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles'
+              ? 'En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere.'
+              : null}
+          </Typography>
         )}
 
-        {registration.status === RegistrationStatus.Draft && registrationIsValid && (
+        {!isPendingPublishingRequest && registration.status === RegistrationStatus.Draft && registrationIsValid && (
           <>
-            <Typography>{t('registration.public_page.ready_to_be_published')}</Typography>
-            <Typography gutterBottom>{t('registration.public_page.ready_to_be_published_description')}</Typography>
+            {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
+              <Typography>
+                Du kan publisere registreringen på egen hånd. Innholdet vil da bli synlig for andre brukere.
+              </Typography>
+            ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
+              <Typography>
+                Du kan publisere metadata selv, men en kurator må godkjenne filene som er lastet opp før de kan vises
+                til andre brukere.
+              </Typography>
+            ) : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles' ? (
+              <Typography>
+                En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere.
+              </Typography>
+            ) : null}
+            <Typography>Se over utkast før du går videre.</Typography>
           </>
         )}
 
@@ -172,10 +195,13 @@ export const PublishingAccordion = ({
                 loadingPosition="end"
                 onClick={onClickPublish}
                 loading={isLoading === LoadingState.CreatePublishingREquest}>
-                {t('common.publish')}
+                {customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles'
+                  ? 'Be om publisering'
+                  : t('common.publish')}
               </LoadingButton>
             ) : (
-              userIsCurator && (
+              userIsCurator &&
+              customer?.publicationWorkflow !== 'RegistratorPublishesMetadataAndFiles' && (
                 <>
                   <LoadingButton
                     variant="contained"

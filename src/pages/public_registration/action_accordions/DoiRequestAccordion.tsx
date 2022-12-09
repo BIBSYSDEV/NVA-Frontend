@@ -104,7 +104,13 @@ export const DoiRequestAccordion = ({
       </AccordionSummary>
       <AccordionDetails>
         {isPendingDoiRequest && (
-          <Typography paragraph>{t('registration.public_page.has_pending_doi_request')}</Typography>
+          <Typography paragraph>
+            {registration.status === RegistrationStatus.Published
+              ? 'Registreringen har en DOI-forespørsel til behandling for kurator. Gå til Meldinger for å se oppdatert status.'
+              : registration.status === RegistrationStatus.Draft
+              ? 'Registreringen har en DOI-forespørsel som vil behandles av en kurator etter at registreringen publiseres.'
+              : null}
+          </Typography>
         )}
 
         {!doiRequestTicket && !registration.doi && (

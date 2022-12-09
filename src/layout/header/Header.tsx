@@ -17,8 +17,8 @@ import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
-import { setPartialUser } from '../../redux/userSlice';
 import { MenuButton } from './MenuButton';
+import { setCustomer } from '../../redux/customerReducer';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ export const Header = () => {
 
   useEffect(() => {
     if (customer) {
-      dispatch(setPartialUser({ customerShortName: customer.shortName }));
+      dispatch(setCustomer(customer));
     }
   }, [dispatch, customer]);
 
@@ -115,11 +115,11 @@ export const Header = () => {
                     component={RouterLink}
                     data-testid={dataTestId.header.editorLink}
                     to={UrlPathTemplate.Editor}>
-                    {user?.customerShortName}
+                    {customer.shortName}
                   </Button>
                 ) : (
                   <Typography variant="button" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
-                    {user?.customerShortName}
+                    {customer.shortName}
                   </Typography>
                 ))}
               <Divider
