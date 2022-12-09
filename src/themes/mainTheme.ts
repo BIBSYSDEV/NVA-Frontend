@@ -62,18 +62,18 @@ export const mainTheme = createTheme(
     typography: {
       h1: {
         fontSize: '1.25rem',
-        fontWeight: 700,
+        fontWeight: 600,
       },
       h2: {
         fontSize: '1rem',
-        fontWeight: 700,
+        fontWeight: 600,
       },
       h3: {
         fontSize: '1rem',
         fontWeight: 700,
       },
       h4: {
-        fontSize: '1rem',
+        fontSize: '0.9rem',
         fontWeight: 400,
       },
       overline: {
