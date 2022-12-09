@@ -40,6 +40,7 @@ export const MyProfile = () => {
           <Divider />
           <UserAffiliations user={user} />
         </Box>
+
         <Box sx={{ gridArea: 'summary' }}>
           <ResearchProfileSummary />
         </Box>
