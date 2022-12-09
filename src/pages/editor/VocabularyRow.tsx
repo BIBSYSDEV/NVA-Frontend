@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
 import { getTranslatedVocabularyName } from './VocabularySettings';
 
-const toggleButtonSx: SxProps = { width: '6rem' };
+const toggleButtonSx: SxProps = { width: 'fit-content', px: '1rem' };
 
 interface VocabularyRowProps {
   vocabulary: CustomerVocabulary;
@@ -33,7 +33,7 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
         disabled={disabled || isUpdating}
         value={isUpdating ? null : vocabulary.status}
         exclusive
-        onChange={async (event, value) => {
+        onChange={async (_, value) => {
           if (value) {
             setIsUpdating(true);
             await updateVocabularies({ ...vocabulary, status: value });

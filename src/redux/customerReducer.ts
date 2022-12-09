@@ -11,8 +11,16 @@ const customerSlice = createSlice({
       state = action.payload;
       return state;
     },
+    setPartialCustomer: (state, action: PayloadAction<Partial<CustomerInstitution>>) => {
+      if (!state) {
+        state = null;
+      } else {
+        state = { ...state, ...action.payload };
+      }
+      return state;
+    },
   },
 });
 
-export const { setCustomer } = customerSlice.actions;
+export const { setCustomer, setPartialCustomer } = customerSlice.actions;
 export default customerSlice.reducer;
