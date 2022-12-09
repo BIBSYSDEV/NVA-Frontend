@@ -74,7 +74,7 @@ export const Header = () => {
           <Button
             sx={{
               gridArea: 'new-result',
-              fontSize: '1.1rem',
+              fontSize: '1rem',
               fontWeight: 700,
               gap: '0.5rem',
               display: { xs: 'none', md: 'inline-flex' },
