@@ -25,7 +25,7 @@ import { RootState } from '../../../redux/store';
 
 interface PublishingAccordionProps {
   registration: Registration;
-  refetchRegistration: () => void;
+  refetchData: () => void;
   publishingRequestTicket: Ticket | null;
   userIsCurator: boolean;
 }
@@ -40,7 +40,7 @@ enum LoadingState {
 export const PublishingAccordion = ({
   publishingRequestTicket,
   registration,
-  refetchRegistration,
+  refetchData,
   userIsCurator,
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
@@ -79,7 +79,7 @@ export const PublishingAccordion = ({
       setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
-      refetchRegistration();
+      refetchData();
     }
   };
 
@@ -105,7 +105,7 @@ export const PublishingAccordion = ({
         } else {
           dispatch(setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' }));
         }
-        refetchRegistration();
+        refetchData();
       }
     }
   };

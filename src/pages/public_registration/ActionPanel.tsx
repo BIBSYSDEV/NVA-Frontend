@@ -11,11 +11,7 @@ import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
-export interface ActionPanelProps extends PublicRegistrationContentProps {
-  refetchRegistration: () => void;
-}
-
-export const ActionPanel = ({ registration, refetchRegistration, tickets }: ActionPanelProps) => {
+export const ActionPanel = ({ registration, tickets, refetchData }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const userIsCurator = userIsCuratorForRegistration(user, registration);
@@ -33,7 +29,7 @@ export const ActionPanel = ({ registration, refetchRegistration, tickets }: Acti
       <BackgroundDiv>
         <ErrorBoundary>
           <PublishingAccordion
-            refetchRegistration={refetchRegistration}
+            refetchData={refetchData}
             registration={registration}
             publishingRequestTicket={publishingRequestTicket}
             userIsCurator={userIsCurator}
@@ -44,7 +40,7 @@ export const ActionPanel = ({ registration, refetchRegistration, tickets }: Acti
             !registration.associatedArtifacts.some(associatedArtifactIsLink) &&
             doiRequestTicket?.status !== 'Completed' && (
               <DoiRequestAccordion
-                refetchRegistration={refetchRegistration}
+                refetchData={refetchData}
                 registration={registration}
                 doiRequestTicket={doiRequestTicket}
                 userIsCurator={userIsCurator}

@@ -1,17 +1,21 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Box, Link, Typography } from '@mui/material';
+import { Box, Button, Link, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { RootState } from '../../redux/store';
-import { Registration } from '../../types/registration.types';
+import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getAssociatedLinks, userCanEditRegistration } from '../../utils/registration-helpers';
+import { Ticket } from '../../types/publication_types/messages.types';
 
 interface PublicDoiProps {
   registration: Registration;
+  doiRequest?: Ticket;
+  refetchData: () => void;
 }
 
-export const PublicDoi = ({ registration }: PublicDoiProps) => {
+export const PublicDoi = ({ registration, doiRequest, refetchData }: PublicDoiProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [nvaDoiIsFindable, setNvaDoiIsFindable] = useState<boolean>();
@@ -43,7 +47,7 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
   const canSeeDraftDoi = userCanEditRegistration(user, registration);
   const canSeeNvaDoi = nvaDoi && (nvaDoiIsFindable || canSeeDraftDoi);
 
-  return !originalDoi && !associatedLink && !canSeeNvaDoi ? null : (
+  return (
     <>
       {(originalDoi || associatedLink) && (
         <>
@@ -70,13 +74,23 @@ export const PublicDoi = ({ registration }: PublicDoiProps) => {
               rel="noopener noreferrer">
               {nvaDoi}
             </Link>
-            {nvaDoiIsFindable === false && ( // Note: Must check explicitly for false, since it is undefined initially
-              <Box component="span" sx={{ ml: '0.5rem' }}>
-                ({t('registration.public_page.in_progress')})
-              </Box>
-            )}
+            {canSeeDraftDoi &&
+              nvaDoiIsFindable === false && ( // Note: Must check explicitly for false, since it is undefined initially
+                <Box component="span" sx={{ ml: '0.5rem' }}>
+                  (
+                  {registration.status === RegistrationStatus.Published
+                    ? t('registration.public_page.in_progress')
+                    : 'Reservert DOI'}
+                  )
+                </Box>
+              )}
           </Typography>
         </>
+      )}
+      {canSeeDraftDoi && !nvaDoi && doiRequest?.status === 'Pending' && (
+        <Button variant="outlined" size="small" onClick={refetchData} startIcon={<RefreshIcon />} sx={{ my: '0.5rem' }}>
+          Last inn på nytt for å se reservert DOI
+        </Button>
       )}
     </>
   );

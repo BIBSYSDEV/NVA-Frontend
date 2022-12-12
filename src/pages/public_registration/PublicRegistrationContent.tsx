@@ -33,9 +33,10 @@ import { Ticket } from '../../types/publication_types/messages.types';
 export interface PublicRegistrationContentProps {
   registration: Registration;
   tickets: Ticket[];
+  refetchData: () => void;
 }
 
-export const PublicRegistrationContent = ({ registration }: PublicRegistrationContentProps) => {
+export const PublicRegistrationContent = ({ registration, tickets, refetchData }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -85,7 +86,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           />
         )}
 
-        <PublicGeneralContent registration={registration} />
+        <PublicGeneralContent registration={registration} tickets={tickets} refetchData={refetchData} />
 
         {!isResearchData(entityDescription?.reference?.publicationInstance.type) && (
           <FilesLandingPageAccordion registration={registration} />

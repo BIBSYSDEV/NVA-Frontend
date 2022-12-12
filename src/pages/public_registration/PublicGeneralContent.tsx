@@ -68,8 +68,15 @@ import {
 } from '../../types/publication_types/mediaContributionRegistration.types';
 import { MapPublicationContext } from '../../types/publication_types/otherRegistration.types';
 import { Registration } from '../../types/registration.types';
+import { Ticket } from '../../types/publication_types/messages.types';
 
-export const PublicGeneralContent = ({ registration }: { registration: Registration }) => {
+interface PublicGeneralContentProps {
+  registration: Registration;
+  tickets: Ticket[];
+  refetchData: () => void;
+}
+
+export const PublicGeneralContent = ({ registration, tickets, refetchData }: PublicGeneralContentProps) => {
   const { t, i18n } = useTranslation();
   const { entityDescription } = registration;
 
@@ -146,7 +153,11 @@ export const PublicGeneralContent = ({ registration }: { registration: Registrat
             />
           ) : null)}
 
-        <PublicDoi registration={registration} />
+        <PublicDoi
+          registration={registration}
+          doiRequest={tickets.find((ticket) => ticket.type === 'DoiRequest')}
+          refetchData={refetchData}
+        />
       </div>
 
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>

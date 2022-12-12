@@ -26,7 +26,7 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 
 interface DoiRequestAccordionProps {
   registration: Registration;
-  refetchRegistration: () => void;
+  refetchData: () => void;
   doiRequestTicket: Ticket | null;
   userIsCurator: boolean;
 }
@@ -41,7 +41,7 @@ enum LoadingState {
 export const DoiRequestAccordion = ({
   registration,
   doiRequestTicket,
-  refetchRegistration,
+  refetchData,
   userIsCurator,
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
@@ -75,7 +75,7 @@ export const DoiRequestAccordion = ({
         toggleRequestDoiModal();
       }
       dispatch(setNotification({ message: t('feedback.success.doi_request_sent'), variant: 'success' }));
-      refetchRegistration();
+      refetchData();
     }
   };
 
@@ -93,7 +93,7 @@ export const DoiRequestAccordion = ({
         setIsLoading(LoadingState.None);
       } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
-        refetchRegistration();
+        refetchData();
       }
     }
   };

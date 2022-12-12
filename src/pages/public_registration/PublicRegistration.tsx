@@ -30,11 +30,17 @@ const PublicRegistration = () => {
   const isRegistrationAdmin = !!registration && userCanEditRegistration(user, registration);
   const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
 
-  const [registrationTicketCollection, isLoadingRegistrationTicketCollection] = useFetch<TicketCollection>({
-    url: isRegistrationAdmin ? `${registration.id}/tickets` : '',
-    withAuthentication: true,
-    errorMessage: t('feedback.error.get_tickets'),
-  });
+  const [registrationTicketCollection, isLoadingRegistrationTicketCollection, refetchTickets] =
+    useFetch<TicketCollection>({
+      url: isRegistrationAdmin ? `${registration.id}/tickets` : '',
+      withAuthentication: true,
+      errorMessage: t('feedback.error.get_tickets'),
+    });
+
+  const refetchData = () => {
+    refetchRegistration();
+    refetchTickets();
+  };
 
   return (
     <SyledPageContent>
@@ -54,13 +60,14 @@ const PublicRegistration = () => {
               {isRegistrationAdmin && (
                 <ActionPanel
                   registration={registration}
-                  refetchRegistration={refetchRegistration}
+                  refetchData={refetchData}
                   tickets={registrationTicketCollection?.tickets ?? []}
                 />
               )}
               <PublicRegistrationContent
                 registration={registration}
                 tickets={registrationTicketCollection?.tickets ?? []}
+                refetchData={refetchData}
               />
             </Box>
           </ErrorBoundary>
