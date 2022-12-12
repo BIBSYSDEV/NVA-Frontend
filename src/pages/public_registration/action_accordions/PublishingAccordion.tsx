@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -143,17 +144,26 @@ export const PublishingAccordion = ({
           />
         )}
 
-        {isPendingPublishingRequest && (
-          <Typography paragraph>
-            {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles'
-              ? 'Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.'
-              : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly'
-              ? 'Metadata er synlig for andre brukere, men en kurator må godkjenne filene som er lastet opp før de blir synlige. Gå til Meldinger for å se oppdatert status.'
-              : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles'
-              ? 'En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere.'
-              : null}
-          </Typography>
-        )}
+        {isPendingPublishingRequest &&
+          (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
+            <>
+              <Typography gutterBottom>
+                Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.
+              </Typography>
+              <Button variant="outlined" onClick={refetchData} startIcon={<RefreshIcon />}>
+                Last på nytt
+              </Button>
+            </>
+          ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
+            <Typography paragraph>
+              Metadata er synlig for andre brukere, men en kurator må godkjenne filene som er lastet opp før de blir
+              synlige. Gå til Meldinger for å se oppdatert status.
+            </Typography>
+          ) : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles' ? (
+            <Typography paragraph>
+              En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere.
+            </Typography>
+          ) : null)}
 
         {!isPendingPublishingRequest && registration.status === RegistrationStatus.Draft && registrationIsValid && (
           <>

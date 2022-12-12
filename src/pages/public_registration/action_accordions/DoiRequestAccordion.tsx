@@ -16,6 +16,7 @@ import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { Ticket, TicketStatus } from '../../../types/publication_types/messages.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { Modal } from '../../../components/Modal';
@@ -99,19 +100,37 @@ export const DoiRequestAccordion = ({
   };
 
   return (
-    <Accordion data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion} elevation={3}>
+    <Accordion
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
+      elevation={3}
+      defaultExpanded={isPendingDoiRequest && !registration.doi}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('common.doi_long')}
       </AccordionSummary>
       <AccordionDetails>
         {isPendingDoiRequest && (
-          <Typography paragraph>
-            {registration.status === RegistrationStatus.Published
-              ? 'Registreringen har en DOI-forespørsel til behandling for kurator. Gå til Meldinger for å se oppdatert status.'
-              : registration.status === RegistrationStatus.Draft
-              ? 'Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.'
-              : null}
-          </Typography>
+          <>
+            <Typography paragraph>
+              {registration.status === RegistrationStatus.Published
+                ? 'Registreringen har en DOI-forespørsel til behandling for kurator. Gå til Meldinger for å se oppdatert status.'
+                : registration.status === RegistrationStatus.Draft
+                ? 'Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.'
+                : null}
+            </Typography>
+            {!registration.doi && (
+              <>
+                <Typography gutterBottom>
+                  Det kan ta litt tid før reservert DOI vises. Last innholdet på nytt for å sjekke igjen.
+                </Typography>
+                <Button variant="outlined" onClick={refetchData} startIcon={<RefreshIcon />}>
+                  Last på nytt
+                </Button>
+              </>
+            )}
+          </>
+        )}
+        {doiRequestTicket?.status === 'Closed' && (
+          <Typography paragraph>Registreringen har en avslått DOI-forespørsel.</Typography>
         )}
 
         {!doiRequestTicket && !registration.doi && (
