@@ -13,7 +13,7 @@ import { EditorInstitution } from './EditorInstitution';
 import {
   LinkButton,
   NavigationList,
-  SideNav,
+  SidePanel,
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
@@ -34,7 +34,7 @@ const EditorPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SideNav aria-labelledby="editor-title">
+      <SidePanel aria-labelledby="editor-title">
         <SideNavHeader text={customerShortName} id="editor-title" icon={StoreIcon} />
 
         <NavigationList>
@@ -63,7 +63,7 @@ const EditorPage = () => {
             {t('editor.curators.areas_of_responsibility')}
           </LinkButton>
         </NavigationList>
-      </SideNav>
+      </SidePanel>
       <BackgroundDiv>
         <Switch>
           <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />

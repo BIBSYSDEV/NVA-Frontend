@@ -56,10 +56,14 @@ export const SearchBar = () => {
       <FieldArray name="properties">
         {({ push, remove }: FieldArrayRenderProps) => (
           <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {properties.map((_, index) => (
+            {properties.map((property, index) => (
               <AdvancedSearchRow
                 key={index}
-                removeFilter={() => remove(index)}
+                propertySearchItem={property}
+                removeFilter={() => {
+                  remove(index);
+                  submitForm();
+                }}
                 baseFieldName={`properties[${index}]`}
               />
             ))}
