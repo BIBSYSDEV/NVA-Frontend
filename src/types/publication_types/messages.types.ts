@@ -4,7 +4,7 @@ export interface Message {
   sender: string;
   owner: string;
   text: string;
-  date: string;
+  createdDate: string;
   recipient: string;
 }
 
@@ -13,7 +13,7 @@ export interface TicketCollection {
   tickets: Ticket[];
 }
 
-export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest' | 'GeneralSupportRequest'; // TODO: remove duplicated Support when search and publication api returns same
+export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest';
 export type TicketStatus = 'Pending' | 'Closed' | 'Completed';
 
 export interface Ticket {

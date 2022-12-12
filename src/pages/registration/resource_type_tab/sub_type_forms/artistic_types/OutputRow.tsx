@@ -2,7 +2,7 @@ import { TableRow, TableCell, Typography, Button, Tooltip, Box } from '@mui/mate
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import {
@@ -131,7 +131,7 @@ export const OutputRow = ({
         <Button onClick={() => setOpenEditItem(true)} variant="outlined" sx={{ mr: '1rem' }} startIcon={<EditIcon />}>
           {t('common.show')}/{t('common.edit')}
         </Button>
-        <Button onClick={() => setOpenRemoveItem(true)} variant="outlined" color="error" startIcon={<DeleteIcon />}>
+        <Button onClick={() => setOpenRemoveItem(true)} variant="outlined" color="error" startIcon={<CancelIcon />}>
           {t('common.remove')}
         </Button>
       </TableCell>

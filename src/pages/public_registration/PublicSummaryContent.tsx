@@ -37,7 +37,7 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
           )}
           {entityDescription.description && (
             <>
-              <Typography variant="overline" component="h3" color="primary">
+              <Typography variant="h3" color="primary">
                 {t('common.description')}
               </Typography>
               <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
@@ -77,7 +77,7 @@ const TagsList = ({ title, values }: TagsListProps) => (
       alignItems: 'center',
       marginBottom: '0.5rem',
     }}>
-    <Typography variant="overline" component="h3" color="primary">
+    <Typography variant="h3" color="primary">
       {title}
     </Typography>
     <Box

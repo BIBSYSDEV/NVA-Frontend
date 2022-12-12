@@ -13,6 +13,8 @@ enum Color {
   SecondaryDark = '#EDE2C7',
   SuccessMain = '#025810',
   InfoMain = '#4367F6',
+  InfoLight = '#C2D3EA',
+  StepperBlue = '#0D4DAD',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
 }
@@ -47,6 +49,10 @@ export const mainTheme = createTheme(
       success: {
         main: Color.SuccessMain,
       },
+      info: {
+        main: Color.InfoMain,
+        light: Color.InfoLight,
+      },
       background: {
         default: Color.White,
         paper: Color.SecondaryLight,
@@ -55,19 +61,18 @@ export const mainTheme = createTheme(
     typography: {
       h1: {
         fontSize: '1.25rem',
-        fontWeight: 700,
+        fontWeight: 600,
       },
       h2: {
         fontSize: '1rem',
-        fontWeight: 700,
+        fontWeight: 600,
       },
       h3: {
         fontSize: '1rem',
         fontWeight: 700,
-        textTransform: 'uppercase',
       },
       h4: {
-        fontSize: '1rem',
+        fontSize: '0.9rem',
         fontWeight: 400,
       },
       overline: {
@@ -134,30 +139,40 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiStepIcon: {
+        styleOverrides: {
+          root: {
+            fill: Color.StepperBlue,
+            opacity: 0.6,
+            '&.Mui-active': {
+              opacity: 1,
+            },
+            '&.Mui-error': {
+              fill: Color.ErrorMain,
+            },
+          },
+        },
+      },
       MuiStepLabel: {
         styleOverrides: {
           label: {
             opacity: 0.6,
             textTransform: 'uppercase',
             fontSize: '1rem',
-            color: Color.PrimaryMain,
+            color: Color.StepperBlue,
             '&.Mui-active': {
-              color: Color.PrimaryMain,
+              color: Color.StepperBlue,
               fontWeight: 600,
+              borderBottom: '0.1875rem solid',
+              mb: '-0.1875rem', //prevents text from 'popping'
+              boxShadow: '-1px 7px 4px -3px rgba(0,0,0,0.3)',
               opacity: 1,
             },
             '&.Mui-completed': {
-              color: Color.PrimaryMain,
+              color: Color.StepperBlue,
             },
             '&.Mui-error': {
               color: Color.ErrorMain,
-            },
-          },
-          iconContainer: {
-            opacity: 0.6,
-            color: Color.PrimaryMain,
-            '&.Mui-active': {
-              opacity: 1,
             },
           },
         },
@@ -214,6 +229,13 @@ export const mainTheme = createTheme(
           },
           gutters: {
             paddingRight: '2rem',
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            borderRadius: '0.25rem',
           },
         },
       },

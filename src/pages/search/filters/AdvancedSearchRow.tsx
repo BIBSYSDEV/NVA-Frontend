@@ -8,12 +8,8 @@ import {
   ContributorFieldNames,
   SpecificContributorFieldNames,
 } from '../../../types/publicationFieldNames';
-import { ExpressionStatement } from '../../../utils/searchHelpers';
-
-interface AdvancedSearchRowProps {
-  baseFieldName: string;
-  removeFilter: () => void;
-}
+import { PublicationInstanceType } from '../../../types/registration.types';
+import { ExpressionStatement, PropertySearch } from '../../../utils/searchHelpers';
 
 interface FilterItem {
   field: string;
@@ -23,7 +19,7 @@ interface FilterItem {
 export const registrationFilters: FilterItem[] = [
   { field: DescriptionFieldNames.Title, i18nKey: 'common.title' },
   { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract' },
-  { field: ResourceFieldNames.SubType, i18nKey: 'search.registration_type' },
+  { field: ResourceFieldNames.SubType, i18nKey: 'registration.resource_type.resource_type' },
   { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords' },
   {
     field: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`,
@@ -32,7 +28,13 @@ export const registrationFilters: FilterItem[] = [
   { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'registration.year_published' },
 ];
 
-export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearchRowProps) => {
+interface AdvancedSearchRowProps {
+  baseFieldName: string;
+  removeFilter: () => void;
+  propertySearchItem: PropertySearch;
+}
+
+export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchItem }: AdvancedSearchRowProps) => {
   const { t } = useTranslation();
 
   return (
@@ -58,7 +60,17 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
       </Field>
       <Field name={`${baseFieldName}.value`}>
         {({ field }: FieldProps<string>) => (
-          <TextField {...field} variant="outlined" label={t('search.search_term_label')} />
+          <TextField
+            {...field}
+            disabled={propertySearchItem.fieldName === ResourceFieldNames.SubType}
+            value={
+              propertySearchItem.value && propertySearchItem.fieldName === ResourceFieldNames.SubType
+                ? t(`registration.publication_types.${propertySearchItem.value as PublicationInstanceType}`)
+                : field.value
+            }
+            variant="outlined"
+            label={t('search.search_term_label')}
+          />
         )}
       </Field>
       <Button onClick={removeFilter} color="error">

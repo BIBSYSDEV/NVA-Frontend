@@ -37,7 +37,7 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
       dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
       const newMessage: Message = {
         ...messagesCopy[0],
-        date: new Date().toString(),
+        createdDate: new Date().toString(),
         sender: username ?? '',
         text: message,
       };
@@ -63,7 +63,7 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
             sx={{ gridArea: 'type', fontWeight: 'bold' }}>
             {ticket.type === 'DoiRequest'
               ? t('my_page.messages.types.doi')
-              : ticket.type === 'GeneralSupportCase' || ticket.type === 'GeneralSupportRequest'
+              : ticket.type === 'GeneralSupportCase'
               ? t('my_page.messages.types.support')
               : ticket.type === 'PublishingRequest'
               ? t('my_page.messages.types.publishing_request')
