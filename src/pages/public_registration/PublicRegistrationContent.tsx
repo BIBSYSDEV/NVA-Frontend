@@ -28,9 +28,11 @@ import { RootState } from '../../redux/store';
 import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
+import { Ticket } from '../../types/publication_types/messages.types';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
+  tickets: Ticket[];
 }
 
 export const PublicRegistrationContent = ({ registration }: PublicRegistrationContentProps) => {

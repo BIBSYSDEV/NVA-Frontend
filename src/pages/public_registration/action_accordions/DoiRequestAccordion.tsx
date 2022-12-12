@@ -22,10 +22,11 @@ import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
 import { addTicketMessage, createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { RegistrationStatus } from '../../../types/registration.types';
-import { ActionPanelProps } from '../ActionPanel';
+import { Registration, RegistrationStatus } from '../../../types/registration.types';
 
-interface DoiRequestAccordionProps extends ActionPanelProps {
+interface DoiRequestAccordionProps {
+  registration: Registration;
+  refetchRegistration: () => void;
   doiRequestTicket: Ticket | null;
   userIsCurator: boolean;
 }
@@ -108,7 +109,7 @@ export const DoiRequestAccordion = ({
             {registration.status === RegistrationStatus.Published
               ? 'Registreringen har en DOI-forespørsel til behandling for kurator. Gå til Meldinger for å se oppdatert status.'
               : registration.status === RegistrationStatus.Draft
-              ? 'Registreringen har en DOI-forespørsel som vil behandles av en kurator etter at registreringen publiseres.'
+              ? 'Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.'
               : null}
           </Typography>
         )}

@@ -15,22 +15,32 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RegistrationParams } from '../../utils/urlPaths';
 import { SyledPageContent } from '../../components/styled/Wrappers';
 import { ActionPanel } from './ActionPanel';
+import { TicketCollection } from '../../types/publication_types/messages.types';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
   const { identifier } = useParams<RegistrationParams>();
+  const user = useSelector((store: RootState) => store.user);
+
   const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
     errorMessage: t('feedback.error.get_registration'),
   });
-  const user = useSelector((store: RootState) => store.user);
 
   const isRegistrationAdmin = !!registration && userCanEditRegistration(user, registration);
   const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
 
+  const [registrationTicketCollection, isLoadingRegistrationTicketCollection] = useFetch<TicketCollection>({
+    url: isRegistrationAdmin ? `${registration.id}/tickets` : '',
+    withAuthentication: true,
+    errorMessage: t('feedback.error.get_tickets'),
+  });
+
   return (
     <SyledPageContent>
-      {isLoadingRegistration ? (
+      {isLoadingRegistration ||
+      isLoadingRegistrationTicketCollection ||
+      (isRegistrationAdmin && !registrationTicketCollection) ? (
         <PageSpinner aria-label={t('common.registration')} />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
@@ -42,9 +52,16 @@ const PublicRegistration = () => {
                 gap: '1rem',
               }}>
               {isRegistrationAdmin && (
-                <ActionPanel registration={registration} refetchRegistration={refetchRegistration} />
+                <ActionPanel
+                  registration={registration}
+                  refetchRegistration={refetchRegistration}
+                  tickets={registrationTicketCollection?.tickets ?? []}
+                />
               )}
-              <PublicRegistrationContent registration={registration} />
+              <PublicRegistrationContent
+                registration={registration}
+                tickets={registrationTicketCollection?.tickets ?? []}
+              />
             </Box>
           </ErrorBoundary>
         ) : (

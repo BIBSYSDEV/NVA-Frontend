@@ -3,15 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { RootState } from '../../../redux/store';
-import { RegistrationStatus } from '../../../types/registration.types';
+import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getAssociatedFiles, userCanEditRegistration } from '../../../utils/registration-helpers';
-import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 
 const maxFileSizeForPreview = 10_000_000; //10 MB
 
-export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationContentProps) => {
+export const FilesLandingPageAccordion = ({ registration }: { registration: Registration }) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 

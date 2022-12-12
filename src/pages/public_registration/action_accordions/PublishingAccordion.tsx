@@ -16,7 +16,6 @@ import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { ErrorList } from '../../registration/ErrorList';
 import { Ticket, TicketStatus } from '../../../types/publication_types/messages.types';
-import { ActionPanelProps } from '../ActionPanel';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -24,7 +23,9 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { RootState } from '../../../redux/store';
 
-interface PublishingAccordionProps extends ActionPanelProps {
+interface PublishingAccordionProps {
+  registration: Registration;
+  refetchRegistration: () => void;
   publishingRequestTicket: Ticket | null;
   userIsCurator: boolean;
 }
