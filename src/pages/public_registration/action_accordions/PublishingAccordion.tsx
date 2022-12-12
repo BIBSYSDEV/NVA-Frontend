@@ -111,13 +111,13 @@ export const PublishingAccordion = ({
     }
   };
 
-  const isPendingPublishingRequest = publishingRequestTicket?.status === 'Pending';
+  const isDraftRegistration = registration.status === RegistrationStatus.Draft;
 
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
       elevation={3}
-      defaultExpanded={registration.status === RegistrationStatus.Draft}>
+      defaultExpanded={isDraftRegistration}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('registration.public_page.publishing_request')} - {t(`registration.status.${registration.status}`)}
         {!registrationIsValid && (
@@ -144,8 +144,10 @@ export const PublishingAccordion = ({
           />
         )}
 
-        {isPendingPublishingRequest &&
-          (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
+        {publishingRequestTicket &&
+          isDraftRegistration &&
+          (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ||
+          publishingRequestTicket.status === 'Completed' ? (
             <>
               <Typography gutterBottom>
                 Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.
@@ -165,7 +167,7 @@ export const PublishingAccordion = ({
             </Typography>
           ) : null)}
 
-        {!isPendingPublishingRequest && registration.status === RegistrationStatus.Draft && registrationIsValid && (
+        {!publishingRequestTicket && isDraftRegistration && registrationIsValid && (
           <>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
               <Typography>
@@ -185,18 +187,18 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {registration.status === RegistrationStatus.Published && (
+        {registration.status === RegistrationStatus.Published ? (
           <Typography>
             {t('registration.public_page.published_date', {
               date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
               interpolation: { escapeValue: false },
             })}
           </Typography>
-        )}
+        ) : null}
 
-        {registration.status === RegistrationStatus.Draft && (
+        {isDraftRegistration && (
           <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
-            {!isPendingPublishingRequest ? (
+            {!publishingRequestTicket ? (
               <LoadingButton
                 disabled={isLoading !== LoadingState.None || !registrationIsValid}
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
@@ -212,7 +214,8 @@ export const PublishingAccordion = ({
               </LoadingButton>
             ) : (
               userIsCurator &&
-              customer?.publicationWorkflow !== 'RegistratorPublishesMetadataAndFiles' && (
+              customer?.publicationWorkflow !== 'RegistratorPublishesMetadataAndFiles' &&
+              publishingRequestTicket.status === 'Pending' && (
                 <>
                   <LoadingButton
                     variant="contained"
