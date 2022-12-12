@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { MediaFormat, MediaMedium } from '../../../../../types/publication_types/mediaContributionRegistration.types';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 
 export const MediaContributionForm = () => {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ export const MediaContributionForm = () => {
                 label={t('registration.resource_type.media_contribution.medium')}
                 fullWidth
                 {...field}
+                data-testid={dataTestId.registrationWizard.resourceType.mediaMedium}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}>
                 {Object.values(MediaMedium).map((medium) => (
@@ -41,6 +43,7 @@ export const MediaContributionForm = () => {
                 label={t('registration.resource_type.media_contribution.format')}
                 fullWidth
                 {...field}
+                data-testid={dataTestId.registrationWizard.resourceType.mediaFormat}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}>
                 {Object.values(MediaFormat).map((format) => (
@@ -60,6 +63,7 @@ export const MediaContributionForm = () => {
                 label={t('registration.resource_type.media_contribution.channel')}
                 fullWidth
                 {...field}
+                data-testid={dataTestId.registrationWizard.resourceType.mediaChannel}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -72,6 +76,7 @@ export const MediaContributionForm = () => {
                 label={t('registration.resource_type.media_contribution.name_of_series_program')}
                 fullWidth
                 {...field}
+                data-testid={dataTestId.registrationWizard.resourceType.mediaSeries}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
@@ -84,6 +89,7 @@ export const MediaContributionForm = () => {
                 label={t('registration.resource_type.media_contribution.name_of_issue_episode')}
                 fullWidth
                 {...field}
+                data-testid={dataTestId.registrationWizard.resourceType.mediaIssue}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
               />
