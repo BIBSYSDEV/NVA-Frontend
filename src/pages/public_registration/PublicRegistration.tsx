@@ -37,9 +37,9 @@ const PublicRegistration = () => {
       errorMessage: t('feedback.error.get_tickets'),
     });
 
-  const refetchData = () => {
-    refetchRegistration();
+  const refetchRegistrationAndTickets = () => {
     refetchTickets();
+    refetchRegistration();
   };
 
   return (
@@ -60,15 +60,11 @@ const PublicRegistration = () => {
               {isRegistrationAdmin && (
                 <ActionPanel
                   registration={registration}
-                  refetchData={refetchData}
+                  refetchRegistrationAndTickets={refetchRegistrationAndTickets}
                   tickets={registrationTicketCollection?.tickets ?? []}
                 />
               )}
-              <PublicRegistrationContent
-                registration={registration}
-                tickets={registrationTicketCollection?.tickets ?? []}
-                refetchData={refetchData}
-              />
+              <PublicRegistrationContent registration={registration} />
             </Box>
           </ErrorBoundary>
         ) : (

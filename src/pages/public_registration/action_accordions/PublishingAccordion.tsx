@@ -26,7 +26,7 @@ import { RootState } from '../../../redux/store';
 
 interface PublishingAccordionProps {
   registration: Registration;
-  refetchData: () => void;
+  refetchRegistrationAndTickets: () => void;
   publishingRequestTicket: Ticket | null;
   userIsCurator: boolean;
 }
@@ -41,7 +41,7 @@ enum LoadingState {
 export const PublishingAccordion = ({
   publishingRequestTicket,
   registration,
-  refetchData,
+  refetchRegistrationAndTickets,
   userIsCurator,
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
@@ -80,7 +80,7 @@ export const PublishingAccordion = ({
       setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
-      refetchData();
+      refetchRegistrationAndTickets();
     }
   };
 
@@ -106,7 +106,7 @@ export const PublishingAccordion = ({
         } else {
           dispatch(setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' }));
         }
-        refetchData();
+        refetchRegistrationAndTickets();
       }
     }
   };
@@ -150,7 +150,7 @@ export const PublishingAccordion = ({
               <Typography gutterBottom>
                 Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.
               </Typography>
-              <Button variant="outlined" onClick={refetchData} startIcon={<RefreshIcon />}>
+              <Button variant="outlined" onClick={refetchRegistrationAndTickets} startIcon={<RefreshIcon />}>
                 Last på nytt
               </Button>
             </>

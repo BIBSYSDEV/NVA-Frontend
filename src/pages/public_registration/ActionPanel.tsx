@@ -5,13 +5,19 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
+import { Ticket } from '../../types/publication_types/messages.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { associatedArtifactIsLink, userIsCuratorForRegistration } from '../../utils/registration-helpers';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
-export const ActionPanel = ({ registration, tickets, refetchData }: PublicRegistrationContentProps) => {
+interface ActionPanelProps extends PublicRegistrationContentProps {
+  tickets: Ticket[];
+  refetchRegistrationAndTickets: () => void;
+}
+
+export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTickets }: ActionPanelProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const userIsCurator = userIsCuratorForRegistration(user, registration);
@@ -29,7 +35,7 @@ export const ActionPanel = ({ registration, tickets, refetchData }: PublicRegist
       <BackgroundDiv>
         <ErrorBoundary>
           <PublishingAccordion
-            refetchData={refetchData}
+            refetchRegistrationAndTickets={refetchRegistrationAndTickets}
             registration={registration}
             publishingRequestTicket={publishingRequestTicket}
             userIsCurator={userIsCurator}
@@ -40,7 +46,7 @@ export const ActionPanel = ({ registration, tickets, refetchData }: PublicRegist
             !registration.associatedArtifacts.some(associatedArtifactIsLink) &&
             doiRequestTicket?.status !== 'Completed' && (
               <DoiRequestAccordion
-                refetchData={refetchData}
+                refetchRegistrationAndTickets={refetchRegistrationAndTickets}
                 registration={registration}
                 doiRequestTicket={doiRequestTicket}
                 userIsCurator={userIsCurator}

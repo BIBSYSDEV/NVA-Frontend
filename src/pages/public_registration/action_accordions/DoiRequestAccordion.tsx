@@ -27,7 +27,7 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 
 interface DoiRequestAccordionProps {
   registration: Registration;
-  refetchData: () => void;
+  refetchRegistrationAndTickets: () => void;
   doiRequestTicket: Ticket | null;
   userIsCurator: boolean;
 }
@@ -42,7 +42,7 @@ enum LoadingState {
 export const DoiRequestAccordion = ({
   registration,
   doiRequestTicket,
-  refetchData,
+  refetchRegistrationAndTickets,
   userIsCurator,
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
@@ -76,7 +76,7 @@ export const DoiRequestAccordion = ({
         toggleRequestDoiModal();
       }
       dispatch(setNotification({ message: t('feedback.success.doi_request_sent'), variant: 'success' }));
-      refetchData();
+      refetchRegistrationAndTickets();
     }
   };
 
@@ -94,7 +94,7 @@ export const DoiRequestAccordion = ({
         setIsLoading(LoadingState.None);
       } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
-        refetchData();
+        refetchRegistrationAndTickets();
       }
     }
   };
@@ -122,7 +122,7 @@ export const DoiRequestAccordion = ({
                 <Typography gutterBottom>
                   Det kan ta litt tid før reservert DOI vises. Last innholdet på nytt for å sjekke igjen.
                 </Typography>
-                <Button variant="outlined" onClick={refetchData} startIcon={<RefreshIcon />}>
+                <Button variant="outlined" onClick={refetchRegistrationAndTickets} startIcon={<RefreshIcon />}>
                   Last på nytt
                 </Button>
               </>

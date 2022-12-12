@@ -1,21 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Box, Button, Link, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import { RootState } from '../../redux/store';
-import { Registration, RegistrationStatus } from '../../types/registration.types';
+import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getAssociatedLinks, userCanEditRegistration } from '../../utils/registration-helpers';
-import { Ticket } from '../../types/publication_types/messages.types';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
-interface PublicDoiProps {
-  registration: Registration;
-  doiRequest?: Ticket;
-  refetchData: () => void;
-}
-
-export const PublicDoi = ({ registration, doiRequest, refetchData }: PublicDoiProps) => {
+export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [nvaDoiIsFindable, setNvaDoiIsFindable] = useState<boolean>();
@@ -86,11 +79,6 @@ export const PublicDoi = ({ registration, doiRequest, refetchData }: PublicDoiPr
               )}
           </Typography>
         </>
-      )}
-      {canSeeDraftDoi && !nvaDoi && doiRequest?.status === 'Pending' && (
-        <Button variant="outlined" size="small" onClick={refetchData} startIcon={<RefreshIcon />} sx={{ my: '0.5rem' }}>
-          Last inn på nytt for å se reservert DOI
-        </Button>
       )}
     </>
   );

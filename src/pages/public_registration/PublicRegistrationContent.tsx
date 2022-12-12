@@ -28,15 +28,12 @@ import { RootState } from '../../redux/store';
 import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
-import { Ticket } from '../../types/publication_types/messages.types';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
-  tickets: Ticket[];
-  refetchData: () => void;
 }
 
-export const PublicRegistrationContent = ({ registration, tickets, refetchData }: PublicRegistrationContentProps) => {
+export const PublicRegistrationContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -86,7 +83,7 @@ export const PublicRegistrationContent = ({ registration, tickets, refetchData }
           />
         )}
 
-        <PublicGeneralContent registration={registration} tickets={tickets} refetchData={refetchData} />
+        <PublicGeneralContent registration={registration} />
 
         {!isResearchData(entityDescription?.reference?.publicationInstance.type) && (
           <FilesLandingPageAccordion registration={registration} />
