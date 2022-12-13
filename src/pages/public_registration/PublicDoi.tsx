@@ -35,7 +35,6 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
         }
       }
     };
-    // TODO: with interval?
     lookupNvaDoi();
   }, [nvaDoi, registration.status]);
 
