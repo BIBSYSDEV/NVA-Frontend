@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
@@ -40,7 +40,7 @@ const ResearchProfile = () => {
   });
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr' }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: '4fr 1fr 2fr', gap: '1rem' }}>
       {isLoadingRegistrations ? (
         <PageSpinner aria-label={t('my_page.research_profile')} />
       ) : (
@@ -61,6 +61,7 @@ const ResearchProfile = () => {
           </BackgroundDiv>
         )
       )}
+      <Divider orientation="vertical" />
       <ResearchProfileSummary />
     </Box>
   );
