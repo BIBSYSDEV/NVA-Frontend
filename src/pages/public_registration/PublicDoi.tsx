@@ -11,17 +11,18 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const [nvaDoiIsFindable, setNvaDoiIsFindable] = useState<boolean>();
 
-  const originalDoi = registration.entityDescription?.reference?.doi ?? '';
   const nvaDoi = registration.doi;
+  const originalDoi = registration.entityDescription?.reference?.doi ?? '';
   const associatedLink = getAssociatedLinks(registration.associatedArtifacts)[0]?.id;
+
+  const [nvaDoiIsFindable, setNvaDoiIsFindable] = useState<boolean | undefined>(
+    !nvaDoi || registration.status === RegistrationStatus.Draft ? false : undefined
+  );
 
   useEffect(() => {
     const lookupNvaDoi = async () => {
-      if (!nvaDoi) {
-        setNvaDoiIsFindable(false);
-      } else {
+      if (nvaDoi && registration.status === RegistrationStatus.Published) {
         try {
           const doiHeadResponse = await fetch(nvaDoi, { method: 'HEAD', redirect: 'manual' });
           if (doiHeadResponse.status === 404) {
@@ -34,8 +35,9 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
         }
       }
     };
+    // TODO: with interval?
     lookupNvaDoi();
-  }, [nvaDoi]);
+  }, [nvaDoi, registration.status]);
 
   const canSeeDraftDoi = userCanEditRegistration(user, registration);
   const canSeeNvaDoi = nvaDoi && (nvaDoiIsFindable || canSeeDraftDoi);
