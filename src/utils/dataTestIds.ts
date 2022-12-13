@@ -125,6 +125,8 @@ export const dataTestId = {
       publishingRequestAcceptButton: 'publishing-request-accept-button',
       publishingRequestAccordion: 'publishing-request-accordion',
       publishingRequestRejectButton: 'publishing-request-reject-button',
+      refreshDoiRequestButton: 'refresh-doi-button',
+      refreshPublishingRequestButton: 'refresh-publishing-request-button',
       reserveDoiButton: 'button-toggle-reserve-doi',
       requestDoiButton: 'button-toggle-request-doi',
       requestDoiModal: 'request-doi-modal',

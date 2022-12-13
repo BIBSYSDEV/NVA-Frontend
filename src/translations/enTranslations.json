@@ -957,7 +957,7 @@
     "new_registration": "New registration",
     "public_page": {
       "about_registration": "About this registration",
-      "action_panel": {
+      "tasks_panel": {
         "has_doi_request": "Registration has a DOI request for approval to curator. Go to messages to see status.",
         "has_rejected_doi_request": "Registration has a rejected DOI request.",
         "has_reserved_doi": "Registration has a reserved DOI. When the registration is published a DOI request will be created and sent to curator.",

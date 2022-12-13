@@ -112,25 +112,29 @@ export const DoiRequestAccordion = ({
           <>
             <Typography paragraph>
               {registration.status === RegistrationStatus.Published
-                ? t('registration.public_page.action_panel.has_doi_request')
+                ? t('registration.public_page.tasks_panel.has_doi_request')
                 : registration.status === RegistrationStatus.Draft
-                ? t('registration.public_page.action_panel.has_reserved_doi')
+                ? t('registration.public_page.tasks_panel.has_reserved_doi')
                 : null}
             </Typography>
             {!registration.doi && (
               <>
                 <Typography gutterBottom>
-                  {t('registration.public_page.action_panel.waiting_for_reserved_doi')}
+                  {t('registration.public_page.tasks_panel.waiting_for_reserved_doi')}
                 </Typography>
-                <Button variant="outlined" onClick={refetchRegistrationAndTickets} startIcon={<RefreshIcon />}>
-                  {t('registration.public_page.action_panel.reload')}
+                <Button
+                  variant="outlined"
+                  onClick={refetchRegistrationAndTickets}
+                  startIcon={<RefreshIcon />}
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
+                  {t('registration.public_page.tasks_panel.reload')}
                 </Button>
               </>
             )}
           </>
         )}
         {doiRequestTicket?.status === 'Closed' && (
-          <Typography paragraph>{t('registration.public_page.action_panel.has_rejected_doi_request')}</Typography>
+          <Typography paragraph>{t('registration.public_page.tasks_panel.has_rejected_doi_request')}</Typography>
         )}
 
         {!doiRequestTicket && !registration.doi && (

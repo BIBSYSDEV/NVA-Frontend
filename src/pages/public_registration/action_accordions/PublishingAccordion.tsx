@@ -150,34 +150,38 @@ export const PublishingAccordion = ({
           publishingRequestTicket.status === 'Completed' ? (
             <>
               <Typography gutterBottom>
-                {t('registration.public_page.action_panel.registration_will_soon_be_published')}
+                {t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
               </Typography>
-              <Button variant="outlined" onClick={refetchRegistrationAndTickets} startIcon={<RefreshIcon />}>
-                {t('registration.public_page.action_panel.reload')}
+              <Button
+                variant="outlined"
+                onClick={refetchRegistrationAndTickets}
+                startIcon={<RefreshIcon />}
+                data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
+                {t('registration.public_page.tasks_panel.reload')}
               </Button>
             </>
           ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
             <Typography paragraph>
-              {t('registration.public_page.action_panel.metadata_published_waiting_for_files')}
+              {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}
             </Typography>
           ) : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles' ? (
             <Typography paragraph>
-              {t('registration.public_page.action_panel.waiting_for_publishing_approval')}
+              {t('registration.public_page.tasks_panel.waiting_for_publishing_approval')}
             </Typography>
           ) : null)}
 
         {!publishingRequestTicket && isDraftRegistration && registrationIsValid && (
           <>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
-              <Typography>{t('registration.public_page.action_panel.you_can_publish_everything')}</Typography>
+              <Typography>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
-              <Typography>{t('registration.public_page.action_panel.you_can_publish_metadata')}</Typography>
+              <Typography>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
             ) : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles' ? (
               <Typography>
-                {t('registration.public_page.action_panel.you_can_publish_metadata_after_curator_approval')}
+                {t('registration.public_page.tasks_panel.you_can_publish_metadata_after_curator_approval')}
               </Typography>
             ) : null}
-            <Typography>{t('registration.public_page.action_panel.review_preview_before_publishing')}</Typography>
+            <Typography>{t('registration.public_page.tasks_panel.review_preview_before_publishing')}</Typography>
           </>
         )}
 
@@ -203,7 +207,7 @@ export const PublishingAccordion = ({
                 onClick={onClickPublish}
                 loading={isLoading === LoadingState.CreatePublishingREquest}>
                 {customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles'
-                  ? t('registration.public_page.action_panel.request_publishing')
+                  ? t('registration.public_page.tasks_panel.request_publishing')
                   : t('common.publish')}
               </LoadingButton>
             ) : (

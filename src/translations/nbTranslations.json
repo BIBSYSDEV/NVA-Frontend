@@ -957,7 +957,7 @@
     "new_registration": "Ny registrering",
     "public_page": {
       "about_registration": "Om registreringen",
-      "action_panel": {
+      "tasks_panel": {
         "has_doi_request": "Registreringen har en DOI-forespørsel til behandling for kurator. Gå til Meldinger for å se oppdatert status.",
         "has_rejected_doi_request": "Registreringen har en avslått DOI-forespørsel.",
         "has_reserved_doi": "Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.",
