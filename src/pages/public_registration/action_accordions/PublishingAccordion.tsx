@@ -150,40 +150,34 @@ export const PublishingAccordion = ({
           publishingRequestTicket.status === 'Completed' ? (
             <>
               <Typography gutterBottom>
-                Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.
+                {t('registration.public_page.action_panel.registration_will_soon_be_published')}
               </Typography>
               <Button variant="outlined" onClick={refetchRegistrationAndTickets} startIcon={<RefreshIcon />}>
-                Last på nytt
+                {t('registration.public_page.action_panel.reload')}
               </Button>
             </>
           ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
             <Typography paragraph>
-              Metadata er synlig for andre brukere, men en kurator må godkjenne filene som er lastet opp før de blir
-              synlige. Gå til Meldinger for å se oppdatert status.
+              {t('registration.public_page.action_panel.metadata_published_waiting_for_files')}
             </Typography>
           ) : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles' ? (
             <Typography paragraph>
-              En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere.
+              {t('registration.public_page.action_panel.waiting_for_publishing_approval')}
             </Typography>
           ) : null)}
 
         {!publishingRequestTicket && isDraftRegistration && registrationIsValid && (
           <>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
-              <Typography>
-                Du kan publisere registreringen på egen hånd. Innholdet vil da bli synlig for andre brukere.
-              </Typography>
+              <Typography>{t('registration.public_page.action_panel.you_can_publish_everything')}</Typography>
             ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
-              <Typography>
-                Du kan publisere metadata selv, men en kurator må godkjenne filene som er lastet opp før de kan vises
-                til andre brukere.
-              </Typography>
+              <Typography>{t('registration.public_page.action_panel.you_can_publish_metadata')}</Typography>
             ) : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles' ? (
               <Typography>
-                En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere.
+                {t('registration.public_page.action_panel.you_can_publish_metadata_after_curator_approval')}
               </Typography>
             ) : null}
-            <Typography>Se over utkast før du går videre.</Typography>
+            <Typography>{t('registration.public_page.action_panel.review_preview_before_publishing')}</Typography>
           </>
         )}
 
@@ -209,7 +203,7 @@ export const PublishingAccordion = ({
                 onClick={onClickPublish}
                 loading={isLoading === LoadingState.CreatePublishingREquest}>
                 {customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles'
-                  ? 'Be om publisering'
+                  ? t('registration.public_page.action_panel.request_publishing')
                   : t('common.publish')}
               </LoadingButton>
             ) : (

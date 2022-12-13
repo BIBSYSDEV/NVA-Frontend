@@ -112,25 +112,25 @@ export const DoiRequestAccordion = ({
           <>
             <Typography paragraph>
               {registration.status === RegistrationStatus.Published
-                ? 'Registreringen har en DOI-forespørsel til behandling for kurator. Gå til Meldinger for å se oppdatert status.'
+                ? t('registration.public_page.action_panel.has_doi_request')
                 : registration.status === RegistrationStatus.Draft
-                ? 'Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.'
+                ? t('registration.public_page.action_panel.has_reserved_doi')
                 : null}
             </Typography>
             {!registration.doi && (
               <>
                 <Typography gutterBottom>
-                  Det kan ta litt tid før reservert DOI vises. Last innholdet på nytt for å sjekke igjen.
+                  {t('registration.public_page.action_panel.waiting_for_reserved_doi')}
                 </Typography>
                 <Button variant="outlined" onClick={refetchRegistrationAndTickets} startIcon={<RefreshIcon />}>
-                  Last på nytt
+                  {t('registration.public_page.action_panel.reload')}
                 </Button>
               </>
             )}
           </>
         )}
         {doiRequestTicket?.status === 'Closed' && (
-          <Typography paragraph>Registreringen har en avslått DOI-forespørsel.</Typography>
+          <Typography paragraph>{t('registration.public_page.action_panel.has_rejected_doi_request')}</Typography>
         )}
 
         {!doiRequestTicket && !registration.doi && (
