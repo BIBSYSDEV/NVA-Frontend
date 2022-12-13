@@ -7,7 +7,7 @@ import { UserInfo } from './UserInfo';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
 import { UserAffiliations } from './UserAffiliations';
-import { ResearchProfileSummary } from './ResearchProfilePanel';
+import { ResearchProfilePanel } from './ResearchProfilePanel';
 
 export const MyProfile = () => {
   const { t } = useTranslation();
@@ -42,7 +42,7 @@ export const MyProfile = () => {
         </Box>
 
         <Box sx={{ gridArea: 'summary' }}>
-          <ResearchProfileSummary />
+          <ResearchProfilePanel />
         </Box>
       </Box>
     </>

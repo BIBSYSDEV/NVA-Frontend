@@ -12,7 +12,7 @@ import { ExpressionStatement } from '../../utils/searchHelpers';
 import { CristinPerson } from '../../types/user.types';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RootState } from '../../redux/store';
-import { ResearchProfileSummary } from '../my_page/user_profile/ResearchProfilePanel';
+import { ResearchProfilePanel } from '../my_page/user_profile/ResearchProfilePanel';
 
 const ResearchProfile = () => {
   const { t } = useTranslation();
@@ -40,7 +40,7 @@ const ResearchProfile = () => {
   });
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: '4fr 1fr 2fr', gap: '1rem' }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: '4fr 1fr', gap: '1rem' }}>
       {isLoadingRegistrations ? (
         <PageSpinner aria-label={t('my_page.research_profile')} />
       ) : (
@@ -61,8 +61,10 @@ const ResearchProfile = () => {
           </BackgroundDiv>
         )
       )}
-      <Divider orientation="vertical" />
-      <ResearchProfileSummary />
+      <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Divider orientation="vertical" />
+        <ResearchProfilePanel />
+      </Box>
     </Box>
   );
 };

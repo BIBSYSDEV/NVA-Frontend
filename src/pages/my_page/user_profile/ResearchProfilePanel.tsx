@@ -13,7 +13,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { PageSpinner } from '../../../components/PageSpinner';
 
-export const ResearchProfileSummary = () => {
+export const ResearchProfilePanel = () => {
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -65,7 +65,8 @@ export const ResearchProfileSummary = () => {
               )}
             </BackgroundDiv>
           </BackgroundDiv>
-          <Typography>{person?.id}</Typography>
+          {/* PLACEHOLDER */}
+          <Typography>EMAIL</Typography>
           <Divider sx={{ mt: '3rem' }} />
           {activeAffiliations.map((affiliation) => {
             return <AffiliationHierarchy unitUri={affiliation.organization} />;
