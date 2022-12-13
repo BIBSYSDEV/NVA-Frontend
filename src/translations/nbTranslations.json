@@ -993,7 +993,7 @@
       "reject_publish_request": "Avvis publisering",
       "reserved_doi": "Reservert DOI",
       "request_doi": "Be om en DOI",
-      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
+      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
       "reserve_doi": "Reserver en DOI",
       "validation_errors": "Valideringsfeil"
     },
