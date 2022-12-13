@@ -111,7 +111,7 @@ export const Header = () => {
                 (user?.isEditor ? (
                   <MenuButton
                     sx={{
-                      fontSize: '1rem',
+                      fontSize: '1.25rem',
                       fontWeight: 700,
                       textTransform: 'none',
                     }}
@@ -122,7 +122,7 @@ export const Header = () => {
                     {user?.customerShortName}
                   </MenuButton>
                 ) : (
-                  <Typography variant="h1" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
+                  <Typography variant="h1" component="span" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
                     {user?.customerShortName}
                   </Typography>
                 ))}
