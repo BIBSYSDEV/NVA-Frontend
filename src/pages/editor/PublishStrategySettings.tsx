@@ -48,7 +48,7 @@ const PublishStrategyButton = styled(ButtonBase, { shouldForwardProp: (prop) => 
 export const PublishStrategySettings = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const customer = useSelector((store: RootState) => store.customer);
+  const { customer } = useSelector((store: RootState) => store);
   const [isUpdating, setIsUpdating] = useState<PublishStrategy>();
 
   const setPublicationWorkflow = async (publishStrategy: PublishStrategy) => {

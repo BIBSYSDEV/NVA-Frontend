@@ -41,13 +41,13 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
           }
         }}>
         <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Default}>
-          {t('editor.default')}
+          {t('editor.vocabulary_status.Default')}
         </ToggleButton>
         <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Allowed}>
-          {t('editor.allowed')}
+          {t('editor.vocabulary_status.Allowed')}
         </ToggleButton>
         <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Disabled}>
-          {t('editor.disabled')}
+          {t('editor.vocabulary_status.Disabled')}
         </ToggleButton>
       </ToggleButtonGroup>
 

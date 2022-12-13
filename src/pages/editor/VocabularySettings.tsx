@@ -73,7 +73,7 @@ export const VocabularySettings = () => {
           setNotification({
             message: t('feedback.success.update_vocabulary', {
               vocabulary: vocabularyName,
-              status: t(newVocabulary.status.toLowerCase() as any).toLowerCase(), // TODO: Fix translation of status
+              status: t(`editor.vocabulary_status.${newVocabulary.status}`).toLowerCase(),
             }),
             variant: 'success',
           })
@@ -124,10 +124,10 @@ export const VocabularySettings = () => {
         )
       )}
       <Typography gutterBottom mt="1rem">
-        {t('editor.default_description')}
+        {t('editor.vocabulary_status.default_description')}
       </Typography>
-      <Typography gutterBottom>{t('editor.allowed_description')}</Typography>
-      <Typography gutterBottom>{t('editor.disabled_description')}</Typography>
+      <Typography gutterBottom>{t('editor.vocabulary_status.allowed_description')}</Typography>
+      <Typography gutterBottom>{t('editor.vocabulary_status.disabled_description')}</Typography>
     </>
   );
 };

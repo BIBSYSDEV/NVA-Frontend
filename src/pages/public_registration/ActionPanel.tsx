@@ -19,7 +19,7 @@ interface ActionPanelProps extends PublicRegistrationContentProps {
 
 export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTickets }: ActionPanelProps) => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
+  const { user } = useSelector((store: RootState) => store);
   const userIsCurator = userIsCuratorForRegistration(user, registration);
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;

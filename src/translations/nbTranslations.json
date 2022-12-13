@@ -279,18 +279,12 @@
     "1144": "Ernæring"
   },
   "editor": {
-    "allowed": "Tillatt",
-    "allowed_description": "$t(editor.allowed): Kan legges til av brukeren selv",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensninger",
       "areas_of_responsibility": "Ansvarsområder",
       "no_users_found": "Ingen brukere funnet"
     },
-    "default": "Standard",
-    "default_description": "$t(editor.default): Vises som standard for alle registreringer",
-    "disabled": "Ikke tillatt",
-    "disabled_description": "$t(editor.disabled): Er ikke tilgjengelig",
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
@@ -313,7 +307,15 @@
       "registrator_publishes_without_curator_description": "Institutsjonen bestemmer hvem som er Registrator."
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
-    "vocabulary": "Vokabular"
+    "vocabulary": "Vokabular",
+    "vocabulary_status": {
+      "Allowed": "Tillatt",
+      "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
+      "Default": "Standard",
+      "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
+      "Disabled": "Ikke tillatt",
+      "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
+    }
   },
   "feedback": {
     "error": {
@@ -989,6 +991,7 @@
       "published_date": "Publisert: {{date}}",
       "publishing_request": "Publiseringsgodkjenning",
       "reject_publish_request": "Avvis publisering",
+      "reserved_doi": "Reservert DOI",
       "request_doi": "Be om en DOI",
       "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
       "reserve_doi": "Reserver en DOI",

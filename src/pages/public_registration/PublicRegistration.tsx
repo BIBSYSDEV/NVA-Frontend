@@ -20,13 +20,13 @@ import { TicketCollection } from '../../types/publication_types/messages.types';
 const PublicRegistration = () => {
   const { t } = useTranslation();
   const { identifier } = useParams<RegistrationParams>();
-  const user = useSelector((store: RootState) => store.user);
 
   const [registration, isLoadingRegistration, refetchRegistration] = useFetch<Registration>({
     url: `${PublicationsApiPath.Registration}/${identifier}`,
     errorMessage: t('feedback.error.get_registration'),
   });
 
+  const { user } = useSelector((store: RootState) => store);
   const isRegistrationAdmin = !!registration && userCanEditRegistration(user, registration);
   const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
 

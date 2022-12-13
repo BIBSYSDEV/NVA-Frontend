@@ -56,6 +56,7 @@ import {
   PublicPublicationInstanceJournal,
   PublicPublicationInstanceReport,
 } from './PublicPublicationInstance';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
@@ -67,7 +68,6 @@ import {
   MediaContributionPublicationContext,
 } from '../../types/publication_types/mediaContributionRegistration.types';
 import { MapPublicationContext } from '../../types/publication_types/otherRegistration.types';
-import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();

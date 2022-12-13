@@ -10,7 +10,7 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
+  const { user } = useSelector((store: RootState) => store);
 
   const nvaDoi = registration.doi;
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';
@@ -74,7 +74,7 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
                   (
                   {registration.status === RegistrationStatus.Published
                     ? t('registration.public_page.in_progress')
-                    : 'Reservert DOI'}
+                    : t('registration.public_page.reserved_doi')}
                   )
                 </Box>
               )}

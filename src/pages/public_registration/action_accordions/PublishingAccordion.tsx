@@ -46,7 +46,7 @@ export const PublishingAccordion = ({
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const customer = useSelector((store: RootState) => store.customer);
+  const { customer } = useSelector((store: RootState) => store);
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
@@ -185,14 +185,14 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {registration.status === RegistrationStatus.Published ? (
+        {registration.status === RegistrationStatus.Published && (
           <Typography>
             {t('registration.public_page.published_date', {
               date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
               interpolation: { escapeValue: false },
             })}
           </Typography>
-        ) : null}
+        )}
 
         {isDraftRegistration && (
           <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>

@@ -279,18 +279,12 @@
     "1144": "Nutrition"
   },
   "editor": {
-    "allowed": "Allowed",
-    "allowed_description": "$t(editor.allowed): Can be added by the user",
     "curators": {
       "area_of_responsibility": "Area of responsibility",
       "area_of_responsibility_placeholder": "No limitations",
       "areas_of_responsibility": "Areas of responsibility",
       "no_users_found": "No users found"
     },
-    "default": "Default",
-    "default_description": "$t(editor.default): Shown by default for all registrations",
-    "disabled": "Disabled",
-    "disabled_description": "$t(editor.disabled): Is not available",
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
@@ -313,7 +307,15 @@
       "registrator_publishes_without_curator_description": "The institution decides who is Registrator."
     },
     "select_vocabulary_description": "Activate controlled vocabularies for registration of new results",
-    "vocabulary": "Vocabulary"
+    "vocabulary": "Vocabulary",
+    "vocabulary_status": {
+      "allowed": "Allowed",
+      "allowed_description": "$t(editor.allowed): Can be added by the user",
+      "default": "Default",
+      "default_description": "$t(editor.default): Shown by default for all registrations",
+      "disabled": "Disabled",
+      "disabled_description": "$t(editor.disabled): Is not available"
+    }
   },
   "feedback": {
     "error": {
@@ -989,6 +991,7 @@
       "published_date": "Published: {{date}}",
       "publishing_request": "Publishing request",
       "reject_publish_request": "Reject publishing request",
+      "reserved_doi": "Reserved DOI",
       "request_doi": "Request a DOI",
       "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated.",
       "reserve_doi": "Reserve a DOI",

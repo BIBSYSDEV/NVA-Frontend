@@ -22,7 +22,7 @@ import { EditorCurators } from './EditorCurators';
 
 const EditorPage = () => {
   const { t } = useTranslation();
-  const customer = useSelector((store: RootState) => store.customer);
+  const { customer } = useSelector((store: RootState) => store);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
