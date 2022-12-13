@@ -55,6 +55,7 @@ export const DoiRequestAccordion = ({
 
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const isPendingDoiRequest = doiRequestTicket?.status === 'Pending';
+  const isClosedDoiRequest = doiRequestTicket?.status === 'Closed';
 
   const sendDoiRequest = async () => {
     setIsLoading(LoadingState.RequestDoi);
@@ -99,11 +100,14 @@ export const DoiRequestAccordion = ({
     }
   };
 
+  const hasMismatchingDoiRequest =
+    (isPendingDoiRequest && !registration.doi) || (isClosedDoiRequest && !!registration.doi);
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
       elevation={3}
-      defaultExpanded={isPendingDoiRequest && !registration.doi}>
+      defaultExpanded={hasMismatchingDoiRequest || (userIsCurator && isPendingDoiRequest)}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('common.doi_long')}
       </AccordionSummary>
@@ -117,7 +121,7 @@ export const DoiRequestAccordion = ({
                 ? t('registration.public_page.tasks_panel.has_reserved_doi')
                 : null}
             </Typography>
-            {!registration.doi && (
+            {hasMismatchingDoiRequest && (
               <>
                 <Typography gutterBottom>
                   {t('registration.public_page.tasks_panel.waiting_for_reserved_doi')}
@@ -133,8 +137,25 @@ export const DoiRequestAccordion = ({
             )}
           </>
         )}
-        {doiRequestTicket?.status === 'Closed' && (
-          <Typography paragraph>{t('registration.public_page.tasks_panel.has_rejected_doi_request')}</Typography>
+
+        {isClosedDoiRequest && (
+          <>
+            <Typography paragraph>{t('registration.public_page.tasks_panel.has_rejected_doi_request')}</Typography>
+            {hasMismatchingDoiRequest && (
+              <>
+                <Typography gutterBottom>
+                  {t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}
+                </Typography>
+                <Button
+                  variant="outlined"
+                  onClick={refetchRegistrationAndTickets}
+                  startIcon={<RefreshIcon />}
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
+                  {t('registration.public_page.tasks_panel.reload')}
+                </Button>
+              </>
+            )}
+          </>
         )}
 
         {!doiRequestTicket && !registration.doi && (
@@ -185,7 +206,7 @@ export const DoiRequestAccordion = ({
           </>
         )}
 
-        {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
+        {registration.doi && userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <LoadingButton
               variant="contained"
