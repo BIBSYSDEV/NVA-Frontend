@@ -13,7 +13,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RegistrationParams } from '../../utils/urlPaths';
-import { SyledPageContent } from '../../components/styled/Wrappers';
+import { StyledPageContent } from '../../components/styled/Wrappers';
 import { ActionPanel } from './ActionPanel';
 
 const PublicRegistration = () => {
@@ -29,7 +29,7 @@ const PublicRegistration = () => {
   const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
 
   return (
-    <SyledPageContent>
+    <StyledPageContent>
       {isLoadingRegistration ? (
         <PageSpinner aria-label={t('common.registration')} />
       ) : registration ? (
@@ -53,7 +53,7 @@ const PublicRegistration = () => {
       ) : (
         <NotFound />
       )}
-    </SyledPageContent>
+    </StyledPageContent>
   );
 };
 
