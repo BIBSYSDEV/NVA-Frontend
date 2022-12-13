@@ -13,7 +13,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RegistrationParams } from '../../utils/urlPaths';
-import { SyledPageContent } from '../../components/styled/Wrappers';
+import { StyledPageContent } from '../../components/styled/Wrappers';
 import { ActionPanel } from './ActionPanel';
 import { TicketCollection } from '../../types/publication_types/messages.types';
 
@@ -43,10 +43,8 @@ const PublicRegistration = () => {
   };
 
   return (
-    <SyledPageContent>
-      {isLoadingRegistration ||
-      isLoadingRegistrationTicketCollection ||
-      (isRegistrationAdmin && !registrationTicketCollection) ? (
+    <StyledPageContent>
+      {isLoadingRegistration || isLoadingRegistrationTicketCollection ? (
         <PageSpinner aria-label={t('common.registration')} />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
@@ -73,7 +71,7 @@ const PublicRegistration = () => {
       ) : (
         <NotFound />
       )}
-    </SyledPageContent>
+    </StyledPageContent>
   );
 };
 
