@@ -2,13 +2,13 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { PageHeader } from '../../components/PageHeader';
-import { SyledPageContent } from '../../components/styled/Wrappers';
+import { StyledPageContent } from '../../components/styled/Wrappers';
 
 const PrivacyPolicy = () => {
   const { t } = useTranslation();
 
   return (
-    <SyledPageContent>
+    <StyledPageContent>
       <PageHeader>{t('privacy.privacy_statement')}</PageHeader>
 
       <Box
@@ -326,7 +326,7 @@ const PrivacyPolicy = () => {
           </Trans>
         </Typography>
       </Box>
-    </SyledPageContent>
+    </StyledPageContent>
   );
 };
 

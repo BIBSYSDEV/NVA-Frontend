@@ -5,7 +5,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import { useSelector } from 'react-redux';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { PageHeader } from '../../components/PageHeader';
-import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
+import { BackgroundDiv, StyledPageContent } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -58,7 +58,7 @@ const ResearchProfile = () => {
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
   return (
-    <SyledPageContent>
+    <StyledPageContent>
       <PageHeader>{fullName}</PageHeader>
       {isLoadingPerson || isLoadingRegistrations ? (
         <PageSpinner aria-label={t('my_page.research_profile')} />
@@ -103,7 +103,7 @@ const ResearchProfile = () => {
           </BackgroundDiv>
         )
       )}
-    </SyledPageContent>
+    </StyledPageContent>
   );
 };
 

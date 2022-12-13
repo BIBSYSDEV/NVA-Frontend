@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { CircularProgress, Typography } from '@mui/material';
 import { PageHeader } from '../../components/PageHeader';
-import { SyledPageContent } from '../../components/styled/Wrappers';
+import { StyledPageContent } from '../../components/styled/Wrappers';
 import { RoleApiPath, SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { Ticket } from '../../types/publication_types/messages.types';
@@ -38,7 +38,7 @@ const TasksPage = () => {
   const tickets = ticketsSearch?.hits ?? [];
 
   return (
-    <SyledPageContent>
+    <StyledPageContent>
       <PageHeader>{t('tasks.tasks')}</PageHeader>
       {isLoadingTicketsSearch ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
@@ -60,7 +60,7 @@ const TasksPage = () => {
           <TicketAccordionList tickets={tickets} />
         </>
       )}
-    </SyledPageContent>
+    </StyledPageContent>
   );
 };
 
