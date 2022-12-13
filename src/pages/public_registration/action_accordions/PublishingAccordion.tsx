@@ -162,11 +162,15 @@ export const PublishingAccordion = ({
             </>
           ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
             <Typography paragraph>
-              {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}
+              {publishingRequestTicket.status === 'Closed'
+                ? t('registration.public_page.tasks_panel.has_rejected_files_publishing_request')
+                : t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}
             </Typography>
           ) : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles' ? (
             <Typography paragraph>
-              {t('registration.public_page.tasks_panel.waiting_for_publishing_approval')}
+              {publishingRequestTicket.status === 'Closed'
+                ? t('registration.public_page.tasks_panel.has_rejected_publishing_request')
+                : t('registration.public_page.tasks_panel.waiting_for_publishing_approval')}
             </Typography>
           ) : null)}
 
