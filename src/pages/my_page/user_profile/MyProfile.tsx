@@ -7,7 +7,7 @@ import { UserInfo } from './UserInfo';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
 import { UserAffiliations } from './UserAffiliations';
-import { ResearchProfileSummary } from './ResearchProfileSummary';
+import { ResearchProfileSummary } from './ResearchProfilePanel';
 
 export const MyProfile = () => {
   const { t } = useTranslation();
