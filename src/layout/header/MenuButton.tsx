@@ -11,7 +11,7 @@ export const MenuButton = ({ isSelected, sx, ...rest }: MenuButtonProps) => (
       height: '100%',
       display: 'flex',
       borderBottom: isSelected ? '0.375rem solid white' : 'none',
-      boxShadow: '-1px 7px 4px -3px rgba(0,0,0,0.3)',
+      boxShadow: isSelected ? '-1px 7px 4px -3px rgba(0,0,0,0.3)' : 'none',
     }}>
     <Button
       sx={{
