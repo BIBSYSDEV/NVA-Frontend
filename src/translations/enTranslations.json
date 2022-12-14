@@ -996,7 +996,7 @@
       "reject_publish_request": "Reject publishing request",
       "reserved_doi": "Reserved DOI",
       "request_doi": "Request a DOI",
-      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated.",
+      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
       "reserve_doi": "Reserve a DOI",
       "validation_errors": "Validation errors"
     },
