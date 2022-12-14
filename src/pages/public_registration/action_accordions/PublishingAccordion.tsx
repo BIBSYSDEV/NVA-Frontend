@@ -7,23 +7,26 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { ErrorList } from '../../registration/ErrorList';
 import { Ticket, TicketStatus } from '../../../types/publication_types/messages.types';
-import { ActionPanelProps } from '../ActionPanel';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
+import { RootState } from '../../../redux/store';
 
-interface PublishingAccordionProps extends ActionPanelProps {
+interface PublishingAccordionProps {
+  registration: Registration;
+  refetchRegistrationAndTickets: () => void;
   publishingRequestTicket: Ticket | null;
   userIsCurator: boolean;
 }
@@ -38,11 +41,12 @@ enum LoadingState {
 export const PublishingAccordion = ({
   publishingRequestTicket,
   registration,
-  refetchRegistration,
+  refetchRegistrationAndTickets,
   userIsCurator,
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { customer } = useSelector((store: RootState) => store);
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
@@ -75,11 +79,8 @@ export const PublishingAccordion = ({
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
       setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      // TODO: Creating PublishingRequest can take some time, so wait 10 sec before refetching
-      setTimeout(() => {
-        dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
-        refetchRegistration();
-      }, 10_000);
+      dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
+      refetchRegistrationAndTickets();
     }
   };
 
@@ -100,30 +101,27 @@ export const PublishingAccordion = ({
         dispatch(setNotification({ message: t('feedback.error.update_publishing_request'), variant: 'error' }));
         setIsLoading(LoadingState.None);
       } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
-        // TODO: Updating status of PublishingRequest can take some time, so wait 10 sec before refetching
-        setTimeout(() => {
-          if (status === 'Completed') {
-            dispatch(
-              setNotification({ message: t('feedback.success.publishing_request_approved'), variant: 'success' })
-            );
-          } else {
-            dispatch(
-              setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' })
-            );
-          }
-          refetchRegistration();
-        }, 10_000);
+        if (status === 'Completed') {
+          dispatch(setNotification({ message: t('feedback.success.publishing_request_approved'), variant: 'success' }));
+        } else {
+          dispatch(setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' }));
+        }
+        refetchRegistrationAndTickets();
       }
     }
   };
 
-  const isPendingPublishingRequest = publishingRequestTicket?.status === 'Pending';
+  const isDraftRegistration = registration.status === RegistrationStatus.Draft;
+  const hasPendingPublishingRequest =
+    userIsCurator &&
+    customer?.publicationWorkflow !== 'RegistratorPublishesMetadataAndFiles' &&
+    publishingRequestTicket?.status === 'Pending';
 
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
       elevation={3}
-      defaultExpanded={registration.status === RegistrationStatus.Draft}>
+      defaultExpanded={isDraftRegistration || hasPendingPublishingRequest}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('registration.public_page.publishing_request')} - {t(`registration.status.${registration.status}`)}
         {!registrationIsValid && (
@@ -150,19 +148,8 @@ export const PublishingAccordion = ({
           />
         )}
 
-        {isPendingPublishingRequest && (
-          <Typography paragraph>{t('registration.public_page.has_pending_publishing_request')}</Typography>
-        )}
-
-        {registration.status === RegistrationStatus.Draft && registrationIsValid && (
-          <>
-            <Typography>{t('registration.public_page.ready_to_be_published')}</Typography>
-            <Typography gutterBottom>{t('registration.public_page.ready_to_be_published_description')}</Typography>
-          </>
-        )}
-
         {registration.status === RegistrationStatus.Published && (
-          <Typography>
+          <Typography paragraph>
             {t('registration.public_page.published_date', {
               date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
               interpolation: { escapeValue: false },
@@ -170,46 +157,89 @@ export const PublishingAccordion = ({
           </Typography>
         )}
 
-        {registration.status === RegistrationStatus.Draft && (
+        {publishingRequestTicket &&
+          (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ||
+          publishingRequestTicket.status === 'Completed' ? (
+            <>
+              <Typography gutterBottom>
+                {t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
+              </Typography>
+              <Button
+                variant="outlined"
+                onClick={refetchRegistrationAndTickets}
+                startIcon={<RefreshIcon />}
+                data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
+                {t('registration.public_page.tasks_panel.reload')}
+              </Button>
+            </>
+          ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
+            <Typography paragraph>
+              {publishingRequestTicket.status === 'Closed'
+                ? t('registration.public_page.tasks_panel.has_rejected_files_publishing_request')
+                : t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}
+            </Typography>
+          ) : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles' ? (
+            <Typography paragraph>
+              {publishingRequestTicket.status === 'Closed'
+                ? t('registration.public_page.tasks_panel.has_rejected_publishing_request')
+                : t('registration.public_page.tasks_panel.waiting_for_publishing_approval')}
+            </Typography>
+          ) : null)}
+
+        {!publishingRequestTicket && isDraftRegistration && registrationIsValid && (
+          <>
+            {customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ? (
+              <Typography>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
+            ) : customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly' ? (
+              <Typography>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
+            ) : customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles' ? (
+              <Typography>
+                {t('registration.public_page.tasks_panel.you_can_publish_metadata_after_curator_approval')}
+              </Typography>
+            ) : null}
+            <Typography>{t('registration.public_page.tasks_panel.review_preview_before_publishing')}</Typography>
+          </>
+        )}
+
+        {isDraftRegistration && !publishingRequestTicket && (
+          <LoadingButton
+            disabled={isLoading !== LoadingState.None || !registrationIsValid}
+            data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
+            sx={{ mt: '1rem' }}
+            color="primary"
+            variant="contained"
+            endIcon={<CloudUploadIcon />}
+            loadingPosition="end"
+            onClick={onClickPublish}
+            loading={isLoading === LoadingState.CreatePublishingREquest}>
+            {customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles'
+              ? t('registration.public_page.tasks_panel.request_publishing')
+              : t('common.publish')}
+          </LoadingButton>
+        )}
+
+        {hasPendingPublishingRequest && (
           <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
-            {!isPendingPublishingRequest ? (
-              <LoadingButton
-                disabled={isLoading !== LoadingState.None || !registrationIsValid}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
-                color="primary"
-                variant="contained"
-                endIcon={<CloudUploadIcon />}
-                loadingPosition="end"
-                onClick={onClickPublish}
-                loading={isLoading === LoadingState.CreatePublishingREquest}>
-                {t('common.publish')}
-              </LoadingButton>
-            ) : (
-              userIsCurator && (
-                <>
-                  <LoadingButton
-                    variant="contained"
-                    data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
-                    endIcon={<CheckIcon />}
-                    loadingPosition="end"
-                    onClick={() => updatePendingPublishingRequest('Completed')}
-                    loading={isLoading === LoadingState.ApprovePulishingRequest}
-                    disabled={isLoading !== LoadingState.None || !registrationIsValid}>
-                    {t('registration.public_page.approve_publish_request')}
-                  </LoadingButton>
-                  <LoadingButton
-                    variant="contained"
-                    data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
-                    endIcon={<CloseIcon />}
-                    loadingPosition="end"
-                    onClick={() => updatePendingPublishingRequest('Closed')}
-                    loading={isLoading === LoadingState.RejectPublishingRequest}
-                    disabled={isLoading !== LoadingState.None}>
-                    {t('registration.public_page.reject_publish_request')}
-                  </LoadingButton>
-                </>
-              )
-            )}
+            <LoadingButton
+              variant="contained"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
+              endIcon={<CheckIcon />}
+              loadingPosition="end"
+              onClick={() => updatePendingPublishingRequest('Completed')}
+              loading={isLoading === LoadingState.ApprovePulishingRequest}
+              disabled={isLoading !== LoadingState.None || !registrationIsValid}>
+              {t('registration.public_page.approve_publish_request')}
+            </LoadingButton>
+            <LoadingButton
+              variant="contained"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
+              endIcon={<CloseIcon />}
+              loadingPosition="end"
+              onClick={() => updatePendingPublishingRequest('Closed')}
+              loading={isLoading === LoadingState.RejectPublishingRequest}
+              disabled={isLoading !== LoadingState.None}>
+              {t('registration.public_page.reject_publish_request')}
+            </LoadingButton>
           </Box>
         )}
       </AccordionDetails>

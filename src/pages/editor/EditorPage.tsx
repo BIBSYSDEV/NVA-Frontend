@@ -22,7 +22,7 @@ import { EditorCurators } from './EditorCurators';
 
 const EditorPage = () => {
   const { t } = useTranslation();
-  const customerShortName = useSelector((store: RootState) => store.user?.customerShortName);
+  const { customer } = useSelector((store: RootState) => store);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -35,7 +35,7 @@ const EditorPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SidePanel aria-labelledby="editor-title">
-        <SideNavHeader text={customerShortName} id="editor-title" icon={StoreIcon} />
+        <SideNavHeader text={customer?.shortName} id="editor-title" icon={StoreIcon} />
 
         <NavigationList>
           <LinkButton

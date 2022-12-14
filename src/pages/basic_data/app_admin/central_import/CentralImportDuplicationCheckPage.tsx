@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { Registration } from '../../../../types/registration.types';
 import { PublicationsApiPath } from '../../../../api/apiPaths';
-import { SyledPageContent } from '../../../../components/styled/Wrappers';
+import { StyledPageContent } from '../../../../components/styled/Wrappers';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
@@ -45,7 +45,7 @@ export const CentralImportDuplicationCheckPage = () => {
       <Typography id="duplicate-check-label" variant="h3" component="h2" paragraph>
         {t('basic_data.central_import.duplicate_check')}
       </Typography>
-      <SyledPageContent>
+      <StyledPageContent>
         {isLoadingRegistration ? (
           <PageSpinner aria-labelledby="duplicate-check-label" />
         ) : registration ? (
@@ -85,7 +85,7 @@ export const CentralImportDuplicationCheckPage = () => {
         ) : (
           <NotFound />
         )}
-      </SyledPageContent>
+      </StyledPageContent>
     </>
   );
 };

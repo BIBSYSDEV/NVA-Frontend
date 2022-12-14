@@ -17,8 +17,8 @@ import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
-import { setPartialUser } from '../../redux/userSlice';
 import { MenuButton } from './MenuButton';
+import { setCustomer } from '../../redux/customerReducer';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ export const Header = () => {
 
   useEffect(() => {
     if (customer) {
-      dispatch(setPartialUser({ customerShortName: customer.shortName }));
+      dispatch(setCustomer(customer));
     }
   }, [dispatch, customer]);
 
@@ -115,15 +115,15 @@ export const Header = () => {
                       fontWeight: 700,
                       textTransform: 'none',
                     }}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
                     color="inherit"
                     data-testid={dataTestId.header.editorLink}
-                    to={UrlPathTemplate.Editor}
-                    isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}>
-                    {user?.customerShortName}
+                    to={UrlPathTemplate.Editor}>
+                    {customer.shortName}
                   </MenuButton>
                 ) : (
-                  <Typography variant="h1" component="span" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
-                    {user?.customerShortName}
+                  <Typography variant="button" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
+                    {customer.shortName}
                   </Typography>
                 ))}
               <Divider
