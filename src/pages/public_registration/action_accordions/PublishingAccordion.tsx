@@ -148,8 +148,16 @@ export const PublishingAccordion = ({
           />
         )}
 
+        {registration.status === RegistrationStatus.Published && (
+          <Typography paragraph>
+            {t('registration.public_page.published_date', {
+              date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
+              interpolation: { escapeValue: false },
+            })}
+          </Typography>
+        )}
+
         {publishingRequestTicket &&
-          isDraftRegistration &&
           (customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles' ||
           publishingRequestTicket.status === 'Completed' ? (
             <>
@@ -191,15 +199,6 @@ export const PublishingAccordion = ({
             ) : null}
             <Typography>{t('registration.public_page.tasks_panel.review_preview_before_publishing')}</Typography>
           </>
-        )}
-
-        {registration.status === RegistrationStatus.Published && (
-          <Typography>
-            {t('registration.public_page.published_date', {
-              date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
-              interpolation: { escapeValue: false },
-            })}
-          </Typography>
         )}
 
         {isDraftRegistration && !publishingRequestTicket && (
