@@ -27,5 +27,4 @@ phases:
     commands:
       - npm run build
       - npm run test:react
-      - npm run test:cypress --coverage
-      - npx nyc report
+      - npm run test:cypress
