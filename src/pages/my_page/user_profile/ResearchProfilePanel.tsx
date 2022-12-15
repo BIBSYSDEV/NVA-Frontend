@@ -13,6 +13,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
+import { Helmet } from 'react-helmet-async';
 
 export const ResearchProfilePanel = () => {
   const { t } = useTranslation();
@@ -38,42 +39,51 @@ export const ResearchProfilePanel = () => {
   const isPreview = currentPath === UrlPathTemplate.MyPageMyProfile;
 
   return (
-    <BackgroundDiv sx={{ height: '100%', bgcolor: 'secondary.main', padding: '1rem' }}>
-      {isLoadingPerson ? (
-        <PageSpinner aria-label={t('my_page.research_profile')} />
-      ) : (
-        <>
-          {isPreview && (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <PreviewIcon />
-              <Typography variant="h3" component="span" sx={{ textTransform: 'none' }}>
-                {t('my_page.my_profile.research_profile_summary.preview')}
-              </Typography>
-            </Box>
-          )}
-
-          <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center' }}>
-            <Typography variant="h2">{t('my_page.my_profile.research_profile_summary.research_profile')}</Typography>
-            <AccountCircle sx={{ fontSize: '3rem' }} />
-          </Box>
-
-          <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-            <Typography variant="h3">{fullName}</Typography>
-            {orcidUri && (
-              <Box>
-                <IconButton size="small" href={orcidUri} target="_blank">
-                  <img src={orcidIcon} height="20" alt="orcid" />
-                </IconButton>
+    <>
+      <Helmet>
+        <title>{fullName}</title>
+      </Helmet>
+      <BackgroundDiv sx={{ height: '100%', bgcolor: 'secondary.main', padding: '1rem' }}>
+        {isLoadingPerson ? (
+          <PageSpinner aria-label={t('my_page.research_profile')} />
+        ) : (
+          <>
+            {isPreview && (
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <PreviewIcon />
+                <Typography variant="h3" component="span" sx={{ textTransform: 'none' }}>
+                  {t('my_page.my_profile.research_profile_summary.preview')}
+                </Typography>
               </Box>
             )}
-          </Box>
 
-          <Divider sx={{ mt: '3rem' }} />
-          {activeAffiliations.map((affiliation) => {
-            return <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />;
-          })}
-        </>
-      )}
-    </BackgroundDiv>
+            <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center' }}>
+              <Typography variant="h2" component="h1">
+                {t('my_page.my_profile.research_profile_summary.research_profile')}
+              </Typography>
+              <AccountCircle sx={{ fontSize: '3rem' }} />
+            </Box>
+
+            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <Typography variant="h3" component="h2">
+                {fullName}
+              </Typography>
+              {orcidUri && (
+                <Box>
+                  <IconButton size="small" href={orcidUri} target="_blank">
+                    <img src={orcidIcon} height="20" alt="orcid" />
+                  </IconButton>
+                </Box>
+              )}
+            </Box>
+
+            <Divider sx={{ mt: '3rem' }} />
+            {activeAffiliations.map((affiliation) => {
+              return <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />;
+            })}
+          </>
+        )}
+      </BackgroundDiv>
+    </>
   );
 };

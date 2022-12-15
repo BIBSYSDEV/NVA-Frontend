@@ -40,31 +40,33 @@ const ResearchProfile = () => {
   });
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '1rem' }}>
-      {isLoadingRegistrations ? (
-        <PageSpinner aria-label={t('my_page.research_profile')} />
-      ) : (
-        person && (
-          <>
-            <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
-              {registrations && (
-                <Box>
-                  <Typography variant="h2" gutterBottom>
-                    {t('common.registrations')}
-                  </Typography>
-                  {registrations.size > 0 ? (
-                    <SearchResults searchResult={registrations} />
-                  ) : (
-                    <Typography>{t('common.no_hits')}</Typography>
-                  )}
-                </Box>
-              )}
-            </BackgroundDiv>
-          </>
-        )
-      )}
-      <ResearchProfilePanel />
-    </Box>
+    <>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '1rem' }}>
+        {isLoadingRegistrations ? (
+          <PageSpinner aria-label={t('my_page.research_profile')} />
+        ) : (
+          person && (
+            <>
+              <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
+                {registrations && (
+                  <Box>
+                    <Typography variant="h2" component="h1" gutterBottom>
+                      {t('common.registrations')}
+                    </Typography>
+                    {registrations.size > 0 ? (
+                      <SearchResults searchResult={registrations} />
+                    ) : (
+                      <Typography>{t('common.no_hits')}</Typography>
+                    )}
+                  </Box>
+                )}
+              </BackgroundDiv>
+            </>
+          )
+        )}
+        <ResearchProfilePanel />
+      </Box>
+    </>
   );
 };
 
