@@ -152,7 +152,7 @@
     "required_description": "Felt med stjerne er obligatorisk",
     "role": "Rolle",
     "save": "Lagre",
-    "save_and_present": "Lagre og presenter",
+    "save_and_present": "Lagre og se",
     "search": "Søk",
     "search_by_name": "Søk på navn",
     "search_placeholder": "Navn Navnesen",
@@ -1365,7 +1365,6 @@
       "type_work_specified": "Egendefinert type verk",
       "volume": "Volum"
     },
-    "save_draft": "Lagre kladd",
     "status": {
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Slettet",
