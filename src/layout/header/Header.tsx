@@ -122,7 +122,7 @@ export const Header = () => {
                     {customer.shortName}
                   </MenuButton>
                 ) : (
-                  <Typography variant="button" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
+                  <Typography variant="h1" component="span" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
                     {customer.shortName}
                   </Typography>
                 ))}
