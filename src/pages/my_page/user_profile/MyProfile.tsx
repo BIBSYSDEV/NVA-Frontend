@@ -7,6 +7,7 @@ import { UserInfo } from './UserInfo';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
 import { UserAffiliations } from './UserAffiliations';
+import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 
 export const MyProfile = () => {
@@ -19,31 +20,32 @@ export const MyProfile = () => {
       <Helmet>
         <title>{t('my_page.my_profile.user_profile')}</title>
       </Helmet>
-      <Box
-        sx={{
-          display: 'grid',
-          columnGap: '3rem',
-          gridTemplateAreas: {
-            xs: '"primary-info" "roles" "summary"',
-            md: '"roles primary-info summary"',
-          },
-          gridTemplateColumns: { xs: '1fr', md: '1fr 2fr 1fr' },
-        }}>
-        <Box sx={{ gridArea: 'roles' }}>
-          <UserRoles user={user} />
-        </Box>
+      <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '1rem' }}>
+        <BackgroundDiv>
+          <Box
+            sx={{
+              display: 'grid',
+              columnGap: '3rem',
+              gridTemplateAreas: {
+                xs: '"primary-info" "roles"',
+                md: '"roles primary-info summary"',
+              },
+              gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' },
+            }}>
+            <Box sx={{ gridArea: 'roles' }}>
+              <UserRoles user={user} />
+            </Box>
 
-        <Box sx={{ display: 'grid', gridArea: 'primary-info', gap: '1rem' }}>
-          <UserInfo user={user} />
-          <Divider />
-          <UserOrcid user={user} />
-          <Divider />
-          <UserAffiliations user={user} />
-        </Box>
-
-        <Box sx={{ gridArea: 'summary' }}>
-          <ResearchProfilePanel />
-        </Box>
+            <Box sx={{ display: 'grid', gridArea: 'primary-info', gap: '1rem' }}>
+              <UserInfo user={user} />
+              <Divider />
+              <UserOrcid user={user} />
+              <Divider />
+              <UserAffiliations user={user} />
+            </Box>
+          </Box>
+        </BackgroundDiv>
+        <ResearchProfilePanel />
       </Box>
     </>
   );

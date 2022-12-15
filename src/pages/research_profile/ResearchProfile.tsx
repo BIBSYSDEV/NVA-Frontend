@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
@@ -40,31 +40,30 @@ const ResearchProfile = () => {
   });
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: '4fr 1fr', gap: '1rem' }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '1rem' }}>
       {isLoadingRegistrations ? (
         <PageSpinner aria-label={t('my_page.research_profile')} />
       ) : (
         person && (
-          <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
-            {registrations && (
-              <Box>
-                <Typography variant="h2" gutterBottom>
-                  {t('common.registrations')}
-                </Typography>
-                {registrations.size > 0 ? (
-                  <SearchResults searchResult={registrations} />
-                ) : (
-                  <Typography>{t('common.no_hits')}</Typography>
-                )}
-              </Box>
-            )}
-          </BackgroundDiv>
+          <>
+            <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
+              {registrations && (
+                <Box>
+                  <Typography variant="h2" gutterBottom>
+                    {t('common.registrations')}
+                  </Typography>
+                  {registrations.size > 0 ? (
+                    <SearchResults searchResult={registrations} />
+                  ) : (
+                    <Typography>{t('common.no_hits')}</Typography>
+                  )}
+                </Box>
+              )}
+            </BackgroundDiv>
+          </>
         )
       )}
-      <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Divider orientation="vertical" />
-        <ResearchProfilePanel />
-      </Box>
+      <ResearchProfilePanel />
     </Box>
   );
 };
