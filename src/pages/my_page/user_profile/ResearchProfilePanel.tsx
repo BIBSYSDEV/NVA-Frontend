@@ -9,7 +9,7 @@ import { CristinPerson } from '../../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
 import { AccountCircle } from '@mui/icons-material';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
@@ -17,12 +17,12 @@ import { Helmet } from 'react-helmet-async';
 
 export const ResearchProfilePanel = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const location = useLocation();
 
   const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
-  const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
+  const isPublicPage = location.pathname === UrlPathTemplate.ResearchProfile;
   const personId = isPublicPage
-    ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
+    ? new URLSearchParams(location.search).get('id') ?? '' // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
 
   const [person, isLoadingPerson] = useFetch<CristinPerson>({
@@ -34,7 +34,6 @@ export const ResearchProfilePanel = () => {
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
-  const location = useLocation();
   const currentPath = location.pathname.replace(/\/$/, '').toLowerCase();
   const isPreview = currentPath === UrlPathTemplate.MyPageMyProfile;
 
@@ -78,9 +77,9 @@ export const ResearchProfilePanel = () => {
             </Box>
 
             <Divider sx={{ mt: '3rem' }} />
-            {activeAffiliations.map((affiliation) => {
-              return <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />;
-            })}
+            {activeAffiliations.map((affiliation) => (
+              <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />
+            ))}
           </>
         )}
       </BackgroundDiv>
