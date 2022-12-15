@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { RootState } from '../../redux/store';
-import { CustomerInstitution, PublishStrategy } from '../../types/customerInstitution.types';
-import { useFetch } from '../../utils/hooks/useFetch';
+import { PublishStrategy } from '../../types/customerInstitution.types';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { setNotification } from '../../redux/notificationSlice';
+import { setCustomer } from '../../redux/customerReducer';
 
 const StyledItemContainer = styled('div')({
   display: 'grid',
@@ -48,8 +48,7 @@ const PublishStrategyButton = styled(ButtonBase, { shouldForwardProp: (prop) => 
 export const PublishStrategySettings = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
-  const [customer, isLoadingCustomer, , setCustomer] = useFetch<CustomerInstitution>({ url: user?.customerId ?? '' });
+  const { customer } = useSelector((store: RootState) => store);
   const [isUpdating, setIsUpdating] = useState<PublishStrategy>();
 
   const setPublicationWorkflow = async (publishStrategy: PublishStrategy) => {
@@ -62,14 +61,13 @@ export const PublishStrategySettings = () => {
       if (isErrorStatus(updateCustomerResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_publish_strategy'), variant: 'error' }));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
-        setCustomer(updateCustomerResponse.data);
+        dispatch(setCustomer(updateCustomerResponse.data));
         dispatch(setNotification({ message: t('feedback.success.update_publish_strategy'), variant: 'success' }));
       }
       setIsUpdating(undefined);
     }
   };
 
-  const isLoading = isLoadingCustomer || isUpdating;
   const currentPublishStrategy = customer?.publicationWorkflow;
 
   return (
@@ -80,8 +78,8 @@ export const PublishStrategySettings = () => {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <StyledItemContainer>
           <PublishStrategyButton
-            disabled={!!isLoading || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
-            isSelected={!isLoading && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
+            disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
+            isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
             onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
@@ -102,15 +100,15 @@ export const PublishStrategySettings = () => {
               </Typography>
             </Box>
           </PublishStrategyButton>
-          {isLoading === 'RegistratorPublishesMetadataAndFiles' && (
+          {isUpdating === 'RegistratorPublishesMetadataAndFiles' && (
             <CircularProgress aria-labelledby="publish-strategy-label" />
           )}
         </StyledItemContainer>
 
         <StyledItemContainer>
           <PublishStrategyButton
-            disabled={!!isLoading || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
-            isSelected={!isLoading && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
+            disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
+            isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
             onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
@@ -131,15 +129,15 @@ export const PublishStrategySettings = () => {
               </Typography>
             </Box>
           </PublishStrategyButton>
-          {isLoading === 'RegistratorPublishesMetadataOnly' && (
+          {isUpdating === 'RegistratorPublishesMetadataOnly' && (
             <CircularProgress aria-labelledby="publish-strategy-label" />
           )}
         </StyledItemContainer>
 
         <StyledItemContainer>
           <PublishStrategyButton
-            disabled={!!isLoading || currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
-            isSelected={!isLoading && currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
+            disabled={!!isUpdating || currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
+            isSelected={!isUpdating && currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
             onClick={() => setPublicationWorkflow('RegistratorRequiresApprovalForMetadataAndFiles')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
@@ -160,7 +158,7 @@ export const PublishStrategySettings = () => {
               </Typography>
             </Box>
           </PublishStrategyButton>
-          {isLoading === 'RegistratorRequiresApprovalForMetadataAndFiles' && (
+          {isUpdating === 'RegistratorRequiresApprovalForMetadataAndFiles' && (
             <CircularProgress aria-labelledby="publish-strategy-label" />
           )}
         </StyledItemContainer>

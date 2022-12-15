@@ -279,18 +279,12 @@
     "1144": "Ernæring"
   },
   "editor": {
-    "allowed": "Tillatt",
-    "allowed_description": "$t(editor.allowed): Kan legges til av brukeren selv",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensninger",
       "areas_of_responsibility": "Ansvarsområder",
       "no_users_found": "Ingen brukere funnet"
     },
-    "default": "Standard",
-    "default_description": "$t(editor.default): Vises som standard for alle registreringer",
-    "disabled": "Ikke tillatt",
-    "disabled_description": "$t(editor.disabled): Er ikke tilgjengelig",
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
@@ -313,7 +307,15 @@
       "registrator_publishes_without_curator_description": "Institutsjonen bestemmer hvem som er Registrator."
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
-    "vocabulary": "Vokabular"
+    "vocabulary": "Vokabular",
+    "vocabulary_status": {
+      "Allowed": "Tillatt",
+      "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
+      "Default": "Standard",
+      "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
+      "Disabled": "Ikke tillatt",
+      "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
+    }
   },
   "feedback": {
     "error": {
@@ -961,12 +963,28 @@
     "new_registration": "Ny registrering",
     "public_page": {
       "about_registration": "Om registreringen",
+      "tasks_panel": {
+        "has_doi_request": "Registreringen har en DOI-forespørsel til behandling for kurator.",
+        "has_rejected_doi_request": "Registreringen har en avslått DOI-forespørsel.",
+        "has_rejected_files_publishing_request": "Registreringen har en avslått publiseringsforespørsel for filene.",
+        "has_rejected_publishing_request": "Registreringen har en avslått publiseringsforespørsel.",
+        "has_reserved_doi": "Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.",
+        "metadata_published_waiting_for_files": "Metadata er publisert og synlig for andre brukere, men en kurator må godkjenne filene som er lastet opp før de blir synlige.",
+        "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
+        "reload": "Last på nytt",
+        "request_publishing": "Be om publisering",
+        "review_preview_before_publishing": "Se over utkast før du går videre.",
+        "waiting_for_publishing_approval": "En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere.",
+        "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
+        "waiting_for_reserved_doi": "Det kan ta litt tid før reservert DOI vises. Last innholdet på nytt for å sjekke igjen.",
+        "you_can_publish_everything": "Du kan publisere registreringen på egen hånd. Innholdet vil da bli synlig for andre brukere.",
+        "you_can_publish_metadata": "Du kan publisere metadata selv, men en kurator må godkjenne filene som er lastet opp før de kan vises til andre brukere.",
+        "you_can_publish_metadata_after_curator_approval": "En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere."
+      },
       "approve_publish_request": "Godkjenn publisering",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
-      "has_pending_doi_request": "Registreringen har en DOI-forespørsel under behandling.",
-      "has_pending_publishing_request": "Registreringen har en publiseringsforespørsel under behandling.",
       "in_progress": "Under behandling",
       "message_to_curator": "Melding til kurator",
       "other_contributors_one": "(+{{count}} annen)",
@@ -979,13 +997,11 @@
       "published": "Publisert",
       "published_date": "Publisert: {{date}}",
       "publishing_request": "Publiseringsgodkjenning",
-      "ready_to_be_published": "Klar for publisering.",
-      "ready_to_be_published_description": "Se over utkast før du publiserer.",
       "reject_publish_request": "Avvis publisering",
+      "reserved_doi": "Reservert DOI",
       "request_doi": "Be om en DOI",
-      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
+      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
       "reserve_doi": "Reserver en DOI",
-      "reserve_doi_message": "Autogenerert melding: Bruker ønsker å reservere en DOI.",
       "validation_errors": "Valideringsfeil"
     },
     "publication_types": {

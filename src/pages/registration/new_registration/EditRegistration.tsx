@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { PageHeader } from '../../../components/PageHeader';
-import { SyledPageContent } from '../../../components/styled/Wrappers';
+import { StyledPageContent } from '../../../components/styled/Wrappers';
 import { RegistrationParams } from '../../../utils/urlPaths';
 import { RegistrationForm } from '../RegistrationForm';
 import { LinkRegistration } from './LinkRegistration';
@@ -29,7 +29,7 @@ const EditRegistration = () => {
     setExpanded(isExpanded ? panel : false);
 
   return !showForm ? (
-    <SyledPageContent>
+    <StyledPageContent>
       <PageHeader>{t('registration.new_registration')}</PageHeader>
       <Box
         sx={{
@@ -42,11 +42,11 @@ const EditRegistration = () => {
         <UploadRegistration expanded={expanded === PanelName.File} onChange={handleChange(PanelName.File)} />
         <StartEmptyRegistration expanded={expanded === PanelName.Empty} onChange={handleChange(PanelName.Empty)} />
       </Box>
-    </SyledPageContent>
+    </StyledPageContent>
   ) : (
-    <SyledPageContent>
+    <StyledPageContent>
       <RegistrationForm identifier={identifier} />
-    </SyledPageContent>
+    </StyledPageContent>
   );
 };
 

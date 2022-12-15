@@ -279,18 +279,12 @@
     "1144": "Nutrition"
   },
   "editor": {
-    "allowed": "Allowed",
-    "allowed_description": "$t(editor.allowed): Can be added by the user",
     "curators": {
       "area_of_responsibility": "Area of responsibility",
       "area_of_responsibility_placeholder": "No limitations",
       "areas_of_responsibility": "Areas of responsibility",
       "no_users_found": "No users found"
     },
-    "default": "Default",
-    "default_description": "$t(editor.default): Shown by default for all registrations",
-    "disabled": "Disabled",
-    "disabled_description": "$t(editor.disabled): Is not available",
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
@@ -313,7 +307,15 @@
       "registrator_publishes_without_curator_description": "The institution decides who is Registrator."
     },
     "select_vocabulary_description": "Activate controlled vocabularies for registration of new results",
-    "vocabulary": "Vocabulary"
+    "vocabulary": "Vocabulary",
+    "vocabulary_status": {
+      "allowed": "Allowed",
+      "allowed_description": "$t(editor.allowed): Can be added by the user",
+      "default": "Default",
+      "default_description": "$t(editor.default): Shown by default for all registrations",
+      "disabled": "Disabled",
+      "disabled_description": "$t(editor.disabled): Is not available"
+    }
   },
   "feedback": {
     "error": {
@@ -961,12 +963,28 @@
     "new_registration": "New registration",
     "public_page": {
       "about_registration": "About this registration",
+      "tasks_panel": {
+        "has_doi_request": "Registration has a DOI request for approval to curator.",
+        "has_rejected_doi_request": "Registration has a rejected DOI request.",
+        "has_rejected_files_publishing_request": "Registration has a rejected publishing request for its files.",
+        "has_rejected_publishing_request": "Registration has a rejected publishing request.",
+        "has_reserved_doi": "Registration has a reserved DOI. When the registration is published a DOI request will be created and sent to curator.",
+        "metadata_published_waiting_for_files": "Metadata is published and visible for other users, but a curator must approve the uploaded files before they will be visible.",
+        "registration_will_soon_be_published": "The registration will be published soon. Reload page to see updated status.",
+        "reload": "Reload",
+        "request_publishing": "Request publishing",
+        "review_preview_before_publishing": "Review content before publishing.",
+        "waiting_for_publishing_approval": "A curator must approve content before it can be published and visible to other users.",
+        "waiting_for_rejected_doi": "It can take some time before the reserved DOI is removed. Reload to check again.",
+        "waiting_for_reserved_doi": "It can take some time before the reserved DOI is displayed. Reload to check again.",
+        "you_can_publish_everything": "You can publish on your own. The content will then be visible to other users.",
+        "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the uploaded files before they can be shown to other users.",
+        "you_can_publish_metadata_after_curator_approval": "A curaotr must approve the content before it can be published and visible for other users."
+      },
       "approve_publish_request": "Approve publishing request",
       "error_description": "To publish you must fix the following errors:",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",
       "go_back_to_wizard": "Go back to form",
-      "has_pending_doi_request": "The registration has a pending DOI request.",
-      "has_pending_publishing_request": "The registration has a pending publishing request.",
       "in_progress": "In progress",
       "message_to_curator": "Message to curator",
       "other_contributors_one": "(+{{count}} other)",
@@ -979,13 +997,11 @@
       "published": "Published",
       "published_date": "Published: {{date}}",
       "publishing_request": "Publishing request",
-      "ready_to_be_published": "Ready to be published.",
-      "ready_to_be_published_description": "Review content before publishing.",
       "reject_publish_request": "Reject publishing request",
+      "reserved_doi": "Reserved DOI",
       "request_doi": "Request a DOI",
-      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated.",
+      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
       "reserve_doi": "Reserve a DOI",
-      "reserve_doi_message": "Auto-generated message: User wants to reserve a DOI.",
       "validation_errors": "Validation errors"
     },
     "publication_types": {
