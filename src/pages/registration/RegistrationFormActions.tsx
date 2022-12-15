@@ -10,7 +10,7 @@ import { LoadingButton } from '@mui/lab';
 import { updateRegistration } from '../../api/registrationApi';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
-import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
+import { Registration, RegistrationTab } from '../../types/registration.types';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
@@ -106,7 +106,7 @@ export const RegistrationFormActions = ({
                 // Set all fields with error to touched to ensure error messages are shown
                 setTouched(setNestedObjectValues(errors, true));
               }}>
-              {values.status === RegistrationStatus.Draft ? t('registration.save_draft') : t('common.save')}
+              {t('common.save')}
             </LoadingButton>
             <Button
               variant="contained"
