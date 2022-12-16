@@ -5,7 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { BackgroundDiv, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { TabButton } from '../../components/TabButton';
 import { RootState } from '../../redux/store';
 import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
@@ -43,38 +43,40 @@ export const MyRegistrations = () => {
       <Helmet>
         <title>{t('common.registrations')}</title>
       </Helmet>
-      <StyledRightAlignedWrapper>
-        {user?.cristinId && (
-          <Button
-            component={RouterLink}
-            to={getResearchProfilePath(user.cristinId)}
-            data-testid="public-profile-button">
-            {t('my_page.registrations.my_research_profile')}
-          </Button>
+      <BackgroundDiv>
+        <StyledRightAlignedWrapper>
+          {user?.cristinId && (
+            <Button
+              component={RouterLink}
+              to={getResearchProfilePath(user.cristinId)}
+              data-testid="public-profile-button">
+              {t('my_page.registrations.my_research_profile')}
+            </Button>
+          )}
+        </StyledRightAlignedWrapper>
+        <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
+          <TabButton
+            data-testid="unpublished-button"
+            onClick={() => setSelectedTab(Tab.Unpublished)}
+            isSelected={selectedTab === Tab.Unpublished}>
+            {t('my_page.registrations.unpublished_registrations')} ({unpublishedRegistrations.length})
+          </TabButton>
+          <TabButton
+            data-testid="published-button"
+            onClick={() => setSelectedTab(Tab.Published)}
+            isSelected={selectedTab === Tab.Published}>
+            {t('my_page.registrations.published_registrations')} ({publishedRegistrations.length})
+          </TabButton>
+        </Box>
+        {isLoading ? (
+          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+        ) : (
+          <MyRegistrationsList
+            registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
+            refetchRegistrations={refetchRegistrations}
+          />
         )}
-      </StyledRightAlignedWrapper>
-      <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-        <TabButton
-          data-testid="unpublished-button"
-          onClick={() => setSelectedTab(Tab.Unpublished)}
-          isSelected={selectedTab === Tab.Unpublished}>
-          {t('my_page.registrations.unpublished_registrations')} ({unpublishedRegistrations.length})
-        </TabButton>
-        <TabButton
-          data-testid="published-button"
-          onClick={() => setSelectedTab(Tab.Published)}
-          isSelected={selectedTab === Tab.Published}>
-          {t('my_page.registrations.published_registrations')} ({publishedRegistrations.length})
-        </TabButton>
-      </Box>
-      {isLoading ? (
-        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-      ) : (
-        <MyRegistrationsList
-          registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
-          refetchRegistrations={refetchRegistrations}
-        />
-      )}
+      </BackgroundDiv>
     </>
   );
 };
