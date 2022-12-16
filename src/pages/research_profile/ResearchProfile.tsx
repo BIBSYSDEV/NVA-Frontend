@@ -52,7 +52,7 @@ const ResearchProfile = () => {
       },
     ],
   });
-
+  //hei
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
