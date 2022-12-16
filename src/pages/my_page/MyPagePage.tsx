@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddIcon from '@mui/icons-material/Add';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
@@ -83,16 +82,15 @@ const MyPagePage = () => {
           </LinkButton>
         </NavigationList>
       </SidePanel>
-      <BackgroundDiv>
-        <Switch>
-          <ErrorBoundary>
-            <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
-            <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
-            <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
-            <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
-          </ErrorBoundary>
-        </Switch>
-      </BackgroundDiv>
+
+      <Switch>
+        <ErrorBoundary>
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
+          <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
+        </ErrorBoundary>
+      </Switch>
     </StyledPageWithSideMenu>
   );
 };

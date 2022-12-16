@@ -59,50 +59,52 @@ const ResearchProfile = () => {
 
   return (
     <StyledPageContent>
-      <PageHeader>{fullName}</PageHeader>
-      {isLoadingPerson || isLoadingRegistrations ? (
-        <PageSpinner aria-label={t('my_page.research_profile')} />
-      ) : (
-        person && (
-          <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
-            <Typography variant="h2">{t('common.employments')}</Typography>
-            {activeAffiliations.length > 0 && (
-              <Box sx={lineSx}>
-                <WorkIcon />
-                <Box sx={textContainerSx}>
-                  {activeAffiliations.map(({ organization }) => (
-                    <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
-                  ))}
+      <BackgroundDiv>
+        <PageHeader>{fullName}</PageHeader>
+        {isLoadingPerson || isLoadingRegistrations ? (
+          <PageSpinner aria-label={t('my_page.research_profile')} />
+        ) : (
+          person && (
+            <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
+              <Typography variant="h2">{t('common.employments')}</Typography>
+              {activeAffiliations.length > 0 && (
+                <Box sx={lineSx}>
+                  <WorkIcon />
+                  <Box sx={textContainerSx}>
+                    {activeAffiliations.map(({ organization }) => (
+                      <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
+                    ))}
+                  </Box>
                 </Box>
-              </Box>
-            )}
-            {orcidUri && (
-              <Box sx={lineSx}>
-                <IconButton size="small" href={orcidUri} target="_blank">
-                  <img src={orcidIcon} height="20" alt="orcid" />
-                </IconButton>
-                <Box sx={textContainerSx}>
-                  <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
-                    {orcidUri}
+              )}
+              {orcidUri && (
+                <Box sx={lineSx}>
+                  <IconButton size="small" href={orcidUri} target="_blank">
+                    <img src={orcidIcon} height="20" alt="orcid" />
+                  </IconButton>
+                  <Box sx={textContainerSx}>
+                    <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
+                      {orcidUri}
+                    </Typography>
+                  </Box>
+                </Box>
+              )}
+              {registrations && (
+                <Box sx={{ mt: '2rem' }}>
+                  <Typography variant="h2" gutterBottom>
+                    {t('common.registrations')}
                   </Typography>
+                  {registrations.size > 0 ? (
+                    <SearchResults searchResult={registrations} />
+                  ) : (
+                    <Typography>{t('common.no_hits')}</Typography>
+                  )}
                 </Box>
-              </Box>
-            )}
-            {registrations && (
-              <Box sx={{ mt: '2rem' }}>
-                <Typography variant="h2" gutterBottom>
-                  {t('common.registrations')}
-                </Typography>
-                {registrations.size > 0 ? (
-                  <SearchResults searchResult={registrations} />
-                ) : (
-                  <Typography>{t('common.no_hits')}</Typography>
-                )}
-              </Box>
-            )}
-          </BackgroundDiv>
-        )
-      )}
+              )}
+            </BackgroundDiv>
+          )
+        )}
+      </BackgroundDiv>
     </StyledPageContent>
   );
 };

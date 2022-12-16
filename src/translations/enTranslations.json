@@ -155,7 +155,7 @@
     "required_description": "Fields with asterisk are required",
     "role": "Role",
     "save": "Save",
-    "save_and_present": "Save and present",
+    "save_and_present": "Save and see",
     "search": "Search",
     "search_by_name": "Search by name",
     "search_placeholder": "Name Nameson",
@@ -483,7 +483,12 @@
         "remove_connection": "Remove connection to ORCID",
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
       },
-      "user_profile": "User profile"
+      "user_profile": "User profile",
+      "research_profile_summary": {
+        "preview": "Preview",
+        "research_profile": "Research profile",
+        "affiliations": "Affiliations"
+      }
     },
     "registrations": {
       "delete_registration": "Delete unpublished registration",
@@ -1364,7 +1369,6 @@
       "type_work_specified": "Self-defined type work",
       "volume": "Volume"
     },
-    "save_draft": "Save draft",
     "status": {
       "DRAFT": "Draft",
       "DRAFT_FOR_DELETION": "Deleted",
