@@ -58,8 +58,8 @@ const ResearchProfile = () => {
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
   return (
-    <BackgroundDiv>
-      <StyledPageContent>
+    <StyledPageContent>
+      <BackgroundDiv>
         <PageHeader>{fullName}</PageHeader>
         {isLoadingPerson || isLoadingRegistrations ? (
           <PageSpinner aria-label={t('my_page.research_profile')} />
@@ -104,8 +104,8 @@ const ResearchProfile = () => {
             </BackgroundDiv>
           )
         )}
-      </StyledPageContent>
-    </BackgroundDiv>
+      </BackgroundDiv>
+    </StyledPageContent>
   );
 };
 

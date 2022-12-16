@@ -27,7 +27,7 @@ export const MyProfile = () => {
             columnGap: '3rem',
             gridTemplateAreas: {
               xs: '"primary-info" "roles"',
-              md: '"roles primary-info summary"',
+              md: '"roles primary-info"',
             },
             gridTemplateColumns: { xs: '1fr', md: '1fr 2fr' },
           }}>
@@ -39,8 +39,6 @@ export const MyProfile = () => {
             <UserInfo user={user} />
             <Divider />
             <UserOrcid user={user} />
-            <Divider />
-            <UserAffiliations user={user} />
           </Box>
         </BackgroundDiv>
         <ResearchProfilePanel />
