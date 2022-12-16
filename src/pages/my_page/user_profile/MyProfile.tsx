@@ -6,7 +6,6 @@ import { RootState } from '../../../redux/store';
 import { UserInfo } from './UserInfo';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
-import { UserAffiliations } from './UserAffiliations';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 
