@@ -60,6 +60,12 @@ Alternatively:
 
 Runs React testing library tests
 
+## Generate code coverage
+
+`npx nyc report`
+
+coverage report: `coverage/lcov-report/index.html`
+
 ## External tools
 
 [![Cypress.io](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)](https://www.cypress.io/)
