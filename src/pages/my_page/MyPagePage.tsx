@@ -10,7 +10,6 @@ import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
-import ResearchProfile from '../research_profile/ResearchProfile';
 import { MyProfile } from './user_profile/MyProfile';
 import {
   LinkButton,
@@ -22,6 +21,7 @@ import {
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import ResearchProfile from '../research_profile/ResearchProfile';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
