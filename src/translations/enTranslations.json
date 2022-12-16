@@ -480,7 +480,12 @@
         "remove_connection": "Remove connection to ORCID",
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
       },
-      "user_profile": "User profile"
+      "user_profile": "User profile",
+      "research_profile_summary": {
+        "preview": "Preview",
+        "research_profile": "Research profile",
+        "affiliations": "Affiliations"
+      }
     },
     "registrations": {
       "delete_registration": "Delete unpublished registration",
