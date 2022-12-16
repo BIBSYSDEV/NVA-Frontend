@@ -20,7 +20,7 @@ import '@fontsource/roboto/700.css';
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
 }
-
+//TEst
 // Expose redux store to cypress tests
 if ((window as any).Cypress) {
   (window as any).store = store;
