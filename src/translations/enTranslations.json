@@ -483,7 +483,8 @@
       "user_profile": "User profile",
       "research_profile_summary": {
         "preview": "Preview",
-        "research_profile": "Research profile"
+        "research_profile": "Research profile",
+        "affiliations": "Affiliations"
       }
     },
     "registrations": {

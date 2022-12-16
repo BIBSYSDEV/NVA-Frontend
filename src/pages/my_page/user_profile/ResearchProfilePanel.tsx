@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import PreviewIcon from '@mui/icons-material/Preview';
 import { useSelector } from 'react-redux';
@@ -68,18 +68,20 @@ export const ResearchProfilePanel = () => {
                 {fullName}
               </Typography>
               {orcidUri && (
-                <Box>
-                  <IconButton size="small" href={orcidUri} target="_blank">
-                    <img src={orcidIcon} height="20" alt="orcid" />
-                  </IconButton>
-                </Box>
+                <IconButton size="small" href={orcidUri} target="_blank">
+                  <img src={orcidIcon} height="20" alt="orcid" />
+                </IconButton>
               )}
             </Box>
 
-            <Divider sx={{ mt: '3rem' }} />
-            {activeAffiliations.map((affiliation) => (
-              <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />
-            ))}
+            <Typography sx={{ mt: '3rem', mb: '0.5rem' }} variant="h3">
+              {t('my_page.my_profile.research_profile_summary.affiliations')}
+            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {activeAffiliations.map((affiliation) => (
+                <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />
+              ))}
+            </Box>
           </>
         )}
       </BackgroundDiv>

@@ -483,7 +483,8 @@
       "user_profile": "Brukerprofil",
       "research_profile_summary": {
         "preview": "Forhåndsvisning",
-        "research_profile": "Forskerprofil"
+        "research_profile": "Forskerprofil",
+        "affiliations": "Tilhørigheter"
       }
     },
     "registrations": {
