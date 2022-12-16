@@ -13,7 +13,7 @@ const PublicRegistration = lazy(() => import('./pages/public_registration/Public
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
 const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
-const PublicProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
+const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
 const MyPagePage = lazy(() => import('./pages/my_page/MyPagePage'));
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const Logout = lazy(() => import('./layout/Logout'));
@@ -26,7 +26,7 @@ export const AppRoutes = () => {
         <Route exact path={UrlPathTemplate.Home} component={Dashboard} />
         <Route exact path={UrlPathTemplate.About} component={AboutPage} />
         <Route exact path={UrlPathTemplate.PrivacyPolicy} component={PrivacyPolicy} />
-        <Route exact path={UrlPathTemplate.ResearchProfile} component={PublicProfile} />
+        <Route exact path={UrlPathTemplate.ResearchProfile} component={PublicResearchProfile} />
         <Route exact path={UrlPathTemplate.RegistrationLandingPage} component={PublicRegistration} />
         <Route exact path={UrlPathTemplate.Projects} component={ProjectsPage} />
         <Route exact path={UrlPathTemplate.Login} component={LoginPage} />
