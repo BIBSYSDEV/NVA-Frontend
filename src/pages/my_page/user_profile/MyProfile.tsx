@@ -1,14 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { RootState } from '../../../redux/store';
-import { UserInfo } from './UserInfo';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
-import { BackgroundDiv } from '../../../components/styled/Wrappers';
+import { BackgroundDiv, InputContainerBox } from '../../../components/styled/Wrappers';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
-import { Field, Form, Formik, FormikHelpers, FormikValues } from 'formik';
+import { ErrorMessage, Field, FieldProps, Formik, FormikHelpers, FormikValues } from 'formik';
+import { dataTestId } from '../../../utils/dataTestIds';
+import EditIcon from '@mui/icons-material/Edit';
 
 export const MyProfile = () => {
   const { t } = useTranslation();
@@ -36,7 +37,15 @@ export const MyProfile = () => {
           }}>
           <Box>
             <Typography variant="h2">Personalia</Typography>
-            <Box sx={{ mt: '3rem', display: 'grid', gridTemplateColumns: '1fr 2fr 3fr', gridColumnEnd: 2 }}>
+            <Box
+              sx={{
+                mt: '3rem',
+                display: 'grid',
+                gap: '1rem',
+                gridTemplateColumns: '1fr 2fr 3fr',
+                gridColumnEnd: 2,
+                alignItems: 'center',
+              }}>
               <Typography>Forfatternavn</Typography>
               <Formik
                 initialValues={{ name: fullName }}
@@ -46,9 +55,31 @@ export const MyProfile = () => {
                 ): void | Promise<any> {
                   throw new Error('Function not implemented.');
                 }}>
-                <Form>
-                  <Field name="name" type="text" />
-                </Form>
+                <InputContainerBox>
+                  <Field name={'authorName'}>
+                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                      <TextField
+                        {...field}
+                        id={field.name}
+                        value={field.value ?? fullName}
+                        required
+                        data-testid={dataTestId.registrationWizard.description.titleField}
+                        variant="filled"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton>
+                                <EditIcon />
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  </Field>
+                </InputContainerBox>
               </Formik>
               <UserOrcid user={user} />
             </Box>

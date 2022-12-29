@@ -126,16 +126,10 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               rel="noopener noreferrer">
               {orcidUrl}
             </Typography>
+            <IconButton color="error" data-testid="button-confirm-delete-orcid" onClick={toggleConfirmDialog}>
+              <CancelIcon />
+            </IconButton>
           </Box>
-
-          <Button
-            color="error"
-            data-testid="button-confirm-delete-orcid"
-            onClick={toggleConfirmDialog}
-            startIcon={<CancelIcon />}
-            variant="outlined">
-            {t('common.remove')}
-          </Button>
 
           <ConfirmDialog
             open={openConfirmDialog}
