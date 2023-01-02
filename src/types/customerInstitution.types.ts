@@ -23,16 +23,23 @@ export interface CustomerInstitution extends SimpleCustomerInstitution {
   vocabularies: CustomerVocabulary[];
   publicationWorkflow: PublishStrategy;
   rorId?: string;
-  doiAgent?: DoiAgent;
+  doiAgent: {
+    id: string;
+  };
 }
 
 export interface DoiAgent {
-  name: string;
+  id: string;
+  url: string;
   prefix: string;
+  username: string;
+  password?: string;
 }
 
-export interface CustomerInstitutionFormData extends CustomerInstitution {
+export interface CustomerInstitutionFormData {
   canAssignDoi: boolean;
+  customer: Omit<CustomerInstitution, 'doiAgent'>;
+  doiAgent: Omit<DoiAgent, 'url'>;
 }
 
 export enum VocabularyStatus {
@@ -48,7 +55,7 @@ export interface CustomerVocabulary {
   status: VocabularyStatus;
 }
 
-export const emptyCustomerInstitution: CustomerInstitution = {
+export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   type: 'Customer',
   id: '',
   archiveName: '',
@@ -64,25 +71,29 @@ export const emptyCustomerInstitution: CustomerInstitution = {
   vocabularies: [],
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   rorId: '',
-  doiAgent: {
-    name: '',
-    prefix: '',
-  },
+};
+
+export const emptyDoiAgent: DoiAgent = {
+  id: '',
+  url: '',
+  prefix: '',
+  username: '',
+  password: '',
 };
 
 export enum CustomerInstitutionFieldNames {
-  ArchiveName = 'archiveName',
-  CName = 'cname',
-  CristinId = 'cristinId',
-  DisplayName = 'displayName',
-  DoiName = 'doiAgent.name',
+  ArchiveName = 'customer.archiveName',
+  CName = 'customer.cname',
+  CristinId = 'customer.cristinId',
+  DisplayName = 'customer.displayName',
+  DoiUsername = 'doiAgent.username',
   DoiPrefix = 'doiAgent.prefix',
-  FeideOrganizationDomain = 'feideOrganizationDomain',
-  Identifier = 'identifier',
-  InstitutionDns = 'institutionDns',
-  Name = 'name',
-  RorId = 'rorId',
-  ShortName = 'shortName',
+  FeideOrganizationDomain = 'customer.feideOrganizationDomain',
+  Identifier = 'customer.identifier',
+  InstitutionDns = 'customer.institutionDns',
+  Name = 'customer.name',
+  RorId = 'customer.rorId',
+  ShortName = 'customer.shortName',
   CanAssignDoi = 'canAssignDoi',
 }
 

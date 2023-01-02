@@ -340,6 +340,7 @@
       "get_customer": "Could not retrieve customer institution",
       "get_customers": "Could not retrieve customer institutions",
       "get_doi": "Could not retrieve link data",
+      "get_doi_agent": "Could not retrieve DOI configuration",
       "get_institution": "Could not retrieve institution",
       "get_institutions": "Could not retrieve institutions",
       "get_journal": "Could not retrieve journal",

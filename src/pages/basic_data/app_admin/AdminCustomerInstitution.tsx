@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { RoleApiPath } from '../../../api/apiPaths';
 import { PageHeader } from '../../../components/PageHeader';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { CustomerInstitution, emptyCustomerInstitution } from '../../../types/customerInstitution.types';
+import { CustomerInstitution, DoiAgent } from '../../../types/customerInstitution.types';
 import { RoleName, UserList } from '../../../types/user.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { filterUsersByRole } from '../../../utils/role-helpers';
@@ -21,6 +21,11 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
     errorMessage: t('feedback.error.get_customer'),
     withAuthentication: true,
   });
+  const [doiAgent, isLoadingDoiAgent] = useFetch<DoiAgent>({
+    url: customerInstitution?.doiAgent.id ?? '',
+    errorMessage: t('feedback.error.get_doi_agent'),
+    withAuthentication: true,
+  });
   const [userList, isLoadingUsers, refetchInstitutionUsers] = useFetch<UserList>({
     url: customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(customerId)}` : '',
     errorMessage: t('feedback.error.get_users_for_institution'),
@@ -36,12 +41,13 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
         {editMode ? t('basic_data.institutions.edit_institution') : t('basic_data.institutions.add_institution')}
       </PageHeader>
 
-      {isLoadingCustomerInstitution ? (
+      {isLoadingCustomerInstitution || isLoadingDoiAgent || isLoadingUsers ? (
         <PageSpinner aria-labelledby="admin-institution-label" />
       ) : (
         <>
           <CustomerInstitutionMetadataForm
-            customerInstitution={customerInstitution ?? emptyCustomerInstitution}
+            customerInstitution={customerInstitution}
+            doiAgent={doiAgent}
             editMode={editMode}
           />
 
@@ -49,7 +55,6 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
             <CustomerInstitutionAdminsForm
               admins={admins}
               refetchInstitutionUsers={refetchInstitutionUsers}
-              isLoadingUsers={isLoadingUsers}
               cristinInstitutionId={customerInstitution.cristinId}
             />
           )}

@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { CustomerInstitution, CustomerInstitutionFieldNames, DoiAgent } from '../../types/customerInstitution.types';
+import { CustomerInstitution, CustomerInstitutionFormData, DoiAgent } from '../../types/customerInstitution.types';
 import i18n from '../../translations/i18n';
 import { YupShape } from './validationHelpers';
 
@@ -22,23 +22,17 @@ const customerErrorMessage = {
   }),
 };
 
-export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerInstitution>>({
-  [CustomerInstitutionFieldNames.Name]: Yup.string().required(customerErrorMessage.institutionRequired),
-  [CustomerInstitutionFieldNames.DisplayName]: Yup.string().required(customerErrorMessage.displayNameRequired),
-  [CustomerInstitutionFieldNames.ShortName]: Yup.string().required(customerErrorMessage.shortNameRequired),
-  [CustomerInstitutionFieldNames.ArchiveName]: Yup.string(),
-  [CustomerInstitutionFieldNames.FeideOrganizationDomain]: Yup.string(),
-  [CustomerInstitutionFieldNames.RorId]: Yup.string().matches(
-    /^https?:\/\/ror\.org\/([a-z0-9]{9})/,
-    customerErrorMessage.rorInvalid
-  ),
-  doiAgent: Yup.object()
-    .nullable()
-    .when(CustomerInstitutionFieldNames.CanAssignDoi, {
-      is: true,
-      then: Yup.object<YupShape<DoiAgent>>({
-        name: Yup.string().required(customerErrorMessage.doiNameRequired),
-        prefix: Yup.string().required(customerErrorMessage.doiPrefixRequired),
-      }),
-    }),
+export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerInstitutionFormData>>({
+  customer: Yup.object<YupShape<CustomerInstitution>>({
+    name: Yup.string().required(customerErrorMessage.institutionRequired),
+    displayName: Yup.string().required(customerErrorMessage.displayNameRequired),
+    shortName: Yup.string().required(customerErrorMessage.shortNameRequired),
+    archiveName: Yup.string(),
+    feideOrganizationDomain: Yup.string(),
+    rorId: Yup.string().matches(/^https?:\/\/ror\.org\/([a-z0-9]{9})/, customerErrorMessage.rorInvalid),
+  }),
+  doiAgent: Yup.object<YupShape<DoiAgent>>({
+    username: Yup.string().required(customerErrorMessage.doiNameRequired),
+    prefix: Yup.string().required(customerErrorMessage.doiPrefixRequired),
+  }),
 });

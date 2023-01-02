@@ -4,21 +4,18 @@ import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { UserList } from './UserList';
-import { ListSkeleton } from '../../../components/ListSkeleton';
 import { AddAdminDialog } from './AddAdminDialog';
 import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 
 interface CustomerInstitutionAdminsFormProps {
   admins: InstitutionUser[];
   refetchInstitutionUsers: () => void;
-  isLoadingUsers: boolean;
   cristinInstitutionId: string;
 }
 
 export const CustomerInstitutionAdminsForm = ({
   admins,
   refetchInstitutionUsers,
-  isLoadingUsers,
   cristinInstitutionId,
 }: CustomerInstitutionAdminsFormProps) => {
   const { t } = useTranslation();
@@ -32,33 +29,28 @@ export const CustomerInstitutionAdminsForm = ({
       <Typography variant="h2" gutterBottom>
         {t('basic_data.institutions.administrators')}
       </Typography>
-      {isLoadingUsers ? (
-        <ListSkeleton />
-      ) : (
-        <>
-          <UserList
-            userList={admins}
-            roleToRemove={RoleName.InstitutionAdmin}
-            refetchUsers={refetchInstitutionUsers}
-            tableCaption={t('my_page.roles.institution_admins')}
-          />
-          <StyledRightAlignedWrapper>
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              data-testid="button-open-add-admin"
-              onClick={toggleOpenAddAdminModal}>
-              {t('common.add_custom', { name: t('my_page.roles.institution_admin') })}
-            </Button>
-          </StyledRightAlignedWrapper>
-          <AddAdminDialog
-            open={openAddAdminModal}
-            toggleOpen={toggleOpenAddAdminModal}
-            cristinInstitutionId={cristinInstitutionId}
-            refetchInstitutionUsers={refetchInstitutionUsers}
-          />
-        </>
-      )}
+
+      <UserList
+        userList={admins}
+        roleToRemove={RoleName.InstitutionAdmin}
+        refetchUsers={refetchInstitutionUsers}
+        tableCaption={t('my_page.roles.institution_admins')}
+      />
+      <StyledRightAlignedWrapper>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          data-testid="button-open-add-admin"
+          onClick={toggleOpenAddAdminModal}>
+          {t('common.add_custom', { name: t('my_page.roles.institution_admin') })}
+        </Button>
+      </StyledRightAlignedWrapper>
+      <AddAdminDialog
+        open={openAddAdminModal}
+        toggleOpen={toggleOpenAddAdminModal}
+        cristinInstitutionId={cristinInstitutionId}
+        refetchInstitutionUsers={refetchInstitutionUsers}
+      />
     </>
   );
 };

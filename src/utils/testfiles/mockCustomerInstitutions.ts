@@ -39,8 +39,7 @@ export const mockCustomerInstitution: CustomerInstitution = {
   vocabularies: mockCustomerInstitutionVocabularies.vocabularies,
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   doiAgent: {
-    name: '',
-    prefix: '',
+    id: 'https://api.dev.nva.aws.unit.no/customer/1/doiagent',
   },
 };
 
