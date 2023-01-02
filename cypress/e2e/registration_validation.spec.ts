@@ -13,7 +13,7 @@ import {
 } from '../../src/types/publicationFieldNames';
 
 describe('User opens registration form and can see validation errors', () => {
-  before('Given that the user is logged in as Creator:', () => {
+  beforeEach('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
     cy.mocklogin();
 
@@ -24,12 +24,10 @@ describe('User opens registration form and can see validation errors', () => {
 
   it('The User should be see validation errors for every tab', () => {
     cy.get('[data-testid=error-tab]').should('have.length', 4);
-  });
 
-  it('The User should be able to see validation errors on description tab', () => {
+    /* The User should be able to see validation errors on description tab */
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click({ force: true });
 
-    // Title field
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] p.Mui-error`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).within(() =>
       cy.get('[data-testid=error-tab]').should('exist')
@@ -39,7 +37,6 @@ describe('User opens registration form and can see validation errors', () => {
       .type('TITLE INPUT');
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.titleField}] p.Mui-error`).should('not.exist');
 
-    // Date published field
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}] input`)
       .click({ force: true })
       .type('999');
@@ -57,9 +54,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
-  });
 
-  it('The User should be able to see validation errors on resource tab (Journal)', () => {
+    /* The User should be able to see validation errors on resource tab (Journal) */
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.resourceStepButton}]`).click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.resourceStepButton}]`).click({ force: true });
@@ -119,9 +115,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
-  });
 
-  it('The User should be able to see validation errors on resource tab (Book)', () => {
+    /* The User should be able to see validation errors on resource tab (Book) */
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.Article)}]`).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.Monograph)}]`).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
@@ -169,9 +164,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
-  });
 
-  it('The User should be able to see validation errors on resource tab (Report)', () => {
+    /* The User should be able to see validation errors on resource tab (Report) */
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.Monograph)}]`).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Report)}]`).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
@@ -197,9 +191,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
-  });
 
-  it('The User should be able to see validation errors on resource tab (Presentation)', () => {
+    /* The User should be able to see validation errors on resource tab (Presentation) */
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Report)}]`).click();
     cy.get(
       `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(PresentationType.ConferenceLecture)}]`
@@ -239,9 +232,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
-  });
 
-  it('The User should be able to see validation errors on resource tab (Artistic)', () => {
+    /* The User should be able to see validation errors on resource tab (Artistic) */
     cy.get(
       `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(PresentationType.ConferenceLecture)}]`
     ).click();
@@ -280,9 +272,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
-  });
 
-  it('The User should be able to see validation errors on resource tab (Degree)', () => {
+    /* The User should be able to see validation errors on resource tab (Degree) */
     cy.get(
       `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ArtisticType.ArtisticDesign)}]`
     ).click();
@@ -310,9 +301,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
-  });
 
-  it('The User should be able to see validation errors on contributors tab', () => {
+    /* The User should be able to see validation errors on contributors tab */
     cy.get('[data-testid=nav-tabpanel-contributors]').click();
     cy.get('p.Mui-error').should('be.visible');
     cy.get('[data-testid=nav-tabpanel-contributors]').within(() => cy.get('[data-testid=error-tab]').should('exist'));
@@ -335,9 +325,8 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-contributors]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
-  });
 
-  it('The User should be able to see validation errors on files tab', () => {
+    /* The User should be able to see validation errors on files tab */
     cy.get('[data-testid="nav-tabpanel-files-and-license"]').click({ force: true });
     cy.get('p.Mui-error').should('have.length', 1);
     cy.get('[data-testid=nav-tabpanel-files-and-license]').within(() =>
