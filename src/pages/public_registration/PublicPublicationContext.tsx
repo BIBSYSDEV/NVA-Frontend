@@ -165,9 +165,9 @@ interface PublicJournalContentProps {
   errorMessage: string;
 }
 
-const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
+const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) => {
   const { t } = useTranslation();
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', t('feedback.error.get_journal'));
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', errorMessage);
 
   return id ? (
     <>

@@ -5,7 +5,7 @@ import { getRegistrationIdentifier } from '../../src/utils/registration-helpers'
 import { getRegistrationLandingPagePath, getRegistrationWizardPath } from '../../src/utils/urlPaths';
 
 describe('Tasks', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/my-profile');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.Curator]);
