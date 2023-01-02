@@ -12,7 +12,7 @@ import {
   ReportType,
 } from '../../src/types/publicationFieldNames';
 
-describe('User opens registration form and can see validation errors', { testIsolation: false }, () => {
+describe('User opens registration form and can see validation errors', () => {
   beforeEach('Given that the user is logged in as Creator:', () => {
     cy.visit('/');
     cy.mocklogin();
