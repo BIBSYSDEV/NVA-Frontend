@@ -27,7 +27,7 @@
     ]
   },
   "dependencies": {
-    "@aws-amplify/auth": "^5.1.0",
+    "@aws-amplify/auth": "^5.1.2",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/roboto": "^4.5.8",
@@ -41,7 +41,7 @@
     "@uppy/dashboard": "^1.21.1",
     "@uppy/locales": "^1.22.0",
     "@uppy/react": "^1.12.2",
-    "axios": "^1.2.1",
+    "axios": "^1.2.2",
     "date-fns": "^2.29.3",
     "deepmerge": "^4.2.2",
     "formik": "^2.2.9",
