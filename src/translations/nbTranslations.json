@@ -366,6 +366,7 @@
       "search": "Søk feilet",
       "send_message": "Kunne ikke sende melding",
       "update_customer": "Kunne ikke oppdatere institusjon",
+      "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
       "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
       "update_institution_user": "Kunne ikke oppdatere bruker",
       "update_orcid": "Oppdatering av ORCID-kobling feilet",

@@ -5,7 +5,6 @@ import AddIcon from '@mui/icons-material/Add';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
 import { UserList } from './UserList';
 import { AddAdminDialog } from './AddAdminDialog';
-import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 
 interface CustomerInstitutionAdminsFormProps {
   admins: InstitutionUser[];
@@ -36,15 +35,14 @@ export const CustomerInstitutionAdminsForm = ({
         refetchUsers={refetchInstitutionUsers}
         tableCaption={t('my_page.roles.institution_admins')}
       />
-      <StyledRightAlignedWrapper>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          data-testid="button-open-add-admin"
-          onClick={toggleOpenAddAdminModal}>
-          {t('common.add_custom', { name: t('my_page.roles.institution_admin') })}
-        </Button>
-      </StyledRightAlignedWrapper>
+      <Button
+        sx={{ mt: '0.5rem', float: 'right' }}
+        variant="contained"
+        startIcon={<AddIcon />}
+        data-testid="button-open-add-admin"
+        onClick={toggleOpenAddAdminModal}>
+        {t('common.add_custom', { name: t('my_page.roles.institution_admin') })}
+      </Button>
       <AddAdminDialog
         open={openAddAdminModal}
         toggleOpen={toggleOpenAddAdminModal}

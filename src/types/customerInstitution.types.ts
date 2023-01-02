@@ -39,7 +39,7 @@ export interface DoiAgent {
 export interface CustomerInstitutionFormData {
   canAssignDoi: boolean;
   customer: Omit<CustomerInstitution, 'doiAgent'>;
-  doiAgent: Omit<DoiAgent, 'url'>;
+  doiAgent: DoiAgent;
 }
 
 export enum VocabularyStatus {

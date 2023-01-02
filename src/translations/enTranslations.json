@@ -366,6 +366,7 @@
       "search": "Search failed",
       "send_message": "Could not send message",
       "update_customer": "Could not update customer institution",
+      "update_doi_agent": "Could not update DOI configuration",
       "update_doi_request": "Could not update DOI request",
       "update_institution_user": "Could not update user",
       "update_orcid": "Could not update ORCID",

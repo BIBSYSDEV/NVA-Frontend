@@ -13,7 +13,11 @@ import {
   emptyDoiAgent,
 } from '../../../types/customerInstitution.types';
 import { setNotification } from '../../../redux/notificationSlice';
-import { createCustomerInstitution, updateCustomerInstitution } from '../../../api/customerInstitutionsApi';
+import {
+  createCustomerInstitution,
+  updateCustomerInstitution,
+  updateDoiAgent,
+} from '../../../api/customerInstitutionsApi';
 import { InputContainerBox, StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
 import { customerInstitutionValidationSchema } from '../../../utils/validation/customerInstitutionValidation';
 import { getAdminInstitutionPath } from '../../../utils/urlPaths';
@@ -38,8 +42,7 @@ export const CustomerInstitutionMetadataForm = ({
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const handleSubmit = async ({ customer }: CustomerInstitutionFormData) => {
-    // TODO: Update doiAgent
+  const handleSubmit = async ({ customer, doiAgent }: CustomerInstitutionFormData) => {
     if (!editMode) {
       const createCustomerResponse = await createCustomerInstitution(customer);
       if (isErrorStatus(createCustomerResponse.status)) {
@@ -53,7 +56,12 @@ export const CustomerInstitutionMetadataForm = ({
       if (isErrorStatus(updateCustomerResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' }));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
+        const updateDoiAgentResponse = await updateDoiAgent(customerInstitution?.doiAgent.id ?? '', doiAgent);
+        if (isErrorStatus(updateDoiAgentResponse.status)) {
+          dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
+        } else if (isSuccessStatus(updateDoiAgentResponse.status)) {
+          dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
+        }
       }
     }
   };
@@ -138,39 +146,41 @@ export const CustomerInstitutionMetadataForm = ({
               dataTestId={dataTestId.basicData.institutionAdmin.rorField}
             />
 
-            <div>
-              <Field name={CustomerInstitutionFieldNames.CanAssignDoi}>
-                {({ field }: FieldProps<boolean>) => (
-                  <FormControlLabel
-                    label={t('basic_data.institutions.can_assign_doi')}
-                    control={
-                      <Checkbox
-                        data-testid={dataTestId.basicData.institutionAdmin.canAssignDoiCheckbox}
-                        required
-                        {...field}
-                        checked={field.value}
-                      />
-                    }
-                  />
+            {editMode && (
+              <div>
+                <Field name={CustomerInstitutionFieldNames.CanAssignDoi}>
+                  {({ field }: FieldProps<boolean>) => (
+                    <FormControlLabel
+                      label={t('basic_data.institutions.can_assign_doi')}
+                      control={
+                        <Checkbox
+                          data-testid={dataTestId.basicData.institutionAdmin.canAssignDoiCheckbox}
+                          required
+                          {...field}
+                          checked={field.value}
+                        />
+                      }
+                    />
+                  )}
+                </Field>
+                {values.canAssignDoi && (
+                  <Box sx={{ display: 'flex', gap: '1rem' }}>
+                    <CustomerInstitutionTextField
+                      required
+                      name={CustomerInstitutionFieldNames.DoiUsername}
+                      label={t('basic_data.institutions.doi_name')}
+                      dataTestId={dataTestId.basicData.institutionAdmin.dataCiteMemberField}
+                    />
+                    <CustomerInstitutionTextField
+                      required
+                      name={CustomerInstitutionFieldNames.DoiPrefix}
+                      label={t('basic_data.institutions.doi_prefix')}
+                      dataTestId={dataTestId.basicData.institutionAdmin.doiPrefixField}
+                    />
+                  </Box>
                 )}
-              </Field>
-              {values.canAssignDoi && (
-                <Box sx={{ display: 'flex', gap: '1rem' }}>
-                  <CustomerInstitutionTextField
-                    required
-                    name={CustomerInstitutionFieldNames.DoiUsername}
-                    label={t('basic_data.institutions.doi_name')}
-                    dataTestId={dataTestId.basicData.institutionAdmin.dataCiteMemberField}
-                  />
-                  <CustomerInstitutionTextField
-                    required
-                    name={CustomerInstitutionFieldNames.DoiPrefix}
-                    label={t('basic_data.institutions.doi_prefix')}
-                    dataTestId={dataTestId.basicData.institutionAdmin.doiPrefixField}
-                  />
-                </Box>
-              )}
-            </div>
+              </div>
+            )}
             <StyledRightAlignedWrapper>
               <LoadingButton
                 data-testid={dataTestId.basicData.institutionAdmin.saveButton}
