@@ -17,6 +17,7 @@ const customerErrorMessage = {
   doiNameRequired: i18n.t('translation:feedback.validation.is_required', {
     field: i18n.t('translation:basic_data.institutions.doi_name'),
   }),
+  doiPrefixInvalid: i18n.t('translation:basic_data.institutions.invalid_doi_prefix'),
   doiPrefixRequired: i18n.t('translation:feedback.validation.is_required', {
     field: i18n.t('translation:basic_data.institutions.doi_prefix'),
   }),
@@ -40,7 +41,9 @@ export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerI
     then: () =>
       Yup.object<YupShape<DoiAgent>>({
         username: Yup.string().required(customerErrorMessage.doiNameRequired),
-        prefix: Yup.string().required(customerErrorMessage.doiPrefixRequired), // TODO: regex
+        prefix: Yup.string()
+          .matches(/^10.(\d){4,9}$/, customerErrorMessage.doiPrefixInvalid)
+          .required(customerErrorMessage.doiPrefixRequired),
         url: Yup.string().required(customerErrorMessage.doiUrlRequired),
       }),
     otherwise: (schema) => schema,

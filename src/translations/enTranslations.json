@@ -67,6 +67,7 @@
       "display_name": "Display name for the institution",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",
+      "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
       "remove_role_text": "Are you sure you want to remove this role?",
       "remove_role_title": "Remove role?",
