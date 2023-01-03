@@ -38,6 +38,9 @@ export const mockCustomerInstitution: CustomerInstitution = {
   feideOrganizationDomain: 'ntnu.no',
   vocabularies: mockCustomerInstitutionVocabularies.vocabularies,
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
+  doiAgent: {
+    id: 'https://api.dev.nva.aws.unit.no/customer/1/doiagent',
+  },
 };
 
 export const mockCustomerInstitutions: CustomerList = {
