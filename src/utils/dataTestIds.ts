@@ -1,5 +1,6 @@
 export const dataTestId = {
   basicData: {
+    addCustomerLink: 'add-customer-link',
     addEmployeeLink: 'add-employee-link',
     adminInstitutionsLink: 'admin-institutions-link',
     centralImportLink: 'central-import-link',
@@ -20,7 +21,6 @@ export const dataTestId = {
       textFieldYear: 'duplicate-search-year-textfield',
     },
     customers: {
-      addCustomerButton: 'add-institution-button',
       customerList: 'customer-institutions-list',
       editInstitutionButton: (name: string) => `edit-institution-button-${name.toLowerCase().replaceAll(' ', '-')}`,
     },
