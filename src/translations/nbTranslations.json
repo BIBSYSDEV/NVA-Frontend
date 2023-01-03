@@ -63,6 +63,7 @@
       "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
       "doi_name": "Data Cite Member ID",
       "doi_prefix": "DOI prefiks",
+      "doi_url": "URL",
       "display_name": "Visningsnavn på institusjonen",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Organisasjonens domene i Feide",

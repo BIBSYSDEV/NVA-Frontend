@@ -63,6 +63,7 @@
       "can_assign_doi": "Institution can assign Digital Object Identifier (DOI)",
       "doi_name": "Data Cite Member ID",
       "doi_prefix": "DOI prefix",
+      "doi_url": "URL",
       "display_name": "Display name for the institution",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",

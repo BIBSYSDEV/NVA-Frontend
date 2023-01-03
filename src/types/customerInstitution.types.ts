@@ -86,6 +86,7 @@ export enum CustomerInstitutionFieldNames {
   CName = 'customer.cname',
   CristinId = 'customer.cristinId',
   DisplayName = 'customer.displayName',
+  DoiUrl = 'doiAgent.url',
   DoiUsername = 'doiAgent.username',
   DoiPrefix = 'doiAgent.prefix',
   FeideOrganizationDomain = 'customer.feideOrganizationDomain',
