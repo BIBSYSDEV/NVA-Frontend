@@ -290,6 +290,10 @@
       "areas_of_responsibility": "Ansvarsområder",
       "no_users_found": "Ingen brukere funnet"
     },
+    "doi": {
+      "digital_object_identifier": "Digital Object Identifier",
+      "doi_data_cite": "DOI DataCite"
+    },
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {

@@ -50,6 +50,7 @@ export const dataTestId = {
   editor: {
     areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
+    doiLinkButton: 'doi-link-button',
     publishStrategyLinkButton: 'publishing-strategy-link-button',
     vocabularyLinkButton: 'vocabulary-link-button',
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',

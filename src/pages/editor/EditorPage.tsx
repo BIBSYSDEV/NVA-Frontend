@@ -19,6 +19,7 @@ import {
 } from '../../components/PageWithSideMenu';
 import { RootState } from '../../redux/store';
 import { EditorCurators } from './EditorCurators';
+import { EditorDoi } from './EditorDoi';
 
 const EditorPage = () => {
   const { t } = useTranslation();
@@ -43,6 +44,12 @@ const EditorPage = () => {
             data-testid={dataTestId.editor.institutionsNameLinkButton}
             to={UrlPathTemplate.EditorInstitution}>
             {t('editor.institution.institution_name')}
+          </LinkButton>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.EditorDoi}
+            data-testid={dataTestId.editor.doiLinkButton}
+            to={UrlPathTemplate.EditorDoi}>
+            {t('editor.doi.doi_data_cite')}
           </LinkButton>
           <LinkButton
             isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
@@ -70,6 +77,7 @@ const EditorPage = () => {
           <EditorRoute exact path={UrlPathTemplate.EditorPublishStrategy} component={PublishStrategySettings} />
           <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
           <EditorRoute exact path={UrlPathTemplate.EditorCurators} component={EditorCurators} />
+          <EditorRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} />
         </Switch>
       </BackgroundDiv>
     </StyledPageWithSideMenu>
