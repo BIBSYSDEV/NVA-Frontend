@@ -7,8 +7,8 @@ describe('User administers institutions ', () => {
     cy.visit('/');
     cy.mocklogin();
     cy.setUserRolesInRedux([RoleName.AppAdmin]);
-    cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click({ force: true });
-    cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.basicData.adminInstitutionsLink}]`).click();
   });
 
   it('The User should be able to open admin page for institutions from the menu', () => {
@@ -17,15 +17,15 @@ describe('User administers institutions ', () => {
   });
 
   it('The User should be able to add an institution', () => {
-    cy.get(`[data-testid=${dataTestId.basicData.customers.addCustomerButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.basicData.customers.addCustomerButton}]`).click();
 
-    cy.get(`[data-testid=${dataTestId.organization.searchField}]`).click({ force: true }).type('sikt');
-    cy.get('[class^=MuiAutocomplete-option]').contains('Sikt').click({ force: true });
+    cy.get(`[data-testid=${dataTestId.organization.searchField}]`).click().type('sikt');
+    cy.get('[class^=MuiAutocomplete-option]').contains('Sikt').click();
     cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.shortNameField}] input`).type('Sikt');
     cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.archiveNameField}] input`).type('Sikt arkiv');
     cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.feideField}] input`).type('NO123');
 
-    cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.saveButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.saveButton}]`).click();
     cy.get('[data-testid=snackbar-success]').contains('Created customer institution');
   });
 
@@ -36,7 +36,7 @@ describe('User administers institutions ', () => {
 
     cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.archiveNameField}] input`).type(' Archive');
 
-    cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.saveButton}]`).click({ force: true });
+    cy.get(`[data-testid=${dataTestId.basicData.institutionAdmin.saveButton}]`).click();
     cy.get('[data-testid=snackbar-success]').contains('Updated customer institution');
   });
 });

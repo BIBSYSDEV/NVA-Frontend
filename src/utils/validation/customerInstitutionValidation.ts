@@ -23,6 +23,7 @@ const customerErrorMessage = {
 };
 
 export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerInstitutionFormData>>({
+  canAssignDoi: Yup.boolean(),
   customer: Yup.object<YupShape<CustomerInstitution>>({
     name: Yup.string().required(customerErrorMessage.institutionRequired),
     displayName: Yup.string().required(customerErrorMessage.displayNameRequired),
@@ -31,8 +32,13 @@ export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerI
     feideOrganizationDomain: Yup.string(),
     rorId: Yup.string().matches(/^https?:\/\/ror\.org\/([a-z0-9]{9})/, customerErrorMessage.rorInvalid),
   }),
-  doiAgent: Yup.object<YupShape<DoiAgent>>({
-    username: Yup.string().required(customerErrorMessage.doiNameRequired),
-    prefix: Yup.string().required(customerErrorMessage.doiPrefixRequired),
+  doiAgent: Yup.object().when('canAssignDoi', {
+    is: true,
+    then: () =>
+      Yup.object<YupShape<DoiAgent>>({
+        username: Yup.string().required(customerErrorMessage.doiNameRequired),
+        prefix: Yup.string().required(customerErrorMessage.doiPrefixRequired),
+      }),
+    otherwise: (schema) => schema,
   }),
 });
