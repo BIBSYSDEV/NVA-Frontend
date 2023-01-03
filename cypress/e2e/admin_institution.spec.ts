@@ -17,7 +17,7 @@ describe('User administers institutions ', () => {
   });
 
   it('The User should be able to add an institution', () => {
-    cy.get(`[data-testid=${dataTestId.basicData.customers.addCustomerButton}]`).click();
+    cy.get(`[data-testid=${dataTestId.basicData.addCustomerLink}]`).click();
 
     cy.get(`[data-testid=${dataTestId.organization.searchField}]`).click().type('sikt');
     cy.get('[class^=MuiAutocomplete-option]').contains('Sikt').click();
