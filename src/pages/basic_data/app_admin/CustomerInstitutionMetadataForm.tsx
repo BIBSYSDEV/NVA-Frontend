@@ -56,11 +56,15 @@ export const CustomerInstitutionMetadataForm = ({
       if (isErrorStatus(updateCustomerResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' }));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
-        const updateDoiAgentResponse = await updateDoiAgent(customerInstitution?.doiAgent.id ?? '', doiAgent);
-        if (isErrorStatus(updateDoiAgentResponse.status)) {
+        if (customerInstitution?.doiAgent.id) {
+          const updateDoiAgentResponse = await updateDoiAgent(customerInstitution.doiAgent.id, doiAgent);
+          if (isErrorStatus(updateDoiAgentResponse.status)) {
+            dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
+          } else if (isSuccessStatus(updateDoiAgentResponse.status)) {
+            dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
+          }
+        } else {
           dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
-        } else if (isSuccessStatus(updateDoiAgentResponse.status)) {
-          dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' }));
         }
       }
     }
@@ -70,7 +74,7 @@ export const CustomerInstitutionMetadataForm = ({
     <Formik
       enableReinitialize
       initialValues={{
-        canAssignDoi: !!doiAgent?.username || !!doiAgent?.prefix,
+        canAssignDoi: !!doiAgent?.prefix,
         customer: {
           ...emptyCustomerInstitution,
           ...customerInstitution,

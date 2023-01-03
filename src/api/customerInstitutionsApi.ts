@@ -27,7 +27,7 @@ export const updateCustomerInstitution = async (
 
 export const updateDoiAgent = async (id: string, doiAgent: DoiAgent, cancelToken?: CancelToken) =>
   await authenticatedApiRequest<DoiAgent>({
-    url: id, // TODO: use doiAgent.id when endpoint no longer give 500?
+    url: id, // TODO: use doiAgent.id when endpoint no longer give 500 (NP-27646)?
     method: 'PUT',
     data: doiAgent,
     cancelToken,

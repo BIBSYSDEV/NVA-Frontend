@@ -33,7 +33,6 @@ export interface DoiAgent {
   url: string;
   prefix: string;
   username: string;
-  password?: string;
 }
 
 export interface CustomerInstitutionFormData {
@@ -78,7 +77,6 @@ export const emptyDoiAgent: DoiAgent = {
   url: '',
   prefix: '',
   username: '',
-  password: '',
 };
 
 export enum CustomerInstitutionFieldNames {

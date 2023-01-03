@@ -46,6 +46,6 @@ export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerI
           .required(customerErrorMessage.doiPrefixRequired),
         url: Yup.string().required(customerErrorMessage.doiUrlRequired),
       }),
-    otherwise: (schema) => schema,
+    otherwise: (schema) => schema.nullable(),
   }),
 });
