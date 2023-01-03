@@ -23,7 +23,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
   });
   const [doiAgent, isLoadingDoiAgent] = useFetch<DoiAgent>({
     url: customerInstitution?.doiAgent.id ?? '',
-    errorMessage: t('feedback.error.get_doi_agent'), // TODO: set false when endpoint no longer give 500?
+    errorMessage: t('feedback.error.get_doi_agent'), // TODO: set false when endpoint no longer give 500 (NP-27646)?
     withAuthentication: true,
   });
   const [userList, isLoadingUsers, refetchInstitutionUsers] = useFetch<UserList>({
