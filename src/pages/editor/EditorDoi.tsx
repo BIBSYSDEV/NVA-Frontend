@@ -22,7 +22,7 @@ export const EditorDoi = () => {
       <Typography id="doi-label" variant="h2" sx={{ mb: '2rem' }}>
         {t('common.doi_long')}
       </Typography>
-      {isLoadingDoiAgent ? (
+      {!customer || isLoadingDoiAgent ? (
         <CircularProgress aria-labelledby="doi-label" />
       ) : (
         <>
