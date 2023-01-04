@@ -62,6 +62,7 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
         display: 'flex',
         flexDirection: 'column',
         gap: '1rem',
+        a: { textTransform: 'none' },
         ...sx,
       }}
       {...props}

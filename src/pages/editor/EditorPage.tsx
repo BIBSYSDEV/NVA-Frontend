@@ -49,7 +49,7 @@ const EditorPage = () => {
             isSelected={currentPath === UrlPathTemplate.EditorDoi}
             data-testid={dataTestId.editor.doiLinkButton}
             to={UrlPathTemplate.EditorDoi}>
-            {t('editor.doi.doi_data_cite')}
+            {t('common.doi_long')}
           </LinkButton>
           <LinkButton
             isSelected={currentPath === UrlPathTemplate.EditorVocabulary}

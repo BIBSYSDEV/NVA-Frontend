@@ -111,7 +111,7 @@
     "delete": "Slett",
     "description": "Beskrivelse",
     "doi": "DOI",
-    "doi_long": "Digital objektidentifikator (DOI)",
+    "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
@@ -291,8 +291,10 @@
       "no_users_found": "Ingen brukere funnet"
     },
     "doi": {
-      "digital_object_identifier": "Digital Object Identifier",
-      "doi_data_cite": "DOI DataCite"
+      "doi_information_bullet_points": "$t(common.doi_long) er en persistent identifikator.|Gjør det enklere å sitere publikasjoner korrekt.|Metadata om resultatet blir delt internasjonalt.|Synligheten til resultatet øker.|Bidrar til å oppfylle FAIR-prinsippene.|Understøtter åpen forskning.",
+      "doi_information_bullet_points_2": "Tjenesten har støtte for å tildele $t(common.doi_long) til resultater.|Institusjonen som tildeler $t(common.doi_long) blir utgiver av resultatet.|Grundig sjekk av metadata, innhold i filer og lisenser er nødvendig før tildeling av $t(common.doi_long). Feil metadata er tidkrevende å rette i ettertid.",
+      "institution_can_create_doi": "Institusjonen har en profil hos DataCite som gir Kurator tilgang til å tildele $t(common.doi_long) på resultat.",
+      "institution_cannot_create_doi": "Ta kontakt med <0>Sikt</0> om institusjonen vil tildele $t(common.doi_long)."
     },
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
