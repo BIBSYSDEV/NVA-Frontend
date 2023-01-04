@@ -23,9 +23,7 @@ export interface CustomerInstitution extends SimpleCustomerInstitution {
   vocabularies: CustomerVocabulary[];
   publicationWorkflow: PublishStrategy;
   rorId?: string;
-  doiAgent: {
-    id: string;
-  };
+  doiAgent: DoiAgent;
 }
 
 export interface DoiAgent {
