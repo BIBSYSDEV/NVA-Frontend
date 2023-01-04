@@ -48,7 +48,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
     const { t, children } = this.props;
     const { hasError } = this.state;
 
-    return hasError ? <ErrorMessage errorMessage={t('common.error_occurred')} /> : children;
+    return hasError ? <ErrorMessage errorMessage={t('common.error_occurred')} /> : children ?? null;
   }
 }
 
