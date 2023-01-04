@@ -38,7 +38,7 @@ export const EditorDoi = () => {
 
           <Box
             sx={{
-              background: '#d9d9d9',
+              bgcolor: 'grey.400',
               width: 'fit-content',
               p: '1rem 2rem',
               display: 'flex',
