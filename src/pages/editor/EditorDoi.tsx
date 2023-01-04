@@ -62,14 +62,14 @@ export const EditorDoi = () => {
             {t(`editor.doi.doi_information_bullet_points`)
               .split('|')
               .map((item) => (
-                <li>{item}</li>
+                <li key={item}>{item}</li>
               ))}
           </Box>
           <Box component="ul" sx={{ pl: '1rem' }}>
             {t(`editor.doi.doi_information_bullet_points_2`)
               .split('|')
               .map((item) => (
-                <li>{item}</li>
+                <li key={item}>{item}</li>
               ))}
           </Box>
         </>
