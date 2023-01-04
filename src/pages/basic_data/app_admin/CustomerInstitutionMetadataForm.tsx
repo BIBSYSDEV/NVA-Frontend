@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
@@ -169,12 +169,27 @@ export const CustomerInstitutionMetadataForm = ({
                 </Field>
                 {values.canAssignDoi && (
                   <Box sx={{ display: 'flex', gap: '1rem' }}>
-                    <CustomerInstitutionTextField
-                      required
-                      name={CustomerInstitutionFieldNames.DoiUsername}
-                      label={t('basic_data.institutions.doi_name')}
-                      dataTestId={dataTestId.basicData.institutionAdmin.doiUsernameField}
-                    />
+                    <Field name={CustomerInstitutionFieldNames.DoiUsername}>
+                      {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          data-testid={dataTestId.basicData.institutionAdmin.doiUsernameField}
+                          label={t('basic_data.institutions.doi_name')}
+                          required
+                          fullWidth
+                          onChange={(event) => {
+                            const inputValue = event.target.value;
+                            if (inputValue.length <= 8) {
+                              const formattedValue = inputValue.toUpperCase().replace(/[^A-Z]/g, '');
+                              setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
+                            }
+                          }}
+                          variant="filled"
+                          error={touched && !!error}
+                          helperText={<ErrorMessage name={field.name} />}
+                        />
+                      )}
+                    </Field>
                     <CustomerInstitutionTextField
                       required
                       name={CustomerInstitutionFieldNames.DoiPrefix}
