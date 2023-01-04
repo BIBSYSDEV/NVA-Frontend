@@ -50,11 +50,11 @@ export const EditorDoi = () => {
             }}>
             <div>
               <Typography variant="h3">{t('basic_data.institutions.doi_name')}</Typography>
-              {doiAgent?.username ? <Typography sx={{ color: 'primary.light' }}>{doiAgent.username}</Typography> : '-'}
+              {doiAgent?.username ? <Typography sx={{ color: 'primary.light' }}>{doiAgent.username}</Typography> : '—'}
             </div>
             <div>
               <Typography variant="h3">{t('basic_data.institutions.doi_prefix')}</Typography>
-              {doiAgent?.prefix ? <Typography sx={{ color: 'primary.light' }}>{doiAgent.prefix}</Typography> : '-'}
+              {doiAgent?.prefix ? <Typography sx={{ color: 'primary.light' }}>{doiAgent.prefix}</Typography> : '—'}
             </div>
           </Box>
 
