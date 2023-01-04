@@ -111,7 +111,7 @@
     "delete": "Delete",
     "description": "Description",
     "doi": "DOI",
-    "doi_long": "Digital object identifier (DOI)",
+    "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Edit",
     "employments": "Employments",
     "end_date": "End date",
@@ -289,6 +289,12 @@
       "area_of_responsibility_placeholder": "No limitations",
       "areas_of_responsibility": "Areas of responsibility",
       "no_users_found": "No users found"
+    },
+    "doi": {
+      "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
+      "doi_information_bullet_points_2": "The service has support for assigning $t(common.doi_long) to results.|The institution that assigns the DOI becomes the publisher of the result.|A thorough check of metadata, contents of files and licenses is necessary before assigning a $t(common.doi_long). Incorrect metadata is time-consuming to correct afterwards.",
+      "institution_can_create_doi": "Institution does not have a profile at DataCite the gives the Curator privilege to assign $t(common.doi_long) to result.",
+      "institution_cannot_create_doi": "Contact <0>Sikt</0> if your institution wants to assign $t(common.doi_long)."
     },
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
