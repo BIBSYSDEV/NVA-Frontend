@@ -33,10 +33,14 @@ export interface DoiAgent {
   username: string;
 }
 
+export interface ProtectedDoiAgent extends DoiAgent {
+  password?: string;
+}
+
 export interface CustomerInstitutionFormData {
   canAssignDoi: boolean;
   customer: Omit<CustomerInstitution, 'doiAgent'>;
-  doiAgent: DoiAgent;
+  doiAgent: ProtectedDoiAgent;
 }
 
 export enum VocabularyStatus {
@@ -84,6 +88,7 @@ export enum CustomerInstitutionFieldNames {
   DisplayName = 'customer.displayName',
   DoiUrl = 'doiAgent.url',
   DoiUsername = 'doiAgent.username',
+  DoiPassword = 'doiAgent.password',
   DoiPrefix = 'doiAgent.prefix',
   FeideOrganizationDomain = 'customer.feideOrganizationDomain',
   Identifier = 'customer.identifier',

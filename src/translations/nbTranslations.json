@@ -62,6 +62,7 @@
       "archive_name": "Arkivnavn",
       "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
       "doi_name": "Data Cite Member ID",
+      "doi_password": "Passord",
       "doi_prefix": "DOI prefiks",
       "doi_url": "URL",
       "display_name": "Visningsnavn på institusjonen",

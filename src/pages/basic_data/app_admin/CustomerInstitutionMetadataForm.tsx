@@ -2,8 +2,10 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, IconButton, TextField, Tooltip } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import {
   CustomerInstitution,
   emptyCustomerInstitution,
@@ -26,6 +28,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { OrganizationSearchField } from './OrganizationSearchField';
 import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
+import { CustomerDoiPasswordField } from './CustomerDoiPasswordField';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution?: CustomerInstitution;
@@ -168,7 +171,7 @@ export const CustomerInstitutionMetadataForm = ({
                   )}
                 </Field>
                 {values.canAssignDoi && (
-                  <Box sx={{ display: 'flex', gap: '1rem' }}>
+                  <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                     <Field name={CustomerInstitutionFieldNames.DoiUsername}>
                       {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
                         <TextField
@@ -202,6 +205,11 @@ export const CustomerInstitutionMetadataForm = ({
                       label={t('basic_data.institutions.doi_url')}
                       dataTestId={dataTestId.basicData.institutionAdmin.doiUrlField}
                     />
+                    <Field name={CustomerInstitutionFieldNames.DoiPassword}>
+                      {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+                        <CustomerDoiPasswordField doiAgentId={customerInstitution?.doiAgent.id ?? ''} />
+                      )}
+                    </Field>
                   </Box>
                 )}
               </div>
