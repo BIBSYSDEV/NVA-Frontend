@@ -22,6 +22,7 @@ export const MediaContributionForm = () => {
                 label={t('registration.resource_type.media_contribution.medium')}
                 fullWidth
                 {...field}
+                value={field.value ?? ''}
                 data-testid={dataTestId.registrationWizard.resourceType.mediaMedium}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}>
@@ -43,6 +44,7 @@ export const MediaContributionForm = () => {
                 label={t('registration.resource_type.media_contribution.format')}
                 fullWidth
                 {...field}
+                value={field.value ?? ''}
                 data-testid={dataTestId.registrationWizard.resourceType.mediaFormat}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}>

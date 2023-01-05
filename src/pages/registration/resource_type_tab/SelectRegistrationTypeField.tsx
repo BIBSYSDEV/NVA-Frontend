@@ -143,8 +143,8 @@ export const SelectRegistrationTypeField = () => {
           break;
         case PublicationType.MediaContribution:
           if (isPeriodicalMediaContribution(newInstanceType)) {
+            setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
             if (!isPeriodicalMediaContribution(currentInstanceType)) {
-              setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPeriodicalPublicationContext, false);
               setFieldValue(
                 instanceTypeBaseFieldName,
                 {
@@ -157,8 +157,8 @@ export const SelectRegistrationTypeField = () => {
               setFieldValue(ResourceFieldNames.SubType, newInstanceType, false);
             }
           } else {
+            setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
             if (isPeriodicalMediaContribution(currentInstanceType)) {
-              setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
               setFieldValue(
                 instanceTypeBaseFieldName,
                 {
