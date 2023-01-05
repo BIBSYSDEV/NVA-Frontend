@@ -65,6 +65,7 @@ export const MediaContributionForm = () => {
                 label={t('registration.resource_type.media_contribution.channel')}
                 fullWidth
                 {...field}
+                value={field.value ?? ''}
                 data-testid={dataTestId.registrationWizard.resourceType.mediaChannel}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
