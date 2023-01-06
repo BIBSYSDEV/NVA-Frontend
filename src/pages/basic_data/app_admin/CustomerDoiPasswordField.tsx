@@ -32,7 +32,7 @@ export const CustomerDoiPasswordField = ({ doiAgentId }: CustomerDoiPasswordFiel
   useEffect(() => {
     // Ensure value is set only one time (when doiAgent.password is empty)
     if (!values.doiAgent.password && doiAgent?.password) {
-      setFieldValue(CustomerInstitutionFieldNames.DoiPassword, 'doiAgent.password');
+      setFieldValue(CustomerInstitutionFieldNames.DoiPassword, doiAgent.password);
     }
   }, [setFieldValue, values.doiAgent.password, doiAgent?.password]);
 

@@ -49,7 +49,7 @@ export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerI
           .matches(/^10.(\d){4,9}$/, customerErrorMessage.doiPrefixInvalid)
           .required(customerErrorMessage.doiPrefixRequired),
         url: Yup.string().required(customerErrorMessage.doiUrlRequired),
-        password: Yup.string().nullable(), // Password in validated inline, on the Field component
+        password: Yup.string().optional(), // Password in validated inline, on the Field component
       }),
     otherwise: (schema) => schema.nullable(),
   }),

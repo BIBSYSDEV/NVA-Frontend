@@ -83,6 +83,7 @@ export const CustomerInstitutionMetadataForm = ({
         doiAgent: {
           ...emptyDoiAgent,
           ...doiAgent,
+          password: undefined,
         },
       }}
       validateOnChange
