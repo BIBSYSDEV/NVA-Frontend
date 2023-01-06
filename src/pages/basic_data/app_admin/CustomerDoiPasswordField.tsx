@@ -30,7 +30,7 @@ export const CustomerDoiPasswordField = ({ doiAgentId }: CustomerDoiPasswordFiel
   });
 
   useEffect(() => {
-    // Ensure value is set only one time (when doiAgent.password is empty)
+    // Ensure value is set only one time (when values.doiAgent.password is empty)
     if (!values.doiAgent.password && doiAgent?.password) {
       setFieldValue(CustomerInstitutionFieldNames.DoiPassword, doiAgent.password);
     }
@@ -40,7 +40,7 @@ export const CustomerDoiPasswordField = ({ doiAgentId }: CustomerDoiPasswordFiel
     <>
       {!showPasswordInput || !doiAgent ? (
         <LoadingButton
-          sx={{ height: 'fit-content', minWidth: '7rem' }}
+          sx={{ height: 'fit-content', minWidth: '7rem', alignSelf: 'center' }}
           variant="outlined"
           loading={isLoadingDoiAgent}
           onClick={() => setShowPasswordInput(true)}>

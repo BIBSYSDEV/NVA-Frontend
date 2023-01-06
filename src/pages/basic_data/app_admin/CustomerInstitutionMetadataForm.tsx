@@ -170,7 +170,7 @@ export const CustomerInstitutionMetadataForm = ({
                   )}
                 </Field>
                 {values.canAssignDoi && (
-                  <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                  <Box sx={{ display: 'flex', gap: '1rem' }}>
                     <Field name={CustomerInstitutionFieldNames.DoiUsername}>
                       {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
                         <TextField
@@ -204,11 +204,7 @@ export const CustomerInstitutionMetadataForm = ({
                       label={t('basic_data.institutions.doi_url')}
                       dataTestId={dataTestId.basicData.institutionAdmin.doiUrlField}
                     />
-                    <Field name={CustomerInstitutionFieldNames.DoiPassword}>
-                      {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
-                        <CustomerDoiPasswordField doiAgentId={customerInstitution?.doiAgent.id ?? ''} />
-                      )}
-                    </Field>
+                    <CustomerDoiPasswordField doiAgentId={customerInstitution?.doiAgent.id ?? ''} />
                   </Box>
                 )}
               </div>
