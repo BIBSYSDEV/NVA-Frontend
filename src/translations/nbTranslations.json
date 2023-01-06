@@ -845,6 +845,7 @@
       "confirmed": "Bekreftet",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
+      "contributor_not_found": "Finner ikke bidragsyter",
       "corresponding": "Korresponderende",
       "department": "Enhet",
       "invalid_role": "Bidragsyteren må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
@@ -915,7 +916,6 @@
         "VideoEditor": "Klipper",
         "Writer": "Tekstforfatter"
       },
-      "user_not_found": "Finner ikke bruker",
       "verify_affiliation": "Verifiser tilhørighet",
       "verify_person": "Verifiser person"
     },
