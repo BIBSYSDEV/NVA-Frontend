@@ -1,5 +1,9 @@
 import * as Yup from 'yup';
-import { CustomerInstitution, CustomerInstitutionFormData, DoiAgent } from '../../types/customerInstitution.types';
+import {
+  CustomerInstitution,
+  CustomerInstitutionFormData,
+  ProtectedDoiAgent,
+} from '../../types/customerInstitution.types';
 import i18n from '../../translations/i18n';
 import { YupShape } from './validationHelpers';
 
@@ -39,12 +43,13 @@ export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerI
   doiAgent: Yup.object().when('canAssignDoi', {
     is: true,
     then: () =>
-      Yup.object<YupShape<DoiAgent>>({
+      Yup.object<YupShape<ProtectedDoiAgent>>({
         username: Yup.string().required(customerErrorMessage.doiNameRequired),
         prefix: Yup.string()
           .matches(/^10.(\d){4,9}$/, customerErrorMessage.doiPrefixInvalid)
           .required(customerErrorMessage.doiPrefixRequired),
         url: Yup.string().required(customerErrorMessage.doiUrlRequired),
+        password: Yup.string().nullable(), // Password in validated inline, on the Field component
       }),
     otherwise: (schema) => schema.nullable(),
   }),

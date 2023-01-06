@@ -1,4 +1,4 @@
-import { Button, IconButton, TextField, Tooltip } from '@mui/material';
+import { IconButton, TextField, Tooltip } from '@mui/material';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
@@ -11,6 +11,7 @@ import {
   ProtectedDoiAgent,
 } from '../../../types/customerInstitution.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface CustomerDoiPasswordFieldProps {
   doiAgentId: string;
@@ -20,10 +21,12 @@ export const CustomerDoiPasswordField = ({ doiAgentId }: CustomerDoiPasswordFiel
   const { t } = useTranslation();
   const { setFieldValue, values } = useFormikContext<CustomerInstitutionFormData>();
   const [showPasswordInput, setShowPasswordInput] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [doiAgent, isLoadingDoiAgent] = useFetch<ProtectedDoiAgent>({
     url: showPasswordInput ? doiAgentId : '',
     withAuthentication: true,
+    errorMessage: t('feedback.error.get_doi_agent'),
   });
 
   useEffect(() => {
@@ -41,18 +44,27 @@ export const CustomerDoiPasswordField = ({ doiAgentId }: CustomerDoiPasswordFiel
           variant="outlined"
           loading={isLoadingDoiAgent}
           onClick={() => setShowPasswordInput(true)}>
-          {'Password'}
+          {t('basic_data.institutions.doi_password')}
         </LoadingButton>
       ) : (
-        <Field name={CustomerInstitutionFieldNames.DoiPassword}>
+        <Field
+          name={CustomerInstitutionFieldNames.DoiPassword}
+          validate={(value: string) =>
+            value
+              ? undefined
+              : t('feedback.validation.is_required', {
+                  field: t('basic_data.institutions.doi_password'),
+                })
+          }>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
-              // data-testid={dataTestId.basicData.institutionAdmin.doiUsernameField}
+              value={field.value ?? ''}
+              data-testid={dataTestId.basicData.institutionAdmin.doiPasswordField}
               label={t('basic_data.institutions.doi_password')}
               required
               fullWidth
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               variant="filled"
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
@@ -60,12 +72,12 @@ export const CustomerDoiPasswordField = ({ doiAgentId }: CustomerDoiPasswordFiel
                 endAdornment: (
                   <Tooltip
                     title={
-                      Math.random() < 0.5
-                        ? t('basic_data.person_register.hide_full_nin')
-                        : t('basic_data.person_register.show_full_nin')
+                      showPassword
+                        ? t('basic_data.institutions.password_hide')
+                        : t('basic_data.institutions.password_show')
                     }>
-                    <IconButton /*onClick={() => setShowFullNin((prevShowFullNin) => !prevShowFullNin)}*/>
-                      {Math.random() < 0.5 ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                    <IconButton onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                     </IconButton>
                   </Tooltip>
                 ),
