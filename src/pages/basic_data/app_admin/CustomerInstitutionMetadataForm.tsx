@@ -10,7 +10,7 @@ import {
   CustomerInstitutionFieldNames,
   CustomerInstitutionFormData,
   DoiAgent,
-  emptyDoiAgent,
+  emptyProtectedDoiAgent,
 } from '../../../types/customerInstitution.types';
 import { setNotification } from '../../../redux/notificationSlice';
 import {
@@ -26,6 +26,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { OrganizationSearchField } from './OrganizationSearchField';
 import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
+import { CustomerDoiPasswordField } from './CustomerDoiPasswordField';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution?: CustomerInstitution;
@@ -80,7 +81,7 @@ export const CustomerInstitutionMetadataForm = ({
           ...customerInstitution,
         },
         doiAgent: {
-          ...emptyDoiAgent,
+          ...emptyProtectedDoiAgent,
           ...doiAgent,
         },
       }}
@@ -104,7 +105,7 @@ export const CustomerInstitutionMetadataForm = ({
                           displayName: name,
                           cristinId: selectedInstitution?.id ?? '',
                         },
-                        doiAgent: emptyDoiAgent,
+                        doiAgent: emptyProtectedDoiAgent,
                       });
                     }}
                     errorMessage={touched && !!error ? error : undefined}
@@ -202,6 +203,7 @@ export const CustomerInstitutionMetadataForm = ({
                       label={t('basic_data.institutions.doi_url')}
                       dataTestId={dataTestId.basicData.institutionAdmin.doiUrlField}
                     />
+                    <CustomerDoiPasswordField doiAgentId={customerInstitution?.doiAgent.id ?? ''} />
                   </Box>
                 )}
               </div>

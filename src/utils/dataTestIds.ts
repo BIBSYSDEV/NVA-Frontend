@@ -29,6 +29,7 @@ export const dataTestId = {
       canAssignDoiCheckbox: 'can-assign-doi-checkbox',
       displayNameField: 'display-name-field',
       doiUsernameField: 'doi-username-field',
+      doiPasswordField: 'doi-password-field',
       doiPrefixField: 'doi-prefix-field',
       doiUrlField: 'doi-url-field',
       feideField: 'feide-field',
