@@ -27,13 +27,16 @@ interface AddContributorFormProps {
   openAddUnverifiedContributor: () => void;
   initialSearchTerm?: string;
   roleToAdd: ContributorRole;
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
 }
 
 export const AddContributorForm = ({
   addContributor,
   openAddUnverifiedContributor,
-  initialSearchTerm = '',
-  roleToAdd,
+  initialSearchTerm,
+  searchTerm,
+  setSearchTerm,
 }: AddContributorFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -41,7 +44,6 @@ export const AddContributorForm = ({
 
   const [isAddingSelf, setIsAddingSelf] = useState(false);
   const [selectedUser, setSelectedUser] = useState<CristinPerson>();
-  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [page, setPage] = useState(0);
@@ -79,7 +81,7 @@ export const AddContributorForm = ({
         </Typography>
       )}
       <TextField
-        id="search"
+        type="search"
         data-testid={dataTestId.registrationWizard.contributors.searchField}
         variant="outlined"
         fullWidth

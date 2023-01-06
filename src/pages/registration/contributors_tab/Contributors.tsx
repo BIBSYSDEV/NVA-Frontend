@@ -157,6 +157,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     <>
       {contributors.length > 5 && (
         <TextField
+          type="search"
           sx={{ display: 'block', mb: '1rem' }}
           label={t('common.search_by_name')}
           variant="filled"

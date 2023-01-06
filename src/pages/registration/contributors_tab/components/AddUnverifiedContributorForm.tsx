@@ -18,11 +18,15 @@ const unverifiedContributorValidationSchema = Yup.object().shape({
 interface AddUnverifiedContributorFormProps {
   addUnverifiedContributor: (newContributor: Contributor) => void;
   handleCloseModal: () => void;
+  handleCancel: () => void;
+  searchTerm: string;
 }
 
 export const AddUnverifiedContributorForm = ({
   addUnverifiedContributor,
   handleCloseModal,
+  handleCancel,
+  searchTerm = '',
 }: AddUnverifiedContributorFormProps) => {
   const { t } = useTranslation();
 
@@ -33,7 +37,7 @@ export const AddUnverifiedContributorForm = ({
 
   return (
     <Formik
-      initialValues={emptyContributor}
+      initialValues={{ ...emptyContributor, identity: { ...emptyContributor.identity, name: searchTerm } }}
       validationSchema={unverifiedContributorValidationSchema}
       onSubmit={handleSubmit}>
       {({ isSubmitting }) => (
@@ -59,7 +63,7 @@ export const AddUnverifiedContributorForm = ({
           </Box>
 
           <DialogActions>
-            <Button onClick={handleCloseModal}>{t('common.cancel')}</Button>
+            <Button onClick={handleCancel}>{t('common.cancel')}</Button>
             <LoadingButton
               data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
               type="submit"
