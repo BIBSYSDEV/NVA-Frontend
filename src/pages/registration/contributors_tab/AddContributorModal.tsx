@@ -36,7 +36,6 @@ export const AddContributorModal = ({
 
   const handleCloseModal = () => {
     toggleModal();
-    setOpenAddUnverifiedContributor(false);
   };
 
   return (
@@ -78,7 +77,7 @@ export const AddContributorModal = ({
               newContributor.role = selectedContributorRole;
               addUnverifiedContributor?.(newContributor);
             }}
-            handleCloseModal={handleCloseModal}
+            handleCloseModal={() => setOpenAddUnverifiedContributor(false)}
           />
         ) : (
           <AddContributorForm

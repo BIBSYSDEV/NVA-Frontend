@@ -49,6 +49,7 @@ export const AddUnverifiedContributorForm = ({
                   label={t('common.name')}
                   value={field.value ?? ''}
                   variant="filled"
+                  placeholder={`${t('common.first_name')} ${t('common.last_name')}`}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                   data-testid={dataTestId.registrationWizard.contributors.unverifiedContributorName}
@@ -58,7 +59,7 @@ export const AddUnverifiedContributorForm = ({
           </Box>
 
           <DialogActions>
-            <Button onClick={handleCloseModal}>{t('common.close')}</Button>
+            <Button onClick={handleCloseModal}>{t('common.cancel')}</Button>
             <LoadingButton
               data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
               type="submit"
