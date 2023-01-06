@@ -845,6 +845,7 @@
       "confirmed": "Confirmed",
       "contributor": "Contributor",
       "contributor_already_added": "Chosen contributor is already added",
+      "contributor_not_found": "Cannot find contributor",
       "corresponding": "Corresponding",
       "department": "Department",
       "invalid_role": "The contributor must have a role that is valid for this resource type to be displayed for other users",
@@ -915,7 +916,6 @@
         "VideoEditor": "Video editor",
         "Writer": "Writer"
       },
-      "user_not_found": "Cannot find user",
       "verify_affiliation": "Verify affiliation",
       "verify_person": "Verify person"
     },
