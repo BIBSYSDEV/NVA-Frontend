@@ -141,7 +141,7 @@ export const AddContributorForm = ({
           <Button
             data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
             onClick={openAddUnverifiedContributor}>
-            {t('registration.contributors.user_not_found')}
+            {t('registration.contributors.contributor_not_found')}
           </Button>
         )}
         <Button
@@ -152,9 +152,7 @@ export const AddContributorForm = ({
           variant="contained">
           {initialSearchTerm
             ? t('registration.contributors.verify_person')
-            : t('common.add_custom', {
-                name: t(`registration.contributors.types.${roleToAdd}`),
-              })}
+            : t('registration.contributors.add_contributor')}
         </Button>
       </Box>
     </>

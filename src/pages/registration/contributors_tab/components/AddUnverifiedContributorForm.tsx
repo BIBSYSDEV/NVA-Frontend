@@ -65,7 +65,7 @@ export const AddUnverifiedContributorForm = ({
               variant="contained"
               loading={isSubmitting}
               disabled={isSubmitting}>
-              {t('common.add')}
+              {t('registration.contributors.add_contributor')}
             </LoadingButton>
           </DialogActions>
         </Form>
