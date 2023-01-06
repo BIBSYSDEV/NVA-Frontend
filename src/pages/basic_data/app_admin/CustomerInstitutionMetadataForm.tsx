@@ -10,7 +10,7 @@ import {
   CustomerInstitutionFieldNames,
   CustomerInstitutionFormData,
   DoiAgent,
-  emptyDoiAgent,
+  emptyProtectedDoiAgent,
 } from '../../../types/customerInstitution.types';
 import { setNotification } from '../../../redux/notificationSlice';
 import {
@@ -81,9 +81,8 @@ export const CustomerInstitutionMetadataForm = ({
           ...customerInstitution,
         },
         doiAgent: {
-          ...emptyDoiAgent,
+          ...emptyProtectedDoiAgent,
           ...doiAgent,
-          password: undefined,
         },
       }}
       validateOnChange
@@ -106,7 +105,7 @@ export const CustomerInstitutionMetadataForm = ({
                           displayName: name,
                           cristinId: selectedInstitution?.id ?? '',
                         },
-                        doiAgent: emptyDoiAgent,
+                        doiAgent: emptyProtectedDoiAgent,
                       });
                     }}
                     errorMessage={touched && !!error ? error : undefined}

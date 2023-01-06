@@ -74,11 +74,12 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   rorId: '',
 };
 
-export const emptyDoiAgent: DoiAgent = {
+export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
   id: '',
   url: '',
   prefix: '',
   username: '',
+  password: undefined,
 };
 
 export enum CustomerInstitutionFieldNames {
