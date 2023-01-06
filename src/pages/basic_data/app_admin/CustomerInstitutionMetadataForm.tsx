@@ -62,7 +62,7 @@ export const CustomerInstitutionMetadataForm = ({
             // Set empty username of doiAgent if user has un-checked support DOI
             doiAgent.username = '';
           }
-          const updateDoiAgentResponse = await updateDoiAgent(customerInstitution.doiAgent.id, doiAgent);
+          const updateDoiAgentResponse = await updateDoiAgent(doiAgent);
           if (isErrorStatus(updateDoiAgentResponse.status)) {
             dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
           } else if (isSuccessStatus(updateDoiAgentResponse.status)) {
