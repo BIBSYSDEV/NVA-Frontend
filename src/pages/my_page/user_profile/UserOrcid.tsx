@@ -126,7 +126,11 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               rel="noopener noreferrer">
               {orcidUrl}
             </Typography>
-            <IconButton color="error" data-testid="button-confirm-delete-orcid" onClick={toggleConfirmDialog}>
+            <IconButton
+              color="error"
+              data-testid="button-confirm-delete-orcid"
+              onClick={toggleConfirmDialog}
+              aria-label={t('common.delete')}>
               <CancelIcon />
             </IconButton>
           </Box>

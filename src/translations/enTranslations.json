@@ -463,8 +463,10 @@
     },
     "my_page": "My page",
     "my_profile": {
+      "author_name": "Author name",
       "heading": {
         "affiliations": "Affiliations",
+        "personalia": "Personalia",
         "roles": "Roles",
         "user_info": "User information"
       },
@@ -481,6 +483,7 @@
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
       },
       "user_profile": "User profile",
+      "user-profile-description": "Here you can fill in and mark what you want to appear on your official researcher profile.",
       "research_profile_summary": {
         "preview": "Preview",
         "research_profile": "Research profile",

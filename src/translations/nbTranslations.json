@@ -463,8 +463,10 @@
     },
     "my_page": "Min side",
     "my_profile": {
+      "author_name": "Forfatternavn",
       "heading": {
         "affiliations": "Tilhørigheter",
+        "personalia": "Personalia",
         "roles": "Roller",
         "user_info": "Brukerinformasjon"
       },
@@ -481,6 +483,7 @@
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
       "user_profile": "Brukerprofil",
+      "user-profile-description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil.",
       "research_profile_summary": {
         "preview": "Forhåndsvisning",
         "research_profile": "Forskerprofil",
