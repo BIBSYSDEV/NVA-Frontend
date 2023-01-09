@@ -1387,7 +1387,8 @@
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Slettet",
       "NEW": "Ny",
-      "PUBLISHED": "Publisert"
+      "PUBLISHED": "Publisert",
+      "PUBLISHED_METADATA": "Publisert metadata"
     },
     "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
     "year_published": "Publiseringsår"
