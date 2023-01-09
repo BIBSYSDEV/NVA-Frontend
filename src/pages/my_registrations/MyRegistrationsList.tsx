@@ -69,6 +69,8 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     }
   };
 
+  useEffect(() => setPage(0), [registrations]); // Reset page if user changes focus between Published and Unpublished
+
   useEffect(() => {
     if (registrations.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
       typesetMathJax();

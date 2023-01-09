@@ -54,6 +54,9 @@ export const mainTheme = createTheme(
         main: Color.InfoMain,
         light: Color.InfoLight,
       },
+      grey: {
+        400: '#d9d9d9',
+      },
       background: {
         default: Color.White,
         paper: Color.SecondaryLight,

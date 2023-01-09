@@ -29,7 +29,7 @@ export const emptyMediaContributionPublicationContext: MediaContributionPublicat
   type: PublicationType.MediaContribution,
   format: '',
   medium: {
-    type: '',
+    type: null,
   },
   disseminationChannel: '',
   partOf: {
@@ -56,7 +56,7 @@ export interface MediaContributionPublicationContext {
   type: PublicationType | '';
   format: MediaFormat | '';
   medium: {
-    type: MediaMedium | '';
+    type: MediaMedium | null;
     description?: string;
   };
   disseminationChannel: string;

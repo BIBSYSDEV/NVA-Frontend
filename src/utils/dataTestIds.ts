@@ -1,5 +1,6 @@
 export const dataTestId = {
   basicData: {
+    addCustomerLink: 'add-customer-link',
     addEmployeeLink: 'add-employee-link',
     adminInstitutionsLink: 'admin-institutions-link',
     centralImportLink: 'central-import-link',
@@ -20,9 +21,22 @@ export const dataTestId = {
       textFieldYear: 'duplicate-search-year-textfield',
     },
     customers: {
-      addCustomerButton: 'add-institution-button',
       customerList: 'customer-institutions-list',
       editInstitutionButton: (name: string) => `edit-institution-button-${name.toLowerCase().replaceAll(' ', '-')}`,
+    },
+    institutionAdmin: {
+      archiveNameField: 'archive-field',
+      canAssignDoiCheckbox: 'can-assign-doi-checkbox',
+      displayNameField: 'display-name-field',
+      doiUsernameField: 'doi-username-field',
+      doiPasswordField: 'doi-password-field',
+      doiPrefixField: 'doi-prefix-field',
+      doiUrlField: 'doi-url-field',
+      feideField: 'feide-field',
+      nameField: 'institution-name-field',
+      rorField: 'ror-field',
+      saveButton: 'save-button',
+      shortNameField: 'short-name-field',
     },
     personRegisterLink: 'person-register-link',
   },
@@ -37,6 +51,7 @@ export const dataTestId = {
   editor: {
     areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
+    doiLinkButton: 'doi-link-button',
     publishStrategyLinkButton: 'publishing-strategy-link-button',
     vocabularyLinkButton: 'vocabulary-link-button',
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',
@@ -56,15 +71,6 @@ export const dataTestId = {
     newRegistrationLink: 'new-registration',
     privacyLink: 'privacy-link',
     tasksLink: 'tasks-link',
-  },
-  institutionAdmin: {
-    archiveNameField: 'archive-field',
-    displayNameField: 'display-name-field',
-    feideField: 'feide-field',
-    nameField: 'institution-name-field',
-    rorField: 'ror-field',
-    saveButton: 'save-button',
-    shortNameField: 'short-name-field',
   },
   startPage: {
     orderBySelect: 'order-by-select',

@@ -86,6 +86,7 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.editor.vocabularyLinkButton}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.editor.publishStrategyLinkButton}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.editor.areaOfResponsibilityLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.doiLinkButton}]`).should('be.visible');
   });
 
   it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {

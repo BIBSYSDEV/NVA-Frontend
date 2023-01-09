@@ -31,11 +31,11 @@ export const MyRegistrations = () => {
   const registrations = myRegistrationsResponse?.publications ?? [];
 
   const unpublishedRegistrations = registrations
-    .filter((registration) => registration.status === RegistrationStatus.Draft)
+    .filter(({ status }) => status === RegistrationStatus.Draft)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   const publishedRegistrations = registrations
-    .filter((registration) => registration.status === RegistrationStatus.Published)
+    .filter(({ status }) => status === RegistrationStatus.Published || status === RegistrationStatus.PublishedMetadata)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
   return (
