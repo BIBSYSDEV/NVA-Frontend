@@ -32,6 +32,7 @@ export enum RegistrationStatus {
   Draft = 'DRAFT',
   New = 'NEW',
   Published = 'PUBLISHED',
+  PublishedMetadata = 'PUBLISHED_METADATA',
 }
 
 export enum RegistrationTab {
