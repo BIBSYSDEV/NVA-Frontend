@@ -39,8 +39,10 @@ export const RegistrationListItem = ({ registration }: RegistrationListItemProps
     <ListItem divider disableGutters>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.main' }}>
-          {t(`registration.publication_types.${entityDescription?.reference?.publicationInstance.type ?? ''}` as any)} -{' '}
-          {displayDate(entityDescription?.date)}
+          {entityDescription?.reference?.publicationInstance.type
+            ? t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)
+            : '?'}{' '}
+          - {displayDate(entityDescription?.date)}
         </Typography>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
