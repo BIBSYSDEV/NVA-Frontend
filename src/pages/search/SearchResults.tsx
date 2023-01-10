@@ -22,7 +22,7 @@ export const SearchResults = ({ searchResult }: SearchResultsProps) => {
   }, [searchResult]);
 
   return (
-    <Box data-testid="search-results" sx={{ pb: '1rem' }}>
+    <Box data-testid="search-results">
       <RegistrationList registrations={searchResult.hits} />
     </Box>
   );
