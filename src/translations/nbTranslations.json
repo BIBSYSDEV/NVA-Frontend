@@ -61,11 +61,11 @@
       "administrators": "Administratorer",
       "archive_name": "Arkivnavn",
       "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
+      "display_name": "Visningsnavn på institusjonen",
       "doi_name": "Data Cite Member ID",
       "doi_password": "Passord",
       "doi_prefix": "DOI prefiks",
       "doi_url": "URL",
-      "display_name": "Visningsnavn på institusjonen",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Organisasjonens domene i Feide",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
@@ -295,8 +295,8 @@
       "no_users_found": "Ingen brukere funnet"
     },
     "doi": {
-      "doi_information_bullet_points": "$t(common.doi_long) er en persistent identifikator.|Gjør det enklere å sitere publikasjoner korrekt.|Metadata om resultatet blir delt internasjonalt.|Synligheten til resultatet øker.|Bidrar til å oppfylle FAIR-prinsippene.|Understøtter åpen forskning.",
-      "doi_information_bullet_points_2": "Tjenesten har støtte for å tildele $t(common.doi_long) til resultater.|Institusjonen som tildeler $t(common.doi_long) blir utgiver av resultatet.|Grundig sjekk av metadata, innhold i filer og lisenser er nødvendig før tildeling av $t(common.doi_long). Feil metadata er tidkrevende å rette i ettertid.",
+      "doi_information_bullet_points": "Tjenesten har støtte for å tildele $t(common.doi_long) til resultater.|Institusjonen som tildeler $t(common.doi_long) blir utgiver av resultatet.|Grundig sjekk av metadata, innhold i filer og lisenser er nødvendig før tildeling av $t(common.doi_long). Feil metadata er tidkrevende å rette i ettertid.",
+      "doi_information_bullet_points_plural": "",
       "institution_can_create_doi": "Institusjonen har en profil hos DataCite som gir Kurator tilgang til å tildele $t(common.doi_long) på resultat.",
       "institution_cannot_create_doi": "Ta kontakt med <0>Sikt</0> om institusjonen vil tildele $t(common.doi_long)."
     },
@@ -325,10 +325,13 @@
     "vocabulary": "Vokabular",
     "vocabulary_status": {
       "Allowed": "Tillatt",
-      "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
       "Default": "Standard",
-      "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
       "Disabled": "Ikke tillatt",
+      "allowed": "",
+      "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
+      "default": "",
+      "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
+      "disabled": "",
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
     }
   },
@@ -498,12 +501,12 @@
         "remove_connection": "Fjern kobling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
-      "user_profile": "Brukerprofil",
       "research_profile_summary": {
+        "affiliations": "Tilhørigheter",
         "preview": "Forhåndsvisning",
-        "research_profile": "Forskerprofil",
-        "affiliations": "Tilhørigheter"
-      }
+        "research_profile": "Forskerprofil"
+      },
+      "user_profile": "Brukerprofil"
     },
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
@@ -982,6 +985,27 @@
     "new_registration": "Ny registrering",
     "public_page": {
       "about_registration": "Om registreringen",
+      "approve_publish_request": "Godkjenn publisering",
+      "error_description": "For å publisere må du rette følgende feil:",
+      "find_in_channel_registry": "Finn i kanalregisteret",
+      "go_back_to_wizard": "Gå tilbake til skjema",
+      "in_progress": "Under behandling",
+      "message_to_curator": "Melding til kurator",
+      "other_contributors_one": "(+{{count}} annen)",
+      "other_contributors_other": "(+{{count}} andre)",
+      "other_related_registrations": "Andre relaterte registreringer",
+      "participants_one": "{{count}} deltaker",
+      "participants_other": "{{count}} deltakere",
+      "preview_of": "Forhåndsvisning av {{fileName}}",
+      "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
+      "published": "Publisert",
+      "published_date": "Publisert: {{date}}",
+      "publishing_request": "Publiseringsgodkjenning",
+      "reject_publish_request": "Avvis publisering",
+      "request_doi": "Be om en DOI",
+      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
+      "reserve_doi": "Reserver en DOI",
+      "reserved_doi": "Reservert DOI",
       "tasks_panel": {
         "has_doi_request": "Registreringen har en DOI-forespørsel til behandling for kurator.",
         "has_rejected_doi_request": "Registreringen har en avslått DOI-forespørsel.",
@@ -1000,27 +1024,6 @@
         "you_can_publish_metadata": "Du kan publisere metadata selv, men en kurator må godkjenne filene som er lastet opp før de kan vises til andre brukere.",
         "you_can_publish_metadata_after_curator_approval": "En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere."
       },
-      "approve_publish_request": "Godkjenn publisering",
-      "error_description": "For å publisere må du rette følgende feil:",
-      "find_in_channel_registry": "Finn i kanalregisteret",
-      "go_back_to_wizard": "Gå tilbake til skjema",
-      "in_progress": "Under behandling",
-      "message_to_curator": "Melding til kurator",
-      "other_contributors_one": "(+{{count}} annen)",
-      "other_contributors_other": "(+{{count}} andre)",
-      "other_related_registrations": "Andre relaterte registreringer",
-      "participants_one": "{{count}} deltaker",
-      "participants_other": "{{count}} deltakere",
-      "preview_of": "Forhåndsvisning av {{fileName}}",
-      "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
-      "published": "Publisert",
-      "published_date": "Publisert: {{date}}",
-      "publishing_request": "Publiseringsgodkjenning",
-      "reject_publish_request": "Avvis publisering",
-      "reserved_doi": "Reservert DOI",
-      "request_doi": "Be om en DOI",
-      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
-      "reserve_doi": "Reserver en DOI",
       "validation_errors": "Valideringsfeil"
     },
     "publication_types": {

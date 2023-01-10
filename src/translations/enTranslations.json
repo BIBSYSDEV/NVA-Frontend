@@ -61,11 +61,11 @@
       "administrators": "Administrators",
       "archive_name": "Archive name",
       "can_assign_doi": "Institution can assign Digital Object Identifier (DOI)",
+      "display_name": "Display name for the institution",
       "doi_name": "Data Cite Member ID",
       "doi_password": "Password",
       "doi_prefix": "DOI prefix",
       "doi_url": "URL",
-      "display_name": "Display name for the institution",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
@@ -295,8 +295,8 @@
       "no_users_found": "No users found"
     },
     "doi": {
-      "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
-      "doi_information_bullet_points_2": "The service has support for assigning $t(common.doi_long) to results.|The institution that assigns the DOI becomes the publisher of the result.|A thorough check of metadata, contents of files and licenses is necessary before assigning a $t(common.doi_long). Incorrect metadata is time-consuming to correct afterwards.",
+      "doi_information_bullet_points": "The service has support for assigning $t(common.doi_long) to results.|The institution that assigns the DOI becomes the publisher of the result.|A thorough check of metadata, contents of files and licenses is necessary before assigning a $t(common.doi_long). Incorrect metadata is time-consuming to correct afterwards.",
+      "doi_information_bullet_points_plural": "",
       "institution_can_create_doi": "Institution does not have a profile at DataCite the gives the Curator privilege to assign $t(common.doi_long) to result.",
       "institution_cannot_create_doi": "Contact <0>Sikt</0> if your institution wants to assign $t(common.doi_long)."
     },
@@ -324,6 +324,9 @@
     "select_vocabulary_description": "Activate controlled vocabularies for registration of new results",
     "vocabulary": "Vocabulary",
     "vocabulary_status": {
+      "Allowed": "Allowed",
+      "Default": "Default",
+      "Disabled": "Disabled",
       "allowed": "Allowed",
       "allowed_description": "$t(editor.allowed): Can be added by the user",
       "default": "Default",
@@ -498,12 +501,12 @@
         "remove_connection": "Remove connection to ORCID",
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
       },
-      "user_profile": "User profile",
       "research_profile_summary": {
+        "affiliations": "Affiliations",
         "preview": "Preview",
-        "research_profile": "Research profile",
-        "affiliations": "Affiliations"
-      }
+        "research_profile": "Research profile"
+      },
+      "user_profile": "User profile"
     },
     "registrations": {
       "delete_registration": "Delete unpublished registration",
@@ -982,6 +985,27 @@
     "new_registration": "New registration",
     "public_page": {
       "about_registration": "About this registration",
+      "approve_publish_request": "Approve publishing request",
+      "error_description": "To publish you must fix the following errors:",
+      "find_in_channel_registry": "Find in the Norwegian register for publishers",
+      "go_back_to_wizard": "Go back to form",
+      "in_progress": "In progress",
+      "message_to_curator": "Message to curator",
+      "other_contributors_one": "(+{{count}} other)",
+      "other_contributors_other": "(+{{count}} others)",
+      "other_related_registrations": "Other related registrations",
+      "participants_one": "{{count}} participant",
+      "participants_other": "{{count}} participants",
+      "preview_of": "Preview of {{fileName}}",
+      "preview_unavailable": "Preview not available. Open file in suited program.",
+      "published": "Published",
+      "published_date": "Published: {{date}}",
+      "publishing_request": "Publishing request",
+      "reject_publish_request": "Reject publishing request",
+      "request_doi": "Request a DOI",
+      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
+      "reserve_doi": "Reserve a DOI",
+      "reserved_doi": "Reserved DOI",
       "tasks_panel": {
         "has_doi_request": "Registration has a DOI request for approval to curator.",
         "has_rejected_doi_request": "Registration has a rejected DOI request.",
@@ -1000,27 +1024,6 @@
         "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the uploaded files before they can be shown to other users.",
         "you_can_publish_metadata_after_curator_approval": "A curaotr must approve the content before it can be published and visible for other users."
       },
-      "approve_publish_request": "Approve publishing request",
-      "error_description": "To publish you must fix the following errors:",
-      "find_in_channel_registry": "Find in the Norwegian register for publishers",
-      "go_back_to_wizard": "Go back to form",
-      "in_progress": "In progress",
-      "message_to_curator": "Message to curator",
-      "other_contributors_one": "(+{{count}} other)",
-      "other_contributors_other": "(+{{count}} others)",
-      "other_related_registrations": "Other related registrations",
-      "participants_one": "{{count}} participant",
-      "participants_other": "{{count}} participants",
-      "preview_of": "Preview of {{fileName}}",
-      "preview_unavailable": "Preview not available. Open file in suited program.",
-      "published": "Published",
-      "published_date": "Published: {{date}}",
-      "publishing_request": "Publishing request",
-      "reject_publish_request": "Reject publishing request",
-      "reserved_doi": "Reserved DOI",
-      "request_doi": "Request a DOI",
-      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
-      "reserve_doi": "Reserve a DOI",
       "validation_errors": "Validation errors"
     },
     "publication_types": {
