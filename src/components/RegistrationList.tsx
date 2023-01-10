@@ -36,13 +36,18 @@ export const RegistrationListItem = ({ registration }: RegistrationListItemProps
   const countRestContributors = contributors.length - focusedContributors.length;
 
   return (
-    <ListItem divider disableGutters>
+    <ListItem
+      sx={{
+        border: '2px solid',
+        borderLeft: '1.25rem solid',
+        borderColor: 'registration.main',
+      }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.main' }}>
           {entityDescription?.reference?.publicationInstance.type
             ? t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)
             : '?'}{' '}
-          - {displayDate(entityDescription?.date)}
+          — {displayDate(entityDescription?.date)}
         </Typography>
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>

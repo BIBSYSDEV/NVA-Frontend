@@ -158,6 +158,7 @@
     "reload_page_info": "A new version of NVA is available and the page must be reloaded.",
     "remove": "Remove",
     "required_description": "Fields with asterisk are required",
+    "result": "Result",
     "role": "Role",
     "save": "Save",
     "save_and_present": "Save and see",

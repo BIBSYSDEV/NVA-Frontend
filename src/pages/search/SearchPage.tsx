@@ -2,8 +2,9 @@ import { Formik, Form } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import { Box, Button } from '@mui/material';
 import { SearchBar } from './SearchBar';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
 import { RegistrationFacetsFilter } from './filters/RegistrationFacetsFilter';
 import { RegistrationSearch } from './RegistrationSearch';
@@ -43,11 +44,27 @@ const SearchPage = () => {
         <StyledPageWithSideMenu>
           <SidePanel>
             <SideNavHeader icon={SearchIcon} text={t('common.search')} />
-            {searchResults?.aggregations && (
-              <RegistrationFacetsFilter aggregations={searchResults.aggregations} isLoadingSearch={isLoadingSearch} />
-            )}
+            <Box
+              sx={{
+                m: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem',
+                button: { textTransform: 'none' },
+              }}>
+              <Button
+                variant="contained"
+                color="registration"
+                sx={{ width: 'fit-content' }}
+                startIcon={<ManageSearchIcon />}>
+                {t('common.result')}
+              </Button>
+              {searchResults?.aggregations && (
+                <RegistrationFacetsFilter aggregations={searchResults.aggregations} isLoadingSearch={isLoadingSearch} />
+              )}
+            </Box>
           </SidePanel>
-          <BackgroundDiv
+          <Box
             sx={{
               display: 'grid',
               gridTemplateRows: 'auto auto 1fr',
@@ -62,7 +79,7 @@ const SearchPage = () => {
             <SearchBar />
             <SortSelector />
             <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
-          </BackgroundDiv>
+          </Box>
         </StyledPageWithSideMenu>
       </Form>
     </Formik>
