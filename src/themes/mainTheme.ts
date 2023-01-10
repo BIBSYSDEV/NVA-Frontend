@@ -27,12 +27,10 @@ declare module '@mui/material/styles' {
   interface Palette {
     registration: PaletteColorOptions;
   }
-
   interface PaletteOptions {
-    registration: PaletteColorOptions;
+    registration?: PaletteColorOptions;
   }
 }
-
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     registration: true;

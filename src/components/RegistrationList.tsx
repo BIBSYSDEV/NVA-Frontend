@@ -37,13 +37,10 @@ export const RegistrationListItem = ({ registration }: RegistrationListItemProps
 
   return (
     <ListItem
-      divider
-      disableGutters
       sx={{
         border: '2px solid',
         borderLeft: '1.25rem solid',
         borderColor: 'registration.main',
-        p: '0.5rem 1rem',
       }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.main' }}>

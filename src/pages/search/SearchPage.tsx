@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import { Box, Button } from '@mui/material';
 import { SearchBar } from './SearchBar';
 import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
 import { RegistrationFacetsFilter } from './filters/RegistrationFacetsFilter';
@@ -13,7 +14,6 @@ import { Registration } from '../../types/registration.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { Box, Button } from '@mui/material';
 
 const SearchPage = () => {
   const { t } = useTranslation();
