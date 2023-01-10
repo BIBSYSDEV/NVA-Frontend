@@ -998,7 +998,7 @@
         "waiting_for_reserved_doi": "It can take some time before the reserved DOI is displayed. Reload to check again.",
         "you_can_publish_everything": "You can publish on your own. The content will then be visible to other users.",
         "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the uploaded files before they can be shown to other users.",
-        "you_can_publish_metadata_after_curator_approval": "A curaotr must approve the content before it can be published and visible for other users."
+        "you_can_publish_metadata_after_curator_approval": "A curator must approve the content before it can be published and visible for other users."
       },
       "approve_publish_request": "Approve publishing request",
       "error_description": "To publish you must fix the following errors:",
