@@ -1407,8 +1407,7 @@
     "sort_by": "Order by",
     "sort_by_modified_date": "Last modified",
     "sort_by_published_date_asc": "Published date (oldest first)",
-    "sort_by_published_date_desc": "Published date (newest first)",
-    "title_and_contributors": "Title and contributors"
+    "sort_by_published_date_desc": "Published date (newest first)"
   },
   "tasks": {
     "limited_to": "Limited to: \"{{name}}\"",
