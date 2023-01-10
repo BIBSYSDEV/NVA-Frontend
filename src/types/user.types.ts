@@ -84,7 +84,7 @@ export interface CristinPersonIdentifier extends CristinArrayValue {
   type: CristinPersonIdentifierType;
 }
 
-export type CristinPersonNameType = 'FirstName' | 'LastName';
+export type CristinPersonNameType = 'FirstName' | 'LastName' | 'PreferredFirstName' | 'PreferredLastName';
 interface CristinPersonName extends CristinArrayValue {
   type: CristinPersonNameType;
 }
@@ -104,6 +104,8 @@ export interface CristinPerson extends CreateCristinPerson {
 export interface FlatCristinPerson {
   firstName: string;
   lastName: string;
+  preferredFirstName: string;
+  preferredLastName: string;
   nationalId: string;
   id: string;
   cristinIdentifier: string;

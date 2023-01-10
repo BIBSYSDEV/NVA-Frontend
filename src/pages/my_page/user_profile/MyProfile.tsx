@@ -66,6 +66,8 @@ export const MyProfile = () => {
                         {...field}
                         id={field.name}
                         value={field.value ?? firstName}
+                        defaultValue={firstName}
+                        disabled
                         required
                         label={t('common.first_name')}
                         size="small"
