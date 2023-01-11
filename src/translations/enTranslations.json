@@ -1402,6 +1402,7 @@
     "not_containing": "Doesn't include",
     "operator": "Operator",
     "persons": "Persons",
+    "person_search_placeholder": "Search for name",
     "remove_filter": "Remove filter",
     "result": "Result",
     "search_placeholder": "Search for title, contributor, abstract, etc.",

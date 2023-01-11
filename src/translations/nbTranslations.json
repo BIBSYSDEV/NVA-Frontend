@@ -1402,6 +1402,7 @@
     "not_containing": "Inneholder ikke",
     "operator": "Operator",
     "persons": "Personer",
+    "person_search_placeholder": "Søk etter navn",
     "remove_filter": "Fjern filter",
     "result": "Resultat",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
