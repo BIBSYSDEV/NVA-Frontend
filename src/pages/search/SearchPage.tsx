@@ -36,7 +36,7 @@ const SearchPage = () => {
     paramsSearchContext === SearchContextValue.Person ? SearchContextValue.Person : SearchContextValue.Result;
 
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration>>({
-    url: searchContext === SearchContextValue.Result ? `${SearchApiPath.Registrations}?${params.toString()}` : '', // TODO: skip context from toString?
+    url: searchContext === SearchContextValue.Result ? `${SearchApiPath.Registrations}?${params.toString()}` : '', // TODO: Problematic if context is in path here
     errorMessage: t('feedback.error.search'),
   });
 
@@ -71,9 +71,11 @@ const SearchPage = () => {
                 <Button
                   variant={searchContext === SearchContextValue.Result ? 'contained' : 'outlined'}
                   onClick={() => {
-                    const resultParams = new URLSearchParams();
-                    history.push({ search: resultParams.toString() });
-                    resetForm();
+                    if (searchContext !== SearchContextValue.Result) {
+                      const resultParams = new URLSearchParams();
+                      history.push({ search: resultParams.toString() });
+                      resetForm();
+                    }
                   }}
                   color="registration"
                   sx={{ width: 'fit-content' }}
@@ -83,10 +85,12 @@ const SearchPage = () => {
                 <Button
                   variant={searchContext === SearchContextValue.Person ? 'contained' : 'outlined'}
                   onClick={() => {
-                    const personParams = new URLSearchParams();
-                    personParams.set(SearchParam.Context, SearchContextValue.Person);
-                    history.push({ search: personParams.toString() });
-                    resetForm();
+                    if (searchContext !== SearchContextValue.Person) {
+                      const personParams = new URLSearchParams();
+                      personParams.set(SearchParam.Context, SearchContextValue.Person);
+                      history.push({ search: personParams.toString() });
+                      resetForm();
+                    }
                   }}
                   color="person"
                   sx={{ width: 'fit-content' }}
