@@ -1126,9 +1126,10 @@
           "RadioPlay": "Radio play",
           "ShortFilm": "Short film"
         },
+        "award_one": "",
+        "award_other": "Other",
         "award_name": "Award name",
         "award_organizer": "Award giver/organizer",
-        "award_other": "Other",
         "award_ranking": "Ranking",
         "catalogue_number": "Catalogue number",
         "competition_date": "Date for announcement",
@@ -1185,6 +1186,7 @@
           "Translation": "Translation"
         },
         "media_type": "Media type",
+        "mention_one": "",
         "mention_other": "Other (publisher, ISBN, etc.)",
         "mention_title": "Journal/Book/medium",
         "moving_picture_type": {
