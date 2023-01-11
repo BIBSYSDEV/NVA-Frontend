@@ -16,7 +16,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { useState } from 'react';
-import { PersonSearch } from './PersonSearch';
+import { PersonSearch } from './person_search/PersonSearch';
 
 const SearchPage = () => {
   const { t } = useTranslation();
