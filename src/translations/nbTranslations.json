@@ -61,11 +61,11 @@
       "administrators": "Administratorer",
       "archive_name": "Arkivnavn",
       "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
+      "display_name": "Visningsnavn på institusjonen",
       "doi_name": "Data Cite Member ID",
       "doi_password": "Passord",
       "doi_prefix": "DOI prefiks",
       "doi_url": "URL",
-      "display_name": "Visningsnavn på institusjonen",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Organisasjonens domene i Feide",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
@@ -325,10 +325,10 @@
     "vocabulary": "Vokabular",
     "vocabulary_status": {
       "Allowed": "Tillatt",
-      "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
       "Default": "Standard",
-      "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
       "Disabled": "Ikke tillatt",
+      "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
+      "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
     }
   },

@@ -325,10 +325,10 @@
     "vocabulary": "Vocabulary",
     "vocabulary_status": {
       "Allowed": "Allowed",
-      "allowed_description": "$t(editor.vocabulary_status.Allowed): Can be added by the user",
       "Default": "Default",
-      "default_description": "$t(editor.vocabulary_status.Default): Shown by default for all registrations",
       "Disabled": "Disabled",
+      "allowed_description": "$t(editor.vocabulary_status.Allowed): Can be added by the user",
+      "default_description": "$t(editor.vocabulary_status.Default): Shown by default for all registrations",
       "disabled_description": "$t(editor.vocabulary_status.Disabled): Is not available"
     }
   },
