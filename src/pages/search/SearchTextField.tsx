@@ -13,7 +13,7 @@ export const SearchTextField = ({ clearValue, ...props }: SearchTextFieldProps) 
   return (
     <TextField
       {...props}
-      id={dataTestId.startPage.searchField}
+      type="search"
       data-testid={dataTestId.startPage.searchField}
       fullWidth
       variant="outlined"
