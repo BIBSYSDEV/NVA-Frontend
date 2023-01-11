@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { Box, TablePagination, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import { ListSkeleton } from '../../components/ListSkeleton';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { SearchResults } from './SearchResults';
-import { dataTestId } from '../../utils/dataTestIds';
-import { SearchParam } from '../../utils/searchHelpers';
-import { SearchResponse } from '../../types/common.types';
-import { Registration } from '../../types/registration.types';
+import { RegistrationSearchResults } from './RegistrationSearchResults';
+import { ListSkeleton } from '../../../components/ListSkeleton';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { SearchParam } from '../../../utils/searchHelpers';
+import { SearchResponse } from '../../../types/common.types';
+import { Registration } from '../../../types/registration.types';
 
 interface RegistrationSearchProps {
   searchResults?: SearchResponse<Registration>;
@@ -37,7 +37,7 @@ export const RegistrationSearch = ({ searchResults, isLoadingSearch }: Registrat
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
         <>
-          <SearchResults searchResult={searchResults} />
+          <RegistrationSearchResults searchResult={searchResults} />
           <TablePagination
             data-testid={dataTestId.startPage.searchPagination}
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}

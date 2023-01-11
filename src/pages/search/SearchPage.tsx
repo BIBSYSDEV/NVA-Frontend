@@ -4,11 +4,11 @@ import { useHistory } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import { Box, Button } from '@mui/material';
-import { SearchBar } from './SearchBar';
+import { RegistrationSearchBar } from './result_search/RegistrationSearchBar';
 import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
-import { RegistrationFacetsFilter } from './filters/RegistrationFacetsFilter';
-import { RegistrationSearch } from './RegistrationSearch';
-import { SortSelector } from './SortSelector';
+import { RegistrationFacetsFilter } from './result_search/filters/RegistrationFacetsFilter';
+import { RegistrationSearch } from './result_search/RegistrationSearch';
+import { RegistrationSortSelector } from './result_search/RegistrationSortSelector';
 import { SearchResponse } from '../../types/common.types';
 import { Registration } from '../../types/registration.types';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -76,8 +76,8 @@ const SearchPage = () => {
               columnGap: '2rem',
               rowGap: '1rem',
             }}>
-            <SearchBar />
-            <SortSelector />
+            <RegistrationSearchBar />
+            <RegistrationSortSelector />
             <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
           </Box>
         </StyledPageWithSideMenu>

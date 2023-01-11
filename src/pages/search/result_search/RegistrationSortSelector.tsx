@@ -3,9 +3,9 @@ import { TFuncKey } from 'i18next';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { RegistrationFieldName } from '../../types/publicationFieldNames';
-import { dataTestId } from '../../utils/dataTestIds';
-import { SearchParam } from '../../utils/searchHelpers';
+import { RegistrationFieldName } from '../../../types/publicationFieldNames';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { SearchParam } from '../../../utils/searchHelpers';
 
 enum SortOptionValue {
   PublishedDateDesc,
@@ -24,7 +24,7 @@ const sortOptions: SortOption[] = [
   { value: SortOptionValue.ModifiedDateDesc, i18nKey: 'search.sort_by_modified_date' },
 ];
 
-export const SortSelector = () => {
+export const RegistrationSortSelector = () => {
   const history = useHistory();
   const { t } = useTranslation();
   const params = new URLSearchParams(history.location.search);
