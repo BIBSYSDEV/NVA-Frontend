@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { Box, Button } from '@mui/material';
 import { SearchBar } from './SearchBar';
 import { createSearchConfigFromSearchParams, createSearchQuery, SearchParam } from '../../utils/searchHelpers';
@@ -14,11 +15,14 @@ import { Registration } from '../../types/registration.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { useState } from 'react';
+import { PersonSearch } from './PersonSearch';
 
 const SearchPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
+  const [searchContext, setSearchContext] = useState<'Result' | 'Person'>('Result'); // TODO: Set this in URL path
 
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations}?${params.toString()}`,
@@ -53,33 +57,47 @@ const SearchPage = () => {
                 button: { textTransform: 'none' },
               }}>
               <Button
-                variant="contained"
+                variant={searchContext === 'Result' ? 'contained' : 'outlined'}
+                onClick={() => setSearchContext('Result')}
                 color="registration"
                 sx={{ width: 'fit-content' }}
                 startIcon={<ManageSearchIcon />}>
-                {t('common.result')}
+                {t('search.result')}
               </Button>
-              {searchResults?.aggregations && (
+              <Button
+                variant={searchContext === 'Person' ? 'contained' : 'outlined'}
+                onClick={() => setSearchContext('Person')}
+                color="person"
+                sx={{ width: 'fit-content' }}
+                startIcon={<PersonSearchIcon />}>
+                {t('search.persons')}
+              </Button>
+
+              {searchContext === 'Result' && searchResults?.aggregations && (
                 <RegistrationFacetsFilter aggregations={searchResults.aggregations} isLoadingSearch={isLoadingSearch} />
               )}
             </Box>
           </SidePanel>
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateRows: 'auto auto 1fr',
-              gridTemplateColumns: { xs: '1fr', md: '5fr 2fr' },
-              gridTemplateAreas: {
-                xs: "'searchbar' 'sorting' 'advanced' 'results'",
-                md: "'searchbar sorting' 'advanced advanced' 'results results'",
-              },
-              columnGap: '2rem',
-              rowGap: '1rem',
-            }}>
-            <SearchBar />
-            <SortSelector />
-            <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
-          </Box>
+          {searchContext === 'Result' ? (
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateRows: 'auto auto 1fr',
+                gridTemplateColumns: { xs: '1fr', md: '5fr 2fr' },
+                gridTemplateAreas: {
+                  xs: "'searchbar' 'sorting' 'advanced' 'results'",
+                  md: "'searchbar sorting' 'advanced advanced' 'results results'",
+                },
+                columnGap: '2rem',
+                rowGap: '1rem',
+              }}>
+              <SearchBar />
+              <SortSelector />
+              <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
+            </Box>
+          ) : (
+            <PersonSearch />
+          )}
         </StyledPageWithSideMenu>
       </Form>
     </Formik>
