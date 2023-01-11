@@ -16,7 +16,7 @@ import { CristinPerson } from '../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RootState } from '../../redux/store';
-import { RegistrationSearchResults } from '../search/result_search/RegistrationSearchResults';
+import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 
 const textContainerSx: SxProps = {
   width: '100%',

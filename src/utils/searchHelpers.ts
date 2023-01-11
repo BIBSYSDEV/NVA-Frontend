@@ -1,4 +1,4 @@
-import { registrationFilters } from '../pages/search/result_search/filters/AdvancedSearchRow';
+import { registrationFilters } from '../pages/search/registration_search/filters/AdvancedSearchRow';
 
 export enum SearchParam {
   From = 'from',
