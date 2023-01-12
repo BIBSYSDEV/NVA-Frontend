@@ -19,7 +19,6 @@ export const PersonListItem = ({ person }: PersonListItemProps) => {
 
   return (
     <ListItem
-      key={person.id}
       sx={{
         border: '2px solid',
         borderLeft: '1.25rem solid',
