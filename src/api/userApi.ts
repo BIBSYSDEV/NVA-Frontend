@@ -1,5 +1,5 @@
 import { Auth, CognitoUser } from '@aws-amplify/auth';
-import { CreateCristinPerson, CristinPerson, Employment } from '../types/user.types';
+import { CreateCristinPerson, CristinPerson, Employment, FlatCristinPerson } from '../types/user.types';
 import { USE_MOCK_DATA, LocalStorageKey } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
 import { CristinApiPath } from './apiPaths';
@@ -57,6 +57,14 @@ export const createCristinPerson = async (cristinPerson: CreateCristinPerson) =>
     data: cristinPerson,
   });
 
+export const updateCristinPerson = async (id: string, cristinPerson: Partial<FlatCristinPerson>) => {
+  await authenticatedApiRequest<CristinPerson>({
+    url: id,
+    method: 'PATCH',
+    data: cristinPerson,
+  });
+};
+
 type EmploymentData = Omit<Employment, 'endDate' | 'fullTimeEquivalentPercentage'> &
   Partial<Pick<Employment, 'endDate' | 'fullTimeEquivalentPercentage'>>;
 
@@ -78,7 +86,7 @@ export const searchByNationalIdNumber = async (nationalIdNumber: string) => {
     value: nationalIdNumber,
   };
   return await authenticatedApiRequest<CristinPerson>({
-    url: CristinApiPath.PersonIdentityNumer,
+    url: CristinApiPath.PersonIdentityNumber,
     method: 'POST',
     data: data,
   });

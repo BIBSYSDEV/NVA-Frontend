@@ -1,13 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Box, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { RootState } from '../../../redux/store';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
 import { BackgroundDiv, InputContainerBox } from '../../../components/styled/Wrappers';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
-import { ErrorMessage, Field, FieldProps, Formik, FormikHelpers, FormikValues } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { FlatCristinPerson } from '../../../types/user.types';
+import { updateCristinPerson } from '../../../api/userApi';
 import EditIcon from '@mui/icons-material/Edit';
 
 export const MyProfile = () => {
@@ -16,6 +18,19 @@ export const MyProfile = () => {
   const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
   const firstName = user?.givenName;
   const lastName = user?.familyName;
+
+  type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
+
+  const initialValues: CristinPersonFormData = {
+    preferredFirstName: '',
+    preferredLastName: '',
+  };
+
+  const updatePerson = async (values: CristinPersonFormData) => {
+    if (user.cristinId) {
+      await updateCristinPerson(user.cristinId, values);
+    }
+  };
 
   return (
     <>
@@ -51,70 +66,68 @@ export const MyProfile = () => {
             <Typography>{t('my_page.my_profile.user-profile-description')}</Typography>
             <Box>
               <Typography>{t('my_page.my_profile.author_name')}</Typography>
-              <Formik
-                initialValues={{ firstName: firstName, lastName: lastName }}
-                onSubmit={function (
-                  values: FormikValues,
-                  formikHelpers: FormikHelpers<FormikValues>
-                ): void | Promise<any> {
-                  throw new Error('Function not implemented.');
-                }}>
-                <InputContainerBox sx={{ display: 'flex', flexDirection: 'row' }}>
-                  <Field name={'firstNamePreferred'}>
-                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                      <TextField
-                        {...field}
-                        id={field.name}
-                        value={field.value ?? firstName}
-                        defaultValue={firstName}
-                        disabled
-                        required
-                        label={t('common.first_name')}
-                        size="small"
-                        variant="filled"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                sx={{ bgcolor: 'info.light', borderRadius: '50%', padding: '0.2rem' }}
-                                aria-label={t('common.edit')}>
-                                <EditIcon sx={{ width: '1.2rem', height: '1.2rem' }} />
-                              </IconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
-                  </Field>
-                  <Field name={'lastNamePreferred'}>
-                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                      <TextField
-                        {...field}
-                        id={field.name}
-                        value={field.value ?? lastName}
-                        required
-                        label={t('common.last_name')}
-                        size="small"
-                        variant="filled"
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                sx={{ bgcolor: 'info.light', borderRadius: '50%', padding: '0.2rem' }}
-                                aria-label={t('common.edit')}>
-                                <EditIcon sx={{ width: '1.2rem', height: '1.2rem' }} />
-                              </IconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
-                  </Field>
-                </InputContainerBox>
+              <Formik initialValues={initialValues} onSubmit={(values) => updatePerson(values)}>
+                <Form>
+                  <InputContainerBox sx={{ display: 'flex', flexDirection: 'row' }}>
+                    <Field name={'preferredFirstName'}>
+                      {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          id={field.name}
+                          value={field.value ?? firstName}
+                          required
+                          label={t('common.first_name')}
+                          size="small"
+                          variant="filled"
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  sx={{ bgcolor: 'info.light', borderRadius: '50%', padding: '0.2rem' }}
+                                  aria-label={t('common.edit')}>
+                                  <EditIcon sx={{ width: '1.2rem', height: '1.2rem' }} />
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
+                          error={touched && !!error}
+                          helperText={<ErrorMessage name={field.name} />}
+                        />
+                      )}
+                    </Field>
+                    <Field name={'preferredLastName'}>
+                      {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          id={field.name}
+                          value={field.value ?? lastName}
+                          required
+                          label={t('common.last_name')}
+                          size="small"
+                          variant="filled"
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  sx={{ bgcolor: 'info.light', borderRadius: '50%', padding: '0.2rem' }}
+                                  aria-label={t('common.edit')}>
+                                  <EditIcon sx={{ width: '1.2rem', height: '1.2rem' }} />
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
+                          error={touched && !!error}
+                          helperText={<ErrorMessage name={field.name} />}
+                        />
+                      )}
+                    </Field>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Button variant="contained" type="submit">
+                        {t('common.save')}
+                      </Button>
+                    </Box>
+                  </InputContainerBox>
+                </Form>
               </Formik>
               <Box sx={{ display: 'flex' }}>
                 <Typography sx={{ mt: '0.6rem' }}>{t('common.orcid')}</Typography>
