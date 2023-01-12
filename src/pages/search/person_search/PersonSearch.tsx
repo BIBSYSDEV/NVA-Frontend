@@ -23,6 +23,8 @@ export const PersonSearch = () => {
     errorMessage: t('feedback.error.search'),
   });
 
+  const persons = searchResults?.hits ?? [];
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Field name="searchTerm">
@@ -40,14 +42,12 @@ export const PersonSearch = () => {
 
       {isLoadingSearch ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : searchResults && searchResults.hits.length > 0 ? (
-        <>
-          <List>
-            {searchResults.hits.map((person) => (
-              <PersonListItem key={person.id} person={person} />
-            ))}
-          </List>
-        </>
+      ) : persons.length > 0 ? (
+        <List>
+          {searchResults?.hits.map((person) => (
+            <PersonListItem key={person.id} person={person} />
+          ))}
+        </List>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}
