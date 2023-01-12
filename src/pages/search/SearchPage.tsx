@@ -36,8 +36,11 @@ const SearchPage = () => {
   const searchContext =
     paramsSearchContext === SearchContextValue.Person ? SearchContextValue.Person : SearchContextValue.Result;
 
+  const requestParams = new URLSearchParams(history.location.search);
+  requestParams.delete(SearchParam.Context);
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration>>({
-    url: searchContext === SearchContextValue.Result ? `${SearchApiPath.Registrations}?${params.toString()}` : '', // TODO: Problematic if context is in path here
+    url:
+      searchContext === SearchContextValue.Result ? `${SearchApiPath.Registrations}?${requestParams.toString()}` : '',
     errorMessage: t('feedback.error.search'),
   });
 

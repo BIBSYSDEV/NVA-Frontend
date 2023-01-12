@@ -16,7 +16,7 @@ export const PersonSearch = () => {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const queryParam = params.get(SearchParam.Query);
-  const nameQuery = queryParam?.replaceAll('"', ''); // TODO: Remove "" from query as default, and add it if/when needed instead?
+  const nameQuery = queryParam?.replaceAll('"', ''); // TODO: build separate query for person (don't reuse from result search)
 
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<CristinPerson>>({
     url: nameQuery ? `${CristinApiPath.Person}?name=${nameQuery}&results=10` : '',
