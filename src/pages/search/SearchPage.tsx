@@ -21,6 +21,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { PersonSearch } from './person_search/PersonSearch';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 
 enum SearchContextValue {
   Result = 'result',
@@ -82,21 +83,23 @@ const SearchPage = () => {
                   startIcon={<ManageSearchIcon />}>
                   {t('search.result')}
                 </Button>
-                <Button
-                  variant={searchContext === SearchContextValue.Person ? 'contained' : 'outlined'}
-                  onClick={() => {
-                    if (searchContext !== SearchContextValue.Person) {
-                      const personParams = new URLSearchParams();
-                      personParams.set(SearchParam.Context, SearchContextValue.Person);
-                      history.push({ search: personParams.toString() });
-                      resetForm();
-                    }
-                  }}
-                  color="person"
-                  sx={{ width: 'fit-content' }}
-                  startIcon={<PersonSearchIcon />}>
-                  {t('search.persons')}
-                </Button>
+                <BetaFunctionality>
+                  <Button
+                    variant={searchContext === SearchContextValue.Person ? 'contained' : 'outlined'}
+                    onClick={() => {
+                      if (searchContext !== SearchContextValue.Person) {
+                        const personParams = new URLSearchParams();
+                        personParams.set(SearchParam.Context, SearchContextValue.Person);
+                        history.push({ search: personParams.toString() });
+                        resetForm();
+                      }
+                    }}
+                    color="person"
+                    sx={{ width: 'fit-content' }}
+                    startIcon={<PersonSearchIcon />}>
+                    {t('search.persons')}
+                  </Button>
+                </BetaFunctionality>
 
                 {searchContext === SearchContextValue.Result && searchResults?.aggregations && (
                   <RegistrationFacetsFilter

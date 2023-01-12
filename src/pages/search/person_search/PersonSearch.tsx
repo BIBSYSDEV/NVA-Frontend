@@ -44,7 +44,7 @@ export const PersonSearch = () => {
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : persons.length > 0 ? (
         <List>
-          {searchResults?.hits.map((person) => (
+          {persons.map((person) => (
             <PersonListItem key={person.id} person={person} />
           ))}
         </List>
