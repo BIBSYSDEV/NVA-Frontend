@@ -18,6 +18,7 @@ enum Color {
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
   Registration = '#DAC48E',
+  Person = '#E48F8F',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
@@ -26,14 +27,17 @@ const pickersLocale = i18n.language === 'eng' ? pickersEnUs : pickersNbNo;
 declare module '@mui/material/styles' {
   interface Palette {
     registration: PaletteColorOptions;
+    person: PaletteColorOptions;
   }
   interface PaletteOptions {
     registration?: PaletteColorOptions;
+    person?: PaletteColorOptions;
   }
 }
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     registration: true;
+    person: true;
   }
 }
 
@@ -74,6 +78,9 @@ export const mainTheme = createTheme(
       },
       registration: {
         main: Color.Registration,
+      },
+      person: {
+        main: Color.Person,
       },
       background: {
         default: Color.White,
