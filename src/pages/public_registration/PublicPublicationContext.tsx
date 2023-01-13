@@ -738,9 +738,9 @@ export const PublicPublicationContextMediaContribution = ({ publicationContext }
           {t('registration.resource_type.media_contribution.channel')}: {disseminationChannel}
         </Typography>
       )}
-      {partOf?.series && (
+      {partOf?.seriesName && (
         <Typography>
-          {t('registration.resource_type.media_contribution.name_of_series_program')}: {partOf.series}
+          {t('registration.resource_type.media_contribution.name_of_series_program')}: {partOf.seriesName}
         </Typography>
       )}
       {partOf?.seriesPart && (
