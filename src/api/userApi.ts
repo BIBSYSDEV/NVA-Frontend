@@ -57,13 +57,12 @@ export const createCristinPerson = async (cristinPerson: CreateCristinPerson) =>
     data: cristinPerson,
   });
 
-export const updateCristinPerson = async (id: string, cristinPerson: Partial<FlatCristinPerson>) => {
-  await authenticatedApiRequest<CristinPerson>({
+export const updateCristinPerson = async (id: string, cristinPerson: Partial<FlatCristinPerson>) =>
+  await authenticatedApiRequest({
     url: id,
     method: 'PATCH',
     data: cristinPerson,
   });
-};
 
 type EmploymentData = Omit<Employment, 'endDate' | 'fullTimeEquivalentPercentage'> &
   Partial<Pick<Employment, 'endDate' | 'fullTimeEquivalentPercentage'>>;

@@ -405,6 +405,7 @@
       "update_customer": "Institusjon er oppdatert",
       "update_institution_user": "Bruker er oppdatert",
       "update_orcid": "ORCID-kobling ble oppdatert",
+      "update_person": "Person ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
@@ -499,8 +500,10 @@
         "remove_connection": "Fjern kobling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
+      "preferred_first_name": "Foretrukket fornavn",
+      "preferred_last_name": "Foretrukket etternavn",
       "user_profile": "Brukerprofil",
-      "user-profile-description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil.",
+      "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil.",
       "research_profile_summary": {
         "preview": "Forhåndsvisning",
         "research_profile": "Forskerprofil",

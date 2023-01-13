@@ -104,8 +104,8 @@ export interface CristinPerson extends CreateCristinPerson {
 export interface FlatCristinPerson {
   firstName: string;
   lastName: string;
-  preferredFirstName: string;
-  preferredLastName: string;
+  preferredFirstName: string | null;
+  preferredLastName: string | null;
   nationalId: string;
   id: string;
   cristinIdentifier: string;

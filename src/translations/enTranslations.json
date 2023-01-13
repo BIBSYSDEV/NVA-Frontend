@@ -405,6 +405,7 @@
       "update_customer": "Updated customer institution",
       "update_institution_user": "Updated user",
       "update_orcid": "Successfully updated ORCID",
+      "update_person": "Successfully updated person",
       "update_publish_strategy": "Updated publish strategy",
       "update_registration": "Updated registration",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"
@@ -499,8 +500,10 @@
         "remove_connection": "Remove connection to ORCID",
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
       },
+      "preferred_first_name": "Preferred first name",
+      "preferred_last_name": "Preferred last name",
       "user_profile": "User profile",
-      "user-profile-description": "Here you can fill in and mark what you want to appear on your official researcher profile.",
+      "user_profile_description": "Here you can fill in and mark what you want to appear on your official researcher profile.",
       "research_profile_summary": {
         "preview": "Preview",
         "research_profile": "Research profile",

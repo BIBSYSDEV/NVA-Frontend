@@ -1,58 +1,74 @@
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import { RootState } from '../../../redux/store';
+import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import EditIcon from '@mui/icons-material/Edit';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
-import { BackgroundDiv, InputContainerBox } from '../../../components/styled/Wrappers';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
-import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { RootState } from '../../../redux/store';
+import { setNotification } from '../../../redux/notificationSlice';
+import { BackgroundDiv, InputContainerBox } from '../../../components/styled/Wrappers';
+import { PageSpinner } from '../../../components/PageSpinner';
 import { CristinPerson, FlatCristinPerson } from '../../../types/user.types';
 import { updateCristinPerson } from '../../../api/userApi';
-import EditIcon from '@mui/icons-material/Edit';
-import { useState } from 'react';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import { useLocation } from 'react-router-dom';
-import { PageSpinner } from '../../../components/PageSpinner';
 import { getValueByKey } from '../../../utils/user-helpers';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 export const MyProfile = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const location = useLocation();
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
-  const firstName = user?.givenName;
-  const lastName = user?.familyName;
-
-  const [editPreferredFirstName, setEditPreferredFirstName] = useState(false);
-  const [editPreferredLastName, setEditPreferredLastName] = useState(false);
 
   const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
   const isPublicPage = location.pathname === UrlPathTemplate.ResearchProfile;
+
   const personId = isPublicPage
     ? new URLSearchParams(location.search).get('id') ?? '' // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
 
-  const [person, isLoadingPerson] = useFetch<CristinPerson>({
+  const [person, isLoadingPerson, refetchPerson] = useFetch<CristinPerson>({
     url: personId,
     errorMessage: t('feedback.error.get_person'),
   });
 
+  const firstName = getValueByKey('FirstName', person?.names);
+  const lastName = getValueByKey('LastName', person?.names);
   const personPreferredFirstName = getValueByKey('PreferredFirstName', person?.names);
   const personPreferredLastName = getValueByKey('PreferredLastName', person?.names);
+  const [editPreferredNames, setEditPreferredNames] = useState(false);
 
   type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
   const initialValues: CristinPersonFormData = {
-    preferredFirstName: personPreferredFirstName ?? firstName,
-    preferredLastName: personPreferredLastName ?? lastName,
+    preferredFirstName: personPreferredFirstName || firstName,
+    preferredLastName: personPreferredLastName || lastName,
   };
 
   const updatePerson = async (values: CristinPersonFormData) => {
     if (user.cristinId) {
-      await updateCristinPerson(user.cristinId, values);
+      if (values.preferredFirstName === '') {
+        values.preferredFirstName = null;
+      }
+      if (values.preferredLastName === '') {
+        values.preferredLastName = null;
+      }
+      const updatePersonResponse = await updateCristinPerson(user.cristinId, values);
+      if (isErrorStatus(updatePersonResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
+      } else if (isSuccessStatus(updatePersonResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' }));
+        setEditPreferredNames(!editPreferredNames);
+        refetchPerson();
+      }
     }
   };
 
@@ -87,88 +103,76 @@ export const MyProfile = () => {
           }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             <Typography variant="h2">{t('my_page.my_profile.heading.personalia')}</Typography>
-            <Typography>{t('my_page.my_profile.user-profile-description')}</Typography>
-            {isLoadingPerson ? (
+            {isLoadingPerson && !person ? (
               <PageSpinner />
             ) : (
-              <Box>
-                <Typography>{t('my_page.my_profile.author_name')}</Typography>
-                <Formik initialValues={initialValues} onSubmit={(values) => updatePerson(values)}>
-                  <Form>
-                    <InputContainerBox sx={{ display: 'flex', flexDirection: 'row' }}>
-                      <Field name={'preferredFirstName'}>
-                        {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                          <TextField
-                            {...field}
-                            id={field.name}
-                            value={field.value ?? firstName}
-                            required
-                            disabled={!editPreferredFirstName}
-                            label={t('common.first_name')}
-                            size="small"
-                            variant="filled"
-                            InputProps={{
-                              endAdornment: (
-                                <InputAdornment position="end">
-                                  <IconButton
-                                    sx={{ bgcolor: 'info.light', borderRadius: '50%', padding: '0.2rem' }}
-                                    aria-label={t('common.edit')}
-                                    onClick={() => setEditPreferredFirstName(!editPreferredFirstName)}>
-                                    <EditIcon sx={{ width: '1.2rem', height: '1.2rem' }} />
-                                  </IconButton>
-                                </InputAdornment>
-                              ),
-                            }}
-                            error={touched && !!error}
-                            helperText={<ErrorMessage name={field.name} />}
-                          />
-                        )}
-                      </Field>
-                      <Field name={'preferredLastName'}>
-                        {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                          <TextField
-                            {...field}
-                            id={field.name}
-                            value={field.value ?? lastName}
-                            required
-                            disabled={!editPreferredLastName}
-                            label={t('common.last_name')}
-                            size="small"
-                            variant="filled"
-                            InputProps={{
-                              endAdornment: (
-                                <InputAdornment position="end">
-                                  <IconButton
-                                    sx={{ bgcolor: 'info.light', borderRadius: '50%', padding: '0.2rem' }}
-                                    aria-label={t('common.edit')}
-                                    onClick={() => setEditPreferredLastName(!editPreferredLastName)}>
-                                    <EditIcon sx={{ width: '1.2rem', height: '1.2rem' }} />
-                                  </IconButton>
-                                </InputAdornment>
-                              ),
-                            }}
-                            error={touched && !!error}
-                            helperText={<ErrorMessage name={field.name} />}
-                          />
-                        )}
-                      </Field>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Button variant="contained" type="submit">
-                          {t('common.save')}
-                        </Button>
-                      </Box>
-                    </InputContainerBox>
-                  </Form>
-                </Formik>
-                <Box sx={{ display: 'flex' }}>
-                  <Typography sx={{ mt: '0.6rem' }}>{t('common.orcid')}</Typography>
-                  <UserOrcid user={user} />
-                </Box>
-              </Box>
+              <>
+                <Typography>{t('my_page.my_profile.user_profile_description')}</Typography>
+                <>
+                  <Formik initialValues={initialValues} onSubmit={(values) => updatePerson(values)}>
+                    {({ isSubmitting }: FormikProps<CristinPersonFormData>) => {
+                      return (
+                        <Form>
+                          <InputContainerBox sx={{ display: 'flex', flexDirection: 'row' }}>
+                            <Field name={'preferredFirstName'}>
+                              {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                                <TextField
+                                  {...field}
+                                  id={field.name}
+                                  value={field.value}
+                                  disabled={!editPreferredNames || isSubmitting}
+                                  label={t('my_page.my_profile.preferred_first_name')}
+                                  size="small"
+                                  variant="filled"
+                                  error={touched && !!error}
+                                  helperText={<ErrorMessage name={field.name} />}
+                                />
+                              )}
+                            </Field>
+                            <Field name={'preferredLastName'}>
+                              {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                                <TextField
+                                  {...field}
+                                  id={field.name}
+                                  value={field.value}
+                                  disabled={!editPreferredNames || isSubmitting}
+                                  label={t('my_page.my_profile.preferred_last_name')}
+                                  size="small"
+                                  variant="filled"
+                                  error={touched && !!error}
+                                  helperText={<ErrorMessage name={field.name} />}
+                                />
+                              )}
+                            </Field>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                              <Tooltip title={t('common.edit')}>
+                                <IconButton
+                                  aria-label={t('common.edit')}
+                                  onClick={() => setEditPreferredNames(!editPreferredNames)}>
+                                  <EditIcon sx={{ width: '1.2rem' }} />
+                                </IconButton>
+                              </Tooltip>
+                            </Box>
+                          </InputContainerBox>
+                          <Box sx={{ display: 'flex' }}>
+                            <Typography sx={{ mt: '0.6rem' }}>{t('common.orcid')}</Typography>
+                            <UserOrcid user={user} />
+                          </Box>
+                          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+                            <LoadingButton loading={isSubmitting} variant="contained" type="submit">
+                              {t('common.save')}
+                            </LoadingButton>
+                          </Box>
+                          <Box sx={{ gridArea: 'roles', gridRow: 2 }}>
+                            <UserRoles user={user} />
+                          </Box>
+                        </Form>
+                      );
+                    }}
+                  </Formik>
+                </>
+              </>
             )}
-          </Box>
-          <Box sx={{ gridArea: 'roles', gridRow: 2 }}>
-            <UserRoles user={user} />
           </Box>
         </BackgroundDiv>
         <Box sx={{ gridArea: 'research-profile' }}>
