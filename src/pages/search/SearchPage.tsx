@@ -44,12 +44,12 @@ const SearchPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
-  const paramsSearchContext = params.get(SearchParam.Context);
+  const paramsSearchContext = params.get(SearchParam.Type);
   const searchContext =
     paramsSearchContext === SearchContextValue.Person ? SearchContextValue.Person : SearchContextValue.Result;
 
   const requestParams = new URLSearchParams(history.location.search);
-  requestParams.delete(SearchParam.Context);
+  requestParams.delete(SearchParam.Type);
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration>>({
     url:
       searchContext === SearchContextValue.Result ? `${SearchApiPath.Registrations}?${requestParams.toString()}` : '',
@@ -71,7 +71,7 @@ const SearchPage = () => {
           newSearchParams.set(SearchParam.Results, defaultResultSize);
           newSearchParams.set(SearchParam.From, '0');
         } else if (searchContext === SearchContextValue.Person) {
-          newSearchParams.set(SearchParam.Context, SearchContextValue.Person);
+          newSearchParams.set(SearchParam.Type, SearchContextValue.Person);
           if (values.searchTerm) {
             newSearchParams.set(SearchParam.Page, '1');
             newSearchParams.set(SearchParam.Results, defaultResultSize);
@@ -113,7 +113,7 @@ const SearchPage = () => {
                     onClick={() => {
                       if (searchContext !== SearchContextValue.Person) {
                         const personParams = new URLSearchParams();
-                        personParams.set(SearchParam.Context, SearchContextValue.Person);
+                        personParams.set(SearchParam.Type, SearchContextValue.Person);
                         history.push({ search: personParams.toString() });
                         resetForm();
                       }

@@ -16,7 +16,7 @@ export const PersonSearch = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const personSearchQueryParmas = new URLSearchParams(location.search);
-  personSearchQueryParmas.delete(SearchParam.Context);
+  personSearchQueryParmas.delete(SearchParam.Type);
   const queryParams = personSearchQueryParmas.toString();
 
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<CristinPerson>>({
