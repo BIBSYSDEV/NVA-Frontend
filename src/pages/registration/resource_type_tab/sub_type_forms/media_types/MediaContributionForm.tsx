@@ -72,7 +72,7 @@ export const MediaContributionForm = () => {
               />
             )}
           </Field>
-          <Field name={ResourceFieldNames.PublicationContextMediaPartOfSeries}>
+          <Field name={ResourceFieldNames.PublicationContextMediaPartOfSeriesName}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 variant="filled"

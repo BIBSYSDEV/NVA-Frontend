@@ -1,4 +1,4 @@
-import { registrationFilters } from '../pages/search/filters/AdvancedSearchRow';
+import { registrationFilters } from '../pages/search/registration_search/filters/AdvancedSearchRow';
 
 export enum SearchParam {
   From = 'from',
@@ -6,6 +6,7 @@ export enum SearchParam {
   Query = 'query',
   Results = 'results',
   SortOrder = 'sortOrder',
+  Context = 'context',
 }
 
 export enum ExpressionStatement {
