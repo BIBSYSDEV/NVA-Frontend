@@ -9,7 +9,7 @@ interface FacetItemProps {
   children: ReactNode[];
 }
 
-const itemsToShowByDefault = 5;
+const itemsToShowByDefault = 3;
 
 export const FacetItem = ({ title, children }: FacetItemProps) => {
   const { t } = useTranslation();
@@ -42,17 +42,15 @@ export const FacetItem = ({ title, children }: FacetItemProps) => {
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <List disablePadding>
           {itemsToShow}
-          {!showAll && children.length > itemsToShowByDefault && (
-            <li>
-              <ListItemButton
-                title={t('common.show_more')}
-                dense
-                sx={{ justifyContent: 'space-around' }}
-                onClick={() => setShowAll(true)}>
-                <ExpandMore />
-              </ListItemButton>
-            </li>
-          )}
+          <li>
+            <ListItemButton
+              title={t('common.show_more')}
+              dense
+              sx={{ justifyContent: 'space-around' }}
+              onClick={() => setShowAll(!showAll)}>
+              {showAll ? <ExpandLess titleAccess={t('common.show_fewer')} /> : <ExpandMore />}
+            </ListItemButton>
+          </li>
         </List>
       </Collapse>
     </Box>
