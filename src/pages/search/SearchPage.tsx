@@ -8,7 +8,7 @@ import { Box, Button } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
   createSearchConfigFromSearchParams,
-  createSearchQuery,
+  createSearchQuery as createRegistrationSearchQuery,
   SearchConfig,
   SearchParam,
 } from '../../utils/searchHelpers';
@@ -22,11 +22,23 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { PersonSearch } from './person_search/PersonSearch';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+
+/*
+ * The Search Page allows for users to search for 3 things (contexts): Registrations/Results, Persons, and Projects
+ * The actual flow may not be 100% obvious, but the process is simply speaking along these lines:
+ *   1) Search inputs (query and filters) are added to Formik
+ *   2) User submits the form
+ *   3) The form's submit function builds the search query string to add to the URL based on the form values
+ *   4) When the URL Search params are updated, a new search will be performed
+ */
 
 enum SearchContextValue {
   Result = 'result',
   Person = 'person',
 }
+
+const defaultResultSize = ROWS_PER_PAGE_OPTIONS[1].toString();
 
 const SearchPage = () => {
   const { t } = useTranslation();
@@ -50,14 +62,23 @@ const SearchPage = () => {
     <Formik
       initialValues={initialSearchParams}
       onSubmit={(values) => {
-        const queryString = createSearchQuery(values);
-        params.set(SearchParam.From, '0');
-        if (queryString) {
-          params.set(SearchParam.Query, queryString);
-        } else {
-          params.delete(SearchParam.Query);
+        const newSearchParams = new URLSearchParams();
+        if (searchContext === SearchContextValue.Result) {
+          const queryString = createRegistrationSearchQuery(values);
+          if (queryString) {
+            newSearchParams.set(SearchParam.Query, queryString);
+          }
+          newSearchParams.set(SearchParam.Results, defaultResultSize);
+          newSearchParams.set(SearchParam.From, '0');
+        } else if (searchContext === SearchContextValue.Person) {
+          newSearchParams.set(SearchParam.Context, SearchContextValue.Person);
+          if (values.searchTerm) {
+            newSearchParams.set(SearchParam.Page, '1');
+            newSearchParams.set(SearchParam.Results, defaultResultSize);
+            newSearchParams.set(SearchParam.Name, values.searchTerm);
+          }
         }
-        history.push({ search: params.toString() });
+        history.push({ search: newSearchParams.toString() });
       }}>
       {({ resetForm }: FormikProps<SearchConfig>) => (
         <Form>

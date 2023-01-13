@@ -7,6 +7,8 @@ export enum SearchParam {
   Results = 'results',
   SortOrder = 'sortOrder',
   Context = 'context',
+  Page = 'page',
+  Name = 'name',
 }
 
 export enum ExpressionStatement {
