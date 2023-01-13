@@ -11,12 +11,10 @@ interface CristinSearchPaginationProps {
 export const CristinSearchPagination = ({ totalCount }: CristinSearchPaginationProps) => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
-
   const resultsParam = params.get(SearchParam.Results);
   const pageParam = params.get(SearchParam.Page);
-  const muiPage = pageParam ? +pageParam - 1 : 0;
 
-  const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
+  const rowsPerPage = resultsParam ? +resultsParam : ROWS_PER_PAGE_OPTIONS[1];
 
   const updatePath = (page: string, results: string) => {
     params.set(SearchParam.Page, page);
@@ -31,7 +29,7 @@ export const CristinSearchPagination = ({ totalCount }: CristinSearchPaginationP
       component="div"
       count={totalCount}
       rowsPerPage={rowsPerPage}
-      page={muiPage}
+      page={pageParam ? +pageParam - 1 : 0}
       onPageChange={(_, newMuiPage) => updatePath((newMuiPage + 1).toString(), rowsPerPage.toString())}
       onRowsPerPageChange={(event) => updatePath('1', event.target.value)}
     />

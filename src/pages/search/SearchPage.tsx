@@ -8,7 +8,7 @@ import { Box, Button } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
   createSearchConfigFromSearchParams,
-  createSearchQuery as createRegistrationSearchQuery,
+  createRegistrationSearchQuery,
   SearchConfig,
   SearchParam,
 } from '../../utils/searchHelpers';
