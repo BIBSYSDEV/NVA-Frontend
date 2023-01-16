@@ -87,7 +87,6 @@ const SearchPage = () => {
               <SideNavHeader icon={SearchIcon} text={t('common.search')} />
               <Box
                 sx={{
-                  bgcolor: 'background.default',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '0.5rem',
@@ -104,7 +103,11 @@ const SearchPage = () => {
                     }
                   }}
                   color="registration"
-                  sx={{ width: 'fit-content', color: 'common.black', borderColor: 'registration.main' }}
+                  sx={{
+                    width: 'fit-content',
+                    color: 'common.black',
+                    borderColor: 'registration.main',
+                  }}
                   startIcon={<SubjectIcon />}>
                   {t('search.result')}
                 </Button>

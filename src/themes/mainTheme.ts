@@ -18,7 +18,7 @@ enum Color {
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
   Registration = '#DAC48E',
-  Person = '#E48F8F',
+  Person = '#B3D6D9',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
