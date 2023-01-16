@@ -1405,6 +1405,7 @@
     "operator": "Operator",
     "persons": "Persons",
     "person_search_placeholder": "Search for name",
+    "project_search_placeholder": "Search for title",
     "remove_filter": "Remove filter",
     "result": "Result",
     "search_placeholder": "Search for title, contributor, abstract, etc.",

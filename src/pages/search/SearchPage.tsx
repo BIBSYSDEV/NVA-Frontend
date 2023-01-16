@@ -48,15 +48,10 @@ const SearchPage = () => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
-  const searchType =
-    paramsSearchType === SearchTypeValue.Person
-      ? SearchTypeValue.Person
-      : paramsSearchType === SearchTypeValue.Project
-      ? SearchTypeValue.Project
-      : SearchTypeValue.Result;
-  const resultIsSelected = searchType === SearchTypeValue.Result;
-  const personIsSeleced = searchType === SearchTypeValue.Person;
-  const projectIsSelected = searchType === SearchTypeValue.Project;
+
+  const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
+  const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
+  const projectIsSelected = paramsSearchType === SearchTypeValue.Project;
 
   const requestParams = new URLSearchParams(history.location.search);
   requestParams.delete(SearchParam.Type);

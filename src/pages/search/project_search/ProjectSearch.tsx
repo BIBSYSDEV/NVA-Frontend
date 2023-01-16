@@ -30,7 +30,7 @@ export const ProjectSearch = () => {
         {({ field, form: { submitForm } }: FieldProps<string>) => (
           <SearchTextField
             {...field}
-            placeholder={t('search.person_search_placeholder')} // Update key
+            placeholder={t('search.project_search_placeholder')}
             clearValue={() => {
               field.onChange({ target: { value: '', id: field.name } });
               submitForm();
