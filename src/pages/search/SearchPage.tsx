@@ -12,6 +12,7 @@ import {
   createRegistrationSearchQuery,
   SearchConfig,
   SearchParam,
+  emptySearchConfig,
 } from '../../utils/searchHelpers';
 import { RegistrationFacetsFilter } from './registration_search/filters/RegistrationFacetsFilter';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
@@ -95,7 +96,7 @@ const SearchPage = () => {
         }
         history.push({ search: newSearchParams.toString() });
       }}>
-      {({ resetForm }: FormikProps<SearchConfig>) => (
+      {({ setValues }: FormikProps<SearchConfig>) => (
         <Form>
           <StyledPageWithSideMenu>
             <SidePanel>
@@ -114,7 +115,7 @@ const SearchPage = () => {
                     if (!resultIsSelected) {
                       const resultParams = new URLSearchParams();
                       history.push({ search: resultParams.toString() });
-                      resetForm();
+                      setValues(emptySearchConfig);
                     }
                   }}
                   color="registration"
@@ -133,7 +134,7 @@ const SearchPage = () => {
                       const personParams = new URLSearchParams();
                       personParams.set(SearchParam.Type, SearchTypeValue.Person);
                       history.push({ search: personParams.toString() });
-                      resetForm();
+                      setValues(emptySearchConfig);
                     }
                   }}
                   color="person"
@@ -148,7 +149,7 @@ const SearchPage = () => {
                       const projectParams = new URLSearchParams();
                       projectParams.set(SearchParam.Type, SearchTypeValue.Project);
                       history.push({ search: projectParams.toString() });
-                      resetForm();
+                      setValues(emptySearchConfig);
                     }
                   }}
                   color="project"

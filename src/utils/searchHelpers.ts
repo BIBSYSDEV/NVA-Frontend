@@ -26,6 +26,11 @@ export interface SearchConfig {
   properties?: PropertySearch[];
 }
 
+export const emptySearchConfig: SearchConfig = {
+  searchTerm: '',
+  properties: [],
+};
+
 // Since these Operators will be used in joins they must be enclosed by whitespaces
 enum Operator {
   AND = ' AND ',
