@@ -2,8 +2,8 @@ import { Formik, Form, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import SubjectIcon from '@mui/icons-material/Subject';
+import PersonIcon from '@mui/icons-material/Person';
 import { Box, Button } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
@@ -21,7 +21,6 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { PersonSearch } from './person_search/PersonSearch';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 
 /*
@@ -47,12 +46,13 @@ const SearchPage = () => {
   const paramsSearchContext = params.get(SearchParam.Type);
   const searchContext =
     paramsSearchContext === SearchContextValue.Person ? SearchContextValue.Person : SearchContextValue.Result;
+  const resultIsSelected = searchContext === SearchContextValue.Result;
+  const personIsSeleced = searchContext === SearchContextValue.Person;
 
   const requestParams = new URLSearchParams(history.location.search);
   requestParams.delete(SearchParam.Type);
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration>>({
-    url:
-      searchContext === SearchContextValue.Result ? `${SearchApiPath.Registrations}?${requestParams.toString()}` : '',
+    url: resultIsSelected ? `${SearchApiPath.Registrations}?${requestParams.toString()}` : '',
     errorMessage: t('feedback.error.search'),
   });
 
@@ -63,14 +63,14 @@ const SearchPage = () => {
       initialValues={initialSearchParams}
       onSubmit={(values) => {
         const newSearchParams = new URLSearchParams();
-        if (searchContext === SearchContextValue.Result) {
+        if (resultIsSelected) {
           const queryString = createRegistrationSearchQuery(values);
           if (queryString) {
             newSearchParams.set(SearchParam.Query, queryString);
           }
           newSearchParams.set(SearchParam.Results, defaultResultSize);
           newSearchParams.set(SearchParam.From, '0');
-        } else if (searchContext === SearchContextValue.Person) {
+        } else if (personIsSeleced) {
           newSearchParams.set(SearchParam.Type, SearchContextValue.Person);
           if (values.searchTerm) {
             newSearchParams.set(SearchParam.Page, '1');
@@ -87,45 +87,53 @@ const SearchPage = () => {
               <SideNavHeader icon={SearchIcon} text={t('common.search')} />
               <Box
                 sx={{
-                  m: '1rem',
+                  bgcolor: 'background.default',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '1rem',
+                  gap: '0.5rem',
                   button: { textTransform: 'none' },
+                  p: '1rem',
                 }}>
                 <Button
-                  variant={searchContext === SearchContextValue.Result ? 'contained' : 'outlined'}
+                  variant={resultIsSelected ? 'contained' : 'outlined'}
                   onClick={() => {
-                    if (searchContext !== SearchContextValue.Result) {
+                    if (!resultIsSelected) {
                       const resultParams = new URLSearchParams();
                       history.push({ search: resultParams.toString() });
                       resetForm();
                     }
                   }}
                   color="registration"
-                  sx={{ width: 'fit-content' }}
-                  startIcon={<ManageSearchIcon />}>
+                  sx={{ width: 'fit-content', color: 'common.black', borderColor: 'registration.main' }}
+                  startIcon={<SubjectIcon />}>
                   {t('search.result')}
                 </Button>
-                <BetaFunctionality>
-                  <Button
-                    variant={searchContext === SearchContextValue.Person ? 'contained' : 'outlined'}
-                    onClick={() => {
-                      if (searchContext !== SearchContextValue.Person) {
-                        const personParams = new URLSearchParams();
-                        personParams.set(SearchParam.Type, SearchContextValue.Person);
-                        history.push({ search: personParams.toString() });
-                        resetForm();
-                      }
-                    }}
-                    color="person"
-                    sx={{ width: 'fit-content' }}
-                    startIcon={<PersonSearchIcon />}>
-                    {t('search.persons')}
-                  </Button>
-                </BetaFunctionality>
+                <Button
+                  variant={personIsSeleced ? 'contained' : 'outlined'}
+                  onClick={() => {
+                    if (!personIsSeleced) {
+                      const personParams = new URLSearchParams();
+                      personParams.set(SearchParam.Type, SearchContextValue.Person);
+                      history.push({ search: personParams.toString() });
+                      resetForm();
+                    }
+                  }}
+                  color="person"
+                  sx={{ width: 'fit-content', color: 'common.black', borderColor: 'person.main' }}
+                  startIcon={<PersonIcon />}>
+                  {t('search.persons')}
+                </Button>
+              </Box>
 
-                {searchContext === SearchContextValue.Result && searchResults?.aggregations && (
+              <Box
+                sx={{
+                  m: '1rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem',
+                  button: { textTransform: 'none' },
+                }}>
+                {resultIsSelected && searchResults?.aggregations && (
                   <RegistrationFacetsFilter
                     aggregations={searchResults.aggregations}
                     isLoadingSearch={isLoadingSearch}
@@ -133,7 +141,7 @@ const SearchPage = () => {
                 )}
               </Box>
             </SidePanel>
-            {searchContext === SearchContextValue.Result ? (
+            {resultIsSelected ? (
               <Box
                 sx={{
                   display: 'grid',
