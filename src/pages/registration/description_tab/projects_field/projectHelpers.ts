@@ -1,4 +1,4 @@
-import { CristinProject } from '../../../../types/project.types';
+import { CristinProject, ProjectContributor } from '../../../../types/project.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const getProjectCoordinatingInstitutionName = (project?: CristinProject) =>
@@ -25,3 +25,9 @@ export const getProjectPeriod = (project?: CristinProject) => {
 
   return dateInterval;
 };
+
+export const getProjectManagers = (contributors: ProjectContributor[]) =>
+  contributors.filter((contributor) => contributor.type === 'ProjectManager');
+
+export const getProjectParticipants = (contributors: ProjectContributor[]) =>
+  contributors.filter((contributor) => contributor.type === 'ProjectParticipant');

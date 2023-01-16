@@ -19,6 +19,7 @@ enum Color {
   White = '#fff',
   Registration = '#DAC48E',
   Person = '#B3D6D9',
+  Project = '#E48F8F',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
@@ -28,16 +29,19 @@ declare module '@mui/material/styles' {
   interface Palette {
     registration: PaletteColorOptions;
     person: PaletteColorOptions;
+    project: PaletteColorOptions;
   }
   interface PaletteOptions {
     registration?: PaletteColorOptions;
     person?: PaletteColorOptions;
+    project?: PaletteColorOptions;
   }
 }
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     registration: true;
     person: true;
+    project: true;
   }
 }
 
@@ -81,6 +85,9 @@ export const mainTheme = createTheme(
       },
       person: {
         main: Color.Person,
+      },
+      project: {
+        main: Color.Project,
       },
       background: {
         default: Color.White,

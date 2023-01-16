@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import SubjectIcon from '@mui/icons-material/Subject';
 import PersonIcon from '@mui/icons-material/Person';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Box, Button } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
@@ -22,6 +23,7 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { ProjectSearch } from './project_search/ProjectSearch';
 
 /*
  * The Search Page allows for users to search for 3 things (types): Registrations/Results, Persons, and Projects
@@ -35,6 +37,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 enum SearchTypeValue {
   Result = 'result',
   Person = 'person',
+  Project = 'project',
 }
 
 const defaultResultSize = ROWS_PER_PAGE_OPTIONS[1].toString();
@@ -44,9 +47,15 @@ const SearchPage = () => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
-  const searchType = paramsSearchType === SearchTypeValue.Person ? SearchTypeValue.Person : SearchTypeValue.Result;
+  const searchType =
+    paramsSearchType === SearchTypeValue.Person
+      ? SearchTypeValue.Person
+      : paramsSearchType === SearchTypeValue.Project
+      ? SearchTypeValue.Project
+      : SearchTypeValue.Result;
   const resultIsSelected = searchType === SearchTypeValue.Result;
   const personIsSeleced = searchType === SearchTypeValue.Person;
+  const projectIsSelected = searchType === SearchTypeValue.Project;
 
   const requestParams = new URLSearchParams(history.location.search);
   requestParams.delete(SearchParam.Type);
@@ -75,6 +84,13 @@ const SearchPage = () => {
             newSearchParams.set(SearchParam.Page, '1');
             newSearchParams.set(SearchParam.Results, defaultResultSize);
             newSearchParams.set(SearchParam.Name, values.searchTerm);
+          }
+        } else if (projectIsSelected) {
+          newSearchParams.set(SearchParam.Type, SearchTypeValue.Project);
+          if (values.searchTerm) {
+            newSearchParams.set(SearchParam.Page, '1');
+            newSearchParams.set(SearchParam.Results, defaultResultSize);
+            newSearchParams.set(SearchParam.Query, values.searchTerm);
           }
         }
         history.push({ search: newSearchParams.toString() });
@@ -125,6 +141,21 @@ const SearchPage = () => {
                   startIcon={<PersonIcon />}>
                   {t('search.persons')}
                 </Button>
+                <Button
+                  variant={projectIsSelected ? 'contained' : 'outlined'}
+                  onClick={() => {
+                    if (!projectIsSelected) {
+                      const projectParams = new URLSearchParams();
+                      projectParams.set(SearchParam.Type, SearchTypeValue.Project);
+                      history.push({ search: projectParams.toString() });
+                      resetForm();
+                    }
+                  }}
+                  color="project"
+                  sx={{ width: 'fit-content', color: 'common.black', borderColor: 'project.main' }}
+                  startIcon={<ShowChartIcon />}>
+                  {t('project.project')}
+                </Button>
               </Box>
 
               <Box
@@ -143,7 +174,8 @@ const SearchPage = () => {
                 )}
               </Box>
             </SidePanel>
-            {resultIsSelected ? (
+
+            {resultIsSelected && (
               <Box
                 sx={{
                   display: 'grid',
@@ -160,9 +192,9 @@ const SearchPage = () => {
                 <RegistrationSortSelector />
                 <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
               </Box>
-            ) : (
-              <PersonSearch />
             )}
+            {personIsSeleced && <PersonSearch />}
+            {projectIsSelected && <ProjectSearch />}
           </StyledPageWithSideMenu>
         </Form>
       )}

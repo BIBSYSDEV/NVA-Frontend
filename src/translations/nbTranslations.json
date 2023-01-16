@@ -1394,6 +1394,8 @@
     "year_published": "Publiseringsår"
   },
   "search": {
+    "additional_participants_one": "+{{count}} deltaker",
+    "additional_participants_other": "+{{count}} deltakere",
     "add_filter": "Legg til filter",
     "contains": "Inneholder",
     "field_label": "Felt",

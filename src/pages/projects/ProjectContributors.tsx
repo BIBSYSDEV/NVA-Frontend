@@ -2,6 +2,10 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ProjectContributor } from '../../types/project.types';
 import { getLanguageString } from '../../utils/translation-helpers';
+import {
+  getProjectManagers,
+  getProjectParticipants,
+} from '../registration/description_tab/projects_field/projectHelpers';
 
 interface ProjectContributorsProps {
   contributors: ProjectContributor[];
@@ -10,8 +14,8 @@ interface ProjectContributorsProps {
 export const ProjectContributors = ({ contributors }: ProjectContributorsProps) => {
   const { t } = useTranslation();
 
-  const projectManagers = contributors.filter((contributor) => contributor.type === 'ProjectManager');
-  const projectParticipants = contributors.filter((contributor) => contributor.type === 'ProjectParticipant');
+  const projectManagers = getProjectManagers(contributors);
+  const projectParticipants = getProjectParticipants(contributors);
 
   return (
     <Box
