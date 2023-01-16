@@ -13,7 +13,7 @@ import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { Helmet } from 'react-helmet-async';
 
 interface ResearchProfilePanelProps {
-  person: CristinPerson | undefined;
+  person?: CristinPerson;
   isLoadingPerson: boolean;
 }
 

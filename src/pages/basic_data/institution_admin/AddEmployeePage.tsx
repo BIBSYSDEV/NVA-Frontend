@@ -35,8 +35,6 @@ export const emptyUser: FlatCristinPerson = {
   nationalId: '',
   firstName: '',
   lastName: '',
-  preferredFirstName: '',
-  preferredLastName: '',
   id: '',
   cristinIdentifier: '',
   affiliations: [],

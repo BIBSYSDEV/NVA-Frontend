@@ -45,8 +45,6 @@ export const convertToCristinPerson = (user: FlatCristinPerson): CreateCristinPe
   names: [
     { type: 'FirstName', value: user.firstName },
     { type: 'LastName', value: user.lastName },
-    { type: 'PreferredFirstName', value: user.preferredFirstName ?? '' },
-    { type: 'PreferredLastName', value: user.preferredLastName ?? '' },
   ],
   employments: user.employments,
 });

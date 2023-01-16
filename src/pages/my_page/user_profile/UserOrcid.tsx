@@ -99,9 +99,6 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
   return (
     <div>
-      {/* <Typography id="orcid-label" variant="h2" paragraph>
-        {t('common.orcid')}
-      </Typography> */}
       {isLoadingCristinPerson ? (
         <CircularProgress aria-labelledby="orcid-label" />
       ) : isAddingOrcid ? (
@@ -130,7 +127,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               color="error"
               data-testid="button-confirm-delete-orcid"
               onClick={toggleConfirmDialog}
-              aria-label={t('common.delete')}>
+              title={t('common.delete')}>
               <CancelIcon />
             </IconButton>
           </Box>

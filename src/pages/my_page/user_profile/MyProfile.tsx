@@ -108,69 +108,63 @@ export const MyProfile = () => {
             ) : (
               <>
                 <Typography>{t('my_page.my_profile.user_profile_description')}</Typography>
-                <>
-                  <Formik initialValues={initialValues} onSubmit={(values) => updatePerson(values)}>
-                    {({ isSubmitting }: FormikProps<CristinPersonFormData>) => {
-                      return (
-                        <Form>
-                          <InputContainerBox sx={{ display: 'flex', flexDirection: 'row' }}>
-                            <Field name={'preferredFirstName'}>
-                              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                                <TextField
-                                  {...field}
-                                  id={field.name}
-                                  value={field.value}
-                                  disabled={!editPreferredNames || isSubmitting}
-                                  label={t('my_page.my_profile.preferred_first_name')}
-                                  size="small"
-                                  variant="filled"
-                                  error={touched && !!error}
-                                  helperText={<ErrorMessage name={field.name} />}
-                                />
-                              )}
-                            </Field>
-                            <Field name={'preferredLastName'}>
-                              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                                <TextField
-                                  {...field}
-                                  id={field.name}
-                                  value={field.value}
-                                  disabled={!editPreferredNames || isSubmitting}
-                                  label={t('my_page.my_profile.preferred_last_name')}
-                                  size="small"
-                                  variant="filled"
-                                  error={touched && !!error}
-                                  helperText={<ErrorMessage name={field.name} />}
-                                />
-                              )}
-                            </Field>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                              <Tooltip title={t('common.edit')}>
-                                <IconButton
-                                  aria-label={t('common.edit')}
-                                  onClick={() => setEditPreferredNames(!editPreferredNames)}>
-                                  <EditIcon sx={{ width: '1.2rem' }} />
-                                </IconButton>
-                              </Tooltip>
-                            </Box>
-                          </InputContainerBox>
-                          <Box sx={{ display: 'flex' }}>
-                            <Typography sx={{ mt: '0.6rem' }}>{t('common.orcid')}</Typography>
-                            <UserOrcid user={user} />
+                <Formik initialValues={initialValues} onSubmit={updatePerson}>
+                  {({ isSubmitting }: FormikProps<CristinPersonFormData>) => {
+                    return (
+                      <Form>
+                        <InputContainerBox sx={{ display: 'flex', flexDirection: 'row' }}>
+                          <Field name={'preferredFirstName'}>
+                            {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                              <TextField
+                                {...field}
+                                id={field.name}
+                                disabled={!editPreferredNames || isSubmitting}
+                                label={t('my_page.my_profile.preferred_first_name')}
+                                size="small"
+                                variant="filled"
+                                error={touched && !!error}
+                                helperText={<ErrorMessage name={field.name} />}
+                              />
+                            )}
+                          </Field>
+                          <Field name={'preferredLastName'}>
+                            {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                              <TextField
+                                {...field}
+                                id={field.name}
+                                disabled={!editPreferredNames || isSubmitting}
+                                label={t('my_page.my_profile.preferred_last_name')}
+                                size="small"
+                                variant="filled"
+                                error={touched && !!error}
+                                helperText={<ErrorMessage name={field.name} />}
+                              />
+                            )}
+                          </Field>
+                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Tooltip title={t('common.edit')}>
+                              <IconButton onClick={() => setEditPreferredNames(!editPreferredNames)}>
+                                <EditIcon sx={{ width: '1.2rem' }} />
+                              </IconButton>
+                            </Tooltip>
                           </Box>
-                          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
-                            <LoadingButton loading={isSubmitting} variant="contained" type="submit">
-                              {t('common.save')}
-                            </LoadingButton>
-                          </Box>
-                          <Box sx={{ gridArea: 'roles', gridRow: 2 }}>
-                            <UserRoles user={user} />
-                          </Box>
-                        </Form>
-                      );
-                    }}
-                  </Formik>
-                </>
+                        </InputContainerBox>
+                        <Box sx={{ display: 'flex' }}>
+                          <Typography sx={{ mt: '0.6rem' }}>{t('common.orcid')}</Typography>
+                          <UserOrcid user={user} />
+                        </Box>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
+                          <LoadingButton loading={isSubmitting} variant="contained" type="submit">
+                            {t('common.save')}
+                          </LoadingButton>
+                        </Box>
+                        <Box sx={{ gridArea: 'roles', gridRow: 2 }}>
+                          <UserRoles user={user} />
+                        </Box>
+                      </Form>
+                    );
+                  }}
+                </Formik>
               </>
             )}
           </Box>
