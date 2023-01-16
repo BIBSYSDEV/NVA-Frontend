@@ -1,4 +1,4 @@
-import { ListItem, ListItemText, Typography, Link as MuiLink, Box } from '@mui/material';
+import { ListItem, Typography, Link as MuiLink, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
@@ -27,15 +27,11 @@ export const ProjectListItem = ({ project }: ProjectListItemProps) => {
         flexDirection: 'column',
         alignItems: 'start',
       }}>
-      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-        <ListItemText disableTypography>
-          <Typography sx={{ fontSize: '1rem', fontWeight: '600' }}>
-            <MuiLink component={Link} to={getProjectPath(project.id)}>
-              {project.title}
-            </MuiLink>
-          </Typography>
-        </ListItemText>
-      </Box>
+      <Typography sx={{ fontSize: '1rem', fontWeight: '600' }} gutterBottom>
+        <MuiLink component={Link} to={getProjectPath(project.id)}>
+          {project.title}
+        </MuiLink>
+      </Typography>
 
       <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '1rem' }}>
         {projectManagers.map((projectManager) => (
