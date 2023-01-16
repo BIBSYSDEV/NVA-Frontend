@@ -44,11 +44,11 @@ export const FacetItem = ({ title, children }: FacetItemProps) => {
           {itemsToShow}
           <li>
             <ListItemButton
-              title={t('common.show_more')}
+              title={showAll ? t('common.show_fewer') : t('common.show_more')}
               dense
               sx={{ justifyContent: 'space-around' }}
               onClick={() => setShowAll(!showAll)}>
-              {showAll ? <ExpandLess titleAccess={t('common.show_fewer')} /> : <ExpandMore />}
+              {showAll ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
           </li>
         </List>
