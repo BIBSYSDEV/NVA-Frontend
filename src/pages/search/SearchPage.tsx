@@ -24,7 +24,7 @@ import { PersonSearch } from './person_search/PersonSearch';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 
 /*
- * The Search Page allows for users to search for 3 things (contexts): Registrations/Results, Persons, and Projects
+ * The Search Page allows for users to search for 3 things (types): Registrations/Results, Persons, and Projects
  * The actual flow may not be 100% obvious, but the process is simply speaking along these lines:
  *   1) Search inputs (query and filters) are added to Formik
  *   2) User submits the form
@@ -32,7 +32,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
  *   4) When the URL Search params are updated, a new search will be performed
  */
 
-enum SearchContextValue {
+enum SearchTypeValue {
   Result = 'result',
   Person = 'person',
 }
@@ -43,11 +43,10 @@ const SearchPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
-  const paramsSearchContext = params.get(SearchParam.Type);
-  const searchContext =
-    paramsSearchContext === SearchContextValue.Person ? SearchContextValue.Person : SearchContextValue.Result;
-  const resultIsSelected = searchContext === SearchContextValue.Result;
-  const personIsSeleced = searchContext === SearchContextValue.Person;
+  const paramsSearchType = params.get(SearchParam.Type);
+  const searchType = paramsSearchType === SearchTypeValue.Person ? SearchTypeValue.Person : SearchTypeValue.Result;
+  const resultIsSelected = searchType === SearchTypeValue.Result;
+  const personIsSeleced = searchType === SearchTypeValue.Person;
 
   const requestParams = new URLSearchParams(history.location.search);
   requestParams.delete(SearchParam.Type);
@@ -71,7 +70,7 @@ const SearchPage = () => {
           newSearchParams.set(SearchParam.Results, defaultResultSize);
           newSearchParams.set(SearchParam.From, '0');
         } else if (personIsSeleced) {
-          newSearchParams.set(SearchParam.Type, SearchContextValue.Person);
+          newSearchParams.set(SearchParam.Type, SearchTypeValue.Person);
           if (values.searchTerm) {
             newSearchParams.set(SearchParam.Page, '1');
             newSearchParams.set(SearchParam.Results, defaultResultSize);
@@ -116,7 +115,7 @@ const SearchPage = () => {
                   onClick={() => {
                     if (!personIsSeleced) {
                       const personParams = new URLSearchParams();
-                      personParams.set(SearchParam.Type, SearchContextValue.Person);
+                      personParams.set(SearchParam.Type, SearchTypeValue.Person);
                       history.push({ search: personParams.toString() });
                       resetForm();
                     }
