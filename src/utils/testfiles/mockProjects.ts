@@ -1,4 +1,5 @@
-import { CristinProject, ProjectSearchResponse } from '../../types/project.types';
+import { SearchResponse } from '../../types/common.types';
+import { CristinProject } from '../../types/project.types';
 
 export const mockProject: CristinProject = {
   id: 'https://api.dev.nva.aws.unit.no/cristin/project/1',
@@ -309,11 +310,8 @@ const mockProjects: CristinProject[] = [
   },
 ];
 
-export const mockProjectSearch: ProjectSearchResponse = {
-  id: 'https://api.dev.nva.aws.unit.no/cristin/project/search?QUERY_PARAMS',
-  size: 0,
-  searchString: 'title=natu',
+export const mockProjectSearch: SearchResponse<CristinProject> = {
+  size: 5,
   processingTime: 5828,
-  firstRecord: 0,
   hits: mockProjects,
 };
