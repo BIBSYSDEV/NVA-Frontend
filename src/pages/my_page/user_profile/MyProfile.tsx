@@ -55,6 +55,8 @@ export const MyProfile = () => {
 
   const updatePerson = async (values: CristinPersonFormData) => {
     if (user.cristinId) {
+      values.preferredFirstName = values.preferredFirstName?.trim();
+      values.preferredLastName = values.preferredLastName?.trim();
       if (values.preferredFirstName === '') {
         values.preferredFirstName = null;
       }
@@ -107,7 +109,7 @@ export const MyProfile = () => {
             ) : (
               <>
                 <Typography>{t('my_page.my_profile.user_profile_description')}</Typography>
-                <Formik initialValues={initialValues} onSubmit={updatePerson}>
+                <Formik initialValues={initialValues} onSubmit={updatePerson} enableReinitialize>
                   {({ isSubmitting, dirty }: FormikProps<CristinPersonFormData>) => (
                     <Form>
                       <Box sx={{ display: 'flex', gap: '1rem' }}>
