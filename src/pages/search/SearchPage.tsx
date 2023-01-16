@@ -66,27 +66,28 @@ const SearchPage = () => {
     <Formik
       initialValues={initialSearchParams}
       onSubmit={(values) => {
+        const previousParamsResults = params.get(SearchParam.Results);
         const newSearchParams = new URLSearchParams();
         if (resultIsSelected) {
           const queryString = createRegistrationSearchQuery(values);
           if (queryString) {
             newSearchParams.set(SearchParam.Query, queryString);
           }
-          newSearchParams.set(SearchParam.Results, defaultResultSize);
+          newSearchParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
           newSearchParams.set(SearchParam.From, '0');
         } else if (personIsSeleced) {
           newSearchParams.set(SearchParam.Type, SearchTypeValue.Person);
           if (values.searchTerm) {
-            newSearchParams.set(SearchParam.Page, '1');
-            newSearchParams.set(SearchParam.Results, defaultResultSize);
             newSearchParams.set(SearchParam.Name, values.searchTerm);
+            newSearchParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
+            newSearchParams.set(SearchParam.Page, '1');
           }
         } else if (projectIsSelected) {
           newSearchParams.set(SearchParam.Type, SearchTypeValue.Project);
           if (values.searchTerm) {
-            newSearchParams.set(SearchParam.Page, '1');
-            newSearchParams.set(SearchParam.Results, defaultResultSize);
             newSearchParams.set(SearchParam.Query, values.searchTerm);
+            newSearchParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
+            newSearchParams.set(SearchParam.Page, '1');
           }
         }
         history.push({ search: newSearchParams.toString() });
