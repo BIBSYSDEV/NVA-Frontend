@@ -3,7 +3,7 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { SearchResponse } from '../../types/common.types';
 import { Registration } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../constants';
-import { createSearchQuery, SearchConfig } from '../searchHelpers';
+import { createRegistrationSearchQuery, SearchConfig } from '../searchHelpers';
 import { useFetch } from './useFetch';
 
 export const useSearchRegistrations = (
@@ -12,7 +12,7 @@ export const useSearchRegistrations = (
   searchAfter = 0
 ) => {
   const { t } = useTranslation();
-  const searchQuery = createSearchQuery(searchConfig ?? {});
+  const searchQuery = createRegistrationSearchQuery(searchConfig ?? {});
 
   const url = searchQuery
     ? `${SearchApiPath.Registrations}?query=${searchQuery}&results=${numberOfResults}&from=${searchAfter}`

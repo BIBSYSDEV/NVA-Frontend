@@ -1,29 +1,28 @@
 import { Box, List, Typography } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchResponse } from '../../../types/common.types';
 import { CristinPerson } from '../../../types/user.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { SearchParam } from '../../../utils/searchHelpers';
+import { CristinSearchPagination } from '../CristinSearchPagination';
 import { SearchTextField } from '../SearchTextField';
 import { PersonListItem } from './PersonListItem';
 
 export const PersonSearch = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const queryParam = params.get(SearchParam.Query);
-  const nameQuery = queryParam?.replaceAll('"', ''); // TODO: build separate query params for person search (don't reuse from result search)
+  const personSearchQueryParmas = new URLSearchParams(location.search);
+  personSearchQueryParmas.delete(SearchParam.Context);
+  const queryParams = personSearchQueryParmas.toString();
 
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<CristinPerson>>({
-    url: nameQuery ? `${CristinApiPath.Person}?name=${nameQuery}&results=10` : '',
+    url: queryParams ? `${CristinApiPath.Person}?${queryParams}` : '',
     errorMessage: t('feedback.error.search'),
   });
-
-  const persons = searchResults?.hits ?? [];
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -42,12 +41,15 @@ export const PersonSearch = () => {
 
       {isLoadingSearch ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : persons.length > 0 ? (
-        <List>
-          {persons.map((person) => (
-            <PersonListItem key={person.id} person={person} />
-          ))}
-        </List>
+      ) : searchResults && searchResults.hits.length > 0 ? (
+        <>
+          <List>
+            {searchResults.hits.map((person) => (
+              <PersonListItem key={person.id} person={person} />
+            ))}
+          </List>
+          <CristinSearchPagination totalCount={searchResults.size} />
+        </>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}
