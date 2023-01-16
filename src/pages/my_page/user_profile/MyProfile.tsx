@@ -19,6 +19,8 @@ import { useFetch } from '../../../utils/hooks/useFetch';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
+type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
+
 export const MyProfile = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -38,8 +40,6 @@ export const MyProfile = () => {
   const personPreferredFirstName = getValueByKey('PreferredFirstName', person?.names);
   const personPreferredLastName = getValueByKey('PreferredLastName', person?.names);
   const [editPreferredNames, setEditPreferredNames] = useState(false);
-
-  type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
   const initialValues: CristinPersonFormData = {
     preferredFirstName: personPreferredFirstName ? personPreferredFirstName : firstName,
