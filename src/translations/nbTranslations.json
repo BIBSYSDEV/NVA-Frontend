@@ -490,6 +490,7 @@
       "id": "ID",
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
+        "delete_orcid": "Fjern ORCID-kobling",
         "dialog": {
           "heading": "Koble eller opprette ORCID iD",
           "paragraph0": "Logg inn på din ORCID-konto eller registrer deg hvis du ikke har en konto.",

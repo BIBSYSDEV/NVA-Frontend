@@ -127,7 +127,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               color="error"
               data-testid="button-confirm-delete-orcid"
               onClick={toggleConfirmDialog}
-              title={t('common.delete')}>
+              title={t('my_page.my_profile.orcid.delete_orcid')}>
               <CancelIcon />
             </IconButton>
           </Box>
