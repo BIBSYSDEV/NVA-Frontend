@@ -24,16 +24,11 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 export const MyProfile = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const location = useLocation();
+
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
 
-  const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
-  const isPublicPage = location.pathname === UrlPathTemplate.ResearchProfile;
-
-  const personId = isPublicPage
-    ? new URLSearchParams(location.search).get('id') ?? '' // Page for Research Profile of anyone
-    : currentCristinId; // Page for My Research Profile
+  const personId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
 
   const [person, isLoadingPerson, refetchPerson] = useFetch<CristinPerson>({
     url: personId,
