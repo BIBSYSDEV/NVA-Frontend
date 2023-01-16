@@ -42,25 +42,14 @@ export const FacetItem = ({ title, children }: FacetItemProps) => {
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <List disablePadding>
           {itemsToShow}
-          {!showAll && children.length > itemsToShowByDefault && (
+          {children.length > itemsToShowByDefault && (
             <li>
               <ListItemButton
-                title={t('common.show_more')}
+                title={showAll ? t('common.show_fewer') : t('common.show_more')}
                 dense
                 sx={{ justifyContent: 'space-around' }}
                 onClick={() => setShowAll(!showAll)}>
-                <ExpandMore />
-              </ListItemButton>
-            </li>
-          )}
-          {showAll && children.length > itemsToShowByDefault && (
-            <li>
-              <ListItemButton
-                title={t('common.show_fewer')}
-                dense
-                sx={{ justifyContent: 'space-around' }}
-                onClick={() => setShowAll(!showAll)}>
-                <ExpandLess />
+                {showAll ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
             </li>
           )}
