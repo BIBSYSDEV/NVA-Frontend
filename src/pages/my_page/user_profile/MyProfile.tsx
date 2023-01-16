@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
 import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
@@ -17,7 +16,6 @@ import { PageSpinner } from '../../../components/PageSpinner';
 import { CristinPerson, FlatCristinPerson } from '../../../types/user.types';
 import { updateCristinPerson } from '../../../api/userApi';
 import { useFetch } from '../../../utils/hooks/useFetch';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
