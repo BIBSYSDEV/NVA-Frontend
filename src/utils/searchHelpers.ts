@@ -7,6 +7,8 @@ export enum SearchParam {
   Results = 'results',
   SortOrder = 'sortOrder',
   Context = 'context',
+  Page = 'page',
+  Name = 'name',
 }
 
 export enum ExpressionStatement {
@@ -68,7 +70,7 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
   return propertyFilter;
 };
 
-export const createSearchQuery = (searchConfig: SearchConfig) => {
+export const createRegistrationSearchQuery = (searchConfig: SearchConfig) => {
   const textSearch = formatValue(searchConfig.searchTerm);
   const propertySearch = createPropertyFilter(searchConfig.properties);
 
