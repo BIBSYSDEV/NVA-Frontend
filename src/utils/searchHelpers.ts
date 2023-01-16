@@ -6,7 +6,7 @@ export enum SearchParam {
   Query = 'query',
   Results = 'results',
   SortOrder = 'sortOrder',
-  Context = 'context',
+  Type = 'type',
   Page = 'page',
   Name = 'name',
 }
