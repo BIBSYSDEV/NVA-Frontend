@@ -1394,6 +1394,8 @@
     "year_published": "Publiseringsår"
   },
   "search": {
+    "additional_participants_one": "+{{count}} deltaker",
+    "additional_participants_other": "+{{count}} deltakere",
     "add_filter": "Legg til filter",
     "contains": "Inneholder",
     "field_label": "Felt",
@@ -1403,6 +1405,7 @@
     "operator": "Operator",
     "persons": "Personer",
     "person_search_placeholder": "Søk etter navn",
+    "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "result": "Resultat",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",

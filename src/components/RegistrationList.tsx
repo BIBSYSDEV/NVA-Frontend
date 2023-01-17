@@ -77,7 +77,7 @@ export const RegistrationListItem = ({ registration }: RegistrationListItemProps
           )}
         </Box>
 
-        <TruncatableTypography>{entityDescription?.abstract}</TruncatableTypography>
+        <TruncatableTypography sx={{ mt: '0.5rem' }}>{entityDescription?.abstract}</TruncatableTypography>
       </ListItemText>
     </ListItem>
   );
