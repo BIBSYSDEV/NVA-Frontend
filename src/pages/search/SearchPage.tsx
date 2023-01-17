@@ -5,7 +5,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import SubjectIcon from '@mui/icons-material/Subject';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Box, Button } from '@mui/material';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
   createSearchConfigFromSearchParams,
@@ -103,7 +104,7 @@ const SearchPage = () => {
                   flexDirection: 'column',
                   gap: '0.5rem',
                   button: { textTransform: 'none' },
-                  p: '1rem',
+                  m: '1rem',
                 }}>
                 <Button
                   variant={resultIsSelected ? 'contained' : 'outlined'}
@@ -155,21 +156,28 @@ const SearchPage = () => {
                 </Button>
               </Box>
 
-              <Box
-                sx={{
-                  m: '1rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1rem',
-                  button: { textTransform: 'none' },
-                }}>
-                {resultIsSelected && searchResults?.aggregations && (
-                  <RegistrationFacetsFilter
-                    aggregations={searchResults.aggregations}
-                    isLoadingSearch={isLoadingSearch}
-                  />
-                )}
-              </Box>
+              {resultIsSelected && searchResults?.aggregations && (
+                <>
+                  <Divider />
+                  <Box sx={{ m: '0.5rem 1rem', display: 'flex', justifyContent: 'space-between' }}>
+                    <Typography variant="h2">{t('search.search_filter')}</Typography>
+                    <FilterAltIcon />
+                  </Box>
+                  <Divider />
+                  <Box
+                    sx={{
+                      m: '1rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '1rem',
+                    }}>
+                    <RegistrationFacetsFilter
+                      aggregations={searchResults.aggregations}
+                      isLoadingSearch={isLoadingSearch}
+                    />
+                  </Box>
+                </>
+              )}
             </SidePanel>
 
             {resultIsSelected && (
