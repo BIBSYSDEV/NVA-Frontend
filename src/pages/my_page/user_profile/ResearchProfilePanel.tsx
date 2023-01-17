@@ -1,5 +1,6 @@
 import { Box, IconButton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import PreviewIcon from '@mui/icons-material/Preview';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { CristinPerson } from '../../../types/user.types';
@@ -10,7 +11,6 @@ import { useLocation } from 'react-router-dom';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
-import { Helmet } from 'react-helmet-async';
 
 interface ResearchProfilePanelProps {
   person?: CristinPerson;
