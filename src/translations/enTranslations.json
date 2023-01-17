@@ -405,6 +405,7 @@
       "update_customer": "Updated customer institution",
       "update_institution_user": "Updated user",
       "update_orcid": "Successfully updated ORCID",
+      "update_person": "Successfully updated person",
       "update_publish_strategy": "Updated publish strategy",
       "update_registration": "Updated registration",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"
@@ -482,12 +483,14 @@
     "my_profile": {
       "heading": {
         "affiliations": "Affiliations",
+        "personalia": "Personalia",
         "roles": "Roles",
         "user_info": "User information"
       },
       "id": "ID",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
+        "delete_orcid": "Remove ORCID connection",
         "dialog": {
           "heading": "Connect or create ORCID iD",
           "paragraph0": "Sign in to ORCID or register to create an account.",
@@ -497,12 +500,15 @@
         "remove_connection": "Remove connection to ORCID",
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
       },
+      "preferred_first_name": "Preferred first name",
+      "preferred_last_name": "Preferred last name",
       "research_profile_summary": {
         "affiliations": "Affiliations",
         "preview": "Preview",
         "research_profile": "Research profile"
       },
-      "user_profile": "User profile"
+      "user_profile": "User profile",
+      "user_profile_description": "Here you can fill in and mark what you want to appear on your official researcher profile."
     },
     "registrations": {
       "delete_registration": "Delete unpublished registration",
