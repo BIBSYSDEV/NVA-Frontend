@@ -108,6 +108,7 @@ export const dataTestId = {
     filesAccordion: 'files-accordion',
     generalInfo: 'public-registration-general-info',
     geographicAccordion: 'geographic-accordion',
+    handleLink: 'handle-link',
     keywords: 'public-registration-keywords',
     license: 'public-registration-license',
     linkedInButton: 'linkedin-button',

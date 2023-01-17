@@ -991,6 +991,7 @@
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
+      "handle": "Handle",
       "in_progress": "Under behandling",
       "message_to_curator": "Melding til kurator",
       "other_contributors_one": "(+{{count}} annen)",
@@ -1400,6 +1401,8 @@
     "year_published": "Publiseringsår"
   },
   "search": {
+    "additional_participants_one": "+{{count}} deltaker",
+    "additional_participants_other": "+{{count}} deltakere",
     "add_filter": "Legg til filter",
     "contains": "Inneholder",
     "field_label": "Felt",
@@ -1409,6 +1412,7 @@
     "operator": "Operator",
     "persons": "Personer",
     "person_search_placeholder": "Søk etter navn",
+    "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "result": "Resultat",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",

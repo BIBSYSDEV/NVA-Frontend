@@ -6,7 +6,7 @@ export enum SearchParam {
   Query = 'query',
   Results = 'results',
   SortOrder = 'sortOrder',
-  Context = 'context',
+  Type = 'type',
   Page = 'page',
   Name = 'name',
 }
@@ -25,6 +25,11 @@ export interface SearchConfig {
   searchTerm?: string;
   properties?: PropertySearch[];
 }
+
+export const emptySearchConfig: SearchConfig = {
+  searchTerm: '',
+  properties: [],
+};
 
 // Since these Operators will be used in joins they must be enclosed by whitespaces
 enum Operator {

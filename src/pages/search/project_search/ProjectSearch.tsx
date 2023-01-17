@@ -5,23 +5,23 @@ import { useLocation } from 'react-router-dom';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchResponse } from '../../../types/common.types';
-import { CristinPerson } from '../../../types/user.types';
+import { CristinProject } from '../../../types/project.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../CristinSearchPagination';
 import { SearchTextField } from '../SearchTextField';
-import { PersonListItem } from './PersonListItem';
+import { ProjectListItem } from './ProjectListItem';
 
-export const PersonSearch = () => {
+export const ProjectSearch = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const personSearchQueryParmas = new URLSearchParams(location.search);
-  personSearchQueryParmas.delete(SearchParam.Type);
-  const queryParams = personSearchQueryParmas.toString();
+  const projectSearchQueryParmas = new URLSearchParams(location.search);
+  projectSearchQueryParmas.delete(SearchParam.Type);
+  const queryParams = projectSearchQueryParmas.toString();
 
-  const [searchResults, isLoadingSearch] = useFetch<SearchResponse<CristinPerson>>({
-    url: queryParams ? `${CristinApiPath.Person}?${queryParams}` : '',
-    errorMessage: t('feedback.error.search'),
+  const [projectsSearch, isLoadingProjectsSearch] = useFetch<SearchResponse<CristinProject>>({
+    url: queryParams ? `${CristinApiPath.Project}?${queryParams}` : '',
+    errorMessage: t('feedback.error.project_search'),
   });
 
   return (
@@ -30,7 +30,7 @@ export const PersonSearch = () => {
         {({ field, form: { submitForm } }: FieldProps<string>) => (
           <SearchTextField
             {...field}
-            placeholder={t('search.person_search_placeholder')}
+            placeholder={t('search.project_search_placeholder')}
             clearValue={() => {
               field.onChange({ target: { value: '', id: field.name } });
               submitForm();
@@ -39,16 +39,16 @@ export const PersonSearch = () => {
         )}
       </Field>
 
-      {isLoadingSearch ? (
+      {isLoadingProjectsSearch ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : searchResults && searchResults.hits.length > 0 ? (
+      ) : projectsSearch && projectsSearch.hits.length > 0 ? (
         <>
           <List>
-            {searchResults.hits.map((person) => (
-              <PersonListItem key={person.id} person={person} />
+            {projectsSearch.hits.map((project) => (
+              <ProjectListItem key={project.id} project={project} />
             ))}
           </List>
-          <CristinSearchPagination totalCount={searchResults.size} />
+          <CristinSearchPagination totalCount={projectsSearch.size} />
         </>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
