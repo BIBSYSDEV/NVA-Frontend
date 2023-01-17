@@ -31,6 +31,7 @@ import { AffiliationHierarchy } from '../../../../components/institution/Affilia
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
 import {
   convertToFlatCristinPerson,
+  getFullCristinName,
   getMaskedNationalIdentityNumber,
   isActiveEmployment,
 } from '../../../../utils/user-helpers';
@@ -81,6 +82,7 @@ export const PersonTableRow = ({
     convertToFlatCristinPerson(cristinPerson);
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
 
+  const fullName = getFullCristinName(cristinPerson.names);
   const username = `${cristinIdentifier}@${topOrgCristinIdentifier}`;
   const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
     url: openDialog ? `${RoleApiPath.Users}/${username}` : '',
@@ -159,9 +161,7 @@ export const PersonTableRow = ({
         <TableCell>{getMaskedNationalIdentityNumber(nationalId)}</TableCell>
         <TableCell width="25%">
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>
-              {firstName} {lastName}
-            </Typography>
+            <Typography>{fullName}</Typography>
             {orcidUrl && (
               <Tooltip title={t('common.orcid_profile')}>
                 <IconButton size="small" href={orcidUrl} target="_blank">
