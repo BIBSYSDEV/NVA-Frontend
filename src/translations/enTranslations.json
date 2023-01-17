@@ -845,8 +845,6 @@
       "add_self_as_contributor": "Add me as contributor",
       "add_unverified_contributor": "Add a non-verified contributor.",
       "authors": "Authors",
-      "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
-      "confirm_remove_affiliation_title": "Remove affiliation?",
       "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}}?",
       "confirmed": "Confirmed",
       "contributor": "Contributor",
