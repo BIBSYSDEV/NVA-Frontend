@@ -56,7 +56,7 @@ export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAcco
       </AccordionSummary>
 
       <AccordionDetails>
-        {uppy && (
+        {uppy && expanded && (
           <>
             <FileUploader uppy={uppy} addFile={(newFile) => setUploadedFiles((files) => [newFile, ...files])} />
             {uploadedFiles.length > 0 && (
