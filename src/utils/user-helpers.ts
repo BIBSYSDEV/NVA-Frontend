@@ -53,6 +53,8 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
   nationalId: getValueByKey('NationalIdentificationNumber', user.identifiers),
   firstName: getValueByKey('FirstName', user.names),
   lastName: getValueByKey('LastName', user.names),
+  preferredFirstName: getValueByKey('PreferredFirstName', user.names),
+  preferredLastName: getValueByKey('PreferredLastName', user.names),
   id: user.id,
   cristinIdentifier: getValueByKey('CristinIdentifier', user.identifiers),
   affiliations: user.affiliations,
