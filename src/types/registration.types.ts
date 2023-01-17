@@ -88,6 +88,7 @@ export interface BaseRegistration {
   readonly status: RegistrationStatus;
   readonly doi?: string;
   readonly publisher: RegistrationPublisher;
+  readonly handle?: string;
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];

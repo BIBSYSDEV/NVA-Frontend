@@ -985,6 +985,7 @@
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
+      "handle": "Handle",
       "in_progress": "Under behandling",
       "message_to_curator": "Melding til kurator",
       "other_contributors_one": "(+{{count}} annen)",

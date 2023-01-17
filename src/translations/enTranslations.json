@@ -985,6 +985,7 @@
       "error_description": "To publish you must fix the following errors:",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",
       "go_back_to_wizard": "Go back to form",
+      "handle": "Handle",
       "in_progress": "In progress",
       "message_to_curator": "Message to curator",
       "other_contributors_one": "(+{{count}} other)",
