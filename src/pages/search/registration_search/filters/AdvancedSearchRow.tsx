@@ -7,9 +7,9 @@ import {
   ResourceFieldNames,
   ContributorFieldNames,
   SpecificContributorFieldNames,
-} from '../../../types/publicationFieldNames';
-import { PublicationInstanceType } from '../../../types/registration.types';
-import { ExpressionStatement, PropertySearch } from '../../../utils/searchHelpers';
+} from '../../../../types/publicationFieldNames';
+import { PublicationInstanceType } from '../../../../types/registration.types';
+import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHelpers';
 
 interface FilterItem {
   field: string;

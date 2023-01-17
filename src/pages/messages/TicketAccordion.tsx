@@ -71,7 +71,7 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
           </Typography>
           <Typography
             data-testid={`message-title-${registrationIdentifier}`}
-            sx={{ gridArea: 'title', fontWeight: 'bold' }}>
+            sx={{ gridArea: 'title', fontWeight: 'bold', wordBreak: 'break-word' }}>
             {getTitleString(ticket.publication.mainTitle)}
           </Typography>
           <Typography

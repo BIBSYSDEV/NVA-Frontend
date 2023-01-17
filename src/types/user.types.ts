@@ -13,7 +13,6 @@ export interface User {
   createdDate?: string;
   cristinId?: string;
   customerId?: string;
-  customerShortName?: string;
   topOrgCristinId?: string;
   familyName: string;
   givenName: string;
@@ -85,7 +84,7 @@ export interface CristinPersonIdentifier extends CristinArrayValue {
   type: CristinPersonIdentifierType;
 }
 
-export type CristinPersonNameType = 'FirstName' | 'LastName';
+export type CristinPersonNameType = 'FirstName' | 'LastName' | 'PreferredFirstName' | 'PreferredLastName';
 interface CristinPersonName extends CristinArrayValue {
   type: CristinPersonNameType;
 }
@@ -105,6 +104,8 @@ export interface CristinPerson extends CreateCristinPerson {
 export interface FlatCristinPerson {
   firstName: string;
   lastName: string;
+  preferredFirstName?: string | null;
+  preferredLastName?: string | null;
   nationalId: string;
   id: string;
   cristinIdentifier: string;

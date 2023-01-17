@@ -60,10 +60,18 @@
       "admin_institutions": "Administer institutions",
       "administrators": "Administrators",
       "archive_name": "Archive name",
+      "can_assign_doi": "Institution can assign Digital Object Identifier (DOI)",
       "display_name": "Display name for the institution",
+      "doi_name": "Data Cite Member ID",
+      "doi_password": "Password",
+      "doi_prefix": "DOI prefix",
+      "doi_url": "URL",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",
+      "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
+      "password_hide": "Hide password",
+      "password_show": "Show password",
       "remove_role_text": "Are you sure you want to remove this role?",
       "remove_role_title": "Remove role?",
       "ror": "Research Organization Registry (ROR)",
@@ -106,7 +114,7 @@
     "delete": "Delete",
     "description": "Description",
     "doi": "DOI",
-    "doi_long": "Digital object identifier (DOI)",
+    "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Edit",
     "employments": "Employments",
     "end_date": "End date",
@@ -152,7 +160,7 @@
     "required_description": "Fields with asterisk are required",
     "role": "Role",
     "save": "Save",
-    "save_and_present": "Save and present",
+    "save_and_present": "Save and see",
     "search": "Search",
     "search_by_name": "Search by name",
     "search_placeholder": "Name Nameson",
@@ -279,18 +287,18 @@
     "1144": "Nutrition"
   },
   "editor": {
-    "allowed": "Allowed",
-    "allowed_description": "$t(editor.allowed): Can be added by the user",
     "curators": {
       "area_of_responsibility": "Area of responsibility",
       "area_of_responsibility_placeholder": "No limitations",
       "areas_of_responsibility": "Areas of responsibility",
       "no_users_found": "No users found"
     },
-    "default": "Default",
-    "default_description": "$t(editor.default): Shown by default for all registrations",
-    "disabled": "Disabled",
-    "disabled_description": "$t(editor.disabled): Is not available",
+    "doi": {
+      "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
+      "doi_information_bullet_points_2": "The service has support for assigning $t(common.doi_long) to results.|The institution that assigns the DOI becomes the publisher of the result.|A thorough check of metadata, contents of files and licenses is necessary before assigning a $t(common.doi_long). Incorrect metadata is time-consuming to correct afterwards.",
+      "institution_can_create_doi": "Institution does not have a profile at DataCite the gives the Curator privilege to assign $t(common.doi_long) to result.",
+      "institution_cannot_create_doi": "Contact <0>Sikt</0> if your institution wants to assign $t(common.doi_long)."
+    },
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
@@ -313,7 +321,15 @@
       "registrator_publishes_without_curator_description": "The institution decides who is Registrator."
     },
     "select_vocabulary_description": "Activate controlled vocabularies for registration of new results",
-    "vocabulary": "Vocabulary"
+    "vocabulary": "Vocabulary",
+    "vocabulary_status": {
+      "Allowed": "Allowed",
+      "Default": "Default",
+      "Disabled": "Disabled",
+      "allowed_description": "$t(editor.vocabulary_status.Allowed): Can be added by the user",
+      "default_description": "$t(editor.vocabulary_status.Default): Shown by default for all registrations",
+      "disabled_description": "$t(editor.vocabulary_status.Disabled): Is not available"
+    }
   },
   "feedback": {
     "error": {
@@ -335,6 +351,7 @@
       "get_customer": "Could not retrieve customer institution",
       "get_customers": "Could not retrieve customer institutions",
       "get_doi": "Could not retrieve link data",
+      "get_doi_agent": "Could not retrieve DOI configuration",
       "get_institution": "Could not retrieve institution",
       "get_institutions": "Could not retrieve institutions",
       "get_journal": "Could not retrieve journal",
@@ -344,7 +361,7 @@
       "get_orcid": "Could not get data from ORCID",
       "get_person": "Could not retrieve person",
       "get_positions": "Could not retrieve positions",
-      "get_project": "Search for projects failed",
+      "get_project": "Could not retrieve project",
       "get_publisher": "Could not retrieve publisher",
       "get_publishers": "Search for publishers failed",
       "get_registration": "Could not get registration",
@@ -355,10 +372,12 @@
       "get_users_for_institution": "Could not get users",
       "get_vocabularies": "Could not fetch vocabularies",
       "orcid_login": "ORCID login failed",
+      "project_search": "Search for projects failed",
       "remove_role": "Could not remove role",
       "search": "Search failed",
       "send_message": "Could not send message",
       "update_customer": "Could not update customer institution",
+      "update_doi_agent": "Could not update DOI configuration",
       "update_doi_request": "Could not update DOI request",
       "update_institution_user": "Could not update user",
       "update_orcid": "Could not update ORCID",
@@ -386,6 +405,7 @@
       "update_customer": "Updated customer institution",
       "update_institution_user": "Updated user",
       "update_orcid": "Successfully updated ORCID",
+      "update_person": "Successfully updated person",
       "update_publish_strategy": "Updated publish strategy",
       "update_registration": "Updated registration",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"
@@ -463,12 +483,14 @@
     "my_profile": {
       "heading": {
         "affiliations": "Affiliations",
+        "personalia": "Personalia",
         "roles": "Roles",
         "user_info": "User information"
       },
       "id": "ID",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
+        "delete_orcid": "Remove ORCID connection",
         "dialog": {
           "heading": "Connect or create ORCID iD",
           "paragraph0": "Sign in to ORCID or register to create an account.",
@@ -478,7 +500,15 @@
         "remove_connection": "Remove connection to ORCID",
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
       },
-      "user_profile": "User profile"
+      "preferred_first_name": "Preferred first name",
+      "preferred_last_name": "Preferred last name",
+      "research_profile_summary": {
+        "affiliations": "Affiliations",
+        "preview": "Preview",
+        "research_profile": "Research profile"
+      },
+      "user_profile": "User profile",
+      "user_profile_description": "Here you can fill in and mark what you want to appear on your official researcher profile."
     },
     "registrations": {
       "delete_registration": "Delete unpublished registration",
@@ -821,6 +851,7 @@
       "confirmed": "Confirmed",
       "contributor": "Contributor",
       "contributor_already_added": "Chosen contributor is already added",
+      "contributor_not_found": "Cannot find contributor",
       "corresponding": "Corresponding",
       "department": "Department",
       "invalid_role": "The contributor must have a role that is valid for this resource type to be displayed for other users",
@@ -891,7 +922,6 @@
         "VideoEditor": "Video editor",
         "Writer": "Writer"
       },
-      "user_not_found": "Cannot find user",
       "verify_affiliation": "Verify affiliation",
       "verify_person": "Verify person"
     },
@@ -961,8 +991,7 @@
       "error_description": "To publish you must fix the following errors:",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",
       "go_back_to_wizard": "Go back to form",
-      "has_pending_doi_request": "The registration has a pending DOI request.",
-      "has_pending_publishing_request": "The registration has a pending publishing request.",
+      "handle": "Handle",
       "in_progress": "In progress",
       "message_to_curator": "Message to curator",
       "other_contributors_one": "(+{{count}} other)",
@@ -975,13 +1004,29 @@
       "published": "Published",
       "published_date": "Published: {{date}}",
       "publishing_request": "Publishing request",
-      "ready_to_be_published": "Ready to be published.",
-      "ready_to_be_published_description": "Review content before publishing.",
       "reject_publish_request": "Reject publishing request",
       "request_doi": "Request a DOI",
-      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications. You will receive an email when the request has been evaluated.",
+      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
       "reserve_doi": "Reserve a DOI",
-      "reserve_doi_message": "Auto-generated message: User wants to reserve a DOI.",
+      "reserved_doi": "Reserved DOI",
+      "tasks_panel": {
+        "has_doi_request": "Registration has a DOI request for approval to curator.",
+        "has_rejected_doi_request": "Registration has a rejected DOI request.",
+        "has_rejected_files_publishing_request": "Registration has a rejected publishing request for its files.",
+        "has_rejected_publishing_request": "Registration has a rejected publishing request.",
+        "has_reserved_doi": "Registration has a reserved DOI. When the registration is published a DOI request will be created and sent to curator.",
+        "metadata_published_waiting_for_files": "Metadata is published and visible for other users, but a curator must approve the uploaded files before they will be visible.",
+        "registration_will_soon_be_published": "The registration will be published soon. Reload page to see updated status.",
+        "reload": "Reload",
+        "request_publishing": "Request publishing",
+        "review_preview_before_publishing": "Review content before publishing.",
+        "waiting_for_publishing_approval": "A curator must approve content before it can be published and visible to other users.",
+        "waiting_for_rejected_doi": "It can take some time before the reserved DOI is removed. Reload to check again.",
+        "waiting_for_reserved_doi": "It can take some time before the reserved DOI is displayed. Reload to check again.",
+        "you_can_publish_everything": "You can publish on your own. The content will then be visible to other users.",
+        "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the uploaded files before they can be shown to other users.",
+        "you_can_publish_metadata_after_curator_approval": "A curator must approve the content before it can be published and visible for other users."
+      },
       "validation_errors": "Validation errors"
     },
     "publication_types": {
@@ -1345,17 +1390,19 @@
       "type_work_specified": "Self-defined type work",
       "volume": "Volume"
     },
-    "save_draft": "Save draft",
     "status": {
       "DRAFT": "Draft",
       "DRAFT_FOR_DELETION": "Deleted",
       "NEW": "New",
-      "PUBLISHED": "Published"
+      "PUBLISHED": "Published",
+      "PUBLISHED_METADATA": "Published metadata"
     },
     "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
     "year_published": "Year published"
   },
   "search": {
+    "additional_participants_one": "+{{count}} participant",
+    "additional_participants_other": "+{{count}} participants",
     "add_filter": "Add filter",
     "contains": "Contains",
     "field_label": "Field",
@@ -1363,14 +1410,18 @@
     "hits_other": "{{count}} hits",
     "not_containing": "Doesn't include",
     "operator": "Operator",
+    "persons": "Persons",
+    "person_search_placeholder": "Search for name",
+    "project_search_placeholder": "Search for title",
     "remove_filter": "Remove filter",
+    "result": "Result",
+    "search_filter": "Search filter",
     "search_placeholder": "Search for title, contributor, abstract, etc.",
     "search_term_label": "Value",
     "sort_by": "Order by",
     "sort_by_modified_date": "Last modified",
     "sort_by_published_date_asc": "Published date (oldest first)",
-    "sort_by_published_date_desc": "Published date (newest first)",
-    "title_and_contributors": "Title and contributors"
+    "sort_by_published_date_desc": "Published date (newest first)"
   },
   "tasks": {
     "limited_to": "Limited to: \"{{name}}\"",

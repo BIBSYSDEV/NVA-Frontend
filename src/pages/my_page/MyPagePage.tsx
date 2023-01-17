@@ -4,14 +4,12 @@ import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddIcon from '@mui/icons-material/Add';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
-import ResearchProfile from '../research_profile/ResearchProfile';
 import { MyProfile } from './user_profile/MyProfile';
 import {
   LinkButton,
@@ -23,6 +21,7 @@ import {
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import ResearchProfile from '../research_profile/ResearchProfile';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -83,16 +82,15 @@ const MyPagePage = () => {
           </LinkButton>
         </NavigationList>
       </SidePanel>
-      <BackgroundDiv>
-        <Switch>
-          <ErrorBoundary>
-            <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
-            <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
-            <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
-            <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
-          </ErrorBoundary>
-        </Switch>
-      </BackgroundDiv>
+
+      <Switch>
+        <ErrorBoundary>
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
+          <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
+        </ErrorBoundary>
+      </Switch>
     </StyledPageWithSideMenu>
   );
 };

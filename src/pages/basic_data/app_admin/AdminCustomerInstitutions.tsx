@@ -1,16 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
-import { Button } from '@mui/material';
 import { PageHeader } from '../../../components/PageHeader';
-import { StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
-import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 import { InstitutionList } from './InstitutionList';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { CustomerList } from '../../../types/customerInstitution.types';
 import { CustomerInstitutionApiPath } from '../../../api/apiPaths';
 import { sortCustomerInstitutions } from '../../../utils/institutions-helpers';
-import { dataTestId } from '../../../utils/dataTestIds';
 
 export const AdminCustomerInstitutions = () => {
   const { t } = useTranslation();
@@ -23,14 +18,6 @@ export const AdminCustomerInstitutions = () => {
   return (
     <>
       <PageHeader id="admin-institutions-label">{t('basic_data.institutions.admin_institutions')}</PageHeader>
-      <StyledRightAlignedWrapper>
-        <Button
-          component={RouterLink}
-          to={getAdminInstitutionPath('new')}
-          data-testid={dataTestId.basicData.customers.addCustomerButton}>
-          {t('basic_data.institutions.add_institution')}
-        </Button>
-      </StyledRightAlignedWrapper>
       {isLoadingCustomerInstitutions ? (
         <PageSpinner aria-labelledby="admin-institutions-label" />
       ) : (

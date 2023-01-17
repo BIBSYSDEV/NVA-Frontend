@@ -47,8 +47,9 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(PublicationsApiPath.RegistrationsByOwner)).reply(200, mockMyRegistrations);
 
   //MY MESSAGES
-  mock.onGet(new RegExp(PublicationsApiPath.Tickets)).reply(200, mockTicketCollection);
   mock.onGet(new RegExp(SearchApiPath.Tickets)).reply(200, mockSearchTasks);
+  mock.onGet(new RegExp(PublicationsApiPath.Tickets)).reply(200, mockTicketCollection);
+  mock.onGet(new RegExp('/tickets')).reply(200, mockTicketCollection);
 
   // PUBLICATION CHANNEL
   mock.onGet(mockJournalsSearch[0].id).reply(200, mockJournalsSearch[0]);
@@ -82,7 +83,7 @@ export const interceptRequestsOnMock = () => {
 
   // Person Registry
   mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinPersonSearch);
-  mock.onPost(new RegExp(CristinApiPath.PersonIdentityNumer)).reply(201, mockCristinPersonSearch.hits[0]);
+  mock.onPost(new RegExp(CristinApiPath.PersonIdentityNumber)).reply(201, mockCristinPersonSearch.hits[0]);
   mock.onGet(mockCristinPersonSearch.hits[0].id).reply(200, mockCristinPersonSearch.hits[0]);
 
   // Positions

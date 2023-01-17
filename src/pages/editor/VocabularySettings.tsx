@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
+import { setPartialCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { VocabularyList, CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
@@ -67,18 +68,18 @@ export const VocabularySettings = () => {
       });
 
       const vocabularyName = getTranslatedVocabularyName(t, newVocabulary.id);
-
       if (isSuccessStatus(updatedVocabularyResponse.status)) {
         dispatch(
           setNotification({
             message: t('feedback.success.update_vocabulary', {
               vocabulary: vocabularyName,
-              status: t(newVocabulary.status.toLowerCase() as any).toLowerCase(),
+              status: t(`editor.vocabulary_status.${newVocabulary.status}`).toLowerCase(),
             }),
             variant: 'success',
           })
         );
         setVocabularyList(updatedVocabularyResponse.data);
+        dispatch(setPartialCustomer({ vocabularies: updatedVocabularyResponse.data.vocabularies }));
       } else if (isErrorStatus(updatedVocabularyResponse.status)) {
         dispatch(
           setNotification({
@@ -123,10 +124,10 @@ export const VocabularySettings = () => {
         )
       )}
       <Typography gutterBottom mt="1rem">
-        {t('editor.default_description')}
+        {t('editor.vocabulary_status.default_description')}
       </Typography>
-      <Typography gutterBottom>{t('editor.allowed_description')}</Typography>
-      <Typography gutterBottom>{t('editor.disabled_description')}</Typography>
+      <Typography gutterBottom>{t('editor.vocabulary_status.allowed_description')}</Typography>
+      <Typography gutterBottom>{t('editor.vocabulary_status.disabled_description')}</Typography>
     </>
   );
 };

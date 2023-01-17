@@ -28,6 +28,7 @@ export const AddContributorModal = ({
   const { t } = useTranslation();
   const [openAddUnverifiedContributor, setOpenAddUnverifiedContributor] = useState(false);
   const [selectedContributorRole, setSelectedContributorRole] = useState(contributorRoles[0]);
+  const [searchTerm, setSearchTerm] = useState(initialSearchTerm ?? '');
 
   const addContributor = (newContributor: CristinPerson) => {
     onContributorSelected(newContributor, selectedContributorRole as ContributorRole);
@@ -37,6 +38,7 @@ export const AddContributorModal = ({
   const handleCloseModal = () => {
     toggleModal();
     setOpenAddUnverifiedContributor(false);
+    setSearchTerm('');
   };
 
   return (
@@ -74,14 +76,18 @@ export const AddContributorModal = ({
       {selectedContributorRole &&
         (openAddUnverifiedContributor && !initialSearchTerm ? (
           <AddUnverifiedContributorForm
+            searchTerm={searchTerm}
             addUnverifiedContributor={(newContributor) => {
               newContributor.role = selectedContributorRole;
               addUnverifiedContributor?.(newContributor);
             }}
             handleCloseModal={handleCloseModal}
+            handleCancel={() => setOpenAddUnverifiedContributor(false)}
           />
         ) : (
           <AddContributorForm
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
             addContributor={addContributor}
             openAddUnverifiedContributor={() => setOpenAddUnverifiedContributor(true)}
             initialSearchTerm={initialSearchTerm}

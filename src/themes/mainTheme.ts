@@ -1,4 +1,4 @@
-import { createTheme, SxProps } from '@mui/material';
+import { createTheme, SxProps, PaletteColorOptions } from '@mui/material';
 import { nbNO as coreNbNo, enUS as coreEnUs } from '@mui/material/locale';
 import { nbNO as pickersNbNo, enUS as pickersEnUs } from '@mui/x-date-pickers';
 import i18n from '../translations/i18n';
@@ -14,13 +14,36 @@ enum Color {
   SuccessMain = '#025810',
   InfoMain = '#4367F6',
   InfoLight = '#C2D3EA',
-  StepperBlue = '#0D4DAD',
+  PrimaryLight = '#0D4DAD',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
+  Registration = '#DAC48E',
+  Person = '#B3D6D9',
+  Project = '#E48F8F',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
 const pickersLocale = i18n.language === 'eng' ? pickersEnUs : pickersNbNo;
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    registration: PaletteColorOptions;
+    person: PaletteColorOptions;
+    project: PaletteColorOptions;
+  }
+  interface PaletteOptions {
+    registration?: PaletteColorOptions;
+    person?: PaletteColorOptions;
+    project?: PaletteColorOptions;
+  }
+}
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    registration: true;
+    person: true;
+    project: true;
+  }
+}
 
 export const mainTheme = createTheme(
   {
@@ -36,6 +59,7 @@ export const mainTheme = createTheme(
     palette: {
       primary: {
         main: Color.PrimaryMain,
+        light: Color.PrimaryLight,
         contrastText: Color.White,
       },
       secondary: {
@@ -52,6 +76,18 @@ export const mainTheme = createTheme(
       info: {
         main: Color.InfoMain,
         light: Color.InfoLight,
+      },
+      grey: {
+        400: '#d9d9d9',
+      },
+      registration: {
+        main: Color.Registration,
+      },
+      person: {
+        main: Color.Person,
+      },
+      project: {
+        main: Color.Project,
       },
       background: {
         default: Color.White,
@@ -142,7 +178,7 @@ export const mainTheme = createTheme(
       MuiStepIcon: {
         styleOverrides: {
           root: {
-            fill: Color.StepperBlue,
+            fill: Color.PrimaryLight,
             opacity: 0.6,
             '&.Mui-active': {
               opacity: 1,
@@ -159,9 +195,9 @@ export const mainTheme = createTheme(
             opacity: 0.6,
             textTransform: 'uppercase',
             fontSize: '1rem',
-            color: Color.StepperBlue,
+            color: Color.PrimaryLight,
             '&.Mui-active': {
-              color: Color.StepperBlue,
+              color: Color.PrimaryLight,
               fontWeight: 600,
               borderBottom: '0.1875rem solid',
               mb: '-0.1875rem', //prevents text from 'popping'
@@ -169,7 +205,7 @@ export const mainTheme = createTheme(
               opacity: 1,
             },
             '&.Mui-completed': {
-              color: Color.StepperBlue,
+              color: Color.PrimaryLight,
             },
             '&.Mui-error': {
               color: Color.ErrorMain,

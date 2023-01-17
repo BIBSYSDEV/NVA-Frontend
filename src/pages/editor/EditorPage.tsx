@@ -19,10 +19,11 @@ import {
 } from '../../components/PageWithSideMenu';
 import { RootState } from '../../redux/store';
 import { EditorCurators } from './EditorCurators';
+import { EditorDoi } from './EditorDoi';
 
 const EditorPage = () => {
   const { t } = useTranslation();
-  const customerShortName = useSelector((store: RootState) => store.user?.customerShortName);
+  const { customer } = useSelector((store: RootState) => store);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -35,7 +36,7 @@ const EditorPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SidePanel aria-labelledby="editor-title">
-        <SideNavHeader text={customerShortName} id="editor-title" icon={StoreIcon} />
+        <SideNavHeader text={customer?.shortName} id="editor-title" icon={StoreIcon} />
 
         <NavigationList>
           <LinkButton
@@ -43,6 +44,12 @@ const EditorPage = () => {
             data-testid={dataTestId.editor.institutionsNameLinkButton}
             to={UrlPathTemplate.EditorInstitution}>
             {t('editor.institution.institution_name')}
+          </LinkButton>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.EditorDoi}
+            data-testid={dataTestId.editor.doiLinkButton}
+            to={UrlPathTemplate.EditorDoi}>
+            {t('common.doi_long')}
           </LinkButton>
           <LinkButton
             isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
@@ -70,6 +77,7 @@ const EditorPage = () => {
           <EditorRoute exact path={UrlPathTemplate.EditorPublishStrategy} component={PublishStrategySettings} />
           <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
           <EditorRoute exact path={UrlPathTemplate.EditorCurators} component={EditorCurators} />
+          <EditorRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} />
         </Switch>
       </BackgroundDiv>
     </StyledPageWithSideMenu>

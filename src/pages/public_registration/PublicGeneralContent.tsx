@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
+import { Typography, Link } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import {
   BookPublicationContext,
@@ -92,7 +92,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
         {journalPublicationInstance?.contentType && (
           <Typography>
-            {t(`registration.resource_type.content_types.${journalPublicationInstance?.contentType}` as any)}
+            {t(`registration.resource_type.content_types.${journalPublicationInstance.contentType}`)}
           </Typography>
         )}
 
@@ -147,6 +147,21 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           ) : null)}
 
         <PublicDoi registration={registration} />
+
+        {registration.handle && (
+          <>
+            <Typography variant="overline">{t('registration.public_page.handle')}</Typography>
+            <Typography>
+              <Link
+                data-testid={dataTestId.registrationLandingPage.handleLink}
+                href={registration.handle}
+                target="_blank"
+                rel="noopener noreferrer">
+                {registration.handle}
+              </Link>
+            </Typography>
+          </>
+        )}
       </div>
 
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>

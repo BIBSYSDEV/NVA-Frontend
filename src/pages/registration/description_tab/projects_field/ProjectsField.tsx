@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Autocomplete, Box, Button, Typography } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { CristinProject, ProjectSearchResponse, ResearchProject } from '../../../../types/project.types';
+import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../../utils/translation-helpers';
@@ -15,15 +15,16 @@ import { ProjectChip } from './ProjectChip';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { CreateProjectDialog } from './CreateProjectDialog';
 import { BetaFunctionality } from '../../../../components/BetaFunctionality';
+import { SearchResponse } from '../../../../types/common.types';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
   const [openNewProjectDialog, setOpenNewProjectDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
-  const [projects, isLoadingProjects] = useFetch<ProjectSearchResponse>({
+  const [projects, isLoadingProjects] = useFetch<SearchResponse<CristinProject>>({
     url: debouncedSearchTerm ? `${CristinApiPath.Project}?query=${encodeURIComponent(debouncedSearchTerm)}` : '',
-    errorMessage: t('feedback.error.get_project'),
+    errorMessage: t('feedback.error.project_search'),
   });
 
   return (

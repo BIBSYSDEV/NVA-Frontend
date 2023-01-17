@@ -17,8 +17,8 @@ import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
-import { setPartialUser } from '../../redux/userSlice';
 import { MenuButton } from './MenuButton';
+import { setCustomer } from '../../redux/customerReducer';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -32,7 +32,7 @@ export const Header = () => {
 
   useEffect(() => {
     if (customer) {
-      dispatch(setPartialUser({ customerShortName: customer.shortName }));
+      dispatch(setCustomer(customer));
     }
   }, [dispatch, customer]);
 
@@ -74,10 +74,12 @@ export const Header = () => {
           <Button
             sx={{
               gridArea: 'new-result',
-              fontSize: '1.5rem',
+              fontSize: '1rem',
+              fontWeight: 700,
+              gap: '0.5rem',
               display: { xs: 'none', md: 'inline-flex' },
               '.MuiButton-startIcon > :nth-of-type(1)': {
-                fontSize: '1.5rem',
+                fontSize: '1.875rem',
               },
             }}
             color="inherit"
@@ -85,7 +87,7 @@ export const Header = () => {
             data-testid={dataTestId.header.newRegistrationLink}
             to={UrlPathTemplate.RegistrationNew}
             startIcon={
-              <AddIcon sx={{ color: 'white', bgcolor: 'info.main', borderRadius: '50%', padding: '0.1rem' }} />
+              <AddIcon sx={{ color: 'white', bgcolor: 'primary.light', borderRadius: '50%', padding: '0.1rem' }} />
             }>
             {t('registration.new_registration')}
           </Button>
@@ -107,19 +109,21 @@ export const Header = () => {
             <>
               {customer?.shortName &&
                 (user?.isEditor ? (
-                  <Button
-                    sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
+                  <MenuButton
+                    sx={{
+                      fontSize: '1.25rem',
+                      fontWeight: 700,
+                      textTransform: 'none',
+                    }}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
                     color="inherit"
-                    variant="outlined"
-                    size="small"
-                    component={RouterLink}
                     data-testid={dataTestId.header.editorLink}
                     to={UrlPathTemplate.Editor}>
-                    {user?.customerShortName}
-                  </Button>
+                    {customer.shortName}
+                  </MenuButton>
                 ) : (
-                  <Typography variant="button" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
-                    {user?.customerShortName}
+                  <Typography variant="h1" component="span" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
+                    {customer.shortName}
                   </Typography>
                 ))}
               <Divider

@@ -4,12 +4,13 @@ import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AppAdminRoute, InstitutionAdminRoute } from '../../utils/routes/Routes';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getAdminInstitutionPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
@@ -41,6 +42,9 @@ const BasicDataPage = () => {
       }
     }
   }, [history, currentPath, user?.isInstitutionAdmin, user?.isAppAdmin]);
+
+  const newCustomerIsSelected =
+    currentPath === UrlPathTemplate.BasicDataInstitutions && history.location.search === '?id=new';
 
   return (
     <StyledPageWithSideMenu>
@@ -75,13 +79,21 @@ const BasicDataPage = () => {
                 {t('basic_data.central_import.central_import')}
               </LinkButton>
             </BetaFunctionality>,
-            <LinkButton
-              key={dataTestId.basicData.adminInstitutionsLink}
-              data-testid={dataTestId.basicData.adminInstitutionsLink}
-              isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions}
-              to={UrlPathTemplate.BasicDataInstitutions}>
-              {t('common.institutions')}
-            </LinkButton>,
+            <LinkButtonRow key={dataTestId.basicData.adminInstitutionsLink}>
+              <LinkButton
+                data-testid={dataTestId.basicData.adminInstitutionsLink}
+                isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
+                to={UrlPathTemplate.BasicDataInstitutions}>
+                {t('common.institutions')}
+              </LinkButton>
+              <LinkIconButton
+                data-testid={dataTestId.basicData.addCustomerLink}
+                isSelected={newCustomerIsSelected}
+                to={getAdminInstitutionPath('new')}
+                title={t('basic_data.institutions.add_institution')}
+                icon={<AddBusinessIcon />}
+              />
+            </LinkButtonRow>,
           ]}
         </NavigationList>
       </SidePanel>

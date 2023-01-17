@@ -18,11 +18,15 @@ const unverifiedContributorValidationSchema = Yup.object().shape({
 interface AddUnverifiedContributorFormProps {
   addUnverifiedContributor: (newContributor: Contributor) => void;
   handleCloseModal: () => void;
+  handleCancel: () => void;
+  searchTerm: string;
 }
 
 export const AddUnverifiedContributorForm = ({
   addUnverifiedContributor,
   handleCloseModal,
+  handleCancel,
+  searchTerm = '',
 }: AddUnverifiedContributorFormProps) => {
   const { t } = useTranslation();
 
@@ -33,7 +37,7 @@ export const AddUnverifiedContributorForm = ({
 
   return (
     <Formik
-      initialValues={emptyContributor}
+      initialValues={{ ...emptyContributor, identity: { ...emptyContributor.identity, name: searchTerm } }}
       validationSchema={unverifiedContributorValidationSchema}
       onSubmit={handleSubmit}>
       {({ isSubmitting }) => (
@@ -49,6 +53,7 @@ export const AddUnverifiedContributorForm = ({
                   label={t('common.name')}
                   value={field.value ?? ''}
                   variant="filled"
+                  placeholder={`${t('common.first_name')} ${t('common.last_name')}`}
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                   data-testid={dataTestId.registrationWizard.contributors.unverifiedContributorName}
@@ -58,14 +63,14 @@ export const AddUnverifiedContributorForm = ({
           </Box>
 
           <DialogActions>
-            <Button onClick={handleCloseModal}>{t('common.close')}</Button>
+            <Button onClick={handleCancel}>{t('common.cancel')}</Button>
             <LoadingButton
               data-testid={dataTestId.registrationWizard.contributors.selectUserButton}
               type="submit"
               variant="contained"
               loading={isSubmitting}
               disabled={isSubmitting}>
-              {t('common.add')}
+              {t('registration.contributors.add_contributor')}
             </LoadingButton>
           </DialogActions>
         </Form>

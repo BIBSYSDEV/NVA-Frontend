@@ -165,9 +165,9 @@ interface PublicJournalContentProps {
   errorMessage: string;
 }
 
-const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
+const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) => {
   const { t } = useTranslation();
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', t('feedback.error.get_journal'));
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', errorMessage);
 
   return id ? (
     <>
@@ -738,9 +738,9 @@ export const PublicPublicationContextMediaContribution = ({ publicationContext }
           {t('registration.resource_type.media_contribution.channel')}: {disseminationChannel}
         </Typography>
       )}
-      {partOf?.series && (
+      {partOf?.seriesName && (
         <Typography>
-          {t('registration.resource_type.media_contribution.name_of_series_program')}: {partOf.series}
+          {t('registration.resource_type.media_contribution.name_of_series_program')}: {partOf.seriesName}
         </Typography>
       )}
       {partOf?.seriesPart && (

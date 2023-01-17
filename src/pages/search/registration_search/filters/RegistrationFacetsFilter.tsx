@@ -1,11 +1,11 @@
 import { Box, ListItemButton } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
+import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
 import { FacetItem } from './FacetItem';
-import { Aggregations } from '../../../types/common.types';
-import { ResourceFieldNames } from '../../../types/publicationFieldNames';
-import { PublicationInstanceType } from '../../../types/registration.types';
+import { Aggregations } from '../../../../types/common.types';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { PublicationInstanceType } from '../../../../types/registration.types';
 
 interface RegistrationFacetsFilterProps {
   aggregations: Aggregations;
