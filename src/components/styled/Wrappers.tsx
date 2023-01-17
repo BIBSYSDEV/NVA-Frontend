@@ -34,7 +34,7 @@ export const InputContainerBox = styled(Box)({
 });
 
 export const BackgroundDiv = styled(Box)(({ theme }) => ({
-  background: theme.palette.secondary.main,
+  background: theme.palette.secondary.dark,
   [theme.breakpoints.up('md')]: {
     padding: '1rem 2rem',
   },

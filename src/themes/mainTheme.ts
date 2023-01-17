@@ -91,7 +91,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.White,
-        paper: Color.SecondaryLight,
+        paper: Color.SecondaryMain,
       },
     },
     typography: {
