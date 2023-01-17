@@ -170,7 +170,6 @@ const SearchPage = () => {
                       display: 'flex',
                       flexDirection: 'column',
                       gap: '1rem',
-                      button: { textTransform: 'none' },
                     }}>
                     <RegistrationFacetsFilter
                       aggregations={searchResults.aggregations}
