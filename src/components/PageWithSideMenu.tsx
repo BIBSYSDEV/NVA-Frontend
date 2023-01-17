@@ -61,7 +61,7 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
         px: '1rem',
         display: 'flex',
         flexDirection: 'column',
-        gap: '1rem',
+        gap: '0.5rem',
         a: { textTransform: 'none' },
         ...sx,
       }}
@@ -76,7 +76,12 @@ interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
 
 export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
   <li>
-    <Button variant={isSelected ? 'contained' : 'outlined'} size="large" LinkComponent={Link} {...rest} />
+    <Button
+      sx={{ bgcolor: isSelected ? 'primary.main' : 'white' }}
+      variant={isSelected ? 'contained' : 'outlined'}
+      LinkComponent={Link}
+      {...rest}
+    />
   </li>
 );
 
@@ -85,7 +90,7 @@ interface LinkIconButtonProps extends LinkButtonProps {
 }
 
 export const LinkIconButton = ({ sx = {}, icon, ...rest }: LinkIconButtonProps) => (
-  <LinkButton sx={{ minWidth: 0, width: 0, ...sx }} {...rest}>
+  <LinkButton sx={{ minWidth: 0, width: 0, bgcolor: 'white', ...sx }} {...rest}>
     &nbsp;{icon}&nbsp; {/* Add spaces to ensure same button height as buttons with text */}
   </LinkButton>
 );
@@ -100,6 +105,7 @@ export const LinkButtonRow = ({ sx, ...props }: BoxProps) => (
         display: 'flex',
         gap: '0.75rem',
         alignItems: 'center',
+        justifyContent: 'space-between',
         ...sx,
       }}
       {...props}
