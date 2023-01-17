@@ -490,7 +490,7 @@
       "id": "ID",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
-        "delete_orcid": "Remove ORCID-connection",
+        "delete_orcid": "Remove ORCID connection",
         "dialog": {
           "heading": "Connect or create ORCID iD",
           "paragraph0": "Sign in to ORCID or register to create an account.",

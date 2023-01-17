@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { UserOrcid } from './UserOrcid';
 import { UserRoles } from './UserRoles';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
@@ -48,15 +48,11 @@ export const MyProfile = () => {
 
   const updatePerson = async (values: CristinPersonFormData) => {
     if (user.cristinId) {
-      values.preferredFirstName = values.preferredFirstName?.trim();
-      values.preferredLastName = values.preferredLastName?.trim();
-      if (values.preferredFirstName === '') {
-        values.preferredFirstName = null;
-      }
-      if (values.preferredLastName === '') {
-        values.preferredLastName = null;
-      }
-      const updatePersonResponse = await updateCristinPerson(user.cristinId, values);
+      const payload: CristinPersonFormData = {
+        preferredFirstName: values.preferredFirstName === '' ? null : values.preferredFirstName?.trim(),
+        preferredLastName: values.preferredLastName === '' ? null : values.preferredLastName?.trim(),
+      };
+      const updatePersonResponse = await updateCristinPerson(user.cristinId, payload);
       if (isErrorStatus(updatePersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
       } else if (isSuccessStatus(updatePersonResponse.status)) {
@@ -107,7 +103,7 @@ export const MyProfile = () => {
                     <Form>
                       <Box sx={{ display: 'flex', gap: '1rem' }}>
                         <Field name={'preferredFirstName'}>
-                          {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                          {({ field }: FieldProps<string>) => (
                             <TextField
                               {...field}
                               id={field.name}
@@ -115,13 +111,11 @@ export const MyProfile = () => {
                               label={t('my_page.my_profile.preferred_first_name')}
                               size="small"
                               variant="filled"
-                              error={touched && !!error}
-                              helperText={<ErrorMessage name={field.name} />}
                             />
                           )}
                         </Field>
                         <Field name={'preferredLastName'}>
-                          {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                          {({ field }: FieldProps<string>) => (
                             <TextField
                               {...field}
                               id={field.name}
@@ -129,8 +123,6 @@ export const MyProfile = () => {
                               label={t('my_page.my_profile.preferred_last_name')}
                               size="small"
                               variant="filled"
-                              error={touched && !!error}
-                              helperText={<ErrorMessage name={field.name} />}
                             />
                           )}
                         </Field>
@@ -140,12 +132,12 @@ export const MyProfile = () => {
                           </IconButton>
                         </Tooltip>
                       </Box>
-                      <Box sx={{ display: 'flex' }}>
+                      <Box sx={{ display: 'flex', mt: '0.5rem' }}>
                         <Typography sx={{ mt: '0.6rem' }}>{t('common.orcid')}</Typography>
                         <UserOrcid user={user} />
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'right' }}>
-                        <LoadingButton loading={isSubmitting} variant="contained" type="submit">
+                        <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
                           {t('common.save')}
                         </LoadingButton>
                       </Box>
