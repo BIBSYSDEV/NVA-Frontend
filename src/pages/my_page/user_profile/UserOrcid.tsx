@@ -111,7 +111,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
             alignItems: 'center',
           }}>
-          <Box sx={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <Box sx={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
             <IconButton size="small" href={orcidUrl}>
               <img src={orcidIcon} height="20" alt={t('common.orcid')} />
             </IconButton>
@@ -121,7 +121,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               href={orcidUrl}
               target="_blank"
               rel="noopener noreferrer">
-              {orcidUrl}
+              {currentOrcid}
             </Typography>
             <IconButton
               color="error"

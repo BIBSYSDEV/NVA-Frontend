@@ -83,11 +83,6 @@ export const MyProfile = () => {
         }}>
         <BackgroundDiv
           sx={{
-            display: 'grid',
-            gridTemplateAreas: {
-              xs: '"primary-info" "roles"',
-              md: '"roles" "primary-info"',
-            },
             bgcolor: 'info.light',
             gridArea: 'user-profile',
           }}>
@@ -132,8 +127,8 @@ export const MyProfile = () => {
                           </IconButton>
                         </Tooltip>
                       </Box>
-                      <Box sx={{ display: 'flex', mt: '0.5rem' }}>
-                        <Typography sx={{ mt: '0.6rem' }}>{t('common.orcid')}</Typography>
+                      <Box sx={{ display: 'flex', mt: '0.5rem', alignItems: 'center' }}>
+                        <Typography fontWeight={600}>{t('common.orcid')}</Typography>
                         <UserOrcid user={user} />
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'right' }}>
@@ -141,7 +136,7 @@ export const MyProfile = () => {
                           {t('common.save')}
                         </LoadingButton>
                       </Box>
-                      <Box sx={{ gridArea: 'roles' }}>
+                      <Box>
                         <UserRoles user={user} />
                       </Box>
                     </Form>
