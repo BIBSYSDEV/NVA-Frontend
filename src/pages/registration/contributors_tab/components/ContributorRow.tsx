@@ -10,6 +10,7 @@ import {
   TextField,
   IconButton,
   MenuItem,
+  Link,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -134,20 +135,9 @@ export const ContributorRow = ({
       </TableCell>
       <TableCell align="center" width="1">
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {contributor.identity.id ? (
+          {contributor.identity.id && (
             <Tooltip title={t('registration.contributors.known_author_identity')}>
               <CheckIcon color="primary" />
-            </Tooltip>
-          ) : (
-            <Tooltip title={t('registration.contributors.verify_person')}>
-              <IconButton
-                size="small"
-                data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
-                  contributor.identity.name
-                )}
-                onClick={() => setOpenVerifyContributor(true)}>
-                <WarningIcon color="warning" />
-              </IconButton>
             </Tooltip>
           )}
           {contributor.identity.orcId && (
@@ -160,7 +150,21 @@ export const ContributorRow = ({
         </Box>
       </TableCell>
       <TableCell>
-        <Typography>{contributor.identity.name}</Typography>
+        {contributor.identity.id ? (
+          <Typography>{contributor.identity.name}</Typography>
+        ) : (
+          <Tooltip title={t('registration.contributors.verify_person')}>
+            <Typography
+              data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
+                contributor.identity.name
+              )}
+              component={Link}
+              onClick={() => setOpenVerifyContributor(true)}
+              sx={{ cursor: 'pointer' }}>
+              {contributor.identity.name}
+            </Typography>
+          </Tooltip>
+        )}
       </TableCell>
       <TableCell sx={{ maxWidth: '25rem' }}>
         {contributor.identity && (
