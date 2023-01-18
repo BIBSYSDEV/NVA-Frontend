@@ -175,15 +175,13 @@ export const CustomerInstitutionMetadataForm = ({
                         <TextField
                           {...field}
                           data-testid={dataTestId.basicData.institutionAdmin.doiUsernameField}
-                          label={t('basic_data.institutions.doi_name')}
+                          label={t('basic_data.institutions.doi_repo_id')}
                           required
                           fullWidth
                           onChange={(event) => {
                             const inputValue = event.target.value;
-                            if (inputValue.length <= 8) {
-                              const formattedValue = inputValue.toUpperCase().replace(/[^A-Z]/g, '');
-                              setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
-                            }
+                            const formattedValue = inputValue.toUpperCase().replace(/[^A-Z.]/g, '');
+                            setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
                           }}
                           variant="filled"
                           error={touched && !!error}
