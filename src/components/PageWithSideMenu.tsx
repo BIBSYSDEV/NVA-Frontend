@@ -10,7 +10,7 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   gap: '1rem',
   padding: '1rem',
 
-  gridTemplateColumns: '1fr 4fr',
+  gridTemplateColumns: 'auto 4fr',
   [theme.breakpoints.down('md')]: {
     padding: 0,
     gridTemplateColumns: '1fr',
@@ -55,10 +55,8 @@ export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
 export const NavigationList = ({ sx, ...props }: BoxProps) => (
   <nav>
     <Box
-      component="ul"
       sx={{
-        listStyle: 'none',
-        px: '1rem',
+        pt: '0.5rem',
         display: 'flex',
         flexDirection: 'column',
         gap: '0.5rem',
@@ -75,14 +73,12 @@ interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
 }
 
 export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
-  <li>
-    <Button
-      sx={{ bgcolor: isSelected ? 'primary.main' : 'white' }}
-      variant={isSelected ? 'contained' : 'outlined'}
-      LinkComponent={Link}
-      {...rest}
-    />
-  </li>
+  <Button
+    sx={{ bgcolor: isSelected ? 'primary.main' : 'white', ml: '1rem', width: 'min-content' }}
+    variant={isSelected ? 'contained' : 'outlined'}
+    LinkComponent={Link}
+    {...rest}
+  />
 );
 
 interface LinkIconButtonProps extends LinkButtonProps {
@@ -90,25 +86,21 @@ interface LinkIconButtonProps extends LinkButtonProps {
 }
 
 export const LinkIconButton = ({ sx = {}, icon, ...rest }: LinkIconButtonProps) => (
-  <LinkButton sx={{ minWidth: 0, width: 0, bgcolor: 'white', ...sx }} {...rest}>
+  <LinkButton sx={{ minWidth: 0, width: 0, bgcolor: 'white', mr: '1rem', ...sx }} {...rest}>
     &nbsp;{icon}&nbsp; {/* Add spaces to ensure same button height as buttons with text */}
   </LinkButton>
 );
 
 export const LinkButtonRow = ({ sx, ...props }: BoxProps) => (
-  <li>
-    <Box
-      component="ul"
-      sx={{
-        listStyle: 'none',
-        p: 0,
-        display: 'flex',
-        gap: '0.75rem',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        ...sx,
-      }}
-      {...props}
-    />
-  </li>
+  <Box
+    sx={{
+      p: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '5rem',
+      ...sx,
+    }}
+    {...props}
+  />
 );
