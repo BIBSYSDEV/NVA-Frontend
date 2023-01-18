@@ -4,7 +4,7 @@ import OrcidLogo from '../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { CristinPerson } from '../../../types/user.types';
 import { getResearchProfilePath } from '../../../utils/urlPaths';
-import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-helpers';
+import { filterActiveAffiliations, getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
 import { ORCID_BASE_URL } from '../../../utils/constants';
 
 interface PersonListItemProps {
@@ -13,8 +13,7 @@ interface PersonListItemProps {
 
 export const PersonListItem = ({ person }: PersonListItemProps) => {
   const orcid = getValueByKey('ORCID', person.identifiers);
-  const firstName = getValueByKey('FirstName', person.names);
-  const lastName = getValueByKey('LastName', person.names);
+  const personName = getFullCristinName(person.names);
   const activeAffiliations = filterActiveAffiliations(person.affiliations);
 
   return (
@@ -30,7 +29,7 @@ export const PersonListItem = ({ person }: PersonListItemProps) => {
         <ListItemText disableTypography>
           <Typography sx={{ fontSize: '1rem', fontWeight: '600' }}>
             <MuiLink component={Link} to={getResearchProfilePath(person.id)}>
-              {firstName} {lastName}
+              {personName}
             </MuiLink>
           </Typography>
         </ListItemText>
