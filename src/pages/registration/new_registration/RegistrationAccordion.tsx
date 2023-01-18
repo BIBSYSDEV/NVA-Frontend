@@ -2,6 +2,7 @@ import { Accordion } from '@mui/material';
 import { styled } from '@mui/system';
 
 export const RegistrationAccordion = styled(Accordion)(({ theme }) => ({
+  bgcolor: 'secondary.dark !important',
   '.MuiAccordionSummary-content': {
     alignItems: 'center',
     padding: '1rem 0',
