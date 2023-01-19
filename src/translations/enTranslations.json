@@ -513,7 +513,6 @@
     "registrations": {
       "delete_registration": "Delete unpublished registration",
       "delete_registration_message": "Do you want to delete \"{{title}}\"?",
-      "my_research_profile": "My research profile",
       "published_registrations": "Published registrations",
       "unpublished_registrations": "Unpublished registrations"
     },

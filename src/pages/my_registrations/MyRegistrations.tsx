@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { BackgroundDiv, StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TabButton } from '../../components/TabButton';
-import { RootState } from '../../redux/store';
 import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
-import { getResearchProfilePath } from '../../utils/urlPaths';
 import { MyRegistrationsList } from './MyRegistrationsList';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { PublicationsApiPath } from '../../api/apiPaths';
@@ -21,7 +17,6 @@ enum Tab {
 
 export const MyRegistrations = () => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
   const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
   const [myRegistrationsResponse, isLoading, refetchRegistrations] = useFetch<MyRegistrationsResponse>({
     url: PublicationsApiPath.RegistrationsByOwner,
@@ -44,16 +39,6 @@ export const MyRegistrations = () => {
         <title>{t('common.registrations')}</title>
       </Helmet>
       <BackgroundDiv>
-        <StyledRightAlignedWrapper>
-          {user?.cristinId && (
-            <Button
-              component={RouterLink}
-              to={getResearchProfilePath(user.cristinId)}
-              data-testid="public-profile-button">
-              {t('my_page.registrations.my_research_profile')}
-            </Button>
-          )}
-        </StyledRightAlignedWrapper>
         <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
           <TabButton
             data-testid="unpublished-button"
