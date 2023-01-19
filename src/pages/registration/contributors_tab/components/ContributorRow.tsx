@@ -178,7 +178,7 @@ export const ContributorRow = ({
           <IconButton
             data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
             onClick={() => setOpenRemoveContributor(true)}>
-            <CancelIcon color="error" />
+            <CancelIcon color="primary" />
           </IconButton>
         </Tooltip>
       </TableCell>
