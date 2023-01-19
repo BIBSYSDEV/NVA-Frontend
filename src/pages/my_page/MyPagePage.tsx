@@ -24,8 +24,8 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import ResearchProfile from '../research_profile/ResearchProfile';
-import { Box } from '@mui/system';
-import { Divider } from '@mui/material';
+
+import { Box, Divider } from '@mui/material';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -54,11 +54,9 @@ const MyPagePage = () => {
               key={dataTestId.myPage.messagesLink}
               data-testid={dataTestId.myPage.messagesLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMessages}
-              to={UrlPathTemplate.MyPageMessages}>
-              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                <ChatBubbleOutlineOutlinedIcon />
-                {t('my_page.messages.messages')}
-              </Box>
+              to={UrlPathTemplate.MyPageMessages}
+              startIcon={<ChatBubbleOutlineOutlinedIcon />}>
+              {t('my_page.messages.messages')}
             </LinkButton>,
             <Divider key="divider1" />,
             <LinkButtonRow key={dataTestId.myPage.myRegistrationsLink}>
@@ -80,11 +78,9 @@ const MyPagePage = () => {
           <LinkButton
             data-testid={dataTestId.myPage.researchProfileLink}
             isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
-            to={UrlPathTemplate.MyPageResearchProfile}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <img src={orcidIcon} height="20" alt={t('common.orcid')} />
-              {t('my_page.research_profile')}
-            </Box>
+            to={UrlPathTemplate.MyPageResearchProfile}
+            startIcon={<img src={orcidIcon} height="20" alt={t('common.orcid')} />}>
+            {t('my_page.research_profile')}
           </LinkButton>
           <Divider key="divider3" />
           <LinkButton
