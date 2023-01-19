@@ -49,6 +49,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 disabled={isLoadingSearch}
                 sx={{
                   display: 'flex',
+                  gap: '1rem',
                   justifyContent: 'space-between',
                   '&.Mui-selected': {
                     bgcolor: 'info.light',
