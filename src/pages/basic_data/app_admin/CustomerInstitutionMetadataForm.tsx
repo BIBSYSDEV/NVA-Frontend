@@ -43,7 +43,7 @@ export const CustomerInstitutionMetadataForm = ({
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const handleSubmit = async ({ customer, doiAgent }: CustomerInstitutionFormData) => {
+  const handleSubmit = async ({ customer, doiAgent, canAssignDoi }: CustomerInstitutionFormData) => {
     if (!editMode) {
       const createCustomerResponse = await createCustomerInstitution(customer);
       if (isErrorStatus(createCustomerResponse.status)) {
@@ -58,7 +58,11 @@ export const CustomerInstitutionMetadataForm = ({
         dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' }));
       } else if (isSuccessStatus(updateCustomerResponse.status)) {
         if (customerInstitution?.doiAgent.id) {
-          const updateDoiAgentResponse = await updateDoiAgent(customerInstitution.doiAgent.id, doiAgent);
+          if (!canAssignDoi && doiAgent.username) {
+            // Set empty username of doiAgent if user has un-checked support DOI
+            doiAgent.username = '';
+          }
+          const updateDoiAgentResponse = await updateDoiAgent(doiAgent);
           if (isErrorStatus(updateDoiAgentResponse.status)) {
             dispatch(setNotification({ message: t('feedback.error.update_doi_agent'), variant: 'error' }));
           } else if (isSuccessStatus(updateDoiAgentResponse.status)) {
@@ -75,7 +79,7 @@ export const CustomerInstitutionMetadataForm = ({
     <Formik
       enableReinitialize
       initialValues={{
-        canAssignDoi: !!doiAgent?.prefix,
+        canAssignDoi: !!doiAgent?.username,
         customer: {
           ...emptyCustomerInstitution,
           ...customerInstitution,
@@ -175,15 +179,13 @@ export const CustomerInstitutionMetadataForm = ({
                         <TextField
                           {...field}
                           data-testid={dataTestId.basicData.institutionAdmin.doiUsernameField}
-                          label={t('basic_data.institutions.doi_name')}
+                          label={t('basic_data.institutions.doi_repo_id')}
                           required
                           fullWidth
                           onChange={(event) => {
                             const inputValue = event.target.value;
-                            if (inputValue.length <= 8) {
-                              const formattedValue = inputValue.toUpperCase().replace(/[^A-Z]/g, '');
-                              setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
-                            }
+                            const formattedValue = inputValue.toUpperCase().replace(/[^A-Z.]/g, '');
+                            setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
                           }}
                           variant="filled"
                           error={touched && !!error}

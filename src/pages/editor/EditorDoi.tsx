@@ -39,7 +39,7 @@ export const EditorDoi = () => {
               },
             }}>
             <div>
-              <Typography variant="h3">{t('basic_data.institutions.doi_name')}</Typography>
+              <Typography variant="h3">{t('basic_data.institutions.doi_repo_id')}</Typography>
               {customer.doiAgent?.username ? (
                 <Typography sx={{ color: 'primary.light' }}>{customer.doiAgent.username}</Typography>
               ) : (
