@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Box, Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
-import { displayDate } from '../utils/date-helpers';
 import { getRegistrationLandingPagePath, getResearchProfilePath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
-import { TruncatableTypography } from './TruncatableTypography';
 import { dataTestId } from '../utils/dataTestIds';
 import { getTitleString } from '../utils/registration-helpers';
+import { displayDate } from '../utils/date-helpers';
+import { TruncatableTypography } from './TruncatableTypography';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -36,13 +36,20 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const countRestContributors = contributors.length - focusedContributors.length;
 
   return (
-    <ListItem divider disableGutters>
+    <ListItem
+      sx={{
+        border: '2px solid',
+        borderLeft: '1.25rem solid',
+        borderColor: 'registration.main',
+      }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.main' }}>
-          {t(`registration.publication_types.${entityDescription?.reference?.publicationInstance.type ?? ''}` as any)} -{' '}
-          {displayDate(entityDescription?.date)}
+          {entityDescription?.reference?.publicationInstance.type
+            ? t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)
+            : '?'}{' '}
+          — {displayDate(entityDescription?.date)}
         </Typography>
-        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
             {getTitleString(entityDescription?.mainTitle)}
           </MuiLink>
@@ -70,7 +77,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           )}
         </Box>
 
-        <TruncatableTypography>{entityDescription?.abstract}</TruncatableTypography>
+        <TruncatableTypography sx={{ mt: '0.5rem' }}>{entityDescription?.abstract}</TruncatableTypography>
       </ListItemText>
     </ListItem>
   );

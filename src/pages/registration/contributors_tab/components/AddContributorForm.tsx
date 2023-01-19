@@ -27,13 +27,16 @@ interface AddContributorFormProps {
   openAddUnverifiedContributor: () => void;
   initialSearchTerm?: string;
   roleToAdd: ContributorRole;
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
 }
 
 export const AddContributorForm = ({
   addContributor,
   openAddUnverifiedContributor,
-  initialSearchTerm = '',
-  roleToAdd,
+  initialSearchTerm,
+  searchTerm,
+  setSearchTerm,
 }: AddContributorFormProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -41,7 +44,6 @@ export const AddContributorForm = ({
 
   const [isAddingSelf, setIsAddingSelf] = useState(false);
   const [selectedUser, setSelectedUser] = useState<CristinPerson>();
-  const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [page, setPage] = useState(0);
@@ -79,7 +81,7 @@ export const AddContributorForm = ({
         </Typography>
       )}
       <TextField
-        id="search"
+        type="search"
         data-testid={dataTestId.registrationWizard.contributors.searchField}
         variant="outlined"
         fullWidth
@@ -141,7 +143,7 @@ export const AddContributorForm = ({
           <Button
             data-testid={dataTestId.registrationWizard.contributors.addUnverifiedContributorButton}
             onClick={openAddUnverifiedContributor}>
-            {t('registration.contributors.user_not_found')}
+            {t('registration.contributors.contributor_not_found')}
           </Button>
         )}
         <Button
@@ -152,9 +154,7 @@ export const AddContributorForm = ({
           variant="contained">
           {initialSearchTerm
             ? t('registration.contributors.verify_person')
-            : t('common.add_custom', {
-                name: t(`registration.contributors.types.${roleToAdd}`),
-              })}
+            : t('registration.contributors.add_contributor')}
         </Button>
       </Box>
     </>

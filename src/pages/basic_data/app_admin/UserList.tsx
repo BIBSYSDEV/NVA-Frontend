@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { visuallyHidden } from '@mui/utils';
 import { LoadingButton } from '@mui/lab';
 import { updateUser } from '../../../api/roleApi';
@@ -124,7 +124,7 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
                           <Button
                             color="error"
                             variant="outlined"
-                            startIcon={<DeleteIcon />}
+                            startIcon={<CancelIcon />}
                             disabled={isLastInstitutionAdmin}
                             data-testid={`button-remove-role-${roleToRemove}-${user.username}`}
                             onClick={() => setRemoveRoleForUser(user.username)}>

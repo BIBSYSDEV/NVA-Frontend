@@ -9,8 +9,6 @@ describe('User', () => {
   });
 
   it('The user should be able to see their user details', () => {
-    cy.get('[data-testid=user-name]').contains('Test User');
-    cy.get('[data-testid=user-id]').contains('tu@sikt.no');
     cy.get('[data-testid=user-role-app-admin]').should('be.visible');
     cy.get('[data-testid=user-role-institution-admin]').should('be.visible');
     cy.get('[data-testid=user-role-curator]').should('be.visible');

@@ -15,7 +15,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { visuallyHidden } from '@mui/utils';
@@ -68,6 +68,8 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       refetchRegistrations();
     }
   };
+
+  useEffect(() => setPage(0), [registrations]); // Reset page if user changes focus between Published and Unpublished
 
   useEffect(() => {
     if (registrations.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
@@ -129,7 +131,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                           color="error"
                           variant="outlined"
                           data-testid={`delete-registration-${identifier}`}
-                          startIcon={<DeleteIcon />}
+                          startIcon={<CancelIcon />}
                           onClick={() => {
                             setRegistrationToDelete(registration);
                             setShowDeleteModal(true);

@@ -5,18 +5,18 @@ import WorkIcon from '@mui/icons-material/Work';
 import { useSelector } from 'react-redux';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { PageHeader } from '../../components/PageHeader';
-import { BackgroundDiv, SyledPageContent } from '../../components/styled/Wrappers';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { SearchResults } from '../search/SearchResults';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
 import { CristinPerson } from '../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RootState } from '../../redux/store';
+import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 
 const textContainerSx: SxProps = {
   width: '100%',
@@ -58,13 +58,13 @@ const ResearchProfile = () => {
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
   return (
-    <SyledPageContent>
+    <BackgroundDiv>
       <PageHeader>{fullName}</PageHeader>
       {isLoadingPerson || isLoadingRegistrations ? (
         <PageSpinner aria-label={t('my_page.research_profile')} />
       ) : (
         person && (
-          <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
+          <>
             <Typography variant="h2">{t('common.employments')}</Typography>
             {activeAffiliations.length > 0 && (
               <Box sx={lineSx}>
@@ -94,16 +94,16 @@ const ResearchProfile = () => {
                   {t('common.registrations')}
                 </Typography>
                 {registrations.size > 0 ? (
-                  <SearchResults searchResult={registrations} />
+                  <RegistrationSearchResults searchResult={registrations} />
                 ) : (
                   <Typography>{t('common.no_hits')}</Typography>
                 )}
               </Box>
             )}
-          </BackgroundDiv>
+          </>
         )
       )}
-    </SyledPageContent>
+    </BackgroundDiv>
   );
 };
 

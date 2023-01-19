@@ -1,9 +1,12 @@
-import { CustomerInstitution } from '../types/customerInstitution.types';
 import { CancelToken } from 'axios';
+import { CustomerInstitution, DoiAgent } from '../types/customerInstitution.types';
 import { authenticatedApiRequest } from './apiRequest';
 import { CustomerInstitutionApiPath } from './apiPaths';
 
-export const createCustomerInstitution = async (customer: CustomerInstitution, cancelToken?: CancelToken) =>
+export const createCustomerInstitution = async (
+  customer: Omit<CustomerInstitution, 'doiAgent'>,
+  cancelToken?: CancelToken
+) =>
   await authenticatedApiRequest<CustomerInstitution>({
     url: CustomerInstitutionApiPath.Customer,
     method: 'POST',
@@ -11,10 +14,21 @@ export const createCustomerInstitution = async (customer: CustomerInstitution, c
     cancelToken,
   });
 
-export const updateCustomerInstitution = async (customer: CustomerInstitution, cancelToken?: CancelToken) =>
+export const updateCustomerInstitution = async (
+  customer: Omit<CustomerInstitution, 'doiAgent'>,
+  cancelToken?: CancelToken
+) =>
   await authenticatedApiRequest<CustomerInstitution>({
     url: `${CustomerInstitutionApiPath.Customer}/${customer.identifier}`,
     method: 'PUT',
     data: customer,
+    cancelToken,
+  });
+
+export const updateDoiAgent = async (doiAgent: DoiAgent, cancelToken?: CancelToken) =>
+  await authenticatedApiRequest<DoiAgent>({
+    url: doiAgent.id,
+    method: 'PUT',
+    data: doiAgent,
     cancelToken,
   });

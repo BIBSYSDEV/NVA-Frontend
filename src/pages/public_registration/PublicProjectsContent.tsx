@@ -57,7 +57,10 @@ interface ProjectRowProps {
 
 const ProjectRow = ({ project }: ProjectRowProps) => {
   const { t } = useTranslation();
-  const [fetchedProject, isLoadingProject] = useFetch<CristinProject>({ url: project.id });
+  const [fetchedProject, isLoadingProject] = useFetch<CristinProject>({
+    url: project.id,
+    errorMessage: t('feedback.error.get_project'),
+  });
   const projectTitle = fetchedProject?.title ?? project.name;
 
   return (

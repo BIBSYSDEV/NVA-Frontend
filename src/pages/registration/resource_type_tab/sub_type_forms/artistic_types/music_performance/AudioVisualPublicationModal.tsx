@@ -14,11 +14,12 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import {
   AudioVisualPublication,
+  emptyUnconfirmedPublisher,
   MusicMediaType,
   MusicTrack,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
@@ -36,7 +37,7 @@ interface AudioVisualPublicationModalProps {
 const emptyAudioVisualPublication: AudioVisualPublication = {
   type: 'AudioVisualPublication',
   mediaType: '',
-  publisher: '',
+  publisher: emptyUnconfirmedPublisher,
   catalogueNumber: '',
   trackList: [],
 };
@@ -54,11 +55,15 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       field: i18n.t('translation:registration.resource_type.artistic.media_type'),
     })
   ),
-  publisher: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:common.publisher'),
-    })
-  ),
+  publisher: Yup.object().shape({
+    name: Yup.string()
+      .nullable()
+      .required(
+        i18n.t('translation:feedback.validation.is_required', {
+          field: i18n.t('translation:common.publisher'),
+        })
+      ),
+  }),
   catalogueNumber: Yup.string().required(
     i18n.t('translation:feedback.validation.is_required', {
       field: i18n.t('translation:registration.resource_type.artistic.catalogue_number'),
@@ -147,7 +152,7 @@ export const AudioVisualPublicationModal = ({
                   </TextField>
                 )}
               </Field>
-              <Field name="publisher">
+              <Field name="publisher.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
@@ -232,7 +237,7 @@ export const AudioVisualPublicationModal = ({
                             title={t('registration.resource_type.artistic.remove_music_work')}
                             onClick={() => setRemoveTrackIndex(index)}
                             sx={{ px: '2rem' }}
-                            startIcon={<DeleteIcon />}
+                            startIcon={<CancelIcon />}
                             data-testid={`${dataTestId.registrationWizard.resourceType.audioVideoContentRemove}-${index}`}>
                             {t('common.remove')}
                           </Button>

@@ -60,10 +60,18 @@
       "admin_institutions": "Administrer institusjoner",
       "administrators": "Administratorer",
       "archive_name": "Arkivnavn",
+      "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
       "display_name": "Visningsnavn på institusjonen",
+      "doi_password": "Passord",
+      "doi_prefix": "DOI prefiks",
+      "doi_repo_id": "Data Cite Repository ID",
+      "doi_url": "URL",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Organisasjonens domene i Feide",
+      "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
+      "password_hide": "Skjul passord",
+      "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
@@ -106,7 +114,7 @@
     "delete": "Slett",
     "description": "Beskrivelse",
     "doi": "DOI",
-    "doi_long": "Digital objektidentifikator (DOI)",
+    "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
@@ -152,7 +160,7 @@
     "required_description": "Felt med stjerne er obligatorisk",
     "role": "Rolle",
     "save": "Lagre",
-    "save_and_present": "Lagre og presenter",
+    "save_and_present": "Lagre og se",
     "search": "Søk",
     "search_by_name": "Søk på navn",
     "search_placeholder": "Navn Navnesen",
@@ -166,6 +174,7 @@
     "show_all": "Vis alle",
     "show_details": "Vis detaljer",
     "show_fewer": "Vis færre",
+    "show_more": "Vis flere",
     "skip_to_main_content": "Hopp til hovedinnhold",
     "skip_to_schema": "Hopp til skjema",
     "start": "Start",
@@ -278,18 +287,18 @@
     "1144": "Ernæring"
   },
   "editor": {
-    "allowed": "Tillatt",
-    "allowed_description": "$t(editor.allowed): Kan legges til av brukeren selv",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensninger",
       "areas_of_responsibility": "Ansvarsområder",
       "no_users_found": "Ingen brukere funnet"
     },
-    "default": "Standard",
-    "default_description": "$t(editor.default): Vises som standard for alle registreringer",
-    "disabled": "Ikke tillatt",
-    "disabled_description": "$t(editor.disabled): Er ikke tilgjengelig",
+    "doi": {
+      "doi_information_bullet_points": "$t(common.doi_long) er en persistent identifikator.|Gjør det enklere å sitere publikasjoner korrekt.|Metadata om resultatet blir delt internasjonalt.|Synligheten til resultatet øker.|Bidrar til å oppfylle FAIR-prinsippene.|Understøtter åpen forskning.",
+      "doi_information_bullet_points_2": "Tjenesten har støtte for å tildele $t(common.doi_long) til resultater.|Institusjonen som tildeler $t(common.doi_long) blir utgiver av resultatet.|Grundig sjekk av metadata, innhold i filer og lisenser er nødvendig før tildeling av $t(common.doi_long). Feil metadata er tidkrevende å rette i ettertid.",
+      "institution_can_create_doi": "Institusjonen har en profil hos DataCite som gir Kurator tilgang til å tildele $t(common.doi_long) på resultat.",
+      "institution_cannot_create_doi": "Ta kontakt med <0>Sikt</0> om institusjonen vil tildele $t(common.doi_long)."
+    },
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
@@ -312,7 +321,15 @@
       "registrator_publishes_without_curator_description": "Institutsjonen bestemmer hvem som er Registrator."
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
-    "vocabulary": "Vokabular"
+    "vocabulary": "Vokabular",
+    "vocabulary_status": {
+      "Allowed": "Tillatt",
+      "Default": "Standard",
+      "Disabled": "Ikke tillatt",
+      "allowed_description": "$t(editor.vocabulary_status.Allowed): Kan legges til av brukeren selv",
+      "default_description": "$t(editor.vocabulary_status.Default): Vises som standard for alle registreringer",
+      "disabled_description": "$t(editor.vocabulary_status.Disabled): Er ikke tilgjengelig"
+    }
   },
   "feedback": {
     "error": {
@@ -334,6 +351,7 @@
       "get_customer": "Kunne ikke hente kundeinstitusjon",
       "get_customers": "Kunne ikke hente kundeinstitusjoner",
       "get_doi": "Kunne ikke hente lenkedata",
+      "get_doi_agent": "Kunne ikke hente DOI-konfigurasjon",
       "get_institution": "Kunne ikke laste inn institusjon",
       "get_institutions": "Kunne ikke laste inn institusjoner",
       "get_journal": "Kunne ikke hente tidsskrift",
@@ -343,7 +361,7 @@
       "get_orcid": "Kunne ikke hente data fra ORCID",
       "get_person": "Kunne ikke hente person",
       "get_positions": "Kunne ikke hente stillinger",
-      "get_project": "Søk på prosjekt feilet",
+      "get_project": "Kunne ikke hente prosjekt",
       "get_publisher": "Kunne ikke hente utgiver",
       "get_publishers": "Søk på utgivere feilet",
       "get_registration": "Kunne ikke laste inn registrering",
@@ -354,10 +372,12 @@
       "get_users_for_institution": "Kunne ikke hente brukere",
       "get_vocabularies": "Kunne ikke hente kontrollerte vokabular",
       "orcid_login": "Kunne ikke logge inn på ORCID",
+      "project_search": "Søk på prosjekt feilet",
       "remove_role": "Kunne ikke fjerne rolle",
       "search": "Søk feilet",
       "send_message": "Kunne ikke sende melding",
       "update_customer": "Kunne ikke oppdatere institusjon",
+      "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
       "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
       "update_institution_user": "Kunne ikke oppdatere bruker",
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
@@ -385,6 +405,7 @@
       "update_customer": "Institusjon er oppdatert",
       "update_institution_user": "Bruker er oppdatert",
       "update_orcid": "ORCID-kobling ble oppdatert",
+      "update_person": "Person ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
@@ -462,12 +483,12 @@
     "my_profile": {
       "heading": {
         "affiliations": "Tilhørigheter",
-        "roles": "Roller",
-        "user_info": "Brukerinformasjon"
+        "personalia": "Personalia",
+        "roles": "Roller"
       },
-      "id": "ID",
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
+        "delete_orcid": "Fjern ORCID-kobling",
         "dialog": {
           "heading": "Koble eller opprette ORCID iD",
           "paragraph0": "Logg inn på din ORCID-konto eller registrer deg hvis du ikke har en konto.",
@@ -477,12 +498,19 @@
         "remove_connection": "Fjern kobling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
-      "user_profile": "Brukerprofil"
+      "preferred_first_name": "Foretrukket fornavn",
+      "preferred_last_name": "Foretrukket etternavn",
+      "research_profile_summary": {
+        "affiliations": "Tilhørigheter",
+        "preview": "Forhåndsvisning",
+        "research_profile": "Forskerprofil"
+      },
+      "user_profile": "Brukerprofil",
+      "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil."
     },
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "my_research_profile": "Min forskerprofil",
       "published_registrations": "Publiserte registreringer",
       "unpublished_registrations": "Upubliserte registreringer"
     },
@@ -814,12 +842,11 @@
       "add_self_as_contributor": "Legg meg til som bidragsyter",
       "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
       "authors": "Forfattere",
-      "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
-      "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "confirmed": "Bekreftet",
       "contributor": "Bidragsyter",
       "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
+      "contributor_not_found": "Finner ikke bidragsyter",
       "corresponding": "Korresponderende",
       "department": "Enhet",
       "invalid_role": "Bidragsyteren må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
@@ -890,7 +917,6 @@
         "VideoEditor": "Klipper",
         "Writer": "Tekstforfatter"
       },
-      "user_not_found": "Finner ikke bruker",
       "verify_affiliation": "Verifiser tilhørighet",
       "verify_person": "Verifiser person"
     },
@@ -925,6 +951,7 @@
       "file_publish_date": "Utsatt publisering",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "files": "Filer",
+      "files_are_not_published": "Filer publiseres ikke",
       "files_awaits_approval": "Filer (avventer godkjenning)",
       "find_journal_in_channel_register": "Se informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
@@ -959,8 +986,7 @@
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
-      "has_pending_doi_request": "Registreringen har en DOI-forespørsel under behandling.",
-      "has_pending_publishing_request": "Registreringen har en publiseringsforespørsel under behandling.",
+      "handle": "Handle",
       "in_progress": "Under behandling",
       "message_to_curator": "Melding til kurator",
       "other_contributors_one": "(+{{count}} annen)",
@@ -973,13 +999,29 @@
       "published": "Publisert",
       "published_date": "Publisert: {{date}}",
       "publishing_request": "Publiseringsgodkjenning",
-      "ready_to_be_published": "Klar for publisering.",
-      "ready_to_be_published_description": "Se over utkast før du publiserer.",
       "reject_publish_request": "Avvis publisering",
       "request_doi": "Be om en DOI",
-      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer. Du vil få en epost når forespørselen er behandlet.",
+      "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
       "reserve_doi": "Reserver en DOI",
-      "reserve_doi_message": "Autogenerert melding: Bruker ønsker å reservere en DOI.",
+      "reserved_doi": "Reservert DOI",
+      "tasks_panel": {
+        "has_doi_request": "Registreringen har en DOI-forespørsel til behandling for kurator.",
+        "has_rejected_doi_request": "Registreringen har en avslått DOI-forespørsel.",
+        "has_rejected_files_publishing_request": "Registreringen har en avslått publiseringsforespørsel for filene.",
+        "has_rejected_publishing_request": "Registreringen har en avslått publiseringsforespørsel.",
+        "has_reserved_doi": "Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.",
+        "metadata_published_waiting_for_files": "Metadata er publisert og synlig for andre brukere, men en kurator må godkjenne filene som er lastet opp før de blir synlige.",
+        "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
+        "reload": "Last på nytt",
+        "request_publishing": "Be om publisering",
+        "review_preview_before_publishing": "Se over utkast før du går videre.",
+        "waiting_for_publishing_approval": "En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere.",
+        "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
+        "waiting_for_reserved_doi": "Det kan ta litt tid før reservert DOI vises. Last innholdet på nytt for å sjekke igjen.",
+        "you_can_publish_everything": "Du kan publisere registreringen på egen hånd. Innholdet vil da bli synlig for andre brukere.",
+        "you_can_publish_metadata": "Du kan publisere metadata selv, men en kurator må godkjenne filene som er lastet opp før de kan vises til andre brukere.",
+        "you_can_publish_metadata_after_curator_approval": "En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere."
+      },
       "validation_errors": "Valideringsfeil"
     },
     "publication_types": {
@@ -1343,17 +1385,19 @@
       "type_work_specified": "Egendefinert type verk",
       "volume": "Volum"
     },
-    "save_draft": "Lagre kladd",
     "status": {
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Slettet",
       "NEW": "Ny",
-      "PUBLISHED": "Publisert"
+      "PUBLISHED": "Publisert",
+      "PUBLISHED_METADATA": "Publisert metadata"
     },
     "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
     "year_published": "Publiseringsår"
   },
   "search": {
+    "additional_participants_one": "+{{count}} deltaker",
+    "additional_participants_other": "+{{count}} deltakere",
     "add_filter": "Legg til filter",
     "contains": "Inneholder",
     "field_label": "Felt",
@@ -1361,8 +1405,12 @@
     "hits_other": "{{count}} treff",
     "not_containing": "Inneholder ikke",
     "operator": "Operator",
-    "registration_type": "Registreringstype",
+    "persons": "Personer",
+    "person_search_placeholder": "Søk etter navn",
+    "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
+    "result": "Resultat",
+    "search_filter": "Søkefilter",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",
     "sort_by": "Sorter etter",

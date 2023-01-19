@@ -22,7 +22,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import prettyBytes from 'pretty-bytes';
 import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
-import { AssociatedFile, LicenseNames, licenses } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, AssociatedFileType, LicenseNames, licenses } from '../../../types/associatedArtifact.types';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -44,7 +44,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
       <TableCell sx={{ minWidth: '13rem' }}>
-        <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
           <Tooltip title={t('registration.files_and_license.remove_file')}>
             <IconButton onClick={toggleOpenConfirmDialog}>
@@ -73,24 +73,23 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
       <TableCell align="center">
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
           {({ field }: FieldProps) => (
-            <FormControlLabel
-              data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
-              control={
-                <Tooltip title={t('registration.files_and_license.administrative_contract')}>
-                  <Checkbox
-                    {...field}
-                    checked={field.value}
-                    onChange={(event) => {
-                      field.onChange(event);
-                      setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`, null);
-                      setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.License}`, null);
-                      setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`, null);
-                    }}
-                  />
-                </Tooltip>
-              }
-              label=""
-            />
+            <Tooltip title={t('registration.files_and_license.administrative_contract')}>
+              <Checkbox
+                {...field}
+                data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
+                checked={field.value}
+                onChange={(event) => {
+                  const newAssociatedFileType: AssociatedFileType =
+                    field.value === true ? 'UnpublishedFile' : 'UnpublishableFile';
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.Type}`, newAssociatedFileType);
+
+                  field.onChange(event);
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`, null);
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.License}`, null);
+                  setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`, null);
+                }}
+              />
+            </Tooltip>
           )}
         </Field>
       </TableCell>

@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AccordionActions, AccordionSummary, Typography } from '@mui/material';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { AccordionSummary, Box, CircularProgress, Typography } from '@mui/material';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { LoadingButton } from '@mui/lab';
 import { RegistrationAccordion } from './RegistrationAccordion';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -15,7 +12,9 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
 
-export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
+const labelId = 'start-empty-label';
+
+export const StartEmptyRegistration = ({ onChange }: Pick<StartRegistrationAccordionProps, 'onChange'>) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
@@ -33,28 +32,19 @@ export const StartEmptyRegistration = ({ expanded, onChange }: StartRegistration
   };
 
   return (
-    <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange} sx={{ borderColor: 'primary.main' }}>
-      <AccordionSummary
-        data-testid={dataTestId.registrationWizard.new.emptyRegistrationAccordion}
-        expandIcon={<ExpandMoreIcon fontSize="large" />}>
+    <RegistrationAccordion elevation={5} onChange={onChange} onClick={createEmptyRegistration}>
+      <AccordionSummary data-testid={dataTestId.registrationWizard.new.emptyRegistrationAccordion}>
         <InsertDriveFileIcon />
-        <div>
-          <Typography variant="h2">{t('registration.registration.start_with_empty_registration_title')}</Typography>
-          <Typography>{t('registration.registration.start_with_empty_registration_description')}</Typography>
-        </div>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+          <div>
+            <Typography variant="h2" id={labelId}>
+              {t('registration.registration.start_with_empty_registration_title')}
+            </Typography>
+            <Typography>{t('registration.registration.start_with_empty_registration_description')}</Typography>
+          </div>
+          {isLoading && <CircularProgress aria-labelledby={labelId} />}
+        </Box>
       </AccordionSummary>
-
-      <AccordionActions>
-        <LoadingButton
-          data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
-          endIcon={<ArrowForwardIcon fontSize="large" />}
-          loadingPosition="end"
-          variant="contained"
-          loading={isLoading}
-          onClick={createEmptyRegistration}>
-          {t('registration.registration.start_registration')}
-        </LoadingButton>
-      </AccordionActions>
     </RegistrationAccordion>
   );
 };

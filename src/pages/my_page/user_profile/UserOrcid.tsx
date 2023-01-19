@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { Button, IconButton, Typography, Link as MuiLink, Box, CircularProgress } from '@mui/material';
 import { Skeleton } from '@mui/material';
 import { useHistory } from 'react-router-dom';
@@ -99,9 +99,6 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
 
   return (
     <div>
-      <Typography id="orcid-label" variant="h2" paragraph>
-        {t('common.orcid')}
-      </Typography>
       {isLoadingCristinPerson ? (
         <CircularProgress aria-labelledby="orcid-label" />
       ) : isAddingOrcid ? (
@@ -114,7 +111,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
             alignItems: 'center',
           }}>
-          <Box sx={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <Box sx={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
             <IconButton size="small" href={orcidUrl}>
               <img src={orcidIcon} height="20" alt={t('common.orcid')} />
             </IconButton>
@@ -124,18 +121,16 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               href={orcidUrl}
               target="_blank"
               rel="noopener noreferrer">
-              {orcidUrl}
+              {currentOrcid}
             </Typography>
+            <IconButton
+              color="error"
+              data-testid="button-confirm-delete-orcid"
+              onClick={toggleConfirmDialog}
+              title={t('my_page.my_profile.orcid.delete_orcid')}>
+              <CancelIcon />
+            </IconButton>
           </Box>
-
-          <Button
-            color="error"
-            data-testid="button-confirm-delete-orcid"
-            onClick={toggleConfirmDialog}
-            startIcon={<DeleteIcon />}
-            variant="outlined">
-            {t('common.remove')}
-          </Button>
 
           <ConfirmDialog
             open={openConfirmDialog}

@@ -140,7 +140,7 @@ export const SearchForCristinPerson = ({
           <div>
             {selectedPersonActiveAffiliations.length > 0 && (
               <>
-                <Typography variant="overline">{t('basic_data.person_register.current_employments')}</Typography>
+                <Typography variant="h3">{t('basic_data.person_register.current_employments')}</Typography>
                 <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
                   {selectedPersonActiveAffiliations.map((affiliation) => {
                     const roleString = getLanguageString(affiliation.role.labels);
@@ -158,7 +158,7 @@ export const SearchForCristinPerson = ({
             )}
             {selectedPersonInactiveAffiliations.length > 0 && (
               <>
-                <Typography variant="overline">{t('basic_data.person_register.previous_employments')}</Typography>
+                <Typography variant="h3">{t('basic_data.person_register.previous_employments')}</Typography>
                 <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
                   {selectedPersonInactiveAffiliations.map((affiliation) => {
                     const roleString = getLanguageString(affiliation.role.labels);

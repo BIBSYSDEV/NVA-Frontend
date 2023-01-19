@@ -32,6 +32,7 @@ export enum RegistrationStatus {
   Draft = 'DRAFT',
   New = 'NEW',
   Published = 'PUBLISHED',
+  PublishedMetadata = 'PUBLISHED_METADATA',
 }
 
 export enum RegistrationTab {
@@ -87,6 +88,7 @@ export interface BaseRegistration {
   readonly status: RegistrationStatus;
   readonly doi?: string;
   readonly publisher: RegistrationPublisher;
+  readonly handle?: string;
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];

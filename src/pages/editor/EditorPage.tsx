@@ -13,16 +13,17 @@ import { EditorInstitution } from './EditorInstitution';
 import {
   LinkButton,
   NavigationList,
-  SideNav,
+  SidePanel,
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { RootState } from '../../redux/store';
 import { EditorCurators } from './EditorCurators';
+import { EditorDoi } from './EditorDoi';
 
 const EditorPage = () => {
   const { t } = useTranslation();
-  const customerShortName = useSelector((store: RootState) => store.user?.customerShortName);
+  const { customer } = useSelector((store: RootState) => store);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -34,8 +35,8 @@ const EditorPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SideNav aria-labelledby="editor-title">
-        <SideNavHeader text={customerShortName} id="editor-title" icon={StoreIcon} />
+      <SidePanel aria-labelledby="editor-title">
+        <SideNavHeader text={customer?.shortName} id="editor-title" icon={StoreIcon} />
 
         <NavigationList>
           <LinkButton
@@ -43,6 +44,12 @@ const EditorPage = () => {
             data-testid={dataTestId.editor.institutionsNameLinkButton}
             to={UrlPathTemplate.EditorInstitution}>
             {t('editor.institution.institution_name')}
+          </LinkButton>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.EditorDoi}
+            data-testid={dataTestId.editor.doiLinkButton}
+            to={UrlPathTemplate.EditorDoi}>
+            {t('common.doi_long')}
           </LinkButton>
           <LinkButton
             isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
@@ -63,13 +70,14 @@ const EditorPage = () => {
             {t('editor.curators.areas_of_responsibility')}
           </LinkButton>
         </NavigationList>
-      </SideNav>
+      </SidePanel>
       <BackgroundDiv>
         <Switch>
           <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />
           <EditorRoute exact path={UrlPathTemplate.EditorPublishStrategy} component={PublishStrategySettings} />
           <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
           <EditorRoute exact path={UrlPathTemplate.EditorCurators} component={EditorCurators} />
+          <EditorRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} />
         </Switch>
       </BackgroundDiv>
     </StyledPageWithSideMenu>

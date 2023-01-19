@@ -74,7 +74,7 @@ export const PublicJournal = ({ publicationContext }: PublicJournalProps) => {
 
   return publicationContext.id || publicationContext.title ? (
     <>
-      <Typography variant="overline" component="p">
+      <Typography variant="h3" component="p">
         {t('registration.resource_type.journal')}
       </Typography>
       {publicationContext.id ? (
@@ -96,7 +96,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
 
   return publisher?.id || publisher?.name ? (
     <>
-      <Typography variant="overline" component="p">
+      <Typography variant="h3" component="p">
         {t('common.publisher')}
       </Typography>
 
@@ -125,7 +125,7 @@ export const PublicPartOfContent = ({ partOf }: { partOf: string | null }) => {
 
   return partOf ? (
     <>
-      <Typography variant="overline" component="p">
+      <Typography variant="h3" component="p">
         {t('registration.resource_type.chapter.published_in')}
       </Typography>
       <RegistrationSummary id={partOf} />
@@ -143,7 +143,7 @@ export const PublicSeries = ({
 
   return series?.id || series?.title ? (
     <>
-      <Typography variant="overline" component="p">
+      <Typography variant="h3" component="p">
         {t('registration.resource_type.series')}
       </Typography>
       {series.id ? (
@@ -165,9 +165,9 @@ interface PublicJournalContentProps {
   errorMessage: string;
 }
 
-const PublicJournalContent = ({ id }: PublicJournalContentProps) => {
+const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) => {
   const { t } = useTranslation();
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', t('feedback.error.get_journal'));
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', errorMessage);
 
   return id ? (
     <>
@@ -207,7 +207,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 
   return (
     <>
-      <Typography variant="overline">{t(`registration.publication_types.${type}`)}</Typography>
+      <Typography variant="h3">{t(`registration.publication_types.${type}`)}</Typography>
       {label && <Typography>{label}</Typography>}
       {agent?.name && (
         <Typography>
@@ -237,7 +237,7 @@ interface PublicArtisticOutputProps {
 
 export const PublicArtisticOutput = ({ outputs, heading, showType = false }: PublicArtisticOutputProps) => (
   <>
-    <Typography variant="overline">{heading}</Typography>
+    <Typography variant="h3">{heading}</Typography>
     {outputs.map((output, index) => (
       <PublicOutputRow key={index} output={output} heading={heading} showType={showType} />
     ))}
@@ -321,9 +321,9 @@ const PublicVenueDialogContent = ({ venue }: { venue: Venue }) => {
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.place')}</Typography>
+      <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{venue.place?.label ?? ''}</Typography>
-      <Typography variant="overline">{t('common.date')}</Typography>
+      <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{getPeriodString(venue.date)}</Typography>
     </DialogContent>
   );
@@ -333,11 +333,11 @@ const PublicCompetitionDialogContent = ({ competition }: { competition: Competit
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('registration.resource_type.artistic.competition_name')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.competition_name')}</Typography>
       <Typography paragraph>{competition.name}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.competition_rank')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.competition_rank')}</Typography>
       <Typography paragraph>{competition.description}</Typography>
-      <Typography variant="overline">{t('common.date')}</Typography>
+      <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{new Date(competition.date.value).toLocaleDateString()}</Typography>
     </DialogContent>
   );
@@ -347,15 +347,15 @@ const PublicAwardDialogContent = ({ award }: { award: Award }) => {
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('registration.resource_type.artistic.competition_name')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.competition_name')}</Typography>
       <Typography paragraph>{award.name}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.award_organizer')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.award_organizer')}</Typography>
       <Typography paragraph>{award.organizer}</Typography>
-      <Typography variant="overline">{t('common.year')}</Typography>
+      <Typography variant="h3">{t('common.year')}</Typography>
       <Typography>{new Date(award.date.value).getFullYear()}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.award_ranking')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.award_ranking')}</Typography>
       <Typography paragraph>{award.ranking}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.award_other')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.award_other')}</Typography>
       <Typography paragraph>{award.otherInformation}</Typography>
     </DialogContent>
   );
@@ -365,13 +365,13 @@ const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('registration.resource_type.artistic.mention_title')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.mention_title')}</Typography>
       <Typography paragraph>{mention.title}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.issue')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.issue')}</Typography>
       <Typography paragraph>{mention.issue}</Typography>
-      <Typography variant="overline">{t('common.date')}</Typography>
+      <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{new Date(mention.date.value).toLocaleDateString()}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.mention_other')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.mention_other')}</Typography>
       <Typography paragraph>{mention.otherInformation}</Typography>
     </DialogContent>
   );
@@ -381,13 +381,13 @@ const PublicExhibitionDialogContent = ({ exhibition }: { exhibition: Exhibition 
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('registration.resource_type.artistic.exhibition_title')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.exhibition_title')}</Typography>
       <Typography paragraph>{exhibition.name}</Typography>
-      <Typography variant="overline">{t('common.place')}</Typography>
+      <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{exhibition.place?.label ?? ''}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.organizer')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.organizer')}</Typography>
       <Typography>{exhibition.organizer}</Typography>
-      <Typography variant="overline">{t('common.other')}</Typography>
+      <Typography variant="h3">{t('common.other')}</Typography>
       <Typography paragraph>{exhibition.otherInformation}</Typography>
     </DialogContent>
   );
@@ -397,11 +397,11 @@ const PublicBroadcastDialogContent = ({ broadcast }: { broadcast: Broadcast }) =
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${broadcast.type}`)}</Typography>
-      <Typography variant="overline">{t('common.publisher')}</Typography>
+      <Typography variant="h3">{t('common.publisher')}</Typography>
       <Typography paragraph>{broadcast.publisher.name}</Typography>
-      <Typography variant="overline">{t('common.date')}</Typography>
+      <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{new Date(broadcast.date.value).toLocaleDateString()}</Typography>
     </DialogContent>
   );
@@ -411,11 +411,11 @@ const PublicCinematicReleaseDialogContent = ({ cinematicRelease }: { cinematicRe
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${cinematicRelease.type}`)}</Typography>
-      <Typography variant="overline">{t('common.place')}</Typography>
+      <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{cinematicRelease.place.label}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.premiere_date')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.premiere_date')}</Typography>
       <Typography>{new Date(cinematicRelease.date.value).toLocaleDateString()}</Typography>
     </DialogContent>
   );
@@ -425,21 +425,19 @@ const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: Other
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('registration.resource_type.artistic.other_release_description')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.other_release_description')}</Typography>
       <Typography paragraph>
         {t(`registration.resource_type.artistic.output_type.${otherRelease.type}`)}: {otherRelease.description}
       </Typography>
-      <Typography variant="overline">{t('common.place')}</Typography>
+      <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{otherRelease.place.label}</Typography>
       {otherRelease.publisher.name && (
         <>
-          <Typography variant="overline">
-            {t('registration.resource_type.artistic.other_announcement_organizer')}
-          </Typography>
+          <Typography variant="h3">{t('registration.resource_type.artistic.other_announcement_organizer')}</Typography>
           <Typography paragraph>{otherRelease.publisher.name}</Typography>
         </>
       )}
-      <Typography variant="overline">{t('registration.resource_type.artistic.premiere_date')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.premiere_date')}</Typography>
       <Typography>{new Date(otherRelease.date.value).toLocaleDateString()}</Typography>
     </DialogContent>
   );
@@ -451,19 +449,19 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
 
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.music_score_ensemble')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ensemble')}</Typography>
       <Typography paragraph>{ensemble}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.music_score_movements')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_movements')}</Typography>
       <Typography paragraph>{movements}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.extent')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.extent')}</Typography>
       <Typography paragraph>{extent}</Typography>
-      <Typography variant="overline">{t('common.publisher')}</Typography>
+      <Typography variant="h3">{t('common.publisher')}</Typography>
       <Typography paragraph>{publisher.name}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.music_score_ismn')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ismn')}</Typography>
       <Typography paragraph>{ismn.formatted ?? ismn.value}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
       <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>
     </DialogContent>
   );
@@ -479,15 +477,15 @@ const PublicAudioVisualPublicationDialogContent = ({
 
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.media_type')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.media_type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.music_media_type.${mediaType}` as any)}</Typography>
-      <Typography variant="overline">{t('common.publisher')}</Typography>
+      <Typography variant="h3">{t('common.publisher')}</Typography>
       <Typography paragraph>{publisher}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
       <Typography paragraph>{catalogueNumber}</Typography>
-      <Typography variant="overline" id="tracks-heading">
+      <Typography variant="h3" id="tracks-heading">
         {t('registration.resource_type.artistic.content_track')}
       </Typography>
 
@@ -524,26 +522,26 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
 
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
 
-      <Typography variant="overline">{t('common.place')}</Typography>
+      <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{place.label}</Typography>
 
-      <Typography variant="overline">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
       <Typography paragraph>{partOfSeries ? t('common.yes') : t('common.no')}</Typography>
 
-      <Typography variant="overline">{t('common.date')}</Typography>
+      <Typography variant="h3">{t('common.date')}</Typography>
       {time.type === 'Instant' ? (
         <Typography paragraph>{new Date(time.value).toLocaleDateString()}</Typography>
       ) : (
         <Typography paragraph>{getPeriodString(time)}</Typography>
       )}
 
-      <Typography variant="overline">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{extent}</Typography>
 
-      <Typography variant="overline" id="program-heading">
+      <Typography variant="h3" id="program-heading">
         {t('registration.resource_type.artistic.concert_program')}
       </Typography>
       <TableContainer component={Paper}>
@@ -579,19 +577,19 @@ const PublicOtherPerformanceDialogContent = ({ otherPerformance }: { otherPerfor
 
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
 
-      <Typography variant="overline">{t('registration.resource_type.artistic.performance_type')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.performance_type')}</Typography>
       <Typography paragraph>{performanceType}</Typography>
 
-      <Typography variant="overline">{t('common.place')}</Typography>
+      <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{place.label}</Typography>
 
-      <Typography variant="overline">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{extent}</Typography>
 
-      <Typography variant="overline" id="works-heading">
+      <Typography variant="h3" id="works-heading">
         {t('registration.resource_type.artistic.musical_works')}
       </Typography>
       <TableContainer component={Paper}>
@@ -627,17 +625,17 @@ const PublicLiteraryArtsMonographDialogContent = ({
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>
         {t(`registration.resource_type.artistic.output_type.${literaryArtsMonograph.type}`)}
       </Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.publisher')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.publisher')}</Typography>
       <Typography paragraph>{literaryArtsMonograph.publisher.name}</Typography>
-      <Typography variant="overline">{t('common.year')}</Typography>
+      <Typography variant="h3">{t('common.year')}</Typography>
       <Typography paragraph>{literaryArtsMonograph.publicationDate.year}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.isbn')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.isbn')}</Typography>
       <Typography paragraph>{hyphenate(literaryArtsMonograph.isbn)}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.number_of_pages')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.number_of_pages')}</Typography>
       <Typography>{literaryArtsMonograph.pages.pages ?? '-'}</Typography>
     </DialogContent>
   );
@@ -647,17 +645,17 @@ const PublicLiteraryArtsWebPublicationDialogContent = ({ webPublication }: { web
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${webPublication.type}`)}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.web_link')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.web_link')}</Typography>
       <Typography paragraph>
         <Link href={webPublication.id} target="_blank" rel="noopener noreferrer">
           {webPublication.id}
         </Link>
       </Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.publisher')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.publisher')}</Typography>
       <Typography paragraph>{webPublication.publisher.name}</Typography>
-      <Typography variant="overline">{t('common.year')}</Typography>
+      <Typography variant="h3">{t('common.year')}</Typography>
       <Typography paragraph>{webPublication.publicationDate.year}</Typography>
     </DialogContent>
   );
@@ -667,17 +665,17 @@ const PublicLiteraryArtsPerformanceDialogContent = ({ performance }: { performan
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${performance.type}`)}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.type_work')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.type_work')}</Typography>
       {performance.subtype && (
         <Typography paragraph>
           {t(`registration.resource_type.artistic.performance_types.${performance.subtype}`)}
         </Typography>
       )}
-      <Typography variant="overline">{t('common.place')}</Typography>
+      <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{performance.place.label}</Typography>
-      <Typography variant="overline">{t('common.date')}</Typography>
+      <Typography variant="h3">{t('common.date')}</Typography>
       <Typography paragraph>
         {new Date(
           +performance.publicationDate.year,
@@ -693,21 +691,21 @@ const PublicLiteraryArtsAudioVisualDialogContent = ({ audioVisual }: { audioVisu
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="overline">{t('common.type')}</Typography>
+      <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${audioVisual.type}`)}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.type_work')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.type_work')}</Typography>
       {audioVisual.subtype && (
         <Typography paragraph>
           {t(`registration.resource_type.artistic.audio_video_type.${audioVisual.subtype}`)}
         </Typography>
       )}
-      <Typography variant="overline">{t('registration.resource_type.artistic.publisher')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.publisher')}</Typography>
       <Typography paragraph>{audioVisual.publisher.name}</Typography>
-      <Typography variant="overline">{t('common.year')}</Typography>
+      <Typography variant="h3">{t('common.year')}</Typography>
       <Typography paragraph>{audioVisual.publicationDate.year ?? '-'}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.isbn')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.isbn')}</Typography>
       <Typography paragraph>{hyphenate(audioVisual.isbn) ?? '-'}</Typography>
-      <Typography variant="overline">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{audioVisual.extent ?? '-'}</Typography>
     </DialogContent>
   );
@@ -740,9 +738,9 @@ export const PublicPublicationContextMediaContribution = ({ publicationContext }
           {t('registration.resource_type.media_contribution.channel')}: {disseminationChannel}
         </Typography>
       )}
-      {partOf?.series && (
+      {partOf?.seriesName && (
         <Typography>
-          {t('registration.resource_type.media_contribution.name_of_series_program')}: {partOf.series}
+          {t('registration.resource_type.media_contribution.name_of_series_program')}: {partOf.seriesName}
         </Typography>
       )}
       {partOf?.seriesPart && (

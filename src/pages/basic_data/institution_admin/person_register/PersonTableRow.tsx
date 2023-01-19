@@ -21,7 +21,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
@@ -31,6 +31,7 @@ import { AffiliationHierarchy } from '../../../../components/institution/Affilia
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
 import {
   convertToFlatCristinPerson,
+  getFullCristinName,
   getMaskedNationalIdentityNumber,
   isActiveEmployment,
 } from '../../../../utils/user-helpers';
@@ -81,6 +82,7 @@ export const PersonTableRow = ({
     convertToFlatCristinPerson(cristinPerson);
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
 
+  const fullName = getFullCristinName(cristinPerson.names);
   const username = `${cristinIdentifier}@${topOrgCristinIdentifier}`;
   const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
     url: openDialog ? `${RoleApiPath.Users}/${username}` : '',
@@ -159,9 +161,7 @@ export const PersonTableRow = ({
         <TableCell>{getMaskedNationalIdentityNumber(nationalId)}</TableCell>
         <TableCell width="25%">
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>
-              {firstName} {lastName}
-            </Typography>
+            <Typography>{fullName}</Typography>
             {orcidUrl && (
               <Tooltip title={t('common.orcid_profile')}>
                 <IconButton size="small" href={orcidUrl} target="_blank">
@@ -228,7 +228,7 @@ export const PersonTableRow = ({
                     {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
                     {employmentsInOtherInstitutions.some(isActiveEmployment) && (
                       <div>
-                        <Typography variant="overline">{t('basic_data.person_register.other_employments')}</Typography>
+                        <Typography variant="h3">{t('basic_data.person_register.other_employments')}</Typography>
                         <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
                           {employmentsInOtherInstitutions.filter(isActiveEmployment).map((affiliation) => (
                             <li key={affiliation.organization}>
@@ -247,7 +247,7 @@ export const PersonTableRow = ({
                   ) : (
                     values.employments.length > 0 && (
                       <div>
-                        <Typography variant="overline" gutterBottom>
+                        <Typography variant="h3" gutterBottom>
                           {t('common.employments')}
                         </Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -328,7 +328,7 @@ export const PersonTableRow = ({
                             color="error"
                             variant="outlined"
                             onClick={toggleConfirmDeleteDialog}
-                            endIcon={<DeleteIcon />}>
+                            endIcon={<CancelIcon />}>
                             {t('basic_data.person_register.remove_employment')}
                           </Button>
                           {values.employments.length > 1 && (

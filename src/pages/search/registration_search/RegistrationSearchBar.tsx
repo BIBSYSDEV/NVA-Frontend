@@ -1,14 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import { Box, Button, IconButton, TextField } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import ClearIcon from '@mui/icons-material/Clear';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
-import { dataTestId } from '../../utils/dataTestIds';
-import { ExpressionStatement, PropertySearch, SearchConfig } from '../../utils/searchHelpers';
-import { AdvancedSearchRow } from './filters/AdvancedSearchRow';
+import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
+import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
+import { SearchTextField } from '../SearchTextField';
 
-export const SearchBar = () => {
+export const RegistrationSearchBar = () => {
   const { t } = useTranslation();
   const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
@@ -17,38 +16,13 @@ export const SearchBar = () => {
     <>
       <Field name="searchTerm">
         {({ field }: FieldProps<string>) => (
-          <TextField
-            sx={{ gridArea: 'searchbar' }}
+          <SearchTextField
             {...field}
-            id={field.name}
-            data-testid={dataTestId.startPage.searchField}
-            fullWidth
-            variant="outlined"
-            label={t('common.search')}
+            sx={{ gridArea: 'searchbar' }}
             placeholder={t('search.search_placeholder')}
-            InputProps={{
-              endAdornment: (
-                <>
-                  {field.value && (
-                    <IconButton
-                      onClick={() => {
-                        field.onChange({ target: { value: '', id: field.name } });
-                        submitForm();
-                      }}
-                      title={t('common.clear')}
-                      size="large">
-                      <ClearIcon />
-                    </IconButton>
-                  )}
-                  <IconButton
-                    type="submit"
-                    data-testid={dataTestId.startPage.searchButton}
-                    title={t('common.search')}
-                    size="large">
-                    <SearchIcon />
-                  </IconButton>
-                </>
-              ),
+            clearValue={() => {
+              field.onChange({ target: { value: '', id: field.name } });
+              submitForm();
             }}
           />
         )}
@@ -56,10 +30,14 @@ export const SearchBar = () => {
       <FieldArray name="properties">
         {({ push, remove }: FieldArrayRenderProps) => (
           <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {properties.map((_, index) => (
+            {properties.map((property, index) => (
               <AdvancedSearchRow
                 key={index}
-                removeFilter={() => remove(index)}
+                propertySearchItem={property}
+                removeFilter={() => {
+                  remove(index);
+                  submitForm();
+                }}
                 baseFieldName={`properties[${index}]`}
               />
             ))}

@@ -16,7 +16,7 @@ export const StyledSelectWrapper = styled(Box)(({ theme }) => ({
   },
 }));
 
-export const SyledPageContent = styled(Box)(({ theme }) => ({
+export const StyledPageContent = styled(Box)(({ theme }) => ({
   width: '100%',
   maxWidth: theme.breakpoints.values.lg,
   [theme.breakpoints.up('sm')]: {

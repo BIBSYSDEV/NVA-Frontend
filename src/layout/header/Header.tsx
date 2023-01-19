@@ -1,9 +1,9 @@
 import { useState, MouseEvent, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { AppBar, Box, Button, Divider, IconButton, Theme, Typography, useMediaQuery } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
@@ -17,10 +17,13 @@ import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
-import { setPartialUser } from '../../redux/userSlice';
+import { MenuButton } from './MenuButton';
+import { setCustomer } from '../../redux/customerReducer';
 
 export const Header = () => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const currentPath = location.pathname.replace(/\/$/, '').toLowerCase(); // Remove trailing slash
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const [customer] = useFetch<CustomerInstitution>({
@@ -29,7 +32,7 @@ export const Header = () => {
 
   useEffect(() => {
     if (customer) {
-      dispatch(setPartialUser({ customerShortName: customer.shortName }));
+      dispatch(setCustomer(customer));
     }
   }, [dispatch, customer]);
 
@@ -71,14 +74,21 @@ export const Header = () => {
           <Button
             sx={{
               gridArea: 'new-result',
-              fontSize: '1.5rem',
+              fontSize: '1rem',
+              fontWeight: 700,
+              gap: '0.5rem',
               display: { xs: 'none', md: 'inline-flex' },
+              '.MuiButton-startIcon > :nth-of-type(1)': {
+                fontSize: '1.875rem',
+              },
             }}
             color="inherit"
             component={RouterLink}
             data-testid={dataTestId.header.newRegistrationLink}
             to={UrlPathTemplate.RegistrationNew}
-            startIcon={<AddCircleIcon />}>
+            startIcon={
+              <AddIcon sx={{ color: 'white', bgcolor: 'primary.light', borderRadius: '50%', padding: '0.1rem' }} />
+            }>
             {t('registration.new_registration')}
           </Button>
         )}
@@ -99,19 +109,21 @@ export const Header = () => {
             <>
               {customer?.shortName &&
                 (user?.isEditor ? (
-                  <Button
-                    sx={{ whiteSpace: 'nowrap', borderRadius: '2rem' }}
+                  <MenuButton
+                    sx={{
+                      fontSize: '1.25rem',
+                      fontWeight: 700,
+                      textTransform: 'none',
+                    }}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
                     color="inherit"
-                    variant="outlined"
-                    size="small"
-                    component={RouterLink}
                     data-testid={dataTestId.header.editorLink}
                     to={UrlPathTemplate.Editor}>
-                    {user?.customerShortName}
-                  </Button>
+                    {customer.shortName}
+                  </MenuButton>
                 ) : (
-                  <Typography variant="button" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
-                    {user?.customerShortName}
+                  <Typography variant="h1" component="span" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
+                    {customer.shortName}
                   </Typography>
                 ))}
               <Divider
@@ -122,36 +134,34 @@ export const Header = () => {
               />
               <LanguageSelector />
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
-                <Button
-                  sx={{ whiteSpace: 'nowrap' }}
+                <MenuButton
                   color="inherit"
-                  component={RouterLink}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.BasicData)}
                   data-testid={dataTestId.header.basicDataLink}
                   to={UrlPathTemplate.BasicData}
                   startIcon={<BusinessCenterIcon />}>
                   {t('basic_data.basic_data')}
-                </Button>
+                </MenuButton>
               )}
               {user?.isCurator && (
-                <Button
+                <MenuButton
                   color="inherit"
-                  component={RouterLink}
                   data-testid={dataTestId.header.tasksLink}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
                   to={UrlPathTemplate.Tasks}
                   startIcon={<AssignmentIcon />}>
                   {t('tasks.tasks')}
-                </Button>
+                </MenuButton>
               )}
               {user && (
-                <Button
-                  sx={{ whiteSpace: 'nowrap' }}
+                <MenuButton
                   color="inherit"
-                  component={RouterLink}
                   data-testid={dataTestId.header.myPageLink}
+                  isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
                   to={UrlPathTemplate.MyPage}
                   startIcon={<FavoriteBorderIcon />}>
                   {t('my_page.my_page')}
-                </Button>
+                </MenuButton>
               )}
             </>
           )}
