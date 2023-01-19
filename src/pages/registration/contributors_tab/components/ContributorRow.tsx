@@ -18,6 +18,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CheckIcon from '@mui/icons-material/CheckCircleSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import WarningIcon from '@mui/icons-material/Warning';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { AffiliationsCell } from './AffiliationsCell';
@@ -134,10 +135,35 @@ export const ContributorRow = ({
         </Field>
       </TableCell>
       <TableCell align="center" width="1">
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {contributor.identity.id && (
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
+          {contributor.identity.id ? (
             <Tooltip title={t('registration.contributors.known_author_identity')}>
               <CheckIcon color="primary" />
+            </Tooltip>
+          ) : (
+            <Tooltip title={t('registration.contributors.verify_person')}>
+              <IconButton size="small" onClick={() => setOpenVerifyContributor(true)}>
+                <ErrorOutlineIcon color="info" />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Box>
+      </TableCell>
+      <TableCell>
+        <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
+          {contributor.identity.id ? (
+            <Typography>{contributor.identity.name}</Typography>
+          ) : (
+            <Tooltip title={t('registration.contributors.verify_person')}>
+              <Typography
+                data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
+                  contributor.identity.name
+                )}
+                component={Link}
+                onClick={() => setOpenVerifyContributor(true)}
+                sx={{ cursor: 'pointer' }}>
+                {contributor.identity.name}
+              </Typography>
             </Tooltip>
           )}
           {contributor.identity.orcId && (
@@ -148,23 +174,6 @@ export const ContributorRow = ({
             </Tooltip>
           )}
         </Box>
-      </TableCell>
-      <TableCell>
-        {contributor.identity.id ? (
-          <Typography>{contributor.identity.name}</Typography>
-        ) : (
-          <Tooltip title={t('registration.contributors.verify_person')}>
-            <Typography
-              data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
-                contributor.identity.name
-              )}
-              component={Link}
-              onClick={() => setOpenVerifyContributor(true)}
-              sx={{ cursor: 'pointer' }}>
-              {contributor.identity.name}
-            </Typography>
-          </Tooltip>
-        )}
       </TableCell>
       <TableCell sx={{ maxWidth: '25rem' }}>
         {contributor.identity && (
