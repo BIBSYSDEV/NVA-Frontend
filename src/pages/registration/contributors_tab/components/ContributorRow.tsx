@@ -99,6 +99,11 @@ export const ContributorRow = ({
           )}
         </Box>
       </TableCell>
+      <TableCell width="1">
+        <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+          <ContributorIndicator contributor={contributor} />
+        </Box>
+      </TableCell>
       <TableCell align="left" width="1">
         <Box sx={{ display: 'flex', alignItems: 'end' }}>
           {!contributorRoles.includes(contributor.role) && (
@@ -132,11 +137,6 @@ export const ContributorRow = ({
             </Tooltip>
           )}
         </Field>
-      </TableCell>
-      <TableCell width="1">
-        <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-          <ContributorIndicator contributor={contributor} />
-        </Box>
       </TableCell>
       <TableCell>
         <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
