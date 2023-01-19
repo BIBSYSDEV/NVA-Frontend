@@ -40,7 +40,7 @@ const EditRegistration = () => {
         }}>
         <LinkRegistration expanded={expanded === PanelName.Link} onChange={handleChange(PanelName.Link)} />
         <UploadRegistration expanded={expanded === PanelName.File} onChange={handleChange(PanelName.File)} />
-        <StartEmptyRegistration expanded={expanded === PanelName.Empty} onChange={handleChange(PanelName.Empty)} />
+        <StartEmptyRegistration onChange={handleChange(PanelName.Empty)} />
       </Box>
     </StyledPageContent>
   ) : (

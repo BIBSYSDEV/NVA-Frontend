@@ -27,7 +27,7 @@ interface RegistrationListItemProps {
   registration: Registration;
 }
 
-export const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
+const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
 

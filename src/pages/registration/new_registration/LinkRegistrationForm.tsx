@@ -56,7 +56,7 @@ export const LinkRegistrationForm = ({ handleSearch }: LinkRegistrationFormProps
                   sx={{ mr: '1rem' }}
                   id={field.name}
                   data-testid="new-registration-link-field"
-                  variant="outlined"
+                  variant="filled"
                   label={t('registration.registration.link_to_resource')}
                   required
                   fullWidth

@@ -1,5 +1,6 @@
 import { Box, IconButton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import PreviewIcon from '@mui/icons-material/Preview';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { CristinPerson } from '../../../types/user.types';
@@ -10,7 +11,6 @@ import { useLocation } from 'react-router-dom';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
-import { Helmet } from 'react-helmet-async';
 
 interface ResearchProfilePanelProps {
   person?: CristinPerson;
@@ -33,7 +33,7 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
       <Helmet>
         <title>{fullName}</title>
       </Helmet>
-      <BackgroundDiv sx={{ height: '100%', bgcolor: 'secondary.main', padding: '1rem' }}>
+      <BackgroundDiv sx={{ bgcolor: 'secondary.dark', height: '100%', padding: '1rem' }}>
         {isLoadingPerson ? (
           <PageSpinner aria-label={t('my_page.research_profile')} />
         ) : (
