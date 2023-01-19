@@ -511,7 +511,6 @@
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "my_research_profile": "Min forskerprofil",
       "published_registrations": "Publiserte registreringer",
       "unpublished_registrations": "Upubliserte registreringer"
     },
