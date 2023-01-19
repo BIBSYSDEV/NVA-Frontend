@@ -1,6 +1,7 @@
 import { styled, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Contributor } from '../../../types/contributor.types';
+import { getContributorInitials } from '../../../utils/registration-helpers';
 
 const StyledBaseContributorIndicator = styled('div')({
   width: '1.75rem',
@@ -33,11 +34,7 @@ interface ContributorIndicatorProps {
 
 export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps) => {
   const { t } = useTranslation();
-  const initials = contributor.identity.name
-    .split(' ')
-    .slice(0, 2)
-    .filter((name) => name.length > 0)
-    .map((name) => name[0]);
+  const initials = getContributorInitials(contributor.identity.name);
 
   const hasId = contributor.identity.id;
   const hasAffiliation = contributor.affiliations && contributor.affiliations.length > 0;
