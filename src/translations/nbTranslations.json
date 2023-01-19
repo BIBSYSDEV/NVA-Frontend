@@ -484,10 +484,8 @@
       "heading": {
         "affiliations": "Tilhørigheter",
         "personalia": "Personalia",
-        "roles": "Roller",
-        "user_info": "Brukerinformasjon"
+        "roles": "Roller"
       },
-      "id": "ID",
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
         "delete_orcid": "Fjern ORCID-kobling",
