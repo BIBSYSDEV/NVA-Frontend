@@ -74,7 +74,7 @@ interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
 
 export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
   <Button
-    sx={{ bgcolor: isSelected ? 'primary.main' : 'white', ml: '1rem', width: 'fit-content' }}
+    sx={{ bgcolor: isSelected ? 'primary.main' : 'white', mx: '1rem', width: 'fit-content' }}
     variant={isSelected ? 'contained' : 'outlined'}
     LinkComponent={Link}
     {...rest}
