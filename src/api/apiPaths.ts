@@ -15,7 +15,7 @@ export enum FileApiPath {
 export enum CristinApiPath {
   Organization = '/cristin/organization',
   Person = '/cristin/person',
-  PersonIdentityNumer = '/cristin/person/identityNumber',
+  PersonIdentityNumber = '/cristin/person/identityNumber',
   Position = '/cristin/position',
   Project = '/cristin/project',
 }

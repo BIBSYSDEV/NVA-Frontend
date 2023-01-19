@@ -1,4 +1,4 @@
-import { createTheme, SxProps } from '@mui/material';
+import { createTheme, SxProps, PaletteColorOptions } from '@mui/material';
 import { nbNO as coreNbNo, enUS as coreEnUs } from '@mui/material/locale';
 import { nbNO as pickersNbNo, enUS as pickersEnUs } from '@mui/x-date-pickers';
 import i18n from '../translations/i18n';
@@ -17,10 +17,33 @@ enum Color {
   PrimaryLight = '#0D4DAD',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
+  Registration = '#DAC48E',
+  Person = '#B3D6D9',
+  Project = '#E48F8F',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
 const pickersLocale = i18n.language === 'eng' ? pickersEnUs : pickersNbNo;
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    registration: PaletteColorOptions;
+    person: PaletteColorOptions;
+    project: PaletteColorOptions;
+  }
+  interface PaletteOptions {
+    registration?: PaletteColorOptions;
+    person?: PaletteColorOptions;
+    project?: PaletteColorOptions;
+  }
+}
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    registration: true;
+    person: true;
+    project: true;
+  }
+}
 
 export const mainTheme = createTheme(
   {
@@ -56,6 +79,15 @@ export const mainTheme = createTheme(
       },
       grey: {
         400: '#d9d9d9',
+      },
+      registration: {
+        main: Color.Registration,
+      },
+      person: {
+        main: Color.Person,
+      },
+      project: {
+        main: Color.Project,
       },
       background: {
         default: Color.White,

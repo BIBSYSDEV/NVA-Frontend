@@ -61,11 +61,11 @@
       "administrators": "Administrators",
       "archive_name": "Archive name",
       "can_assign_doi": "Institution can assign Digital Object Identifier (DOI)",
-      "doi_name": "Data Cite Member ID",
+      "display_name": "Display name for the institution",
       "doi_password": "Password",
       "doi_prefix": "DOI prefix",
+      "doi_repo_id": "Data Cite Repository ID",
       "doi_url": "URL",
-      "display_name": "Display name for the institution",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
@@ -323,12 +323,12 @@
     "select_vocabulary_description": "Activate controlled vocabularies for registration of new results",
     "vocabulary": "Vocabulary",
     "vocabulary_status": {
-      "allowed": "Allowed",
-      "allowed_description": "$t(editor.allowed): Can be added by the user",
-      "default": "Default",
-      "default_description": "$t(editor.default): Shown by default for all registrations",
-      "disabled": "Disabled",
-      "disabled_description": "$t(editor.disabled): Is not available"
+      "Allowed": "Allowed",
+      "Default": "Default",
+      "Disabled": "Disabled",
+      "allowed_description": "$t(editor.vocabulary_status.Allowed): Can be added by the user",
+      "default_description": "$t(editor.vocabulary_status.Default): Shown by default for all registrations",
+      "disabled_description": "$t(editor.vocabulary_status.Disabled): Is not available"
     }
   },
   "feedback": {
@@ -405,6 +405,7 @@
       "update_customer": "Updated customer institution",
       "update_institution_user": "Updated user",
       "update_orcid": "Successfully updated ORCID",
+      "update_person": "Successfully updated person",
       "update_publish_strategy": "Updated publish strategy",
       "update_registration": "Updated registration",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"
@@ -482,12 +483,14 @@
     "my_profile": {
       "heading": {
         "affiliations": "Affiliations",
+        "personalia": "Personalia",
         "roles": "Roles",
         "user_info": "User information"
       },
       "id": "ID",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
+        "delete_orcid": "Remove ORCID connection",
         "dialog": {
           "heading": "Connect or create ORCID iD",
           "paragraph0": "Sign in to ORCID or register to create an account.",
@@ -497,12 +500,15 @@
         "remove_connection": "Remove connection to ORCID",
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
       },
-      "user_profile": "User profile",
+      "preferred_first_name": "Preferred first name",
+      "preferred_last_name": "Preferred last name",
       "research_profile_summary": {
+        "affiliations": "Affiliations",
         "preview": "Preview",
-        "research_profile": "Research profile",
-        "affiliations": "Affiliations"
-      }
+        "research_profile": "Research profile"
+      },
+      "user_profile": "User profile",
+      "user_profile_description": "Here you can fill in and mark what you want to appear on your official researcher profile."
     },
     "registrations": {
       "delete_registration": "Delete unpublished registration",
@@ -839,8 +845,6 @@
       "add_self_as_contributor": "Add me as contributor",
       "add_unverified_contributor": "Add a non-verified contributor.",
       "authors": "Authors",
-      "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
-      "confirm_remove_affiliation_title": "Remove affiliation?",
       "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}}?",
       "confirmed": "Confirmed",
       "contributor": "Contributor",
@@ -981,6 +985,28 @@
     "new_registration": "New registration",
     "public_page": {
       "about_registration": "About this registration",
+      "approve_publish_request": "Approve publishing request",
+      "error_description": "To publish you must fix the following errors:",
+      "find_in_channel_registry": "Find in the Norwegian register for publishers",
+      "go_back_to_wizard": "Go back to form",
+      "handle": "Handle",
+      "in_progress": "In progress",
+      "message_to_curator": "Message to curator",
+      "other_contributors_one": "(+{{count}} other)",
+      "other_contributors_other": "(+{{count}} others)",
+      "other_related_registrations": "Other related registrations",
+      "participants_one": "{{count}} participant",
+      "participants_other": "{{count}} participants",
+      "preview_of": "Preview of {{fileName}}",
+      "preview_unavailable": "Preview not available. Open file in suited program.",
+      "published": "Published",
+      "published_date": "Published: {{date}}",
+      "publishing_request": "Publishing request",
+      "reject_publish_request": "Reject publishing request",
+      "request_doi": "Request a DOI",
+      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
+      "reserve_doi": "Reserve a DOI",
+      "reserved_doi": "Reserved DOI",
       "tasks_panel": {
         "has_doi_request": "Registration has a DOI request for approval to curator.",
         "has_rejected_doi_request": "Registration has a rejected DOI request.",
@@ -997,29 +1023,8 @@
         "waiting_for_reserved_doi": "It can take some time before the reserved DOI is displayed. Reload to check again.",
         "you_can_publish_everything": "You can publish on your own. The content will then be visible to other users.",
         "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the uploaded files before they can be shown to other users.",
-        "you_can_publish_metadata_after_curator_approval": "A curaotr must approve the content before it can be published and visible for other users."
+        "you_can_publish_metadata_after_curator_approval": "A curator must approve the content before it can be published and visible for other users."
       },
-      "approve_publish_request": "Approve publishing request",
-      "error_description": "To publish you must fix the following errors:",
-      "find_in_channel_registry": "Find in the Norwegian register for publishers",
-      "go_back_to_wizard": "Go back to form",
-      "in_progress": "In progress",
-      "message_to_curator": "Message to curator",
-      "other_contributors_one": "(+{{count}} other)",
-      "other_contributors_other": "(+{{count}} others)",
-      "other_related_registrations": "Other related registrations",
-      "participants_one": "{{count}} participant",
-      "participants_other": "{{count}} participants",
-      "preview_of": "Preview of {{fileName}}",
-      "preview_unavailable": "Preview not available. Open file in suited program.",
-      "published": "Published",
-      "published_date": "Published: {{date}}",
-      "publishing_request": "Publishing request",
-      "reject_publish_request": "Reject publishing request",
-      "reserved_doi": "Reserved DOI",
-      "request_doi": "Request a DOI",
-      "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
-      "reserve_doi": "Reserve a DOI",
       "validation_errors": "Validation errors"
     },
     "publication_types": {
@@ -1387,12 +1392,15 @@
       "DRAFT": "Draft",
       "DRAFT_FOR_DELETION": "Deleted",
       "NEW": "New",
-      "PUBLISHED": "Published"
+      "PUBLISHED": "Published",
+      "PUBLISHED_METADATA": "Published metadata"
     },
     "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
     "year_published": "Year published"
   },
   "search": {
+    "additional_participants_one": "+{{count}} participant",
+    "additional_participants_other": "+{{count}} participants",
     "add_filter": "Add filter",
     "contains": "Contains",
     "field_label": "Field",
@@ -1400,14 +1408,18 @@
     "hits_other": "{{count}} hits",
     "not_containing": "Doesn't include",
     "operator": "Operator",
+    "persons": "Persons",
+    "person_search_placeholder": "Search for name",
+    "project_search_placeholder": "Search for title",
     "remove_filter": "Remove filter",
+    "result": "Result",
+    "search_filter": "Search filter",
     "search_placeholder": "Search for title, contributor, abstract, etc.",
     "search_term_label": "Value",
     "sort_by": "Order by",
     "sort_by_modified_date": "Last modified",
     "sort_by_published_date_asc": "Published date (oldest first)",
-    "sort_by_published_date_desc": "Published date (newest first)",
-    "title_and_contributors": "Title and contributors"
+    "sort_by_published_date_desc": "Published date (newest first)"
   },
   "tasks": {
     "limited_to": "Limited to: \"{{name}}\"",

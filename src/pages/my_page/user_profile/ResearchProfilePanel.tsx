@@ -1,10 +1,8 @@
 import { Box, IconButton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 import PreviewIcon from '@mui/icons-material/Preview';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
-import { useFetch } from '../../../utils/hooks/useFetch';
 import { CristinPerson } from '../../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
 import { AccountCircle } from '@mui/icons-material';
@@ -13,22 +11,15 @@ import { useLocation } from 'react-router-dom';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
-import { Helmet } from 'react-helmet-async';
 
-export const ResearchProfilePanel = () => {
+interface ResearchProfilePanelProps {
+  person?: CristinPerson;
+  isLoadingPerson: boolean;
+}
+
+export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfilePanelProps) => {
   const { t } = useTranslation();
   const location = useLocation();
-
-  const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
-  const isPublicPage = location.pathname === UrlPathTemplate.ResearchProfile;
-  const personId = isPublicPage
-    ? new URLSearchParams(location.search).get('id') ?? '' // Page for Research Profile of anyone
-    : currentCristinId; // Page for My Research Profile
-
-  const [person, isLoadingPerson] = useFetch<CristinPerson>({
-    url: personId,
-    errorMessage: t('feedback.error.get_person'),
-  });
 
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);

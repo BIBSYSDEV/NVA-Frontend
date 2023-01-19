@@ -19,7 +19,14 @@ export const getValueByKey = (
 export const getFullCristinName = (names: CristinArrayValue[] = []) => {
   const firstName = getValueByKey('FirstName', names);
   const lastName = getValueByKey('LastName', names);
-  return [firstName, lastName].filter((name) => !!name).join(' ');
+  const preferredFirstName = getValueByKey('PreferredFirstName', names);
+  const preferredLastName = getValueByKey('PreferredLastName', names);
+
+  if (preferredFirstName || preferredLastName) {
+    return `${preferredFirstName} ${preferredLastName}`.trim();
+  } else {
+    return `${firstName} ${lastName}`.trim();
+  }
 };
 
 export const filterActiveAffiliations = (affiliations: CristinPersonAffiliation[] = []) =>
@@ -53,6 +60,8 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
   nationalId: getValueByKey('NationalIdentificationNumber', user.identifiers),
   firstName: getValueByKey('FirstName', user.names),
   lastName: getValueByKey('LastName', user.names),
+  preferredFirstName: getValueByKey('PreferredFirstName', user.names),
+  preferredLastName: getValueByKey('PreferredLastName', user.names),
   id: user.id,
   cristinIdentifier: getValueByKey('CristinIdentifier', user.identifiers),
   affiliations: user.affiliations,

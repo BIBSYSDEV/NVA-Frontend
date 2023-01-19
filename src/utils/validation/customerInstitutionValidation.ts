@@ -19,7 +19,7 @@ const customerErrorMessage = {
   }),
   rorInvalid: i18n.t('translation:basic_data.institutions.invalid_ror_format'),
   doiNameRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:basic_data.institutions.doi_name'),
+    field: i18n.t('translation:basic_data.institutions.doi_repo_id'),
   }),
   doiPrefixInvalid: i18n.t('translation:basic_data.institutions.invalid_doi_prefix'),
   doiPrefixRequired: i18n.t('translation:feedback.validation.is_required', {

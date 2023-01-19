@@ -1,4 +1,4 @@
-import { registrationFilters } from '../pages/search/filters/AdvancedSearchRow';
+import { registrationFilters } from '../pages/search/registration_search/filters/AdvancedSearchRow';
 
 export enum SearchParam {
   From = 'from',
@@ -6,6 +6,9 @@ export enum SearchParam {
   Query = 'query',
   Results = 'results',
   SortOrder = 'sortOrder',
+  Type = 'type',
+  Page = 'page',
+  Name = 'name',
 }
 
 export enum ExpressionStatement {
@@ -22,6 +25,11 @@ export interface SearchConfig {
   searchTerm?: string;
   properties?: PropertySearch[];
 }
+
+export const emptySearchConfig: SearchConfig = {
+  searchTerm: '',
+  properties: [],
+};
 
 // Since these Operators will be used in joins they must be enclosed by whitespaces
 enum Operator {
@@ -67,7 +75,7 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
   return propertyFilter;
 };
 
-export const createSearchQuery = (searchConfig: SearchConfig) => {
+export const createRegistrationSearchQuery = (searchConfig: SearchConfig) => {
   const textSearch = formatValue(searchConfig.searchTerm);
   const propertySearch = createPropertyFilter(searchConfig.properties);
 

@@ -34,7 +34,7 @@ export const emptyMediaContributionPublicationContext: MediaContributionPublicat
   disseminationChannel: '',
   partOf: {
     type: 'SeriesEpisode',
-    series: '',
+    seriesName: '',
     seriesPart: '',
   },
 };
@@ -62,7 +62,7 @@ export interface MediaContributionPublicationContext {
   disseminationChannel: string;
   partOf?: {
     type: 'SeriesEpisode';
-    series: string;
+    seriesName: string;
     seriesPart: string;
   };
 }

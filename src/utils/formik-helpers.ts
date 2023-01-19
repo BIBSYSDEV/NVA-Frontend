@@ -295,7 +295,7 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
               medium: { type: true },
               disseminationChannel: true,
               partOf: {
-                series: true,
+                seriesName: true,
                 seriesPart: true,
               },
             },
