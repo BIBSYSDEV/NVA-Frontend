@@ -15,10 +15,8 @@ import {
 import { useTranslation } from 'react-i18next';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import CheckIcon from '@mui/icons-material/CheckCircleSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import WarningIcon from '@mui/icons-material/Warning';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { AffiliationsCell } from './AffiliationsCell';
@@ -27,6 +25,7 @@ import { AddContributorModal } from '../AddContributorModal';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { CristinPerson } from '../../../../types/user.types';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
+import { ContributorIndicator } from '../ContributorIndicator';
 
 interface ContributorRowProps {
   contributor: Contributor;
@@ -134,19 +133,9 @@ export const ContributorRow = ({
           )}
         </Field>
       </TableCell>
-      <TableCell align="center" width="1">
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-          {contributor.identity.id ? (
-            <Tooltip title={t('registration.contributors.known_author_identity')}>
-              <CheckIcon color="primary" />
-            </Tooltip>
-          ) : (
-            <Tooltip title={t('registration.contributors.verify_person')}>
-              <IconButton size="small" onClick={() => setOpenVerifyContributor(true)}>
-                <ErrorOutlineIcon color="info" />
-              </IconButton>
-            </Tooltip>
-          )}
+      <TableCell width="1">
+        <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+          <ContributorIndicator contributor={contributor} />
         </Box>
       </TableCell>
       <TableCell>

@@ -79,6 +79,7 @@ export const mainTheme = createTheme(
       },
       grey: {
         400: '#d9d9d9',
+        500: '#A1A1A1',
       },
       registration: {
         main: Color.Registration,

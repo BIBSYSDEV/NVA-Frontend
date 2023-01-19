@@ -849,8 +849,12 @@
       "contributor_not_found": "Cannot find contributor",
       "corresponding": "Corresponding",
       "department": "Department",
+      "identity_status": {
+        "confirmed_identity": "Confirmed identity",
+        "confirmed_identity_without_affiliation": "Confirmed identity without affiliation",
+        "unknown_identity": "Unknown identity"
+      },
       "invalid_role": "The contributor must have a role that is valid for this resource type to be displayed for other users",
-      "known_author_identity": "Connected author identity",
       "must_select_type_first": "You must select resource type before you can add contributors.",
       "no_affiliations_found": "No affiliations found",
       "no_registrations_found": "No registrations found",
