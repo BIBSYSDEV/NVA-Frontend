@@ -18,6 +18,7 @@ import { updateCristinPerson } from '../../../api/userApi';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { UserIdentities } from './UserIdentities';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
@@ -146,6 +147,7 @@ export const MyProfile = () => {
             )}
           </Box>
         </BackgroundDiv>
+        <UserIdentities user={user} />
         <Box sx={{ gridArea: 'research-profile' }}>
           <ResearchProfilePanel person={person} isLoadingPerson={isLoadingPerson} />
         </Box>
