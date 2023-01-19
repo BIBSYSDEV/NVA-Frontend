@@ -484,10 +484,8 @@
       "heading": {
         "affiliations": "Affiliations",
         "personalia": "Personalia",
-        "roles": "Roles",
-        "user_info": "User information"
+        "roles": "Roles"
       },
-      "id": "ID",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
         "delete_orcid": "Remove ORCID connection",
