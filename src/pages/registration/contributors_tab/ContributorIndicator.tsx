@@ -41,7 +41,6 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
 
   const verifiedContributor = hasId && hasAffiliation;
   const verifiedContributorWithoutAffiliation = hasId && !hasAffiliation;
-  const unknownContributor = !hasId;
 
   return verifiedContributor ? (
     <Tooltip title={t('registration.contributors.identity_status.confirmed_identity')}>
@@ -51,9 +50,9 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
     <Tooltip title={t('registration.contributors.identity_status.confirmed_identity_without_affiliation')}>
       <StyledVerifiedContributorWithoutAffiliation>{initials}</StyledVerifiedContributorWithoutAffiliation>
     </Tooltip>
-  ) : unknownContributor ? (
+  ) : (
     <Tooltip title={t('registration.contributors.identity_status.unknown_identity')}>
       <StyledUnknownContributor>{initials}</StyledUnknownContributor>
     </Tooltip>
-  ) : null;
+  );
 };
