@@ -32,7 +32,7 @@ const StyledSideMenuHeader = styled(StyledPaperHeader)({
   padding: '0.5rem',
 });
 
-export const SidePanel = (props: BoxProps) => <Box component="section" sx={{ bgcolor: 'secondary.dark' }} {...props} />;
+export const SidePanel = (props: BoxProps) => <Box component="section" sx={{ bgcolor: 'secondary.main' }} {...props} />;
 
 interface SideNavHeaderProps {
   icon?: SvgIconComponent;

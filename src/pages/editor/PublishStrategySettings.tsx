@@ -11,6 +11,7 @@ import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { setNotification } from '../../redux/notificationSlice';
 import { setCustomer } from '../../redux/customerReducer';
+import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledItemContainer = styled('div')({
   display: 'grid',
@@ -80,6 +81,7 @@ export const PublishStrategySettings = () => {
           <PublishStrategyButton
             disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
             isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
+            data-testid={dataTestId.editor.workflowRegistratorPublishesAll}
             onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
@@ -109,6 +111,7 @@ export const PublishStrategySettings = () => {
           <PublishStrategyButton
             disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
             isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
+            data-testid={dataTestId.editor.workflowRegistratorPublishesMetadata}
             onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
@@ -138,6 +141,7 @@ export const PublishStrategySettings = () => {
           <PublishStrategyButton
             disabled={!!isUpdating || currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
             isSelected={!isUpdating && currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
+            data-testid={dataTestId.editor.workflowRegistratorRequiresApproval}
             onClick={() => setPublicationWorkflow('RegistratorRequiresApprovalForMetadataAndFiles')}>
             <Box>
               <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>

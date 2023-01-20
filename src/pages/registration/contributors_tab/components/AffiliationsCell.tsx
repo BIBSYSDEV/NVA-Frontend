@@ -108,7 +108,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
           )}
           <Tooltip title={t('registration.contributors.remove_affiliation')}>
             <IconButton
-              color="error"
+              color="primary"
               size="small"
               data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
               onClick={() =>

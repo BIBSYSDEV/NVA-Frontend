@@ -500,3 +500,11 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
+
+export const getContributorInitials = (name: string) => {
+  const splittedNames = name.split(' ');
+  const firstNameInitial = splittedNames[0][0];
+  const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
+  const initials = `${firstNameInitial}${lastNameInitial}`;
+  return initials;
+};

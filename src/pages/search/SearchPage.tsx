@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SubjectIcon from '@mui/icons-material/Subject';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
@@ -161,7 +161,7 @@ const SearchPage = () => {
                   <Divider />
                   <Box sx={{ m: '0.5rem 1rem', display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h2">{t('search.search_filter')}</Typography>
-                    <FilterAltIcon />
+                    <FilterAltOutlined />
                   </Box>
                   <Divider />
                   <Box

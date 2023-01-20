@@ -56,6 +56,9 @@ export const dataTestId = {
     vocabularyLinkButton: 'vocabulary-link-button',
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',
     hrcsCategoryButtonGroup: 'hrcs-category-button-group',
+    workflowRegistratorPublishesAll: 'workflow-registrator-publishes-all',
+    workflowRegistratorPublishesMetadata: 'workflow-registrator-publishes-metadata',
+    workflowRegistratorRequiresApproval: 'workflow-registrator-requires-approval',
   },
   header: {
     aboutLink: 'about-link',

@@ -96,7 +96,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
             <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
             <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
             <RequiredDescription />
-            <BackgroundDiv sx={{ bgcolor: 'secondary.dark' }}>
+            <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
               <Box id="form" mb="2rem">
                 {tabNumber === RegistrationTab.Description && (
                   <ErrorBoundary>
