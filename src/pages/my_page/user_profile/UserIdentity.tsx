@@ -82,11 +82,12 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
         <Box>
           <Box
             sx={{
-              backgroundColor: 'white',
+              backgroundColor: 'background.default',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.5rem',
               p: '1rem',
+              borderRadius: '4px',
             }}>
             <UserRoles user={user} />
           </Box>
