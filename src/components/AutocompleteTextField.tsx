@@ -16,6 +16,7 @@ export const AutocompleteTextField = ({
   ...params
 }: AutocompleteTextFieldProps) => (
   <TextField
+    type="search"
     {...params}
     variant="filled"
     fullWidth

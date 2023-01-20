@@ -66,6 +66,7 @@ export const PositionField = ({
           loading={isLoadingPositions}
           renderInput={(params) => (
             <TextField
+              type="search"
               {...field}
               {...params}
               required
