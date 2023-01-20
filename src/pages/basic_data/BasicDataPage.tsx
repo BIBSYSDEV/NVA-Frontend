@@ -26,6 +26,7 @@ import {
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { Divider } from '@mui/material';
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
@@ -68,6 +69,7 @@ const BasicDataPage = () => {
                 icon={<PersonAddIcon />}
               />
             </LinkButtonRow>,
+            <Divider key="divider1" />,
           ]}
           {user?.isAppAdmin && [
             <BetaFunctionality key={dataTestId.basicData.centralImportLink}>
@@ -94,6 +96,7 @@ const BasicDataPage = () => {
                 icon={<AddBusinessIcon />}
               />
             </LinkButtonRow>,
+            <Divider key="divider2" />,
           ]}
         </NavigationList>
       </SidePanel>
