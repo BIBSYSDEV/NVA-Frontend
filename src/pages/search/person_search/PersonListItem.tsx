@@ -20,7 +20,7 @@ export const PersonListItem = ({ person }: PersonListItemProps) => {
     <ListItem
       sx={{
         border: '2px solid',
-        borderColor: '#D3C9AF',
+        borderColor: 'secondary.dark',
         borderLeft: '1.25rem solid',
         borderLeftColor: 'person.main',
         flexDirection: 'column',

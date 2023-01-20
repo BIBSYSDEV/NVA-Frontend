@@ -8,9 +8,9 @@ enum Color {
   Black = '#222',
   ErrorMain = '#AC0303',
   PrimaryMain = '#0F0035',
-  SecondaryLight = '#FEFBF3',
-  SecondaryMain = '#F9F4E6',
-  SecondaryDark = '#EDE2C7',
+  SecondaryLight = '#F9F4E6',
+  SecondaryMain = '#EDE2C7',
+  SecondaryDark = '#D3C9AF',
   SuccessMain = '#025810',
   InfoMain = '#4367F6',
   InfoLight = '#C2D3EA',
@@ -91,7 +91,7 @@ export const mainTheme = createTheme(
       },
       background: {
         default: Color.White,
-        paper: Color.SecondaryMain,
+        paper: Color.SecondaryLight,
       },
     },
     typography: {
@@ -283,9 +283,9 @@ export const mainTheme = createTheme(
 
 export const alternatingTableRowColor: SxProps = {
   tr: {
-    bgcolor: 'secondary.main',
+    bgcolor: 'secondary.light',
     '&:nth-of-type(odd)': {
-      bgcolor: 'secondary.light',
+      bgcolor: '#FEFBF3',
     },
   },
 };
