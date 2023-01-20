@@ -32,7 +32,9 @@ const StyledSideMenuHeader = styled(StyledPaperHeader)({
   padding: '0.5rem',
 });
 
-export const SidePanel = (props: BoxProps) => <Box component="section" sx={{ bgcolor: 'secondary.main' }} {...props} />;
+export const SidePanel = (props: BoxProps) => (
+  <Box component="section" sx={{ bgcolor: 'secondary.main', minWidth: '20rem' }} {...props} />
+);
 
 interface SideNavHeaderProps {
   icon?: SvgIconComponent;
@@ -74,7 +76,7 @@ interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
 
 export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
   <Button
-    sx={{ bgcolor: isSelected ? 'primary.main' : 'white', mx: '1rem', width: 'fit-content' }}
+    sx={{ bgcolor: isSelected ? 'primary.main' : 'white', ml: '1rem', width: 'fit-content' }}
     variant={isSelected ? 'contained' : 'outlined'}
     LinkComponent={Link}
     {...rest}
