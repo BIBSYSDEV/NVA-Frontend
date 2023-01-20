@@ -124,7 +124,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
               {currentOrcid}
             </Typography>
             <IconButton
-              color="error"
+              color="primary"
               data-testid="button-confirm-delete-orcid"
               onClick={toggleConfirmDialog}
               title={t('my_page.my_profile.orcid.delete_orcid')}>
