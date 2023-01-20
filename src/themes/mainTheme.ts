@@ -12,7 +12,7 @@ enum Color {
   SecondaryMain = '#F9F4E6',
   SecondaryDark = '#EDE2C7',
   SuccessMain = '#025810',
-  InfoMain = '#4367F6',
+  InfoMain = '#0B408F',
   InfoLight = '#C2D3EA',
   PrimaryLight = '#0D4DAD',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
@@ -79,6 +79,7 @@ export const mainTheme = createTheme(
       },
       grey: {
         400: '#d9d9d9',
+        500: '#A1A1A1',
       },
       registration: {
         main: Color.Registration,
