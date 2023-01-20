@@ -119,6 +119,7 @@ const SearchPage = () => {
                   sx={{
                     width: 'fit-content',
                     color: 'common.black',
+                    bgcolor: resultIsSelected ? 'primary' : 'white',
                     borderColor: 'registration.main',
                   }}
                   startIcon={<SubjectIcon />}>
@@ -135,7 +136,12 @@ const SearchPage = () => {
                     }
                   }}
                   color="person"
-                  sx={{ width: 'fit-content', color: 'common.black', borderColor: 'person.main' }}
+                  sx={{
+                    width: 'fit-content',
+                    color: 'common.black',
+                    bgcolor: personIsSeleced ? 'primary' : 'white',
+                    borderColor: 'person.main',
+                  }}
                   startIcon={<PersonIcon />}>
                   {t('search.persons')}
                 </Button>
@@ -150,7 +156,12 @@ const SearchPage = () => {
                     }
                   }}
                   color="project"
-                  sx={{ width: 'fit-content', color: 'common.black', borderColor: 'project.main' }}
+                  sx={{
+                    width: 'fit-content',
+                    color: 'common.black',
+                    bgcolor: projectIsSelected ? 'primary' : 'white',
+                    borderColor: 'project.main',
+                  }}
                   startIcon={<ShowChartIcon />}>
                   {t('project.project')}
                 </Button>
