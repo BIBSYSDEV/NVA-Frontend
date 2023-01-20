@@ -119,7 +119,7 @@ const SearchPage = () => {
                   sx={{
                     width: 'fit-content',
                     color: 'common.black',
-                    bgcolor: resultIsSelected ? 'primary' : 'white',
+                    bgcolor: resultIsSelected ? 'primary' : 'background.default',
                     borderColor: 'registration.main',
                   }}
                   startIcon={<SubjectIcon />}>
@@ -139,7 +139,7 @@ const SearchPage = () => {
                   sx={{
                     width: 'fit-content',
                     color: 'common.black',
-                    bgcolor: personIsSeleced ? 'primary' : 'white',
+                    bgcolor: personIsSeleced ? 'primary' : 'background.default',
                     borderColor: 'person.main',
                   }}
                   startIcon={<PersonIcon />}>
