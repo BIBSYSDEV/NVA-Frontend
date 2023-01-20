@@ -77,15 +77,12 @@ const RoleItem = ({ dataTestId, label, text }: IconLabelTextLineProps) => (
   <Box
     data-testid={dataTestId}
     sx={{
-      bgcolor: '#d3c9af',
+      bgcolor: 'secondary.dark',
       p: '0.5rem',
       display: 'grid',
       gridTemplateAreas: "'role label' 'text text'",
       gridTemplateColumns: 'auto 1fr',
-      borderBottom: '1px solid',
-      '&:first-of-type': {
-        borderTop: '1px solid',
-      },
+      borderRadius: '4px',
     }}>
     <Typography component="h3" variant="body1" sx={{ gridArea: 'label', fontWeight: 'bold' }}>
       {label}
