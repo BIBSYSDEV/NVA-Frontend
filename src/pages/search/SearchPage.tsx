@@ -119,7 +119,7 @@ const SearchPage = () => {
                   sx={{
                     width: 'fit-content',
                     color: 'common.black',
-                    bgcolor: resultIsSelected ? 'primary' : 'background.default',
+                    bgcolor: resultIsSelected ? undefined : 'background.default',
                     borderColor: 'registration.main',
                   }}
                   startIcon={<SubjectIcon />}>
@@ -139,7 +139,7 @@ const SearchPage = () => {
                   sx={{
                     width: 'fit-content',
                     color: 'common.black',
-                    bgcolor: personIsSeleced ? 'primary' : 'background.default',
+                    bgcolor: personIsSeleced ? undefined : 'background.default',
                     borderColor: 'person.main',
                   }}
                   startIcon={<PersonIcon />}>
@@ -159,7 +159,7 @@ const SearchPage = () => {
                   sx={{
                     width: 'fit-content',
                     color: 'common.black',
-                    bgcolor: projectIsSelected ? 'primary' : 'background.default',
+                    bgcolor: projectIsSelected ? undefined : 'background.default',
                     borderColor: 'project.main',
                   }}
                   startIcon={<ShowChartIcon />}>
