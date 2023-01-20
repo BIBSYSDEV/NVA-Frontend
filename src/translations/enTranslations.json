@@ -62,9 +62,9 @@
       "archive_name": "Archive name",
       "can_assign_doi": "Institution can assign Digital Object Identifier (DOI)",
       "display_name": "Display name for the institution",
-      "doi_name": "Data Cite Member ID",
       "doi_password": "Password",
       "doi_prefix": "DOI prefix",
+      "doi_repo_id": "Data Cite Repository ID",
       "doi_url": "URL",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Organization domain in Feide",
@@ -484,10 +484,8 @@
       "heading": {
         "affiliations": "Affiliations",
         "personalia": "Personalia",
-        "roles": "Roles",
-        "user_info": "User information"
+        "roles": "Roles"
       },
-      "id": "ID",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
         "delete_orcid": "Remove ORCID connection",
@@ -513,7 +511,6 @@
     "registrations": {
       "delete_registration": "Delete unpublished registration",
       "delete_registration_message": "Do you want to delete \"{{title}}\"?",
-      "my_research_profile": "My research profile",
       "published_registrations": "Published registrations",
       "unpublished_registrations": "Unpublished registrations"
     },
@@ -845,8 +842,6 @@
       "add_self_as_contributor": "Add me as contributor",
       "add_unverified_contributor": "Add a non-verified contributor.",
       "authors": "Authors",
-      "confirm_remove_affiliation_text": "Are you sure you want to remove this affiliation?",
-      "confirm_remove_affiliation_title": "Remove affiliation?",
       "confirm_remove_author_text": "Are you sure you want to remove {{contributorName}}?",
       "confirmed": "Confirmed",
       "contributor": "Contributor",
@@ -854,8 +849,12 @@
       "contributor_not_found": "Cannot find contributor",
       "corresponding": "Corresponding",
       "department": "Department",
+      "identity_status": {
+        "confirmed_identity": "Confirmed identity",
+        "confirmed_identity_without_affiliation": "Confirmed identity without affiliation",
+        "unknown_identity": "Unknown identity"
+      },
       "invalid_role": "The contributor must have a role that is valid for this resource type to be displayed for other users",
-      "known_author_identity": "Connected author identity",
       "must_select_type_first": "You must select resource type before you can add contributors.",
       "no_affiliations_found": "No affiliations found",
       "no_registrations_found": "No registrations found",
@@ -1401,17 +1400,17 @@
     "year_published": "Year published"
   },
   "search": {
+    "add_filter": "Add filter",
     "additional_participants_one": "+{{count}} participant",
     "additional_participants_other": "+{{count}} participants",
-    "add_filter": "Add filter",
     "contains": "Contains",
     "field_label": "Field",
     "hits_one": "{{count}} hit",
     "hits_other": "{{count}} hits",
     "not_containing": "Doesn't include",
     "operator": "Operator",
-    "persons": "Persons",
     "person_search_placeholder": "Search for name",
+    "persons": "Persons",
     "project_search_placeholder": "Search for title",
     "remove_filter": "Remove filter",
     "result": "Result",

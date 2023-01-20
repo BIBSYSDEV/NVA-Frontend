@@ -27,7 +27,7 @@ interface RegistrationListItemProps {
   registration: Registration;
 }
 
-export const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
+const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
 
@@ -39,8 +39,9 @@ export const RegistrationListItem = ({ registration }: RegistrationListItemProps
     <ListItem
       sx={{
         border: '2px solid',
+        borderColor: 'secondary.dark',
         borderLeft: '1.25rem solid',
-        borderColor: 'registration.main',
+        borderLeftColor: 'registration.main',
       }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.main' }}>

@@ -62,9 +62,9 @@
       "archive_name": "Arkivnavn",
       "can_assign_doi": "Institusjonen kan tildele Digital Object Identifier (DOI)",
       "display_name": "Visningsnavn på institusjonen",
-      "doi_name": "Data Cite Member ID",
       "doi_password": "Passord",
       "doi_prefix": "DOI prefiks",
+      "doi_repo_id": "Data Cite Repository ID",
       "doi_url": "URL",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Organisasjonens domene i Feide",
@@ -484,10 +484,8 @@
       "heading": {
         "affiliations": "Tilhørigheter",
         "personalia": "Personalia",
-        "roles": "Roller",
-        "user_info": "Brukerinformasjon"
+        "roles": "Roller"
       },
-      "id": "ID",
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
         "delete_orcid": "Fjern ORCID-kobling",
@@ -513,7 +511,6 @@
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "my_research_profile": "Min forskerprofil",
       "published_registrations": "Publiserte registreringer",
       "unpublished_registrations": "Upubliserte registreringer"
     },
@@ -845,8 +842,6 @@
       "add_self_as_contributor": "Legg meg til som bidragsyter",
       "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
       "authors": "Forfattere",
-      "confirm_remove_affiliation_text": "Er du sikker på at du ønsker å fjerne denne tilhørigheten?",
-      "confirm_remove_affiliation_title": "Fjerne tilhørighet?",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "confirmed": "Bekreftet",
       "contributor": "Bidragsyter",
@@ -854,8 +849,12 @@
       "contributor_not_found": "Finner ikke bidragsyter",
       "corresponding": "Korresponderende",
       "department": "Enhet",
+      "identity_status": {
+        "confirmed_identity": "Bekreftet identitet",
+        "confirmed_identity_without_affiliation": "Bekreftet identitet uten tilhørighet",
+        "unknown_identity": "Ukjent identitet"
+      },
       "invalid_role": "Bidragsyteren må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
-      "known_author_identity": "Har tilknyttet forfatteridentitet",
       "must_select_type_first": "Du må velge ressurstype før du kan legge til bidragsytere.",
       "no_affiliations_found": "Ingen tilhørigheter funnet",
       "no_registrations_found": "Ingen registreringer funnet",
@@ -1401,17 +1400,17 @@
     "year_published": "Publiseringsår"
   },
   "search": {
+    "add_filter": "Legg til filter",
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
-    "add_filter": "Legg til filter",
     "contains": "Inneholder",
     "field_label": "Felt",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
     "not_containing": "Inneholder ikke",
     "operator": "Operator",
-    "persons": "Personer",
     "person_search_placeholder": "Søk etter navn",
+    "persons": "Personer",
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "result": "Resultat",

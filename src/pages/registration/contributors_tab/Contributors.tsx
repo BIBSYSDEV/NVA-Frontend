@@ -181,13 +181,13 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
             <TableHead>
               <TableRow>
                 <TableCell>{t('common.order')}</TableCell>
+                <TableCell>{t('registration.contributors.confirmed')}</TableCell>
                 <TableCell>{t('common.role')}</TableCell>
                 <TableCell align="center">
                   <Tooltip title={t('registration.contributors.corresponding')}>
                     <MailOutlineIcon />
                   </Tooltip>
                 </TableCell>
-                <TableCell>{t('registration.contributors.confirmed')}</TableCell>
                 <TableCell>{t('common.name')}</TableCell>
                 <TableCell>{t('common.institution')}</TableCell>
                 <TableCell>{t('common.remove')}</TableCell>

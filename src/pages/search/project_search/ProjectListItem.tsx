@@ -22,8 +22,9 @@ export const ProjectListItem = ({ project }: ProjectListItemProps) => {
     <ListItem
       sx={{
         border: '2px solid',
+        borderColor: 'secondary.dark',
         borderLeft: '1.25rem solid',
-        borderColor: 'project.main',
+        borderLeftColor: 'project.main',
         flexDirection: 'column',
         alignItems: 'start',
       }}>

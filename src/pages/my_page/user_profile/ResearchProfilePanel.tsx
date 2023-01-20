@@ -33,7 +33,7 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
       <Helmet>
         <title>{fullName}</title>
       </Helmet>
-      <BackgroundDiv sx={{ height: '100%', bgcolor: 'secondary.main', padding: '1rem' }}>
+      <BackgroundDiv sx={{ bgcolor: 'secondary.main', height: '100%', padding: '1rem' }}>
         {isLoadingPerson ? (
           <PageSpinner aria-label={t('my_page.research_profile')} />
         ) : (

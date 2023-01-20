@@ -455,7 +455,7 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
     case 'MusicScore':
       return (item as MusicScore).publisher.name;
     case 'AudioVisualPublication':
-      return (item as AudioVisualPublication).publisher;
+      return (item as AudioVisualPublication).publisher.name;
     case 'Concert':
       return (item as Concert).place.label;
     case 'OtherPerformance':
@@ -500,3 +500,11 @@ export const getAssociatedFiles = (associatedArtifacts: AssociatedArtifact[]) =>
 
 export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
+
+export const getContributorInitials = (name: string) => {
+  const splittedNames = name.split(' ');
+  const firstNameInitial = splittedNames[0][0];
+  const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
+  const initials = `${firstNameInitial}${lastNameInitial}`;
+  return initials;
+};

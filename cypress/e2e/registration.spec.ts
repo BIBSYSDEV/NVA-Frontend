@@ -35,7 +35,7 @@ describe('Registration', () => {
 
     cy.mockFileUpload();
 
-    cy.fixture('img.jpg').as('file')
+    cy.fixture('img.jpg').as('file');
     cy.get('input[type=file]').first().selectFile('@file', { force: true });
     cy.get('[data-testid=uploaded-file]').should('be.visible');
 
@@ -51,7 +51,6 @@ describe('Registration', () => {
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.new.emptyRegistrationAccordion}]`).click();
 
-    cy.get(`[data-testid=${dataTestId.registrationWizard.new.startRegistrationButton}]`).filter(':visible').click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.description.datePublishedField}]`).should('be.visible');
     cy.get('[data-testid=error-tab]').should('have.length', 0);
   });

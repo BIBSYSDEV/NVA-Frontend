@@ -64,7 +64,7 @@ const ResearchProfile = () => {
         <PageSpinner aria-label={t('my_page.research_profile')} />
       ) : (
         person && (
-          <BackgroundDiv sx={isPublicPage ? undefined : { padding: 0 }}>
+          <>
             <Typography variant="h2">{t('common.employments')}</Typography>
             {activeAffiliations.length > 0 && (
               <Box sx={lineSx}>
@@ -100,7 +100,7 @@ const ResearchProfile = () => {
                 )}
               </Box>
             )}
-          </BackgroundDiv>
+          </>
         )
       )}
     </BackgroundDiv>

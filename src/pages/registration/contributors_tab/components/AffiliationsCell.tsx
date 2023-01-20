@@ -6,7 +6,6 @@ import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
 import WarningIcon from '@mui/icons-material/Warning';
-import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { Modal } from '../../../../components/Modal';
 import { setNotification } from '../../../../redux/notificationSlice';
@@ -29,7 +28,6 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
   const disptach = useDispatch();
   const { setFieldValue, values } = useFormikContext<Registration>();
   const [openAffiliationModal, setOpenAffiliationModal] = useState(false);
-  const [affiliationToRemove, setAffiliationToRemove] = useState<Institution | null>(null);
   const [affiliationToVerify, setAffiliationToVerify] = useState('');
   const toggleAffiliationModal = () => setOpenAffiliationModal(!openAffiliationModal);
 
@@ -110,10 +108,15 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
           )}
           <Tooltip title={t('registration.contributors.remove_affiliation')}>
             <IconButton
-              color="error"
+              color="primary"
               size="small"
               data-testid={dataTestId.registrationWizard.contributors.removeAffiliationButton}
-              onClick={() => setAffiliationToRemove(affiliation)}>
+              onClick={() =>
+                setFieldValue(
+                  `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
+                  affiliations.filter((thisAffiliation) => thisAffiliation.id !== affiliation.id)
+                )
+              }>
               <RemoveIcon />
             </IconButton>
           </Tooltip>
@@ -160,22 +163,6 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
           />
         </>
       </Modal>
-
-      {/* Confirm dialog for removing affiliation */}
-      <ConfirmDialog
-        open={!!affiliationToRemove}
-        title={t('registration.contributors.confirm_remove_affiliation_title')}
-        onAccept={() => {
-          setFieldValue(
-            `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
-            affiliations.filter((affiliation) => affiliation.id !== affiliationToRemove?.id)
-          );
-          setAffiliationToRemove(null);
-        }}
-        onCancel={() => setAffiliationToRemove(null)}
-        dialogDataTestId="confirm-remove-affiliation-dialog">
-        <Typography>{t('registration.contributors.confirm_remove_affiliation_text')}</Typography>
-      </ConfirmDialog>
     </Box>
   );
 };
