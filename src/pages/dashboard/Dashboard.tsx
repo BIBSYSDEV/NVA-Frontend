@@ -37,7 +37,7 @@ const Dashboard = () => {
         <title>{t('common.start_page')}</title>
       </Helmet>
       {showBanner && (
-        <Box sx={{ bgcolor: 'secondary.dark', p: '1rem 0.5rem', width: '100%' }}>
+        <Box sx={{ bgcolor: 'secondary.main', p: '1rem 0.5rem', width: '100%' }}>
           <Box
             sx={{
               gridArea: 'tagline',

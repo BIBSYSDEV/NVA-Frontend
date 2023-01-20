@@ -39,7 +39,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
     <ListItem
       sx={{
         border: '2px solid',
-        borderColor: '#D3C9AF',
+        borderColor: 'secondary.dark',
         borderLeft: '1.25rem solid',
         borderLeftColor: 'registration.main',
       }}>
