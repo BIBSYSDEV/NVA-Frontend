@@ -33,7 +33,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
       defaultExpanded
       heading={
         showRegistrationHasFilesAwaitingApproval ? (
-          <Box component="span" sx={{ bgcolor: 'secondary.light', p: '0.25rem' }}>
+          <Box component="span" sx={{ background: '#FEFBF3', p: '0.25rem' }}>
             {t('registration.files_and_license.files_awaits_approval')}
           </Box>
         ) : (
