@@ -15,12 +15,12 @@ interface UserIdentitiesProps {
 export const UserIdentity = ({ user }: UserIdentitiesProps) => {
   const { t } = useTranslation();
   const fullName = `${user.givenName} ${user.familyName}`;
-  const userCristinId = user.cristinId?.split('/').at(-1);
+  const userCristinId = user.cristinId?.split('/').pop();
   const nationalId = user.nationalIdNumber;
   const [showFullNin, setShowFullNin] = useState(false);
 
   return (
-    <BackgroundDiv sx={{ bgcolor: 'secondary.dark' }}>
+    <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
       <Typography variant="h2">{t('my_page.my_profile.identity.identity')}</Typography>
       <Box
         sx={{
@@ -50,7 +50,7 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
             }}>
             <TextField
               size="small"
-              label={t('my_page.my_profile.identity.national_identity_number')}
+              label={t('basic_data.person_register.national_identity_number')}
               variant="filled"
               disabled
               value={showFullNin ? nationalId : getMaskedNationalIdentityNumber(nationalId)}
@@ -59,8 +59,8 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
                   <Tooltip
                     title={
                       showFullNin
-                        ? t('my_page.my_profile.identity.hide_full_nin')
-                        : t('my_page.my_profile.identity.show_full_nin')
+                        ? t('basic_data.person_register.hide_full_nin')
+                        : t('basic_data.person_register.show_full_nin')
                     }>
                     <IconButton onClick={() => setShowFullNin(!showFullNin)}>
                       {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -86,8 +86,7 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
               display: 'flex',
               flexDirection: 'column',
               gap: '0.5rem',
-              pb: '0.5rem',
-              px: '0.5rem',
+              p: '1rem',
             }}>
             <UserRoles user={user} />
           </Box>

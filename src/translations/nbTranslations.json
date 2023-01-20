@@ -488,11 +488,8 @@
       },
       "identity": {
         "full_name": "Fullt navn",
-        "hide_full_nin": "Skjul personnummer",
         "identity": "Identitet",
-        "national_identity_number": "Personnummer",
-        "not_shown_publicly": "Vises ikke offentlig",
-        "show_full_nin": "Vis personnummer"
+        "not_shown_publicly": "Vises ikke offentlig"
       },
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
