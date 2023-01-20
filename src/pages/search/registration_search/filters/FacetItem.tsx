@@ -23,7 +23,6 @@ export const FacetItem = ({ title, children }: FacetItemProps) => {
   return (
     <Box
       sx={{
-        minWidth: '15rem',
         bgcolor: 'background.default',
         border: '2px solid',
         borderColor: 'primary.main',
