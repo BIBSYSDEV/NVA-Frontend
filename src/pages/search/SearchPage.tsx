@@ -159,7 +159,7 @@ const SearchPage = () => {
                   sx={{
                     width: 'fit-content',
                     color: 'common.black',
-                    bgcolor: projectIsSelected ? 'primary' : 'white',
+                    bgcolor: projectIsSelected ? 'primary' : 'background.default',
                     borderColor: 'project.main',
                   }}
                   startIcon={<ShowChartIcon />}>
