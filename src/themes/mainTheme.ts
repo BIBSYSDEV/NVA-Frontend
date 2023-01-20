@@ -283,10 +283,17 @@ export const mainTheme = createTheme(
 );
 
 export const alternatingTableRowColor: SxProps = {
-  tr: {
-    bgcolor: 'secondary.light',
-    '&:nth-of-type(odd)': {
+  thead: {
+    tr: {
       bgcolor: '#FEFBF3',
+    },
+  },
+  tbody: {
+    tr: {
+      bgcolor: 'secondary.light',
+      '&:nth-of-type(even)': {
+        bgcolor: '#FEFBF3',
+      },
     },
   },
 };
