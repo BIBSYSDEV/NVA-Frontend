@@ -486,6 +486,14 @@
         "personalia": "Personalia",
         "roles": "Roles"
       },
+      "identity": {
+        "full_name": "Full name",
+        "hide_full_nin": "Hide national identity number",
+        "identity": "Identity",
+        "national_identity_number": "National identity number",
+        "not_shown_publicly": "Will not be shown publicly",
+        "show_full_nin": "Show full national identity number"
+      },
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
         "delete_orcid": "Remove ORCID connection",
