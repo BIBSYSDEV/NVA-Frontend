@@ -37,10 +37,11 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
   const initials = getContributorInitials(contributor.identity.name);
 
   const hasId = contributor.identity.id;
-  const hasAffiliation = contributor.affiliations && contributor.affiliations.length > 0;
+  const hasVerifiedAffiliation =
+    contributor.affiliations && contributor.affiliations.some((affiliation) => affiliation.id);
 
-  const verifiedContributor = hasId && hasAffiliation;
-  const verifiedContributorWithoutAffiliation = hasId && !hasAffiliation;
+  const verifiedContributor = hasId && hasVerifiedAffiliation;
+  const verifiedContributorWithoutAffiliation = hasId && !hasVerifiedAffiliation;
 
   return verifiedContributor ? (
     <Tooltip title={t('registration.contributors.identity_status.confirmed_identity')}>
