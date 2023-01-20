@@ -7,7 +7,6 @@ import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { UserOrcid } from './UserOrcid';
-import { UserRoles } from './UserRoles';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 import { RootState } from '../../../redux/store';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -18,7 +17,7 @@ import { updateCristinPerson } from '../../../api/userApi';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { UserIdentities } from './UserIdentities';
+import { UserIdentity } from './UserIdentity';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
@@ -76,10 +75,10 @@ export const MyProfile = () => {
             xs: '1fr',
             md: '3fr 1fr',
           },
-          gap: '1rem',
+          columnGap: '1rem',
           gridTemplateAreas: {
-            xs: '"user-profile" "research-profile"',
-            md: '"user-profile research-profile" ',
+            xs: '"user-profile" "user-identity" "research-profile"',
+            md: '"user-profile research-profile" "user-identity research-profile" ',
           },
         }}>
         <BackgroundDiv
@@ -137,9 +136,6 @@ export const MyProfile = () => {
                           {t('common.save')}
                         </LoadingButton>
                       </Box>
-                      <Box>
-                        <UserRoles user={user} />
-                      </Box>
                     </Form>
                   )}
                 </Formik>
@@ -147,7 +143,8 @@ export const MyProfile = () => {
             )}
           </Box>
         </BackgroundDiv>
-        <UserIdentities user={user} />
+        <UserIdentity user={user} />
+
         <Box sx={{ gridArea: 'research-profile' }}>
           <ResearchProfilePanel person={person} isLoadingPerson={isLoadingPerson} />
         </Box>

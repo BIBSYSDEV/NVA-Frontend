@@ -11,7 +11,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
   const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator } = user;
 
   return (
-    <div>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <Typography variant="h2">{t('my_page.my_profile.heading.roles')}</Typography>
       {user.customerId ? (
         !isAppAdmin &&
@@ -63,7 +63,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
           text={t('my_page.roles.app_admin_description')}
         />
       )}
-    </div>
+    </Box>
   );
 };
 
@@ -77,7 +77,8 @@ const RoleItem = ({ dataTestId, label, text }: IconLabelTextLineProps) => (
   <Box
     data-testid={dataTestId}
     sx={{
-      pt: '0.8rem',
+      bgcolor: '#d3c9af',
+      p: '0.5rem',
       display: 'grid',
       gridTemplateAreas: "'role label' 'text text'",
       gridTemplateColumns: 'auto 1fr',
