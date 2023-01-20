@@ -76,7 +76,7 @@ interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
 
 export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
   <Button
-    sx={{ bgcolor: isSelected ? 'primary.main' : 'white', ml: '1rem', width: 'fit-content' }}
+    sx={{ bgcolor: isSelected ? 'primary.main' : 'background.default', ml: '1rem', width: 'fit-content' }}
     variant={isSelected ? 'contained' : 'outlined'}
     LinkComponent={Link}
     {...rest}
@@ -88,7 +88,7 @@ interface LinkIconButtonProps extends LinkButtonProps {
 }
 
 export const LinkIconButton = ({ sx = {}, icon, ...rest }: LinkIconButtonProps) => (
-  <LinkButton sx={{ minWidth: 0, width: 0, bgcolor: 'white', mr: '1rem', ...sx }} {...rest}>
+  <LinkButton sx={{ minWidth: 0, width: 0, bgcolor: 'background.default', mr: '1rem', ...sx }} {...rest}>
     &nbsp;{icon}&nbsp; {/* Add spaces to ensure same button height as buttons with text */}
   </LinkButton>
 );
