@@ -4,20 +4,20 @@ import { IconButton, TextField, Tooltip } from '@mui/material';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { getMaskedNationalIdentityNumber } from '../utils/user-helpers';
+import { dataTestId } from '../utils/dataTestIds';
 
 interface NationIdNumberFieldProps {
   nationalId: string;
-  dataTestId?: string;
 }
 
-export const NationalIdNumberField = ({ nationalId, dataTestId }: NationIdNumberFieldProps) => {
+export const NationalIdNumberField = ({ nationalId }: NationIdNumberFieldProps) => {
   const { t } = useTranslation();
 
   const [showFullNin, setShowFullNin] = useState(false);
 
   return (
     <TextField
-      data-testid={dataTestId}
+      data-testid={dataTestId.basicData.nationalIdentityNumberField}
       variant="filled"
       disabled
       value={showFullNin ? nationalId : getMaskedNationalIdentityNumber(nationalId)}

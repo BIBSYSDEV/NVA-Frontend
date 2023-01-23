@@ -46,10 +46,7 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
               flexDirection: { xs: 'column', md: 'row' },
               gap: { xs: '1rem', md: '5rem' },
             }}>
-            <NationalIdNumberField
-              nationalId={nationalId}
-              dataTestId={dataTestId.myPage.myProfile.nationalIdentityNumberField}
-            />
+            <NationalIdNumberField nationalId={nationalId} />
             <TextField
               data-testid={dataTestId.myPage.myProfile.cristinIdField}
               size="small"
