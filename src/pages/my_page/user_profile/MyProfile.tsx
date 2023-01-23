@@ -15,7 +15,7 @@ import { PageSpinner } from '../../../components/PageSpinner';
 import { CristinPerson, FlatCristinPerson } from '../../../types/user.types';
 import { updateCristinPerson } from '../../../api/userApi';
 import { useFetch } from '../../../utils/hooks/useFetch';
-import { getValueByKey } from '../../../utils/user-helpers';
+import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-helpers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { UserIdentity } from './UserIdentity';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -35,6 +35,8 @@ export const MyProfile = () => {
     url: personId,
     errorMessage: t('feedback.error.get_person'),
   });
+
+  const hasActiveEmployment = filterActiveAffiliations(person?.affiliations).length > 0;
 
   const firstName = getValueByKey('FirstName', person?.names);
   const lastName = getValueByKey('LastName', person?.names);
@@ -153,7 +155,7 @@ export const MyProfile = () => {
             )}
           </Box>
         </BackgroundDiv>
-        <UserIdentity user={user} />
+        <UserIdentity user={user} hasActiveEmployment={hasActiveEmployment} />
 
         <Box sx={{ gridArea: 'research-profile' }}>
           <ResearchProfilePanel person={person} isLoadingPerson={isLoadingPerson} />

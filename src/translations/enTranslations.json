@@ -532,6 +532,7 @@
       "institution_admin": "Administrator",
       "institution_admin_description": "Maintains the institution's information in the person registery and assigns roles in the service.",
       "institution_admins": "Administrators",
+      "no_active_employments": "You have no roles because you have no active employments and do not have access to register.",
       "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
       "not_customer": "You don't have any roles because your institution is unknown to this application"
     }

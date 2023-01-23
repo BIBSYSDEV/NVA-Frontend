@@ -11,9 +11,10 @@ import { dataTestId } from '../../../utils/dataTestIds';
 
 interface UserIdentitiesProps {
   user: User;
+  hasActiveEmployment: boolean;
 }
 
-export const UserIdentity = ({ user }: UserIdentitiesProps) => {
+export const UserIdentity = ({ user, hasActiveEmployment }: UserIdentitiesProps) => {
   const { t } = useTranslation();
   const fullName = `${user.givenName} ${user.familyName}`;
   const userCristinId = user.cristinId?.split('/').pop();
@@ -95,7 +96,7 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
               p: '1rem',
               borderRadius: '4px',
             }}>
-            <UserRoles user={user} />
+            <UserRoles user={user} hasActiveEmployment={hasActiveEmployment} />
           </Box>
         </Box>
       </Box>
