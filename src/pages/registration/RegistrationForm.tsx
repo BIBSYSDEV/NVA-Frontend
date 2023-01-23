@@ -10,7 +10,12 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { getTitleString, userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
+import {
+  getContentType,
+  getTitleString,
+  userIsRegistrationCurator,
+  userIsRegistrationOwner,
+} from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
@@ -56,8 +61,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const validateForm = (values: Registration): FormikErrors<Registration> => {
     const publicationInstance = values.entityDescription?.reference?.publicationInstance;
-    const contentType =
-      publicationInstance && 'contentType' in publicationInstance ? publicationInstance.contentType : null;
+    const contentType = getContentType(values);
 
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
