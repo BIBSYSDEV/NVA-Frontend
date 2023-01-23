@@ -53,7 +53,7 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
   ) : verifiedContributorWithoutAffiliation ? (
     <Tooltip title={t('registration.contributors.identity_status.confirmed_identity_without_affiliation')}>
       <StyledVerifiedContributorWithoutAffiliation
-        data-testid={dataTestId.registrationWizard.contributors.verifiedAuthor(initials)}>
+        data-testid={dataTestId.registrationWizard.contributors.verifiedAuthorNoAffiliation(initials)}>
         {initials}
       </StyledVerifiedContributorWithoutAffiliation>
     </Tooltip>
