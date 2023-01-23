@@ -338,6 +338,16 @@ export const dataTestId = {
   myPage: {
     messagesLink: 'messages-link',
     myProfileLink: 'my-profile-link',
+    myProfile: {
+      cristinIdField: 'cristin-id-field',
+      editPreferredNameButton: 'edit-preferred-name-button',
+      fullNameField: 'full-name-field',
+      nationalIdentityNumberField: 'national-identity-number-field',
+      preferredFirstNameField: 'preferred-first-name-field',
+      preferredLastNameField: 'preferred-last-name-field',
+      saveProfileChangesButton: 'save-profile-changes-button',
+      showFullNinButton: 'show-full-nin-button',
+    },
     myRegistrationsLink: 'my-registrations-link',
     newRegistrationLink: 'new-registration-link',
     researchProfileLink: 'research-profile-link',

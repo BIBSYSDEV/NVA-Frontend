@@ -7,6 +7,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { getMaskedNationalIdentityNumber } from '../../../utils/user-helpers';
 import { UserRoles } from './UserRoles';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface UserIdentitiesProps {
   user: User;
@@ -36,6 +37,7 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '30rem' }}>
           <Typography>{t('my_page.my_profile.identity.not_shown_publicly')}</Typography>
           <TextField
+            data-testid={dataTestId.myPage.myProfile.fullNameField}
             label={t('my_page.my_profile.identity.full_name')}
             value={fullName}
             size="small"
@@ -49,6 +51,7 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
               gap: { xs: '1rem', md: '5rem' },
             }}>
             <TextField
+              data-testid={dataTestId.myPage.myProfile.nationalIdentityNumberField}
               size="small"
               label={t('basic_data.person_register.national_identity_number')}
               variant="filled"
@@ -62,7 +65,9 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
                         ? t('basic_data.person_register.hide_full_nin')
                         : t('basic_data.person_register.show_full_nin')
                     }>
-                    <IconButton onClick={() => setShowFullNin(!showFullNin)}>
+                    <IconButton
+                      data-testid={dataTestId.myPage.myProfile.showFullNinButton}
+                      onClick={() => setShowFullNin(!showFullNin)}>
                       {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
                     </IconButton>
                   </Tooltip>
@@ -70,6 +75,7 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
               }}
             />
             <TextField
+              data-testid={dataTestId.myPage.myProfile.cristinIdField}
               size="small"
               label={'Cristin ID'}
               value={userCristinId ? userCristinId : ''}
