@@ -38,6 +38,7 @@ export const dataTestId = {
       saveButton: 'save-button',
       shortNameField: 'short-name-field',
     },
+    nationalIdentityNumberField: 'national-identity-number-field',
     personRegisterLink: 'person-register-link',
   },
   confirmDialog: {
@@ -342,7 +343,6 @@ export const dataTestId = {
       cristinIdField: 'cristin-id-field',
       editPreferredNameButton: 'edit-preferred-name-button',
       fullNameField: 'full-name-field',
-      nationalIdentityNumberField: 'national-identity-number-field',
       preferredFirstNameField: 'preferred-first-name-field',
       preferredLastNameField: 'preferred-last-name-field',
       saveProfileChangesButton: 'save-profile-changes-button',

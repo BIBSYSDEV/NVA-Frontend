@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, Divider, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
@@ -134,11 +134,7 @@ export const MyProfile = () => {
                           </IconButton>
                         </Tooltip>
                       </Box>
-                      <Box sx={{ display: 'flex', mt: '0.5rem', alignItems: 'center' }}>
-                        <Typography fontWeight={600}>{t('common.orcid')}</Typography>
-                        <UserOrcid user={user} />
-                      </Box>
-                      <Box sx={{ display: 'flex', justifyContent: 'right' }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
                         <LoadingButton
                           data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
                           loading={isSubmitting}
@@ -148,6 +144,9 @@ export const MyProfile = () => {
                           {t('common.save')}
                         </LoadingButton>
                       </Box>
+                      <Divider sx={{ my: '1rem' }} />
+                      <Typography fontWeight={600}>{t('common.orcid')}</Typography>
+                      <UserOrcid user={user} />
                     </Form>
                   )}
                 </Formik>
