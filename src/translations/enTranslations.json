@@ -67,7 +67,7 @@
       "doi_repo_id": "Data Cite Repository ID",
       "doi_url": "URL",
       "edit_institution": "Edit institution",
-      "feide_organization_domain": "Organization domain in Feide",
+      "feide_organization_domain": "Institution's domain in Feide",
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
       "password_hide": "Hide password",
@@ -713,7 +713,7 @@
             "col2": "Feide, Felles autoritesregister, ORCID"
           },
           "row1": {
-            "col0": "System roles and affiliation to the organisation",
+            "col0": "System roles and affiliation to the institution",
             "col1": "The user is assigned roles in the system in order to provide adapted functionality and access to the service.",
             "col2": "Assigned in NVA, Feide"
           },
@@ -737,7 +737,7 @@
           },
           "row1": {
             "col0": "Contact information",
-            "col1": "Email address assigned by the organization.",
+            "col1": "Email address assigned by the institution.",
             "col2": "Feide"
           },
           "row2": {
