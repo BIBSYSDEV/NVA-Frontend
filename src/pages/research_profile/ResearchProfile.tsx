@@ -1,6 +1,15 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Box, IconButton, Link as MuiLink, SxProps, Typography } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  Link as MuiLink,
+  SxProps,
+  TablePagination,
+  Typography,
+} from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
 import { useSelector } from 'react-redux';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -17,6 +26,7 @@ import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../..
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RootState } from '../../redux/store';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 
 const textContainerSx: SxProps = {
   width: '100%',
@@ -31,6 +41,8 @@ const lineSx: SxProps = {
 const ResearchProfile = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
   const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
@@ -43,15 +55,19 @@ const ResearchProfile = () => {
     errorMessage: t('feedback.error.get_person'),
   });
 
-  const [registrations, isLoadingRegistrations] = useSearchRegistrations({
-    properties: [
-      {
-        fieldName: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}`,
-        value: personId,
-        operator: ExpressionStatement.Contains,
-      },
-    ],
-  });
+  const [registrations, isLoadingRegistrations] = useSearchRegistrations(
+    {
+      properties: [
+        {
+          fieldName: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}`,
+          value: personId,
+          operator: ExpressionStatement.Contains,
+        },
+      ],
+    },
+    rowsPerPage,
+    rowsPerPage * page
+  );
 
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
@@ -60,7 +76,7 @@ const ResearchProfile = () => {
   return (
     <BackgroundDiv>
       <PageHeader>{fullName}</PageHeader>
-      {isLoadingPerson || isLoadingRegistrations ? (
+      {isLoadingPerson ? (
         <PageSpinner aria-label={t('my_page.research_profile')} />
       ) : (
         person && (
@@ -90,11 +106,27 @@ const ResearchProfile = () => {
             )}
             {registrations && (
               <Box sx={{ mt: '2rem' }}>
-                <Typography variant="h2" gutterBottom>
+                <Typography id="registration-label" variant="h2" gutterBottom>
                   {t('common.registrations')}
                 </Typography>
-                {registrations.size > 0 ? (
-                  <RegistrationSearchResults searchResult={registrations} />
+                {isLoadingRegistrations && !registrations ? (
+                  <CircularProgress aria-labelledby="registration-label" />
+                ) : registrations.size > 0 ? (
+                  <>
+                    <RegistrationSearchResults searchResult={registrations} />
+                    <TablePagination
+                      rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+                      component="div"
+                      count={registrations.size}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={(_, newPage) => setPage(newPage)}
+                      onRowsPerPageChange={(event) => {
+                        setRowsPerPage(+event.target.value);
+                        setPage(0);
+                      }}
+                    />
+                  </>
                 ) : (
                   <Typography>{t('common.no_hits')}</Typography>
                 )}
