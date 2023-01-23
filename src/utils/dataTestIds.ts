@@ -161,7 +161,9 @@ export const dataTestId = {
       searchField: 'search-field',
       selectContributorType: 'select-contributor-type',
       selectUserButton: 'select-user-button',
+      unverifiedAuthor: (id: string) => `unverified-author-${id}`,
       unverifiedContributorName: 'unverified-contributor-name',
+      verifiedAuthor: (id: string) => `verified-author-${id}`,
     },
     description: {
       addVocabularyButton: 'add-vocabulary-button',
