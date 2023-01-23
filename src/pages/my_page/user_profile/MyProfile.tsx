@@ -18,6 +18,7 @@ import { useFetch } from '../../../utils/hooks/useFetch';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { UserIdentity } from './UserIdentity';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
@@ -101,6 +102,7 @@ export const MyProfile = () => {
                           {({ field }: FieldProps<string>) => (
                             <TextField
                               {...field}
+                              data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
                               id={field.name}
                               disabled={!editPreferredNames || isSubmitting}
                               label={t('my_page.my_profile.preferred_first_name')}
@@ -113,6 +115,7 @@ export const MyProfile = () => {
                           {({ field }: FieldProps<string>) => (
                             <TextField
                               {...field}
+                              data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
                               id={field.name}
                               disabled={!editPreferredNames || isSubmitting}
                               label={t('my_page.my_profile.preferred_last_name')}
@@ -122,7 +125,9 @@ export const MyProfile = () => {
                           )}
                         </Field>
                         <Tooltip title={t('common.edit')}>
-                          <IconButton onClick={() => setEditPreferredNames(!editPreferredNames)}>
+                          <IconButton
+                            data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
+                            onClick={() => setEditPreferredNames(!editPreferredNames)}>
                             <EditIcon sx={{ width: '1.2rem' }} />
                           </IconButton>
                         </Tooltip>
@@ -132,7 +137,12 @@ export const MyProfile = () => {
                         <UserOrcid user={user} />
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'right' }}>
-                        <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
+                        <LoadingButton
+                          data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
+                          loading={isSubmitting}
+                          disabled={!dirty}
+                          variant="contained"
+                          type="submit">
                           {t('common.save')}
                         </LoadingButton>
                       </Box>
