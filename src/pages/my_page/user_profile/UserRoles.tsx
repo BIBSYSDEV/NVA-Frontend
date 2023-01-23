@@ -4,28 +4,30 @@ import { User } from '../../../types/user.types';
 
 interface UserRolesProps {
   user: User;
+  hasActiveEmployment: boolean;
 }
 
-export const UserRoles = ({ user }: UserRolesProps) => {
+export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
   const { t } = useTranslation();
   const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator } = user;
+  const hasAnyRole = isAppAdmin || isInstitutionAdmin || isCurator || isEditor || isCreator;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <Typography variant="h2">{t('my_page.my_profile.heading.roles')}</Typography>
       {user.customerId ? (
-        !isAppAdmin &&
-        !isInstitutionAdmin &&
-        !isEditor &&
-        !isCurator &&
-        !isCreator && (
+        !hasAnyRole && (
           <Typography data-testid="no-roles-text" sx={{ color: 'error.main' }}>
             {t('my_page.roles.no_roles')}
           </Typography>
         )
-      ) : (
+      ) : hasActiveEmployment ? (
         <Typography data-testid="not-customer-text" sx={{ color: 'error.main' }}>
           {t('my_page.roles.not_customer')}
+        </Typography>
+      ) : (
+        <Typography data-testid="no-active-employments-text" sx={{ color: 'error.main' }}>
+          {t('my_page.roles.no_active_employments')}
         </Typography>
       )}
       {isCreator && (
