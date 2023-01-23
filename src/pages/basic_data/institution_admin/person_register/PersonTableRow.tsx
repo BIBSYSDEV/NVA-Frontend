@@ -19,8 +19,6 @@ import {
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,6 +45,7 @@ import { StartDateField } from '../../fields/StartDateField';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { RootState } from '../../../../redux/store';
+import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
 
 export interface PersonData {
   employments: Employment[];
@@ -74,7 +73,6 @@ export const PersonTableRow = ({
   const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(false);
   const toggleConfirmDeleteDialog = () => setOpenConfirmDeleteDialog(!openConfirmDeleteDialog);
   const [employmentIndex, setEmploymentIndex] = useState(0);
-  const [showFullNin, setShowFullNin] = useState(false);
 
   const hasFetchedPositions = Object.keys(reduxResources).some((id) => id.endsWith(CristinApiPath.Position));
 
@@ -205,26 +203,7 @@ export const PersonTableRow = ({
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     <TextField variant="filled" disabled value={firstName} label={t('common.first_name')} />
                     <TextField variant="filled" disabled value={lastName} label={t('common.last_name')} />
-                    <TextField
-                      variant="filled"
-                      disabled
-                      value={showFullNin ? nationalId : getMaskedNationalIdentityNumber(nationalId)}
-                      label={t('basic_data.person_register.national_identity_number')}
-                      InputProps={{
-                        endAdornment: (
-                          <Tooltip
-                            title={
-                              showFullNin
-                                ? t('basic_data.person_register.hide_full_nin')
-                                : t('basic_data.person_register.show_full_nin')
-                            }>
-                            <IconButton onClick={() => setShowFullNin((prevShowFullNin) => !prevShowFullNin)}>
-                              {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                            </IconButton>
-                          </Tooltip>
-                        ),
-                      }}
-                    />
+                    <NationalIdNumberField nationalId={nationalId} />
                     {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
                     {employmentsInOtherInstitutions.some(isActiveEmployment) && (
                       <div>
