@@ -143,10 +143,8 @@ export const MyProfile = () => {
                         </LoadingButton>
                       </Box>
                       <Divider sx={{ my: '1rem' }} />
-                      <Box sx={{ display: 'flex', flexDirection: 'column', mt: '0.5rem' }}>
-                        <Typography fontWeight={600}>{t('common.orcid')}</Typography>
-                        <UserOrcid user={user} />
-                      </Box>
+                      <Typography fontWeight={600}>{t('common.orcid')}</Typography>
+                      <UserOrcid user={user} />
                     </Form>
                   )}
                 </Formik>
