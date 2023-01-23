@@ -508,3 +508,10 @@ export const getContributorInitials = (name: string) => {
   const initials = `${firstNameInitial}${lastNameInitial}`;
   return initials;
 };
+
+export const getContentType = (registration: Registration) => {
+  const publicationInstance = registration?.entityDescription?.reference?.publicationInstance;
+  const contentType =
+    publicationInstance && 'contentType' in publicationInstance ? publicationInstance.contentType : null;
+  return contentType;
+};
