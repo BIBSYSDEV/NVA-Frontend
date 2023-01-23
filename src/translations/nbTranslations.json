@@ -67,7 +67,7 @@
       "doi_repo_id": "Data Cite Repository ID",
       "doi_url": "URL",
       "edit_institution": "Endre institusjon",
-      "feide_organization_domain": "Organisasjonens domene i Feide",
+      "feide_organization_domain": "Institusjonens domene i Feide",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "password_hide": "Skjul passord",
@@ -347,7 +347,7 @@
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
       "fetch": "Kunne ikke hente {{resource}}",
-      "get_affiliation_name": "Kunne ikke hente navn på tilhørighet for {{unitUri}}",
+      "get_affiliation_name": "Kunne ikke hente navn på tilknytning for {{unitUri}}",
       "get_customer": "Kunne ikke hente kundeinstitusjon",
       "get_customers": "Kunne ikke hente kundeinstitusjoner",
       "get_doi": "Kunne ikke hente lenkedata",
@@ -482,7 +482,7 @@
     "my_page": "Min side",
     "my_profile": {
       "heading": {
-        "affiliations": "Tilhørigheter",
+        "affiliations": "Tilknytninger",
         "personalia": "Personalia",
         "roles": "Roller"
       },
@@ -506,7 +506,7 @@
       "preferred_first_name": "Foretrukket fornavn",
       "preferred_last_name": "Foretrukket etternavn",
       "research_profile_summary": {
-        "affiliations": "Tilhørigheter",
+        "affiliations": "Tilknytninger",
         "preview": "Forhåndsvisning",
         "research_profile": "Forskerprofil"
       },
@@ -713,7 +713,7 @@
             "col2": "Feide, Felles autoritetsregister, ORCID"
           },
           "row1": {
-            "col0": "Systemroller og tilhørighet til organisasjon",
+            "col0": "Systemroller og tilknytning til institusjon",
             "col1": "Bruker tildeles roller i systemet for å gi tilpasset funksjonalitet og tilgang til tjenesten.",
             "col2": "Tildelt i NVA, Feide"
           },
@@ -737,12 +737,12 @@
           },
           "row1": {
             "col0": "Kontaktinformasjon",
-            "col1": "E-postadresse tildelt ved egen organisasjon.",
+            "col1": "E-postadresse tildelt ved egen institusjon.",
             "col2": "Feide"
           },
           "row2": {
             "col0": "Profil",
-            "col1": "Brukers preferanser for bruk av tjenesten. Språkvalg, Institusjonstilhørighet",
+            "col1": "Brukers preferanser for bruk av tjenesten. Språkvalg, Institusjonstilknytning",
             "col2": "Innstillinger i NVA"
           }
         }
@@ -841,9 +841,9 @@
   },
   "registration": {
     "contributors": {
-      "add_affiliation": "Legg til tilhørighet",
+      "add_affiliation": "Legg til tilknytning",
       "add_contributor": "Legg til bidragsyter",
-      "add_duplicate_affiliation": "Tilhørigheten er allerede lagt til",
+      "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
       "add_self_as_contributor": "Legg meg til som bidragsyter",
       "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
       "authors": "Forfattere",
@@ -861,17 +861,17 @@
       },
       "invalid_role": "Bidragsyteren må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
       "must_select_type_first": "Du må velge ressurstype før du kan legge til bidragsytere.",
-      "no_affiliations_found": "Ingen tilhørigheter funnet",
+      "no_affiliations_found": "Ingen tilknytninger funnet",
       "no_registrations_found": "Ingen registreringer funnet",
       "other_registrations_one": "+ {{count}} annen registrering",
       "other_registrations_other": "+ {{count}} andre registreringer",
-      "prefilled_affiliation": "Forhåndsutfylt tilhørighet",
+      "prefilled_affiliation": "Forhåndsutfylt tilknytning",
       "prefilled_name": "Forhåndsutfylt navn",
-      "remove_affiliation": "Fjern tilhørighet",
+      "remove_affiliation": "Fjern tilknytning",
       "remove_contributor": "Fjern bidragsyter",
       "search_for_institution": "Søk etter institusjon",
       "select_contributor_type": "Velg type bidragsyter",
-      "suggested_affiliations": "Foreslåtte tilhørigheter",
+      "suggested_affiliations": "Foreslåtte tilknytninger",
       "type": "Bidragstype",
       "types": {
         "AcademicCoordinator": "Faglig ansvarlig",
@@ -926,7 +926,7 @@
         "VideoEditor": "Klipper",
         "Writer": "Tekstforfatter"
       },
-      "verify_affiliation": "Verifiser tilhørighet",
+      "verify_affiliation": "Bekreft tilknytning",
       "verify_person": "Verifiser person"
     },
     "description": {
