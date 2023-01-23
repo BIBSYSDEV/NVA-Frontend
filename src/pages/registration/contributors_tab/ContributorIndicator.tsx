@@ -1,6 +1,7 @@
 import { styled, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Contributor } from '../../../types/contributor.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getContributorInitials } from '../../../utils/registration-helpers';
 
 const StyledBaseContributorIndicator = styled('div')({
@@ -45,15 +46,22 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
 
   return verifiedContributor ? (
     <Tooltip title={t('registration.contributors.identity_status.confirmed_identity')}>
-      <StyledVerifiedContributor>{initials}</StyledVerifiedContributor>
+      <StyledVerifiedContributor data-testid={dataTestId.registrationWizard.contributors.verifiedAuthor(initials)}>
+        {initials}
+      </StyledVerifiedContributor>
     </Tooltip>
   ) : verifiedContributorWithoutAffiliation ? (
     <Tooltip title={t('registration.contributors.identity_status.confirmed_identity_without_affiliation')}>
-      <StyledVerifiedContributorWithoutAffiliation>{initials}</StyledVerifiedContributorWithoutAffiliation>
+      <StyledVerifiedContributorWithoutAffiliation
+        data-testid={dataTestId.registrationWizard.contributors.verifiedAuthorNoAffiliation(initials)}>
+        {initials}
+      </StyledVerifiedContributorWithoutAffiliation>
     </Tooltip>
   ) : (
     <Tooltip title={t('registration.contributors.identity_status.unknown_identity')}>
-      <StyledUnknownContributor>{initials}</StyledUnknownContributor>
+      <StyledUnknownContributor data-testid={dataTestId.registrationWizard.contributors.unverifiedAuthor(initials)}>
+        {initials}
+      </StyledUnknownContributor>
     </Tooltip>
   );
 };

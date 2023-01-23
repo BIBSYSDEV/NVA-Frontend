@@ -74,9 +74,9 @@ interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
   isSelected?: boolean;
 }
 
-export const LinkButton = ({ isSelected, ...rest }: LinkButtonProps) => (
+export const LinkButton = ({ isSelected, sx, ...rest }: LinkButtonProps) => (
   <Button
-    sx={{ bgcolor: isSelected ? 'primary.main' : 'background.default', ml: '1rem', width: 'fit-content' }}
+    sx={{ bgcolor: isSelected ? 'primary.main' : 'background.default', ml: '1rem', width: 'fit-content', ...sx }}
     variant={isSelected ? 'contained' : 'outlined'}
     LinkComponent={Link}
     {...rest}
@@ -87,9 +87,9 @@ interface LinkIconButtonProps extends LinkButtonProps {
   icon: ReactNode;
 }
 
-export const LinkIconButton = ({ sx = {}, icon, ...rest }: LinkIconButtonProps) => (
-  <LinkButton sx={{ minWidth: 0, width: 0, bgcolor: 'background.default', mr: '1rem', ...sx }} {...rest}>
-    &nbsp;{icon}&nbsp; {/* Add spaces to ensure same button height as buttons with text */}
+export const LinkIconButton = ({ sx, icon, ...rest }: LinkIconButtonProps) => (
+  <LinkButton sx={{ ml: '0rem', mr: '1rem', ...sx }} {...rest}>
+    {icon}
   </LinkButton>
 );
 
