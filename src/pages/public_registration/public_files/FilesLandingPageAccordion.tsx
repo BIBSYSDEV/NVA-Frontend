@@ -5,7 +5,7 @@ import { LandingPageAccordion } from '../../../components/landing_page/LandingPa
 import { RootState } from '../../../redux/store';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getAssociatedFiles, userCanEditRegistration } from '../../../utils/registration-helpers';
+import { getAssociatedFiles, userIsRegistrationAdmin } from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 
@@ -15,16 +15,16 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
-  const userIsRegistrationAdmin = userCanEditRegistration(user, registration);
+  const isRegistrationAdmin = userIsRegistrationAdmin(user, registration);
 
   const showRegistrationHasFilesAwaitingApproval =
     registration.status === RegistrationStatus.Published &&
-    userIsRegistrationAdmin &&
+    isRegistrationAdmin &&
     registration.associatedArtifacts.some((file) => file.type === 'UnpublishedFile');
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
   const filesToShow = associatedFiles.filter(
-    (file) => file.type === 'PublishedFile' || (file.type === 'UnpublishedFile' && userIsRegistrationAdmin)
+    (file) => file.type === 'PublishedFile' || (file.type === 'UnpublishedFile' && isRegistrationAdmin)
   );
 
   return filesToShow.length === 0 ? null : (

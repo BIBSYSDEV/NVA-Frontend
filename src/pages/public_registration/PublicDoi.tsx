@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getAssociatedLinks, userCanEditRegistration } from '../../utils/registration-helpers';
+import { getAssociatedLinks, userIsRegistrationAdmin } from '../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
@@ -38,7 +38,7 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
     lookupNvaDoi();
   }, [nvaDoi, registration.status]);
 
-  const canSeeDraftDoi = userCanEditRegistration(user, registration);
+  const canSeeDraftDoi = userIsRegistrationAdmin(user, registration);
   const canSeeNvaDoi = nvaDoi && (nvaDoiIsFindable || canSeeDraftDoi);
 
   return (

@@ -88,7 +88,7 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
   !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCurator && user.customerId === registration.publisher.id;
+  !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
 export const getYearQuery = (yearValue: string) =>
   yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();
@@ -473,14 +473,11 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
   }
 };
 
-const userIsOwnerOfRegistration = (user: User | null, registration: Registration) =>
-  !!user?.isCreator && !!user.nvaUsername && user.nvaUsername === registration.resourceOwner.owner;
+export const userIsRegistrationAdmin = (user: User | null, registration?: Registration) =>
+  userIsRegistrationOwner(user, registration) || userIsRegistrationCurator(user, registration);
 
-export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
-  !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
-
-export const userCanEditRegistration = (user: User | null, registration: Registration) =>
-  userIsOwnerOfRegistration(user, registration) || userIsCuratorForRegistration(user, registration);
+export const userCanEditRegistration = (user: User | null, registration?: Registration) =>
+  userIsRegistrationAdmin(user, registration) || !!user?.isEditor;
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';

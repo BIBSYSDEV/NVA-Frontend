@@ -7,7 +7,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { Ticket } from '../../types/publication_types/messages.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { associatedArtifactIsLink, userIsCuratorForRegistration } from '../../utils/registration-helpers';
+import { associatedArtifactIsLink, userIsRegistrationCurator } from '../../utils/registration-helpers';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
@@ -20,7 +20,7 @@ interface ActionPanelProps extends PublicRegistrationContentProps {
 export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTickets }: ActionPanelProps) => {
   const { t } = useTranslation();
   const { user, customer } = useSelector((store: RootState) => store);
-  const userIsCurator = userIsCuratorForRegistration(user, registration);
+  const userIsCurator = userIsRegistrationCurator(user, registration);
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
   const publishingRequestTicket = tickets.find((ticket) => ticket.type === 'PublishingRequest') ?? null;

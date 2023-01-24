@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
-import { userCanEditRegistration } from '../../utils/registration-helpers';
+import { userIsRegistrationAdmin } from '../../utils/registration-helpers';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -27,7 +27,7 @@ const PublicRegistration = () => {
   });
 
   const { user } = useSelector((store: RootState) => store);
-  const isRegistrationAdmin = !!registration && userCanEditRegistration(user, registration);
+  const isRegistrationAdmin = !!registration && userIsRegistrationAdmin(user, registration);
   const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
 
   const [registrationTicketCollection, isLoadingRegistrationTicketCollection, refetchTickets] =
