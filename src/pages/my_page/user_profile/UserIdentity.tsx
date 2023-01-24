@@ -37,7 +37,6 @@ export const UserIdentity = ({ user, hasActiveEmployment }: UserIdentitiesProps)
             data-testid={dataTestId.myPage.myProfile.fullNameField}
             label={t('my_page.my_profile.identity.full_name')}
             value={fullName}
-            size="small"
             variant="filled"
             disabled
           />
@@ -50,8 +49,7 @@ export const UserIdentity = ({ user, hasActiveEmployment }: UserIdentitiesProps)
             <NationalIdNumberField nationalId={nationalId} />
             <TextField
               data-testid={dataTestId.myPage.myProfile.cristinIdField}
-              size="small"
-              label={'Cristin ID'}
+              label={t('my_page.my_profile.identity.cristin_id')}
               value={userCristinId ? userCristinId : ''}
               variant="filled"
               disabled
