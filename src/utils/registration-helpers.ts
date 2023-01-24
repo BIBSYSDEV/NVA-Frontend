@@ -517,7 +517,7 @@ export const getContentType = (registration: Registration) => {
   return contentType;
 };
 
-export const shouldShowFileVersion = (registration: Registration) => {
+export const shouldShowFileVersionField = (registration: Registration) => {
   const contentType = getContentType(registration);
   return (
     contentType === JournalArticleContentType.AcademicArticle ||

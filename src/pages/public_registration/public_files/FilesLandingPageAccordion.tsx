@@ -7,7 +7,7 @@ import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   getAssociatedFiles,
-  shouldShowFileVersion,
+  shouldShowFileVersionField,
   userCanEditRegistration,
 } from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
@@ -31,7 +31,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     (file) => file.type === 'PublishedFile' || (file.type === 'UnpublishedFile' && userIsRegistrationAdmin)
   );
 
-  const showFileVersion = shouldShowFileVersion(registration);
+  const showFileVersionField = shouldShowFileVersionField(registration);
 
   return filesToShow.length === 0 ? null : (
     <LandingPageAccordion
@@ -52,7 +52,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           file={file}
           registrationIdentifier={registration.identifier}
           openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
-          showFileVersion={showFileVersion}
+          showFileVersionField={showFileVersionField}
         />
       ))}
     </LandingPageAccordion>

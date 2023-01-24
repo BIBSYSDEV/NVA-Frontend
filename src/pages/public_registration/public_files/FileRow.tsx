@@ -26,10 +26,10 @@ interface FileRowProps {
   file: AssociatedFile;
   registrationIdentifier: string;
   openPreviewByDefault: boolean;
-  showFileVersion: boolean;
+  showFileVersionField: boolean;
 }
 
-export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, showFileVersion }: FileRowProps) => {
+export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, showFileVersionField }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -93,7 +93,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, sh
       <Typography data-testid={dataTestId.registrationLandingPage.fileSize} sx={{ gridArea: 'size' }}>
         {prettyBytes(file.size, { locale: true })}
       </Typography>
-      {showFileVersion && (
+      {showFileVersionField && (
         <Typography data-testid={dataTestId.registrationLandingPage.fileVersion} sx={{ gridArea: 'version' }}>
           {file.publisherAuthority
             ? t('registration.files_and_license.published_version')
