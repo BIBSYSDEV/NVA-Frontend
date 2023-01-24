@@ -4,7 +4,7 @@ import { Box, BoxProps, Button, ButtonProps, styled, Typography } from '@mui/mat
 import { Link, LinkProps } from 'react-router-dom';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
-  width: '100vw',
+  width: '100%',
   minHeight: '40vh',
   display: 'grid',
   gap: '1rem',

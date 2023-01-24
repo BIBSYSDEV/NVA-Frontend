@@ -94,7 +94,7 @@ const SearchPage = () => {
         history.push({ search: newSearchParams.toString() });
       }}>
       {({ setValues }: FormikProps<SearchConfig>) => (
-        <Form>
+        <Form style={{ width: '100%' }}>
           <StyledPageWithSideMenu>
             <SidePanel>
               <SideNavHeader icon={SearchIcon} text={t('common.search')} />

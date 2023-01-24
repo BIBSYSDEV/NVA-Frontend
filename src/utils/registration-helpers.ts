@@ -37,6 +37,7 @@ import {
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
+import { JournalArticleContentType } from '../types/publication_types/content.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -505,3 +506,19 @@ export const getContributorInitials = (name: string) => {
   const initials = `${firstNameInitial}${lastNameInitial}`;
   return initials;
 };
+
+export const getContentType = (registration: Registration) => {
+  const publicationInstance = registration?.entityDescription?.reference?.publicationInstance;
+  const contentType =
+    publicationInstance && 'contentType' in publicationInstance ? publicationInstance.contentType : null;
+  return contentType;
+};
+
+export const shouldShowFileVersionField = (registration: Registration) => {
+  const contentType = getContentType(registration);
+  return isContentTypeWithFileVersionField(contentType);
+};
+
+export const isContentTypeWithFileVersionField = (contentType: string | null) =>
+  contentType === JournalArticleContentType.AcademicArticle ||
+  contentType === JournalArticleContentType.AcademicLiteratureReview;

@@ -487,6 +487,7 @@
         "roles": "Roller"
       },
       "identity": {
+        "cristin_id": "Cristin ID",
         "full_name": "Fullt navn",
         "identity": "Identitet",
         "not_shown_publicly": "Vises ikke offentlig"
