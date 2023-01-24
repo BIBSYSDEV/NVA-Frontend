@@ -40,7 +40,6 @@ export const mockCustomerInstitution: CustomerInstitution = {
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   doiAgent: {
     id: 'https://api.dev.nva.aws.unit.no/customer/1/doiagent',
-    url: 'test.url.com',
     prefix: '10.1111',
     username: 'LOFF',
   },
