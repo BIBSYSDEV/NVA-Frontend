@@ -343,6 +343,7 @@ export const dataTestId = {
       cristinIdField: 'cristin-id-field',
       editPreferredNameButton: 'edit-preferred-name-button',
       fullNameField: 'full-name-field',
+      noActiveEmploymentsText: 'no-active-employments-text',
       preferredFirstNameField: 'preferred-first-name-field',
       preferredLastNameField: 'preferred-last-name-field',
       saveProfileChangesButton: 'save-profile-changes-button',
