@@ -519,8 +519,9 @@ export const getContentType = (registration: Registration) => {
 
 export const shouldShowFileVersionField = (registration: Registration) => {
   const contentType = getContentType(registration);
-  return (
-    contentType === JournalArticleContentType.AcademicArticle ||
-    contentType === JournalArticleContentType.AcademicLiteratureReview
-  );
+  return isContentTypeWithFileVersionField(contentType);
 };
+
+export const isContentTypeWithFileVersionField = (contentType: string | null) =>
+  contentType === JournalArticleContentType.AcademicArticle ||
+  contentType === JournalArticleContentType.AcademicLiteratureReview;
