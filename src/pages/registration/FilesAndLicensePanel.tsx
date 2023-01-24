@@ -42,14 +42,13 @@ import {
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
-  getContentType,
+  shouldShowFileVersion,
 } from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
-import { JournalArticleContentType } from '../../types/publication_types/content.types';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
@@ -108,11 +107,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   const originalDoi = entityDescription?.reference?.doi;
-
-  const contentType = getContentType(values);
-  const showFileVersion =
-    contentType === JournalArticleContentType.AcademicArticle ||
-    contentType === JournalArticleContentType.AcademicLiteratureReview;
+  const showFileVersion = shouldShowFileVersion(values);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>

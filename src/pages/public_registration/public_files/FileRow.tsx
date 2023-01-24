@@ -26,9 +26,10 @@ interface FileRowProps {
   file: AssociatedFile;
   registrationIdentifier: string;
   openPreviewByDefault: boolean;
+  showFileVersion: boolean;
 }
 
-export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: FileRowProps) => {
+export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, showFileVersion }: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -77,7 +78,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
           xs: `"name size" "version license" "download download"`,
           sm: `"name size version license download" "preview preview preview preview preview"`,
         },
-        gridTemplateColumns: { xs: '4fr 1fr', sm: '5fr 1fr 2fr 2fr 2fr' },
+        gridTemplateColumns: { xs: '4fr 1fr', sm: '5fr 1fr auto 2fr 2fr' },
         rowGap: { xs: '1rem', sm: 0 },
         columnGap: '1rem',
         alignItems: 'center',
@@ -92,11 +93,13 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault }: 
       <Typography data-testid={dataTestId.registrationLandingPage.fileSize} sx={{ gridArea: 'size' }}>
         {prettyBytes(file.size, { locale: true })}
       </Typography>
-      <Typography data-testid={dataTestId.registrationLandingPage.fileVersion} sx={{ gridArea: 'version' }}>
-        {file.publisherAuthority
-          ? t('registration.files_and_license.published_version')
-          : t('registration.files_and_license.accepted_version')}
-      </Typography>
+      {showFileVersion && (
+        <Typography data-testid={dataTestId.registrationLandingPage.fileVersion} sx={{ gridArea: 'version' }}>
+          {file.publisherAuthority
+            ? t('registration.files_and_license.published_version')
+            : t('registration.files_and_license.accepted_version')}
+        </Typography>
+      )}
 
       <Link
         href={licenseData?.link}
