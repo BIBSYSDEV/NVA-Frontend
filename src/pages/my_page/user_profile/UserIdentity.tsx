@@ -1,13 +1,10 @@
-import { useState } from 'react';
-import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { User } from '../../../types/user.types';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { getMaskedNationalIdentityNumber } from '../../../utils/user-helpers';
 import { UserRoles } from './UserRoles';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 
 interface UserIdentitiesProps {
   user: User;
@@ -18,7 +15,6 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
   const fullName = `${user.givenName} ${user.familyName}`;
   const userCristinId = user.cristinId?.split('/').pop();
   const nationalId = user.nationalIdNumber;
-  const [showFullNin, setShowFullNin] = useState(false);
 
   return (
     <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
@@ -50,30 +46,7 @@ export const UserIdentity = ({ user }: UserIdentitiesProps) => {
               flexDirection: { xs: 'column', md: 'row' },
               gap: { xs: '1rem', md: '5rem' },
             }}>
-            <TextField
-              data-testid={dataTestId.myPage.myProfile.nationalIdentityNumberField}
-              size="small"
-              label={t('basic_data.person_register.national_identity_number')}
-              variant="filled"
-              disabled
-              value={showFullNin ? nationalId : getMaskedNationalIdentityNumber(nationalId)}
-              InputProps={{
-                endAdornment: (
-                  <Tooltip
-                    title={
-                      showFullNin
-                        ? t('basic_data.person_register.hide_full_nin')
-                        : t('basic_data.person_register.show_full_nin')
-                    }>
-                    <IconButton
-                      data-testid={dataTestId.myPage.myProfile.showFullNinButton}
-                      onClick={() => setShowFullNin(!showFullNin)}>
-                      {showFullNin ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                    </IconButton>
-                  </Tooltip>
-                ),
-              }}
-            />
+            <NationalIdNumberField nationalId={nationalId} />
             <TextField
               data-testid={dataTestId.myPage.myProfile.cristinIdField}
               size="small"
