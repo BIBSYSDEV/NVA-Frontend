@@ -1,6 +1,10 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
-import { associatedArtifactIsFile, associatedArtifactIsLink } from '../../registration-helpers';
+import {
+  associatedArtifactIsFile,
+  associatedArtifactIsLink,
+  isContentTypeWithFileVersionField,
+} from '../../registration-helpers';
 
 const associatedArtifactErrorMessage = {
   fileVersionRequired: i18n.t('translation:feedback.validation.is_required', {
@@ -31,9 +35,11 @@ export const associatedFileValidationSchema = Yup.object({
     }),
   publisherAuthority: Yup.boolean()
     .nullable()
-    .when(['type', 'administrativeAgreement'], {
-      is: (type: string, administrativeAgreement: boolean) =>
-        associatedArtifactIsFile({ type }) && administrativeAgreement === false,
+    .when(['type', 'administrativeAgreement', '$contentType'], {
+      is: (type: string, administrativeAgreement: boolean, contentType: string | null) =>
+        associatedArtifactIsFile({ type }) &&
+        administrativeAgreement === false &&
+        isContentTypeWithFileVersionField(contentType),
       then: (schema) => schema.required(associatedArtifactErrorMessage.fileVersionRequired),
     }),
   license: Yup.object()

@@ -33,9 +33,10 @@ interface FilesTableRowProps {
   removeFile: () => void;
   toggleLicenseModal: () => void;
   baseFieldName: string;
+  showFileVersion: boolean;
 }
 
-export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRowProps) => {
+export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
@@ -94,33 +95,35 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName }: FilesTableRow
         </Field>
       </TableCell>
 
-      <TableCell>
-        <Field name={`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`}>
-          {({ field, meta: { error, touched } }: FieldProps) => (
-            <FormControl
-              data-testid={dataTestId.registrationWizard.files.version}
-              required
-              disabled={file.administrativeAgreement}>
-              <RadioGroup
-                {...field}
-                row
-                onChange={(event) => setFieldValue(field.name, JSON.parse(event.target.value))}>
-                <FormControlLabel
-                  value={false}
-                  control={<Radio />}
-                  label={t('registration.files_and_license.accepted')}
-                />
-                <FormControlLabel
-                  value={true}
-                  control={<Radio />}
-                  label={t('registration.files_and_license.published')}
-                />
-              </RadioGroup>
-              {error && touched && <FormHelperText error>{error}</FormHelperText>}
-            </FormControl>
-          )}
-        </Field>
-      </TableCell>
+      {showFileVersion && (
+        <TableCell>
+          <Field name={`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`}>
+            {({ field, meta: { error, touched } }: FieldProps) => (
+              <FormControl
+                data-testid={dataTestId.registrationWizard.files.version}
+                required
+                disabled={file.administrativeAgreement}>
+                <RadioGroup
+                  {...field}
+                  row
+                  onChange={(event) => setFieldValue(field.name, JSON.parse(event.target.value))}>
+                  <FormControlLabel
+                    value={false}
+                    control={<Radio />}
+                    label={t('registration.files_and_license.accepted')}
+                  />
+                  <FormControlLabel
+                    value={true}
+                    control={<Radio />}
+                    label={t('registration.files_and_license.published')}
+                  />
+                </RadioGroup>
+                {error && touched && <FormHelperText error>{error}</FormHelperText>}
+              </FormControl>
+            )}
+          </Field>
+        </TableCell>
+      )}
 
       <TableCell>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
