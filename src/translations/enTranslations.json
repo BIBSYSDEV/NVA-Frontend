@@ -396,7 +396,7 @@
       "create_user": "Your user was created",
       "created_customer": "Created customer institution",
       "delete_registration": "Deleted registration",
-      "doi_request_sent": "DOI request sent",
+      "doi_request_sent": "DOI is reserved",
       "doi_request_updated": "DOI request is updated",
       "publishing_request_approved": "Registration was published",
       "publishing_request_rejected": "Publishing request was rejected",
