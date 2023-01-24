@@ -483,10 +483,11 @@
     "my_profile": {
       "heading": {
         "affiliations": "Affiliations",
-        "personalia": "Personalia",
+        "personalia": "Personal details",
         "roles": "Roles"
       },
       "identity": {
+        "cristin_id": "Cristin ID",
         "full_name": "Full name",
         "identity": "Identity",
         "not_shown_publicly": "Will not be shown publicly"
@@ -511,7 +512,7 @@
         "research_profile": "Research profile"
       },
       "user_profile": "User profile",
-      "user_profile_description": "Here you can fill in and mark what you want to appear on your official researcher profile."
+      "user_profile_description": "Here you can fill in and mark what you want to appear on your public researcher profile."
     },
     "registrations": {
       "delete_registration": "Delete unpublished registration",
