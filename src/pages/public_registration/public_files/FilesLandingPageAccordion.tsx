@@ -5,7 +5,11 @@ import { LandingPageAccordion } from '../../../components/landing_page/LandingPa
 import { RootState } from '../../../redux/store';
 import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { getAssociatedFiles, userCanEditRegistration } from '../../../utils/registration-helpers';
+import {
+  getAssociatedFiles,
+  shouldShowFileVersion,
+  userCanEditRegistration,
+} from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
 
@@ -27,6 +31,8 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     (file) => file.type === 'PublishedFile' || (file.type === 'UnpublishedFile' && userIsRegistrationAdmin)
   );
 
+  const showFileVersion = shouldShowFileVersion(registration);
+
   return filesToShow.length === 0 ? null : (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
@@ -46,6 +52,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           file={file}
           registrationIdentifier={registration.identifier}
           openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
+          showFileVersion={showFileVersion}
         />
       ))}
     </LandingPageAccordion>
