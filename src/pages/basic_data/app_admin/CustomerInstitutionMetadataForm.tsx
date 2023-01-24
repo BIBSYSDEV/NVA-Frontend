@@ -199,12 +199,7 @@ export const CustomerInstitutionMetadataForm = ({
                       label={t('basic_data.institutions.doi_prefix')}
                       dataTestId={dataTestId.basicData.institutionAdmin.doiPrefixField}
                     />
-                    <CustomerInstitutionTextField
-                      required
-                      name={CustomerInstitutionFieldNames.DoiUrl}
-                      label={t('basic_data.institutions.doi_url')}
-                      dataTestId={dataTestId.basicData.institutionAdmin.doiUrlField}
-                    />
+
                     <CustomerDoiPasswordField doiAgentId={customerInstitution?.doiAgent.id ?? ''} />
                   </Box>
                 )}
