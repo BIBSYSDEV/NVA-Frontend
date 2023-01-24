@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
 import { User } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface UserRolesProps {
   user: User;
@@ -26,7 +27,7 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
           {t('my_page.roles.not_customer')}
         </Typography>
       ) : (
-        <Typography data-testid="no-active-employments-text" sx={{ color: 'error.main' }}>
+        <Typography data-testid={dataTestId.myPage.myProfile.noActiveEmploymentsText} sx={{ color: 'error.main' }}>
           {t('my_page.roles.no_active_employments')}
         </Typography>
       )}
