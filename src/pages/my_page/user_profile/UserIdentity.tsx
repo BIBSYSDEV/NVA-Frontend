@@ -49,7 +49,7 @@ export const UserIdentity = ({ user, hasActiveEmployment }: UserIdentitiesProps)
             <NationalIdNumberField nationalId={nationalId} />
             <TextField
               data-testid={dataTestId.myPage.myProfile.cristinIdField}
-              label={'Cristin ID'}
+              label={t('my_page.my_profile.identity.cristin_id')}
               value={userCristinId ? userCristinId : ''}
               variant="filled"
               disabled
