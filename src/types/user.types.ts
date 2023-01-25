@@ -89,6 +89,10 @@ interface CristinPersonName extends CristinArrayValue {
   type: CristinPersonNameType;
 }
 
+interface CristinPersonContactDetails {
+  telephone: string;
+}
+
 export interface CreateCristinPerson {
   identifiers: CristinPersonIdentifier[];
   names: CristinPersonName[];
@@ -99,6 +103,7 @@ export interface CristinPerson extends CreateCristinPerson {
   id: string;
   affiliations: CristinPersonAffiliation[];
   employments: Employment[];
+  contactDetails?: CristinPersonContactDetails;
 }
 
 export interface FlatCristinPerson {

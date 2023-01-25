@@ -348,6 +348,7 @@ export const dataTestId = {
       preferredLastNameField: 'preferred-last-name-field',
       saveProfileChangesButton: 'save-profile-changes-button',
       showFullNinButton: 'show-full-nin-button',
+      telephoneField: 'telephone-field',
     },
     myRegistrationsLink: 'my-registrations-link',
     newRegistrationLink: 'new-registration-link',
