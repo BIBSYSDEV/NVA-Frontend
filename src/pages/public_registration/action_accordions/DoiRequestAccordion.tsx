@@ -108,9 +108,10 @@ export const DoiRequestAccordion = ({
     }
   };
 
-  const hasMismatchingDoiRequest =
-    (isPendingDoiRequest && !registration.doi && registration.status !== RegistrationStatus.Published) ||
-    (isClosedDoiRequest && !!registration.doi);
+  const waitingForReservedDoi =
+    isPendingDoiRequest && !registration.doi && registration.status !== RegistrationStatus.Published;
+  const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
+  const hasMismatchingDoiRequest = waitingForReservedDoi || waitingForRemovalOfDoi;
 
   return (
     <Accordion
