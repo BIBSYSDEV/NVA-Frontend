@@ -109,7 +109,8 @@ export const DoiRequestAccordion = ({
   };
 
   const hasMismatchingDoiRequest =
-    (isPendingDoiRequest && !registration.doi) || (isClosedDoiRequest && !!registration.doi);
+    (isPendingDoiRequest && !registration.doi && registration.status !== RegistrationStatus.Published) ||
+    (isClosedDoiRequest && !!registration.doi);
 
   return (
     <Accordion
@@ -214,7 +215,7 @@ export const DoiRequestAccordion = ({
           </>
         )}
 
-        {registration.doi && userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
+        {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <LoadingButton
               variant="contained"
