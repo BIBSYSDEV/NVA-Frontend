@@ -76,7 +76,15 @@ export const DoiRequestAccordion = ({
       if (openRequestDoiModal) {
         toggleRequestDoiModal();
       }
-      dispatch(setNotification({ message: t('feedback.success.doi_request_sent'), variant: 'success' }));
+      dispatch(
+        setNotification({
+          message:
+            registration.status === RegistrationStatus.Draft
+              ? t('feedback.success.doi_reserved')
+              : t('feedback.success.doi_request_sent'),
+          variant: 'success',
+        })
+      );
       refetchRegistrationAndTickets();
     }
   };
