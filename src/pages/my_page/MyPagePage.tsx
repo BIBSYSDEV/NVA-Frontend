@@ -24,8 +24,8 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import ResearchProfile from '../research_profile/ResearchProfile';
-
-import { Box, Divider } from '@mui/material';
+import { Divider } from '@mui/material';
+import { MyPublications } from './user_profile/MyPublications';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -89,6 +89,11 @@ const MyPagePage = () => {
             to={UrlPathTemplate.MyPageMyProfile}>
             {t('my_page.my_profile.user_profile')}
           </LinkButton>
+          <LinkButton
+            isSelected={currentPath === UrlPathTemplate.MyPageMyPublications}
+            to={UrlPathTemplate.MyPageMyPublications}>
+            {t('my_page.my_profile.publications')}
+          </LinkButton>
           <Divider key="divider4" />
         </NavigationList>
       </SidePanel>
@@ -99,6 +104,7 @@ const MyPagePage = () => {
           <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPublications} component={MyPublications} />
         </ErrorBoundary>
       </Switch>
     </StyledPageWithSideMenu>
