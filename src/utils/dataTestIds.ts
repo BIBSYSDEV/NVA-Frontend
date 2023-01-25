@@ -349,6 +349,7 @@ export const dataTestId = {
       saveProfileChangesButton: 'save-profile-changes-button',
       showFullNinButton: 'show-full-nin-button',
     },
+    myPublicationsLink: "my-publications'link",
     myRegistrationsLink: 'my-registrations-link',
     newRegistrationLink: 'new-registration-link',
     researchProfileLink: 'research-profile-link',

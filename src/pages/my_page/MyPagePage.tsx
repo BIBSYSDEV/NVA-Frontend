@@ -25,7 +25,7 @@ import {
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import ResearchProfile from '../research_profile/ResearchProfile';
 import { Divider } from '@mui/material';
-import { MyPublications } from './user_profile/MyPublications';
+import { MyResults } from './user_profile/MyResults';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -90,9 +90,10 @@ const MyPagePage = () => {
             {t('my_page.my_profile.user_profile')}
           </LinkButton>
           <LinkButton
-            isSelected={currentPath === UrlPathTemplate.MyPageMyPublications}
-            to={UrlPathTemplate.MyPageMyPublications}>
-            {t('my_page.my_profile.publications')}
+            data-testid={dataTestId.myPage.myPublicationsLink}
+            isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
+            to={UrlPathTemplate.MyPageMyResults}>
+            {t('my_page.my_profile.results')}
           </LinkButton>
           <Divider key="divider4" />
         </NavigationList>
@@ -104,7 +105,7 @@ const MyPagePage = () => {
           <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPublications} component={MyPublications} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResults} component={MyResults} />
         </ErrorBoundary>
       </Switch>
     </StyledPageWithSideMenu>
