@@ -65,7 +65,6 @@
       "doi_password": "Password",
       "doi_prefix": "DOI prefix",
       "doi_repo_id": "Data Cite Repository ID",
-      "doi_url": "URL",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Institution's domain in Feide",
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",

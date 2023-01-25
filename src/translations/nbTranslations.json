@@ -65,7 +65,6 @@
       "doi_password": "Passord",
       "doi_prefix": "DOI prefiks",
       "doi_repo_id": "Data Cite Repository ID",
-      "doi_url": "URL",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Institusjonens domene i Feide",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",

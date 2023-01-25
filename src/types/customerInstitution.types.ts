@@ -28,7 +28,6 @@ export interface CustomerInstitution extends SimpleCustomerInstitution {
 
 export interface DoiAgent {
   id: string;
-  url: string;
   prefix: string;
   username: string;
 }
@@ -76,7 +75,6 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
   id: '',
-  url: '',
   prefix: '',
   username: '',
   password: undefined,
@@ -87,7 +85,6 @@ export enum CustomerInstitutionFieldNames {
   CName = 'customer.cname',
   CristinId = 'customer.cristinId',
   DisplayName = 'customer.displayName',
-  DoiUrl = 'doiAgent.url',
   DoiUsername = 'doiAgent.username',
   DoiPassword = 'doiAgent.password',
   DoiPrefix = 'doiAgent.prefix',
