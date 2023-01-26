@@ -13,6 +13,7 @@ export enum FileApiPath {
 }
 
 export enum CristinApiPath {
+  FundingSources = '/cristin/funding-sources',
   Organization = '/cristin/organization',
   Person = '/cristin/person',
   PersonIdentityNumber = '/cristin/person/identityNumber',

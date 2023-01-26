@@ -111,6 +111,21 @@ interface Funding {
   activeTo: string;
 }
 
+export const emptyFunding: Funding = {
+  type: 'Funding',
+  source: '',
+  id: '',
+  identifier: '',
+  name: '',
+  alternativeName: {},
+  fundingAmount: {
+    currency: 'NOK',
+    amount: 0,
+  },
+  activeFrom: '',
+  activeTo: '',
+};
+
 export interface BaseEntityDescription {
   type: 'EntityDescription';
   abstract: string;

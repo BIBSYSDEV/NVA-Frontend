@@ -95,3 +95,14 @@ export interface CristinProject extends PostCristinProject {
   popularScientificSummary: LanguageString;
   funding: Funding[];
 }
+
+interface FundingSource {
+  id: string;
+  identifier: string;
+  name: LanguageString;
+}
+
+export interface FundingSources {
+  id: string;
+  sources: FundingSource[];
+}

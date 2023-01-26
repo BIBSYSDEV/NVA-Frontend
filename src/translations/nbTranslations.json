@@ -937,6 +937,10 @@
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskrivelse av innhold, hvis relevant",
+      "funding": {
+        "funder": "Finansiør",
+        "funder_filter": "Filtrer på navn eller kode"
+      },
       "hrcs_activities": "HRCS-aktiviteter",
       "hrcs_categories": "HRCS-kategorier",
       "keywords": "Nøkkelord",

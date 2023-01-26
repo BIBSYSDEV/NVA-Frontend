@@ -10,6 +10,7 @@ import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
+import { FundingsField } from './description_tab/FundingsField';
 
 const languageOptions = [
   getLanguageByIso6393Code('eng'),
@@ -156,6 +157,8 @@ export const DescriptionPanel = () => {
       </Box>
 
       <ProjectsField />
+
+      <FundingsField />
     </InputContainerBox>
   );
 };
