@@ -96,14 +96,14 @@ export interface BaseRegistration {
   fundings: Funding[];
 }
 
-interface Funding {
+export interface Funding {
   type: 'Funding';
   source: string;
   id: string;
   identifier: string;
   name: string;
-  alternativeName: LanguageString;
-  fundingAmount: {
+  alternativeName?: LanguageString;
+  fundingAmount?: {
     currency: string;
     amount: number;
   };

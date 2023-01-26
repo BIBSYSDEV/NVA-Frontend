@@ -106,3 +106,13 @@ export interface FundingSources {
   id: string;
   sources: FundingSource[];
 }
+
+export interface NfrProject {
+  source: string;
+  id: string;
+  identifier: string;
+  name: LanguageString;
+  lead: string;
+  activeFrom: string;
+  activeTo: string;
+}
