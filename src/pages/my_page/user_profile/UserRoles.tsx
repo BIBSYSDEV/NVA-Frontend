@@ -1,31 +1,34 @@
 import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
 import { User } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface UserRolesProps {
   user: User;
+  hasActiveEmployment: boolean;
 }
 
-export const UserRoles = ({ user }: UserRolesProps) => {
+export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
   const { t } = useTranslation();
   const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator } = user;
+  const hasAnyRole = isAppAdmin || isInstitutionAdmin || isCurator || isEditor || isCreator;
 
   return (
-    <div>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       <Typography variant="h2">{t('my_page.my_profile.heading.roles')}</Typography>
       {user.customerId ? (
-        !isAppAdmin &&
-        !isInstitutionAdmin &&
-        !isEditor &&
-        !isCurator &&
-        !isCreator && (
+        !hasAnyRole && (
           <Typography data-testid="no-roles-text" sx={{ color: 'error.main' }}>
             {t('my_page.roles.no_roles')}
           </Typography>
         )
-      ) : (
+      ) : hasActiveEmployment ? (
         <Typography data-testid="not-customer-text" sx={{ color: 'error.main' }}>
           {t('my_page.roles.not_customer')}
+        </Typography>
+      ) : (
+        <Typography data-testid={dataTestId.myPage.myProfile.noActiveEmploymentsText} sx={{ color: 'error.main' }}>
+          {t('my_page.roles.no_active_employments')}
         </Typography>
       )}
       {isCreator && (
@@ -63,7 +66,7 @@ export const UserRoles = ({ user }: UserRolesProps) => {
           text={t('my_page.roles.app_admin_description')}
         />
       )}
-    </div>
+    </Box>
   );
 };
 
@@ -77,14 +80,12 @@ const RoleItem = ({ dataTestId, label, text }: IconLabelTextLineProps) => (
   <Box
     data-testid={dataTestId}
     sx={{
-      pt: '0.8rem',
+      bgcolor: 'secondary.dark',
+      p: '0.5rem',
       display: 'grid',
       gridTemplateAreas: "'role label' 'text text'",
       gridTemplateColumns: 'auto 1fr',
-      borderBottom: '1px solid',
-      '&:first-of-type': {
-        borderTop: '1px solid',
-      },
+      borderRadius: '1px',
     }}>
     <Typography component="h3" variant="body1" sx={{ gridArea: 'label', fontWeight: 'bold' }}>
       {label}

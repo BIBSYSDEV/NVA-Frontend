@@ -25,9 +25,6 @@ const customerErrorMessage = {
   doiPrefixRequired: i18n.t('translation:feedback.validation.is_required', {
     field: i18n.t('translation:basic_data.institutions.doi_prefix'),
   }),
-  doiUrlRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:basic_data.institutions.doi_url'),
-  }),
 };
 
 export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerInstitutionFormData>>({
@@ -48,7 +45,6 @@ export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerI
         prefix: Yup.string()
           .matches(/^10.(\d){4,9}$/, customerErrorMessage.doiPrefixInvalid)
           .required(customerErrorMessage.doiPrefixRequired),
-        url: Yup.string().required(customerErrorMessage.doiUrlRequired),
         password: Yup.string().optional(), // Password in validated inline, on the Field component
       }),
     otherwise: (schema) => schema.nullable(),

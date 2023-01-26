@@ -10,11 +10,11 @@ import {
   TextField,
   IconButton,
   MenuItem,
+  Link,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import CheckIcon from '@mui/icons-material/CheckCircleSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
@@ -25,6 +25,7 @@ import { AddContributorModal } from '../AddContributorModal';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { CristinPerson } from '../../../../types/user.types';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
+import { ContributorIndicator } from '../ContributorIndicator';
 
 interface ContributorRowProps {
   contributor: Contributor;
@@ -98,6 +99,11 @@ export const ContributorRow = ({
           )}
         </Box>
       </TableCell>
+      <TableCell width="1">
+        <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+          <ContributorIndicator contributor={contributor} />
+        </Box>
+      </TableCell>
       <TableCell align="left" width="1">
         <Box sx={{ display: 'flex', alignItems: 'end' }}>
           {!contributorRoles.includes(contributor.role) && (
@@ -132,22 +138,21 @@ export const ContributorRow = ({
           )}
         </Field>
       </TableCell>
-      <TableCell align="center" width="1">
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <TableCell>
+        <Box sx={{ display: 'flex', gap: '0.2rem', alignItems: 'center' }}>
           {contributor.identity.id ? (
-            <Tooltip title={t('registration.contributors.known_author_identity')}>
-              <CheckIcon color="primary" />
-            </Tooltip>
+            <Typography>{contributor.identity.name}</Typography>
           ) : (
             <Tooltip title={t('registration.contributors.verify_person')}>
-              <IconButton
-                size="small"
+              <Typography
                 data-testid={dataTestId.registrationWizard.contributors.verifyContributorButton(
                   contributor.identity.name
                 )}
-                onClick={() => setOpenVerifyContributor(true)}>
-                <WarningIcon color="warning" />
-              </IconButton>
+                component={Link}
+                onClick={() => setOpenVerifyContributor(true)}
+                sx={{ cursor: 'pointer' }}>
+                {contributor.identity.name}
+              </Typography>
             </Tooltip>
           )}
           {contributor.identity.orcId && (
@@ -158,9 +163,6 @@ export const ContributorRow = ({
             </Tooltip>
           )}
         </Box>
-      </TableCell>
-      <TableCell>
-        <Typography>{contributor.identity.name}</Typography>
       </TableCell>
       <TableCell sx={{ maxWidth: '25rem' }}>
         {contributor.identity && (
@@ -176,7 +178,7 @@ export const ContributorRow = ({
           <IconButton
             data-testid={dataTestId.registrationWizard.contributors.removeContributorButton(contributor.identity.name)}
             onClick={() => setOpenRemoveContributor(true)}>
-            <CancelIcon color="error" />
+            <CancelIcon color="primary" />
           </IconButton>
         </Tooltip>
       </TableCell>

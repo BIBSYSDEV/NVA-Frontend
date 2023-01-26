@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SubjectIcon from '@mui/icons-material/Subject';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
 import { Box, Button, Divider, Typography } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
@@ -94,7 +94,7 @@ const SearchPage = () => {
         history.push({ search: newSearchParams.toString() });
       }}>
       {({ setValues }: FormikProps<SearchConfig>) => (
-        <Form>
+        <Form style={{ width: '100%' }}>
           <StyledPageWithSideMenu>
             <SidePanel>
               <SideNavHeader icon={SearchIcon} text={t('common.search')} />
@@ -119,6 +119,7 @@ const SearchPage = () => {
                   sx={{
                     width: 'fit-content',
                     color: 'common.black',
+                    bgcolor: resultIsSelected ? undefined : 'background.default',
                     borderColor: 'registration.main',
                   }}
                   startIcon={<SubjectIcon />}>
@@ -135,7 +136,12 @@ const SearchPage = () => {
                     }
                   }}
                   color="person"
-                  sx={{ width: 'fit-content', color: 'common.black', borderColor: 'person.main' }}
+                  sx={{
+                    width: 'fit-content',
+                    color: 'common.black',
+                    bgcolor: personIsSeleced ? undefined : 'background.default',
+                    borderColor: 'person.main',
+                  }}
                   startIcon={<PersonIcon />}>
                   {t('search.persons')}
                 </Button>
@@ -150,7 +156,12 @@ const SearchPage = () => {
                     }
                   }}
                   color="project"
-                  sx={{ width: 'fit-content', color: 'common.black', borderColor: 'project.main' }}
+                  sx={{
+                    width: 'fit-content',
+                    color: 'common.black',
+                    bgcolor: projectIsSelected ? undefined : 'background.default',
+                    borderColor: 'project.main',
+                  }}
                   startIcon={<ShowChartIcon />}>
                   {t('project.project')}
                 </Button>
@@ -161,7 +172,7 @@ const SearchPage = () => {
                   <Divider />
                   <Box sx={{ m: '0.5rem 1rem', display: 'flex', justifyContent: 'space-between' }}>
                     <Typography variant="h2">{t('search.search_filter')}</Typography>
-                    <FilterAltIcon />
+                    <FilterAltOutlined />
                   </Box>
                   <Divider />
                   <Box

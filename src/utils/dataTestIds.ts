@@ -38,6 +38,7 @@ export const dataTestId = {
       saveButton: 'save-button',
       shortNameField: 'short-name-field',
     },
+    nationalIdentityNumberField: 'national-identity-number-field',
     personRegisterLink: 'person-register-link',
   },
   confirmDialog: {
@@ -56,6 +57,9 @@ export const dataTestId = {
     vocabularyLinkButton: 'vocabulary-link-button',
     hrcsActivityButtonGroup: 'hrcs-activity-button-group',
     hrcsCategoryButtonGroup: 'hrcs-category-button-group',
+    workflowRegistratorPublishesAll: 'workflow-registrator-publishes-all',
+    workflowRegistratorPublishesMetadata: 'workflow-registrator-publishes-metadata',
+    workflowRegistratorRequiresApproval: 'workflow-registrator-requires-approval',
   },
   header: {
     aboutLink: 'about-link',
@@ -158,7 +162,10 @@ export const dataTestId = {
       searchField: 'search-field',
       selectContributorType: 'select-contributor-type',
       selectUserButton: 'select-user-button',
+      unverifiedAuthor: (initials: string) => `unverified-author-${initials}`,
       unverifiedContributorName: 'unverified-contributor-name',
+      verifiedAuthor: (initials: string) => `verified-author-${initials}`,
+      verifiedAuthorNoAffiliation: (initials: string) => `verified-author-no-affiliation-${initials}`,
     },
     description: {
       addVocabularyButton: 'add-vocabulary-button',
@@ -332,6 +339,17 @@ export const dataTestId = {
   myPage: {
     messagesLink: 'messages-link',
     myProfileLink: 'my-profile-link',
+    myProfile: {
+      cristinIdField: 'cristin-id-field',
+      editPreferredNameButton: 'edit-preferred-name-button',
+      fullNameField: 'full-name-field',
+      noActiveEmploymentsText: 'no-active-employments-text',
+      preferredFirstNameField: 'preferred-first-name-field',
+      preferredLastNameField: 'preferred-last-name-field',
+      saveProfileChangesButton: 'save-profile-changes-button',
+      showFullNinButton: 'show-full-nin-button',
+      telephoneField: 'telephone-field',
+    },
     myRegistrationsLink: 'my-registrations-link',
     newRegistrationLink: 'new-registration-link',
     researchProfileLink: 'research-profile-link',

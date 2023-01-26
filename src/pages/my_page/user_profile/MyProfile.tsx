@@ -2,12 +2,11 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, Divider, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { UserOrcid } from './UserOrcid';
-import { UserRoles } from './UserRoles';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 import { RootState } from '../../../redux/store';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -16,8 +15,10 @@ import { PageSpinner } from '../../../components/PageSpinner';
 import { CristinPerson, FlatCristinPerson } from '../../../types/user.types';
 import { updateCristinPerson } from '../../../api/userApi';
 import { useFetch } from '../../../utils/hooks/useFetch';
-import { getValueByKey } from '../../../utils/user-helpers';
+import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-helpers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { UserIdentity } from './UserIdentity';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
@@ -35,11 +36,14 @@ export const MyProfile = () => {
     errorMessage: t('feedback.error.get_person'),
   });
 
+  const hasActiveEmployment = filterActiveAffiliations(person?.affiliations).length > 0;
+
   const firstName = getValueByKey('FirstName', person?.names);
   const lastName = getValueByKey('LastName', person?.names);
   const personPreferredFirstName = getValueByKey('PreferredFirstName', person?.names);
   const personPreferredLastName = getValueByKey('PreferredLastName', person?.names);
   const [editPreferredNames, setEditPreferredNames] = useState(false);
+  const personTelephone = person?.contactDetails?.telephone;
 
   const initialValues: CristinPersonFormData = {
     preferredFirstName: personPreferredFirstName ? personPreferredFirstName : firstName,
@@ -75,10 +79,10 @@ export const MyProfile = () => {
             xs: '1fr',
             md: '3fr 1fr',
           },
-          gap: '1rem',
+          columnGap: '1rem',
           gridTemplateAreas: {
-            xs: '"user-profile" "research-profile"',
-            md: '"user-profile research-profile" ',
+            xs: '"user-profile" "user-identity" "research-profile"',
+            md: '"user-profile research-profile" "user-identity research-profile" ',
           },
         }}>
         <BackgroundDiv
@@ -96,49 +100,65 @@ export const MyProfile = () => {
                 <Formik initialValues={initialValues} onSubmit={updatePerson} enableReinitialize>
                   {({ isSubmitting, dirty }: FormikProps<CristinPersonFormData>) => (
                     <Form>
-                      <Box sx={{ display: 'flex', gap: '1rem' }}>
-                        <Field name={'preferredFirstName'}>
-                          {({ field }: FieldProps<string>) => (
-                            <TextField
-                              {...field}
-                              id={field.name}
-                              disabled={!editPreferredNames || isSubmitting}
-                              label={t('my_page.my_profile.preferred_first_name')}
-                              size="small"
-                              variant="filled"
-                            />
-                          )}
-                        </Field>
-                        <Field name={'preferredLastName'}>
-                          {({ field }: FieldProps<string>) => (
-                            <TextField
-                              {...field}
-                              id={field.name}
-                              disabled={!editPreferredNames || isSubmitting}
-                              label={t('my_page.my_profile.preferred_last_name')}
-                              size="small"
-                              variant="filled"
-                            />
-                          )}
-                        </Field>
-                        <Tooltip title={t('common.edit')}>
-                          <IconButton onClick={() => setEditPreferredNames(!editPreferredNames)}>
-                            <EditIcon sx={{ width: '1.2rem' }} />
-                          </IconButton>
-                        </Tooltip>
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: 'fit-content' }}>
+                        <Box sx={{ display: 'flex', gap: '1rem' }}>
+                          <Field name={'preferredFirstName'}>
+                            {({ field }: FieldProps<string>) => (
+                              <TextField
+                                {...field}
+                                data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
+                                id={field.name}
+                                disabled={!editPreferredNames || isSubmitting}
+                                label={t('my_page.my_profile.preferred_first_name')}
+                                size="small"
+                                variant="filled"
+                              />
+                            )}
+                          </Field>
+                          <Field name={'preferredLastName'}>
+                            {({ field }: FieldProps<string>) => (
+                              <TextField
+                                {...field}
+                                data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
+                                id={field.name}
+                                disabled={!editPreferredNames || isSubmitting}
+                                label={t('my_page.my_profile.preferred_last_name')}
+                                size="small"
+                                variant="filled"
+                              />
+                            )}
+                          </Field>
+                          <Tooltip title={t('common.edit')}>
+                            <IconButton
+                              data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
+                              onClick={() => setEditPreferredNames(!editPreferredNames)}>
+                              <EditIcon sx={{ width: '1.2rem' }} />
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
+                        <TextField
+                          sx={{ width: 'fit-content' }}
+                          value={personTelephone}
+                          data-testid={dataTestId.myPage.myProfile.telephoneField}
+                          disabled
+                          label={t('my_page.my_profile.telephone')}
+                          size="small"
+                          variant="filled"
+                        />
                       </Box>
-                      <Box sx={{ display: 'flex', mt: '0.5rem', alignItems: 'center' }}>
-                        <Typography fontWeight={600}>{t('common.orcid')}</Typography>
-                        <UserOrcid user={user} />
-                      </Box>
-                      <Box sx={{ display: 'flex', justifyContent: 'right' }}>
-                        <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
+                      <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
+                        <LoadingButton
+                          data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
+                          loading={isSubmitting}
+                          disabled={!dirty}
+                          variant="contained"
+                          type="submit">
                           {t('common.save')}
                         </LoadingButton>
                       </Box>
-                      <Box>
-                        <UserRoles user={user} />
-                      </Box>
+                      <Divider sx={{ my: '1rem' }} />
+                      <Typography fontWeight={600}>{t('common.orcid')}</Typography>
+                      <UserOrcid user={user} />
                     </Form>
                   )}
                 </Formik>
@@ -146,6 +166,8 @@ export const MyProfile = () => {
             )}
           </Box>
         </BackgroundDiv>
+        <UserIdentity user={user} hasActiveEmployment={hasActiveEmployment} />
+
         <Box sx={{ gridArea: 'research-profile' }}>
           <ResearchProfilePanel person={person} isLoadingPerson={isLoadingPerson} />
         </Box>

@@ -46,6 +46,7 @@ export const AddAffiliationPanel = () => {
             onChange={(_, value) => setFieldValue(field.name, value?.id)}
             renderInput={(params) => (
               <TextField
+                type="search"
                 {...field}
                 {...params}
                 required

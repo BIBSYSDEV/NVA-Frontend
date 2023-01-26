@@ -69,6 +69,7 @@ export const PersonRegisterPage = () => {
       </Helmet>
 
       <TextField
+        type="search"
         variant="filled"
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}

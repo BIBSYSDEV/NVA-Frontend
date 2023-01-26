@@ -42,6 +42,7 @@ import {
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  shouldShowFileVersionField,
 } from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
@@ -55,13 +56,8 @@ interface FilesAndLicensePanelProps {
 
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
-  const {
-    values: { associatedArtifacts, entityDescription },
-    setFieldTouched,
-    setFieldValue,
-    errors,
-    touched,
-  } = useFormikContext<Registration>();
+  const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
+  const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
   const [isEmbargoModalOpen, setIsEmbargoModalOpen] = useState(false);
@@ -111,6 +107,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   const originalDoi = entityDescription?.reference?.doi;
+  const showFileVersion = shouldShowFileVersionField(values);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -184,12 +181,14 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                 <TableCell>{t('common.name')}</TableCell>
                                 <TableCell>{t('registration.files_and_license.size')}</TableCell>
                                 <TableCell>{t('registration.files_and_license.administrative_agreement')}</TableCell>
-                                <TableCell>
-                                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                    {t('common.version')}
-                                    <Typography color="error">*</Typography>
-                                  </Box>
-                                </TableCell>
+                                {showFileVersion && (
+                                  <TableCell>
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                      {t('common.version')}
+                                      <Typography color="error">*</Typography>
+                                    </Box>
+                                  </TableCell>
+                                )}
                                 <TableCell>
                                   <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                                     {t('registration.files_and_license.embargo')}
@@ -245,6 +244,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                     }}
                                     toggleLicenseModal={toggleLicenseModal}
                                     baseFieldName={`${name}[${associatedFileIndex}]`}
+                                    showFileVersion={showFileVersion}
                                   />
                                 );
                               })}

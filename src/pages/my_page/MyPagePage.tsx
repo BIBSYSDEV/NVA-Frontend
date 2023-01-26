@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import AddIcon from '@mui/icons-material/Add';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
@@ -22,6 +24,8 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import ResearchProfile from '../research_profile/ResearchProfile';
+
+import { Box, Divider } from '@mui/material';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -50,9 +54,11 @@ const MyPagePage = () => {
               key={dataTestId.myPage.messagesLink}
               data-testid={dataTestId.myPage.messagesLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMessages}
-              to={UrlPathTemplate.MyPageMessages}>
+              to={UrlPathTemplate.MyPageMessages}
+              startIcon={<ChatBubbleOutlineOutlinedIcon />}>
               {t('my_page.messages.messages')}
             </LinkButton>,
+            <Divider key="divider1" />,
             <LinkButtonRow key={dataTestId.myPage.myRegistrationsLink}>
               <LinkButton
                 data-testid={dataTestId.myPage.myRegistrationsLink}
@@ -63,23 +69,27 @@ const MyPagePage = () => {
               <LinkIconButton
                 data-testid={dataTestId.myPage.newRegistrationLink}
                 to={UrlPathTemplate.RegistrationNew}
-                icon={<AddIcon />}
+                icon={<AddCircleIcon />}
                 title={t('registration.new_registration')}
               />
             </LinkButtonRow>,
+            <Divider key="divider2" />,
           ]}
           <LinkButton
             data-testid={dataTestId.myPage.researchProfileLink}
             isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
-            to={UrlPathTemplate.MyPageResearchProfile}>
+            to={UrlPathTemplate.MyPageResearchProfile}
+            startIcon={<img src={orcidIcon} height="20" alt={t('common.orcid')} />}>
             {t('my_page.research_profile')}
           </LinkButton>
+          <Divider key="divider3" />
           <LinkButton
             data-testid={dataTestId.myPage.myProfileLink}
             isSelected={currentPath === UrlPathTemplate.MyPageMyProfile}
             to={UrlPathTemplate.MyPageMyProfile}>
             {t('my_page.my_profile.user_profile')}
           </LinkButton>
+          <Divider key="divider4" />
         </NavigationList>
       </SidePanel>
 

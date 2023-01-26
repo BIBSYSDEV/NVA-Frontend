@@ -65,9 +65,8 @@
       "doi_password": "Password",
       "doi_prefix": "DOI prefix",
       "doi_repo_id": "Data Cite Repository ID",
-      "doi_url": "URL",
       "edit_institution": "Edit institution",
-      "feide_organization_domain": "Organization domain in Feide",
+      "feide_organization_domain": "Institution's domain in Feide",
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
       "password_hide": "Hide password",
@@ -483,8 +482,14 @@
     "my_profile": {
       "heading": {
         "affiliations": "Affiliations",
-        "personalia": "Personalia",
+        "personalia": "Personal details",
         "roles": "Roles"
+      },
+      "identity": {
+        "cristin_id": "Cristin ID",
+        "full_name": "Full name",
+        "identity": "Identity",
+        "not_shown_publicly": "Will not be shown publicly"
       },
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
@@ -505,8 +510,9 @@
         "preview": "Preview",
         "research_profile": "Research profile"
       },
+      "telephone": "Telephone",
       "user_profile": "User profile",
-      "user_profile_description": "Here you can fill in and mark what you want to appear on your official researcher profile."
+      "user_profile_description": "Here you can fill in and mark what you want to appear on your public researcher profile."
     },
     "registrations": {
       "delete_registration": "Delete unpublished registration",
@@ -527,6 +533,7 @@
       "institution_admin": "Administrator",
       "institution_admin_description": "Maintains the institution's information in the person registery and assigns roles in the service.",
       "institution_admins": "Administrators",
+      "no_active_employments": "You have no roles because you have no active employments and do not have access to register.",
       "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
       "not_customer": "You don't have any roles because your institution is unknown to this application"
     }
@@ -708,7 +715,7 @@
             "col2": "Feide, Felles autoritesregister, ORCID"
           },
           "row1": {
-            "col0": "System roles and affiliation to the organisation",
+            "col0": "System roles and affiliation to the institution",
             "col1": "The user is assigned roles in the system in order to provide adapted functionality and access to the service.",
             "col2": "Assigned in NVA, Feide"
           },
@@ -732,7 +739,7 @@
           },
           "row1": {
             "col0": "Contact information",
-            "col1": "Email address assigned by the organization.",
+            "col1": "Email address assigned by the institution.",
             "col2": "Feide"
           },
           "row2": {
@@ -849,8 +856,12 @@
       "contributor_not_found": "Cannot find contributor",
       "corresponding": "Corresponding",
       "department": "Department",
+      "identity_status": {
+        "confirmed_identity": "Confirmed identity",
+        "confirmed_identity_without_affiliation": "Confirmed identity without affiliation",
+        "unknown_identity": "Unknown identity"
+      },
       "invalid_role": "The contributor must have a role that is valid for this resource type to be displayed for other users",
-      "known_author_identity": "Connected author identity",
       "must_select_type_first": "You must select resource type before you can add contributors.",
       "no_affiliations_found": "No affiliations found",
       "no_registrations_found": "No registrations found",
@@ -1396,17 +1407,17 @@
     "year_published": "Year published"
   },
   "search": {
+    "add_filter": "Add filter",
     "additional_participants_one": "+{{count}} participant",
     "additional_participants_other": "+{{count}} participants",
-    "add_filter": "Add filter",
     "contains": "Contains",
     "field_label": "Field",
     "hits_one": "{{count}} hit",
     "hits_other": "{{count}} hits",
     "not_containing": "Doesn't include",
     "operator": "Operator",
-    "persons": "Persons",
     "person_search_placeholder": "Search for name",
+    "persons": "Persons",
     "project_search_placeholder": "Search for title",
     "remove_filter": "Remove filter",
     "result": "Result",
