@@ -70,9 +70,7 @@ export const FundingsField = () => {
                         )}
                         disabled={!fundingSources || !!field.value}
                         getOptionLabel={(option) => getLanguageString(option.name)}
-                        onChange={(event, value) => {
-                          setFieldValue(field.name, value?.id);
-                        }}
+                        onChange={(_, value) => setFieldValue(field.name, value?.id)}
                         renderInput={(params) => (
                           <AutocompleteTextField
                             {...params}
@@ -97,7 +95,7 @@ export const FundingsField = () => {
                           {...field}
                           value={field.value ?? ''}
                           disabled={hasSelectedNfrSource}
-                          label={t('common.name')}
+                          label={t('registration.description.funding.project')}
                           fullWidth
                           variant="filled"
                           multiline
@@ -121,7 +119,8 @@ export const FundingsField = () => {
                         variant="outlined"
                         endIcon={<OpenInNewIcon />}
                         href={getNfrProjectUrl(funding.identifier)}
-                        target="_blank">
+                        target="_blank"
+                        rel="noopener noreferrer">
                         {t('common.open')}
                       </Button>
                     ) : (
@@ -140,7 +139,7 @@ export const FundingsField = () => {
                     )}
                   </>
                 )}
-                <IconButton onClick={() => remove(index)} title="Fjern">
+                <IconButton sx={{ width: 'fit-content' }} onClick={() => remove(index)} title={t('common.remove')}>
                   <CancelIcon color="primary" />
                 </IconButton>
               </Box>

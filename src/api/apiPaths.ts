@@ -43,3 +43,7 @@ export enum SearchApiPath {
   Registrations = '/search/resources',
   Tickets = '/search/tickets',
 }
+
+export enum VerifiedFundingApiPath {
+  Nfr = '/verified-funding/nfr',
+}
