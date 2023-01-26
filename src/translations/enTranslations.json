@@ -120,6 +120,7 @@
     "error_occurred": "An unexpected error has occurred",
     "first_name": "First name",
     "help": "Help",
+    "id": "ID",
     "institution": "Institution",
     "institutions": "Institutions",
     "last_name": "Last name",

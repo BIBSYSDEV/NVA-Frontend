@@ -102,7 +102,7 @@ export interface Funding {
   id: string;
   identifier: string;
   name: string;
-  alternativeName?: LanguageString;
+  alternativeName?: LanguageString; // TODO: rename to labels and remove "name" field
   fundingAmount?: {
     currency: string;
     amount: number;

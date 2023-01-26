@@ -120,6 +120,7 @@
     "error_occurred": "En uventet feil har oppstått",
     "first_name": "Fornavn",
     "help": "Hjelp",
+    "id": "ID",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
     "last_name": "Etternavn",
@@ -938,8 +939,10 @@
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskrivelse av innhold, hvis relevant",
       "funding": {
+        "financing": "Finansiering",
         "funder": "Finansiør",
-        "funder_filter": "Filtrer på navn eller kode"
+        "funder_filter": "Filtrer på navn eller kode",
+        "funding_sum": "Sum"
       },
       "hrcs_activities": "HRCS-aktiviteter",
       "hrcs_categories": "HRCS-kategorier",

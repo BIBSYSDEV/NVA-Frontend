@@ -3,6 +3,7 @@ import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext 
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { FundingSources } from '../../../types/project.types';
@@ -10,6 +11,7 @@ import { emptyFunding, Registration } from '../../../types/registration.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { NfrProjectSearch } from './NfrProjectSearch';
+import { getNfrProjectUrl } from './projects_field/projectHelpers';
 
 export const FundingsField = () => {
   const { t } = useTranslation();
@@ -23,29 +25,29 @@ export const FundingsField = () => {
         <>
           <Divider />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography>Finansiering</Typography>
+            <Typography>{t('registration.description.funding.financing')}</Typography>
 
             <Button startIcon={<AddIcon />} onClick={() => push(emptyFunding)}>
-              Legg til finansiering
+              {t('common.add')}
             </Button>
           </Box>
 
           {values.fundings.map((funding, index) => {
             const baseFieldName = `fundings[${index}]`;
-            const hasSelectedSource = !!values.fundings[index].source;
-            const hasSelectedNfrSource = values.fundings[index].source.split('/').pop() === 'NFR';
-            const hasSelectedNfrProject = hasSelectedNfrSource && values.fundings[index].id;
+            const hasSelectedSource = !!funding.source;
+            const hasSelectedNfrSource = funding.source.split('/').pop() === 'NFR';
+            const hasSelectedNfrProject = hasSelectedNfrSource && funding.id;
+
             return (
               <Box
                 key={index}
                 sx={{
                   display: 'grid',
-                  // gridTemplateAreas: '"source name id amount remove"',
-                  gridTemplateColumns: '3fr 4fr 1fr 1fr 1fr',
+                  gridTemplateColumns: '5fr 6fr 2fr 2fr 1fr',
                   gap: '1rem',
                   alignItems: 'center',
                 }}>
-                <Field name={`fundings[${index}].source`}>
+                <Field name={`${baseFieldName}.source`}>
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <>
                       <Autocomplete
@@ -69,7 +71,6 @@ export const FundingsField = () => {
                         disabled={!fundingSources || !!field.value}
                         getOptionLabel={(option) => getLanguageString(option.name)}
                         onChange={(event, value) => {
-                          // console.log('value', value);
                           setFieldValue(field.name, value?.id);
                         }}
                         renderInput={(params) => (
@@ -90,39 +91,47 @@ export const FundingsField = () => {
 
                 {hasSelectedSource && (!hasSelectedNfrSource || hasSelectedNfrProject) && (
                   <>
-                    <Field name={`fundings[${index}].name`}>
+                    <Field name={`${baseFieldName}.name`}>
                       {({ field }: FieldProps<string>) => (
                         <TextField
                           {...field}
                           value={field.value ?? ''}
                           disabled={hasSelectedNfrSource}
-                          label={'Name'}
+                          label={t('common.name')}
                           fullWidth
                           variant="filled"
                           multiline
                         />
                       )}
                     </Field>
-                    <Field name={`fundings[${index}].identifier`}>
+                    <Field name={`${baseFieldName}.identifier`}>
                       {({ field }: FieldProps<string>) => (
                         <TextField
                           {...field}
                           value={field.value ?? ''}
                           disabled={hasSelectedNfrSource}
-                          label={'ID'}
+                          label={t('common.id')}
                           fullWidth
                           variant="filled"
                         />
                       )}
                     </Field>
-                    {!hasSelectedNfrSource && (
-                      <Field name={`fundings[${index}].fundingAmount.amount`}>
+                    {hasSelectedNfrSource ? (
+                      <Button
+                        variant="outlined"
+                        endIcon={<OpenInNewIcon />}
+                        href={getNfrProjectUrl(funding.identifier)}
+                        target="_blank">
+                        {t('common.open')}
+                      </Button>
+                    ) : (
+                      <Field name={`${baseFieldName}.fundingAmount.amount`}>
                         {({ field }: FieldProps<string>) => (
                           <TextField
                             {...field}
                             value={field.value ?? ''}
                             disabled={hasSelectedNfrSource}
-                            label={'Sum'}
+                            label={t('registration.description.funding.funding_sum')}
                             fullWidth
                             variant="filled"
                           />
@@ -131,10 +140,7 @@ export const FundingsField = () => {
                     )}
                   </>
                 )}
-                <IconButton
-                  sx={{ width: 'fit-content', height: 'fit-content' }}
-                  onClick={() => remove(index)}
-                  title="Fjern">
+                <IconButton onClick={() => remove(index)} title="Fjern">
                   <CancelIcon color="primary" />
                 </IconButton>
               </Box>

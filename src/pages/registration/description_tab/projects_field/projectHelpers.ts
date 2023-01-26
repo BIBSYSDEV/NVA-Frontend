@@ -31,3 +31,6 @@ export const getProjectManagers = (contributors: ProjectContributor[]) =>
 
 export const getProjectParticipants = (contributors: ProjectContributor[]) =>
   contributors.filter((contributor) => contributor.type === 'ProjectParticipant');
+
+export const getNfrProjectUrl = (identifier: string) =>
+  `https://prosjektbanken.forskningsradet.no/project/FORISS/${identifier}`;
