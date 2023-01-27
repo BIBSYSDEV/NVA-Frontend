@@ -101,8 +101,7 @@ export interface Funding {
   source: string;
   id: string;
   identifier: string;
-  name: string;
-  alternativeName?: LanguageString; // TODO: rename to labels and remove "name" field
+  labels: LanguageString;
   fundingAmount?: {
     currency: string;
     amount: number;
@@ -116,8 +115,7 @@ export const emptyFunding: Funding = {
   source: '',
   id: '',
   identifier: '',
-  name: '',
-  alternativeName: {},
+  labels: {},
   fundingAmount: {
     currency: 'NOK',
     amount: 0,

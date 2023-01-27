@@ -41,7 +41,7 @@ export const NfrProjectSearch = ({ baseFieldName }: NfrProjectSearchProps) => {
             const nfrFunding: Funding = {
               type: 'Funding',
               ...rest,
-              name: getLanguageString(name),
+              labels: name,
             };
             setFieldValue(baseFieldName, nfrFunding);
           }

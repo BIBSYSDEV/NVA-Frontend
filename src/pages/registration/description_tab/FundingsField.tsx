@@ -9,12 +9,12 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { FundingSources } from '../../../types/project.types';
 import { emptyFunding, Registration } from '../../../types/registration.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
-import { getLanguageString } from '../../../utils/translation-helpers';
+import { getLanguageString, getPreferredLanguageCode } from '../../../utils/translation-helpers';
 import { NfrProjectSearch } from './NfrProjectSearch';
 import { getNfrProjectUrl } from './projects_field/projectHelpers';
 
 export const FundingsField = () => {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<Registration>();
   const [fundingSources, isLoadingFundingSources] = useFetchResource<FundingSources>(CristinApiPath.FundingSources);
   const fundingSourcesList = fundingSources?.sources ?? [];
@@ -37,6 +37,12 @@ export const FundingsField = () => {
             const hasSelectedSource = !!funding.source;
             const hasSelectedNfrSource = funding.source.split('/').pop() === 'NFR';
             const hasSelectedNfrProject = hasSelectedNfrSource && funding.id;
+
+            const labelKeys = Object.keys(funding.labels ?? {});
+            const preferredLanguageCode = getPreferredLanguageCode(i18n.language);
+            const labelKeyToUse = labelKeys.includes(preferredLanguageCode)
+              ? preferredLanguageCode
+              : labelKeys[0] ?? 'nb';
 
             return (
               <Box
@@ -89,7 +95,7 @@ export const FundingsField = () => {
 
                 {hasSelectedSource && (!hasSelectedNfrSource || hasSelectedNfrProject) && (
                   <>
-                    <Field name={`${baseFieldName}.name`}>
+                    <Field name={`${baseFieldName}.labels.${labelKeyToUse}`}>
                       {({ field }: FieldProps<string>) => (
                         <TextField
                           {...field}
