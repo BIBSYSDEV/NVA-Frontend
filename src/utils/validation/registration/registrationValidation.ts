@@ -18,8 +18,9 @@ import {
 } from './referenceValidation';
 import i18n from '../../../translations/i18n';
 import { getMainRegistrationType, isBook } from '../../registration-helpers';
-import { Registration, EntityDescription, RegistrationDate, Funding } from '../../../types/registration.types';
+import { Registration, EntityDescription, RegistrationDate } from '../../../types/registration.types';
 import { YupShape } from '../validationHelpers';
+import { fundingValidationSchema } from './fundingValidation';
 
 const registrationErrorMessage = {
   titleRequired: i18n.t('translation:feedback.validation.is_required', { field: i18n.t('translation:common.title') }),
@@ -33,24 +34,7 @@ const registrationErrorMessage = {
     field: i18n.t('translation:registration.description.date_published'),
   }),
   associatedArtifactRequired: i18n.t('translation:feedback.validation.must_have_associated_artifact'),
-  fundingSourceRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.description.funding.funder'),
-  }),
-  fundingProjectRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.description.funding.project'),
-  }),
-  fundingNfrProjectRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.description.funding.nfr_project'),
-  }),
 };
-
-const fundingValidationSchema = Yup.object<YupShape<Funding>>({
-  source: Yup.string().required(registrationErrorMessage.fundingSourceRequired),
-  id: Yup.string().required(registrationErrorMessage.fundingNfrProjectRequired), // TODO: Required if NFR
-  labels: Yup.object({
-    nb: Yup.string().required(registrationErrorMessage.fundingProjectRequired), // TODO: Required if not NFR
-  }),
-});
 
 export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
   entityDescription: Yup.object<YupShape<EntityDescription>>({

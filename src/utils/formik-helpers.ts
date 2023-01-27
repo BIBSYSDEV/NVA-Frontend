@@ -58,7 +58,7 @@ export const getTabErrors = (
   touched?: FormikTouched<Registration>
 ) => {
   const tabErrors: TabErrors = {
-    [RegistrationTab.Description]: getErrorMessages(descriptionFieldNames, errors, touched),
+    [RegistrationTab.Description]: getErrorMessages(getAllDescriptionFields(values.fundings), errors, touched),
     [RegistrationTab.ResourceType]: getErrorMessages(resourceFieldNames, errors, touched),
     [RegistrationTab.Contributors]: getErrorMessages(
       getAllContributorFields(values.entityDescription?.contributors ?? []),
@@ -84,8 +84,22 @@ export const getFirstErrorTab = (tabErrors?: TabErrors) =>
       : -1
     : -1;
 
-const descriptionFieldNames = Object.values(DescriptionFieldNames);
+// const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const resourceFieldNames = Object.values(ResourceFieldNames);
+
+const getAllDescriptionFields = (fundings: Funding[]) => {
+  const descriptionFieldNames: string[] = Object.values(DescriptionFieldNames);
+  fundings.forEach((_, index) => {
+    const baseFieldName = `fundings[${index}]`;
+
+    descriptionFieldNames.push(`${baseFieldName}.source`);
+    descriptionFieldNames.push(`${baseFieldName}.id`);
+    descriptionFieldNames.push(`${baseFieldName}.identifier`);
+    descriptionFieldNames.push(`${baseFieldName}.labels.nb`);
+    descriptionFieldNames.push(`${baseFieldName}.fundingAmount.amount`);
+  });
+  return descriptionFieldNames;
+};
 
 const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] => {
   const fieldNames: string[] = [];
