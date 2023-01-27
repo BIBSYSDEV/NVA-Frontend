@@ -12,6 +12,7 @@ import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { NfrProjectSearch } from './NfrProjectSearch';
 import { getNfrProjectUrl } from './projects_field/projectHelpers';
+import { fundingSourceIsNfr } from '../../../utils/registration-helpers';
 
 export const FundingsField = () => {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ export const FundingsField = () => {
           {values.fundings.map((funding, index) => {
             const baseFieldName = `${name}[${index}]`;
             const hasSelectedSource = !!funding.source;
-            const hasSelectedNfrSource = funding.source.split('/').pop() === 'NFR';
+            const hasSelectedNfrSource = fundingSourceIsNfr(funding.source);
             const hasSelectedNfrProject = hasSelectedNfrSource && funding.id;
 
             return (
@@ -150,10 +151,11 @@ export const FundingsField = () => {
                     </Field>
 
                     <Field name={`${baseFieldName}.fundingAmount.amount`}>
-                      {({ field }: FieldProps<string>) => (
+                      {({ field }: FieldProps<number>) => (
                         <TextField
                           {...field}
-                          value={field.value ?? ''}
+                          type="number"
+                          value={field.value > 0 ? field.value : ''}
                           disabled={hasSelectedNfrSource}
                           label={t('registration.description.funding.funding_sum')}
                           fullWidth
