@@ -20,7 +20,7 @@ import {
 } from '../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
 import { MapRegistration } from '../types/publication_types/otherRegistration.types';
-import { Registration, RegistrationTab } from '../types/registration.types';
+import { Funding, Registration, RegistrationTab } from '../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
 
 export interface TabErrors {
@@ -123,7 +123,7 @@ const getAllContributorFields = (contributors: Contributor[]): string[] => {
   return fieldNames;
 };
 
-const touchedDescriptionTabFields: FormikTouched<unknown> = {
+const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown> => ({
   entityDescription: {
     abstract: true,
     date: {
@@ -136,7 +136,17 @@ const touchedDescriptionTabFields: FormikTouched<unknown> = {
     mainTitle: true,
     tags: true,
   },
-};
+  fundings: fundings.map((_) => ({
+    source: true,
+    id: true,
+    identifier: true,
+    labels: { nb: true },
+    fundingAmount: {
+      currency: true,
+      amount: true,
+    },
+  })),
+});
 
 const touchedResourceTabFields = (registration: Registration): FormikTouched<unknown> => {
   const mainType = getMainRegistrationType(registration.entityDescription?.reference?.publicationInstance.type ?? '');
@@ -401,7 +411,7 @@ export const getTouchedTabFields = (
   values: Registration
 ): FormikTouched<Registration> => {
   const tabFields = {
-    [RegistrationTab.Description]: () => touchedDescriptionTabFields,
+    [RegistrationTab.Description]: () => touchedDescriptionTabFields(values.fundings),
     [RegistrationTab.ResourceType]: () => touchedResourceTabFields(values),
     [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription?.contributors ?? []),
     [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.associatedArtifacts),

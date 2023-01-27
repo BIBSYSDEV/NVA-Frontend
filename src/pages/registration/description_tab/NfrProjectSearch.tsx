@@ -1,5 +1,5 @@
 import { Autocomplete } from '@mui/material';
-import { useFormikContext } from 'formik';
+import { Field, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
@@ -17,7 +17,7 @@ interface NfrProjectSearchProps {
 
 export const NfrProjectSearch = ({ baseFieldName }: NfrProjectSearchProps) => {
   const { t } = useTranslation();
-  const { setFieldValue } = useFormikContext<Registration>();
+  const { setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -27,35 +27,40 @@ export const NfrProjectSearch = ({ baseFieldName }: NfrProjectSearchProps) => {
   const projects = nfrProjectSearch?.hits ?? [];
 
   return (
-    <>
-      <Autocomplete
-        options={projects}
-        filterOptions={(options) => options}
-        onInputChange={(_, newInputValue) => {
-          setSearchTerm(newInputValue);
-        }}
-        getOptionLabel={(option) => getLanguageString(option.name)}
-        onChange={(_, value) => {
-          if (value) {
-            const { name, lead, ...rest } = value;
-            const nfrFunding: Funding = {
-              type: 'Funding',
-              ...rest,
-              labels: name,
-            };
-            setFieldValue(baseFieldName, nfrFunding);
-          }
-        }}
-        renderInput={(params) => (
-          <AutocompleteTextField
-            {...params}
-            label={t('registration.description.funding.nfr_project')}
-            isLoading={isLoadingNfrProjectSearch}
-            placeholder={t('registration.description.funding.nfr_project_search')}
-            showSearchIcon
-          />
-        )}
-      />
-    </>
+    <Field name={`${baseFieldName}.id`}>
+      {({ field: { name }, meta: { touched, error } }: FieldProps<string>) => (
+        <Autocomplete
+          options={projects}
+          filterOptions={(options) => options}
+          onInputChange={(_, newInputValue) => {
+            setSearchTerm(newInputValue);
+          }}
+          getOptionLabel={(option) => getLanguageString(option.name)}
+          onChange={(_, value) => {
+            if (value) {
+              const { name, lead, ...rest } = value;
+              const nfrFunding: Funding = {
+                type: 'Funding',
+                ...rest,
+                labels: name,
+              };
+              setFieldValue(baseFieldName, nfrFunding);
+            }
+          }}
+          onBlur={() => setFieldTouched(name, true, false)}
+          renderInput={(params) => (
+            <AutocompleteTextField
+              {...params}
+              label={t('registration.description.funding.nfr_project')}
+              isLoading={isLoadingNfrProjectSearch}
+              placeholder={t('registration.description.funding.nfr_project_search')}
+              showSearchIcon
+              required
+              errorMessage={touched && !!error ? error : undefined}
+            />
+          )}
+        />
+      )}
+    </Field>
   );
 };

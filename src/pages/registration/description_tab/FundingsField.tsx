@@ -9,13 +9,13 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { FundingSources } from '../../../types/project.types';
 import { emptyFunding, Registration } from '../../../types/registration.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
-import { getLanguageString, getPreferredLanguageCode } from '../../../utils/translation-helpers';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { NfrProjectSearch } from './NfrProjectSearch';
 import { getNfrProjectUrl } from './projects_field/projectHelpers';
 
 export const FundingsField = () => {
-  const { i18n, t } = useTranslation();
-  const { values, setFieldValue } = useFormikContext<Registration>();
+  const { t } = useTranslation();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [fundingSources, isLoadingFundingSources] = useFetchResource<FundingSources>(CristinApiPath.FundingSources);
   const fundingSourcesList = fundingSources?.sources ?? [];
 
@@ -38,12 +38,6 @@ export const FundingsField = () => {
             const hasSelectedNfrSource = funding.source.split('/').pop() === 'NFR';
             const hasSelectedNfrProject = hasSelectedNfrSource && funding.id;
 
-            const labelKeys = Object.keys(funding.labels ?? {});
-            const preferredLanguageCode = getPreferredLanguageCode(i18n.language);
-            const labelKeyToUse = labelKeys.includes(preferredLanguageCode)
-              ? preferredLanguageCode
-              : labelKeys[0] ?? 'nb';
-
             return (
               <Box
                 key={index}
@@ -51,52 +45,83 @@ export const FundingsField = () => {
                   display: 'grid',
                   gridTemplateColumns: '5fr 6fr 2fr 2fr 1fr',
                   gap: '1rem',
-                  alignItems: 'center',
+                  alignItems: 'start',
                 }}>
                 <Field name={`${baseFieldName}.source`}>
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                    <>
-                      <Autocomplete
-                        value={fundingSourcesList.find((source) => source.id === field.value) ?? null}
-                        fullWidth
-                        options={fundingSourcesList}
-                        filterOptions={(options, state) => {
-                          const filter = state.inputValue.toLocaleLowerCase();
-                          return options.filter((option) => {
-                            const names = Object.values(option.name).map((name) => name.toLocaleLowerCase());
-                            const identifier = option.identifier.toLocaleLowerCase();
-                            return identifier.includes(filter) || names.some((name) => name.includes(filter));
-                          });
-                        }}
-                        renderOption={(props, option) => (
-                          //  TODO: Check if identical names are expected. If not, remove renderOption?
-                          <li {...props} key={option.identifier}>
-                            {getLanguageString(option.name)}
-                          </li>
-                        )}
-                        disabled={!fundingSources || !!field.value}
-                        getOptionLabel={(option) => getLanguageString(option.name)}
-                        onChange={(_, value) => setFieldValue(field.name, value?.id)}
-                        renderInput={(params) => (
-                          <AutocompleteTextField
-                            {...params}
-                            label={t('registration.description.funding.funder')}
-                            isLoading={isLoadingFundingSources}
-                            placeholder={t('registration.description.funding.funder_filter')}
-                            showSearchIcon={!field.value}
-                            multiline
-                          />
-                        )}
-                      />
-                    </>
+                    <Autocomplete
+                      value={fundingSourcesList.find((source) => source.id === field.value) ?? null}
+                      fullWidth
+                      options={fundingSourcesList}
+                      filterOptions={(options, state) => {
+                        const filter = state.inputValue.toLocaleLowerCase();
+                        return options.filter((option) => {
+                          const names = Object.values(option.name).map((name) => name.toLocaleLowerCase());
+                          const identifier = option.identifier.toLocaleLowerCase();
+                          return identifier.includes(filter) || names.some((name) => name.includes(filter));
+                        });
+                      }}
+                      renderOption={(props, option) => (
+                        //  TODO: Check if identical names are expected. If not, remove renderOption?
+                        <li {...props} key={option.identifier}>
+                          {getLanguageString(option.name)}
+                        </li>
+                      )}
+                      onBlur={() => setFieldTouched(field.name, true, false)}
+                      disabled={!fundingSources || !!field.value}
+                      getOptionLabel={(option) => getLanguageString(option.name)}
+                      onChange={(_, value) => setFieldValue(field.name, value?.id)}
+                      renderInput={(params) => (
+                        <AutocompleteTextField
+                          {...params}
+                          label={t('registration.description.funding.funder')}
+                          isLoading={isLoadingFundingSources}
+                          placeholder={t('registration.description.funding.funder_filter')}
+                          showSearchIcon={!field.value}
+                          multiline
+                          required
+                          errorMessage={touched && !!error ? error : undefined}
+                        />
+                      )}
+                    />
                   )}
                 </Field>
-                {hasSelectedNfrSource && !hasSelectedNfrProject && <NfrProjectSearch baseFieldName={baseFieldName} />}
 
-                {hasSelectedSource && (!hasSelectedNfrSource || hasSelectedNfrProject) && (
+                {hasSelectedNfrSource &&
+                  (hasSelectedNfrProject ? (
+                    <>
+                      <TextField
+                        value={getLanguageString(funding.labels)}
+                        disabled
+                        label={t('registration.description.funding.project')}
+                        fullWidth
+                        variant="filled"
+                        multiline
+                      />
+                      <TextField
+                        value={funding.identifier}
+                        disabled={hasSelectedNfrSource}
+                        label={t('common.id')}
+                        fullWidth
+                        variant="filled"
+                      />
+                      <Button
+                        variant="outlined"
+                        endIcon={<OpenInNewIcon />}
+                        href={getNfrProjectUrl(funding.identifier)}
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        {t('common.open')}
+                      </Button>
+                    </>
+                  ) : (
+                    <NfrProjectSearch baseFieldName={baseFieldName} />
+                  ))}
+
+                {!hasSelectedNfrSource && hasSelectedSource && (
                   <>
-                    <Field name={`${baseFieldName}.labels.${labelKeyToUse}`}>
-                      {({ field }: FieldProps<string>) => (
+                    <Field name={`${baseFieldName}.labels.nb`}>
+                      {({ field, meta: { touched, error } }: FieldProps<string>) => (
                         <TextField
                           {...field}
                           value={field.value ?? ''}
@@ -105,6 +130,9 @@ export const FundingsField = () => {
                           fullWidth
                           variant="filled"
                           multiline
+                          required={!hasSelectedNfrSource}
+                          error={touched && !!error}
+                          helperText={touched && !!error ? error : undefined}
                         />
                       )}
                     </Field>
@@ -120,29 +148,19 @@ export const FundingsField = () => {
                         />
                       )}
                     </Field>
-                    {hasSelectedNfrSource ? (
-                      <Button
-                        variant="outlined"
-                        endIcon={<OpenInNewIcon />}
-                        href={getNfrProjectUrl(funding.identifier)}
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        {t('common.open')}
-                      </Button>
-                    ) : (
-                      <Field name={`${baseFieldName}.fundingAmount.amount`}>
-                        {({ field }: FieldProps<string>) => (
-                          <TextField
-                            {...field}
-                            value={field.value ?? ''}
-                            disabled={hasSelectedNfrSource}
-                            label={t('registration.description.funding.funding_sum')}
-                            fullWidth
-                            variant="filled"
-                          />
-                        )}
-                      </Field>
-                    )}
+
+                    <Field name={`${baseFieldName}.fundingAmount.amount`}>
+                      {({ field }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          value={field.value ?? ''}
+                          disabled={hasSelectedNfrSource}
+                          label={t('registration.description.funding.funding_sum')}
+                          fullWidth
+                          variant="filled"
+                        />
+                      )}
+                    </Field>
                   </>
                 )}
                 <IconButton
