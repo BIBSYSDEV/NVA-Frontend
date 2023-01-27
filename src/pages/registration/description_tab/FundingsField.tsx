@@ -25,7 +25,7 @@ export const FundingsField = () => {
         <>
           <Divider />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography>{t('registration.description.funding.financing')}</Typography>
+            <Typography variant="h2">{t('registration.description.funding.financing')}</Typography>
 
             <Button startIcon={<AddIcon />} onClick={() => push(emptyFunding)}>
               {t('common.add')}
@@ -33,7 +33,7 @@ export const FundingsField = () => {
           </Box>
 
           {values.fundings.map((funding, index) => {
-            const baseFieldName = `fundings[${index}]`;
+            const baseFieldName = `${name}[${index}]`;
             const hasSelectedSource = !!funding.source;
             const hasSelectedNfrSource = funding.source.split('/').pop() === 'NFR';
             const hasSelectedNfrProject = hasSelectedNfrSource && funding.id;
@@ -139,7 +139,10 @@ export const FundingsField = () => {
                     )}
                   </>
                 )}
-                <IconButton sx={{ width: 'fit-content' }} onClick={() => remove(index)} title={t('common.remove')}>
+                <IconButton
+                  sx={{ width: 'fit-content' }}
+                  onClick={() => remove(index)}
+                  title={t('registration.description.funding.remove_funding')}>
                   <CancelIcon color="primary" />
                 </IconButton>
               </Box>

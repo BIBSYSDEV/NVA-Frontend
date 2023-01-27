@@ -938,6 +938,16 @@
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
       "date_published": "Date published",
       "description_of_content": "Description of content, if relevant",
+      "funding": {
+        "financing": "Funding",
+        "funder": "Funder",
+        "funder_filter": "Filter by name or code",
+        "funding_sum": "Sum",
+        "nfr_project": "NFR project",
+        "nfr_project_search": "Search by project name or project leader",
+        "project": "Project",
+        "remove_funding": "Remove funding"
+      },
       "hrcs_activities": "HRCS activities",
       "hrcs_categories": "HRCS categories",
       "keywords": "Keywords",
