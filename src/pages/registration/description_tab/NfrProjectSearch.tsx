@@ -35,14 +35,13 @@ export const NfrProjectSearch = ({ baseFieldName }: NfrProjectSearchProps) => {
           onInputChange={(_, newInputValue) => {
             setSearchTerm(newInputValue);
           }}
-          getOptionLabel={(option) => getLanguageString(option.name)}
+          getOptionLabel={(option) => getLanguageString(option.labels)}
           onChange={(_, value) => {
             if (value) {
-              const { name, lead, ...rest } = value;
+              const { lead, ...rest } = value;
               const nfrFunding: Funding = {
                 type: 'ConfirmedFunding',
                 ...rest,
-                labels: name,
               };
               setFieldValue(baseFieldName, nfrFunding);
             }

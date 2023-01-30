@@ -111,7 +111,7 @@ export interface NfrProject {
   source: string;
   id: string;
   identifier: string;
-  name: LanguageString;
+  labels: LanguageString;
   lead: string;
   activeFrom: string;
   activeTo: string;
