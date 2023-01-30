@@ -20,55 +20,52 @@ export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) 
 
   return (
     <>
-      {fundings.map((funding, index) => {
-        const isNfrSource = fundingSourceIsNfr(funding.source);
-        return (
-          <Box
-            key={index}
-            sx={{
-              bgcolor: 'grey.400',
-              borderRadius: '4px',
-              p: '0.5rem',
-              alignItems: 'center',
-              display: 'grid',
-              gridTemplateColumns: { xs: '1fr', md: '3fr auto 3fr auto 2fr auto 1fr' },
-              columnGap: '1rem',
-              ':not(:last-of-type)': { mb: '0.5rem' },
-            }}>
-            <Typography>{getLanguageString(funding.labels)}</Typography>
-            <Divider orientation="vertical" />
-            {isLoadingFundingSources ? (
-              <Skeleton />
-            ) : (
-              <Typography>
-                {getLanguageString(
-                  fundingSources?.sources.find((fundingSource) => fundingSource.id === funding.source)?.name
-                )}
-              </Typography>
-            )}
-            <Divider orientation="vertical" />
-            {isNfrSource ? (
-              <>
-                <Typography>{getPeriodString(funding.activeFrom, funding.activeTo)}</Typography>
-                <Divider orientation="vertical" />
-                <Button
-                  sx={{ width: 'min-content', justifySelf: { md: 'end' } }}
-                  size="small"
-                  endIcon={<OpenInNewIcon />}
-                  href={getNfrProjectUrl(funding.identifier)}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  {t('common.open')}
-                </Button>
-              </>
-            ) : (
-              <Typography>
-                {funding.fundingAmount?.amount} {funding.fundingAmount?.currency}
-              </Typography>
-            )}
-          </Box>
-        );
-      })}
+      {fundings.map((funding, index) => (
+        <Box
+          key={index}
+          sx={{
+            bgcolor: 'grey.400',
+            borderRadius: '4px',
+            p: '0.5rem',
+            alignItems: 'center',
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '3fr auto 3fr auto 2fr auto 1fr' },
+            columnGap: '1rem',
+            ':not(:last-of-type)': { mb: '0.5rem' },
+          }}>
+          <Typography>{getLanguageString(funding.labels)}</Typography>
+          <Divider orientation="vertical" />
+          {isLoadingFundingSources ? (
+            <Skeleton />
+          ) : (
+            <Typography>
+              {getLanguageString(
+                fundingSources?.sources.find((fundingSource) => fundingSource.id === funding.source)?.name
+              )}
+            </Typography>
+          )}
+          <Divider orientation="vertical" />
+          {fundingSourceIsNfr(funding.source) ? (
+            <>
+              <Typography>{getPeriodString(funding.activeFrom, funding.activeTo)}</Typography>
+              <Divider orientation="vertical" />
+              <Button
+                sx={{ width: 'min-content', justifySelf: { md: 'end' } }}
+                size="small"
+                endIcon={<OpenInNewIcon />}
+                href={getNfrProjectUrl(funding.identifier)}
+                target="_blank"
+                rel="noopener noreferrer">
+                {t('common.open')}
+              </Button>
+            </>
+          ) : (
+            <Typography>
+              {funding.fundingAmount?.amount} {funding.fundingAmount?.currency}
+            </Typography>
+          )}
+        </Box>
+      ))}
     </>
   );
 };
