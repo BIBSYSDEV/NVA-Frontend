@@ -47,7 +47,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             return (
               <Typography key={index}>
                 {funding.source.code === 'NFR' ? (
-                  <Link href={getNfrProjectUrl(funding.code)} target="_blank">
+                  <Link href={getNfrProjectUrl(funding.code)} target="_blank" rel="noopener noreferrer">
                     {fundingText}
                   </Link>
                 ) : (
