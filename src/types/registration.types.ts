@@ -97,9 +97,9 @@ export interface BaseRegistration {
 }
 
 export interface Funding {
-  type: 'Funding';
+  type: 'ConfirmedFunding' | 'UnconfirmedFunding';
   source: string;
-  id: string;
+  id?: string;
   identifier: string;
   labels: LanguageString;
   fundingAmount?: {
@@ -111,7 +111,7 @@ export interface Funding {
 }
 
 export const emptyFunding: Funding = {
-  type: 'Funding',
+  type: 'UnconfirmedFunding',
   source: '',
   id: '',
   identifier: '',

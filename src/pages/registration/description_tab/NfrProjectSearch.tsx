@@ -40,7 +40,7 @@ export const NfrProjectSearch = ({ baseFieldName }: NfrProjectSearchProps) => {
             if (value) {
               const { name, lead, ...rest } = value;
               const nfrFunding: Funding = {
-                type: 'Funding',
+                type: 'ConfirmedFunding',
                 ...rest,
                 labels: name,
               };
