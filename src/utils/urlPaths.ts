@@ -22,6 +22,7 @@ export enum UrlPathTemplate {
   MyPage = '/my-page',
   MyPageMessages = '/my-page/messages',
   MyPageMyProfile = '/my-page/my-profile',
+  MyPageMyProjects = '/my-page/my-projects',
   MyPageRegistrations = '/my-page/registrations',
   MyPageResearchProfile = '/my-page/research-profile',
   PrivacyPolicy = '/privacy-policy',

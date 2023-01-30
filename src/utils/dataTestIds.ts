@@ -350,6 +350,7 @@ export const dataTestId = {
       showFullNinButton: 'show-full-nin-button',
       telephoneField: 'telephone-field',
     },
+    myProjectsLink: 'my-projects-link',
     myRegistrationsLink: 'my-registrations-link',
     newRegistrationLink: 'new-registration-link',
     researchProfileLink: 'research-profile-link',
