@@ -44,7 +44,7 @@ export const FundingsField = () => {
                 key={index}
                 sx={{
                   display: 'grid',
-                  gridTemplateColumns: '5fr 6fr 2fr 2fr 1fr',
+                  gridTemplateColumns: { xs: '1fr', md: '5fr 6fr 2fr 2fr 1fr' },
                   gap: '1rem',
                   alignItems: 'start',
                 }}>

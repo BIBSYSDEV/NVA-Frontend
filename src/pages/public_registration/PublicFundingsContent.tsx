@@ -31,12 +31,12 @@ export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) 
               p: '0.5rem',
               alignItems: 'center',
               display: 'grid',
-              gridTemplateColumns: '2fr auto 2fr auto 1fr auto 1fr',
-              gap: '1rem',
+              gridTemplateColumns: { xs: '1fr', md: '3fr auto 3fr auto 2fr auto 1fr' },
+              columnGap: '1rem',
               ':not(:last-of-type)': { mb: '0.5rem' },
             }}>
             <Typography>{getLanguageString(funding.labels)}</Typography>
-            <Divider component="span" orientation="vertical" />
+            <Divider orientation="vertical" />
             {isLoadingFundingSources ? (
               <Skeleton />
             ) : (
@@ -46,13 +46,13 @@ export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) 
                 )}
               </Typography>
             )}
-            <Divider component="span" orientation="vertical" />
+            <Divider orientation="vertical" />
             {isNfrSource ? (
               <>
                 <Typography>{getPeriodString(funding.activeFrom, funding.activeTo)}</Typography>
-                <Divider component="span" orientation="vertical" />
+                <Divider orientation="vertical" />
                 <Button
-                  sx={{ width: 'min-content', justifySelf: 'end' }}
+                  sx={{ width: 'min-content', justifySelf: { md: 'end' } }}
                   size="small"
                   endIcon={<OpenInNewIcon />}
                   href={getNfrProjectUrl(funding.identifier)}
