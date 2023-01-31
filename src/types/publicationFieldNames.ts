@@ -161,6 +161,7 @@ export enum DescriptionFieldNames {
   Abstract = 'entityDescription.abstract',
   Date = 'entityDescription.date',
   Description = 'entityDescription.description',
+  Fundings = 'fundings',
   Language = 'entityDescription.language',
   Projects = 'projects',
   PublicationDay = 'entityDescription.date.day',
@@ -201,4 +202,14 @@ export enum SpecificContributorFieldNames {
   Name = 'identity.name',
   Role = 'role',
   Sequence = 'sequence',
+}
+
+// The following fields should be present in "fundings[index].<KEY>"
+export enum SpecificFundingFieldNames {
+  Source = 'affiliations',
+  Identifier = 'identifier',
+  Id = 'id',
+  Amount = 'fundingAmount.amount',
+  Currency = 'fundingAmount.currency',
+  NorwegianLabel = 'labels.nb',
 }

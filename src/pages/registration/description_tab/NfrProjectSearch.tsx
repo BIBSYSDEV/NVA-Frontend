@@ -6,6 +6,7 @@ import { VerifiedFundingApiPath } from '../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { SearchResponse } from '../../../types/common.types';
 import { NfrProject } from '../../../types/project.types';
+import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { Funding, Registration } from '../../../types/registration.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
@@ -27,7 +28,7 @@ export const NfrProjectSearch = ({ baseFieldName }: NfrProjectSearchProps) => {
   const projects = nfrProjectSearch?.hits ?? [];
 
   return (
-    <Field name={`${baseFieldName}.id`}>
+    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Id}`}>
       {({ field: { name }, meta: { touched, error } }: FieldProps<string>) => (
         <Autocomplete
           options={projects}

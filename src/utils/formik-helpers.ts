@@ -16,6 +16,7 @@ import {
   ResourceFieldNames,
   SpecificContributorFieldNames,
   SpecificFileFieldNames,
+  SpecificFundingFieldNames,
   SpecificLinkFieldNames,
 } from '../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
@@ -89,14 +90,13 @@ const resourceFieldNames = Object.values(ResourceFieldNames);
 const getAllDescriptionFields = (fundings: Funding[]) => {
   const descriptionFieldNames: string[] = Object.values(DescriptionFieldNames);
   fundings.forEach((_, index) => {
-    const baseFieldName = `fundings[${index}]`;
-
-    descriptionFieldNames.push(`${baseFieldName}.source`);
-    descriptionFieldNames.push(`${baseFieldName}.id`);
-    descriptionFieldNames.push(`${baseFieldName}.identifier`);
-    descriptionFieldNames.push(`${baseFieldName}.labels.nb`);
-    descriptionFieldNames.push(`${baseFieldName}.fundingAmount.currency`);
-    descriptionFieldNames.push(`${baseFieldName}.fundingAmount.amount`);
+    const baseFieldName = `${DescriptionFieldNames.Fundings}[${index}]`;
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Source}`);
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Id}`);
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Identifier}`);
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.NorwegianLabel}`);
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Currency}`);
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Amount}`);
   });
   return descriptionFieldNames;
 };

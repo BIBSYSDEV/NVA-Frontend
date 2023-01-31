@@ -13,6 +13,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { NfrProjectSearch } from './NfrProjectSearch';
 import { getNfrProjectUrl } from './projects_field/projectHelpers';
 import { fundingSourceIsNfr } from '../../../utils/registration-helpers';
+import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 
 export const FundingsField = () => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ export const FundingsField = () => {
   const fundingSourcesList = fundingSources?.sources ?? [];
 
   return (
-    <FieldArray name="fundings">
+    <FieldArray name={DescriptionFieldNames.Fundings}>
       {({ name, remove, push }: FieldArrayRenderProps) => (
         <>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -47,7 +48,7 @@ export const FundingsField = () => {
                   gap: '1rem',
                   alignItems: 'start',
                 }}>
-                <Field name={`${baseFieldName}.source`}>
+                <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Source}`}>
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <Autocomplete
                       value={fundingSourcesList.find((source) => source.id === field.value) ?? null}
@@ -120,7 +121,7 @@ export const FundingsField = () => {
 
                 {!hasSelectedNfrSource && hasSelectedSource && (
                   <>
-                    <Field name={`${baseFieldName}.labels.nb`}>
+                    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.NorwegianLabel}`}>
                       {({ field, meta: { touched, error } }: FieldProps<string>) => (
                         <TextField
                           {...field}
@@ -136,7 +137,7 @@ export const FundingsField = () => {
                         />
                       )}
                     </Field>
-                    <Field name={`${baseFieldName}.identifier`}>
+                    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Identifier}`}>
                       {({ field }: FieldProps<string>) => (
                         <TextField
                           {...field}
@@ -149,7 +150,7 @@ export const FundingsField = () => {
                       )}
                     </Field>
 
-                    <Field name={`${baseFieldName}.fundingAmount.amount`}>
+                    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Amount}`}>
                       {({ field }: FieldProps<number>) => (
                         <TextField
                           {...field}
