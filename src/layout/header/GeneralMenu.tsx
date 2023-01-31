@@ -30,13 +30,24 @@ export const GeneralMenu = ({ anchorEl, onClose }: GeneralMenuProps) => {
         vertical: 'bottom',
         horizontal: 'left',
       }}>
-      <MenuItem data-testid={dataTestId.header.aboutLink} onClick={() => handleClickMenuItem(UrlPathTemplate.About)}>
-        {t('common.about_nva')}
+      <MenuItem
+        divider
+        data-testid={dataTestId.header.aboutLink}
+        onClick={() => handleClickMenuItem(UrlPathTemplate.About)}>
+        {t('about.about_nva')}
       </MenuItem>
       <MenuItem
         data-testid={dataTestId.header.privacyLink}
         onClick={() => handleClickMenuItem(UrlPathTemplate.PrivacyPolicy)}>
         {t('privacy.privacy_statement')}
+      </MenuItem>
+      <MenuItem
+        data-testid={dataTestId.header.availabilityStatement}
+        component="a"
+        target="_blank"
+        rel="noopener noreferrer"
+        href={'https://uustatus.no/nb/erklaringer/publisert/xxx'}>
+        {t('about.availability_statement')}
       </MenuItem>
     </Menu>
   );
