@@ -43,7 +43,7 @@
     "@uppy/react": "^1.12.2",
     "axios": "^1.2.6",
     "date-fns": "^2.29.3",
-    "deepmerge": "^4.2.2",
+    "deepmerge": "^4.3.0",
     "formik": "^2.2.9",
     "i18n-iso-countries": "^7.5.0",
     "i18next": "^22.4.9",
