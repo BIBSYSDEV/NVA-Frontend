@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Divider, IconButton, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
@@ -24,7 +24,6 @@ export const FundingsField = () => {
     <FieldArray name="fundings">
       {({ name, remove, push }: FieldArrayRenderProps) => (
         <>
-          <Divider />
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography variant="h2">{t('registration.description.funding.financing')}</Typography>
 
@@ -44,7 +43,7 @@ export const FundingsField = () => {
                 key={index}
                 sx={{
                   display: 'grid',
-                  gridTemplateColumns: { xs: '1fr', md: '5fr 6fr 2fr 2fr 1fr' },
+                  gridTemplateColumns: { xs: '1fr', md: '4fr 6fr 2fr 2fr 1fr' },
                   gap: '1rem',
                   alignItems: 'start',
                 }}>
@@ -154,12 +153,16 @@ export const FundingsField = () => {
                       {({ field }: FieldProps<number>) => (
                         <TextField
                           {...field}
-                          type="number"
                           value={field.value > 0 ? field.value : ''}
                           disabled={hasSelectedNfrSource}
                           label={t('registration.description.funding.funding_sum')}
                           fullWidth
                           variant="filled"
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">{funding.fundingAmount?.currency}</InputAdornment>
+                            ),
+                          }}
                         />
                       )}
                     </Field>

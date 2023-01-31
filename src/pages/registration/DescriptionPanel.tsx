@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MenuItem, TextField, Autocomplete, Box } from '@mui/material';
+import { MenuItem, TextField, Autocomplete, Box, Divider } from '@mui/material';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -157,7 +157,7 @@ export const DescriptionPanel = () => {
       </Box>
 
       <ProjectsField />
-
+      <Divider />
       <FundingsField />
     </InputContainerBox>
   );

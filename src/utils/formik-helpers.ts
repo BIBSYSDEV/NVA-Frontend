@@ -84,7 +84,6 @@ export const getFirstErrorTab = (tabErrors?: TabErrors) =>
       : -1
     : -1;
 
-// const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const resourceFieldNames = Object.values(ResourceFieldNames);
 
 const getAllDescriptionFields = (fundings: Funding[]) => {
@@ -96,6 +95,7 @@ const getAllDescriptionFields = (fundings: Funding[]) => {
     descriptionFieldNames.push(`${baseFieldName}.id`);
     descriptionFieldNames.push(`${baseFieldName}.identifier`);
     descriptionFieldNames.push(`${baseFieldName}.labels.nb`);
+    descriptionFieldNames.push(`${baseFieldName}.fundingAmount.currency`);
     descriptionFieldNames.push(`${baseFieldName}.fundingAmount.amount`);
   });
   return descriptionFieldNames;
