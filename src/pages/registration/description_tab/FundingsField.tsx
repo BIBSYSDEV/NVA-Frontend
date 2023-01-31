@@ -151,10 +151,9 @@ export const FundingsField = () => {
                     </Field>
 
                     <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Amount}`}>
-                      {({ field }: FieldProps<number>) => (
+                      {({ field, meta: { error, touched } }: FieldProps<number>) => (
                         <TextField
                           {...field}
-                          value={field.value > 0 ? field.value : ''}
                           disabled={hasSelectedNfrSource}
                           label={t('registration.description.funding.funding_sum')}
                           fullWidth
@@ -164,6 +163,8 @@ export const FundingsField = () => {
                               <InputAdornment position="start">{funding.fundingAmount?.currency}</InputAdornment>
                             ),
                           }}
+                          error={touched && !!error}
+                          helperText={touched && !!error ? error : undefined}
                         />
                       )}
                     </Field>

@@ -14,6 +14,9 @@ const fundingErrorMessage = {
   fundingNfrProjectRequired: i18n.t('translation:feedback.validation.is_required', {
     field: i18n.t('translation:registration.description.funding.nfr_project'),
   }),
+  fundingAmountMustBeAPositiveNumber: i18n.t('translation:feedback.validation.must_be_a_positive_number', {
+    field: i18n.t('translation:registration.description.funding.funding_sum'),
+  }),
 };
 
 export const fundingValidationSchema = Yup.object<YupShape<Funding>>({
@@ -33,5 +36,11 @@ export const fundingValidationSchema = Yup.object<YupShape<Funding>>({
       }
       return true;
     }),
+  }),
+  fundingAmount: Yup.object({
+    amount: Yup.number()
+      .typeError(fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
+      .min(0, fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
+      .required(fundingErrorMessage.fundingAmountMustBeAPositiveNumber),
   }),
 });

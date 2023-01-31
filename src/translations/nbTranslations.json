@@ -426,6 +426,7 @@
       "is_required": "{{-field}} er obligatorisk",
       "isbn_too_short": "ISBN må ha 13 siffer",
       "must_accept_terms_for_dataset": "Du må godta vilkårene for datasett",
+      "must_be_a_positive_number": "{{field}} må være et positivt tall",
       "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
       "must_have_associated_artifact": "Du må laste opp minst en fil eller en lenke for denne registreringen",

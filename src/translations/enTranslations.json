@@ -426,6 +426,7 @@
       "is_required": "{{-field}} is required",
       "isbn_too_short": "ISBN must have 13 digits",
       "must_accept_terms_for_dataset": "You must accept terms for dataset",
+      "must_be_a_positive_number": "{{field}} must be a positive number",
       "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
       "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",
       "must_have_associated_artifact": "You need to upload at least one file or a link for this registration",
