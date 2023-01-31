@@ -52,7 +52,6 @@ export const FundingsField = () => {
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <Autocomplete
                       value={fundingSourcesList.find((source) => source.id === field.value) ?? null}
-                      fullWidth
                       options={fundingSourcesList}
                       filterOptions={(options, state) => {
                         const filter = state.inputValue.toLocaleLowerCase();

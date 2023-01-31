@@ -1,5 +1,5 @@
 import { Autocomplete } from '@mui/material';
-import { Field, FieldProps, useFormikContext } from 'formik';
+import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
@@ -7,7 +7,7 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { SearchResponse } from '../../../types/common.types';
 import { NfrProject } from '../../../types/project.types';
 import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
-import { Funding, Registration } from '../../../types/registration.types';
+import { Funding } from '../../../types/registration.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -18,7 +18,6 @@ interface NfrProjectSearchProps {
 
 export const NfrProjectSearch = ({ baseFieldName }: NfrProjectSearchProps) => {
   const { t } = useTranslation();
-  const { setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -29,13 +28,11 @@ export const NfrProjectSearch = ({ baseFieldName }: NfrProjectSearchProps) => {
 
   return (
     <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Id}`}>
-      {({ field: { name }, meta: { touched, error } }: FieldProps<string>) => (
+      {({ field: { name, onBlur }, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
         <Autocomplete
           options={projects}
           filterOptions={(options) => options}
-          onInputChange={(_, newInputValue) => {
-            setSearchTerm(newInputValue);
-          }}
+          onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
           getOptionLabel={(option) => getLanguageString(option.labels)}
           onChange={(_, value) => {
             if (value) {
@@ -47,10 +44,11 @@ export const NfrProjectSearch = ({ baseFieldName }: NfrProjectSearchProps) => {
               setFieldValue(baseFieldName, nfrFunding);
             }
           }}
-          onBlur={() => setFieldTouched(name, true, false)}
           renderInput={(params) => (
             <AutocompleteTextField
               {...params}
+              name={name}
+              onBlur={onBlur}
               label={t('registration.description.funding.nfr_project')}
               isLoading={isLoadingNfrProjectSearch}
               placeholder={t('registration.description.funding.nfr_project_search')}
