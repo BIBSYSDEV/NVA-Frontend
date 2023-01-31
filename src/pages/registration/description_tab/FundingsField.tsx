@@ -17,7 +17,7 @@ import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types
 
 export const FundingsField = () => {
   const { t } = useTranslation();
-  const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
+  const { values, setFieldValue } = useFormikContext<Registration>();
   const [fundingSources, isLoadingFundingSources] = useFetchResource<FundingSources>(CristinApiPath.FundingSources);
   const fundingSourcesList = fundingSources?.sources ?? [];
 
@@ -63,17 +63,17 @@ export const FundingsField = () => {
                         });
                       }}
                       renderOption={(props, option) => (
-                        //  TODO: Check if identical names are expected. If not, remove renderOption?
                         <li {...props} key={option.identifier}>
                           {getLanguageString(option.name)}
                         </li>
                       )}
-                      onBlur={() => setFieldTouched(field.name, true, false)}
                       disabled={!fundingSources || !!field.value}
                       getOptionLabel={(option) => getLanguageString(option.name)}
                       onChange={(_, value) => setFieldValue(field.name, value?.id)}
                       renderInput={(params) => (
                         <AutocompleteTextField
+                          name={field.name}
+                          onBlur={field.onBlur}
                           {...params}
                           label={t('registration.description.funding.funder')}
                           isLoading={isLoadingFundingSources}

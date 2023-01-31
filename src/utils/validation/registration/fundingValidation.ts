@@ -18,14 +18,20 @@ const fundingErrorMessage = {
 
 export const fundingValidationSchema = Yup.object<YupShape<Funding>>({
   source: Yup.string().required(fundingErrorMessage.fundingSourceRequired),
-  id: Yup.string().when('source', {
-    is: (source: string) => fundingSourceIsNfr(source),
-    then: (schema) => schema.required(fundingErrorMessage.fundingNfrProjectRequired),
-    otherwise: (schema) => schema,
+  id: Yup.string().test('test-id', fundingErrorMessage.fundingNfrProjectRequired, (value, context) => {
+    const isNfrSource = fundingSourceIsNfr(context.parent.source ?? '');
+    if (isNfrSource && !value) {
+      return false;
+    }
+    return true;
   }),
-  labels: Yup.object().when('source', {
-    is: (source: string) => !fundingSourceIsNfr(source),
-    then: (schema) => schema.shape({ nb: Yup.string().required(fundingErrorMessage.fundingProjectRequired) }),
-    otherwise: (schema) => schema,
+  labels: Yup.object({
+    nb: Yup.string().test('test-labels', fundingErrorMessage.fundingProjectRequired, (value, context) => {
+      const isNfrSource = fundingSourceIsNfr(context.parent.source ?? '');
+      if (!isNfrSource && !value) {
+        return false;
+      }
+      return true;
+    }),
   }),
 });
