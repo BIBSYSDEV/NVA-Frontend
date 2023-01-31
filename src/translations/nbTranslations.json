@@ -1,5 +1,7 @@
 {
   "about": {
+    "about_nva": "Om NVA",
+    "availability_statement": "Tilgjengenlighetserklæring",
     "description": {
       "paragraph0": {
         "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent vitenarkiv",
@@ -95,7 +97,6 @@
     }
   },
   "common": {
-    "about_nva": "Om NVA",
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",

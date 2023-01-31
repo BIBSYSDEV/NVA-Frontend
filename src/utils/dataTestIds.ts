@@ -63,6 +63,7 @@ export const dataTestId = {
   },
   header: {
     aboutLink: 'about-link',
+    availabilityStatement: 'availability-statement',
     basicDataLink: 'basic-data-link',
     editorLink: 'editor-link',
     generalMenuButton: 'general-menu-button',

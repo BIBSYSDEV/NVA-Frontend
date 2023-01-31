@@ -9,7 +9,7 @@ const AboutPage = () => {
 
   return (
     <StyledPageContent>
-      <PageHeader>{t('common.about_nva')}</PageHeader>
+      <PageHeader>{t('about.about_nva')}</PageHeader>
       <Typography paragraph>{t('about.short_description')}</Typography>
       <AboutContent />
     </StyledPageContent>
