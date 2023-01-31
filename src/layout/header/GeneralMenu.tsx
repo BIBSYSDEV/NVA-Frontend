@@ -46,7 +46,7 @@ export const GeneralMenu = ({ anchorEl, onClose }: GeneralMenuProps) => {
         component="a"
         target="_blank"
         rel="noopener noreferrer"
-        href={'https://uustatus.no/nb/erklaringer/publisert/xxx'}>
+        href={'https://uustatus.no/nb/erklaringer/publisert/bffb4b1d-25eb-4fe0-bac7-2f0b4a8e0fd9'}>
         {t('about.availability_statement')}
       </MenuItem>
     </Menu>
