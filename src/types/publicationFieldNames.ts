@@ -206,7 +206,7 @@ export enum SpecificContributorFieldNames {
 
 // The following fields should be present in "fundings[index].<KEY>"
 export enum SpecificFundingFieldNames {
-  Source = 'affiliations',
+  Source = 'source',
   Identifier = 'identifier',
   Id = 'id',
   Amount = 'fundingAmount.amount',
