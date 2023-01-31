@@ -43,6 +43,7 @@ export const MyProfile = () => {
   const personPreferredFirstName = getValueByKey('PreferredFirstName', person?.names);
   const personPreferredLastName = getValueByKey('PreferredLastName', person?.names);
   const [editPreferredNames, setEditPreferredNames] = useState(false);
+  const personTelephone = person?.contactDetails?.telephone;
 
   const initialValues: CristinPersonFormData = {
     preferredFirstName: personPreferredFirstName ? personPreferredFirstName : firstName,
@@ -99,40 +100,51 @@ export const MyProfile = () => {
                 <Formik initialValues={initialValues} onSubmit={updatePerson} enableReinitialize>
                   {({ isSubmitting, dirty }: FormikProps<CristinPersonFormData>) => (
                     <Form>
-                      <Box sx={{ display: 'flex', gap: '1rem' }}>
-                        <Field name={'preferredFirstName'}>
-                          {({ field }: FieldProps<string>) => (
-                            <TextField
-                              {...field}
-                              data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
-                              id={field.name}
-                              disabled={!editPreferredNames || isSubmitting}
-                              label={t('my_page.my_profile.preferred_first_name')}
-                              size="small"
-                              variant="filled"
-                            />
-                          )}
-                        </Field>
-                        <Field name={'preferredLastName'}>
-                          {({ field }: FieldProps<string>) => (
-                            <TextField
-                              {...field}
-                              data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
-                              id={field.name}
-                              disabled={!editPreferredNames || isSubmitting}
-                              label={t('my_page.my_profile.preferred_last_name')}
-                              size="small"
-                              variant="filled"
-                            />
-                          )}
-                        </Field>
-                        <Tooltip title={t('common.edit')}>
-                          <IconButton
-                            data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
-                            onClick={() => setEditPreferredNames(!editPreferredNames)}>
-                            <EditIcon sx={{ width: '1.2rem' }} />
-                          </IconButton>
-                        </Tooltip>
+                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: 'fit-content' }}>
+                        <Box sx={{ display: 'flex', gap: '1rem' }}>
+                          <Field name={'preferredFirstName'}>
+                            {({ field }: FieldProps<string>) => (
+                              <TextField
+                                {...field}
+                                data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
+                                id={field.name}
+                                disabled={!editPreferredNames || isSubmitting}
+                                label={t('my_page.my_profile.preferred_first_name')}
+                                size="small"
+                                variant="filled"
+                              />
+                            )}
+                          </Field>
+                          <Field name={'preferredLastName'}>
+                            {({ field }: FieldProps<string>) => (
+                              <TextField
+                                {...field}
+                                data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
+                                id={field.name}
+                                disabled={!editPreferredNames || isSubmitting}
+                                label={t('my_page.my_profile.preferred_last_name')}
+                                size="small"
+                                variant="filled"
+                              />
+                            )}
+                          </Field>
+                          <Tooltip title={t('common.edit')}>
+                            <IconButton
+                              data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
+                              onClick={() => setEditPreferredNames(!editPreferredNames)}>
+                              <EditIcon sx={{ width: '1.2rem' }} />
+                            </IconButton>
+                          </Tooltip>
+                        </Box>
+                        <TextField
+                          sx={{ width: 'fit-content' }}
+                          value={personTelephone}
+                          data-testid={dataTestId.myPage.myProfile.telephoneField}
+                          disabled
+                          label={t('my_page.my_profile.telephone')}
+                          size="small"
+                          variant="filled"
+                        />
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
                         <LoadingButton

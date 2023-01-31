@@ -1,5 +1,7 @@
 {
   "about": {
+    "about_nva": "Om NVA",
+    "availability_statement": "Tilgjengenlighetserklæring",
     "description": {
       "paragraph0": {
         "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent vitenarkiv",
@@ -95,7 +97,6 @@
     }
   },
   "common": {
-    "about_nva": "Om NVA",
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
@@ -511,6 +512,7 @@
         "preview": "Forhåndsvisning",
         "research_profile": "Forskerprofil"
       },
+      "telephone": "Telefon",
       "user_profile": "Brukerprofil",
       "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil."
     },

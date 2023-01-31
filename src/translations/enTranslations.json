@@ -1,5 +1,7 @@
 {
   "about": {
+    "about_nva": "About NVA",
+    "availability_statement": "Availability statement",
     "description": {
       "paragraph0": {
         "bullet_point0": "Meet requirements for open access to articles and other research results through deposit in an open research archive",
@@ -95,7 +97,6 @@
     }
   },
   "common": {
-    "about_nva": "About NVA",
     "actions": "Actions",
     "add": "Add",
     "add_custom": "Add {{- name}}",
@@ -511,6 +512,7 @@
         "preview": "Preview",
         "research_profile": "Research profile"
       },
+      "telephone": "Telephone",
       "user_profile": "User profile",
       "user_profile_description": "Here you can fill in and mark what you want to appear on your public researcher profile."
     },

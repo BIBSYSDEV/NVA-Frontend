@@ -63,6 +63,7 @@ export const dataTestId = {
   },
   header: {
     aboutLink: 'about-link',
+    availabilityStatement: 'availability-statement',
     basicDataLink: 'basic-data-link',
     editorLink: 'editor-link',
     generalMenuButton: 'general-menu-button',
@@ -348,6 +349,7 @@ export const dataTestId = {
       preferredLastNameField: 'preferred-last-name-field',
       saveProfileChangesButton: 'save-profile-changes-button',
       showFullNinButton: 'show-full-nin-button',
+      telephoneField: 'telephone-field',
     },
     myRegistrationsLink: 'my-registrations-link',
     newRegistrationLink: 'new-registration-link',
