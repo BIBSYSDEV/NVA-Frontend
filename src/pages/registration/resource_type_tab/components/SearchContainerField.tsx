@@ -1,6 +1,6 @@
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
-import { Chip, Typography, Autocomplete, Box } from '@mui/material';
+import { Chip, Typography, Autocomplete, Box, Skeleton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
@@ -182,27 +182,47 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const publisherId = publicationContext.publisher?.id ?? '';
   const seriesId = publicationContext.series?.id ?? '';
 
-  const [publisher] = useFetchResource<Publisher>(publisherId, t('feedback.error.get_publisher'));
-  const [series] = useFetchResource<Journal>(seriesId, t('feedback.error.get_series'));
+  const [publisher, isLoadingPublisher] = useFetchResource<Publisher>(publisherId, t('feedback.error.get_publisher'));
+  const [series, isLoadingSeries] = useFetchResource<Journal>(seriesId, t('feedback.error.get_series'));
 
   return seriesId ? (
     <>
       {publisherId && (
-        <Typography variant="body2" color="textSecondary">
-          {t('common.publisher')}: {publisher?.name}
-        </Typography>
+        <ContainerDisplayName label={t('common.publisher')} value={publisher?.name} isLoading={isLoadingPublisher} />
       )}
-      <Typography variant="body2" color="textSecondary">
-        {t('registration.resource_type.series')}: {series?.name}
-      </Typography>
+      <ContainerDisplayName
+        label={t('registration.resource_type.series')}
+        value={series?.name}
+        isLoading={isLoadingSeries}
+      />
       <NpiLevelTypography variant="body2" color="textSecondary" level={series?.level} />
     </>
   ) : publisherId ? (
     <>
-      <Typography variant="body2" color="textSecondary">
-        {t('common.publisher')}: {publisher?.name}
-      </Typography>
+      <ContainerDisplayName label={t('common.publisher')} value={publisher?.name} isLoading={isLoadingPublisher} />
       <NpiLevelTypography variant="body2" color="textSecondary" level={publisher?.level} />
     </>
   ) : null;
 };
+
+interface ContainerDisplayNameProps {
+  label: string;
+  value?: string;
+  isLoading: boolean;
+}
+
+const ContainerDisplayName = ({ label, value, isLoading }: ContainerDisplayNameProps) => (
+  <Box sx={{ display: 'flex', gap: '0.25rem' }}>
+    <Typography variant="body2" color="textSecondary">
+      {label}:
+    </Typography>
+
+    {isLoading ? (
+      <Skeleton sx={{ minWidth: '80%' }} />
+    ) : (
+      <Typography variant="body2" color="textSecondary">
+        {value ?? '?'}
+      </Typography>
+    )}
+  </Box>
+);
