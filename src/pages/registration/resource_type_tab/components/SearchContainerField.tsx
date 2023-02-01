@@ -224,7 +224,7 @@ const ContainerDisplayName = ({ label, value, isLoading }: ContainerDisplayNameP
       <Skeleton sx={{ minWidth: '80%' }} />
     ) : (
       <Typography variant="body2" color="textSecondary">
-        {value ?? '?'}
+        {value ? value : '?'}
       </Typography>
     )}
   </Box>
