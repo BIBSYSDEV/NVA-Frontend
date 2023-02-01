@@ -1,4 +1,4 @@
-import { Autocomplete } from '@mui/material';
+import { Autocomplete, Box, Typography } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,7 @@ import { SearchResponse } from '../../../types/common.types';
 import { NfrProject } from '../../../types/project.types';
 import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { Funding } from '../../../types/registration.types';
+import { getPeriodString } from '../../../utils/general-helpers';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -34,6 +35,20 @@ export const NfrProjectSearch = ({ baseFieldName }: NfrProjectSearchProps) => {
           filterOptions={(options) => options}
           onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
           getOptionLabel={(option) => getLanguageString(option.labels)}
+          renderOption={(props, option) => {
+            const projectName = getLanguageString(option.labels);
+            const period = getPeriodString(option.activeFrom, option.activeTo);
+            const manager = option.lead ? `${t('project.project_manager')}: ${option.lead}` : '';
+            return (
+              <li {...props}>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <Typography sx={{ fontWeight: 600 }}>{projectName}</Typography>
+                  <Typography variant="body1">{period}</Typography>
+                  <Typography variant="body2">{manager}</Typography>
+                </Box>
+              </li>
+            );
+          }}
           onChange={(_, value) => {
             if (value) {
               const { lead, ...rest } = value;
