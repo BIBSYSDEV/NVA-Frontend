@@ -45,6 +45,7 @@ export const mockCustomerInstitution: CustomerInstitution = {
     username: 'LOFF',
   },
   sector: Sector.Uhi,
+  nviInstitution: false,
 };
 
 export const mockCustomerInstitutions: CustomerList = {

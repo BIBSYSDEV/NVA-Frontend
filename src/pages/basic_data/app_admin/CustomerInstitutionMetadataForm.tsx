@@ -159,11 +159,12 @@ export const CustomerInstitutionMetadataForm = ({
             <Field name={CustomerInstitutionFieldNames.Sector}>
               {({ field }: FieldProps) => (
                 <div>
-                  <FormLabel>{t('basic_data.institutions.sector')}</FormLabel>
+                  <FormLabel component="legend">{t('basic_data.institutions.sector')}</FormLabel>
                   <Box sx={{ display: 'flex', gap: '0.5rem', mt: '0.5rem' }}>
                     {Object.values(Sector).map((sector) => (
                       <Chip
                         key={sector}
+                        data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}
                         label={t(`basic_data.institutions.sector_values.${sector}`)}
                         color="primary"
                         variant={field.value === sector ? 'filled' : 'outlined'}
@@ -175,8 +176,27 @@ export const CustomerInstitutionMetadataForm = ({
               )}
             </Field>
 
+            <Field name={CustomerInstitutionFieldNames.NviInstitution}>
+              {({ field }: FieldProps<boolean>) => (
+                <div>
+                  <FormLabel component="legend">{t('basic_data.institutions.nvi')}</FormLabel>
+                  <FormControlLabel
+                    label={t('basic_data.institutions.institution_is_nvi_applicable')}
+                    control={
+                      <Checkbox
+                        data-testid={dataTestId.basicData.institutionAdmin.nviInstitutionCheckbox}
+                        {...field}
+                        checked={field.value}
+                      />
+                    }
+                  />
+                </div>
+              )}
+            </Field>
+
             {editMode && (
               <div>
+                <FormLabel component="legend">{t('common.doi_long')}</FormLabel>
                 <Field name={CustomerInstitutionFieldNames.CanAssignDoi}>
                   {({ field }: FieldProps<boolean>) => (
                     <FormControlLabel
@@ -184,7 +204,6 @@ export const CustomerInstitutionMetadataForm = ({
                       control={
                         <Checkbox
                           data-testid={dataTestId.basicData.institutionAdmin.canAssignDoiCheckbox}
-                          required
                           {...field}
                           checked={field.value}
                         />
