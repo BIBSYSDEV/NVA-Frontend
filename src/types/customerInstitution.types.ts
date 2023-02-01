@@ -31,6 +31,7 @@ export interface CustomerInstitution extends SimpleCustomerInstitution {
   rorId?: string;
   doiAgent: DoiAgent;
   sector: Sector;
+  nviInstitution: boolean;
 }
 
 export interface DoiAgent {
@@ -79,6 +80,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   rorId: '',
   sector: Sector.Uhi,
+  nviInstitution: false,
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
@@ -103,6 +105,7 @@ export enum CustomerInstitutionFieldNames {
   RorId = 'customer.rorId',
   ShortName = 'customer.shortName',
   Sector = 'customer.sector',
+  NviInstitution = 'customer.nviInstitution',
   CanAssignDoi = 'canAssignDoi',
 }
 
