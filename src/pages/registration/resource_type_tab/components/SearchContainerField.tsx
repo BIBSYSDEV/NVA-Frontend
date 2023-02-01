@@ -41,12 +41,15 @@ export const SearchContainerField = ({
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
 
-  const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations({
-    searchTerm: debouncedQuery,
-    properties: [
-      { fieldName: ResourceFieldNames.SubType, value: searchSubtypes, operator: ExpressionStatement.Contains },
-    ],
-  });
+  const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations(
+    {
+      searchTerm: debouncedQuery,
+      properties: [
+        { fieldName: ResourceFieldNames.SubType, value: searchSubtypes, operator: ExpressionStatement.Contains },
+      ],
+    },
+    25
+  );
 
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
     getIn(values, fieldName),
