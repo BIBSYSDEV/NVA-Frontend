@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import { Box, Checkbox, Chip, FormControlLabel, FormLabel, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import {
   CustomerInstitution,
@@ -11,6 +11,7 @@ import {
   CustomerInstitutionFormData,
   DoiAgent,
   emptyProtectedDoiAgent,
+  Sector,
 } from '../../../types/customerInstitution.types';
 import { setNotification } from '../../../redux/notificationSlice';
 import {
@@ -92,7 +93,7 @@ export const CustomerInstitutionMetadataForm = ({
       validateOnChange
       validationSchema={customerInstitutionValidationSchema}
       onSubmit={handleSubmit}>
-      {({ values, isSubmitting, setValues }: FormikProps<CustomerInstitutionFormData>) => (
+      {({ values, isSubmitting, setValues, setFieldValue }: FormikProps<CustomerInstitutionFormData>) => (
         <Form noValidate>
           <InputContainerBox>
             <Field name={CustomerInstitutionFieldNames.Name}>
@@ -154,6 +155,25 @@ export const CustomerInstitutionMetadataForm = ({
               label={t('basic_data.institutions.ror')}
               dataTestId={dataTestId.basicData.institutionAdmin.rorField}
             />
+
+            <Field name={CustomerInstitutionFieldNames.Sector}>
+              {({ field }: FieldProps) => (
+                <div>
+                  <FormLabel>{t('basic_data.institutions.sector')}</FormLabel>
+                  <Box sx={{ display: 'flex', gap: '0.5rem', mt: '0.5rem' }}>
+                    {Object.values(Sector).map((sector) => (
+                      <Chip
+                        key={sector}
+                        label={t(`basic_data.institutions.sector_values.${sector}`)}
+                        color="primary"
+                        variant={field.value === sector ? 'filled' : 'outlined'}
+                        onClick={() => setFieldValue(field.name, sector)}
+                      />
+                    ))}
+                  </Box>
+                </div>
+              )}
+            </Field>
 
             {editMode && (
               <div>

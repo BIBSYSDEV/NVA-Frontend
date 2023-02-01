@@ -1,6 +1,7 @@
 import {
   CustomerInstitution,
   CustomerList,
+  Sector,
   VocabularyList,
   VocabularyStatus,
 } from '../../types/customerInstitution.types';
@@ -43,6 +44,7 @@ export const mockCustomerInstitution: CustomerInstitution = {
     prefix: '10.1111',
     username: 'LOFF',
   },
+  sector: Sector.Uhi,
 };
 
 export const mockCustomerInstitutions: CustomerList = {

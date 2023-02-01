@@ -76,6 +76,12 @@
       "remove_role_text": "Are you sure you want to remove this role?",
       "remove_role_title": "Remove role?",
       "ror": "Research Organization Registry (ROR)",
+      "sector": "Sector",
+      "sector_values": {
+        "HEALTH": "Health sector",
+        "INSTITUTE": "Institute sector",
+        "UHI": "University and college"
+      },
       "short_name": "Shortened display name"
     },
     "person_register": {

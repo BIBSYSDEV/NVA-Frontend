@@ -9,6 +9,12 @@ export type PublishStrategy =
   | 'RegistratorPublishesMetadataAndFiles'
   | 'RegistratorRequiresApprovalForMetadataAndFiles';
 
+export enum Sector {
+  Uhi = 'UHI',
+  Health = 'HEALTH',
+  Institute = 'INSTITUTE',
+}
+
 export interface CustomerInstitution extends SimpleCustomerInstitution {
   type?: 'Customer';
   archiveName: string;
@@ -24,6 +30,7 @@ export interface CustomerInstitution extends SimpleCustomerInstitution {
   publicationWorkflow: PublishStrategy;
   rorId?: string;
   doiAgent: DoiAgent;
+  sector: Sector;
 }
 
 export interface DoiAgent {
@@ -71,6 +78,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   vocabularies: [],
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   rorId: '',
+  sector: Sector.Uhi,
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
@@ -94,6 +102,7 @@ export enum CustomerInstitutionFieldNames {
   Name = 'customer.name',
   RorId = 'customer.rorId',
   ShortName = 'customer.shortName',
+  Sector = 'customer.sector',
   CanAssignDoi = 'canAssignDoi',
 }
 
