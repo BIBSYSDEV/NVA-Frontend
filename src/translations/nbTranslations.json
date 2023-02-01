@@ -396,6 +396,7 @@
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
       "delete_registration": "Registrering ble slettet",
+      "doi_reserved": "DOI er reservert",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
       "publishing_request_approved": "Registreringen ble publisert",
