@@ -153,7 +153,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('registration.resource_type.artistic.award_other')}
+                    label={t('registration.resource_type.artistic.award_other_type')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.awardOther}

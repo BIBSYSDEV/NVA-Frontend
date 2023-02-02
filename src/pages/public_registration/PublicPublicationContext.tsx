@@ -355,7 +355,7 @@ const PublicAwardDialogContent = ({ award }: { award: Award }) => {
       <Typography>{new Date(award.date.value).getFullYear()}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.award_ranking')}</Typography>
       <Typography paragraph>{award.ranking}</Typography>
-      <Typography variant="h3">{t('registration.resource_type.artistic.award_other')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.award_other_type')}</Typography>
       <Typography paragraph>{award.otherInformation}</Typography>
     </DialogContent>
   );
@@ -371,7 +371,7 @@ const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication
       <Typography paragraph>{mention.issue}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{new Date(mention.date.value).toLocaleDateString()}</Typography>
-      <Typography variant="h3">{t('registration.resource_type.artistic.mention_other')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.mention_other_type')}</Typography>
       <Typography paragraph>{mention.otherInformation}</Typography>
     </DialogContent>
   );
