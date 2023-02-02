@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Box, CircularProgress, TablePagination, Typography } from '@mui/material';
+import { Box, Box as div, CircularProgress, TablePagination, Typography } from '@mui/material';
 import { RootState } from '../../../redux/store';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
@@ -33,14 +33,16 @@ export const MyResults = () => {
 
   return (
     <>
-      {registrations && (
-        <Box>
+      {isLoadingRegistrations ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <div>
           <Typography id="registration-label" variant="h2" gutterBottom>
             {t('my_page.my_profile.my_research_results')}
           </Typography>
-          {isLoadingRegistrations ? (
-            <CircularProgress aria-labelledby="registration-label" />
-          ) : registrations.size > 0 ? (
+          {registrations && registrations.size > 0 ? (
             <>
               <RegistrationSearchResults searchResult={registrations} />
               <TablePagination
@@ -59,7 +61,7 @@ export const MyResults = () => {
           ) : (
             <Typography>{t('common.no_hits')}</Typography>
           )}
-        </Box>
+        </div>
       )}
     </>
   );
