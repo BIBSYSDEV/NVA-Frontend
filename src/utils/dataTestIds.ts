@@ -34,8 +34,10 @@ export const dataTestId = {
       doiUrlField: 'doi-url-field',
       feideField: 'feide-field',
       nameField: 'institution-name-field',
+      nviInstitutionCheckbox: 'nvi-institution-checkbox',
       rorField: 'ror-field',
       saveButton: 'save-button',
+      sectorChip: (sector: string) => `sector-chip-${sector}`,
       shortNameField: 'short-name-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
@@ -63,6 +65,7 @@ export const dataTestId = {
   },
   header: {
     aboutLink: 'about-link',
+    availabilityStatement: 'availability-statement',
     basicDataLink: 'basic-data-link',
     editorLink: 'editor-link',
     generalMenuButton: 'general-menu-button',

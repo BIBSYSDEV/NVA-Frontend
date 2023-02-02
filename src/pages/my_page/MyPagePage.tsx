@@ -5,6 +5,7 @@ import { Switch, useHistory } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Divider } from '@mui/material';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -13,6 +14,7 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { MyProfile } from './user_profile/MyProfile';
+import { MyResults } from './user_profile/MyResults';
 import {
   LinkButton,
   LinkButtonRow,
@@ -24,8 +26,6 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import ResearchProfile from '../research_profile/ResearchProfile';
-import { Divider } from '@mui/material';
-import { MyResults } from './user_profile/MyResults';
 
 const MyPagePage = () => {
   const { t } = useTranslation();

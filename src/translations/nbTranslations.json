@@ -1,5 +1,7 @@
 {
   "about": {
+    "about_nva": "Om NVA",
+    "availability_statement": "Tilgjengenlighetserklæring",
     "description": {
       "paragraph0": {
         "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent vitenarkiv",
@@ -67,13 +69,21 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Institusjonens domene i Feide",
+      "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
+      "nvi": "Norsk vitenskapsindeks (NVI)",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
+      "sector": "Sektor",
+      "sector_values": {
+        "HEALTH": "Helsesektoren",
+        "INSTITUTE": "Instituttsektoren",
+        "UHI": "Universitet og høyskoler (UH)"
+      },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
     "person_register": {
@@ -95,7 +105,6 @@
     }
   },
   "common": {
-    "about_nva": "Om NVA",
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
@@ -395,6 +404,7 @@
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
       "delete_registration": "Registrering ble slettet",
+      "doi_reserved": "DOI er reservert",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
       "publishing_request_approved": "Registreringen ble publisert",

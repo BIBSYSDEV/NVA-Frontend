@@ -12,6 +12,7 @@ module.exports = {
     'privacy.purpose.table.row',
     'privacy.registered_personal_data.',
     'project.status.',
+    'basic_data.institutions.sector_values.',
     'registration.contributors.types.',
     'registration.publication_types.',
     'registration.resource_type.artistic.architecture_type.',
