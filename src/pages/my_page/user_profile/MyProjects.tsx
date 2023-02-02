@@ -1,68 +1,45 @@
-import { Box, CircularProgress, TablePagination, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Box, List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { BackgroundDiv } from '../../../components/styled/Wrappers';
+import { CristinApiPath } from '../../../api/apiPaths';
+import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RootState } from '../../../redux/store';
-import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../types/publicationFieldNames';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
-import { useSearchRegistrations } from '../../../utils/hooks/useSearchRegistrations';
-import { ExpressionStatement } from '../../../utils/searchHelpers';
-import { RegistrationSearchResults } from '../../search/registration_search/RegistrationSearchResults';
+import { SearchResponse } from '../../../types/common.types';
+import { CristinProject } from '../../../types/project.types';
+import { useFetch } from '../../../utils/hooks/useFetch';
+import { CristinSearchPagination } from '../../search/CristinSearchPagination';
+import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 
 export const MyProjects = () => {
   const { t } = useTranslation();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
+  const userCristinId = user.cristinId?.split('/').pop();
 
-  const personId = currentCristinId;
+  const queryParams = `?query=.&participant=${userCristinId}`;
 
-  const [registrations, isLoadingRegistrations] = useSearchRegistrations(
-    {
-      properties: [
-        {
-          fieldName: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}`,
-          value: personId,
-          operator: ExpressionStatement.Contains,
-        },
-      ],
-    },
-    rowsPerPage,
-    rowsPerPage * page
-  );
+  const [projectsSearch, isLoadingProjectsSearch] = useFetch<SearchResponse<CristinProject>>({
+    url: queryParams ? `${CristinApiPath.Project}?${queryParams}` : '',
+    errorMessage: t('feedback.error.project_search'),
+  });
 
   return (
-    <BackgroundDiv>
-      {registrations && (
-        <Box sx={{ mt: '2rem' }}>
-          <Typography id="registration-label" variant="h2" gutterBottom>
-            {t('common.registrations')}
-          </Typography>
-          {isLoadingRegistrations && !registrations ? (
-            <CircularProgress aria-labelledby="registration-label" />
-          ) : registrations.size > 0 ? (
-            <>
-              <RegistrationSearchResults searchResult={registrations} />
-              <TablePagination
-                rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                component="div"
-                count={registrations.size}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(_, newPage) => setPage(newPage)}
-                onRowsPerPageChange={(event) => {
-                  setRowsPerPage(+event.target.value);
-                  setPage(0);
-                }}
-              />
-            </>
-          ) : (
-            <Typography>{t('common.no_hits')}</Typography>
-          )}
-        </Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      {isLoadingProjectsSearch ? (
+        <ListSkeleton arrayLength={3} minWidth={40} height={100} />
+      ) : projectsSearch && projectsSearch.hits.length > 0 ? (
+        <>
+          <List>
+            {projectsSearch.hits.map((project) => (
+              <ProjectListItem key={project.id} project={project} />
+            ))}
+          </List>
+          <CristinSearchPagination totalCount={projectsSearch.size} />
+        </>
+      ) : (
+        <Typography>{t('common.no_hits')}</Typography>
       )}
-    </BackgroundDiv>
+    </Box>
   );
 };
