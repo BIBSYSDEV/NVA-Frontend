@@ -32,13 +32,13 @@ export const MyResults = () => {
   );
 
   return (
-    <Box>
+    <>
       {registrations && (
         <Box>
           <Typography id="registration-label" variant="h2" gutterBottom>
             {t('my_page.my_profile.my_research_results')}
           </Typography>
-          {isLoadingRegistrations && !registrations ? (
+          {isLoadingRegistrations ? (
             <CircularProgress aria-labelledby="registration-label" />
           ) : registrations.size > 0 ? (
             <>
@@ -61,6 +61,6 @@ export const MyResults = () => {
           )}
         </Box>
       )}
-    </Box>
+    </>
   );
 };
