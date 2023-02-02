@@ -1162,7 +1162,7 @@
         },
         "award_name": "Prisnavn",
         "award_organizer": "Prisutdeler/arrangør",
-        "award_other": "Annet",
+        "award_other_type": "Annet",
         "award_ranking": "Rangering",
         "catalogue_number": "Katalognummer",
         "competition_date": "Dato for offentliggjøring",
@@ -1219,7 +1219,7 @@
           "Translation": "Oversettelse"
         },
         "media_type": "Medietype",
-        "mention_other": "Annet (utgiver, ISBN, m.m.)",
+        "mention_other_type": "Annet (utgiver, ISBN, m.m.)",
         "mention_title": "Tidsskrift/Boktittel/medium",
         "moving_picture_type": {
           "AugmentedVirtualRealityFilm": "AR/VR",
