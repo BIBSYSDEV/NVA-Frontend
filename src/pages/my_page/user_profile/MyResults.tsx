@@ -38,7 +38,7 @@ export const MyResults = () => {
       </Typography>
       {isLoadingRegistrations ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <CircularProgress />
+          <CircularProgress aria-labelledby="registration-label" />
         </Box>
       ) : (
         <div>
