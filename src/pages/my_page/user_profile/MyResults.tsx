@@ -32,16 +32,16 @@ export const MyResults = () => {
   );
 
   return (
-    <>
-      {isLoadingRegistrations || !isLoadingRegistrations ? (
+    <div>
+      <Typography id="registration-label" variant="h2" gutterBottom>
+        {t('my_page.my_profile.my_research_results')}
+      </Typography>
+      {isLoadingRegistrations ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <CircularProgress />
         </Box>
       ) : (
         <div>
-          <Typography id="registration-label" variant="h2" gutterBottom>
-            {t('my_page.my_profile.my_research_results')}
-          </Typography>
           {registrations && registrations.size > 0 ? (
             <>
               <RegistrationSearchResults searchResult={registrations} />
@@ -63,6 +63,6 @@ export const MyResults = () => {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
