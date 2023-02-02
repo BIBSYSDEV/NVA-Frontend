@@ -39,16 +39,21 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     setNoHit(false);
     setDoi(null);
 
-    const doiRegistrationResponse = await getRegistrationByDoi(doiUrl);
-    if (isErrorStatus(doiRegistrationResponse.status)) {
+    try {
+      const doiRegistrationResponse = await getRegistrationByDoi(doiUrl);
+      if (isErrorStatus(doiRegistrationResponse.status)) {
+        setNoHit(true);
+        dispatch(setNotification({ message: t('feedback.error.get_doi'), variant: 'error' }));
+      } else if (isSuccessStatus(doiRegistrationResponse.status)) {
+        if (doiRegistrationResponse.data) {
+          setDoi(doiRegistrationResponse.data);
+        } else {
+          setNoHit(true);
+        }
+      }
+    } catch {
       setNoHit(true);
       dispatch(setNotification({ message: t('feedback.error.get_doi'), variant: 'error' }));
-    } else if (isSuccessStatus(doiRegistrationResponse.status)) {
-      if (doiRegistrationResponse.data) {
-        setDoi(doiRegistrationResponse.data);
-      } else {
-        setNoHit(true);
-      }
     }
   };
 
