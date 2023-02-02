@@ -69,13 +69,21 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Institusjonens domene i Feide",
+      "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
+      "nvi": "Norsk vitenskapsindeks (NVI)",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
+      "sector": "Sektor",
+      "sector_values": {
+        "HEALTH": "Helsesektoren",
+        "INSTITUTE": "Instituttsektoren",
+        "UHI": "Universitet og høyskoler (UH)"
+      },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
     "person_register": {

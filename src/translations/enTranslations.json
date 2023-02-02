@@ -69,13 +69,21 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Institution's domain in Feide",
+      "institution_is_nvi_applicable": "Institution reports publication points to NVI",
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
+      "nvi": "Norwegian Science Index (NVI)",
       "password_hide": "Hide password",
       "password_show": "Show password",
       "remove_role_text": "Are you sure you want to remove this role?",
       "remove_role_title": "Remove role?",
       "ror": "Research Organization Registry (ROR)",
+      "sector": "Sector",
+      "sector_values": {
+        "HEALTH": "Health sector",
+        "INSTITUTE": "Institute sector",
+        "UHI": "University and college"
+      },
       "short_name": "Shortened display name"
     },
     "person_register": {
