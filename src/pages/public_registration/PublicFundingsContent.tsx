@@ -26,7 +26,7 @@ export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) 
           sx={{
             bgcolor: 'grey.400',
             borderRadius: '4px',
-            p: '0.5rem',
+            p: '0.75rem 1rem',
             alignItems: 'center',
             display: 'grid',
             gridTemplateColumns: { xs: '1fr', md: '3fr auto 3fr auto 2fr auto 1fr' },
