@@ -33,8 +33,8 @@ export const MyResults = () => {
 
   return (
     <>
-      {isLoadingRegistrations ? (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+      {isLoadingRegistrations || !isLoadingRegistrations ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <CircularProgress />
         </Box>
       ) : (
