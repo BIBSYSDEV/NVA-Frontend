@@ -44,9 +44,10 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
           project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.source.names);
             const fundingText = funding.code ? `${sourceName} - ${t('project.grant_id')} ${funding.code}` : sourceName;
+
             return (
               <Typography key={index}>
-                {funding.source.code === 'NFR' ? (
+                {funding.source.code === 'NFR' && funding.code ? (
                   <Link href={getNfrProjectUrl(funding.code)} target="_blank" rel="noopener noreferrer">
                     {fundingText}
                   </Link>
