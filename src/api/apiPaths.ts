@@ -13,6 +13,7 @@ export enum FileApiPath {
 }
 
 export enum CristinApiPath {
+  FundingSources = '/cristin/funding-sources',
   Organization = '/cristin/organization',
   Person = '/cristin/person',
   PersonIdentityNumber = '/cristin/person/identityNumber',
@@ -41,4 +42,8 @@ export enum RoleApiPath {
 export enum SearchApiPath {
   Registrations = '/search/resources',
   Tickets = '/search/tickets',
+}
+
+export enum VerifiedFundingApiPath {
+  Nfr = '/verified-funding/nfr',
 }

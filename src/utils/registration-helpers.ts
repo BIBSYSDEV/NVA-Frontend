@@ -525,3 +525,5 @@ export const shouldShowFileVersionField = (registration: Registration) => {
 export const isContentTypeWithFileVersionField = (contentType: string | null) =>
   contentType === JournalArticleContentType.AcademicArticle ||
   contentType === JournalArticleContentType.AcademicLiteratureReview;
+
+export const fundingSourceIsNfr = (sourceId: string) => sourceId.split('/').pop() === 'NFR';

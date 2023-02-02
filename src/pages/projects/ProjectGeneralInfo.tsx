@@ -5,6 +5,7 @@ import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
 import {
+  getNfrProjectUrl,
   getProjectCoordinatingInstitutionName,
   getProjectManagerName,
   getProjectPeriod,
@@ -46,9 +47,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             return (
               <Typography key={index}>
                 {funding.source.code === 'NFR' ? (
-                  <Link
-                    href={`https://prosjektbanken.forskningsradet.no/project/FORISS/${funding.code}`}
-                    target="_blank">
+                  <Link href={getNfrProjectUrl(funding.code)} target="_blank" rel="noopener noreferrer">
                     {fundingText}
                   </Link>
                 ) : (
