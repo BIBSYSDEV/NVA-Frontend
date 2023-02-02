@@ -1,9 +1,9 @@
 version: 0.2
 
 batch:
-  fast-fail: true
+  # fast-fail: true
   build-list:
-    - identifier: prod-build
+    - identifier: build
       buildspec: buildspecs/production_build.yml
-    - identifier: cypress-tests
+    - identifier: tests
       buildspec: buildspecs/cypress_tests.yml
