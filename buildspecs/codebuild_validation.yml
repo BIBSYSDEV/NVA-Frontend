@@ -1,7 +1,7 @@
 version: 0.2
 
 batch:
-  # fast-fail: true
+  fast-fail: true
   build-list:
     - identifier: build
       buildspec: buildspecs/production_build.yml
