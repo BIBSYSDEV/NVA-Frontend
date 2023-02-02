@@ -40,28 +40,24 @@ export const MyResults = () => {
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <CircularProgress aria-labelledby="registration-label" />
         </Box>
+      ) : registrations && registrations.size > 0 ? (
+        <>
+          <RegistrationSearchResults searchResult={registrations} />
+          <TablePagination
+            rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+            component="div"
+            count={registrations.size}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={(_, newPage) => setPage(newPage)}
+            onRowsPerPageChange={(event) => {
+              setRowsPerPage(+event.target.value);
+              setPage(0);
+            }}
+          />
+        </>
       ) : (
-        <div>
-          {registrations && registrations.size > 0 ? (
-            <>
-              <RegistrationSearchResults searchResult={registrations} />
-              <TablePagination
-                rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                component="div"
-                count={registrations.size}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(_, newPage) => setPage(newPage)}
-                onRowsPerPageChange={(event) => {
-                  setRowsPerPage(+event.target.value);
-                  setPage(0);
-                }}
-              />
-            </>
-          ) : (
-            <Typography>{t('common.no_hits')}</Typography>
-          )}
-        </div>
+        <Typography>{t('common.no_hits')}</Typography>
       )}
     </div>
   );
