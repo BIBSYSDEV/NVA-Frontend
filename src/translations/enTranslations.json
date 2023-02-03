@@ -503,6 +503,7 @@
         "identity": "Identity",
         "not_shown_publicly": "Will not be shown publicly"
       },
+      "my_research_results": "My research results",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
         "delete_orcid": "Remove ORCID connection",
@@ -522,6 +523,7 @@
         "preview": "Preview",
         "research_profile": "Research profile"
       },
+      "results": "Results",
       "telephone": "Telephone",
       "user_profile": "User profile",
       "user_profile_description": "Here you can fill in and mark what you want to appear on your public researcher profile."

@@ -355,6 +355,7 @@ export const dataTestId = {
       telephoneField: 'telephone-field',
     },
     myRegistrationsLink: 'my-registrations-link',
+    myResultsLink: "my-publications'link",
     newRegistrationLink: 'new-registration-link',
     researchProfileLink: 'research-profile-link',
   },
