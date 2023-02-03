@@ -79,6 +79,9 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
                 checked={field.value}
+                inputProps={{
+                  'aria-label': `${t('registration.files_and_license.administrative_agreement')} checkbox`,
+                }}
                 onChange={(event) => {
                   const newAssociatedFileType: AssociatedFileType =
                     field.value === true ? 'UnpublishedFile' : 'UnpublishableFile';
