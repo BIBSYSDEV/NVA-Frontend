@@ -35,6 +35,7 @@ export const mockRegistration: JournalRegistration = {
       license: null,
     },
   ],
+  fundings: [],
   subjects: [],
   entityDescription: {
     type: 'EntityDescription',

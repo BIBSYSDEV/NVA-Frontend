@@ -113,6 +113,7 @@ export const dataTestId = {
     fileSize: 'file-size',
     fileVersion: 'file-version',
     filesAccordion: 'files-accordion',
+    fundingsAccordion: 'fundings-accordion',
     generalInfo: 'public-registration-general-info',
     geographicAccordion: 'geographic-accordion',
     handleLink: 'handle-link',

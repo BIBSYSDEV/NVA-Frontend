@@ -58,7 +58,6 @@ export const RegistrationFormStepper = ({ setTabNumber, tabNumber }: Registratio
   }, [setTouched, tabNumber, locationState]);
 
   const tabErrors = getTabErrors(valuesRef.current, errors, touched);
-
   const descriptionTabHasError = tabErrors[RegistrationTab.Description].length > 0;
   const resourceTabHasError = tabErrors[RegistrationTab.ResourceType].length > 0;
   const contributorTabHasError = tabErrors[RegistrationTab.Contributors].length > 0;
