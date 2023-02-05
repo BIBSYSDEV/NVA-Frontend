@@ -18,6 +18,8 @@ export const RegistrationSearchBar = () => {
         {({ field }: FieldProps<string>) => (
           <SearchTextField
             {...field}
+            // eslint-disable-next-line jsx-a11y/tabindex-no-positive
+            tabIndex={0}
             sx={{ gridArea: 'searchbar' }}
             placeholder={t('search.search_placeholder')}
             clearValue={() => {
@@ -43,6 +45,8 @@ export const RegistrationSearchBar = () => {
             ))}
             <Box sx={{ display: 'flex', gap: '1rem' }}>
               <Button
+                // eslint-disable-next-line jsx-a11y/tabindex-no-positive
+                tabIndex={1}
                 variant="outlined"
                 onClick={() => {
                   const newPropertyFilter: PropertySearch = {
