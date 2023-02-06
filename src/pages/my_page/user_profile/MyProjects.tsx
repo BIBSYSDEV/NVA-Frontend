@@ -8,7 +8,6 @@ import { RootState } from '../../../redux/store';
 import { SearchResponse } from '../../../types/common.types';
 import { CristinProject } from '../../../types/project.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
-import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../../search/CristinSearchPagination';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 
