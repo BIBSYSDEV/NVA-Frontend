@@ -1,5 +1,7 @@
 {
   "about": {
+    "about_nva": "Om NVA",
+    "availability_statement": "Tilgjengenlighetserklæring",
     "description": {
       "paragraph0": {
         "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent vitenarkiv",
@@ -67,13 +69,21 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Institusjonens domene i Feide",
+      "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
+      "nvi": "Norsk vitenskapsindeks (NVI)",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
+      "sector": "Sektor",
+      "sector_values": {
+        "HEALTH": "Helsesektoren",
+        "INSTITUTE": "Instituttsektoren",
+        "UHI": "Universitet og høyskoler (UH)"
+      },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
     "person_register": {
@@ -95,7 +105,6 @@
     }
   },
   "common": {
-    "about_nva": "Om NVA",
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
@@ -120,6 +129,7 @@
     "error_occurred": "En uventet feil har oppstått",
     "first_name": "Fornavn",
     "help": "Hjelp",
+    "id": "ID",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
     "last_name": "Etternavn",
@@ -397,6 +407,7 @@
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
+      "doi_reserved": "DOI er reservert",
       "publishing_request_approved": "Registreringen ble publisert",
       "publishing_request_rejected": "Publiseringsforespørselen ble avvist",
       "removed_role": "Rollen ble fjernet",
@@ -424,6 +435,7 @@
       "is_required": "{{-field}} er obligatorisk",
       "isbn_too_short": "ISBN må ha 13 siffer",
       "must_accept_terms_for_dataset": "Du må godta vilkårene for datasett",
+      "must_be_a_positive_number": "{{field}} må være et positivt tall",
       "must_be_bigger_than": "{{field}} kan ikke være mindre enn {{limit}}",
       "must_be_smaller_than": "{{field}} kan ikke være større enn {{limit}}",
       "must_have_associated_artifact": "Du må laste opp minst en fil eller en lenke for denne registreringen",
@@ -492,6 +504,7 @@
         "not_shown_publicly": "Vises ikke offentlig"
       },
       "my_projects": "Mine prosjekt",
+      "my_research_results": "Mine forskningsresultat",
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
         "delete_orcid": "Fjern ORCID-kobling",
@@ -512,6 +525,7 @@
         "preview": "Forhåndsvisning",
         "research_profile": "Forskerprofil"
       },
+      "results": "Resultat",
       "telephone": "Telefon",
       "user_profile": "Brukerprofil",
       "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil."
@@ -940,6 +954,16 @@
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskrivelse av innhold, hvis relevant",
+      "funding": {
+        "financing": "Finansiering",
+        "funder": "Finansiør",
+        "funder_filter": "Filtrer på navn eller kode",
+        "funding_sum": "Sum",
+        "nfr_project": "NFR-prosjekt",
+        "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
+        "project": "Prosjekt",
+        "remove_funding": "Fjern finansiering"
+      },
       "hrcs_activities": "HRCS-aktiviteter",
       "hrcs_categories": "HRCS-kategorier",
       "keywords": "Nøkkelord",
@@ -1142,7 +1166,7 @@
         },
         "award_name": "Prisnavn",
         "award_organizer": "Prisutdeler/arrangør",
-        "award_other": "Annet",
+        "award_other_type": "Annet",
         "award_ranking": "Rangering",
         "catalogue_number": "Katalognummer",
         "competition_date": "Dato for offentliggjøring",
@@ -1199,7 +1223,7 @@
           "Translation": "Oversettelse"
         },
         "media_type": "Medietype",
-        "mention_other": "Annet (utgiver, ISBN, m.m.)",
+        "mention_other_type": "Annet (utgiver, ISBN, m.m.)",
         "mention_title": "Tidsskrift/Boktittel/medium",
         "moving_picture_type": {
           "AugmentedVirtualRealityFilm": "AR/VR",

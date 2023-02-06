@@ -1,3 +1,4 @@
+import { Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RoleApiPath } from '../../../api/apiPaths';
 import { PageHeader } from '../../../components/PageHeader';
@@ -48,11 +49,14 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
           />
 
           {editMode && customerInstitution && (
-            <CustomerInstitutionAdminsForm
-              admins={admins}
-              refetchInstitutionUsers={refetchInstitutionUsers}
-              cristinInstitutionId={customerInstitution.cristinId}
-            />
+            <>
+              <Divider sx={{ my: '1rem' }} />
+              <CustomerInstitutionAdminsForm
+                admins={admins}
+                refetchInstitutionUsers={refetchInstitutionUsers}
+                cristinInstitutionId={customerInstitution.cristinId}
+              />
+            </>
           )}
         </>
       )}

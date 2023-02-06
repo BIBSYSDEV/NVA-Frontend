@@ -5,6 +5,7 @@ import { Switch, useHistory } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { Divider } from '@mui/material';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -14,7 +15,7 @@ import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjects } from './user_profile/MyProjects';
-
+import { MyResults } from './user_profile/MyResults';
 import {
   LinkButton,
   LinkButtonRow,
@@ -26,8 +27,6 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import ResearchProfile from '../research_profile/ResearchProfile';
-
-import { Divider } from '@mui/material';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -92,6 +91,12 @@ const MyPagePage = () => {
             {t('my_page.my_profile.user_profile')}
           </LinkButton>
           <LinkButton
+            data-testid={dataTestId.myPage.myResultsLink}
+            isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
+            to={UrlPathTemplate.MyPageMyResults}>
+            {t('my_page.my_profile.results')}
+          </LinkButton>
+          <LinkButton
             data-testid={dataTestId.myPage.myProjectsLink}
             isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
             to={UrlPathTemplate.MyPageMyProjects}>
@@ -108,6 +113,7 @@ const MyPagePage = () => {
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResults} component={MyResults} />
         </ErrorBoundary>
       </Switch>
     </StyledPageWithSideMenu>

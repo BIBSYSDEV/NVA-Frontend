@@ -26,6 +26,7 @@ import {
 } from './publicationFieldNames';
 import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 import { MapEntityDescription } from './publication_types/otherRegistration.types';
+import { LanguageString } from './common.types';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -92,7 +93,36 @@ export interface BaseRegistration {
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
+  fundings: Funding[];
 }
+
+export interface Funding {
+  type: 'ConfirmedFunding' | 'UnconfirmedFunding';
+  source: string;
+  id?: string;
+  identifier: string;
+  labels: LanguageString;
+  fundingAmount?: {
+    currency: string;
+    amount: number;
+  };
+  activeFrom: string;
+  activeTo: string;
+}
+
+export const emptyFunding: Funding = {
+  type: 'UnconfirmedFunding',
+  source: '',
+  id: '',
+  identifier: '',
+  labels: {},
+  fundingAmount: {
+    currency: 'NOK',
+    amount: 0,
+  },
+  activeFrom: '',
+  activeTo: '',
+};
 
 export interface BaseEntityDescription {
   type: 'EntityDescription';
@@ -198,6 +228,7 @@ export const emptyRegistration: Registration = {
   publisher: { id: '' },
   subjects: [],
   associatedArtifacts: [],
+  fundings: [],
 };
 
 export interface Series {
