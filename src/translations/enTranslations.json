@@ -491,6 +491,7 @@
         "identity": "Identity",
         "not_shown_publicly": "Will not be shown publicly"
       },
+      "my_projects": "My projects",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
         "delete_orcid": "Remove ORCID connection",

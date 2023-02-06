@@ -491,6 +491,7 @@
         "identity": "Identitet",
         "not_shown_publicly": "Vises ikke offentlig"
       },
+      "my_projects": "Mine prosjekt",
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
         "delete_orcid": "Fjern ORCID-kobling",
