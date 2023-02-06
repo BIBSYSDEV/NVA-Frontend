@@ -27,6 +27,7 @@ import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
+import { administrativeAgreementId } from '../FilesAndLicensePanel';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -80,7 +81,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
                 checked={field.value}
                 inputProps={{
-                  'aria-label': `${t('registration.files_and_license.administrative_agreement')} checkbox`,
+                  'aria-labelledby': administrativeAgreementId,
                 }}
                 onChange={(event) => {
                   const newAssociatedFileType: AssociatedFileType =
