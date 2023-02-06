@@ -12,13 +12,18 @@ export enum PublicationType {
 }
 
 export enum JournalType {
-  Article = 'JournalArticle',
+  AcademicArticle = 'AcademicArticle',
+  AcademicLiteratureReview = 'AcademicLiteratureReview',
   Letter = 'JournalLetter',
   Review = 'JournalReview',
   Leader = 'JournalLeader',
   Corrigendum = 'JournalCorrigendum',
   Issue = 'JournalIssue',
   ConferenceAbstract = 'ConferenceAbstract',
+  CaseReport = 'CaseReport',
+  StudyProtocol = 'StudyProtocol',
+  ProfessionalArticle = 'ProfessionalArticle',
+  PopularScienceArticle = 'PopularScienceArticle',
 }
 
 export enum BookType {

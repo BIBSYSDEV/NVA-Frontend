@@ -13,11 +13,7 @@ import {
   ResearchDataType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import {
-  BookMonographContentType,
-  ChapterContentType,
-  JournalArticleContentType,
-} from '../../../types/publication_types/content.types';
+import { BookMonographContentType, ChapterContentType } from '../../../types/publication_types/content.types';
 import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../validationHelpers';
 import {
@@ -253,15 +249,6 @@ const journalPublicationInstance = Yup.object<YupShape<JournalPublicationInstanc
         .url(resourceErrorMessage.corrigendumForInvalid)
         .nullable()
         .required(resourceErrorMessage.corrigendumForRequired),
-    }),
-  contentType: Yup.string()
-    .nullable()
-    .when('$publicationInstanceType', {
-      is: JournalType.Article,
-      then: Yup.string()
-        .nullable()
-        .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentTypeRequired)
-        .required(resourceErrorMessage.contentTypeRequired),
     }),
 });
 

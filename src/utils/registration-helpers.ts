@@ -37,7 +37,6 @@ import {
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
-import { JournalArticleContentType } from '../types/publication_types/content.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -175,7 +174,11 @@ type ContributorConfig = {
 
 export const contributorConfig: ContributorConfig = {
   // Journal
-  [JournalType.Article]: {
+  [JournalType.AcademicArticle]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.AcademicLiteratureReview]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
@@ -200,6 +203,22 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   [JournalType.ConferenceAbstract]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.CaseReport]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.StudyProtocol]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.ProfessionalArticle]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.PopularScienceArticle]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
@@ -519,11 +538,11 @@ export const getContentType = (registration: Registration) => {
 
 export const shouldShowFileVersionField = (registration: Registration) => {
   const contentType = getContentType(registration);
-  return isContentTypeWithFileVersionField(contentType);
+  return isContentTypeWithFileVersionField(contentType ?? '');
 };
 
-export const isContentTypeWithFileVersionField = (contentType: string | null) =>
-  contentType === JournalArticleContentType.AcademicArticle ||
-  contentType === JournalArticleContentType.AcademicLiteratureReview;
+export const isContentTypeWithFileVersionField = (publicationInstanceType: string) =>
+  publicationInstanceType === JournalType.AcademicArticle ||
+  publicationInstanceType === JournalType.AcademicLiteratureReview;
 
 export const fundingSourceIsNfr = (sourceId: string) => sourceId.split('/').pop() === 'NFR';

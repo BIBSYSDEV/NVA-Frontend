@@ -1,12 +1,3 @@
-export enum JournalArticleContentType {
-  AcademicArticle = 'AcademicArticle',
-  AcademicLiteratureReview = 'AcademicLiteratureReview',
-  CaseReport = 'CaseReport',
-  StudyProtocol = 'StudyProtocol',
-  ProfessionalArticle = 'ProfessionalArticle',
-  PopularScienceArticle = 'PopularScienceArticle',
-}
-
 export enum BookMonographContentType {
   AcademicMonograph = 'AcademicMonograph',
   NonFictionMonograph = 'NonFictionMonograph',

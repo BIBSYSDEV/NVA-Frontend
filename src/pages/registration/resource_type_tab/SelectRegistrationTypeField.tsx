@@ -50,7 +50,8 @@ import { getMainRegistrationType, isPeriodicalMediaContribution } from '../../..
 import { dataTestId } from '../../../utils/dataTestIds';
 
 const nviApplicableTypes: PublicationInstanceType[] = [
-  JournalType.Article,
+  JournalType.AcademicArticle,
+  JournalType.AcademicLiteratureReview,
   BookType.Monograph,
   ChapterType.AnthologyChapter,
 ];
@@ -392,7 +393,7 @@ const RegistrationTypesRow = ({ mainType, subTypes, value, onChangeType }: Regis
   return (
     <>
       <Typography>{t(`registration.publication_types.${mainType}`)}</Typography>
-      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+      <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
         {subTypes.map((subType) => (
           <Chip
             data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(subType)}

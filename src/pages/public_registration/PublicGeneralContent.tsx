@@ -90,12 +90,6 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
         <Typography>{displayDate(entityDescription?.date)}</Typography>
 
-        {journalPublicationInstance?.contentType && (
-          <Typography>
-            {t(`registration.resource_type.content_types.${journalPublicationInstance.contentType}`)}
-          </Typography>
-        )}
-
         {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
             {i18n.language === 'nob' ? language.nob : language.eng}
