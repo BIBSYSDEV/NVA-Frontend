@@ -3,11 +3,11 @@ import { Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { BookMonographContentType, ChapterContentType } from '../../../../types/publication_types/content.types';
+import { ChapterContentType } from '../../../../types/publication_types/content.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface ContentTypeFieldProps {
-  contentTypes: BookMonographContentType[] | ChapterContentType[];
+  contentTypes: ChapterContentType[];
 }
 
 export const ContentTypeField = ({ contentTypes }: ContentTypeFieldProps) => {

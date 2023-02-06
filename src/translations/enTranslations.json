@@ -1333,17 +1333,11 @@
       "content": "Content",
       "content_types": {
         "AcademicChapter": "Academic chapter",
-        "AcademicMonograph": "Academic monograph",
-        "Encyclopedia": "Encyclopedia",
         "EncyclopediaChapter": "Encyclopedia chapter",
-        "ExhibitionCatalog": "Exhibition catalog",
         "ExhibitionCatalogChapter": "Chapter in Exhibition catalog",
         "Introduction": "Introduction in anthology",
         "NonFictionChapter": "Non-fiction chapter",
-        "NonFictionMonograph": "Non-fiction monograph",
         "PopularScienceChapter": "Popular science chapter",
-        "PopularScienceMonograph": "Popular science monograph",
-        "Textbook": "Textbook",
         "TextbookChapter": "Textbook chapter"
       },
       "date_from": "Date from",

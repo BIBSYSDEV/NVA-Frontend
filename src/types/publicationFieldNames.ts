@@ -27,7 +27,12 @@ export enum JournalType {
 }
 
 export enum BookType {
-  Monograph = 'BookMonograph',
+  AcademicMonograph = 'AcademicMonograph',
+  NonFictionMonograph = 'NonFictionMonograph',
+  PopularScienceMonograph = 'PopularScienceMonograph',
+  Textbook = 'Textbook',
+  Encyclopedia = 'Encyclopedia',
+  ExhibitionCatalog = 'ExhibitionCatalog',
   Anthology = 'BookAnthology',
 }
 

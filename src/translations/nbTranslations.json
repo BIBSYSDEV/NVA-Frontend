@@ -1333,17 +1333,11 @@
       "content": "Innhold",
       "content_types": {
         "AcademicChapter": "Vitenskapelig kapittel",
-        "AcademicMonograph": "Vitenskapelig monografi",
-        "Encyclopedia": "Oppslagsverk",
         "EncyclopediaChapter": "Kapittel i oppslagsverk",
-        "ExhibitionCatalog": "Utstillingskatalog",
         "ExhibitionCatalogChapter": "Kapittel i utstillingskatalog",
         "Introduction": "Innledning i antologi",
         "NonFictionChapter": "Faglig kapittel",
-        "NonFictionMonograph": "Faglig monografi",
         "PopularScienceChapter": "Populærvitenskapelig kapittel",
-        "PopularScienceMonograph": "Populærvitenskapelig monografi",
-        "Textbook": "Lærebok",
         "TextbookChapter": "Kapittel i lærebok"
       },
       "date_from": "Dato fra",

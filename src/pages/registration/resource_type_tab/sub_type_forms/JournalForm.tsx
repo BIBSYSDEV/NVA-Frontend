@@ -9,11 +9,12 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { InputContainerBox } from '../../../../components/styled/Wrappers';
 import { PublicationChannelType } from '../../../../types/registration.types';
 import { JournalDetailsFields } from '../components/JournalDetailsFields';
+import { nviApplicableTypes } from '../../../../utils/registration-helpers';
 
 export const JournalForm = () => {
   const { t } = useTranslation();
   const { values } = useFormikContext<JournalRegistration>();
-  const instanceType = values.entityDescription.reference?.publicationInstance.type;
+  const instanceType = values.entityDescription.reference?.publicationInstance.type ?? '';
 
   return (
     <>
@@ -37,7 +38,7 @@ export const JournalForm = () => {
         <JournalDetailsFields />
       </InputContainerBox>
 
-      <NviValidation registration={values} />
+      {nviApplicableTypes.includes(instanceType) ? <NviValidation registration={values} /> : null}
     </>
   );
 };

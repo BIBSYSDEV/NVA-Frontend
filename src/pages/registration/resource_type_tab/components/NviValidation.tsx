@@ -6,7 +6,7 @@ import { RootState } from '../../../../redux/store';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
-import { BookMonographContentType, ChapterContentType } from '../../../../types/publication_types/content.types';
+import { ChapterContentType } from '../../../../types/publication_types/content.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
 import { Journal, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -28,8 +28,7 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
   const isNviApplicableJournalArticle =
     instanceType === JournalType.AcademicArticle || instanceType === JournalType.AcademicLiteratureReview;
 
-  const isNviApplicableBookMonograph =
-    instanceType === BookType.Monograph && contentType === BookMonographContentType.AcademicMonograph;
+  const isNviApplicableBookMonograph = instanceType === BookType.AcademicMonograph;
 
   const isNviApplicableChapterArticle =
     instanceType === ChapterType.AnthologyChapter && contentType === ChapterContentType.AcademicChapter;

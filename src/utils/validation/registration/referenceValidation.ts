@@ -13,7 +13,7 @@ import {
   ResearchDataType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import { BookMonographContentType, ChapterContentType } from '../../../types/publication_types/content.types';
+import { ChapterContentType } from '../../../types/publication_types/content.types';
 import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../validationHelpers';
 import {
@@ -273,15 +273,6 @@ export const journalReference = baseReference.shape({
 const bookPublicationInstance = Yup.object<YupShape<BookPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(BookType)).required(resourceErrorMessage.typeRequired),
   pages: pagesMonographField,
-  contentType: Yup.string()
-    .nullable()
-    .when('$publicationInstanceType', {
-      is: BookType.Monograph,
-      then: Yup.string()
-        .nullable()
-        .oneOf(Object.values(BookMonographContentType), resourceErrorMessage.contentTypeRequired)
-        .required(resourceErrorMessage.contentTypeRequired),
-    }),
 });
 
 const bookPublicationContext = Yup.object<YupShape<BookPublicationContext>>({

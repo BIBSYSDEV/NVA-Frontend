@@ -46,15 +46,12 @@ import {
   emptyResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
-import { getMainRegistrationType, isPeriodicalMediaContribution } from '../../../utils/registration-helpers';
+import {
+  getMainRegistrationType,
+  isPeriodicalMediaContribution,
+  nviApplicableTypes,
+} from '../../../utils/registration-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
-
-const nviApplicableTypes: PublicationInstanceType[] = [
-  JournalType.AcademicArticle,
-  JournalType.AcademicLiteratureReview,
-  BookType.Monograph,
-  ChapterType.AnthologyChapter,
-];
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();

@@ -1,12 +1,3 @@
-export enum BookMonographContentType {
-  AcademicMonograph = 'AcademicMonograph',
-  NonFictionMonograph = 'NonFictionMonograph',
-  PopularScienceMonograph = 'PopularScienceMonograph',
-  Textbook = 'Textbook',
-  Encyclopedia = 'Encyclopedia',
-  ExhititionCatalog = 'ExhibitionCatalog',
-}
-
 export enum ChapterContentType {
   AcademicChapter = 'AcademicChapter',
   NonFictionChapter = 'NonFictionChapter',

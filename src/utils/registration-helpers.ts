@@ -84,6 +84,13 @@ export const isPeriodicalMediaContribution = (instanceType: string) =>
 
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
 
+export const nviApplicableTypes: string[] = [
+  JournalType.AcademicArticle,
+  JournalType.AcademicLiteratureReview,
+  BookType.AcademicMonograph,
+  ChapterType.AnthologyChapter,
+];
+
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
 
@@ -223,7 +230,27 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Book
-  [BookType.Monograph]: {
+  [BookType.AcademicMonograph]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.NonFictionMonograph]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.PopularScienceMonograph]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.Textbook]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.Encyclopedia]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.ExhibitionCatalog]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
