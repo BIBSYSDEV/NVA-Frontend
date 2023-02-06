@@ -6,6 +6,7 @@ import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext 
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
 import { SearchTextField } from '../SearchTextField';
+import { RegistrationSortSelector } from './RegistrationSortSelector';
 
 export const RegistrationSearchBar = () => {
   const { t } = useTranslation();
@@ -18,8 +19,6 @@ export const RegistrationSearchBar = () => {
         {({ field }: FieldProps<string>) => (
           <SearchTextField
             {...field}
-            // eslint-disable-next-line jsx-a11y/tabindex-no-positive
-            tabIndex={0}
             sx={{ gridArea: 'searchbar' }}
             placeholder={t('search.search_placeholder')}
             clearValue={() => {
@@ -29,6 +28,7 @@ export const RegistrationSearchBar = () => {
           />
         )}
       </Field>
+      <RegistrationSortSelector />
       <FieldArray name="properties">
         {({ push, remove }: FieldArrayRenderProps) => (
           <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -45,8 +45,6 @@ export const RegistrationSearchBar = () => {
             ))}
             <Box sx={{ display: 'flex', gap: '1rem' }}>
               <Button
-                // eslint-disable-next-line jsx-a11y/tabindex-no-positive
-                tabIndex={1}
                 variant="outlined"
                 onClick={() => {
                   const newPropertyFilter: PropertySearch = {

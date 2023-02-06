@@ -58,8 +58,6 @@ export const RegistrationSortSelector = () => {
 
   return (
     <TextField
-      // eslint-disable-next-line jsx-a11y/tabindex-no-positive
-      tabIndex={1}
       sx={{ gridArea: 'sorting' }}
       data-testid={dataTestId.startPage.orderBySelect}
       select
