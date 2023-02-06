@@ -11,6 +11,15 @@ import { PublicationChannelType } from '../../../../types/registration.types';
 import { JournalDetailsFields } from '../components/JournalDetailsFields';
 import { nviApplicableTypes } from '../../../../utils/registration-helpers';
 
+const journalArticleTypes = [
+  JournalType.AcademicArticle,
+  JournalType.AcademicLiteratureReview,
+  JournalType.CaseReport,
+  JournalType.StudyProtocol,
+  JournalType.ProfessionalArticle,
+  JournalType.PopularScienceArticle,
+];
+
 export const JournalForm = () => {
   const { t } = useTranslation();
   const { values } = useFormikContext<JournalRegistration>();
@@ -22,7 +31,7 @@ export const JournalForm = () => {
         {instanceType === JournalType.Corrigendum ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.CorrigendumFor}
-            searchSubtypes={[JournalType.AcademicArticle]}
+            searchSubtypes={journalArticleTypes}
             label={t('registration.resource_type.original_article_title')}
             placeholder={t('registration.resource_type.search_for_original_article')}
             dataTestId={dataTestId.registrationWizard.resourceType.corrigendumForField}
