@@ -1330,16 +1330,6 @@
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
       "click_to_change_resource_type": "Trykk på valgt ressurstype om du vil endre",
-      "content": "Innhold",
-      "content_types": {
-        "AcademicChapter": "Vitenskapelig kapittel",
-        "EncyclopediaChapter": "Kapittel i oppslagsverk",
-        "ExhibitionCatalogChapter": "Kapittel i utstillingskatalog",
-        "Introduction": "Innledning i antologi",
-        "NonFictionChapter": "Faglig kapittel",
-        "PopularScienceChapter": "Populærvitenskapelig kapittel",
-        "TextbookChapter": "Kapittel i lærebok"
-      },
       "date_from": "Dato fra",
       "date_to": "Dato til",
       "isbn": "ISBN",

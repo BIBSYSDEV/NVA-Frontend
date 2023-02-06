@@ -53,7 +53,13 @@ export enum DegreeType {
 }
 
 export enum ChapterType {
-  AnthologyChapter = 'ChapterArticle',
+  AcademicChapter = 'AcademicChapter',
+  NonFictionChapter = 'NonFictionChapter',
+  PopularScienceChapter = 'PopularScienceChapter',
+  TextbookChapter = 'TextbookChapter',
+  EncyclopediaChapter = 'EncyclopediaChapter',
+  Introduction = 'Introduction',
+  ExhibitionCatalogChapter = 'ExhibitionCatalogChapter',
   ReportChapter = 'ChapterInReport',
   ConferenceAbstract = 'ChapterConferenceAbstract',
 }

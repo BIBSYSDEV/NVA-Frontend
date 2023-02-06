@@ -7,15 +7,23 @@ import { BookType, ChapterType, ReportType, ResourceFieldNames } from '../../../
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
-import { ChapterContentType } from '../../../../types/publication_types/content.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { ContentTypeField } from '../components/ContentTypeField';
+
+const anthologyChapterTypes: string[] = [
+  ChapterType.AcademicChapter,
+  ChapterType.NonFictionChapter,
+  ChapterType.PopularScienceChapter,
+  ChapterType.TextbookChapter,
+  ChapterType.EncyclopediaChapter,
+  ChapterType.Introduction,
+  ChapterType.ExhibitionCatalogChapter,
+];
 
 export const ChapterForm = () => {
   const { t } = useTranslation();
 
   const { values } = useFormikContext<ChapterRegistration>();
-  const instanceType = values.entityDescription.reference?.publicationInstance.type;
+  const instanceType = values.entityDescription.reference?.publicationInstance.type ?? '';
 
   return (
     <>
@@ -23,7 +31,7 @@ export const ChapterForm = () => {
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
           <InfoIcon color="primary" />
           <Typography variant="body1" gutterBottom>
-            {instanceType === ChapterType.AnthologyChapter
+            {anthologyChapterTypes.includes(instanceType)
               ? t('registration.resource_type.chapter.info_anthology')
               : instanceType === ChapterType.ConferenceAbstract
               ? t('registration.resource_type.chapter.info_book_of_abstracts')
@@ -33,7 +41,7 @@ export const ChapterForm = () => {
           </Typography>
         </Box>
 
-        {instanceType === ChapterType.AnthologyChapter ? (
+        {anthologyChapterTypes.includes(instanceType) ? (
           <SearchContainerField
             fieldName={ResourceFieldNames.PartOf}
             searchSubtypes={[BookType.Anthology]}
@@ -100,12 +108,7 @@ export const ChapterForm = () => {
         </Field>
       </Box>
 
-      {instanceType === ChapterType.AnthologyChapter && (
-        <>
-          <ContentTypeField contentTypes={Object.values(ChapterContentType)} />
-          <NviValidation registration={values} />
-        </>
-      )}
+      {instanceType === ChapterType.AcademicChapter ? <NviValidation registration={values} /> : null}
     </>
   );
 };

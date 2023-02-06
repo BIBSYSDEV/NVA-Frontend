@@ -88,7 +88,7 @@ export const nviApplicableTypes: string[] = [
   JournalType.AcademicArticle,
   JournalType.AcademicLiteratureReview,
   BookType.AcademicMonograph,
-  ChapterType.AnthologyChapter,
+  ChapterType.AcademicChapter,
 ];
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
@@ -301,7 +301,31 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Chapter
-  [ChapterType.AnthologyChapter]: {
+  [ChapterType.AcademicChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.NonFictionChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.PopularScienceChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.TextbookChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.EncyclopediaChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.Introduction]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.ExhibitionCatalogChapter]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
@@ -563,12 +587,10 @@ export const getContentType = (registration: Registration) => {
   return contentType;
 };
 
-export const shouldShowFileVersionField = (registration: Registration) => {
-  const contentType = getContentType(registration);
-  return isContentTypeWithFileVersionField(contentType ?? '');
-};
+export const shouldShowFileVersionField = (registration: Registration) =>
+  isTypeWithFileVersionField(registration.entityDescription?.reference?.publicationInstance.type ?? '');
 
-export const isContentTypeWithFileVersionField = (publicationInstanceType: string) =>
+export const isTypeWithFileVersionField = (publicationInstanceType: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
 

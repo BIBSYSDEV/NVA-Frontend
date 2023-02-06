@@ -1330,16 +1330,6 @@
         "search_for_report": "Search for the report where the chapter is published"
       },
       "click_to_change_resource_type": "Click on selected resource type to change it",
-      "content": "Content",
-      "content_types": {
-        "AcademicChapter": "Academic chapter",
-        "EncyclopediaChapter": "Encyclopedia chapter",
-        "ExhibitionCatalogChapter": "Chapter in Exhibition catalog",
-        "Introduction": "Introduction in anthology",
-        "NonFictionChapter": "Non-fiction chapter",
-        "PopularScienceChapter": "Popular science chapter",
-        "TextbookChapter": "Textbook chapter"
-      },
       "date_from": "Date from",
       "date_to": "Date to",
       "isbn": "ISBN",
