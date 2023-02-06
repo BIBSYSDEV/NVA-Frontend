@@ -1,12 +1,14 @@
 import { List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RootState } from '../../../redux/store';
 import { SearchResponse } from '../../../types/common.types';
 import { CristinProject } from '../../../types/project.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
+import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../../search/CristinSearchPagination';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 
@@ -16,8 +18,12 @@ export const MyProjects = () => {
   const user = useSelector((store: RootState) => store.user);
   const userCristinId = user?.cristinId?.split('/').pop() ?? '';
 
+  const location = useLocation();
+  const projectSearchQueryParams = new URLSearchParams(location.search);
+  const queryParams = projectSearchQueryParams.toString();
+
   const [projectsSearch, isLoadingProjectsSearch] = useFetch<SearchResponse<CristinProject>>({
-    url: userCristinId ? `${CristinApiPath.Project}?query=.&participant=${userCristinId}` : '',
+    url: userCristinId ? `${CristinApiPath.Project}?query=.&${queryParams}&participant=${userCristinId}` : '',
     errorMessage: t('feedback.error.project_search'),
   });
 
