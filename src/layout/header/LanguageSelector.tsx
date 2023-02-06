@@ -41,7 +41,7 @@ export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        <MenuItem disabled={i18n.language === 'nob'} onClick={() => setLanguage('nob')} lang="nob">
+        <MenuItem disabled={i18n.language === 'nob'} onClick={() => setLanguage('nob')} lang="nb">
           {norwegianTitle}
         </MenuItem>
         <MenuItem disabled={i18n.language === 'eng'} onClick={() => setLanguage('eng')} lang="en">
