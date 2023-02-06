@@ -13,14 +13,11 @@ import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 export const MyProjects = () => {
   const { t } = useTranslation();
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
-  const userCristinId = user.cristinId?.split('/').pop();
-
-  const queryParams = `query=.&participant=${userCristinId}`;
+  const user = useSelector((store: RootState) => store.user);
+  const userCristinId = user?.cristinId?.split('/').pop() ?? '';
 
   const [projectsSearch, isLoadingProjectsSearch] = useFetch<SearchResponse<CristinProject>>({
-    url: queryParams ? `${CristinApiPath.Project}?${queryParams}` : '',
+    url: userCristinId ? `${CristinApiPath.Project}?query=.&participant=${userCristinId}` : '',
     errorMessage: t('feedback.error.project_search'),
   });
 
