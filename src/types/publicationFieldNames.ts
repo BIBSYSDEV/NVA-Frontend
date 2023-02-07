@@ -99,17 +99,6 @@ export enum ResearchDataType {
   Dataset = 'DataSet',
 }
 
-export type RegistrationSubtype =
-  | JournalType
-  | ReportType
-  | BookType
-  | DegreeType
-  | ChapterType
-  | PresentationType
-  | ArtisticType
-  | MediaType
-  | ResearchDataType;
-
 export enum RegistrationFieldName {
   Identifier = 'identifier',
   ModifiedDate = 'modifiedDate',

@@ -580,10 +580,7 @@ export const getContributorInitials = (name: string) => {
   return initials;
 };
 
-export const shouldShowFileVersionField = (registration: Registration) =>
-  isTypeWithFileVersionField(registration.entityDescription?.reference?.publicationInstance.type ?? '');
-
-export const isTypeWithFileVersionField = (publicationInstanceType: string) =>
+export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
 
