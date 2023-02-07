@@ -15,9 +15,9 @@ import { ProjectListItem } from './ProjectListItem';
 export const ProjectSearch = () => {
   const { t } = useTranslation();
   const location = useLocation();
-  const projectSearchQueryParmas = new URLSearchParams(location.search);
-  projectSearchQueryParmas.delete(SearchParam.Type);
-  const queryParams = projectSearchQueryParmas.toString();
+  const projectSearchQueryParams = new URLSearchParams(location.search);
+  projectSearchQueryParams.delete(SearchParam.Type);
+  const queryParams = projectSearchQueryParams.toString();
 
   const [projectsSearch, isLoadingProjectsSearch] = useFetch<SearchResponse<CristinProject>>({
     url: queryParams ? `${CristinApiPath.Project}?${queryParams}` : '',
