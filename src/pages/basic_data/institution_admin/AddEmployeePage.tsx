@@ -102,9 +102,7 @@ export const AddEmployeePage = () => {
       <Helmet>
         <title>{t('basic_data.add_employee.add_employee')}</title>
       </Helmet>
-      <Typography variant="h3" component="h2" paragraph>
-        {t('basic_data.add_employee.update_person_registry')}
-      </Typography>
+      <Typography variant="h2">{t('basic_data.add_employee.update_person_registry')}</Typography>
       <Formik
         initialValues={initialValues}
         validationSchema={addEmployeeValidationSchema}

@@ -67,9 +67,7 @@ interface RoleLabelProps {
 
 const RoleLabel = ({ title, description }: RoleLabelProps) => (
   <>
-    <Typography variant="h4" component="h3" sx={{ fontWeight: 600, lineHeight: '1' }}>
-      {title}
-    </Typography>
+    <Typography sx={{ fontWeight: 600, lineHeight: '1' }}>{title}</Typography>
     <Typography>{description}</Typography>
   </>
 );
