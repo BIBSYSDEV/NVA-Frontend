@@ -1,5 +1,4 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
-import { JournalArticleContentType, BookMonographContentType } from '../../src/types/publication_types/content.types';
 import { DesignType } from '../../src/types/publication_types/artisticRegistration.types';
 import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
 import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
@@ -64,7 +63,9 @@ describe('User opens registration form and can see validation errors', () => {
     );
 
     // No errors should be displayed when user has just selected new context type
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.Article)}]`).click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.AcademicArticle)}]`
+    ).click();
     cy.get('p.Mui-error').should('not.exist');
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click({ force: true });
@@ -107,22 +108,21 @@ describe('User opens registration form and can see validation errors', () => {
     );
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesToField}] p.Mui-error`).should('not.exist');
 
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('be.visible');
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
-    cy.get(`[data-value="${JournalArticleContentType.AcademicArticle}"]`).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}] p.Mui-error`).should('not.exist');
-
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
 
     /* The User should be able to see validation errors on resource tab (Book) */
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.Article)}]`).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.Monograph)}]`).click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.AcademicArticle)}]`
+    ).click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.AcademicMonograph)}]`
+    ).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.Monograph)}]`).should(
-      'be.visible'
-    );
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.AcademicMonograph)}]`
+    ).should('be.visible');
 
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
@@ -158,15 +158,14 @@ describe('User opens registration form and can see validation errors', () => {
       cy.get('input').clear().type('20');
     });
 
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
-    cy.get(`[data-value="${BookMonographContentType.Textbook}"]`).click();
-
     cy.get('[data-testid=nav-tabpanel-resource-type]').within(() =>
       cy.get('[data-testid=error-tab]').should('not.exist')
     );
 
     /* The User should be able to see validation errors on resource tab (Report) */
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.Monograph)}]`).click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(BookType.AcademicMonograph)}]`
+    ).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Report)}]`).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Report)}]`).should(

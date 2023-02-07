@@ -54,13 +54,11 @@ export const PublishingAccordion = ({
   const [tabErrors, setTabErrors] = useState<TabErrors>();
   useEffect(() => {
     const publicationInstance = registration.entityDescription?.reference?.publicationInstance;
-    const contentType =
-      publicationInstance && 'contentType' in publicationInstance ? publicationInstance.contentType : null;
+
     try {
       validateYupSchema<Registration>(registration, registrationValidationSchema, true, {
         publicationInstanceType: publicationInstance?.type ?? '',
         publicationStatus: registration.status,
-        contentType,
       });
       setRegistrationIsValid(true);
     } catch (error) {

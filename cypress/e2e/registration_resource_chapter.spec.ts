@@ -1,5 +1,4 @@
-import { JournalType, BookType, ChapterType } from '../../src/types/publicationFieldNames';
-import { ChapterContentType } from '../../src/types/publication_types/content.types';
+import { JournalType, ChapterType } from '../../src/types/publicationFieldNames';
 import { dataTestId } from '../../src/utils/dataTestIds';
 
 describe('Registration: Resource type: Chapter', () => {
@@ -16,22 +15,19 @@ describe('Registration: Resource type: Chapter', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').click();
 
     // choose Chapter type
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.Article)}]`).click();
     cy.get(
-      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ChapterType.AnthologyChapter)}]`
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.AcademicArticle)}]`
+    ).click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ChapterType.AcademicChapter)}]`
     ).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
     cy.get(
-      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ChapterType.AnthologyChapter)}]`
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ChapterType.AcademicChapter)}]`
     ).should('be.visible');
 
     // fill out number of page-number fields
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesFromField}]`).type('1');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.pagesToField}]`).type('42');
-
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.contentField}]`).click();
-    cy.get(
-      `[data-testid=${dataTestId.registrationWizard.resourceType.contentValue(ChapterContentType.AcademicChapter)}]`
-    ).click();
   });
 });

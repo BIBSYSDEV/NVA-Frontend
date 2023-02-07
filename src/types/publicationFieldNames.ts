@@ -122,7 +122,6 @@ export const instanceTypeBaseFieldName = 'entityDescription.reference.publicatio
 
 export enum ResourceFieldNames {
   ArticleNumber = 'entityDescription.reference.publicationInstance.articleNumber',
-  ContentType = 'entityDescription.reference.publicationInstance.contentType',
   CorrigendumFor = 'entityDescription.reference.publicationInstance.corrigendumFor',
   Doi = 'entityDescription.reference.doi',
   IsbnList = 'entityDescription.reference.publicationContext.isbnList',
