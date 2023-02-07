@@ -15,9 +15,9 @@ export const Footer = () => {
         gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
         gap: '1rem',
       }}>
-      <Box sx={{ gridColumn: { xs: 1, md: 2 }, justifySelf: 'center' }}>
-        <Typography sx={{ color: 'primary.main' }}>{t('about.footer_text')}</Typography>
-      </Box>
+      <Typography sx={{ color: 'primary.main', gridColumn: { xs: 1, md: 2 }, justifySelf: 'center' }}>
+        {t('about.footer_text')}
+      </Typography>
       <Box
         sx={{
           display: 'flex',
