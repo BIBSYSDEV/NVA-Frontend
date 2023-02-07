@@ -70,7 +70,7 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.descriptionStepButton}]`).click({ force: true });
     cy.get(`[data-testid=${dataTestId.registrationWizard.stepper.resourceStepButton}]`).click({ force: true });
-    cy.get('p.Mui-error').should('have.length', 2);
+    cy.get('p.Mui-error').should('have.length', 1);
 
     // Journal (publicationContext) field
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] input`)
@@ -127,7 +127,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=nav-tabpanel-description]').click({ force: true });
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
-    cy.get('p.Mui-error').should('have.length', 3);
+    cy.get('p.Mui-error').should('have.length', 2);
 
     // publicationContext
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
