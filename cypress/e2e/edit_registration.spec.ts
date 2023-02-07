@@ -21,9 +21,9 @@ describe('User opens an item in the My Registrations list', () => {
 
     // Resource Type tab
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.Article)}]`).should(
-      'be.visible'
-    );
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.AcademicArticle)}]`
+    ).should('be.visible');
 
     // Contributors tab
     cy.get('[data-testid=nav-tabpanel-contributors]').click({ force: true });

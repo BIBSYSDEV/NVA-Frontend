@@ -17,7 +17,9 @@ describe('Registration: Resource type: Report', () => {
     cy.get('[data-testid=nav-tabpanel-resource-type]').click();
 
     // choose Report type
-    cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.Article)}]`).click();
+    cy.get(
+      `[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(JournalType.AcademicArticle)}]`
+    ).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Research)}]`).click();
     cy.get(`[data-testid=${dataTestId.confirmDialog.acceptButton}]`).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.resourceTypeChip(ReportType.Research)}]`).should(
