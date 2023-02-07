@@ -42,7 +42,7 @@ export const CentralImportDuplicationCheckPage = () => {
 
   return (
     <>
-      <Typography id="duplicate-check-label" variant="h3" component="h2" paragraph>
+      <Typography id="duplicate-check-label" variant="h2">
         {t('basic_data.central_import.duplicate_check')}
       </Typography>
       <StyledPageContent>
@@ -50,9 +50,7 @@ export const CentralImportDuplicationCheckPage = () => {
           <PageSpinner aria-labelledby="duplicate-check-label" />
         ) : registration ? (
           <>
-            <Typography variant="h3" component="h2" paragraph>
-              {t('basic_data.central_import.import_publication')}:
-            </Typography>
+            <Typography variant="h3">{t('basic_data.central_import.import_publication')}:</Typography>
             <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
               {getTitleString(registration.entityDescription?.mainTitle)}
             </Typography>
@@ -71,9 +69,7 @@ export const CentralImportDuplicationCheckPage = () => {
               </MuiLink>
             )}
             <Divider sx={{ marginBottom: '2rem' }} />
-            <Typography variant="h3" component="h2" paragraph>
-              {t('basic_data.central_import.search_for_duplicates')}:
-            </Typography>
+            <Typography variant="h3">{t('basic_data.central_import.search_for_duplicates')}:</Typography>
             <DuplicateSearchFilterForm
               publication={registration}
               setDuplicateSearchFilters={setDuplicateSearchFilters}
