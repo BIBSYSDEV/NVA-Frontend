@@ -503,6 +503,7 @@
         "identity": "Identity",
         "not_shown_publicly": "Will not be shown publicly"
       },
+      "my_projects": "My projects",
       "my_research_results": "My research results",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
@@ -516,6 +517,7 @@
         "remove_connection": "Remove connection to ORCID",
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
       },
+      "projects": "Projects",
       "preferred_first_name": "Preferred first name",
       "preferred_last_name": "Preferred last name",
       "research_profile_summary": {

@@ -503,6 +503,7 @@
         "identity": "Identitet",
         "not_shown_publicly": "Vises ikke offentlig"
       },
+      "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskningsresultat",
       "orcid": {
         "connect_orcid": "Koble/opprette ORCID iD",
@@ -516,6 +517,7 @@
         "remove_connection": "Fjern kobling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
+      "projects": "Prosjekt",
       "preferred_first_name": "Foretrukket fornavn",
       "preferred_last_name": "Foretrukket etternavn",
       "research_profile_summary": {
