@@ -15,8 +15,7 @@ describe('About and Privacy policy', () => {
   });
 
   it('The user should see privacy policy page', () => {
-    cy.get(`[data-testid=${dataTestId.header.generalMenuButton}]`).click();
-    cy.get(`[data-testid=${dataTestId.header.privacyLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.footer.privacyLink}]`).click();
     cy.url().should('include', UrlPathTemplate.PrivacyPolicy);
     cy.injectAxe();
     cy.checkA11y();

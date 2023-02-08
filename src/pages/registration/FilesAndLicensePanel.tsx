@@ -50,6 +50,8 @@ import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
 
+export const administrativeAgreementId = 'administrative-agreement';
+
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
 }
@@ -180,7 +182,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                               <TableRow>
                                 <TableCell>{t('common.name')}</TableCell>
                                 <TableCell>{t('registration.files_and_license.size')}</TableCell>
-                                <TableCell>{t('registration.files_and_license.administrative_agreement')}</TableCell>
+                                <TableCell id={administrativeAgreementId}>
+                                  {t('registration.files_and_license.administrative_agreement')}
+                                </TableCell>
                                 {showFileVersion && (
                                   <TableCell>
                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>

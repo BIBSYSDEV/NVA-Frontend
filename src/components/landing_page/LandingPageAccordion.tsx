@@ -26,7 +26,7 @@ export const LandingPageAccordion = ({ heading, children, dataTestId, ...props }
     data-testid={dataTestId}
     {...props}>
     <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />} sx={{ padding: '0' }} id={dataTestId}>
-      <Typography variant="h3" component="h2" color="primary">
+      <Typography variant="h2" color="primary">
         {heading}
       </Typography>
     </AccordionSummary>

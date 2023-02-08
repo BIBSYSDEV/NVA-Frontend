@@ -5,6 +5,7 @@ import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getLanguageString } from '../../utils/translation-helpers';
 import {
+  getNfrProjectUrl,
   getProjectCoordinatingInstitutionName,
   getProjectManagerName,
   getProjectPeriod,
@@ -43,12 +44,11 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
           project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.source.names);
             const fundingText = funding.code ? `${sourceName} - ${t('project.grant_id')} ${funding.code}` : sourceName;
+
             return (
               <Typography key={index}>
-                {funding.source.code === 'NFR' ? (
-                  <Link
-                    href={`https://prosjektbanken.forskningsradet.no/project/FORISS/${funding.code}`}
-                    target="_blank">
+                {funding.source.code === 'NFR' && funding.code ? (
+                  <Link href={getNfrProjectUrl(funding.code)} target="_blank" rel="noopener noreferrer">
                     {fundingText}
                   </Link>
                 ) : (

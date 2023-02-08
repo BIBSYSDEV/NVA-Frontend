@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
-import { Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import { Box, Checkbox, Chip, FormControlLabel, FormLabel, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import {
   CustomerInstitution,
@@ -11,6 +11,7 @@ import {
   CustomerInstitutionFormData,
   DoiAgent,
   emptyProtectedDoiAgent,
+  Sector,
 } from '../../../types/customerInstitution.types';
 import { setNotification } from '../../../redux/notificationSlice';
 import {
@@ -92,7 +93,7 @@ export const CustomerInstitutionMetadataForm = ({
       validateOnChange
       validationSchema={customerInstitutionValidationSchema}
       onSubmit={handleSubmit}>
-      {({ values, isSubmitting, setValues }: FormikProps<CustomerInstitutionFormData>) => (
+      {({ values, isSubmitting, setValues, setFieldValue }: FormikProps<CustomerInstitutionFormData>) => (
         <Form noValidate>
           <InputContainerBox>
             <Field name={CustomerInstitutionFieldNames.Name}>
@@ -155,8 +156,47 @@ export const CustomerInstitutionMetadataForm = ({
               dataTestId={dataTestId.basicData.institutionAdmin.rorField}
             />
 
+            <Field name={CustomerInstitutionFieldNames.Sector}>
+              {({ field }: FieldProps) => (
+                <div>
+                  <FormLabel component="legend">{t('basic_data.institutions.sector')}</FormLabel>
+                  <Box sx={{ display: 'flex', gap: '0.5rem', mt: '0.5rem' }}>
+                    {Object.values(Sector).map((sector) => (
+                      <Chip
+                        key={sector}
+                        data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}
+                        label={t(`basic_data.institutions.sector_values.${sector}`)}
+                        color="primary"
+                        variant={field.value === sector ? 'filled' : 'outlined'}
+                        onClick={() => setFieldValue(field.name, sector)}
+                      />
+                    ))}
+                  </Box>
+                </div>
+              )}
+            </Field>
+
+            <Field name={CustomerInstitutionFieldNames.NviInstitution}>
+              {({ field }: FieldProps<boolean>) => (
+                <div>
+                  <FormLabel component="legend">{t('basic_data.institutions.nvi')}</FormLabel>
+                  <FormControlLabel
+                    label={t('basic_data.institutions.institution_is_nvi_applicable')}
+                    control={
+                      <Checkbox
+                        data-testid={dataTestId.basicData.institutionAdmin.nviInstitutionCheckbox}
+                        {...field}
+                        checked={field.value}
+                      />
+                    }
+                  />
+                </div>
+              )}
+            </Field>
+
             {editMode && (
               <div>
+                <FormLabel component="legend">{t('common.doi_long')}</FormLabel>
                 <Field name={CustomerInstitutionFieldNames.CanAssignDoi}>
                   {({ field }: FieldProps<boolean>) => (
                     <FormControlLabel
@@ -164,7 +204,6 @@ export const CustomerInstitutionMetadataForm = ({
                       control={
                         <Checkbox
                           data-testid={dataTestId.basicData.institutionAdmin.canAssignDoiCheckbox}
-                          required
                           {...field}
                           checked={field.value}
                         />

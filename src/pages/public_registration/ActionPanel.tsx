@@ -7,7 +7,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { Ticket } from '../../types/publication_types/messages.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { associatedArtifactIsLink, userIsCuratorForRegistration } from '../../utils/registration-helpers';
+import { userIsCuratorForRegistration } from '../../utils/registration-helpers';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
@@ -43,7 +43,6 @@ export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTicke
         </ErrorBoundary>
         <ErrorBoundary>
           {!registration.entityDescription?.reference?.doi &&
-            !registration.associatedArtifacts.some(associatedArtifactIsLink) &&
             doiRequestTicket?.status !== 'Completed' &&
             customer?.doiAgent.username && (
               <DoiRequestAccordion

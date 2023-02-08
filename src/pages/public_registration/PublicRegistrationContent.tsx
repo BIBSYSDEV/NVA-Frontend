@@ -28,6 +28,7 @@ import { RootState } from '../../redux/store';
 import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
+import { PublicFundingsContent } from './PublicFundingsContent';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -37,7 +38,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
-  const { identifier, entityDescription, projects, subjects } = registration;
+  const { identifier, entityDescription, projects, subjects, fundings } = registration;
   const contributors = entityDescription?.contributors ?? [];
   const mainTitle = getTitleString(entityDescription?.mainTitle);
   const abstract = entityDescription?.abstract;
@@ -147,6 +148,15 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             defaultExpanded
             heading={t('registration.description.project_association')}>
             <PublicProjectsContent projects={projects} />
+          </LandingPageAccordion>
+        )}
+
+        {fundings.length > 0 && (
+          <LandingPageAccordion
+            dataTestId={dataTestId.registrationLandingPage.fundingsAccordion}
+            defaultExpanded
+            heading={t('project.financing')}>
+            <PublicFundingsContent fundings={fundings} />
           </LandingPageAccordion>
         )}
 

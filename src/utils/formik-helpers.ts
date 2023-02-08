@@ -16,11 +16,12 @@ import {
   ResourceFieldNames,
   SpecificContributorFieldNames,
   SpecificFileFieldNames,
+  SpecificFundingFieldNames,
   SpecificLinkFieldNames,
 } from '../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
 import { MapRegistration } from '../types/publication_types/otherRegistration.types';
-import { Registration, RegistrationTab } from '../types/registration.types';
+import { Funding, Registration, RegistrationTab } from '../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
 
 export interface TabErrors {
@@ -58,7 +59,7 @@ export const getTabErrors = (
   touched?: FormikTouched<Registration>
 ) => {
   const tabErrors: TabErrors = {
-    [RegistrationTab.Description]: getErrorMessages(descriptionFieldNames, errors, touched),
+    [RegistrationTab.Description]: getErrorMessages(getAllDescriptionFields(values.fundings), errors, touched),
     [RegistrationTab.ResourceType]: getErrorMessages(resourceFieldNames, errors, touched),
     [RegistrationTab.Contributors]: getErrorMessages(
       getAllContributorFields(values.entityDescription?.contributors ?? []),
@@ -84,8 +85,21 @@ export const getFirstErrorTab = (tabErrors?: TabErrors) =>
       : -1
     : -1;
 
-const descriptionFieldNames = Object.values(DescriptionFieldNames);
 const resourceFieldNames = Object.values(ResourceFieldNames);
+
+const getAllDescriptionFields = (fundings: Funding[]) => {
+  const descriptionFieldNames: string[] = Object.values(DescriptionFieldNames);
+  fundings.forEach((_, index) => {
+    const baseFieldName = `${DescriptionFieldNames.Fundings}[${index}]`;
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Source}`);
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Id}`);
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Identifier}`);
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.NorwegianLabel}`);
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Currency}`);
+    descriptionFieldNames.push(`${baseFieldName}.${SpecificFundingFieldNames.Amount}`);
+  });
+  return descriptionFieldNames;
+};
 
 const getAllFileFields = (associatedArtifacts: AssociatedArtifact[]): string[] => {
   const fieldNames: string[] = [];
@@ -123,7 +137,7 @@ const getAllContributorFields = (contributors: Contributor[]): string[] => {
   return fieldNames;
 };
 
-const touchedDescriptionTabFields: FormikTouched<unknown> = {
+const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown> => ({
   entityDescription: {
     abstract: true,
     date: {
@@ -136,7 +150,17 @@ const touchedDescriptionTabFields: FormikTouched<unknown> = {
     mainTitle: true,
     tags: true,
   },
-};
+  fundings: fundings.map((_) => ({
+    source: true,
+    id: true,
+    identifier: true,
+    labels: { nb: true },
+    fundingAmount: {
+      currency: true,
+      amount: true,
+    },
+  })),
+});
 
 const touchedResourceTabFields = (registration: Registration): FormikTouched<unknown> => {
   const mainType = getMainRegistrationType(registration.entityDescription?.reference?.publicationInstance.type ?? '');
@@ -401,7 +425,7 @@ export const getTouchedTabFields = (
   values: Registration
 ): FormikTouched<Registration> => {
   const tabFields = {
-    [RegistrationTab.Description]: () => touchedDescriptionTabFields,
+    [RegistrationTab.Description]: () => touchedDescriptionTabFields(values.fundings),
     [RegistrationTab.ResourceType]: () => touchedResourceTabFields(values),
     [RegistrationTab.Contributors]: () => touchedContributorTabFields(values.entityDescription?.contributors ?? []),
     [RegistrationTab.FilesAndLicenses]: () => touchedFilesTabFields(values.associatedArtifacts),

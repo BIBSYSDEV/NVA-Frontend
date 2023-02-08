@@ -6,6 +6,7 @@ import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext 
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
 import { SearchTextField } from '../SearchTextField';
+import { RegistrationSortSelector } from './RegistrationSortSelector';
 
 export const RegistrationSearchBar = () => {
   const { t } = useTranslation();
@@ -27,6 +28,7 @@ export const RegistrationSearchBar = () => {
           />
         )}
       </Field>
+      <RegistrationSortSelector />
       <FieldArray name="properties">
         {({ push, remove }: FieldArrayRenderProps) => (
           <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

@@ -17,7 +17,6 @@ import {
 } from '../../utils/searchHelpers';
 import { RegistrationFacetsFilter } from './registration_search/filters/RegistrationFacetsFilter';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
-import { RegistrationSortSelector } from './registration_search/RegistrationSortSelector';
 import { SearchResponse } from '../../types/common.types';
 import { Registration } from '../../types/registration.types';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -205,7 +204,6 @@ const SearchPage = () => {
                   rowGap: '1rem',
                 }}>
                 <RegistrationSearchBar />
-                <RegistrationSortSelector />
                 <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
               </Box>
             )}

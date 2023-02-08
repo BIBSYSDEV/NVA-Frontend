@@ -14,6 +14,8 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { MyProfile } from './user_profile/MyProfile';
+import { MyProjects } from './user_profile/MyProjects';
+import { MyResults } from './user_profile/MyResults';
 import {
   LinkButton,
   LinkButtonRow,
@@ -88,6 +90,18 @@ const MyPagePage = () => {
             to={UrlPathTemplate.MyPageMyProfile}>
             {t('my_page.my_profile.user_profile')}
           </LinkButton>
+          <LinkButton
+            data-testid={dataTestId.myPage.myResultsLink}
+            isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
+            to={UrlPathTemplate.MyPageMyResults}>
+            {t('my_page.my_profile.results')}
+          </LinkButton>
+          <LinkButton
+            data-testid={dataTestId.myPage.myProjectsLink}
+            isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
+            to={UrlPathTemplate.MyPageMyProjects}>
+            {t('my_page.my_profile.projects')}
+          </LinkButton>
           <Divider key="divider4" />
         </NavigationList>
       </SidePanel>
@@ -97,7 +111,9 @@ const MyPagePage = () => {
           <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
           <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResults} component={MyResults} />
         </ErrorBoundary>
       </Switch>
     </StyledPageWithSideMenu>

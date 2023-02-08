@@ -149,7 +149,7 @@ export const PublicationMentionModal = ({
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('registration.resource_type.artistic.mention_other')}
+                    label={t('registration.resource_type.artistic.mention_other_type')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.publicationMentionOther}
