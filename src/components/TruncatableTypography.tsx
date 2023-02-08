@@ -1,5 +1,5 @@
 import { TypographyProps, Typography, styled, Tooltip } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, KeyboardEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
 
@@ -32,6 +32,13 @@ export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypogr
 
   const isExpandable = isTruncated && lineClamp !== undefined;
 
+  const handleKeyPress = (event: KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      isTruncated && setLineClamp(undefined);
+    }
+  };
+
   useEffect(() => {
     if (props.children && stringIncludesMathJax(props.children.toString())) {
       typesetMathJax();
@@ -44,7 +51,9 @@ export const TruncatableTypography = ({ lines = 3, ...props }: TruncatableTypogr
         ref={(ref) => setIsTruncated(isOverflown(ref))}
         lineClamp={lineClamp}
         isExpandable={isExpandable}
+        tabIndex={isExpandable ? 0 : -1}
         onClick={() => isTruncated && setLineClamp(undefined)}
+        onKeyDown={handleKeyPress}
         {...props}
       />
     </Tooltip>
