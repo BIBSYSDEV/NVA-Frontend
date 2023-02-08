@@ -6,7 +6,4 @@ batch:
     - identifier: build
       buildspec: buildspecs/production_build.yml
     - identifier: tests
-      env:
-        variables:
-          IMAGE: public.ecr.aws/cypress-io/cypress/browsers:node16.15.1-chrome85-ff81
       buildspec: buildspecs/cypress_tests.yml
