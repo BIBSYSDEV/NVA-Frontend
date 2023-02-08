@@ -71,7 +71,7 @@ interface Funding {
     names: LanguageString;
     code: string;
   };
-  code: string;
+  code?: string;
 }
 
 export interface PostCristinProject {

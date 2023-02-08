@@ -32,5 +32,8 @@ export const getProjectManagers = (contributors: ProjectContributor[]) =>
 export const getProjectParticipants = (contributors: ProjectContributor[]) =>
   contributors.filter((contributor) => contributor.type === 'ProjectParticipant');
 
-export const getNfrProjectUrl = (identifier: string) =>
-  `https://prosjektbanken.forskningsradet.no/project/FORISS/${identifier}`;
+export const getNfrProjectUrl = (identifier: string) => {
+  const splittedIdentifier = identifier ? identifier.split('/') : []; // Some identifiers have a slash for some reason, eg: project 558223
+  const projectIdentifier = splittedIdentifier.length > 0 ? splittedIdentifier[0] : null;
+  return projectIdentifier ? `https://prosjektbanken.forskningsradet.no/project/FORISS/${projectIdentifier}` : '';
+};

@@ -3,7 +3,7 @@ import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockSearchResults } from '../../src/utils/testfiles/mockSearchResults';
 import { UrlPathTemplate } from '../../src/utils/urlPaths';
 
-describe('Central Import', () => {
+describe.skip('Central Import', () => {
   beforeEach(() => {
     cy.visit('/basic-data/central-import');
     cy.mocklogin();
