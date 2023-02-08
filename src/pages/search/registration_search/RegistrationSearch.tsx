@@ -39,6 +39,7 @@ export const RegistrationSearch = ({ searchResults, isLoadingSearch }: Registrat
         <>
           <RegistrationSearchResults searchResult={searchResults} />
           <TablePagination
+            aria-live="assertive"
             data-testid={dataTestId.startPage.searchPagination}
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             component="div"

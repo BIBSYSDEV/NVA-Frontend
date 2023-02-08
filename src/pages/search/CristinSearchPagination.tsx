@@ -24,6 +24,7 @@ export const CristinSearchPagination = ({ totalCount }: CristinSearchPaginationP
 
   return (
     <TablePagination
+      aria-live="assertive"
       data-testid={dataTestId.startPage.searchPagination}
       rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
       component="div"
