@@ -6,8 +6,6 @@ env:
   variables:
     REACT_APP_API_HOST: 'https://my-nva-api.no'
     REACT_APP_USE_MOCK: 'true'
-  secrets-manager:
-    CYPRESS_RECORD_KEY: CypressRecordKey
 
 phases:
   install:
