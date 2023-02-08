@@ -76,7 +76,15 @@ export const DoiRequestAccordion = ({
       if (openRequestDoiModal) {
         toggleRequestDoiModal();
       }
-      dispatch(setNotification({ message: t('feedback.success.doi_request_sent'), variant: 'success' }));
+      dispatch(
+        setNotification({
+          message:
+            registration.status === RegistrationStatus.Draft
+              ? t('feedback.success.doi_reserved')
+              : t('feedback.success.doi_request_sent'),
+          variant: 'success',
+        })
+      );
       refetchRegistrationAndTickets();
     }
   };
@@ -100,8 +108,10 @@ export const DoiRequestAccordion = ({
     }
   };
 
-  const hasMismatchingDoiRequest =
-    (isPendingDoiRequest && !registration.doi) || (isClosedDoiRequest && !!registration.doi);
+  const waitingForReservedDoi =
+    isPendingDoiRequest && !registration.doi && registration.status !== RegistrationStatus.Published;
+  const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
+  const hasMismatchingDoiRequest = waitingForReservedDoi || waitingForRemovalOfDoi;
 
   return (
     <Accordion
@@ -206,7 +216,7 @@ export const DoiRequestAccordion = ({
           </>
         )}
 
-        {registration.doi && userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
+        {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', gap: '1rem' }}>
             <LoadingButton
               variant="contained"

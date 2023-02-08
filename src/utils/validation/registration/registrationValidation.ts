@@ -20,6 +20,7 @@ import i18n from '../../../translations/i18n';
 import { getMainRegistrationType, isBook } from '../../registration-helpers';
 import { Registration, EntityDescription, RegistrationDate } from '../../../types/registration.types';
 import { YupShape } from '../validationHelpers';
+import { fundingValidationSchema } from './fundingValidation';
 
 const registrationErrorMessage = {
   titleRequired: i18n.t('translation:feedback.validation.is_required', { field: i18n.t('translation:common.title') }),
@@ -92,4 +93,5 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
     )
     .required(registrationErrorMessage.associatedArtifactRequired),
   projects: Yup.array().of(Yup.object()),
+  fundings: Yup.array().of(fundingValidationSchema),
 });

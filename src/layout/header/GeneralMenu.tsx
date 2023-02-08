@@ -36,19 +36,6 @@ export const GeneralMenu = ({ anchorEl, onClose }: GeneralMenuProps) => {
         onClick={() => handleClickMenuItem(UrlPathTemplate.About)}>
         {t('about.about_nva')}
       </MenuItem>
-      <MenuItem
-        data-testid={dataTestId.header.privacyLink}
-        onClick={() => handleClickMenuItem(UrlPathTemplate.PrivacyPolicy)}>
-        {t('privacy.privacy_statement')}
-      </MenuItem>
-      <MenuItem
-        data-testid={dataTestId.header.availabilityStatement}
-        component="a"
-        target="_blank"
-        rel="noopener noreferrer"
-        href={'https://uustatus.no/nb/erklaringer/publisert/bffb4b1d-25eb-4fe0-bac7-2f0b4a8e0fd9'}>
-        {t('about.availability_statement')}
-      </MenuItem>
     </Menu>
   );
 };

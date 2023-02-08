@@ -3,7 +3,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
-    Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur'> {
+    Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur' | 'multiline'> {
   isLoading: boolean;
   showSearchIcon?: boolean;
   errorMessage?: string;

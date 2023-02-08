@@ -14,7 +14,7 @@
       "paragraph4": "NVA will make the institution's open content available via open interfaces, with the intention of making this known and searchable to the outside world and promoting indexing in search engines and search portals.",
       "paragraph5": "Although NVA is established and in use by several institutions, the service will be in continous development throughout its lifetime. Institutions that do not have a research archive can contact <0>Sikt</0> to use NVA as a pilot institution."
     },
-    "footer_text": "$t(about.short_description) The service is delivered by Sikt.",
+    "footer_text": "The service is delivered by Sikt - Norwegian Agency for Shared Services in Education and Research",
     "short_description": "The national research archive (NVA) collects information about Norwegian research and makes research results and research information openly available."
   },
   "authorization": {
@@ -69,13 +69,21 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Institution's domain in Feide",
+      "institution_is_nvi_applicable": "Institution reports publication points to NVI",
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
+      "nvi": "Norwegian Science Index (NVI)",
       "password_hide": "Hide password",
       "password_show": "Show password",
       "remove_role_text": "Are you sure you want to remove this role?",
       "remove_role_title": "Remove role?",
       "ror": "Research Organization Registry (ROR)",
+      "sector": "Sector",
+      "sector_values": {
+        "HEALTH": "Health sector",
+        "INSTITUTE": "Institute sector",
+        "UHI": "University and college"
+      },
       "short_name": "Shortened display name"
     },
     "person_register": {
@@ -121,6 +129,7 @@
     "error_occurred": "An unexpected error has occurred",
     "first_name": "First name",
     "help": "Help",
+    "id": "ID",
     "institution": "Institution",
     "institutions": "Institutions",
     "last_name": "Last name",
@@ -398,6 +407,7 @@
       "delete_registration": "Deleted registration",
       "doi_request_sent": "DOI request sent",
       "doi_request_updated": "DOI request is updated",
+      "doi_reserved": "DOI is reserved",
       "publishing_request_approved": "Registration was published",
       "publishing_request_rejected": "Publishing request was rejected",
       "removed_role": "Role removed",
@@ -425,6 +435,7 @@
       "is_required": "{{-field}} is required",
       "isbn_too_short": "ISBN must have 13 digits",
       "must_accept_terms_for_dataset": "You must accept terms for dataset",
+      "must_be_a_positive_number": "{{field}} must be a positive number",
       "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
       "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",
       "must_have_associated_artifact": "You need to upload at least one file or a link for this registration",
@@ -492,6 +503,8 @@
         "identity": "Identity",
         "not_shown_publicly": "Will not be shown publicly"
       },
+      "my_projects": "My projects",
+      "my_research_results": "My research results",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
         "delete_orcid": "Remove ORCID connection",
@@ -504,6 +517,7 @@
         "remove_connection": "Remove connection to ORCID",
         "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
       },
+      "projects": "Projects",
       "preferred_first_name": "Preferred first name",
       "preferred_last_name": "Preferred last name",
       "research_profile_summary": {
@@ -511,6 +525,7 @@
         "preview": "Preview",
         "research_profile": "Research profile"
       },
+      "results": "Results",
       "telephone": "Telephone",
       "user_profile": "User profile",
       "user_profile_description": "Here you can fill in and mark what you want to appear on your public researcher profile."
@@ -939,6 +954,16 @@
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
       "date_published": "Date published",
       "description_of_content": "Description of content, if relevant",
+      "funding": {
+        "financing": "Funding",
+        "funder": "Funder",
+        "funder_filter": "Filter by name or code",
+        "funding_sum": "Sum",
+        "nfr_project": "NFR project",
+        "nfr_project_search": "Search by project name or project leader",
+        "project": "Project",
+        "remove_funding": "Remove funding"
+      },
       "hrcs_activities": "HRCS activities",
       "hrcs_categories": "HRCS categories",
       "keywords": "Keywords",
@@ -1141,7 +1166,7 @@
         },
         "award_name": "Award name",
         "award_organizer": "Award giver/organizer",
-        "award_other": "Other",
+        "award_other_type": "Other",
         "award_ranking": "Ranking",
         "catalogue_number": "Catalogue number",
         "competition_date": "Date for announcement",
@@ -1198,7 +1223,7 @@
           "Translation": "Translation"
         },
         "media_type": "Media type",
-        "mention_other": "Other (publisher, ISBN, etc.)",
+        "mention_other_type": "Other (publisher, ISBN, etc.)",
         "mention_title": "Journal/Book/medium",
         "moving_picture_type": {
           "AugmentedVirtualRealityFilm": "AR/VR",
