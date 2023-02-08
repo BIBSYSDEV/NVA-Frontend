@@ -3,6 +3,7 @@
 version: 0.2
 
 env:
+  IMAGE: public.ecr.aws/cypress-io/cypress/base:16.18.1
   variables:
     REACT_APP_API_HOST: 'https://my-nva-api.no'
     REACT_APP_USE_MOCK: 'true'
@@ -14,7 +15,6 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
-      - yum install -y xorg-x11-server-Xvfb gtk2-devel gtk3-devel libnotify-devel GConf2 nss libXScrnSaver alsa-lib #https://docs.cypress.io/guides/continuous-integration/introduction#Dependencies
       - npm ci
   build:
     commands:
