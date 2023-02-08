@@ -6,4 +6,7 @@ batch:
     - identifier: build
       buildspec: buildspecs/production_build.yml
     - identifier: tests
+      env:
+        variables:
+          IMAGE: public.ecr.aws/cypress-io/cypress/base:16.18.1
       buildspec: buildspecs/cypress_tests.yml
