@@ -2,7 +2,6 @@ import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { Funding } from '../../../types/registration.types';
 import { fundingSourceIsNfr } from '../../registration-helpers';
-import { YupShape } from '../validationHelpers';
 
 const fundingErrorMessage = {
   fundingSourceRequired: i18n.t('translation:feedback.validation.is_required', {
@@ -19,7 +18,11 @@ const fundingErrorMessage = {
   }),
 };
 
-export const fundingValidationSchema = Yup.object<YupShape<Funding>>({
+export const fundingValidationSchema: Yup.ObjectSchema<Funding> = Yup.object({
+  type: Yup.string<'ConfirmedFunding' | 'UnconfirmedFunding'>().defined(),
+  identifier: Yup.string().optional(),
+  activeFrom: Yup.string().optional(),
+  activeTo: Yup.string().optional(),
   source: Yup.string().required(fundingErrorMessage.fundingSourceRequired),
   id: Yup.string().test('test-id', fundingErrorMessage.fundingNfrProjectRequired, (value, context) => {
     const isNfrSource = fundingSourceIsNfr(context.parent.source ?? '');
@@ -38,6 +41,7 @@ export const fundingValidationSchema = Yup.object<YupShape<Funding>>({
     }),
   }),
   fundingAmount: Yup.object({
+    currency: Yup.string().defined(),
     amount: Yup.number()
       .typeError(fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
       .min(0, fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
