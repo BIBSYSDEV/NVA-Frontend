@@ -169,7 +169,7 @@ export const PublishingAccordion = ({
           />
         )}
 
-        {registration.status === RegistrationStatus.Published && (
+        {isPublishedRegistration && (
           <Typography paragraph>
             {t('registration.public_page.published_date', {
               date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
@@ -178,6 +178,7 @@ export const PublishingAccordion = ({
           </Typography>
         )}
 
+        {/* Option to reload data if status is not up to date with ticket */}
         {hasMismatchingPublishedStatus && (
           <>
             <Typography gutterBottom>
@@ -195,27 +196,33 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {publishingRequestTicket &&
+        {/* Show current status info */}
+        {!!publishingRequestTicket &&
           !hasMismatchingPublishedStatus &&
-          isDraftRegistration &&
+          (isDraftRegistration || hasUnpublishedFiles) &&
           (registratorPublishesMetadataOnly ? (
-            <Typography paragraph>
-              {hasClosedTicket
-                ? t('registration.public_page.tasks_panel.has_rejected_files_publishing_request')
-                : hasPendingTicket
-                ? t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')
-                : ''}
-            </Typography>
+            hasClosedTicket ? (
+              <Typography paragraph>
+                {t('registration.public_page.tasks_panel.has_rejected_files_publishing_request')}
+              </Typography>
+            ) : hasPendingTicket ? (
+              <Typography paragraph>
+                {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}
+              </Typography>
+            ) : null
           ) : registratorRequiresApprovalForMetadataAndFiles ? (
-            <Typography paragraph>
-              {hasClosedTicket
-                ? t('registration.public_page.tasks_panel.has_rejected_publishing_request')
-                : hasPendingTicket
-                ? t('registration.public_page.tasks_panel.waiting_for_publishing_approval')
-                : ''}
-            </Typography>
+            hasClosedTicket ? (
+              <Typography paragraph>
+                {t('registration.public_page.tasks_panel.has_rejected_publishing_request')}
+              </Typography>
+            ) : hasPendingTicket ? (
+              <Typography paragraph>
+                {t('registration.public_page.tasks_panel.waiting_for_publishing_approval')}
+              </Typography>
+            ) : null
           ) : null)}
 
+        {/* Tell user what they can publish */}
         {!publishingRequestTicket && isDraftRegistration && registrationIsValid && (
           <>
             {registratorPublishesMetadataAndFiles ? (
