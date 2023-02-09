@@ -1042,6 +1042,7 @@
       "reserve_doi": "Reserve a DOI",
       "reserved_doi": "Reserved DOI",
       "tasks_panel": {
+        "files_will_soon_be_published": "The Files will be published soon. Reload page to see updated status.",
         "has_doi_request": "Registration has a DOI request for approval to curator.",
         "has_rejected_doi_request": "Registration has a rejected DOI request.",
         "has_rejected_files_publishing_request": "Registration has a rejected publishing request for its files.",

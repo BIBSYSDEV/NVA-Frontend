@@ -117,14 +117,32 @@ export const PublishingAccordion = ({
     customer?.publicationWorkflow === 'RegistratorRequiresApprovalForMetadataAndFiles';
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
-  const canHandlePublishingRequest =
-    userIsCurator && !registratorPublishesMetadataAndFiles && publishingRequestTicket?.status === 'Pending';
+  const isPublishedRegistration = registration.status === RegistrationStatus.Published;
+  const hasUnpublishedFiles = registration.associatedArtifacts.some((artifact) => artifact.type === 'UnpublishedFile');
+
+  const hasClosedTicket = publishingRequestTicket?.status === 'Closed';
+  const hasPendingTicket = publishingRequestTicket?.status === 'Pending';
+  const hasCompletedTicket = publishingRequestTicket?.status === 'Completed';
+
+  const canHandlePublishingRequest = userIsCurator && !registratorPublishesMetadataAndFiles && hasPendingTicket;
+
+  const mismatchingPublishedStatusWorkflow1 =
+    registratorPublishesMetadataAndFiles && !!publishingRequestTicket && isDraftRegistration;
+  const mismatchingPublishedStatusWorkflow2 =
+    registratorPublishesMetadataOnly &&
+    !!publishingRequestTicket &&
+    (isDraftRegistration || (hasCompletedTicket && hasUnpublishedFiles));
+  const mismatchingPublishedStatusWorkflow3 =
+    registratorRequiresApprovalForMetadataAndFiles && hasCompletedTicket && isDraftRegistration;
+
+  const hasMismatchingPublishedStatus =
+    mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2 || mismatchingPublishedStatusWorkflow3;
 
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
       elevation={3}
-      defaultExpanded={isDraftRegistration || canHandlePublishingRequest}>
+      defaultExpanded={isDraftRegistration || canHandlePublishingRequest || hasMismatchingPublishedStatus}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('registration.public_page.publishing_request')} - {t(`registration.status.${registration.status}`)}
         {!registrationIsValid && (
@@ -160,35 +178,39 @@ export const PublishingAccordion = ({
           </Typography>
         )}
 
+        {hasMismatchingPublishedStatus && (
+          <>
+            <Typography gutterBottom>
+              {hasUnpublishedFiles && isPublishedRegistration
+                ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
+                : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
+            </Typography>
+            <Button
+              variant="outlined"
+              onClick={refetchRegistrationAndTickets}
+              startIcon={<RefreshIcon />}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
+              {t('registration.public_page.tasks_panel.reload')}
+            </Button>
+          </>
+        )}
+
         {publishingRequestTicket &&
-          (isDraftRegistration &&
-          (registratorPublishesMetadataAndFiles ||
-            (registratorPublishesMetadataOnly && publishingRequestTicket.status === 'Pending')) ? (
-            <>
-              <Typography gutterBottom>
-                {t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
-              </Typography>
-              <Button
-                variant="outlined"
-                onClick={refetchRegistrationAndTickets}
-                startIcon={<RefreshIcon />}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
-                {t('registration.public_page.tasks_panel.reload')}
-              </Button>
-            </>
-          ) : registratorPublishesMetadataOnly ? (
+          !hasMismatchingPublishedStatus &&
+          isDraftRegistration &&
+          (registratorPublishesMetadataOnly ? (
             <Typography paragraph>
-              {publishingRequestTicket.status === 'Closed'
+              {hasClosedTicket
                 ? t('registration.public_page.tasks_panel.has_rejected_files_publishing_request')
-                : publishingRequestTicket.status === 'Pending'
+                : hasPendingTicket
                 ? t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')
                 : ''}
             </Typography>
           ) : registratorRequiresApprovalForMetadataAndFiles ? (
             <Typography paragraph>
-              {publishingRequestTicket.status === 'Closed'
+              {hasClosedTicket
                 ? t('registration.public_page.tasks_panel.has_rejected_publishing_request')
-                : publishingRequestTicket.status === 'Pending'
+                : hasPendingTicket
                 ? t('registration.public_page.tasks_panel.waiting_for_publishing_approval')
                 : ''}
             </Typography>
@@ -226,7 +248,7 @@ export const PublishingAccordion = ({
           </LoadingButton>
         )}
 
-        {canHandlePublishingRequest && (
+        {canHandlePublishingRequest && !hasMismatchingPublishedStatus && (
           <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
             <LoadingButton
               variant="contained"
