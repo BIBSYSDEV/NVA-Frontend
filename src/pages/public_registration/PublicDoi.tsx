@@ -61,13 +61,17 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
         <>
           <Typography variant="overline">{t('common.doi')}</Typography>
           <Typography>
-            <Link
-              data-testid={dataTestId.registrationLandingPage.doiLink}
-              href={nvaDoi}
-              target="_blank"
-              rel="noopener noreferrer">
-              {nvaDoi}
-            </Link>
+            {nvaDoiIsFindable ? (
+              <Link
+                data-testid={dataTestId.registrationLandingPage.doiLink}
+                href={nvaDoi}
+                target="_blank"
+                rel="noopener noreferrer">
+                {nvaDoi}
+              </Link>
+            ) : (
+              nvaDoi
+            )}
             {canSeeDraftDoi &&
               nvaDoiIsFindable === false && ( // Note: Must check explicitly for false, since it is undefined initially
                 <Box component="span" sx={{ ml: '0.5rem' }}>

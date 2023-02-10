@@ -1,7 +1,7 @@
 {
   "about": {
     "about_nva": "Om NVA",
-    "availability_statement": "Tilgjengenlighetserklæring",
+    "availability_statement": "Tilgjengelighetserklæring",
     "description": {
       "paragraph0": {
         "bullet_point0": "Innfri krav om åpen tilgang til artikler og andre forskningsresultater gjennom deponering i et åpent vitenarkiv",
@@ -14,7 +14,7 @@
       "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
       "paragraph5": "Selv om NVA er etablert og i bruk av flere institusjoner, vil tjenesten være i kontinuerlig utvikling i hele sin levetid. Institusjoner som ikke har et vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
     },
-    "footer_text": "$t(about.short_description) Tjenesten er levert av Sikt.",
+    "footer_text": "Tjenesten er levert av Sikt - kunnskapssektorens tjenesteleverandør",
     "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig."
   },
   "authorization": {
@@ -517,9 +517,9 @@
         "remove_connection": "Fjern kobling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
-      "projects": "Prosjekt",
       "preferred_first_name": "Foretrukket fornavn",
       "preferred_last_name": "Foretrukket etternavn",
+      "projects": "Prosjekt",
       "research_profile_summary": {
         "affiliations": "Tilknytninger",
         "preview": "Forhåndsvisning",
@@ -1042,6 +1042,7 @@
       "reserve_doi": "Reserver en DOI",
       "reserved_doi": "Reservert DOI",
       "tasks_panel": {
+        "files_will_soon_be_published": "Filene vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
         "has_doi_request": "Registreringen har en DOI-forespørsel til behandling for kurator.",
         "has_rejected_doi_request": "Registreringen har en avslått DOI-forespørsel.",
         "has_rejected_files_publishing_request": "Registreringen har en avslått publiseringsforespørsel for filene.",

@@ -101,12 +101,12 @@ export const mainTheme = createTheme(
         fontWeight: 600,
       },
       h2: {
-        fontSize: '1rem',
+        fontSize: '1.125rem',
         fontWeight: 600,
       },
       h3: {
         fontSize: '1rem',
-        fontWeight: 700,
+        fontWeight: 600,
       },
       h4: {
         fontSize: '0.9rem',

@@ -63,9 +63,12 @@ export const dataTestId = {
     workflowRegistratorPublishesMetadata: 'workflow-registrator-publishes-metadata',
     workflowRegistratorRequiresApproval: 'workflow-registrator-requires-approval',
   },
+  footer: {
+    availabilityStatement: 'availability-statement',
+    privacyLink: 'privacy-link',
+  },
   header: {
     aboutLink: 'about-link',
-    availabilityStatement: 'availability-statement',
     basicDataLink: 'basic-data-link',
     editorLink: 'editor-link',
     generalMenuButton: 'general-menu-button',
@@ -76,7 +79,6 @@ export const dataTestId = {
     menuButton: 'menu-button',
     myPageLink: 'my-page-link',
     newRegistrationLink: 'new-registration',
-    privacyLink: 'privacy-link',
     tasksLink: 'tasks-link',
   },
   startPage: {

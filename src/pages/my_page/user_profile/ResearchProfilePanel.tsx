@@ -48,16 +48,12 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
             )}
 
             <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center' }}>
-              <Typography variant="h2" component="h1">
-                {t('my_page.my_profile.research_profile_summary.research_profile')}
-              </Typography>
+              <Typography variant="h2">{t('my_page.my_profile.research_profile_summary.research_profile')}</Typography>
               <AccountCircle sx={{ fontSize: '3rem' }} />
             </Box>
 
             <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <Typography variant="h3" component="h2">
-                {fullName}
-              </Typography>
+              <Typography variant="h3">{fullName}</Typography>
               {orcidUri && (
                 <IconButton size="small" href={orcidUri} target="_blank">
                   <img src={orcidIcon} height="20" alt="orcid" />
