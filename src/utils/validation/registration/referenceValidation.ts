@@ -59,6 +59,7 @@ import {
   MapPublicationContext,
   MapPublicationInstance,
 } from '../../../types/publication_types/otherRegistration.types';
+import { ContextPublisher, PublicationChannelType } from '../../../types/registration.types';
 
 const resourceErrorMessage = {
   announcementsRequired: i18n.t('translation:feedback.validation.announcement_required'),
@@ -212,12 +213,14 @@ export const periodField = Yup.object().shape({
     ),
 });
 
-const publisherField = Yup.object().shape({
-  id: Yup.string().when('name', {
-    is: (value: string) => !!value,
-    then: Yup.string().required(resourceErrorMessage.publisherNotSelected),
-    otherwise: Yup.string().required(resourceErrorMessage.publisherRequired),
-  }),
+const publisherField: Yup.ObjectSchema<ContextPublisher> = Yup.object({
+  type: Yup.string<PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher>().defined(),
+  name: Yup.string().optional(),
+  id: Yup.string().when('name', ([name], schema) =>
+    name
+      ? schema.required(resourceErrorMessage.publisherNotSelected)
+      : schema.required(resourceErrorMessage.publisherRequired)
+  ),
 });
 
 const seriesField = Yup.object().shape({
@@ -239,30 +242,28 @@ export const baseReference = Yup.object()
   .required(resourceErrorMessage.typeRequired);
 
 // Journal
-const journalPublicationInstance = Yup.object<YupShape<JournalPublicationInstance>>({
+const journalPublicationInstance: Yup.ObjectSchema<Pick<JournalPublicationInstance, 'issue'>> = Yup.object({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
-  articleNumber: Yup.string().nullable(),
+  articleNumber: Yup.string().defined(),
   volume: Yup.string().nullable(),
   issue: Yup.string().nullable(),
   pages: pagesRangeField,
   corrigendumFor: Yup.string()
     .nullable()
-    .when('type', {
-      is: JournalType.Corrigendum,
-      then: Yup.string()
-        .url(resourceErrorMessage.corrigendumForInvalid)
-        .nullable()
-        .required(resourceErrorMessage.corrigendumForRequired),
-    }),
+    .when('type', ([type], schema) =>
+      type === JournalType.Corrigendum
+        ? schema.url(resourceErrorMessage.corrigendumForInvalid).required(resourceErrorMessage.corrigendumForRequired)
+        : schema
+    ),
   contentType: Yup.string()
     .nullable()
-    .when('$publicationInstanceType', {
-      is: JournalType.Article,
-      then: Yup.string()
-        .nullable()
-        .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentTypeRequired)
-        .required(resourceErrorMessage.contentTypeRequired),
-    }),
+    .when('type', ([type], schema) =>
+      type === JournalType.Article
+        ? schema
+            .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentTypeRequired)
+            .required(resourceErrorMessage.contentTypeRequired)
+        : schema
+    ),
 });
 
 const journalPublicationContext = Yup.object<YupShape<JournalPublicationContext>>({

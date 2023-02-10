@@ -1,11 +1,5 @@
 import * as Yup from 'yup';
-import {
-  CustomerInstitution,
-  CustomerInstitutionFormData,
-  ProtectedDoiAgent,
-} from '../../types/customerInstitution.types';
 import i18n from '../../translations/i18n';
-import { YupShape } from './validationHelpers';
 
 const customerErrorMessage = {
   displayNameRequired: i18n.t('translation:feedback.validation.is_required', {
@@ -27,9 +21,9 @@ const customerErrorMessage = {
   }),
 };
 
-export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerInstitutionFormData>>({
+export const customerInstitutionValidationSchema = Yup.object({
   canAssignDoi: Yup.boolean(),
-  customer: Yup.object<YupShape<CustomerInstitution>>({
+  customer: Yup.object({
     name: Yup.string().required(customerErrorMessage.institutionRequired),
     displayName: Yup.string().required(customerErrorMessage.displayNameRequired),
     shortName: Yup.string().required(customerErrorMessage.shortNameRequired),
@@ -40,7 +34,7 @@ export const customerInstitutionValidationSchema = Yup.object<YupShape<CustomerI
   doiAgent: Yup.object().when('canAssignDoi', {
     is: true,
     then: () =>
-      Yup.object<YupShape<ProtectedDoiAgent>>({
+      Yup.object({
         username: Yup.string().required(customerErrorMessage.doiNameRequired),
         prefix: Yup.string()
           .matches(/^10.(\d){4,9}$/, customerErrorMessage.doiPrefixInvalid)
