@@ -105,14 +105,16 @@ export const FundingsField = () => {
                         fullWidth
                         variant="filled"
                       />
-                      <Button
-                        variant="outlined"
-                        endIcon={<OpenInNewIcon />}
-                        href={getNfrProjectUrl(funding.identifier)}
-                        target="_blank"
-                        rel="noopener noreferrer">
-                        {t('common.open')}
-                      </Button>
+                      {funding.identifier && (
+                        <Button
+                          variant="outlined"
+                          endIcon={<OpenInNewIcon />}
+                          href={getNfrProjectUrl(funding.identifier)}
+                          target="_blank"
+                          rel="noopener noreferrer">
+                          {t('common.open')}
+                        </Button>
+                      )}
                     </>
                   ) : (
                     <NfrProjectSearch baseFieldName={baseFieldName} />

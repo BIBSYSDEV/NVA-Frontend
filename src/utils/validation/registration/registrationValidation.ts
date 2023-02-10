@@ -56,7 +56,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
     }),
     language: Yup.string().nullable(),
     contributors: contributorsValidationSchema,
-    reference: Yup.object().when('$publicationInstanceType', (publicationInstanceType) => {
+    reference: Yup.object().when('$publicationInstanceType', ([publicationInstanceType]) => {
       const mainType = getMainRegistrationType(publicationInstanceType);
       switch (mainType) {
         case PublicationType.PublicationInJournal:
@@ -86,7 +86,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
   }),
   associatedArtifacts: Yup.array()
     .of(associatedFileValidationSchema)
-    .when('entityDescription', (entityDescription: EntityDescription, schema) =>
+    .when('entityDescription', ([entityDescription]: EntityDescription[], schema) =>
       entityDescription.reference?.doi
         ? schema.min(0)
         : schema.min(1, registrationErrorMessage.associatedArtifactRequired)

@@ -234,7 +234,7 @@ export const baseReference = Yup.object()
   .required(resourceErrorMessage.typeRequired);
 
 // Journal
-const journalPublicationInstance = Yup.object({
+const journalPublicationInstance = Yup.object<YupShape<JournalPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
   articleNumber: Yup.string().nullable(),
   volume: Yup.string().nullable(),
@@ -250,15 +250,15 @@ const journalPublicationInstance = Yup.object({
 });
 
 const journalPublicationContext = Yup.object<YupShape<JournalPublicationContext>>({
-  id: Yup.string().when('$publicationInstanceType', {
-    is: JournalType.Corrigendum,
-    then: Yup.string(),
-    otherwise: Yup.string().when('title', {
-      is: (value: string) => !!value,
-      then: Yup.string().required(resourceErrorMessage.journalNotSelected),
-      otherwise: Yup.string().required(resourceErrorMessage.journalRequired),
-    }),
-  }),
+  id: Yup.string().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+    publicationInstanceType === JournalType.Corrigendum
+      ? schema
+      : schema.when('title', ([title], subSchema) =>
+          !!title
+            ? subSchema.required(resourceErrorMessage.journalNotSelected)
+            : subSchema.required(resourceErrorMessage.journalRequired)
+        )
+  ),
 });
 
 export const journalReference = baseReference.shape({
@@ -358,32 +358,29 @@ const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicatio
   subtype: Yup.object().shape({
     type: Yup.string()
       .nullable()
-      .when('$publicationInstanceType', {
-        is: ArtisticType.MusicPerformance,
-        then: Yup.string().nullable().optional(),
-        otherwise: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
-      }),
+      .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+        publicationInstanceType === ArtisticType.MusicPerformance
+          ? schema.optional()
+          : schema.required(resourceErrorMessage.typeWorkRequired)
+      ),
     description: Yup.string()
       .nullable()
-      .when('type', {
-        is: DesignType.Other,
-        then: Yup.string().nullable().required(resourceErrorMessage.typeWorkRequired),
-      }),
+      .when('type', ([type], schema) =>
+        type === DesignType.Other ? schema.required(resourceErrorMessage.typeWorkRequired) : schema
+      ),
   }),
   description: Yup.string().nullable(),
-  venues: Yup.array().when('$publicationInstanceType', {
-    is: (value: ArtisticType) => value === ArtisticType.ArtisticDesign || value === ArtisticType.VisualArts,
-    then: Yup.array().min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired),
-    otherwise: Yup.array().nullable(),
-  }),
-  architectureOutput: Yup.array().when('$publicationInstanceType', {
-    is: ArtisticType.ArtisticArchitecture,
-    then: Yup.array()
-      .min(1, resourceErrorMessage.announcementsRequired)
-      .required(resourceErrorMessage.announcementsRequired),
-    otherwise: Yup.array().nullable(),
-  }),
-  outputs: Yup.array().when('$publicationInstanceType', (type: string, schema) => {
+  venues: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+    publicationInstanceType === ArtisticType.ArtisticDesign || publicationInstanceType === ArtisticType.VisualArts
+      ? schema.min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired)
+      : schema.nullable()
+  ),
+  architectureOutput: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+    publicationInstanceType === ArtisticType.ArtisticArchitecture
+      ? schema.min(1, resourceErrorMessage.announcementsRequired).required(resourceErrorMessage.announcementsRequired)
+      : schema.nullable()
+  ),
+  outputs: Yup.array().when('$publicationInstanceType', ([type], schema) => {
     if (type === ArtisticType.PerformingArts) {
       return schema.min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired);
     } else if (type === ArtisticType.MovingPicture) {
@@ -394,13 +391,11 @@ const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicatio
       return schema.nullable();
     }
   }),
-  manifestations: Yup.array().when('$publicationInstanceType', {
-    is: (value: ArtisticType) => value === ArtisticType.MusicPerformance || value === ArtisticType.LiteraryArts,
-    then: Yup.array()
-      .min(1, resourceErrorMessage.announcementsRequired)
-      .required(resourceErrorMessage.announcementsRequired),
-    otherwise: Yup.array().nullable(),
-  }),
+  manifestations: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+    publicationInstanceType === ArtisticType.MusicPerformance || publicationInstanceType === ArtisticType.LiteraryArts
+      ? schema.min(1, resourceErrorMessage.announcementsRequired).required(resourceErrorMessage.announcementsRequired)
+      : schema.nullable()
+  ),
 });
 
 export const artisticDesignReference = baseReference.shape({
@@ -408,55 +403,61 @@ export const artisticDesignReference = baseReference.shape({
 });
 
 // Media Contribution
-const mediaContributionPublicationContext = Yup.object().when('$publicationInstanceType', (type: string) => {
-  if (isPeriodicalMediaContribution(type)) {
-    return Yup.object<YupShape<MediaContributionPeriodicalPublicationContext>>({
-      id: Yup.string().required(resourceErrorMessage.journalRequired),
-    });
-  } else {
-    return Yup.object<YupShape<MediaContributionPublicationContext>>({
-      format: Yup.string()
-        .nullable()
-        .required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:registration.resource_type.media_contribution.format'),
-          })
-        ),
-      medium: Yup.object().shape({
-        type: Yup.string()
+const mediaContributionPublicationContext = Yup.object().when(
+  '$publicationInstanceType',
+  ([publicationInstanceType]) => {
+    if (isPeriodicalMediaContribution(publicationInstanceType)) {
+      return Yup.object<YupShape<MediaContributionPeriodicalPublicationContext>>({
+        id: Yup.string().required(resourceErrorMessage.journalRequired),
+      });
+    } else {
+      return Yup.object<YupShape<MediaContributionPublicationContext>>({
+        format: Yup.string()
           .nullable()
           .required(
             i18n.t('translation:feedback.validation.is_required', {
-              field: i18n.t('translation:registration.resource_type.media_contribution.medium'),
+              field: i18n.t('translation:registration.resource_type.media_contribution.format'),
             })
           ),
-      }),
-      disseminationChannel: Yup.string()
-        .nullable()
-        .required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:registration.resource_type.media_contribution.channel'),
-          })
-        ),
-    });
+        medium: Yup.object().shape({
+          type: Yup.string()
+            .nullable()
+            .required(
+              i18n.t('translation:feedback.validation.is_required', {
+                field: i18n.t('translation:registration.resource_type.media_contribution.medium'),
+              })
+            ),
+        }),
+        disseminationChannel: Yup.string()
+          .nullable()
+          .required(
+            i18n.t('translation:feedback.validation.is_required', {
+              field: i18n.t('translation:registration.resource_type.media_contribution.channel'),
+            })
+          ),
+      });
+    }
   }
-});
+);
 
-const mediaContributionPublicationInstance = Yup.object().when('$publicationInstanceType', (type: string) => {
-  if (isPeriodicalMediaContribution(type)) {
-    return Yup.object<YupShape<MediaContributionPeriodicalPublicationInstance>>({
-      type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
-      articleNumber: Yup.string().nullable(),
-      volume: Yup.string().nullable(),
-      issue: Yup.string().nullable(),
-      pages: pagesRangeField,
-    });
-  } else {
-    return Yup.object<YupShape<MediaContributionPublicationInstance>>({
-      type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
-    });
+const mediaContributionPublicationInstance = Yup.object().when(
+  '$publicationInstanceType',
+  ([publicationInstanceType]) => {
+    if (isPeriodicalMediaContribution(publicationInstanceType)) {
+      return Yup.object<YupShape<MediaContributionPeriodicalPublicationInstance>>({
+        type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
+        articleNumber: Yup.string().nullable(),
+        volume: Yup.string().nullable(),
+        issue: Yup.string().nullable(),
+        pages: pagesRangeField,
+      });
+    } else {
+      return Yup.object<YupShape<MediaContributionPublicationInstance>>({
+        type: Yup.string().oneOf(Object.values(MediaType)).required(resourceErrorMessage.typeRequired),
+      });
+    }
   }
-});
+);
 
 export const mediaContributionReference = baseReference.shape({
   publicationContext: mediaContributionPublicationContext,
@@ -465,20 +466,22 @@ export const mediaContributionReference = baseReference.shape({
 
 // Research Data
 const researchDataPublicationContext = Yup.object<YupShape<ResearchDataPublicationContext>>({
-  publisher: Yup.object().nullable().when('$publicationInstanceType', {
-    is: ResearchDataType.DataManagementPlan,
-    then: publisherField,
-  }),
+  publisher: Yup.object()
+    .nullable()
+    .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+      publicationInstanceType === ResearchDataType.DataManagementPlan ? publisherField : schema
+    ),
 });
 
 const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ResearchDataType)).required(resourceErrorMessage.typeRequired),
   userAgreesToTermsAndConditions: Yup.boolean()
     .nullable()
-    .when('$publicationInstanceType', {
-      is: ResearchDataType.Dataset,
-      then: Yup.boolean().equals([true], i18n.t('translation:feedback.validation.must_accept_terms_for_dataset')),
-    }),
+    .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+      publicationInstanceType === ResearchDataType.Dataset
+        ? Yup.boolean().equals([true], i18n.t('translation:feedback.validation.must_accept_terms_for_dataset'))
+        : schema
+    ),
   related: Yup.array(),
 });
 
