@@ -3,7 +3,7 @@ import i18n from '../../../translations/i18n';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
-  isContentTypeWithFileVersionField,
+  isTypeWithFileVersionField,
 } from '../../registration-helpers';
 
 const associatedArtifactErrorMessage = {
@@ -35,11 +35,9 @@ export const associatedFileValidationSchema = Yup.object({
     }),
   publisherAuthority: Yup.boolean()
     .nullable()
-    .when(['type', 'administrativeAgreement', '$contentType'], {
-      is: (type: string, administrativeAgreement: boolean, contentType: string | null) =>
-        associatedArtifactIsFile({ type }) &&
-        administrativeAgreement === false &&
-        isContentTypeWithFileVersionField(contentType),
+    .when(['type', 'administrativeAgreement'], {
+      is: (type: string, administrativeAgreement: boolean) =>
+        associatedArtifactIsFile({ type }) && administrativeAgreement === false && isTypeWithFileVersionField(type),
       then: (schema) => schema.required(associatedArtifactErrorMessage.fileVersionRequired),
     }),
   license: Yup.object()

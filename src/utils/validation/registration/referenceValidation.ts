@@ -13,11 +13,6 @@ import {
   ResearchDataType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import {
-  BookMonographContentType,
-  ChapterContentType,
-  JournalArticleContentType,
-} from '../../../types/publication_types/content.types';
 import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../validationHelpers';
 import {
@@ -63,9 +58,6 @@ import { ContextPublisher, PublicationChannelType } from '../../../types/registr
 
 const resourceErrorMessage = {
   announcementsRequired: i18n.t('translation:feedback.validation.announcement_required'),
-  contentTypeRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.content'),
-  }),
   corrigendumForRequired: i18n.t('translation:feedback.validation.is_required', {
     field: i18n.t('translation:registration.resource_type.original_article'),
   }),
@@ -242,9 +234,9 @@ export const baseReference = Yup.object()
   .required(resourceErrorMessage.typeRequired);
 
 // Journal
-const journalPublicationInstance: Yup.ObjectSchema<Pick<JournalPublicationInstance, 'issue'>> = Yup.object({
+const journalPublicationInstance = Yup.object({
   type: Yup.string().oneOf(Object.values(JournalType)).required(resourceErrorMessage.typeRequired),
-  articleNumber: Yup.string().defined(),
+  articleNumber: Yup.string().nullable(),
   volume: Yup.string().nullable(),
   issue: Yup.string().nullable(),
   pages: pagesRangeField,
@@ -253,15 +245,6 @@ const journalPublicationInstance: Yup.ObjectSchema<Pick<JournalPublicationInstan
     .when('type', ([type], schema) =>
       type === JournalType.Corrigendum
         ? schema.url(resourceErrorMessage.corrigendumForInvalid).required(resourceErrorMessage.corrigendumForRequired)
-        : schema
-    ),
-  contentType: Yup.string()
-    .nullable()
-    .when('type', ([type], schema) =>
-      type === JournalType.Article
-        ? schema
-            .oneOf(Object.values(JournalArticleContentType), resourceErrorMessage.contentTypeRequired)
-            .required(resourceErrorMessage.contentTypeRequired)
         : schema
     ),
 });
@@ -287,15 +270,6 @@ export const journalReference = baseReference.shape({
 const bookPublicationInstance = Yup.object<YupShape<BookPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(BookType)).required(resourceErrorMessage.typeRequired),
   pages: pagesMonographField,
-  contentType: Yup.string()
-    .nullable()
-    .when('$publicationInstanceType', {
-      is: BookType.Monograph,
-      then: Yup.string()
-        .nullable()
-        .oneOf(Object.values(BookMonographContentType), resourceErrorMessage.contentTypeRequired)
-        .required(resourceErrorMessage.contentTypeRequired),
-    }),
 });
 
 const bookPublicationContext = Yup.object<YupShape<BookPublicationContext>>({
@@ -345,15 +319,6 @@ export const degreeReference = baseReference.shape({
 const chapterPublicationInstance = Yup.object<YupShape<ChapterPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ChapterType)).required(resourceErrorMessage.typeRequired),
   pages: pagesRangeField,
-  contentType: Yup.string()
-    .nullable()
-    .when('$publicationInstanceType', {
-      is: ChapterType.AnthologyChapter,
-      then: Yup.string()
-        .nullable()
-        .oneOf(Object.values(ChapterContentType), resourceErrorMessage.contentTypeRequired)
-        .required(resourceErrorMessage.contentTypeRequired),
-    }),
 });
 
 const chapterPublicationContext = Yup.object<YupShape<ChapterPublicationContext>>({

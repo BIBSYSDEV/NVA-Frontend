@@ -7,7 +7,7 @@ import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   getAssociatedFiles,
-  shouldShowFileVersionField,
+  isTypeWithFileVersionField,
   userCanEditRegistration,
 } from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
@@ -31,7 +31,9 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     (file) => file.type === 'PublishedFile' || (file.type === 'UnpublishedFile' && userIsRegistrationAdmin)
   );
 
-  const showFileVersionField = shouldShowFileVersionField(registration);
+  const showFileVersionField = isTypeWithFileVersionField(
+    registration.entityDescription?.reference?.publicationInstance.type
+  );
 
   return filesToShow.length === 0 ? null : (
     <LandingPageAccordion

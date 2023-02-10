@@ -1,19 +1,12 @@
-import {
-  BaseEntityDescription,
-  BaseReference,
-  BaseRegistration,
-  NviApplicableBase,
-  PublicationChannelType,
-} from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, PublicationChannelType } from '../registration.types';
 import { JournalType } from '../publicationFieldNames';
 import { emptyPagesRange, PagesRange } from './pages.types';
-import { JournalArticleContentType } from './content.types';
 
 export interface JournalRegistration extends BaseRegistration {
   entityDescription: JournalEntityDescription;
 }
 
-export interface JournalPublicationInstance extends NviApplicableBase<JournalArticleContentType> {
+export interface JournalPublicationInstance {
   type: JournalType | '';
   articleNumber: string | null;
   issue: string | null;
@@ -46,7 +39,6 @@ export const emptyJournalPublicationInstance: JournalPublicationInstance = {
   pages: emptyPagesRange,
   volume: '',
   corrigendumFor: '',
-  contentType: null,
 };
 
 const emptyPublicationContext: JournalPublicationContext = {
