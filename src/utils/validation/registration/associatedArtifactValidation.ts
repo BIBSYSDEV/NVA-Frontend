@@ -28,31 +28,29 @@ export const associatedFileValidationSchema = Yup.object({
   administrativeAgreement: Yup.boolean().nullable(),
   embargoDate: Yup.date()
     .nullable()
-    .when(['type', 'administrativeAgreement'], {
-      is: (type: string, administrativeAgreement: boolean) =>
-        associatedArtifactIsFile({ type }) && administrativeAgreement === false,
-      then: (schema) => schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid),
-    }),
+    .when(['type', 'administrativeAgreement'], ([type, administrativeAgreement], schema) =>
+      associatedArtifactIsFile({ type }) && administrativeAgreement === false
+        ? schema.typeError(associatedArtifactErrorMessage.embargoDateInvalid)
+        : schema
+    ),
   publisherAuthority: Yup.boolean()
     .nullable()
-    .when(['type', 'administrativeAgreement'], {
-      is: (type: string, administrativeAgreement: boolean) =>
-        associatedArtifactIsFile({ type }) && administrativeAgreement === false && isTypeWithFileVersionField(type),
-      then: (schema) => schema.required(associatedArtifactErrorMessage.fileVersionRequired),
-    }),
+    .when(['type', 'administrativeAgreement'], ([type, administrativeAgreement], schema) =>
+      associatedArtifactIsFile({ type }) && administrativeAgreement === false && isTypeWithFileVersionField(type)
+        ? schema.required(associatedArtifactErrorMessage.fileVersionRequired)
+        : schema
+    ),
   license: Yup.object()
     .nullable()
-    .when(['type', 'administrativeAgreement'], {
-      is: (type: string, administrativeAgreement: boolean) =>
-        associatedArtifactIsFile({ type }) && administrativeAgreement === false,
-      then: (schema) => schema.required(associatedArtifactErrorMessage.licenseRequired),
-    }),
-
+    .when(['type', 'administrativeAgreement'], ([type, administrativeAgreement], schema) =>
+      associatedArtifactIsFile({ type }) && administrativeAgreement === false
+        ? schema.required(associatedArtifactErrorMessage.licenseRequired)
+        : schema
+    ),
   // Link validation
   id: Yup.string()
     .nullable()
-    .when('type', {
-      is: (type: string) => associatedArtifactIsLink({ type }),
-      then: (schema) => schema.url(associatedArtifactErrorMessage.linkInvalid),
-    }),
+    .when('type', ([type], schema) =>
+      associatedArtifactIsLink({ type }) ? schema.url(associatedArtifactErrorMessage.linkInvalid) : schema
+    ),
 });

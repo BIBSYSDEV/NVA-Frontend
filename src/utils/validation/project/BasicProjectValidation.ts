@@ -51,7 +51,7 @@ export const basicProjectValidationSchema = Yup.object<YupShape<PostCristinProje
   endDate: Yup.date()
     .required(basicProjectErrorMessage.endDateRequired)
     .typeError(basicProjectErrorMessage.endDateInvalidFormat)
-    .when('startDate', (startDate, schema) =>
+    .when('startDate', ([startDate], schema) =>
       startDate instanceof Date && !isNaN(startDate.getTime())
         ? schema.min(startDate, basicProjectErrorMessage.endDateCannotBeBeforeStart)
         : schema

@@ -198,7 +198,7 @@ export const periodField = Yup.object().shape({
   to: Yup.date()
     .required(resourceErrorMessage.dateToRequired)
     .typeError(resourceErrorMessage.dateToInvalid)
-    .when('from', (from, schema) =>
+    .when('from', ([from], schema) =>
       from instanceof Date && !isNaN(from.getTime())
         ? schema.min(from, resourceErrorMessage.dateToBeforeDateFrom)
         : schema
@@ -254,7 +254,7 @@ const journalPublicationContext = Yup.object<YupShape<JournalPublicationContext>
     publicationInstanceType === JournalType.Corrigendum
       ? schema
       : schema.when('title', ([title], subSchema) =>
-          !!title
+          title
             ? subSchema.required(resourceErrorMessage.journalNotSelected)
             : subSchema.required(resourceErrorMessage.journalRequired)
         )
@@ -380,10 +380,10 @@ const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicatio
       ? schema.min(1, resourceErrorMessage.announcementsRequired).required(resourceErrorMessage.announcementsRequired)
       : schema.nullable()
   ),
-  outputs: Yup.array().when('$publicationInstanceType', ([type], schema) => {
-    if (type === ArtisticType.PerformingArts) {
+  outputs: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) => {
+    if (publicationInstanceType === ArtisticType.PerformingArts) {
       return schema.min(1, resourceErrorMessage.exhibitionRequired).required(resourceErrorMessage.exhibitionRequired);
-    } else if (type === ArtisticType.MovingPicture) {
+    } else if (publicationInstanceType === ArtisticType.MovingPicture) {
       return schema
         .min(1, resourceErrorMessage.announcementsRequired)
         .required(resourceErrorMessage.announcementsRequired);

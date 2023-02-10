@@ -31,16 +31,15 @@ export const customerInstitutionValidationSchema = Yup.object({
     feideOrganizationDomain: Yup.string(),
     rorId: Yup.string().matches(/^https?:\/\/ror\.org\/([a-z0-9]{9})/, customerErrorMessage.rorInvalid),
   }),
-  doiAgent: Yup.object().when('canAssignDoi', {
-    is: true,
-    then: () =>
-      Yup.object({
-        username: Yup.string().required(customerErrorMessage.doiNameRequired),
-        prefix: Yup.string()
-          .matches(/^10.(\d){4,9}$/, customerErrorMessage.doiPrefixInvalid)
-          .required(customerErrorMessage.doiPrefixRequired),
-        password: Yup.string().optional(), // Password in validated inline, on the Field component
-      }),
-    otherwise: (schema) => schema.nullable(),
-  }),
+  doiAgent: Yup.object().when('canAssignDoi', ([canAssignDoi], schema) =>
+    canAssignDoi
+      ? Yup.object({
+          username: Yup.string().required(customerErrorMessage.doiNameRequired),
+          prefix: Yup.string()
+            .matches(/^10.(\d){4,9}$/, customerErrorMessage.doiPrefixInvalid)
+            .required(customerErrorMessage.doiPrefixRequired),
+          password: Yup.string().optional(), // Password in validated inline, on the Field component
+        })
+      : schema.nullable()
+  ),
 });
