@@ -60,13 +60,9 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
       {canSeeNvaDoi && (
         <>
           <Typography variant="overline">{t('common.doi')}</Typography>
-          <Typography>
+          <Typography data-testid={dataTestId.registrationLandingPage.doiLink}>
             {nvaDoiIsFindable ? (
-              <Link
-                data-testid={dataTestId.registrationLandingPage.doiLink}
-                href={nvaDoi}
-                target="_blank"
-                rel="noopener noreferrer">
+              <Link href={nvaDoi} target="_blank" rel="noopener noreferrer">
                 {nvaDoi}
               </Link>
             ) : (
