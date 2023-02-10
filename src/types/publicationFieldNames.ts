@@ -12,17 +12,27 @@ export enum PublicationType {
 }
 
 export enum JournalType {
-  Article = 'JournalArticle',
+  AcademicArticle = 'AcademicArticle',
+  AcademicLiteratureReview = 'AcademicLiteratureReview',
   Letter = 'JournalLetter',
   Review = 'JournalReview',
   Leader = 'JournalLeader',
   Corrigendum = 'JournalCorrigendum',
   Issue = 'JournalIssue',
   ConferenceAbstract = 'ConferenceAbstract',
+  CaseReport = 'CaseReport',
+  StudyProtocol = 'StudyProtocol',
+  ProfessionalArticle = 'ProfessionalArticle',
+  PopularScienceArticle = 'PopularScienceArticle',
 }
 
 export enum BookType {
-  Monograph = 'BookMonograph',
+  AcademicMonograph = 'AcademicMonograph',
+  NonFictionMonograph = 'NonFictionMonograph',
+  PopularScienceMonograph = 'PopularScienceMonograph',
+  Textbook = 'Textbook',
+  Encyclopedia = 'Encyclopedia',
+  ExhibitionCatalog = 'ExhibitionCatalog',
   Anthology = 'BookAnthology',
 }
 
@@ -43,7 +53,13 @@ export enum DegreeType {
 }
 
 export enum ChapterType {
-  AnthologyChapter = 'ChapterArticle',
+  AcademicChapter = 'AcademicChapter',
+  NonFictionChapter = 'NonFictionChapter',
+  PopularScienceChapter = 'PopularScienceChapter',
+  TextbookChapter = 'TextbookChapter',
+  EncyclopediaChapter = 'EncyclopediaChapter',
+  Introduction = 'Introduction',
+  ExhibitionCatalogChapter = 'ExhibitionCatalogChapter',
   ReportChapter = 'ChapterInReport',
   ConferenceAbstract = 'ChapterConferenceAbstract',
 }
@@ -83,17 +99,6 @@ export enum ResearchDataType {
   Dataset = 'DataSet',
 }
 
-export type RegistrationSubtype =
-  | JournalType
-  | ReportType
-  | BookType
-  | DegreeType
-  | ChapterType
-  | PresentationType
-  | ArtisticType
-  | MediaType
-  | ResearchDataType;
-
 export enum RegistrationFieldName {
   Identifier = 'identifier',
   ModifiedDate = 'modifiedDate',
@@ -106,7 +111,6 @@ export const instanceTypeBaseFieldName = 'entityDescription.reference.publicatio
 
 export enum ResourceFieldNames {
   ArticleNumber = 'entityDescription.reference.publicationInstance.articleNumber',
-  ContentType = 'entityDescription.reference.publicationInstance.contentType',
   CorrigendumFor = 'entityDescription.reference.publicationInstance.corrigendumFor',
   Doi = 'entityDescription.reference.doi',
   IsbnList = 'entityDescription.reference.publicationContext.isbnList',

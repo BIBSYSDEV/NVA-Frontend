@@ -3,18 +3,16 @@ import {
   BaseReference,
   BaseRegistration,
   ContextPublisher,
-  NviApplicableBase,
   Series,
 } from '../registration.types';
 import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
-import { BookMonographContentType } from './content.types';
 
 export interface BookRegistration extends BaseRegistration {
   entityDescription: BookEntityDescription;
 }
 
-export interface BookPublicationInstance extends NviApplicableBase<BookMonographContentType> {
+export interface BookPublicationInstance {
   type: BookType | '';
   pages: PagesMonograph | null;
 }
@@ -22,7 +20,6 @@ export interface BookPublicationInstance extends NviApplicableBase<BookMonograph
 export const emptyBookPublicationInstance: BookPublicationInstance = {
   type: '',
   pages: emptyPagesMonograph,
-  contentType: null,
 };
 
 export interface BookPublicationContext {
