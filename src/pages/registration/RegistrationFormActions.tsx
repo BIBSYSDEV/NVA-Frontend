@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Box, Button } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, Button, IconButton } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { LoadingButton } from '@mui/lab';
 import { updateRegistration } from '../../api/registrationApi';
 import { Modal } from '../../components/Modal';
@@ -59,6 +59,9 @@ export const RegistrationFormActions = ({
     }
   };
 
+  const isFirstTab = tabNumber === RegistrationTab.Description;
+  const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
+
   return (
     <>
       <Box
@@ -73,51 +76,60 @@ export const RegistrationFormActions = ({
           alignItems: 'center',
           gap: '1rem',
         }}>
-        {tabNumber > RegistrationTab.Description && (
-          <Box sx={{ gridArea: 'back-button' }}>
-            <Button
-              variant="outlined"
-              data-testid="button-previous-tab"
-              startIcon={<ArrowBackIcon />}
-              onClick={() => setTabNumber(tabNumber - 1)}>
-              {tabNumber === RegistrationTab.ResourceType && t('registration.heading.description')}
-              {tabNumber === RegistrationTab.Contributors && t('registration.heading.resource_type')}
-              {tabNumber === RegistrationTab.FilesAndLicenses && t('registration.heading.contributors')}
-            </Button>
-          </Box>
-        )}
+        <Box sx={{ gridArea: 'back-button' }}>
+          <IconButton size="large" onClick={() => setTabNumber(tabNumber - 1)} disabled={isFirstTab}>
+            <Box
+              sx={{
+                bgcolor: isFirstTab ? 'gray' : 'info.main',
+                display: 'flex',
+                borderRadius: '50%',
+                padding: '0.2rem',
+              }}>
+              <ChevronLeftIcon sx={{ color: 'white' }} />
+            </Box>
+          </IconButton>
+        </Box>
+
         <Button data-testid="open-support-button" onClick={toggleSupportModal} sx={{ gridArea: 'support-button' }}>
           {t('common.support')}
         </Button>
         {tabNumber < RegistrationTab.FilesAndLicenses ? (
-          <Box
-            sx={{
-              gridArea: 'save-next-button',
-              display: 'grid',
-              gridTemplateAreas: '"save-button next-button"',
-              columnGap: '1rem',
-            }}>
-            <LoadingButton
-              variant="outlined"
-              loading={isSaving}
-              data-testid="button-save-registration"
-              onClick={async () => {
-                await saveRegistration(values);
-                // Set all fields with error to touched to ensure error messages are shown
-                setTouched(setNestedObjectValues(errors, true));
+          <>
+            <Box
+              sx={{
+                gridArea: 'save-next-button',
+                display: 'grid',
+                gridTemplateAreas: '"save-button next-button next-tab-button"',
+                columnGap: '1rem',
               }}>
-              {t('common.save')}
-            </LoadingButton>
-            <Button
-              variant="contained"
-              data-testid="button-next-tab"
-              endIcon={<ArrowForwardIcon />}
-              onClick={() => setTabNumber(tabNumber + 1)}>
-              {tabNumber === RegistrationTab.Description && t('registration.heading.resource_type')}
-              {tabNumber === RegistrationTab.ResourceType && t('registration.heading.contributors')}
-              {tabNumber === RegistrationTab.Contributors && t('registration.heading.files_and_license')}
-            </Button>
-          </Box>
+              <LoadingButton
+                variant="outlined"
+                loading={isSaving}
+                data-testid="button-save-registration"
+                onClick={async () => {
+                  await saveRegistration(values);
+                  // Set all fields with error to touched to ensure error messages are shown
+                  setTouched(setNestedObjectValues(errors, true));
+                }}>
+                {t('common.save')}
+              </LoadingButton>
+              <IconButton
+                size="large"
+                sx={{ gridArea: 'next-tab-button' }}
+                onClick={() => setTabNumber(tabNumber + 1)}
+                disabled={isLastTab}>
+                <Box
+                  sx={{
+                    bgcolor: isLastTab ? 'gray' : 'info.main',
+                    display: 'flex',
+                    borderRadius: '50%',
+                    padding: '0.2rem',
+                  }}>
+                  <ChevronRightIcon sx={{ color: 'white' }} />
+                </Box>
+              </IconButton>
+            </Box>
+          </>
         ) : (
           <LoadingButton
             variant="contained"
