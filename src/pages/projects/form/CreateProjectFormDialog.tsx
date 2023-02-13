@@ -14,15 +14,15 @@ import {
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { CristinApiPath } from '../../../../api/apiPaths';
-import { authenticatedApiRequest } from '../../../../api/apiRequest';
-import { setNotification } from '../../../../redux/notificationSlice';
-import { PostCristinProject } from '../../../../types/project.types';
-import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
-import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
-import { ProjectContributorRow } from './ProjectContributorRow';
+import { CristinApiPath } from '../../../api/apiPaths';
+import { authenticatedApiRequest } from '../../../api/apiRequest';
+import { setNotification } from '../../../redux/notificationSlice';
+import { PostCristinProject } from '../../../types/project.types';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
+import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
+import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 
 const initialValues: PostCristinProject = {
   type: 'Project',
@@ -39,11 +39,11 @@ const initialValues: PostCristinProject = {
   },
 };
 
-interface CreateProjectDialogProps extends DialogProps {
+interface ProjectFormDialogProps extends DialogProps {
   onClose: () => void;
 }
 
-export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
+export const ProjectFormDialog = (props: ProjectFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
