@@ -17,14 +17,15 @@ import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { setNotification } from '../../../redux/notificationSlice';
-import { PostCristinProject } from '../../../types/project.types';
+import { CristinProject, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
+import { getSimpleCristinProjectModel } from '../../registration/description_tab/projects_field/projectHelpers';
 
-const initialValues: PostCristinProject = {
+const initialValues: SaveCristinProject = {
   type: 'Project',
   title: '',
   language: 'http://lexvo.org/id/iso639-3/nob',
@@ -41,24 +42,41 @@ const initialValues: PostCristinProject = {
 
 interface ProjectFormDialogProps extends DialogProps {
   onClose: () => void;
+  currentProject?: CristinProject;
 }
 
-export const ProjectFormDialog = (props: ProjectFormDialogProps) => {
+export const ProjectFormDialog = ({ currentProject, ...props }: ProjectFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const editMode = !!currentProject;
 
-  const createProject = async (values: PostCristinProject) => {
-    const createProjectResponse = await authenticatedApiRequest({
-      url: CristinApiPath.Project,
-      method: 'POST',
-      data: values,
-    });
+  const createProject = async (values: SaveCristinProject) => {
+    if (editMode) {
+      const createProjectResponse = await authenticatedApiRequest({
+        url: currentProject.id,
+        method: 'PATCH',
+        data: values,
+      });
 
-    if (isSuccessStatus(createProjectResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.success.create_project'), variant: 'success' }));
-      props.onClose();
-    } else if (isErrorStatus(createProjectResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.create_project'), variant: 'error' }));
+      if (isSuccessStatus(createProjectResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.success.update_project'), variant: 'success' }));
+        props.onClose();
+      } else if (isErrorStatus(createProjectResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.update_project'), variant: 'error' }));
+      }
+    } else {
+      const createProjectResponse = await authenticatedApiRequest({
+        url: CristinApiPath.Project,
+        method: 'POST',
+        data: values,
+      });
+
+      if (isSuccessStatus(createProjectResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.success.create_project'), variant: 'success' }));
+        props.onClose();
+      } else if (isErrorStatus(createProjectResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.create_project'), variant: 'error' }));
+      }
     }
   };
 
@@ -66,9 +84,13 @@ export const ProjectFormDialog = (props: ProjectFormDialogProps) => {
     <Dialog maxWidth="md" fullWidth {...props}>
       <DialogTitle>{t('project.create_project')}</DialogTitle>
 
-      <Formik initialValues={initialValues} validationSchema={basicProjectValidationSchema} onSubmit={createProject}>
-        {({ values, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<PostCristinProject>) => (
+      <Formik
+        initialValues={editMode ? getSimpleCristinProjectModel(currentProject) : initialValues}
+        validationSchema={basicProjectValidationSchema}
+        onSubmit={createProject}>
+        {({ values, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<SaveCristinProject>) => (
           <Form noValidate>
+            {console.log(values)}
             <DialogContent>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <Field name="title">

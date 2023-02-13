@@ -26,7 +26,7 @@ interface ProjectLandingPageProps {
 export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const userCanEditProject = user && canEditProject(user, project);
+  const userCanEditProject = !!user && canEditProject(user, project);
   const [openEditProject, setOpenEditProject] = useState(false);
 
   return (
@@ -73,7 +73,10 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
         <ProjectResultsAccordion projectId={project.id} />
       </BackgroundDiv>
-      {userCanEditProject && <ProjectFormDialog open={openEditProject} onClose={() => setOpenEditProject(false)} />}
+
+      {userCanEditProject && (
+        <ProjectFormDialog open={openEditProject} currentProject={project} onClose={() => setOpenEditProject(false)} />
+      )}
     </Paper>
   );
 };

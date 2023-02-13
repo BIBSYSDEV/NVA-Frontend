@@ -391,6 +391,7 @@
       "update_institution_user": "Could not update user",
       "update_orcid": "Could not update ORCID",
       "update_person": "Could not update person",
+      "update_project": "Could not update project",
       "update_publish_strategy": "Could not update publish strategy",
       "update_publishing_request": "Could not update publishing request",
       "update_registration": "Could not update registration",
@@ -416,6 +417,7 @@
       "update_institution_user": "Updated user",
       "update_orcid": "Successfully updated ORCID",
       "update_person": "Successfully updated person",
+      "update_project": "Successfully updated project",
       "update_publish_strategy": "Updated publish strategy",
       "update_registration": "Updated registration",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"

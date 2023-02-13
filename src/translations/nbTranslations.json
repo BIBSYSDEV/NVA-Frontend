@@ -391,6 +391,7 @@
       "update_institution_user": "Kunne ikke oppdatere bruker",
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
       "update_person": "Kunne ikke oppdatere person",
+      "update_project": "Kunne ikke oppdatere prosjekt",
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
@@ -416,6 +417,7 @@
       "update_institution_user": "Bruker er oppdatert",
       "update_orcid": "ORCID-kobling ble oppdatert",
       "update_person": "Person ble oppdatert",
+      "update_project": "Prosjektet ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
