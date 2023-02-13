@@ -10,6 +10,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { SearchResponse } from '../../../types/common.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 
 interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   onChange?: (selectedInstitution: Organization | null) => void;
@@ -36,8 +37,10 @@ export const OrganizationSearchField = ({
     url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('feedback.error.get_institutions'),
   });
-
-  const isLoading = isLoadingDefaultOptions || isLoadingInstitutionOptions;
+  const [selectedInstitution, isLoadingSelectedInstitution] = useFetchResource<Organization>(
+    fieldInputProps?.value ?? ''
+  );
+  const isLoading = isLoadingDefaultOptions || isLoadingInstitutionOptions || isLoadingSelectedInstitution;
   const options = isLoadingInstitutionOptions || !institutionOptions ? defaultOptions : institutionOptions.hits;
 
   return (
@@ -58,6 +61,7 @@ export const OrganizationSearchField = ({
         }
         setSearchTerm('');
       }}
+      value={selectedInstitution ?? null}
       loading={isLoading}
       renderInput={(params) => (
         <AutocompleteTextField
