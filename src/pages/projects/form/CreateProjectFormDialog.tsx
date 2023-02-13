@@ -63,7 +63,7 @@ export const ProjectFormDialog = (props: ProjectFormDialogProps) => {
   };
 
   return (
-    <Dialog {...props}>
+    <Dialog maxWidth="md" fullWidth {...props}>
       <DialogTitle>{t('project.create_project')}</DialogTitle>
 
       <Formik initialValues={initialValues} validationSchema={basicProjectValidationSchema} onSubmit={createProject}>

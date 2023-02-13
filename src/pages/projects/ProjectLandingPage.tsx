@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Paper, Typography } from '@mui/material';
+import { IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
+import { useSelector } from 'react-redux';
+import EditIcon from '@mui/icons-material/Edit';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
@@ -11,6 +14,10 @@ import { ProjectResultsAccordion } from './ProjectResultsAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { RootState } from '../../redux/store';
+import { canEditProject } from '../registration/description_tab/projects_field/projectHelpers';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { ProjectFormDialog } from './form/CreateProjectFormDialog';
 
 interface ProjectLandingPageProps {
   project: CristinProject;
@@ -18,6 +25,9 @@ interface ProjectLandingPageProps {
 
 export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
+  const userCanEditProject = user && canEditProject(user, project);
+  const [openEditProject, setOpenEditProject] = useState(false);
 
   return (
     <Paper elevation={0}>
@@ -30,6 +40,18 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
         <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
           {project.title}
         </TruncatableTypography>
+        <BetaFunctionality>
+          {userCanEditProject && (
+            <Tooltip title={t('project.edit_project')}>
+              <IconButton
+                data-testid={dataTestId.projectLandingPage.editProjectButton}
+                onClick={() => setOpenEditProject(true)}
+                sx={{ ml: 'auto', color: 'inherit' }}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+        </BetaFunctionality>
       </StyledPaperHeader>
       <BackgroundDiv>
         <ProjectGeneralInfo project={project} />
@@ -51,6 +73,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
         <ProjectResultsAccordion projectId={project.id} />
       </BackgroundDiv>
+      {userCanEditProject && <ProjectFormDialog open={openEditProject} onClose={() => setOpenEditProject(false)} />}
     </Paper>
   );
 };

@@ -1,4 +1,5 @@
 import { CristinProject, ProjectContributor } from '../../../../types/project.types';
+import { User } from '../../../../types/user.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const getProjectCoordinatingInstitutionName = (project?: CristinProject) =>
@@ -36,4 +37,9 @@ export const getNfrProjectUrl = (identifier: string) => {
   const splittedIdentifier = identifier ? identifier.split('/') : []; // Some identifiers have a slash for some reason, eg: project 558223
   const projectIdentifier = splittedIdentifier.length > 0 ? splittedIdentifier[0] : null;
   return projectIdentifier ? `https://prosjektbanken.forskningsradet.no/project/FORISS/${projectIdentifier}` : '';
+};
+
+export const canEditProject = (user: User, project: CristinProject) => {
+  const projectManagers = getProjectManagers(project.contributors);
+  return user.cristinId && projectManagers.some((projectManager) => projectManager.identity.id === user.cristinId);
 };
