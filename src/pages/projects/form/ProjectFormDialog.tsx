@@ -39,13 +39,13 @@ const initialValues: SaveCristinProject = {
   },
 };
 
-interface ProjectFormDialogProps extends DialogProps {
+interface ProjectFormDialogProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
   currentProject?: CristinProject;
   refetchData?: () => void;
 }
 
-export const ProjectFormDialog = ({ currentProject, refetchData, ...props }: ProjectFormDialogProps) => {
+export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }: ProjectFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const editMode = !!currentProject;
@@ -60,7 +60,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, ...props }: Pro
 
       if (isSuccessStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.update_project'), variant: 'success' }));
-        props.onClose();
+        onClose();
         refetchData?.();
       } else if (isErrorStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_project'), variant: 'error' }));
@@ -74,7 +74,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, ...props }: Pro
 
       if (isSuccessStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.create_project'), variant: 'success' }));
-        props.onClose();
+        onClose();
       } else if (isErrorStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_project'), variant: 'error' }));
       }
@@ -82,7 +82,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, ...props }: Pro
   };
 
   return (
-    <Dialog maxWidth="md" fullWidth {...props}>
+    <Dialog maxWidth="md" fullWidth onClose={onClose} open={open}>
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
 
       <Formik
@@ -205,7 +205,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, ...props }: Pro
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={props.onClose}>{t('common.cancel')}</Button>
+              <Button onClick={onClose}>{t('common.cancel')}</Button>
               <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
                 {t('common.save')}
               </LoadingButton>

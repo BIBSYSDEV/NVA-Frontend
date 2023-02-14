@@ -27,7 +27,7 @@ interface ProjectLandingPageProps {
 export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPageProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const userCanEditProject = !!user && canEditProject(user, project);
+  const userCanEditProject = canEditProject(user, project);
   const [openEditProject, setOpenEditProject] = useState(false);
 
   return (

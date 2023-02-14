@@ -1,5 +1,6 @@
+import { Organization } from '../../../../types/organization.types';
 import { CristinProject, ProjectContributor } from '../../../../types/project.types';
-import { User } from '../../../../types/user.types';
+import { CristinPerson, User } from '../../../../types/user.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const getProjectCoordinatingInstitutionName = (project?: CristinProject) =>
@@ -46,3 +47,20 @@ export const canEditProject = (user: User | null, project?: CristinProject) => {
   const projectManagers = getProjectManagers(project.contributors);
   return !!user.cristinId && projectManagers.some((projectManager) => projectManager.identity.id === user.cristinId);
 };
+
+export const projectContributorToCristinPerson = (contributor?: ProjectContributor): CristinPerson | null =>
+  contributor
+    ? {
+        id: contributor.identity.id,
+        identifiers: [],
+        names: [
+          { type: 'FirstName', value: contributor.identity.firstName },
+          { type: 'LastName', value: contributor.identity.lastName },
+        ],
+        affiliations: [],
+        employments: [],
+      }
+    : null;
+
+export const getContributorOrganzation = (contributor?: ProjectContributor): Organization | null =>
+  contributor?.affiliation ? { id: contributor.affiliation.id, name: contributor.affiliation.name } : null;

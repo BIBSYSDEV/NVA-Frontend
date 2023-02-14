@@ -10,7 +10,10 @@ const ProjectsPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const projectId = new URLSearchParams(location.search).get('id') ?? '';
-  const [project, isLoadingProject, refetchProject] = useFetch<CristinProject>({ url: projectId });
+  const [project, isLoadingProject, refetchProject] = useFetch<CristinProject>({
+    url: projectId,
+    errorMessage: t('feedback.error.get_project'),
+  });
 
   return (
     <StyledPageContent>

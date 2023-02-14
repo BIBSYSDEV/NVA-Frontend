@@ -17,6 +17,7 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
 import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
+import { getContributorOrganzation, projectContributorToCristinPerson } from './projectHelpers';
 
 interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
@@ -32,22 +33,9 @@ export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProp
     url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&name=${debouncedSearchTerm}` : '',
   });
 
-  const cristinPersonContributor: CristinPerson | undefined = contributor
-    ? {
-        id: contributor.identity.id,
-        identifiers: [],
-        names: [
-          { type: 'FirstName', value: contributor.identity.firstName },
-          { type: 'LastName', value: contributor.identity.lastName },
-        ],
-        affiliations: [],
-        employments: [],
-      }
-    : undefined;
+  const cristinPersonContributor = projectContributorToCristinPerson(contributor);
 
-  const contributorAffiliation: Organization | undefined = contributor?.affiliation
-    ? { id: contributor.affiliation.id, name: contributor.affiliation.name }
-    : undefined;
+  const contributorAffiliation = getContributorOrganzation(contributor);
 
   const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
   const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
