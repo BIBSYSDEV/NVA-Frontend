@@ -112,6 +112,15 @@ export const ProjectFormDialog = ({ currentProject, ...props }: ProjectFormDialo
                       onChange={(selectedInstitution) => setFieldValue(field.name, selectedInstitution?.id ?? '')}
                       errorMessage={touched && !!error ? error : undefined}
                       fieldInputProps={field}
+                      currentValue={
+                        values.coordinatingInstitution.id &&
+                        currentProject?.coordinatingInstitution.id === values.coordinatingInstitution.id
+                          ? {
+                              id: values.coordinatingInstitution.id,
+                              name: currentProject.coordinatingInstitution.name,
+                            }
+                          : undefined
+                      }
                     />
                   )}
                 </Field>
@@ -180,8 +189,8 @@ export const ProjectFormDialog = ({ currentProject, ...props }: ProjectFormDialo
               <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
                 {t('project.project_participants')}
               </Typography>
-              {currentProject?.contributors.map((_, index) => (
-                <ProjectContributorRow key={index} contributorIndex={index} />
+              {currentProject?.contributors.map((contributor, index) => (
+                <ProjectContributorRow key={index} contributor={contributor} />
               ))}
             </DialogContent>
 
