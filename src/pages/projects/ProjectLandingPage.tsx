@@ -51,6 +51,11 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
               </IconButton>
             </Tooltip>
           )}
+          <ProjectFormDialog
+            open={openEditProject}
+            currentProject={project}
+            onClose={() => setOpenEditProject(false)}
+          />
         </BetaFunctionality>
       </StyledPaperHeader>
       <BackgroundDiv>
@@ -73,10 +78,6 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
 
         <ProjectResultsAccordion projectId={project.id} />
       </BackgroundDiv>
-
-      {userCanEditProject && (
-        <ProjectFormDialog open={openEditProject} currentProject={project} onClose={() => setOpenEditProject(false)} />
-      )}
     </Paper>
   );
 };

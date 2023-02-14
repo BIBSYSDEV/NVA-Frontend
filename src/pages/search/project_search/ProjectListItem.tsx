@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ListItem, Typography, Link as MuiLink, Box, IconButton, Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +11,7 @@ import {
 } from '../../registration/description_tab/projects_field/projectHelpers';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
-import { useState } from 'react';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 
 interface ProjectListItemProps {
   project: CristinProject;
@@ -40,13 +41,20 @@ export const ProjectListItem = ({ project, showEdit = false }: ProjectListItemPr
             {project.title}
           </MuiLink>
         </Typography>
-        {showEdit && (
-          <Tooltip title={t('project.edit_project')}>
-            <IconButton onClick={() => setOpenEditProject(true)}>
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+        <BetaFunctionality>
+          {showEdit && (
+            <Tooltip title={t('project.edit_project')}>
+              <IconButton onClick={() => setOpenEditProject(true)}>
+                <EditIcon />
+              </IconButton>
+            </Tooltip>
+          )}
+          <ProjectFormDialog
+            open={openEditProject}
+            currentProject={project}
+            onClose={() => setOpenEditProject(false)}
+          />
+        </BetaFunctionality>
       </Box>
       <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '1rem' }}>
         {projectManagers.map((projectManager) => (
@@ -62,9 +70,6 @@ export const ProjectListItem = ({ project, showEdit = false }: ProjectListItemPr
         )}
       </Box>
       <AffiliationHierarchy unitUri={project.coordinatingInstitution.id} />
-      {showEdit && (
-        <ProjectFormDialog open={openEditProject} currentProject={project} onClose={() => setOpenEditProject(false)} />
-      )}
     </ListItem>
   );
 };
