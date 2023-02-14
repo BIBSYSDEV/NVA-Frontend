@@ -191,8 +191,16 @@ export const ProjectFormDialog = ({ currentProject, refetchData, ...props }: Pro
               <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
                 {t('project.project_participants')}
               </Typography>
-              {currentProject?.contributors.map((contributor, index) => (
-                <ProjectContributorRow key={index} contributor={contributor} />
+              {values.contributors.map((contributor, index) => (
+                <ProjectContributorRow
+                  key={index}
+                  contributor={
+                    contributor.identity.id &&
+                    contributor.identity.id === currentProject?.contributors[index].identity.id
+                      ? currentProject.contributors[index]
+                      : undefined
+                  }
+                />
               ))}
             </DialogContent>
 

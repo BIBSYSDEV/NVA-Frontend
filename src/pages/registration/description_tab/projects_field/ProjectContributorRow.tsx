@@ -19,7 +19,7 @@ import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 
 interface ProjectContributorRowProps {
-  contributor: ProjectContributor;
+  contributor?: ProjectContributor;
 }
 
 export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProps) => {
@@ -45,7 +45,7 @@ export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProp
       }
     : undefined;
 
-  const contributorAffiliation: Organization | undefined = contributor.affiliation
+  const contributorAffiliation: Organization | undefined = contributor?.affiliation
     ? { id: contributor.affiliation.id, name: contributor.affiliation.name }
     : undefined;
 
@@ -83,6 +83,7 @@ export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProp
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}>
               <MenuItem value="ProjectManager">{t('project.project_manager')}</MenuItem>
+              <MenuItem value="ProjectParticipant">{t('project.project_participant')}</MenuItem>
             </TextField>
           )}
         </Field>
