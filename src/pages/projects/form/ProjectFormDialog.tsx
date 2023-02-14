@@ -42,9 +42,10 @@ const initialValues: SaveCristinProject = {
 interface ProjectFormDialogProps extends DialogProps {
   onClose: () => void;
   currentProject?: CristinProject;
+  refetchData?: () => void;
 }
 
-export const ProjectFormDialog = ({ currentProject, ...props }: ProjectFormDialogProps) => {
+export const ProjectFormDialog = ({ currentProject, refetchData, ...props }: ProjectFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const editMode = !!currentProject;
@@ -60,6 +61,7 @@ export const ProjectFormDialog = ({ currentProject, ...props }: ProjectFormDialo
       if (isSuccessStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.update_project'), variant: 'success' }));
         props.onClose();
+        refetchData?.();
       } else if (isErrorStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_project'), variant: 'error' }));
       }
@@ -81,7 +83,7 @@ export const ProjectFormDialog = ({ currentProject, ...props }: ProjectFormDialo
 
   return (
     <Dialog maxWidth="md" fullWidth {...props}>
-      <DialogTitle>{t('project.create_project')}</DialogTitle>
+      <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
 
       <Formik
         initialValues={editMode ? currentProject : initialValues}

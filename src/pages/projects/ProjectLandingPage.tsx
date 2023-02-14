@@ -21,9 +21,10 @@ import { ProjectFormDialog } from './form/ProjectFormDialog';
 
 interface ProjectLandingPageProps {
   project: CristinProject;
+  refetchProject: () => void;
 }
 
-export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
+export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPageProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const userCanEditProject = !!user && canEditProject(user, project);
@@ -55,6 +56,7 @@ export const ProjectLandingPage = ({ project }: ProjectLandingPageProps) => {
             open={openEditProject}
             currentProject={project}
             onClose={() => setOpenEditProject(false)}
+            refetchData={refetchProject}
           />
         </BetaFunctionality>
       </StyledPaperHeader>

@@ -16,9 +16,10 @@ import { BetaFunctionality } from '../../../components/BetaFunctionality';
 interface ProjectListItemProps {
   project: CristinProject;
   showEdit?: boolean;
+  refetchProjects?: () => void;
 }
 
-export const ProjectListItem = ({ project, showEdit = false }: ProjectListItemProps) => {
+export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: ProjectListItemProps) => {
   const { t } = useTranslation();
   const [openEditProject, setOpenEditProject] = useState(false);
 
@@ -53,6 +54,7 @@ export const ProjectListItem = ({ project, showEdit = false }: ProjectListItemPr
             open={openEditProject}
             currentProject={project}
             onClose={() => setOpenEditProject(false)}
+            refetchData={refetchProjects}
           />
         </BetaFunctionality>
       </Box>

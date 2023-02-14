@@ -21,7 +21,7 @@ export const MyProjects = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const [projects, isLoadingProjects] = useFetch<SearchResponse<CristinProject>>({
+  const [projects, isLoadingProjects, refetchProjects] = useFetch<SearchResponse<CristinProject>>({
     url: userCristinId
       ? `${CristinApiPath.Project}?query=.&page=${page + 1}&results=${rowsPerPage}&participant=${userCristinId}`
       : '',
@@ -39,7 +39,12 @@ export const MyProjects = () => {
         <>
           <List>
             {projects.hits.map((project) => (
-              <ProjectListItem key={project.id} project={project} showEdit={canEditProject(user, project)} />
+              <ProjectListItem
+                key={project.id}
+                project={project}
+                showEdit={canEditProject(user, project)}
+                refetchProjects={refetchProjects}
+              />
             ))}
           </List>
           <TablePagination

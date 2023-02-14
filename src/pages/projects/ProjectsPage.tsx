@@ -10,14 +10,14 @@ const ProjectsPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const projectId = new URLSearchParams(location.search).get('id') ?? '';
-  const [project, isLoadingProject] = useFetch<CristinProject>({ url: projectId });
+  const [project, isLoadingProject, refetchProject] = useFetch<CristinProject>({ url: projectId });
 
   return (
     <StyledPageContent>
       {isLoadingProject ? (
         <PageSpinner aria-label={t('project.project')} />
       ) : (
-        project && <ProjectLandingPage project={project} />
+        project && <ProjectLandingPage project={project} refetchProject={refetchProject} />
       )}
     </StyledPageContent>
   );
