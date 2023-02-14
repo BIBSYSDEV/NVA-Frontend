@@ -41,8 +41,8 @@ export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPa
         <TruncatableTypography variant="h1" sx={{ color: 'inherit' }}>
           {project.title}
         </TruncatableTypography>
-        <BetaFunctionality>
-          {userCanEditProject && (
+        {userCanEditProject && (
+          <BetaFunctionality>
             <Tooltip title={t('project.edit_project')}>
               <IconButton
                 data-testid={dataTestId.projectLandingPage.editProjectButton}
@@ -51,14 +51,14 @@ export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPa
                 <EditIcon />
               </IconButton>
             </Tooltip>
-          )}
-          <ProjectFormDialog
-            open={openEditProject}
-            currentProject={project}
-            onClose={() => setOpenEditProject(false)}
-            refetchData={refetchProject}
-          />
-        </BetaFunctionality>
+            <ProjectFormDialog
+              open={openEditProject}
+              currentProject={project}
+              onClose={() => setOpenEditProject(false)}
+              refetchData={refetchProject}
+            />
+          </BetaFunctionality>
+        )}
       </StyledPaperHeader>
       <BackgroundDiv>
         <ProjectGeneralInfo project={project} />

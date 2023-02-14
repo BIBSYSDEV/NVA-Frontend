@@ -42,21 +42,21 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
             {project.title}
           </MuiLink>
         </Typography>
-        <BetaFunctionality>
-          {showEdit && (
+        {showEdit && (
+          <BetaFunctionality>
             <Tooltip title={t('project.edit_project')}>
               <IconButton onClick={() => setOpenEditProject(true)}>
                 <EditIcon />
               </IconButton>
             </Tooltip>
-          )}
-          <ProjectFormDialog
-            open={openEditProject}
-            currentProject={project}
-            onClose={() => setOpenEditProject(false)}
-            refetchData={refetchProjects}
-          />
-        </BetaFunctionality>
+            <ProjectFormDialog
+              open={openEditProject}
+              currentProject={project}
+              onClose={() => setOpenEditProject(false)}
+              refetchData={refetchProjects}
+            />
+          </BetaFunctionality>
+        )}
       </Box>
       <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '1rem' }}>
         {projectManagers.map((projectManager) => (
