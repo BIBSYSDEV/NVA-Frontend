@@ -23,7 +23,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
-import { getSimpleCristinProjectModel } from '../../registration/description_tab/projects_field/projectHelpers';
 
 const initialValues: SaveCristinProject = {
   type: 'Project',
@@ -85,12 +84,11 @@ export const ProjectFormDialog = ({ currentProject, ...props }: ProjectFormDialo
       <DialogTitle>{t('project.create_project')}</DialogTitle>
 
       <Formik
-        initialValues={editMode ? getSimpleCristinProjectModel(currentProject) : initialValues}
+        initialValues={editMode ? currentProject : initialValues}
         validationSchema={basicProjectValidationSchema}
         onSubmit={createProject}>
         {({ values, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<SaveCristinProject>) => (
           <Form noValidate>
-            {console.log(values)}
             <DialogContent>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <Field name="title">
@@ -182,7 +180,9 @@ export const ProjectFormDialog = ({ currentProject, ...props }: ProjectFormDialo
               <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
                 {t('project.project_participants')}
               </Typography>
-              <ProjectContributorRow />
+              {currentProject?.contributors.map((_, index) => (
+                <ProjectContributorRow key={index} contributorIndex={index} />
+              ))}
             </DialogContent>
 
             <DialogActions>

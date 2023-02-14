@@ -17,7 +17,7 @@ import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
 import { canEditProject } from '../registration/description_tab/projects_field/projectHelpers';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
-import { ProjectFormDialog } from './form/CreateProjectFormDialog';
+import { ProjectFormDialog } from './form/ProjectFormDialog';
 
 interface ProjectLandingPageProps {
   project: CristinProject;

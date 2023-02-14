@@ -1,5 +1,5 @@
 import { Box, Autocomplete, Typography, TextField, MenuItem } from '@mui/material';
-import { Field, FieldProps, ErrorMessage } from 'formik';
+import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../../api/apiPaths';
@@ -8,23 +8,36 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
 import { Organization } from '../../../../types/organization.types';
+import { SaveCristinProject } from '../../../../types/project.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
 import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 
-export const ProjectContributorRow = () => {
+interface ProjectContributorRowProps {
+  contributorIndex: number;
+}
+
+export const ProjectContributorRow = ({ contributorIndex }: ProjectContributorRowProps) => {
   const { t } = useTranslation();
+  const { values } = useFormikContext<SaveCristinProject>();
+  const thisContributor = values.contributors[contributorIndex];
+
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
   const [personSearchResult, isLoadingPersonSearchResult] = useFetch<SearchResponse<CristinPerson>>({
     url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&name=${debouncedSearchTerm}` : '',
   });
+
+  const [selectedContributor, isLoadingSelectedContributor] = useFetchResource<CristinPerson>(
+    thisContributor.identity.id ?? ''
+  );
 
   const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
   const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
@@ -44,6 +57,8 @@ export const ProjectContributorRow = () => {
     setDefaultInstitutionOptions(defaultInstitutions);
     setIsLoadingDefaultOptions(false);
   };
+
+  const isLoading = isLoadingPersonSearchResult || isLoadingSelectedContributor;
 
   return (
     <>
@@ -75,6 +90,7 @@ export const ProjectContributorRow = () => {
                   setSearchTerm(value);
                 }
               }}
+              value={selectedContributor ?? null}
               onChange={async (_, selectedUser) => {
                 if (!selectedUser) {
                   setFieldValue(field.name, '');
@@ -88,7 +104,8 @@ export const ProjectContributorRow = () => {
                 }
                 setSearchTerm('');
               }}
-              loading={isLoadingPersonSearchResult}
+              disabled={isLoadingSelectedContributor}
+              loading={isLoading}
               renderOption={(props, option) => {
                 const orgId = option.affiliations.length > 0 ? option.affiliations[0].organization ?? '' : '';
                 return (
@@ -111,7 +128,7 @@ export const ProjectContributorRow = () => {
                   label={t('project.person')}
                   placeholder={t('project.search_for_person')}
                   errorMessage={touched && !!error ? error : ''}
-                  isLoading={isLoadingPersonSearchResult}
+                  isLoading={isLoading}
                   showSearchIcon={!field.value}
                 />
               )}

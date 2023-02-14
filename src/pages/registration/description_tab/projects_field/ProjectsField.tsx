@@ -13,7 +13,7 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { CristinApiPath } from '../../../../api/apiPaths';
 import { ProjectChip } from './ProjectChip';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { ProjectFormDialog } from '../../../projects/form/CreateProjectFormDialog';
+import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
 import { BetaFunctionality } from '../../../../components/BetaFunctionality';
 import { SearchResponse } from '../../../../types/common.types';
 
