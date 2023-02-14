@@ -39,7 +39,10 @@ export const getNfrProjectUrl = (identifier: string) => {
   return projectIdentifier ? `https://prosjektbanken.forskningsradet.no/project/FORISS/${projectIdentifier}` : '';
 };
 
-export const canEditProject = (user: User, project: CristinProject) => {
+export const canEditProject = (user: User | null, project?: CristinProject) => {
+  if (!user || !project) {
+    return false;
+  }
   const projectManagers = getProjectManagers(project.contributors);
   return !!user.cristinId && projectManagers.some((projectManager) => projectManager.identity.id === user.cristinId);
 };
