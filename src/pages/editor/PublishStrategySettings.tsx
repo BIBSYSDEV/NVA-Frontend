@@ -79,6 +79,7 @@ export const PublishStrategySettings = () => {
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <StyledItemContainer>
           <PublishStrategyButton
+            focusRipple
             disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
             isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
             data-testid={dataTestId.editor.workflowRegistratorPublishesAll}
@@ -109,6 +110,7 @@ export const PublishStrategySettings = () => {
 
         <StyledItemContainer>
           <PublishStrategyButton
+            focusRipple
             disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
             isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
             data-testid={dataTestId.editor.workflowRegistratorPublishesMetadata}
@@ -139,6 +141,7 @@ export const PublishStrategySettings = () => {
 
         <StyledItemContainer>
           <PublishStrategyButton
+            focusRipple
             disabled={!!isUpdating || currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
             isSelected={!isUpdating && currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
             data-testid={dataTestId.editor.workflowRegistratorRequiresApproval}
