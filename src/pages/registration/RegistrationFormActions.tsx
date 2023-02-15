@@ -76,19 +76,21 @@ export const RegistrationFormActions = ({
           alignItems: 'center',
           gap: '1rem',
         }}>
-        <Box sx={{ gridArea: 'back-button' }}>
-          <IconButton size="large" onClick={() => setTabNumber(tabNumber - 1)} disabled={isFirstTab}>
-            <Box
-              sx={{
-                bgcolor: isFirstTab ? 'gray' : 'info.main',
-                display: 'flex',
-                borderRadius: '50%',
-                padding: '0.2rem',
-              }}>
-              <ChevronLeftIcon sx={{ color: 'white' }} />
-            </Box>
-          </IconButton>
-        </Box>
+        {tabNumber > RegistrationTab.Description && (
+          <Box sx={{ gridArea: 'back-button' }}>
+            <IconButton onClick={() => setTabNumber(tabNumber - 1)} disabled={isFirstTab}>
+              <Box
+                sx={{
+                  bgcolor: isFirstTab ? 'gray' : 'info.main',
+                  display: 'flex',
+                  borderRadius: '50%',
+                  padding: '0.2rem',
+                }}>
+                <ChevronLeftIcon sx={{ color: 'white' }} />
+              </Box>
+            </IconButton>
+          </Box>
+        )}
 
         <Button data-testid="open-support-button" onClick={toggleSupportModal} sx={{ gridArea: 'support-button' }}>
           {t('common.support')}
@@ -101,8 +103,10 @@ export const RegistrationFormActions = ({
                 display: 'grid',
                 gridTemplateAreas: '"save-button next-button next-tab-button"',
                 columnGap: '1rem',
+                alignItems: 'center',
               }}>
               <LoadingButton
+                sx={{ height: '80%' }}
                 variant="outlined"
                 loading={isSaving}
                 data-testid="button-save-registration"
@@ -114,7 +118,6 @@ export const RegistrationFormActions = ({
                 {t('common.save')}
               </LoadingButton>
               <IconButton
-                size="large"
                 sx={{ gridArea: 'next-tab-button' }}
                 onClick={() => setTabNumber(tabNumber + 1)}
                 disabled={isLastTab}>
