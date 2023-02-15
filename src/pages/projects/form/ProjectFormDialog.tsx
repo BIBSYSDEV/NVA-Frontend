@@ -196,7 +196,12 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
               <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
                 {t('project.project_participants')}
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', my: '0.25rem' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  rowGap: { xs: '1.25rem', sm: '0.5rem' },
+                }}>
                 {values.contributors.map((contributor, index) => {
                   const thisContributor =
                     contributor.identity.id &&
@@ -212,14 +217,17 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
                     />
                   );
                 })}
+                <FieldArray name="contributors">
+                  {({ push }: FieldArrayRenderProps) => (
+                    <Button
+                      startIcon={<AddCircleIcon />}
+                      onClick={() => push(emptyProjectContributor)}
+                      sx={{ width: 'fit-content', alignSelf: 'center' }}>
+                      {t('common.add')}
+                    </Button>
+                  )}
+                </FieldArray>
               </Box>
-              <FieldArray name="contributors">
-                {({ push }: FieldArrayRenderProps) => (
-                  <Button startIcon={<AddCircleIcon />} onClick={() => push(emptyProjectContributor)}>
-                    {t('common.add')}
-                  </Button>
-                )}
-              </FieldArray>
             </DialogContent>
 
             <DialogActions>

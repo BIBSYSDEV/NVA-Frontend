@@ -1,5 +1,5 @@
-import { Box, Autocomplete, Typography, TextField, MenuItem } from '@mui/material';
-import { Field, FieldProps, ErrorMessage } from 'formik';
+import { Box, Autocomplete, Typography, TextField } from '@mui/material';
+import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../../api/apiPaths';
@@ -59,21 +59,22 @@ export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectCon
 
   return (
     <>
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 2fr 3fr' }, gap: '0.5rem 1rem' }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr' }, gap: '0.25rem 1rem' }}>
         <Field name={`${baseFieldName}.type`}>
-          {({ field, meta: { touched, error } }: FieldProps<string>) => (
+          {({ field }: FieldProps<string>) => (
             <TextField
               data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
-              {...field}
+              value={
+                field.value === 'ProjectManager'
+                  ? t('project.project_manager')
+                  : field.value === 'ProjectParticipant'
+                  ? t('project.project_participant')
+                  : ''
+              }
               disabled
-              select
               label={t('common.role')}
               variant="filled"
-              error={touched && !!error}
-              helperText={<ErrorMessage name={field.name} />}>
-              <MenuItem value="ProjectManager">{t('project.project_manager')}</MenuItem>
-              <MenuItem value="ProjectParticipant">{t('project.project_participant')}</MenuItem>
-            </TextField>
+            />
           )}
         </Field>
         <Field name={`${baseFieldName}.identity.id`}>
