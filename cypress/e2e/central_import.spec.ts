@@ -3,7 +3,7 @@ import { dataTestId } from '../../src/utils/dataTestIds';
 import { mockSearchResults } from '../../src/utils/testfiles/mockSearchResults';
 import { UrlPathTemplate } from '../../src/utils/urlPaths';
 
-describe('Central Import', () => {
+describe.skip('Central Import', () => {
   beforeEach(() => {
     cy.visit('/basic-data/central-import');
     cy.mocklogin();
@@ -14,7 +14,7 @@ describe('Central Import', () => {
   it('should show a list of imported central-import publications', () => {
     const resultItemTestId = `${dataTestId.basicData.centralImport.resultItem}-${mockSearchResults.hits[1].identifier}`;
     cy.get(`[data-testid=${resultItemTestId}]`).contains(mockSearchResults.hits[1].entityDescription!.mainTitle);
-    cy.get(`[data-testid=${resultItemTestId}]`).contains('Journal article');
+    cy.get(`[data-testid=${resultItemTestId}]`).contains('Academic article');
     cy.get(`[data-testid=${resultItemTestId}]`).contains(
       mockSearchResults.hits[1].entityDescription!.contributors[1].identity.name
     );

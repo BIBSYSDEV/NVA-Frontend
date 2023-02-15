@@ -184,7 +184,6 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
               },
               volume: true,
               corrigendumFor: true,
-              contentType: true,
             },
           },
         },
@@ -236,7 +235,6 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
               pages: {
                 pages: true,
               },
-              contentType: true,
             },
           },
         },
@@ -251,7 +249,6 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
             },
             publicationInstance: {
               type: true,
-              contentType: true,
             },
           },
         },

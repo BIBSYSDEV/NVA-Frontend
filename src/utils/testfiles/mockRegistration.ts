@@ -4,7 +4,6 @@ import { PublicationChannelType, RegistrationStatus } from '../../types/registra
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
 import { TicketCollection } from '../../types/publication_types/messages.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
-import { JournalArticleContentType } from '../../types/publication_types/content.types';
 import { mockUser } from './mock_feide_user';
 
 export const mockRegistration: JournalRegistration = {
@@ -90,7 +89,7 @@ export const mockRegistration: JournalRegistration = {
       type: 'Reference',
       doi: '',
       publicationInstance: {
-        type: JournalType.Article,
+        type: JournalType.AcademicArticle,
         pages: {
           type: 'Range',
           begin: '',
@@ -100,7 +99,6 @@ export const mockRegistration: JournalRegistration = {
         issue: '2',
         volume: '3',
         corrigendumFor: '',
-        contentType: JournalArticleContentType.AcademicArticle,
       },
       publicationContext: {
         type: PublicationChannelType.Journal,

@@ -37,7 +37,6 @@ import {
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
-import { JournalArticleContentType } from '../types/publication_types/content.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -84,6 +83,13 @@ export const isPeriodicalMediaContribution = (instanceType: string) =>
   instanceType === MediaType.MediaFeatureArticle || instanceType === MediaType.MediaReaderOpinion;
 
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
+
+export const nviApplicableTypes: string[] = [
+  JournalType.AcademicArticle,
+  JournalType.AcademicLiteratureReview,
+  BookType.AcademicMonograph,
+  ChapterType.AcademicChapter,
+];
 
 export const userIsRegistrationOwner = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
@@ -175,7 +181,11 @@ type ContributorConfig = {
 
 export const contributorConfig: ContributorConfig = {
   // Journal
-  [JournalType.Article]: {
+  [JournalType.AcademicArticle]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.AcademicLiteratureReview]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
@@ -203,8 +213,44 @@ export const contributorConfig: ContributorConfig = {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
+  [JournalType.CaseReport]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.StudyProtocol]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.ProfessionalArticle]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [JournalType.PopularScienceArticle]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
   // Book
-  [BookType.Monograph]: {
+  [BookType.AcademicMonograph]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.NonFictionMonograph]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.PopularScienceMonograph]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.Textbook]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.Encyclopedia]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [BookType.ExhibitionCatalog]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
@@ -255,7 +301,31 @@ export const contributorConfig: ContributorConfig = {
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
   // Chapter
-  [ChapterType.AnthologyChapter]: {
+  [ChapterType.AcademicChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.NonFictionChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.PopularScienceChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.TextbookChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.EncyclopediaChapter]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.Introduction]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
+  [ChapterType.ExhibitionCatalogChapter]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
@@ -510,20 +580,8 @@ export const getContributorInitials = (name: string) => {
   return initials;
 };
 
-export const getContentType = (registration: Registration) => {
-  const publicationInstance = registration?.entityDescription?.reference?.publicationInstance;
-  const contentType =
-    publicationInstance && 'contentType' in publicationInstance ? publicationInstance.contentType : null;
-  return contentType;
-};
-
-export const shouldShowFileVersionField = (registration: Registration) => {
-  const contentType = getContentType(registration);
-  return isContentTypeWithFileVersionField(contentType);
-};
-
-export const isContentTypeWithFileVersionField = (contentType: string | null) =>
-  contentType === JournalArticleContentType.AcademicArticle ||
-  contentType === JournalArticleContentType.AcademicLiteratureReview;
+export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
+  publicationInstanceType === JournalType.AcademicArticle ||
+  publicationInstanceType === JournalType.AcademicLiteratureReview;
 
 export const fundingSourceIsNfr = (sourceId: string) => sourceId.split('/').pop() === 'NFR';
