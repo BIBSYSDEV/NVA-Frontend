@@ -14,6 +14,7 @@ export const EditorInstitution = () => {
   const [customer, isLoadingCustomer] = useFetch<CustomerInstitution>({
     url: user?.customerId ? user.customerId : '',
     errorMessage: t('feedback.error.get_customer'),
+    withAuthentication: true,
   });
   const [institution, isLoadingInstitution] = useFetchResource<Organization>(
     user?.topOrgCristinId ? user.topOrgCristinId : '',
