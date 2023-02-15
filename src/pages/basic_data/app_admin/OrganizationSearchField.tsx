@@ -18,7 +18,7 @@ interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   fieldInputProps?: FieldInputProps<string>;
   isLoadingDefaultOptions?: boolean;
   defaultOptions?: Organization[];
-  currentValue?: Organization | null;
+  currentValue?: Organization;
 }
 
 export const OrganizationSearchField = ({

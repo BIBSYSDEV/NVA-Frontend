@@ -1,4 +1,3 @@
-import { Organization } from '../../../../types/organization.types';
 import { CristinProject, ProjectContributor } from '../../../../types/project.types';
 import { CristinPerson, User } from '../../../../types/user.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
@@ -61,6 +60,3 @@ export const projectContributorToCristinPerson = (contributor?: ProjectContribut
         employments: [],
       }
     : null;
-
-export const getContributorOrganzation = (contributor?: ProjectContributor): Organization | null =>
-  contributor?.affiliation ? { id: contributor.affiliation.id, name: contributor.affiliation.name } : null;

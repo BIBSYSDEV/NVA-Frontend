@@ -50,19 +50,19 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
   const dispatch = useDispatch();
   const editMode = !!currentProject;
 
-  const createProject = async (values: SaveCristinProject) => {
+  const submitProjectForm = async (values: SaveCristinProject) => {
     if (editMode) {
-      const createProjectResponse = await authenticatedApiRequest({
+      const updateProjectResponse = await authenticatedApiRequest({
         url: currentProject.id,
         method: 'PATCH',
         data: values,
       });
 
-      if (isSuccessStatus(createProjectResponse.status)) {
+      if (isSuccessStatus(updateProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.update_project'), variant: 'success' }));
         onClose();
         refetchData?.();
-      } else if (isErrorStatus(createProjectResponse.status)) {
+      } else if (isErrorStatus(updateProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_project'), variant: 'error' }));
       }
     } else {
@@ -88,7 +88,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
       <Formik
         initialValues={editMode ? currentProject : initialValues}
         validationSchema={basicProjectValidationSchema}
-        onSubmit={createProject}>
+        onSubmit={submitProjectForm}>
         {({ values, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<SaveCristinProject>) => (
           <Form noValidate>
             <DialogContent>

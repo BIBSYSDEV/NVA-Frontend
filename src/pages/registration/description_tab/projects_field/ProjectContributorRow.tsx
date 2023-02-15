@@ -17,7 +17,7 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
 import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
-import { getContributorOrganzation, projectContributorToCristinPerson } from './projectHelpers';
+import { projectContributorToCristinPerson } from './projectHelpers';
 
 interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
@@ -25,7 +25,6 @@ interface ProjectContributorRowProps {
 
 export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProps) => {
   const { t } = useTranslation();
-
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -34,8 +33,9 @@ export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProp
   });
 
   const cristinPersonContributor = projectContributorToCristinPerson(contributor);
-
-  const contributorAffiliation = getContributorOrganzation(contributor);
+  const contributorAffiliation = contributor?.affiliation
+    ? { id: contributor.affiliation.id, name: contributor.affiliation.name }
+    : undefined;
 
   const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
   const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
