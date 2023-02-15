@@ -60,7 +60,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 <Box component="span">
                   {t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}
                 </Box>
-                <Box component="span">({bucket.doc_count})</Box>
+                {(bucket.docCount || bucket.doc_count) && <span>({bucket.docCount ?? bucket.doc_count})</span>}
               </ListItemButton>
             </Box>
           ))}
