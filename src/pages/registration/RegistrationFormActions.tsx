@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Box, Button, IconButton } from '@mui/material';
+import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { LoadingButton } from '@mui/lab';
@@ -78,17 +78,19 @@ export const RegistrationFormActions = ({
         }}>
         {tabNumber > RegistrationTab.Description && (
           <Box sx={{ gridArea: 'back-button' }}>
-            <IconButton onClick={() => setTabNumber(tabNumber - 1)} disabled={isFirstTab}>
-              <Box
-                sx={{
-                  bgcolor: isFirstTab ? 'gray' : 'info.main',
-                  display: 'flex',
-                  borderRadius: '50%',
-                  padding: '0.2rem',
-                }}>
-                <ChevronLeftIcon sx={{ color: 'white' }} />
-              </Box>
-            </IconButton>
+            <Tooltip title={t('common.previous')}>
+              <IconButton onClick={() => setTabNumber(tabNumber - 1)} disabled={isFirstTab}>
+                <Box
+                  sx={{
+                    bgcolor: isFirstTab ? 'gray' : 'info.main',
+                    display: 'flex',
+                    borderRadius: '50%',
+                    padding: '0.2rem',
+                  }}>
+                  <ChevronLeftIcon sx={{ color: 'white' }} />
+                </Box>
+              </IconButton>
+            </Tooltip>
           </Box>
         )}
 
@@ -117,20 +119,22 @@ export const RegistrationFormActions = ({
                 }}>
                 {t('common.save')}
               </LoadingButton>
-              <IconButton
-                sx={{ gridArea: 'next-tab-button' }}
-                onClick={() => setTabNumber(tabNumber + 1)}
-                disabled={isLastTab}>
-                <Box
-                  sx={{
-                    bgcolor: isLastTab ? 'gray' : 'info.main',
-                    display: 'flex',
-                    borderRadius: '50%',
-                    padding: '0.2rem',
-                  }}>
-                  <ChevronRightIcon sx={{ color: 'white' }} />
-                </Box>
-              </IconButton>
+              <Tooltip title={t('common.next')}>
+                <IconButton
+                  sx={{ gridArea: 'next-tab-button' }}
+                  onClick={() => setTabNumber(tabNumber + 1)}
+                  disabled={isLastTab}>
+                  <Box
+                    sx={{
+                      bgcolor: isLastTab ? 'gray' : 'info.main',
+                      display: 'flex',
+                      borderRadius: '50%',
+                      padding: '0.2rem',
+                    }}>
+                    <ChevronRightIcon sx={{ color: 'white' }} />
+                  </Box>
+                </IconButton>
+              </Tooltip>
             </Box>
           </>
         ) : (
