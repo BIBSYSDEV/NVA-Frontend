@@ -11,18 +11,25 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import AddCircleIcon from '@mui/icons-material/AddCircleOutline';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { setNotification } from '../../../redux/notificationSlice';
-import { CristinProject, SaveCristinProject } from '../../../types/project.types';
+import { BasicProjectContributor, CristinProject, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
+
+const emptyProjectContributor: BasicProjectContributor = {
+  type: 'ProjectParticipant',
+  identity: { type: 'Person', id: '' },
+  affiliation: { type: 'Organization', id: '' },
+};
 
 const initialValues: SaveCristinProject = {
   type: 'Project',
@@ -30,9 +37,7 @@ const initialValues: SaveCristinProject = {
   language: 'http://lexvo.org/id/iso639-3/nob',
   startDate: '',
   endDate: '',
-  contributors: [
-    { type: 'ProjectManager', identity: { type: 'Person', id: '' }, affiliation: { type: 'Organization', id: '' } },
-  ],
+  contributors: [{ ...emptyProjectContributor, type: 'ProjectManager' }],
   coordinatingInstitution: {
     type: 'Organization',
     id: '',
@@ -191,17 +196,30 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
               <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
                 {t('project.project_participants')}
               </Typography>
-              {values.contributors.map((contributor, index) => (
-                <ProjectContributorRow
-                  key={index}
-                  contributor={
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', my: '0.25rem' }}>
+                {values.contributors.map((contributor, index) => {
+                  const thisContributor =
                     contributor.identity.id &&
-                    contributor.identity.id === currentProject?.contributors[index].identity.id
+                    currentProject?.contributors[index] &&
+                    contributor.identity.id === currentProject.contributors[index].identity.id
                       ? currentProject.contributors[index]
-                      : undefined
-                  }
-                />
-              ))}
+                      : undefined;
+                  return (
+                    <ProjectContributorRow
+                      key={index}
+                      baseFieldName={`contributors[${index}]`}
+                      contributor={thisContributor}
+                    />
+                  );
+                })}
+              </Box>
+              <FieldArray name="contributors">
+                {({ push }: FieldArrayRenderProps) => (
+                  <Button startIcon={<AddCircleIcon />} onClick={() => push(emptyProjectContributor)}>
+                    {t('common.add')}
+                  </Button>
+                )}
+              </FieldArray>
             </DialogContent>
 
             <DialogActions>

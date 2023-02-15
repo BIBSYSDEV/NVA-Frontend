@@ -21,9 +21,10 @@ import { projectContributorToCristinPerson } from './projectHelpers';
 
 interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
+  baseFieldName: string;
 }
 
-export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProps) => {
+export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectContributorRowProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -59,7 +60,7 @@ export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProp
   return (
     <>
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 2fr 3fr' }, gap: '0.5rem 1rem' }}>
-        <Field name="contributors[0].type">
+        <Field name={`${baseFieldName}.type`}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
@@ -75,7 +76,7 @@ export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProp
             </TextField>
           )}
         </Field>
-        <Field name="contributors[0].identity.id">
+        <Field name={`${baseFieldName}.identity.id`}>
           {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
             <Autocomplete
               options={personSearchResult?.hits ?? []}
@@ -131,7 +132,7 @@ export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProp
             />
           )}
         </Field>
-        <Field name="contributors[0].affiliation.id">
+        <Field name={`${baseFieldName}.affiliation.id`}>
           {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
             <OrganizationSearchField
               onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
