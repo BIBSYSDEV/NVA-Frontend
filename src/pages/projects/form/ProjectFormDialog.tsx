@@ -25,6 +25,14 @@ import { basicProjectValidationSchema } from '../../../utils/validation/project/
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 
+enum ProjectFieldName {
+  Title = 'title',
+  CoordinatingInstitutionId = 'coordinatingInstitution.id',
+  Contributors = 'contributors',
+  StartDate = 'startDate',
+  EndDate = 'endDate',
+}
+
 const emptyProjectContributor: BasicProjectContributor = {
   type: 'ProjectParticipant',
   identity: { type: 'Person', id: '' },
@@ -98,7 +106,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
           <Form noValidate>
             <DialogContent>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <Field name="title">
+                <Field name={ProjectFieldName.Title}>
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
@@ -112,7 +120,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
                     />
                   )}
                 </Field>
-                <Field name="coordinatingInstitution.id">
+                <Field name={ProjectFieldName.CoordinatingInstitutionId}>
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <OrganizationSearchField
                       label={t('project.coordinating_institution')}
@@ -133,7 +141,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
                 </Field>
 
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
-                  <Field name="startDate">
+                  <Field name={ProjectFieldName.StartDate}>
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
                         label={t('common.start_date')}
@@ -162,7 +170,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
                     )}
                   </Field>
 
-                  <Field name="endDate">
+                  <Field name={ProjectFieldName.EndDate}>
                     {({ field, meta: { touched, error } }: FieldProps<string>) => (
                       <DatePicker
                         label={t('common.end_date')}
@@ -202,29 +210,31 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
                   flexDirection: 'column',
                   rowGap: { xs: '1.25rem', sm: '0.5rem' },
                 }}>
-                {values.contributors.map((contributor, index) => {
-                  const thisContributor =
-                    contributor.identity.id &&
-                    currentProject?.contributors[index] &&
-                    contributor.identity.id === currentProject.contributors[index].identity.id
-                      ? currentProject.contributors[index]
-                      : undefined;
-                  return (
-                    <ProjectContributorRow
-                      key={index}
-                      baseFieldName={`contributors[${index}]`}
-                      contributor={thisContributor}
-                    />
-                  );
-                })}
-                <FieldArray name="contributors">
-                  {({ push }: FieldArrayRenderProps) => (
-                    <Button
-                      startIcon={<AddCircleIcon />}
-                      onClick={() => push(emptyProjectContributor)}
-                      sx={{ width: 'fit-content', alignSelf: 'center' }}>
-                      {t('common.add')}
-                    </Button>
+                <FieldArray name={ProjectFieldName.Contributors}>
+                  {({ name, push }: FieldArrayRenderProps) => (
+                    <>
+                      {values.contributors.map((contributor, index) => {
+                        const thisContributor =
+                          contributor.identity.id &&
+                          currentProject?.contributors[index] &&
+                          contributor.identity.id === currentProject.contributors[index].identity.id
+                            ? currentProject.contributors[index]
+                            : undefined;
+                        return (
+                          <ProjectContributorRow
+                            key={index}
+                            baseFieldName={`${name}[${index}]`}
+                            contributor={thisContributor}
+                          />
+                        );
+                      })}
+                      <Button
+                        startIcon={<AddCircleIcon />}
+                        onClick={() => push(emptyProjectContributor)}
+                        sx={{ width: 'fit-content', alignSelf: 'center' }}>
+                        {t('common.add')}
+                      </Button>
+                    </>
                   )}
                 </FieldArray>
               </Box>

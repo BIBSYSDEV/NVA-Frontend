@@ -8,7 +8,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
 import { Organization } from '../../../../types/organization.types';
-import { ProjectContributor } from '../../../../types/project.types';
+import { ProjectContributor, ProjectContributorType } from '../../../../types/project.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -18,6 +18,12 @@ import { getTopLevelOrganization } from '../../../../utils/institutions-helpers'
 import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { projectContributorToCristinPerson } from './projectHelpers';
+
+enum ProjectContributorFieldName {
+  Type = 'type',
+  IdentityId = 'identity.id',
+  AffiliationId = 'affiliation.id',
+}
 
 interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
@@ -60,8 +66,8 @@ export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectCon
   return (
     <>
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr' }, gap: '0.25rem 1rem' }}>
-        <Field name={`${baseFieldName}.type`}>
-          {({ field }: FieldProps<string>) => (
+        <Field name={`${baseFieldName}.${ProjectContributorFieldName.Type}`}>
+          {({ field }: FieldProps<ProjectContributorType>) => (
             <TextField
               data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
               value={
@@ -77,7 +83,7 @@ export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectCon
             />
           )}
         </Field>
-        <Field name={`${baseFieldName}.identity.id`}>
+        <Field name={`${baseFieldName}.${ProjectContributorFieldName.IdentityId}`}>
           {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
             <Autocomplete
               options={personSearchResult?.hits ?? []}
@@ -133,7 +139,7 @@ export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectCon
             />
           )}
         </Field>
-        <Field name={`${baseFieldName}.affiliation.id`}>
+        <Field name={`${baseFieldName}.${ProjectContributorFieldName.AffiliationId}`}>
           {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
             <OrganizationSearchField
               onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
