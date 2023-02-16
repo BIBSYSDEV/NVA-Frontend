@@ -39,7 +39,7 @@ const emptyProjectContributor: BasicProjectContributor = {
   affiliation: { type: 'Organization', id: '' },
 };
 
-const initialValues: SaveCristinProject = {
+const emptyProject: SaveCristinProject = {
   type: 'Project',
   title: '',
   language: 'http://lexvo.org/id/iso639-3/nob',
@@ -99,7 +99,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
 
       <Formik
-        initialValues={editMode ? currentProject : initialValues}
+        initialValues={editMode ? currentProject : emptyProject}
         validationSchema={basicProjectValidationSchema}
         onSubmit={submitProjectForm}>
         {({ values, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<SaveCristinProject>) => (
