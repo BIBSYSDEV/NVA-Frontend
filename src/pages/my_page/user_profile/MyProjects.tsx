@@ -9,6 +9,7 @@ import { SearchResponse } from '../../../types/common.types';
 import { CristinProject } from '../../../types/project.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { useFetch } from '../../../utils/hooks/useFetch';
+import { canEditProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 
 export const MyProjects = () => {
@@ -20,7 +21,7 @@ export const MyProjects = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const [projects, isLoadingProjects] = useFetch<SearchResponse<CristinProject>>({
+  const [projects, isLoadingProjects, refetchProjects] = useFetch<SearchResponse<CristinProject>>({
     url: userCristinId
       ? `${CristinApiPath.Project}?query=.&page=${page + 1}&results=${rowsPerPage}&participant=${userCristinId}`
       : '',
@@ -38,7 +39,12 @@ export const MyProjects = () => {
         <>
           <List>
             {projects.hits.map((project) => (
-              <ProjectListItem key={project.id} project={project} />
+              <ProjectListItem
+                key={project.id}
+                project={project}
+                showEdit={canEditProject(user, project)}
+                refetchProjects={refetchProjects}
+              />
             ))}
           </List>
           <TablePagination

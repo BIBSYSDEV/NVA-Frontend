@@ -14,17 +14,17 @@ import {
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { CristinApiPath } from '../../../../api/apiPaths';
-import { authenticatedApiRequest } from '../../../../api/apiRequest';
-import { setNotification } from '../../../../redux/notificationSlice';
-import { PostCristinProject } from '../../../../types/project.types';
-import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { basicProjectValidationSchema } from '../../../../utils/validation/project/BasicProjectValidation';
-import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
-import { ProjectContributorRow } from './ProjectContributorRow';
+import { CristinApiPath } from '../../../api/apiPaths';
+import { authenticatedApiRequest } from '../../../api/apiRequest';
+import { setNotification } from '../../../redux/notificationSlice';
+import { CristinProject, SaveCristinProject } from '../../../types/project.types';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
+import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
+import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 
-const initialValues: PostCristinProject = {
+const initialValues: SaveCristinProject = {
   type: 'Project',
   title: '',
   language: 'http://lexvo.org/id/iso639-3/nob',
@@ -39,35 +39,57 @@ const initialValues: PostCristinProject = {
   },
 };
 
-interface CreateProjectDialogProps extends DialogProps {
+interface ProjectFormDialogProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
+  currentProject?: CristinProject;
+  refetchData?: () => void;
 }
 
-export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
+export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }: ProjectFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const editMode = !!currentProject;
 
-  const createProject = async (values: PostCristinProject) => {
-    const createProjectResponse = await authenticatedApiRequest({
-      url: CristinApiPath.Project,
-      method: 'POST',
-      data: values,
-    });
+  const submitProjectForm = async (values: SaveCristinProject) => {
+    if (editMode) {
+      const updateProjectResponse = await authenticatedApiRequest({
+        url: currentProject.id,
+        method: 'PATCH',
+        data: values,
+      });
 
-    if (isSuccessStatus(createProjectResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.success.create_project'), variant: 'success' }));
-      props.onClose();
-    } else if (isErrorStatus(createProjectResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.create_project'), variant: 'error' }));
+      if (isSuccessStatus(updateProjectResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.success.update_project'), variant: 'success' }));
+        onClose();
+        refetchData?.();
+      } else if (isErrorStatus(updateProjectResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.update_project'), variant: 'error' }));
+      }
+    } else {
+      const createProjectResponse = await authenticatedApiRequest({
+        url: CristinApiPath.Project,
+        method: 'POST',
+        data: values,
+      });
+
+      if (isSuccessStatus(createProjectResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.success.create_project'), variant: 'success' }));
+        onClose();
+      } else if (isErrorStatus(createProjectResponse.status)) {
+        dispatch(setNotification({ message: t('feedback.error.create_project'), variant: 'error' }));
+      }
     }
   };
 
   return (
-    <Dialog {...props}>
-      <DialogTitle>{t('project.create_project')}</DialogTitle>
+    <Dialog maxWidth="md" fullWidth onClose={onClose} open={open}>
+      <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
 
-      <Formik initialValues={initialValues} validationSchema={basicProjectValidationSchema} onSubmit={createProject}>
-        {({ values, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<PostCristinProject>) => (
+      <Formik
+        initialValues={editMode ? currentProject : initialValues}
+        validationSchema={basicProjectValidationSchema}
+        onSubmit={submitProjectForm}>
+        {({ values, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<SaveCristinProject>) => (
           <Form noValidate>
             <DialogContent>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -92,6 +114,15 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
                       onChange={(selectedInstitution) => setFieldValue(field.name, selectedInstitution?.id ?? '')}
                       errorMessage={touched && !!error ? error : undefined}
                       fieldInputProps={field}
+                      currentValue={
+                        values.coordinatingInstitution.id &&
+                        currentProject?.coordinatingInstitution.id === values.coordinatingInstitution.id
+                          ? {
+                              id: values.coordinatingInstitution.id,
+                              name: currentProject.coordinatingInstitution.name,
+                            }
+                          : undefined
+                      }
                     />
                   )}
                 </Field>
@@ -160,11 +191,21 @@ export const CreateProjectDialog = (props: CreateProjectDialogProps) => {
               <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
                 {t('project.project_participants')}
               </Typography>
-              <ProjectContributorRow />
+              {values.contributors.map((contributor, index) => (
+                <ProjectContributorRow
+                  key={index}
+                  contributor={
+                    contributor.identity.id &&
+                    contributor.identity.id === currentProject?.contributors[index].identity.id
+                      ? currentProject.contributors[index]
+                      : undefined
+                  }
+                />
+              ))}
             </DialogContent>
 
             <DialogActions>
-              <Button onClick={props.onClose}>{t('common.cancel')}</Button>
+              <Button onClick={onClose}>{t('common.cancel')}</Button>
               <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
                 {t('common.save')}
               </LoadingButton>

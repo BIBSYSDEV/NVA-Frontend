@@ -90,6 +90,7 @@ export const dataTestId = {
     searchResultItem: 'result-list-item',
   },
   projectLandingPage: {
+    editProjectButton: 'edit-project-button',
     generalInfoBox: 'general-info',
     participantsAccordion: 'participants-accordion',
     resultsAccordion: 'results-accordion',

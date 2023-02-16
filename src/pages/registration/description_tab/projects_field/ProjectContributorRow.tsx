@@ -8,6 +8,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
 import { Organization } from '../../../../types/organization.types';
+import { ProjectContributor } from '../../../../types/project.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -16,8 +17,13 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
 import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
+import { projectContributorToCristinPerson } from './projectHelpers';
 
-export const ProjectContributorRow = () => {
+interface ProjectContributorRowProps {
+  contributor?: ProjectContributor;
+}
+
+export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -25,6 +31,11 @@ export const ProjectContributorRow = () => {
   const [personSearchResult, isLoadingPersonSearchResult] = useFetch<SearchResponse<CristinPerson>>({
     url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&name=${debouncedSearchTerm}` : '',
   });
+
+  const cristinPersonContributor = projectContributorToCristinPerson(contributor);
+  const contributorAffiliation = contributor?.affiliation
+    ? { id: contributor.affiliation.id, name: contributor.affiliation.name }
+    : undefined;
 
   const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
   const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
@@ -60,6 +71,7 @@ export const ProjectContributorRow = () => {
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}>
               <MenuItem value="ProjectManager">{t('project.project_manager')}</MenuItem>
+              <MenuItem value="ProjectParticipant">{t('project.project_participant')}</MenuItem>
             </TextField>
           )}
         </Field>
@@ -75,6 +87,7 @@ export const ProjectContributorRow = () => {
                   setSearchTerm(value);
                 }
               }}
+              defaultValue={cristinPersonContributor ?? null}
               onChange={async (_, selectedUser) => {
                 if (!selectedUser) {
                   setFieldValue(field.name, '');
@@ -126,6 +139,7 @@ export const ProjectContributorRow = () => {
               errorMessage={touched && !!error ? error : ''}
               isLoadingDefaultOptions={isLoadingDefaultOptions}
               defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
+              currentValue={contributorAffiliation}
             />
           )}
         </Field>

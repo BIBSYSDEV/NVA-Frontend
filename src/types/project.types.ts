@@ -74,7 +74,7 @@ interface Funding {
   code?: string;
 }
 
-export interface PostCristinProject {
+export interface SaveCristinProject {
   type: 'Project';
   title: string;
   language: string;
@@ -84,7 +84,7 @@ export interface PostCristinProject {
   contributors: BasicProjectContributor[];
 }
 
-export interface CristinProject extends PostCristinProject {
+export interface CristinProject extends SaveCristinProject {
   id: string;
   identifier: ProjectIdentifier[];
   status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
