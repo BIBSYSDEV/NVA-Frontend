@@ -66,49 +66,41 @@ export const RegistrationFormActions = ({
     <>
       <Box
         sx={{
-          mb: '1rem',
           display: 'grid',
           gridTemplateAreas: {
-            xs: "'save-next-button save-next-button' 'back-button support-button'",
-            sm: '"back-button support-button save-next-button"',
+            xs: "'back-button next-button' 'support-button save-button'",
+            sm: '"back-button support-button save-button next-button"',
           },
           gridTemplateColumns: { xs: '1fr 1fr', sm: '2fr auto auto' },
           alignItems: 'center',
           gap: '1rem',
         }}>
-        {tabNumber > RegistrationTab.Description && (
+        {!isFirstTab && (
           <Box sx={{ gridArea: 'back-button' }}>
             <Tooltip title={t('common.previous')}>
-              <IconButton onClick={() => setTabNumber(tabNumber - 1)} disabled={isFirstTab}>
-                <Box
-                  sx={{
-                    bgcolor: isFirstTab ? 'gray' : 'info.main',
-                    display: 'flex',
-                    borderRadius: '50%',
-                    padding: '0.2rem',
-                  }}>
-                  <ChevronLeftIcon sx={{ color: 'white' }} />
-                </Box>
+              <IconButton onClick={() => setTabNumber(tabNumber - 1)}>
+                <ChevronLeftIcon
+                  sx={{ color: 'white', borderRadius: '50%', bgcolor: 'info.main', height: '2rem', width: '2rem' }}
+                />
               </IconButton>
             </Tooltip>
           </Box>
         )}
 
-        <Button data-testid="open-support-button" onClick={toggleSupportModal} sx={{ gridArea: 'support-button' }}>
-          {t('common.support')}
-        </Button>
-        {tabNumber < RegistrationTab.FilesAndLicenses ? (
+        <Box sx={{ gridArea: 'support-button', display: 'flex', justifyContent: { xs: 'start' } }}>
+          <Button data-testid="open-support-button" onClick={toggleSupportModal}>
+            {t('common.support')}
+          </Button>
+        </Box>
+        {!isLastTab ? (
           <>
             <Box
               sx={{
-                gridArea: 'save-next-button',
-                display: 'grid',
-                gridTemplateAreas: '"save-button next-button next-tab-button"',
-                columnGap: '1rem',
-                alignItems: 'center',
+                gridArea: 'save-button',
+                display: 'flex',
+                justifyContent: { xs: 'end' },
               }}>
               <LoadingButton
-                sx={{ height: '80%' }}
                 variant="outlined"
                 loading={isSaving}
                 data-testid="button-save-registration"
@@ -119,20 +111,13 @@ export const RegistrationFormActions = ({
                 }}>
                 {t('common.save')}
               </LoadingButton>
+            </Box>
+            <Box sx={{ gridArea: 'next-button', display: 'flex', justifyContent: { xs: 'end' } }}>
               <Tooltip title={t('common.next')}>
-                <IconButton
-                  sx={{ gridArea: 'next-tab-button' }}
-                  onClick={() => setTabNumber(tabNumber + 1)}
-                  disabled={isLastTab}>
-                  <Box
-                    sx={{
-                      bgcolor: isLastTab ? 'gray' : 'info.main',
-                      display: 'flex',
-                      borderRadius: '50%',
-                      padding: '0.2rem',
-                    }}>
-                    <ChevronRightIcon sx={{ color: 'white' }} />
-                  </Box>
+                <IconButton onClick={() => setTabNumber(tabNumber + 1)}>
+                  <ChevronRightIcon
+                    sx={{ color: 'white', borderRadius: '50%', bgcolor: 'info.main', height: '2rem', width: '2rem' }}
+                  />
                 </IconButton>
               </Tooltip>
             </Box>
@@ -143,7 +128,7 @@ export const RegistrationFormActions = ({
             loading={isSaving}
             data-testid="button-save-registration"
             onClick={onClickSaveAndPresent}
-            sx={{ gridArea: 'save-next-button' }}>
+            sx={{ gridArea: 'save-button' }}>
             {t('common.save_and_present')}
           </LoadingButton>
         )}
