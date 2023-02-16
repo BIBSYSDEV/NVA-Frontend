@@ -52,6 +52,7 @@ import {
   nviApplicableTypes,
 } from '../../../utils/registration-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { ContentTypeSearchBar } from './components/CategorySearchBar';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
@@ -209,7 +210,10 @@ export const SelectRegistrationTypeField = () => {
     <>
       <Paper sx={{ p: '1rem' }} elevation={10}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <FormLabel>{t('registration.resource_type.select_resource_type')}</FormLabel>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <FormLabel>{t('registration.resource_type.select_resource_type')}</FormLabel>
+            <ContentTypeSearchBar />
+          </Box>
 
           {currentInstanceType && (
             <IconButton
