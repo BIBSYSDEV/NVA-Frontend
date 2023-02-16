@@ -1,5 +1,5 @@
-import { Box, Autocomplete, Typography, TextField, MenuItem } from '@mui/material';
-import { Field, FieldProps, ErrorMessage } from 'formik';
+import { Box, Autocomplete, Typography, TextField } from '@mui/material';
+import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../../api/apiPaths';
@@ -8,7 +8,7 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
 import { Organization } from '../../../../types/organization.types';
-import { ProjectContributor } from '../../../../types/project.types';
+import { ProjectContributor, ProjectContributorType } from '../../../../types/project.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -19,11 +19,18 @@ import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { projectContributorToCristinPerson } from './projectHelpers';
 
-interface ProjectContributorRowProps {
-  contributor?: ProjectContributor;
+enum ProjectContributorFieldName {
+  Type = 'type',
+  IdentityId = 'identity.id',
+  AffiliationId = 'affiliation.id',
 }
 
-export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProps) => {
+interface ProjectContributorRowProps {
+  contributor?: ProjectContributor;
+  baseFieldName: string;
+}
+
+export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectContributorRowProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -58,24 +65,25 @@ export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProp
 
   return (
     <>
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 2fr 3fr' }, gap: '0.5rem 1rem' }}>
-        <Field name="contributors[0].type">
-          {({ field, meta: { touched, error } }: FieldProps<string>) => (
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr' }, gap: '0.25rem 1rem' }}>
+        <Field name={`${baseFieldName}.${ProjectContributorFieldName.Type}`}>
+          {({ field }: FieldProps<ProjectContributorType>) => (
             <TextField
               data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
-              {...field}
+              value={
+                field.value === 'ProjectManager'
+                  ? t('project.project_manager')
+                  : field.value === 'ProjectParticipant'
+                  ? t('project.project_participant')
+                  : ''
+              }
               disabled
-              select
               label={t('common.role')}
               variant="filled"
-              error={touched && !!error}
-              helperText={<ErrorMessage name={field.name} />}>
-              <MenuItem value="ProjectManager">{t('project.project_manager')}</MenuItem>
-              <MenuItem value="ProjectParticipant">{t('project.project_participant')}</MenuItem>
-            </TextField>
+            />
           )}
         </Field>
-        <Field name="contributors[0].identity.id">
+        <Field name={`${baseFieldName}.${ProjectContributorFieldName.IdentityId}`}>
           {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
             <Autocomplete
               options={personSearchResult?.hits ?? []}
@@ -131,7 +139,7 @@ export const ProjectContributorRow = ({ contributor }: ProjectContributorRowProp
             />
           )}
         </Field>
-        <Field name="contributors[0].affiliation.id">
+        <Field name={`${baseFieldName}.${ProjectContributorFieldName.AffiliationId}`}>
           {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
             <OrganizationSearchField
               onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}

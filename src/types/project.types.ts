@@ -55,8 +55,10 @@ interface ContributorIdentity extends BasicContributorIdentity {
   lastName: string;
 }
 
-interface BasicProjectContributor {
-  type: 'ProjectManager' | 'ProjectParticipant';
+export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
+
+export interface BasicProjectContributor {
+  type: ProjectContributorType;
   identity: BasicContributorIdentity;
   affiliation?: BasicContributorAffiliation;
 }
