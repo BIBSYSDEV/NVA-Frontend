@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -18,19 +19,13 @@ import AddCircleIcon from '@mui/icons-material/AddCircleOutline';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { setNotification } from '../../../redux/notificationSlice';
-import {
-  BasicProjectContributor,
-  CristinProject,
-  emptyProjectContributor,
-  SaveCristinProject,
-} from '../../../types/project.types';
+import { CristinProject, emptyProjectContributor, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
-import { CreateProjectStartPage } from './CreateProjectDialog';
-import { useState } from 'react';
+import { CreateProjectStartPage } from './CreateProjectStartPage';
 
 enum ProjectFieldName {
   Title = 'title',

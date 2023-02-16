@@ -10,12 +10,12 @@ import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
-interface CreateProjectDialog {
+interface CreateProjectStartPageProps {
   onClose: () => void;
   setInitialValues: (project: SaveCristinProject) => void;
 }
 
-export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProjectDialog) => {
+export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProjectStartPageProps) => {
   const { t } = useTranslation();
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -85,7 +85,14 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
             if (emptyProjectSelected) {
               setInitialValues(emptyProject);
             } else if (selectedNfrProject) {
-              //todo
+              const projectFromNfr: SaveCristinProject = {
+                ...emptyProject,
+                title: getLanguageString(selectedNfrProject.labels),
+                startDate: selectedNfrProject.activeFrom,
+                endDate: selectedNfrProject.activeTo,
+                // TODO: Reuse 'lead' for something?
+              };
+              setInitialValues(projectFromNfr);
             }
           }}>
           {t('common.start')}
