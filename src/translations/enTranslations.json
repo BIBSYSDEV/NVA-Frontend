@@ -66,7 +66,7 @@
       "display_name": "Display name for the institution",
       "doi_password": "Password",
       "doi_prefix": "DOI prefix",
-      "doi_repo_id": "Data Cite Repository ID",
+      "doi_repo_id": "DataCite Repository ID",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Institution's domain in Feide",
       "institution_is_nvi_applicable": "Institution reports publication points to NVI",

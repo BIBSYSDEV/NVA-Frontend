@@ -64,94 +64,90 @@ export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectCon
   };
 
   return (
-    <>
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr' }, gap: '0.25rem 1rem' }}>
-        <Field name={`${baseFieldName}.${ProjectContributorFieldName.Type}`}>
-          {({ field }: FieldProps<ProjectContributorType>) => (
-            <TextField
-              data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
-              value={
-                field.value === 'ProjectManager'
-                  ? t('project.project_manager')
-                  : field.value === 'ProjectParticipant'
-                  ? t('project.project_participant')
-                  : ''
+    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr' }, gap: '0.25rem 1rem' }}>
+      <Field name={`${baseFieldName}.${ProjectContributorFieldName.Type}`}>
+        {({ field }: FieldProps<ProjectContributorType>) => (
+          <TextField
+            data-testid={dataTestId.registrationWizard.description.projectForm.roleField}
+            value={
+              field.value === 'ProjectManager'
+                ? t('project.project_manager')
+                : field.value === 'ProjectParticipant'
+                ? t('project.project_participant')
+                : ''
+            }
+            disabled
+            label={t('common.role')}
+            variant="filled"
+          />
+        )}
+      </Field>
+      <Field name={`${baseFieldName}.${ProjectContributorFieldName.IdentityId}`}>
+        {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+          <Autocomplete
+            options={personSearchResult?.hits ?? []}
+            inputMode="search"
+            getOptionLabel={(option) => getFullCristinName(option.names)}
+            filterOptions={(options) => options}
+            onInputChange={(_, value, reason) => {
+              if (reason !== 'reset') {
+                setSearchTerm(value);
               }
-              disabled
-              label={t('common.role')}
-              variant="filled"
-            />
-          )}
-        </Field>
-        <Field name={`${baseFieldName}.${ProjectContributorFieldName.IdentityId}`}>
-          {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
-            <Autocomplete
-              options={personSearchResult?.hits ?? []}
-              inputMode="search"
-              getOptionLabel={(option) => getFullCristinName(option.names)}
-              filterOptions={(options) => options}
-              onInputChange={(_, value, reason) => {
-                if (reason !== 'reset') {
-                  setSearchTerm(value);
+            }}
+            defaultValue={cristinPersonContributor ?? null}
+            onChange={async (_, selectedUser) => {
+              if (!selectedUser) {
+                setFieldValue(field.name, '');
+              } else {
+                setFieldValue(field.name, selectedUser.id ?? '');
+                if (selectedUser.affiliations) {
+                  fetchSuggestedInstitutions(selectedUser.affiliations.map((affiliation) => affiliation.organization));
                 }
-              }}
-              defaultValue={cristinPersonContributor ?? null}
-              onChange={async (_, selectedUser) => {
-                if (!selectedUser) {
-                  setFieldValue(field.name, '');
-                } else {
-                  setFieldValue(field.name, selectedUser.id ?? '');
-                  if (selectedUser.affiliations) {
-                    fetchSuggestedInstitutions(
-                      selectedUser.affiliations.map((affiliation) => affiliation.organization)
-                    );
-                  }
-                }
-                setSearchTerm('');
-              }}
-              loading={isLoadingPersonSearchResult}
-              renderOption={(props, option) => {
-                const orgId = option.affiliations.length > 0 ? option.affiliations[0].organization ?? '' : '';
-                return (
-                  <li {...props} key={option.id}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                      <Typography variant="subtitle1">{getFullCristinName(option.names)}</Typography>
-                      {orgId && <AffiliationHierarchy unitUri={orgId} commaSeparated />}
-                    </Box>
-                  </li>
-                );
-              }}
-              renderInput={(params) => (
-                <AutocompleteTextField
-                  onBlur={field.onBlur}
-                  value={field.value}
-                  name={field.name}
-                  data-testid={dataTestId.registrationWizard.description.projectForm.contributorsSearchField}
-                  {...params}
-                  required
-                  label={t('project.person')}
-                  placeholder={t('project.search_for_person')}
-                  errorMessage={touched && !!error ? error : ''}
-                  isLoading={isLoadingPersonSearchResult}
-                  showSearchIcon={!field.value}
-                />
-              )}
-            />
-          )}
-        </Field>
-        <Field name={`${baseFieldName}.${ProjectContributorFieldName.AffiliationId}`}>
-          {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
-            <OrganizationSearchField
-              onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
-              fieldInputProps={field}
-              errorMessage={touched && !!error ? error : ''}
-              isLoadingDefaultOptions={isLoadingDefaultOptions}
-              defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
-              currentValue={contributorAffiliation}
-            />
-          )}
-        </Field>
-      </Box>
-    </>
+              }
+              setSearchTerm('');
+            }}
+            loading={isLoadingPersonSearchResult}
+            renderOption={(props, option) => {
+              const orgId = option.affiliations.length > 0 ? option.affiliations[0].organization ?? '' : '';
+              return (
+                <li {...props} key={option.id}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Typography variant="subtitle1">{getFullCristinName(option.names)}</Typography>
+                    {orgId && <AffiliationHierarchy unitUri={orgId} commaSeparated />}
+                  </Box>
+                </li>
+              );
+            }}
+            renderInput={(params) => (
+              <AutocompleteTextField
+                onBlur={field.onBlur}
+                value={field.value}
+                name={field.name}
+                data-testid={dataTestId.registrationWizard.description.projectForm.contributorsSearchField}
+                {...params}
+                required
+                label={t('project.person')}
+                placeholder={t('project.search_for_person')}
+                errorMessage={touched && !!error ? error : ''}
+                isLoading={isLoadingPersonSearchResult}
+                showSearchIcon={!field.value}
+              />
+            )}
+          />
+        )}
+      </Field>
+      <Field name={`${baseFieldName}.${ProjectContributorFieldName.AffiliationId}`}>
+        {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+          <OrganizationSearchField
+            onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
+            fieldInputProps={field}
+            errorMessage={touched && !!error ? error : ''}
+            isLoadingDefaultOptions={isLoadingDefaultOptions}
+            defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
+            currentValue={contributorAffiliation}
+          />
+        )}
+      </Field>
+    </Box>
   );
 };
