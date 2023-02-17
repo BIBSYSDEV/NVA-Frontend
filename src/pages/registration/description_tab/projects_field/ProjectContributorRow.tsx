@@ -1,4 +1,5 @@
-import { Box, Autocomplete, Typography, TextField } from '@mui/material';
+import { Box, Autocomplete, Typography, TextField, IconButton } from '@mui/material';
+import RemoveIcon from '@mui/icons-material/HighlightOff';
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,9 +29,14 @@ enum ProjectContributorFieldName {
 interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
   baseFieldName: string;
+  removeContributor: () => void;
 }
 
-export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectContributorRowProps) => {
+export const ProjectContributorRow = ({
+  contributor,
+  baseFieldName,
+  removeContributor,
+}: ProjectContributorRowProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -64,7 +70,7 @@ export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectCon
   };
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr' }, gap: '0.25rem 1rem' }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr auto' }, gap: '0.25rem 0.75rem' }}>
       <Field name={`${baseFieldName}.${ProjectContributorFieldName.Type}`}>
         {({ field }: FieldProps<ProjectContributorType>) => (
           <TextField
@@ -148,6 +154,14 @@ export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectCon
           />
         )}
       </Field>
+      <IconButton
+        size="small"
+        color="primary"
+        disabled={contributor?.type === 'ProjectManager'}
+        title={t('project.remove_participant')}
+        onClick={removeContributor}>
+        <RemoveIcon />
+      </IconButton>
     </Box>
   );
 };

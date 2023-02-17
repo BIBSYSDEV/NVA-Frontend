@@ -211,7 +211,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
                   rowGap: { xs: '1.25rem', sm: '0.5rem' },
                 }}>
                 <FieldArray name={ProjectFieldName.Contributors}>
-                  {({ name, push }: FieldArrayRenderProps) => (
+                  {({ name, push, remove }: FieldArrayRenderProps) => (
                     <>
                       {values.contributors.map((contributor, index) => {
                         const thisContributor =
@@ -225,6 +225,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
                             key={index}
                             baseFieldName={`${name}[${index}]`}
                             contributor={thisContributor}
+                            removeContributor={() => remove(index)}
                           />
                         );
                       })}
