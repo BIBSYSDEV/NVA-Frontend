@@ -47,6 +47,11 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
   const [initialValues, setInitialValues] = useState<CristinProject | SaveCristinProject | undefined>(currentProject);
   const editMode = !!currentProject;
 
+  const handleClose = () => {
+    onClose();
+    setInitialValues(undefined);
+  };
+
   const submitProjectForm = async (values: SaveCristinProject) => {
     if (editMode) {
       const updateProjectResponse = await authenticatedApiRequest({
@@ -57,7 +62,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
 
       if (isSuccessStatus(updateProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.update_project'), variant: 'success' }));
-        onClose();
+        handleClose();
         refetchData?.();
       } else if (isErrorStatus(updateProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_project'), variant: 'error' }));
@@ -71,7 +76,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
 
       if (isSuccessStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.create_project'), variant: 'success' }));
-        onClose();
+        handleClose();
       } else if (isErrorStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_project'), variant: 'error' }));
       }
@@ -79,11 +84,11 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
   };
 
   return (
-    <Dialog maxWidth="md" fullWidth onClose={onClose} open={open}>
+    <Dialog maxWidth="md" fullWidth onClose={handleClose} open={open}>
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
 
       {!initialValues ? (
-        <CreateProjectStartPage onClose={onClose} setInitialValues={setInitialValues} />
+        <CreateProjectStartPage onClose={handleClose} setInitialValues={setInitialValues} />
       ) : (
         <Formik
           initialValues={initialValues}
@@ -228,8 +233,8 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
               </DialogContent>
 
               <DialogActions>
-                <Button onClick={onClose}>{t('common.cancel')}</Button>
-                <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
+                <Button onClick={handleClose}>{t('common.cancel')}</Button>
+                <LoadingButton variant="contained" loading={isSubmitting}>
                   {t('common.save')}
                 </LoadingButton>
               </DialogActions>
