@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Box, Button } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Box, Button, IconButton, Tooltip } from '@mui/material';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { LoadingButton } from '@mui/lab';
 import { updateRegistration } from '../../api/registrationApi';
 import { Modal } from '../../components/Modal';
@@ -59,73 +59,89 @@ export const RegistrationFormActions = ({
     }
   };
 
+  const isFirstTab = tabNumber === RegistrationTab.Description;
+  const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
+
   return (
     <>
       <Box
         sx={{
-          mb: '1rem',
           display: 'grid',
           gridTemplateAreas: {
-            xs: "'save-next-button save-next-button' 'back-button support-button'",
-            sm: '"back-button support-button save-next-button"',
+            xs: "'support-button save-button' 'back-button next-button'",
+            sm: '"back-button support-button save-button next-button"',
           },
           gridTemplateColumns: { xs: '1fr 1fr', sm: '2fr auto auto' },
           alignItems: 'center',
           gap: '1rem',
         }}>
-        {tabNumber > RegistrationTab.Description && (
+        {!isFirstTab && (
           <Box sx={{ gridArea: 'back-button' }}>
-            <Button
-              variant="outlined"
-              data-testid="button-previous-tab"
-              startIcon={<ArrowBackIcon />}
-              onClick={() => setTabNumber(tabNumber - 1)}>
-              {tabNumber === RegistrationTab.ResourceType && t('registration.heading.description')}
-              {tabNumber === RegistrationTab.Contributors && t('registration.heading.resource_type')}
-              {tabNumber === RegistrationTab.FilesAndLicenses && t('registration.heading.contributors')}
-            </Button>
+            <Tooltip title={t('common.previous')}>
+              <IconButton onClick={() => setTabNumber(tabNumber - 1)}>
+                <KeyboardArrowLeftIcon
+                  sx={{
+                    color: 'white',
+                    borderRadius: '50%',
+                    bgcolor: 'primary.light',
+                    height: '1.875rem',
+                    width: '1.875rem',
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
           </Box>
         )}
-        <Button data-testid="open-support-button" onClick={toggleSupportModal} sx={{ gridArea: 'support-button' }}>
-          {t('common.support')}
-        </Button>
-        {tabNumber < RegistrationTab.FilesAndLicenses ? (
-          <Box
-            sx={{
-              gridArea: 'save-next-button',
-              display: 'grid',
-              gridTemplateAreas: '"save-button next-button"',
-              columnGap: '1rem',
-            }}>
-            <LoadingButton
-              variant="outlined"
-              loading={isSaving}
-              data-testid="button-save-registration"
-              onClick={async () => {
-                await saveRegistration(values);
-                // Set all fields with error to touched to ensure error messages are shown
-                setTouched(setNestedObjectValues(errors, true));
+
+        <Box sx={{ gridArea: 'support-button', display: 'flex', justifyContent: 'start' }}>
+          <Button data-testid="open-support-button" onClick={toggleSupportModal}>
+            {t('common.support')}
+          </Button>
+        </Box>
+        {!isLastTab ? (
+          <>
+            <Box
+              sx={{
+                gridArea: 'save-button',
+                display: 'flex',
+                justifyContent: 'end',
               }}>
-              {t('common.save')}
-            </LoadingButton>
-            <Button
-              variant="contained"
-              data-testid="button-next-tab"
-              endIcon={<ArrowForwardIcon />}
-              onClick={() => setTabNumber(tabNumber + 1)}>
-              {tabNumber === RegistrationTab.Description && t('registration.heading.resource_type')}
-              {tabNumber === RegistrationTab.ResourceType && t('registration.heading.contributors')}
-              {tabNumber === RegistrationTab.Contributors && t('registration.heading.files_and_license')}
-            </Button>
-          </Box>
+              <LoadingButton
+                variant="outlined"
+                loading={isSaving}
+                data-testid="button-save-registration"
+                onClick={async () => {
+                  await saveRegistration(values);
+                  // Set all fields with error to touched to ensure error messages are shown
+                  setTouched(setNestedObjectValues(errors, true));
+                }}>
+                {t('common.save')}
+              </LoadingButton>
+            </Box>
+            <Box sx={{ gridArea: 'next-button', display: 'flex', justifyContent: 'end' }}>
+              <Tooltip title={t('common.next')}>
+                <IconButton onClick={() => setTabNumber(tabNumber + 1)}>
+                  <KeyboardArrowRightIcon
+                    sx={{
+                      color: 'white',
+                      borderRadius: '50%',
+                      bgcolor: 'primary.light',
+                      height: '1.875rem',
+                      width: '1.875rem',
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </>
         ) : (
           <LoadingButton
             variant="contained"
             loading={isSaving}
             data-testid="button-save-registration"
             onClick={onClickSaveAndPresent}
-            sx={{ gridArea: 'save-next-button' }}>
-            {t('common.save_and_present')}
+            sx={{ gridArea: 'save-button' }}>
+            {t('common.save_and_view')}
           </LoadingButton>
         )}
       </Box>
