@@ -46,14 +46,12 @@ import {
   emptyResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
-import { getMainRegistrationType, isPeriodicalMediaContribution } from '../../../utils/registration-helpers';
+import {
+  getMainRegistrationType,
+  isPeriodicalMediaContribution,
+  nviApplicableTypes,
+} from '../../../utils/registration-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
-
-const nviApplicableTypes: PublicationInstanceType[] = [
-  JournalType.Article,
-  BookType.Monograph,
-  ChapterType.AnthologyChapter,
-];
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
@@ -392,7 +390,7 @@ const RegistrationTypesRow = ({ mainType, subTypes, value, onChangeType }: Regis
   return (
     <>
       <Typography>{t(`registration.publication_types.${mainType}`)}</Typography>
-      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+      <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
         {subTypes.map((subType) => (
           <Chip
             data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(subType)}

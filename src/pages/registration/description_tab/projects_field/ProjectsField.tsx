@@ -13,7 +13,7 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { CristinApiPath } from '../../../../api/apiPaths';
 import { ProjectChip } from './ProjectChip';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { CreateProjectDialog } from './CreateProjectDialog';
+import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
 import { BetaFunctionality } from '../../../../components/BetaFunctionality';
 import { SearchResponse } from '../../../../types/common.types';
 
@@ -95,12 +95,7 @@ export const ProjectsField = () => {
           <Button onClick={() => setOpenNewProjectDialog(true)} startIcon={<AddIcon />}>
             {t('project.create_project')}
           </Button>
-          <CreateProjectDialog
-            open={openNewProjectDialog}
-            onClose={() => setOpenNewProjectDialog(false)}
-            maxWidth="md"
-            fullWidth
-          />
+          <ProjectFormDialog open={openNewProjectDialog} onClose={() => setOpenNewProjectDialog(false)} />
         </BetaFunctionality>
       </Box>
     </>

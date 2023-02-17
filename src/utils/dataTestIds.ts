@@ -90,6 +90,7 @@ export const dataTestId = {
     searchResultItem: 'result-list-item',
   },
   projectLandingPage: {
+    editProjectButton: 'edit-project-button',
     generalInfoBox: 'general-info',
     participantsAccordion: 'participants-accordion',
     resultsAccordion: 'results-accordion',
@@ -262,8 +263,6 @@ export const dataTestId = {
       concertProgramIsPremiere: 'concert-program-is-premiere',
       concertProgramRemove: 'concert-program-remove',
       confirmDatasetTypeDialog: 'research-data-confirm-dialog',
-      contentField: 'content-field',
-      contentValue: (value: string) => `content-value-${value.toLowerCase()}`,
       corrigendumForField: 'corrigendum-for-field',
       eventCountryField: 'event-country-field',
       exhibitionName: 'artistic-exhibition-name',

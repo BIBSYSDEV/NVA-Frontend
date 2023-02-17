@@ -18,6 +18,7 @@ interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   fieldInputProps?: FieldInputProps<string>;
   isLoadingDefaultOptions?: boolean;
   defaultOptions?: Organization[];
+  currentValue?: Organization;
 }
 
 export const OrganizationSearchField = ({
@@ -28,6 +29,7 @@ export const OrganizationSearchField = ({
   label,
   isLoadingDefaultOptions = false,
   defaultOptions = [],
+  currentValue,
 }: OrganizationSearchFieldProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
@@ -36,7 +38,6 @@ export const OrganizationSearchField = ({
     url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('feedback.error.get_institutions'),
   });
-
   const isLoading = isLoadingDefaultOptions || isLoadingInstitutionOptions;
   const options = isLoadingInstitutionOptions || !institutionOptions ? defaultOptions : institutionOptions.hits;
 
@@ -58,6 +59,7 @@ export const OrganizationSearchField = ({
         }
         setSearchTerm('');
       }}
+      defaultValue={currentValue ?? null}
       loading={isLoading}
       renderInput={(params) => (
         <AutocompleteTextField

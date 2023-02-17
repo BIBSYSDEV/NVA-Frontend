@@ -28,6 +28,8 @@ export const Header = () => {
   const user = useSelector((store: RootState) => store.user);
   const [customer] = useFetch<CustomerInstitution>({
     url: user?.customerId ?? '',
+    errorMessage: t('feedback.error.get_customer'),
+    withAuthentication: true,
   });
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import { CristinProject, ProjectContributor } from '../../../../types/project.types';
+import { CristinPerson, User } from '../../../../types/user.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const getProjectCoordinatingInstitutionName = (project?: CristinProject) =>
@@ -37,3 +38,25 @@ export const getNfrProjectUrl = (identifier: string) => {
   const projectIdentifier = splittedIdentifier.length > 0 ? splittedIdentifier[0] : null;
   return projectIdentifier ? `https://prosjektbanken.forskningsradet.no/project/FORISS/${projectIdentifier}` : '';
 };
+
+export const canEditProject = (user: User | null, project?: CristinProject) => {
+  if (!user || !project) {
+    return false;
+  }
+  const projectManagers = getProjectManagers(project.contributors);
+  return !!user.cristinId && projectManagers.some((projectManager) => projectManager.identity.id === user.cristinId);
+};
+
+export const projectContributorToCristinPerson = (contributor?: ProjectContributor): CristinPerson | null =>
+  contributor
+    ? {
+        id: contributor.identity.id,
+        identifiers: [],
+        names: [
+          { type: 'FirstName', value: contributor.identity.firstName },
+          { type: 'LastName', value: contributor.identity.lastName },
+        ],
+        affiliations: [],
+        employments: [],
+      }
+    : null;

@@ -1,21 +1,9 @@
 version: 0.2
 
-# Buildspec to run Frontend tests in parallel. To add more builds to the parallel run,
-# add dummy parameters to RUNNERS at the end of the buildspec.
-
 batch:
-  build-matrix:
-    static:
-      fast-fail: false
-    dynamic:
-      buildspec:
-        - buildspecs/codebuild_validation_runner.yml
-      env:
-        variables:
-          RUNNER:
-            - 1
-            - 2
-            - 3
-            - 4
-            - 5
-            - 6
+  fast-fail: true
+  build-list:
+    - identifier: build
+      buildspec: buildspecs/production_build.yml
+    - identifier: tests
+      buildspec: buildspecs/cypress_tests.yml
