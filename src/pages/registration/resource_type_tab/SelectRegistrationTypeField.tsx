@@ -1,8 +1,9 @@
-import { Box, Chip, FormHelperText, FormLabel, IconButton, Paper, Typography } from '@mui/material';
+import { Box, Chip, FormHelperText, FormLabel, IconButton, Paper, TextField, Typography } from '@mui/material';
 import { ErrorMessage, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
+import SearchIcon from '@mui/icons-material/Search';
 import FilterVintageIcon from '@mui/icons-material/FilterVintage';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import {
@@ -52,7 +53,7 @@ import {
   nviApplicableTypes,
 } from '../../../utils/registration-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { ContentTypeSearchBar } from './components/CategorySearchBar';
+import { RegistrationTypeElement, RegistrationTypesRow } from './components/RegistrationTypesRow';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
@@ -206,13 +207,32 @@ export const SelectRegistrationTypeField = () => {
     }
   };
 
+  const [searchValue, setSearchValue] = useState('');
+
+  const filterSubTypes = (subTypes: RegistrationTypeElement[]) => {
+    return subTypes.filter((subType) => subType.text.toLocaleLowerCase().includes(searchValue.toLowerCase()));
+  };
+
   return openSelectType || !currentInstanceType ? (
     <>
       <Paper sx={{ p: '1rem' }} elevation={10}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <FormLabel>{t('registration.resource_type.select_resource_type')}</FormLabel>
-            <ContentTypeSearchBar />
+            <TextField
+              sx={{ bgcolor: 'white' }}
+              placeholder={t('registration.resource_type.search_for_resource_type')}
+              type="search"
+              fullWidth
+              variant="outlined"
+              label={t('common.search')}
+              InputProps={{
+                startAdornment: <SearchIcon sx={{ mr: '1rem' }} />,
+              }}
+              onChange={(event) => {
+                setSearchValue(event.target.value);
+              }}
+            />
           </Box>
 
           {currentInstanceType && (
@@ -235,61 +255,111 @@ export const SelectRegistrationTypeField = () => {
         <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem', alignItems: 'center' }}>
           <RegistrationTypesRow
             mainType={PublicationType.PublicationInJournal}
-            subTypes={Object.values(JournalType)}
+            subTypes={filterSubTypes(
+              Object.values(JournalType).map((subType) => ({
+                value: subType,
+                text: t(`registration.publication_types.${subType}`),
+              }))
+            )}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
             mainType={PublicationType.Book}
-            subTypes={Object.values(BookType)}
+            subTypes={filterSubTypes(
+              Object.values(BookType).map((subType) => ({
+                value: subType,
+                text: t(`registration.publication_types.${subType}`),
+              }))
+            )}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
             mainType={PublicationType.Report}
-            subTypes={Object.values(ReportType)}
+            subTypes={filterSubTypes(
+              Object.values(ReportType).map((subType) => ({
+                value: subType,
+                text: t(`registration.publication_types.${subType}`),
+              }))
+            )}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
             mainType={PublicationType.Degree}
-            subTypes={Object.values(DegreeType)}
+            subTypes={filterSubTypes(
+              Object.values(DegreeType).map((subType) => ({
+                value: subType,
+                text: t(`registration.publication_types.${subType}`),
+              }))
+            )}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
             mainType={PublicationType.Chapter}
-            subTypes={Object.values(ChapterType)}
+            subTypes={filterSubTypes(
+              Object.values(ChapterType).map((subType) => ({
+                value: subType,
+                text: t(`registration.publication_types.${subType}`),
+              }))
+            )}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
             mainType={PublicationType.Presentation}
-            subTypes={Object.values(PresentationType)}
+            subTypes={filterSubTypes(
+              Object.values(PresentationType).map((subType) => ({
+                value: subType,
+                text: t(`registration.publication_types.${subType}`),
+              }))
+            )}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
             mainType={PublicationType.Artistic}
-            subTypes={Object.values(ArtisticType)}
+            subTypes={filterSubTypes(
+              Object.values(ArtisticType).map((subType) => ({
+                value: subType,
+                text: t(`registration.publication_types.${subType}`),
+              }))
+            )}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
             mainType={PublicationType.MediaContribution}
-            subTypes={Object.values(MediaType)}
+            subTypes={filterSubTypes(
+              Object.values(MediaType).map((subType) => ({
+                value: subType,
+                text: t(`registration.publication_types.${subType}`),
+              }))
+            )}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
             mainType={PublicationType.ResearchData}
-            subTypes={Object.values(ResearchDataType)}
+            subTypes={filterSubTypes(
+              Object.values(ResearchDataType).map((subType) => ({
+                value: subType,
+                text: t(`registration.publication_types.${subType}`),
+              }))
+            )}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
             mainType={PublicationType.GeographicalContent}
-            subTypes={Object.values(OtherRegistrationType)}
+            subTypes={filterSubTypes(
+              Object.values(OtherRegistrationType).map((subType) => ({
+                value: subType,
+                text: t(`registration.publication_types.${subType}`),
+              }))
+            )}
             value={currentInstanceType}
             onChangeType={onChangeType}
           />
@@ -378,42 +448,5 @@ export const SelectRegistrationTypeField = () => {
       />
       <FormHelperText>{t('registration.resource_type.click_to_change_resource_type')}</FormHelperText>
     </div>
-  );
-};
-
-interface RegistrationTypesRowProps {
-  onChangeType: (type: PublicationInstanceType) => void;
-  mainType: PublicationType;
-  subTypes: PublicationInstanceType[];
-  value: string;
-}
-
-const RegistrationTypesRow = ({ mainType, subTypes, value, onChangeType }: RegistrationTypesRowProps) => {
-  const { t } = useTranslation();
-
-  return (
-    <>
-      <Typography>{t(`registration.publication_types.${mainType}`)}</Typography>
-      <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
-        {subTypes.map((subType) => (
-          <Chip
-            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(subType)}
-            key={subType}
-            icon={
-              nviApplicableTypes.includes(subType) ? (
-                <FilterVintageIcon
-                  titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-                  fontSize="small"
-                />
-              ) : undefined
-            }
-            variant={value === subType ? 'filled' : 'outlined'}
-            color="primary"
-            onClick={() => onChangeType(subType)}
-            label={t(`registration.publication_types.${subType}`)}
-          />
-        ))}
-      </Box>
-    </>
   );
 };
