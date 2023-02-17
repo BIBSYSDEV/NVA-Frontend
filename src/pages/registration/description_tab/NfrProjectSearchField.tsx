@@ -9,7 +9,7 @@ interface NfrProjectSearchProps {
 
 export const NfrProjectSearchField = ({ baseFieldName }: NfrProjectSearchProps) => (
   <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Id}`}>
-    {({ field: { onBlur }, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+    {({ field: { name, onBlur }, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
       <NfrProjectSearch
         onSelectProject={(project) => {
           if (project) {
@@ -22,6 +22,7 @@ export const NfrProjectSearchField = ({ baseFieldName }: NfrProjectSearchProps) 
           }
         }}
         required
+        name={name}
         onBlur={onBlur}
         errorMessage={touched && !!error ? error : undefined}
       />
