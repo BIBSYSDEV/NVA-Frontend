@@ -23,27 +23,31 @@ export const RegistrationTypesRow = ({ mainType, subTypes, value, onChangeType }
 
   return (
     <>
-      <Typography>{t(`registration.publication_types.${mainType}`)}</Typography>
-      <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
-        {subTypes.map((subType) => (
-          <Chip
-            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(subType.value)}
-            key={subType.value}
-            icon={
-              nviApplicableTypes.includes(subType.value) ? (
-                <FilterVintageIcon
-                  titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-                  fontSize="small"
-                />
-              ) : undefined
-            }
-            variant={value === subType.value ? 'filled' : 'outlined'}
-            color="primary"
-            onClick={() => onChangeType(subType.value)}
-            label={subType.text}
-          />
-        ))}
-      </Box>
+      {subTypes.length > 0 ? (
+        <>
+          <Typography>{t(`registration.publication_types.${mainType}`)}</Typography>
+          <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
+            {subTypes.map((subType) => (
+              <Chip
+                data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(subType.value)}
+                key={subType.value}
+                icon={
+                  nviApplicableTypes.includes(subType.value) ? (
+                    <FilterVintageIcon
+                      titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+                      fontSize="small"
+                    />
+                  ) : undefined
+                }
+                variant={value === subType.value ? 'filled' : 'outlined'}
+                color="primary"
+                onClick={() => onChangeType(subType.value)}
+                label={subType.text}
+              />
+            ))}
+          </Box>
+        </>
+      ) : null}
     </>
   );
 };
