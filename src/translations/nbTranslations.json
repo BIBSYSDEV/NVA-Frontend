@@ -169,7 +169,7 @@
     "required_description": "Felt med stjerne er obligatorisk",
     "role": "Rolle",
     "save": "Lagre",
-    "save_and_present": "Lagre og se",
+    "save_and_view": "Lagre og se",
     "search": "Søk",
     "search_by_name": "Søk på navn",
     "search_placeholder": "Navn Navnesen",

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { LoadingButton } from '@mui/lab';
 import { updateRegistration } from '../../api/registrationApi';
 import { Modal } from '../../components/Modal';
@@ -68,7 +68,7 @@ export const RegistrationFormActions = ({
         sx={{
           display: 'grid',
           gridTemplateAreas: {
-            xs: "'back-button next-button' 'support-button save-button'",
+            xs: "'support-button save-button' 'back-button next-button'",
             sm: '"back-button support-button save-button next-button"',
           },
           gridTemplateColumns: { xs: '1fr 1fr', sm: '2fr auto auto' },
@@ -79,15 +79,21 @@ export const RegistrationFormActions = ({
           <Box sx={{ gridArea: 'back-button' }}>
             <Tooltip title={t('common.previous')}>
               <IconButton onClick={() => setTabNumber(tabNumber - 1)}>
-                <ChevronLeftIcon
-                  sx={{ color: 'white', borderRadius: '50%', bgcolor: 'info.main', height: '2rem', width: '2rem' }}
+                <KeyboardArrowLeftIcon
+                  sx={{
+                    color: 'white',
+                    borderRadius: '50%',
+                    bgcolor: 'primary.light',
+                    height: '1.875rem',
+                    width: '1.875rem',
+                  }}
                 />
               </IconButton>
             </Tooltip>
           </Box>
         )}
 
-        <Box sx={{ gridArea: 'support-button', display: 'flex', justifyContent: { xs: 'start' } }}>
+        <Box sx={{ gridArea: 'support-button', display: 'flex', justifyContent: 'start' }}>
           <Button data-testid="open-support-button" onClick={toggleSupportModal}>
             {t('common.support')}
           </Button>
@@ -98,7 +104,7 @@ export const RegistrationFormActions = ({
               sx={{
                 gridArea: 'save-button',
                 display: 'flex',
-                justifyContent: { xs: 'end' },
+                justifyContent: 'end',
               }}>
               <LoadingButton
                 variant="outlined"
@@ -112,11 +118,17 @@ export const RegistrationFormActions = ({
                 {t('common.save')}
               </LoadingButton>
             </Box>
-            <Box sx={{ gridArea: 'next-button', display: 'flex', justifyContent: { xs: 'end' } }}>
+            <Box sx={{ gridArea: 'next-button', display: 'flex', justifyContent: 'end' }}>
               <Tooltip title={t('common.next')}>
                 <IconButton onClick={() => setTabNumber(tabNumber + 1)}>
-                  <ChevronRightIcon
-                    sx={{ color: 'white', borderRadius: '50%', bgcolor: 'info.main', height: '2rem', width: '2rem' }}
+                  <KeyboardArrowRightIcon
+                    sx={{
+                      color: 'white',
+                      borderRadius: '50%',
+                      bgcolor: 'primary.light',
+                      height: '1.875rem',
+                      width: '1.875rem',
+                    }}
                   />
                 </IconButton>
               </Tooltip>
@@ -129,7 +141,7 @@ export const RegistrationFormActions = ({
             data-testid="button-save-registration"
             onClick={onClickSaveAndPresent}
             sx={{ gridArea: 'save-button' }}>
-            {t('common.save_and_present')}
+            {t('common.save_and_view')}
           </LoadingButton>
         )}
       </Box>
