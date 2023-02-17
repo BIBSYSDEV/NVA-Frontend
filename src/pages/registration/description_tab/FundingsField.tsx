@@ -10,7 +10,7 @@ import { FundingSources } from '../../../types/project.types';
 import { emptyFunding, Registration } from '../../../types/registration.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { NfrProjectSearch } from './NfrProjectSearch';
+import { NfrProjectSearchField } from './NfrProjectSearchField';
 import { getNfrProjectUrl } from './projects_field/projectHelpers';
 import { fundingSourceIsNfr } from '../../../utils/registration-helpers';
 import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
@@ -115,7 +115,7 @@ export const FundingsField = () => {
                       </Button>
                     </>
                   ) : (
-                    <NfrProjectSearch baseFieldName={baseFieldName} />
+                    <NfrProjectSearchField baseFieldName={baseFieldName} />
                   ))}
 
                 {!hasSelectedNfrSource && hasSelectedSource && (
