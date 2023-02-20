@@ -218,6 +218,13 @@ export const dataTestId = {
       linkMetadata: 'link-metadata',
       startRegistrationButton: 'registration-start-button',
     },
+    formActions: {
+      nextTabButton: 'next-tab-button',
+      openSupportButton: 'open-support-button',
+      previousTabButton: 'previous-tab-button',
+      saveRegistrationButton: 'save-registration-button',
+      supportModal: 'support-modal',
+    },
     resourceType: {
       addAudioVideoButton: 'add-audio-video-button',
       addCompetitionButton: 'add-competition-button',

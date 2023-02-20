@@ -15,6 +15,7 @@ import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getFormattedRegistration } from '../../utils/registration-helpers';
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
@@ -78,7 +79,9 @@ export const RegistrationFormActions = ({
         {!isFirstTab && (
           <Box sx={{ gridArea: 'back-button' }}>
             <Tooltip title={t('common.previous')}>
-              <IconButton onClick={() => setTabNumber(tabNumber - 1)}>
+              <IconButton
+                onClick={() => setTabNumber(tabNumber - 1)}
+                data-testid={dataTestId.registrationWizard.formActions.previousTabButton}>
                 <KeyboardArrowLeftIcon
                   sx={{
                     color: 'white',
@@ -94,7 +97,9 @@ export const RegistrationFormActions = ({
         )}
 
         <Box sx={{ gridArea: 'support-button', display: 'flex', justifyContent: 'start' }}>
-          <Button data-testid="open-support-button" onClick={toggleSupportModal}>
+          <Button
+            data-testid={dataTestId.registrationWizard.formActions.openSupportButton}
+            onClick={toggleSupportModal}>
             {t('common.support')}
           </Button>
         </Box>
@@ -109,7 +114,7 @@ export const RegistrationFormActions = ({
               <LoadingButton
                 variant="outlined"
                 loading={isSaving}
-                data-testid="button-save-registration"
+                data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
                 onClick={async () => {
                   await saveRegistration(values);
                   // Set all fields with error to touched to ensure error messages are shown
@@ -120,7 +125,9 @@ export const RegistrationFormActions = ({
             </Box>
             <Box sx={{ gridArea: 'next-button', display: 'flex', justifyContent: 'end' }}>
               <Tooltip title={t('common.next')}>
-                <IconButton onClick={() => setTabNumber(tabNumber + 1)}>
+                <IconButton
+                  onClick={() => setTabNumber(tabNumber + 1)}
+                  data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
                   <KeyboardArrowRightIcon
                     sx={{
                       color: 'white',
@@ -138,7 +145,7 @@ export const RegistrationFormActions = ({
           <LoadingButton
             variant="contained"
             loading={isSaving}
-            data-testid="button-save-registration"
+            data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
             onClick={onClickSaveAndPresent}
             sx={{ gridArea: 'save-button' }}>
             {t('common.save_and_view')}
@@ -150,7 +157,7 @@ export const RegistrationFormActions = ({
         open={openSupportModal}
         onClose={toggleSupportModal}
         headingText={t('common.support')}
-        dataTestId="support-modal">
+        dataTestId={dataTestId.registrationWizard.formActions.supportModal}>
         <SupportModalContent closeModal={toggleSupportModal} registrationId={values.id} />
       </Modal>
     </>
