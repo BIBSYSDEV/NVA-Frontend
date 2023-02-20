@@ -113,7 +113,7 @@ export const AddEmployeePage = () => {
             <Box
               sx={{
                 display: 'grid',
-                gridTemplateColumns: { xs: '1fr', md: '1fr auto 1fr auto 1fr' },
+                gridTemplateColumns: { xs: '1fr', md: '3fr auto 2fr' },
                 gap: '1rem',
                 mt: '2rem',
               }}>
@@ -121,14 +121,8 @@ export const AddEmployeePage = () => {
                 <FindPersonPanel />
               </Box>
               <Divider orientation="vertical" />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', justifyContent: 'right' }}>
                 <AddAffiliationPanel />
-              </Box>
-              <Divider orientation="vertical" />
-              <Box>
-                <StyledCenterContainer>
-                  <LooksThreeIcon color="primary" fontSize="large" />
-                </StyledCenterContainer>
                 <UserRolesSelector
                   selectedRoles={values.roles}
                   updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
@@ -136,12 +130,11 @@ export const AddEmployeePage = () => {
                 />
               </Box>
             </Box>
-            <StyledCenterContainer sx={{ mt: '1rem' }}>
+            <StyledCenterContainer sx={{ mt: '2rem', justifyContent: 'end' }}>
               <LoadingButton
                 variant="contained"
                 size="large"
                 loading={isSubmitting}
-                disabled={!isValid}
                 type="submit"
                 startIcon={<AddCircleOutlineIcon />}>
                 {t('common.create')}
