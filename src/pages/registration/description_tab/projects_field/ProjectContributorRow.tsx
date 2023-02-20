@@ -136,7 +136,7 @@ export const ProjectContributorRow = ({
                 {...params}
                 required
                 label={t('project.person')}
-                placeholder={t('project.search_for_person')}
+                placeholder={t('project.form.search_for_person')}
                 errorMessage={touched && !!error ? error : ''}
                 isLoading={isLoadingPersonSearchResult}
                 showSearchIcon={!field.value}
@@ -161,7 +161,7 @@ export const ProjectContributorRow = ({
         size="small"
         color="primary"
         disabled={contributor?.type === 'ProjectManager'}
-        title={t('project.remove_participant')}
+        title={t('project.form.remove_participant')}
         onClick={() => setShowConfirmRemoveContributor(true)}>
         <RemoveIcon />
       </IconButton>
@@ -171,10 +171,10 @@ export const ProjectContributorRow = ({
           removeContributor();
           setShowConfirmRemoveContributor(false);
         }}
-        title={t('project.remove_participant')}
+        title={t('project.form.remove_participant')}
         onCancel={() => setShowConfirmRemoveContributor(false)}>
         <Typography>
-          {t('project.remove_participant_text', {
+          {t('project.form.remove_participant_text', {
             name:
               contributor?.identity.firstName && contributor?.identity.firstName
                 ? `${contributor.identity.firstName} ${contributor.identity.lastName}`

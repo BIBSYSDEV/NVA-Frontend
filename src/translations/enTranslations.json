@@ -841,6 +841,9 @@
     "form": {
       "empty_registration": "Empty registration",
       "here_you_can_create_project": "Here you can create a project:",
+      "remove_participant": "Remove project participant",
+      "remove_participant_text": "Are you sure you want to remove {{name}}?",
+      "search_for_person": "Search for person",
       "start_with_empty_form": "Start without any prefilled values.",
       "start_with_nfr_project": "If you have a funding from The Research Council of Norway (NFR), you can start with that, and get some fields prefilled."
     },
@@ -856,12 +859,9 @@
     "project_manager": "Project manager",
     "project_participant": "Project participant",
     "project_participants": "Project participants",
-    "remove_participant": "Remove project participant",
-    "remove_participant_text": "Are you sure you want to remove {{name}}?",
     "results": "Results",
     "scientific_summary": "Scientific summary",
     "search_for_institution": "Search for institution",
-    "search_for_person": "Search for person",
     "status": {
       "ACTIVE": "Active",
       "CONCLUDED": "Concluded",
