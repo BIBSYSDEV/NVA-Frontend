@@ -49,7 +49,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
 
   const handleClose = () => {
     onClose();
-    setInitialValues(undefined);
+    setInitialValues(currentProject);
   };
 
   const submitProjectForm = async (values: SaveCristinProject) => {
@@ -235,7 +235,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
 
               <DialogActions>
                 <Button onClick={handleClose}>{t('common.cancel')}</Button>
-                <LoadingButton variant="contained" loading={isSubmitting}>
+                <LoadingButton variant="contained" loading={isSubmitting} type="submit">
                   {t('common.save')}
                 </LoadingButton>
               </DialogActions>
