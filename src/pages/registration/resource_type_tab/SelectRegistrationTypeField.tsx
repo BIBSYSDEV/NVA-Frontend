@@ -209,11 +209,10 @@ export const SelectRegistrationTypeField = () => {
 
   const [searchValue, setSearchValue] = useState('');
 
-  const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) => {
-    return registrationTypes.filter((registrationType) =>
+  const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) =>
+    registrationTypes.filter((registrationType) =>
       registrationType.text.toLowerCase().includes(searchValue.toLowerCase())
     );
-  };
 
   return openSelectType || !currentInstanceType ? (
     <>
