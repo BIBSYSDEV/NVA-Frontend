@@ -154,7 +154,7 @@ export const SelectRegistrationTypeField = () => {
                 false
               );
             } else {
-              setFieldValue(ResourceFieldNames.SubType, newInstanceType, false);
+              setFieldValue(ResourceFieldNames.RegistrationType, newInstanceType, false);
             }
           } else {
             setFieldValue(contextTypeBaseFieldName, emptyMediaContributionPublicationContext, false);
@@ -168,7 +168,7 @@ export const SelectRegistrationTypeField = () => {
                 false
               );
             } else {
-              setFieldValue(ResourceFieldNames.SubType, newInstanceType, false);
+              setFieldValue(ResourceFieldNames.RegistrationType, newInstanceType, false);
             }
           }
           break;
@@ -209,8 +209,10 @@ export const SelectRegistrationTypeField = () => {
 
   const [searchValue, setSearchValue] = useState('');
 
-  const filterSubTypes = (subTypes: RegistrationTypeElement[]) => {
-    return subTypes.filter((subType) => subType.text.toLowerCase().includes(searchValue.toLowerCase()));
+  const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) => {
+    return registrationTypes.filter((registrationType) =>
+      registrationType.text.toLowerCase().includes(searchValue.toLowerCase())
+    );
   };
 
   return openSelectType || !currentInstanceType ? (
@@ -276,10 +278,10 @@ export const SelectRegistrationTypeField = () => {
         <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem', alignItems: 'center' }}>
           <RegistrationTypesRow
             mainType={PublicationType.PublicationInJournal}
-            subTypes={filterSubTypes(
-              Object.values(JournalType).map((subType) => ({
-                value: subType,
-                text: t(`registration.publication_types.${subType}`),
+            registrationType={filterRegistrationTypes(
+              Object.values(JournalType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
               }))
             )}
             value={currentInstanceType}
@@ -287,10 +289,10 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Book}
-            subTypes={filterSubTypes(
-              Object.values(BookType).map((subType) => ({
-                value: subType,
-                text: t(`registration.publication_types.${subType}`),
+            registrationType={filterRegistrationTypes(
+              Object.values(BookType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
               }))
             )}
             value={currentInstanceType}
@@ -298,10 +300,10 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Report}
-            subTypes={filterSubTypes(
-              Object.values(ReportType).map((subType) => ({
-                value: subType,
-                text: t(`registration.publication_types.${subType}`),
+            registrationType={filterRegistrationTypes(
+              Object.values(ReportType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
               }))
             )}
             value={currentInstanceType}
@@ -309,10 +311,10 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Degree}
-            subTypes={filterSubTypes(
-              Object.values(DegreeType).map((subType) => ({
-                value: subType,
-                text: t(`registration.publication_types.${subType}`),
+            registrationType={filterRegistrationTypes(
+              Object.values(DegreeType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
               }))
             )}
             value={currentInstanceType}
@@ -320,10 +322,10 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Chapter}
-            subTypes={filterSubTypes(
-              Object.values(ChapterType).map((subType) => ({
-                value: subType,
-                text: t(`registration.publication_types.${subType}`),
+            registrationType={filterRegistrationTypes(
+              Object.values(ChapterType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
               }))
             )}
             value={currentInstanceType}
@@ -331,10 +333,10 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Presentation}
-            subTypes={filterSubTypes(
-              Object.values(PresentationType).map((subType) => ({
-                value: subType,
-                text: t(`registration.publication_types.${subType}`),
+            registrationType={filterRegistrationTypes(
+              Object.values(PresentationType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
               }))
             )}
             value={currentInstanceType}
@@ -342,10 +344,10 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Artistic}
-            subTypes={filterSubTypes(
-              Object.values(ArtisticType).map((subType) => ({
-                value: subType,
-                text: t(`registration.publication_types.${subType}`),
+            registrationType={filterRegistrationTypes(
+              Object.values(ArtisticType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
               }))
             )}
             value={currentInstanceType}
@@ -353,10 +355,10 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.MediaContribution}
-            subTypes={filterSubTypes(
-              Object.values(MediaType).map((subType) => ({
-                value: subType,
-                text: t(`registration.publication_types.${subType}`),
+            registrationType={filterRegistrationTypes(
+              Object.values(MediaType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
               }))
             )}
             value={currentInstanceType}
@@ -364,10 +366,10 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.ResearchData}
-            subTypes={filterSubTypes(
-              Object.values(ResearchDataType).map((subType) => ({
-                value: subType,
-                text: t(`registration.publication_types.${subType}`),
+            registrationType={filterRegistrationTypes(
+              Object.values(ResearchDataType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
               }))
             )}
             value={currentInstanceType}
@@ -375,10 +377,10 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.GeographicalContent}
-            subTypes={filterSubTypes(
-              Object.values(OtherRegistrationType).map((subType) => ({
-                value: subType,
-                text: t(`registration.publication_types.${subType}`),
+            registrationType={filterRegistrationTypes(
+              Object.values(OtherRegistrationType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
               }))
             )}
             value={currentInstanceType}
@@ -387,7 +389,7 @@ export const SelectRegistrationTypeField = () => {
         </Box>
         {!currentInstanceType && (
           <FormHelperText error sx={{ mt: '1rem' }}>
-            <ErrorMessage name={ResourceFieldNames.SubType} />
+            <ErrorMessage name={ResourceFieldNames.RegistrationType} />
           </FormHelperText>
         )}
       </Paper>
