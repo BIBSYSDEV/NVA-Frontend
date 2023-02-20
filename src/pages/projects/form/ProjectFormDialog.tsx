@@ -84,7 +84,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
   };
 
   return (
-    <Dialog maxWidth="md" fullWidth onClose={handleClose} open={open}>
+    <Dialog maxWidth="md" fullWidth onClose={handleClose} open={open} PaperProps={{ sx: { bgcolor: 'info.light' } }}>
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
 
       {!initialValues ? (
