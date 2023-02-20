@@ -48,7 +48,11 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
               alignItems: 'center',
             }}>
             <Button
-              sx={{ width: 'fit-content', justifySelf: 'center' }}
+              sx={{
+                width: 'fit-content',
+                justifySelf: 'center',
+                bgcolor: emptyProjectSelected ? 'primary.main' : 'background.default',
+              }}
               variant={emptyProjectSelected ? 'contained' : 'outlined'}
               onClick={() => {
                 setSelectedNfrProject(null);

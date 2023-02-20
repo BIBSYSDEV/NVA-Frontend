@@ -49,7 +49,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
 
   const handleClose = () => {
     onClose();
-    setInitialValues(undefined);
+    setInitialValues(currentProject);
   };
 
   const submitProjectForm = async (values: SaveCristinProject) => {
@@ -84,7 +84,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
   };
 
   return (
-    <Dialog maxWidth="md" fullWidth onClose={handleClose} open={open}>
+    <Dialog maxWidth="md" fullWidth onClose={handleClose} open={open} PaperProps={{ sx: { bgcolor: 'info.light' } }}>
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
 
       {!initialValues ? (
@@ -235,7 +235,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
 
               <DialogActions>
                 <Button onClick={handleClose}>{t('common.cancel')}</Button>
-                <LoadingButton variant="contained" loading={isSubmitting}>
+                <LoadingButton variant="contained" loading={isSubmitting} type="submit">
                   {t('common.save')}
                 </LoadingButton>
               </DialogActions>
