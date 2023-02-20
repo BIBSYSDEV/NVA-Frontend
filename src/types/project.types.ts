@@ -84,6 +84,8 @@ export interface SaveCristinProject {
   endDate: string;
   coordinatingInstitution: BasicCoordinatingInstitution;
   contributors: BasicProjectContributor[];
+  academicSummary: LanguageString;
+  popularScientificSummary: LanguageString;
 }
 
 export interface CristinProject extends SaveCristinProject {
@@ -93,8 +95,6 @@ export interface CristinProject extends SaveCristinProject {
   alternativeTitles: LanguageString[];
   coordinatingInstitution: CoordinatingInstitution;
   contributors: ProjectContributor[];
-  academicSummary: LanguageString;
-  popularScientificSummary: LanguageString;
   funding: Funding[];
 }
 
@@ -136,4 +136,6 @@ export const emptyProject: SaveCristinProject = {
     type: 'Organization',
     id: '',
   },
+  academicSummary: {},
+  popularScientificSummary: {},
 };
