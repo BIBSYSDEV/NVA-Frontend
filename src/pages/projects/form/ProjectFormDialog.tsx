@@ -1,6 +1,16 @@
 import { useState } from 'react';
 import { LoadingButton } from '@mui/lab';
-import { Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogProps,
+  DialogTitle,
+  Radio,
+  RadioGroup,
+} from '@mui/material';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -92,22 +102,30 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
           initialValues={initialValues}
           validationSchema={basicProjectValidationSchema}
           onSubmit={submitProjectForm}>
-          {({ values, isSubmitting }: FormikProps<SaveCristinProject>) => (
+          {({ isSubmitting }: FormikProps<SaveCristinProject>) => (
             <Form noValidate>
               <DialogContent>
                 {selectedPanel === 0 ? <ProjectFormPanel1 currentProject={currentProject} /> : <ProjectFormPanel2 />}
               </DialogContent>
 
-              <DialogActions>
-                <Button onClick={handleClose}>{t('common.cancel')}</Button>
-                {selectedPanel === 0 ? (
-                  <Button onClick={() => setSelectedPanel(1)}>{t('common.next')}</Button>
-                ) : (
-                  <Button onClick={() => setSelectedPanel(0)}>{t('common.previous')}</Button>
-                )}
-                <LoadingButton variant="contained" loading={isSubmitting} type="submit">
-                  {t('common.save')}
-                </LoadingButton>
+              <DialogActions sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
+                <RadioGroup row sx={{ gridArea: '1/2', justifyContent: 'center' }}>
+                  <Radio checked={selectedPanel === 0} onClick={() => setSelectedPanel(0)} />
+                  <Radio checked={selectedPanel === 1} onClick={() => setSelectedPanel(1)} />
+                </RadioGroup>
+
+                <Box sx={{ gridArea: '1/3', display: 'flex', gap: '0.5rem', justifyContent: 'end' }}>
+                  <Button onClick={handleClose}>{t('common.cancel')}</Button>
+                  {selectedPanel === 0 ? (
+                    <Button variant="contained" onClick={() => setSelectedPanel(1)}>
+                      {t('common.next')}
+                    </Button>
+                  ) : (
+                    <LoadingButton variant="contained" loading={isSubmitting} type="submit">
+                      {t('common.save')}
+                    </LoadingButton>
+                  )}
+                </Box>
               </DialogActions>
             </Form>
           )}
