@@ -4,7 +4,6 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import LooksThreeIcon from '@mui/icons-material/Looks3Outlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
   CreateCristinPerson,
@@ -15,7 +14,6 @@ import {
 } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
-import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { setNotification } from '../../../redux/notificationSlice';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
@@ -121,7 +119,7 @@ export const AddEmployeePage = () => {
                 <FindPersonPanel />
               </Box>
               <Divider orientation="vertical" />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', justifyContent: 'right' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <AddAffiliationPanel />
                 <UserRolesSelector
                   selectedRoles={values.roles}
@@ -130,7 +128,7 @@ export const AddEmployeePage = () => {
                 />
               </Box>
             </Box>
-            <StyledCenterContainer sx={{ mt: '2rem', justifyContent: 'end' }}>
+            <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'end' }}>
               <LoadingButton
                 variant="contained"
                 size="large"
@@ -139,7 +137,7 @@ export const AddEmployeePage = () => {
                 startIcon={<AddCircleOutlineIcon />}>
                 {t('common.create')}
               </LoadingButton>
-            </StyledCenterContainer>
+            </Box>
           </Form>
         )}
       </Formik>
