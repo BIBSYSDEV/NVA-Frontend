@@ -210,31 +210,14 @@ export const SelectRegistrationTypeField = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const filterSubTypes = (subTypes: RegistrationTypeElement[]) => {
-    return subTypes.filter((subType) => subType.text.toLocaleLowerCase().includes(searchValue.toLowerCase()));
+    return subTypes.filter((subType) => subType.text.toLowerCase().includes(searchValue.toLowerCase()));
   };
 
   return openSelectType || !currentInstanceType ? (
     <>
       <Paper sx={{ p: '1rem' }} elevation={10}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <FormLabel>{t('registration.resource_type.select_resource_type')}</FormLabel>
-            <TextField
-              sx={{ bgcolor: 'white' }}
-              placeholder={t('registration.resource_type.search_for_resource_type')}
-              type="search"
-              fullWidth
-              variant="outlined"
-              label={t('common.search')}
-              InputProps={{
-                startAdornment: <SearchIcon sx={{ mr: '1rem' }} />,
-              }}
-              onChange={(event) => {
-                setSearchValue(event.target.value);
-              }}
-            />
-          </Box>
-
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '0.5rem', width: '100%' }}>
+          <FormLabel>{t('registration.resource_type.select_resource_type')}</FormLabel>
           {currentInstanceType && (
             <IconButton
               data-testid={dataTestId.registrationWizard.resourceType.closeResourceTypeSelectorButton}
@@ -244,14 +227,52 @@ export const SelectRegistrationTypeField = () => {
             </IconButton>
           )}
         </Box>
-        <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'end', mb: '1rem' }}>
-          <FilterVintageIcon
-            color="primary"
-            titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-            fontSize="small"
+        <Paper
+          elevation={5}
+          sx={{
+            padding: '0.5rem',
+            bgcolor: 'secondary.main',
+            display: 'grid',
+            gap: '0.5rem',
+            gridTemplateAreas: {
+              xs: "'search-bar' 'publication-points-text'",
+              md: "'search-bar publication-points-text'",
+            },
+            gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+            mb: '1rem',
+          }}>
+          <TextField
+            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeSearchField}
+            sx={{ bgcolor: 'white', maxWidth: '15rem', gridArea: 'search-bar' }}
+            placeholder={t('registration.resource_type.search_for_resource_type')}
+            type="search"
+            fullWidth
+            variant="outlined"
+            label={t('common.search')}
+            InputProps={{
+              startAdornment: <SearchIcon sx={{ mr: '1rem' }} />,
+            }}
+            onChange={(event) => {
+              setSearchValue(event.target.value);
+            }}
           />
-          <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
-        </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '0.5rem',
+              alignItems: 'center',
+              justifyContent: { xs: 'start', md: 'end' },
+              gridArea: 'publication-points-text',
+            }}>
+            <FilterVintageIcon
+              color="primary"
+              titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+              fontSize="small"
+            />
+            <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
+          </Box>
+        </Paper>
+
         <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem', alignItems: 'center' }}>
           <RegistrationTypesRow
             mainType={PublicationType.PublicationInJournal}
