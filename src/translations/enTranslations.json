@@ -838,6 +838,12 @@
     "create_project": "Create project",
     "edit_project": "Edit project",
     "financing": "Financing",
+    "form": {
+      "empty_registration": "Empty registration",
+      "here_you_can_create_project": "Here you can create a project:",
+      "start_with_empty_form": "Start without any prefilled values.",
+      "start_with_nfr_project": "If you have a funding from The Research Council of Norway (NFR), you can start with that, and get some fields prefilled."
+    },
     "grant_id": "GrantID",
     "no_participants": "No registered participants.",
     "no_results": "No published results.",

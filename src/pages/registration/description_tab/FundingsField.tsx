@@ -7,13 +7,13 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { FundingSources } from '../../../types/project.types';
-import { emptyFunding, Registration } from '../../../types/registration.types';
+import { emptyFunding, Funding, Registration } from '../../../types/registration.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { NfrProjectSearch } from './NfrProjectSearch';
 import { getNfrProjectUrl } from './projects_field/projectHelpers';
 import { fundingSourceIsNfr } from '../../../utils/registration-helpers';
 import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
+import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 
 export const FundingsField = () => {
   const { t } = useTranslation();
@@ -115,7 +115,26 @@ export const FundingsField = () => {
                       </Button>
                     </>
                   ) : (
-                    <NfrProjectSearch baseFieldName={baseFieldName} />
+                    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Id}`}>
+                      {({ field: { name, onBlur }, meta: { touched, error } }: FieldProps<string>) => (
+                        <NfrProjectSearch
+                          onSelectProject={(project) => {
+                            if (project) {
+                              const { lead, ...rest } = project;
+                              const nfrFunding: Funding = {
+                                type: 'ConfirmedFunding',
+                                ...rest,
+                              };
+                              setFieldValue(baseFieldName, nfrFunding);
+                            }
+                          }}
+                          required
+                          name={name}
+                          onBlur={onBlur}
+                          errorMessage={touched && !!error ? error : undefined}
+                        />
+                      )}
+                    </Field>
                   ))}
 
                 {!hasSelectedNfrSource && hasSelectedSource && (
