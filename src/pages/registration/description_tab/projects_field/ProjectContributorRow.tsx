@@ -1,4 +1,5 @@
-import { Box, Autocomplete, Typography, TextField } from '@mui/material';
+import { Box, Autocomplete, Typography, TextField, IconButton } from '@mui/material';
+import RemoveIcon from '@mui/icons-material/HighlightOff';
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +19,7 @@ import { getTopLevelOrganization } from '../../../../utils/institutions-helpers'
 import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { projectContributorToCristinPerson } from './projectHelpers';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 
 enum ProjectContributorFieldName {
   Type = 'type',
@@ -28,10 +30,17 @@ enum ProjectContributorFieldName {
 interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
   baseFieldName: string;
+  removeContributor: () => void;
 }
 
-export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectContributorRowProps) => {
+export const ProjectContributorRow = ({
+  contributor,
+  baseFieldName,
+  removeContributor,
+}: ProjectContributorRowProps) => {
   const { t } = useTranslation();
+  const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -64,7 +73,7 @@ export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectCon
   };
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr' }, gap: '0.25rem 1rem' }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr auto' }, gap: '0.25rem 0.75rem' }}>
       <Field name={`${baseFieldName}.${ProjectContributorFieldName.Type}`}>
         {({ field }: FieldProps<ProjectContributorType>) => (
           <TextField
@@ -127,7 +136,7 @@ export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectCon
                 {...params}
                 required
                 label={t('project.person')}
-                placeholder={t('project.search_for_person')}
+                placeholder={t('project.form.search_for_person')}
                 errorMessage={touched && !!error ? error : ''}
                 isLoading={isLoadingPersonSearchResult}
                 showSearchIcon={!field.value}
@@ -148,6 +157,31 @@ export const ProjectContributorRow = ({ contributor, baseFieldName }: ProjectCon
           />
         )}
       </Field>
+      <IconButton
+        size="small"
+        color="primary"
+        disabled={contributor?.type === 'ProjectManager'}
+        title={t('project.form.remove_participant')}
+        onClick={() => setShowConfirmRemoveContributor(true)}>
+        <RemoveIcon />
+      </IconButton>
+      <ConfirmDialog
+        open={showConfirmRemoveContributor}
+        onAccept={() => {
+          removeContributor();
+          setShowConfirmRemoveContributor(false);
+        }}
+        title={t('project.form.remove_participant')}
+        onCancel={() => setShowConfirmRemoveContributor(false)}>
+        <Typography>
+          {t('project.form.remove_participant_text', {
+            name:
+              contributor?.identity.firstName && contributor?.identity.firstName
+                ? `${contributor.identity.firstName} ${contributor.identity.lastName}`
+                : t('project.project_participant').toLocaleLowerCase(),
+          })}
+        </Typography>
+      </ConfirmDialog>
     </Box>
   );
 };
