@@ -19,6 +19,7 @@ import { getTopLevelOrganization } from '../../../../utils/institutions-helpers'
 import { getFullCristinName } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { projectContributorToCristinPerson } from './projectHelpers';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 
 enum ProjectContributorFieldName {
   Type = 'type',
@@ -38,6 +39,8 @@ export const ProjectContributorRow = ({
   removeContributor,
 }: ProjectContributorRowProps) => {
   const { t } = useTranslation();
+  const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
@@ -159,9 +162,26 @@ export const ProjectContributorRow = ({
         color="primary"
         disabled={contributor?.type === 'ProjectManager'}
         title={t('project.remove_participant')}
-        onClick={removeContributor}>
+        onClick={() => setShowConfirmRemoveContributor(true)}>
         <RemoveIcon />
       </IconButton>
+      <ConfirmDialog
+        open={showConfirmRemoveContributor}
+        onAccept={() => {
+          removeContributor();
+          setShowConfirmRemoveContributor(false);
+        }}
+        title={t('project.remove_participant')}
+        onCancel={() => setShowConfirmRemoveContributor(false)}>
+        <Typography>
+          {t('project.remove_participant_text', {
+            name:
+              contributor?.identity.firstName && contributor?.identity.firstName
+                ? `${contributor.identity.firstName} ${contributor.identity.lastName}`
+                : t('project.project_participant').toLocaleLowerCase(),
+          })}
+        </Typography>
+      </ConfirmDialog>
     </Box>
   );
 };

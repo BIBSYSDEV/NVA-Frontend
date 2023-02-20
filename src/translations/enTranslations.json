@@ -851,6 +851,7 @@
     "project_participant": "Project participant",
     "project_participants": "Project participants",
     "remove_participant": "Remove project participant",
+    "remove_participant_text": "Are you sure you want to remove {{name}}?",
     "results": "Results",
     "scientific_summary": "Scientific summary",
     "search_for_institution": "Search for institution",
