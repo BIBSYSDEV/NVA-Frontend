@@ -217,7 +217,7 @@ export const SelectRegistrationTypeField = () => {
   return openSelectType || !currentInstanceType ? (
     <>
       <Paper sx={{ p: '1rem' }} elevation={10}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <FormLabel>{t('registration.resource_type.select_resource_type')}</FormLabel>
           {currentInstanceType && (
             <IconButton
@@ -233,7 +233,6 @@ export const SelectRegistrationTypeField = () => {
             display: 'flex',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            padding: '0.5rem',
             gap: '0.5rem',
             my: '1rem',
           }}>
@@ -241,10 +240,10 @@ export const SelectRegistrationTypeField = () => {
             data-testid={dataTestId.registrationWizard.resourceType.resourceTypeSearchField}
             sx={{ maxWidth: '17rem' }}
             type="search"
-            variant="outlined"
+            variant="filled"
             label={t('common.search')}
             InputProps={{
-              startAdornment: <SearchIcon />,
+              endAdornment: <SearchIcon />,
             }}
             onChange={(event) => setSearchValue(event.target.value)}
           />
