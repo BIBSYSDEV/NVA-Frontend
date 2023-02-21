@@ -228,41 +228,31 @@ export const SelectRegistrationTypeField = () => {
             </IconButton>
           )}
         </Box>
-        <Paper
-          elevation={5}
+        <Box
           sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
             padding: '0.5rem',
-            bgcolor: 'secondary.main',
-            display: 'grid',
             gap: '0.5rem',
-            gridTemplateAreas: {
-              xs: "'search-bar' 'publication-points-text'",
-              md: "'search-bar publication-points-text'",
-            },
-            gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-            mb: '1rem',
+            my: '1rem',
           }}>
           <TextField
             data-testid={dataTestId.registrationWizard.resourceType.resourceTypeSearchField}
-            sx={{ bgcolor: 'white', maxWidth: '15rem', gridArea: 'search-bar' }}
-            placeholder={t('registration.resource_type.search_for_resource_type')}
+            sx={{ maxWidth: '17rem' }}
             type="search"
             variant="outlined"
             label={t('common.search')}
             InputProps={{
-              startAdornment: <SearchIcon sx={{ mr: '1rem' }} />,
+              startAdornment: <SearchIcon />,
             }}
-            onChange={(event) => {
-              setSearchValue(event.target.value);
-            }}
+            onChange={(event) => setSearchValue(event.target.value)}
           />
           <Box
             sx={{
               display: 'flex',
               gap: '0.5rem',
               alignItems: 'center',
-              justifyContent: { xs: 'start', md: 'end' },
-              gridArea: 'publication-points-text',
             }}>
             <FilterVintageIcon
               color="primary"
@@ -271,12 +261,12 @@ export const SelectRegistrationTypeField = () => {
             />
             <Typography>{t('registration.resource_type.nvi.can_give_publication_points')}</Typography>
           </Box>
-        </Paper>
+        </Box>
 
         <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem', alignItems: 'center' }}>
           <RegistrationTypesRow
             mainType={PublicationType.PublicationInJournal}
-            registrationType={filterRegistrationTypes(
+            registrationTypes={filterRegistrationTypes(
               Object.values(JournalType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
@@ -287,7 +277,7 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Book}
-            registrationType={filterRegistrationTypes(
+            registrationTypes={filterRegistrationTypes(
               Object.values(BookType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
@@ -298,7 +288,7 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Report}
-            registrationType={filterRegistrationTypes(
+            registrationTypes={filterRegistrationTypes(
               Object.values(ReportType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
@@ -309,7 +299,7 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Degree}
-            registrationType={filterRegistrationTypes(
+            registrationTypes={filterRegistrationTypes(
               Object.values(DegreeType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
@@ -320,7 +310,7 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Chapter}
-            registrationType={filterRegistrationTypes(
+            registrationTypes={filterRegistrationTypes(
               Object.values(ChapterType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
@@ -331,7 +321,7 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Presentation}
-            registrationType={filterRegistrationTypes(
+            registrationTypes={filterRegistrationTypes(
               Object.values(PresentationType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
@@ -342,7 +332,7 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.Artistic}
-            registrationType={filterRegistrationTypes(
+            registrationTypes={filterRegistrationTypes(
               Object.values(ArtisticType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
@@ -353,7 +343,7 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.MediaContribution}
-            registrationType={filterRegistrationTypes(
+            registrationTypes={filterRegistrationTypes(
               Object.values(MediaType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
@@ -364,7 +354,7 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.ResearchData}
-            registrationType={filterRegistrationTypes(
+            registrationTypes={filterRegistrationTypes(
               Object.values(ResearchDataType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
@@ -375,7 +365,7 @@ export const SelectRegistrationTypeField = () => {
           />
           <RegistrationTypesRow
             mainType={PublicationType.GeographicalContent}
-            registrationType={filterRegistrationTypes(
+            registrationTypes={filterRegistrationTypes(
               Object.values(OtherRegistrationType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),

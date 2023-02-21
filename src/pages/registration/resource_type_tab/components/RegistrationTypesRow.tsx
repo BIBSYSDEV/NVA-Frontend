@@ -9,7 +9,7 @@ import { nviApplicableTypes } from '../../../../utils/registration-helpers';
 interface RegistrationTypesRowProps {
   onChangeType: (type: PublicationInstanceType) => void;
   mainType: PublicationType;
-  registrationType: RegistrationTypeElement[];
+  registrationTypes: RegistrationTypeElement[];
   value: string;
 }
 
@@ -20,7 +20,7 @@ export interface RegistrationTypeElement {
 
 export const RegistrationTypesRow = ({
   mainType,
-  registrationType: registrationTypes,
+  registrationTypes,
   value,
   onChangeType,
 }: RegistrationTypesRowProps) => {
