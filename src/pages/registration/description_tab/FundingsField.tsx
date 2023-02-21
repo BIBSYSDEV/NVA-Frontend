@@ -14,6 +14,7 @@ import { getNfrProjectUrl } from './projects_field/projectHelpers';
 import { fundingSourceIsNfr } from '../../../utils/registration-helpers';
 import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 export const FundingsField = () => {
   const { t } = useTranslation();
@@ -28,7 +29,10 @@ export const FundingsField = () => {
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography variant="h2">{t('registration.description.funding.financing')}</Typography>
 
-            <Button startIcon={<AddIcon />} onClick={() => push(emptyFunding)}>
+            <Button
+              data-testid={dataTestId.registrationWizard.description.addFundingButton}
+              startIcon={<AddIcon />}
+              onClick={() => push(emptyFunding)}>
               {t('common.add')}
             </Button>
           </Box>
@@ -71,6 +75,7 @@ export const FundingsField = () => {
                       onChange={(_, value) => setFieldValue(field.name, value?.id)}
                       renderInput={(params) => (
                         <AutocompleteTextField
+                          data-testid={dataTestId.registrationWizard.description.fundingSourceSearchField}
                           name={field.name}
                           onBlur={field.onBlur}
                           {...params}
@@ -97,6 +102,7 @@ export const FundingsField = () => {
                         fullWidth
                         variant="filled"
                         multiline
+                        data-testid={dataTestId.registrationWizard.description.fundingProjectField}
                       />
                       <TextField
                         value={funding.identifier}
@@ -104,12 +110,14 @@ export const FundingsField = () => {
                         label={t('common.id')}
                         fullWidth
                         variant="filled"
+                        data-testid={dataTestId.registrationWizard.description.fundingIdField}
                       />
                       <Button
                         variant="outlined"
                         endIcon={<OpenInNewIcon />}
                         href={getNfrProjectUrl(funding.identifier)}
                         target="_blank"
+                        data-testid={dataTestId.registrationWizard.description.fundingCancelButton}
                         rel="noopener noreferrer">
                         {t('common.open')}
                       </Button>
@@ -132,6 +140,7 @@ export const FundingsField = () => {
                           name={name}
                           onBlur={onBlur}
                           errorMessage={touched && !!error ? error : undefined}
+                          data-testid={dataTestId.registrationWizard.description.fundingNfrProjectSearchField}
                         />
                       )}
                     </Field>
@@ -152,6 +161,7 @@ export const FundingsField = () => {
                           required={!hasSelectedNfrSource}
                           error={touched && !!error}
                           helperText={touched && !!error ? error : undefined}
+                          data-testid={dataTestId.registrationWizard.description.fundingProjectField}
                         />
                       )}
                     </Field>
@@ -164,6 +174,7 @@ export const FundingsField = () => {
                           label={t('common.id')}
                           fullWidth
                           variant="filled"
+                          data-testid={dataTestId.registrationWizard.description.fundingIdField}
                         />
                       )}
                     </Field>
@@ -183,6 +194,7 @@ export const FundingsField = () => {
                           }}
                           error={touched && !!error}
                           helperText={touched && !!error ? error : undefined}
+                          data-testid={dataTestId.registrationWizard.description.fundingSumField}
                         />
                       )}
                     </Field>
@@ -191,6 +203,7 @@ export const FundingsField = () => {
                 <IconButton
                   sx={{ width: 'fit-content' }}
                   onClick={() => remove(index)}
+                  data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
                   title={t('registration.description.funding.remove_funding')}>
                   <CancelIcon color="primary" />
                 </IconButton>
