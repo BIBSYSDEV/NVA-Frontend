@@ -10,8 +10,9 @@ import {
   DialogTitle,
   Radio,
   RadioGroup,
+  Typography,
 } from '@mui/material';
-import { Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps, FormikTouched } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../api/apiPaths';
@@ -102,7 +103,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
           initialValues={initialValues}
           validationSchema={basicProjectValidationSchema}
           onSubmit={submitProjectForm}>
-          {({ isSubmitting, errors }: FormikProps<SaveCristinProject>) => {
+          {({ isSubmitting, errors, setTouched, touched, values }: FormikProps<SaveCristinProject>) => {
             const errorOnTab1 =
               errors.title ||
               errors.contributors ||
@@ -111,6 +112,26 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
               errors.coordinatingInstitution;
             const errorOnTab2 = false;
 
+            const touchFieldsOnPanel1: FormikTouched<SaveCristinProject & any> = {
+              ...touched,
+              title: true,
+              startDate: true,
+              endDate: true,
+              coordinatingInstitution: {
+                id: true,
+              },
+              contributors: values.contributors.map(() => ({
+                type: true,
+                identity: { id: true },
+                affiliation: { id: true },
+              })),
+            };
+
+            const goToNextTab = () => {
+              setTouched(touchFieldsOnPanel1);
+              setSelectedPanel(1);
+            };
+
             return (
               <Form noValidate>
                 <DialogContent>
@@ -118,25 +139,32 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
                 </DialogContent>
 
                 <DialogActions sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
-                  <RadioGroup row sx={{ gridArea: '1/2', justifyContent: 'center' }}>
-                    <Radio
-                      checked={selectedPanel === 0}
-                      onClick={() => setSelectedPanel(0)}
-                      sx={{ color: errorOnTab1 ? 'error.main' : undefined }}
-                      color={errorOnTab1 ? 'error' : 'primary'}
-                    />
-                    <Radio
-                      checked={selectedPanel === 1}
-                      onClick={() => setSelectedPanel(1)}
-                      sx={{ color: errorOnTab2 ? 'error.main' : undefined }}
-                      color={errorOnTab2 ? 'error' : 'primary'}
-                    />
-                  </RadioGroup>
+                  <Box sx={{ gridArea: '1/2' }}>
+                    <RadioGroup row sx={{ justifyContent: 'center' }}>
+                      <Radio
+                        checked={selectedPanel === 0}
+                        onClick={() => setSelectedPanel(0)}
+                        sx={{ color: errorOnTab1 ? 'error.main' : undefined }}
+                        color={errorOnTab1 ? 'error' : 'primary'}
+                      />
+                      <Radio
+                        checked={selectedPanel === 1}
+                        onClick={goToNextTab}
+                        sx={{ color: errorOnTab2 ? 'error.main' : undefined }}
+                        color={errorOnTab2 ? 'error' : 'primary'}
+                      />
+                    </RadioGroup>
+                    {errorOnTab1 || errorOnTab2 ? (
+                      <Typography color="error" sx={{ display: 'flex', justifyContent: 'center' }}>
+                        {t('feedback.validation.must_correct_errors')}
+                      </Typography>
+                    ) : null}
+                  </Box>
 
                   <Box sx={{ gridArea: '1/3', display: 'flex', gap: '0.5rem', justifyContent: 'end' }}>
                     <Button onClick={handleClose}>{t('common.cancel')}</Button>
                     {selectedPanel === 0 ? (
-                      <Button variant="contained" onClick={() => setSelectedPanel(1)}>
+                      <Button variant="contained" onClick={goToNextTab}>
                         {t('common.next')}
                       </Button>
                     ) : (
