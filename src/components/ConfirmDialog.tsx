@@ -27,23 +27,19 @@ export const ConfirmDialog = ({
 }: ConfirmDialogProps) => {
   const { t } = useTranslation();
 
-  useEffect(() => {
-    const keyDownHandler = (event: KeyboardEvent) => {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        onAccept();
-      }
-    };
-
-    document.addEventListener('keydown', keyDownHandler);
-
-    return () => {
-      document.removeEventListener('keydown', keyDownHandler);
-    };
-  });
+  const handleKeypress = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === 'NumpadEnter') {
+      event.preventDefault();
+      onAccept();
+    }
+  };
 
   return (
-    <Dialog open={open} onClose={!ignoreBackdropClick ? onCancel : undefined} data-testid={dialogDataTestId}>
+    <Dialog
+      open={open}
+      onClose={!ignoreBackdropClick ? onCancel : undefined}
+      data-testid={dialogDataTestId}
+      onKeyDown={handleKeypress}>
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
       <DialogActions>
