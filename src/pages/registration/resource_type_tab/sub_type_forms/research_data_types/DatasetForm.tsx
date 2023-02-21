@@ -29,7 +29,7 @@ export const DatasetForm = () => {
   const debouncedRelatedRegistrationsQuery = useDebounce(relatedRegistrationsQuery);
   const [relatedRegistrationsOptions, isLoadingRelatedRegistrationsOptions] = useFetch<SearchResponse<Registration>>({
     url: debouncedRelatedRegistrationsQuery
-      ? `${SearchApiPath.Registrations}?query=${debouncedRelatedRegistrationsQuery} AND NOT (${ResourceFieldNames.SubType}:"${ResearchDataType.DataManagementPlan}") AND NOT (${RegistrationFieldName.Identifier}:"${values.identifier}")`
+      ? `${SearchApiPath.Registrations}?query=${debouncedRelatedRegistrationsQuery} AND NOT (${ResourceFieldNames.RegistrationType}:"${ResearchDataType.DataManagementPlan}") AND NOT (${RegistrationFieldName.Identifier}:"${values.identifier}")`
       : '',
   });
 
@@ -37,8 +37,8 @@ export const DatasetForm = () => {
   const debouncedRelatedDmpQuery = useDebounce(relatedDmpQuery);
   const [relatedDmpOptions, isLoadingRelatedDmpOptions] = useFetch<SearchResponse<Registration>>({
     url: debouncedRelatedDmpQuery
-      ? `${SearchApiPath.Registrations}?query=${debouncedRelatedDmpQuery} AND (${ResourceFieldNames.SubType}:"${ResearchDataType.DataManagementPlan}")`
-      : `${SearchApiPath.Registrations}?query=${ResourceFieldNames.SubType}:"${ResearchDataType.DataManagementPlan}"`,
+      ? `${SearchApiPath.Registrations}?query=${debouncedRelatedDmpQuery} AND (${ResourceFieldNames.RegistrationType}:"${ResearchDataType.DataManagementPlan}")`
+      : `${SearchApiPath.Registrations}?query=${ResourceFieldNames.RegistrationType}:"${ResearchDataType.DataManagementPlan}"`,
   });
 
   return (
