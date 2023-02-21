@@ -185,7 +185,7 @@ export const dataTestId = {
       fundingProjectField: 'funding-project-field',
       fundingIdField: 'funding-id-field',
       fundingSumField: 'funding-sum-field',
-      fundingCancelButton: 'funding-cancel-button',
+      fundingLinkButton: 'funding-link-button',
       fundingNfrProjectSearchField: 'funding-nfr-project-search-field',
       fundingRemoveButton: 'funding-remove-button',
       projectForm: {
