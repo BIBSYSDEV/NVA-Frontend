@@ -117,7 +117,7 @@ export const FundingsField = () => {
                         endIcon={<OpenInNewIcon />}
                         href={getNfrProjectUrl(funding.identifier)}
                         target="_blank"
-                        data-testid={dataTestId.registrationWizard.description.fundingCancelButton}
+                        data-testid={dataTestId.registrationWizard.description.fundingLinkButton}
                         rel="noopener noreferrer">
                         {t('common.open')}
                       </Button>
