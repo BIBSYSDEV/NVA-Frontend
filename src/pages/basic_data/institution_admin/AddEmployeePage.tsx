@@ -111,7 +111,7 @@ export const AddEmployeePage = () => {
             <Box
               sx={{
                 display: 'grid',
-                gridTemplateColumns: { xs: '1fr', md: '3fr auto 2fr' },
+                gridTemplateColumns: { xs: '1fr', md: '1fr auto 1fr' },
                 gap: '1rem',
                 mt: '2rem',
               }}>
