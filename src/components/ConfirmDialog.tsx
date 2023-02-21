@@ -40,7 +40,7 @@ export const ConfirmDialog = ({
     return () => {
       document.removeEventListener('keydown', keyDownHandler);
     };
-  }, []);
+  });
 
   return (
     <Dialog open={open} onClose={!ignoreBackdropClick ? onCancel : undefined} data-testid={dialogDataTestId}>
