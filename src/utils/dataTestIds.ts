@@ -178,8 +178,16 @@ export const dataTestId = {
       verifiedAuthorNoAffiliation: (initials: string) => `verified-author-no-affiliation-${initials}`,
     },
     description: {
+      addFundingButton: 'add-funding-button',
       addVocabularyButton: 'add-vocabulary-button',
       datePublishedField: 'date-published-field',
+      fundingSourceSearchField: 'funding-source-search-field',
+      fundingProjectField: 'funding-project-field',
+      fundingIdField: 'funding-id-field',
+      fundingSumField: 'funding-sum-field',
+      fundingLinkButton: 'funding-link-button',
+      fundingNfrProjectSearchField: 'funding-nfr-project-search-field',
+      fundingRemoveButton: 'funding-remove-button',
       projectForm: {
         contributorsSearchField: 'project-contributors-search-field',
         endDateField: 'project-end-date-field',
