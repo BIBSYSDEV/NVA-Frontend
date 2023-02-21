@@ -1,10 +1,8 @@
 import { Button, TextField, Typography } from '@mui/material';
-import LooksOneIcon from '@mui/icons-material/LooksOneOutlined';
 import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useCallback, useState } from 'react';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { AddEmployeeData, emptyUser } from './AddEmployeePage';
 import { SearchForCristinPerson } from '../SearchForCristinPerson';
 
@@ -20,10 +18,6 @@ export const FindPersonPanel = () => {
 
   return (
     <>
-      <StyledCenterContainer>
-        <LooksOneIcon color="primary" fontSize="large" sx={{ float: 'center' }} />
-      </StyledCenterContainer>
-
       <SearchForCristinPerson
         selectedPerson={values.user}
         setSelectedPerson={setSelectedPerson}
