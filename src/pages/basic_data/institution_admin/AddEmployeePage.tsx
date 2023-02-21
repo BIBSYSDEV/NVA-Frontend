@@ -4,7 +4,6 @@ import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import LooksThreeIcon from '@mui/icons-material/Looks3Outlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
   CreateCristinPerson,
@@ -15,7 +14,6 @@ import {
 } from '../../../types/user.types';
 import { FindPersonPanel } from './FindPersonPanel';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
-import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { setNotification } from '../../../redux/notificationSlice';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
@@ -113,7 +111,7 @@ export const AddEmployeePage = () => {
             <Box
               sx={{
                 display: 'grid',
-                gridTemplateColumns: { xs: '1fr', md: '1fr auto 1fr auto 1fr' },
+                gridTemplateColumns: { xs: '1fr', md: '1fr auto 1fr' },
                 gap: '1rem',
                 mt: '2rem',
               }}>
@@ -123,12 +121,6 @@ export const AddEmployeePage = () => {
               <Divider orientation="vertical" />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <AddAffiliationPanel />
-              </Box>
-              <Divider orientation="vertical" />
-              <Box>
-                <StyledCenterContainer>
-                  <LooksThreeIcon color="primary" fontSize="large" />
-                </StyledCenterContainer>
                 <UserRolesSelector
                   selectedRoles={values.roles}
                   updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
@@ -136,17 +128,16 @@ export const AddEmployeePage = () => {
                 />
               </Box>
             </Box>
-            <StyledCenterContainer sx={{ mt: '1rem' }}>
+            <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'end' }}>
               <LoadingButton
                 variant="contained"
                 size="large"
                 loading={isSubmitting}
-                disabled={!isValid}
                 type="submit"
                 startIcon={<AddCircleOutlineIcon />}>
                 {t('common.create')}
               </LoadingButton>
-            </StyledCenterContainer>
+            </Box>
           </Form>
         )}
       </Formik>

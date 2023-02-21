@@ -55,8 +55,10 @@ interface ContributorIdentity extends BasicContributorIdentity {
   lastName: string;
 }
 
+export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
+
 interface BasicProjectContributor {
-  type: 'ProjectManager' | 'ProjectParticipant';
+  type: ProjectContributorType;
   identity: BasicContributorIdentity;
   affiliation?: BasicContributorAffiliation;
 }
@@ -116,3 +118,22 @@ export interface NfrProject {
   activeFrom: string;
   activeTo: string;
 }
+
+export const emptyProjectContributor: BasicProjectContributor = {
+  type: 'ProjectParticipant',
+  identity: { type: 'Person', id: '' },
+  affiliation: { type: 'Organization', id: '' },
+};
+
+export const emptyProject: SaveCristinProject = {
+  type: 'Project',
+  title: '',
+  language: 'http://lexvo.org/id/iso639-3/nob',
+  startDate: '',
+  endDate: '',
+  contributors: [{ ...emptyProjectContributor, type: 'ProjectManager' }],
+  coordinatingInstitution: {
+    type: 'Organization',
+    id: '',
+  },
+};

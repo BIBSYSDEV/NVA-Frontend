@@ -169,7 +169,7 @@
     "required_description": "Felt med stjerne er obligatorisk",
     "role": "Rolle",
     "save": "Lagre",
-    "save_and_present": "Lagre og se",
+    "save_and_view": "Lagre og se",
     "search": "Søk",
     "search_by_name": "Søk på navn",
     "search_placeholder": "Navn Navnesen",
@@ -838,6 +838,15 @@
     "create_project": "Opprett prosjekt",
     "edit_project": "Endre prosjekt",
     "financing": "Finansiering",
+    "form": {
+      "empty_registration": "Tom registrering",
+      "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
+      "remove_participant": "Fjern prosjektdeltaker",
+      "remove_participant_text": "Er du sikker på at du ønsker å fjerne {{name}}?",
+      "search_for_person": "Søk etter person",
+      "start_with_empty_form": "Start uten noen ferdig utfylte opplysninger.",
+      "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt."
+    },
     "grant_id": "GrantID",
     "no_participants": "Ingen registrerte deltakere.",
     "no_results": "Ingen publiserte resultater.",
@@ -853,7 +862,6 @@
     "results": "Resultater",
     "scientific_summary": "Vitenskapelig sammendrag",
     "search_for_institution": "Søk etter institusjon",
-    "search_for_person": "Søk etter person",
     "status": {
       "ACTIVE": "Aktivt",
       "CONCLUDED": "Avsluttet",
