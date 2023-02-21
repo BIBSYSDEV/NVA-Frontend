@@ -1,10 +1,8 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import LooksTwoIcon from '@mui/icons-material/LooksTwoOutlined';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useSelector } from 'react-redux';
-import { StyledCenterContainer } from '../../../components/styled/Wrappers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
@@ -27,9 +25,6 @@ export const AddAffiliationPanel = () => {
 
   return (
     <>
-      <StyledCenterContainer>
-        <LooksTwoIcon color="primary" fontSize="large" />
-      </StyledCenterContainer>
       <Field name="affiliation.organization">
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <Autocomplete
