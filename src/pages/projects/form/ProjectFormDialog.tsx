@@ -102,33 +102,53 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
           initialValues={initialValues}
           validationSchema={basicProjectValidationSchema}
           onSubmit={submitProjectForm}>
-          {({ isSubmitting }: FormikProps<SaveCristinProject>) => (
-            <Form noValidate>
-              <DialogContent>
-                {selectedPanel === 0 ? <ProjectFormPanel1 currentProject={currentProject} /> : <ProjectFormPanel2 />}
-              </DialogContent>
+          {({ isSubmitting, errors }: FormikProps<SaveCristinProject>) => {
+            const errorOnTab1 =
+              errors.title ||
+              errors.contributors ||
+              errors.startDate ||
+              errors.endDate ||
+              errors.coordinatingInstitution;
+            const errorOnTab2 = false;
 
-              <DialogActions sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
-                <RadioGroup row sx={{ gridArea: '1/2', justifyContent: 'center' }}>
-                  <Radio checked={selectedPanel === 0} onClick={() => setSelectedPanel(0)} />
-                  <Radio checked={selectedPanel === 1} onClick={() => setSelectedPanel(1)} />
-                </RadioGroup>
+            return (
+              <Form noValidate>
+                <DialogContent>
+                  {selectedPanel === 0 ? <ProjectFormPanel1 currentProject={currentProject} /> : <ProjectFormPanel2 />}
+                </DialogContent>
 
-                <Box sx={{ gridArea: '1/3', display: 'flex', gap: '0.5rem', justifyContent: 'end' }}>
-                  <Button onClick={handleClose}>{t('common.cancel')}</Button>
-                  {selectedPanel === 0 ? (
-                    <Button variant="contained" onClick={() => setSelectedPanel(1)}>
-                      {t('common.next')}
-                    </Button>
-                  ) : (
-                    <LoadingButton variant="contained" loading={isSubmitting} type="submit">
-                      {t('common.save')}
-                    </LoadingButton>
-                  )}
-                </Box>
-              </DialogActions>
-            </Form>
-          )}
+                <DialogActions sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
+                  <RadioGroup row sx={{ gridArea: '1/2', justifyContent: 'center' }}>
+                    <Radio
+                      checked={selectedPanel === 0}
+                      onClick={() => setSelectedPanel(0)}
+                      sx={{ color: errorOnTab1 ? 'error.main' : undefined }}
+                      color={errorOnTab1 ? 'error' : 'primary'}
+                    />
+                    <Radio
+                      checked={selectedPanel === 1}
+                      onClick={() => setSelectedPanel(1)}
+                      sx={{ color: errorOnTab2 ? 'error.main' : undefined }}
+                      color={errorOnTab2 ? 'error' : 'primary'}
+                    />
+                  </RadioGroup>
+
+                  <Box sx={{ gridArea: '1/3', display: 'flex', gap: '0.5rem', justifyContent: 'end' }}>
+                    <Button onClick={handleClose}>{t('common.cancel')}</Button>
+                    {selectedPanel === 0 ? (
+                      <Button variant="contained" onClick={() => setSelectedPanel(1)}>
+                        {t('common.next')}
+                      </Button>
+                    ) : (
+                      <LoadingButton variant="contained" loading={isSubmitting} type="submit">
+                        {t('common.save')}
+                      </LoadingButton>
+                    )}
+                  </Box>
+                </DialogActions>
+              </Form>
+            );
+          }}
         </Formik>
       )}
     </Dialog>
