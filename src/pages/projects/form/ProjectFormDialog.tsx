@@ -24,6 +24,7 @@ import { basicProjectValidationSchema } from '../../../utils/validation/project/
 import { CreateProjectStartPage } from './CreateProjectStartPage';
 import { ProjectFormPanel2 } from './ProjectFormPanel2';
 import { ProjectFormPanel1 } from './ProjectFormPanel1';
+import { ErrorBoundary } from '../../../components/ErrorBoundary';
 
 export enum ProjectFieldName {
   Title = 'title',
@@ -46,7 +47,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState<CristinProject | SaveCristinProject | undefined>(currentProject);
-  const [selectedPanel, setSelectedPanel] = useState(0);
+  const [selectedPanel, setSelectedPanel] = useState<0 | 1>(0);
   const editMode = !!currentProject;
 
   const handleClose = () => {
@@ -95,90 +96,97 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
       PaperProps={{ sx: { bgcolor: 'info.light' } }}
       transitionDuration={0}>
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
+      <ErrorBoundary>
+        {!initialValues ? (
+          <CreateProjectStartPage onClose={handleClose} setInitialValues={setInitialValues} />
+        ) : (
+          <Formik
+            initialValues={initialValues}
+            validationSchema={basicProjectValidationSchema}
+            onSubmit={submitProjectForm}>
+            {({ isSubmitting, errors, setTouched, touched, values }: FormikProps<SaveCristinProject>) => {
+              const errorOnTab1 =
+                errors.title ||
+                errors.contributors ||
+                errors.startDate ||
+                errors.endDate ||
+                errors.coordinatingInstitution;
+              const errorOnTab2 = false;
 
-      {!initialValues ? (
-        <CreateProjectStartPage onClose={handleClose} setInitialValues={setInitialValues} />
-      ) : (
-        <Formik
-          initialValues={initialValues}
-          validationSchema={basicProjectValidationSchema}
-          onSubmit={submitProjectForm}>
-          {({ isSubmitting, errors, setTouched, touched, values }: FormikProps<SaveCristinProject>) => {
-            const errorOnTab1 =
-              errors.title ||
-              errors.contributors ||
-              errors.startDate ||
-              errors.endDate ||
-              errors.coordinatingInstitution;
-            const errorOnTab2 = false;
+              const touchFieldsOnPanel1: FormikTouched<SaveCristinProject> = {
+                ...touched,
+                title: true,
+                startDate: true,
+                endDate: true,
+                coordinatingInstitution: {
+                  id: true,
+                },
+                contributors: values.contributors.map(() => ({
+                  type: true,
+                  identity: { id: true },
+                  affiliation: { id: true },
+                })),
+              };
 
-            const touchFieldsOnPanel1: FormikTouched<SaveCristinProject & any> = {
-              ...touched,
-              title: true,
-              startDate: true,
-              endDate: true,
-              coordinatingInstitution: {
-                id: true,
-              },
-              contributors: values.contributors.map(() => ({
-                type: true,
-                identity: { id: true },
-                affiliation: { id: true },
-              })),
-            };
+              const goToNextTab = () => {
+                setTouched(touchFieldsOnPanel1);
+                setSelectedPanel(1);
+              };
 
-            const goToNextTab = () => {
-              setTouched(touchFieldsOnPanel1);
-              setSelectedPanel(1);
-            };
+              return (
+                <Form noValidate>
+                  <DialogContent>
+                    <ErrorBoundary>
+                      {selectedPanel === 0 ? (
+                        <ProjectFormPanel1 currentProject={currentProject} />
+                      ) : (
+                        <ProjectFormPanel2 />
+                      )}
+                    </ErrorBoundary>
+                  </DialogContent>
 
-            return (
-              <Form noValidate>
-                <DialogContent>
-                  {selectedPanel === 0 ? <ProjectFormPanel1 currentProject={currentProject} /> : <ProjectFormPanel2 />}
-                </DialogContent>
+                  <DialogActions sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
+                    <Box sx={{ gridArea: '1/2' }}>
+                      <RadioGroup row sx={{ justifyContent: 'center' }}>
+                        <Radio
+                          checked={selectedPanel === 0}
+                          onClick={() => setSelectedPanel(0)}
+                          sx={{ color: errorOnTab1 ? 'error.main' : undefined }}
+                          color={errorOnTab1 ? 'error' : 'primary'}
+                        />
+                        <Radio
+                          checked={selectedPanel === 1}
+                          onClick={goToNextTab}
+                          sx={{ color: errorOnTab2 ? 'error.main' : undefined }}
+                          color={errorOnTab2 ? 'error' : 'primary'}
+                        />
+                      </RadioGroup>
+                      {errorOnTab1 || errorOnTab2 ? (
+                        <Typography color="error" sx={{ display: 'flex', justifyContent: 'center' }}>
+                          {t('feedback.validation.must_correct_errors')}
+                        </Typography>
+                      ) : null}
+                    </Box>
 
-                <DialogActions sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
-                  <Box sx={{ gridArea: '1/2' }}>
-                    <RadioGroup row sx={{ justifyContent: 'center' }}>
-                      <Radio
-                        checked={selectedPanel === 0}
-                        onClick={() => setSelectedPanel(0)}
-                        sx={{ color: errorOnTab1 ? 'error.main' : undefined }}
-                        color={errorOnTab1 ? 'error' : 'primary'}
-                      />
-                      <Radio
-                        checked={selectedPanel === 1}
-                        onClick={goToNextTab}
-                        sx={{ color: errorOnTab2 ? 'error.main' : undefined }}
-                        color={errorOnTab2 ? 'error' : 'primary'}
-                      />
-                    </RadioGroup>
-                    {errorOnTab1 || errorOnTab2 ? (
-                      <Typography color="error" sx={{ display: 'flex', justifyContent: 'center' }}>
-                        {t('feedback.validation.must_correct_errors')}
-                      </Typography>
-                    ) : null}
-                  </Box>
-
-                  <Box sx={{ gridArea: '1/3', display: 'flex', gap: '0.5rem', justifyContent: 'end' }}>
-                    <Button onClick={handleClose}>{t('common.cancel')}</Button>
-                    {selectedPanel === 0 ? (
-                      <Button variant="contained" onClick={goToNextTab}>
-                        {t('common.next')}
-                      </Button>
-                    ) : (
-                      <LoadingButton variant="contained" loading={isSubmitting} type="submit">
-                        {t('common.save')}
-                      </LoadingButton>
-                    )}
-                  </Box>
-                </DialogActions>
-              </Form>
-            );
-          }}
-        </Formik>
-      )}
+                    <Box sx={{ gridArea: '1/3', display: 'flex', gap: '0.5rem', justifyContent: 'end' }}>
+                      <Button onClick={handleClose}>{t('common.cancel')}</Button>
+                      {selectedPanel === 0 ? (
+                        <Button variant="contained" onClick={goToNextTab}>
+                          {t('common.next')}
+                        </Button>
+                      ) : (
+                        <LoadingButton variant="contained" loading={isSubmitting} type="submit">
+                          {t('common.save')}
+                        </LoadingButton>
+                      )}
+                    </Box>
+                  </DialogActions>
+                </Form>
+              );
+            }}
+          </Formik>
+        )}
+      </ErrorBoundary>
     </Dialog>
   );
 };

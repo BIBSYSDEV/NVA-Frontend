@@ -60,11 +60,11 @@ export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 interface BasicProjectContributor {
   type: ProjectContributorType;
   identity: BasicContributorIdentity;
-  affiliation?: BasicContributorAffiliation;
+  affiliation: BasicContributorAffiliation;
 }
 
 export interface ProjectContributor extends BasicProjectContributor {
-  affiliation?: ContributorAffiliation;
+  affiliation: ContributorAffiliation;
   identity: ContributorIdentity;
 }
 
