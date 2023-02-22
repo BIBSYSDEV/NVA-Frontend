@@ -39,6 +39,7 @@ export const fundingValidationSchema = Yup.object<YupShape<Funding>>({
   }),
   fundingAmount: Yup.object({
     amount: Yup.number()
+      .transform((value, originalValue) => (/\s/.test(originalValue) ? NaN : value))
       .typeError(fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
       .min(0, fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
       .required(fundingErrorMessage.fundingAmountMustBeAPositiveNumber),
