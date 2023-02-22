@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
 import { getTranslatedVocabularyName } from './VocabularySettings';
+import { dataTestId as dataTestIds } from '../../utils/dataTestIds';
 
 const toggleButtonSx: SxProps = { width: 'fit-content', px: '1rem' };
 
@@ -40,13 +41,22 @@ export const VocabularyRow = ({ vocabulary, updateVocabularies, dataTestId, disa
             setIsUpdating(false);
           }
         }}>
-        <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Default}>
+        <ToggleButton
+          sx={toggleButtonSx}
+          value={VocabularyStatus.Default}
+          data-testid={dataTestIds.editor.vocabularyDefault}>
           {t('editor.vocabulary_status.Default')}
         </ToggleButton>
-        <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Allowed}>
+        <ToggleButton
+          sx={toggleButtonSx}
+          value={VocabularyStatus.Allowed}
+          data-testid={dataTestIds.editor.vocabularyAllowed}>
           {t('editor.vocabulary_status.Allowed')}
         </ToggleButton>
-        <ToggleButton sx={toggleButtonSx} value={VocabularyStatus.Disabled}>
+        <ToggleButton
+          sx={toggleButtonSx}
+          value={VocabularyStatus.Disabled}
+          data-testid={dataTestIds.editor.vocabularyDisabled}>
           {t('editor.vocabulary_status.Disabled')}
         </ToggleButton>
       </ToggleButtonGroup>

@@ -10,7 +10,7 @@ export const mockUser: FeideUser = {
   'custom:topOrgCristinId': 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
   'custom:nvaUsername': '1@20754.0.0.0',
   'custom:roles':
-    'Creator@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Curator@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,App-admin@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Institution-admin@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
+    'Creator@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Curator@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,App-admin@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Institution-admin@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a,Editor@https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
   'custom:accessRights': '',
   'custom:allowedCustomers': 'https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
 };
@@ -20,6 +20,7 @@ export const mockRoles: InstitutionUser = {
     { type: 'Role', rolename: RoleName.AppAdmin },
     { type: 'Role', rolename: RoleName.Creator },
     { type: 'Role', rolename: RoleName.Curator },
+    { type: 'Role', rolename: RoleName.Editor },
     { type: 'Role', rolename: RoleName.InstitutionAdmin },
   ],
   username: 'tu@unit.no',
