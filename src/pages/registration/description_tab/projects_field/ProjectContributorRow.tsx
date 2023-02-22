@@ -162,7 +162,7 @@ export const ProjectContributorRow = ({
         data-testid={dataTestId.registrationWizard.description.projectForm.removeContributorButton}
         size="small"
         color="primary"
-        disabled={!!removeContributor}
+        disabled={!removeContributor}
         title={t('project.form.remove_participant')}
         onClick={() => setShowConfirmRemoveContributor(true)}>
         <RemoveIcon />
