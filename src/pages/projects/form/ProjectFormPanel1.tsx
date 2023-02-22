@@ -141,6 +141,7 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
                     baseFieldName={`${name}[${index}]`}
                     contributor={thisContributor}
                     removeContributor={() => remove(index)}
+                    disableRemoveContributor={contributor.type === 'ProjectManager'}
                   />
                 );
               })}

@@ -31,12 +31,14 @@ interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
   baseFieldName: string;
   removeContributor: () => void;
+  disableRemoveContributor: boolean;
 }
 
 export const ProjectContributorRow = ({
   contributor,
   baseFieldName,
   removeContributor,
+  disableRemoveContributor,
 }: ProjectContributorRowProps) => {
   const { t } = useTranslation();
   const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
@@ -160,7 +162,7 @@ export const ProjectContributorRow = ({
       <IconButton
         size="small"
         color="primary"
-        disabled={contributor?.type === 'ProjectManager'}
+        disabled={disableRemoveContributor}
         title={t('project.form.remove_participant')}
         onClick={() => setShowConfirmRemoveContributor(true)}>
         <RemoveIcon />
