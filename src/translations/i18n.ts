@@ -17,6 +17,7 @@ i18n.use(LanguageDetector).init({
     },
   },
   fallbackLng: 'nob',
+  returnEmptyString: false,
   supportedLngs: ['nob', 'eng', 'nno'],
   debug: false,
 });
