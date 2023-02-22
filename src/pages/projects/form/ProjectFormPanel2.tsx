@@ -1,7 +1,6 @@
 import { Box, TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-
 import { ProjectFieldName } from './ProjectFormDialog';
 
 export const ProjectFormPanel2 = () => {

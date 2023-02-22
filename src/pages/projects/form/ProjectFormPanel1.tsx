@@ -20,7 +20,7 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
 
   return (
     <>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '1rem' }}>
         <Field name={ProjectFieldName.Title}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
@@ -117,7 +117,7 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
         </Box>
       </Box>
 
-      <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
+      <Typography variant="h3" gutterBottom>
         {t('project.project_participants')}
       </Typography>
       <Box
@@ -141,8 +141,7 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
                     key={index}
                     baseFieldName={`${name}[${index}]`}
                     contributor={thisContributor}
-                    removeContributor={() => remove(index)}
-                    disableRemoveContributor={contributor.type === 'ProjectManager'}
+                    removeContributor={contributor.type === 'ProjectManager' ? undefined : () => remove(index)}
                   />
                 );
               })}
