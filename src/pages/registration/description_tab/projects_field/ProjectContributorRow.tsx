@@ -30,7 +30,7 @@ enum ProjectContributorFieldName {
 interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
   baseFieldName: string;
-  removeContributor: () => void;
+  removeContributor?: () => void;
 }
 
 export const ProjectContributorRow = ({
@@ -154,34 +154,38 @@ export const ProjectContributorRow = ({
             isLoadingDefaultOptions={isLoadingDefaultOptions}
             defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
             currentValue={contributorAffiliation}
+            customDataTestId={dataTestId.registrationWizard.description.projectForm.contributorAffiliationField}
           />
         )}
       </Field>
       <IconButton
+        data-testid={dataTestId.registrationWizard.description.projectForm.removeContributorButton}
         size="small"
         color="primary"
-        disabled={contributor?.type === 'ProjectManager'}
+        disabled={!removeContributor}
         title={t('project.form.remove_participant')}
         onClick={() => setShowConfirmRemoveContributor(true)}>
         <RemoveIcon />
       </IconButton>
-      <ConfirmDialog
-        open={showConfirmRemoveContributor}
-        onAccept={() => {
-          removeContributor();
-          setShowConfirmRemoveContributor(false);
-        }}
-        title={t('project.form.remove_participant')}
-        onCancel={() => setShowConfirmRemoveContributor(false)}>
-        <Typography>
-          {t('project.form.remove_participant_text', {
-            name:
-              contributor?.identity.firstName && contributor?.identity.firstName
-                ? `${contributor.identity.firstName} ${contributor.identity.lastName}`
-                : t('project.project_participant').toLocaleLowerCase(),
-          })}
-        </Typography>
-      </ConfirmDialog>
+      {!!removeContributor && (
+        <ConfirmDialog
+          open={showConfirmRemoveContributor}
+          onAccept={() => {
+            removeContributor();
+            setShowConfirmRemoveContributor(false);
+          }}
+          title={t('project.form.remove_participant')}
+          onCancel={() => setShowConfirmRemoveContributor(false)}>
+          <Typography>
+            {t('project.form.remove_participant_text', {
+              name:
+                contributor?.identity.firstName && contributor?.identity.firstName
+                  ? `${contributor.identity.firstName} ${contributor.identity.lastName}`
+                  : t('project.project_participant').toLocaleLowerCase(),
+            })}
+          </Typography>
+        </ConfirmDialog>
+      )}
     </Box>
   );
 };
