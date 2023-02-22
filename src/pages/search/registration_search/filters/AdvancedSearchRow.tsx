@@ -19,7 +19,7 @@ interface FilterItem {
 export const registrationFilters: FilterItem[] = [
   { field: DescriptionFieldNames.Title, i18nKey: 'common.title' },
   { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract' },
-  { field: ResourceFieldNames.SubType, i18nKey: 'registration.resource_type.resource_type' },
+  { field: ResourceFieldNames.RegistrationType, i18nKey: 'registration.resource_type.resource_type' },
   { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords' },
   {
     field: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`,
@@ -62,9 +62,9 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            disabled={propertySearchItem.fieldName === ResourceFieldNames.SubType}
+            disabled={propertySearchItem.fieldName === ResourceFieldNames.RegistrationType}
             value={
-              propertySearchItem.value && propertySearchItem.fieldName === ResourceFieldNames.SubType
+              propertySearchItem.value && propertySearchItem.fieldName === ResourceFieldNames.RegistrationType
                 ? t(`registration.publication_types.${propertySearchItem.value as PublicationInstanceType}`)
                 : field.value
             }

@@ -51,7 +51,11 @@ export const SearchContainerField = ({
     {
       searchTerm: debouncedQuery,
       properties: [
-        { fieldName: ResourceFieldNames.SubType, value: searchSubtypes, operator: ExpressionStatement.Contains },
+        {
+          fieldName: ResourceFieldNames.RegistrationType,
+          value: searchSubtypes,
+          operator: ExpressionStatement.Contains,
+        },
       ],
     },
     25

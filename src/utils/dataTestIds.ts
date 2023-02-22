@@ -332,6 +332,7 @@ export const dataTestId = {
       removePublisherButton: 'remove-publisher-button',
       removeRelationButton: (value: string) => (value ? `remove-relation-button-${value}` : 'remove-relation-button'),
       resourceTypeChip: (type: string) => `resource-type-chip-${type}`,
+      resourceTypeSearchField: 'resource-type-search-field',
       scientificSubjectField: 'scientific-subject-field',
       scoreEnsemble: 'score-ensemble',
       scoreMovements: 'score-movements',
