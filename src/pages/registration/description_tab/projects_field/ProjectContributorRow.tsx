@@ -156,10 +156,12 @@ export const ProjectContributorRow = ({
             isLoadingDefaultOptions={isLoadingDefaultOptions}
             defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
             currentValue={contributorAffiliation}
+            customDataTestId={dataTestId.registrationWizard.description.projectForm.contributorAffiliationField}
           />
         )}
       </Field>
       <IconButton
+        data-testid={dataTestId.registrationWizard.description.projectForm.removeContributorButton}
         size="small"
         color="primary"
         disabled={disableRemoveContributor}

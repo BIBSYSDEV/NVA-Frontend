@@ -19,6 +19,7 @@ interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   isLoadingDefaultOptions?: boolean;
   defaultOptions?: Organization[];
   currentValue?: Organization;
+  customDataTestId?: string;
 }
 
 export const OrganizationSearchField = ({
@@ -30,6 +31,7 @@ export const OrganizationSearchField = ({
   isLoadingDefaultOptions = false,
   defaultOptions = [],
   currentValue,
+  customDataTestId,
 }: OrganizationSearchFieldProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
@@ -67,7 +69,7 @@ export const OrganizationSearchField = ({
           value={fieldInputProps?.value}
           name={fieldInputProps?.name}
           {...params}
-          data-testid={dataTestId.organization.searchField}
+          data-testid={customDataTestId ?? dataTestId.organization.searchField}
           label={label ?? t('common.institution')}
           required
           placeholder={t('project.search_for_institution')}

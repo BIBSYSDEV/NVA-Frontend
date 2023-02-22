@@ -51,6 +51,7 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
                     }
                   : undefined
               }
+              customDataTestId={dataTestId.registrationWizard.description.projectForm.coordinatingInstitutionField}
             />
           )}
         </Field>

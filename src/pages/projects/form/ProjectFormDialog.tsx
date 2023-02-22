@@ -25,6 +25,7 @@ import { CreateProjectStartPage } from './CreateProjectStartPage';
 import { ProjectFormPanel2 } from './ProjectFormPanel2';
 import { ProjectFormPanel1 } from './ProjectFormPanel1';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 export enum ProjectFieldName {
   Title = 'title',
@@ -149,12 +150,14 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
                     <Box sx={{ gridArea: '1/2' }}>
                       <RadioGroup row sx={{ justifyContent: 'center' }}>
                         <Radio
+                          data-testid={dataTestId.registrationWizard.description.projectForm.panel1Button}
                           checked={selectedPanel === 0}
                           onClick={() => setSelectedPanel(0)}
                           sx={{ color: errorOnTab1 ? 'error.main' : undefined }}
                           color={errorOnTab1 ? 'error' : 'primary'}
                         />
                         <Radio
+                          data-testid={dataTestId.registrationWizard.description.projectForm.panel2Button}
                           checked={selectedPanel === 1}
                           onClick={goToNextTab}
                           sx={{ color: errorOnTab2 ? 'error.main' : undefined }}
@@ -175,7 +178,11 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
                           {t('common.next')}
                         </Button>
                       ) : (
-                        <LoadingButton variant="contained" loading={isSubmitting} type="submit">
+                        <LoadingButton
+                          data-testid={dataTestId.registrationWizard.description.projectForm.saveProjectButton}
+                          variant="contained"
+                          loading={isSubmitting}
+                          type="submit">
                           {t('common.save')}
                         </LoadingButton>
                       )}
