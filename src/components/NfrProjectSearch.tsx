@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../api/apiPaths';
 import { SearchResponse } from '../types/common.types';
 import { NfrProject } from '../types/project.types';
+import { dataTestId } from '../utils/dataTestIds';
 import { getPeriodString } from '../utils/general-helpers';
 import { useDebounce } from '../utils/hooks/useDebounce';
 import { useFetch } from '../utils/hooks/useFetch';
@@ -52,6 +53,7 @@ export const NfrProjectSearch = ({ onSelectProject, errorMessage, ...textFieldPr
         <AutocompleteTextField
           {...params}
           {...textFieldProps}
+          data-testid={dataTestId.registrationWizard.description.nfrProjectSearchField}
           label={t('registration.description.funding.nfr_project')}
           isLoading={isLoadingNfrProjectSearch}
           placeholder={t('registration.description.funding.nfr_project_search')}

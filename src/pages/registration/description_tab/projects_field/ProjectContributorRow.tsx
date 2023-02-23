@@ -1,6 +1,6 @@
 import { Box, Autocomplete, Typography, TextField, IconButton } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
-import { Field, FieldProps } from 'formik';
+import { Field, FieldProps, FormikErrors, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../../api/apiPaths';
@@ -9,27 +9,34 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
 import { Organization } from '../../../../types/organization.types';
-import { ProjectContributor, ProjectContributorType } from '../../../../types/project.types';
+import {
+  ProjectContributor,
+  ProjectContributorIdentity,
+  ProjectContributorType,
+  ProjectOrganization,
+  SaveCristinProject,
+} from '../../../../types/project.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
-import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
-import { getFullCristinName } from '../../../../utils/user-helpers';
+import { getTopLevelOrganization, getUnitTopLevelCode } from '../../../../utils/institutions-helpers';
+import { getFullCristinName, getValueByKey } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { projectContributorToCristinPerson } from './projectHelpers';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 
 enum ProjectContributorFieldName {
   Type = 'type',
-  IdentityId = 'identity.id',
-  AffiliationId = 'affiliation.id',
+  Identity = 'identity',
+  Affiliation = 'affiliation',
 }
 
 interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
   baseFieldName: string;
+  contributorIndex: number;
   removeContributor?: () => void;
 }
 
@@ -37,8 +44,11 @@ export const ProjectContributorRow = ({
   contributor,
   baseFieldName,
   removeContributor,
+  contributorIndex,
 }: ProjectContributorRowProps) => {
   const { t } = useTranslation();
+  const { errors, touched, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
+
   const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -48,18 +58,23 @@ export const ProjectContributorRow = ({
     url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&name=${debouncedSearchTerm}` : '',
   });
 
-  const cristinPersonContributor = projectContributorToCristinPerson(contributor);
-  const contributorAffiliation = contributor?.affiliation
-    ? { id: contributor.affiliation.id, name: contributor.affiliation.name }
-    : undefined;
-
   const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
   const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
   const fetchSuggestedInstitutions = async (affiliationIds: string[]) => {
     if (affiliationIds.length > 0) {
       setIsLoadingDefaultOptions(true);
     }
-    const defaultInstitutionsPromises = affiliationIds.map(async (id) => {
+
+    // Find affiliations with distinct top levels
+    const distinctInstitutions = affiliationIds.reduce((accumumlator: string[], current) => {
+      const currentTopLevel = getUnitTopLevelCode(current);
+      if (!accumumlator.some((item) => getUnitTopLevelCode(item) === currentTopLevel)) {
+        accumumlator.push(current);
+      }
+      return accumumlator;
+    }, []);
+
+    const defaultInstitutionsPromises = distinctInstitutions.map(async (id) => {
       const organizationResponse = await apiRequest<Organization>({ url: id });
       if (isSuccessStatus(organizationResponse.status)) {
         return getTopLevelOrganization(organizationResponse.data);
@@ -68,9 +83,12 @@ export const ProjectContributorRow = ({
     const defaultInstitutions = (await Promise.all(defaultInstitutionsPromises)).filter(
       (institution) => institution // Remove null/undefined objects
     ) as Organization[];
+
     setDefaultInstitutionOptions(defaultInstitutions);
     setIsLoadingDefaultOptions(false);
   };
+
+  const contributorErrors = errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>;
 
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr auto' }, gap: '0.25rem 0.75rem' }}>
@@ -91,8 +109,8 @@ export const ProjectContributorRow = ({
           />
         )}
       </Field>
-      <Field name={`${baseFieldName}.${ProjectContributorFieldName.IdentityId}`}>
-        {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+      <Field name={`${baseFieldName}.${ProjectContributorFieldName.Identity}`}>
+        {({ field }: FieldProps<ProjectContributorIdentity>) => (
           <Autocomplete
             options={personSearchResult?.hits ?? []}
             inputMode="search"
@@ -103,15 +121,17 @@ export const ProjectContributorRow = ({
                 setSearchTerm(value);
               }
             }}
-            defaultValue={cristinPersonContributor ?? null}
-            onChange={async (_, selectedUser) => {
-              if (!selectedUser) {
-                setFieldValue(field.name, '');
-              } else {
-                setFieldValue(field.name, selectedUser.id ?? '');
-                if (selectedUser.affiliations) {
-                  fetchSuggestedInstitutions(selectedUser.affiliations.map((affiliation) => affiliation.organization));
-                }
+            defaultValue={projectContributorToCristinPerson(field.value)}
+            onChange={(_, selectedPerson) => {
+              const selectedContributorIdentity: ProjectContributorIdentity = {
+                type: 'Person',
+                id: selectedPerson?.id ?? '',
+                firstName: getValueByKey('FirstName', selectedPerson?.names),
+                lastName: getValueByKey('LastName', selectedPerson?.names),
+              };
+              setFieldValue(field.name, selectedContributorIdentity);
+              if (selectedPerson?.affiliations) {
+                fetchSuggestedInstitutions(selectedPerson.affiliations.map((affiliation) => affiliation.organization));
               }
               setSearchTerm('');
             }}
@@ -129,31 +149,49 @@ export const ProjectContributorRow = ({
             }}
             renderInput={(params) => (
               <AutocompleteTextField
-                onBlur={field.onBlur}
+                {...params}
+                onBlur={() => setFieldTouched(`${field.name}.id`)}
                 value={field.value}
                 name={field.name}
                 data-testid={dataTestId.registrationWizard.description.projectForm.contributorsSearchField}
-                {...params}
                 required
                 label={t('project.person')}
                 placeholder={t('project.form.search_for_person')}
-                errorMessage={touched && !!error ? error : ''}
+                errorMessage={
+                  touched.contributors?.[contributorIndex]?.identity?.id && !!contributorErrors?.identity?.id
+                    ? contributorErrors?.identity?.id
+                    : ''
+                }
                 isLoading={isLoadingPersonSearchResult}
-                showSearchIcon={!field.value}
+                showSearchIcon={!field.value.id}
               />
             )}
           />
         )}
       </Field>
-      <Field name={`${baseFieldName}.${ProjectContributorFieldName.AffiliationId}`}>
-        {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+      <Field name={`${baseFieldName}.${ProjectContributorFieldName.Affiliation}`}>
+        {({ field }: FieldProps<ProjectOrganization>) => (
           <OrganizationSearchField
-            onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
-            fieldInputProps={field}
-            errorMessage={touched && !!error ? error : ''}
+            onChange={(institution) => {
+              const selectedCoordinatingInstitution: ProjectOrganization = {
+                type: 'Organization',
+                id: institution?.id ?? '',
+                name: institution?.name ?? {},
+              };
+              setFieldValue(field.name, selectedCoordinatingInstitution);
+            }}
+            fieldInputProps={{
+              ...field,
+              onBlur: () => setFieldTouched(`${field.name}.id`),
+            }}
+            errorMessage={
+              touched.contributors?.[contributorIndex]?.affiliation?.id && !!contributorErrors?.affiliation?.id
+                ? contributorErrors?.affiliation?.id
+                : ''
+            }
             isLoadingDefaultOptions={isLoadingDefaultOptions}
-            defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
-            currentValue={contributorAffiliation}
+            defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value.id)}
+            selectedValue={field.value}
             customDataTestId={dataTestId.registrationWizard.description.projectForm.contributorAffiliationField}
           />
         )}

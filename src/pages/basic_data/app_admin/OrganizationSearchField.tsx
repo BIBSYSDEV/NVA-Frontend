@@ -15,10 +15,10 @@ interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   onChange?: (selectedInstitution: Organization | null) => void;
   disabled?: boolean;
   errorMessage?: string;
-  fieldInputProps?: FieldInputProps<string>;
+  fieldInputProps?: FieldInputProps<any>;
   isLoadingDefaultOptions?: boolean;
   defaultOptions?: Organization[];
-  currentValue?: Organization;
+  selectedValue?: Organization;
   customDataTestId?: string;
 }
 
@@ -30,7 +30,7 @@ export const OrganizationSearchField = ({
   label,
   isLoadingDefaultOptions = false,
   defaultOptions = [],
-  currentValue,
+  selectedValue,
   customDataTestId,
 }: OrganizationSearchFieldProps) => {
   const { t } = useTranslation();
@@ -61,7 +61,7 @@ export const OrganizationSearchField = ({
         }
         setSearchTerm('');
       }}
-      defaultValue={currentValue ?? null}
+      value={selectedValue}
       loading={isLoading}
       renderInput={(params) => (
         <AutocompleteTextField
@@ -75,7 +75,7 @@ export const OrganizationSearchField = ({
           placeholder={t('project.search_for_institution')}
           errorMessage={errorMessage}
           isLoading={isLoading}
-          showSearchIcon={!fieldInputProps?.value}
+          showSearchIcon={!selectedValue?.id}
         />
       )}
     />
