@@ -180,6 +180,7 @@ export const dataTestId = {
     description: {
       addFundingButton: 'add-funding-button',
       addVocabularyButton: 'add-vocabulary-button',
+      createProjectButton: 'create-project-button',
       datePublishedField: 'date-published-field',
       fundingSourceSearchField: 'funding-source-search-field',
       fundingProjectField: 'funding-project-field',
@@ -188,6 +189,7 @@ export const dataTestId = {
       fundingLinkButton: 'funding-link-button',
       fundingNfrProjectSearchField: 'funding-nfr-project-search-field',
       fundingRemoveButton: 'funding-remove-button',
+      nfrProjectSearchField: 'nfr-project-search-field',
       projectForm: {
         contributorAffiliationField: 'contributor-affiliation-field',
         contributorsSearchField: 'project-contributors-search-field',
@@ -199,6 +201,7 @@ export const dataTestId = {
         roleField: 'project-participant-role-field',
         saveProjectButton: 'save-project-button',
         startDateField: 'project-start-date-field',
+        startWithEmptyProjectButton: 'start-with-empty-project-button',
         titleField: 'project-title-field',
       },
       projectSearchField: 'project-search-field',

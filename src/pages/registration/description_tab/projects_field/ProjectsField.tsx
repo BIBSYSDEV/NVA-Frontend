@@ -92,7 +92,10 @@ export const ProjectsField = () => {
           )}
         </Field>
         <BetaFunctionality>
-          <Button onClick={() => setOpenNewProjectDialog(true)} startIcon={<AddIcon />}>
+          <Button
+            data-testid={dataTestId.registrationWizard.description.createProjectButton}
+            onClick={() => setOpenNewProjectDialog(true)}
+            startIcon={<AddIcon />}>
             {t('project.create_project')}
           </Button>
           <ProjectFormDialog open={openNewProjectDialog} onClose={() => setOpenNewProjectDialog(false)} />

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 import { SaveCristinProject, NfrProject, emptyProject } from '../../../types/project.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface CreateProjectStartPageProps {
@@ -48,6 +49,7 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
               alignItems: 'center',
             }}>
             <Button
+              data-testid={dataTestId.registrationWizard.description.projectForm.startWithEmptyProjectButton}
               sx={{
                 width: 'fit-content',
                 justifySelf: 'center',
