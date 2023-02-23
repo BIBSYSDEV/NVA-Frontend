@@ -88,6 +88,8 @@ export const ProjectContributorRow = ({
     setIsLoadingDefaultOptions(false);
   };
 
+  const contributorErrors = errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>;
+
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr auto' }, gap: '0.25rem 0.75rem' }}>
       <Field name={`${baseFieldName}.${ProjectContributorFieldName.Type}`}>
@@ -120,16 +122,16 @@ export const ProjectContributorRow = ({
               }
             }}
             defaultValue={projectContributorToCristinPerson(field.value)}
-            onChange={async (_, selectedUser) => {
-              const selectedContributrIdentity: ProjectContributorIdentity = {
+            onChange={(_, selectedPerson) => {
+              const selectedContributorIdentity: ProjectContributorIdentity = {
                 type: 'Person',
-                id: selectedUser?.id ?? '',
-                firstName: getValueByKey('FirstName', selectedUser?.names),
-                lastName: getValueByKey('LastName', selectedUser?.names),
+                id: selectedPerson?.id ?? '',
+                firstName: getValueByKey('FirstName', selectedPerson?.names),
+                lastName: getValueByKey('LastName', selectedPerson?.names),
               };
-              setFieldValue(field.name, selectedContributrIdentity);
-              if (selectedUser?.affiliations) {
-                fetchSuggestedInstitutions(selectedUser.affiliations.map((affiliation) => affiliation.organization));
+              setFieldValue(field.name, selectedContributorIdentity);
+              if (selectedPerson?.affiliations) {
+                fetchSuggestedInstitutions(selectedPerson.affiliations.map((affiliation) => affiliation.organization));
               }
               setSearchTerm('');
             }}
@@ -156,9 +158,8 @@ export const ProjectContributorRow = ({
                 label={t('project.person')}
                 placeholder={t('project.form.search_for_person')}
                 errorMessage={
-                  touched.contributors?.[contributorIndex]?.identity?.id &&
-                  !!(errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>)?.identity?.id
-                    ? (errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>)?.identity?.id
+                  touched.contributors?.[contributorIndex]?.identity?.id && !!contributorErrors?.identity?.id
+                    ? contributorErrors?.identity?.id
                     : ''
                 }
                 isLoading={isLoadingPersonSearchResult}
@@ -184,9 +185,8 @@ export const ProjectContributorRow = ({
               onBlur: () => setFieldTouched(`${field.name}.id`),
             }}
             errorMessage={
-              touched.contributors?.[contributorIndex]?.affiliation?.id &&
-              !!(errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>)?.affiliation?.id
-                ? (errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>)?.affiliation?.id
+              touched.contributors?.[contributorIndex]?.affiliation?.id && !!contributorErrors?.affiliation?.id
+                ? contributorErrors?.affiliation?.id
                 : ''
             }
             isLoadingDefaultOptions={isLoadingDefaultOptions}
