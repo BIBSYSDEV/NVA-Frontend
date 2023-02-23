@@ -21,7 +21,7 @@ import { isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
-import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
+import { getTopLevelOrganization, getUnitTopLevelCode } from '../../../../utils/institutions-helpers';
 import { getFullCristinName, getValueByKey } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { projectContributorToCristinPerson } from './projectHelpers';
@@ -64,7 +64,17 @@ export const ProjectContributorRow = ({
     if (affiliationIds.length > 0) {
       setIsLoadingDefaultOptions(true);
     }
-    const defaultInstitutionsPromises = affiliationIds.map(async (id) => {
+
+    // Find affiliations with distinct top levels
+    const distinctInstitutions = affiliationIds.reduce((accumumlator: string[], current) => {
+      const currentTopLevel = getUnitTopLevelCode(current);
+      if (!accumumlator.some((item) => getUnitTopLevelCode(item) === currentTopLevel)) {
+        accumumlator.push(current);
+      }
+      return accumumlator;
+    }, []);
+
+    const defaultInstitutionsPromises = distinctInstitutions.map(async (id) => {
       const organizationResponse = await apiRequest<Organization>({ url: id });
       if (isSuccessStatus(organizationResponse.status)) {
         return getTopLevelOrganization(organizationResponse.data);
@@ -73,6 +83,7 @@ export const ProjectContributorRow = ({
     const defaultInstitutions = (await Promise.all(defaultInstitutionsPromises)).filter(
       (institution) => institution // Remove null/undefined objects
     ) as Organization[];
+
     setDefaultInstitutionOptions(defaultInstitutions);
     setIsLoadingDefaultOptions(false);
   };
