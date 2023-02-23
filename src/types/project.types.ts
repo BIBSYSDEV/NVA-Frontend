@@ -30,7 +30,7 @@ interface ProjectIdentifier {
 
 export type ProjectOrganization = Omit<Organization, 'partOf' | 'hasPart'>;
 
-interface ContributorIdentity {
+export interface ProjectContributorIdentity {
   type: 'Person';
   id: string;
   firstName: string;
@@ -42,7 +42,7 @@ export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 export interface ProjectContributor {
   type: ProjectContributorType;
   affiliation: ProjectOrganization;
-  identity: ContributorIdentity;
+  identity: ProjectContributorIdentity;
 }
 
 interface Funding {

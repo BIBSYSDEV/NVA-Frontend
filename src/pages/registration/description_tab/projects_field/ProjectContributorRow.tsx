@@ -11,6 +11,7 @@ import { SearchResponse } from '../../../../types/common.types';
 import { Organization } from '../../../../types/organization.types';
 import {
   ProjectContributor,
+  ProjectContributorIdentity,
   ProjectContributorType,
   ProjectOrganization,
   SaveCristinProject,
@@ -21,20 +22,20 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getTopLevelOrganization } from '../../../../utils/institutions-helpers';
-import { getFullCristinName } from '../../../../utils/user-helpers';
+import { getFullCristinName, getValueByKey } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { projectContributorToCristinPerson } from './projectHelpers';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 
 enum ProjectContributorFieldName {
   Type = 'type',
-  IdentityId = 'identity.id',
+  Identity = 'identity',
   Affiliation = 'affiliation',
 }
 
 interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
-  baseFieldName: string; //TODO: remove
+  baseFieldName: string;
   contributorIndex: number;
   removeContributor?: () => void;
 }
@@ -56,8 +57,6 @@ export const ProjectContributorRow = ({
   const [personSearchResult, isLoadingPersonSearchResult] = useFetch<SearchResponse<CristinPerson>>({
     url: debouncedSearchTerm ? `${CristinApiPath.Person}?results=20&name=${debouncedSearchTerm}` : '',
   });
-
-  const cristinPersonContributor = projectContributorToCristinPerson(contributor);
 
   const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
   const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
@@ -97,8 +96,8 @@ export const ProjectContributorRow = ({
           />
         )}
       </Field>
-      <Field name={`${baseFieldName}.${ProjectContributorFieldName.IdentityId}`}>
-        {({ field, meta: { touched, error } }: FieldProps<string>) => (
+      <Field name={`${baseFieldName}.${ProjectContributorFieldName.Identity}`}>
+        {({ field }: FieldProps<ProjectContributorIdentity>) => (
           <Autocomplete
             options={personSearchResult?.hits ?? []}
             inputMode="search"
@@ -109,15 +108,17 @@ export const ProjectContributorRow = ({
                 setSearchTerm(value);
               }
             }}
-            defaultValue={cristinPersonContributor ?? null}
+            defaultValue={projectContributorToCristinPerson(field.value)}
             onChange={async (_, selectedUser) => {
-              if (!selectedUser) {
-                setFieldValue(field.name, '');
-              } else {
-                setFieldValue(field.name, selectedUser.id ?? '');
-                if (selectedUser.affiliations) {
-                  fetchSuggestedInstitutions(selectedUser.affiliations.map((affiliation) => affiliation.organization));
-                }
+              const selectedContributrIdentity: ProjectContributorIdentity = {
+                type: 'Person',
+                id: selectedUser?.id ?? '',
+                firstName: getValueByKey('FirstName', selectedUser?.names),
+                lastName: getValueByKey('LastName', selectedUser?.names),
+              };
+              setFieldValue(field.name, selectedContributrIdentity);
+              if (selectedUser?.affiliations) {
+                fetchSuggestedInstitutions(selectedUser.affiliations.map((affiliation) => affiliation.organization));
               }
               setSearchTerm('');
             }}
@@ -135,17 +136,22 @@ export const ProjectContributorRow = ({
             }}
             renderInput={(params) => (
               <AutocompleteTextField
-                onBlur={field.onBlur}
+                {...params}
+                onBlur={() => setFieldTouched(`${field.name}.id`)}
                 value={field.value}
                 name={field.name}
                 data-testid={dataTestId.registrationWizard.description.projectForm.contributorsSearchField}
-                {...params}
                 required
                 label={t('project.person')}
                 placeholder={t('project.form.search_for_person')}
-                errorMessage={touched && !!error ? error : ''}
+                errorMessage={
+                  touched.contributors?.[contributorIndex]?.identity?.id &&
+                  !!(errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>)?.identity?.id
+                    ? (errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>)?.identity?.id
+                    : ''
+                }
                 isLoading={isLoadingPersonSearchResult}
-                showSearchIcon={!field.value}
+                showSearchIcon={!field.value.id}
               />
             )}
           />
@@ -167,7 +173,7 @@ export const ProjectContributorRow = ({
               onBlur: () => setFieldTouched(`${field.name}.id`),
             }}
             errorMessage={
-              touched.contributors?.[contributorIndex].affiliation?.id &&
+              touched.contributors?.[contributorIndex]?.affiliation?.id &&
               !!(errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>)?.affiliation?.id
                 ? (errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>)?.affiliation?.id
                 : ''
