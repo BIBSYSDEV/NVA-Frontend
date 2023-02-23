@@ -29,7 +29,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 
 export enum ProjectFieldName {
   Title = 'title',
-  CoordinatingInstitutionId = 'coordinatingInstitution.id',
+  CoordinatingInstitution = 'coordinatingInstitution',
   Contributors = 'contributors',
   StartDate = 'startDate',
   EndDate = 'endDate',

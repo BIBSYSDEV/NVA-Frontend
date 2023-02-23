@@ -32,7 +32,7 @@ interface BasicCoordinatingInstitution {
   id: string;
 }
 
-interface CoordinatingInstitution extends BasicCoordinatingInstitution {
+export interface CoordinatingInstitution extends BasicCoordinatingInstitution {
   name: LanguageString;
 }
 

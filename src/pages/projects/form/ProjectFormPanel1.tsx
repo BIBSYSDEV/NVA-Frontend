@@ -4,7 +4,12 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import AddCircleIcon from '@mui/icons-material/AddCircleOutline';
-import { CristinProject, emptyProjectContributor, SaveCristinProject } from '../../../types/project.types';
+import {
+  CoordinatingInstitution,
+  CristinProject,
+  emptyProjectContributor,
+  SaveCristinProject,
+} from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
@@ -16,7 +21,7 @@ interface ProjectFormPanel1Props {
 
 export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) => {
   const { t } = useTranslation();
-  const { values, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
+  const { values, setFieldValue, setFieldTouched, touched, errors } = useFormikContext<SaveCristinProject>();
 
   return (
     <>
@@ -35,22 +40,28 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
             />
           )}
         </Field>
-        <Field name={ProjectFieldName.CoordinatingInstitutionId}>
-          {({ field, meta: { touched, error } }: FieldProps<string>) => (
+        <Field name={ProjectFieldName.CoordinatingInstitution}>
+          {({ field }: FieldProps<CoordinatingInstitution>) => (
             <OrganizationSearchField
               label={t('project.coordinating_institution')}
-              onChange={(selectedInstitution) => setFieldValue(field.name, selectedInstitution?.id ?? '')}
-              errorMessage={touched && !!error ? error : undefined}
-              fieldInputProps={field}
-              currentValue={
-                values.coordinatingInstitution.id &&
-                currentProject?.coordinatingInstitution.id === values.coordinatingInstitution.id
-                  ? {
-                      id: values.coordinatingInstitution.id,
-                      name: currentProject.coordinatingInstitution.name,
-                    }
+              onChange={(selectedInstitution) => {
+                const selectedCoordinatingInstitution: CoordinatingInstitution = {
+                  type: 'Organization',
+                  id: selectedInstitution?.id ?? '',
+                  name: selectedInstitution?.name ?? {},
+                };
+                setFieldValue(field.name, selectedCoordinatingInstitution);
+              }}
+              errorMessage={
+                touched.coordinatingInstitution?.id && !!errors.coordinatingInstitution?.id
+                  ? errors.coordinatingInstitution?.id
                   : undefined
               }
+              fieldInputProps={{
+                ...field,
+                onBlur: () => setFieldTouched(`${field.name}.id`),
+              }}
+              selectedValue={field.value}
               customDataTestId={dataTestId.registrationWizard.description.projectForm.coordinatingInstitutionField}
             />
           )}

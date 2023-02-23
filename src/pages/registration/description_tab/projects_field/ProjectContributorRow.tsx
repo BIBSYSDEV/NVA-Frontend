@@ -153,7 +153,7 @@ export const ProjectContributorRow = ({
             errorMessage={touched && !!error ? error : ''}
             isLoadingDefaultOptions={isLoadingDefaultOptions}
             defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
-            currentValue={contributorAffiliation}
+            selectedValue={contributorAffiliation}
             customDataTestId={dataTestId.registrationWizard.description.projectForm.contributorAffiliationField}
           />
         )}
