@@ -1,4 +1,5 @@
 import { LanguageString } from './common.types';
+import { Organization } from './organization.types';
 
 export interface ResearchProject {
   type: 'ResearchProject';
@@ -27,44 +28,20 @@ interface ProjectIdentifier {
   value: string;
 }
 
-interface BasicCoordinatingInstitution {
-  type: 'Organization';
-  id: string;
-}
+export type ProjectOrganization = Omit<Organization, 'partOf' | 'hasPart'>;
 
-export interface CoordinatingInstitution extends BasicCoordinatingInstitution {
-  name: LanguageString;
-}
-
-interface BasicContributorAffiliation {
-  type: 'Organization';
-  id: string;
-}
-
-interface ContributorAffiliation extends BasicContributorAffiliation {
-  name: LanguageString;
-}
-
-interface BasicContributorIdentity {
+interface ContributorIdentity {
   type: 'Person';
   id: string;
-}
-
-interface ContributorIdentity extends BasicContributorIdentity {
   firstName: string;
   lastName: string;
 }
 
 export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 
-interface BasicProjectContributor {
+export interface ProjectContributor {
   type: ProjectContributorType;
-  identity: BasicContributorIdentity;
-  affiliation: BasicContributorAffiliation;
-}
-
-export interface ProjectContributor extends BasicProjectContributor {
-  affiliation: ContributorAffiliation;
+  affiliation: ProjectOrganization;
   identity: ContributorIdentity;
 }
 
@@ -82,8 +59,8 @@ export interface SaveCristinProject {
   language: string;
   startDate: string;
   endDate: string;
-  coordinatingInstitution: BasicCoordinatingInstitution;
-  contributors: BasicProjectContributor[];
+  coordinatingInstitution: ProjectOrganization;
+  contributors: ProjectContributor[];
   academicSummary: LanguageString;
   popularScientificSummary: LanguageString;
 }
@@ -93,7 +70,7 @@ export interface CristinProject extends SaveCristinProject {
   identifier: ProjectIdentifier[];
   status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
   alternativeTitles: LanguageString[];
-  coordinatingInstitution: CoordinatingInstitution;
+  coordinatingInstitution: ProjectOrganization;
   contributors: ProjectContributor[];
   funding: Funding[];
 }
@@ -119,10 +96,10 @@ export interface NfrProject {
   activeTo: string;
 }
 
-export const emptyProjectContributor: BasicProjectContributor = {
+export const emptyProjectContributor: ProjectContributor = {
   type: 'ProjectParticipant',
-  identity: { type: 'Person', id: '' },
-  affiliation: { type: 'Organization', id: '' },
+  identity: { type: 'Person', id: '', firstName: '', lastName: '' },
+  affiliation: { type: 'Organization', id: '', name: {} },
 };
 
 export const emptyProject: SaveCristinProject = {
@@ -135,6 +112,7 @@ export const emptyProject: SaveCristinProject = {
   coordinatingInstitution: {
     type: 'Organization',
     id: '',
+    name: {},
   },
   academicSummary: {},
   popularScientificSummary: {},

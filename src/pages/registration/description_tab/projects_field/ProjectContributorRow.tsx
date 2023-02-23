@@ -1,6 +1,6 @@
 import { Box, Autocomplete, Typography, TextField, IconButton } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
-import { Field, FieldProps } from 'formik';
+import { Field, FieldProps, FormikErrors, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../../api/apiPaths';
@@ -9,7 +9,12 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../../../types/common.types';
 import { Organization } from '../../../../types/organization.types';
-import { ProjectContributor, ProjectContributorType } from '../../../../types/project.types';
+import {
+  ProjectContributor,
+  ProjectContributorType,
+  ProjectOrganization,
+  SaveCristinProject,
+} from '../../../../types/project.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -24,12 +29,13 @@ import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 enum ProjectContributorFieldName {
   Type = 'type',
   IdentityId = 'identity.id',
-  AffiliationId = 'affiliation.id',
+  Affiliation = 'affiliation',
 }
 
 interface ProjectContributorRowProps {
   contributor?: ProjectContributor;
-  baseFieldName: string;
+  baseFieldName: string; //TODO: remove
+  contributorIndex: number;
   removeContributor?: () => void;
 }
 
@@ -37,8 +43,11 @@ export const ProjectContributorRow = ({
   contributor,
   baseFieldName,
   removeContributor,
+  contributorIndex,
 }: ProjectContributorRowProps) => {
   const { t } = useTranslation();
+  const { errors, touched, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
+
   const [showConfirmRemoveContributor, setShowConfirmRemoveContributor] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -49,9 +58,6 @@ export const ProjectContributorRow = ({
   });
 
   const cristinPersonContributor = projectContributorToCristinPerson(contributor);
-  const contributorAffiliation = contributor?.affiliation
-    ? { id: contributor.affiliation.id, name: contributor.affiliation.name }
-    : undefined;
 
   const [isLoadingDefaultOptions, setIsLoadingDefaultOptions] = useState(false);
   const [defaultInstitutionOptions, setDefaultInstitutionOptions] = useState<Organization[]>([]);
@@ -92,7 +98,7 @@ export const ProjectContributorRow = ({
         )}
       </Field>
       <Field name={`${baseFieldName}.${ProjectContributorFieldName.IdentityId}`}>
-        {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+        {({ field, meta: { touched, error } }: FieldProps<string>) => (
           <Autocomplete
             options={personSearchResult?.hits ?? []}
             inputMode="search"
@@ -145,15 +151,30 @@ export const ProjectContributorRow = ({
           />
         )}
       </Field>
-      <Field name={`${baseFieldName}.${ProjectContributorFieldName.AffiliationId}`}>
-        {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+      <Field name={`${baseFieldName}.${ProjectContributorFieldName.Affiliation}`}>
+        {({ field }: FieldProps<ProjectOrganization>) => (
           <OrganizationSearchField
-            onChange={(institution) => setFieldValue(field.name, institution?.id ?? '')}
-            fieldInputProps={field}
-            errorMessage={touched && !!error ? error : ''}
+            onChange={(institution) => {
+              const selectedCoordinatingInstitution: ProjectOrganization = {
+                type: 'Organization',
+                id: institution?.id ?? '',
+                name: institution?.name ?? {},
+              };
+              setFieldValue(field.name, selectedCoordinatingInstitution);
+            }}
+            fieldInputProps={{
+              ...field,
+              onBlur: () => setFieldTouched(`${field.name}.id`),
+            }}
+            errorMessage={
+              touched.contributors?.[contributorIndex].affiliation?.id &&
+              !!(errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>)?.affiliation?.id
+                ? (errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>)?.affiliation?.id
+                : ''
+            }
             isLoadingDefaultOptions={isLoadingDefaultOptions}
-            defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value)}
-            selectedValue={contributorAffiliation}
+            defaultOptions={defaultInstitutionOptions.filter((institution) => institution.id !== field.value.id)}
+            selectedValue={field.value}
             customDataTestId={dataTestId.registrationWizard.description.projectForm.contributorAffiliationField}
           />
         )}

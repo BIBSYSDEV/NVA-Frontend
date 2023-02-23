@@ -5,9 +5,9 @@ import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, use
 import { useTranslation } from 'react-i18next';
 import AddCircleIcon from '@mui/icons-material/AddCircleOutline';
 import {
-  CoordinatingInstitution,
   CristinProject,
   emptyProjectContributor,
+  ProjectOrganization,
   SaveCristinProject,
 } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -41,11 +41,11 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
           )}
         </Field>
         <Field name={ProjectFieldName.CoordinatingInstitution}>
-          {({ field }: FieldProps<CoordinatingInstitution>) => (
+          {({ field }: FieldProps<ProjectOrganization>) => (
             <OrganizationSearchField
               label={t('project.coordinating_institution')}
               onChange={(selectedInstitution) => {
-                const selectedCoordinatingInstitution: CoordinatingInstitution = {
+                const selectedCoordinatingInstitution: ProjectOrganization = {
                   type: 'Organization',
                   id: selectedInstitution?.id ?? '',
                   name: selectedInstitution?.name ?? {},
@@ -150,6 +150,7 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
                 return (
                   <ProjectContributorRow
                     key={index}
+                    contributorIndex={index}
                     baseFieldName={`${name}[${index}]`}
                     contributor={thisContributor}
                     removeContributor={contributor.type === 'ProjectManager' ? undefined : () => remove(index)}
