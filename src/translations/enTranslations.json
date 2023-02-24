@@ -849,6 +849,7 @@
       "start_with_nfr_project": "If you have a funding from The Research Council of Norway (NFR), you can start with that, and get some fields prefilled."
     },
     "grant_id": "GrantID",
+    "keywords": "Keywords",
     "no_participants": "No registered participants.",
     "no_results": "No published results.",
     "no_summary": "No registered summary.",
