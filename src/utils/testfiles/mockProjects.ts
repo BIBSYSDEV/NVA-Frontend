@@ -80,6 +80,7 @@ export const mockProject: CristinProject = {
       },
     },
   ],
+  projectCategories: [],
 };
 
 const mockProjects: CristinProject[] = [
@@ -131,6 +132,7 @@ const mockProjects: CristinProject[] = [
         },
       },
     ],
+    projectCategories: [],
   },
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414392',
@@ -179,6 +181,7 @@ const mockProjects: CristinProject[] = [
         },
       },
     ],
+    projectCategories: [],
   },
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414451',
@@ -259,6 +262,7 @@ const mockProjects: CristinProject[] = [
         },
       },
     ],
+    projectCategories: [],
   },
   {
     id: 'https://api.dev.nva.aws.unit.no/cristin/project/414803',
@@ -307,6 +311,7 @@ const mockProjects: CristinProject[] = [
         },
       },
     ],
+    projectCategories: [],
   },
 ];
 

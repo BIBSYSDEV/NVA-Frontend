@@ -1,6 +1,11 @@
 import { LanguageString } from './common.types';
 import { Organization } from './organization.types';
 
+export interface TypedLabel {
+  type: string;
+  label: LanguageString;
+}
+
 export interface ResearchProject {
   type: 'ResearchProject';
   id: string;
@@ -63,6 +68,7 @@ export interface SaveCristinProject {
   contributors: ProjectContributor[];
   academicSummary: LanguageString;
   popularScientificSummary: LanguageString;
+  projectCategories: TypedLabel[];
 }
 
 export interface CristinProject extends SaveCristinProject {
@@ -116,4 +122,5 @@ export const emptyProject: SaveCristinProject = {
   },
   academicSummary: {},
   popularScientificSummary: {},
+  projectCategories: [],
 };
