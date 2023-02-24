@@ -40,11 +40,18 @@ export enum ProjectFieldName {
 
 interface ProjectFormDialogProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
+  onCreateProject?: (project: CristinProject) => void;
   currentProject?: CristinProject;
   refetchData?: () => void;
 }
 
-export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }: ProjectFormDialogProps) => {
+export const ProjectFormDialog = ({
+  currentProject,
+  refetchData,
+  onClose,
+  open,
+  onCreateProject,
+}: ProjectFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [initialValues, setInitialValues] = useState<CristinProject | SaveCristinProject | undefined>(currentProject);
@@ -59,7 +66,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
 
   const submitProjectForm = async (values: SaveCristinProject) => {
     if (editMode) {
-      const updateProjectResponse = await authenticatedApiRequest({
+      const updateProjectResponse = await authenticatedApiRequest<CristinProject>({
         url: currentProject.id,
         method: 'PATCH',
         data: values,
@@ -73,7 +80,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
         dispatch(setNotification({ message: t('feedback.error.update_project'), variant: 'error' }));
       }
     } else {
-      const createProjectResponse = await authenticatedApiRequest({
+      const createProjectResponse = await authenticatedApiRequest<CristinProject>({
         url: CristinApiPath.Project,
         method: 'POST',
         data: values,
@@ -81,6 +88,7 @@ export const ProjectFormDialog = ({ currentProject, refetchData, onClose, open }
 
       if (isSuccessStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.create_project'), variant: 'success' }));
+        onCreateProject?.(createProjectResponse.data);
         handleClose();
       } else if (isErrorStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_project'), variant: 'error' }));
