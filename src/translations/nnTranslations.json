@@ -578,267 +578,267 @@
         "paragraph": ""
       },
       "section2": {
-        "email": "",
-        "intro": "",
-        "telephone": ""
+        "email": "Epost: <0><0></0></0>",
+        "intro": "Kontaktinformasjon til Sikt brukarstøtte:",
+        "telephone": "Telefon: <0><0></0></0>"
       }
     },
     "disclosure_of_data": {
-      "heading": "",
-      "paragraph0": "",
-      "paragraph1": "",
-      "paragraph2": "",
+      "heading": "Utlevering av dine personopplysingar til andre",
+      "paragraph0": "Utlevering eller eksport av data vert definert som kvar og ein avgiving av data forutan til eiga system/handsaming eller til den registrerte sjølve, eller nokon som tek imot data på deira vegne.",
+      "paragraph1": "Personopplysingar knytt til brukarar vert ikkje overført til land utanfor EU/EØS.",
+      "paragraph2": "Tenesta er drifta på servere innanfor EU/EØS.",
       "paragraph3": {
-        "intro": "",
+        "intro": "Dine personopplysingar vert levert ut til Sikt som er leverandør av tenesta, og til deira underleverandører:",
         "table": {
-          "caption": "",
+          "caption": "Oversyn over underleverandører som kan ta imot personopplysingar",
           "header": {
-            "col0": "",
-            "col1": ""
+            "col0": "Underleverandør",
+            "col1": "Funksjon"
           },
           "row0": {
-            "col0": "",
-            "col1": ""
+            "col0": "Leverandør i rammeavtale for AWS gjennom GÉANT-samarbeidet",
+            "col1": "Skydrift og backup for Sikt sine direkte tenester"
           },
           "row1": {
-            "col0": "",
-            "col1": ""
+            "col0": "Blue Safespring AB",
+            "col1": "Skydrift og backup for Sikt sine direkte tenester"
           },
           "row2": {
-            "col0": "",
-            "col1": ""
+            "col0": "UNINETT AS",
+            "col1": "Leverer Feide, for autentisering av brukarar mot tenestene"
           }
         }
       },
-      "paragraph4": "",
-      "paragraph5": "",
+      "paragraph4": "Tilsette hos underleverandørane, som har behov for det i sin jobb, vil ha tilpassa tilgang til dine persondata for å kunne gjere stedleg vedlikehald, brukarstøtte og eventuell retting av feil i tenesta.",
+      "paragraph5": "Opne personopplysingar knytt til ressursane vert delt opent med eksterne tenester. Dette inkluderer søkjetenester som Oria og OpenAIRE, samt søkjemotorar som indekserer data via nettstadene - til dømes Google, Baidu, Bing med fleire.",
       "paragraph6": {
-        "intro": "",
+        "intro": "Sjå følgjande tabell for tenesta sine integrasjonar:",
         "table": {
-          "caption": "",
+          "caption": "Oversyn over integrasjonar",
           "header": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Integrasjon",
+            "col1": "Føremål",
+            "col2": "Teneste levert av"
           },
           "row0": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Feide",
+            "col1": "Informasjon for sikker innlogging av brukarar.",
+            "col2": "UNINETT AS"
           },
           "row1": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Import av materiale til NVA frå eksterne tenester",
+            "col1": "Registrering og publisering i NVA.",
+            "col2": "Kjelder definert av ansvarleg for handsaming"
           },
           "row2": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Eksport av metadata frå NVA til ekstern teneste",
+            "col1": "Eksport av metadata for ressursar til andre tenester for presentasjon eller kryssregistering. Til dømes Oria for å leggje til rette for attfinning.",
+            "col2": "Sikt for Oria. Kjelder definert av ansvarleg for handsaming"
           },
           "row3": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "DOI og Datacite",
+            "col1": "Registrator kan be om tildeling av ein Document Object Identifier (DOI) til ein ressurs i NVA. Dette vil føre til at valde metadata vert publisert i DataCite - ein kjelde som vert indeksert regelmessig av søkjemotorar.",
+            "col2": "DataCite"
           },
           "row4": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Felles autoritetsregister",
+            "col1": "Etablere kopling til autoritetsregister for autorisering av forfattar, redaktør, rettleiar og anna opphavsperson eller bidragsytar som vert registrert i tenesta. For å leggje til rette for eintydig registrering og attfinning.",
+            "col2": "Sikt"
           },
           "row5": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "$t(common.orcid)",
+            "col1": "Etablere kopling til ORCID for autorisering av forfattar, redaktør, rettleiar og anna opphavsperson eller bidragsytar som vert registrert i tenesta. For å leggje til rette for eintydig registrering og attfinning.",
+            "col2": "$t(common.orcid)"
           }
         }
       }
     },
-    "privacy_statement": "",
+    "privacy_statement": "Personvernerklæring",
     "purpose": {
-      "heading": "",
-      "paragraph": "",
+      "heading": "Føremålet med handsaming av personopplysingar i tenesta",
+      "paragraph": "Tenesta handsamar ulike persontypar med følgjande føremål:",
       "table": {
         "header": {
-          "col0": "",
-          "col1": "",
-          "col2": ""
+          "col0": "Typer",
+          "col1": "$t(common.description)",
+          "col2": "Føremål med registrering og handsaming"
         },
         "row0": {
-          "col0": "",
-          "col1": "",
-          "col2": ""
+          "col0": "Administrative brukarar",
+          "col1": "Arkivadministrator, redaktør, kurator. Typisk tilsette ved institusjonen.",
+          "col2": "Administrasjon av tenesta irekna vedlikehald av innhald og konfigurering av tilgang til funksjonar og til innhald. Administrative brukarar må vere registrert med identitet for å få rettar i tenesta."
         },
         "row1": {
-          "col0": "",
-          "col1": "",
-          "col2": ""
+          "col0": "Autentiserte brukarar",
+          "col1": "Registrator. Personar med tilknyting til institusjonen som har logga på tenesta.",
+          "col2": "Registrering av innhald i tenesta. Brukarar må vere registrert med identitet og kopling til autoritetsregister for forfattar for å få rettar i tenesta."
         },
         "row2": {
-          "col0": "",
-          "col1": "",
-          "col2": ""
+          "col0": "Anonyme brukarar",
+          "col1": "Personar eller tenester som har tilgang til tenesta utan å logge på. IP-adressar vil verte registrert i logg.",
+          "col2": "Anonyme brukarar vert gjeve tilgang til opne ressursar i tenesta. Tenesta loggfører nødvendig informasjon for å hindre misbruk samt for å generere aggregert statistikk over bruk av ressursane."
         },
         "row3": {
-          "col0": "",
-          "col1": "",
-          "col2": ""
+          "col0": "Bibliografiske data - personar knytt til registrert ressurs",
+          "col1": "Forfattar, redaktør, rettleiar eller anna opphavsperson eller bidragsytar til ressurs registrert i tenesta.",
+          "col2": "Katalogisering, kreditering og ansvarleggjering av personane bak ressursen."
         },
         "row4": {
-          "col0": "",
-          "col1": "",
-          "col2": ""
+          "col0": "Bibliografiske data - personar referert i ressursen",
+          "col1": "Personopplysingar referert gjennom innhald i publisert ressurs",
+          "col2": "Tilgjengeleggjering av publisert ressurs. Ansvarleg for innhald må saman med ansvarleg for handsaming sikre personvernet i ressursen før publisering i tenesta."
         }
       }
     },
     "registered_personal_data": {
-      "heading": "",
-      "paragraph0": "",
-      "paragraph1": "",
-      "paragraph2": "",
-      "paragraph3": "",
-      "paragraph4": "",
-      "paragraph5": "",
+      "heading": "Registrerte personopplysingar, rettsleg grunnlag og lagringstid",
+      "paragraph0": "Personopplysingar knytt til brukarkonto i tenesta krev samtykke som rettsleg grunnlag, jamfør <0>Lov om handsaming av personopplysingar (lov om personopplysing), GDPR artikkel 6</0> nr. 1 bokstav a.",
+      "paragraph1": "Registrerte personopplysingar om forfattarar og andre presonar knytt til ressurs eller identifisert i ressurs vert dekt av <0>Lov om handsaming av personopplysingar (personopplysingsloven), GDPR artikkel 6</0> nr. 1 bokstav f - å utføre ein oppgåve av rettkomen interesse.",
+      "paragraph2": "Tenesta tillèt ikkje handsaming av sensitive personopplysingar. I dei tilfeller brukarar sjølv kan leggje inn opplysingar i kommentarfelt og liknande, plikter brukaren å følgje krav og retningsliner for tenesta. Det er ikkje tillate å registrere sensitive opplysingar om seg sjølve eller andre, eller å nytte tenesta til skadeleg åtferd.",
+      "paragraph3": "Ansvarleg for handsaming kan lagre opplysingar for statistiske føremål, viss dette er i samfunnets interesse, jf <0>Personopplysingslova §8</0> og <1>GDPR artikkel 6</1> nr 1 bokstav e.",
+      "paragraph4": "Følgjande persondata vert handsama i tenesta:",
+      "paragraph5": "Informasjonen om din aktivitet vert lagra for å kunne gje deg brukarstøtte og for å kunne seie noko om den generelle bruken av tenesta.",
       "paragraph6": {
-        "bullet_point0": "",
-        "bullet_point1": "",
-        "bullet_point2": "",
-        "intro": ""
+        "bullet_point0": "Brukarsamtykkjet vert trekt tilbake",
+        "bullet_point1": "Føremålet med handsaming av personopplysingar er oppfylt",
+        "bullet_point2": "Ansvarleg for handsaming avgjer å leggje ned tenesta",
+        "intro": "Persondata vert lagra inntil ein av følgjande hendingar inntreffer:"
       },
-      "paragraph7": "",
-      "paragraph8": "",
+      "paragraph7": "Logg og backup av systemdata vert lagra inntil eit år.",
+      "paragraph8": "Brukarinformasjon (unnateke logg) vart lagra i levetida til ein ressurs for brukarar som registrerer innhald i NVA.",
       "table": {
         "header": {
-          "col0": "",
-          "col1": "",
-          "col2": ""
+          "col0": "Opplysingstype",
+          "col1": "$t(common.description)",
+          "col2": "Kjelde"
         },
         "other_user_data": {
-          "heading": "",
+          "heading": "Andre persondata",
           "row0": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Metadata for ressurs",
+            "col1": "Fullt namn og rolle for forfattar, redaktør, rettleiar og anna opphavsperson eller bidragsytar",
+            "col2": "Oppretta i NVA ved registrering eller overført frå ekstern datakjelde"
           },
           "row1": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Persondata i sjølve ressursen",
+            "col1": "Personar identifisert i ressursen. Innhald i ressursen må verte kvalitetssikra av ansvarleg før publisering.",
+            "col2": "Ressursen er lasta opp i NVA ved registrering eller overført frå ekstern kjelde"
           }
         },
         "techincal_user_data": {
-          "heading": "",
+          "heading": "Brukardata av teknisk karakter",
           "row0": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Systemidentitetar",
+            "col1": "Identitetar i tenesta og integrerte system. Feide-id, Forfattar-id, ORCID iD",
+            "col2": "Feide, Felles autoritetsregister, ORCID"
           },
           "row1": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Systemroller og tilknyting til institusjon",
+            "col1": "Brukar verte tildelt roller i systemet for å gje tilpassa funksjonalitet og tilgang til tenesta.",
+            "col2": "Tildelt i NVA, Feide"
           },
           "row2": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Sesjonsinformasjon og informasjonskapslar",
+            "col1": "Informasjon knytt til brukar sin dialog med tenesta. Nødvendeg for å tilpasse funksjonalitet i tenesta og for autentisering av brukarar.",
+            "col2": "NVA, Feide"
           },
           "row3": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Logg",
+            "col1": "Logg over bruk av systemet knyt til innlogga brukar og/eller ip-adresse. IP-adresse vil vere registrert for anonyme brukarar, noko som i nokre tilfeller kan verte spora attende til ein person. Føremålet med logg er å vareta sikkerheit og integritet i systemet, yte brukarstøtte, samt å analysere bruk av tenesta. Opplysingane som vert samla inn inkluderer tidspunkt, brukar-id, ip-adresse, informasjon om nettlesar og maskinvare, sesjonsinformasjon og anna informasjon som nettlesar vanlegvis leverer ifrå seg.",
+            "col2": "Oppretta i NVA"
           }
         },
         "user_data": {
-          "heading": "",
+          "heading": "Brukardata",
           "row0": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Grunnleggjande brukardata",
+            "col1": "Fullt namn.",
+            "col2": "Feide"
           },
           "row1": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Kontaktinformasjon",
+            "col1": "E-postadresse tildelt ved eigen institusjon.",
+            "col2": "Feide"
           },
           "row2": {
-            "col0": "",
-            "col1": "",
-            "col2": ""
+            "col0": "Profil",
+            "col1": "Brukaren sine preferansar for bruk av tenesta. Språkval, Institusjonstilknyting",
+            "col2": "Innstillingar i NVA"
           }
         }
       }
     },
     "security_for_personal_data": {
-      "heading": "",
-      "paragraph0": "",
-      "paragraph1": ""
+      "heading": "Sikkerheita kring dine personopplysingar",
+      "paragraph0": "Personopplysingar i tenesta er sikra med fleire tiltak. Alle overføringar til og frå tenesta knyt til brukarkonti er kryptert. Datahandsamar utfører regelmessig risiko- og sårbarheitsanalyser, og tester sikkerheita i tenesta for å sikre dine personopplysingar.",
+      "paragraph1": "Ansvarleg for handsaming er ansvarleg for rutiner som varetar personvernet i samband med publisering av innhald."
     },
     "service_in_brief": {
-      "heading": "",
-      "paragraph0": "",
-      "paragraph1": "",
-      "paragraph2": ""
+      "heading": "Kort om tenesta",
+      "paragraph0": "NVA er ein teneste for å samle og gjere tilgjengeleg informasjon om, og resultat frå, norsk forsking. Institusjonen (den ansvarlege for handsaming) registrerer og vedlikeheld eiga innhold i tenesten og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett etc.). Tenesta får òg overført innhald som høyrer til institusjonen frå andre datakjelder. NVA gjer institusjonens opne innhald tilgjengeleg via opne grensesnitt, med hensikt å gjere dette kjend og søkbart for omverda og framme indeksering i søkjemotorar og søkjeportalar.",
+      "paragraph1": "NVA har støtte for utsatt publisering av ressursar. Det betyr at registreringa kan verte ferdigstilt slik at metadata om ressursen vert publisert, mens ressursen ikkje vert opent tilgjengeleg før angjeve dato.",
+      "paragraph2": "Tenesta tillèt ikkje handsaming av sensitive personopplysingar."
     },
     "what_are_personal_data": {
-      "heading": "",
-      "paragraph": ""
+      "heading": "Kva er personopplysingar?",
+      "paragraph": "Personopplysingar er alle former for data, informasjon, opplysingar og vurderingar som kan vert knytt til deg som enkeltperson, jf. <0>personopplysingslova § 2</0> og <1>GDPR artikkel 5</1> nr. 1. Det avgjerandre for om ein opplysing er ein personopplysing er om opplysinga kan vert knytt til ein konkret person. Opplysingar, som aleine ikkje kan vert knytt til ein enkeltperson, kan i tilfeller kor opplysinga førekjem saman med andre data utgjere ein personopplysing."
     },
     "your_rights": {
-      "heading": "",
+      "heading": "Dine rettar",
       "section0": {
-        "heading": "",
-        "paragraph0": "",
-        "paragraph1": ""
+        "heading": "Rett til informasjon og innsyn",
+        "paragraph0": "Du har rett til å få informasjon om korleis dine personopplysingar vert handsama i tenesta. Denne personvernerklæringa er meint å innehalde den informasjonen du har rett til å få. Du har òg rett til å sjå/få innsyn i dine personopplysingar som er registrert i tenesta, òg andre personopplysingar som vert innhenta etter aktiv pålogging frå deg. Du har òg rett til å få utlevert ein kopi av personopplysingar om deg, viss du ønskjer det.",
+        "paragraph1": "Retten til innsyn vert ivareteke gjennom sjølvbetening i tenesta, kor du etter pålogging får innsyn i eigne opplysingar. Viss tenesten ikkje gjev fullstendege opplysingar via sjølvbeteningsløysinga, må det rettast ein skriftleg førespurnad til ansvarleg for handsaming sin brukarstøtte for å få tilgang til utfyllande opplysingar."
       },
       "section1": {
-        "heading": "",
-        "paragraph0": "",
-        "paragraph1": ""
+        "heading": "Rett til korrigering",
+        "paragraph0": "Du har rett til å få urektige personopplysingar om deg korrigert. Du har òg rett til å få ufullstendege personopplysingar om deg supplert. Viss du meiner tenesta viser feil eller mangelfulle personopplysingar, ber vi deg om å ta kontakt med ansvarleg for handsaming og at du grunngjev kvifor du meiner personopplysingane er feil eller mangelfulle.",
+        "paragraph1": "Ver oppmerksam på at det er avgrensa moglegheiter til å korrigere opplysingar som er distribuert via opne grensesnitt."
       },
       "section2": {
-        "heading": "",
+        "heading": "Rett til å avgrense handsaminga",
         "paragraph0": {
-          "bullet_point0": "",
-          "bullet_point1": "",
-          "bullet_point2": "",
-          "intro": ""
+          "bullet_point0": "I påvente av at ansvarleg for handsaming korrigerer feil eller mangelfulle personopplysingar",
+          "bullet_point1": "Viss du har fremma ein innseiing mot handsaminga (sjå meir om dette under)",
+          "bullet_point2": "Viss personopplysingane er naudsynt for å opprette eller forsvare eit rettsleg krav",
+          "intro": "I nokre tilfeller kan du ha rett til å krevje at handsaminga av dine personopplysingar vert avgrensa. Avgrensa handsaming vil seie at personopplysingane framleis vert lagra, men at anna handsaming i tenesta vert avgrensa. For å kunne krevje avgrensa handsaming av personopplysingar, må vilkåra i personopplysingslova og <0>GDPR artikkel 18</0> vere oppfylt."
         },
-        "paragraph1": ""
+        "paragraph1": "Vert avgrensa handsaming sett i verk, vil du verte varsla av ansvarleg for handsaming før avgrensinga vert oppheva."
       },
       "section3": {
-        "heading": "",
-        "paragraph0": "",
-        "paragraph1": "",
-        "paragraph2": ""
+        "heading": "Rett til sletting",
+        "paragraph0": "Du har rett til å krevje at vi sletter personopplysingar om deg. Viss du ønskjer å få sletta dine personopplysingar, ber vi deg om å ta kontakt med ansvarleg for handsaming. Det er viktig at du grunngjev kvifor du ønskjer at personopplysingane vert sletta, og om mogleg òg opplyser kva personopplysingar du ønskjer å få sletta.",
+        "paragraph1": "Vær oppmerksam på at lovverket i nokre tilfeller gjev oss høve til å gjere unntak frå retten til sletting. Til eksempel vil dette vere tilfeller når vi handsamar personopplysingane for å oppfylle ein lovpålagt oppgåve, eller for å ivareta viktige samfunnsinteressar som arkivering, forsking og statistikk. Vi har ikkje moglegheit til å slette brukarinformasjon kor brukaren sjølv har registrert innhald i NVA utan samstundes å slette det registrerte innhaldet.",
+        "paragraph2": "Vær òg oppmerksam på at det er avgrensa moglegheiter til å slette personopplysingar som er distribuert via opne grensesnitt."
       },
       "section4": {
-        "heading": "",
+        "heading": "Rett til å fremme innseiing",
         "paragraph0": {
-          "bullet_point0": "",
-          "bullet_point1": "",
-          "bullet_point2": "",
-          "intro": ""
+          "bullet_point0": "Rettsleg grunnlag for handsaming av personopplysingar er basert på legitime interessar, i allmenn interesse, eller ved utøving av offentleg myndegheit.",
+          "bullet_point1": "Handsaming av personopplysingar inneber direkte marknadsføring eller profilering",
+          "bullet_point2": "Handsaming av personopplysingar skjer med tanke på vitskapeleg/historisk forsking eller statistikk.",
+          "intro": "Du har rett til å fremme innseiing mot handsaming av dine personopplysingar under visse vilkår, definert i <0>GDPR artikkel 21</0>. Dette gjeld viss;"
         },
-        "paragraph1": "",
+        "paragraph1": "Tenesta tilfredsstiller generelt ikkje desse vilkåra, med unntak for handsaming av forfattaropplysingar og i dei tilfeller kor personopplysingar vert brukt for statistikk. Ved bruk til statistikk vil persondata vere anonymisert.",
         "paragraph2": {
-          "bullet_point0": "",
-          "bullet_point1": "",
-          "intro": ""
+          "bullet_point0": "Viss du har eit særskild behov for å få stansa handsaminga ber vi deg om å ta kontakt med ansvarleg for handsaming - eksempelvis viss du har eit behov for vern, fortruleg adresse eller liknande.",
+          "bullet_point1": "Når det er gjeve samtykke for handsaming av personopplysingar, har du rett til å trekkje samtykket.",
+          "intro": "Vær likevel oppmerksam på følgjande;"
         }
       },
       "section5": {
-        "heading": "",
-        "paragraph0": "",
-        "paragraph1": ""
+        "heading": "Rett til å klage over handsaminga",
+        "paragraph0": "Viss du meiner vi ikkje har handsama personopplysingane på riktig eller lovleg vis, eller viss du meiner at vi ikkje har klart å oppfylle dine rettar, har du moglegheit til å klage over handsaminga. Sjå nedst for informasjon om korleis du kan kontakte oss.",
+        "paragraph1": "Viss vi ikkje tar klagen di til følgje, har du moglegheit til å framme klagen for Datatilsynet. Datatilsynet er ansvarleg for å kontrollere at norske verksemder overheld avgjersler i personoppysingslova og GDPR, ved handsaming av personopplysingar."
       }
     }
   },
   "project": {
-    "coordinating_institution": "",
-    "create_project": "",
+    "coordinating_institution": "Koordinerandre institusjon",
+    "create_project": "Opprett prosjekt",
     "edit_project": "Endre prosjekt",
-    "financing": "",
+    "financing": "Finansiering",
     "form": {
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
@@ -848,43 +848,43 @@
       "start_with_empty_form": "Start utan nokre ferdeg utfylte opplysingar.",
       "start_with_nfr_project": "Viss du har finansiering frå Norges Forskningsråd (NFR), kan du starte med den og få nokre felt ferdeg utfylt."
     },
-    "grant_id": "",
-    "no_participants": "",
-    "no_results": "",
-    "no_summary": "",
-    "period": "",
-    "person": "",
-    "popular_science_summary": "",
-    "project": "",
-    "project_info": "",
-    "project_manager": "",
+    "grant_id": "GrantID",
+    "no_participants": "Inga registrerte deltakarar.",
+    "no_results": "Inga publiserte resultat.",
+    "no_summary": "Inga registrerte samandrag.",
+    "period": "Prosjektperiode",
+    "person": "Person",
+    "popular_science_summary": "Populærvitskapeleg samandrag",
+    "project": "Prosjekt",
+    "project_info": "Prosjektinfo",
+    "project_manager": "Prosjektleiar",
     "project_participant": "Prosjektdeltakar",
-    "project_participants": "",
-    "results": "",
-    "scientific_summary": "",
-    "search_for_institution": "",
+    "project_participants": "Prosjektdeltakarar",
+    "results": "Resultat",
+    "scientific_summary": "Vitskapeleg samandrag",
+    "search_for_institution": "Søk etter institusjon",
     "status": {
-      "ACTIVE": "",
-      "CONCLUDED": "",
-      "NOTSTARTED": ""
+      "ACTIVE": "Aktivt",
+      "CONCLUDED": "Avslutta",
+      "NOTSTARTED": "Ikkje starta"
     },
-    "summary": ""
+    "summary": "Samandrag"
   },
   "registration": {
     "contributors": {
-      "add_affiliation": "",
+      "add_affiliation": "Legg til tilknyting",
       "add_contributor": "Legg til bidragsytar",
-      "add_duplicate_affiliation": "",
+      "add_duplicate_affiliation": "Tilknytinga er allereie lagt til",
       "add_self_as_contributor": "Legg meg til som bidragsytar",
-      "add_unverified_contributor": "",
-      "authors": "",
-      "confirm_remove_author_text": "",
-      "confirmed": "",
-      "contributor": "",
-      "contributor_already_added": "",
+      "add_unverified_contributor": "Legg til ein ikkje-verifisert bidragsytar",
+      "authors": "Forfattarar",
+      "confirm_remove_author_text": "Er du sikker på at du ønskjer å fjerne {{contributorName}}?",
+      "confirmed": "Bekrefta",
+      "contributor": "Bidragsytar",
+      "contributor_already_added": "Vald bidragsytar er allereie lagt til",
       "contributor_not_found": "Finn ikkje bidragsytar",
-      "corresponding": "",
-      "department": "",
+      "corresponding": "Korresponderande",
+      "department": "Eining",
       "identity_status": {
         "confirmed_identity": "Bekreft identitet",
         "confirmed_identity_without_affiliation": "Bekrefta identitet utan tilhøyrsle",
@@ -892,12 +892,12 @@
       },
       "invalid_role": "Bidragsytaren må ha ein rolle som er gyldeg for denne ressurstypen for å visast for andre brukarar",
       "must_select_type_first": "Du må velje ressurstype før du kan leggje til bidragsytarar.",
-      "no_affiliations_found": "",
-      "no_registrations_found": "",
+      "no_affiliations_found": "Inga tilknytingar funne",
+      "no_registrations_found": "Inga registreringar funne",
       "other_registrations_one": "+ {{count}} annan registrering",
       "other_registrations_other": "+ {{count}} andre registreringar",
-      "prefilled_affiliation": "",
-      "prefilled_name": "",
+      "prefilled_affiliation": "Førehandsutfylt tilknyting",
+      "prefilled_name": "Førehandsutfylt namn",
       "remove_affiliation": "Fjern tilknyting",
       "remove_contributor": "Fjern bidragsytar",
       "search_for_institution": "Søk etter institusjon",
