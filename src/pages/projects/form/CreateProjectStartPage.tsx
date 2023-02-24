@@ -70,6 +70,7 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
       <DialogActions>
         <Button onClick={onClose}>{t('common.cancel')}</Button>
         <Button
+          data-testid={dataTestId.registrationWizard.description.projectForm.startCreateProjectButton}
           variant="contained"
           disabled={!emptyProjectSelected && !selectedNfrProject}
           onClick={() => {
