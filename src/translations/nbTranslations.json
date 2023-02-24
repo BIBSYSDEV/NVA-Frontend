@@ -849,6 +849,7 @@
       "start_with_nfr_project": "Hvis du har finansiering fra Norges Forskningsråd (NFR), så kan du starte med den og få noen felt ferdig utfylt."
     },
     "grant_id": "GrantID",
+    "keywords": "Nøkkelord",
     "no_participants": "Ingen registrerte deltakere.",
     "no_results": "Ingen publiserte resultater.",
     "no_summary": "Ingen registrerte sammendrag.",
