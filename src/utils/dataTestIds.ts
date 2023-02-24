@@ -200,6 +200,7 @@ export const dataTestId = {
         removeContributorButton: 'remove-contributor-button',
         roleField: 'project-participant-role-field',
         saveProjectButton: 'save-project-button',
+        startCreateProjectButton: 'start-create-project-button',
         startDateField: 'project-start-date-field',
         startWithEmptyProjectButton: 'start-with-empty-project-button',
         titleField: 'project-title-field',
