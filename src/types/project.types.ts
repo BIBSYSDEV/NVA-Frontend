@@ -70,6 +70,7 @@ export interface SaveCristinProject {
   popularScientificSummary: LanguageString;
   projectCategories: TypedLabel[];
   keywords: TypedLabel[];
+  relatedProjects: string[];
 }
 
 export interface CristinProject extends SaveCristinProject {
@@ -125,4 +126,5 @@ export const emptyProject: SaveCristinProject = {
   popularScientificSummary: {},
   projectCategories: [],
   keywords: [],
+  relatedProjects: [],
 };
