@@ -230,7 +230,7 @@
     "1022": "Teologi og religionsvitenskap",
     "1023": "Tverrfaglig humanistisk forskning",
     "1024": "Tysk og nederlandsk",
-    "1025": "Biblioteks- og informasjonsvitenskap",
+    "1025": "Bibliotek- og informasjonsvitenskap",
     "1026": "Geografi",
     "1027": "Pedagogikk og utdanning",
     "1028": "Rettsvitenskap",
@@ -776,7 +776,7 @@
     },
     "service_in_brief": {
       "heading": "Kort om tjenesten",
-      "paragraph0": "NVA er en tjeneste for å samle og gjøre tilgjengelig informasjon om, og resultater fra, norsk forskning. Institusjonen (den behandlingsansvarlige) registrer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold tilhørende institusjonen fra andre datakilder. NVA tilgjengeliggjør institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
+      "paragraph0": "NVA er en tjeneste for å samle og gjøre tilgjengelig informasjon om, og resultater fra, norsk forskning. Institusjonen (den behandlingsansvarlige) registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold tilhørende institusjonen fra andre datakilder. NVA tilgjengeliggjør institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
       "paragraph1": "NVA har støtte for utsatt publisering av ressurser. Det betyr at registreringen kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato.",
       "paragraph2": "Tjenesten tillater ikke behandling av sensitive personopplysninger."
     },
@@ -997,7 +997,7 @@
       "accepted_version": "Akseptert versjon",
       "add_files_or_link": "Legg til filer eller lenke",
       "administrative_agreement": "Administrativ avtale",
-      "administrative_contract": "Intern fil som ikke aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
+      "administrative_contract": "Intern fil som aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
       "embargo": "Embargo",
       "file_publish_date": "Utsatt publisering",
@@ -1311,8 +1311,8 @@
           "Other": "Annet",
           "TheatricalProduction": "Forestilling/visning"
         },
-        "premiere": "Premiære",
-        "premiere_date": "Premiæredato",
+        "premiere": "Premiere",
+        "premiere_date": "Premieredato",
         "publisher": "Utgiver/forlag",
         "remove_announcement": "Fjern offentliggjøring",
         "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
@@ -1340,7 +1340,7 @@
         "info_report": "Rapporten hvor kapittelet er publisert i må være publisert først",
         "published_in": "Publisert i",
         "search_for_anthology": "Søk etter antologien hvor kapittelet er publisert",
-        "search_for_book_of_abstracts": "Søk etter abstraktsamlingen hor abstraktet er publisert",
+        "search_for_book_of_abstracts": "Søk etter abstraktsamlingen hvor abstraktet er publisert",
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
       "click_to_change_resource_type": "Trykk på valgt ressurstype om du vil endre",
