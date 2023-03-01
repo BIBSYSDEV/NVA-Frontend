@@ -17,25 +17,23 @@ export const ProjectChip = ({ id, fallbackName, ...rest }: ProjectChipProps) => 
       data-testid={`project-chip-${id}`}
       disabled={isLoadingProject}
       label={
-        <>
-          {isLoadingProject ? (
-            <>
-              <Skeleton sx={{ width: '15rem' }} />
-              <Skeleton sx={{ width: '10rem' }} />
-            </>
-          ) : (
-            <>
-              <Typography variant="h3" component="h2">
-                {project?.title ?? fallbackName}
+        isLoadingProject ? (
+          <>
+            <Skeleton sx={{ width: '15rem' }} />
+            <Skeleton sx={{ width: '10rem' }} />
+          </>
+        ) : (
+          <>
+            <Typography variant="h3" component="h2">
+              {project?.title ?? fallbackName}
+            </Typography>
+            {project && (
+              <Typography variant="body2" color="textSecondary">
+                {getLanguageString(project.coordinatingInstitution.name)}
               </Typography>
-              {project && (
-                <Typography variant="body2" color="textSecondary">
-                  {getLanguageString(project.coordinatingInstitution.name)}
-                </Typography>
-              )}
-            </>
-          )}
-        </>
+            )}
+          </>
+        )
       }
     />
   );
