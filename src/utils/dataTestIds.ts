@@ -207,6 +207,7 @@ export const dataTestId = {
       },
       projectSearchField: 'project-search-field',
       abstractField: 'registration-abstract-field',
+      alternativeTitleField: 'registration-alternative-title-field',
       descriptionField: 'registration-description-field',
       languageField: 'registration-language-field',
       tagField: 'registration-tag-field',

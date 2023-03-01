@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, ReactElement, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MenuItem, TextField, Autocomplete, Box, Divider } from '@mui/material';
+import { MenuItem, TextField, Autocomplete, Box, Divider, List, Button, ListItem } from '@mui/material';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -11,6 +11,7 @@ import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { FundingsField } from './description_tab/FundingsField';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const languageOptions = [
   getLanguageByIso6393Code('eng'),
@@ -33,25 +34,55 @@ const languageOptions = [
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
-  const { setFieldValue } = useFormikContext<Registration>();
+  const { setFieldValue, values } = useFormikContext<Registration>();
+
+  const hasAlternativeTitle = Object.keys(values.entityDescription?.alternativeTitles ?? {}).length > 0;
 
   return (
     <InputContainerBox>
       <Field name={DescriptionFieldNames.Title}>
         {({ field, meta: { touched, error } }: FieldProps<string>) => (
-          <TextField
-            {...field}
-            id={field.name}
-            value={field.value ?? ''}
-            required
-            data-testid={dataTestId.registrationWizard.description.titleField}
-            variant="filled"
-            fullWidth
-            label={t('common.title')}
-            error={touched && !!error}
-            helperText={<ErrorMessage name={field.name} />}
-          />
+          <>
+            <Box sx={{ display: 'flex', gap: '1rem' }}>
+              <TextField
+                {...field}
+                id={field.name}
+                value={field.value ?? ''}
+                required
+                data-testid={dataTestId.registrationWizard.description.titleField}
+                variant="filled"
+                fullWidth
+                label={t('common.title')}
+                error={touched && !!error}
+                helperText={<ErrorMessage name={field.name} />}
+              />
+              <Button
+                sx={{ whiteSpace: 'nowrap' }}
+                startIcon={<AddCircleOutlineIcon />}
+                disabled={hasAlternativeTitle}
+                onClick={() => {
+                  setFieldValue(DescriptionFieldNames.AlternativeTitles, { und: '' });
+                }}>
+                {t('common.add')}
+              </Button>
+            </Box>
+          </>
         )}
+      </Field>
+      <Field name={`${DescriptionFieldNames.AlternativeTitles}.und`}>
+        {({ field }: FieldProps<string>) =>
+          field.value !== undefined ? (
+            <TextField
+              {...field}
+              id={field.name}
+              value={field.value ?? ''}
+              data-testid={dataTestId.registrationWizard.description.alternativeTitleField}
+              variant="filled"
+              fullWidth
+              label={t('registration.description.alternative_title')}
+            />
+          ) : null
+        }
       </Field>
       <Field name={DescriptionFieldNames.Abstract}>
         {({ field }: FieldProps<string>) => (

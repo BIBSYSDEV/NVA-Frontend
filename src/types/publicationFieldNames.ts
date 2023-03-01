@@ -163,6 +163,7 @@ export enum ResourceFieldNames {
 
 export enum DescriptionFieldNames {
   Abstract = 'entityDescription.abstract',
+  AlternativeTitles = 'entityDescription.alternativeTitles',
   Date = 'entityDescription.date',
   Description = 'entityDescription.description',
   Fundings = 'fundings',
