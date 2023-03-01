@@ -197,6 +197,7 @@ export const dataTestId = {
         endDateField: 'project-end-date-field',
         panel1Button: 'panel-1-button',
         panel2Button: 'panel-2-button',
+        relatedProjectsSearchField: 'related-projects-search-form',
         removeContributorButton: 'remove-contributor-button',
         roleField: 'project-participant-role-field',
         saveProjectButton: 'save-project-button',

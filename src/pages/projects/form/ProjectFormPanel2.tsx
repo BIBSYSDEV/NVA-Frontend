@@ -6,6 +6,7 @@ import { cristinKeywords } from '../../../resources/cristinKeywords';
 import { TypedLabel } from '../../../types/project.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { ProjectFieldName } from './ProjectFormDialog';
+import { RelatedProjectsField } from './RelatedProjectsField';
 
 export const ProjectFormPanel2 = () => {
   const { t } = useTranslation();
@@ -66,6 +67,7 @@ export const ProjectFormPanel2 = () => {
           />
         )}
       </Field>
+      <RelatedProjectsField />
     </Box>
   );
 };
