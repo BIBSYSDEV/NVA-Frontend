@@ -34,61 +34,59 @@ const languageOptions = [
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
-  const { setFieldValue, values } = useFormikContext<Registration>();
-
-  const hasAlternativeTitle = Object.keys(values.entityDescription?.alternativeTitles ?? {}).length > 0;
+  const { setFieldValue } = useFormikContext<Registration>();
 
   return (
     <InputContainerBox>
-      <Field name={DescriptionFieldNames.Title}>
-        {({ field, meta: { touched, error } }: FieldProps<string>) => (
-          <>
-            <Box sx={{ display: 'flex', gap: '1rem' }}>
-              <TextField
-                {...field}
-                id={field.name}
-                value={field.value ?? ''}
-                required
-                data-testid={dataTestId.registrationWizard.description.titleField}
-                variant="filled"
-                fullWidth
-                label={t('common.title')}
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
-              <Button
-                sx={{ whiteSpace: 'nowrap' }}
-                startIcon={<AddCircleOutlineIcon />}
-                disabled={hasAlternativeTitle}
-                onClick={() => {
-                  setFieldValue(DescriptionFieldNames.AlternativeTitles, { und: '' });
-                }}>
-                {t('common.add')}
-              </Button>
-            </Box>
-          </>
-        )}
-      </Field>
-      <Field name={`${DescriptionFieldNames.AlternativeTitles}.und`}>
-        {({ field }: FieldProps<string>) =>
-          field.value !== undefined ? (
+      <Box
+        sx={{
+          display: 'grid',
+          rowGap: '1rem',
+          columnGap: '0.5rem',
+          gridTemplateColumns: '1fr auto',
+        }}>
+        <Field name={DescriptionFieldNames.Title}>
+          {({ field, meta: { touched, error } }: FieldProps<string>) => (
             <TextField
               {...field}
-              id={field.name}
               value={field.value ?? ''}
-              data-testid={dataTestId.registrationWizard.description.alternativeTitleField}
+              required
+              data-testid={dataTestId.registrationWizard.description.titleField}
               variant="filled"
               fullWidth
-              label={t('registration.description.alternative_title')}
+              label={t('common.title')}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
             />
-          ) : null
-        }
-      </Field>
+          )}
+        </Field>
+        <Field name={`${DescriptionFieldNames.AlternativeTitles}.und`}>
+          {({ field }: FieldProps<string>) => (
+            <>
+              <Button
+                startIcon={<AddCircleOutlineIcon />}
+                disabled={field.value !== undefined}
+                onClick={() => setFieldValue(field.name, '')}>
+                {t('common.add')}
+              </Button>
+              {field.value !== undefined ? (
+                <TextField
+                  {...field}
+                  value={field.value ?? ''}
+                  data-testid={dataTestId.registrationWizard.description.alternativeTitleField}
+                  variant="filled"
+                  fullWidth
+                  label={t('registration.description.alternative_title')}
+                />
+              ) : null}
+            </>
+          )}
+        </Field>
+      </Box>
       <Field name={DescriptionFieldNames.Abstract}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            id={field.name}
             value={field.value ?? ''}
             data-testid={dataTestId.registrationWizard.description.abstractField}
             variant="filled"
@@ -103,7 +101,6 @@ export const DescriptionPanel = () => {
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            id={field.name}
             value={field.value ?? ''}
             data-testid={dataTestId.registrationWizard.description.descriptionField}
             label={t('registration.description.description_of_content')}
@@ -119,8 +116,6 @@ export const DescriptionPanel = () => {
         {({ field }: FieldProps) => (
           <Autocomplete
             {...field}
-            id={field.name}
-            aria-labelledby={`${field.name}-label`}
             value={field.value ?? []}
             freeSolo
             multiple
