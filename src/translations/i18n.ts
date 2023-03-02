@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import enTranslations from './enTranslations.json';
 import nbTranslations from './nbTranslations.json';
+import nnTranslations from './nnTranslations.json';
 
 i18n.use(LanguageDetector).init({
   resources: {
@@ -11,9 +12,13 @@ i18n.use(LanguageDetector).init({
     nob: {
       translation: nbTranslations,
     },
+    nno: {
+      translation: nnTranslations,
+    },
   },
   fallbackLng: 'nob',
-  supportedLngs: ['nob', 'eng'],
+  returnEmptyString: false,
+  supportedLngs: ['nob', 'eng', 'nno'],
   debug: false,
 });
 
