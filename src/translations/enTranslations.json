@@ -964,8 +964,8 @@
     },
     "description": {
       "abstract": "Abstract",
-      "alternative_title": "Alternative title",
       "add_vocabulary": "Add vocabulary",
+      "alternative_title": "Alternative title",
       "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
       "date_published": "Date published",

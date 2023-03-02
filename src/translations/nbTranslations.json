@@ -964,8 +964,8 @@
     },
     "description": {
       "abstract": "Sammendrag",
-      "alternative_title": "Alternativ tittel",
       "add_vocabulary": "Legg til vokabular",
+      "alternative_title": "Alternativ tittel",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
       "date_published": "Publiseringsdato",
