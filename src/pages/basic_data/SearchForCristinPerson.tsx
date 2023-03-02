@@ -90,7 +90,7 @@ export const SearchForCristinPerson = ({
           loading={isLoadingSearchByNin || isLoadingSearchByName}
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }} data-testid={`project-option-${option.id}`}>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }} data-testid={`person-option-${option.id}`}>
                 <Typography variant="subtitle1">
                   <EmphasizeSubstring text={`${option.firstName} ${option.lastName}`} emphasized={searchQuery} />
                 </Typography>

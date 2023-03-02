@@ -842,6 +842,7 @@
     "form": {
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
+      "related_projects": "Relaterte prosjekt",
       "remove_participant": "Fjern prosjektdeltakar",
       "remove_participant_text": "Er du sikker på at du ønskjer å fjerne {{name}}?",
       "search_for_person": "Søk etter person",
