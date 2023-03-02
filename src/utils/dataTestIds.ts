@@ -96,6 +96,7 @@ export const dataTestId = {
     editProjectButton: 'edit-project-button',
     generalInfoBox: 'general-info',
     participantsAccordion: 'participants-accordion',
+    relatedProjectsAccordion: 'related-projects-accordion',
     resultsAccordion: 'results-accordion',
     scientificSummaryAccordion: 'scientific-summary-accordion',
   },

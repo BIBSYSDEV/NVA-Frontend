@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Divider, Link, Typography, Skeleton } from '@mui/material';
 import { styled } from '@mui/system';
 import { Link as RouterLink } from 'react-router-dom';
-import { CristinProject, ResearchProject } from '../../types/project.types';
+import { CristinProject } from '../../types/project.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getProjectPath } from '../../utils/urlPaths';
 import {
@@ -22,8 +22,13 @@ const StyledProjectGridRow = styled('div')(({ theme }) => ({
   alignItems: 'center',
 }));
 
+interface SimpleProject {
+  id: string;
+  name?: string;
+}
+
 interface PublicProjectsContentProps {
-  projects: ResearchProject[];
+  projects: SimpleProject[];
 }
 
 export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) => {
@@ -45,23 +50,24 @@ export const PublicProjectsContent = ({ projects }: PublicProjectsContentProps) 
       </StyledProjectGridRow>
 
       {projects.map((project) => (
-        <ProjectRow key={project.id} project={project} />
+        <ProjectRow key={project.id} id={project.id} fallbackName={project.name} />
       ))}
     </>
   );
 };
 
 interface ProjectRowProps {
-  project: ResearchProject;
+  id: string;
+  fallbackName?: string;
 }
 
-const ProjectRow = ({ project }: ProjectRowProps) => {
+const ProjectRow = ({ id, fallbackName = '' }: ProjectRowProps) => {
   const { t } = useTranslation();
   const [fetchedProject, isLoadingProject] = useFetch<CristinProject>({
-    url: project.id,
+    url: id,
     errorMessage: t('feedback.error.get_project'),
   });
-  const projectTitle = fetchedProject?.title ?? project.name;
+  const projectTitle = fetchedProject?.title ?? fallbackName;
 
   return (
     <StyledProjectGridRow sx={{ ':not(:last-of-type)': { mb: '1rem' } }}>
