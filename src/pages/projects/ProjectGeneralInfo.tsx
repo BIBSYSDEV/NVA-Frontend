@@ -23,23 +23,15 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
   return (
     <StyledGeneralInfo data-testid={dataTestId.projectLandingPage.generalInfoBox}>
       <div>
-        <Typography variant="overline" component="h2">
-          {t('project.coordinating_institution')}
-        </Typography>
+        <Typography variant="overline">{t('project.coordinating_institution')}</Typography>
         <Typography>{getProjectCoordinatingInstitutionName(project) ?? '-'}</Typography>
-        <Typography variant="overline" component="h2">
-          {t('project.project_manager')}
-        </Typography>
+        <Typography variant="overline">{t('project.project_manager')}</Typography>
         <Typography>{getProjectManagerName(project) ?? '-'}</Typography>
-        <Typography variant="overline" component="h2">
-          {t('project.period')}
-        </Typography>
+        <Typography variant="overline">{t('project.period')}</Typography>
         <Typography>{projectPeriodString ? `${projectPeriodString} (${projectStatusString})` : '-'}</Typography>
       </div>
       <div>
-        <Typography variant="overline" component="h2">
-          {t('project.financing')}
-        </Typography>
+        <Typography variant="overline">{t('project.financing')}</Typography>
         {project.funding.length > 0 ? (
           project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.source.names);
@@ -60,6 +52,19 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         ) : (
           <Typography>-</Typography>
         )}
+
+        <Typography variant="overline">{t('project.project_category')}</Typography>
+        <Typography>
+          {project.projectCategories.length > 0
+            ? project.projectCategories.map((category) => getLanguageString(category.label)).join(', ')
+            : '-'}
+        </Typography>
+        <Typography variant="overline">{t('project.keywords')}</Typography>
+        <Typography>
+          {project.keywords.length > 0
+            ? project.keywords.map((keyword) => getLanguageString(keyword.label)).join(', ')
+            : '-'}
+        </Typography>
       </div>
     </StyledGeneralInfo>
   );
