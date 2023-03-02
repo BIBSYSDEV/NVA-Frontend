@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { ChangeEvent, ReactElement, useState } from 'react';
+import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MenuItem, TextField, Autocomplete, Box, Divider, List, Button, ListItem } from '@mui/material';
+import { MenuItem, TextField, Autocomplete, Box, Divider, Button } from '@mui/material';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -60,10 +60,11 @@ export const DescriptionPanel = () => {
             />
           )}
         </Field>
-        <Field name={`${DescriptionFieldNames.AlternativeTitles}.und`}>
+        <Field name={DescriptionFieldNames.AlternativeTitles}>
           {({ field }: FieldProps<string>) => (
             <>
               <Button
+                sx={{ height: 'fit-content', mt: '0.5rem' }}
                 startIcon={<AddCircleOutlineIcon />}
                 disabled={field.value !== undefined}
                 onClick={() => setFieldValue(field.name, '')}>

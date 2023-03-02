@@ -88,8 +88,10 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
         {entityDescription?.alternativeTitles.und && (
           <Box sx={{ borderTop: '1px solid', py: '1rem' }}>
-            <Typography variant="h3">{t('registration.public_page.alternative_title')}</Typography>
-            <Typography>{entityDescription?.alternativeTitles.und}</Typography>
+            <Typography variant="h3" component="h2">
+              {t('registration.description.alternative_title')}
+            </Typography>
+            <Typography>{entityDescription.alternativeTitles.und}</Typography>
           </Box>
         )}
 
