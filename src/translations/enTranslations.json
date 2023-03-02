@@ -440,6 +440,7 @@
       "must_be_a_positive_number": "{{field}} must be a positive number",
       "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
       "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",
+      "must_correct_errors": "You must correct errors",
       "must_have_associated_artifact": "You need to upload at least one file or a link for this registration",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
       "not_selected": "{{field}} is not selected"
@@ -848,6 +849,7 @@
       "start_with_nfr_project": "If you have a funding from The Research Council of Norway (NFR), you can start with that, and get some fields prefilled."
     },
     "grant_id": "GrantID",
+    "keywords": "Keywords",
     "no_participants": "No registered participants.",
     "no_results": "No published results.",
     "no_summary": "No registered summary.",
@@ -855,6 +857,7 @@
     "person": "Person",
     "popular_science_summary": "Popular science summary",
     "project": "Project",
+    "project_category": "Project category",
     "project_info": "Project info",
     "project_manager": "Project manager",
     "project_participant": "Project participant",
