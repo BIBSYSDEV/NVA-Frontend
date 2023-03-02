@@ -207,6 +207,7 @@ export const dataTestId = {
         titleField: 'project-title-field',
       },
       projectSearchField: 'project-search-field',
+      projectSearchOption: (id: string) => `project-option-${id}`,
       abstractField: 'registration-abstract-field',
       descriptionField: 'registration-description-field',
       languageField: 'registration-language-field',
