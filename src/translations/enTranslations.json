@@ -1035,6 +1035,7 @@
     "new_registration": "New registration",
     "public_page": {
       "about_registration": "About this registration",
+      "alternative_title": "Alternative title",
       "approve_publish_request": "Approve publishing request",
       "error_description": "To publish you must fix the following errors:",
       "find_in_channel_registry": "Find in the Norwegian register for publishers",

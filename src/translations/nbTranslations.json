@@ -1035,6 +1035,7 @@
     "new_registration": "Ny registrering",
     "public_page": {
       "about_registration": "Om registreringen",
+      "alternative_title": "Alternativ tittel",
       "approve_publish_request": "Godkjenn publisering",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
