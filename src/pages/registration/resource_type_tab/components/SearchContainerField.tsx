@@ -4,8 +4,14 @@ import { Chip, Typography, Autocomplete, Box, Skeleton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { RegistrationSubtype, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { Journal, Publisher, Registration, RegistrationDate } from '../../../../types/registration.types';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import {
+  Journal,
+  PublicationInstanceType,
+  Publisher,
+  Registration,
+  RegistrationDate,
+} from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
@@ -20,7 +26,7 @@ import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 
 interface SearchContainerFieldProps {
   fieldName: string;
-  searchSubtypes: RegistrationSubtype[];
+  searchSubtypes: PublicationInstanceType[];
   label: string;
   placeholder: string;
   dataTestId: string;
@@ -45,7 +51,11 @@ export const SearchContainerField = ({
     {
       searchTerm: debouncedQuery,
       properties: [
-        { fieldName: ResourceFieldNames.SubType, value: searchSubtypes, operator: ExpressionStatement.Contains },
+        {
+          fieldName: ResourceFieldNames.RegistrationType,
+          value: searchSubtypes,
+          operator: ExpressionStatement.Contains,
+        },
       ],
     },
     25

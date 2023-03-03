@@ -42,7 +42,7 @@ import {
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
-  shouldShowFileVersionField,
+  isTypeWithFileVersionField,
 } from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
@@ -109,7 +109,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   const originalDoi = entityDescription?.reference?.doi;
-  const showFileVersion = shouldShowFileVersionField(values);
+  const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance.type);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>

@@ -136,10 +136,6 @@ export interface BaseEntityDescription {
   tags: string[];
 }
 
-export interface NviApplicableBase<T> {
-  contentType: T | null;
-}
-
 export interface BaseReference {
   type: 'Reference';
   doi: string;

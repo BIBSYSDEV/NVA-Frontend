@@ -55,8 +55,10 @@ interface ContributorIdentity extends BasicContributorIdentity {
   lastName: string;
 }
 
+export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
+
 interface BasicProjectContributor {
-  type: 'ProjectManager' | 'ProjectParticipant';
+  type: ProjectContributorType;
   identity: BasicContributorIdentity;
   affiliation?: BasicContributorAffiliation;
 }
@@ -74,7 +76,7 @@ interface Funding {
   code?: string;
 }
 
-export interface PostCristinProject {
+export interface SaveCristinProject {
   type: 'Project';
   title: string;
   language: string;
@@ -84,7 +86,7 @@ export interface PostCristinProject {
   contributors: BasicProjectContributor[];
 }
 
-export interface CristinProject extends PostCristinProject {
+export interface CristinProject extends SaveCristinProject {
   id: string;
   identifier: ProjectIdentifier[];
   status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
@@ -116,3 +118,22 @@ export interface NfrProject {
   activeFrom: string;
   activeTo: string;
 }
+
+export const emptyProjectContributor: BasicProjectContributor = {
+  type: 'ProjectParticipant',
+  identity: { type: 'Person', id: '' },
+  affiliation: { type: 'Organization', id: '' },
+};
+
+export const emptyProject: SaveCristinProject = {
+  type: 'Project',
+  title: '',
+  language: 'http://lexvo.org/id/iso639-3/nob',
+  startDate: '',
+  endDate: '',
+  contributors: [{ ...emptyProjectContributor, type: 'ProjectManager' }],
+  coordinatingInstitution: {
+    type: 'Organization',
+    id: '',
+  },
+};
