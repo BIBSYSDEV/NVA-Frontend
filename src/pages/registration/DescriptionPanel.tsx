@@ -64,7 +64,7 @@ export const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <>
               <Button
-                sx={{ height: 'fit-content', mt: '0.5rem' }}
+                sx={{ height: 'fit-content', alignSelf: 'center' }}
                 startIcon={<AddCircleOutlineIcon />}
                 disabled={field.value !== undefined}
                 onClick={() => setFieldValue(field.name, '')}>
