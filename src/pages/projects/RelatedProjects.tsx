@@ -1,5 +1,6 @@
-import { List } from '@mui/material';
+import { CircularProgress, List, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { authenticatedApiRequest } from '../../api/apiRequest';
 import { CristinProject } from '../../types/project.types';
 import { isSuccessStatus } from '../../utils/constants';
@@ -10,18 +11,21 @@ interface RelatedProjectsProps {
 }
 
 export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
+  const { t } = useTranslation();
   const [projects, setProjects] = useState<CristinProject[]>([]);
   const [isLoading, setIsLoading] = useState(projectIds.length > 0);
 
   useEffect(() => {
     // TODO: can this be done by one search request instead?
-    const projectsToFetch = projectIds.slice(0, 10);
+    const projectsToFetch = projectIds.slice(0, 5);
     const fetchRelatedProjects = async () => {
       setIsLoading(true);
       const allowedCustomersPromises = projectsToFetch.map(async (id) => {
         const projectResponse = await authenticatedApiRequest<CristinProject>({ url: id });
         if (isSuccessStatus(projectResponse.status)) {
           return projectResponse.data;
+        } else {
+          return;
         }
       });
       const fetchedProjects = (await Promise.all(allowedCustomersPromises)).filter(
@@ -29,7 +33,6 @@ export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
       ) as CristinProject[];
 
       setProjects(fetchedProjects);
-
       setIsLoading(false);
     };
 
@@ -38,13 +41,15 @@ export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
     }
   }, [projectIds]);
 
-  return (
-    <>
-      <List>
-        {projects.map((project) => (
-          <ProjectListItem key={project.id} project={project} />
-        ))}
-      </List>
-    </>
+  return isLoading ? (
+    <CircularProgress />
+  ) : projects.length > 0 ? (
+    <List>
+      {projects.map((project) => (
+        <ProjectListItem key={project.id} project={project} />
+      ))}
+    </List>
+  ) : (
+    <Typography>{t('project.no_related_projects')}</Typography>
   );
 };
