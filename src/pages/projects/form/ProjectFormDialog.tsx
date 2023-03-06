@@ -37,6 +37,7 @@ export enum ProjectFieldName {
   AcademicSummary = 'academicSummary.no',
   PopularScientificSummary = 'popularScientificSummary.no',
   Keywords = 'keywords',
+  RelatedProjects = 'relatedProjects',
 }
 
 interface ProjectFormDialogProps extends Pick<DialogProps, 'open'> {

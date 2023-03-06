@@ -842,6 +842,7 @@
     "form": {
       "empty_registration": "Empty registration",
       "here_you_can_create_project": "Here you can create a project:",
+      "related_projects": "Related projects",
       "remove_participant": "Remove project participant",
       "remove_participant_text": "Are you sure you want to remove {{name}}?",
       "search_for_person": "Search for person",

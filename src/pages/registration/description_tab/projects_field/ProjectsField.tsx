@@ -4,11 +4,9 @@ import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { getLanguageString } from '../../../../utils/translation-helpers';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { CristinApiPath } from '../../../../api/apiPaths';
 import { ProjectChip } from './ProjectChip';
@@ -16,6 +14,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
 import { BetaFunctionality } from '../../../../components/BetaFunctionality';
 import { SearchResponse } from '../../../../types/common.types';
+import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
@@ -70,16 +69,7 @@ export const ProjectsField = () => {
                 getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
                 loading={isLoadingProjects}
                 renderOption={(props, option: CristinProject, state) => (
-                  <li {...props} key={option.id}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column' }} data-testid={`project-option-${option.id}`}>
-                      <Typography variant="subtitle1">
-                        <EmphasizeSubstring text={option.title} emphasized={state.inputValue} />
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {getLanguageString(option.coordinatingInstitution.name)}
-                      </Typography>
-                    </Box>
-                  </li>
+                  <AutocompleteProjectOption project={option} inputValue={state.inputValue} {...props} />
                 )}
                 renderInput={(params) => (
                   <AutocompleteTextField
