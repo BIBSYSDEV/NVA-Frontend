@@ -97,7 +97,7 @@ export const OutputRow = ({
   }
 
   return (
-    <TableRow sx={{ '& td': { borderBottom: 1 } }}>
+    <TableRow>
       {showTypeColumn && (
         <TableCell>
           <Typography>{t(`registration.resource_type.artistic.output_type.${item.type}` as any)}</Typography>
@@ -128,10 +128,20 @@ export const OutputRow = ({
         )}
       </TableCell>
       <TableCell>
-        <Button onClick={() => setOpenEditItem(true)} variant="outlined" sx={{ mr: '1rem' }} startIcon={<EditIcon />}>
+        <Button
+          onClick={() => setOpenEditItem(true)}
+          variant="outlined"
+          sx={{ mr: '1rem' }}
+          size="small"
+          startIcon={<EditIcon />}>
           {t('common.show')}/{t('common.edit')}
         </Button>
-        <Button onClick={() => setOpenRemoveItem(true)} variant="outlined" color="error" startIcon={<CancelIcon />}>
+        <Button
+          onClick={() => setOpenRemoveItem(true)}
+          variant="outlined"
+          color="error"
+          size="small"
+          startIcon={<CancelIcon />}>
           {t('common.remove')}
         </Button>
       </TableCell>

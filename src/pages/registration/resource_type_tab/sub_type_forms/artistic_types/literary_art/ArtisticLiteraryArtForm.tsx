@@ -102,7 +102,7 @@ export const ArtisticLiteraryArtForm = () => {
             return (
               <>
                 {manifestations.length > 0 && (
-                  <Table>
+                  <Table sx={{ '& th,td': { borderBottom: 1 } }}>
                     <TableHead>
                       <TableRow>
                         <TableCell>{t('common.type')}</TableCell>
