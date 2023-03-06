@@ -18,7 +18,7 @@ import { RootState } from '../../redux/store';
 import { canEditProject } from '../registration/description_tab/projects_field/projectHelpers';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ProjectFormDialog } from './form/ProjectFormDialog';
-import { PublicProjectsContent } from '../public_registration/PublicProjectsContent';
+import { RelatedProjects } from './RelatedProjects';
 
 interface ProjectLandingPageProps {
   project: CristinProject;
@@ -84,7 +84,7 @@ export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPa
         <LandingPageAccordion
           dataTestId={dataTestId.projectLandingPage.relatedProjectsAccordion}
           heading={`${t('project.form.related_projects')} (${project.relatedProjects.length})`}>
-          <PublicProjectsContent projects={project.relatedProjects.map((projectId) => ({ id: projectId }))} />
+          <RelatedProjects projectIds={project.relatedProjects} />
         </LandingPageAccordion>
       </BackgroundDiv>
     </Paper>
