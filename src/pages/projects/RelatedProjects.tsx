@@ -53,7 +53,7 @@ export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
   }, [dispatch, t, projectIds, page]);
 
   return isLoading ? (
-    <CircularProgress />
+    <CircularProgress aria-label={t('project.form.related_projects')} />
   ) : projects.length > 0 ? (
     <>
       <List>

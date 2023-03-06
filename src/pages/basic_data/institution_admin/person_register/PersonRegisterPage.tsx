@@ -129,6 +129,7 @@ export const PersonRegisterPage = () => {
           </TableContainer>
           <TablePagination
             rowsPerPageOptions={rowsPerPageOptions}
+            component="div"
             count={employeesSearchResponse?.size ?? -1}
             rowsPerPage={rowsPerPage}
             page={page - 1}
