@@ -37,11 +37,15 @@ export const fundingValidationSchema = Yup.object<YupShape<Funding>>({
       return true;
     }),
   }),
-  fundingAmount: Yup.object({
-    amount: Yup.number()
-      .transform((value, originalValue) => (/\s/.test(originalValue) ? NaN : value))
-      .typeError(fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
-      .min(0, fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
-      .required(fundingErrorMessage.fundingAmountMustBeAPositiveNumber),
-  }),
+  fundingAmount: Yup.object().when(['source'], (source: string, schema) =>
+    fundingSourceIsNfr(source)
+      ? schema
+      : schema.shape({
+          amount: Yup.number()
+            .transform((value, originalValue) => (/\s/.test(originalValue) ? NaN : value))
+            .typeError(fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
+            .min(0, fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
+            .required(fundingErrorMessage.fundingAmountMustBeAPositiveNumber),
+        })
+  ),
 });
