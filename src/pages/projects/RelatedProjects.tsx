@@ -1,4 +1,4 @@
-import { CircularProgress, List, Typography } from '@mui/material';
+import { CircularProgress, List, TablePagination, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { authenticatedApiRequest } from '../../api/apiRequest';
@@ -10,14 +10,17 @@ interface RelatedProjectsProps {
   projectIds: string[];
 }
 
+const itemsPerRow = 5;
+
 export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
   const { t } = useTranslation();
   const [projects, setProjects] = useState<CristinProject[]>([]);
   const [isLoading, setIsLoading] = useState(projectIds.length > 0);
 
+  const [page, setPage] = useState(0);
+
   useEffect(() => {
-    // TODO: can this be done by one search request instead?
-    const projectsToFetch = projectIds.slice(0, 5);
+    const projectsToFetch = projectIds.slice(page * itemsPerRow, (page + 1) * itemsPerRow);
     const fetchRelatedProjects = async () => {
       setIsLoading(true);
       const allowedCustomersPromises = projectsToFetch.map(async (id) => {
@@ -39,16 +42,26 @@ export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
     if (projectIds.length > 0) {
       fetchRelatedProjects();
     }
-  }, [projectIds]);
+  }, [projectIds, page]);
 
   return isLoading ? (
     <CircularProgress />
   ) : projects.length > 0 ? (
-    <List>
-      {projects.map((project) => (
-        <ProjectListItem key={project.id} project={project} />
-      ))}
-    </List>
+    <>
+      <List>
+        {projects.map((project) => (
+          <ProjectListItem key={project.id} project={project} />
+        ))}
+      </List>
+      <TablePagination
+        rowsPerPageOptions={[itemsPerRow]}
+        component="div"
+        count={projectIds.length}
+        rowsPerPage={itemsPerRow}
+        page={page}
+        onPageChange={(_, muiPage) => setPage(muiPage)}
+      />
+    </>
   ) : (
     <Typography>{t('project.no_related_projects')}</Typography>
   );

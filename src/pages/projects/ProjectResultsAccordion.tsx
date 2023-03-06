@@ -20,6 +20,8 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
     errorMessage: t('feedback.error.search'),
   });
 
+  // TODO: Pagination
+
   return (
     <LandingPageAccordion
       dataTestId={dataTestId.projectLandingPage.resultsAccordion}
