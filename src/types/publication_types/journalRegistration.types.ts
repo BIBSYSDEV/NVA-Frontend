@@ -55,6 +55,7 @@ const emptyReference: JournalReference = {
 export const emptyRegistrationEntityDescription: JournalEntityDescription = {
   type: 'EntityDescription',
   abstract: '',
+  alternativeTitles: {},
   contributors: [],
   date: {
     type: 'PublicationDate',
