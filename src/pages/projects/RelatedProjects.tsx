@@ -1,9 +1,11 @@
 import { CircularProgress, List, TablePagination, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
+import { setNotification } from '../../redux/notificationSlice';
 import { CristinProject } from '../../types/project.types';
-import { isSuccessStatus } from '../../utils/constants';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
 
 interface RelatedProjectsProps {
@@ -14,9 +16,9 @@ const itemsPerRow = 5;
 
 export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [projects, setProjects] = useState<CristinProject[]>([]);
   const [isLoading, setIsLoading] = useState(projectIds.length > 0);
-
   const [page, setPage] = useState(0);
 
   useEffect(() => {
@@ -24,10 +26,16 @@ export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
     const fetchRelatedProjects = async () => {
       setIsLoading(true);
       const allowedCustomersPromises = projectsToFetch.map(async (id) => {
-        const projectResponse = await authenticatedApiRequest<CristinProject>({ url: id });
-        if (isSuccessStatus(projectResponse.status)) {
-          return projectResponse.data;
-        } else {
+        try {
+          const projectResponse = await authenticatedApiRequest<CristinProject>({ url: id });
+          if (isSuccessStatus(projectResponse.status)) {
+            return projectResponse.data;
+          } else if (isErrorStatus(projectResponse.status)) {
+            dispatch(setNotification({ message: t('feedback.error.get_project'), variant: 'error' }));
+            return;
+          }
+        } catch {
+          dispatch(setNotification({ message: t('feedback.error.get_project'), variant: 'error' }));
           return;
         }
       });
@@ -42,7 +50,7 @@ export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
     if (projectIds.length > 0) {
       fetchRelatedProjects();
     }
-  }, [projectIds, page]);
+  }, [dispatch, t, projectIds, page]);
 
   return isLoading ? (
     <CircularProgress />
