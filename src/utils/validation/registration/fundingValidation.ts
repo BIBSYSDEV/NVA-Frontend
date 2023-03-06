@@ -40,7 +40,7 @@ export const fundingValidationSchema = Yup.object<YupShape<Funding>>({
   fundingAmount: Yup.object().when(['source'], (source: string, schema) =>
     fundingSourceIsNfr(source)
       ? schema
-      : Yup.object({
+      : schema.shape({
           amount: Yup.number()
             .transform((value, originalValue) => (/\s/.test(originalValue) ? NaN : value))
             .typeError(fundingErrorMessage.fundingAmountMustBeAPositiveNumber)
