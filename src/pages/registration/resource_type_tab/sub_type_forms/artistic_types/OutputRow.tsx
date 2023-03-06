@@ -97,7 +97,7 @@ export const OutputRow = ({
   }
 
   return (
-    <TableRow>
+    <TableRow sx={{ '& td': { borderBottom: 1 } }}>
       {showTypeColumn && (
         <TableCell>
           <Typography>{t(`registration.resource_type.artistic.output_type.${item.type}` as any)}</Typography>
