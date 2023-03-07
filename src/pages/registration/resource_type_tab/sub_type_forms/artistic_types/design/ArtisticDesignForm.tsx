@@ -103,7 +103,7 @@ export const ArtisticDesignForm = () => {
               {venues.length > 0 && (
                 <Table>
                   <TableHead>
-                    <TableRow>
+                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
                       <TableCell>{t('registration.resource_type.artistic.exhibition_place')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import { IconButton, Paper, Tooltip, Typography, Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -85,6 +85,15 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         )}
 
         <PublicGeneralContent registration={registration} />
+
+        {entityDescription?.alternativeTitles.und && (
+          <Box sx={{ borderTop: '1px solid', py: '1rem' }}>
+            <Typography variant="h3" component="h2">
+              {t('registration.description.alternative_title')}
+            </Typography>
+            <Typography>{entityDescription.alternativeTitles.und}</Typography>
+          </Box>
+        )}
 
         {!isResearchData(entityDescription?.reference?.publicationInstance.type) && (
           <FilesLandingPageAccordion registration={registration} />

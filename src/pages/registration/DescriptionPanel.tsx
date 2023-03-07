@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MenuItem, TextField, Autocomplete, Box, Divider } from '@mui/material';
+import { MenuItem, TextField, Autocomplete, Box, Divider, Button } from '@mui/material';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
@@ -11,6 +11,7 @@ import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
 import { FundingsField } from './description_tab/FundingsField';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const languageOptions = [
   getLanguageByIso6393Code('eng'),
@@ -37,27 +38,56 @@ export const DescriptionPanel = () => {
 
   return (
     <InputContainerBox>
-      <Field name={DescriptionFieldNames.Title}>
-        {({ field, meta: { touched, error } }: FieldProps<string>) => (
-          <TextField
-            {...field}
-            id={field.name}
-            value={field.value ?? ''}
-            required
-            data-testid={dataTestId.registrationWizard.description.titleField}
-            variant="filled"
-            fullWidth
-            label={t('common.title')}
-            error={touched && !!error}
-            helperText={<ErrorMessage name={field.name} />}
-          />
-        )}
-      </Field>
+      <Box
+        sx={{
+          display: 'grid',
+          rowGap: '1rem',
+          columnGap: '0.5rem',
+          gridTemplateColumns: '1fr auto',
+        }}>
+        <Field name={DescriptionFieldNames.Title}>
+          {({ field, meta: { touched, error } }: FieldProps<string>) => (
+            <TextField
+              {...field}
+              value={field.value ?? ''}
+              required
+              data-testid={dataTestId.registrationWizard.description.titleField}
+              variant="filled"
+              fullWidth
+              label={t('common.title')}
+              error={touched && !!error}
+              helperText={<ErrorMessage name={field.name} />}
+            />
+          )}
+        </Field>
+        <Field name={DescriptionFieldNames.AlternativeTitles}>
+          {({ field }: FieldProps<string>) => (
+            <>
+              <Button
+                sx={{ height: 'fit-content', alignSelf: 'center' }}
+                startIcon={<AddCircleOutlineIcon />}
+                disabled={field.value !== undefined}
+                onClick={() => setFieldValue(field.name, '')}>
+                {t('common.add')}
+              </Button>
+              {field.value !== undefined ? (
+                <TextField
+                  {...field}
+                  value={field.value ?? ''}
+                  data-testid={dataTestId.registrationWizard.description.alternativeTitleField}
+                  variant="filled"
+                  fullWidth
+                  label={t('registration.description.alternative_title')}
+                />
+              ) : null}
+            </>
+          )}
+        </Field>
+      </Box>
       <Field name={DescriptionFieldNames.Abstract}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            id={field.name}
             value={field.value ?? ''}
             data-testid={dataTestId.registrationWizard.description.abstractField}
             variant="filled"
@@ -72,7 +102,6 @@ export const DescriptionPanel = () => {
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            id={field.name}
             value={field.value ?? ''}
             data-testid={dataTestId.registrationWizard.description.descriptionField}
             label={t('registration.description.description_of_content')}
@@ -88,8 +117,6 @@ export const DescriptionPanel = () => {
         {({ field }: FieldProps) => (
           <Autocomplete
             {...field}
-            id={field.name}
-            aria-labelledby={`${field.name}-label`}
             value={field.value ?? []}
             freeSolo
             multiple
