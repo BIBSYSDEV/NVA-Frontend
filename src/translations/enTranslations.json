@@ -858,6 +858,8 @@
     "period": "Project period",
     "person": "Person",
     "popular_science_summary": "Popular science summary",
+    "popular_science_summary_english": "$t(project.popular_science_summary) (English)",
+    "popular_science_summary_norwegian": "$t(project.popular_science_summary) (Norwegian)",
     "project": "Project",
     "project_category": "Project category",
     "project_info": "Project info",
@@ -866,6 +868,8 @@
     "project_participants": "Project participants",
     "results": "Results",
     "scientific_summary": "Scientific summary",
+    "scientific_summary_english": "$t(project.scientific_summary) (English)",
+    "scientific_summary_norwegian": "$t(project.scientific_summary) (Norwegian)",
     "search_for_institution": "Search for institution",
     "status": {
       "ACTIVE": "Active",
