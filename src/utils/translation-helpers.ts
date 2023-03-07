@@ -6,6 +6,10 @@ export const getPreferredLanguageCode = (language?: string) => {
   const currentLanguage = language || i18n.language;
   if (currentLanguage === 'nob') {
     return 'nb';
+  } else if (currentLanguage === 'nno') {
+    return 'nn';
+  } else if (currentLanguage === 'nor') {
+    return 'no';
   } else {
     return 'en';
   }
@@ -17,8 +21,30 @@ export const getLanguageString = (labels?: LanguageString) => {
     return '';
   }
   const preferredLanguageCode = getPreferredLanguageCode();
-  if (Object.keys(labels).includes(preferredLanguageCode)) {
-    return labels[preferredLanguageCode];
+
+  let translatedString = '';
+
+  switch (preferredLanguageCode) {
+    case 'nb':
+      translatedString = labels['nb'] ?? labels['no'] ?? labels['nn'] ?? labels['en'];
+      break;
+    case 'nn':
+      translatedString = labels['nn'] ?? labels['no'] ?? labels['nb'] ?? labels['en'];
+      break;
+    case 'no':
+      translatedString = labels['no'] ?? labels['nb'] ?? labels['nn'] ?? labels['en'];
+      break;
+    case 'en':
+      translatedString = labels['en'] ?? labels['no'] ?? labels['nb'] ?? labels['nn'];
+      break;
+    default:
+      translatedString = labels[preferredLanguageCode];
+      break;
   }
-  return Object.values(labels)[0];
+
+  if (!translatedString) {
+    translatedString = labels[Object.keys(labels)[0]];
+  }
+
+  return translatedString;
 };
