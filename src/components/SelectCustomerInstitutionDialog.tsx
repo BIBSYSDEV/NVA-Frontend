@@ -31,6 +31,8 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
         const customerResponse = await authenticatedApiRequest<CustomerInstitution>({ url: id });
         if (isSuccessStatus(customerResponse.status)) {
           return customerResponse.data;
+        } else {
+          return;
         }
       });
       const customers = (await Promise.all(allowedCustomersPromises)).filter(

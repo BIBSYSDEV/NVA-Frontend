@@ -1,4 +1,5 @@
-import { CircularProgress, Typography } from '@mui/material';
+import { CircularProgress, TablePagination, Typography } from '@mui/material';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchApiPath } from '../../api/apiPaths';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
@@ -13,10 +14,16 @@ interface ProjectResultsProps {
   projectId: string;
 }
 
+const itemsPerRow = 5;
+
 export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   const { t } = useTranslation();
+  const [page, setPage] = useState(0);
+
   const [results, isLoadingResults] = useFetch<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}?query=${DescriptionFieldNames.Projects}.id="${projectId}"`,
+    url: `${SearchApiPath.Registrations}?query=${
+      DescriptionFieldNames.Projects
+    }.id="${projectId}"&results=${itemsPerRow}&from=${page * itemsPerRow}`,
     errorMessage: t('feedback.error.search'),
   });
 
@@ -27,7 +34,17 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
       {isLoadingResults ? (
         <CircularProgress aria-label={t('project.results')} />
       ) : results && results.size > 0 ? (
-        <RegistrationList registrations={results.hits} />
+        <>
+          <RegistrationList registrations={results.hits} />
+          <TablePagination
+            rowsPerPageOptions={[itemsPerRow]}
+            component="div"
+            count={results.size}
+            rowsPerPage={itemsPerRow}
+            page={page}
+            onPageChange={(_, muiPage) => setPage(muiPage)}
+          />
+        </>
       ) : (
         <Typography>{t('project.no_results')}</Typography>
       )}
