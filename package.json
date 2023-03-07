@@ -32,7 +32,7 @@
     "@mui/icons-material": "^5.11.11",
     "@mui/lab": "5.0.0-alpha.122",
     "@mui/material": "^5.11.12",
-    "@mui/x-date-pickers": "^5.0.20",
+    "@mui/x-date-pickers": "^6.0.0",
     "@reduxjs/toolkit": "^1.9.3",
     "@uppy/aws-s3-multipart": "^1.8.18",
     "@uppy/core": "^1.20.1",
