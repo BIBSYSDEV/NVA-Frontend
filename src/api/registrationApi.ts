@@ -37,12 +37,21 @@ export const addTicketMessage = async (ticketId: string, message: string) =>
     data: { message },
   });
 
-export const createTicket = async (registrationId: string, type: TicketType) =>
-  await authenticatedApiRequest<Ticket>({
+export const createTicket = async (registrationId: string, type: TicketType) => {
+  const createTicketResponse = await authenticatedApiRequest<Ticket>({
     url: `${registrationId}/ticket`,
     method: 'POST',
     data: { type },
   });
+
+  const locationHeader = createTicketResponse.headers['Location'];
+
+  return locationHeader
+    ? await authenticatedApiRequest<Ticket>({
+        url: locationHeader,
+      })
+    : createTicketResponse;
+};
 
 export const updateTicketStatus = async (ticketId: string, type: TicketType, status: TicketStatus) =>
   await authenticatedApiRequest({
