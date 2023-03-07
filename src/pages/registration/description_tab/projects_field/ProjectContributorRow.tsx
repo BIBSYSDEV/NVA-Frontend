@@ -78,6 +78,8 @@ export const ProjectContributorRow = ({
       const organizationResponse = await apiRequest<Organization>({ url: id });
       if (isSuccessStatus(organizationResponse.status)) {
         return getTopLevelOrganization(organizationResponse.data);
+      } else {
+        return;
       }
     });
     const defaultInstitutions = (await Promise.all(defaultInstitutionsPromises)).filter(

@@ -852,6 +852,7 @@
     "grant_id": "GrantID",
     "keywords": "Keywords",
     "no_participants": "No registered participants.",
+    "no_related_projects": "No related projects.",
     "no_results": "No published results.",
     "no_summary": "No registered summary.",
     "period": "Project period",
