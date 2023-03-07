@@ -105,28 +105,27 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('common.year')}
-                    PopperProps={{
-                      'aria-label': t('common.year'),
-                    }}
                     value={field.value ?? null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date ?? '');
                     }}
-                    inputFormat="yyyy"
+                    format="yyyy"
                     views={['year']}
-                    mask="____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="filled"
-                        required
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
-                      />
-                    )}
+                    /*  mask="____" */
+                    slotProps={{
+                      popper: {
+                        'aria-label': t('common.year'),
+                      },
+                      textField: {
+                        inputProps: { dataTestId: dataTestId.registrationWizard.resourceType.artisticOutputDate },
+                        variant: 'filled',
+                        required: true,
+                        onBlur: () => !touched && setFieldTouched(field.name),
+                        error: touched && !!error,
+                        helperText: <ErrorMessage name={field.name} />,
+                      },
+                    }}
                   />
                 )}
               </Field>

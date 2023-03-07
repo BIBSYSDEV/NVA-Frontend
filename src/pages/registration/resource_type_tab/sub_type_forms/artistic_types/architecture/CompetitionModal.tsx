@@ -115,28 +115,27 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('registration.resource_type.artistic.competition_date')}
-                    PopperProps={{
-                      'aria-label': t('registration.resource_type.artistic.competition_date'),
-                    }}
                     value={field.value ?? null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date ?? '');
                     }}
-                    inputFormat="dd.MM.yyyy"
+                    format="dd.MM.yyyy"
                     views={['year', 'month', 'day']}
-                    mask="__.__.____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
-                        variant="filled"
-                        required
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
+                    /*  mask="__.__.____" */
+                    slotProps={{
+                      popper: {
+                        'aria-label': t('registration.resource_type.artistic.competition_date'),
+                      },
+                      textField: {
+                        inputProps: { dataTestId: dataTestId.registrationWizard.resourceType.artisticOutputDate },
+                        variant: 'filled',
+                        required: true,
+                        onBlur: () => !touched && setFieldTouched(field.name),
+                        error: touched && !!error,
+                        helperText: <ErrorMessage name={field.name} />,
+                      },
+                    }}
                   />
                 )}
               </Field>

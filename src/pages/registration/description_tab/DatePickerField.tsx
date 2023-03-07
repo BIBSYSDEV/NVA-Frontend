@@ -59,28 +59,27 @@ export const DatePickerField = () => {
       <DatePicker
         label={t('registration.description.date_published')}
         value={date}
-        PopperProps={{
-          'aria-label': t('registration.description.date_published'),
-        }}
         onChange={(newDate) => {
           updateDateValues(newDate, yearOnly);
           setDate(newDate);
         }}
-        inputFormat={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
+        format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
         views={yearOnly ? ['year'] : ['year', 'month', 'day']}
         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-        mask={yearOnly ? '____' : '__.__.____'}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            data-testid={dataTestId.registrationWizard.description.datePublishedField}
-            variant="filled"
-            required
-            onBlur={() => !touchedYear && setFieldTouched(DescriptionFieldNames.PublicationYear)}
-            error={hasError}
-            helperText={hasError && errorYear}
-          />
-        )}
+        /* mask={yearOnly ? '____' : '__.__.____'} */
+        slotProps={{
+          popper: {
+            'aria-label': t('registration.description.date_published'),
+          },
+          textField: {
+            inputProps: { dataTestId: dataTestId.registrationWizard.description.datePublishedField },
+            variant: 'filled',
+            required: true,
+            onBlur: () => !touchedYear && setFieldTouched(DescriptionFieldNames.PublicationYear),
+            error: hasError,
+            helperText: hasError && errorYear,
+          },
+        }}
       />
       <FormControlLabel
         sx={{ alignSelf: 'start', mt: '0.4rem' }} // Center field regardless of error state of published date field

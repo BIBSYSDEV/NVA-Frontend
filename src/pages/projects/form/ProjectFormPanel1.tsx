@@ -72,27 +72,26 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <DatePicker
                 label={t('common.start_date')}
-                PopperProps={{
-                  'aria-label': t('common.start_date'),
-                }}
                 onChange={(date) => {
                   !touched && setFieldTouched(field.name, true, false);
                   setFieldValue(field.name, date ?? '');
                 }}
                 value={field.value ? new Date(field.value) : null}
-                maxDate={values.endDate}
-                inputFormat="dd.MM.yyyy"
-                mask="__.__.____"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    data-testid={dataTestId.registrationWizard.description.projectForm.startDateField}
-                    variant="filled"
-                    required
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                  />
-                )}
+                maxDate={new Date(values.endDate)}
+                format="dd.MM.yyyy"
+                /* mask="__.__.____" */
+                slotProps={{
+                  popper: {
+                    'aria-label': t('common.start_date'),
+                  },
+                  textField: {
+                    inputProps: { dataTestId: dataTestId.registrationWizard.description.projectForm.startDateField },
+                    variant: 'filled',
+                    required: true,
+                    error: touched && !!error,
+                    helperText: <ErrorMessage name={field.name} />,
+                  },
+                }}
               />
             )}
           </Field>
@@ -101,27 +100,26 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <DatePicker
                 label={t('common.end_date')}
-                PopperProps={{
-                  'aria-label': t('common.end_date'),
-                }}
                 onChange={(date) => {
                   !touched && setFieldTouched(field.name, true, false);
                   setFieldValue(field.name, date);
                 }}
                 value={field.value ? new Date(field.value) : null}
-                minDate={values.startDate}
-                inputFormat="dd.MM.yyyy"
-                mask="__.__.____"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    data-testid={dataTestId.registrationWizard.description.projectForm.endDateField}
-                    variant="filled"
-                    required
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                  />
-                )}
+                minDate={new Date(values.startDate)}
+                format="dd.MM.yyyy"
+                /*  mask="__.__.____" */
+                slotProps={{
+                  popper: {
+                    'aria-label': t('common.end_date'),
+                  },
+                  textField: {
+                    inputProps: { dataTestId: dataTestId.registrationWizard.description.projectForm.endDateField },
+                    variant: 'filled',
+                    required: true,
+                    error: touched && !!error,
+                    helperText: <ErrorMessage name={field.name} />,
+                  },
+                }}
               />
             )}
           </Field>

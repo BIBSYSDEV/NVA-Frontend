@@ -86,27 +86,28 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('registration.resource_type.artistic.premiere_date')}
-                    PopperProps={{
-                      'aria-label': t('registration.resource_type.artistic.premiere_date'),
-                    }}
                     value={field.value ?? null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date);
                     }}
-                    inputFormat="dd.MM.yyyy"
-                    mask="__.__.____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        sx={{ maxWidth: '13rem' }}
-                        variant="filled"
-                        required
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
-                      />
-                    )}
+                    format="dd.MM.yyyy"
+                    /* mask="__.__.____" */
+                    slotProps={{
+                      popper: {
+                        'aria-label': t('registration.resource_type.artistic.premiere_date'),
+                      },
+                      textField: {
+                        inputProps: {
+                          dataTestId: dataTestId.registrationWizard.resourceType.artisticOutputDate,
+                          sx: { maxWidth: '13rem' },
+                        },
+                        variant: 'filled',
+                        required: true,
+                        error: touched && !!error,
+                        helperText: <ErrorMessage name={field.name} />,
+                      },
+                    }}
                   />
                 )}
               </Field>

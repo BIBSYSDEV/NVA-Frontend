@@ -277,27 +277,26 @@ export const PersonTableRow = ({
                                 <DatePicker
                                   disabled={isSubmitting || !hasFetchedPositions}
                                   label={t('common.end_date')}
-                                  PopperProps={{
-                                    'aria-label': t('common.end_date'),
-                                  }}
-                                  value={field.value ? field.value : null}
+                                  value={field.value ? new Date(field.value) : null}
                                   onChange={(date) => setFieldValue(field.name, date ?? '')}
-                                  inputFormat="dd.MM.yyyy"
+                                  format="dd.MM.yyyy"
                                   views={['year', 'month', 'day']}
-                                  mask="__.__.____"
+                                  /* mask="__.__.____" */
                                   minDate={
                                     values.employments[employmentIndex].startDate
                                       ? new Date(values.employments[employmentIndex].startDate)
                                       : undefined
                                   }
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      variant="filled"
-                                      error={touched && !!error}
-                                      helperText={<ErrorMessage name={field.name} />}
-                                    />
-                                  )}
+                                  slotProps={{
+                                    popper: {
+                                      'aria-label': t('common.end_date'),
+                                    },
+                                    textField: {
+                                      variant: 'filled',
+                                      error: touched && !!error,
+                                      helperText: <ErrorMessage name={field.name} />,
+                                    },
+                                  }}
                                 />
                               )}
                             </Field>

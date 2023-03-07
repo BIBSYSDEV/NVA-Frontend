@@ -18,21 +18,21 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false }: StartDa
         <DatePicker
           disabled={disabled}
           label={t('common.start_date')}
-          PopperProps={{
-            'aria-label': t('common.start_date'),
-          }}
-          value={field.value ? field.value : null}
+          value={field.value ? new Date(field.value) : null}
           onChange={(date) => {
             !touched && setFieldTouched(field.name, true, false);
             setFieldValue(field.name, date ?? '');
           }}
-          inputFormat="dd.MM.yyyy"
+          format="dd.MM.yyyy"
           views={['year', 'month', 'day']}
-          mask="__.__.____"
+          /* mask="__.__.____" */
           maxDate={maxDate}
-          renderInput={(params) => (
-            <TextField {...params} required variant="filled" error={touched && !!error} helperText={touched && error} />
-          )}
+          slotProps={{
+            popper: {
+              'aria-label': t('common.start_date'),
+            },
+            textField: { variant: 'filled', error: touched && !!error, helperText: touched && error, required: true },
+          }}
         />
       )}
     </Field>
