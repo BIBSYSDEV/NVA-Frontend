@@ -375,6 +375,7 @@ export const dataTestId = {
     usersCreators: 'users-creators',
   },
   myPage: {
+    createProjectButton: 'create-project-button',
     messagesLink: 'messages-link',
     myProfileLink: 'my-profile-link',
     myProfile: {
