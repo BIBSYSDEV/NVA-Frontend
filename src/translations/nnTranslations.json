@@ -852,6 +852,7 @@
     "grant_id": "GrantID",
     "keywords": "Nøkkelord",
     "no_participants": "Inga registrerte deltakarar.",
+    "no_related_projects": "",
     "no_results": "Inga publiserte resultat.",
     "no_summary": "Inga registrerte samandrag.",
     "period": "Prosjektperiode",
@@ -966,6 +967,7 @@
     "description": {
       "abstract": "Samandrag",
       "add_vocabulary": "Legg til vokabular",
+      "alternative_title": "Alternativ tittel",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønskjer å fjerne vokabular for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
       "date_published": "Publiseringsdato",
