@@ -65,8 +65,8 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
           }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             {focusedContributors.map((contributor, index) => (
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography key={index} variant="body2">
+              <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography variant="body2">
                   {contributor.identity.id ? (
                     <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                       {contributor.identity.name}
