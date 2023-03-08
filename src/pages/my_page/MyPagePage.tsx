@@ -113,6 +113,7 @@ const MyPagePage = () => {
                 <LinkIconButton
                   data-testid={dataTestId.myPage.createProjectButton}
                   icon={<PostAddIcon />}
+                  isSelected={showCreateProject}
                   onClick={() => setShowCreateProject(true)}
                   title={t('project.create_project')}
                 />
