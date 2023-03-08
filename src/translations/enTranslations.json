@@ -1208,8 +1208,6 @@
         "competition_rank": "Rank/purchase/mention/invited",
         "composer": "Composer",
         "concert_part_of_series": "Multiple performances (concert series, tour, etc)",
-        "concert_program": "Concert program",
-        "concert_program_table_caption": "Overview over concert program",
         "content_track": "Content/tracks",
         "content_track_table_caption": "Overview over content/tracks",
         "design_type": {
@@ -1248,7 +1246,7 @@
         "literary_arts_type": {
           "Essay": "Essay",
           "Novel": "Novel",
-          "Novella": "Novella",
+          "Novella": "Novella/novellas",
           "Other": "Other literary arts",
           "Play": "Play",
           "Poetry": "Poetry",
@@ -1316,6 +1314,8 @@
         },
         "premiere": "Premiere",
         "premiere_date": "Premiere date",
+        "program": "Program",
+        "program_table_caption": "Overview over program",
         "publisher": "Publisher",
         "remove_announcement": "Remove announcement",
         "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?",
