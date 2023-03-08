@@ -41,7 +41,7 @@ export const ProjectFormPanel2 = () => {
         )}
       </Field>
 
-      <Field name={ProjectFieldName.AcademicSummary}>
+      <Field name={ProjectFieldName.AcademicSummaryNo}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
@@ -50,11 +50,11 @@ export const ProjectFormPanel2 = () => {
             fullWidth
             multiline
             rows="4"
-            label={t('project.scientific_summary')}
+            label={t('project.scientific_summary_norwegian')}
           />
         )}
       </Field>
-      <Field name={ProjectFieldName.PopularScientificSummary}>
+      <Field name={ProjectFieldName.PopularScientificSummaryNo}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
@@ -63,7 +63,33 @@ export const ProjectFormPanel2 = () => {
             fullWidth
             multiline
             rows="4"
-            label={t('project.popular_science_summary')}
+            label={t('project.popular_science_summary_norwegian')}
+          />
+        )}
+      </Field>
+      <Field name={ProjectFieldName.AcademicSummaryEn}>
+        {({ field }: FieldProps<string>) => (
+          <TextField
+            {...field}
+            value={field.value ?? ''}
+            variant="filled"
+            fullWidth
+            multiline
+            rows="4"
+            label={t('project.scientific_summary_english')}
+          />
+        )}
+      </Field>
+      <Field name={ProjectFieldName.PopularScientificSummaryEn}>
+        {({ field }: FieldProps<string>) => (
+          <TextField
+            {...field}
+            value={field.value ?? ''}
+            variant="filled"
+            fullWidth
+            multiline
+            rows="4"
+            label={t('project.popular_science_summary_english')}
           />
         )}
       </Field>
