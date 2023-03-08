@@ -70,7 +70,7 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
   </nav>
 );
 
-interface LinkButtonProps extends ButtonProps, Pick<LinkProps, 'to'> {
+interface LinkButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
   isSelected?: boolean;
 }
 
@@ -78,7 +78,7 @@ export const LinkButton = ({ isSelected, sx, ...rest }: LinkButtonProps) => (
   <Button
     sx={{ bgcolor: isSelected ? 'primary.main' : 'background.default', ml: '1rem', width: 'fit-content', ...sx }}
     variant={isSelected ? 'contained' : 'outlined'}
-    LinkComponent={Link}
+    LinkComponent={rest.to ? Link : undefined}
     {...rest}
   />
 );
