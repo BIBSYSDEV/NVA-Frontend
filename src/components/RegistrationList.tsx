@@ -8,6 +8,7 @@ import { dataTestId } from '../utils/dataTestIds';
 import { getTitleString } from '../utils/registration-helpers';
 import { displayDate } from '../utils/date-helpers';
 import { TruncatableTypography } from './TruncatableTypography';
+import { ContributorIndicators } from './ContributorIndicators';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -62,20 +63,25 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
             columnGap: '1rem',
             whiteSpace: 'nowrap',
           }}>
-          {focusedContributors.map((contributor, index) => (
-            <Typography key={index} variant="body2">
-              {contributor.identity.id ? (
-                <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-                  {contributor.identity.name}
-                </MuiLink>
-              ) : (
-                contributor.identity.name
-              )}
-            </Typography>
-          ))}
-          {countRestContributors > 0 && (
-            <Typography variant="body2">({t('common.x_others', { count: countRestContributors })})</Typography>
-          )}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            {focusedContributors.map((contributor, index) => (
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography key={index} variant="body2">
+                  {contributor.identity.id ? (
+                    <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+                      {contributor.identity.name}
+                    </MuiLink>
+                  ) : (
+                    contributor.identity.name
+                  )}
+                </Typography>
+                <ContributorIndicators contributor={contributor} />
+              </Box>
+            ))}
+            {countRestContributors > 0 && (
+              <Typography variant="body2">({t('common.x_others', { count: countRestContributors })})</Typography>
+            )}
+          </Box>
         </Box>
 
         <TruncatableTypography sx={{ mt: '0.5rem' }}>{entityDescription?.abstract}</TruncatableTypography>
