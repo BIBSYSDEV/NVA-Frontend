@@ -101,9 +101,9 @@ export const ArtisticDesignForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {venues.length > 0 && (
-                <Table>
+                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
                   <TableHead>
-                    <TableRow>
+                    <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
                       <TableCell>{t('registration.resource_type.artistic.exhibition_place')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>

@@ -1,4 +1,4 @@
-import { Typography, Link } from '@mui/material';
+import { Typography, Link, Chip, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
@@ -55,15 +55,27 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
 
         <Typography variant="overline">{t('project.project_category')}</Typography>
         <Typography>
-          {project.projectCategories.length > 0
-            ? project.projectCategories.map((category) => getLanguageString(category.label)).join(', ')
-            : '-'}
+          {project.projectCategories.length > 0 ? (
+            <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {project.projectCategories.map((category) => (
+                <Chip color="primary" label={getLanguageString(category.label)} />
+              ))}
+            </Box>
+          ) : (
+            '-'
+          )}
         </Typography>
         <Typography variant="overline">{t('project.keywords')}</Typography>
         <Typography>
-          {project.keywords.length > 0
-            ? project.keywords.map((keyword) => getLanguageString(keyword.label)).join(', ')
-            : '-'}
+          {project.keywords.length > 0 ? (
+            <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              {project.keywords.map((keyword) => (
+                <Chip color="primary" label={getLanguageString(keyword.label)} />
+              ))}
+            </Box>
+          ) : (
+            '-'
+          )}
         </Typography>
       </div>
     </StyledGeneralInfo>

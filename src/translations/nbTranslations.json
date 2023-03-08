@@ -852,6 +852,7 @@
     "grant_id": "GrantID",
     "keywords": "Nøkkelord",
     "no_participants": "Ingen registrerte deltakere.",
+    "no_related_projects": "Ingen relaterte prosjekt.",
     "no_results": "Ingen publiserte resultater.",
     "no_summary": "Ingen registrerte sammendrag.",
     "period": "Prosjektperiode",
@@ -1176,7 +1177,7 @@
         "add_concert": "Legg til konsert/forestilling",
         "add_exhibition": "Legg til utstilling",
         "add_exhibition_place": "Legg til visningssted",
-        "add_music_score": "Legg til partitur/manuscript",
+        "add_music_score": "Legg til partitur/manuskript",
         "add_other_performance": "Legg til annen fremføring",
         "add_other_release": "Legg til annen offentliggjøring",
         "add_performance": "Legg til fremføring/forestilling",
@@ -1188,7 +1189,7 @@
           "Interior": "Interiør",
           "LandscapeArchitecture": "Landskapsarkitektur",
           "Other": "Annen arkitektur",
-          "PlanningProposal": "Planforsalg"
+          "PlanningProposal": "Planforslag"
         },
         "audio_video_type": {
           "Audiobook": "Lydbok",
@@ -1207,8 +1208,6 @@
         "competition_rank": "Rangering/innkjøp/omtale/invitert",
         "composer": "Komponist",
         "concert_part_of_series": "Flere fremføringer (konsertserie, turné, etc)",
-        "concert_program": "Konsertprogram",
-        "concert_program_table_caption": "Oversikt over konsertprogram",
         "content_track": "Innhold/spor",
         "content_track_table_caption": "Oversikt over innhold/spor",
         "design_type": {
@@ -1233,7 +1232,7 @@
         "edit_concert": "Endre konsert",
         "edit_exhibition": "Endre utstilling",
         "edit_exhibition_place": "Endre visningsted",
-        "edit_music_score": "Endre partitur/manuscript",
+        "edit_music_score": "Endre partitur/manuskript",
         "edit_other_performance": "Endre annen fremføringsform",
         "edit_other_release": "Endre annen offentliggjøring",
         "edit_performance": "Endre fremføring/forestilling",
@@ -1247,7 +1246,7 @@
         "literary_arts_type": {
           "Essay": "Essay",
           "Novel": "Roman",
-          "Novella": "Novelle",
+          "Novella": "Novelle/noveller",
           "Other": "Annen skrivekunst",
           "Play": "Drama/scenetekster",
           "Poetry": "Poesi",
@@ -1315,6 +1314,8 @@
         },
         "premiere": "Premiere",
         "premiere_date": "Premieredato",
+        "program": "Program",
+        "program_table_caption": "Oversikt over program",
         "publisher": "Utgiver/forlag",
         "remove_announcement": "Fjern offentliggjøring",
         "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",

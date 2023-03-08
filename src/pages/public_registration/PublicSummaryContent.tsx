@@ -84,7 +84,7 @@ const TagsList = ({ title, values }: TagsListProps) => (
       data-testid={dataTestId.registrationLandingPage.keywords}
       sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
       {values.map((value) => (
-        <Chip key={value} label={<Typography>{value}</Typography>} />
+        <Chip key={value} color="primary" label={<Typography>{value}</Typography>} />
       ))}
     </Box>
   </Box>

@@ -852,6 +852,7 @@
     "grant_id": "GrantID",
     "keywords": "Nøkkelord",
     "no_participants": "Inga registrerte deltakarar.",
+    "no_related_projects": "",
     "no_results": "Inga publiserte resultat.",
     "no_summary": "Inga registrerte samandrag.",
     "period": "Prosjektperiode",
@@ -966,6 +967,7 @@
     "description": {
       "abstract": "Samandrag",
       "add_vocabulary": "Legg til vokabular",
+      "alternative_title": "Alternativ tittel",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønskjer å fjerne vokabular for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
       "date_published": "Publiseringsdato",
@@ -1206,8 +1208,6 @@
         "competition_rank": "Rangering/innkjøp/omtale/invitert",
         "composer": "Komponist",
         "concert_part_of_series": "Fleire framsyningar (konsertserie, turné, etc)",
-        "concert_program": "Konsertprogram",
-        "concert_program_table_caption": "Oversyn over konsertprogram",
         "content_track": "Innhald/spor",
         "content_track_table_caption": "Oversyn over innhald/spor",
         "design_type": {
@@ -1246,7 +1246,7 @@
         "literary_arts_type": {
           "Essay": "Essay",
           "Novel": "Roman",
-          "Novella": "Novelle",
+          "Novella": "Novelle/noveller",
           "Other": "Anna skrivekunst",
           "Play": "Drama/scenetekstar",
           "Poetry": "Posei",
@@ -1314,6 +1314,8 @@
         },
         "premiere": "Premiere",
         "premiere_date": "Premieredato",
+        "program": "Program",
+        "program_table_caption": "Oversyn over program",
         "publisher": "Utgjevar/forlag",
         "remove_announcement": "Fjern offentleggjering",
         "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" frå lista over offentleggjeringar?",
