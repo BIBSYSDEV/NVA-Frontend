@@ -1,6 +1,6 @@
 import { Doi, Registration } from '../types/registration.types';
 import { authenticatedApiRequest } from './apiRequest';
-import { Ticket, TicketStatus, TicketType } from '../types/publication_types/messages.types';
+import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/messages.types';
 import { PublicationsApiPath } from './apiPaths';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
@@ -37,20 +37,28 @@ export const addTicketMessage = async (ticketId: string, message: string) =>
     data: { message },
   });
 
-export const createTicket = async (registrationId: string, type: TicketType) => {
+export const createTicket = async (registrationId: string, type: TicketType, returnCreatedTicket = false) => {
   const createTicketResponse = await authenticatedApiRequest<Ticket>({
     url: `${registrationId}/ticket`,
     method: 'POST',
     data: { type },
   });
 
-  const locationHeader = createTicketResponse.headers['Location'];
-
-  return locationHeader
-    ? await authenticatedApiRequest<Ticket>({
-        url: locationHeader,
-      })
-    : createTicketResponse;
+  // Must handle redirects manually since the browser denies the app access to the response's location header
+  if (!returnCreatedTicket) {
+    return createTicketResponse;
+  } else {
+    const getTickets = await authenticatedApiRequest<TicketCollection>({
+      url: `${registrationId}/tickets`,
+    });
+    const createdTicketId =
+      getTickets.data.tickets
+        .sort((a, b) => (a.createdDate < b.createdDate ? 1 : -1))
+        .find((ticket) => ticket.type === type)?.id ?? '';
+    return await authenticatedApiRequest<Ticket>({
+      url: createdTicketId,
+    });
+  }
 };
 
 export const updateTicketStatus = async (ticketId: string, type: TicketType, status: TicketStatus) =>

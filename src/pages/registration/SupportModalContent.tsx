@@ -20,7 +20,7 @@ export const SupportModalContent = ({ closeModal, registrationId }: SupportModal
   const sendMessage = async (message: string) => {
     if (message) {
       // Create ticket
-      const createTicketResponse = await createTicket(registrationId, 'GeneralSupportCase');
+      const createTicketResponse = await createTicket(registrationId, 'GeneralSupportCase', true);
       if (isErrorStatus(createTicketResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
       } else if (isSuccessStatus(createTicketResponse.status)) {
