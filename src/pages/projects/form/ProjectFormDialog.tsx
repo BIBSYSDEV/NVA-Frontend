@@ -34,8 +34,10 @@ export enum ProjectFieldName {
   Contributors = 'contributors',
   StartDate = 'startDate',
   EndDate = 'endDate',
-  AcademicSummary = 'academicSummary.no',
-  PopularScientificSummary = 'popularScientificSummary.no',
+  AcademicSummaryNo = 'academicSummary.no',
+  PopularScientificSummaryNo = 'popularScientificSummary.no',
+  AcademicSummaryEn = 'academicSummary.en',
+  PopularScientificSummaryEn = 'popularScientificSummary.en',
   Keywords = 'keywords',
   RelatedProjects = 'relatedProjects',
 }

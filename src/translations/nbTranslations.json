@@ -858,6 +858,8 @@
     "period": "Prosjektperiode",
     "person": "Person",
     "popular_science_summary": "Populærvitenskapelig sammendrag",
+    "popular_science_summary_english": "$t(project.popular_science_summary) (engelsk)",
+    "popular_science_summary_norwegian": "$t(project.popular_science_summary) (norsk)",
     "project": "Prosjekt",
     "project_category": "Prosjektkategori",
     "project_info": "Prosjektinfo",
@@ -866,6 +868,8 @@
     "project_participants": "Prosjektdeltakere",
     "results": "Resultater",
     "scientific_summary": "Vitenskapelig sammendrag",
+    "scientific_summary_english": "$t(project.scientific_summary) (engelsk)",
+    "scientific_summary_norwegian": "$t(project.scientific_summary) (norsk)",
     "search_for_institution": "Søk etter institusjon",
     "status": {
       "ACTIVE": "Aktivt",

@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 import { Divider } from '@mui/material';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
@@ -27,12 +28,15 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import ResearchProfile from '../research_profile/ResearchProfile';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const [showCreateProject, setShowCreateProject] = useState(false);
 
   useEffect(() => {
     if (currentPath === UrlPathTemplate.MyPage) {
@@ -96,12 +100,26 @@ const MyPagePage = () => {
             to={UrlPathTemplate.MyPageMyResults}>
             {t('my_page.my_profile.results')}
           </LinkButton>
-          <LinkButton
-            data-testid={dataTestId.myPage.myProjectsLink}
-            isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
-            to={UrlPathTemplate.MyPageMyProjects}>
-            {t('my_page.my_profile.projects')}
-          </LinkButton>
+          <LinkButtonRow>
+            <LinkButton
+              data-testid={dataTestId.myPage.myProjectsLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
+              to={UrlPathTemplate.MyPageMyProjects}>
+              {t('my_page.my_profile.projects')}
+            </LinkButton>
+
+            {user?.isCreator && (
+              <BetaFunctionality>
+                <LinkIconButton
+                  data-testid={dataTestId.myPage.createProjectButton}
+                  icon={<PostAddIcon />}
+                  isSelected={showCreateProject}
+                  onClick={() => setShowCreateProject(true)}
+                  title={t('project.create_project')}
+                />
+              </BetaFunctionality>
+            )}
+          </LinkButtonRow>
           <Divider key="divider4" />
         </NavigationList>
       </SidePanel>
@@ -116,6 +134,7 @@ const MyPagePage = () => {
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResults} component={MyResults} />
         </ErrorBoundary>
       </Switch>
+      {user?.isCreator && <ProjectFormDialog open={showCreateProject} onClose={() => setShowCreateProject(false)} />}
     </StyledPageWithSideMenu>
   );
 };
