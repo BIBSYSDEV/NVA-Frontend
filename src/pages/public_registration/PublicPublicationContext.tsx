@@ -542,13 +542,11 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       <Typography paragraph>{extent}</Typography>
 
       <Typography variant="h3" id="program-heading">
-        {t('registration.resource_type.artistic.concert_program')}
+        {t('registration.resource_type.artistic.program')}
       </Typography>
       <TableContainer component={Paper}>
         <Table aria-labelledby="program-heading">
-          <caption style={visuallyHidden}>
-            {t('registration.resource_type.artistic.concert_program_table_caption')}
-          </caption>
+          <caption style={visuallyHidden}>{t('registration.resource_type.artistic.program_table_caption')}</caption>
           <TableHead>
             <TableRow>
               <TableCell>{t('common.title')}</TableCell>
