@@ -1,4 +1,10 @@
 import { LanguageString } from './common.types';
+import { Organization } from './organization.types';
+
+export interface TypedLabel {
+  type: string;
+  label: LanguageString;
+}
 
 export interface ResearchProject {
   type: 'ResearchProject';
@@ -27,43 +33,21 @@ interface ProjectIdentifier {
   value: string;
 }
 
-interface BasicCoordinatingInstitution {
-  type: 'Organization';
-  id: string;
-}
+export type ProjectOrganization = Omit<Organization, 'partOf' | 'hasPart'>;
 
-interface CoordinatingInstitution extends BasicCoordinatingInstitution {
-  name: LanguageString;
-}
-
-interface BasicContributorAffiliation {
-  type: 'Organization';
-  id: string;
-}
-
-interface ContributorAffiliation extends BasicContributorAffiliation {
-  name: LanguageString;
-}
-
-interface BasicContributorIdentity {
+export interface ProjectContributorIdentity {
   type: 'Person';
   id: string;
-}
-
-interface ContributorIdentity extends BasicContributorIdentity {
   firstName: string;
   lastName: string;
 }
 
-interface BasicProjectContributor {
-  type: 'ProjectManager' | 'ProjectParticipant';
-  identity: BasicContributorIdentity;
-  affiliation?: BasicContributorAffiliation;
-}
+export type ProjectContributorType = 'ProjectManager' | 'ProjectParticipant';
 
-export interface ProjectContributor extends BasicProjectContributor {
-  affiliation?: ContributorAffiliation;
-  identity: ContributorIdentity;
+export interface ProjectContributor {
+  type: ProjectContributorType;
+  affiliation: ProjectOrganization;
+  identity: ProjectContributorIdentity;
 }
 
 interface Funding {
@@ -74,25 +58,28 @@ interface Funding {
   code?: string;
 }
 
-export interface PostCristinProject {
+export interface SaveCristinProject {
   type: 'Project';
   title: string;
   language: string;
   startDate: string;
   endDate: string;
-  coordinatingInstitution: BasicCoordinatingInstitution;
-  contributors: BasicProjectContributor[];
+  coordinatingInstitution: ProjectOrganization;
+  contributors: ProjectContributor[];
+  academicSummary: LanguageString;
+  popularScientificSummary: LanguageString;
+  projectCategories: TypedLabel[];
+  keywords: TypedLabel[];
+  relatedProjects: string[];
 }
 
-export interface CristinProject extends PostCristinProject {
+export interface CristinProject extends SaveCristinProject {
   id: string;
   identifier: ProjectIdentifier[];
   status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
   alternativeTitles: LanguageString[];
-  coordinatingInstitution: CoordinatingInstitution;
+  coordinatingInstitution: ProjectOrganization;
   contributors: ProjectContributor[];
-  academicSummary: LanguageString;
-  popularScientificSummary: LanguageString;
   funding: Funding[];
 }
 
@@ -116,3 +103,28 @@ export interface NfrProject {
   activeFrom: string;
   activeTo: string;
 }
+
+export const emptyProjectContributor: ProjectContributor = {
+  type: 'ProjectParticipant',
+  identity: { type: 'Person', id: '', firstName: '', lastName: '' },
+  affiliation: { type: 'Organization', id: '', name: {} },
+};
+
+export const emptyProject: SaveCristinProject = {
+  type: 'Project',
+  title: '',
+  language: 'http://lexvo.org/id/iso639-3/nob',
+  startDate: '',
+  endDate: '',
+  contributors: [{ ...emptyProjectContributor, type: 'ProjectManager' }],
+  coordinatingInstitution: {
+    type: 'Organization',
+    id: '',
+    name: {},
+  },
+  academicSummary: {},
+  popularScientificSummary: {},
+  projectCategories: [],
+  keywords: [],
+  relatedProjects: [],
+};

@@ -227,7 +227,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
               <FieldArray name="concertProgramme">
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <>
-                    <Typography variant="h3">{t('registration.resource_type.artistic.concert_program')}</Typography>
+                    <Typography variant="h3">{t('registration.resource_type.artistic.program')}</Typography>
                     {values.concertProgramme.map((_, index) => {
                       const baseFieldName = `${name}[${index}]`;
                       return (

@@ -117,7 +117,7 @@ export const VocabularySettings = () => {
               vocabulary={currentHrcsCategoryVocabularies}
               updateVocabularies={updateVocabularies}
               isLoadingCustomer={isLoadingVocabularyList}
-              dataTestId={dataTestId.editor.hrcsActivityButtonGroup}
+              dataTestId={dataTestId.editor.hrcsCategoryButtonGroup}
               disabled={isUpdating}
             />
           </Box>

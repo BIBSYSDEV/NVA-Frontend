@@ -37,7 +37,9 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
   };
 
   const aggregationEntries = Object.entries(aggregations);
-  const registrationTypeFacet = aggregationEntries.find(([fieldName]) => fieldName === ResourceFieldNames.SubType)?.[1];
+  const registrationTypeFacet = aggregationEntries.find(
+    ([fieldName]) => fieldName === ResourceFieldNames.RegistrationType
+  )?.[1];
 
   return (
     <>
@@ -55,12 +57,10 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                     bgcolor: 'info.light',
                   },
                 }}
-                onClick={() => updateFilter(ResourceFieldNames.SubType, bucket.key)}
+                onClick={() => updateFilter(ResourceFieldNames.RegistrationType, bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
-                <Box component="span">
-                  {t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}
-                </Box>
-                <Box component="span">({bucket.doc_count})</Box>
+                <span>{t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}</span>
+                {(bucket.docCount || bucket.doc_count) && <span>({bucket.docCount ?? bucket.doc_count})</span>}
               </ListItemButton>
             </Box>
           ))}

@@ -39,13 +39,12 @@ export interface SearchResponse<T> {
 
 export type Aggregations = {
   [fieldName: string]: {
-    doc_count_error_upper_bound: number;
-    sum_other_doc_count: number;
     buckets: AggregationBucket[];
   };
 };
 
 interface AggregationBucket {
   key: string;
-  doc_count: number;
+  doc_count?: number; // TODO: Remove when model is updated in all environments
+  docCount?: number;
 }

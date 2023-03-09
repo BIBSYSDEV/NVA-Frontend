@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../api/apiPaths';
-import { apiRequest, authenticatedApiRequest } from '../api/apiRequest';
+import { authenticatedApiRequest } from '../api/apiRequest';
 import { getCurrentUserAttributes } from '../api/userApi';
 import { setUser } from '../redux/userSlice';
 import { setNotification } from '../redux/notificationSlice';
@@ -28,9 +28,11 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
   useEffect(() => {
     const fetchAllowedCustomers = async () => {
       const allowedCustomersPromises = allowedCustomerIds.map(async (id) => {
-        const customerResponse = await apiRequest<CustomerInstitution>({ url: id });
+        const customerResponse = await authenticatedApiRequest<CustomerInstitution>({ url: id });
         if (isSuccessStatus(customerResponse.status)) {
           return customerResponse.data;
+        } else {
+          return;
         }
       });
       const customers = (await Promise.all(allowedCustomersPromises)).filter(

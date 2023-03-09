@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
-import { PostCristinProject } from '../../../types/project.types';
+import { SaveCristinProject } from '../../../types/project.types';
 import { YupShape } from '../validationHelpers';
 
 const basicProjectErrorMessage = {
@@ -43,7 +43,7 @@ const contributorValidationSchema = Yup.object().shape({
   affiliation: Yup.object().shape({ id: Yup.string().required(basicProjectErrorMessage.institutionRequired) }),
 });
 
-export const basicProjectValidationSchema = Yup.object<YupShape<PostCristinProject>>().shape({
+export const basicProjectValidationSchema = Yup.object<YupShape<SaveCristinProject>>().shape({
   title: Yup.string().required(basicProjectErrorMessage.titleRequired),
   startDate: Yup.date()
     .typeError(basicProjectErrorMessage.startDateInvalidFormat)

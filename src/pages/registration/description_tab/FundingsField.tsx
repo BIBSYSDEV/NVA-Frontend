@@ -7,13 +7,14 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { FundingSources } from '../../../types/project.types';
-import { emptyFunding, Registration } from '../../../types/registration.types';
+import { emptyFunding, Funding, Registration } from '../../../types/registration.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { NfrProjectSearch } from './NfrProjectSearch';
 import { getNfrProjectUrl } from './projects_field/projectHelpers';
 import { fundingSourceIsNfr } from '../../../utils/registration-helpers';
 import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
+import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 export const FundingsField = () => {
   const { t } = useTranslation();
@@ -28,7 +29,10 @@ export const FundingsField = () => {
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography variant="h2">{t('registration.description.funding.financing')}</Typography>
 
-            <Button startIcon={<AddIcon />} onClick={() => push(emptyFunding)}>
+            <Button
+              data-testid={dataTestId.registrationWizard.description.addFundingButton}
+              startIcon={<AddIcon />}
+              onClick={() => push(emptyFunding)}>
               {t('common.add')}
             </Button>
           </Box>
@@ -71,6 +75,7 @@ export const FundingsField = () => {
                       onChange={(_, value) => setFieldValue(field.name, value?.id)}
                       renderInput={(params) => (
                         <AutocompleteTextField
+                          data-testid={dataTestId.registrationWizard.description.fundingSourceSearchField}
                           name={field.name}
                           onBlur={field.onBlur}
                           {...params}
@@ -97,6 +102,7 @@ export const FundingsField = () => {
                         fullWidth
                         variant="filled"
                         multiline
+                        data-testid={dataTestId.registrationWizard.description.fundingProjectField}
                       />
                       <TextField
                         value={funding.identifier}
@@ -104,6 +110,7 @@ export const FundingsField = () => {
                         label={t('common.id')}
                         fullWidth
                         variant="filled"
+                        data-testid={dataTestId.registrationWizard.description.fundingIdField}
                       />
                       {funding.identifier && (
                         <Button
@@ -111,13 +118,34 @@ export const FundingsField = () => {
                           endIcon={<OpenInNewIcon />}
                           href={getNfrProjectUrl(funding.identifier)}
                           target="_blank"
+                          data-testid={dataTestId.registrationWizard.description.fundingLinkButton}
                           rel="noopener noreferrer">
                           {t('common.open')}
                         </Button>
                       )}
                     </>
                   ) : (
-                    <NfrProjectSearch baseFieldName={baseFieldName} />
+                    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Id}`}>
+                      {({ field: { name, onBlur }, meta: { touched, error } }: FieldProps<string>) => (
+                        <NfrProjectSearch
+                          onSelectProject={(project) => {
+                            if (project) {
+                              const { lead, ...rest } = project;
+                              const nfrFunding: Funding = {
+                                type: 'ConfirmedFunding',
+                                ...rest,
+                              };
+                              setFieldValue(baseFieldName, nfrFunding);
+                            }
+                          }}
+                          required
+                          name={name}
+                          onBlur={onBlur}
+                          errorMessage={touched && !!error ? error : undefined}
+                          data-testid={dataTestId.registrationWizard.description.fundingNfrProjectSearchField}
+                        />
+                      )}
+                    </Field>
                   ))}
 
                 {!hasSelectedNfrSource && hasSelectedSource && (
@@ -135,6 +163,7 @@ export const FundingsField = () => {
                           required={!hasSelectedNfrSource}
                           error={touched && !!error}
                           helperText={touched && !!error ? error : undefined}
+                          data-testid={dataTestId.registrationWizard.description.fundingProjectField}
                         />
                       )}
                     </Field>
@@ -147,6 +176,7 @@ export const FundingsField = () => {
                           label={t('common.id')}
                           fullWidth
                           variant="filled"
+                          data-testid={dataTestId.registrationWizard.description.fundingIdField}
                         />
                       )}
                     </Field>
@@ -166,6 +196,7 @@ export const FundingsField = () => {
                           }}
                           error={touched && !!error}
                           helperText={touched && !!error ? error : undefined}
+                          data-testid={dataTestId.registrationWizard.description.fundingSumField}
                         />
                       )}
                     </Field>
@@ -174,6 +205,7 @@ export const FundingsField = () => {
                 <IconButton
                   sx={{ width: 'fit-content' }}
                   onClick={() => remove(index)}
+                  data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
                   title={t('registration.description.funding.remove_funding')}>
                   <CancelIcon color="primary" />
                 </IconButton>

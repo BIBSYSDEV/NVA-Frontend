@@ -584,4 +584,4 @@ export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
 
-export const fundingSourceIsNfr = (sourceId: string) => sourceId.split('/').pop() === 'NFR';
+export const fundingSourceIsNfr = (sourceId = '') => sourceId.split('/').pop()?.toUpperCase() === 'NFR';

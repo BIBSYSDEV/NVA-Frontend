@@ -17,6 +17,14 @@ export const PersonSearch = () => {
   const location = useLocation();
   const personSearchQueryParmas = new URLSearchParams(location.search);
   personSearchQueryParmas.delete(SearchParam.Type);
+
+  if (!personSearchQueryParmas.get(SearchParam.Name)) {
+    personSearchQueryParmas.set(SearchParam.Name, '.');
+  }
+  if (!personSearchQueryParmas.get(SearchParam.Results)) {
+    personSearchQueryParmas.set(SearchParam.Results, '10');
+  }
+
   const queryParams = personSearchQueryParmas.toString();
 
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<CristinPerson>>({

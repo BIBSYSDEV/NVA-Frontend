@@ -15,9 +15,11 @@ interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   onChange?: (selectedInstitution: Organization | null) => void;
   disabled?: boolean;
   errorMessage?: string;
-  fieldInputProps?: FieldInputProps<string>;
+  fieldInputProps?: FieldInputProps<any>;
   isLoadingDefaultOptions?: boolean;
   defaultOptions?: Organization[];
+  selectedValue?: Organization;
+  customDataTestId?: string;
 }
 
 export const OrganizationSearchField = ({
@@ -28,6 +30,8 @@ export const OrganizationSearchField = ({
   label,
   isLoadingDefaultOptions = false,
   defaultOptions = [],
+  selectedValue,
+  customDataTestId,
 }: OrganizationSearchFieldProps) => {
   const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
@@ -36,7 +40,6 @@ export const OrganizationSearchField = ({
     url: debouncedQuery ? `${CristinApiPath.Organization}?query=${debouncedQuery}&results=20` : '',
     errorMessage: t('feedback.error.get_institutions'),
   });
-
   const isLoading = isLoadingDefaultOptions || isLoadingInstitutionOptions;
   const options = isLoadingInstitutionOptions || !institutionOptions ? defaultOptions : institutionOptions.hits;
 
@@ -58,6 +61,7 @@ export const OrganizationSearchField = ({
         }
         setSearchTerm('');
       }}
+      value={selectedValue}
       loading={isLoading}
       renderInput={(params) => (
         <AutocompleteTextField
@@ -65,13 +69,13 @@ export const OrganizationSearchField = ({
           value={fieldInputProps?.value}
           name={fieldInputProps?.name}
           {...params}
-          data-testid={dataTestId.organization.searchField}
+          data-testid={customDataTestId ?? dataTestId.organization.searchField}
           label={label ?? t('common.institution')}
           required
           placeholder={t('project.search_for_institution')}
           errorMessage={errorMessage}
           isLoading={isLoading}
-          showSearchIcon={!fieldInputProps?.value}
+          showSearchIcon={!selectedValue?.id}
         />
       )}
     />
