@@ -49,6 +49,12 @@ interface ProjectFormDialogProps extends Pick<DialogProps, 'open'> {
   refetchData?: () => void;
 }
 
+type ProjectInitialValues = CristinProject | SaveCristinProject | undefined;
+export interface InitialProjectFormData {
+  project: ProjectInitialValues;
+  suggestedProjectManager?: string;
+}
+
 export const ProjectFormDialog = ({
   currentProject,
   refetchData,
@@ -58,13 +64,13 @@ export const ProjectFormDialog = ({
 }: ProjectFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [initialValues, setInitialValues] = useState<CristinProject | SaveCristinProject | undefined>(currentProject);
+  const [initialValues, setInitialValues] = useState<InitialProjectFormData>({ project: currentProject });
   const [selectedPanel, setSelectedPanel] = useState<0 | 1>(0);
   const editMode = !!currentProject;
 
   const handleClose = () => {
     onClose();
-    setInitialValues(currentProject);
+    setInitialValues({ project: currentProject });
     setSelectedPanel(0);
   };
 
@@ -110,11 +116,11 @@ export const ProjectFormDialog = ({
       transitionDuration={0}>
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
       <ErrorBoundary>
-        {!initialValues ? (
+        {!initialValues.project ? (
           <CreateProjectStartPage onClose={handleClose} setInitialValues={setInitialValues} />
         ) : (
           <Formik
-            initialValues={initialValues}
+            initialValues={initialValues.project}
             validationSchema={basicProjectValidationSchema}
             onSubmit={submitProjectForm}>
             {({ isSubmitting, errors, setTouched, touched, values }: FormikProps<SaveCristinProject>) => {
@@ -151,7 +157,10 @@ export const ProjectFormDialog = ({
                   <DialogContent>
                     <ErrorBoundary>
                       {selectedPanel === 0 ? (
-                        <ProjectFormPanel1 currentProject={currentProject} />
+                        <ProjectFormPanel1
+                          currentProject={currentProject}
+                          suggestedProjectManager={initialValues.suggestedProjectManager}
+                        />
                       ) : (
                         <ProjectFormPanel2 />
                       )}

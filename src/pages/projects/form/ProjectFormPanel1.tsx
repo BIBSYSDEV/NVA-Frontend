@@ -15,11 +15,12 @@ import { OrganizationSearchField } from '../../basic_data/app_admin/Organization
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 import { ProjectFieldName } from './ProjectFormDialog';
 
-interface ProjectFormPanel1Props {
+export interface ProjectFormPanel1Props {
   currentProject?: CristinProject;
+  suggestedProjectManager?: string;
 }
 
-export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) => {
+export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: ProjectFormPanel1Props) => {
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched, touched, errors } = useFormikContext<SaveCristinProject>();
 
@@ -137,6 +138,9 @@ export const ProjectFormPanel1 = ({ currentProject }: ProjectFormPanel1Props) =>
           flexDirection: 'column',
           rowGap: { xs: '1.25rem', sm: '0.5rem' },
         }}>
+        {suggestedProjectManager && (
+          <Typography>{t('project.project_manager_from_nfr', { name: suggestedProjectManager })}</Typography>
+        )}
         <FieldArray name={ProjectFieldName.Contributors}>
           {({ name, push, remove }: FieldArrayRenderProps) => (
             <>
