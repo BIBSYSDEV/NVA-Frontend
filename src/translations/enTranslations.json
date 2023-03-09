@@ -864,6 +864,7 @@
     "project_category": "Project category",
     "project_info": "Project info",
     "project_manager": "Project manager",
+    "project_manager_from_nfr": "Project manager from NFR: {{name}}",
     "project_participant": "Project participant",
     "project_participants": "Project participants",
     "results": "Results",
