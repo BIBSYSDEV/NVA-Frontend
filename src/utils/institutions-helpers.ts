@@ -44,3 +44,10 @@ export const getTopLevelOrganization = (organization: Organization): Organizatio
 
 export const sortCustomerInstitutions = <T extends SimpleCustomerInstitution>(customers: T[] = []) =>
   customers.sort((a, b) => (a.displayName.toLocaleLowerCase() < b.displayName.toLocaleLowerCase() ? -1 : 1));
+
+export const getUnitTopLevelCode = (id = '') => {
+  const identifier = id.split('/').pop() ?? '';
+  const levelIdentifiers = identifier ? identifier.split('.') : [];
+  const topLevel = levelIdentifiers.length > 0 ? levelIdentifiers[0] : null;
+  return topLevel;
+};

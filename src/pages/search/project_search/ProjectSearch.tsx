@@ -17,6 +17,14 @@ export const ProjectSearch = () => {
   const location = useLocation();
   const projectSearchQueryParams = new URLSearchParams(location.search);
   projectSearchQueryParams.delete(SearchParam.Type);
+
+  if (!projectSearchQueryParams.get(SearchParam.Query)) {
+    projectSearchQueryParams.set(SearchParam.Query, '.');
+  }
+  if (!projectSearchQueryParams.get(SearchParam.Results)) {
+    projectSearchQueryParams.set(SearchParam.Results, '10');
+  }
+
   const queryParams = projectSearchQueryParams.toString();
 
   const [projectsSearch, isLoadingProjectsSearch] = useFetch<SearchResponse<CristinProject>>({

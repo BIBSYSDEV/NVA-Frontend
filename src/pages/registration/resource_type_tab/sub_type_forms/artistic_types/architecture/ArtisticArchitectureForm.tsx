@@ -111,7 +111,7 @@ export const ArtisticArchitectureForm = () => {
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
             <>
               {architectureOutput.length > 0 && (
-                <Table>
+                <Table sx={{ '& th,td': { borderBottom: 1 } }}>
                   <TableHead>
                     <TableRow>
                       <TableCell>{t('common.type')}</TableCell>

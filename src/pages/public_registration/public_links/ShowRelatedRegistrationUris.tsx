@@ -28,6 +28,8 @@ export const ShowRelatedRegistrationUris = ({
         const registrationResponse = await apiRequest<Registration>({ url: id });
         if (isSuccessStatus(registrationResponse.status)) {
           return registrationResponse.data;
+        } else {
+          return;
         }
       });
 
