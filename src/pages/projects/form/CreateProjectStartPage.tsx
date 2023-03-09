@@ -5,10 +5,11 @@ import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 import { SaveCristinProject, NfrProject, emptyProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { InitialProjectFormData } from './ProjectFormDialog';
 
 interface CreateProjectStartPageProps {
   onClose: () => void;
-  setInitialValues: (project: SaveCristinProject) => void;
+  setInitialValues: (projectFormData: InitialProjectFormData) => void;
 }
 
 export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProjectStartPageProps) => {
@@ -75,16 +76,16 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
           disabled={!emptyProjectSelected && !selectedNfrProject}
           onClick={() => {
             if (emptyProjectSelected) {
-              setInitialValues(emptyProject);
+              setInitialValues({ project: emptyProject });
             } else if (selectedNfrProject) {
               const projectFromNfr: SaveCristinProject = {
                 ...emptyProject,
                 title: getLanguageString(selectedNfrProject.labels),
                 startDate: selectedNfrProject.activeFrom,
                 endDate: selectedNfrProject.activeTo,
-                // TODO: prefill project manager search with 'lead'?
               };
-              setInitialValues(projectFromNfr);
+
+              setInitialValues({ project: projectFromNfr, suggestedProjectManager: selectedNfrProject.lead });
             }
           }}>
           {t('common.start')}
