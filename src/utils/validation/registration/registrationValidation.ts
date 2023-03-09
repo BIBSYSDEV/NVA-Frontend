@@ -42,11 +42,11 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
     abstract: Yup.string().nullable(),
     description: Yup.string().nullable(),
     tags: Yup.array().of(Yup.string()),
-    npiSubjectHeading: Yup.string().when('$publicationInstanceType', (publicationInstanceType) =>
-      isBook(publicationInstanceType)
-        ? Yup.string().nullable().required(registrationErrorMessage.npiSubjectRequired)
-        : Yup.string().nullable()
-    ),
+    npiSubjectHeading: Yup.string()
+      .nullable()
+      .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+        isBook(publicationInstanceType) ? schema.required(registrationErrorMessage.npiSubjectRequired) : schema
+      ),
     date: Yup.object<YupShape<RegistrationDate>>({
       year: Yup.number()
         .typeError(registrationErrorMessage.publishedDateInvalid)
@@ -56,7 +56,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
     }),
     language: Yup.string().nullable(),
     contributors: contributorsValidationSchema,
-    reference: Yup.object().when('$publicationInstanceType', (publicationInstanceType) => {
+    reference: Yup.object().when('$publicationInstanceType', ([publicationInstanceType]) => {
       const mainType = getMainRegistrationType(publicationInstanceType);
       switch (mainType) {
         case PublicationType.PublicationInJournal:
@@ -86,7 +86,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
   }),
   associatedArtifacts: Yup.array()
     .of(associatedFileValidationSchema)
-    .when('entityDescription', (entityDescription: EntityDescription, schema) =>
+    .when('entityDescription', ([entityDescription]: EntityDescription[], schema) =>
       entityDescription.reference?.doi
         ? schema.min(0)
         : schema.min(1, registrationErrorMessage.associatedArtifactRequired)

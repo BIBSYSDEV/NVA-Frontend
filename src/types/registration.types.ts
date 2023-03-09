@@ -100,14 +100,14 @@ export interface Funding {
   type: 'ConfirmedFunding' | 'UnconfirmedFunding';
   source: string;
   id?: string;
-  identifier: string;
+  identifier?: string;
   labels: LanguageString;
   fundingAmount?: {
     currency: string;
     amount: number;
   };
-  activeFrom: string;
-  activeTo: string;
+  activeFrom?: string;
+  activeTo?: string;
 }
 
 export const emptyFunding: Funding = {

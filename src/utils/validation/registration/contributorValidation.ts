@@ -23,8 +23,8 @@ const contributorValidationSchema = Yup.object().shape({
 });
 
 export const contributorsValidationSchema = Yup.array().when(
-  ['$publicationInstanceType'],
-  (publicationInstanceType) => {
+  '$publicationInstanceType',
+  ([publicationInstanceType]) => {
     if (isDegree(publicationInstanceType) || publicationInstanceType === ResearchDataType.DataManagementPlan) {
       return Yup.array()
         .of(contributorValidationSchema)

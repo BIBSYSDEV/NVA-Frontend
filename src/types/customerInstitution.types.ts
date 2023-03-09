@@ -18,7 +18,6 @@ export enum Sector {
 export interface CustomerInstitution extends SimpleCustomerInstitution {
   type?: 'Customer';
   archiveName: string;
-  cname: string;
   cristinId: string;
   feideOrganizationDomain: string;
   identifier: string;
@@ -67,7 +66,6 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   type: 'Customer',
   id: '',
   archiveName: '',
-  cname: '',
   createdDate: '',
   cristinId: '',
   displayName: '',
@@ -92,7 +90,6 @@ export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
 
 export enum CustomerInstitutionFieldNames {
   ArchiveName = 'customer.archiveName',
-  CName = 'customer.cname',
   CristinId = 'customer.cristinId',
   DisplayName = 'customer.displayName',
   DoiUsername = 'doiAgent.username',
