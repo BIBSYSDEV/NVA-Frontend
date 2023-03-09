@@ -64,7 +64,7 @@ const validationSchema = Yup.object<YupShape<Concert>>({
       })
     ),
   }),
-  time: Yup.object().when('partOfSeries', (partOfSeries, schema) =>
+  time: Yup.object().when('partOfSeries', ([partOfSeries], schema) =>
     partOfSeries
       ? periodField
       : schema.shape({
