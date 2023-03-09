@@ -114,7 +114,7 @@ export const AffiliationsCell = ({ affiliations = [], authorName, baseFieldName 
               onClick={() =>
                 setFieldValue(
                   `${baseFieldName}.${SpecificContributorFieldNames.Affiliations}`,
-                  affiliations.filter((thisAffiliation) => thisAffiliation.id !== affiliation.id)
+                  affiliations.filter((_, thisIndex) => thisIndex !== index)
                 )
               }>
               <RemoveIcon />
