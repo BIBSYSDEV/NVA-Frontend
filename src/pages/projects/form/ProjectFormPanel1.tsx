@@ -15,7 +15,7 @@ import { OrganizationSearchField } from '../../basic_data/app_admin/Organization
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 import { ProjectFieldName } from './ProjectFormDialog';
 
-export interface ProjectFormPanel1Props {
+interface ProjectFormPanel1Props {
   currentProject?: CristinProject;
   suggestedProjectManager?: string;
 }
