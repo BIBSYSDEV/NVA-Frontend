@@ -223,6 +223,15 @@ export const mainTheme = createTheme(
           },
         },
       },
+      MuiInputBase: {
+        styleOverrides: {
+          inputTypeSearch: {
+            '::-webkit-search-cancel-button': {
+              WebkitAppearance: 'none', // Avoid redundant clear button for input fields with type="search" on webkit browsers
+            },
+          },
+        },
+      },
       MuiTablePagination: {
         defaultProps: {
           showFirstButton: true,
