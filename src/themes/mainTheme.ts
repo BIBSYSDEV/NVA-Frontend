@@ -226,9 +226,8 @@ export const mainTheme = createTheme(
       MuiInputBase: {
         styleOverrides: {
           inputTypeSearch: {
-            // Avoid redundant clear button for input fields with type="search" on webkit browsers
             '::-webkit-search-cancel-button': {
-              WebkitAppearance: 'none',
+              WebkitAppearance: 'none', // Avoid redundant clear button for input fields with type="search" on webkit browsers
             },
           },
         },
