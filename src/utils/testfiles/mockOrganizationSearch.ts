@@ -6,6 +6,7 @@ export const mockOrganizationSearch: SearchResponse<Organization> = {
   size: 1,
   hits: [
     {
+      type: 'Organization',
       id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
       name: {
         en: 'Sikt - Norwegian Agency for Shared Services in Education and Research',
@@ -13,6 +14,7 @@ export const mockOrganizationSearch: SearchResponse<Organization> = {
       },
       hasPart: [
         {
+          type: 'Organization',
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.2.0.0',
           name: {
             en: 'The Research and Education Resources Division',
@@ -21,6 +23,7 @@ export const mockOrganizationSearch: SearchResponse<Organization> = {
           },
         },
         {
+          type: 'Organization',
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.5.0.0',
           name: {
             en: 'The Corporate Governance Department',
@@ -29,6 +32,7 @@ export const mockOrganizationSearch: SearchResponse<Organization> = {
           },
         },
         {
+          type: 'Organization',
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.1.0.0',
           name: {
             en: 'The Education and Administration Division',
@@ -37,6 +41,7 @@ export const mockOrganizationSearch: SearchResponse<Organization> = {
           },
         },
         {
+          type: 'Organization',
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.3.0.0',
           name: {
             en: 'The Organisational Development Department',
@@ -45,6 +50,7 @@ export const mockOrganizationSearch: SearchResponse<Organization> = {
           },
         },
         {
+          type: 'Organization',
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.6.0.0',
           name: {
             en: 'The Customer and Communication Department',
@@ -53,6 +59,7 @@ export const mockOrganizationSearch: SearchResponse<Organization> = {
           },
         },
         {
+          type: 'Organization',
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.4.0.0',
           name: {
             en: 'The Organisational Development Department',
