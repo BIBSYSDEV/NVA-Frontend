@@ -40,6 +40,9 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
   const registrationTypeFacet = aggregationEntries.find(
     ([fieldName]) => fieldName === ResourceFieldNames.RegistrationType
   )?.[1];
+  const registrationInstitutionFacet = aggregationEntries.find(
+    ([fieldName]) => fieldName === 'topLevelOrganization.id'
+  )?.[1];
 
   return (
     <>
@@ -60,6 +63,29 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 onClick={() => updateFilter(ResourceFieldNames.RegistrationType, bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
                 <span>{t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}</span>
+                {(bucket.docCount || bucket.doc_count) && <span>({bucket.docCount ?? bucket.doc_count})</span>}
+              </ListItemButton>
+            </Box>
+          ))}
+        </FacetItem>
+      )}
+      {registrationInstitutionFacet && (
+        <FacetItem title={t('common.institution')}>
+          {registrationInstitutionFacet.buckets.map((bucket) => (
+            <Box key={bucket.key} component="li">
+              <ListItemButton
+                disabled={isLoadingSearch}
+                sx={{
+                  display: 'flex',
+                  gap: '1rem',
+                  justifyContent: 'space-between',
+                  '&.Mui-selected': {
+                    bgcolor: 'info.light',
+                  },
+                }}
+                onClick={() => updateFilter('topLevelOrganization.id', bucket.key)}
+                selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
+                <span>{bucket.key}</span>
                 {(bucket.docCount || bucket.doc_count) && <span>({bucket.docCount ?? bucket.doc_count})</span>}
               </ListItemButton>
             </Box>
