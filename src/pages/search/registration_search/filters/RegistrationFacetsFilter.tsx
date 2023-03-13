@@ -63,7 +63,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 onClick={() => updateFilter(ResourceFieldNames.RegistrationType, bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
                 <span>{t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}</span>
-                {(bucket.docCount || bucket.doc_count) && <span>({bucket.docCount ?? bucket.doc_count})</span>}
+                {bucket.docCount && <span>({bucket.docCount})</span>}
               </ListItemButton>
             </Box>
           ))}
@@ -86,7 +86,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 onClick={() => updateFilter('topLevelOrganization.id', bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
                 <span>{bucket.key}</span>
-                {(bucket.docCount || bucket.doc_count) && <span>({bucket.docCount ?? bucket.doc_count})</span>}
+                {bucket.docCount && <span>({bucket.docCount})</span>}
               </ListItemButton>
             </Box>
           ))}
