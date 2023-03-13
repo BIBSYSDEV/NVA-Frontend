@@ -1193,7 +1193,7 @@
           "Building": "Building",
           "Interior": "Interior",
           "LandscapeArchitecture": "Landscape architecture",
-          "Other": "Other architecture",
+          "Other": "Other",
           "PlanningProposal": "Planning proposal"
         },
         "audio_video_type": {
@@ -1223,7 +1223,7 @@
           "InteractionDesign": "Interaction design",
           "InteriorDesign": "Interior design",
           "LightDesign": "Lighting design",
-          "Other": "Other design",
+          "Other": "Other",
           "ProductDesign": "Product design",
           "ServiceDesign": "Service design",
           "WebDesign": "Web design"
@@ -1252,7 +1252,7 @@
           "Essay": "Essay",
           "Novel": "Novel",
           "Novella": "Novella/novellas",
-          "Other": "Other literary arts",
+          "Other": "Other",
           "Play": "Play",
           "Poetry": "Poetry",
           "Retelling": "Retelling",
@@ -1266,7 +1266,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Long film",
           "InteractiveFilm": "Interactive production",
-          "Other": "Other film",
+          "Other": "Other",
           "SerialFilmProduction": "Serial production",
           "ShortFilm": "Short film"
         },
@@ -1283,7 +1283,7 @@
         "music_score_isrc": "ISRC",
         "music_score_movements": "Movements",
         "musical_work_item": "Work",
-        "musical_works": "Other performances",
+        "musical_works": "Other",
         "musical_works_table_caption": "Overview over other performances",
         "name_or_title": "Name/title",
         "other_announcement_organizer": "Publisher/organizer etc.",
@@ -1302,13 +1302,13 @@
           "LiteraryArtsWeb": "Web publication",
           "MentionInPublication": "Publication/mention",
           "MusicScore": "Score/manuscript",
-          "OtherPerformance": "Other performance",
+          "OtherPerformance": "Other",
           "OtherRelease": "Other announcement",
           "Venue": "Venue"
         },
         "performance_type": "Type/performance form",
         "performance_types": {
-          "Other": "Other performing arts",
+          "Other": "Other",
           "Play": "Play",
           "Reading": "Reading"
         },
@@ -1335,7 +1335,7 @@
           "CollectiveExhibition": "Collective exhibition",
           "IndividualExhibition": "Individual exhibition",
           "Installation": "Installation",
-          "Other": "Other visual arts",
+          "Other": "Other",
           "Performance": "Performance"
         },
         "web_link": "Link"
