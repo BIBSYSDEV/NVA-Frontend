@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { fundingSourceIsNfr } from '../../utils/registration-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import {
+  fundingSourceIsNfr,
   getNfrProjectUrl,
   getProjectCoordinatingInstitutionName,
   getProjectManagerName,
