@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { fundingSourceIsNfr } from '../../utils/registration-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import {
   getNfrProjectUrl,
@@ -32,15 +33,17 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
       </div>
       <div>
         <Typography variant="overline">{t('project.financing')}</Typography>
-        {project.funding.length > 0 ? (
-          project.funding.map((funding, index) => {
-            const sourceName = getLanguageString(funding.source.names);
-            const fundingText = funding.code ? `${sourceName} - ${t('project.grant_id')} ${funding.code}` : sourceName;
+        {project.newFunding.length > 0 ? (
+          project.newFunding.map((funding, index) => {
+            const sourceName = getLanguageString(funding.labels);
+            const fundingText = funding.identifier
+              ? `${sourceName} - ${t('project.grant_id')} ${funding.identifier}`
+              : sourceName;
 
             return (
               <Typography key={index}>
-                {funding.source.code === 'NFR' && funding.code ? (
-                  <Link href={getNfrProjectUrl(funding.code)} target="_blank" rel="noopener noreferrer">
+                {fundingSourceIsNfr(funding.source) && funding.identifier ? (
+                  <Link href={getNfrProjectUrl(funding.identifier)} target="_blank" rel="noopener noreferrer">
                     {fundingText}
                   </Link>
                 ) : (
