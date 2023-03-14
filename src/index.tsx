@@ -16,7 +16,7 @@ import { BasicErrorBoundary } from './components/ErrorBoundary';
 // Fonts
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
-// init.js
+
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
 }

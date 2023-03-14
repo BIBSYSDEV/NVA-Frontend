@@ -4,10 +4,11 @@ import { DelayedFallback } from './components/DelayedFallback';
 import { BasicDataRoute, CreatorRoute, CuratorRoute, EditorRoute, LoggedInRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
 
-const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
-const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/EditorPage'));
+const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
+const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
+const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
 const NotFound = lazy(() => import('./pages/errorpages/NotFound'));
@@ -15,7 +16,6 @@ const PrivacyPolicy = lazy(() => import('./pages/infopages/PrivacyPolicy'));
 const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const PublicResearchProfile = lazy(() => import('./pages/research_profile/PublicResearchProfile'));
 const MyPagePage = lazy(() => import('./pages/my_page/MyPagePage'));
-const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
 const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
 
