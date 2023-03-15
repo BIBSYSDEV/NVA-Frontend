@@ -109,7 +109,7 @@ export const OutputRow = ({
       <TableCell>
         <Box sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
           <Tooltip title={t('common.move_down')} sx={{ gridArea: 'down' }}>
-            <Button disabled={index === 0 || index === maxIndex} onClick={() => moveItem(index + 1)}>
+            <Button disabled={index === maxIndex} onClick={() => moveItem(index + 1)}>
               <ArrowDownwardIcon />
             </Button>
           </Tooltip>
