@@ -1188,7 +1188,7 @@
           "Building": "Bygg",
           "Interior": "Interiør",
           "LandscapeArchitecture": "Landskapsarkitektur",
-          "Other": "Anna arkitektur",
+          "Other": "Anna",
           "PlanningProposal": "Planframlegg"
         },
         "audio_video_type": {
@@ -1218,7 +1218,7 @@
           "InteractionDesign": "Interaksjonsdesign",
           "InteriorDesign": "Interiørdesign",
           "LightDesign": "Lysdesign",
-          "Other": "Anna design",
+          "Other": "Anna",
           "ProductDesign": "Produktdesign",
           "ServiceDesign": "Tenestedesign",
           "WebDesign": "Webdesign"
@@ -1247,7 +1247,7 @@
           "Essay": "Essay",
           "Novel": "Roman",
           "Novella": "Novelle/noveller",
-          "Other": "Anna skrivekunst",
+          "Other": "Anna",
           "Play": "Drama/scenetekstar",
           "Poetry": "Posei",
           "Retelling": "Gjendikting",
@@ -1261,7 +1261,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Langfilm",
           "InteractiveFilm": "Interaktiv produksjon",
-          "Other": "Anna film",
+          "Other": "Anna",
           "SerialFilmProduction": "Seriell produksjon",
           "ShortFilm": "Kortfilm"
         },
@@ -1303,7 +1303,7 @@
         },
         "performance_type": "Type/formidlingsform",
         "performance_types": {
-          "Other": "Anna scenekunst",
+          "Other": "Anna",
           "Play": "Skodespel/drama",
           "Reading": "Lesing"
         },
@@ -1330,7 +1330,7 @@
           "CollectiveExhibition": "Gruppe-/kolletivutstilling",
           "IndividualExhibition": "Separat utstilling",
           "Installation": "Installasjon",
-          "Other": "Anna visuell kunst",
+          "Other": "Anna",
           "Performance": "Framsyning"
         },
         "web_link": "Lenkje"

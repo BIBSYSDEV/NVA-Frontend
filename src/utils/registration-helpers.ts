@@ -525,8 +525,10 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
       return (item as Broadcast).publisher.name;
     case 'CinematicRelease':
       return (item as CinematicRelease).place.label;
-    case 'OtherRelease':
-      return (item as OtherRelease).description;
+    case 'OtherRelease': {
+      const otherRelease = item as OtherRelease;
+      return [otherRelease.publisher.name, otherRelease.place.label].filter(Boolean).join('/');
+    }
     case 'MusicScore':
       return (item as MusicScore).publisher.name;
     case 'AudioVisualPublication':
