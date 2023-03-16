@@ -22,6 +22,7 @@ import { MediaContributionForm } from './resource_type_tab/sub_type_forms/media_
 import { MediaContributionPeriodicalForm } from './resource_type_tab/sub_type_forms/media_types/MediaContributionPeriodicalForm';
 import { DataManagementPlanForm } from './resource_type_tab/sub_type_forms/research_data_types/DataManagementPlanForm';
 import { DatasetForm } from './resource_type_tab/sub_type_forms/research_data_types/DatasetForm';
+import { ExhibitionProductionForm } from './resource_type_tab/sub_type_forms/ExhibitionProductionForm';
 
 export const ResourceTypePanel = () => {
   const { values } = useFormikContext<Registration>();
@@ -72,6 +73,8 @@ export const ResourceTypePanel = () => {
         ) : instanceType === ResearchDataType.Dataset ? (
           <DatasetForm />
         ) : null
+      ) : mainType === PublicationType.ExhibitionContent ? (
+        <ExhibitionProductionForm />
       ) : mainType === PublicationType.GeographicalContent ? (
         <MapForm />
       ) : null}

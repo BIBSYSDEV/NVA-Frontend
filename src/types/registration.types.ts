@@ -23,10 +23,12 @@ import {
   MediaType,
   ResearchDataType,
   OtherRegistrationType,
+  ExhibitionContentType,
 } from './publicationFieldNames';
 import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 import { MapEntityDescription } from './publication_types/otherRegistration.types';
 import { LanguageString } from './common.types';
+import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -152,6 +154,7 @@ export type PublicationInstanceType =
   | ArtisticType
   | MediaType
   | ResearchDataType
+  | ExhibitionContentType
   | OtherRegistrationType;
 
 export enum PublicationChannelType {
@@ -175,7 +178,8 @@ export type EntityDescription =
   | ArtisticEntityDescription
   | MediaContributionEntityDescription
   | ResearchDataEntityDescription
-  | MapEntityDescription;
+  | MapEntityDescription
+  | ExhibitionEntityDescription;
 
 export interface Registration extends BaseRegistration {
   entityDescription?: EntityDescription;

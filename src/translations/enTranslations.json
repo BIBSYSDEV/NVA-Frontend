@@ -1114,6 +1114,8 @@
       "Event": "Presentation",
       "ExhibitionCatalog": "Exhibition catalog",
       "ExhibitionCatalogChapter": "Chapter in Exhibition catalog",
+      "ExhibitionContent": "Exhibition",
+      "ExhibitionProduction": "Exhibition production",
       "GeographicalContent": "Other publication",
       "Introduction": "Introduction in anthology",
       "Journal": "Publication in journal",

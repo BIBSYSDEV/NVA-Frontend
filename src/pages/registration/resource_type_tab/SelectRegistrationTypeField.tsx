@@ -12,6 +12,7 @@ import {
   ChapterType,
   contextTypeBaseFieldName,
   DegreeType,
+  ExhibitionContentType,
   instanceTypeBaseFieldName,
   JournalType,
   MediaType,
@@ -54,6 +55,10 @@ import {
 } from '../../../utils/registration-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { RegistrationTypeElement, RegistrationTypesRow } from './components/RegistrationTypesRow';
+import {
+  emptyExhibitionPublicationContext,
+  emptyExhibitionPublicationInstance,
+} from '../../../types/publication_types/exhibitionContent.types';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
@@ -179,6 +184,10 @@ export const SelectRegistrationTypeField = () => {
             { ...emptyResearchDataPublicationInstance, type: newInstanceType },
             false
           );
+          break;
+        case PublicationType.ExhibitionContent:
+          newMainType && setFieldValue(contextTypeBaseFieldName, emptyExhibitionPublicationContext, false);
+          setFieldValue(instanceTypeBaseFieldName, emptyExhibitionPublicationInstance, false);
           break;
         case PublicationType.GeographicalContent:
           newMainType && setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
@@ -355,6 +364,17 @@ export const SelectRegistrationTypeField = () => {
             mainType={PublicationType.ResearchData}
             registrationTypes={filterRegistrationTypes(
               Object.values(ResearchDataType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
+              }))
+            )}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <RegistrationTypesRow
+            mainType={PublicationType.ExhibitionContent}
+            registrationTypes={filterRegistrationTypes(
+              Object.values(ExhibitionContentType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
               }))

@@ -8,6 +8,7 @@ export enum PublicationType {
   Artistic = 'Artistic',
   MediaContribution = 'MediaContribution',
   ResearchData = 'ResearchData',
+  ExhibitionContent = 'ExhibitionContent',
   GeographicalContent = 'GeographicalContent',
 }
 
@@ -88,6 +89,10 @@ export enum MediaType {
   MediaBlogPost = 'MediaBlogPost',
   MediaPodcast = 'MediaPodcast',
   MediaParticipationInRadioOrTv = 'MediaParticipationInRadioOrTv',
+}
+
+export enum ExhibitionContentType {
+  ExhibitionProduction = 'ExhibitionProduction',
 }
 
 export enum OtherRegistrationType {
