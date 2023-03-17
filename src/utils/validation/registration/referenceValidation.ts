@@ -507,10 +507,6 @@ export const mapReference = baseReference.shape({
 });
 
 // Exhibition
-const exhibitionProductionPublicationContext = Yup.object({
-  publisher: publisherField,
-});
-
 const exhibitionProductionPublicationInstance = Yup.object({
   type: Yup.string().oneOf(Object.values(ExhibitionContentType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
@@ -527,6 +523,5 @@ const exhibitionProductionPublicationInstance = Yup.object({
 });
 
 export const exhibitionProductionReference = baseReference.shape({
-  publicationContext: exhibitionProductionPublicationContext,
   publicationInstance: exhibitionProductionPublicationInstance,
 });
