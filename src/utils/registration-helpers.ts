@@ -23,7 +23,6 @@ import {
   Competition,
   Exhibition,
   MentionInPublication,
-  ArtisticOutputItem,
   Venue,
   CinematicRelease,
   OtherRelease,
@@ -38,6 +37,8 @@ import {
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
+import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
+import { ExhibitionBasic } from '../types/publication_types/exhibitionContent.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -514,7 +515,7 @@ export const groupContributors = (contributors: Contributor[], registrationType:
   return { primaryContributors, secondaryContributors };
 };
 
-export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
+export const getArtisticOutputName = (item: OutputItem): string => {
   switch (item.type) {
     case 'Venue':
     case 'PerformingArtsVenue':
@@ -551,6 +552,8 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
       return (item as LiteraryArtsAudioVisual).publisher.name;
     case 'LiteraryArtsWeb':
       return (item as LiteraryArtsWeb).publisher.name;
+    case 'ExhibitionBasic':
+      return (item as ExhibitionBasic).title;
     default:
       return '';
   }

@@ -250,6 +250,7 @@ export const dataTestId = {
     resourceType: {
       addAudioVideoButton: 'add-audio-video-button',
       addCompetitionButton: 'add-competition-button',
+      addExhibitionBasicButton: 'add-exhibition-basic-button',
       addExhibitionButton: 'add-exhibition-button',
       addMentionInPublicationButton: 'add-mention-in-publication-button',
       addAwardButton: 'add-award-button',
@@ -295,6 +296,8 @@ export const dataTestId = {
       confirmDatasetTypeDialog: 'research-data-confirm-dialog',
       corrigendumForField: 'corrigendum-for-field',
       eventCountryField: 'event-country-field',
+      exhibitionBasicNameField: 'exhibition-basic-name-field',
+      exhibitionBasicPlaceField: 'exhibition-basic-place-field',
       exhibitionName: 'artistic-exhibition-name',
       exhibitionPlace: 'artistic-exhibition-place',
       exhibitionOrganizer: 'artistic-exhibition-organizer',

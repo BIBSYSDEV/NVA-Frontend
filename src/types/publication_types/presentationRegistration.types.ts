@@ -22,7 +22,7 @@ export const emptyPresentationPublicationContext: PresentationPublicationContext
   time: emptyPeriod,
 };
 
-interface Agent {
+export interface Agent {
   type: 'UnconfirmedOrganization';
   name: string;
 }

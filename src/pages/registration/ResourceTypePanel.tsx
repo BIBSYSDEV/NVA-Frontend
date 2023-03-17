@@ -22,7 +22,7 @@ import { MediaContributionForm } from './resource_type_tab/sub_type_forms/media_
 import { MediaContributionPeriodicalForm } from './resource_type_tab/sub_type_forms/media_types/MediaContributionPeriodicalForm';
 import { DataManagementPlanForm } from './resource_type_tab/sub_type_forms/research_data_types/DataManagementPlanForm';
 import { DatasetForm } from './resource_type_tab/sub_type_forms/research_data_types/DatasetForm';
-import { ExhibitionProductionForm } from './resource_type_tab/sub_type_forms/ExhibitionProductionForm';
+import { ExhibitionProductionForm } from './resource_type_tab/sub_type_forms/exhibition_types/ExhibitionProductionForm';
 
 export const ResourceTypePanel = () => {
   const { values } = useFormikContext<Registration>();

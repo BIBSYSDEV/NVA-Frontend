@@ -1,8 +1,20 @@
 import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PublicationType, ExhibitionContentType } from '../publicationFieldNames';
+import { Agent } from './presentationRegistration.types';
+import { Period, Place } from '../common.types';
 
 export interface ExhibitionRegistration extends BaseRegistration {
   entityDescription: ExhibitionEntityDescription;
+}
+
+export type ExhibitionManifistation = ExhibitionBasic;
+
+export interface ExhibitionBasic {
+  type: 'ExhibitionBasic';
+  title: string;
+  organization: Agent;
+  place: Place;
+  date: Period;
 }
 
 interface ExhibitionPublicationInstance {
@@ -11,6 +23,7 @@ interface ExhibitionPublicationInstance {
     type: ExhibitionProductionSubtype | '';
     description?: string;
   };
+  manifestations: ExhibitionManifistation[];
 }
 
 export const emptyExhibitionPublicationInstance: ExhibitionPublicationInstance = {
@@ -19,6 +32,7 @@ export const emptyExhibitionPublicationInstance: ExhibitionPublicationInstance =
     type: '',
     description: '',
   },
+  manifestations: [],
 };
 
 export const emptyExhibitionPublicationContext: ExhibitionPublicationContext = {

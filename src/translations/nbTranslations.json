@@ -1298,6 +1298,7 @@
           "Competition": "Konkurranse",
           "Concert": "Konsert/forestilling",
           "Exhibition": "Utstilling",
+          "ExhibitionBasic": "Visningssted",
           "LiteraryArtsAudioVisual": "Audio/videoutgivelse",
           "LiteraryArtsMonograph": "Bok/trykksak",
           "LiteraryArtsPerformance": "Fremføring/forestilling",
@@ -1356,14 +1357,17 @@
       "click_to_change_resource_type": "Trykk på valgt ressurstype om du vil endre",
       "date_from": "Dato fra",
       "date_to": "Dato til",
-      "exhibition_production_subtype": {
-        "AmbulatingExhibition": "Vandreutstilling",
-        "BasicExhibition": "Basisutstilling",
-        "DigitalExhibition": "Digital utstilling",
-        "HistoricalInterior": "Historisk interiør",
-        "Other": "Annet",
-        "PopupExhibition": "Popup-utstilling",
-        "TemporaryExhibition": "Temporær utstilling"
+      "exhibition_production": {
+        "institution_name": "Institusjonens navn",
+        "subtype": {
+          "AmbulatingExhibition": "Vandreutstilling",
+          "BasicExhibition": "Basisutstilling",
+          "DigitalExhibition": "Digital utstilling",
+          "HistoricalInterior": "Historisk interiør",
+          "Other": "Annet",
+          "PopupExhibition": "Popup-utstilling",
+          "TemporaryExhibition": "Temporær utstilling"
+        }
       },
       "isbn": "ISBN",
       "issn": "ISSN",

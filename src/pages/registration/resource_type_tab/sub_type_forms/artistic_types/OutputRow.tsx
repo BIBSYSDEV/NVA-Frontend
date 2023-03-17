@@ -42,10 +42,17 @@ import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonograph
 import { LiteraryArtsWebPublicationModal } from './literary_art/LiteraryArtsWebPublicationModal';
 import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerformanceModal';
 import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVisualModal';
+import {
+  ExhibitionBasic,
+  ExhibitionManifistation,
+} from '../../../../../types/publication_types/exhibitionContent.types';
+import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
+
+export type OutputItem = ArtisticOutputItem | ExhibitionManifistation;
 
 interface OutputRowProps {
-  item: ArtisticOutputItem;
-  updateItem: (item: ArtisticOutputItem) => void;
+  item: OutputItem;
+  updateItem: (item: OutputItem) => void;
   removeItem: () => void;
   moveItem: (to: number) => void;
   index: number;
@@ -86,6 +93,7 @@ export const OutputRow = ({
     case 'LiteraryArtsPerformance':
     case 'LiteraryArtsAudioVisual':
     case 'LiteraryArtsWeb':
+    case 'ExhibitionBasic':
       removeItemTitle = t('registration.resource_type.artistic.remove_announcement');
       removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
       break;
@@ -247,6 +255,13 @@ export const OutputRow = ({
       ) : item.type === 'LiteraryArtsAudioVisual' ? (
         <LiteraryArtsAudioVisualModal
           audioVisual={item as LiteraryArtsAudioVisual}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'ExhibitionBasic' ? (
+        <ExhibitionBasicModal
+          exhibitionBasic={item as ExhibitionBasic}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
