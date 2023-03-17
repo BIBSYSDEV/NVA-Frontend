@@ -1,7 +1,6 @@
 import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PublicationType, ExhibitionContentType } from '../publicationFieldNames';
-import { Agent } from './presentationRegistration.types';
-import { Period, Place } from '../common.types';
+import { Period, Place, UnconfirmedOrganization } from '../common.types';
 
 export interface ExhibitionRegistration extends BaseRegistration {
   entityDescription: ExhibitionEntityDescription;
@@ -12,7 +11,7 @@ export type ExhibitionManifistation = ExhibitionBasic;
 export interface ExhibitionBasic {
   type: 'ExhibitionBasic';
   title: string;
-  organization: Agent;
+  organization: UnconfirmedOrganization;
   place: Place;
   date: Period;
 }

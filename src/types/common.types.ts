@@ -8,6 +8,11 @@ export interface Place {
   country: string;
 }
 
+export interface UnconfirmedOrganization {
+  type: 'UnconfirmedOrganization';
+  name: string;
+}
+
 export interface Period {
   type: 'Period';
   from: string;
