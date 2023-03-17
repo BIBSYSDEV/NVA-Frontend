@@ -44,11 +44,11 @@ import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerform
 import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVisualModal';
 import {
   ExhibitionBasic,
-  ExhibitionManifistation,
+  ExhibitionManifestation,
 } from '../../../../../types/publication_types/exhibitionContent.types';
 import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
 
-export type OutputItem = ArtisticOutputItem | ExhibitionManifistation;
+export type OutputItem = ArtisticOutputItem | ExhibitionManifestation;
 
 interface OutputRowProps {
   item: OutputItem;

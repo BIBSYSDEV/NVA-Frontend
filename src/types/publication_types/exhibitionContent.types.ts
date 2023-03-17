@@ -6,7 +6,7 @@ export interface ExhibitionRegistration extends BaseRegistration {
   entityDescription: ExhibitionEntityDescription;
 }
 
-export type ExhibitionManifistation = ExhibitionBasic;
+export type ExhibitionManifestation = ExhibitionBasic;
 
 export interface ExhibitionBasic {
   type: 'ExhibitionBasic';
@@ -22,7 +22,7 @@ interface ExhibitionPublicationInstance {
     type: ExhibitionProductionSubtype | '';
     description?: string;
   };
-  manifestations: ExhibitionManifistation[];
+  manifestations: ExhibitionManifestation[];
 }
 
 export const emptyExhibitionPublicationInstance: ExhibitionPublicationInstance = {
