@@ -85,7 +85,7 @@ export const LiteraryArtsPerformanceModal = ({
                     {...field}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    data-testid={dataTestId.registrationWizard.resourceType.subtypeField}>
                     {Object.values(LiteraryArtsPerformanceSubtype).map((performanceType) => (
                       <MenuItem key={performanceType} value={performanceType}>
                         {t(`registration.resource_type.artistic.performance_types.${performanceType}`)}

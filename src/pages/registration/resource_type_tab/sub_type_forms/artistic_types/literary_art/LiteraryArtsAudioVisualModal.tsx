@@ -110,7 +110,7 @@ export const LiteraryArtsAudioVisualModal = ({
                     fullWidth
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    data-testid={dataTestId.registrationWizard.resourceType.subtypeField}>
                     {Object.values(LiteraryArtsAudioVisualSubtype).map((audioVideoType) => (
                       <MenuItem key={audioVideoType} value={audioVideoType}>
                         {t(`registration.resource_type.artistic.audio_video_type.${audioVideoType}`)}

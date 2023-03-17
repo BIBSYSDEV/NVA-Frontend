@@ -1356,6 +1356,15 @@
       "click_to_change_resource_type": "Click on selected resource type to change it",
       "date_from": "Date from",
       "date_to": "Date to",
+      "exhibition_production_subtype": {
+        "AmbulatingExhibition": "Ambulating exhibition",
+        "BasicExhibition": "Basic exhibition",
+        "DigitalExhibition": "Digital exhibition",
+        "HistoricalInterior": "Historical interior",
+        "Other": "Other",
+        "PopupExhibition": "Popup exhibition",
+        "TemporaryExhibition": "Temporary exhibition"
+      },
       "isbn": "ISBN",
       "issn": "ISSN",
       "issue": "Issue",

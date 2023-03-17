@@ -143,7 +143,7 @@ export const AudioVisualPublicationModal = ({
                     {...field}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    data-testid={dataTestId.registrationWizard.resourceType.subtypeField}>
                     {Object.values(MusicMediaType).map((mediaType) => (
                       <MenuItem key={mediaType} value={mediaType}>
                         {t(`registration.resource_type.artistic.music_media_type.${mediaType}`)}
