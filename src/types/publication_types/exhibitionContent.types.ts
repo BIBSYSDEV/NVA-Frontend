@@ -1,12 +1,13 @@
 import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PublicationType, ExhibitionContentType } from '../publicationFieldNames';
-import { Period, Place, UnconfirmedOrganization } from '../common.types';
+import { Instant, Period, Place, UnconfirmedOrganization } from '../common.types';
+import { UnconfirmedPublisher } from './artisticRegistration.types';
 
 export interface ExhibitionRegistration extends BaseRegistration {
   entityDescription: ExhibitionEntityDescription;
 }
 
-export type ExhibitionManifestation = ExhibitionBasic;
+export type ExhibitionManifestation = ExhibitionBasic | ExhibitionOtherPresentation;
 
 export interface ExhibitionBasic {
   type: 'ExhibitionBasic';
@@ -14,6 +15,15 @@ export interface ExhibitionBasic {
   organization: UnconfirmedOrganization;
   place: Place;
   date: Period;
+}
+
+export interface ExhibitionOtherPresentation {
+  type: 'ExhibitionOtherPresentation';
+  typeDescription: string;
+  description: string;
+  place: Place;
+  publisher: UnconfirmedPublisher;
+  date: Instant;
 }
 
 interface ExhibitionPublicationInstance {

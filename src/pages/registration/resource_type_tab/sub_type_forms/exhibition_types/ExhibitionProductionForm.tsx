@@ -10,6 +10,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Box,
 } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Field, FieldProps, ErrorMessage, useFormikContext, FieldArray, FieldArrayRenderProps } from 'formik';
@@ -23,9 +24,10 @@ import {
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { ExhibitionBasicModal } from './ExhibitionBasicModal';
 import { OutputRow } from '../artistic_types/OutputRow';
+import { ExhibitionOtherPresentationModal } from './ExhibitionOtherPresentationModal';
 
 const exhibitionSubtypes = Object.values(ExhibitionProductionSubtype);
-type ExhibitionProductioModalType = '' | 'ExhibitionBasic';
+type ExhibitionProductioModalType = '' | 'ExhibitionBasic' | 'ExhibitionOtherPresentation';
 
 export const ExhibitionProductionForm = () => {
   const { t } = useTranslation();
@@ -117,17 +119,31 @@ export const ExhibitionProductionForm = () => {
                   </FormHelperText>
                 )}
 
-              <Button
-                data-testid={dataTestId.registrationWizard.resourceType.addExhibitionBasicButton}
-                onClick={() => setOpenModal('ExhibitionBasic')}
-                variant="outlined"
-                sx={{ mt: '1rem' }}
-                startIcon={<AddCircleOutlineIcon />}>
-                {t('registration.resource_type.artistic.add_exhibition_place')}
-              </Button>
+              <Box sx={{ display: 'flex', gap: '1rem', mt: '1rem' }}>
+                <Button
+                  data-testid={dataTestId.registrationWizard.resourceType.addExhibitionBasicButton}
+                  onClick={() => setOpenModal('ExhibitionBasic')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('registration.resource_type.artistic.add_exhibition_place')}
+                </Button>
+                <Button
+                  data-testid={dataTestId.registrationWizard.resourceType.addExhibitionOtherPresentationButton}
+                  onClick={() => setOpenModal('ExhibitionOtherPresentation')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('registration.resource_type.exhibition_production.add_exhibition_other_presentation')}
+                </Button>
+              </Box>
+
               <ExhibitionBasicModal
                 onSubmit={(newExhibitionBasic) => push(newExhibitionBasic)}
                 open={openModal === 'ExhibitionBasic'}
+                closeModal={() => setOpenModal('')}
+              />
+              <ExhibitionOtherPresentationModal
+                onSubmit={(newExhibitionOtherPresentation) => push(newExhibitionOtherPresentation)}
+                open={openModal === 'ExhibitionOtherPresentation'}
                 closeModal={() => setOpenModal('')}
               />
             </>
