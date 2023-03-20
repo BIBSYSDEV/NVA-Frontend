@@ -1,8 +1,8 @@
+import { useState } from 'react';
 import {
   TextField,
   MenuItem,
   Typography,
-  Box,
   Button,
   FormHelperText,
   Table,
@@ -21,7 +21,6 @@ import {
   ExhibitionRegistration,
 } from '../../../../../types/publication_types/exhibitionContent.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
-import { useState } from 'react';
 import { ExhibitionBasicModal } from './ExhibitionBasicModal';
 import { OutputRow } from '../artistic_types/OutputRow';
 
@@ -50,9 +49,9 @@ export const ExhibitionProductionForm = () => {
               required
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}>
-              {exhibitionSubtypes.map((exhibitionType) => (
-                <MenuItem value={exhibitionType} key={exhibitionType}>
-                  {t(`registration.resource_type.exhibition_production.subtype.${exhibitionType}`)}
+              {exhibitionSubtypes.map((exhibitionSubtype) => (
+                <MenuItem value={exhibitionSubtype} key={exhibitionSubtype}>
+                  {t(`registration.resource_type.exhibition_production.subtype.${exhibitionSubtype}`)}
                 </MenuItem>
               ))}
             </TextField>
@@ -113,11 +112,9 @@ export const ExhibitionProductionForm = () => {
               )}
               {!!touched.entityDescription?.reference?.publicationInstance?.manifestations &&
                 typeof errors.entityDescription?.reference?.publicationInstance?.manifestations === 'string' && (
-                  <Box mt="1rem">
-                    <FormHelperText error>
-                      <ErrorMessage name={name} />
-                    </FormHelperText>
-                  </Box>
+                  <FormHelperText error>
+                    <ErrorMessage name={name} />
+                  </FormHelperText>
                 )}
 
               <Button
