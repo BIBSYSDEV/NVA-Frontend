@@ -91,7 +91,7 @@ export const ExhibitionProductionForm = () => {
                   <TableHead>
                     <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
                       <TableCell>{t('common.type')}</TableCell>
-                      <TableCell>{t('registration.resource_type.artistic.exhibition_place')}</TableCell>
+                      <TableCell>{t('common.description')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>

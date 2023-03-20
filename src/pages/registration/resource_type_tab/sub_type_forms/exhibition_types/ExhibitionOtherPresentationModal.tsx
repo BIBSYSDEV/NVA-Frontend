@@ -55,8 +55,8 @@ export const ExhibitionOtherPresentationModal = ({
     <Dialog open={open} onClose={closeModal} fullWidth>
       <DialogTitle>
         {exhibitionOtherPresentation
-          ? t('registration.resource_type.artistic.edit_exhibition_place')
-          : t('registration.resource_type.artistic.add_exhibition_place')}
+          ? t('registration.resource_type.exhibition_production.edit_exhibition_other_presentation')
+          : t('registration.resource_type.exhibition_production.add_exhibition_other_presentation')}
       </DialogTitle>
       <Formik
         initialValues={exhibitionOtherPresentation ?? emptyExhibitionOtherPresentation}

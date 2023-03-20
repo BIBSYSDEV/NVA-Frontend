@@ -45,8 +45,10 @@ import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVi
 import {
   ExhibitionBasic,
   ExhibitionManifestation,
+  ExhibitionOtherPresentation,
 } from '../../../../../types/publication_types/exhibitionContent.types';
 import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
+import { ExhibitionOtherPresentationModal } from '../exhibition_types/ExhibitionOtherPresentationModal';
 
 export type OutputItem = ArtisticOutputItem | ExhibitionManifestation;
 
@@ -78,29 +80,14 @@ export const OutputRow = ({
   let removeItemDescription = '';
 
   switch (item.type) {
-    case 'Competition':
-    case 'MentionInPublication':
-    case 'Award':
-    case 'Exhibition':
-    case 'Broadcast':
-    case 'CinematicRelease':
-    case 'OtherRelease':
-    case 'MusicScore':
-    case 'AudioVisualPublication':
-    case 'Concert':
-    case 'OtherPerformance':
-    case 'LiteraryArtsMonograph':
-    case 'LiteraryArtsPerformance':
-    case 'LiteraryArtsAudioVisual':
-    case 'LiteraryArtsWeb':
-    case 'ExhibitionBasic':
-      removeItemTitle = t('registration.resource_type.artistic.remove_announcement');
-      removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
-      break;
     case 'Venue':
     case 'PerformingArtsVenue':
       removeItemTitle = t('registration.resource_type.artistic.remove_venue_title');
       removeItemDescription = t('registration.resource_type.artistic.remove_venue_text', { name: title });
+      break;
+    default:
+      removeItemTitle = t('registration.resource_type.artistic.remove_announcement');
+      removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
       break;
   }
 
@@ -262,6 +249,13 @@ export const OutputRow = ({
       ) : item.type === 'ExhibitionBasic' ? (
         <ExhibitionBasicModal
           exhibitionBasic={item as ExhibitionBasic}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'ExhibitionOtherPresentation' ? (
+        <ExhibitionOtherPresentationModal
+          exhibitionOtherPresentation={item as ExhibitionOtherPresentation}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}

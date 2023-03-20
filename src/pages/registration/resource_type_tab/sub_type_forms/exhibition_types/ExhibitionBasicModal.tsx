@@ -57,8 +57,8 @@ export const ExhibitionBasicModal = ({ exhibitionBasic, onSubmit, open, closeMod
     <Dialog open={open} onClose={closeModal}>
       <DialogTitle>
         {exhibitionBasic
-          ? t('registration.resource_type.artistic.edit_exhibition_place')
-          : t('registration.resource_type.artistic.add_exhibition_place')}
+          ? t('registration.resource_type.exhibition_production.edit_exhibition_basic')
+          : t('registration.resource_type.exhibition_production.add_exhibition_basic')}
       </DialogTitle>
       <Formik
         initialValues={exhibitionBasic ?? emptyExhibitionBasic}
