@@ -1299,6 +1299,7 @@
           "Concert": "Concert/show",
           "Exhibition": "Exhibition",
           "ExhibitionBasic": "Exhibition place",
+          "ExhibitionOtherPresentation": "Other presentation",
           "LiteraryArtsAudioVisual": "Audio/video publication",
           "LiteraryArtsMonograph": "Book/printed matter",
           "LiteraryArtsPerformance": "Performance",
@@ -1358,8 +1359,13 @@
       "date_from": "Date from",
       "date_to": "Date to",
       "exhibition_production": {
-        "add_exhibition_other_presentation": "Add presentation",
+        "add_exhibition_basic": "Add exhibition place",
+        "add_exhibition_other_presentation": "Add other presentation",
+        "edit_exhibition_basic": "Edit exhibition place",
+        "edit_exhibition_other_presentation": "Edit other presentation",
         "institution_name": "Institution's name",
+        "more_info_about_elementet": "Info about element",
+        "presentation_type": "Type of element",
         "subtype": {
           "AmbulatingExhibition": "Ambulating exhibition",
           "BasicExhibition": "Basic exhibition",
@@ -1411,6 +1417,7 @@
       "pages_to": "to",
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
+      "publisher_or_organizer": "Publisher/organizer etc.",
       "remove_doi": "Remove DOI",
       "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
       "research_data": {

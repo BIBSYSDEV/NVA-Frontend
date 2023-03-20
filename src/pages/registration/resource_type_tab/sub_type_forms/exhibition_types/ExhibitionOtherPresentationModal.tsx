@@ -72,7 +72,7 @@ export const ExhibitionOtherPresentationModal = ({
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
-                    // data-testid={dataTestId.registrationWizard.resourceType.exhibitionBasicNameField}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputTypeField}
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.exhibition_production.presentation_type')}
@@ -100,7 +100,7 @@ export const ExhibitionOtherPresentationModal = ({
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
-                    // data-testid={dataTestId.registrationWizard.resourceType.placeField}
+                    data-testid={dataTestId.registrationWizard.resourceType.publisherNameField}
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.publisher_or_organizer')}
@@ -115,7 +115,7 @@ export const ExhibitionOtherPresentationModal = ({
                     {...field}
                     multiline
                     rows={2}
-                    // data-testid={dataTestId.registrationWizard.resourceType.placeField}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputDescriptionField}
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.exhibition_production.more_info_about_elementet')}
@@ -147,7 +147,7 @@ export const ExhibitionOtherPresentationModal = ({
                         variant="filled"
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
-                        // data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                       />
                     )}
                   />

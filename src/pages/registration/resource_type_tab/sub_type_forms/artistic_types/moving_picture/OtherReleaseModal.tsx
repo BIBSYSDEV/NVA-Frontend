@@ -3,12 +3,15 @@ import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { OtherRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
+import {
+  emptyUnconfirmedPublisher,
+  OtherRelease,
+} from '../../../../../../types/publication_types/artisticRegistration.types';
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { emptyInstant } from '../../../../../../types/common.types';
+import { emptyInstant, emptyPlace } from '../../../../../../types/common.types';
 
 interface OtherReleaseModalProps {
   otherRelease?: OtherRelease;
@@ -20,15 +23,8 @@ interface OtherReleaseModalProps {
 const emptyOtherRelease: OtherRelease = {
   type: 'OtherRelease',
   description: '',
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
-  publisher: {
-    type: 'UnconfirmedPublisher',
-    name: '',
-  },
+  place: emptyPlace,
+  publisher: emptyUnconfirmedPublisher,
   date: emptyInstant,
 };
 
@@ -93,7 +89,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.otherReleaseType}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputDescriptionField}
                   />
                 )}
               </Field>
@@ -145,7 +141,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"
                         required

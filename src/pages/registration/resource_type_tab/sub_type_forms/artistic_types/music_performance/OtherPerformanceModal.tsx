@@ -14,6 +14,7 @@ import {
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyPlace } from '../../../../../../types/common.types';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -24,11 +25,7 @@ interface OtherPerformanceModalProps {
 
 const emptyOtherPerformance: OtherMusicPerformance = {
   type: 'OtherPerformance',
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
+  place: emptyPlace,
   performanceType: '',
   extent: '',
   musicalWorks: [],

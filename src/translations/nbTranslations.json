@@ -1361,8 +1361,8 @@
       "exhibition_production": {
         "add_exhibition_basic": "Legg til visningssted",
         "add_exhibition_other_presentation": "Legg til formidling",
-        "edit_exhibition_other_presentation": "Endre formidling",
         "edit_exhibition_basic": "Endre visningssted",
+        "edit_exhibition_other_presentation": "Endre formidling",
         "institution_name": "Institusjonens navn",
         "more_info_about_elementet": "Mer om elementet",
         "presentation_type": "Type formidlingsform",

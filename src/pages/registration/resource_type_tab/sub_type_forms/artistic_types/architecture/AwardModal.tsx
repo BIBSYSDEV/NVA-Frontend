@@ -124,7 +124,7 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                         onBlur={() => !touched && setFieldTouched(field.name)}
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                       />
                     )}
                   />
