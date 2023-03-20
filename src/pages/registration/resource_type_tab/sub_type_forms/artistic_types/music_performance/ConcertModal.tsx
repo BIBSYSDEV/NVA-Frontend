@@ -163,7 +163,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.concertPlace}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>

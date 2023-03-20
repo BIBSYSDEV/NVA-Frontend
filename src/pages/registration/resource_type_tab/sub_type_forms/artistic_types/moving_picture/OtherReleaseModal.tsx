@@ -103,7 +103,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     label={t('common.place')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.otherReleasePlace}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>

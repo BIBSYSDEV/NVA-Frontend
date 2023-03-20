@@ -85,7 +85,7 @@ export const ExhibitionBasicModal = ({ exhibitionBasic, onSubmit, open, closeMod
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
-                    data-testid={dataTestId.registrationWizard.resourceType.exhibitionBasicPlaceField}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                     variant="filled"
                     fullWidth
                     label={t('common.place')}
