@@ -1174,6 +1174,7 @@
     "resource_type": {
       "article_number": "Artikkelnummer",
       "artistic": {
+        "add_announcement": "Legg til offentliggjøring",
         "add_audio_visual_publication": "Legg til audio-/videoutgivelse",
         "add_award": "Legg til pris/utmerkelse",
         "add_book": "Legg til bok/trykksak",
@@ -1189,6 +1190,7 @@
         "add_performance": "Legg til fremføring/forestilling",
         "add_publication_mention": "Legg til publisering/omtale",
         "add_web_publication": "Legg til webutgivelse",
+        "announcement": "Offentliggjøring",
         "announcements": "Offentliggjøringer",
         "architecture_type": {
           "Building": "Bygg",
@@ -1229,6 +1231,7 @@
           "ServiceDesign": "Tjenestedesign",
           "WebDesign": "Webdesign"
         },
+        "edit_announcement": "Endre offentliggjøring",
         "edit_audio_visual_publication": "Endre audio-/videoutgivelse",
         "edit_award": "Endre pris/utmerkelse",
         "edit_book": "Endre bok/trykksak",

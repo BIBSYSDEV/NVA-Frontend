@@ -1174,6 +1174,7 @@
     "resource_type": {
       "article_number": "Article number",
       "artistic": {
+        "add_announcement": "Add announcment",
         "add_audio_visual_publication": "Add audio/video publication",
         "add_award": "Add prize/award",
         "add_book": "Add book/printed matter",
@@ -1189,6 +1190,7 @@
         "add_performance": "Add performance",
         "add_publication_mention": "Add publication/mention",
         "add_web_publication": "Add web publication",
+        "announcement": "Announcement",
         "announcements": "Announcements",
         "architecture_type": {
           "Building": "Building",
@@ -1229,6 +1231,7 @@
           "ServiceDesign": "Service design",
           "WebDesign": "Web design"
         },
+        "edit_announcement": "Edit announcement",
         "edit_audio_visual_publication": "Edit audio/video publication",
         "edit_award": "Edit prize/award",
         "edit_book": "Edit book/printed matter",

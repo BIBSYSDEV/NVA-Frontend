@@ -44,8 +44,8 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
     <Dialog open={open} onClose={closeModal}>
       <DialogTitle>
         {venue
-          ? t('registration.resource_type.artistic.edit_exhibition_place')
-          : t('registration.resource_type.artistic.add_exhibition_place')}
+          ? t('registration.resource_type.artistic.edit_announcement')
+          : t('registration.resource_type.artistic.add_announcement')}
       </DialogTitle>
       <Formik
         initialValues={venue ?? emptyVenue}
@@ -64,7 +64,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                     data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
                     variant="filled"
                     fullWidth
-                    label={t('registration.resource_type.artistic.exhibition_place')}
+                    label={t('registration.resource_type.artistic.announcement')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
