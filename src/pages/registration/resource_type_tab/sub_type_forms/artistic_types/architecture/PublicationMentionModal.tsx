@@ -87,7 +87,7 @@ export const PublicationMentionModal = ({
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionTitle}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputJournalBookMediumField}
                   />
                 )}
               </Field>
@@ -103,7 +103,7 @@ export const PublicationMentionModal = ({
                       required
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
-                      data-testid={dataTestId.registrationWizard.resourceType.publicationMentionIssue}
+                      data-testid={dataTestId.registrationWizard.resourceType.outputIssueField}
                     />
                   )}
                 </Field>

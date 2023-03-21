@@ -61,7 +61,7 @@ export const ExhibitionMentionInPublicationModal = ({
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
-                    // data-testid={dataTestId.registrationWizard.resourceType.exhibitionBasicNameField}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputJournalBookMediumField}
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.journal_book_medium')}
@@ -77,7 +77,7 @@ export const ExhibitionMentionInPublicationModal = ({
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
-                      // data-testid={dataTestId.registrationWizard.resourceType.placeField}
+                      data-testid={dataTestId.registrationWizard.resourceType.outputIssueField}
                       variant="filled"
                       fullWidth
                       label={t('registration.resource_type.issue')}
@@ -109,7 +109,7 @@ export const ExhibitionMentionInPublicationModal = ({
                           variant="filled"
                           error={touched && !!error}
                           helperText={<ErrorMessage name={field.name} />}
-                          // data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
+                          data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                         />
                       )}
                     />
@@ -123,7 +123,7 @@ export const ExhibitionMentionInPublicationModal = ({
                     {...field}
                     multiline
                     rows={2}
-                    // data-testid={dataTestId.registrationWizard.resourceType.outputDescriptionField}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputDescriptionField}
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.other_publisher_isbn_etc')}

@@ -45,10 +45,12 @@ import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVi
 import {
   ExhibitionBasic,
   ExhibitionManifestation,
+  ExhibitionMentionInPublication,
   ExhibitionOtherPresentation,
 } from '../../../../../types/publication_types/exhibitionContent.types';
 import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
 import { ExhibitionOtherPresentationModal } from '../exhibition_types/ExhibitionOtherPresentationModal';
+import { ExhibitionMentionInPublicationModal } from '../exhibition_types/ExhibitionMentionInPublication';
 
 export type OutputItem = ArtisticOutputItem | ExhibitionManifestation;
 
@@ -256,6 +258,13 @@ export const OutputRow = ({
       ) : item.type === 'ExhibitionOtherPresentation' ? (
         <ExhibitionOtherPresentationModal
           exhibitionOtherPresentation={item as ExhibitionOtherPresentation}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'ExhibitionMentionInPublication' ? (
+        <ExhibitionMentionInPublicationModal
+          exhibitionMentionInPublication={item as ExhibitionMentionInPublication}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
