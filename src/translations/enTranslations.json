@@ -1102,6 +1102,7 @@
       "ConferenceAbstract": "Conference abstract",
       "ConferenceLecture": "Conference lecture",
       "ConferencePoster": "Conference poster",
+      "ConferenceReport": "Conference report",
       "DataManagementPlan": "Data management plan (DMP)",
       "DataSet": "Dataset",
       "Degree": "Thesis",

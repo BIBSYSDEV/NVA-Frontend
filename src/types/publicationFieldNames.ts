@@ -41,6 +41,7 @@ export enum ReportType {
   Policy = 'ReportPolicy',
   WorkingPaper = 'ReportWorkingPaper',
   BookOfAbstracts = 'ReportBookOfAbstract',
+  ConferenceReport = 'ConferenceReport',
   Report = 'ReportBasic',
 }
 
