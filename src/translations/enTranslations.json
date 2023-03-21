@@ -1297,6 +1297,7 @@
           "Concert": "Concert/show",
           "Exhibition": "Exhibition",
           "ExhibitionBasic": "Exhibition place",
+          "ExhibitionCatalog": "Exhibition catalog",
           "ExhibitionMentionInPublication": "Publication/mention",
           "ExhibitionOtherPresentation": "Other presentation",
           "LiteraryArtsAudioVisual": "Audio/video publication",

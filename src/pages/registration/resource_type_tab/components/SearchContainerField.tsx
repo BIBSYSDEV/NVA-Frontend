@@ -30,7 +30,7 @@ interface SearchContainerFieldProps {
   label: string;
   placeholder: string;
   dataTestId: string;
-  fetchErrorMessage: string;
+  fetchErrorMessage?: string;
   descriptionToShow?: 'year-and-contributors' | 'publisher-and-level';
 }
 

@@ -251,6 +251,7 @@ export const dataTestId = {
       addAudioVideoButton: 'add-audio-video-button',
       addCompetitionButton: 'add-competition-button',
       addExhibitionBasicButton: 'add-exhibition-basic-button',
+      addExhibitionCatalogButton: 'add-exhibition-catalog-button',
       addExhibitionOtherPresentationButton: 'add-exhibition-other-presentation-button',
       addExhibitionButton: 'add-exhibition-button',
       addMentionInPublicationButton: 'add-mention-in-publication-button',
