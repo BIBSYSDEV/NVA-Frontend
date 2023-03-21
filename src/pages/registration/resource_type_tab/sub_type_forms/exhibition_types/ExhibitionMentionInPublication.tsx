@@ -1,113 +1,91 @@
+import { Box, Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Dialog, DialogTitle, DialogContent, TextField, Box } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
+import { Formik, FormikProps, Form, Field, FieldProps, ErrorMessage } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { MentionInPublication } from '../../../../../../types/publication_types/artisticRegistration.types';
-import i18n from '../../../../../../translations/i18n';
-import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { YupShape } from '../../../../../../utils/validation/validationHelpers';
-import { OutputModalActions } from '../OutputModalActions';
-import { emptyInstant } from '../../../../../../types/common.types';
+import i18n from '../../../../../translations/i18n';
+import { emptyInstant } from '../../../../../types/common.types';
+import { ExhibitionMentionInPublication } from '../../../../../types/publication_types/exhibitionContent.types';
+import { dataTestId } from '../../../../../utils/dataTestIds';
+import { OutputModalActions } from '../artistic_types/OutputModalActions';
 
-interface PublicationMentionModalProps {
-  mentionInPublication?: MentionInPublication;
-  onSubmit: (mentionInPublication: MentionInPublication) => void;
+interface ExhibitionMentionInPublicationModalProps {
+  exhibitionMentionInPublication?: ExhibitionMentionInPublication;
+  onSubmit: (exhibitionMentionInPublication: ExhibitionMentionInPublication) => void;
   open: boolean;
   closeModal: () => void;
 }
 
-const emptyMentionInPublication: MentionInPublication = {
-  type: 'MentionInPublication',
-  title: '',
-  issue: '',
-  date: emptyInstant,
-  otherInformation: '',
-  sequence: 0,
-};
-
-const validationSchema = Yup.object<YupShape<MentionInPublication>>({
+const validationSchema = Yup.object({
   title: Yup.string().required(
     i18n.t('translation:feedback.validation.is_required', {
       field: i18n.t('translation:registration.resource_type.journal_book_medium'),
     })
   ),
-  issue: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.issue'),
-    })
-  ),
-  date: Yup.object().shape({
-    value: Yup.date()
-      .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.date'),
-        })
-      )
-      .typeError(
-        i18n.t('translation:feedback.validation.has_invalid_format', {
-          field: i18n.t('translation:common.date'),
-        })
-      ),
-  }),
 });
 
-export const PublicationMentionModal = ({
-  mentionInPublication,
+const emptyExhibitionMentionInPublication: ExhibitionMentionInPublication = {
+  type: 'ExhibitionMentionInPublication',
+  title: '',
+  issue: '',
+  date: emptyInstant,
+  otherInformation: '',
+};
+
+export const ExhibitionMentionInPublicationModal = ({
+  exhibitionMentionInPublication,
   onSubmit,
   open,
   closeModal,
-}: PublicationMentionModalProps) => {
+}: ExhibitionMentionInPublicationModalProps) => {
   const { t } = useTranslation();
 
   return (
     <Dialog open={open} onClose={closeModal} fullWidth>
       <DialogTitle>
-        {mentionInPublication
-          ? t('registration.resource_type.artistic.edit_publication_mention')
-          : t('registration.resource_type.artistic.add_publication_mention')}
+        {exhibitionMentionInPublication
+          ? t('registration.resource_type.exhibition_production.edit_mention_in_publication')
+          : t('registration.resource_type.exhibition_production.add_mention_in_publication')}
       </DialogTitle>
       <Formik
-        initialValues={mentionInPublication ?? emptyMentionInPublication}
+        initialValues={exhibitionMentionInPublication ?? emptyExhibitionMentionInPublication}
         validationSchema={validationSchema}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
         }}>
-        {({ isSubmitting }: FormikProps<MentionInPublication>) => (
+        {({ isSubmitting }: FormikProps<ExhibitionMentionInPublication>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="title">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
+                    // data-testid={dataTestId.registrationWizard.resourceType.exhibitionBasicNameField}
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.journal_book_medium')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionTitle}
                   />
                 )}
               </Field>
 
-              <Box sx={{ display: 'flex', gap: '1rem' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'row', gap: '1rem' }}>
                 <Field name="issue">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
                       {...field}
+                      // data-testid={dataTestId.registrationWizard.resourceType.placeField}
                       variant="filled"
                       fullWidth
                       label={t('registration.resource_type.issue')}
-                      required
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
-                      data-testid={dataTestId.registrationWizard.resourceType.publicationMentionIssue}
                     />
                   )}
                 </Field>
-
                 <Field name="date.value">
                   {({
                     field,
@@ -116,26 +94,22 @@ export const PublicationMentionModal = ({
                   }: FieldProps<string>) => (
                     <DatePicker
                       label={t('common.date')}
-                      PopperProps={{
-                        'aria-label': t('common.date'),
-                      }}
+                      PopperProps={{ 'aria-label': t('common.date') }}
                       value={field.value ?? null}
                       onChange={(date) => {
                         !touched && setFieldTouched(field.name, true, false);
-                        setFieldValue(field.name, date ?? '');
+                        setFieldValue(field.name, date);
                       }}
                       inputFormat="dd.MM.yyyy"
-                      views={['year', 'month', 'day']}
                       mask="__.__.____"
                       renderInput={(params) => (
                         <TextField
                           {...params}
+                          fullWidth
                           variant="filled"
-                          required
-                          onBlur={() => !touched && setFieldTouched(field.name)}
                           error={touched && !!error}
                           helperText={<ErrorMessage name={field.name} />}
-                          data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
+                          // data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                         />
                       )}
                     />
@@ -147,12 +121,14 @@ export const PublicationMentionModal = ({
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
+                    multiline
+                    rows={2}
+                    // data-testid={dataTestId.registrationWizard.resourceType.outputDescriptionField}
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.other_publisher_isbn_etc')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionOther}
                   />
                 )}
               </Field>
@@ -160,7 +136,7 @@ export const PublicationMentionModal = ({
             <OutputModalActions
               isSubmitting={isSubmitting}
               closeModal={closeModal}
-              isAddAction={!mentionInPublication}
+              isAddAction={!exhibitionMentionInPublication}
             />
           </Form>
         )}

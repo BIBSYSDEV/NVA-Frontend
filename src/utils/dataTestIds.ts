@@ -260,6 +260,7 @@ export const dataTestId = {
       addFestivalCinemaButton: 'add-festival-cinema-button',
       addOtherButton: 'add-other-button',
       addPerformanceButton: 'add-performance-button',
+      addPublicationMentionButton: 'add-publication-mention-button',
       addBookButton: 'add-book-button',
       addConcertShowButton: 'add-concert-show-button',
       addAudioVideoPublicationButton: 'add-audio-video-publication-button',

@@ -1262,8 +1262,6 @@
           "Translation": "Translation"
         },
         "media_type": "Media type",
-        "mention_other_type": "Other (publisher, ISBN, etc.)",
-        "mention_title": "Journal/Book/medium",
         "moving_picture_type": {
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Long film",
@@ -1299,6 +1297,7 @@
           "Concert": "Concert/show",
           "Exhibition": "Exhibition",
           "ExhibitionBasic": "Exhibition place",
+          "ExhibitionMentionInPublication": "Publicatoin/mention",
           "ExhibitionOtherPresentation": "Other presentation",
           "LiteraryArtsAudioVisual": "Audio/video publication",
           "LiteraryArtsMonograph": "Book/printed matter",
@@ -1361,8 +1360,10 @@
       "exhibition_production": {
         "add_exhibition_basic": "Add exhibition place",
         "add_exhibition_other_presentation": "Add other presentation",
+        "add_mention_in_publication": "Add publication/mention",
         "edit_exhibition_basic": "Edit exhibition place",
         "edit_exhibition_other_presentation": "Edit other presentation",
+        "edit_mention_in_publication": "Edit publication/mention",
         "institution_name": "Institution's name",
         "more_info_about_elementet": "Info about element",
         "presentation_type": "Type of element",
@@ -1380,6 +1381,7 @@
       "issn": "ISSN",
       "issue": "Issue",
       "journal": "Journal",
+      "journal_book_medium": "Journal/Book/medium",
       "level": "Level in Norwegian publication indicator",
       "media_contribution": {
         "channel": "Channel",
@@ -1412,6 +1414,7 @@
       "organizer": "Organizer",
       "original_article": "Original article",
       "original_article_title": "Title on article",
+      "other_publisher_isbn_etc": "Other (publisher, ISBN, etc.)",
       "page": "Page",
       "pages_from": "Pages from",
       "pages_to": "to",

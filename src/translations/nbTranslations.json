@@ -1262,8 +1262,6 @@
           "Translation": "Oversettelse"
         },
         "media_type": "Medietype",
-        "mention_other_type": "Annet (utgiver, ISBN, m.m.)",
-        "mention_title": "Tidsskrift/Boktittel/medium",
         "moving_picture_type": {
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Langfilm",
@@ -1299,6 +1297,7 @@
           "Concert": "Konsert/forestilling",
           "Exhibition": "Utstilling",
           "ExhibitionBasic": "Visningssted",
+          "ExhibitionMentionInPublication": "Publisering/omtale",
           "ExhibitionOtherPresentation": "Formidling",
           "LiteraryArtsAudioVisual": "Audio/videoutgivelse",
           "LiteraryArtsMonograph": "Bok/trykksak",
@@ -1361,8 +1360,10 @@
       "exhibition_production": {
         "add_exhibition_basic": "Legg til visningssted",
         "add_exhibition_other_presentation": "Legg til formidling",
+        "add_mention_in_publication": "Legg til publisering/omtale",
         "edit_exhibition_basic": "Endre visningssted",
         "edit_exhibition_other_presentation": "Endre formidling",
+        "edit_mention_in_publication": "Endre til publisering/omtale",
         "institution_name": "Institusjonens navn",
         "more_info_about_elementet": "Mer om elementet",
         "presentation_type": "Type formidlingsform",
@@ -1380,6 +1381,7 @@
       "issn": "ISSN",
       "issue": "Hefte",
       "journal": "Tidsskrift",
+      "journal_book_medium": "Tidsskrift/Boktittel/medium",
       "level": "Nivå i Norsk publiseringsindikator",
       "media_contribution": {
         "channel": "Formidlingskanal",
@@ -1412,6 +1414,7 @@
       "organizer": "Arrangør",
       "original_article": "Original artikkel",
       "original_article_title": "Tittel på artikkel",
+      "other_publisher_isbn_etc": "Annet (utgiver, ISBN, m.m.)",
       "page": "Side",
       "pages_from": "Sidetall fra",
       "pages_to": "til",

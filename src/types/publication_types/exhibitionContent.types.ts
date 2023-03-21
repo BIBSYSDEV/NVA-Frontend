@@ -7,7 +7,7 @@ export interface ExhibitionRegistration extends BaseRegistration {
   entityDescription: ExhibitionEntityDescription;
 }
 
-export type ExhibitionManifestation = ExhibitionBasic | ExhibitionOtherPresentation;
+export type ExhibitionManifestation = ExhibitionBasic | ExhibitionOtherPresentation | ExhibitionMentionInPublication;
 
 export interface ExhibitionBasic {
   type: 'ExhibitionBasic';
@@ -24,6 +24,14 @@ export interface ExhibitionOtherPresentation {
   place: Place;
   publisher: UnconfirmedPublisher;
   date: Instant;
+}
+
+export interface ExhibitionMentionInPublication {
+  type: 'ExhibitionMentionInPublication';
+  title: string;
+  issue: string;
+  date: Instant;
+  otherInformation: string;
 }
 
 interface ExhibitionPublicationInstance {
