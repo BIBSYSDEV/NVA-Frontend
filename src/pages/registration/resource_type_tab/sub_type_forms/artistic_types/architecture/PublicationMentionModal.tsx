@@ -152,7 +152,7 @@ export const PublicationMentionModal = ({
                     label={t('registration.resource_type.other_publisher_isbn_etc')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionOther}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputDescriptionField}
                   />
                 )}
               </Field>

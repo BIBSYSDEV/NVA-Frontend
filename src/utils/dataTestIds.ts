@@ -336,7 +336,6 @@ export const dataTestId = {
       pagesToField: 'pages-to-field',
       partOfField: 'part-of-field',
       placeField: 'place-field',
-      publicationMentionOther: 'artistic-publication-mention-other',
       publisherChip: 'publisher-chip',
       publisherField: 'publisher-search-field',
       publisherNameField: 'publisher-name-field',
