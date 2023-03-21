@@ -139,7 +139,7 @@ export const ArtisticDesignForm = () => {
                 variant="outlined"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('registration.resource_type.artistic.add_announcement')}
+                {t('registration.resource_type.artistic.add_exhibition_place')}
               </Button>
               <VenueModal
                 onSubmit={(newVenue) => push(newVenue)}
