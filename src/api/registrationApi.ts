@@ -38,7 +38,7 @@ export const addTicketMessage = async (ticketId: string, message: string) =>
   });
 
 export const createTicket = async (registrationId: string, type: TicketType, returnCreatedTicket = false) => {
-  const createTicketResponse = await authenticatedApiRequest<Ticket>({
+  const createTicketResponse = await authenticatedApiRequest<null>({
     url: `${registrationId}/ticket`,
     method: 'POST',
     data: { type },
