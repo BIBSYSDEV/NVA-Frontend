@@ -32,11 +32,6 @@ const validationSchema = Yup.object<YupShape<MentionInPublication>>({
       field: i18n.t('translation:registration.resource_type.artistic.mention_title'),
     })
   ),
-  issue: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.issue'),
-    })
-  ),
   date: Yup.object().shape({
     value: Yup.date()
       .required(
@@ -100,7 +95,6 @@ export const PublicationMentionModal = ({
                       variant="filled"
                       fullWidth
                       label={t('registration.resource_type.issue')}
-                      required
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
                       data-testid={dataTestId.registrationWizard.resourceType.publicationMentionIssue}

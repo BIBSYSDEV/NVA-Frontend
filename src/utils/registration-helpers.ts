@@ -281,6 +281,10 @@ export const contributorConfig: ContributorConfig = {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
+  [ReportType.ConferenceReport]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
   [ReportType.Report]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
