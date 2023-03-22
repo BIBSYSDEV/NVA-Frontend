@@ -73,12 +73,12 @@ export enum PresentationType {
 }
 
 export enum ArtisticType {
+  MusicPerformance = 'MusicPerformance',
   ArtisticDesign = 'ArtisticDesign',
   ArtisticArchitecture = 'Architecture',
+  VisualArts = 'VisualArts',
   PerformingArts = 'PerformingArts',
   MovingPicture = 'MovingPicture',
-  MusicPerformance = 'MusicPerformance',
-  VisualArts = 'VisualArts',
   LiteraryArts = 'LiteraryArts',
 }
 
