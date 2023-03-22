@@ -11,7 +11,6 @@ import {
 import { emptyPagesMonograph, PagesMonograph } from '../../../../../../types/publication_types/pages.types';
 import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { isbnField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 
