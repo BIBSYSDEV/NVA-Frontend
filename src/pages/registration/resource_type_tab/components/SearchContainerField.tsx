@@ -60,6 +60,7 @@ export const SearchContainerField = ({
     },
     25
   );
+
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
     getIn(values, fieldName),
     fetchErrorMessage

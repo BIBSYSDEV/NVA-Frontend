@@ -83,11 +83,11 @@ export const OutputRow = ({
 
   const shouldFetchItem = item.type === 'ExhibitionCatalog';
 
-  const [fetchedItem, isLoadingItem] = useFetch<BookRegistration>({
+  const [fetchedExhibitionCatalog, isLoadingExhibitionCatalog] = useFetch<BookRegistration>({
     url: shouldFetchItem ? item.id : '',
   });
 
-  const title = shouldFetchItem ? fetchedItem?.entityDescription.mainTitle : getArtisticOutputName(item);
+  const title = shouldFetchItem ? fetchedExhibitionCatalog?.entityDescription.mainTitle : getArtisticOutputName(item);
   let removeItemTitle = '';
   let removeItemDescription = '';
 
@@ -112,10 +112,10 @@ export const OutputRow = ({
       )}
       <TableCell>
         {shouldFetchItem ? (
-          isLoadingItem ? (
+          isLoadingExhibitionCatalog ? (
             <Skeleton />
           ) : (
-            <Typography>{fetchedItem?.entityDescription.mainTitle}</Typography>
+            <Typography>{fetchedExhibitionCatalog?.entityDescription.mainTitle}</Typography>
           )
         ) : (
           <Typography>{title}</Typography>
