@@ -10,6 +10,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Box,
 } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Field, FieldProps, ErrorMessage, useFormikContext, FieldArray, FieldArrayRenderProps } from 'formik';
@@ -23,9 +24,17 @@ import {
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { ExhibitionBasicModal } from './ExhibitionBasicModal';
 import { OutputRow } from '../artistic_types/OutputRow';
+import { ExhibitionOtherPresentationModal } from './ExhibitionOtherPresentationModal';
+import { ExhibitionMentionInPublicationModal } from './ExhibitionMentionInPublication';
+import { ExhibitionCatalogModal } from './ExhibitionCatalogModal';
 
 const exhibitionSubtypes = Object.values(ExhibitionProductionSubtype);
-type ExhibitionProductioModalType = '' | 'ExhibitionBasic';
+type ExhibitionProductioModalType =
+  | ''
+  | 'ExhibitionBasic'
+  | 'ExhibitionOtherPresentation'
+  | 'ExhibitionMentionInPublication'
+  | 'ExhibitionCatalog';
 
 export const ExhibitionProductionForm = () => {
   const { t } = useTranslation();
@@ -89,7 +98,7 @@ export const ExhibitionProductionForm = () => {
                   <TableHead>
                     <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
                       <TableCell>{t('common.type')}</TableCell>
-                      <TableCell>{t('registration.resource_type.artistic.exhibition_place')}</TableCell>
+                      <TableCell>{t('common.description')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
@@ -117,17 +126,55 @@ export const ExhibitionProductionForm = () => {
                   </FormHelperText>
                 )}
 
-              <Button
-                data-testid={dataTestId.registrationWizard.resourceType.addExhibitionBasicButton}
-                onClick={() => setOpenModal('ExhibitionBasic')}
-                variant="outlined"
-                sx={{ mt: '1rem' }}
-                startIcon={<AddCircleOutlineIcon />}>
-                {t('registration.resource_type.artistic.add_exhibition_place')}
-              </Button>
+              <Box sx={{ display: 'flex', gap: '1rem', mt: '1rem' }}>
+                <Button
+                  data-testid={dataTestId.registrationWizard.resourceType.addExhibitionBasicButton}
+                  onClick={() => setOpenModal('ExhibitionBasic')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('registration.resource_type.artistic.add_exhibition_place')}
+                </Button>
+                <Button
+                  data-testid={dataTestId.registrationWizard.resourceType.addPublicationMentionButton}
+                  onClick={() => setOpenModal('ExhibitionMentionInPublication')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('registration.resource_type.exhibition_production.add_mention_in_publication')}
+                </Button>
+                <Button
+                  data-testid={dataTestId.registrationWizard.resourceType.addExhibitionOtherPresentationButton}
+                  onClick={() => setOpenModal('ExhibitionOtherPresentation')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('registration.resource_type.exhibition_production.add_exhibition_other_presentation')}
+                </Button>
+                <Button
+                  data-testid={dataTestId.registrationWizard.resourceType.addExhibitionCatalogButton}
+                  onClick={() => setOpenModal('ExhibitionCatalog')}
+                  variant="outlined"
+                  startIcon={<AddCircleOutlineIcon />}>
+                  {t('registration.resource_type.exhibition_production.add_exhibition_catalog')}
+                </Button>
+              </Box>
+
               <ExhibitionBasicModal
                 onSubmit={(newExhibitionBasic) => push(newExhibitionBasic)}
                 open={openModal === 'ExhibitionBasic'}
+                closeModal={() => setOpenModal('')}
+              />
+              <ExhibitionMentionInPublicationModal
+                onSubmit={(newMention) => push(newMention)}
+                open={openModal === 'ExhibitionMentionInPublication'}
+                closeModal={() => setOpenModal('')}
+              />
+              <ExhibitionOtherPresentationModal
+                onSubmit={(newExhibitionOtherPresentation) => push(newExhibitionOtherPresentation)}
+                open={openModal === 'ExhibitionOtherPresentation'}
+                closeModal={() => setOpenModal('')}
+              />
+              <ExhibitionCatalogModal
+                onSubmit={(newExhibitionCatalog) => push(newExhibitionCatalog)}
+                open={openModal === 'ExhibitionCatalog'}
                 closeModal={() => setOpenModal('')}
               />
             </>

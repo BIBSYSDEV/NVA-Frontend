@@ -1261,8 +1261,6 @@
           "Translation": "Omsetjing"
         },
         "media_type": "Medietype",
-        "mention_other_type": "Anna (utgjevar, ISBN, m.m.)",
-        "mention_title": "Tidsskrift/Boktittel/medium",
         "moving_picture_type": {
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Langfilm",
@@ -1359,6 +1357,7 @@
       "issn": "ISSN",
       "issue": "Hefte",
       "journal": "Tidsskrift",
+      "journal_book_medium": "Tidsskrift/Boktittel/medium",
       "level": "Nivå i Norsk publiseringsindikator",
       "media_contribution": {
         "channel": "Formidlingskanal",
@@ -1391,6 +1390,7 @@
       "organizer": "Arrangør",
       "original_article": "Original artikkel",
       "original_article_title": "Tittel på artikkel",
+      "other_publisher_isbn_etc": "Anna (utgjevar, ISBN, m.m.)",
       "page": "Side",
       "pages_from": "Sidetal frå",
       "pages_to": "til",
