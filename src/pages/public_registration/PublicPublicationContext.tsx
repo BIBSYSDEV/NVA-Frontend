@@ -365,13 +365,13 @@ const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="h3">{t('registration.resource_type.artistic.mention_title')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.journal_book_medium')}</Typography>
       <Typography paragraph>{mention.title}</Typography>
       <Typography variant="h3">{t('registration.resource_type.issue')}</Typography>
       <Typography paragraph>{mention.issue}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{new Date(mention.date.value).toLocaleDateString()}</Typography>
-      <Typography variant="h3">{t('registration.resource_type.artistic.mention_other_type')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.other_publisher_isbn_etc')}</Typography>
       <Typography paragraph>{mention.otherInformation}</Typography>
     </DialogContent>
   );

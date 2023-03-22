@@ -8,7 +8,7 @@ import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { emptyInstant } from '../../../../../../types/common.types';
+import { emptyInstant, emptyPlace } from '../../../../../../types/common.types';
 
 interface CinematicReleaseModalProps {
   cinematicRelease?: CinematicRelease;
@@ -19,11 +19,7 @@ interface CinematicReleaseModalProps {
 
 const emptyCinematicRelease: CinematicRelease = {
   type: 'CinematicRelease',
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
+  place: emptyPlace,
   date: emptyInstant,
 };
 
@@ -74,7 +70,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.cinemaPlace}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>
@@ -104,7 +100,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                         required
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                       />
                     )}
                   />

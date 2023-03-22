@@ -38,7 +38,11 @@ import {
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
-import { ExhibitionBasic } from '../types/publication_types/exhibitionContent.types';
+import {
+  ExhibitionBasic,
+  ExhibitionMentionInPublication,
+  ExhibitionOtherPresentation,
+} from '../types/publication_types/exhibitionContent.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -554,6 +558,10 @@ export const getArtisticOutputName = (item: OutputItem): string => {
       return (item as LiteraryArtsWeb).publisher.name;
     case 'ExhibitionBasic':
       return (item as ExhibitionBasic).title;
+    case 'ExhibitionOtherPresentation':
+      return (item as ExhibitionOtherPresentation).typeDescription;
+    case 'ExhibitionMentionInPublication':
+      return (item as ExhibitionMentionInPublication).title;
     default:
       return '';
   }

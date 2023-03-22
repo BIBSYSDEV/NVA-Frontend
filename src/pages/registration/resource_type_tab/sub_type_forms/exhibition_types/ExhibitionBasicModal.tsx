@@ -3,7 +3,7 @@ import { Formik, FormikProps, Form, Field, FieldProps, ErrorMessage } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../translations/i18n';
-import { emptyPeriod } from '../../../../../types/common.types';
+import { emptyPeriod, emptyPlace } from '../../../../../types/common.types';
 import { ExhibitionBasic } from '../../../../../types/publication_types/exhibitionContent.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { periodField } from '../../../../../utils/validation/registration/referenceValidation';
@@ -42,11 +42,7 @@ const emptyExhibitionBasic: ExhibitionBasic = {
     type: 'UnconfirmedOrganization',
     name: '',
   },
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
+  place: emptyPlace,
   date: emptyPeriod,
 };
 
@@ -57,8 +53,8 @@ export const ExhibitionBasicModal = ({ exhibitionBasic, onSubmit, open, closeMod
     <Dialog open={open} onClose={closeModal}>
       <DialogTitle>
         {exhibitionBasic
-          ? t('registration.resource_type.artistic.edit_exhibition_place')
-          : t('registration.resource_type.artistic.add_exhibition_place')}
+          ? t('registration.resource_type.exhibition_production.edit_exhibition_basic')
+          : t('registration.resource_type.exhibition_production.add_exhibition_basic')}
       </DialogTitle>
       <Formik
         initialValues={exhibitionBasic ?? emptyExhibitionBasic}
@@ -89,7 +85,7 @@ export const ExhibitionBasicModal = ({ exhibitionBasic, onSubmit, open, closeMod
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
-                    data-testid={dataTestId.registrationWizard.resourceType.exhibitionBasicPlaceField}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                     variant="filled"
                     fullWidth
                     label={t('common.place')}
