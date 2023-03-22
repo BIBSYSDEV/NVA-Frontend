@@ -408,7 +408,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.VfxSupervisor,
       ContributorRole.VideoEditor,
     ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [ContributorRole.Other],
   },
   [ArtisticType.MusicPerformance]: {
     primaryRoles: [
