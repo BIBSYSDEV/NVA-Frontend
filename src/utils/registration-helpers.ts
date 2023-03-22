@@ -535,8 +535,10 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
       return (item as AudioVisualPublication).publisher.name;
     case 'Concert':
       return (item as Concert).place.label;
-    case 'OtherPerformance':
-      return (item as OtherMusicPerformance).place.label;
+    case 'OtherPerformance': {
+      const otherMusicPerformance = item as OtherMusicPerformance;
+      return otherMusicPerformance.place.label ? otherMusicPerformance.place.label : '-';
+    }
     case 'LiteraryArtsMonograph':
       return (item as LiteraryArtsMonograph).publisher.name;
     case 'LiteraryArtsPerformance':
