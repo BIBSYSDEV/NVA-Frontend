@@ -58,9 +58,9 @@ export const ExhibitionCatalogModal = ({
                 fieldName="id"
                 searchSubtypes={[BookType.ExhibitionCatalog]}
                 label={t('registration.publication_types.ExhibitionCatalog')}
-                placeholder={'TODO: Søk etter utstillingskatalog'}
-                dataTestId="TODO"
-                fetchErrorMessage="TODO?"
+                placeholder={t('registration.resource_type.exhibition_production.search_for_exhibition_catalog')}
+                dataTestId={dataTestId.registrationWizard.resourceType.exhibitionCatalogSearchField}
+                fetchErrorMessage={t('feedback.error.search')}
               />
             </DialogContent>
             <OutputModalActions isSubmitting={isSubmitting} closeModal={closeModal} isAddAction={!exhibitionCatalog} />

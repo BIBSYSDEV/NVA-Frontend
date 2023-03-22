@@ -30,7 +30,7 @@ interface SearchContainerFieldProps {
   label: string;
   placeholder: string;
   dataTestId: string;
-  fetchErrorMessage?: string;
+  fetchErrorMessage: string;
   descriptionToShow?: 'year-and-contributors' | 'publisher-and-level';
 }
 
@@ -60,7 +60,6 @@ export const SearchContainerField = ({
     },
     25
   );
-
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
     getIn(values, fieldName),
     fetchErrorMessage

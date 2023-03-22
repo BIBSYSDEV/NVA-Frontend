@@ -297,6 +297,7 @@ export const dataTestId = {
       corrigendumForField: 'corrigendum-for-field',
       eventCountryField: 'event-country-field',
       exhibitionBasicNameField: 'exhibition-basic-name-field',
+      exhibitionCatalogSearchField: 'exhibition-catalog-search-field',
       exhibitionName: 'artistic-exhibition-name',
       exhibitionOrganizer: 'artistic-exhibition-organizer',
       exhibitionOther: 'artistic-exhibition-other',

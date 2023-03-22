@@ -1360,14 +1360,17 @@
       "date_to": "Date to",
       "exhibition_production": {
         "add_exhibition_basic": "Add exhibition place",
+        "add_exhibition_catalog": "Add exhibition catalog",
         "add_exhibition_other_presentation": "Add other presentation",
         "add_mention_in_publication": "Add publication/mention",
         "edit_exhibition_basic": "Edit exhibition place",
+        "edit_exhibition_catalog": "Edit exhibition catalog",
         "edit_exhibition_other_presentation": "Edit other presentation",
         "edit_mention_in_publication": "Edit publication/mention",
         "institution_name": "Institution's name",
         "more_info_about_elementet": "Info about element",
         "presentation_type": "Type of element",
+        "search_for_exhibition_catalog": "Search for exhibtion catalogs",
         "subtype": {
           "AmbulatingExhibition": "Ambulating exhibition",
           "BasicExhibition": "Basic exhibition",

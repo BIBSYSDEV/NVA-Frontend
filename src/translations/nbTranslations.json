@@ -1297,7 +1297,7 @@
           "Concert": "Konsert/forestilling",
           "Exhibition": "Utstilling",
           "ExhibitionBasic": "Visningssted",
-          "ExhibitionCatalog": "Exhibition catalog",
+          "ExhibitionCatalog": "Utstillingskatalog",
           "ExhibitionMentionInPublication": "Publisering/omtale",
           "ExhibitionOtherPresentation": "Formidling",
           "LiteraryArtsAudioVisual": "Audio/videoutgivelse",
@@ -1370,6 +1370,7 @@
         "institution_name": "Institusjonens navn",
         "more_info_about_elementet": "Mer om elementet",
         "presentation_type": "Type formidlingsform",
+        "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
         "subtype": {
           "AmbulatingExhibition": "Vandreutstilling",
           "BasicExhibition": "Basisutstilling",
