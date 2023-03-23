@@ -70,7 +70,6 @@ export const DoiRequestAccordion = ({
       dispatch(setNotification({ message: t('feedback.success.reserve_doi'), variant: 'success' }));
       refetchRegistrationAndTickets();
     }
-    setIsLoading(LoadingState.None);
   };
 
   const sendDoiRequest = async () => {
