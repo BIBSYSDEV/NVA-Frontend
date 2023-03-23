@@ -383,6 +383,7 @@
       "orcid_login": "ORCID login failed",
       "project_search": "Search for projects failed",
       "remove_role": "Could not remove role",
+      "reserve_doi": "Reservation of DOI failed",
       "search": "Search failed",
       "send_message": "Could not send message",
       "update_customer": "Could not update customer institution",
