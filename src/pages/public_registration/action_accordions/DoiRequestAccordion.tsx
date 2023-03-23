@@ -55,6 +55,7 @@ export const DoiRequestAccordion = ({
   const toggleRequestDoiModal = () => setOpenRequestDoiModal((open) => !open);
 
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
+  const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPendingDoiRequest = doiRequestTicket?.status === 'Pending';
   const isClosedDoiRequest = doiRequestTicket?.status === 'Closed';
 
@@ -161,7 +162,7 @@ export const DoiRequestAccordion = ({
 
         {!doiRequestTicket && !registration.doi && (
           <>
-            {isPublishedRegistration ? (
+            {isPublishedRegistration && (
               <LoadingButton
                 variant="outlined"
                 endIcon={<LocalOfferIcon />}
@@ -172,7 +173,8 @@ export const DoiRequestAccordion = ({
                 onClick={toggleRequestDoiModal}>
                 {t('registration.public_page.request_doi')}
               </LoadingButton>
-            ) : (
+            )}
+            {isDraftRegistration && (
               <LoadingButton
                 variant="outlined"
                 endIcon={<LocalOfferIcon />}
