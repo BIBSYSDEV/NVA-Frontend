@@ -64,7 +64,7 @@ export const DoiRequestAccordion = ({
     const createDraftDoiResponse = await createDraftDoi(registration.id);
 
     if (isErrorStatus(createDraftDoiResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.update_doi_request'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.reserve_doi'), variant: 'error' }));
       setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createDraftDoiResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.reserve_doi'), variant: 'success' }));
