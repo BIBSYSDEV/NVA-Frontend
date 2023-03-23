@@ -26,6 +26,7 @@ export const registrationFilters: FilterItem[] = [
     i18nKey: 'registration.contributors.contributor',
   },
   { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'registration.year_published' },
+  { field: 'topLevelOrganization.id', i18nKey: 'common.institution' },
 ];
 
 interface AdvancedSearchRowProps {
@@ -41,7 +42,12 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '3fr 3fr 5fr 2fr' }, gap: '1rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
-          <TextField {...field} select variant="outlined" label={t('search.field_label')}>
+          <TextField
+            {...field}
+            select
+            variant="outlined"
+            disabled={field.value === ResourceFieldNames.RegistrationType || field.value === 'topLevelOrganization.id'}
+            label={t('search.field_label')}>
             {registrationFilters.map((filter) => (
               <MenuItem key={filter.i18nKey} value={filter.field}>
                 {t(filter.i18nKey)}
@@ -62,7 +68,10 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            disabled={propertySearchItem.fieldName === ResourceFieldNames.RegistrationType}
+            disabled={
+              propertySearchItem.fieldName === ResourceFieldNames.RegistrationType ||
+              propertySearchItem.fieldName === 'topLevelOrganization.id'
+            }
             value={
               propertySearchItem.value && propertySearchItem.fieldName === ResourceFieldNames.RegistrationType
                 ? t(`registration.publication_types.${propertySearchItem.value as PublicationInstanceType}`)
