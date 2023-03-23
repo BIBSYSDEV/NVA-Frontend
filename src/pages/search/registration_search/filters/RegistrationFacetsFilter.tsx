@@ -6,6 +6,7 @@ import { FacetItem } from './FacetItem';
 import { Aggregations } from '../../../../types/common.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
+import { getTranslatedAggregatedInstitutionLabel } from '../../../../utils/translation-helpers';
 
 interface RegistrationFacetsFilterProps {
   aggregations: Aggregations;
@@ -40,6 +41,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
   const registrationTypeFacet = aggregationEntries.find(
     ([fieldName]) => fieldName === ResourceFieldNames.RegistrationType
   )?.[1];
+
   const registrationInstitutionFacet = aggregationEntries.find(
     ([fieldName]) => fieldName === 'topLevelOrganization.id'
   )?.[1];
@@ -63,12 +65,13 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 onClick={() => updateFilter(ResourceFieldNames.RegistrationType, bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
                 <span>{t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}</span>
-                {bucket.docCount && <span>({bucket.docCount})</span>}
+                {bucket.docCount && <span>({bucket.docCount ?? '??'})</span>}
               </ListItemButton>
             </Box>
           ))}
         </FacetItem>
       )}
+
       {registrationInstitutionFacet && (
         <FacetItem title={t('common.institution')}>
           {registrationInstitutionFacet.buckets.map((bucket) => (
@@ -85,8 +88,8 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 }}
                 onClick={() => updateFilter('topLevelOrganization.id', bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
-                <span>{bucket.key}</span>
-                {bucket.docCount && <span>({bucket.docCount})</span>}
+                <span>{getTranslatedAggregatedInstitutionLabel(bucket)}</span>
+                {bucket.docCount && <span>({bucket.docCount ?? '??'})</span>}
               </ListItemButton>
             </Box>
           ))}

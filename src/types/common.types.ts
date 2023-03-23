@@ -43,7 +43,8 @@ export type Aggregations = {
   };
 };
 
-interface AggregationBucket {
+export interface AggregationBucket {
   key: string;
-  docCount?: number;
+  docCount: number;
+  labels?: Aggregations;
 }

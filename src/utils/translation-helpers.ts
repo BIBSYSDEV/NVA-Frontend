@@ -1,5 +1,5 @@
 import i18n from '../translations/i18n';
-import { LanguageString } from '../types/common.types';
+import { AggregationBucket, LanguageString } from '../types/common.types';
 
 // Map from three letter language to two ("nob" -> "no")
 export const getPreferredLanguageCode = (language?: string) => {
@@ -47,4 +47,23 @@ export const getLanguageString = (labels?: LanguageString) => {
   }
 
   return translatedString;
+};
+
+export const getTranslatedAggregatedInstitutionLabel = (aggregationBucket: AggregationBucket) => {
+  const labels = aggregationBucket.labels;
+
+  if (labels) {
+    const languageString: LanguageString = {
+      nb: labels['nb']?.buckets[0]?.key,
+      nn: labels['nn']?.buckets[0]?.key,
+      en: labels['en']?.buckets[0]?.key,
+    };
+
+    const translatedString = getLanguageString(languageString);
+    if (translatedString) {
+      return translatedString;
+    }
+  }
+
+  return aggregationBucket.key.split('/').pop();
 };
