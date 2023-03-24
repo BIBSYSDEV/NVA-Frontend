@@ -14,7 +14,21 @@ export const RegistrationSearchBar = () => {
   const properties = values.properties ?? [];
 
   return (
-    <>
+    <Box
+      sx={{
+        mx: {
+          xs: '1rem',
+          md: 0,
+        },
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', md: '5fr 2fr' },
+        gridTemplateAreas: {
+          xs: "'searchbar' 'sorting' 'advanced'",
+          md: "'searchbar sorting' 'advanced advanced'",
+        },
+        columnGap: '2rem',
+        rowGap: '0.75rem',
+      }}>
       <Field name="searchTerm">
         {({ field }: FieldProps<string>) => (
           <SearchTextField
@@ -66,6 +80,6 @@ export const RegistrationSearchBar = () => {
           </Box>
         )}
       </FieldArray>
-    </>
+    </Box>
   );
 };
