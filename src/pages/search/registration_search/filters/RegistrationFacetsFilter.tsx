@@ -46,30 +46,6 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
     ([fieldName]) => fieldName === 'topLevelOrganization.id'
   )?.[1];
 
-  if (registrationInstitutionFacet?.buckets[0]) {
-    registrationInstitutionFacet.buckets[0].labels = {
-      nn: {
-        buckets: [],
-      },
-      nb: {
-        buckets: [
-          {
-            key: 'Org en',
-            docCount: 2,
-          },
-        ],
-      },
-      en: {
-        buckets: [
-          {
-            key: 'Org one',
-            docCount: 2,
-          },
-        ],
-      },
-    };
-  }
-
   return (
     <>
       {registrationTypeFacet && (
