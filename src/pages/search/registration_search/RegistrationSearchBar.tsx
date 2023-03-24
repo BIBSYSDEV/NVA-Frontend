@@ -24,7 +24,7 @@ export const RegistrationSearchBar = () => {
         gridTemplateColumns: { xs: '1fr', md: '5fr 2fr' },
         gridTemplateAreas: {
           xs: "'searchbar' 'sorting' 'advanced'",
-          md: "'searchbar sorting' 'advanced advanced'",
+          sm: "'searchbar sorting' 'advanced advanced'",
         },
         columnGap: '2rem',
         rowGap: '0.75rem',
