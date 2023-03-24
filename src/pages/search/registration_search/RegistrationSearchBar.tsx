@@ -13,6 +13,12 @@ export const RegistrationSearchBar = () => {
   const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
 
+  const showAdvancedSearch = properties.some(
+    (property) =>
+      !property.fieldName ||
+      registrationFilters.some((filter) => filter.field === property.fieldName && filter.manuallyAddable)
+  );
+
   return (
     <>
       <Field name="searchTerm">
@@ -29,6 +35,7 @@ export const RegistrationSearchBar = () => {
         )}
       </Field>
       <RegistrationSortSelector />
+
       <FieldArray name="properties">
         {({ push, remove }: FieldArrayRenderProps) => (
           <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -61,7 +68,7 @@ export const RegistrationSearchBar = () => {
                 startIcon={<FilterAltIcon />}>
                 {t('search.add_filter')}
               </Button>
-              {properties.length > 0 && (
+              {showAdvancedSearch && (
                 <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
                   {t('common.search')}
                 </Button>

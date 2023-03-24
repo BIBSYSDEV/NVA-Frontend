@@ -219,3 +219,7 @@ export enum SpecificFundingFieldNames {
   Currency = 'fundingAmount.currency',
   NorwegianLabel = 'labels.nb',
 }
+
+export enum SearchFieldName {
+  InstitutionId = 'topLevelOrganization.id',
+}

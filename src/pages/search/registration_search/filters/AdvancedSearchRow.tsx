@@ -7,6 +7,7 @@ import {
   ResourceFieldNames,
   ContributorFieldNames,
   SpecificContributorFieldNames,
+  SearchFieldName,
 } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHelpers';
@@ -32,7 +33,7 @@ export const registrationFilters: FilterItem[] = [
     manuallyAddable: true,
   },
   { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'registration.year_published', manuallyAddable: true },
-  { field: 'topLevelOrganization.id', i18nKey: 'common.institution', manuallyAddable: false },
+  { field: SearchFieldName.InstitutionId, i18nKey: 'common.institution', manuallyAddable: false },
 ];
 
 interface AdvancedSearchRowProps {
@@ -52,7 +53,9 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
             {...field}
             select
             variant="outlined"
-            disabled={field.value === ResourceFieldNames.RegistrationType || field.value === 'topLevelOrganization.id'}
+            disabled={
+              field.value === ResourceFieldNames.RegistrationType || field.value === SearchFieldName.InstitutionId
+            }
             label={t('search.field_label')}>
             {registrationFilters
               .filter((filter) => filter.manuallyAddable)
@@ -78,7 +81,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
             {...field}
             disabled={
               propertySearchItem.fieldName === ResourceFieldNames.RegistrationType ||
-              propertySearchItem.fieldName === 'topLevelOrganization.id'
+              propertySearchItem.fieldName === SearchFieldName.InstitutionId
             }
             value={
               propertySearchItem.value && propertySearchItem.fieldName === ResourceFieldNames.RegistrationType
