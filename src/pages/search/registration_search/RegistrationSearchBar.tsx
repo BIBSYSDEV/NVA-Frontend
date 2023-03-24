@@ -26,8 +26,7 @@ export const RegistrationSearchBar = () => {
           xs: "'searchbar' 'sorting' 'advanced'",
           sm: "'searchbar sorting' 'advanced advanced'",
         },
-        columnGap: '2rem',
-        rowGap: '0.75rem',
+        gap: '0.75rem 1rem',
       }}>
       <Field name="searchTerm">
         {({ field }: FieldProps<string>) => (
