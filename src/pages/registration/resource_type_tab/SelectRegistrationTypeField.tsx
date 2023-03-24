@@ -60,9 +60,15 @@ export const SelectRegistrationTypeField = () => {
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance.type ?? '';
 
+  const [searchValue, setSearchValue] = useState('');
   const [openSelectType, setOpenSelectType] = useState(!currentInstanceType);
   const [confirmNewType, setConfirmNewType] = useState<PublicationInstanceType | ''>('');
   const [showDatasetConditions, setShowDatasetConditions] = useState(false);
+
+  const closeSelectType = () => {
+    setOpenSelectType(false);
+    setSearchValue('');
+  };
 
   const updateRegistrationData = (newInstanceType: PublicationInstanceType) => {
     if (newInstanceType !== currentInstanceType) {
@@ -194,7 +200,7 @@ export const SelectRegistrationTypeField = () => {
       if (newInstanceType !== currentInstanceType) {
         setConfirmNewType(newInstanceType);
       } else {
-        setOpenSelectType(false);
+        closeSelectType();
       }
     } else {
       if (newInstanceType === ResearchDataType.Dataset) {
@@ -202,12 +208,10 @@ export const SelectRegistrationTypeField = () => {
         setShowDatasetConditions(true);
       } else {
         updateRegistrationData(newInstanceType);
-        setOpenSelectType(false);
+        closeSelectType();
       }
     }
   };
-
-  const [searchValue, setSearchValue] = useState('');
 
   const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) =>
     registrationTypes.filter((registrationType) =>
@@ -223,7 +227,7 @@ export const SelectRegistrationTypeField = () => {
             <IconButton
               data-testid={dataTestId.registrationWizard.resourceType.closeResourceTypeSelectorButton}
               title={t('common.close')}
-              onClick={() => setOpenSelectType(false)}>
+              onClick={closeSelectType}>
               <CloseIcon />
             </IconButton>
           )}
@@ -389,7 +393,7 @@ export const SelectRegistrationTypeField = () => {
               setShowDatasetConditions(true);
             } else {
               updateRegistrationData(confirmNewType);
-              setOpenSelectType(false);
+              closeSelectType();
             }
           }
 
@@ -417,7 +421,7 @@ export const SelectRegistrationTypeField = () => {
           updateRegistrationData(ResearchDataType.Dataset);
           setShowDatasetConditions(false);
           setFieldValue(ResourceFieldNames.PublicationInstanceAgreeTerms, true, false); // Set validation to false to avoid Form and Type fields shown as errors
-          setOpenSelectType(false);
+          closeSelectType();
         }}
         dialogDataTestId={dataTestId.registrationWizard.resourceType.confirmDatasetTypeDialog}>
         <Typography fontWeight={500}>
@@ -453,7 +457,7 @@ export const SelectRegistrationTypeField = () => {
         variant="filled"
         color="primary"
         label={t(`registration.publication_types.${currentInstanceType}`)}
-        onClick={() => setOpenSelectType(!openSelectType)}
+        onClick={() => setOpenSelectType(true)}
         sx={{ mt: '0.5rem', width: 'max-content' }}
       />
       <FormHelperText>{t('registration.resource_type.click_to_change_resource_type')}</FormHelperText>
