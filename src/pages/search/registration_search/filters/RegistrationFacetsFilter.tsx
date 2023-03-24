@@ -111,7 +111,10 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                   },
                 }}
                 onClick={() => updateFilter('topLevelOrganization.id', bucket.key)}
-                selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
+                selected={properties.some(
+                  (searchProperty) =>
+                    typeof searchProperty.value === 'string' && decodeURIComponent(searchProperty.value) === bucket.key
+                )}>
                 <span>{getTranslatedAggregatedInstitutionLabel(bucket)}</span>
                 {bucket.docCount && <span>({bucket.docCount ?? '??'})</span>}
               </ListItemButton>

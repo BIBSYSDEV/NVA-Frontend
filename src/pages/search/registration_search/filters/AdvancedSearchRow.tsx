@@ -14,19 +14,25 @@ import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHel
 interface FilterItem {
   field: string;
   i18nKey: TFuncKey;
+  manuallyAddable: boolean;
 }
 
 export const registrationFilters: FilterItem[] = [
-  { field: DescriptionFieldNames.Title, i18nKey: 'common.title' },
-  { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract' },
-  { field: ResourceFieldNames.RegistrationType, i18nKey: 'registration.resource_type.resource_type' },
-  { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords' },
+  { field: DescriptionFieldNames.Title, i18nKey: 'common.title', manuallyAddable: true },
+  { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract', manuallyAddable: true },
+  {
+    field: ResourceFieldNames.RegistrationType,
+    i18nKey: 'registration.resource_type.resource_type',
+    manuallyAddable: false,
+  },
+  { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords', manuallyAddable: true },
   {
     field: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`,
     i18nKey: 'registration.contributors.contributor',
+    manuallyAddable: true,
   },
-  { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'registration.year_published' },
-  { field: 'topLevelOrganization.id', i18nKey: 'common.institution' },
+  { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'registration.year_published', manuallyAddable: true },
+  { field: 'topLevelOrganization.id', i18nKey: 'common.institution', manuallyAddable: false },
 ];
 
 interface AdvancedSearchRowProps {
@@ -38,6 +44,13 @@ interface AdvancedSearchRowProps {
 export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchItem }: AdvancedSearchRowProps) => {
   const { t } = useTranslation();
 
+  if (
+    propertySearchItem.fieldName &&
+    !registrationFilters.find((filter) => filter.field === propertySearchItem.fieldName)?.manuallyAddable
+  ) {
+    return null;
+  }
+
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '3fr 3fr 5fr 2fr' }, gap: '1rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
@@ -48,11 +61,13 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
             variant="outlined"
             disabled={field.value === ResourceFieldNames.RegistrationType || field.value === 'topLevelOrganization.id'}
             label={t('search.field_label')}>
-            {registrationFilters.map((filter) => (
-              <MenuItem key={filter.i18nKey} value={filter.field}>
-                {t(filter.i18nKey)}
-              </MenuItem>
-            ))}
+            {registrationFilters
+              .filter((filter) => filter.manuallyAddable)
+              .map((filter) => (
+                <MenuItem key={filter.i18nKey} value={filter.field}>
+                  {t(filter.i18nKey)}
+                </MenuItem>
+              ))}
           </TextField>
         )}
       </Field>
