@@ -65,6 +65,8 @@ const SearchPage = () => {
   return (
     <Formik
       initialValues={initialSearchParams}
+      validateOnChange={false}
+      validateOnBlur={false}
       onSubmit={(values) => {
         const previousParamsResults = params.get(SearchParam.Results);
         const newSearchParams = new URLSearchParams();

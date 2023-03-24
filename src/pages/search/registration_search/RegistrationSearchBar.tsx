@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
-import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
+import { AdvancedSearchRow, registrationFilters } from '../registration_search/filters/AdvancedSearchRow';
 import { SearchTextField } from '../SearchTextField';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
 
@@ -32,17 +32,21 @@ export const RegistrationSearchBar = () => {
       <FieldArray name="properties">
         {({ push, remove }: FieldArrayRenderProps) => (
           <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {properties.map((property, index) => (
-              <AdvancedSearchRow
-                key={index}
-                propertySearchItem={property}
-                removeFilter={() => {
-                  remove(index);
-                  submitForm();
-                }}
-                baseFieldName={`properties[${index}]`}
-              />
-            ))}
+            {properties.map(
+              (property, index) =>
+                !property.fieldName ||
+                registrationFilters.find((filter) => filter.field === property.fieldName)?.manuallyAddable ? (
+                  <AdvancedSearchRow
+                    key={index}
+                    propertySearchItem={property}
+                    removeFilter={() => {
+                      remove(index);
+                      submitForm();
+                    }}
+                    baseFieldName={`properties[${index}]`}
+                  />
+                ) : null // Hide fields where user cannot set values themself. Typically terms based on aggregations (facets)
+            )}
             <Box sx={{ display: 'flex', gap: '1rem' }}>
               <Button
                 variant="outlined"

@@ -44,13 +44,6 @@ interface AdvancedSearchRowProps {
 export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchItem }: AdvancedSearchRowProps) => {
   const { t } = useTranslation();
 
-  if (
-    propertySearchItem.fieldName &&
-    !registrationFilters.find((filter) => filter.field === propertySearchItem.fieldName)?.manuallyAddable
-  ) {
-    return null;
-  }
-
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '3fr 3fr 5fr 2fr' }, gap: '1rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
