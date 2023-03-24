@@ -103,7 +103,10 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
     const filterWithoutOperator = isNegated ? filter.replace('NOT', '') : filter;
     // Remove parentheses
     const formattedFilter = filterWithoutOperator.substring(1, filterWithoutOperator.length - 1);
-    const [fieldName, value] = formattedFilter.split(':');
+
+    const splitFieldAndValueIndex = formattedFilter.indexOf(':');
+    const fieldName = formattedFilter.substring(0, splitFieldAndValueIndex);
+    const value = formattedFilter.substring(splitFieldAndValueIndex + 1);
 
     return {
       fieldName,
