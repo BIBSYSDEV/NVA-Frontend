@@ -49,14 +49,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '3fr 3fr 5fr 2fr' }, gap: '1rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
-          <TextField
-            {...field}
-            select
-            variant="outlined"
-            disabled={
-              field.value === ResourceFieldNames.RegistrationType || field.value === SearchFieldName.InstitutionId
-            }
-            label={t('search.field_label')}>
+          <TextField {...field} select variant="outlined" label={t('search.field_label')}>
             {registrationFilters
               .filter((filter) => filter.manuallyAddable)
               .map((filter) => (
@@ -79,10 +72,6 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            disabled={
-              propertySearchItem.fieldName === ResourceFieldNames.RegistrationType ||
-              propertySearchItem.fieldName === SearchFieldName.InstitutionId
-            }
             value={
               propertySearchItem.value && propertySearchItem.fieldName === ResourceFieldNames.RegistrationType
                 ? t(`registration.publication_types.${propertySearchItem.value as PublicationInstanceType}`)

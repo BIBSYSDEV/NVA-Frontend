@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
 import { FacetItem } from './FacetItem';
 import { Aggregations } from '../../../../types/common.types';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { getTranslatedAggregatedInstitutionLabel } from '../../../../utils/translation-helpers';
 
@@ -43,7 +43,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
   )?.[1];
 
   const registrationInstitutionFacet = aggregationEntries.find(
-    ([fieldName]) => fieldName === 'topLevelOrganization.id'
+    ([fieldName]) => fieldName === SearchFieldName.InstitutionId
   )?.[1];
 
   return (
@@ -86,7 +86,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                     bgcolor: 'info.light',
                   },
                 }}
-                onClick={() => updateFilter('topLevelOrganization.id', bucket.key)}
+                onClick={() => updateFilter(SearchFieldName.InstitutionId, bucket.key)}
                 selected={properties.some(
                   (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
                 )}>
