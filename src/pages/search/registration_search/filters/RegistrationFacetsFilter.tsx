@@ -1,4 +1,4 @@
-import { Box, ListItemButton } from '@mui/material';
+import { ListItem, ListItemButton, styled } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
@@ -12,6 +12,15 @@ interface RegistrationFacetsFilterProps {
   aggregations: Aggregations;
   isLoadingSearch: boolean;
 }
+
+const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
+  display: 'flex',
+  gap: '1rem',
+  justifyContent: 'space-between',
+  '&.Mui-selected': {
+    background: theme.palette.info.light,
+  },
+}));
 
 export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: RegistrationFacetsFilterProps) => {
   const { t } = useTranslation();
@@ -51,23 +60,15 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
       {registrationTypeFacet && (
         <FacetItem title={t('registration.resource_type.resource_type')}>
           {registrationTypeFacet.buckets.map((bucket) => (
-            <Box key={bucket.key} component="li">
-              <ListItemButton
+            <ListItem disablePadding key={bucket.key}>
+              <StyledListItemButton
                 disabled={isLoadingSearch}
-                sx={{
-                  display: 'flex',
-                  gap: '1rem',
-                  justifyContent: 'space-between',
-                  '&.Mui-selected': {
-                    bgcolor: 'info.light',
-                  },
-                }}
                 onClick={() => updateFilter(ResourceFieldNames.RegistrationType, bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
                 <span>{t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}</span>
                 {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
-              </ListItemButton>
-            </Box>
+              </StyledListItemButton>
+            </ListItem>
           ))}
         </FacetItem>
       )}
@@ -75,25 +76,17 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
       {registrationInstitutionFacet && (
         <FacetItem title={t('common.institution')}>
           {registrationInstitutionFacet.buckets.map((bucket) => (
-            <Box key={bucket.key} component="li">
-              <ListItemButton
+            <ListItem disablePadding key={bucket.key}>
+              <StyledListItemButton
                 disabled={isLoadingSearch}
-                sx={{
-                  display: 'flex',
-                  gap: '1rem',
-                  justifyContent: 'space-between',
-                  '&.Mui-selected': {
-                    bgcolor: 'info.light',
-                  },
-                }}
                 onClick={() => updateFilter(SearchFieldName.InstitutionId, bucket.key)}
                 selected={properties.some(
                   (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
                 )}>
                 <span>{getTranslatedAggregatedInstitutionLabel(bucket)}</span>
                 {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
-              </ListItemButton>
-            </Box>
+              </StyledListItemButton>
+            </ListItem>
           ))}
         </FacetItem>
       )}
