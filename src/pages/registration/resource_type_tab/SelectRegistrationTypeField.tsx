@@ -213,10 +213,12 @@ export const SelectRegistrationTypeField = () => {
     }
   };
 
-  const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) =>
-    registrationTypes.filter((registrationType) =>
-      registrationType.text.toLowerCase().includes(searchValue.toLowerCase())
+  const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) => {
+    const lowerCaseSearchValue = searchValue.toLowerCase();
+    return registrationTypes.filter((registrationType) =>
+      registrationType.text.toLowerCase().includes(lowerCaseSearchValue)
     );
+  };
 
   return openSelectType || !currentInstanceType ? (
     <>
