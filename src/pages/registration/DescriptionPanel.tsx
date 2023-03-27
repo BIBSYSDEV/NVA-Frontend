@@ -109,7 +109,7 @@ export const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <>
               <Button
-                sx={{ height: 'fit-content', alignSelf: 'top' }}
+                sx={{ height: 'fit-content' }}
                 startIcon={<AddCircleOutlineIcon />}
                 disabled={field.value !== undefined || !values.entityDescription?.abstract}
                 onClick={() => setFieldValue(field.name, '')}>
