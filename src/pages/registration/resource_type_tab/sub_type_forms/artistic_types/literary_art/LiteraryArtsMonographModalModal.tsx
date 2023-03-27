@@ -11,7 +11,6 @@ import {
 import { emptyPagesMonograph, PagesMonograph } from '../../../../../../types/publication_types/pages.types';
 import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { isbnField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 
@@ -65,11 +64,6 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsMonograph>>({
         })
       ),
   }),
-  isbn: isbnField.required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.isbn'),
-    })
-  ),
   pages: Yup.object<YupShape<PagesMonograph>>({
     pages: Yup.number().typeError(
       i18n.t('translation:feedback.validation.has_invalid_format', {
@@ -138,7 +132,6 @@ export const LiteraryArtsMonographModal = ({
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.isbn')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.isbnField}

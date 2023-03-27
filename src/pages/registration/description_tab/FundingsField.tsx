@@ -112,15 +112,17 @@ export const FundingsField = () => {
                         variant="filled"
                         data-testid={dataTestId.registrationWizard.description.fundingIdField}
                       />
-                      <Button
-                        variant="outlined"
-                        endIcon={<OpenInNewIcon />}
-                        href={getNfrProjectUrl(funding.identifier)}
-                        target="_blank"
-                        data-testid={dataTestId.registrationWizard.description.fundingLinkButton}
-                        rel="noopener noreferrer">
-                        {t('common.open')}
-                      </Button>
+                      {funding.identifier && (
+                        <Button
+                          variant="outlined"
+                          endIcon={<OpenInNewIcon />}
+                          href={getNfrProjectUrl(funding.identifier)}
+                          target="_blank"
+                          data-testid={dataTestId.registrationWizard.description.fundingLinkButton}
+                          rel="noopener noreferrer">
+                          {t('common.open')}
+                        </Button>
+                      )}
                     </>
                   ) : (
                     <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Id}`}>

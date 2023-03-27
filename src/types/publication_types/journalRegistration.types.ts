@@ -8,7 +8,7 @@ export interface JournalRegistration extends BaseRegistration {
 
 export interface JournalPublicationInstance {
   type: JournalType | '';
-  articleNumber: string;
+  articleNumber: string | null;
   issue: string | null;
   pages: PagesRange | null;
   volume: string | null;
