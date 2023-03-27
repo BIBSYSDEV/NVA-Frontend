@@ -84,20 +84,53 @@ export const DescriptionPanel = () => {
           )}
         </Field>
       </Box>
-      <Field name={DescriptionFieldNames.Abstract}>
-        {({ field }: FieldProps<string>) => (
-          <TextField
-            {...field}
-            value={field.value ?? ''}
-            data-testid={dataTestId.registrationWizard.description.abstractField}
-            variant="filled"
-            fullWidth
-            multiline
-            rows="4"
-            label={t('registration.description.abstract')}
-          />
-        )}
-      </Field>
+      <Box
+        sx={{
+          display: 'grid',
+          rowGap: '1rem',
+          columnGap: '0.5rem',
+          gridTemplateColumns: '1fr auto',
+        }}>
+        <Field name={DescriptionFieldNames.Abstract}>
+          {({ field }: FieldProps<string>) => (
+            <TextField
+              {...field}
+              value={field.value ?? ''}
+              data-testid={dataTestId.registrationWizard.description.abstractField}
+              variant="filled"
+              fullWidth
+              multiline
+              rows="4"
+              label={t('registration.description.abstract')}
+            />
+          )}
+        </Field>
+        <Field name={DescriptionFieldNames.AlternativeAbstracts}>
+          {({ field }: FieldProps<string>) => (
+            <>
+              <Button
+                sx={{ height: 'fit-content', alignSelf: 'top' }}
+                startIcon={<AddCircleOutlineIcon />}
+                disabled={field.value !== undefined}
+                onClick={() => setFieldValue(field.name, '')}>
+                {t('common.add')}
+              </Button>
+              {field.value !== undefined ? (
+                <TextField
+                  {...field}
+                  value={field.value ?? ''}
+                  data-testid={dataTestId.registrationWizard.description.alternativeAbstractField}
+                  variant="filled"
+                  fullWidth
+                  multiline
+                  rows="4"
+                  label={t('registration.description.alternative_abstract')}
+                />
+              ) : null}
+            </>
+          )}
+        </Field>
+      </Box>
       <Field name={DescriptionFieldNames.Description}>
         {({ field }: FieldProps<string>) => (
           <TextField
