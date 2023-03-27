@@ -46,6 +46,7 @@ import { personDataValidationSchema } from '../../../../utils/validation/basic_d
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { RootState } from '../../../../redux/store';
 import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 export interface PersonData {
   employments: Employment[];
@@ -155,9 +156,13 @@ export const PersonTableRow = ({
   return (
     <>
       <TableRow onClick={toggleDialog} sx={{ cursor: 'pointer' }}>
-        <TableCell>{cristinIdentifier}</TableCell>
-        <TableCell>{getMaskedNationalIdentityNumber(nationalId)}</TableCell>
-        <TableCell width="25%">
+        <TableCell data-testid={dataTestId.basicData.personAdmin.cristinId(cristinIdentifier)}>
+          {cristinIdentifier}
+        </TableCell>
+        <TableCell data-testid={dataTestId.basicData.personAdmin.nin(cristinIdentifier)}>
+          {getMaskedNationalIdentityNumber(nationalId)}
+        </TableCell>
+        <TableCell width="25%" data-testid={dataTestId.basicData.personAdmin.name(cristinIdentifier)}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>{fullName}</Typography>
             {orcidUrl && (
@@ -169,7 +174,7 @@ export const PersonTableRow = ({
             )}
           </Box>
         </TableCell>
-        <TableCell width="60%">
+        <TableCell width="60%" data-testid={dataTestId.basicData.personAdmin.employments(cristinIdentifier)}>
           <Box component="ul" sx={{ p: 0 }}>
             {activeEmployments.map((employment, index) => (
               <Box key={`${employment.organization}-${index}`} component="li" sx={{ display: 'flex' }}>

@@ -41,6 +41,12 @@ export const dataTestId = {
       shortNameField: 'short-name-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
+    personAdmin: {
+      cristinId: (id: string) => `cristin-id-${id}`,
+      nin: (id: string) => `nin-${id}`,
+      name: (id: string) => `name-${id}`,
+      employments: (id: string) => `employments-${id}`,
+    },
     personRegisterLink: 'person-register-link',
   },
   confirmDialog: {
