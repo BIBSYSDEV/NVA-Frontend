@@ -5,6 +5,7 @@ import {
   Box,
   Checkbox,
   CircularProgress,
+  Divider,
   FormControlLabel,
   FormGroup,
   TablePagination,
@@ -12,7 +13,6 @@ import {
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
-import { StyledPageContent } from '../../components/styled/Wrappers';
 import { RoleApiPath, SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { Ticket, TicketType } from '../../types/publication_types/messages.types';
@@ -60,34 +60,45 @@ const TasksPage = () => {
       </Helmet>
       <SidePanel>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
+
         <Box sx={{ p: '1rem' }}>
+          {viewingScopeId ? (
+            isLoadingViewingScopeOrganization ? (
+              <CircularProgress />
+            ) : (
+              viewingScopeOrganization && (
+                <Typography paragraph sx={{ fontWeight: 700 }}>
+                  {t('tasks.limited_to', {
+                    name: getLanguageString(viewingScopeOrganization.name),
+                  })}
+                </Typography>
+              )
+            )
+          ) : null}
+
+          <Divider></Divider>
           <FormGroup>
             {ticketsSearch?.aggregations?.type.buckets.map((bucket) => {
-              const typeString = t(`my_page.messages.types.${bucket.key as TicketType}`);
-              const string = `${typeString} (${bucket.docCount})`;
-              return <FormControlLabel disabled checked control={<Checkbox />} label={string} />;
+              const ticketTypeString = t(`my_page.messages.types.${bucket.key as TicketType}`);
+              const ticketTypeFacetText = `${ticketTypeString} (${bucket.docCount})`;
+              return (
+                <FormControlLabel
+                  key={bucket.key}
+                  disabled
+                  checked
+                  control={<Checkbox />}
+                  label={ticketTypeFacetText}
+                />
+              );
             })}
           </FormGroup>
         </Box>
       </SidePanel>
-      <StyledPageContent>
+      <section>
         {isLoadingTicketsSearch ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <>
-            {viewingScopeId ? (
-              isLoadingViewingScopeOrganization ? (
-                <CircularProgress />
-              ) : (
-                viewingScopeOrganization && (
-                  <Typography paragraph sx={{ fontWeight: 'bold' }}>
-                    {t('tasks.limited_to', {
-                      name: getLanguageString(viewingScopeOrganization.name),
-                    })}
-                  </Typography>
-                )
-              )
-            ) : null}
             <TicketAccordionList tickets={tickets} />
             <TablePagination
               aria-live="polite"
@@ -102,7 +113,7 @@ const TasksPage = () => {
             />
           </>
         )}
-      </StyledPageContent>
+      </section>
     </StyledPageWithSideMenu>
   );
 };

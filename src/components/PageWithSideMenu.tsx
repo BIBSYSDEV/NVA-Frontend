@@ -10,7 +10,7 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   gap: '1rem',
   padding: '1rem',
 
-  gridTemplateColumns: 'auto 4fr',
+  gridTemplateColumns: '1fr 4fr',
   [theme.breakpoints.down('md')]: {
     padding: 0,
     gridTemplateColumns: '1fr',
