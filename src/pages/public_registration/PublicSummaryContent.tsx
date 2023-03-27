@@ -32,25 +32,21 @@ export const PublicSummaryContent = ({ registration }: PublicRegistrationContent
       {entityDescription && (
         <>
           {entityDescription.abstract && (
-            <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
-              {entityDescription.abstract}
-            </Typography>
+            <Typography style={{ whiteSpace: 'pre-line' }}>{entityDescription.abstract}</Typography>
           )}
           {entityDescription.alternativeAbstracts.und && (
-            <>
-              <Accordion elevation={0}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />} sx={{ padding: '0' }}>
-                  <Typography variant="h3" color="primary">
-                    {t('registration.description.alternative_abstract')}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails sx={{ padding: 0, marginBottom: '2rem' }}>
-                  <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
-                    {entityDescription.alternativeAbstracts.und}
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            </>
+            <Accordion elevation={0}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon color="primary" />} sx={{ padding: '0' }}>
+                <Typography variant="h3" color="primary">
+                  {t('registration.description.alternative_abstract')}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ padding: 0 }}>
+                <Typography style={{ whiteSpace: 'pre-line' }} paragraph>
+                  {entityDescription.alternativeAbstracts.und}
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
           )}
           {entityDescription.description && (
             <>

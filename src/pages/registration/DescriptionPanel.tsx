@@ -34,7 +34,7 @@ const languageOptions = [
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
-  const { setFieldValue } = useFormikContext<Registration>();
+  const { values, setFieldValue } = useFormikContext<Registration>();
 
   return (
     <InputContainerBox>
@@ -66,7 +66,7 @@ export const DescriptionPanel = () => {
               <Button
                 sx={{ height: 'fit-content', alignSelf: 'center' }}
                 startIcon={<AddCircleOutlineIcon />}
-                disabled={field.value !== undefined}
+                disabled={field.value !== undefined || !values.entityDescription?.mainTitle}
                 onClick={() => setFieldValue(field.name, '')}>
                 {t('common.add')}
               </Button>
@@ -111,7 +111,7 @@ export const DescriptionPanel = () => {
               <Button
                 sx={{ height: 'fit-content', alignSelf: 'top' }}
                 startIcon={<AddCircleOutlineIcon />}
-                disabled={field.value !== undefined}
+                disabled={field.value !== undefined || !values.entityDescription?.abstract}
                 onClick={() => setFieldValue(field.name, '')}>
                 {t('common.add')}
               </Button>
