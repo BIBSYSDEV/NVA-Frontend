@@ -33,7 +33,6 @@ export const mockCustomerInstitution: CustomerInstitution = {
   displayName: 'Norwegian University of Science and Technology',
   shortName: 'NTNU',
   archiveName: 'NTNU Open',
-  cname: 'ntnu.unit.nva.no',
   cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/194.0.0.0',
   institutionDns: '1.1.1.1',
   feideOrganizationDomain: 'ntnu.no',

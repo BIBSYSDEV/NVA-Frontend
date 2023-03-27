@@ -41,6 +41,7 @@ export enum ReportType {
   Policy = 'ReportPolicy',
   WorkingPaper = 'ReportWorkingPaper',
   BookOfAbstracts = 'ReportBookOfAbstract',
+  ConferenceReport = 'ConferenceReport',
   Report = 'ReportBasic',
 }
 
@@ -72,12 +73,12 @@ export enum PresentationType {
 }
 
 export enum ArtisticType {
+  MusicPerformance = 'MusicPerformance',
   ArtisticDesign = 'ArtisticDesign',
   ArtisticArchitecture = 'Architecture',
+  VisualArts = 'VisualArts',
   PerformingArts = 'PerformingArts',
   MovingPicture = 'MovingPicture',
-  MusicPerformance = 'MusicPerformance',
-  VisualArts = 'VisualArts',
   LiteraryArts = 'LiteraryArts',
 }
 

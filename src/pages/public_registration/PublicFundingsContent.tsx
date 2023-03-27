@@ -49,15 +49,17 @@ export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) 
             <>
               <Typography>{getPeriodString(funding.activeFrom, funding.activeTo)}</Typography>
               <Divider orientation="vertical" />
-              <Button
-                sx={{ width: 'min-content', justifySelf: { md: 'end' } }}
-                size="small"
-                endIcon={<OpenInNewIcon />}
-                href={getNfrProjectUrl(funding.identifier)}
-                target="_blank"
-                rel="noopener noreferrer">
-                {t('common.open')}
-              </Button>
+              {funding.identifier && (
+                <Button
+                  sx={{ width: 'min-content', justifySelf: { md: 'end' } }}
+                  size="small"
+                  endIcon={<OpenInNewIcon />}
+                  href={getNfrProjectUrl(funding.identifier)}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  {t('common.open')}
+                </Button>
+              )}
             </>
           ) : (
             <Typography>

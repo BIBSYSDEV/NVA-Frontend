@@ -87,7 +87,7 @@ const employmentValidation = Yup.object<YupShape<Employment>>({
     .typeError(employeeErrorMessage.affiliationStartDateInvalid),
   endDate: Yup.date()
     .typeError(employeeErrorMessage.affiliationEndDateInvalid)
-    .when('startDate', (startDate, schema) =>
+    .when('startDate', ([startDate], schema) =>
       startDate instanceof Date && !isNaN(startDate.getTime())
         ? schema.min(startDate, employeeErrorMessage.affiliationEndDateAfterStart)
         : schema

@@ -275,6 +275,10 @@ export const contributorConfig: ContributorConfig = {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
+  [ReportType.ConferenceReport]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
   [ReportType.Report]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
@@ -404,7 +408,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.VfxSupervisor,
       ContributorRole.VideoEditor,
     ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [ContributorRole.Other],
   },
   [ArtisticType.MusicPerformance]: {
     primaryRoles: [
@@ -521,8 +525,10 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
       return (item as Broadcast).publisher.name;
     case 'CinematicRelease':
       return (item as CinematicRelease).place.label;
-    case 'OtherRelease':
-      return (item as OtherRelease).description;
+    case 'OtherRelease': {
+      const otherRelease = item as OtherRelease;
+      return [otherRelease.publisher.name, otherRelease.place.label].filter(Boolean).join('/');
+    }
     case 'MusicScore':
       return (item as MusicScore).publisher.name;
     case 'AudioVisualPublication':

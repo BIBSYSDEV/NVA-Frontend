@@ -66,7 +66,7 @@ export const DoiRequestAccordion = ({
       dispatch(setNotification({ message: t('feedback.error.create_doi_request'), variant: 'error' }));
       setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
-      const ticketId = createDoiRequestResponse.data.id;
+      const ticketId = createDoiRequestResponse.data?.id;
       // Add message
       if (ticketId && message) {
         await addTicketMessage(ticketId, message);
