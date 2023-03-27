@@ -23,7 +23,7 @@ const TasksPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[1]);
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
   const [institutionUser] = useFetch<InstitutionUser>({
     url: user?.nvaUsername ? `${RoleApiPath.Users}/${user.nvaUsername}` : '',
