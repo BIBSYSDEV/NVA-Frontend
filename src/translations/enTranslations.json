@@ -488,9 +488,9 @@
         "Pending": "Pending"
       },
       "types": {
-        "doi": "DOI Request",
-        "publishing_request": "Publishing Request",
-        "support": "Support"
+        "DoiRequest": "DOI Request",
+        "PublishingRequest": "Publishing Request",
+        "GeneralSupportCase": "Support"
       }
     },
     "my_page": "My page",

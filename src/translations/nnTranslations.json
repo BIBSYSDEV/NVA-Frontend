@@ -488,9 +488,9 @@
         "Pending": "Pågår"
       },
       "types": {
-        "doi": "DOI-førespurnad",
-        "publishing_request": "Publiseringsførespurnad",
-        "support": "Brukarstøtte"
+        "DoiRequest": "DOI-førespurnad",
+        "PublishingRequest": "Publiseringsførespurnad",
+        "GeneralSupportCase": "Brukarstøtte"
       }
     },
     "my_page": "Mi side",

@@ -1,12 +1,21 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
-import { CircularProgress, TablePagination, Typography } from '@mui/material';
-import { PageHeader } from '../../components/PageHeader';
+import {
+  Box,
+  Checkbox,
+  CircularProgress,
+  FormControlLabel,
+  FormGroup,
+  TablePagination,
+  Typography,
+} from '@mui/material';
+import { Helmet } from 'react-helmet-async';
+import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { StyledPageContent } from '../../components/styled/Wrappers';
 import { RoleApiPath, SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { Ticket } from '../../types/publication_types/messages.types';
+import { Ticket, TicketType } from '../../types/publication_types/messages.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { SearchResponse } from '../../types/common.types';
 import { RootState } from '../../redux/store';
@@ -16,6 +25,7 @@ import { getLanguageString } from '../../utils/translation-helpers';
 import { TicketAccordionList } from './TicketAccordionList';
 import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { StyledPageWithSideMenu, SidePanel, SideNavHeader } from '../../components/PageWithSideMenu';
 
 const rowsPerPageOptions = [10, 20, 50];
 
@@ -44,40 +54,56 @@ const TasksPage = () => {
   const tickets = ticketsSearch?.hits ?? [];
 
   return (
-    <StyledPageContent>
-      <PageHeader>{t('tasks.tasks')}</PageHeader>
-      {isLoadingTicketsSearch ? (
-        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-      ) : (
-        <>
-          {viewingScopeId ? (
-            isLoadingViewingScopeOrganization ? (
-              <CircularProgress />
-            ) : (
-              viewingScopeOrganization && (
-                <Typography paragraph sx={{ fontWeight: 'bold' }}>
-                  {t('tasks.limited_to', {
-                    name: getLanguageString(viewingScopeOrganization.name),
-                  })}
-                </Typography>
+    <StyledPageWithSideMenu>
+      <Helmet>
+        <title>{t('common.tasks')}</title>
+      </Helmet>
+      <SidePanel>
+        <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
+        <Box sx={{ p: '1rem' }}>
+          <FormGroup>
+            {ticketsSearch?.aggregations?.type.buckets.map((bucket) => {
+              const typeString = t(`my_page.messages.types.${bucket.key as TicketType}`);
+              const string = `${typeString} (${bucket.docCount})`;
+              return <FormControlLabel disabled checked control={<Checkbox />} label={string} />;
+            })}
+          </FormGroup>
+        </Box>
+      </SidePanel>
+      <StyledPageContent>
+        {isLoadingTicketsSearch ? (
+          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+        ) : (
+          <>
+            {viewingScopeId ? (
+              isLoadingViewingScopeOrganization ? (
+                <CircularProgress />
+              ) : (
+                viewingScopeOrganization && (
+                  <Typography paragraph sx={{ fontWeight: 'bold' }}>
+                    {t('tasks.limited_to', {
+                      name: getLanguageString(viewingScopeOrganization.name),
+                    })}
+                  </Typography>
+                )
               )
-            )
-          ) : null}
-          <TicketAccordionList tickets={tickets} />
-          <TablePagination
-            aria-live="polite"
-            data-testid={dataTestId.startPage.searchPagination}
-            rowsPerPageOptions={rowsPerPageOptions}
-            component="div"
-            count={ticketsSearch?.size ?? 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
-            onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
-          />
-        </>
-      )}
-    </StyledPageContent>
+            ) : null}
+            <TicketAccordionList tickets={tickets} />
+            <TablePagination
+              aria-live="polite"
+              data-testid={dataTestId.startPage.searchPagination}
+              rowsPerPageOptions={rowsPerPageOptions}
+              component="div"
+              count={ticketsSearch?.size ?? 0}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(_, newPage) => setPage(newPage)}
+              onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
+            />
+          </>
+        )}
+      </StyledPageContent>
+    </StyledPageWithSideMenu>
   );
 };
 
