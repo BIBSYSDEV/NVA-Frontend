@@ -489,8 +489,8 @@
       },
       "types": {
         "DoiRequest": "DOI-forespørsel",
-        "PublishingRequest": "Publiseringsforespørsel",
-        "GeneralSupportCase": "Brukerstøtte"
+        "GeneralSupportCase": "Brukerstøtte",
+        "PublishingRequest": "Publiseringsforespørsel"
       }
     },
     "my_page": "Min side",

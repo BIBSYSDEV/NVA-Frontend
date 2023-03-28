@@ -489,8 +489,8 @@
       },
       "types": {
         "DoiRequest": "DOI Request",
-        "PublishingRequest": "Publishing Request",
-        "GeneralSupportCase": "Support"
+        "GeneralSupportCase": "Support",
+        "PublishingRequest": "Publishing Request"
       }
     },
     "my_page": "My page",
