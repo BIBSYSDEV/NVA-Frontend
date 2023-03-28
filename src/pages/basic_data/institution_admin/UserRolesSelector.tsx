@@ -2,6 +2,7 @@ import { FormControl, FormGroup, FormControlLabel, Checkbox, Typography } from '
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RoleName } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface UserRolesSelectorProps {
   selectedRoles: RoleName[];
@@ -25,6 +26,7 @@ export const UserRolesSelector = ({ selectedRoles, updateRoles, disabled = false
           updateRoles([...selectedRoles, role]);
         }
       }}
+      data-testid={dataTestId.basicData.personAdmin.roleSelector}
       disabled={disabled}>
       <Typography component="legend" variant="h3">
         {t('my_page.my_profile.heading.roles')}
