@@ -61,13 +61,13 @@ const TasksPage = () => {
       <SidePanel>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
-        <Box sx={{ p: '1rem' }}>
+        <Box component="article" sx={{ m: '1rem' }}>
           {viewingScopeId ? (
             isLoadingViewingScopeOrganization ? (
-              <CircularProgress />
+              <CircularProgress aria-label={t('common.tasks')} />
             ) : (
               viewingScopeOrganization && (
-                <Typography paragraph sx={{ fontWeight: 700 }}>
+                <Typography sx={{ fontWeight: 700 }}>
                   {t('tasks.limited_to', {
                     name: getLanguageString(viewingScopeOrganization.name),
                   })}
@@ -75,24 +75,25 @@ const TasksPage = () => {
               )
             )
           ) : null}
-
-          <Divider></Divider>
-          <FormGroup>
-            {ticketsSearch?.aggregations?.type.buckets.map((bucket) => {
-              const ticketTypeString = t(`my_page.messages.types.${bucket.key as TicketType}`);
-              const ticketTypeFacetText = `${ticketTypeString} (${bucket.docCount})`;
-              return (
-                <FormControlLabel
-                  key={bucket.key}
-                  disabled
-                  checked
-                  control={<Checkbox />}
-                  label={ticketTypeFacetText}
-                />
-              );
-            })}
-          </FormGroup>
         </Box>
+
+        <Divider />
+
+        <FormGroup sx={{ m: '1rem' }}>
+          {ticketsSearch?.aggregations?.type.buckets.map((bucket) => {
+            const ticketTypeString = t(`my_page.messages.types.${bucket.key as TicketType}`);
+            const ticketTypeFacetText = `${ticketTypeString} (${bucket.docCount})`;
+            return (
+              <FormControlLabel
+                key={bucket.key}
+                disabled
+                checked
+                control={<Checkbox sx={{ py: '0.2rem' }} />}
+                label={ticketTypeFacetText}
+              />
+            );
+          })}
+        </FormGroup>
       </SidePanel>
       <section>
         {isLoadingTicketsSearch ? (
