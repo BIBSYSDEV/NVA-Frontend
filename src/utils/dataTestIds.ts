@@ -51,7 +51,7 @@ export const dataTestId = {
       nin: (id?: string) => (id ? `nin-${id}` : 'nin'),
       personSearchField: 'person-search-field',
       position: 'position',
-      positionPercent: 'positionPercent',
+      positionPercent: 'position-percent',
       removeEmployment: 'remove-employment',
       roleSelector: 'role-selector',
       startDate: 'start-date',
