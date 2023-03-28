@@ -16,6 +16,7 @@ import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { convertToFlatCristinPerson, getMaskedNationalIdentityNumber } from '../../utils/user-helpers';
 import { AddEmployeeData } from './institution_admin/AddEmployeePage';
+import { dataTestId } from '../../utils/dataTestIds';
 
 interface SearchForCristinPersonProps
   extends Pick<AutocompleteProps<FlatCristinPerson, false, false, false>, 'disabled'> {
@@ -106,6 +107,7 @@ export const SearchForCristinPerson = ({
               showSearchIcon
               isLoading={isLoadingSearchByName}
               placeholder={t('basic_data.add_employee.name_or_nin')}
+              dataTestId={dataTestId.basicData.personAdmin.personSearchField}
             />
           )}
         />
