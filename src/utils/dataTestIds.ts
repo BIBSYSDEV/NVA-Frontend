@@ -41,6 +41,12 @@ export const dataTestId = {
       shortNameField: 'short-name-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
+    personAdmin: {
+      cristinId: (id: string) => `cristin-id-${id}`,
+      nin: (id: string) => `nin-${id}`,
+      name: (id: string) => `name-${id}`,
+      employments: (id: string) => `employments-${id}`,
+    },
     personRegisterLink: 'person-register-link',
   },
   confirmDialog: {
@@ -210,6 +216,7 @@ export const dataTestId = {
       projectSearchField: 'project-search-field',
       projectSearchOption: (id: string) => `project-option-${id}`,
       abstractField: 'registration-abstract-field',
+      alternativeAbstractField: 'registration-alternative-abstract-field',
       alternativeTitleField: 'registration-alternative-title-field',
       descriptionField: 'registration-description-field',
       languageField: 'registration-language-field',
