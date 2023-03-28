@@ -34,6 +34,11 @@ const TasksPage = () => {
   const user = useSelector((store: RootState) => store.user);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [selectedTypes, setSelectedTypes] = useState<TicketType[]>([
+    'DoiRequest',
+    'GeneralSupportCase',
+    'PublishingRequest',
+  ]);
 
   const [institutionUser] = useFetch<InstitutionUser>({
     url: user?.nvaUsername ? `${RoleApiPath.Users}/${user.nvaUsername}` : '',
@@ -45,8 +50,11 @@ const TasksPage = () => {
   const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
 
+  const typeQuery =
+    selectedTypes.length > 0 ? `&query=(${selectedTypes.map((type) => 'type:' + type).join(' OR ')})` : '';
+
   const [ticketsSearch, isLoadingTicketsSearch] = useFetch<SearchResponse<Ticket>>({
-    url: `${SearchApiPath.Tickets}?results=${rowsPerPage}&from=${page * rowsPerPage}`,
+    url: `${SearchApiPath.Tickets}?results=${rowsPerPage}&from=${page * rowsPerPage}${typeQuery}`,
     errorMessage: t('feedback.error.get_messages'),
     withAuthentication: true,
   });
@@ -81,20 +89,32 @@ const TasksPage = () => {
 
         <FormGroup sx={{ m: '1rem' }}>
           {ticketsSearch?.aggregations?.type.buckets.map((bucket) => {
-            const ticketTypeString = t(`my_page.messages.types.${bucket.key as TicketType}`);
+            const ticketType = bucket.key as TicketType;
+            const ticketTypeString = t(`my_page.messages.types.${ticketType}`);
             const ticketTypeFacetText = `${ticketTypeString} (${bucket.docCount})`;
+            const isChecked = selectedTypes.includes(ticketType);
+
             return (
               <FormControlLabel
-                key={bucket.key}
-                disabled
-                checked
-                control={<Checkbox sx={{ py: '0.2rem' }} />}
+                key={ticketType}
+                checked={isChecked}
+                control={
+                  <Checkbox
+                    sx={{ py: '0.2rem' }}
+                    onChange={() =>
+                      isChecked
+                        ? setSelectedTypes(selectedTypes.filter((type) => type !== ticketType))
+                        : setSelectedTypes([...selectedTypes, ticketType])
+                    }
+                  />
+                }
                 label={ticketTypeFacetText}
               />
             );
           })}
         </FormGroup>
       </SidePanel>
+
       <section>
         {isLoadingTicketsSearch ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
