@@ -10,7 +10,7 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   gap: '1rem',
   padding: '1rem',
 
-  gridTemplateColumns: '1fr 4fr',
+  gridTemplateColumns: 'auto 1fr',
   [theme.breakpoints.down('md')]: {
     padding: 0,
     gridTemplateColumns: '1fr',
@@ -33,7 +33,7 @@ const StyledSideMenuHeader = styled(StyledPaperHeader)({
 });
 
 export const SidePanel = (props: BoxProps) => (
-  <Box component="section" sx={{ bgcolor: 'secondary.main', minWidth: '20rem' }} {...props} />
+  <Box component="section" sx={{ bgcolor: 'secondary.main', width: { xs: '100%', md: '20rem' } }} {...props} />
 );
 
 interface SideNavHeaderProps {
