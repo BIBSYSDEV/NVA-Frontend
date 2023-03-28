@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, ListItem } from '@mui/material';
 import { styled } from '@mui/system';
 
 export const StyledRightAlignedWrapper = styled(Box)({
@@ -56,3 +56,10 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
     gridTemplateColumns: '1fr',
   },
 }));
+
+export const SearchListItem = styled(ListItem)({
+  border: '2px solid',
+  borderLeft: '1.25rem solid',
+  flexDirection: 'column',
+  alignItems: 'start',
+});

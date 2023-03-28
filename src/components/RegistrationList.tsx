@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Box, Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Box, Link as MuiLink, List, ListItemText, Typography } from '@mui/material';
 import { getRegistrationLandingPagePath, getResearchProfilePath } from '../utils/urlPaths';
 import { Registration } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
@@ -9,6 +9,7 @@ import { getTitleString } from '../utils/registration-helpers';
 import { displayDate } from '../utils/date-helpers';
 import { TruncatableTypography } from './TruncatableTypography';
 import { ContributorIndicators } from './ContributorIndicators';
+import { SearchListItem } from './styled/Wrappers';
 
 interface RegistrationListProps {
   registrations: Registration[];
@@ -37,13 +38,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const countRestContributors = contributors.length - focusedContributors.length;
 
   return (
-    <ListItem
-      sx={{
-        border: '2px solid',
-        borderColor: 'secondary.dark',
-        borderLeft: '1.25rem solid',
-        borderLeftColor: 'registration.main',
-      }}>
+    <SearchListItem sx={{ borderColor: 'registration.main' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.main' }}>
           {entityDescription?.reference?.publicationInstance.type
@@ -86,6 +81,6 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
 
         <TruncatableTypography sx={{ mt: '0.5rem' }}>{entityDescription?.abstract}</TruncatableTypography>
       </ListItemText>
-    </ListItem>
+    </SearchListItem>
   );
 };
