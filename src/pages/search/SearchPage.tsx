@@ -193,14 +193,8 @@ const SearchPage = () => {
             {resultIsSelected && (
               <Box
                 sx={{
-                  display: 'grid',
-                  gridTemplateRows: 'auto auto 1fr',
-                  gridTemplateColumns: { xs: '1fr', md: '5fr 2fr' },
-                  gridTemplateAreas: {
-                    xs: "'searchbar' 'sorting' 'advanced' 'results'",
-                    md: "'searchbar sorting' 'advanced advanced' 'results results'",
-                  },
-                  columnGap: '2rem',
+                  display: 'flex',
+                  flexDirection: 'column',
                   rowGap: '1rem',
                 }}>
                 <RegistrationSearchBar />

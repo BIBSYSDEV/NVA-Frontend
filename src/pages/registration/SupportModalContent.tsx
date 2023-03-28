@@ -24,7 +24,7 @@ export const SupportModalContent = ({ closeModal, registrationId }: SupportModal
       if (isErrorStatus(createTicketResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
       } else if (isSuccessStatus(createTicketResponse.status)) {
-        const ticketId = createTicketResponse.data.id;
+        const ticketId = createTicketResponse.data?.id;
         if (ticketId) {
           const addMessageResponse = await addTicketMessage(ticketId, message);
           if (isErrorStatus(addMessageResponse.status)) {

@@ -5,17 +5,18 @@ The app is deployed via [AWS Amplify](https://aws.amazon.com/amplify/) in the `F
 ## Environments
 
 AWS Amplify is designed to work with feature branch and GitFlow workflows. Read more in the official docs: [Feature branch deployments and team workflows](https://docs.aws.amazon.com/amplify/latest/userguide/multi-environments.html).
-We currently have 3 enviroments (dev, test, prod) as described by the following table.
+We currently have 4 enviroments (dev, test, sandbox, prod) as described by the following table.
 
-| Enviroment | URL                      | Branch    | Description                                                                                                                                                |
-| ---------- | ------------------------ | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| dev        | https://dev.nva.sikt.no  | `develop` | Under active development. Mainley used by internal users, e.g. the development team. Is password protected against the outside world (including crawlers). |
-| test       | https://test.nva.sikt.no | `staging` | Mainly used by external testers to verify work/progress before it reaches production.                                                                      |
-| prod       | https://nva.sikt.no      | `main`    | Production environment.                                                                                                                                    |
+| Enviroment | URL                         | Branch    | Description                                                                                                                                                |
+| ---------- | --------------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| dev        | https://dev.nva.sikt.no     | `develop` | Under active development. Mainley used by internal users, e.g. the development team. Is password protected against the outside world (including crawlers). |
+| test       | https://test.nva.sikt.no    | `staging` | Mainly used by external testers to verify work/progress before it reaches production.                                                                      |
+| sandbox    | https://sandbox.nva.sikt.no | `sandbox` | Sandbox environment.                                                                                                                                       |
+| prod       | https://nva.sikt.no         | `main`    | Production environment.                                                                                                                                    |
 
 ## Work process
 
-All 3 branches mentioned are protected, and should never be deleted. If that happens anyway for some reason, Amplify should still keep the last deployment running as normal, but one can not deploy a new version before the deleted branch is recreated. In the case where a faulty version is deployed, one can redeploy a previous version with the click of a button in AWS Amplify.
+All 4 branches mentioned are protected, and should never be deleted. If that happens anyway for some reason, Amplify should still keep the last deployment running as normal, but one can not deploy a new version before the deleted branch is recreated. In the case where a faulty version is deployed, one can redeploy a previous version with the click of a button in AWS Amplify.
 
 ### Update dev
 
@@ -24,6 +25,10 @@ When working on new features, bug fixes, etc, one should branch out from the `de
 ### Update test
 
 When one want to update the test environment one will usually create a PR from the `develop` branch into the `staging` branch. Once this PR is merged, Amplify will automatically update the test environment.
+
+### Update sandbox
+
+When one want to update the sandbox environment one will usually create a PR from the `develop` branch into the `sandbox` branch. Once this PR is merged, Amplify will automatically update the sandbox environment.
 
 ### Update prod
 
