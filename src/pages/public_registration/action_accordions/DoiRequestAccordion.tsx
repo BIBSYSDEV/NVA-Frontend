@@ -16,7 +16,6 @@ import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import { Ticket, TicketStatus } from '../../../types/publication_types/messages.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { Modal } from '../../../components/Modal';
@@ -144,18 +143,7 @@ export const DoiRequestAccordion = ({
           <>
             <Typography paragraph>{t('registration.public_page.tasks_panel.has_rejected_doi_request')}</Typography>
             {waitingForRemovalOfDoi && (
-              <>
-                <Typography gutterBottom>
-                  {t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}
-                </Typography>
-                <Button
-                  variant="outlined"
-                  onClick={refetchRegistrationAndTickets}
-                  startIcon={<RefreshIcon />}
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
-                  {t('registration.public_page.tasks_panel.reload')}
-                </Button>
-              </>
+              <Typography gutterBottom>{t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}</Typography>
             )}
           </>
         )}
