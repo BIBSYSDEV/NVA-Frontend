@@ -7,12 +7,14 @@ interface AutocompleteTextFieldProps
   isLoading: boolean;
   showSearchIcon?: boolean;
   errorMessage?: string;
+  dataTestId?: string;
 }
 
 export const AutocompleteTextField = ({
   isLoading,
   showSearchIcon,
   errorMessage,
+  dataTestId,
   ...params
 }: AutocompleteTextFieldProps) => (
   <TextField
@@ -37,5 +39,6 @@ export const AutocompleteTextField = ({
     }}
     error={!!errorMessage}
     helperText={errorMessage}
+    data-testid={dataTestId}
   />
 );
