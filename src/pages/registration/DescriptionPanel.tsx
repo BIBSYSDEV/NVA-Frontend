@@ -44,6 +44,7 @@ export const DescriptionPanel = () => {
           rowGap: '1rem',
           columnGap: '0.5rem',
           gridTemplateColumns: '1fr auto',
+          alignItems: 'center',
         }}>
         <Field name={DescriptionFieldNames.Title}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -64,7 +65,7 @@ export const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <>
               <Button
-                sx={{ height: 'fit-content', alignSelf: 'center' }}
+                sx={{ height: 'fit-content' }}
                 startIcon={<AddCircleOutlineIcon />}
                 disabled={field.value !== undefined || !values.entityDescription?.mainTitle}
                 onClick={() => setFieldValue(field.name, '')}>
