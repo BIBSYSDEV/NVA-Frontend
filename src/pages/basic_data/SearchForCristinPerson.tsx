@@ -107,7 +107,7 @@ export const SearchForCristinPerson = ({
               showSearchIcon
               isLoading={isLoadingSearchByName}
               placeholder={t('basic_data.add_employee.name_or_nin')}
-              dataTestId={dataTestId.basicData.personAdmin.personSearchField}
+              data-testid={dataTestId.basicData.personAdmin.personSearchField}
             />
           )}
         />
