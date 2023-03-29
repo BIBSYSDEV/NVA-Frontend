@@ -62,3 +62,5 @@ export const projectContributorToCristinPerson = (
         employments: [],
       }
     : null;
+
+export const isRekProject = (project?: CristinProject) => project?.created.sourceShortName === 'REK';

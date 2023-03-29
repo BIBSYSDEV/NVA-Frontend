@@ -81,6 +81,9 @@ export interface CristinProject extends SaveCristinProject {
   coordinatingInstitution: ProjectOrganization;
   contributors: ProjectContributor[];
   funding: Funding[];
+  created: {
+    sourceShortName: 'REK' | 'NVA' | 'FORSKDOK';
+  };
 }
 
 interface FundingSource {

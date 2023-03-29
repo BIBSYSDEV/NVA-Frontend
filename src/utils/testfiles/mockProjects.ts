@@ -10,6 +10,9 @@ export const mockProject: CristinProject = {
       value: '1',
     },
   ],
+  created: {
+    sourceShortName: 'NVA',
+  },
   funding: [],
   academicSummary: {},
   popularScientificSummary: {},
@@ -96,6 +99,9 @@ const mockProjects: CristinProject[] = [
         value: '414343',
       },
     ],
+    created: {
+      sourceShortName: 'NVA',
+    },
     funding: [],
     academicSummary: {},
     popularScientificSummary: {},
@@ -147,6 +153,9 @@ const mockProjects: CristinProject[] = [
         value: '414392',
       },
     ],
+    created: {
+      sourceShortName: 'NVA',
+    },
     funding: [],
     academicSummary: {},
     popularScientificSummary: {},
@@ -198,6 +207,9 @@ const mockProjects: CristinProject[] = [
         value: '414451',
       },
     ],
+    created: {
+      sourceShortName: 'NVA',
+    },
     funding: [],
     academicSummary: {},
     popularScientificSummary: {},
@@ -281,6 +293,9 @@ const mockProjects: CristinProject[] = [
         value: '414803',
       },
     ],
+    created: {
+      sourceShortName: 'NVA',
+    },
     funding: [],
     academicSummary: {},
     popularScientificSummary: {},
