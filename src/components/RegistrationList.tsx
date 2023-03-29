@@ -38,7 +38,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const countRestContributors = contributors.length - focusedContributors.length;
 
   return (
-    <SearchListItem sx={{ borderColor: 'registration.main' }}>
+    <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.main' }}>
           {entityDescription?.reference?.publicationInstance.type

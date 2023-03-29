@@ -18,7 +18,7 @@ export const PersonListItem = ({ person }: PersonListItemProps) => {
   const activeAffiliations = filterActiveAffiliations(person.affiliations);
 
   return (
-    <SearchListItem sx={{ borderColor: 'person.main' }}>
+    <SearchListItem sx={{ borderLeftColor: 'person.main' }}>
       <Box sx={{ display: 'flex', gap: '0.5rem' }}>
         <ListItemText disableTypography>
           <Typography sx={{ fontSize: '1rem', fontWeight: '600' }}>

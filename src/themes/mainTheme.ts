@@ -17,9 +17,12 @@ enum Color {
   PrimaryLight = '#0D4DAD',
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
+  DoiRequest = '#FFAA8E',
+  GeneralSupportCase = '#4A7AC1',
   Registration = '#DAC48E',
   Person = '#B3D6D9',
   Project = '#E48F8F',
+  publishingRequest = '#FFD27B',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
@@ -30,11 +33,17 @@ declare module '@mui/material/styles' {
     registration: PaletteColorOptions;
     person: PaletteColorOptions;
     project: PaletteColorOptions;
+    publishingRequest: PaletteColorOptions;
+    doiRequest: PaletteColorOptions;
+    generalSupportCase: PaletteColorOptions;
   }
   interface PaletteOptions {
     registration?: PaletteColorOptions;
     person?: PaletteColorOptions;
     project?: PaletteColorOptions;
+    publishingRequest?: PaletteColorOptions;
+    doiRequest?: PaletteColorOptions;
+    generalSupportCase?: PaletteColorOptions;
   }
 }
 declare module '@mui/material/Button' {
@@ -42,6 +51,9 @@ declare module '@mui/material/Button' {
     registration: true;
     person: true;
     project: true;
+    publishingRequest: true;
+    doiRequest: true;
+    generalSupportCase: true;
   }
 }
 
@@ -89,6 +101,15 @@ export const mainTheme = createTheme(
       },
       project: {
         main: Color.Project,
+      },
+      publishingRequest: {
+        main: Color.publishingRequest,
+      },
+      doiRequest: {
+        main: Color.DoiRequest,
+      },
+      generalSupportCase: {
+        main: Color.GeneralSupportCase,
       },
       background: {
         default: Color.White,
