@@ -383,6 +383,7 @@
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "project_search": "Søk på prosjekt feilet",
       "remove_role": "Kunne ikke fjerne rolle",
+      "reserve_doi": "Reservasjon av DOI feilet",
       "search": "Søk feilet",
       "send_message": "Kunne ikke sende melding",
       "update_customer": "Kunne ikke oppdatere institusjon",
@@ -408,10 +409,10 @@
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
-      "doi_reserved": "DOI er reservert",
       "publishing_request_approved": "Registreringen ble publisert",
       "publishing_request_rejected": "Publiseringsforespørselen ble avvist",
       "removed_role": "Rollen ble fjernet",
+      "reserve_doi": "DOI er reservert",
       "send_message": "Melding sendt",
       "update_customer": "Institusjon er oppdatert",
       "update_institution_user": "Bruker er oppdatert",
@@ -488,9 +489,9 @@
         "Pending": "Pågår"
       },
       "types": {
-        "doi": "DOI-forespørsel",
-        "publishing_request": "Publiseringsforespørsel",
-        "support": "Brukerstøtte"
+        "DoiRequest": "DOI-forespørsel",
+        "GeneralSupportCase": "Brukerstøtte",
+        "PublishingRequest": "Publiseringsforespørsel"
       }
     },
     "my_page": "Min side",
@@ -972,6 +973,7 @@
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
+      "alternative_abstract": "Alternativt sammendrag",
       "alternative_title": "Alternativ tittel",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
@@ -1078,7 +1080,6 @@
         "review_preview_before_publishing": "Se over utkast før du går videre.",
         "waiting_for_publishing_approval": "En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere.",
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
-        "waiting_for_reserved_doi": "Det kan ta litt tid før reservert DOI vises. Last innholdet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Du kan publisere registreringen på egen hånd. Innholdet vil da bli synlig for andre brukere.",
         "you_can_publish_metadata": "Du kan publisere metadata selv, men en kurator må godkjenne filene som er lastet opp før de kan vises til andre brukere.",
         "you_can_publish_metadata_after_curator_approval": "En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere."

@@ -67,3 +67,9 @@ export const updateTicketStatus = async (ticketId: string, type: TicketType, sta
     method: 'PUT',
     data: { type, status },
   });
+
+export const createDraftDoi = async (registrationId: string) =>
+  await authenticatedApiRequest<{ doi: string }>({
+    url: `${registrationId}/doi`,
+    method: 'POST',
+  });

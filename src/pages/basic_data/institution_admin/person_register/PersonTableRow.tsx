@@ -46,6 +46,7 @@ import { personDataValidationSchema } from '../../../../utils/validation/basic_d
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { RootState } from '../../../../redux/store';
 import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 export interface PersonData {
   employments: Employment[];
@@ -155,9 +156,13 @@ export const PersonTableRow = ({
   return (
     <>
       <TableRow onClick={toggleDialog} sx={{ cursor: 'pointer' }}>
-        <TableCell>{cristinIdentifier}</TableCell>
-        <TableCell>{getMaskedNationalIdentityNumber(nationalId)}</TableCell>
-        <TableCell width="25%">
+        <TableCell data-testid={dataTestId.basicData.personAdmin.cristinId(cristinIdentifier)}>
+          {cristinIdentifier}
+        </TableCell>
+        <TableCell data-testid={dataTestId.basicData.personAdmin.nin(cristinIdentifier)}>
+          {getMaskedNationalIdentityNumber(nationalId)}
+        </TableCell>
+        <TableCell width="25%" data-testid={dataTestId.basicData.personAdmin.name(cristinIdentifier)}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Typography>{fullName}</Typography>
             {orcidUrl && (
@@ -169,7 +174,7 @@ export const PersonTableRow = ({
             )}
           </Box>
         </TableCell>
-        <TableCell width="60%">
+        <TableCell width="60%" data-testid={dataTestId.basicData.personAdmin.employments(cristinIdentifier)}>
           <Box component="ul" sx={{ p: 0 }}>
             {activeEmployments.map((employment, index) => (
               <Box key={`${employment.organization}-${index}`} component="li" sx={{ display: 'flex' }}>
@@ -201,8 +206,20 @@ export const PersonTableRow = ({
               <DialogContent>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <TextField variant="filled" disabled value={firstName} label={t('common.first_name')} />
-                    <TextField variant="filled" disabled value={lastName} label={t('common.last_name')} />
+                    <TextField
+                      variant="filled"
+                      disabled
+                      value={firstName}
+                      label={t('common.first_name')}
+                      data-testid={dataTestId.basicData.personAdmin.firstName}
+                    />
+                    <TextField
+                      variant="filled"
+                      disabled
+                      value={lastName}
+                      label={t('common.last_name')}
+                      data-testid={dataTestId.basicData.personAdmin.lastName}
+                    />
                     <NationalIdNumberField nationalId={nationalId} />
                     {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
                     {employmentsInOtherInstitutions.some(isActiveEmployment) && (
@@ -230,7 +247,9 @@ export const PersonTableRow = ({
                           {t('common.employments')}
                         </Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                          <Field name={`${employmentBaseFieldName}.organization`}>
+                          <Field
+                            name={`${employmentBaseFieldName}.organization`}
+                            data-testid={dataTestId.basicData.personAdmin.employments()}>
                             {({ field }: FieldProps<string>) => (
                               <AffiliationHierarchy unitUri={field.value} commaSeparated />
                             )}
@@ -257,6 +276,7 @@ export const PersonTableRow = ({
                                   label={t('basic_data.add_employee.position_percent')}
                                   error={touched && !!error}
                                   helperText={touched && error}
+                                  data-testid={dataTestId.basicData.personAdmin.positionPercent}
                                 />
                               )}
                             </Field>
@@ -270,9 +290,12 @@ export const PersonTableRow = ({
                                   ? new Date(values.employments[employmentIndex].endDate)
                                   : undefined
                               }
+                              dataTestId={dataTestId.basicData.personAdmin.startDate}
                             />
 
-                            <Field name={`${employmentBaseFieldName}.endDate`}>
+                            <Field
+                              name={`${employmentBaseFieldName}.endDate`}
+                              data-testid={dataTestId.basicData.personAdmin.endDate}>
                               {({ field, meta: { error, touched } }: FieldProps<string>) => (
                                 <DatePicker
                                   disabled={isSubmitting || !hasFetchedPositions}
@@ -293,6 +316,7 @@ export const PersonTableRow = ({
                                   renderInput={(params) => (
                                     <TextField
                                       {...params}
+                                      data-testid={dataTestId.basicData.personAdmin.endDate}
                                       variant="filled"
                                       error={touched && !!error}
                                       helperText={<ErrorMessage name={field.name} />}
@@ -307,7 +331,8 @@ export const PersonTableRow = ({
                             color="error"
                             variant="outlined"
                             onClick={toggleConfirmDeleteDialog}
-                            endIcon={<CancelIcon />}>
+                            endIcon={<CancelIcon />}
+                            data-testid={dataTestId.basicData.personAdmin.removeEmployment}>
                             {t('basic_data.person_register.remove_employment')}
                           </Button>
                           {values.employments.length > 1 && (
@@ -337,7 +362,7 @@ export const PersonTableRow = ({
                           <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
                         )}
 
-                        <Box sx={{ mt: '1rem' }}>
+                        <Box sx={{ mt: '1rem' }} data-testid={dataTestId.basicData.personAdmin.roleSelector}>
                           <UserRolesSelector
                             selectedRoles={values.roles}
                             updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
