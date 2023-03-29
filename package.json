@@ -60,7 +60,7 @@
     "yup": "^1.0.2"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.10.0",
+    "@cypress/code-coverage": "^3.10.1",
     "@cypress/instrument-cra": "^1.4.0",
     "@types/isbn-utils": "^1.1.3",
     "@types/jest": "^29.5.0",
