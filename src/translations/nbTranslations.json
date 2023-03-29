@@ -489,9 +489,9 @@
         "Pending": "Pågår"
       },
       "types": {
-        "doi": "DOI-forespørsel",
-        "publishing_request": "Publiseringsforespørsel",
-        "support": "Brukerstøtte"
+        "DoiRequest": "DOI-forespørsel",
+        "GeneralSupportCase": "Brukerstøtte",
+        "PublishingRequest": "Publiseringsforespørsel"
       }
     },
     "my_page": "Min side",
@@ -973,6 +973,7 @@
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
+      "alternative_abstract": "Alternativt sammendrag",
       "alternative_title": "Alternativ tittel",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
