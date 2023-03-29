@@ -62,3 +62,5 @@ export const projectContributorToCristinPerson = (
         employments: [],
       }
     : null;
+
+export const fundingSourceIsNfr = (sourceId = '') => sourceId.split('/').pop()?.toUpperCase() === 'NFR';

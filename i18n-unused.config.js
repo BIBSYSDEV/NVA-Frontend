@@ -8,6 +8,7 @@ module.exports = {
     'disciplines.',
     'licenses.labels.',
     'my_page.messages.ticket_types.',
+    'my_page.messages.types.',
     'privacy.disclosure_of_data.',
     'privacy.purpose.table.row',
     'privacy.registered_personal_data.',
