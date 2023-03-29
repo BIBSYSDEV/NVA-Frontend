@@ -127,6 +127,7 @@ export const emptyFunding: Funding = {
 export interface BaseEntityDescription {
   type: 'EntityDescription';
   abstract: string;
+  alternativeAbstracts: LanguageString;
   alternativeTitles: LanguageString;
   contributors: Contributor[];
   date?: RegistrationDate;

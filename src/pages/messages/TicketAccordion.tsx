@@ -61,13 +61,7 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
           <Typography
             data-testid={`message-type-${registrationIdentifier}`}
             sx={{ gridArea: 'type', fontWeight: 'bold' }}>
-            {ticket.type === 'DoiRequest'
-              ? t('my_page.messages.types.doi')
-              : ticket.type === 'GeneralSupportCase'
-              ? t('my_page.messages.types.support')
-              : ticket.type === 'PublishingRequest'
-              ? t('my_page.messages.types.publishing_request')
-              : null}
+            {t(`my_page.messages.types.${ticket.type}`)}
           </Typography>
           <Typography
             data-testid={`message-title-${registrationIdentifier}`}

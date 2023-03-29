@@ -34,7 +34,7 @@ const languageOptions = [
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
-  const { setFieldValue } = useFormikContext<Registration>();
+  const { values, setFieldValue } = useFormikContext<Registration>();
 
   return (
     <InputContainerBox>
@@ -44,6 +44,7 @@ export const DescriptionPanel = () => {
           rowGap: '1rem',
           columnGap: '0.5rem',
           gridTemplateColumns: '1fr auto',
+          alignItems: 'center',
         }}>
         <Field name={DescriptionFieldNames.Title}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -64,9 +65,9 @@ export const DescriptionPanel = () => {
           {({ field }: FieldProps<string>) => (
             <>
               <Button
-                sx={{ height: 'fit-content', alignSelf: 'center' }}
+                sx={{ height: 'fit-content' }}
                 startIcon={<AddCircleOutlineIcon />}
-                disabled={field.value !== undefined}
+                disabled={field.value !== undefined || !values.entityDescription?.mainTitle}
                 onClick={() => setFieldValue(field.name, '')}>
                 {t('common.add')}
               </Button>
@@ -84,20 +85,53 @@ export const DescriptionPanel = () => {
           )}
         </Field>
       </Box>
-      <Field name={DescriptionFieldNames.Abstract}>
-        {({ field }: FieldProps<string>) => (
-          <TextField
-            {...field}
-            value={field.value ?? ''}
-            data-testid={dataTestId.registrationWizard.description.abstractField}
-            variant="filled"
-            fullWidth
-            multiline
-            rows="4"
-            label={t('registration.description.abstract')}
-          />
-        )}
-      </Field>
+      <Box
+        sx={{
+          display: 'grid',
+          rowGap: '1rem',
+          columnGap: '0.5rem',
+          gridTemplateColumns: '1fr auto',
+        }}>
+        <Field name={DescriptionFieldNames.Abstract}>
+          {({ field }: FieldProps<string>) => (
+            <TextField
+              {...field}
+              value={field.value ?? ''}
+              data-testid={dataTestId.registrationWizard.description.abstractField}
+              variant="filled"
+              fullWidth
+              multiline
+              rows="4"
+              label={t('registration.description.abstract')}
+            />
+          )}
+        </Field>
+        <Field name={DescriptionFieldNames.AlternativeAbstracts}>
+          {({ field }: FieldProps<string>) => (
+            <>
+              <Button
+                sx={{ height: 'fit-content' }}
+                startIcon={<AddCircleOutlineIcon />}
+                disabled={field.value !== undefined || !values.entityDescription?.abstract}
+                onClick={() => setFieldValue(field.name, '')}>
+                {t('common.add')}
+              </Button>
+              {field.value !== undefined ? (
+                <TextField
+                  {...field}
+                  value={field.value ?? ''}
+                  data-testid={dataTestId.registrationWizard.description.alternativeAbstractField}
+                  variant="filled"
+                  fullWidth
+                  multiline
+                  rows="4"
+                  label={t('registration.description.alternative_abstract')}
+                />
+              ) : null}
+            </>
+          )}
+        </Field>
+      </Box>
       <Field name={DescriptionFieldNames.Description}>
         {({ field }: FieldProps<string>) => (
           <TextField

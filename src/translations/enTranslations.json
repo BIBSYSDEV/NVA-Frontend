@@ -488,9 +488,9 @@
         "Pending": "Pending"
       },
       "types": {
-        "doi": "DOI Request",
-        "publishing_request": "Publishing Request",
-        "support": "Support"
+        "DoiRequest": "DOI Request",
+        "GeneralSupportCase": "Support",
+        "PublishingRequest": "Publishing Request"
       }
     },
     "my_page": "My page",
@@ -922,7 +922,7 @@
         "ArtisticDirector": "Artistic director",
         "Choreographer": "Choreographer",
         "Composer": "Composer",
-        "Conductor": "Conductor",
+        "Conductor": "Conductor/ensemble leader",
         "Consultant": "Consultant",
         "ContactPerson": "Contact person",
         "CostumeDesigner": "Costume designer",
@@ -945,7 +945,7 @@
         "LandscapeArchitect": "Landscape architect",
         "Librettist": "Librettist",
         "LightDesigner": "Light designer",
-        "Musician": "Musician",
+        "Musician": "Ensemble musician",
         "Organizer": "Organizer",
         "Other": "Other",
         "Photographer": "Photographer",
@@ -972,6 +972,7 @@
     "description": {
       "abstract": "Abstract",
       "add_vocabulary": "Add vocabulary",
+      "alternative_abstract": "Alternative abstract",
       "alternative_title": "Alternative title",
       "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
@@ -1102,6 +1103,7 @@
       "ConferenceAbstract": "Conference abstract",
       "ConferenceLecture": "Conference lecture",
       "ConferencePoster": "Conference poster",
+      "ConferenceReport": "Conference report",
       "DataManagementPlan": "Data management plan (DMP)",
       "DataSet": "Dataset",
       "Degree": "Thesis",
@@ -1193,7 +1195,7 @@
           "Building": "Building",
           "Interior": "Interior",
           "LandscapeArchitecture": "Landscape architecture",
-          "Other": "Other architecture",
+          "Other": "Other",
           "PlanningProposal": "Planning proposal"
         },
         "audio_video_type": {
@@ -1223,7 +1225,7 @@
           "InteractionDesign": "Interaction design",
           "InteriorDesign": "Interior design",
           "LightDesign": "Lighting design",
-          "Other": "Other design",
+          "Other": "Other",
           "ProductDesign": "Product design",
           "ServiceDesign": "Service design",
           "WebDesign": "Web design"
@@ -1252,7 +1254,7 @@
           "Essay": "Essay",
           "Novel": "Novel",
           "Novella": "Novella/novellas",
-          "Other": "Other literary arts",
+          "Other": "Other",
           "Play": "Play",
           "Poetry": "Poetry",
           "Retelling": "Retelling",
@@ -1266,7 +1268,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Long film",
           "InteractiveFilm": "Interactive production",
-          "Other": "Other film",
+          "Other": "Other",
           "SerialFilmProduction": "Serial production",
           "ShortFilm": "Short film"
         },
@@ -1308,7 +1310,7 @@
         },
         "performance_type": "Type/performance form",
         "performance_types": {
-          "Other": "Other performing arts",
+          "Other": "Other",
           "Play": "Play",
           "Reading": "Reading"
         },
@@ -1335,7 +1337,7 @@
           "CollectiveExhibition": "Collective exhibition",
           "IndividualExhibition": "Individual exhibition",
           "Installation": "Installation",
-          "Other": "Other visual arts",
+          "Other": "Other",
           "Performance": "Performance"
         },
         "web_link": "Link"

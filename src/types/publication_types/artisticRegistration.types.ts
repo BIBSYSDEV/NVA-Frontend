@@ -27,7 +27,7 @@ export interface Competition extends ArtisticOutputBase {
 export interface MentionInPublication extends ArtisticOutputBase {
   type: 'MentionInPublication';
   title: string;
-  issue: string;
+  issue?: string;
   date: Instant;
   otherInformation: string;
 }
