@@ -7,7 +7,7 @@ import {
   listParts,
   abortMultipartUpload,
   completeMultipartUpload,
-  prepareUploadPart,
+  signPart,
 } from '../../api/fileApi';
 
 interface UppyArgs {
@@ -31,5 +31,5 @@ export const createUppy = (language: string) => () =>
       await completeMultipartUpload(uploadId, key, parts),
     createMultipartUpload: async (file: UppyFile) => await createMultipartUpload(file),
     listParts: async (_: UppyFile, { uploadId, key }: UppyArgs) => await listParts(uploadId, key),
-    signPart: async (file, { uploadId, key, partNumber }) => await prepareUploadPart(uploadId, key, partNumber),
+    signPart: async (file, { uploadId, key, partNumber }) => await signPart(uploadId, key, partNumber),
   });

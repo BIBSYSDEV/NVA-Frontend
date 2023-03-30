@@ -87,7 +87,7 @@ export const listParts = async (uploadId: string, key: string) => {
   return listPartsResponse.data;
 };
 
-export const prepareUploadPart = async (uploadId: string, key: string, number: number) => {
+export const signPart = async (uploadId: string, key: string, number: number) => {
   const payload = {
     uploadId,
     key,
