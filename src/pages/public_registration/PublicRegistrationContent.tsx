@@ -56,7 +56,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         <title>{mainTitle}</title>
       </Helmet>
       <StyledPaperHeader>
-        {entityDescription?.reference?.publicationInstance.type ? (
+        {entityDescription?.reference?.publicationInstance?.type ? (
           <Typography data-testid={dataTestId.registrationLandingPage.registrationSubtype} sx={{ color: 'inherit' }}>
             {t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)}
           </Typography>
@@ -77,7 +77,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         )}
       </StyledPaperHeader>
       <BackgroundDiv>
-        {contributors.length > 0 && entityDescription?.reference?.publicationInstance.type && (
+        {contributors.length > 0 && entityDescription?.reference?.publicationInstance?.type && (
           <PublicRegistrationContributors
             contributors={contributors}
             registrationType={entityDescription.reference.publicationInstance.type}
@@ -95,7 +95,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </Box>
         )}
 
-        {!isResearchData(entityDescription?.reference?.publicationInstance.type) && (
+        {!isResearchData(entityDescription?.reference?.publicationInstance?.type) && (
           <FilesLandingPageAccordion registration={registration} />
         )}
 
@@ -108,7 +108,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </LandingPageAccordion>
         )}
 
-        {entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset && (
+        {entityDescription?.reference?.publicationInstance?.type === ResearchDataType.Dataset && (
           <>
             <LandingPageAccordion
               dataTestId={dataTestId.registrationLandingPage.geographicAccordion}
@@ -132,7 +132,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </>
         )}
 
-        {entityDescription?.reference?.publicationInstance.type === ResearchDataType.DataManagementPlan && (
+        {entityDescription?.reference?.publicationInstance?.type === ResearchDataType.DataManagementPlan && (
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
             defaultExpanded
@@ -147,7 +147,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </LandingPageAccordion>
         )}
 
-        {isResearchData(entityDescription?.reference?.publicationInstance.type) && (
+        {isResearchData(entityDescription?.reference?.publicationInstance?.type) && (
           <FilesLandingPageAccordion registration={registration} />
         )}
 
@@ -169,7 +169,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </LandingPageAccordion>
         )}
 
-        {entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset && (
+        {entityDescription?.reference?.publicationInstance?.type === ResearchDataType.Dataset && (
           <>
             <LandingPageAccordion
               dataTestId={dataTestId.registrationLandingPage.dmpAccordion}
@@ -190,7 +190,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             </LandingPageAccordion>
           </>
         )}
-        {entityDescription?.reference?.publicationInstance.type === ResearchDataType.DataManagementPlan && (
+        {entityDescription?.reference?.publicationInstance?.type === ResearchDataType.DataManagementPlan && (
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
             defaultExpanded
