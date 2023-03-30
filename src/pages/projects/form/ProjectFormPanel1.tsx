@@ -180,7 +180,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
           )}
         </FieldArray>
 
-        <FundingsField fieldName="newFunding" currentFundings={values.newFunding} />
+        <FundingsField fieldName={ProjectFieldName.Funding} currentFundings={values.newFunding} />
       </Box>
     </>
   );
