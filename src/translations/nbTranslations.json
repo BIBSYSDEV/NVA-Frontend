@@ -1173,6 +1173,7 @@
     "resource_type": {
       "article_number": "Artikkelnummer",
       "artistic": {
+        "add_announcement": "Legg til offentliggjøring",
         "add_audio_visual_publication": "Legg til audio-/videoutgivelse",
         "add_award": "Legg til pris/utmerkelse",
         "add_book": "Legg til bok/trykksak",
@@ -1181,7 +1182,6 @@
         "add_competition": "Legg til konkurranse",
         "add_concert": "Legg til konsert/forestilling",
         "add_exhibition": "Legg til utstilling",
-        "add_exhibition_place": "Legg til visningssted",
         "add_music_score": "Legg til partitur/manuskript",
         "add_other_performance": "Legg til annen fremføring",
         "add_other_release": "Legg til annen offentliggjøring",
@@ -1229,6 +1229,7 @@
           "ServiceDesign": "Tjenestedesign",
           "WebDesign": "Webdesign"
         },
+        "edit_announcement": "Endre offentliggjøring",
         "edit_audio_visual_publication": "Endre audio-/videoutgivelse",
         "edit_award": "Endre pris/utmerkelse",
         "edit_book": "Endre bok/trykksak",
@@ -1237,7 +1238,6 @@
         "edit_competition": "Endre konkurranse",
         "edit_concert": "Endre konsert",
         "edit_exhibition": "Endre utstilling",
-        "edit_exhibition_place": "Endre visningsted",
         "edit_music_score": "Endre partitur/manuskript",
         "edit_other_performance": "Endre annen fremføringsform",
         "edit_other_release": "Endre annen offentliggjøring",
@@ -1317,6 +1317,7 @@
           "Other": "Annet",
           "TheatricalProduction": "Forestilling/visning"
         },
+        "place": "Sted",
         "premiere": "Premiere",
         "premiere_date": "Premieredato",
         "program": "Program",

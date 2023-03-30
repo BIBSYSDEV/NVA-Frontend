@@ -105,7 +105,7 @@ export const ArtisticPerformingArtsForm = () => {
                 <Table sx={{ '& th,td': { borderBottom: 1 } }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('registration.resource_type.artistic.announcement')}</TableCell>
+                      <TableCell>{t('registration.resource_type.artistic.place')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
@@ -140,7 +140,7 @@ export const ArtisticPerformingArtsForm = () => {
                 variant="outlined"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('registration.resource_type.artistic.add_exhibition_place')}
+                {t('registration.resource_type.artistic.add_announcement')}
               </Button>
               <VenueModal
                 onSubmit={(newVenue) => push({ ...newVenue, type: 'PerformingArtsVenue' })}

@@ -1173,6 +1173,7 @@
     "resource_type": {
       "article_number": "Artikkelnummer",
       "artistic": {
+        "add_announcement": "Legg til offentleggjering",
         "add_audio_visual_publication": "Legg til audio-/videoutgjeving",
         "add_award": "Legg til pris/utmerking",
         "add_book": "Legg til bok/trykksak",
@@ -1181,7 +1182,6 @@
         "add_competition": "Legg til konkurranse",
         "add_concert": "Legg til konsert/framsyning",
         "add_exhibition": "Legg til utstilling",
-        "add_exhibition_place": "Legg til visingsstad",
         "add_music_score": "Legg til partitur/manuskript",
         "add_other_performance": "Legg til anna framsyning",
         "add_other_release": "Legg til anna offentleggjering",
@@ -1237,7 +1237,6 @@
         "edit_competition": "Endre konkurranse",
         "edit_concert": "Endre konsert",
         "edit_exhibition": "Endre utstilling",
-        "edit_exhibition_place": "Endre visingsstad",
         "edit_music_score": "Endre partitur/manuskript",
         "edit_other_performance": "Endre anna framsynsform",
         "edit_other_release": "Endre anna offentleggjering",
@@ -1317,6 +1316,7 @@
           "Other": "Anna",
           "TheatricalProduction": "Framsyning/vising"
         },
+        "place": "Stad",
         "premiere": "Premiere",
         "premiere_date": "Premieredato",
         "program": "Program",
