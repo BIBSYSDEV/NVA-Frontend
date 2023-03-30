@@ -1,5 +1,5 @@
 import { Autocomplete, Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
-import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -7,23 +7,27 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { FundingSources } from '../../../types/project.types';
-import { emptyFunding, Funding, Registration } from '../../../types/registration.types';
+import { emptyFunding, Funding } from '../../../types/registration.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { fundingSourceIsNfr, getNfrProjectUrl } from './projects_field/projectHelpers';
-import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
+import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 import { dataTestId } from '../../../utils/dataTestIds';
 
-export const FundingsField = () => {
+interface FundingsFieldProps {
+  fieldName: string;
+  currentFundings: Funding[];
+}
+
+export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps) => {
   const { t } = useTranslation();
-  const { values, setFieldValue } = useFormikContext<Registration>();
   const [fundingSources, isLoadingFundingSources] = useFetchResource<FundingSources>(CristinApiPath.FundingSources);
   const fundingSourcesList = fundingSources?.sources ?? [];
 
   return (
-    <FieldArray name={DescriptionFieldNames.Fundings}>
-      {({ name, remove, push }: FieldArrayRenderProps) => (
+    <FieldArray name={fieldName}>
+      {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (
         <>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography variant="h2">{t('registration.description.funding.financing')}</Typography>
@@ -36,7 +40,7 @@ export const FundingsField = () => {
             </Button>
           </Box>
 
-          {values.fundings.map((funding, index) => {
+          {currentFundings.map((funding, index) => {
             const baseFieldName = `${name}[${index}]`;
             const hasSelectedSource = !!funding.source;
             const hasSelectedNfrSource = fundingSourceIsNfr(funding.source);

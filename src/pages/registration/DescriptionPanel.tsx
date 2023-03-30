@@ -219,7 +219,7 @@ export const DescriptionPanel = () => {
 
       <ProjectsField />
       <Divider />
-      <FundingsField />
+      <FundingsField fieldName={DescriptionFieldNames.Fundings} currentFundings={values.fundings} />
     </InputContainerBox>
   );
 };

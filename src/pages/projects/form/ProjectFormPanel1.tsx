@@ -15,6 +15,7 @@ import { OrganizationSearchField } from '../../basic_data/app_admin/Organization
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 import { ProjectFieldName } from './ProjectFormDialog';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { FundingsField } from '../../registration/description_tab/FundingsField';
 
 interface ProjectFormPanel1Props {
   currentProject?: CristinProject;
@@ -178,6 +179,8 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
             </>
           )}
         </FieldArray>
+
+        <FundingsField fieldName="newFunding" currentFundings={values.newFunding} />
       </Box>
     </>
   );
