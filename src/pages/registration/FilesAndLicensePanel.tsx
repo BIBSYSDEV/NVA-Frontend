@@ -109,7 +109,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   const originalDoi = entityDescription?.reference?.doi;
-  const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance.type);
+  const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance?.type);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
