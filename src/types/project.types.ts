@@ -51,11 +51,10 @@ export interface ProjectContributor {
 }
 
 interface Funding {
-  source: {
-    names: LanguageString;
-    code: string;
-  };
-  code?: string;
+  type: 'Funding';
+  source: string;
+  identifier?: string;
+  labels: LanguageString;
 }
 
 export interface SaveCristinProject {
@@ -80,10 +79,10 @@ export interface CristinProject extends SaveCristinProject {
   alternativeTitles: LanguageString[];
   coordinatingInstitution: ProjectOrganization;
   contributors: ProjectContributor[];
-  funding: Funding[];
   created: {
     sourceShortName: 'REK' | 'NVA' | 'FORSKDOK';
   };
+  newFunding: Funding[];
 }
 
 interface FundingSource {

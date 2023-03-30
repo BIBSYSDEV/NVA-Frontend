@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
+import { fundingSourceIsNfr } from '../../../pages/registration/description_tab/projects_field/projectHelpers';
 import i18n from '../../../translations/i18n';
-import { fundingSourceIsNfr } from '../../registration-helpers';
 
 const fundingErrorMessage = {
   fundingSourceRequired: i18n.t('translation:feedback.validation.is_required', {

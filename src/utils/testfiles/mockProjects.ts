@@ -13,7 +13,7 @@ export const mockProject: CristinProject = {
   created: {
     sourceShortName: 'NVA',
   },
-  funding: [],
+  newFunding: [],
   academicSummary: {},
   popularScientificSummary: {},
   status: 'ACTIVE',
@@ -102,7 +102,7 @@ const mockProjects: CristinProject[] = [
     created: {
       sourceShortName: 'NVA',
     },
-    funding: [],
+    newFunding: [],
     academicSummary: {},
     popularScientificSummary: {},
     status: 'ACTIVE',
@@ -156,7 +156,7 @@ const mockProjects: CristinProject[] = [
     created: {
       sourceShortName: 'NVA',
     },
-    funding: [],
+    newFunding: [],
     academicSummary: {},
     popularScientificSummary: {},
     status: 'ACTIVE',
@@ -210,7 +210,7 @@ const mockProjects: CristinProject[] = [
     created: {
       sourceShortName: 'NVA',
     },
-    funding: [],
+    newFunding: [],
     academicSummary: {},
     popularScientificSummary: {},
     status: 'CONCLUDED',
@@ -296,7 +296,7 @@ const mockProjects: CristinProject[] = [
     created: {
       sourceShortName: 'NVA',
     },
-    funding: [],
+    newFunding: [],
     academicSummary: {},
     popularScientificSummary: {},
     status: 'NOTSTARTED',
