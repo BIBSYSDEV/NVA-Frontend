@@ -31,6 +31,5 @@ export const createUppy = (language: string) => () =>
       await completeMultipartUpload(uploadId, key, parts),
     createMultipartUpload: async (file: UppyFile) => await createMultipartUpload(file),
     listParts: async (_: UppyFile, { uploadId, key }: UppyArgs) => await listParts(uploadId, key),
-    signPart: async (file, { uploadId, key, partNumber, signal }) =>
-      await prepareUploadPart(uploadId, key, partNumber, signal),
+    signPart: async (file, { uploadId, key, partNumber }) => await prepareUploadPart(uploadId, key, partNumber),
   });

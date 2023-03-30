@@ -87,16 +87,13 @@ export const listParts = async (uploadId: string, key: string) => {
   return listPartsResponse.data;
 };
 
-export const prepareUploadPart = async (uploadId: string, key: string, number: number, signal: AbortSignal) => {
+export const prepareUploadPart = async (uploadId: string, key: string, number: number) => {
   const payload = {
     uploadId,
     key,
     body: JSON.stringify('ignored'),
     number,
   };
-  if (signal?.aborted) {
-    throw new Error('aborted');
-  }
 
   const prepareResponse = await authenticatedApiRequest<any>({
     url: FileApiPath.Prepare,
