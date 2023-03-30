@@ -390,7 +390,7 @@ export const SelectRegistrationTypeField = () => {
         open={!!confirmNewType}
         title={t('registration.resource_type.change_registration_type')}
         onAccept={() => {
-          if (confirmNewType && confirmNewType !== values.entityDescription?.reference?.publicationInstance.type) {
+          if (confirmNewType && confirmNewType !== values.entityDescription?.reference?.publicationInstance?.type) {
             if (confirmNewType === ResearchDataType.Dataset) {
               setShowDatasetConditions(true);
             } else {

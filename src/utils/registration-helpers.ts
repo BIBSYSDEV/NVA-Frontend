@@ -122,7 +122,7 @@ export const getRegistrationIdentifier = (id: string) => id.split('/').pop() ?? 
 
 // Ensure Registration has correct type values, etc
 export const getFormattedRegistration = (registration: Registration) => {
-  const type = registration.entityDescription?.reference?.publicationInstance.type ?? '';
+  const type = registration.entityDescription?.reference?.publicationInstance?.type ?? '';
   let formattedRegistration = registration;
 
   if (formattedRegistration.entityDescription && !formattedRegistration.entityDescription.type) {

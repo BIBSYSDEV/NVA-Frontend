@@ -46,7 +46,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
       }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.main' }}>
-          {entityDescription?.reference?.publicationInstance.type
+          {entityDescription?.reference?.publicationInstance?.type
             ? t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)
             : '?'}{' '}
           — {displayDate(entityDescription?.date)}
