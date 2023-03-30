@@ -197,7 +197,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.ArtisticDesign ? (
               <PublicArtisticOutput
                 outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []}
-                heading={t('registration.resource_type.artistic.exhibition_place')}
+                heading={t('registration.resource_type.artistic.announcements')}
               />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.ArtisticArchitecture ? (
               <PublicArtisticOutput
@@ -208,7 +208,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.PerformingArts ? (
               <PublicArtisticOutput
                 outputs={(publicationInstance as ArtisticPublicationInstance).outputs ?? []}
-                heading={t('registration.resource_type.artistic.exhibition_place')}
+                heading={t('registration.resource_type.artistic.announcements')}
               />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.MovingPicture ? (
               <PublicArtisticOutput
@@ -223,7 +223,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.VisualArts ? (
               <PublicArtisticOutput
                 outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []}
-                heading={t('registration.resource_type.artistic.exhibition_place')}
+                heading={t('registration.resource_type.artistic.announcements')}
               />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.LiteraryArts ? (
               <PublicArtisticOutput

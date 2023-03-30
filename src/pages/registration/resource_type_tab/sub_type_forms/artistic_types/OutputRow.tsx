@@ -90,6 +90,9 @@ export const OutputRow = ({
       removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
       break;
     case 'Venue':
+      removeItemTitle = t('registration.resource_type.artistic.remove_announcement');
+      removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
+      break;
     case 'PerformingArtsVenue':
       removeItemTitle = t('registration.resource_type.artistic.remove_venue_title');
       removeItemDescription = t('registration.resource_type.artistic.remove_venue_text', { name: title });

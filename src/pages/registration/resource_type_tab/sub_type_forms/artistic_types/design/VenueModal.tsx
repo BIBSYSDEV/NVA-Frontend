@@ -30,7 +30,7 @@ const validationSchema = Yup.object<YupShape<Venue>>({
       .nullable()
       .required(
         i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:registration.resource_type.artistic.exhibition_place'),
+          field: i18n.t('translation:registration.resource_type.artistic.place'),
         })
       ),
   }),
