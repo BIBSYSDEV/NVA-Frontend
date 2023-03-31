@@ -1326,8 +1326,6 @@
         "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?",
         "remove_music_work": "Remove work",
         "remove_music_work_description": "Are you sure you want to remove this work?",
-        "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?",
-        "remove_venue_title": "Remove exhibition place?",
         "visual_arts_type": {
           "ArtInPublicSpace": "Art in public space",
           "ArtistBook": "Artist book",

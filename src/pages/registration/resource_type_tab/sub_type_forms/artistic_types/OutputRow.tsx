@@ -67,37 +67,6 @@ export const OutputRow = ({
   const [openRemoveItem, setOpenRemoveItem] = useState(false);
 
   const title = getArtisticOutputName(item);
-  let removeItemTitle = '';
-  let removeItemDescription = '';
-
-  switch (item.type) {
-    case 'Competition':
-    case 'MentionInPublication':
-    case 'Award':
-    case 'Exhibition':
-    case 'Broadcast':
-    case 'CinematicRelease':
-    case 'OtherRelease':
-    case 'MusicScore':
-    case 'AudioVisualPublication':
-    case 'Concert':
-    case 'OtherPerformance':
-    case 'LiteraryArtsMonograph':
-    case 'LiteraryArtsPerformance':
-    case 'LiteraryArtsAudioVisual':
-    case 'LiteraryArtsWeb':
-      removeItemTitle = t('registration.resource_type.artistic.remove_announcement');
-      removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
-      break;
-    case 'Venue':
-      removeItemTitle = t('registration.resource_type.artistic.remove_announcement');
-      removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
-      break;
-    case 'PerformingArtsVenue':
-      removeItemTitle = t('registration.resource_type.artistic.remove_venue_title');
-      removeItemDescription = t('registration.resource_type.artistic.remove_venue_text', { name: title });
-      break;
-  }
 
   return (
     <TableRow>
@@ -257,13 +226,13 @@ export const OutputRow = ({
       ) : null}
       <ConfirmDialog
         open={openRemoveItem}
-        title={removeItemTitle}
+        title={t('registration.resource_type.artistic.remove_announcement')}
         onCancel={() => setOpenRemoveItem(false)}
         onAccept={() => {
           removeItem();
           setOpenRemoveItem(false);
         }}>
-        {removeItemDescription}
+        {t('registration.resource_type.artistic.remove_announcement_description', { name: title })}
       </ConfirmDialog>
     </TableRow>
   );

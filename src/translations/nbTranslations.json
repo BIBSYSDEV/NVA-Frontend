@@ -1326,8 +1326,6 @@
         "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
         "remove_music_work": "Fjern verk",
         "remove_music_work_description": "Er du sikker på at du vil fjerne dette verket?",
-        "remove_venue_text": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over visningssteder?",
-        "remove_venue_title": "Fjern visningssted?",
         "visual_arts_type": {
           "ArtInPublicSpace": "Kunst i offentlig rom",
           "ArtistBook": "Artist book",
