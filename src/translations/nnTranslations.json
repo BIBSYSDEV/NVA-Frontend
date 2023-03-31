@@ -981,7 +981,6 @@
       "funding": {
         "financing": "Finansiering",
         "funder": "Finansiør",
-        "funder_filter": "Filtrer på namn eller kode",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnamn eller prosjektleiar",

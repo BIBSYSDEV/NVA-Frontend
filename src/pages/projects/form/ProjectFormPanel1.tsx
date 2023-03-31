@@ -1,5 +1,4 @@
-import { TextField, Typography, Button } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, TextField, Typography, Button } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -173,14 +172,14 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               <Button
                 startIcon={<AddCircleIcon />}
                 onClick={() => push(emptyProjectContributor)}
-                sx={{ width: 'fit-content', alignSelf: 'center' }}>
+                sx={{ width: 'fit-content' }}>
                 {t('common.add')}
               </Button>
             </>
           )}
         </FieldArray>
 
-        <FundingsField fieldName={ProjectFieldName.Funding} currentFundings={values.newFunding} />
+        <FundingsField fieldName={ProjectFieldName.Funding} currentFundings={values.funding} />
       </Box>
     </>
   );

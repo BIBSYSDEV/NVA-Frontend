@@ -78,7 +78,7 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
                             {...params}
                             label={t('registration.description.funding.funder')}
                             isLoading={isLoadingFundingSources}
-                            placeholder={t('registration.description.funding.funder_filter')}
+                            placeholder={t('common.search')}
                             showSearchIcon={!field.value}
                             multiline
                             required
@@ -210,7 +210,7 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
               );
             })}
             <Button
-              sx={{ alignSelf: 'start' }}
+              sx={{ width: 'fit-content' }}
               data-testid={dataTestId.registrationWizard.description.addFundingButton}
               startIcon={<AddIcon />}
               onClick={() => push(emptyFunding)}>

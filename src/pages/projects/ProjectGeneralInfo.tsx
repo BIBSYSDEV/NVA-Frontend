@@ -33,8 +33,8 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
       </div>
       <div>
         <Typography variant="overline">{t('project.financing')}</Typography>
-        {project.newFunding.length > 0 ? (
-          project.newFunding.map((funding, index) => {
+        {project.funding.length > 0 ? (
+          project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.labels);
             const fundingText = funding.identifier
               ? `${sourceName} - ${t('project.grant_id')} ${funding.identifier}`
@@ -60,8 +60,8 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography>
           {project.projectCategories.length > 0 ? (
             <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-              {project.projectCategories.map((category) => (
-                <Chip color="primary" label={getLanguageString(category.label)} />
+              {project.projectCategories.map((category, index) => (
+                <Chip key={index} color="primary" label={getLanguageString(category.label)} />
               ))}
             </Box>
           ) : (
@@ -72,8 +72,8 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography>
           {project.keywords.length > 0 ? (
             <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-              {project.keywords.map((keyword) => (
-                <Chip color="primary" label={getLanguageString(keyword.label)} />
+              {project.keywords.map((keyword, index) => (
+                <Chip key={index} color="primary" label={getLanguageString(keyword.label)} />
               ))}
             </Box>
           ) : (

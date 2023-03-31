@@ -64,7 +64,7 @@ export interface SaveCristinProject {
   projectCategories: TypedLabel[];
   keywords: TypedLabel[];
   relatedProjects: string[];
-  newFunding: Funding[];
+  funding: Funding[];
 }
 
 export interface CristinProject extends SaveCristinProject {
@@ -123,5 +123,5 @@ export const emptyProject: SaveCristinProject = {
   projectCategories: [],
   keywords: [],
   relatedProjects: [],
-  newFunding: [],
+  funding: [],
 };
