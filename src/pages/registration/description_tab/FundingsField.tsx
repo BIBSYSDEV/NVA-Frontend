@@ -26,197 +26,199 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
   const fundingSourcesList = fundingSources?.sources ?? [];
 
   return (
-    <FieldArray name={fieldName}>
-      {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (
-        <>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h2">{t('registration.description.funding.financing')}</Typography>
+    <div>
+      <Typography variant="h2" gutterBottom>
+        {t('registration.description.funding.financing')}
+      </Typography>
 
-            <Button
-              data-testid={dataTestId.registrationWizard.description.addFundingButton}
-              startIcon={<AddIcon />}
-              onClick={() => push(emptyFunding)}>
-              {t('common.add')}
-            </Button>
-          </Box>
+      <FieldArray name={fieldName}>
+        {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            {currentFundings.map((funding, index) => {
+              const baseFieldName = `${name}[${index}]`;
+              const hasSelectedSource = !!funding.source;
+              const hasSelectedNfrSource = fundingSourceIsNfr(funding.source);
+              const hasSelectedNfrProject = hasSelectedNfrSource && funding.id;
 
-          {currentFundings.map((funding, index) => {
-            const baseFieldName = `${name}[${index}]`;
-            const hasSelectedSource = !!funding.source;
-            const hasSelectedNfrSource = fundingSourceIsNfr(funding.source);
-            const hasSelectedNfrProject = hasSelectedNfrSource && funding.id;
-
-            return (
-              <Box
-                key={index}
-                sx={{
-                  display: 'grid',
-                  gridTemplateColumns: { xs: '1fr', md: '4fr 6fr 2fr 2fr 1fr' },
-                  gap: '1rem',
-                  alignItems: 'start',
-                }}>
-                <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Source}`}>
-                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                    <Autocomplete
-                      value={fundingSourcesList.find((source) => source.id === field.value) ?? null}
-                      options={fundingSourcesList}
-                      filterOptions={(options, state) => {
-                        const filter = state.inputValue.toLocaleLowerCase();
-                        return options.filter((option) => {
-                          const names = Object.values(option.name).map((name) => name.toLocaleLowerCase());
-                          const identifier = option.identifier.toLocaleLowerCase();
-                          return identifier.includes(filter) || names.some((name) => name.includes(filter));
-                        });
-                      }}
-                      renderOption={(props, option) => (
-                        <li {...props} key={option.identifier}>
-                          {getLanguageString(option.name)}
-                        </li>
-                      )}
-                      disabled={!fundingSources || !!field.value}
-                      getOptionLabel={(option) => getLanguageString(option.name)}
-                      onChange={(_, value) => setFieldValue(field.name, value?.id)}
-                      renderInput={(params) => (
-                        <AutocompleteTextField
-                          data-testid={dataTestId.registrationWizard.description.fundingSourceSearchField}
-                          name={field.name}
-                          onBlur={field.onBlur}
-                          {...params}
-                          label={t('registration.description.funding.funder')}
-                          isLoading={isLoadingFundingSources}
-                          placeholder={t('registration.description.funding.funder_filter')}
-                          showSearchIcon={!field.value}
-                          multiline
-                          required
-                          errorMessage={touched && !!error ? error : undefined}
-                        />
-                      )}
-                    />
-                  )}
-                </Field>
-
-                {hasSelectedNfrSource &&
-                  (hasSelectedNfrProject ? (
-                    <>
-                      <TextField
-                        value={getLanguageString(funding.labels)}
-                        disabled
-                        label={t('registration.description.funding.project')}
-                        fullWidth
-                        variant="filled"
-                        multiline
-                        data-testid={dataTestId.registrationWizard.description.fundingProjectField}
+              return (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', md: '4fr 6fr 2fr 2fr 1fr' },
+                    gap: '1rem',
+                    alignItems: 'center',
+                  }}>
+                  <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Source}`}>
+                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                      <Autocomplete
+                        value={fundingSourcesList.find((source) => source.id === field.value) ?? null}
+                        options={fundingSourcesList}
+                        filterOptions={(options, state) => {
+                          const filter = state.inputValue.toLocaleLowerCase();
+                          return options.filter((option) => {
+                            const names = Object.values(option.name).map((name) => name.toLocaleLowerCase());
+                            const identifier = option.identifier.toLocaleLowerCase();
+                            return identifier.includes(filter) || names.some((name) => name.includes(filter));
+                          });
+                        }}
+                        renderOption={(props, option) => (
+                          <li {...props} key={option.identifier}>
+                            {getLanguageString(option.name)}
+                          </li>
+                        )}
+                        disabled={!fundingSources || !!field.value}
+                        getOptionLabel={(option) => getLanguageString(option.name)}
+                        onChange={(_, value) => setFieldValue(field.name, value?.id)}
+                        renderInput={(params) => (
+                          <AutocompleteTextField
+                            data-testid={dataTestId.registrationWizard.description.fundingSourceSearchField}
+                            name={field.name}
+                            onBlur={field.onBlur}
+                            {...params}
+                            label={t('registration.description.funding.funder')}
+                            isLoading={isLoadingFundingSources}
+                            placeholder={t('registration.description.funding.funder_filter')}
+                            showSearchIcon={!field.value}
+                            multiline
+                            required
+                            errorMessage={touched && !!error ? error : undefined}
+                          />
+                        )}
                       />
-                      <TextField
-                        value={funding.identifier}
-                        disabled={hasSelectedNfrSource}
-                        label={t('common.id')}
-                        fullWidth
-                        variant="filled"
-                        data-testid={dataTestId.registrationWizard.description.fundingIdField}
-                      />
-                      {funding.identifier && (
-                        <Button
-                          variant="outlined"
-                          endIcon={<OpenInNewIcon />}
-                          href={getNfrProjectUrl(funding.identifier)}
-                          target="_blank"
-                          data-testid={dataTestId.registrationWizard.description.fundingLinkButton}
-                          rel="noopener noreferrer">
-                          {t('common.open')}
-                        </Button>
-                      )}
-                    </>
-                  ) : (
-                    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Id}`}>
-                      {({ field: { name, onBlur }, meta: { touched, error } }: FieldProps<string>) => (
-                        <NfrProjectSearch
-                          onSelectProject={(project) => {
-                            if (project) {
-                              const { lead, ...rest } = project;
-                              const nfrFunding: Funding = {
-                                type: 'ConfirmedFunding',
-                                ...rest,
-                              };
-                              setFieldValue(baseFieldName, nfrFunding);
-                            }
-                          }}
-                          required
-                          name={name}
-                          onBlur={onBlur}
-                          errorMessage={touched && !!error ? error : undefined}
-                          data-testid={dataTestId.registrationWizard.description.fundingNfrProjectSearchField}
-                        />
-                      )}
-                    </Field>
-                  ))}
+                    )}
+                  </Field>
 
-                {!hasSelectedNfrSource && hasSelectedSource && (
-                  <>
-                    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.NorwegianLabel}`}>
-                      {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  {hasSelectedNfrSource &&
+                    (hasSelectedNfrProject ? (
+                      <>
                         <TextField
-                          {...field}
-                          value={field.value ?? ''}
-                          disabled={hasSelectedNfrSource}
+                          value={getLanguageString(funding.labels)}
+                          disabled
                           label={t('registration.description.funding.project')}
                           fullWidth
                           variant="filled"
                           multiline
-                          required={!hasSelectedNfrSource}
-                          error={touched && !!error}
-                          helperText={touched && !!error ? error : undefined}
                           data-testid={dataTestId.registrationWizard.description.fundingProjectField}
                         />
-                      )}
-                    </Field>
-                    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Identifier}`}>
-                      {({ field }: FieldProps<string>) => (
                         <TextField
-                          {...field}
-                          value={field.value ?? ''}
+                          value={funding.identifier}
                           disabled={hasSelectedNfrSource}
                           label={t('common.id')}
                           fullWidth
                           variant="filled"
                           data-testid={dataTestId.registrationWizard.description.fundingIdField}
                         />
-                      )}
-                    </Field>
+                        {funding.identifier && (
+                          <Button
+                            variant="outlined"
+                            endIcon={<OpenInNewIcon />}
+                            href={getNfrProjectUrl(funding.identifier)}
+                            target="_blank"
+                            data-testid={dataTestId.registrationWizard.description.fundingLinkButton}
+                            rel="noopener noreferrer">
+                            {t('common.open')}
+                          </Button>
+                        )}
+                      </>
+                    ) : (
+                      <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Id}`}>
+                        {({ field: { name, onBlur }, meta: { touched, error } }: FieldProps<string>) => (
+                          <NfrProjectSearch
+                            onSelectProject={(project) => {
+                              if (project) {
+                                const { lead, ...rest } = project;
+                                const nfrFunding: Funding = {
+                                  type: 'ConfirmedFunding',
+                                  ...rest,
+                                };
+                                setFieldValue(baseFieldName, nfrFunding);
+                              }
+                            }}
+                            required
+                            name={name}
+                            onBlur={onBlur}
+                            errorMessage={touched && !!error ? error : undefined}
+                            data-testid={dataTestId.registrationWizard.description.fundingNfrProjectSearchField}
+                          />
+                        )}
+                      </Field>
+                    ))}
 
-                    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Amount}`}>
-                      {({ field, meta: { error, touched } }: FieldProps<number>) => (
-                        <TextField
-                          {...field}
-                          disabled={hasSelectedNfrSource}
-                          label={t('registration.description.funding.funding_sum')}
-                          fullWidth
-                          variant="filled"
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position="start">{funding.fundingAmount?.currency}</InputAdornment>
-                            ),
-                          }}
-                          error={touched && !!error}
-                          helperText={touched && !!error ? error : undefined}
-                          data-testid={dataTestId.registrationWizard.description.fundingSumField}
-                        />
-                      )}
-                    </Field>
-                  </>
-                )}
-                <IconButton
-                  sx={{ width: 'fit-content' }}
-                  onClick={() => remove(index)}
-                  data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
-                  title={t('registration.description.funding.remove_funding')}>
-                  <CancelIcon color="primary" />
-                </IconButton>
-              </Box>
-            );
-          })}
-        </>
-      )}
-    </FieldArray>
+                  {!hasSelectedNfrSource && hasSelectedSource && (
+                    <>
+                      <Field name={`${baseFieldName}.${SpecificFundingFieldNames.NorwegianLabel}`}>
+                        {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                          <TextField
+                            {...field}
+                            value={field.value ?? ''}
+                            disabled={hasSelectedNfrSource}
+                            label={t('registration.description.funding.project')}
+                            fullWidth
+                            variant="filled"
+                            multiline
+                            required={!hasSelectedNfrSource}
+                            error={touched && !!error}
+                            helperText={touched && !!error ? error : undefined}
+                            data-testid={dataTestId.registrationWizard.description.fundingProjectField}
+                          />
+                        )}
+                      </Field>
+                      <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Identifier}`}>
+                        {({ field }: FieldProps<string>) => (
+                          <TextField
+                            {...field}
+                            value={field.value ?? ''}
+                            disabled={hasSelectedNfrSource}
+                            label={t('common.id')}
+                            fullWidth
+                            variant="filled"
+                            data-testid={dataTestId.registrationWizard.description.fundingIdField}
+                          />
+                        )}
+                      </Field>
+
+                      <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Amount}`}>
+                        {({ field, meta: { error, touched } }: FieldProps<number>) => (
+                          <TextField
+                            {...field}
+                            disabled={hasSelectedNfrSource}
+                            label={t('registration.description.funding.funding_sum')}
+                            fullWidth
+                            variant="filled"
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">{funding.fundingAmount?.currency}</InputAdornment>
+                              ),
+                            }}
+                            error={touched && !!error}
+                            helperText={touched && !!error ? error : undefined}
+                            data-testid={dataTestId.registrationWizard.description.fundingSumField}
+                          />
+                        )}
+                      </Field>
+                    </>
+                  )}
+                  <IconButton
+                    sx={{ width: 'fit-content' }}
+                    onClick={() => remove(index)}
+                    data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
+                    title={t('registration.description.funding.remove_funding')}>
+                    <CancelIcon color="primary" />
+                  </IconButton>
+                </Box>
+              );
+            })}
+            <Button
+              sx={{ alignSelf: 'start' }}
+              data-testid={dataTestId.registrationWizard.description.addFundingButton}
+              startIcon={<AddIcon />}
+              onClick={() => push(emptyFunding)}>
+              {t('common.add')}
+            </Button>
+          </Box>
+        )}
+      </FieldArray>
+    </div>
   );
 };
