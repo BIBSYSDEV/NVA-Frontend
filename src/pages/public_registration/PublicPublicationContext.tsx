@@ -231,18 +231,26 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 
 interface PublicArtisticOutputProps {
   outputs: ArtisticOutputItem[];
-  heading: string;
   showType?: boolean;
 }
 
-export const PublicArtisticOutput = ({ outputs, heading, showType = false }: PublicArtisticOutputProps) => (
-  <>
-    <Typography variant="h3">{heading}</Typography>
-    {outputs.map((output, index) => (
-      <PublicOutputRow key={index} output={output} heading={heading} showType={showType} />
-    ))}
-  </>
-);
+export const PublicArtisticOutput = ({ outputs, showType = false }: PublicArtisticOutputProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Typography variant="h3">{t('registration.resource_type.artistic.announcements')}</Typography>
+      {outputs.map((output, index) => (
+        <PublicOutputRow
+          key={index}
+          output={output}
+          heading={t('registration.resource_type.artistic.announcements')}
+          showType={showType}
+        />
+      ))}
+    </>
+  );
+};
 
 interface PublicOutputRowProps {
   output: ArtisticOutputItem;
@@ -250,7 +258,7 @@ interface PublicOutputRowProps {
   showType: boolean;
 }
 
-const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) => {
+const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
