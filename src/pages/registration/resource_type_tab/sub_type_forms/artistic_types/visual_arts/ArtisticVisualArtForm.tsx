@@ -106,7 +106,7 @@ export const ArtisticVisualArtForm = () => {
                 <Table sx={{ '& th,td': { borderBottom: 1 } }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('registration.resource_type.artistic.place')}</TableCell>
+                      <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>

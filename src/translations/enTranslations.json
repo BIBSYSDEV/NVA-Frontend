@@ -1316,7 +1316,6 @@
           "Other": "Other",
           "TheatricalProduction": "Theater/show"
         },
-        "place": "Place",
         "premiere": "Premiere",
         "premiere_date": "Premiere date",
         "program": "Program",

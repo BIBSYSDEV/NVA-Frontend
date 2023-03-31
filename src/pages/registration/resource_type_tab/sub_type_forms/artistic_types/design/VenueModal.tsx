@@ -30,7 +30,7 @@ const validationSchema = Yup.object<YupShape<Venue>>({
       .nullable()
       .required(
         i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:registration.resource_type.artistic.place'),
+          field: i18n.t('common.place'),
         })
       ),
   }),
@@ -64,7 +64,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                     data-testid={dataTestId.registrationWizard.resourceType.venueNameField}
                     variant="filled"
                     fullWidth
-                    label={t('registration.resource_type.artistic.place')}
+                    label={t('common.place')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}

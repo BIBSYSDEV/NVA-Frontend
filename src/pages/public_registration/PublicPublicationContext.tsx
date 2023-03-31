@@ -270,7 +270,7 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
       </Tooltip>
 
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
-        <DialogTitle>{heading}</DialogTitle>
+        <DialogTitle>{t('registration.resource_type.artistic.announcement')}</DialogTitle>
         <ErrorBoundary>
           {output.type === 'Venue' || output.type === 'PerformingArtsVenue' ? (
             <PublicVenueDialogContent venue={output as Venue} />
