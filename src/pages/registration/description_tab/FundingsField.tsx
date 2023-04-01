@@ -19,9 +19,10 @@ import { API_URL } from '../../../utils/constants';
 interface FundingsFieldProps {
   fieldName: string;
   currentFundings: Funding[];
+  hideAmountField?: boolean;
 }
 
-export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps) => {
+export const FundingsField = ({ fieldName, currentFundings, hideAmountField = false }: FundingsFieldProps) => {
   const { t } = useTranslation();
   const [fundingSources, isLoadingFundingSources] = useFetchResource<FundingSources>(CristinApiPath.FundingSources);
   const fundingSourcesList = fundingSources?.sources ?? [];
@@ -185,29 +186,31 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
                         )}
                       </Field>
 
-                      <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Amount}`}>
-                        {({ field, meta: { error, touched } }: FieldProps<number>) => (
-                          <TextField
-                            {...field}
-                            disabled={hasSelectedNfrSource}
-                            label={t('registration.description.funding.funding_sum')}
-                            fullWidth
-                            variant="filled"
-                            InputProps={{
-                              startAdornment: (
-                                <InputAdornment position="start">{funding.fundingAmount?.currency}</InputAdornment>
-                              ),
-                            }}
-                            error={touched && !!error}
-                            helperText={touched && !!error ? error : undefined}
-                            data-testid={dataTestId.registrationWizard.description.fundingSumField}
-                          />
-                        )}
-                      </Field>
+                      {!hideAmountField && (
+                        <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Amount}`}>
+                          {({ field, meta: { error, touched } }: FieldProps<number>) => (
+                            <TextField
+                              {...field}
+                              disabled={hasSelectedNfrSource}
+                              label={t('registration.description.funding.funding_sum')}
+                              fullWidth
+                              variant="filled"
+                              InputProps={{
+                                startAdornment: (
+                                  <InputAdornment position="start">{funding.fundingAmount?.currency}</InputAdornment>
+                                ),
+                              }}
+                              error={touched && !!error}
+                              helperText={touched && !!error ? error : undefined}
+                              data-testid={dataTestId.registrationWizard.description.fundingSumField}
+                            />
+                          )}
+                        </Field>
+                      )}
                     </>
                   )}
                   <IconButton
-                    sx={{ width: 'fit-content' }}
+                    sx={{ gridColumn: '5' }}
                     onClick={() => remove(index)}
                     data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
                     title={t('registration.description.funding.remove_funding')}>
