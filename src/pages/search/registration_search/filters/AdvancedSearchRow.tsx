@@ -13,7 +13,7 @@ import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHel
 
 interface FilterItem {
   field: string;
-  i18nKey: TFuncKey;
+  i18nKey: TFuncKey | any; // TODO: fix type
 }
 
 export const registrationFilters: FilterItem[] = [

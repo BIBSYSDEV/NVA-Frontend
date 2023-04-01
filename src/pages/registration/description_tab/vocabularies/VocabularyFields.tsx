@@ -16,7 +16,11 @@ import { InputContainerBox } from '../../../../components/styled/Wrappers';
 import { TFuncKey } from 'i18next';
 
 interface VocabularyConfig {
-  [key: string]: { baseId: string; i18nKey: TFuncKey; component: (props: VocabularyComponentProps) => JSX.Element };
+  [key: string]: {
+    baseId: string;
+    i18nKey: TFuncKey | any; // TODO: Fix type
+    component: (props: VocabularyComponentProps) => JSX.Element;
+  };
 }
 
 // Specify which vocabularies to show, and their i18n key and component
