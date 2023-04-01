@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { CristinApiPath } from '../../../api/apiPaths';
+import { CristinApiPath, VerifiedFundingApiPath } from '../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { FundingSources } from '../../../types/project.types';
 import { emptyFunding, Funding } from '../../../types/registration.types';
@@ -14,6 +14,7 @@ import { fundingSourceIsNfr, getNfrProjectUrl } from './projects_field/projectHe
 import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { API_URL } from '../../../utils/constants';
 
 interface FundingsFieldProps {
   fieldName: string;
@@ -38,7 +39,13 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
               const baseFieldName = `${name}[${index}]`;
               const hasSelectedSource = !!funding.source;
               const hasSelectedNfrSource = fundingSourceIsNfr(funding.source);
-              const hasSelectedNfrProject = hasSelectedNfrSource && funding.id;
+              let fundingId = funding.id ?? '';
+              if (hasSelectedNfrSource && !fundingId && funding.identifier) {
+                // TODO: Remove this when(/if) NP-43030 is solved
+                fundingId = `${API_URL}${VerifiedFundingApiPath.Nfr.substring(1)}/${funding.identifier}`;
+              }
+
+              const hasSelectedNfrProject = hasSelectedNfrSource && fundingId;
 
               return (
                 <Box
