@@ -13,7 +13,7 @@ import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHel
 
 interface FilterItem {
   field: string;
-  i18nKey: TFuncKey | any; // TODO: fix type
+  i18nKey: TFuncKey;
 }
 
 export const registrationFilters: FilterItem[] = [
@@ -44,7 +44,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
           <TextField {...field} select variant="outlined" label={t('search.field_label')}>
             {registrationFilters.map((filter) => (
               <MenuItem key={filter.i18nKey} value={filter.field}>
-                {t(filter.i18nKey)}
+                {t<any>(filter.i18nKey)}
               </MenuItem>
             ))}
           </TextField>

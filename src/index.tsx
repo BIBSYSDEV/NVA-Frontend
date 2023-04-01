@@ -26,20 +26,22 @@ if ((window as any).Cypress) {
 }
 
 const container = document.getElementById('root');
-const root = createRoot(container!);
-root.render(
-  <StrictMode>
-    <BasicErrorBoundary>
-      <I18nextProvider i18n={i18n}>
-        <ReduxProvider store={store}>
-          <ThemeProvider theme={mainTheme}>
-            <CssBaseline />
-            <HelmetProvider>
-              <App />
-            </HelmetProvider>
-          </ThemeProvider>
-        </ReduxProvider>
-      </I18nextProvider>
-    </BasicErrorBoundary>
-  </StrictMode>
-);
+if (container) {
+  const root = createRoot(container);
+  root.render(
+    <StrictMode>
+      <BasicErrorBoundary>
+        <I18nextProvider i18n={i18n}>
+          <ReduxProvider store={store}>
+            <ThemeProvider theme={mainTheme}>
+              <CssBaseline />
+              <HelmetProvider>
+                <App />
+              </HelmetProvider>
+            </ThemeProvider>
+          </ReduxProvider>
+        </I18nextProvider>
+      </BasicErrorBoundary>
+    </StrictMode>
+  );
+}

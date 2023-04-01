@@ -18,7 +18,7 @@ import { TFuncKey } from 'i18next';
 interface VocabularyConfig {
   [key: string]: {
     baseId: string;
-    i18nKey: TFuncKey | any; // TODO: Fix type
+    i18nKey: TFuncKey;
     component: (props: VocabularyComponentProps) => JSX.Element;
   };
 }
@@ -149,7 +149,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                 setVisibleVocabularies([...visibleVocabularies, vocabulary]);
                 setNewVocabularyAnchor(null);
               }}>
-              {t(vocabularyConfig[vocabulary].i18nKey)}
+              {t<any>(vocabularyConfig[vocabulary].i18nKey)}
             </MenuItem>
           ))}
         </Menu>
