@@ -32,7 +32,7 @@ export enum ProjectFieldName {
   Categories = 'projectCategories',
   CoordinatingInstitution = 'coordinatingInstitution',
   Contributors = 'contributors',
-  Funding = 'funding', // TODO: Update field name when "funding" model is updated
+  Funding = 'funding',
   StartDate = 'startDate',
   EndDate = 'endDate',
   AcademicSummaryNo = 'academicSummary.no',
