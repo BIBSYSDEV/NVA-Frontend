@@ -3,7 +3,7 @@ import { Route, RouteComponentProps, RouteProps } from 'react-router-dom';
 import { Forbidden } from '../../pages/errorpages/Forbidden';
 
 interface PrivateRouteProps extends RouteProps {
-  component: ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+  component: ComponentType<RouteComponentProps<any>> | ComponentType<any>;
   isAuthorized: boolean;
 }
 

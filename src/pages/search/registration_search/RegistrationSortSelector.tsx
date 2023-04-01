@@ -1,5 +1,4 @@
 import { TextField, MenuItem } from '@mui/material';
-import { TFuncKey } from 'i18next';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -58,12 +57,6 @@ export const RegistrationSortSelector = () => {
       <MenuItem value={SortOptionValue.PublishedDateDesc}>{t('search.sort_by_published_date_desc')}</MenuItem>
       <MenuItem value={SortOptionValue.PublishedDateAsc}>{t('search.sort_by_published_date_asc')}</MenuItem>
       <MenuItem value={SortOptionValue.ModifiedDateDesc}>{t('search.sort_by_modified_date')}</MenuItem>
-
-      {/* {sortOptions.map((option) => (
-        <MenuItem key={option.value} value={option.value}>
-          {t(option.i18nKey)}
-        </MenuItem>
-      ))} */}
     </TextField>
   );
 };
