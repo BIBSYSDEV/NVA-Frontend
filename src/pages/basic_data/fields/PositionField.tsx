@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { PositionResponse } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
@@ -74,6 +75,7 @@ export const PositionField = ({
               variant="filled"
               error={touched && !!error}
               helperText={touched && error}
+              data-testid={dataTestId.basicData.personAdmin.position}
             />
           )}
         />

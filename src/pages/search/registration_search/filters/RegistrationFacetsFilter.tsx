@@ -1,4 +1,4 @@
-import { ListItem, ListItemButton, styled } from '@mui/material';
+import { Box, ListItem, ListItemButton, styled } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
@@ -65,7 +65,9 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 disabled={isLoadingSearch}
                 onClick={() => updateFilter(ResourceFieldNames.RegistrationType, bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
-                <span>{t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}</span>
+                <Box component="span" sx={{ wordBreak: 'break-word' }}>
+                  {t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}
+                </Box>
                 {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
               </StyledListItemButton>
             </ListItem>

@@ -62,3 +62,7 @@ export const projectContributorToCristinPerson = (
         employments: [],
       }
     : null;
+
+export const isRekProject = (project?: CristinProject) => project?.created.sourceShortName === 'REK';
+
+export const fundingSourceIsNfr = (sourceId = '') => sourceId.split('/').pop()?.toUpperCase() === 'NFR';

@@ -54,7 +54,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
               .filter((filter) => filter.manuallyAddable)
               .map((filter) => (
                 <MenuItem key={filter.i18nKey} value={filter.field}>
-                  {t(filter.i18nKey)}
+                  {t<any>(filter.i18nKey)}
                 </MenuItem>
               ))}
           </TextField>

@@ -16,7 +16,6 @@ import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { RootState } from '../../redux/store';
 import { canEditProject } from '../registration/description_tab/projects_field/projectHelpers';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ProjectFormDialog } from './form/ProjectFormDialog';
 import { RelatedProjects } from './RelatedProjects';
 
@@ -43,7 +42,7 @@ export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPa
           {project.title}
         </TruncatableTypography>
         {userCanEditProject && (
-          <BetaFunctionality>
+          <>
             <Tooltip title={t('project.edit_project')}>
               <IconButton
                 data-testid={dataTestId.projectLandingPage.editProjectButton}
@@ -58,7 +57,7 @@ export const ProjectLandingPage = ({ project, refetchProject }: ProjectLandingPa
               onClose={() => setOpenEditProject(false)}
               refetchData={refetchProject}
             />
-          </BetaFunctionality>
+          </>
         )}
       </StyledPaperHeader>
       <BackgroundDiv>
