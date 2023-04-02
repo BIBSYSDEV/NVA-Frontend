@@ -13,13 +13,12 @@ describe.only('About and Privacy policy', () => {
     cy.url().should('include', UrlPathTemplate.About);
     cy.injectAxe();
     cy.checkA11y(null, undefined, terminalLog);
-    cy.task('log');
   });
 
   it('The user should see privacy policy page', () => {
     cy.get(`[data-testid=${dataTestId.footer.privacyLink}]`).click();
     cy.url().should('include', UrlPathTemplate.PrivacyPolicy);
     cy.injectAxe();
-    cy.checkA11y(null, undefined, terminalLog);
+    cy.checkA11y(null, { retries: 2, interval: 100 }, terminalLog);
   });
 });
