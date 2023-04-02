@@ -139,7 +139,7 @@ describe('User opens registration form and can see validation errors', () => {
     );
 
     // NPI Subject
-    cy.selectNpiDiscipline('Linguistics');
+    cy.selectNpiDiscipline('Lingvistikk');
 
     // ISBN
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.isbnField}]`).within(() => {

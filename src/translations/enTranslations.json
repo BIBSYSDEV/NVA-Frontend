@@ -66,7 +66,7 @@
       "display_name": "Display name for the institution",
       "doi_password": "Password",
       "doi_prefix": "DOI prefix",
-      "doi_repo_id": "DataCite Repository ID",
+      "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "Institution's domain in Feide",
       "institution_is_nvi_applicable": "Institution reports publication points to NVI",
@@ -303,9 +303,9 @@
       "no_users_found": "No users found"
     },
     "doi": {
-      "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
+      "doi_information_bullet_points": "$t(common.doi_long) is a persistent identifier.|Simplifies citations of publications.|Metadata about the result is shared internationally.|Visiblity of result increases.|Contributes to fulfill the FAIR principles.|Supports open research.",
       "doi_information_bullet_points_2": "The service has support for assigning $t(common.doi_long) to results.|The institution that assigns the DOI becomes the publisher of the result.|A thorough check of metadata, contents of files and licenses is necessary before assigning a $t(common.doi_long). Incorrect metadata is time-consuming to correct afterwards.",
-      "institution_can_create_doi": "Institution does not have a profile at DataCite the gives the Curator privilege to assign $t(common.doi_long) to result.",
+      "institution_can_create_doi": "Institution does not have a profile at DataCite that gives the Curator access to assign $t(common.doi_long) to result.",
       "institution_cannot_create_doi": "Contact <0>Sikt</0> if your institution wants to assign $t(common.doi_long)."
     },
     "hrcs_activity": "Health Research Classification System - Activity",
@@ -336,8 +336,8 @@
       "Default": "Default",
       "Disabled": "Disabled",
       "allowed_description": "$t(editor.vocabulary_status.Allowed): Can be added by the user",
-      "default_description": "$t(editor.vocabulary_status.Default): Shown by default for all registrations",
-      "disabled_description": "$t(editor.vocabulary_status.Disabled): Is not available"
+      "default_description": "$t(editor.vocabulary_status.Default): Appears by default for all registrations",
+      "disabled_description": "$t(editor.vocabulary_status.Disabled): Not available"
     }
   },
   "feedback": {
@@ -381,7 +381,7 @@
       "get_users_for_institution": "Could not get users",
       "get_vocabularies": "Could not fetch vocabularies",
       "orcid_login": "ORCID login failed",
-      "project_search": "Search for projects failed",
+      "project_search": "Project search failed",
       "remove_role": "Could not remove role",
       "reserve_doi": "Reservation of DOI failed",
       "search": "Search failed",
@@ -403,14 +403,14 @@
       "added_role": "Role was added",
       "admin_added": "User added as administrator",
       "create_project": "Project is created",
-      "create_publishing_request": "Publishing request was created",
+      "create_publishing_request": "The publishing request was created",
       "create_user": "Your user was created",
       "created_customer": "Created customer institution",
       "delete_registration": "Deleted registration",
       "doi_request_sent": "DOI request sent",
       "doi_request_updated": "DOI request is updated",
-      "publishing_request_approved": "Registration was published",
-      "publishing_request_rejected": "Publishing request was rejected",
+      "publishing_request_approved": "The registration was published",
+      "publishing_request_rejected": "The publishing request was rejected",
       "removed_role": "Role removed",
       "reserve_doi": "DOI is reserved",
       "send_message": "Message sent",
@@ -430,19 +430,19 @@
       "cannot_be_before": "{{field}} cannot be before {{limitField}}",
       "contributor_required": "You need to register at least one contributor for this registration",
       "editor_required": "You need to register at least one editor for this registration",
-      "employments_missing_data": "Every employment must have position, position percent and start date",
+      "employments_missing_data": "Every employment must have position, job percentage and start date",
       "exhibition_place_required": "Must have at least one exhibition place",
       "has_invalid_format": "{{field}} has invalid format",
       "invalid_number_of_digits": "{{field}} must have {{digits}} digits",
       "invalid_symbol_in_name": "{{field}} must not include numbers or special characters",
       "is_required": "{{-field}} is required",
       "isbn_too_short": "ISBN must have 13 digits",
-      "must_accept_terms_for_dataset": "You must accept terms for dataset",
+      "must_accept_terms_for_dataset": "You must agree to the dataset terms",
       "must_be_a_positive_number": "{{field}} must be a positive number",
       "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
       "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",
       "must_correct_errors": "You must correct errors",
-      "must_have_associated_artifact": "You need to upload at least one file or a link for this registration",
+      "must_have_associated_artifact": "You must upload at least one file or link for this registration",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
       "not_selected": "{{field}} is not selected"
     }
@@ -505,13 +505,13 @@
         "cristin_id": "Cristin ID",
         "full_name": "Full name",
         "identity": "Identity",
-        "not_shown_publicly": "Will not be shown publicly"
+        "not_shown_publicly": "Not displayed publicly"
       },
       "my_projects": "My projects",
       "my_research_results": "My research results",
       "orcid": {
         "connect_orcid": "Connect/create ORCID iD",
-        "delete_orcid": "Remove ORCID connection",
+        "delete_orcid": "Remove ORCID link",
         "dialog": {
           "heading": "Connect or create ORCID iD",
           "paragraph0": "Sign in to ORCID or register to create an account.",
@@ -532,7 +532,7 @@
       "results": "Results",
       "telephone": "Telephone",
       "user_profile": "User profile",
-      "user_profile_description": "Here you can fill in and mark what you want to appear on your public researcher profile."
+      "user_profile_description": "Here you can fill in and mark what you wish to display on your public researcher profile."
     },
     "registrations": {
       "delete_registration": "Delete unpublished registration",
@@ -553,7 +553,7 @@
       "institution_admin": "Administrator",
       "institution_admin_description": "Maintains the institution's information in the person registery and assigns roles in the service.",
       "institution_admins": "Administrators",
-      "no_active_employments": "You have no roles because you have no active employments and do not have access to register.",
+      "no_active_employments": "You do not have any roles because you have no active employments and do not have access to register.",
       "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
       "not_customer": "You don't have any roles because your institution is unknown to this application"
     }
@@ -892,7 +892,7 @@
       "confirmed": "Confirmed",
       "contributor": "Contributor",
       "contributor_already_added": "Chosen contributor is already added",
-      "contributor_not_found": "Cannot find contributor",
+      "contributor_not_found": "Contributor not found",
       "corresponding": "Corresponding",
       "department": "Department",
       "identity_status": {
@@ -901,7 +901,7 @@
         "unknown_identity": "Unknown identity"
       },
       "invalid_role": "The contributor must have a role that is valid for this resource type to be displayed for other users",
-      "must_select_type_first": "You must select resource type before you can add contributors.",
+      "must_select_type_first": "You must select a resource type before you can add contributors.",
       "no_affiliations_found": "No affiliations found",
       "no_registrations_found": "No registrations found",
       "other_registrations_one": "+ {{count}} other registration",
@@ -1026,9 +1026,9 @@
       "published_version": "Published version",
       "remove_file": "Remove file",
       "remove_file_description": "Do you want to remove {{fileName}}?",
-      "resource_has_no_files_or_links": "The resource does not have any file or links to publish",
-      "resource_has_no_files_or_links_paragraph0": "Without files or links the published resource is harder to reuse and may give less value for others. If data is not shared, information about data and how they can be accessed should be shared.",
-      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), is a set of principles to support reuse of digital resources. NFR and EC sets clear requirements for data to be available and deposited together with metadata that clarifies any potential conditions for access.",
+      "resource_has_no_files_or_links": "The resource does not have any files or links to publish",
+      "resource_has_no_files_or_links_paragraph0": "Without files or links, the published resource is harder to reuse and may provide less value to others. If data cannot be shared, information about data and how access can be obtained should be shared.",
+      "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), is a set of principles to support the reuse of digital resources. NFR and EC set clear requirements for data to be available and deposited together with metadata that clarifies any conditions for access.",
       "size": "Size"
     },
     "heading": {
@@ -1071,8 +1071,8 @@
         "has_rejected_doi_request": "Registration has a rejected DOI request.",
         "has_rejected_files_publishing_request": "Registration has a rejected publishing request for its files.",
         "has_rejected_publishing_request": "Registration has a rejected publishing request.",
-        "has_reserved_doi": "Registration has a reserved DOI. When the registration is published a DOI request will be created and sent to curator.",
-        "metadata_published_waiting_for_files": "Metadata is published and visible for other users, but a curator must approve the uploaded files before they will be visible.",
+        "has_reserved_doi": "Registration has received a reserved DOI. When the registration is published a DOI request will be created and sent to curator.",
+        "metadata_published_waiting_for_files": "Metadata is published and visible to other users, but a curator must approve the uploaded files before they will be visible.",
         "registration_will_soon_be_published": "The registration will be published soon. Reload page to see updated status.",
         "reload": "Reload",
         "request_publishing": "Request publishing",
@@ -1080,7 +1080,7 @@
         "waiting_for_publishing_approval": "A curator must approve content before it can be published and visible to other users.",
         "waiting_for_rejected_doi": "It can take some time before the reserved DOI is removed. Reload to check again.",
         "you_can_publish_everything": "You can publish on your own. The content will then be visible to other users.",
-        "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the uploaded files before they can be shown to other users.",
+        "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the files you uploaded before they can be displayed to other users.",
         "you_can_publish_metadata_after_curator_approval": "A curator must approve the content before it can be published and visible for other users."
       },
       "validation_errors": "Validation errors"
@@ -1242,7 +1242,7 @@
         "edit_other_performance": "Edit other performance",
         "edit_other_release": "Edit other announcement",
         "edit_performance": "Edit performance",
-        "edit_publication_mention": "Edit publication/mention",
+        "edit_publication_mention": "Change publication/mention",
         "edit_web_publication": "Edit web publication",
         "exhibition_place": "Exhibition place",
         "exhibition_places": "Exhibition places",
@@ -1265,7 +1265,7 @@
         "mention_title": "Journal/Book/medium",
         "moving_picture_type": {
           "AugmentedVirtualRealityFilm": "AR/VR",
-          "Film": "Long film",
+          "Film": "Feature film",
           "InteractiveFilm": "Interactive production",
           "Other": "Other",
           "SerialFilmProduction": "Serial production",
@@ -1274,7 +1274,7 @@
         "music_media_type": {
           "CompactDisc": "CD",
           "DVD": "DVD",
-          "DigitalFile": "Downloading",
+          "DigitalFile": "Download",
           "Other": "Other",
           "Streaming": "Streaming",
           "Vinyl": "LP/EP"
@@ -1285,7 +1285,7 @@
         "music_score_movements": "Movements",
         "musical_work_item": "Work",
         "musical_works": "Other performances",
-        "musical_works_table_caption": "Overview over other performances",
+        "musical_works_table_caption": "List of other performances",
         "name_or_title": "Name/title",
         "other_announcement_organizer": "Publisher/organizer etc.",
         "other_release_description": "Type of announcement",
@@ -1324,11 +1324,11 @@
         "program_table_caption": "Overview over program",
         "publisher": "Publisher",
         "remove_announcement": "Remove announcement",
-        "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list over announcements?",
+        "remove_announcement_description": "Are you sure you want to remove \"{{name}}\" from list of announcements?",
         "remove_music_work": "Remove work",
         "remove_music_work_description": "Are you sure you want to remove this work?",
-        "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list over exhibition places?",
-        "remove_venue_title": "Remove exhibition place?",
+        "remove_venue_text": "Are you sure you want to remove \"{{name}}\" from list of exhibition venues?",
+        "remove_venue_title": "Remove exhibition venue?",
         "visual_arts_type": {
           "ArtInPublicSpace": "Art in public space",
           "ArtistBook": "Artist book",
@@ -1344,9 +1344,9 @@
       "change_registration_type": "Change registration type?",
       "change_registration_type_description": "Note that this can lead to some data getting lost in the case where existing data are not valid for the new type. Are you sure you want to change the registration type?",
       "chapter": {
-        "info_anthology": "The anthology where this chapter is published in must be published in advance",
-        "info_book_of_abstracts": "The book of abstracts where this abstract is published in must be published in advance",
-        "info_report": "The report where this chapter is published in must be published in advance",
+        "info_anthology": "The anthology in which this chapter is published in must be published first",
+        "info_book_of_abstracts": "The abstract collection in which this abstract is published in must be published first",
+        "info_report": "The report in which the chapter is published in must be published first",
         "published_in": "Published in",
         "search_for_anthology": "Search for the anthology where the chapter is published",
         "search_for_book_of_abstracts": "Search for the book of abstracts where the abstract is published",
@@ -1384,7 +1384,7 @@
       "nvi": {
         "applicable": "The publication can be included in the Norwegian Science Index",
         "can_give_publication_points": "Can give publication points",
-        "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (Level can be changed before this year's reporting deadline so that the publication can be included in the Norwegian Science Index)"
+        "channel_not_rated": "The publication can not be included in the Norwegian Science Index since the publication channel is not at level 1 or 2. (The level can be changed before the year's reporting deadline so that the publication can be included in the Norwegian Science Index)"
       },
       "online_issn": "Online ISSN",
       "or": "Or",
@@ -1392,20 +1392,20 @@
       "original_article": "Original article",
       "original_article_title": "Title on article",
       "page": "Page",
-      "pages_from": "Pages from",
+      "pages_from": "Page numbers from",
       "pages_to": "to",
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
       "remove_doi": "Remove DOI",
-      "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you wish to remove connection to the original DOI?",
+      "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you want to remove the link to the original DOI?",
       "research_data": {
         "accept_dataset_terms": {
-          "contains_personal_data": "Dataset contains personal data?*",
-          "contains_personal_data_description": "Personal data is any data about an identified or identifiable physical person. This could be name, address, phone number, e-mail, picture, sound recording, finger print, online identificator, localization data, etc.",
-          "contains_sensitive_data": "Dataset contains other sensitive or confidential data?*",
-          "contains_sensitive_data_description": "Sensitive or confidential data is data and information that requires protection or shielding, and must be secured against unauthorized visibility and access. This could be personal data, company secrets, security information, commercial rights, patents, etc.",
+          "contains_personal_data": "Does the data set contain personal data?*",
+          "contains_personal_data_description": "Personal data is any data about an individual that is identified or makes them identifiable. This can be a name, address, phone number, e-mail, picture, sound recording, fingerprint, online identifier, location data, etc.",
+          "contains_sensitive_data": "Does the dataset contain other sensitive or confidential data?*",
+          "contains_sensitive_data_description": "Sensitive or confidential data and information is data that requires protection and shielding. As such it must be secured against unauthorized access. This could be personal data, company secrets, security information, commercial rights, patents, etc.",
           "dialog_title": "To add research data you must first declare that",
-          "further_info": "When you click YES or are unsure, you must send a message to support where your curator will explain the process to publish the dataset."
+          "further_info": "When you click YES or are unsure, you must send a message to support where your curator will clarify the further process to publish the dataset."
         },
         "add_link": "Add link",
         "external_link": "External link",
@@ -1421,10 +1421,10 @@
         "related_links": "Related links",
         "related_publications": "Related publications",
         "remove_relation": "Remove relation",
-        "remove_relation_confirm_text": "You want to remove this relation?",
+        "remove_relation_confirm_text": "Do you want to remove this relation?",
         "search_for_related_dmps": "Search for related data management plans",
         "search_for_related_registrations": "Search for related registrations",
-        "search_for_related_registrations_helper": "Choose among published registrations"
+        "search_for_related_registrations_helper": "Choose from registrations published in NVA"
       },
       "resource_type": "Resource type",
       "search_for_journal": "Search for journals",
@@ -1435,9 +1435,9 @@
       "series": "Series",
       "series_info": "If the publication is part of a series",
       "series_number": "Series number",
-      "title_of_event": "Title of event",
-      "type_work": "Type work",
-      "type_work_specified": "Self-defined type work",
+      "title_of_event": "Event title",
+      "type_work": "Type of work",
+      "type_work_specified": "Custom work type",
       "volume": "Volume"
     },
     "status": {
@@ -1447,8 +1447,8 @@
       "PUBLISHED": "Published",
       "PUBLISHED_METADATA": "Published metadata"
     },
-    "support_description": "When you request support your message will be sent to a curator at your institution. You can see responses at <0>My Messages</0>.",
-    "year_published": "Year published"
+    "support_description": "When you request support, your message will be sent to a curator at your institution. You can view responses at <0>My Messages</0>.",
+    "year_published": "Publication year"
   },
   "search": {
     "add_filter": "Add filter",
@@ -1458,7 +1458,7 @@
     "field_label": "Field",
     "hits_one": "{{count}} hit",
     "hits_other": "{{count}} hits",
-    "not_containing": "Doesn't include",
+    "not_containing": "Does not contain",
     "operator": "Operator",
     "person_search_placeholder": "Search for name",
     "persons": "Persons",
@@ -1470,8 +1470,8 @@
     "search_term_label": "Value",
     "sort_by": "Order by",
     "sort_by_modified_date": "Last modified",
-    "sort_by_published_date_asc": "Published date (oldest first)",
-    "sort_by_published_date_desc": "Published date (newest first)"
+    "sort_by_published_date_asc": "Publication date (oldest first)",
+    "sort_by_published_date_desc": "Publication date (newest first)"
   },
   "tasks": {
     "limited_to": "Limited to: \"{{name}}\"",
