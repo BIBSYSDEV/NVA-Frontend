@@ -59,19 +59,22 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
     <>
       {registrationTypeFacet && (
         <FacetItem title={t('registration.resource_type.resource_type')}>
-          {registrationTypeFacet.buckets.map((bucket) => (
-            <ListItem disablePadding key={bucket.key}>
-              <StyledListItemButton
-                disabled={isLoadingSearch}
-                onClick={() => updateFilter(ResourceFieldNames.RegistrationType, bucket.key)}
-                selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
-                <Box component="span" sx={{ wordBreak: 'break-word' }}>
-                  {t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}
-                </Box>
-                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
-              </StyledListItemButton>
-            </ListItem>
-          ))}
+          {registrationTypeFacet.buckets.map((bucket) => {
+            const registrationType = bucket.key as PublicationInstanceType;
+            return (
+              <ListItem disablePadding key={registrationType}>
+                <StyledListItemButton
+                  disabled={isLoadingSearch}
+                  onClick={() => updateFilter(ResourceFieldNames.RegistrationType, registrationType)}
+                  selected={properties.some((searchProperty) => searchProperty.value === registrationType)}>
+                  <Box component="span" sx={{ wordBreak: 'break-word' }}>
+                    {t(`registration.publication_types.${registrationType}`)}
+                  </Box>
+                  {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
+                </StyledListItemButton>
+              </ListItem>
+            );
+          })}
         </FacetItem>
       )}
 
