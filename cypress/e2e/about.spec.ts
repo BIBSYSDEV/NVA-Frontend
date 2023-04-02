@@ -37,6 +37,6 @@ describe.only('About and Privacy policy', () => {
     cy.get(`[data-testid=${dataTestId.footer.privacyLink}]`).click();
     cy.url().should('include', UrlPathTemplate.PrivacyPolicy);
     cy.injectAxe();
-    cy.checkA11y(null, undefined, terminalLog);
+    cy.checkA11y(null, { interval: 100 }, terminalLog);
   });
 });
