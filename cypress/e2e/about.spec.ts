@@ -1,7 +1,25 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
 import { UrlPathTemplate } from '../../src/utils/urlPaths';
 
-describe('About and Privacy policy', () => {
+function terminalLog(violations: any) {
+  cy.task(
+    'log',
+    `${violations.length} accessibility violation${violations.length === 1 ? '' : 's'} ${
+      violations.length === 1 ? 'was' : 'were'
+    } detected`
+  );
+  // pluck specific keys to keep the table readable
+  const violationData = violations.map(({ id, impact, description, nodes }: any) => ({
+    id,
+    impact,
+    description,
+    nodes: nodes.length,
+  }));
+
+  cy.task('table', violationData);
+}
+
+describe.only('About and Privacy policy', () => {
   beforeEach(() => {
     cy.visit('/');
   });
@@ -11,7 +29,9 @@ describe('About and Privacy policy', () => {
     cy.get(`[data-testid=${dataTestId.header.aboutLink}]`).click();
     cy.injectAxe();
     cy.url().should('include', UrlPathTemplate.About);
-    cy.checkA11y();
+    console.log('sjekk da');
+    cy.checkA11y(null, undefined, terminalLog);
+    cy.task('log');
   });
 
   it('The user should see privacy policy page', () => {
