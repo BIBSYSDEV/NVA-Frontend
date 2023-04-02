@@ -38,7 +38,7 @@ export const addTicketMessage = async (ticketId: string, message: string) =>
   });
 
 export const createTicket = async (registrationId: string, type: TicketType, returnCreatedTicket = false) => {
-  const createTicketResponse = await authenticatedApiRequest<Ticket>({
+  const createTicketResponse = await authenticatedApiRequest<null>({
     url: `${registrationId}/ticket`,
     method: 'POST',
     data: { type },
@@ -66,4 +66,10 @@ export const updateTicketStatus = async (ticketId: string, type: TicketType, sta
     url: ticketId,
     method: 'PUT',
     data: { type, status },
+  });
+
+export const createDraftDoi = async (registrationId: string) =>
+  await authenticatedApiRequest<{ doi: string }>({
+    url: `${registrationId}/doi`,
+    method: 'POST',
   });

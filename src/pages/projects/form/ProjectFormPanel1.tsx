@@ -14,6 +14,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 import { ProjectFieldName } from './ProjectFormDialog';
+import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
 
 interface ProjectFormPanel1Props {
   currentProject?: CristinProject;
@@ -24,6 +25,8 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched, touched, errors } = useFormikContext<SaveCristinProject>();
 
+  const thisIsRekProject = isRekProject(currentProject);
+
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '1rem' }}>
@@ -33,6 +36,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               {...field}
               data-testid={dataTestId.registrationWizard.description.projectForm.titleField}
               label={t('common.title')}
+              disabled={thisIsRekProject}
               required
               variant="filled"
               fullWidth
@@ -44,6 +48,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
         <Field name={ProjectFieldName.CoordinatingInstitution}>
           {({ field }: FieldProps<ProjectOrganization>) => (
             <OrganizationSearchField
+              disabled={thisIsRekProject}
               label={t('project.coordinating_institution')}
               onChange={(selectedInstitution) => {
                 const selectedCoordinatingInstitution: ProjectOrganization = {
@@ -73,6 +78,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <DatePicker
                 label={t('common.start_date')}
+                disabled={thisIsRekProject}
                 PopperProps={{
                   'aria-label': t('common.start_date'),
                 }}
@@ -102,6 +108,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
               <DatePicker
                 label={t('common.end_date')}
+                disabled={thisIsRekProject}
                 PopperProps={{
                   'aria-label': t('common.end_date'),
                 }}
@@ -158,6 +165,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                     baseFieldName={`${name}[${index}]`}
                     contributor={thisContributor}
                     removeContributor={contributor.type === 'ProjectManager' ? undefined : () => remove(index)}
+                    isRekProject={thisIsRekProject}
                   />
                 );
               })}

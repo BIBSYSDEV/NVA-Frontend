@@ -46,7 +46,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
       }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Typography variant="overline" sx={{ color: 'primary.main' }}>
-          {entityDescription?.reference?.publicationInstance.type
+          {entityDescription?.reference?.publicationInstance?.type
             ? t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)
             : '?'}{' '}
           — {displayDate(entityDescription?.date)}
@@ -63,7 +63,7 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
             columnGap: '1rem',
             whiteSpace: 'nowrap',
           }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem', flexWrap: 'wrap' }}>
             {focusedContributors.map((contributor, index) => (
               <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography variant="body2">

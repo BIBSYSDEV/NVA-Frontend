@@ -107,25 +107,19 @@ export const OutputRow = ({
         <Typography>{title}</Typography>
       </TableCell>
       <TableCell>
-        {maxIndex !== 0 && (
-          <Box
-            sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
-            {index !== maxIndex && (
-              <Tooltip title={t('common.move_down')} sx={{ gridArea: 'down' }}>
-                <Button onClick={() => moveItem(index + 1)}>
-                  <ArrowDownwardIcon />
-                </Button>
-              </Tooltip>
-            )}
-            {index !== 0 && (
-              <Tooltip title={t('common.move_up')} sx={{ gridArea: 'up' }}>
-                <Button onClick={() => moveItem(index - 1)}>
-                  <ArrowUpwardIcon />
-                </Button>
-              </Tooltip>
-            )}
-          </Box>
-        )}
+        <Box sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
+          <Tooltip title={t('common.move_down')} sx={{ gridArea: 'down' }}>
+            <Button disabled={index === maxIndex} onClick={() => moveItem(index + 1)}>
+              <ArrowDownwardIcon />
+            </Button>
+          </Tooltip>
+
+          <Tooltip title={t('common.move_up')} sx={{ gridArea: 'up' }}>
+            <Button disabled={index === 0} onClick={() => moveItem(index - 1)}>
+              <ArrowUpwardIcon />
+            </Button>
+          </Tooltip>
+        </Box>
       </TableCell>
       <TableCell>
         <Button

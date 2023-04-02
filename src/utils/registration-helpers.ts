@@ -122,7 +122,7 @@ export const getRegistrationIdentifier = (id: string) => id.split('/').pop() ?? 
 
 // Ensure Registration has correct type values, etc
 export const getFormattedRegistration = (registration: Registration) => {
-  const type = registration.entityDescription?.reference?.publicationInstance.type ?? '';
+  const type = registration.entityDescription?.reference?.publicationInstance?.type ?? '';
   let formattedRegistration = registration;
 
   if (formattedRegistration.entityDescription && !formattedRegistration.entityDescription.type) {
@@ -275,6 +275,10 @@ export const contributorConfig: ContributorConfig = {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
   },
+  [ReportType.ConferenceReport]: {
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+  },
   [ReportType.Report]: {
     primaryRoles: [ContributorRole.Creator],
     secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
@@ -404,7 +408,7 @@ export const contributorConfig: ContributorConfig = {
       ContributorRole.VfxSupervisor,
       ContributorRole.VideoEditor,
     ],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    secondaryRoles: [ContributorRole.Other],
   },
   [ArtisticType.MusicPerformance]: {
     primaryRoles: [
@@ -521,8 +525,10 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
       return (item as Broadcast).publisher.name;
     case 'CinematicRelease':
       return (item as CinematicRelease).place.label;
-    case 'OtherRelease':
-      return (item as OtherRelease).description;
+    case 'OtherRelease': {
+      const otherRelease = item as OtherRelease;
+      return [otherRelease.publisher.name, otherRelease.place.label].filter(Boolean).join('/');
+    }
     case 'MusicScore':
       return (item as MusicScore).publisher.name;
     case 'AudioVisualPublication':
@@ -583,5 +589,3 @@ export const getContributorInitials = (name: string) => {
 export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
-
-export const fundingSourceIsNfr = (sourceId = '') => sourceId.split('/').pop()?.toUpperCase() === 'NFR';
