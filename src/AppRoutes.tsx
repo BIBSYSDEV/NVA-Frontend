@@ -21,7 +21,7 @@ const LoginPage = lazy(() => import('./layout/LoginPage'));
 
 export const AppRoutes = () => {
   return (
-    <Suspense fallback={<PageSpinner />}>
+    <Suspense fallback={<PageSpinner aria-label="NVA" />}>
       <Switch>
         <Route exact path={UrlPathTemplate.Home} component={Dashboard} />
         <Route exact path={UrlPathTemplate.About} component={AboutPage} />
