@@ -28,7 +28,6 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import ResearchProfile from '../research_profile/ResearchProfile';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 
 const MyPagePage = () => {
@@ -109,15 +108,13 @@ const MyPagePage = () => {
             </LinkButton>
 
             {user?.isCreator && (
-              <BetaFunctionality>
-                <LinkIconButton
-                  data-testid={dataTestId.myPage.createProjectButton}
-                  icon={<PostAddIcon />}
-                  isSelected={showCreateProject}
-                  onClick={() => setShowCreateProject(true)}
-                  title={t('project.create_project')}
-                />
-              </BetaFunctionality>
+              <LinkIconButton
+                data-testid={dataTestId.myPage.createProjectButton}
+                icon={<PostAddIcon />}
+                isSelected={showCreateProject}
+                onClick={() => setShowCreateProject(true)}
+                title={t('project.create_project')}
+              />
             )}
           </LinkButtonRow>
           <Divider key="divider4" />

@@ -26,7 +26,7 @@ import { ExhibitionProductionForm } from './resource_type_tab/sub_type_forms/exh
 
 export const ResourceTypePanel = () => {
   const { values } = useFormikContext<Registration>();
-  const instanceType = values.entityDescription?.reference?.publicationInstance.type ?? '';
+  const instanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
   const mainType = getMainRegistrationType(instanceType);
 
   return (

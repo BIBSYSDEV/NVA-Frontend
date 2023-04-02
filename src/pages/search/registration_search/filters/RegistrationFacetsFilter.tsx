@@ -59,7 +59,9 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 }}
                 onClick={() => updateFilter(ResourceFieldNames.RegistrationType, bucket.key)}
                 selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
-                <span>{t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}</span>
+                <Box component="span" sx={{ wordBreak: 'break-word' }}>
+                  {t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}
+                </Box>
                 {(bucket.docCount || bucket.doc_count) && <span>({bucket.docCount ?? bucket.doc_count})</span>}
               </ListItemButton>
             </Box>

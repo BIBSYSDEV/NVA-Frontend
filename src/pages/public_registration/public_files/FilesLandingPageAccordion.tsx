@@ -32,7 +32,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   );
 
   const showFileVersionField = isTypeWithFileVersionField(
-    registration.entityDescription?.reference?.publicationInstance.type
+    registration.entityDescription?.reference?.publicationInstance?.type
   );
 
   return filesToShow.length === 0 ? null : (

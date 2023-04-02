@@ -7,9 +7,10 @@ interface StartDateFieldProps {
   fieldName: string;
   maxDate?: Date;
   disabled?: boolean;
+  dataTestId?: string;
 }
 
-export const StartDateField = ({ fieldName, maxDate, disabled = false }: StartDateFieldProps) => {
+export const StartDateField = ({ fieldName, maxDate, disabled = false, dataTestId }: StartDateFieldProps) => {
   const { t } = useTranslation();
 
   return (
@@ -31,7 +32,14 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false }: StartDa
           mask="__.__.____"
           maxDate={maxDate}
           renderInput={(params) => (
-            <TextField {...params} required variant="filled" error={touched && !!error} helperText={touched && error} />
+            <TextField
+              {...params}
+              data-testid={dataTestId}
+              required
+              variant="filled"
+              error={touched && !!error}
+              helperText={touched && error}
+            />
           )}
         />
       )}

@@ -164,7 +164,7 @@ const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown
 });
 
 const touchedResourceTabFields = (registration: Registration): FormikTouched<unknown> => {
-  const mainType = getMainRegistrationType(registration.entityDescription?.reference?.publicationInstance.type ?? '');
+  const mainType = getMainRegistrationType(registration.entityDescription?.reference?.publicationInstance?.type ?? '');
 
   switch (mainType) {
     case PublicationType.PublicationInJournal:
