@@ -27,17 +27,16 @@ describe.only('About and Privacy policy', () => {
   it('The user should see about page', () => {
     cy.get(`[data-testid=${dataTestId.header.generalMenuButton}]`).click();
     cy.get(`[data-testid=${dataTestId.header.aboutLink}]`).click();
-    cy.injectAxe();
     cy.url().should('include', UrlPathTemplate.About);
-    console.log('sjekk da');
+    cy.injectAxe();
     cy.checkA11y(null, undefined, terminalLog);
     cy.task('log');
   });
 
   it('The user should see privacy policy page', () => {
     cy.get(`[data-testid=${dataTestId.footer.privacyLink}]`).click();
-    cy.injectAxe();
     cy.url().should('include', UrlPathTemplate.PrivacyPolicy);
-    cy.checkA11y();
+    cy.injectAxe();
+    cy.checkA11y(null, undefined, terminalLog);
   });
 });
