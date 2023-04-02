@@ -1,8 +1,9 @@
 import { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { DelayedFallback } from './components/DelayedFallback';
+import { useTranslation } from 'react-i18next';
 import { BasicDataRoute, CreatorRoute, CuratorRoute, EditorRoute, LoggedInRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
+import { PageSpinner } from './components/PageSpinner';
 
 const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
@@ -20,8 +21,10 @@ const Logout = lazy(() => import('./layout/Logout'));
 const LoginPage = lazy(() => import('./layout/LoginPage'));
 
 export const AppRoutes = () => {
+  const { t } = useTranslation();
+
   return (
-    <Suspense fallback={<DelayedFallback />}>
+    <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
       <Switch>
         <Route exact path={UrlPathTemplate.Home} component={Dashboard} />
         <Route exact path={UrlPathTemplate.About} component={AboutPage} />
