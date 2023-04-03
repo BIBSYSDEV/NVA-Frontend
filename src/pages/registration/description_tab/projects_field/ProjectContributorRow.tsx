@@ -38,6 +38,7 @@ interface ProjectContributorRowProps {
   baseFieldName: string;
   contributorIndex: number;
   removeContributor?: () => void;
+  isRekProject: boolean;
 }
 
 export const ProjectContributorRow = ({
@@ -45,6 +46,7 @@ export const ProjectContributorRow = ({
   baseFieldName,
   removeContributor,
   contributorIndex,
+  isRekProject,
 }: ProjectContributorRowProps) => {
   const { t } = useTranslation();
   const { errors, touched, setFieldValue, setFieldTouched } = useFormikContext<SaveCristinProject>();
@@ -92,6 +94,8 @@ export const ProjectContributorRow = ({
 
   const contributorErrors = errors.contributors?.[contributorIndex] as FormikErrors<ProjectContributor>;
 
+  const isRekProjectManager = isRekProject && contributor?.type === 'ProjectManager';
+
   return (
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '150px 2fr 3fr auto' }, gap: '0.25rem 0.75rem' }}>
       <Field name={`${baseFieldName}.${ProjectContributorFieldName.Type}`}>
@@ -115,6 +119,7 @@ export const ProjectContributorRow = ({
         {({ field }: FieldProps<ProjectContributorIdentity>) => (
           <Autocomplete
             options={personSearchResult?.hits ?? []}
+            disabled={isRekProjectManager}
             inputMode="search"
             getOptionLabel={(option) => getFullCristinName(option.names)}
             filterOptions={(options) => options}
@@ -174,6 +179,7 @@ export const ProjectContributorRow = ({
       <Field name={`${baseFieldName}.${ProjectContributorFieldName.Affiliation}`}>
         {({ field }: FieldProps<ProjectOrganization>) => (
           <OrganizationSearchField
+            disabled={isRekProjectManager}
             onChange={(institution) => {
               const selectedCoordinatingInstitution: ProjectOrganization = {
                 type: 'Organization',

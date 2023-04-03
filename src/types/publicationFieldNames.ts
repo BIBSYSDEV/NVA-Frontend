@@ -73,12 +73,12 @@ export enum PresentationType {
 }
 
 export enum ArtisticType {
+  MusicPerformance = 'MusicPerformance',
   ArtisticDesign = 'ArtisticDesign',
   ArtisticArchitecture = 'Architecture',
+  VisualArts = 'VisualArts',
   PerformingArts = 'PerformingArts',
   MovingPicture = 'MovingPicture',
-  MusicPerformance = 'MusicPerformance',
-  VisualArts = 'VisualArts',
   LiteraryArts = 'LiteraryArts',
 }
 
@@ -164,6 +164,7 @@ export enum ResourceFieldNames {
 
 export enum DescriptionFieldNames {
   Abstract = 'entityDescription.abstract',
+  AlternativeAbstracts = 'entityDescription.alternativeAbstracts.und',
   AlternativeTitles = 'entityDescription.alternativeTitles.und',
   Date = 'entityDescription.date',
   Description = 'entityDescription.description',

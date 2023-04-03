@@ -12,7 +12,6 @@ import { CristinApiPath } from '../../../../api/apiPaths';
 import { ProjectChip } from './ProjectChip';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
-import { BetaFunctionality } from '../../../../components/BetaFunctionality';
 import { SearchResponse } from '../../../../types/common.types';
 import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
 
@@ -81,27 +80,25 @@ export const ProjectsField = () => {
                   />
                 )}
               />
-              <BetaFunctionality>
-                <Button
-                  data-testid={dataTestId.registrationWizard.description.createProjectButton}
-                  onClick={() => setOpenNewProjectDialog(true)}
-                  startIcon={<AddIcon />}>
-                  {t('project.create_project')}
-                </Button>
-                <ProjectFormDialog
-                  open={openNewProjectDialog}
-                  onClose={() => setOpenNewProjectDialog(false)}
-                  onCreateProject={(project) => {
-                    const newProject: ResearchProject = {
-                      type: 'ResearchProject',
-                      id: project.id,
-                      name: project.title,
-                    };
-                    const newProjects = field.value ? [...field.value, newProject] : [newProject];
-                    setFieldValue(field.name, newProjects);
-                  }}
-                />
-              </BetaFunctionality>
+              <Button
+                data-testid={dataTestId.registrationWizard.description.createProjectButton}
+                onClick={() => setOpenNewProjectDialog(true)}
+                startIcon={<AddIcon />}>
+                {t('project.create_project')}
+              </Button>
+              <ProjectFormDialog
+                open={openNewProjectDialog}
+                onClose={() => setOpenNewProjectDialog(false)}
+                onCreateProject={(project) => {
+                  const newProject: ResearchProject = {
+                    type: 'ResearchProject',
+                    id: project.id,
+                    name: project.title,
+                  };
+                  const newProjects = field.value ? [...field.value, newProject] : [newProject];
+                  setFieldValue(field.name, newProjects);
+                }}
+              />
             </>
           )}
         </Field>

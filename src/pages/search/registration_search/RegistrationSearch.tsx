@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Box, TablePagination, Typography } from '@mui/material';
+import { TablePagination, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { RegistrationSearchResults } from './RegistrationSearchResults';
 import { ListSkeleton } from '../../../components/ListSkeleton';
@@ -32,7 +32,7 @@ export const RegistrationSearch = ({ searchResults, isLoadingSearch }: Registrat
   };
 
   return (
-    <Box gridArea="results">
+    <section>
       {isLoadingSearch && !searchResults ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.hits.length > 0 ? (
@@ -53,6 +53,6 @@ export const RegistrationSearch = ({ searchResults, isLoadingSearch }: Registrat
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}
-    </Box>
+    </section>
   );
 };

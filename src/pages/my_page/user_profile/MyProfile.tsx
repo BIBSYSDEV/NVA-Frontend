@@ -91,9 +91,11 @@ export const MyProfile = () => {
             gridArea: 'user-profile',
           }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <Typography variant="h2">{t('my_page.my_profile.heading.personalia')}</Typography>
+            <Typography variant="h2" id="personalia-id">
+              {t('my_page.my_profile.heading.personalia')}
+            </Typography>
             {isLoadingPerson && !person ? (
-              <PageSpinner />
+              <PageSpinner aria-labelledby="personalia-id" />
             ) : (
               <>
                 <Typography>{t('my_page.my_profile.user_profile_description')}</Typography>

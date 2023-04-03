@@ -8,10 +8,11 @@ describe('Menu', () => {
   it('Unauthenticated user should not see protected menu options', () => {
     cy.visit(UrlPathTemplate.Home);
     cy.get(`[data-testid=${dataTestId.header.logInButton}]`).should('be.visible');
-    cy.get('[data-testid=new-registration]').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.editorLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).should('not.exist');
   });
 
@@ -19,11 +20,11 @@ describe('Menu', () => {
     cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.setUserRolesInRedux(allRoles);
-    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click();
-    cy.get('[data-testid=new-registration]').should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.editorLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click();
     cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).should('be.visible');
   });
 
@@ -31,11 +32,11 @@ describe('Menu', () => {
     cy.visit(UrlPathTemplate.Home);
     cy.mocklogin();
     cy.setUserRolesInRedux([]);
-    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click();
-    cy.get('[data-testid=new-registration]').should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.newRegistrationLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.header.basicDataLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.header.editorLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.header.menuButton}]`).click();
     cy.get(`[data-testid=${dataTestId.header.logOutLink}]`).should('be.visible');
   });
 
