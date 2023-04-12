@@ -49,7 +49,7 @@ const PublicRegistration = () => {
 
   return (
     <StyledPageContent>
-      {registrationQuery.isLoading || ticketsQuery.isLoading ? (
+      {registrationQuery.isLoading || (isRegistrationAdmin && ticketsQuery.isLoading) ? (
         <PageSpinner aria-label={t('common.registration')} />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
