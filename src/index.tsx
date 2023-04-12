@@ -5,6 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { HelmetProvider } from 'react-helmet-async';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { App } from './App';
 import { store } from './redux/store';
@@ -47,6 +48,7 @@ if (container) {
               <HelmetProvider>
                 <QueryClientProvider client={queryClient}>
                   <App />
+                  <ReactQueryDevtools />
                 </QueryClientProvider>
               </HelmetProvider>
             </ThemeProvider>
