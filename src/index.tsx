@@ -4,6 +4,7 @@ import { I18nextProvider } from 'react-i18next';
 import { Provider as ReduxProvider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { HelmetProvider } from 'react-helmet-async';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { App } from './App';
 import { store } from './redux/store';
@@ -25,6 +26,14 @@ if ((window as any).Cypress) {
   (window as any).store = store;
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 const container = document.getElementById('root');
 if (container) {
   const root = createRoot(container);
@@ -36,7 +45,9 @@ if (container) {
             <ThemeProvider theme={mainTheme}>
               <CssBaseline />
               <HelmetProvider>
-                <App />
+                <QueryClientProvider client={queryClient}>
+                  <App />
+                </QueryClientProvider>
               </HelmetProvider>
             </ThemeProvider>
           </ReduxProvider>
