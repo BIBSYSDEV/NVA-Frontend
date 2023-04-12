@@ -45,7 +45,7 @@ const emptyConcert: Concert = {
   extent: '',
   description: '',
   concertProgramme: [],
-  partOfSeries: false,
+  concertSeries: '',
 };
 
 const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
@@ -56,7 +56,7 @@ const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
 };
 
 const validationSchema = Yup.object<YupShape<Concert>>({
-  partOfSeries: Yup.boolean(),
+  concertSeries: Yup.string(),
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('translation:feedback.validation.is_required', {
@@ -64,8 +64,8 @@ const validationSchema = Yup.object<YupShape<Concert>>({
       })
     ),
   }),
-  time: Yup.object().when('partOfSeries', ([partOfSeries], schema) =>
-    partOfSeries
+  time: Yup.object().when('concertSeries', ([concertSeries], schema) =>
+    concertSeries !== undefined
       ? periodField
       : schema.shape({
           value: Yup.date()
@@ -135,26 +135,42 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
         {({ values, errors, touched, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<Concert>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Field name="partOfSeries">
-                {({ field }: FieldProps<boolean>) => (
-                  <FormControlLabel
-                    data-testid={dataTestId.registrationWizard.resourceType.concertPartOfSeries}
-                    label={t('registration.resource_type.artistic.concert_part_of_series')}
-                    control={
-                      <Checkbox
-                        checked={field.value}
+              <Field name="concertSeries">
+                {({ field }: FieldProps<string>) => (
+                  <>
+                    <FormControlLabel
+                      data-testid={dataTestId.registrationWizard.resourceType.concertSeriesCheckbox}
+                      label={t('registration.resource_type.artistic.concert_part_of_series')}
+                      control={
+                        <Checkbox
+                          checked={field.value !== undefined}
+                          {...field}
+                          onChange={() => {
+                            if (field.value !== undefined) {
+                              setFieldValue('time', emptyInstant);
+                              setFieldValue(field.name, undefined);
+                            } else {
+                              setFieldValue('time', emptyPeriod);
+                              setFieldValue(field.name, '');
+                            }
+                          }}
+                        />
+                      }
+                    />
+                    {field.value !== undefined && (
+                      <TextField
+                        data-testid={dataTestId.registrationWizard.resourceType.concertSeriesDescriptionField}
                         {...field}
-                        onChange={(event) => {
-                          if (!field.value) {
-                            setFieldValue('time', emptyPeriod);
-                          } else {
-                            setFieldValue('time', emptyInstant);
-                          }
-                          field.onChange(event);
-                        }}
+                        fullWidth
+                        multiline
+                        required
+                        value={field.value}
+                        variant="filled"
+                        rows={3}
+                        label={t('common.description')}
                       />
-                    }
-                  />
+                    )}
+                  </>
                 )}
               </Field>
               <Field name="place.label">
@@ -172,7 +188,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                 )}
               </Field>
 
-              {values.partOfSeries ? (
+              {values.concertSeries !== undefined ? (
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
                   <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
                 </Box>
