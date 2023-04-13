@@ -65,12 +65,10 @@ const TasksPage = () => {
   });
 
   const tickets = ticketsSearch?.hits ?? [];
-  const doiRequestCount =
-    ticketsSearch?.aggregations?.type.buckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount ?? 0;
-  const publishingRequestCount =
-    ticketsSearch?.aggregations?.type.buckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount ?? 0;
-  const generalSupportCaseCount =
-    ticketsSearch?.aggregations?.type.buckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount ?? 0;
+  const typeBuckets = ticketsSearch?.aggregations?.type.buckets ?? [];
+  const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount ?? 0;
+  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount ?? 0;
+  const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount ?? 0;
 
   return (
     <StyledPageWithSideMenu>
