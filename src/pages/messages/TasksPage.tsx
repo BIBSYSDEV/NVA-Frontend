@@ -15,7 +15,7 @@ import { Helmet } from 'react-helmet-async';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { RoleApiPath, SearchApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { Ticket, TicketType } from '../../types/publication_types/messages.types';
+import { Ticket } from '../../types/publication_types/messages.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { SearchResponse } from '../../types/common.types';
 import { RootState } from '../../redux/store';
@@ -34,11 +34,12 @@ const TasksPage = () => {
   const user = useSelector((store: RootState) => store.user);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
-  const [selectedTypes, setSelectedTypes] = useState<TicketType[]>([
-    'DoiRequest',
-    'GeneralSupportCase',
-    'PublishingRequest',
-  ]);
+
+  const [selectedTypes, setSelectedTypes] = useState({
+    doiRequest: true,
+    generalSupportCase: true,
+    publishingRequest: true,
+  });
 
   const [institutionUser] = useFetch<InstitutionUser>({
     url: user?.nvaUsername ? `${RoleApiPath.Users}/${user.nvaUsername}` : '',
@@ -50,8 +51,12 @@ const TasksPage = () => {
   const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
 
+  const selectedTypesArray = Object.entries(selectedTypes)
+    .filter(([_, selected]) => selected)
+    .map(([key]) => key);
+
   const typeQuery =
-    selectedTypes.length > 0 ? `&query=(${selectedTypes.map((type) => 'type:' + type).join(' OR ')})` : '';
+    selectedTypesArray.length > 0 ? `&query=(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
 
   const [ticketsSearch, isLoadingTicketsSearch] = useFetch<SearchResponse<Ticket>>({
     url: `${SearchApiPath.Tickets}?results=${rowsPerPage}&from=${page * rowsPerPage}${typeQuery}`,
@@ -60,6 +65,12 @@ const TasksPage = () => {
   });
 
   const tickets = ticketsSearch?.hits ?? [];
+  const doiRequestCount =
+    ticketsSearch?.aggregations?.type.buckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount ?? 0;
+  const publishingRequestCount =
+    ticketsSearch?.aggregations?.type.buckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount ?? 0;
+  const generalSupportCaseCount =
+    ticketsSearch?.aggregations?.type.buckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount ?? 0;
 
   return (
     <StyledPageWithSideMenu>
@@ -88,30 +99,54 @@ const TasksPage = () => {
         <Divider />
 
         <FormGroup sx={{ m: '1rem' }}>
-          {ticketsSearch?.aggregations?.type.buckets.map((bucket) => {
-            const ticketType = bucket.key as TicketType;
-            const ticketTypeString = t(`my_page.messages.types.${ticketType}`);
-            const ticketTypeFacetText = `${ticketTypeString} (${bucket.docCount})`;
-            const isChecked = selectedTypes.includes(ticketType);
-
-            return (
-              <FormControlLabel
-                key={ticketType}
-                checked={isChecked}
-                control={
-                  <Checkbox
-                    sx={{ py: '0.2rem' }}
-                    onChange={() =>
-                      isChecked
-                        ? setSelectedTypes(selectedTypes.filter((type) => type !== ticketType))
-                        : setSelectedTypes([...selectedTypes, ticketType])
-                    }
-                  />
-                }
-                label={ticketTypeFacetText}
+          <FormControlLabel
+            checked={selectedTypes.doiRequest}
+            control={
+              <Checkbox
+                sx={{ py: '0.2rem' }}
+                onChange={() => {
+                  setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest });
+                }}
               />
-            );
-          })}
+            }
+            label={
+              selectedTypes.doiRequest
+                ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
+                : t('my_page.messages.types.DoiRequest')
+            }
+          />
+          <FormControlLabel
+            checked={selectedTypes.publishingRequest}
+            control={
+              <Checkbox
+                sx={{ py: '0.2rem' }}
+                onChange={() => {
+                  setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest });
+                }}
+              />
+            }
+            label={
+              selectedTypes.publishingRequest
+                ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
+                : t('my_page.messages.types.PublishingRequest')
+            }
+          />
+          <FormControlLabel
+            checked={selectedTypes.generalSupportCase}
+            control={
+              <Checkbox
+                sx={{ py: '0.2rem' }}
+                onChange={() => {
+                  setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase });
+                }}
+              />
+            }
+            label={
+              selectedTypes.generalSupportCase
+                ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
+                : t('my_page.messages.types.GeneralSupportCase')
+            }
+          />
         </FormGroup>
       </SidePanel>
 
