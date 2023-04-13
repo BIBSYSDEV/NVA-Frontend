@@ -58,7 +58,7 @@ import { RegistrationTypeElement, RegistrationTypesRow } from './components/Regi
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
-  const currentInstanceType = values.entityDescription?.reference?.publicationInstance.type ?? '';
+  const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
 
   const [searchValue, setSearchValue] = useState('');
   const [openSelectType, setOpenSelectType] = useState(!currentInstanceType);
@@ -390,7 +390,7 @@ export const SelectRegistrationTypeField = () => {
         open={!!confirmNewType}
         title={t('registration.resource_type.change_registration_type')}
         onAccept={() => {
-          if (confirmNewType && confirmNewType !== values.entityDescription?.reference?.publicationInstance.type) {
+          if (confirmNewType && confirmNewType !== values.entityDescription?.reference?.publicationInstance?.type) {
             if (confirmNewType === ResearchDataType.Dataset) {
               setShowDatasetConditions(true);
             } else {
@@ -410,7 +410,7 @@ export const SelectRegistrationTypeField = () => {
       <ConfirmDialog
         open={
           showDatasetConditions ||
-          (values.entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset &&
+          (values.entityDescription?.reference?.publicationInstance?.type === ResearchDataType.Dataset &&
             !values.entityDescription.reference.publicationInstance.userAgreesToTermsAndConditions)
         }
         title={t('registration.resource_type.research_data.accept_dataset_terms.dialog_title')}

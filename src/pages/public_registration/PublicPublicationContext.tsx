@@ -231,18 +231,26 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 
 interface PublicArtisticOutputProps {
   outputs: ArtisticOutputItem[];
-  heading: string;
   showType?: boolean;
 }
 
-export const PublicArtisticOutput = ({ outputs, heading, showType = false }: PublicArtisticOutputProps) => (
-  <>
-    <Typography variant="h3">{heading}</Typography>
-    {outputs.map((output, index) => (
-      <PublicOutputRow key={index} output={output} heading={heading} showType={showType} />
-    ))}
-  </>
-);
+export const PublicArtisticOutput = ({ outputs, showType = false }: PublicArtisticOutputProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Typography variant="h3">{t('registration.resource_type.artistic.announcements')}</Typography>
+      {outputs.map((output, index) => (
+        <PublicOutputRow
+          key={index}
+          output={output}
+          heading={t('registration.resource_type.artistic.announcements')}
+          showType={showType}
+        />
+      ))}
+    </>
+  );
+};
 
 interface PublicOutputRowProps {
   output: ArtisticOutputItem;
@@ -250,7 +258,7 @@ interface PublicOutputRowProps {
   showType: boolean;
 }
 
-const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) => {
+const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
@@ -270,7 +278,7 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
       </Tooltip>
 
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
-        <DialogTitle>{heading}</DialogTitle>
+        <DialogTitle>{t('registration.resource_type.artistic.announcement')}</DialogTitle>
         <ErrorBoundary>
           {output.type === 'Venue' || output.type === 'PerformingArtsVenue' ? (
             <PublicVenueDialogContent venue={output as Venue} />
@@ -480,9 +488,11 @@ const PublicAudioVisualPublicationDialogContent = ({
       <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.media_type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.music_media_type.${mediaType}` as any)}</Typography>
+      <Typography paragraph>
+        {mediaType ? t(`registration.resource_type.artistic.music_media_type.${mediaType}`) : ''}
+      </Typography>
       <Typography variant="h3">{t('common.publisher')}</Typography>
-      <Typography paragraph>{publisher}</Typography>
+      <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
       <Typography paragraph>{catalogueNumber}</Typography>
       <Typography variant="h3" id="tracks-heading">

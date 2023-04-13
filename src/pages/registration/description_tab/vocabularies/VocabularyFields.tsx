@@ -16,7 +16,11 @@ import { InputContainerBox } from '../../../../components/styled/Wrappers';
 import { TFuncKey } from 'i18next';
 
 interface VocabularyConfig {
-  [key: string]: { baseId: string; i18nKey: TFuncKey; component: (props: VocabularyComponentProps) => JSX.Element };
+  [key: string]: {
+    baseId: string;
+    i18nKey: TFuncKey;
+    component: (props: VocabularyComponentProps) => JSX.Element;
+  };
 }
 
 // Specify which vocabularies to show, and their i18n key and component
@@ -145,7 +149,7 @@ export const VocabularyFields = ({ defaultVocabularies, allowedVocabularies }: V
                 setVisibleVocabularies([...visibleVocabularies, vocabulary]);
                 setNewVocabularyAnchor(null);
               }}>
-              {t(vocabularyConfig[vocabulary].i18nKey)}
+              {t<any>(vocabularyConfig[vocabulary].i18nKey)}
             </MenuItem>
           ))}
         </Menu>

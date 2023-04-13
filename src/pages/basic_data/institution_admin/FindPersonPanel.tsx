@@ -5,6 +5,7 @@ import { useCallback, useState } from 'react';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { AddEmployeeData, emptyUser } from './AddEmployeePage';
 import { SearchForCristinPerson } from '../SearchForCristinPerson';
+import { FlatCristinPerson } from '../../../types/user.types';
 
 export const FindPersonPanel = () => {
   const { t } = useTranslation();
@@ -12,7 +13,7 @@ export const FindPersonPanel = () => {
   const [showCreatePerson, setShowCreatePerson] = useState(false);
 
   const setSelectedPerson = useCallback(
-    (person) => setFieldValue('user', person ? person : emptyUser),
+    (person?: FlatCristinPerson) => setFieldValue('user', person ? person : emptyUser),
     [setFieldValue]
   );
 
