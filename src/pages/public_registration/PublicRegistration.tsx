@@ -27,7 +27,7 @@ const PublicRegistration = () => {
   const registrationQuery = useQuery({
     queryKey: ['registration', identifier],
     queryFn: () => fetchRegistration(`${PublicationsApiPath.Registration}/${identifier}`),
-    onError: () => t('feedback.error.get_registration'),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
   });
 
   const registration = registrationQuery.data;
@@ -36,7 +36,7 @@ const PublicRegistration = () => {
   const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
 
   const ticketsQuery = useQuery({
-    enabled: !!isRegistrationAdmin,
+    enabled: isRegistrationAdmin,
     queryKey: ['registrationTickets', identifier],
     queryFn: () => registration && fetchRegistrationTickets(registration.id),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
