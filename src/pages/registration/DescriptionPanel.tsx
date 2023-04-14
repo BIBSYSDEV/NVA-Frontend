@@ -73,13 +73,14 @@ export const DescriptionPanel = () => {
                   label={t('registration.description.alternative_title')}
                 />
               ) : null}
-              <Button
-                sx={{ height: 'fit-content' }}
-                startIcon={<AddCircleOutlineIcon />}
-                disabled={field.value !== undefined || !values.entityDescription?.mainTitle}
-                onClick={() => setFieldValue(field.name, '')}>
-                {t('common.add')}
-              </Button>
+              {field.value || field.value === '' ? null : (
+                <Button
+                  startIcon={<AddCircleOutlineIcon />}
+                  disabled={field.value !== undefined || !values.entityDescription?.mainTitle}
+                  onClick={() => setFieldValue(field.name, '')}>
+                  {t('common.add')}
+                </Button>
+              )}
             </>
           )}
         </Field>
@@ -120,13 +121,15 @@ export const DescriptionPanel = () => {
                   label={t('registration.description.alternative_abstract')}
                 />
               ) : null}
-              <Button
-                sx={{ height: 'fit-content' }}
-                startIcon={<AddCircleOutlineIcon />}
-                disabled={field.value !== undefined || !values.entityDescription?.abstract}
-                onClick={() => setFieldValue(field.name, '')}>
-                {t('common.add')}
-              </Button>
+
+              {field.value || field.value === '' ? null : (
+                <Button
+                  startIcon={<AddCircleOutlineIcon />}
+                  disabled={field.value !== undefined || !values.entityDescription?.abstract}
+                  onClick={() => setFieldValue(field.name, '')}>
+                  {t('common.add')}
+                </Button>
+              )}
             </>
           )}
         </Field>
