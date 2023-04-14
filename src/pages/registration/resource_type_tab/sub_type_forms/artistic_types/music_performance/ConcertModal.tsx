@@ -10,7 +10,19 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
+import {
+  Formik,
+  Form,
+  Field,
+  FieldProps,
+  ErrorMessage,
+  FieldArray,
+  FieldArrayRenderProps,
+  FormikProps,
+  FormikErrors,
+  validateYupSchema,
+  yupToFormErrors,
+} from 'formik';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -45,7 +57,7 @@ const emptyConcert: Concert = {
   extent: '',
   description: '',
   concertProgramme: [],
-  concertSeries: '',
+  concertSeries: undefined,
 };
 
 const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
@@ -64,8 +76,8 @@ const validationSchema = Yup.object<YupShape<Concert>>({
       })
     ),
   }),
-  time: Yup.object().when('concertSeries', ([concertSeries], schema) =>
-    concertSeries !== undefined
+  time: Yup.object().when('$partOfSeries', ([partOfSeries], schema) =>
+    partOfSeries
       ? periodField
       : schema.shape({
           value: Yup.date()
@@ -118,6 +130,23 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
   const [removeWorkItemIndex, setRemoveWorkItemIndex] = useState(-1);
   const closeConfirmDialog = () => setRemoveWorkItemIndex(-1);
 
+  const [partOfSeries, setPartOfSeries] = useState(concert?.concertSeries ? true : false);
+
+  const validateForm = (values?: Concert): FormikErrors<Concert> => {
+    if (!values) {
+      return {};
+    }
+
+    try {
+      validateYupSchema<Concert>(values, validationSchema, true, {
+        partOfSeries: partOfSeries,
+      });
+    } catch (err) {
+      return yupToFormErrors(err);
+    }
+    return {};
+  };
+
   return (
     <Dialog open={open} onClose={closeModal} maxWidth="md" fullWidth>
       <DialogTitle>
@@ -125,9 +154,11 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
           ? t('registration.resource_type.artistic.edit_concert')
           : t('registration.resource_type.artistic.add_concert')}
       </DialogTitle>
+
       <Formik
         initialValues={concert ?? emptyConcert}
-        validationSchema={validationSchema}
+        validationSchema={validateForm}
+        initialErrors={validateForm(concert)}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
@@ -135,29 +166,30 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
         {({ values, errors, touched, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<Concert>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <FormControlLabel
+                data-testid={dataTestId.registrationWizard.resourceType.concertSeriesCheckbox}
+                label={t('registration.resource_type.artistic.concert_part_of_series')}
+                control={
+                  <Checkbox
+                    checked={partOfSeries}
+                    onChange={() => {
+                      if (!partOfSeries) {
+                        setFieldValue('time', emptyPeriod);
+                        setFieldValue('concertSeries', '');
+                        setPartOfSeries(!partOfSeries);
+                      } else {
+                        setFieldValue('time', emptyInstant);
+                        setFieldValue('concertSeries', undefined);
+                        setPartOfSeries(!partOfSeries);
+                      }
+                    }}
+                  />
+                }
+              />
               <Field name="concertSeries">
                 {({ field }: FieldProps<string>) => (
                   <>
-                    <FormControlLabel
-                      data-testid={dataTestId.registrationWizard.resourceType.concertSeriesCheckbox}
-                      label={t('registration.resource_type.artistic.concert_part_of_series')}
-                      control={
-                        <Checkbox
-                          checked={field.value !== undefined}
-                          {...field}
-                          onChange={() => {
-                            if (field.value !== undefined) {
-                              setFieldValue('time', emptyInstant);
-                              setFieldValue(field.name, undefined);
-                            } else {
-                              setFieldValue('time', emptyPeriod);
-                              setFieldValue(field.name, '');
-                            }
-                          }}
-                        />
-                      }
-                    />
-                    {field.value !== undefined && (
+                    {partOfSeries && concert?.concertSeries && (
                       <TextField
                         data-testid={dataTestId.registrationWizard.resourceType.concertSeriesDescriptionField}
                         {...field}
@@ -188,7 +220,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                 )}
               </Field>
 
-              {values.concertSeries !== undefined ? (
+              {partOfSeries ? (
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
                   <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
                 </Box>

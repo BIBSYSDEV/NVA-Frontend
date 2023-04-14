@@ -520,7 +520,7 @@ const PublicAudioVisualPublicationDialogContent = ({
 
 const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
   const { t } = useTranslation();
-  const { type, place, time, extent, concertProgramme, concertSeries: partOfSeries } = concert;
+  const { type, place, time, extent, concertProgramme, concertSeries } = concert;
 
   return (
     <DialogContent>
@@ -531,8 +531,8 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       <Typography paragraph>{place.label}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
-      <Typography paragraph>{partOfSeries ? t('common.yes') : t('common.no')} </Typography>
-      {partOfSeries && <Typography paragraph>{partOfSeries}</Typography>}
+      <Typography paragraph>{concertSeries ? t('common.yes') : t('common.no')} </Typography>
+      {concertSeries && <Typography paragraph>{concertSeries}</Typography>}
 
       <Typography variant="h3">{t('common.date')}</Typography>
       {time.type === 'Instant' ? (
