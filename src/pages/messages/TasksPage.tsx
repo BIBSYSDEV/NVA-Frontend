@@ -109,7 +109,7 @@ const TasksPage = () => {
               />
             }
             label={
-              selectedTypes.doiRequest && !ticketsQuery.isLoading
+              selectedTypes.doiRequest && doiRequestCount
                 ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                 : t('my_page.messages.types.DoiRequest')
             }
@@ -125,7 +125,7 @@ const TasksPage = () => {
               />
             }
             label={
-              selectedTypes.publishingRequest && !ticketsQuery.isLoading
+              selectedTypes.publishingRequest && publishingRequestCount
                 ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                 : t('my_page.messages.types.PublishingRequest')
             }
@@ -141,7 +141,7 @@ const TasksPage = () => {
               />
             }
             label={
-              selectedTypes.generalSupportCase && !ticketsQuery.isLoading
+              selectedTypes.generalSupportCase && generalSupportCaseCount
                 ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                 : t('my_page.messages.types.GeneralSupportCase')
             }
