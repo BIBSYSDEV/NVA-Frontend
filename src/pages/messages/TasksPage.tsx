@@ -13,11 +13,10 @@ import {
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
-import { RoleApiPath, SearchApiPath } from '../../api/apiPaths';
+import { useQuery } from '@tanstack/react-query';
+import { RoleApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { Ticket } from '../../types/publication_types/messages.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { SearchResponse } from '../../types/common.types';
 import { RootState } from '../../redux/store';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
@@ -26,6 +25,8 @@ import { TicketAccordionList } from './TicketAccordionList';
 import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { StyledPageWithSideMenu, SidePanel, SideNavHeader } from '../../components/PageWithSideMenu';
+import { setNotification } from '../../redux/notificationSlice';
+import { fetchTickets } from '../../api/searchApi';
 
 const rowsPerPageOptions = [10, 20, 50];
 
@@ -56,19 +57,19 @@ const TasksPage = () => {
     .map(([key]) => key);
 
   const typeQuery =
-    selectedTypesArray.length > 0 ? `&query=(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
+    selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
 
-  const [ticketsSearch, isLoadingTicketsSearch] = useFetch<SearchResponse<Ticket>>({
-    url: `${SearchApiPath.Tickets}?results=${rowsPerPage}&from=${page * rowsPerPage}${typeQuery}`,
-    errorMessage: t('feedback.error.get_messages'),
-    withAuthentication: true,
+  const ticketsQuery = useQuery({
+    queryKey: ['tickets', rowsPerPage, page, typeQuery],
+    queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, typeQuery),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 
-  const tickets = ticketsSearch?.hits ?? [];
-  const typeBuckets = ticketsSearch?.aggregations?.type.buckets ?? [];
-  const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount ?? 0;
-  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount ?? 0;
-  const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount ?? 0;
+  const tickets = ticketsQuery.data?.hits ?? [];
+  const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
+  const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
+  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
+  const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
 
   return (
     <StyledPageWithSideMenu>
@@ -108,7 +109,7 @@ const TasksPage = () => {
               />
             }
             label={
-              selectedTypes.doiRequest
+              selectedTypes.doiRequest && !ticketsQuery.isLoading
                 ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                 : t('my_page.messages.types.DoiRequest')
             }
@@ -124,7 +125,7 @@ const TasksPage = () => {
               />
             }
             label={
-              selectedTypes.publishingRequest
+              selectedTypes.publishingRequest && !ticketsQuery.isLoading
                 ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                 : t('my_page.messages.types.PublishingRequest')
             }
@@ -140,7 +141,7 @@ const TasksPage = () => {
               />
             }
             label={
-              selectedTypes.generalSupportCase
+              selectedTypes.generalSupportCase && !ticketsQuery.isLoading
                 ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                 : t('my_page.messages.types.GeneralSupportCase')
             }
@@ -149,7 +150,7 @@ const TasksPage = () => {
       </SidePanel>
 
       <section>
-        {isLoadingTicketsSearch ? (
+        {ticketsQuery.isLoading ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <>
@@ -159,7 +160,7 @@ const TasksPage = () => {
               data-testid={dataTestId.startPage.searchPagination}
               rowsPerPageOptions={rowsPerPageOptions}
               component="div"
-              count={ticketsSearch?.size ?? 0}
+              count={ticketsQuery.data?.size ?? 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={(_, newPage) => setPage(newPage)}
@@ -173,3 +174,6 @@ const TasksPage = () => {
 };
 
 export default TasksPage;
+function dispatch(arg0: any): void {
+  throw new Error('Function not implemented.');
+}
