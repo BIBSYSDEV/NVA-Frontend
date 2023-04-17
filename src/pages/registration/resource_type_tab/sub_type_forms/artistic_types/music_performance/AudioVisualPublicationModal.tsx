@@ -181,7 +181,7 @@ export const AudioVisualPublicationModal = ({
                       {...field}
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
-                      data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}
+                      data-testid={dataTestId.registrationWizard.resourceType.artisticSubtypeDescription}
                     />
                   )}
                 </Field>
