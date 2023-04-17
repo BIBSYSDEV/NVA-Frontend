@@ -33,7 +33,8 @@
     "@mui/lab": "5.0.0-alpha.126",
     "@mui/material": "^5.12.0",
     "@mui/x-date-pickers": "^5.0.20",
-    "@reduxjs/toolkit": "^1.9.3",
+    "@reduxjs/toolkit": "^1.9.4",
+    "@tanstack/react-query": "^4.29.3",
     "@uppy/aws-s3-multipart": "^3.1.3",
     "@uppy/core": "^3.1.1",
     "@uppy/dashboard": "^3.3.1",
@@ -57,11 +58,12 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^5.3.4",
     "react-share": "^4.4.1",
-    "yup": "^1.1.0"
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.4",
     "@cypress/instrument-cra": "^1.4.0",
+    "@tanstack/react-query-devtools": "^4.29.3",
     "@types/isbn-utils": "^1.1.3",
     "@types/jest": "^29.5.0",
     "@types/react": "^18.0.35",
