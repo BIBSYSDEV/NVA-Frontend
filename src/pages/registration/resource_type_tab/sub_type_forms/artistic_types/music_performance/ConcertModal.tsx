@@ -68,7 +68,15 @@ const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
 };
 
 const validationSchema = Yup.object<YupShape<Concert>>({
-  concertSeries: Yup.string(),
+  concertSeries: Yup.string().when('$partOfSeries', ([partOfSeries], schema) =>
+    partOfSeries
+      ? schema.required(
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:common.description'),
+          })
+        )
+      : schema.optional()
+  ),
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('translation:feedback.validation.is_required', {
@@ -157,7 +165,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
 
       <Formik
         initialValues={concert ?? emptyConcert}
-        validationSchema={validateForm}
+        validate={validateForm}
         initialErrors={validateForm(concert)}
         onSubmit={(values) => {
           onSubmit(values);
@@ -187,9 +195,9 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                 }
               />
               <Field name="concertSeries">
-                {({ field }: FieldProps<string>) => (
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <>
-                    {partOfSeries && concert?.concertSeries && (
+                    {partOfSeries && (
                       <TextField
                         data-testid={dataTestId.registrationWizard.resourceType.concertSeriesDescriptionField}
                         {...field}
@@ -200,6 +208,8 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                         variant="filled"
                         rows={3}
                         label={t('common.description')}
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
                       />
                     )}
                   </>
