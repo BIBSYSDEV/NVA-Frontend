@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import {
   Box,
@@ -31,6 +31,7 @@ import { fetchTickets } from '../../api/searchApi';
 const rowsPerPageOptions = [10, 20, 50];
 
 const TasksPage = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const [page, setPage] = useState(0);
@@ -103,9 +104,7 @@ const TasksPage = () => {
             control={
               <Checkbox
                 sx={{ py: '0.2rem' }}
-                onChange={() => {
-                  setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest });
-                }}
+                onChange={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}
               />
             }
             label={
@@ -119,9 +118,9 @@ const TasksPage = () => {
             control={
               <Checkbox
                 sx={{ py: '0.2rem' }}
-                onChange={() => {
-                  setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest });
-                }}
+                onChange={() =>
+                  setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
+                }
               />
             }
             label={
@@ -135,9 +134,9 @@ const TasksPage = () => {
             control={
               <Checkbox
                 sx={{ py: '0.2rem' }}
-                onChange={() => {
-                  setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase });
-                }}
+                onChange={() =>
+                  setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
+                }
               />
             }
             label={
@@ -174,6 +173,3 @@ const TasksPage = () => {
 };
 
 export default TasksPage;
-function dispatch(arg0: any): void {
-  throw new Error('Function not implemented.');
-}
