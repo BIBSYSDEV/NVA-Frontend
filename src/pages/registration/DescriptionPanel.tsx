@@ -76,7 +76,7 @@ export const DescriptionPanel = () => {
               {field.value || field.value === '' ? null : (
                 <Button
                   startIcon={<AddCircleOutlineIcon />}
-                  disabled={field.value !== undefined || !values.entityDescription?.mainTitle}
+                  disabled={!values.entityDescription?.mainTitle}
                   onClick={() => setFieldValue(field.name, '')}>
                   {t('common.add')}
                 </Button>
@@ -125,7 +125,7 @@ export const DescriptionPanel = () => {
               {field.value || field.value === '' ? null : (
                 <Button
                   startIcon={<AddCircleOutlineIcon />}
-                  disabled={field.value !== undefined || !values.entityDescription?.abstract}
+                  disabled={!values.entityDescription?.abstract}
                   onClick={() => setFieldValue(field.name, '')}>
                   {t('common.add')}
                 </Button>
