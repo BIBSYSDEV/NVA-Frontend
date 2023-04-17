@@ -10,7 +10,7 @@ import {
   Box,
 } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
@@ -26,6 +26,8 @@ import {
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { IMaskInput } from 'react-imask';
+import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -40,6 +42,10 @@ const emptyAudioVisualPublication: AudioVisualPublication = {
   publisher: emptyUnconfirmedPublisher,
   catalogueNumber: '',
   trackList: [],
+  isrc: {
+    type: 'Isrc',
+    value: '',
+  },
 };
 
 const emptyMusicTrack: MusicTrack = {
@@ -69,6 +75,16 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       field: i18n.t('translation:registration.resource_type.artistic.catalogue_number'),
     })
   ),
+  isrc: Yup.object().shape({
+    value: Yup.string()
+      .nullable()
+      .matches(
+        /^[A-Z]{2}[A-Z\d]{3}\d{7}$/,
+        i18n.t('translation:feedback.validation.has_invalid_format', {
+          field: i18n.t('translation:registration.resource_type.artistic.music_score_isrc'),
+        })
+      ),
+  }),
   trackList: Yup.array()
     .of(
       Yup.object<YupShape<MusicTrack>>({
@@ -180,6 +196,22 @@ export const AudioVisualPublicationModal = ({
                   />
                 )}
               </Field>
+              <Field name="isrc.value">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    variant="filled"
+                    fullWidth
+                    label={t('registration.resource_type.artistic.music_score_isrc')}
+                    InputProps={{
+                      inputComponent: MaskIsrcInput as any,
+                    }}
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.scoreIsrc}
+                  />
+                )}
+              </Field>
               <FieldArray name="trackList">
                 {({ name, push, remove }: FieldArrayRenderProps) => (
                   <>
@@ -283,3 +315,12 @@ export const AudioVisualPublicationModal = ({
     </Dialog>
   );
 };
+
+const MaskIsrcInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...props }, ref) => (
+  <IMaskInput
+    {...props}
+    mask="aa-***-00-00000"
+    inputRef={ref}
+    onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll('-', '') } })}
+  />
+));

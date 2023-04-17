@@ -181,6 +181,10 @@ export interface AudioVisualPublication extends ArtisticOutputBase {
   publisher: UnconfirmedPublisher;
   catalogueNumber: string;
   trackList: MusicTrack[];
+  isrc: {
+    type: 'Isrc';
+    value?: string;
+  };
 }
 
 export interface MusicalWork {
