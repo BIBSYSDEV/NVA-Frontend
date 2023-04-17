@@ -1,21 +1,18 @@
-import { Autocomplete, Box, Button, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { CristinApiPath, VerifiedFundingApiPath } from '../../../api/apiPaths';
-import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
-import { FundingSources } from '../../../types/project.types';
+import { VerifiedFundingApiPath } from '../../../api/apiPaths';
 import { emptyFunding, Funding } from '../../../types/registration.types';
-import { useFetchResource } from '../../../utils/hooks/useFetchResource';
-import { getLanguageString } from '../../../utils/translation-helpers';
 import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { API_URL } from '../../../utils/constants';
 import { fundingSourceIsNfr, getNfrProjectUrl } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectFieldName } from './ProjectFormDialog';
+import { FundingSourceField } from '../../../components/FundingSourceField';
 
 interface FundingsFieldProps {
   currentFundings: Funding[];
@@ -23,8 +20,6 @@ interface FundingsFieldProps {
 
 export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) => {
   const { t } = useTranslation();
-  const [fundingSources, isLoadingFundingSources] = useFetchResource<FundingSources>(CristinApiPath.FundingSources);
-  const fundingSourcesList = fundingSources?.sources ?? [];
 
   return (
     <div>
@@ -56,45 +51,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                     gap: '1rem',
                     alignItems: 'center',
                   }}>
-                  <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Source}`}>
-                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                      <Autocomplete
-                        value={fundingSourcesList.find((source) => source.id === field.value) ?? null}
-                        options={fundingSourcesList}
-                        filterOptions={(options, state) => {
-                          const filter = state.inputValue.toLocaleLowerCase();
-                          return options.filter((option) => {
-                            const names = Object.values(option.name).map((name) => name.toLocaleLowerCase());
-                            const identifier = option.identifier.toLocaleLowerCase();
-                            return identifier.includes(filter) || names.some((name) => name.includes(filter));
-                          });
-                        }}
-                        renderOption={(props, option) => (
-                          <li {...props} key={option.identifier}>
-                            {getLanguageString(option.name)}
-                          </li>
-                        )}
-                        disabled={!fundingSources || !!field.value}
-                        getOptionLabel={(option) => getLanguageString(option.name)}
-                        onChange={(_, value) => setFieldValue(field.name, value?.id)}
-                        renderInput={(params) => (
-                          <AutocompleteTextField
-                            data-testid={dataTestId.registrationWizard.description.fundingSourceSearchField}
-                            name={field.name}
-                            onBlur={field.onBlur}
-                            {...params}
-                            label={t('registration.description.funding.funder')}
-                            isLoading={isLoadingFundingSources}
-                            placeholder={t('common.search')}
-                            showSearchIcon={!field.value}
-                            multiline
-                            required
-                            errorMessage={touched && !!error ? error : undefined}
-                          />
-                        )}
-                      />
-                    )}
-                  </Field>
+                  <FundingSourceField fieldName={`${baseFieldName}.${SpecificFundingFieldNames.Source}`} />
 
                   {hasSelectedNfrSource &&
                     (hasSelectedNfrProject ? (
