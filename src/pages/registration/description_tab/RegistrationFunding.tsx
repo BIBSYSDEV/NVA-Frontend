@@ -8,18 +8,17 @@ import { VerifiedFundingApiPath } from '../../../api/apiPaths';
 import { emptyFunding, Funding } from '../../../types/registration.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { fundingSourceIsNfr, getNfrProjectUrl } from './projects_field/projectHelpers';
-import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
+import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { API_URL } from '../../../utils/constants';
 import { FundingSourceField } from '../../../components/FundingSourceField';
 
 interface FundingsFieldProps {
-  fieldName: string;
   currentFundings: Funding[];
 }
 
-export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps) => {
+export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => {
   const { t } = useTranslation();
 
   return (
@@ -28,7 +27,7 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
         {t('registration.description.funding.financing')}
       </Typography>
 
-      <FieldArray name={fieldName}>
+      <FieldArray name={DescriptionFieldNames.Fundings}>
         {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {currentFundings.map((funding, index) => {
