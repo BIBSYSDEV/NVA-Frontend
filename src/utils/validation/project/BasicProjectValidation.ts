@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { SaveCristinProject } from '../../../types/project.types';
 import { YupShape } from '../validationHelpers';
+import { projectFundingValidationSchema } from '../registration/fundingValidation';
 
 const basicProjectErrorMessage = {
   coordinatingInstitution: i18n.t('translation:feedback.validation.is_required', {
@@ -60,4 +61,5 @@ export const basicProjectValidationSchema = Yup.object<YupShape<SaveCristinProje
   coordinatingInstitution: Yup.object().shape({
     id: Yup.string().required(basicProjectErrorMessage.coordinatingInstitution),
   }),
+  funding: Yup.array().of(projectFundingValidationSchema),
 });

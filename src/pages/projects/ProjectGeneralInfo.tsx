@@ -64,7 +64,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             ))}
           </Box>
         ) : (
-          '-'
+          <Typography>-</Typography>
         )}
         <Typography variant="overline">{t('project.keywords')}</Typography>
         {project.keywords.length > 0 ? (
@@ -74,7 +74,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             ))}
           </Box>
         ) : (
-          '-'
+          <Typography>-</Typography>
         )}
       </div>
     </StyledGeneralInfo>

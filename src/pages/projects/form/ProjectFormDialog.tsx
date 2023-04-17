@@ -130,7 +130,8 @@ export const ProjectFormDialog = ({
                 errors.contributors ||
                 errors.startDate ||
                 errors.endDate ||
-                errors.coordinatingInstitution;
+                errors.coordinatingInstitution ||
+                errors.funding;
               const errorOnTab2 = false;
 
               const touchFieldsOnPanel1: FormikTouched<SaveCristinProject> = {
@@ -145,6 +146,10 @@ export const ProjectFormDialog = ({
                   type: true,
                   identity: { id: true },
                   affiliation: { id: true },
+                })),
+                funding: values.funding.map(() => ({
+                  source: true,
+                  identifier: true,
                 })),
               };
 

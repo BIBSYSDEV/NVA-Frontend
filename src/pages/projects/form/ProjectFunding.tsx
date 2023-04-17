@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, IconButton, TextField, Typography } from '@mui/material';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
@@ -10,18 +10,18 @@ import { FundingSources } from '../../../types/project.types';
 import { emptyFunding, Funding } from '../../../types/registration.types';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { fundingSourceIsNfr, getNfrProjectUrl } from './projects_field/projectHelpers';
 import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { API_URL } from '../../../utils/constants';
+import { fundingSourceIsNfr, getNfrProjectUrl } from '../../registration/description_tab/projects_field/projectHelpers';
+import { ProjectFieldName } from './ProjectFormDialog';
 
 interface FundingsFieldProps {
-  fieldName: string;
   currentFundings: Funding[];
 }
 
-export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps) => {
+export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) => {
   const { t } = useTranslation();
   const [fundingSources, isLoadingFundingSources] = useFetchResource<FundingSources>(CristinApiPath.FundingSources);
   const fundingSourcesList = fundingSources?.sources ?? [];
@@ -32,7 +32,7 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
         {t('registration.description.funding.financing')}
       </Typography>
 
-      <FieldArray name={fieldName}>
+      <FieldArray name={ProjectFieldName.Funding}>
         {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {currentFundings.map((funding, index) => {
@@ -52,7 +52,7 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
                   key={index}
                   sx={{
                     display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', md: '4fr 6fr 2fr 2fr 1fr' },
+                    gridTemplateColumns: { xs: '1fr', md: '4fr 5fr 2fr 1fr' },
                     gap: '1rem',
                     alignItems: 'center',
                   }}>
@@ -100,15 +100,6 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
                     (hasSelectedNfrProject ? (
                       <>
                         <TextField
-                          value={getLanguageString(funding.labels)}
-                          disabled
-                          label={t('registration.description.funding.project')}
-                          fullWidth
-                          variant="filled"
-                          multiline
-                          data-testid={dataTestId.registrationWizard.description.fundingProjectField}
-                        />
-                        <TextField
                           value={funding.identifier}
                           disabled={hasSelectedNfrSource}
                           label={t('common.id')}
@@ -142,7 +133,6 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
                                 setFieldValue(baseFieldName, nfrFunding);
                               }
                             }}
-                            required
                             name={name}
                             onBlur={onBlur}
                             errorMessage={touched && !!error ? error : undefined}
@@ -153,62 +143,22 @@ export const FundingsField = ({ fieldName, currentFundings }: FundingsFieldProps
                     ))}
 
                   {!hasSelectedNfrSource && hasSelectedSource && (
-                    <>
-                      <Field name={`${baseFieldName}.${SpecificFundingFieldNames.NorwegianLabel}`}>
-                        {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                          <TextField
-                            {...field}
-                            value={field.value ?? ''}
-                            disabled={hasSelectedNfrSource}
-                            label={t('registration.description.funding.project')}
-                            fullWidth
-                            variant="filled"
-                            multiline
-                            required={!hasSelectedNfrSource}
-                            error={touched && !!error}
-                            helperText={touched && !!error ? error : undefined}
-                            data-testid={dataTestId.registrationWizard.description.fundingProjectField}
-                          />
-                        )}
-                      </Field>
-
-                      <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Identifier}`}>
-                        {({ field }: FieldProps<string>) => (
-                          <TextField
-                            {...field}
-                            value={field.value ?? ''}
-                            disabled={hasSelectedNfrSource}
-                            label={t('common.id')}
-                            fullWidth
-                            variant="filled"
-                            data-testid={dataTestId.registrationWizard.description.fundingIdField}
-                          />
-                        )}
-                      </Field>
-
-                      <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Amount}`}>
-                        {({ field, meta: { error, touched } }: FieldProps<number>) => (
-                          <TextField
-                            {...field}
-                            disabled={hasSelectedNfrSource}
-                            label={t('registration.description.funding.funding_sum')}
-                            fullWidth
-                            variant="filled"
-                            InputProps={{
-                              startAdornment: (
-                                <InputAdornment position="start">{funding.fundingAmount?.currency}</InputAdornment>
-                              ),
-                            }}
-                            error={touched && !!error}
-                            helperText={touched && !!error ? error : undefined}
-                            data-testid={dataTestId.registrationWizard.description.fundingSumField}
-                          />
-                        )}
-                      </Field>
-                    </>
+                    <Field name={`${baseFieldName}.${SpecificFundingFieldNames.Identifier}`}>
+                      {({ field }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          value={field.value ?? ''}
+                          disabled={hasSelectedNfrSource}
+                          label={t('common.id')}
+                          fullWidth
+                          variant="filled"
+                          data-testid={dataTestId.registrationWizard.description.fundingIdField}
+                        />
+                      )}
+                    </Field>
                   )}
                   <IconButton
-                    sx={{ gridColumn: '5' }}
+                    sx={{ width: 'fit-content' }}
                     onClick={() => remove(index)}
                     data-testid={dataTestId.registrationWizard.description.fundingRemoveButton}
                     title={t('registration.description.funding.remove_funding')}>
