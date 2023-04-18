@@ -540,7 +540,12 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
 
       <Typography variant="h3">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
       <Typography paragraph>{concertSeries ? t('common.yes') : t('common.no')} </Typography>
-      {concertSeries && <Typography paragraph>{concertSeries}</Typography>}
+      {concertSeries && (
+        <>
+          <Typography variant="h3">{t('common.description')} </Typography>
+          <Typography paragraph>{concertSeries}</Typography>
+        </>
+      )}
 
       <Typography variant="h3">{t('common.date')}</Typography>
       {time.type === 'Instant' ? (
