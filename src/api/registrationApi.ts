@@ -1,5 +1,5 @@
 import { Doi, Registration } from '../types/registration.types';
-import { authenticatedApiRequest } from './apiRequest';
+import { apiRequest, authenticatedApiRequest } from './apiRequest';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/messages.types';
 import { PublicationsApiPath } from './apiPaths';
 
@@ -73,3 +73,17 @@ export const createDraftDoi = async (registrationId: string) =>
     url: `${registrationId}/doi`,
     method: 'POST',
   });
+
+export const fetchRegistration = async (registrationId: string) => {
+  const getRegistration = await apiRequest<Registration>({
+    url: registrationId,
+  });
+  return getRegistration.data;
+};
+
+export const fetchRegistrationTickets = async (registrationId: string) => {
+  const getTickets = await authenticatedApiRequest<TicketCollection>({
+    url: `${registrationId}/tickets`,
+  });
+  return getTickets.data;
+};

@@ -89,7 +89,7 @@ const resourceErrorMessage = {
   eventTitleRequired: i18n.t('translation:feedback.validation.is_required', {
     field: i18n.t('translation:registration.resource_type.title_of_event'),
   }),
-  exhibitionRequired: i18n.t('translation:feedback.validation.exhibition_place_required'),
+  exhibitionRequired: i18n.t('translation:feedback.validation.announcement_required'),
   fromMustBeBeforeTo: i18n.t('translation:feedback.validation.cannot_be_after', {
     field: i18n.t('translation:registration.resource_type.date_from'),
     limitField: i18n.t('translation:registration.resource_type.date_to').toLowerCase(),
