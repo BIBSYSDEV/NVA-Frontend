@@ -31,7 +31,7 @@ import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import { getArtisticOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
+import { getArtisticOutputName } from '../../utils/registration-helpers';
 import {
   Award,
   Broadcast,
@@ -453,7 +453,7 @@ const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: Other
 
 const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore }) => {
   const { t } = useTranslation();
-  const { type, ensemble, movements, extent, publisher, ismn, isrc } = musicScore;
+  const { type, ensemble, movements, extent, publisher, ismn } = musicScore;
 
   return (
     <DialogContent>
@@ -470,7 +470,6 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ismn')}</Typography>
       <Typography paragraph>{ismn.formatted ?? ismn.value}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
-      <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>
     </DialogContent>
   );
 };

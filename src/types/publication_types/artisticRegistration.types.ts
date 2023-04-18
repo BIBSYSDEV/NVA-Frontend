@@ -91,10 +91,6 @@ export interface MusicScore extends ArtisticOutputBase {
     value: string;
     formatted?: string;
   };
-  isrc: {
-    type: 'Isrc';
-    value: string;
-  };
 }
 
 export interface LiteraryArtsMonograph {
