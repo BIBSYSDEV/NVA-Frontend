@@ -502,8 +502,8 @@ export const contributorConfig: ContributorConfig = {
 
 export const groupContributors = (contributors: Contributor[], registrationType: PublicationInstanceType) => {
   const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
-  const primaryContributors = contributors.filter((contributor) => primaryRoles.includes(contributor.role));
-  const secondaryContributors = contributors.filter((contributor) => secondaryRoles.includes(contributor.role));
+  const primaryContributors = contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
+  const secondaryContributors = contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
 
   return { primaryContributors, secondaryContributors };
 };

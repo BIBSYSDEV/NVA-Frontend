@@ -10,7 +10,7 @@
       },
       "paragraph1": "NVA vert òg utvikla til bruk ved rapportering og vitskapeleg publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskingsadministrative oppgåver.",
       "paragraph2": "Sikt er databehandlar. Den enkelte Institusjon er handsamingsansvarleg og registrerer og vedlikeheld eiga innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett etc.). Tenesta får òg overført innhald frå andre datakjelder.",
-      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det tyder at ein registrering kan vert ferdigstilt slik at metadata om ressursen vert publisert, mens ressursen ikkje vert opent tilgjengeleg før angjeve dato. Tenesta tillèt ikkje handsaming av sensitive personopplysingar.",
+      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det betyr at ein registrering kan verte ferdigstilt slik at metadata om ressursen vert publisert, mens ressursen ikkje vert opent tilgjengeleg før angjeve dato. Tenesta tillèt ikkje handsaming av sensitive personopplysingar.",
       "paragraph4": "NVA vil gjere institusjonen sitt opne innhald tilgjengeleg via opne grensesnitt, med hensikt å gjere dette kjend og søkbart for omverda og fremje indeksering i søkjemotorar og søkjeportalar.",
       "paragraph5": "Sjølv om NVA er etablert og i bruk av fleire institusjonar, vil tenesta vere i kontinuerleg utvikling i heile sin levetid. Institusjonar som ikkje har eit vitenarkiv kan kontakte <0>Sikt</0> for å få nytte NVA som pilotinstitusjon."
     },
@@ -918,7 +918,7 @@
         "Actor": "Skodespelar",
         "Architect": "Arkitekt",
         "ArchitecturalPlanner": "Planleggjar",
-        "Artist": "Kunstnar",
+        "Artist": "Kunstner",
         "ArtisticDirector": "Kunstnerisk leiar",
         "Choreographer": "Koreograf",
         "Composer": "Komponist",
@@ -981,7 +981,6 @@
       "funding": {
         "financing": "Finansiering",
         "funder": "Finansiør",
-        "funder_filter": "Filtrer på namn eller kode",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnamn eller prosjektleiar",
@@ -1230,6 +1229,7 @@
           "ServiceDesign": "Tenestedesign",
           "WebDesign": "Webdesign"
         },
+        "edit_announcement": "Endre offentleggjering",
         "edit_audio_visual_publication": "Endre audio-/videoutgjeving",
         "edit_award": "Endre pris",
         "edit_book": "Endre bok/trykksak",

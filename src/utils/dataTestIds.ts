@@ -288,6 +288,7 @@ export const dataTestId = {
       artisticOutputDuration: 'artistic-output-duration',
       artisticOutputSaveButton: 'artistic-output-save-button',
       artisticSubtype: 'artistic-subtype',
+      artisticSubtypeDescription: 'artistic-subtype-description',
       audioVideoAddTrack: 'audio-video-add-track',
       audioVideoPublisher: 'audio-video-publisher',
       audioVideoCatalogueNumber: 'audio-video-catalogue-number',

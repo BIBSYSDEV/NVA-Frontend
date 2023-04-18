@@ -67,7 +67,10 @@ export interface Contributor {
   affiliations?: Institution[];
   correspondingAuthor?: boolean;
   identity: Identity;
-  role: ContributorRole;
+  role: {
+    type: ContributorRole;
+    description?: string;
+  };
   sequence: number;
 }
 
@@ -86,7 +89,7 @@ export const emptyContributor: Contributor = {
     type: 'Identity',
     name: '',
   },
-  role: ContributorRole.Creator,
+  role: { type: ContributorRole.Creator },
   sequence: 0,
   type: 'Contributor',
 };

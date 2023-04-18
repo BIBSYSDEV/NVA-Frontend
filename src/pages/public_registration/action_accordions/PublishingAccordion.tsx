@@ -68,7 +68,7 @@ export const PublishingAccordion = ({
     }
   }, [registration]);
 
-  const firstErrorTab = getFirstErrorTab(tabErrors);
+  const firstErrorTab = Math.max(getFirstErrorTab(tabErrors), 0);
 
   const onClickPublish = async () => {
     setIsLoading(LoadingState.CreatePublishingREquest);
