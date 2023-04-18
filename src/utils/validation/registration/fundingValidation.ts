@@ -52,3 +52,8 @@ export const fundingValidationSchema = Yup.object({
         })
   ),
 });
+
+export const projectFundingValidationSchema = Yup.object({
+  identifier: Yup.string().optional(),
+  source: Yup.string().required(fundingErrorMessage.fundingSourceRequired),
+});
