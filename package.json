@@ -25,7 +25,7 @@
     ]
   },
   "dependencies": {
-    "@aws-amplify/auth": "^5.2.3",
+    "@aws-amplify/auth": "^5.3.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/roboto": "^4.5.8",
@@ -69,7 +69,7 @@
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
     "@types/react-router-dom": "^5.3.3",
-    "axe-core": "^4.6.3",
+    "axe-core": "^4.7.0",
     "axios-mock-adapter": "^1.21.4",
     "cypress": "^12.9.0",
     "cypress-axe": "^1.4.0",
