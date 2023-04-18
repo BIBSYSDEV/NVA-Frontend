@@ -179,7 +179,7 @@ export interface AudioVisualPublication extends ArtisticOutputBase {
   type: 'AudioVisualPublication';
   mediaType: {
     type: MusicMediaType | '';
-    description: string | '';
+    description: string;
   };
   publisher: UnconfirmedPublisher;
   catalogueNumber: string;
