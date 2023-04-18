@@ -71,7 +71,7 @@
     "@types/react-router-dom": "^5.3.3",
     "axe-core": "^4.7.0",
     "axios-mock-adapter": "^1.21.4",
-    "cypress": "^12.9.0",
+    "cypress": "^12.10.0",
     "cypress-axe": "^1.4.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-cypress": "^2.13.2",
