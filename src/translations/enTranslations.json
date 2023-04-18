@@ -981,7 +981,6 @@
       "funding": {
         "financing": "Funding",
         "funder": "Funder",
-        "funder_filter": "Filter by name or code",
         "funding_sum": "Sum",
         "nfr_project": "NFR project",
         "nfr_project_search": "Search by project name or project leader",

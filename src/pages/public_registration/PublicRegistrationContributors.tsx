@@ -140,7 +140,7 @@ const ContributorsRow = ({
                 ) : (
                   name
                 )}
-                {showRole && ` (${t(`registration.contributors.types.${contributor.role}`)})`}
+                {showRole && ` (${t(`registration.contributors.types.${contributor.role.type}`)})`}
                 {affiliationIndexes && affiliationIndexes.length > 0 && (
                   <sup>{affiliationIndexes && affiliationIndexes.length > 0 && affiliationIndexes.join(',')}</sup>
                 )}
