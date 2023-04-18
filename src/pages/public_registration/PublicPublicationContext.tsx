@@ -680,9 +680,9 @@ const PublicLiteraryArtsPerformanceDialogContent = ({ performance }: { performan
       <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${performance.type}`)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.type_work')}</Typography>
-      {performance.subtype && (
+      {performance.subtype.type && (
         <Typography paragraph>
-          {t(`registration.resource_type.artistic.performance_types.${performance.subtype}`)}
+          {t(`registration.resource_type.artistic.performance_types.${performance.subtype.type}`)}
         </Typography>
       )}
       <Typography variant="h3">{t('common.place')}</Typography>

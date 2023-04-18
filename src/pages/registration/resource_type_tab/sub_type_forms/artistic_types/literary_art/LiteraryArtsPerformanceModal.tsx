@@ -22,17 +22,31 @@ interface LiteraryArtsPerformanceModalProps {
 
 const emptyLiteraryArtsPerformance: LiteraryArtsPerformance = {
   type: 'LiteraryArtsPerformance',
-  subtype: '',
+  subtype: {
+    type: '',
+    description: '',
+  },
   place: { type: 'UnconfirmedPlace', label: '', country: '' },
   publicationDate: emptyRegistrationDate,
 };
 
 const validationSchema = Yup.object<YupShape<LiteraryArtsPerformance>>({
-  subtype: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.type_work'),
-    })
-  ),
+  subtype: Yup.object().shape({
+    type: Yup.string().required(
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:registration.resource_type.type_work'),
+      })
+    ),
+    description: Yup.string().when('type', ([type], schema) =>
+      type === 'Other'
+        ? schema.required(
+            i18n.t('translation:feedback.validation.is_required', {
+              field: i18n.t('translation:common.description'),
+            })
+          )
+        : schema.optional()
+    ),
+  }),
   place: Yup.object({
     label: Yup.string().required(
       i18n.t('translation:feedback.validation.is_required', {
@@ -71,10 +85,10 @@ export const LiteraryArtsPerformanceModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ isSubmitting, errors, touched }: FormikProps<LiteraryArtsPerformance>) => (
+        {({ isSubmitting, errors, touched, values }: FormikProps<LiteraryArtsPerformance>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Field name="subtype">
+              <Field name="subtype.type">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     variant="filled"
@@ -94,6 +108,23 @@ export const LiteraryArtsPerformanceModal = ({
                   </TextField>
                 )}
               </Field>
+              {values.subtype.type === 'Other' ? (
+                <Field name="subtype.description">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      variant="filled"
+                      required
+                      label={t('common.description')}
+                      fullWidth
+                      {...field}
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                      data-testid={dataTestId.registrationWizard.resourceType.artisticSubtypeDescription}
+                    />
+                  )}
+                </Field>
+              ) : null}
+
               <Field name="place.label">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
