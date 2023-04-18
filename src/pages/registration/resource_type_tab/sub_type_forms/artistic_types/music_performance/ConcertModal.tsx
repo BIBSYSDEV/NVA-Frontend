@@ -57,7 +57,7 @@ const emptyConcert: Concert = {
   extent: '',
   description: '',
   concertProgramme: [],
-  concertSeries: undefined,
+  concertSeries: '',
 };
 
 const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
@@ -138,13 +138,9 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
   const [removeWorkItemIndex, setRemoveWorkItemIndex] = useState(-1);
   const closeConfirmDialog = () => setRemoveWorkItemIndex(-1);
 
-  const [partOfSeries, setPartOfSeries] = useState(concert?.concertSeries ? true : false);
+  const [partOfSeries, setPartOfSeries] = useState(!!concert?.concertSeries);
 
-  const validateForm = (values?: Concert): FormikErrors<Concert> => {
-    if (!values) {
-      return {};
-    }
-
+  const validateForm = (values: Concert): FormikErrors<Concert> => {
     try {
       validateYupSchema<Concert>(values, validationSchema, true, {
         partOfSeries: partOfSeries,
@@ -155,6 +151,8 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
     return {};
   };
 
+  const initialValues = concert ?? emptyConcert;
+
   return (
     <Dialog open={open} onClose={closeModal} maxWidth="md" fullWidth>
       <DialogTitle>
@@ -164,9 +162,9 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
       </DialogTitle>
 
       <Formik
-        initialValues={concert ?? emptyConcert}
+        initialValues={initialValues}
         validate={validateForm}
-        initialErrors={validateForm(concert)}
+        initialErrors={validateForm(initialValues)}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
@@ -183,38 +181,34 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     onChange={() => {
                       if (!partOfSeries) {
                         setFieldValue('time', emptyPeriod);
-                        setFieldValue('concertSeries', '');
-                        setPartOfSeries(!partOfSeries);
                       } else {
                         setFieldValue('time', emptyInstant);
-                        setFieldValue('concertSeries', undefined);
-                        setPartOfSeries(!partOfSeries);
+                        setFieldValue('concertSeries', '');
                       }
+                      setPartOfSeries(!partOfSeries);
                     }}
                   />
                 }
               />
-              <Field name="concertSeries">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <>
-                    {partOfSeries && (
-                      <TextField
-                        data-testid={dataTestId.registrationWizard.resourceType.concertSeriesDescriptionField}
-                        {...field}
-                        fullWidth
-                        multiline
-                        required
-                        value={field.value}
-                        variant="filled"
-                        rows={3}
-                        label={t('common.description')}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
-                  </>
-                )}
-              </Field>
+              {partOfSeries && (
+                <Field name="concertSeries">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      data-testid={dataTestId.registrationWizard.resourceType.concertSeriesDescriptionField}
+                      {...field}
+                      fullWidth
+                      multiline
+                      required
+                      value={field.value}
+                      variant="filled"
+                      rows={3}
+                      label={t('common.description')}
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                    />
+                  )}
+                </Field>
+              )}
               <Field name="place.label">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
