@@ -1,12 +1,11 @@
 import { Autocomplete } from '@mui/material';
 import { Field, FieldProps } from 'formik';
+import { useQuery } from '@tanstack/react-query';
 import { dataTestId } from '../utils/dataTestIds';
 import { getLanguageString } from '../utils/translation-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
 import { useTranslation } from 'react-i18next';
-import { CristinApiPath } from '../api/apiPaths';
-import { FundingSources } from '../types/project.types';
-import { useFetchResource } from '../utils/hooks/useFetchResource';
+import { fetchFundingSources } from '../api/cristinApi';
 
 interface FundingSourceFieldProps {
   fieldName: string;
@@ -14,8 +13,12 @@ interface FundingSourceFieldProps {
 
 export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
   const { t } = useTranslation();
-  const [fundingSources, isLoadingFundingSources] = useFetchResource<FundingSources>(CristinApiPath.FundingSources);
-  const fundingSourcesList = fundingSources?.sources ?? [];
+
+  const fundingSourcesQuery = useQuery({
+    queryKey: ['fundingSources'],
+    queryFn: fetchFundingSources,
+  });
+  const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
   return (
     <Field name={fieldName}>
@@ -36,7 +39,7 @@ export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
               {getLanguageString(option.name)}
             </li>
           )}
-          disabled={!fundingSources || !!field.value}
+          disabled={!fundingSourcesQuery.data || !!field.value}
           getOptionLabel={(option) => getLanguageString(option.name)}
           onChange={(_, value) => setFieldValue(field.name, value?.id)}
           renderInput={(params) => (
@@ -46,7 +49,7 @@ export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
               onBlur={field.onBlur}
               {...params}
               label={t('registration.description.funding.funder')}
-              isLoading={isLoadingFundingSources}
+              isLoading={fundingSourcesQuery.isLoading}
               placeholder={t('common.search')}
               showSearchIcon={!field.value}
               multiline
