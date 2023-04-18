@@ -64,11 +64,7 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
         })
       ),
   }),
-  catalogueNumber: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.catalogue_number'),
-    })
-  ),
+  catalogueNumber: Yup.string(),
   trackList: Yup.array()
     .of(
       Yup.object<YupShape<MusicTrack>>({
@@ -173,7 +169,6 @@ export const AudioVisualPublicationModal = ({
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.artistic.catalogue_number')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.audioVideoCatalogueNumber}
