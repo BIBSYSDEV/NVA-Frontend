@@ -10,7 +10,19 @@ import {
   Checkbox,
   FormControlLabel,
 } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
+import {
+  Formik,
+  Form,
+  Field,
+  FieldProps,
+  ErrorMessage,
+  FieldArray,
+  FieldArrayRenderProps,
+  FormikProps,
+  FormikErrors,
+  validateYupSchema,
+  yupToFormErrors,
+} from 'formik';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -43,9 +55,8 @@ const emptyConcert: Concert = {
   },
   time: emptyInstant,
   extent: '',
-  description: '',
   concertProgramme: [],
-  partOfSeries: false,
+  concertSeries: '',
 };
 
 const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
@@ -56,7 +67,15 @@ const emptyMusicalWorkPerformance: MusicalWorkPerformance = {
 };
 
 const validationSchema = Yup.object<YupShape<Concert>>({
-  partOfSeries: Yup.boolean(),
+  concertSeries: Yup.string().when('$partOfSeries', ([partOfSeries], schema) =>
+    partOfSeries
+      ? schema.required(
+          i18n.t('translation:feedback.validation.is_required', {
+            field: i18n.t('translation:common.description'),
+          })
+        )
+      : schema.optional()
+  ),
   place: Yup.object().shape({
     label: Yup.string().required(
       i18n.t('translation:feedback.validation.is_required', {
@@ -64,7 +83,7 @@ const validationSchema = Yup.object<YupShape<Concert>>({
       })
     ),
   }),
-  time: Yup.object().when('partOfSeries', ([partOfSeries], schema) =>
+  time: Yup.object().when('$partOfSeries', ([partOfSeries], schema) =>
     partOfSeries
       ? periodField
       : schema.shape({
@@ -118,6 +137,21 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
   const [removeWorkItemIndex, setRemoveWorkItemIndex] = useState(-1);
   const closeConfirmDialog = () => setRemoveWorkItemIndex(-1);
 
+  const [partOfSeries, setPartOfSeries] = useState(!!concert?.concertSeries);
+
+  const validateForm = (values: Concert): FormikErrors<Concert> => {
+    try {
+      validateYupSchema<Concert>(values, validationSchema, true, {
+        partOfSeries: partOfSeries,
+      });
+    } catch (err) {
+      return yupToFormErrors(err);
+    }
+    return {};
+  };
+
+  const initialValues = concert ?? emptyConcert;
+
   return (
     <Dialog open={open} onClose={closeModal} maxWidth="md" fullWidth>
       <DialogTitle>
@@ -125,9 +159,11 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
           ? t('registration.resource_type.artistic.edit_concert')
           : t('registration.resource_type.artistic.add_concert')}
       </DialogTitle>
+
       <Formik
-        initialValues={concert ?? emptyConcert}
-        validationSchema={validationSchema}
+        initialValues={initialValues}
+        validate={validateForm}
+        initialErrors={validateForm(initialValues)}
         onSubmit={(values) => {
           onSubmit(values);
           closeModal();
@@ -135,28 +171,43 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
         {({ values, errors, touched, isSubmitting, setFieldValue, setFieldTouched }: FormikProps<Concert>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Field name="partOfSeries">
-                {({ field }: FieldProps<boolean>) => (
-                  <FormControlLabel
-                    data-testid={dataTestId.registrationWizard.resourceType.concertPartOfSeries}
-                    label={t('registration.resource_type.artistic.concert_part_of_series')}
-                    control={
-                      <Checkbox
-                        checked={field.value}
-                        {...field}
-                        onChange={(event) => {
-                          if (!field.value) {
-                            setFieldValue('time', emptyPeriod);
-                          } else {
-                            setFieldValue('time', emptyInstant);
-                          }
-                          field.onChange(event);
-                        }}
-                      />
-                    }
+              <FormControlLabel
+                data-testid={dataTestId.registrationWizard.resourceType.concertSeriesCheckbox}
+                label={t('registration.resource_type.artistic.concert_part_of_series')}
+                control={
+                  <Checkbox
+                    checked={partOfSeries}
+                    onChange={() => {
+                      if (!partOfSeries) {
+                        setFieldValue('time', emptyPeriod);
+                      } else {
+                        setFieldValue('time', emptyInstant);
+                        setFieldValue('concertSeries', '');
+                      }
+                      setPartOfSeries(!partOfSeries);
+                    }}
                   />
-                )}
-              </Field>
+                }
+              />
+              {partOfSeries && (
+                <Field name="concertSeries">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      data-testid={dataTestId.registrationWizard.resourceType.concertSeriesDescriptionField}
+                      {...field}
+                      fullWidth
+                      multiline
+                      required
+                      value={field.value}
+                      variant="filled"
+                      rows={3}
+                      label={t('common.description')}
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                    />
+                  )}
+                </Field>
+              )}
               <Field name="place.label">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
@@ -172,7 +223,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                 )}
               </Field>
 
-              {values.partOfSeries ? (
+              {partOfSeries ? (
                 <Box sx={{ display: 'flex', gap: '1rem' }}>
                   <PeriodFields fromFieldName="time.from" toFieldName="time.to" />
                 </Box>

@@ -154,9 +154,8 @@ export interface Concert extends ArtisticOutputBase {
   place: Place;
   time: Instant | Period;
   extent: string;
-  description: string;
   concertProgramme: MusicalWorkPerformance[];
-  partOfSeries: boolean;
+  concertSeries: string;
 }
 
 export enum MusicMediaType {
