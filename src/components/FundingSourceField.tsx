@@ -1,11 +1,13 @@
 import { Autocomplete } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { dataTestId } from '../utils/dataTestIds';
 import { getLanguageString } from '../utils/translation-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
-import { useTranslation } from 'react-i18next';
 import { fetchFundingSources } from '../api/cristinApi';
+import { setNotification } from '../redux/notificationSlice';
 
 interface FundingSourceFieldProps {
   fieldName: string;
@@ -13,10 +15,12 @@ interface FundingSourceFieldProps {
 
 export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const fundingSourcesQuery = useQuery({
     queryKey: ['fundingSources'],
     queryFn: fetchFundingSources,
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_funding_sources'), variant: 'error' })),
   });
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
