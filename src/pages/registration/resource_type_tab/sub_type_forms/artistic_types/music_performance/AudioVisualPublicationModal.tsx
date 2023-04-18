@@ -36,7 +36,10 @@ interface AudioVisualPublicationModalProps {
 
 const emptyAudioVisualPublication: AudioVisualPublication = {
   type: 'AudioVisualPublication',
-  mediaType: '',
+  mediaType: {
+    type: '',
+    description: '',
+  },
   publisher: emptyUnconfirmedPublisher,
   catalogueNumber: '',
   trackList: [],
@@ -50,11 +53,22 @@ const emptyMusicTrack: MusicTrack = {
 };
 
 const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
-  mediaType: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.media_type'),
-    })
-  ),
+  mediaType: Yup.object().shape({
+    type: Yup.string().required(
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:registration.resource_type.artistic.media_type'),
+      })
+    ),
+    description: Yup.string().when('type', ([type], schema) =>
+      type === 'Other'
+        ? schema.required(
+            i18n.t('translation:feedback.validation.is_required', {
+              field: i18n.t('translation:common.description'),
+            })
+          )
+        : schema.optional()
+    ),
+  }),
   publisher: Yup.object().shape({
     name: Yup.string()
       .nullable()
@@ -125,10 +139,10 @@ export const AudioVisualPublicationModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ values, errors, touched, isSubmitting }: FormikProps<AudioVisualPublication>) => (
+        {({ values, errors, touched, isSubmitting, setFieldValue }: FormikProps<AudioVisualPublication>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Field name="mediaType">
+              <Field name="mediaType.type">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     variant="filled"
@@ -137,6 +151,10 @@ export const AudioVisualPublicationModal = ({
                     label={t('registration.resource_type.artistic.media_type')}
                     fullWidth
                     {...field}
+                    onChange={(event) => {
+                      field.onChange(event);
+                      setFieldValue('mediaType.description', '');
+                    }}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
@@ -148,6 +166,22 @@ export const AudioVisualPublicationModal = ({
                   </TextField>
                 )}
               </Field>
+              {values.mediaType.type === 'Other' ? (
+                <Field name="mediaType.description">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      variant="filled"
+                      required
+                      label={t('common.description')}
+                      fullWidth
+                      {...field}
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                      data-testid={dataTestId.registrationWizard.resourceType.artisticSubtypeDescription}
+                    />
+                  )}
+                </Field>
+              ) : null}
               <Field name="publisher.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
