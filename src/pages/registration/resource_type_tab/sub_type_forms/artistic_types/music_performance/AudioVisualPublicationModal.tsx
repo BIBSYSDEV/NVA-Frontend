@@ -145,7 +145,7 @@ export const AudioVisualPublicationModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ values, errors, touched, isSubmitting }: FormikProps<AudioVisualPublication>) => (
+        {({ values, errors, touched, isSubmitting, setFieldValue }: FormikProps<AudioVisualPublication>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <Field name="mediaType">
@@ -200,6 +200,10 @@ export const AudioVisualPublicationModal = ({
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
+                    value={field.value ?? ''}
+                    onChange={(event) => {
+                      setFieldValue(field.name, event.target.value === '' ? null : event.target.value);
+                    }}
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.artistic.music_score_isrc')}
