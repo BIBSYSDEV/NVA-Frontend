@@ -33,8 +33,8 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
       </div>
       <div>
         <Typography variant="overline">{t('project.financing')}</Typography>
-        {project.newFunding.length > 0 ? (
-          project.newFunding.map((funding, index) => {
+        {project.funding.length > 0 ? (
+          project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.labels);
             const fundingText = funding.identifier
               ? `${sourceName} - ${t('project.grant_id')} ${funding.identifier}`
@@ -64,7 +64,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             ))}
           </Box>
         ) : (
-          '-'
+          <Typography>-</Typography>
         )}
         <Typography variant="overline">{t('project.keywords')}</Typography>
         {project.keywords.length > 0 ? (
@@ -74,7 +74,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             ))}
           </Box>
         ) : (
-          '-'
+          <Typography>-</Typography>
         )}
       </div>
     </StyledGeneralInfo>
