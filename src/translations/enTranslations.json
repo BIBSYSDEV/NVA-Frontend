@@ -4,31 +4,31 @@
     "availability_statement": "Availability statement",
     "description": {
       "paragraph0": {
-        "bullet_point0": "Meet requirements for open access to articles and other research results through deposit in an open research archive",
+        "bullet_point0": "Meet the requirement for open access to articles and other research results by depositing in an open knowledge archive",
         "bullet_point1": "Publish reports, student theses and other material produced at the institution",
         "intro": "By using NVA, Norwegian research institutions are able to:"
       },
-      "paragraph1": "NVA is also being developed for use in reporting scientific publication to the Ministry of Education and Research and the Ministry of Health and Care Services (NVI reporting), and for other administrative tasks.",
+      "paragraph1": "NVA is also being developed for use when reporting scientific publication to the Ministry of Education and Research and the Ministry of Health and Care Services (NVI reporting), and for other administrative tasks.",
       "paragraph2": "Sikt is the data processor. The individual institution is the data controller and registers and maintains its own content in the service, and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also receives content from other data sources.",
-      "paragraph3": "NVA supports postponed publication of resources. This means that a registration can be completed so that metadata about the resource is published, while the resource itself is not open until the specified date. The service does not allow the processing of sensitive personal data.",
-      "paragraph4": "NVA will make the institution's open content available via open interfaces, with the intention of making this known and searchable to the outside world and promoting indexing in search engines and search portals.",
-      "paragraph5": "Although NVA is established and in use by several institutions, the service will be in continous development throughout its lifetime. Institutions that do not have a research archive can contact <0>Sikt</0> to use NVA as a pilot institution."
+      "paragraph3": "NVA supports deferred publication of resources. This means that a registration can be completed so that metadata about the resource is published, while the resource itself is not open until the specified date. The service does not allow the processing of sensitive personal data.",
+      "paragraph4": "NVA will make the institution's open content available via open interfaces, with the intention of making this known and searchable to the outside world, and promoting indexing in search engines and search portals.",
+      "paragraph5": "Although NVA has been established and in use by several institutions, the service will be in continuous development throughout its lifetime. Institutions that do not have a research archive can contact <0>Sikt</0> to use NVA as a pilot institution."
     },
     "footer_text": "The service is delivered by Sikt - Norwegian Agency for Shared Services in Education and Research",
-    "short_description": "The national research archive (NVA) collects information about Norwegian research and makes research results and research information openly available."
+    "short_description": "The national research archive (NVA) collects information about Norwegian research and makes research results- and information openly available."
   },
   "authorization": {
-    "accept_terms_to_create_user": "I accept to be created as a user in NVA",
-    "back_to_home": "Back to home",
+    "accept_terms_to_create_user": "I agree to be created as a user in NVA",
+    "back_to_home": "Back to the home page",
     "cancel_create_user_text": "You must create a user to proceed. If you cancel, you will be logged out. Do you want to cancel?",
     "cancel_create_user_title": "Do you want to cancel?",
-    "create_user_info": "As a user you will be visible for all users that adds authors or other contributors to results.",
-    "expired_token_info": "Your session has expired. Please log in again.",
+    "create_user_info": "As a user you will be visible to anyone who wants to add an author or other contributors to results.",
+    "expired_token_info": "Your session has expired. Please log back in.",
     "forbidden": "Forbidden",
-    "forbidden_description": "You are not authorized to see the content on this page. Contact the administrator if you think this is wrong.",
+    "forbidden_description": "You are not authorized to view the content on this page. Contact the administrator if you think this is incorrect.",
     "login": "Log in",
     "logout": "Log out",
-    "registration_not_published": "This registration is not published yet.",
+    "registration_not_published": "This registration has not been published yet.",
     "your_user_profile": "Your user profile"
   },
   "basic_data": {
@@ -39,7 +39,7 @@
       "new_search": "New search",
       "no_matching_persons_found": "No matching persons found in the Person Registry",
       "position": "Position",
-      "position_percent": "Position percent",
+      "position_percent": "Percentage employment (FTE percentage)",
       "search_for_person": "Search for person",
       "update_person_registry": "Update person registry"
     },
@@ -59,16 +59,16 @@
     },
     "institutions": {
       "add_institution": "Add institution",
-      "admin_institutions": "Administer institutions",
+      "admin_institutions": "Manage institutions",
       "administrators": "Administrators",
       "archive_name": "Archive name",
       "can_assign_doi": "Institution can assign Digital Object Identifier (DOI)",
-      "display_name": "Display name for the institution",
+      "display_name": "Display name of the institution",
       "doi_password": "Password",
       "doi_prefix": "DOI prefix",
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Edit institution",
-      "feide_organization_domain": "Institution's domain in Feide",
+      "feide_organization_domain": "The institution's domain in Feide",
       "institution_is_nvi_applicable": "Institution reports publication points to NVI",
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
       "invalid_ror_format": "Invalid ROR. Example with valid format: https://ror.org/abcd0123ef",
@@ -113,7 +113,7 @@
     "clear": "Clear",
     "click_to_show_all": "Click to show all",
     "close": "Close",
-    "close_forever": "Close and don't show again",
+    "close_forever": "Close and do not show again",
     "country": "Country",
     "create": "Create",
     "create_doi": "Create DOI",
@@ -164,9 +164,9 @@
     "registration": "Registration",
     "registrations": "Registrations",
     "reject_doi": "Reject DOI",
-    "reload_page_info": "A new version of NVA is available and the page must be reloaded.",
+    "reload_page_info": "A new version of NVA is available and the page will need to be reloaded.",
     "remove": "Remove",
-    "required_description": "Fields with asterisk are required",
+    "required_description": "Fields with an asterisk are mandatory",
     "role": "Role",
     "save": "Save",
     "save_and_view": "Save and view",
@@ -184,8 +184,8 @@
     "show_details": "Show details",
     "show_fewer": "Show fewer",
     "show_more": "Show more",
-    "skip_to_main_content": "Skip to main content",
-    "skip_to_schema": "Skip to schema",
+    "skip_to_main_content": "Jump to main content",
+    "skip_to_schema": "Jump to form",
     "start": "Start",
     "start_date": "Start date",
     "start_page": "Start page",
@@ -311,25 +311,25 @@
     "hrcs_activity": "Health Research Classification System - Activity",
     "hrcs_categories": "Health Research Classification System - Categories",
     "institution": {
-      "institution_code": "Institution's code",
+      "institution_code": "The institution's code",
       "institution_helper_text": "Contact <0>Sikt</0> if changes are needed.",
-      "institution_name": "Institution's name",
-      "institution_name_english": "Institution's English name",
-      "institution_name_norwegian": "Institution's Norwegian name",
-      "institution_short_name": "Institution's short name"
+      "institution_name": "Institution name",
+      "institution_name_english": "The institution's English name",
+      "institution_name_norwegian": "The institution's Norwegian name",
+      "institution_short_name": "Institution short name"
     },
     "publish_strategy": {
       "files_and_licenses": "Files and licenses",
       "metadata": "Metadata",
-      "publish_strategy": "Publish strategy",
-      "registrator_cannot_publish": "Registrator can only register",
-      "registrator_cannot_publish_description": "Metadata, files and licenses must be approved by Curator before publishing.",
-      "registrator_publishes_metadata": "Registrator publishes metadata",
-      "registrator_publishes_metadata_description": "Files and licenses must be approved by Curator before they become publically available.",
-      "registrator_publishes_without_curator": "Registrator publishes without approval from Curator",
-      "registrator_publishes_without_curator_description": "The institution decides who is Registrator."
+      "publish_strategy": "Publishing strategy",
+      "registrator_cannot_publish": "Registrar can only register",
+      "registrator_cannot_publish_description": "Metadata, files and licenses must be approved by the Curator before publishing.",
+      "registrator_publishes_metadata": "Registrar publishes metadata",
+      "registrator_publishes_metadata_description": "Files and licenses must be approved by the Curator before they become publicly available.",
+      "registrator_publishes_without_curator": "The registrar publishes without approval from Curator",
+      "registrator_publishes_without_curator_description": "The institution determines who is the Registrar."
     },
-    "select_vocabulary_description": "Activate controlled vocabularies for registration of new results",
+    "select_vocabulary_description": "Activate controlled vocabularies when registering a new result",
     "vocabulary": "Vocabulary",
     "vocabulary_status": {
       "Allowed": "Allowed",
@@ -342,67 +342,67 @@
   },
   "feedback": {
     "error": {
-      "404_page": "The page you requested could not be found",
-      "add_contributor": "Could not add contributor",
-      "add_employment": "Could not add employment",
-      "add_role": "Could not add role",
+      "404_page": "Sorry, we can't find the page you're looking for",
+      "add_contributor": "Failed to add contributor",
+      "add_employment": "Failed to add employment",
+      "add_role": "Failed to add role",
       "an_error_occurred": "An error occurred",
-      "create_customer": "Could not create customer institution",
-      "create_doi_request": "Could not create DOI request",
-      "create_project": "Could not create project",
+      "create_customer": "Failed to create customer institution",
+      "create_doi_request": "Failed to create DOI request",
+      "create_project": "Failed to create project",
       "create_publishing_request": "Could not create a publishing request",
-      "create_registration": "Could not create registration",
-      "create_user": "Could not create person",
-      "delete_registration": "Could not delete registration",
-      "download_file": "Could not download file",
-      "fetch": "Could not fetch {{resource}}",
-      "get_affiliation_name": "Could not retrieve affiliation name for {{unitUri}}",
-      "get_customer": "Could not retrieve customer institution",
-      "get_customers": "Could not retrieve customer institutions",
-      "get_doi": "Could not retrieve link data",
+      "create_registration": "Failed to create registration",
+      "create_user": "Unable to create person",
+      "delete_registration": "Failed to delete registration",
+      "download_file": "Failed to download file",
+      "fetch": "Failed to retrieve {{resource}}",
+      "get_affiliation_name": "Failed to retrieve affiliation name for {{unitUri}}",
+      "get_customer": "Failed to retrieve customer institution",
+      "get_customers": "Failed to retrieve customer institutions",
+      "get_doi": "Failed to retrieve link data",
       "get_doi_agent": "Could not retrieve DOI configuration",
-      "get_institution": "Could not retrieve institution",
-      "get_institutions": "Could not retrieve institutions",
-      "get_journal": "Could not retrieve journal",
-      "get_journal_article": "Could not fetch journal article",
-      "get_journals": "Could not retrieve journals",
-      "get_messages": "Could not retrieve messages",
-      "get_orcid": "Could not get data from ORCID",
-      "get_person": "Could not retrieve person",
-      "get_positions": "Could not retrieve positions",
-      "get_project": "Could not retrieve project",
-      "get_publisher": "Could not retrieve publisher",
-      "get_publishers": "Search for publishers failed",
-      "get_registration": "Could not get registration",
-      "get_registrations": "Could not retrieve registrations",
-      "get_roles": "Could not get roles",
-      "get_series": "Could not get series",
+      "get_institution": "Failed to retrieve institution",
+      "get_institutions": "Failed to retrieve institutions",
+      "get_journal": "Failed to retrieve journal",
+      "get_journal_article": "Failed to retrieve journal article",
+      "get_journals": "Failed to retrieve journals",
+      "get_messages": "Failed to retrieve messages",
+      "get_orcid": "Failed to retrieve data from ORCID",
+      "get_person": "Failed to retrieve person",
+      "get_positions": "Failed to retrieve positions",
+      "get_project": "Failed to retrieve project",
+      "get_publisher": "Failed to retrieve publisher",
+      "get_publishers": "Publisher search failed",
+      "get_registration": "Failed to load registration",
+      "get_registrations": "Failed to load registrations",
+      "get_roles": "Failed to retrieve roles",
+      "get_series": "Failed to retrieve series",
       "get_tickets": "Could not get cases",
-      "get_users_for_institution": "Could not get users",
-      "get_vocabularies": "Could not fetch vocabularies",
+      "get_users_for_institution": "Failed to retrieve users",
+      "get_vocabularies": "Could not retrieve vocabularies",
       "orcid_login": "ORCID login failed",
       "project_search": "Project search failed",
       "remove_role": "Could not remove role",
       "reserve_doi": "Reservation of DOI failed",
       "search": "Search failed",
       "send_message": "Could not send message",
-      "update_customer": "Could not update customer institution",
+      "update_customer": "Failed to update customer institution",
       "update_doi_agent": "Could not update DOI configuration",
-      "update_doi_request": "Could not update DOI request",
-      "update_institution_user": "Could not update user",
-      "update_orcid": "Could not update ORCID",
+      "update_doi_request": "Failed to update DOI request",
+      "update_institution_user": "User could not be updated",
+      "update_orcid": "Updating ORCID link failed",
       "update_person": "Could not update person",
       "update_project": "Could not update project",
-      "update_publish_strategy": "Could not update publish strategy",
+      "update_publish_strategy": "Failed to update publishing strategy",
       "update_publishing_request": "Could not update publishing request",
-      "update_registration": "Could not update registration",
+      "update_registration": "Failed to update registration",
       "update_vocabulary": "Failed to update {{vocabulary}}"
     },
     "success": {
       "add_employment": "Employment added",
       "added_role": "Role was added",
       "admin_added": "User added as administrator",
-      "create_project": "Project is created",
+      "create_project": "Project created",
       "create_publishing_request": "The publishing request was created",
       "create_user": "Your user was created",
       "created_customer": "Created customer institution",
@@ -416,30 +416,30 @@
       "send_message": "Message sent",
       "update_customer": "Updated customer institution",
       "update_institution_user": "Updated user",
-      "update_orcid": "Successfully updated ORCID",
+      "update_orcid": "ORCID link updated successfully",
       "update_person": "Successfully updated person",
       "update_project": "Successfully updated project",
-      "update_publish_strategy": "Updated publish strategy",
+      "update_publish_strategy": "Updated publishing strategy",
       "update_registration": "Updated registration",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"
     },
     "validation": {
       "announcement_required": "Must have at least one announcement",
-      "author_required": "You need to register at least one author for this registration",
+      "author_required": "You need to register at least one author on this registration",
       "cannot_be_after": "{{field}} cannot be after {{limitField}}",
       "cannot_be_before": "{{field}} cannot be before {{limitField}}",
-      "contributor_required": "You need to register at least one contributor for this registration",
-      "editor_required": "You need to register at least one editor for this registration",
+      "contributor_required": "You need to register at least one contributor on this registration",
+      "editor_required": "You need to register at least one editor on this registration",
       "employments_missing_data": "Every employment must have position, job percentage and start date",
       "has_invalid_format": "{{field}} has invalid format",
       "invalid_number_of_digits": "{{field}} must have {{digits}} digits",
       "invalid_symbol_in_name": "{{field}} must not include numbers or special characters",
       "is_required": "{{-field}} is required",
-      "isbn_too_short": "ISBN must have 13 digits",
+      "isbn_too_short": "The ISBN must have 13 digits",
       "must_accept_terms_for_dataset": "You must agree to the dataset terms",
       "must_be_a_positive_number": "{{field}} must be a positive number",
-      "must_be_bigger_than": "{{field}} cannot be smaller than {{limit}}",
-      "must_be_smaller_than": "{{field}} cannot be bigger than {{limit}}",
+      "must_be_bigger_than": "{{field}} cannot be less than {{limit}}",
+      "must_be_smaller_than": "{{field}} cannot be greater than {{limit}}",
       "must_correct_errors": "You must correct errors",
       "must_have_associated_artifact": "You must upload at least one file or link for this registration",
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
@@ -449,13 +449,13 @@
   "licenses": {
     "description": {
       "cc0": "The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.",
-      "cc_by": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made.",
-      "cc_by_nc": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nYou may not use the material for commercial purposes.",
-      "cc_by_nc_nd": "Share — copy and redistribute the material in any medium or format. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nYou may not use the material for commercial purposes. \nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
-      "cc_by_nc_sa": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nYou may not use the material for commercial purposes. \nIf you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.",
-      "cc_by_nd": "Share — copy and redistribute the material in any medium or format for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
-      "cc_by_sa": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate if changes were made. \nIf you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.",
-      "rights_reserved": "This work is posted here for your personal use and only in accordance with the publishers terms and conditions for use of self-archived versions."
+      "cc_by": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate whether changes have been made.",
+      "cc_by_nc": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material. \n\nYou must give appropriate credit, provide a link to the license, and indicate whether changes have been made.\nYou may not use the material for commercial purposes.",
+      "cc_by_nc_nd": "Share — copy and redistribute the material in any medium or format. \n\nYou must give appropriate credit, provide a link to the license, and indicate whether changes have been made.\nYou may not use the material for commercial purposes. \nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
+      "cc_by_nc_sa": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material. \n\nYou must give appropriate credit, provide a link to the license, and indicate whether changes have been made. \nYou may not use the material for commercial purposes. \nIf you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.",
+      "cc_by_nd": "Share — copy and redistribute the material in any medium or format for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate whether changes have been made. \nIf you remix, transform, or build upon the material, you may not distribute the modified material.",
+      "cc_by_sa": "Share — copy and redistribute the material in any medium or format. \nAdapt — remix, transform, and build upon the material for any purpose, even commercially. \n\nYou must give appropriate credit, provide a link to the license, and indicate whether changes have been made. \nIf you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.",
+      "rights_reserved": "This work is posted here for your personal use and only in accordance with the publisher's terms and conditions for use of self-archived versions."
     },
     "labels": {
       "CC BY": "CC BY",
@@ -465,7 +465,7 @@
       "CC BY-ND": "CC BY-ND",
       "CC BY-SA": "CC BY-SA",
       "CC0": "CC0",
-      "RightsReserved": "Publisher's conditions"
+      "RightsReserved": "Publisher Terms"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/",
@@ -481,7 +481,7 @@
     "messages": {
       "go_to_registration": "Go to registration",
       "messages": "Messages",
-      "no_messages": "You don't have any messages",
+      "no_messages": "You have no messages",
       "ticket_types": {
         "Closed": "Closed",
         "Completed": "Completed",
@@ -513,12 +513,12 @@
         "delete_orcid": "Remove ORCID link",
         "dialog": {
           "heading": "Connect or create ORCID iD",
-          "paragraph0": "Sign in to ORCID or register to create an account.",
-          "paragraph1": "ORCID provides a persistent digital identifier that you own and control, and that distinguishes you from every other researcher. Your ORCID iD can be used in many contexts. By connecting your ORCID iD it is easier to identify you as an author, and to retrieve and share your publications."
+          "paragraph0": "Sign into ORCID or register to create an account.",
+          "paragraph1": "ORCID provides a persistent digital identifier that you own and control, and distinguishes you from other researchers. Your ORCID iD can be used in many contexts. By connecting your ORCID iD it is easier to identify you as an author, and to retrieve and share your publications."
         },
-        "orcid_description": "To connect your ORCID iD, sign into ORCID. Or register to create your ORCID iD and connect. It makes it easier to identify you.",
-        "remove_connection": "Remove connection to ORCID",
-        "remove_connection_info": "Are you sure you want to remove the connection to ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, you have to go to your profile."
+        "orcid_description": "To connect your ORCID iD, sign into ORCID. Or register to create your ORCID iD and connect. This makes it easier to identify you",
+        "remove_connection": "Unlink ORCID",
+        "remove_connection_info": "Are you sure you want to unlink ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, please go to your ORCID profile."
       },
       "preferred_first_name": "Preferred first name",
       "preferred_last_name": "Preferred last name",
@@ -542,62 +542,62 @@
     "research_profile": "Research profile",
     "roles": {
       "app_admin": "System administrator",
-      "app_admin_description": "Registers new institutions in the service and assigns the role Administrator.",
-      "creator": "Registrator",
+      "app_admin_description": "Registers new institutions in the service and assigns the Administrator role.",
+      "creator": "Registrar",
       "creator_description": "Can register publications and other resources.",
       "curator": "Curator",
-      "curator_description": "Can edit the institution's registrations, answer user support inquiries and possibly also assign DOIs.",
+      "curator_description": "Can edit the institution's registrations, answer user support inquiries and possibly also assign DOI.",
       "editor": "Editor",
       "editor_description": "Determines access to controlled vocabularies and publication strategy for the institution.",
       "institution_admin": "Administrator",
-      "institution_admin_description": "Maintains the institution's information in the person registery and assigns roles in the service.",
+      "institution_admin_description": "Maintains the institution's information in the person registry and assigns roles in the service.",
       "institution_admins": "Administrators",
       "no_active_employments": "You do not have any roles because you have no active employments and do not have access to register.",
-      "no_roles": "You don't have any roles because your administrator has not assigned any roles to you",
-      "not_customer": "You don't have any roles because your institution is unknown to this application"
+      "no_roles": "You do not have any roles because your administrator has not assigned any roles to you",
+      "not_customer": "You do not have any roles because your institution is unknown to the application"
     }
   },
   "privacy": {
     "about": {
       "heading": "About the privacy statement",
-      "paragraph": "This privacy statement describes how the data controller processes your personal data in the service. The purpose of this privacy statement is to inform you about what personal data we process, how it is processed, who is responsible for the processing, what your rights are and who you can contact."
+      "paragraph": "This privacy statement describes how the data controller processes your personal data in the service. The purpose of this privacy statement is to inform you about what personal data is processed, how it is processed, who is responsible for the processing, what your rights are and who you can contact."
     },
     "automatic_case_processing": {
       "heading": "Automatic case processing",
-      "paragraph0": "Personal data related to the system users will not be subject to automated case processing or profiling.",
-      "paragraph1": "Open personal data related to the resource can be subject to profiling by services that harvest information from NVA, but will not be profiled as part of the service."
+      "paragraph0": "Personal data related to system users will not be subject to automated case processing or profiling.",
+      "paragraph1": "Open personal data related resources may be subject to profiling by services that harvest information from NVA, but will not be profiled as part of the service."
     },
     "contact": {
       "heading": "Contact",
       "section0": {
         "heading": "The data controller",
-        "paragraph": "The institution is the data controller for personal data in the service and is the primary contact for end users."
+        "paragraph": "The institution is responsible for processing personal data in the service and is the primary point of contact for users."
       },
       "section1": {
-        "heading": "The data processor",
+        "heading": "Data processor",
         "paragraph": "Sikt develops and manages the service on behalf of the data controller and has the role of data processor."
       },
       "section2": {
         "email": "Email: <0><0></0></0>",
-        "intro": "Sikt user support's contact details",
+        "intro": "Contact information for Sikt user support:",
         "telephone": "Telephone: <0><0></0></0>"
       }
     },
     "disclosure_of_data": {
       "heading": "Disclosure of your personal data to third parties",
-      "paragraph0": "Disclosure or export of data is defined as all disclosure of data aside from to the service’s own system/processing or to the data subjects themselves, or to someone who receives data on their behalf.",
-      "paragraph1": "Personal data linked to users are not transferred to countries outside the EU/EEA.",
-      "paragraph2": "The service is run on servers in the EU/EEA.",
+      "paragraph0": "Disclosure or export of data is defined as any disclosure of data except to the data subject's own system/processing or to the data subject himself or anyone receiving data on their behalf.",
+      "paragraph1": "Personal data linked to users is not transferred to countries outside the EU/EEA.",
+      "paragraph2": "The service is operated on servers in the EU/EEA.",
       "paragraph3": {
         "intro": "Your personal data will be disclosed to Sikt, which is the service provider, and to its subcontractors:",
         "table": {
-          "caption": "Overview of subcontractors whom may receive personal data",
+          "caption": "Overview of subcontractors who may receive personal data",
           "header": {
             "col0": "Subcontractor",
             "col1": "Function"
           },
           "row0": {
-            "col0": "Supplier in a framework agreement for AWS through the GÉANT collaboration",
+            "col0": "Supplier in framework agreement for AWS through the GÉANT collaboration",
             "col1": "Cloud management and backup for Sikt's direct services"
           },
           "row1": {
@@ -606,12 +606,12 @@
           },
           "row2": {
             "col0": "UNINETT AS",
-            "col1": "Delivers Feide, for authentication of users of the services"
+            "col1": "Provides Feide, for authentication of users of the services"
           }
         }
       },
-      "paragraph4": "The subcontractors’ staff who need access to the personal data to perform their work will have adapted access in order to provide on-site maintenance, user support and any rectification of errors in the service.",
-      "paragraph5": "Open personal data linked to the resources are openly shared with external services. This includes search services such as Oria and OpenAIRE, as well as search engines such as Google, Baidu, Bing etc. whom index data via the websites.",
+      "paragraph4": "Employees of the subcontractors who need access to the personal data to perform their work will have adapted access in order to provide on-site maintenance, user support and any correction of errors in the service.",
+      "paragraph5": "Open personal data linked to the resources is shared openly with external services. This includes search services such as Oria and OpenAIRE, as well as search engines that index data via the web pages such as Google, Baidu, Bing etc.",
       "paragraph6": {
         "intro": "See the following table for the service's integrations:",
         "table": {
@@ -623,7 +623,7 @@
           },
           "row0": {
             "col0": "Feide",
-            "col1": "Information for secure login of users.",
+            "col1": "Information for secure user login.",
             "col2": "UNINETT AS"
           },
           "row1": {
@@ -634,15 +634,15 @@
           "row2": {
             "col0": "Export of metadata from NVA to external service",
             "col1": "Export of metadata for resources to other services for presentation or cross-registration. For example, Oria to facilitate retrieval.",
-            "col2": "Sikt for Oria Sources defined by the data controller"
+            "col2": "Sikt for Oria. Sources defined by the data controller."
           },
           "row3": {
             "col0": "DOI and DataCite",
-            "col1": "The registrator can request the assignment of a Document Object Identifier (DOI) to a resource in NVA. This will cause selected metadata to be published in DataCite - a source that is regularly indexed by search engines.",
+            "col1": "The registrar can request the assignment of a Document Object Identifier (DOI) to a resource in NVA. This will cause selected metadata to be published in DataCite - a source regularly indexed by search engines.",
             "col2": "DataCite"
           },
           "row4": {
-            "col0": "Felles autoritetsregister",
+            "col0": "National Authority Registry",
             "col1": "Establish a link to the authority register for authorization of author, editor, supervisor and other creator or contributor registered in the service. To facilitate unambiguous registration and retrieval.",
             "col2": "Sikt"
           },
@@ -666,46 +666,46 @@
         },
         "row0": {
           "col0": "Administrative users",
-          "col1": "Archive administrator, Editor, Curator. Typically employees at the institution.",
-          "col2": "Administration of the service including maintenance of content and configuration of access to functions and content. Administrative users must be registered with their identity to acquire rights in the service."
+          "col1": "Archive administrator, editor, curator. Typically employees at the institution.",
+          "col2": "Administration of the service, including maintenance of content and configuration of access to functions and content. Administrative users must be registered with their identity to obtain rights in the service."
         },
         "row1": {
           "col0": "Authenticated users",
-          "col1": "Users who register material in the service. Persons associated with the institution who have logged on to the service.",
-          "col2": "Persons associated with the institution who have logged on to the service. Registration of material in the service. Authenticated users must be registered with their identity to acquire rights in the service."
+          "col1": "User who registers material in the service. Persons associated with the institution who have logged on to the service.",
+          "col2": "Registration of material in the service. Authenticated users must be registered with their identity in order to obtain rights in the service."
         },
         "row2": {
           "col0": "Anonymous users",
-          "col1": "Persons or services whom access the service, identified by IP address and cookies.",
-          "col2": "The Anonymous user is granted access to open resources in the service. The service logs necessary information to avoid misuse of the service and to generate aggregated statistics of use of the resources."
+          "col1": "Persons or services that accessed the service without logging in, identified by IP address(es) and cookies.",
+          "col2": "Anonymous users are granted access to open resources in the service. The service logs necessary information to prevent abuse of the service and to generate aggregated statistics on the use of the resources."
         },
         "row3": {
           "col0": "Persons linked to the registered resource",
           "col1": "Author, editor, supervisor or other creator or contributor to a resource registered in the service.",
-          "col2": "Cataloguing, crediting and accountability of the persons behind the resource."
+          "col2": "Cataloging, crediting and accountability of the persons behind the resource."
         },
         "row4": {
           "col0": "Persons identified in the resource",
           "col1": "Any persons and pertaining data in the published material.",
-          "col2": "Published material made available. The person responsible for content together with the data controller must ensure data protection in the resource before it is published in the service."
+          "col2": "Availability of published resource. The content manager must ensure data protection in the resource together with the data controller before it is published in the service"
         }
       }
     },
     "registered_personal_data": {
-      "heading": "Registered personal data, legal grounds and storage time",
-      "paragraph0": "Personal data related to user accounts in the service requires consent as legal grounds, cf. the <0>Personal Data Act, and the GDPR Article 6</0>(1)(a)",
-      "paragraph1": "Registered personal data about authors and contact persons are covered by the <0>Personal Data Act, and the GDPR Article 6(1)</0>(f) – to perform a task on grounds of legitimate interests.",
-      "paragraph2": "The service does not allow processing of sensitive personal data. In the cases where the users themselves can write information in the comments field and similar, the user is obliged to meet the requirements and guidelines for the service. Users are not permitted to register sensitive personal data about themselves or others or to use the service for defamatory conduct.",
-      "paragraph3": "The data controller is entitled to store information for statistical purposes, if this is in the interests of society at large, cf. the <0>Personal Data Act Section 8</0> and the <1>GDPR Article 6</1>(1)(e)",
-      "paragraph4": "The following personal data are processed in the service:",
-      "paragraph5": "Information about your activity is stored in order to provide user support and to gain an impression of general use of the service.",
+      "heading": "Registered personal data, legal grounds and storage period",
+      "paragraph0": "Personal data related to user accounts in the service requires consent as a legal basis, cf. the <0>Personal Data Act, and the GDPR Article 6</0>(1)(a)",
+      "paragraph1": "Registered personal data about authors and contact persons are covered by the <0>Personal Data Act, and the GDPR Article 6(1)</0>(f) – to perform a task of legitimate interests.",
+      "paragraph2": "The service does not permit processing of sensitive personal data. In cases where users themselves can write information in the comment fields and the like, the user is obliged to follow requirements and guidelines for the service. Users are not permitted to register sensitive data about themselves or others, or to use the service for defamatory conduct.",
+      "paragraph3": "The data controller may store information for statistical purposes if this is in the interests of society at large, cf. the <0>Personal Data Act Section 8</0> and the <1>GDPR Article 6</1>(1)(e)",
+      "paragraph4": "The following personal data is processed in the service:",
+      "paragraph5": "Information about your activity is stored in order to provide user support and to gain insight into general use of the service.",
       "paragraph6": {
         "bullet_point0": "User consent is withdrawn",
         "bullet_point1": "The purpose of the personal data processing has been fulfilled",
         "bullet_point2": "The data controller decides to discontinue the service",
-        "intro": "Personal data is stored until one of the following occurs:"
+        "intro": "Personal data is stored until one of the following events occur:"
       },
-      "paragraph7": "Logs and backups of the system data are stored for up to one year.",
+      "paragraph7": "Logs and backups of system data are stored for up to one year.",
       "paragraph8": "User information (except logs) is stored for the lifetime of the resource for users who register content in the service.",
       "table": {
         "header": {
@@ -717,13 +717,13 @@
           "heading": "Other personal data",
           "row0": {
             "col0": "Metadata about the resource",
-            "col1": "Full name and role of author, editor, supervisor or other creator or contributor",
+            "col1": "Full name and role of author, editor, supervisor or other author or contributor",
             "col2": "Registered in NVA or imported from external source"
           },
           "row1": {
             "col0": "Personal data in the resource itself",
-            "col1": "Arbitrary content that must be quality assured by the person responsible for publishing the resource.",
-            "col2": "The resource is uploaded in NVA during registration or imported from external source"
+            "col1": "Persons identified in the resource. Content in the resource must be quality assured by the person responsible before it can be published.",
+            "col2": "The resource is uploaded in NVA upon registration or imported from external source"
           }
         },
         "techincal_user_data": {
@@ -731,22 +731,22 @@
           "row0": {
             "col0": "System identities",
             "col1": "Identities in the service and integrated systems. Feide iD, Author iD, ORCID iD",
-            "col2": "Feide, Felles autoritesregister, ORCID"
+            "col2": "Feide, National Authority Registry, ORCID"
           },
           "row1": {
             "col0": "System roles and affiliation to the institution",
-            "col1": "The user is assigned roles in the system in order to provide adapted functionality and access to the service.",
+            "col1": "The user is assigned roles in the system in order to provide customized functionality and access to the service.",
             "col2": "Assigned in NVA, Feide"
           },
           "row2": {
             "col0": "Session information and cookies",
-            "col1": "Information related to the user’s dialogue with the service. Necessary to adapt functionality in the service and to authenticate users.",
+            "col1": "Information related to the user’s dialogue with the service. Necessary to customize functionality in the service and authenticate users.",
             "col2": "NVA, Feide"
           },
           "row3": {
             "col0": "Log",
-            "col1": "Log of system use related to the logged-in user and/or their IP address. IP addresses will be registered for anonymous users, which in certain cases can be traced back to a person. The purpose of logs is to ensure security and integrity in the system, provide user support and analyse use of the service. The data collected include time, user ID, IP address, information about browsers and hardware, session information and other information that browsers normally provide.",
-            "col2": "Set up in NVA"
+            "col1": "Log of system use related to the logged-in user and/or their IP address. IP addresses will be registered for anonymous users, which in some cases can be traced back to an individual. The purpose of these logs is to ensure security and integrity in the system, provide user support and analyze service usage. The data that is collected includes time, user ID, IP address, browser- and hardware information, session information and other information that the browser normally provides.",
+            "col2": "Created in NVA"
           }
         },
         "user_data": {
@@ -758,31 +758,31 @@
           },
           "row1": {
             "col0": "Contact information",
-            "col1": "Email address assigned by the institution.",
+            "col1": "E-mail address assigned at your own institution.",
             "col2": "Feide"
           },
           "row2": {
             "col0": "Profile",
-            "col1": "User preferences for using the service. Language choice, Institutional affiliation.",
+            "col1": "User's preferences for using the service. Language choice, Institutional affiliation.",
             "col2": "Settings in NVA"
           }
         }
       }
     },
     "security_for_personal_data": {
-      "heading": "Security in relation to your personal data",
-      "paragraph0": "Personal data processed in the service are secured by several measures. All transfers to and from the service related to user accounts are encrypted. The data processor conducts regular risk and vulnerability analyses and tests the security of the service to ensure that your personal data are safe.",
-      "paragraph1": "The data controller is responsible for procedures that address data protection in connection with the publication of content."
+      "heading": "Security of your personal data",
+      "paragraph0": "Personal data processed in the service is secured with several measures. All transfers to and from the service associated with user accounts are encrypted. The data processor performs regular risk and vulnerability analyses, and tests the security of the service to secure your personal data.",
+      "paragraph1": "The data controller is responsible for routines that address data protection in connection with the publication of content."
     },
     "service_in_brief": {
-      "heading": "The service in brief",
-      "paragraph0": "NVA is a service for collecting and showing information about, and results from, Norwegian research. The institution (the data controller) registers and maintains its own content in the service and configures distribution rules for published resources (articles, reports, data sets, etc.). The service also imports material affiliated to the institution from other data sources. NVA makes the institution's open material available via open interfaces for the purpose of making the content known and searchable for the public and promoting indexing in search engines and portals.",
-      "paragraph1": "NVA supports postponed publication of resources. This means that the registration can be completed so that metadata about the resource is published, while the resource will not be openly available until the specified date.",
-      "paragraph2": "The service does not allow processing of sensitive personal data."
+      "heading": "Brief summary of the service",
+      "paragraph0": "NVA is a service for collecting and displaying information about, and results from, Norwegian research. The institution (the data controller) registers and maintains its own content in the service, and configures rules for distribution of published resources (articles, reports, datasets, etc.). The service also imports material affiliated with the institution from other sources. NVA ensures access to the institution's open material via open interfaces for the purpose of making the content known and searchable for the public, and to promote indexing in search engines/portals.",
+      "paragraph1": "NVA has support for deferred publication of resources. This means that the registration can be completed so that metadata about the resource is published, while the resource will not be openly available until the specified date.",
+      "paragraph2": "The service does not allow the processing of sensitive personal data."
     },
     "what_are_personal_data": {
-      "heading": "What are personal data?",
-      "paragraph": "Personal data are all forms of data, information and assessments that can be linked to you as a person, cf. the <0>Personal Data Act Section 2</0> and the <1>GDPR Article 5</1>(1). The decisive factor as to whether data constitutes personal data is whether it can be linked to a specific person. Data that, on its own, cannot be linked to an individual person may constitute personal data in cases where the data are found together with other data."
+      "heading": "What is personal data?",
+      "paragraph": "Personal data means any data, information and assessments that can be linked to you as an individual, cf. the <0>Personal Data Act Section 2</0> and the <1>GDPR Article 5</1>(1). The deciding factor as to what constitutes personal data, is whether the information can be linked to a specific person. Data that can not be linked to an individual may still be personal data in cases where it occurs together with other information."
     },
     "your_rights": {
       "heading": "Your rights",
@@ -792,14 +792,14 @@
         "paragraph1": "A self-service solution in the service where users can see their personal data after logging in allows users to exercise their right of access. If the service does not provide complete information via the self-service solution, users can send a written enquiry to the data controller’s user support to acquire access to more detailed information."
       },
       "section1": {
-        "heading": "Right to rectification",
+        "heading": "Right to correction",
         "paragraph0": "You have a right to have inaccurate personal data about you rectified. You also have a right to have incomplete personal data about you supplemented. If you feel that the service shows inaccurate or incomplete personal data, please contact the data controller, stating the reason why the personal data are inaccurate or incomplete.",
-        "paragraph1": "Please note that there is a limited possibility of rectifying data that are distributed via open interfaces."
+        "paragraph1": "Please note that there is a limited possibility to correct data that is distributed via open interfaces."
       },
       "section2": {
         "heading": "Right to restriction of processing",
         "paragraph0": {
-          "bullet_point0": "Pending the data controller rectifying inaccurate or incomplete personal data",
+          "bullet_point0": "Pending the data controller correcting inaccurate or incomplete personal data",
           "bullet_point1": "If you have submitted an objection to the processing (see below for more details)",
           "bullet_point2": "If the personal data are necessary to establish or defend a legal claim",
           "intro": "In certain cases, you may have a right to request restrictions on the processing of your personal data. Restricted processing means that the personal data will still be stored, but that other processing in the service is restricted. To request restricted processing of personal data, the conditions in the Personal Data Act and the <0>GDPR Article 18</0> must be met. You can request restricted processing"
@@ -918,7 +918,7 @@
         "Actor": "Actor",
         "Architect": "Architect",
         "ArchitecturalPlanner": "Planner",
-        "Artist": "Artist",
+        "Artist": "Kunstner",
         "ArtisticDirector": "Artistic director",
         "Choreographer": "Choreographer",
         "Composer": "Composer",
