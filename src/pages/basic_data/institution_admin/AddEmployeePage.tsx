@@ -18,7 +18,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { setNotification } from '../../../redux/notificationSlice';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-import { addEmployment, createCristinPerson } from '../../../api/userApi';
+import { addEmployment, createCristinPerson } from '../../../api/cristinApi';
 import { createUser } from '../../../api/roleApi';
 import { RootState } from '../../../redux/store';
 import { UserRolesSelector } from './UserRolesSelector';

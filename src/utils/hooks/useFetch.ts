@@ -13,6 +13,9 @@ interface UseFetchConfig {
   withAuthentication?: boolean;
 }
 
+/**
+ * @deprecated Use react-query instead
+ */
 export const useFetch = <T>({
   url,
   errorMessage,

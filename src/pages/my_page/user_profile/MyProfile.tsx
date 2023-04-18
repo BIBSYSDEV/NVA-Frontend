@@ -13,7 +13,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { CristinPerson, FlatCristinPerson } from '../../../types/user.types';
-import { updateCristinPerson } from '../../../api/userApi';
+import { updateCristinPerson } from '../../../api/cristinApi';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-helpers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';

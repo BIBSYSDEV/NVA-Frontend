@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../api/apiPaths';
 import { authenticatedApiRequest } from '../api/apiRequest';
-import { getCurrentUserAttributes } from '../api/userApi';
+import { getCurrentUserAttributes } from '../api/authApi';
 import { setUser } from '../redux/userSlice';
 import { setNotification } from '../redux/notificationSlice';
 import { CustomerInstitution } from '../types/customerInstitution.types';
