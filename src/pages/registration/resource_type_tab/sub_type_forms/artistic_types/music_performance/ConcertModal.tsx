@@ -55,7 +55,6 @@ const emptyConcert: Concert = {
   },
   time: emptyInstant,
   extent: '',
-  description: '',
   concertProgramme: [],
   concertSeries: '',
 };
