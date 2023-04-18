@@ -19,7 +19,9 @@ const contributorErrorMessage = {
 const contributorValidationSchema = Yup.object().shape({
   correspondingAuthor: Yup.boolean(),
   sequence: Yup.number(),
-  role: Yup.string(),
+  role: Yup.object({
+    type: Yup.string(),
+  }),
 });
 
 export const contributorsValidationSchema = Yup.array().when(
@@ -64,4 +66,4 @@ export const contributorsValidationSchema = Yup.array().when(
 );
 
 const hasRole = (contributors: any, role: ContributorRole) =>
-  !!contributors && contributors.some((contributor: Contributor) => contributor.role === role);
+  !!contributors && contributors.some((contributor: Contributor) => contributor.role.type === role);

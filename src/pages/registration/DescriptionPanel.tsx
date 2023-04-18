@@ -10,7 +10,7 @@ import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
-import { FundingsField } from './description_tab/FundingsField';
+import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const languageOptions = [
@@ -221,7 +221,7 @@ export const DescriptionPanel = () => {
 
       <ProjectsField />
       <Divider />
-      <FundingsField />
+      <RegistrationFunding currentFundings={values.fundings} />
     </InputContainerBox>
   );
 };
