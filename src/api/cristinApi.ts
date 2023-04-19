@@ -1,6 +1,12 @@
 import { Organization } from '../types/organization.types';
 import { FundingSources } from '../types/project.types';
-import { CreateCristinPerson, CristinPerson, FlatCristinPerson, Employment } from '../types/user.types';
+import {
+  CreateCristinPerson,
+  CristinPerson,
+  FlatCristinPerson,
+  Employment,
+  PositionResponse,
+} from '../types/user.types';
 import { CristinApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest } from './apiRequest';
 
@@ -57,4 +63,11 @@ export const fetchOrganization = async (id: string) => {
     url: id,
   });
   return fetchOrganizationResponse.data;
+};
+
+export const fetchPositions = async (includeDisabledPositions: boolean) => {
+  const fetchPositionsResponse = await apiRequest2<PositionResponse>({
+    url: includeDisabledPositions ? CristinApiPath.Position : `${CristinApiPath.Position}?active=true`,
+  });
+  return fetchPositionsResponse.data;
 };
