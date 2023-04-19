@@ -1,5 +1,11 @@
 import { FundingSources } from '../types/project.types';
-import { CreateCristinPerson, CristinPerson, FlatCristinPerson, Employment } from '../types/user.types';
+import {
+  CreateCristinPerson,
+  CristinPerson,
+  FlatCristinPerson,
+  Employment,
+  PositionResponse,
+} from '../types/user.types';
 import { CristinApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest } from './apiRequest';
 
@@ -47,6 +53,13 @@ export const searchByNationalIdNumber = async (nationalIdNumber: string) => {
 export const fetchFundingSources = async () => {
   const getTickets = await apiRequest2<FundingSources>({
     url: CristinApiPath.FundingSources,
+  });
+  return getTickets.data;
+};
+
+export const fetchPositions = async (includeDisabledPositions: boolean) => {
+  const getTickets = await apiRequest2<PositionResponse>({
+    url: includeDisabledPositions ? CristinApiPath.Position : `${CristinApiPath.Position}?active=true`,
   });
   return getTickets.data;
 };
