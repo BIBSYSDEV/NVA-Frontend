@@ -74,11 +74,11 @@ export const createDraftDoi = async (registrationId: string) =>
     method: 'POST',
   });
 
-export const fetchRegistration = async (registrationId: string) => {
-  const getRegistration = await apiRequest2<Registration>({
-    url: registrationId,
+export const fetchRegistration = async (registrationIdentifier: string) => {
+  const fetchRegistrationResponse = await apiRequest2<Registration>({
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
   });
-  return getRegistration.data;
+  return fetchRegistrationResponse.data;
 };
 
 export const fetchRegistrationTickets = async (registrationId: string) => {

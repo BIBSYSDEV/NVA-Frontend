@@ -16,21 +16,18 @@ import { SupportModalContent } from './SupportModalContent';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getFormattedRegistration } from '../../utils/registration-helpers';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
   setTabNumber: (newTab: RegistrationTab) => void;
-  refetchRegistration: () => void;
 }
 
-export const RegistrationFormActions = ({
-  tabNumber,
-  setTabNumber,
-  refetchRegistration,
-}: RegistrationFormActionsProps) => {
+export const RegistrationFormActions = ({ tabNumber, setTabNumber }: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const { values, errors, setTouched } = useFormikContext<Registration>();
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
@@ -44,11 +41,14 @@ export const RegistrationFormActions = ({
     const isSuccess = isSuccessStatus(updateRegistrationResponse.status);
     if (isErrorStatus(updateRegistrationResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
-      setIsSaving(false);
     } else if (isSuccess) {
-      refetchRegistration();
+      queryClient.setQueryData(
+        ['registration', updateRegistrationResponse.data.identifier],
+        updateRegistrationResponse.data
+      );
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
     }
+    setIsSaving(false);
 
     return isSuccess;
   };
