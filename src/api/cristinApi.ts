@@ -1,3 +1,4 @@
+import { Organization } from '../types/organization.types';
 import { FundingSources } from '../types/project.types';
 import { CreateCristinPerson, CristinPerson, FlatCristinPerson, Employment } from '../types/user.types';
 import { CristinApiPath } from './apiPaths';
@@ -49,4 +50,11 @@ export const fetchFundingSources = async () => {
     url: CristinApiPath.FundingSources,
   });
   return getTickets.data;
+};
+
+export const fetchOrganization = async (id: string) => {
+  const fetchOrganizationResponse = await apiRequest2<Organization>({
+    url: id,
+  });
+  return fetchOrganizationResponse.data;
 };
