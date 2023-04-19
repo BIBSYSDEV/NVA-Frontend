@@ -58,8 +58,8 @@ export const fetchFundingSources = async () => {
 };
 
 export const fetchPositions = async (includeDisabledPositions: boolean) => {
-  const getTickets = await apiRequest2<PositionResponse>({
+  const fetchPositionsResponse = await apiRequest2<PositionResponse>({
     url: includeDisabledPositions ? CristinApiPath.Position : `${CristinApiPath.Position}?active=true`,
   });
-  return getTickets.data;
+  return fetchPositionsResponse.data;
 };
