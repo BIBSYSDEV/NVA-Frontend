@@ -10,7 +10,6 @@ import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { PageSpinner } from '../../components/PageSpinner';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
-import { PublicationsApiPath } from '../../api/apiPaths';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RegistrationParams } from '../../utils/urlPaths';
 import { StyledPageContent } from '../../components/styled/Wrappers';
@@ -26,7 +25,7 @@ const PublicRegistration = () => {
 
   const registrationQuery = useQuery({
     queryKey: ['registration', identifier],
-    queryFn: () => fetchRegistration(`${PublicationsApiPath.Registration}/${identifier}`),
+    queryFn: () => fetchRegistration(identifier),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
   });
 
