@@ -101,7 +101,7 @@ export interface LiteraryArtsMonograph {
   type: 'LiteraryArtsMonograph';
   publisher: UnconfirmedPublisher;
   publicationDate: RegistrationDate;
-  isbn: string;
+  isbnList: string[];
   pages: PagesMonograph;
 }
 
@@ -118,7 +118,7 @@ export interface LiteraryArtsAudioVisual {
   subtype: LiteraryArtsAudioVisualSubtype | '';
   publisher: UnconfirmedPublisher;
   publicationDate: RegistrationDate;
-  isbn: string;
+  isbnList: string[];
   extent: string;
 }
 
