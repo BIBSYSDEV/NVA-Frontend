@@ -20,9 +20,9 @@ const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField
 export const SeriesField = () => {
   const { t } = useTranslation();
   const { setFieldValue, values } = useFormikContext<Registration>();
-  const { reference, publicationDate: date } = values.entityDescription as BookEntityDescription;
+  const { reference, publicationDate } = values.entityDescription as BookEntityDescription;
   const series = reference?.publicationContext.series;
-  const year = date?.year ?? '';
+  const year = publicationDate?.year ?? '';
 
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
