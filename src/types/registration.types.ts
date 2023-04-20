@@ -97,7 +97,7 @@ export interface BaseRegistration {
 }
 
 export interface Funding {
-  type: 'ConfirmedFunding' | 'UnconfirmedFunding';
+  type: 'Funding' | 'ConfirmedFunding' | 'UnconfirmedFunding';
   source: string;
   id?: string;
   identifier?: string;
