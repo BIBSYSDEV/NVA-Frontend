@@ -80,7 +80,7 @@ export const LiteraryArtsPerformanceModal = ({
                     variant="filled"
                     select
                     required
-                    label={t('registration.resource_type.type_work')}
+                    label={t('registration.resource_type.artistic.output_type.LiteraryArtsPerformance')}
                     fullWidth
                     {...field}
                     error={touched && !!error}

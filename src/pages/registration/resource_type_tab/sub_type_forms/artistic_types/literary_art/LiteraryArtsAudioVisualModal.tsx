@@ -106,7 +106,7 @@ export const LiteraryArtsAudioVisualModal = ({
                     variant="filled"
                     select
                     required
-                    label={t('registration.resource_type.type_work')}
+                    label={t('registration.resource_type.artistic.output_type.LiteraryArtsAudioVisual')}
                     fullWidth
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
