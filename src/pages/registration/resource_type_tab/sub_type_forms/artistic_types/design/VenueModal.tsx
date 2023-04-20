@@ -6,7 +6,7 @@ import i18n from '../../../../../../translations/i18n';
 import { emptyPeriod } from '../../../../../../types/common.types';
 import { Venue } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
+import { optionalPeriodField, periodField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { PeriodFields } from '../../../components/PeriodFields';
 import { OutputModalActions } from '../OutputModalActions';
@@ -34,7 +34,7 @@ const validationSchema = Yup.object<YupShape<Venue>>({
         })
       ),
   }),
-  date: periodField,
+  date: optionalPeriodField,
 });
 
 export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProps) => {

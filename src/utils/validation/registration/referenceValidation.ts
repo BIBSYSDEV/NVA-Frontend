@@ -205,6 +205,17 @@ export const periodField = Yup.object().shape({
     ),
 });
 
+export const optionalPeriodField = Yup.object().shape({
+  from: Yup.date().required(resourceErrorMessage.dateFromRequired).typeError(resourceErrorMessage.dateFromInvalid),
+  to: Yup.date()
+    .typeError(resourceErrorMessage.dateToInvalid)
+    .when('from', ([from], schema) =>
+      from instanceof Date && !isNaN(from.getTime())
+        ? schema.min(from, resourceErrorMessage.dateToBeforeDateFrom)
+        : schema
+    ),
+});
+
 const publisherField: Yup.ObjectSchema<ContextPublisher> = Yup.object({
   type: Yup.string<PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher>().defined(),
   name: Yup.string().optional(),
