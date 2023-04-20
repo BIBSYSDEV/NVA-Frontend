@@ -21,6 +21,8 @@ export const FundingSourceField = ({ fieldName }: FundingSourceFieldProps) => {
     queryKey: ['fundingSources'],
     queryFn: fetchFundingSources,
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_funding_sources'), variant: 'error' })),
+    staleTime: Infinity,
+    cacheTime: 1_800_000, // 30 minutes
   });
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
