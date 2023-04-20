@@ -41,7 +41,7 @@ export const DatePickerField = () => {
       month: !isYearOnly && newDate ? (newDate.getMonth() + 1).toString() : '',
       day: !isYearOnly && newDate ? newDate.getDate().toString() : '',
     };
-    setFieldValue(DescriptionFieldNames.Date, updatedDate);
+    setFieldValue(DescriptionFieldNames.PublicationDate, updatedDate);
   };
 
   const touchedYear = (
