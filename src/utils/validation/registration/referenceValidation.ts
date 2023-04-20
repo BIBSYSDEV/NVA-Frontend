@@ -147,6 +147,9 @@ const resourceErrorMessage = {
   typeWorkRequired: i18n.t('translation:feedback.validation.is_required', {
     field: i18n.t('translation:registration.resource_type.type_work'),
   }),
+  typeWorkDescriptionRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.type_work_specified'),
+  }),
 };
 
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
@@ -363,11 +366,9 @@ const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicatio
           ? schema.optional()
           : schema.required(resourceErrorMessage.typeWorkRequired)
       ),
-    description: Yup.string()
-      .nullable()
-      .when('type', ([type], schema) =>
-        type === DesignType.Other ? schema.required(resourceErrorMessage.typeWorkRequired) : schema
-      ),
+    description: Yup.string().when('type', ([type]: string[], schema) =>
+      type.endsWith('Other') ? schema.required(resourceErrorMessage.typeWorkDescriptionRequired) : schema.nullable()
+    ),
   }),
   description: Yup.string().nullable(),
   venues: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) =>

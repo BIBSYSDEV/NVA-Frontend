@@ -48,6 +48,7 @@ export const IsbnField = ({ fieldName }: IsbnFieldProps) => {
                   remove(0);
                 }
               }}
+              value={field.value ?? ''}
               label={t('registration.resource_type.isbn')}
               placeholder={isbnFormat}
               variant="filled"

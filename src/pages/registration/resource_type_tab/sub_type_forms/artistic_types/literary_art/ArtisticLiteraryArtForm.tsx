@@ -21,7 +21,6 @@ import {
   ArtisticRegistration,
   LiteraryArtsOutput,
   LiteraryArtsType,
-  VisualArtType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
@@ -72,7 +71,7 @@ export const ArtisticLiteraryArtForm = () => {
         )}
       </Field>
 
-      {values.entityDescription.reference.publicationInstance.subtype?.type === VisualArtType.Other && (
+      {values.entityDescription.reference.publicationInstance.subtype?.type === LiteraryArtsType.Other && (
         <Field name={ResourceFieldNames.PublicationInstanceSubtypeDescription}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField

@@ -166,7 +166,7 @@ export const AudioVisualPublicationModal = ({
                   </TextField>
                 )}
               </Field>
-              {values.mediaType.type === 'Other' ? (
+              {values.mediaType.type === 'MusicMediaOther' ? (
                 <Field name="mediaType.description">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField

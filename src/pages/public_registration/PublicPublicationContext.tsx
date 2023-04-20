@@ -490,7 +490,7 @@ const PublicAudioVisualPublicationDialogContent = ({
       <Typography variant="h3">{t('registration.resource_type.artistic.media_type')}</Typography>
       <Typography paragraph>
         {mediaType.type
-          ? mediaType.type !== 'Other'
+          ? mediaType.type !== 'MusicMediaOther'
             ? t(`registration.resource_type.artistic.music_media_type.${mediaType.type}`)
             : mediaType.description
           : ''}
