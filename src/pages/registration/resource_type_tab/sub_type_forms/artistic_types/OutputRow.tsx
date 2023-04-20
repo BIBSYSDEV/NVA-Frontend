@@ -51,6 +51,7 @@ interface OutputRowProps {
   index: number;
   maxIndex: number;
   showTypeColumn?: boolean;
+  optionalEndDate?: boolean;
 }
 
 export const OutputRow = ({
@@ -61,6 +62,7 @@ export const OutputRow = ({
   index,
   maxIndex,
   showTypeColumn = false,
+  optionalEndDate = false,
 }: OutputRowProps) => {
   const { t } = useTranslation();
   const [openEditItem, setOpenEditItem] = useState(false);
@@ -131,6 +133,7 @@ export const OutputRow = ({
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
+          optionalEndDate={optionalEndDate}
         />
       ) : item.type === 'MentionInPublication' ? (
         <PublicationMentionModal

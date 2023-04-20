@@ -208,12 +208,14 @@ export const periodField = Yup.object().shape({
 export const optionalPeriodField = Yup.object().shape({
   from: Yup.date().required(resourceErrorMessage.dateFromRequired).typeError(resourceErrorMessage.dateFromInvalid),
   to: Yup.date()
+    .nullable()
     .typeError(resourceErrorMessage.dateToInvalid)
     .when('from', ([from], schema) =>
       from instanceof Date && !isNaN(from.getTime())
         ? schema.min(from, resourceErrorMessage.dateToBeforeDateFrom)
         : schema
-    ),
+    )
+    .optional(),
 });
 
 const publisherField: Yup.ObjectSchema<ContextPublisher> = Yup.object({

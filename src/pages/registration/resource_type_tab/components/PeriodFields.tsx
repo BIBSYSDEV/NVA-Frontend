@@ -7,9 +7,10 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 interface PeriodFieldsProps {
   fromFieldName: string;
   toFieldName: string;
+  optionalEndDate?: boolean;
 }
 
-export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) => {
+export const PeriodFields = ({ fromFieldName, toFieldName, optionalEndDate = false }: PeriodFieldsProps) => {
   const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched } = useFormikContext();
   const maxDate = new Date(new Date().getFullYear() + 5, 11, 31);
@@ -71,7 +72,7 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
                 {...params}
                 data-testid={dataTestId.registrationWizard.resourceType.dateToField}
                 variant="filled"
-                required
+                required={optionalEndDate ? false : true}
                 onBlur={() => !touched && setFieldTouched(field.name)}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}

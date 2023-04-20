@@ -2,7 +2,6 @@ import { Dialog, DialogTitle, DialogContent, TextField, Box } from '@mui/materia
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import i18n from '../../../../../../translations/i18n';
 import { emptyPeriod } from '../../../../../../types/common.types';
 import { Venue } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
@@ -16,6 +15,7 @@ interface VenueModalProps {
   onSubmit: (venue: Venue) => void;
   open: boolean;
   closeModal: () => void;
+  optionalEndDate?: boolean;
 }
 
 const emptyVenue: Venue = {
@@ -24,21 +24,21 @@ const emptyVenue: Venue = {
   date: emptyPeriod,
 };
 
-const validationSchema = Yup.object<YupShape<Venue>>({
-  place: Yup.object().shape({
-    label: Yup.string()
-      .nullable()
-      .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('common.place'),
-        })
-      ),
-  }),
-  date: optionalPeriodField,
-});
-
-export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProps) => {
+export const VenueModal = ({ venue, onSubmit, open, closeModal, optionalEndDate = false }: VenueModalProps) => {
   const { t } = useTranslation();
+
+  const validationSchema = Yup.object<YupShape<Venue>>({
+    place: Yup.object().shape({
+      label: Yup.string()
+        .nullable()
+        .required(
+          t('feedback.validation.is_required', {
+            field: t('common.place'),
+          })
+        ),
+    }),
+    date: optionalEndDate ? optionalPeriodField : periodField,
+  });
 
   return (
     <Dialog open={open} onClose={closeModal}>
@@ -72,7 +72,7 @@ export const VenueModal = ({ venue, onSubmit, open, closeModal }: VenueModalProp
                 )}
               </Field>
               <Box sx={{ display: 'flex', gap: '3rem', mt: '1rem' }}>
-                <PeriodFields fromFieldName="date.from" toFieldName="date.to" />
+                <PeriodFields fromFieldName="date.from" toFieldName="date.to" optionalEndDate={optionalEndDate} />
               </Box>
             </DialogContent>
             <OutputModalActions isSubmitting={isSubmitting} closeModal={closeModal} isAddAction={!venue} />

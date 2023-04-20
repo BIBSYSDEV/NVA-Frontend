@@ -11,13 +11,13 @@ export interface Place {
 export interface Period {
   type: 'Period';
   from: string;
-  to: string;
+  to: string | null;
 }
 
 export const emptyPeriod: Period = {
   type: 'Period',
   from: '',
-  to: '',
+  to: null,
 };
 
 export interface Instant {

@@ -121,6 +121,7 @@ export const ArtisticVisualArtForm = () => {
                         moveItem={(newIndex) => move(index, newIndex)}
                         index={index}
                         maxIndex={venues.length - 1}
+                        optionalEndDate={true}
                       />
                     ))}
                   </TableBody>
@@ -146,6 +147,7 @@ export const ArtisticVisualArtForm = () => {
               <VenueModal
                 onSubmit={(newVenue) => push({ ...newVenue, type: 'Venue' })}
                 open={openNewVenueModal}
+                optionalEndDate={true}
                 closeModal={() => setOpenNewVenueModal(false)}
               />
             </>

@@ -203,7 +203,7 @@ interface PublicPresentationProps {
 export const PublicPresentation = ({ publicationContext }: PublicPresentationProps) => {
   const { t } = useTranslation();
   const { type, time, place, label, agent } = publicationContext;
-  const periodString = getPeriodString(time?.from, time?.to);
+  const periodString = getPeriodString(time?.from, time?.to ? time?.to : undefined);
 
   return (
     <>
@@ -332,7 +332,7 @@ const PublicVenueDialogContent = ({ venue }: { venue: Venue }) => {
       <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{venue.place?.label ?? ''}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
-      <Typography>{getPeriodString(venue.date?.from, venue.date?.to)}</Typography>
+      <Typography>{getPeriodString(venue.date?.from, venue.date?.to ? venue.date?.to : undefined)}</Typography>
     </DialogContent>
   );
 };
@@ -555,7 +555,7 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       {time.type === 'Instant' ? (
         <Typography paragraph>{new Date(time.value).toLocaleDateString()}</Typography>
       ) : (
-        <Typography paragraph>{getPeriodString(time.from, time.to)}</Typography>
+        <Typography paragraph>{getPeriodString(time.from, time.to ? time.to : undefined)}</Typography>
       )}
 
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
