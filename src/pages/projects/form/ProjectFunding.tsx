@@ -34,11 +34,10 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
               const baseFieldName = `${name}[${index}]`;
               const hasSelectedSource = !!funding.source;
               const hasSelectedNfrSource = fundingSourceIsNfr(funding.source);
-              let fundingId = '';
-              if (hasSelectedNfrSource && funding.identifier) {
-                // TODO: Remove this when(/if) NP-43030 is solved
-                fundingId = `${API_URL}${VerifiedFundingApiPath.Nfr.substring(1)}/${funding.identifier}`;
-              }
+              let fundingId =
+                hasSelectedNfrSource && funding.identifier
+                  ? `${API_URL}${VerifiedFundingApiPath.Nfr.substring(1)}/${funding.identifier}` // TODO: Remove this when(/if) NP-43030 is solved
+                  : '';
 
               const hasSelectedNfrProject = hasSelectedNfrSource && fundingId;
 
