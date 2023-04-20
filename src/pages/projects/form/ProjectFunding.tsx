@@ -34,7 +34,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
               const baseFieldName = `${name}[${index}]`;
               const hasSelectedSource = !!funding.source;
               const hasSelectedNfrSource = fundingSourceIsNfr(funding.source);
-              let fundingId =
+              const fundingId =
                 hasSelectedNfrSource && funding.identifier
                   ? `${API_URL}${VerifiedFundingApiPath.Nfr.substring(1)}/${funding.identifier}` // TODO: Remove this when(/if) NP-43030 is solved
                   : '';
