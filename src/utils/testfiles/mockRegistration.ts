@@ -49,7 +49,7 @@ export const mockRegistration: JournalRegistration = {
     tags: ['Ost', 'Loff', 'Majones'],
     language: 'http://lexvo.org/id/iso639-3/eng',
     npiSubjectHeading: '0003',
-    date: {
+    publicationDate: {
       type: 'PublicationDate',
       year: '1980',
       month: '12',

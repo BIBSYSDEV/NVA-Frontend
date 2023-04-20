@@ -25,7 +25,7 @@ export const registrationFilters: FilterItem[] = [
     field: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`,
     i18nKey: 'registration.contributors.contributor',
   },
-  { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'registration.year_published' },
+  { field: `${DescriptionFieldNames.PublicationDate}.year`, i18nKey: 'registration.year_published' },
 ];
 
 interface AdvancedSearchRowProps {

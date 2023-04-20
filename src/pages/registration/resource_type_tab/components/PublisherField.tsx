@@ -21,9 +21,9 @@ const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publishe
 export const PublisherField = () => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<Registration>();
-  const { reference, date } = values.entityDescription as BookEntityDescription;
+  const { reference, publicationDate } = values.entityDescription as BookEntityDescription;
   const publisher = reference?.publicationContext.publisher;
-  const year = date?.year ?? '';
+  const year = publicationDate?.year ?? '';
 
   const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
   const debouncedQuery = useDebounce(query);
