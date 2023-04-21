@@ -361,6 +361,7 @@
       "get_customers": "Failed to retrieve customer institutions",
       "get_doi": "Failed to retrieve link data",
       "get_doi_agent": "Could not retrieve DOI configuration",
+      "get_funding_sources": "",
       "get_institution": "Failed to retrieve institution",
       "get_institutions": "Failed to retrieve institutions",
       "get_journal": "Failed to retrieve journal",

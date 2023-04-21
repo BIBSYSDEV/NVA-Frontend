@@ -361,6 +361,7 @@
       "get_customers": "Kunne ikkje hente kundeinstitusjonar",
       "get_doi": "Kunne ikkje hente lenkjedata",
       "get_doi_agent": "Kunne ikkje hente DOI-konfigurering",
+      "get_funding_sources": "",
       "get_institution": "Kunne ikkje laste inn institusjon",
       "get_institutions": "Kunne ikkje laste inn institusjonar",
       "get_journal": "Kunne ikkje hente tidsskrift",
