@@ -24,7 +24,7 @@ import {
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
-import { LiteraryArtsMonographModal } from './LiteraryArtsMonographModalModal';
+import { LiteraryArtsMonographModal } from './LiteraryArtsMonographModal';
 import { LiteraryArtsWebPublicationModal } from './LiteraryArtsWebPublicationModal';
 import { LiteraryArtsPerformanceModal } from './LiteraryArtsPerformanceModal';
 import { LiteraryArtsAudioVisualModal } from './LiteraryArtsAudioVisualModal';
