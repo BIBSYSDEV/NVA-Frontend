@@ -60,7 +60,7 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       })
     ),
     description: Yup.string().when('type', ([type], schema) =>
-      type === 'Other'
+      typeof type === 'string' && type.endsWith('Other')
         ? schema.required(
             i18n.t('translation:feedback.validation.is_required', {
               field: i18n.t('translation:common.description'),
