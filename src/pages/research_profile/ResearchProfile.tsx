@@ -53,6 +53,7 @@ const ResearchProfile = () => {
     : currentCristinId; // Page for My Research Profile
 
   const personQuery = useQuery({
+    enabled: !!personId,
     queryKey: [personId],
     queryFn: () => fetchPerson(personId),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),

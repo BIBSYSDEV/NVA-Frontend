@@ -34,6 +34,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
   const userCristinId = user.cristinId ?? '';
 
   const cristinPersonQuery = useQuery({
+    enabled: !!userCristinId,
     queryKey: [userCristinId],
     queryFn: () => fetchPerson(userCristinId),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
