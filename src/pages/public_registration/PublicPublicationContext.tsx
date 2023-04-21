@@ -490,7 +490,7 @@ const PublicAudioVisualPublicationDialogContent = ({
       <Typography variant="h3">{t('registration.resource_type.artistic.media_type')}</Typography>
       <Typography paragraph>
         {mediaType.type
-          ? mediaType.type !== 'Other'
+          ? mediaType.type !== 'MusicMediaOther'
             ? t(`registration.resource_type.artistic.music_media_type.${mediaType.type}`)
             : mediaType.description
           : ''}
@@ -652,7 +652,12 @@ const PublicLiteraryArtsMonographDialogContent = ({
       <Typography variant="h3">{t('common.year')}</Typography>
       <Typography paragraph>{literaryArtsMonograph.publicationDate.year}</Typography>
       <Typography variant="h3">{t('registration.resource_type.isbn')}</Typography>
-      <Typography paragraph>{hyphenate(literaryArtsMonograph.isbn)}</Typography>
+      <Typography paragraph>
+        {literaryArtsMonograph.isbnList
+          .filter((isbn) => isbn)
+          .map((isbn) => hyphenate(isbn))
+          .join(', ')}
+      </Typography>
       <Typography variant="h3">{t('registration.resource_type.number_of_pages')}</Typography>
       <Typography>{literaryArtsMonograph.pages.pages ?? '-'}</Typography>
     </DialogContent>
@@ -722,7 +727,12 @@ const PublicLiteraryArtsAudioVisualDialogContent = ({ audioVisual }: { audioVisu
       <Typography variant="h3">{t('common.year')}</Typography>
       <Typography paragraph>{audioVisual.publicationDate.year ?? '-'}</Typography>
       <Typography variant="h3">{t('registration.resource_type.isbn')}</Typography>
-      <Typography paragraph>{hyphenate(audioVisual.isbn) ?? '-'}</Typography>
+      <Typography paragraph>
+        {audioVisual.isbnList
+          .filter((isbn) => isbn)
+          .map((isbn) => hyphenate(isbn))
+          .join(', ')}
+      </Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{audioVisual.extent ?? '-'}</Typography>
     </DialogContent>
