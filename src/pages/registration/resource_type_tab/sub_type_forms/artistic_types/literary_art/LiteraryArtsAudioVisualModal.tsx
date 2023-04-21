@@ -33,8 +33,8 @@ const emptyLiteraryArtsAudioVisual: LiteraryArtsAudioVisual = {
 
 const validationSchema = Yup.object<YupShape<LiteraryArtsAudioVisual>>({
   subtype: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.type_work'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.output_type.LiteraryArtsAudioVisual'),
     })
   ),
   publisher: Yup.object<YupShape<UnconfirmedPublisher>>({
