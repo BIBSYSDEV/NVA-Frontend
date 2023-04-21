@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
 import { useDispatch, useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { PageHeader } from '../../components/PageHeader';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
@@ -25,7 +26,6 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RootState } from '../../redux/store';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { useQuery } from '@tanstack/react-query';
 import { fetchPerson } from '../../api/cristinApi';
 import { setNotification } from '../../redux/notificationSlice';
 

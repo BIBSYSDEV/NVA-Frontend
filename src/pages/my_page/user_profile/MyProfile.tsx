@@ -6,6 +6,7 @@ import { Box, Divider, IconButton, TextField, Tooltip, Typography } from '@mui/m
 import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { useQuery } from '@tanstack/react-query';
 import { UserOrcid } from './UserOrcid';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 import { RootState } from '../../../redux/store';
@@ -18,7 +19,6 @@ import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-hel
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { UserIdentity } from './UserIdentity';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { useQuery } from '@tanstack/react-query';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
