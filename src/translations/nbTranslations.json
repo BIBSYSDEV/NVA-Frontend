@@ -948,7 +948,7 @@
         "LightDesigner": "Lysdesigner",
         "Musician": "Ensemblemusiker",
         "Organizer": "Arrangør",
-        "Other": "Annet",
+        "RoleOther": "Annet",
         "Photographer": "Fotograf",
         "Producer": "Produsent",
         "ProductionDesigner": "Produksjonsdesigner",
@@ -1369,7 +1369,7 @@
         "medium_types": {
           "Internet": "Internett",
           "Journal": "Avis eller tidsskrift",
-          "Other": "Annet",
+          "MediaTypeOther": "Annet",
           "Radio": "Radio",
           "TV": "TV"
         },

@@ -35,7 +35,7 @@ export enum ContributorRole {
   LightDesigner = 'LightDesigner',
   Musician = 'Musician',
   Organizer = 'Organizer',
-  Other = 'Other',
+  Other = 'RoleOther',
   Photographer = 'Photographer',
   ProductionDesigner = 'ProductionDesigner',
   Producer = 'Producer',
