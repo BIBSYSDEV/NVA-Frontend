@@ -33,7 +33,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     registration.entityDescription?.reference?.publicationInstance?.type
   );
 
-  return !hasPublishableFiles && !userIsRegistrationAdmin ? null : (
+  return hasPublishableFiles || (userIsRegistrationAdmin && associatedFiles.length > 0) ? (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
       defaultExpanded
@@ -52,5 +52,5 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
         />
       ))}
     </LandingPageAccordion>
-  );
+  ) : null;
 };
