@@ -13,7 +13,7 @@ import {
   ResearchDataType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
+import { ArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../validationHelpers';
 import {
   JournalPublicationInstance,
@@ -359,15 +359,15 @@ export const presentationReference = baseReference.shape({
 const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
-    type: Yup.string()
-      .nullable()
-      .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
-        publicationInstanceType === ArtisticType.MusicPerformance
-          ? schema.optional()
-          : schema.required(resourceErrorMessage.typeWorkRequired)
-      ),
-    description: Yup.string().when('type', ([type]: string[], schema) =>
-      type.endsWith('Other') ? schema.required(resourceErrorMessage.typeWorkDescriptionRequired) : schema.nullable()
+    type: Yup.string().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+      publicationInstanceType === ArtisticType.MusicPerformance
+        ? schema.optional()
+        : schema.required(resourceErrorMessage.typeWorkRequired)
+    ),
+    description: Yup.string().when('type', ([type], schema) =>
+      typeof type === 'string' && type.endsWith('Other')
+        ? schema.required(resourceErrorMessage.typeWorkDescriptionRequired)
+        : schema.nullable()
     ),
   }),
   description: Yup.string().nullable(),
