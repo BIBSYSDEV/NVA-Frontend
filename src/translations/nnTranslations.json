@@ -361,6 +361,7 @@
       "get_customers": "Kunne ikkje hente kundeinstitusjonar",
       "get_doi": "Kunne ikkje hente lenkjedata",
       "get_doi_agent": "Kunne ikkje hente DOI-konfigurering",
+      "get_funding_sources": "",
       "get_institution": "Kunne ikkje laste inn institusjon",
       "get_institutions": "Kunne ikkje laste inn institusjonar",
       "get_journal": "Kunne ikkje hente tidsskrift",
@@ -956,6 +957,7 @@
         "RelatedPerson": "Relatert person",
         "Researcher": "Forskar",
         "RightsHolder": "Rettholdar",
+        "RoleOther": "Anna",
         "Scenographer": "Scenograf",
         "Screenwriter": "Manusforfattar",
         "Soloist": "Solist",
@@ -1191,6 +1193,7 @@
         "announcement": "Offentleggjering",
         "announcements": "Offentleggjeringar",
         "architecture_type": {
+          "ArchitectureOther": "Anna",
           "Building": "Bygg",
           "Interior": "Interiør",
           "LandscapeArchitecture": "Landskapsarkitektur",
@@ -1199,6 +1202,7 @@
         },
         "audio_video_type": {
           "Audiobook": "Lydbok",
+          "LiteraryArtsAudioVisualOther": "Anna",
           "Other": "Anna",
           "Podcast": "Podkast",
           "RadioPlay": "Høyrespel",
@@ -1217,6 +1221,7 @@
         "content_track": "Innhald/spor",
         "content_track_table_caption": "Oversyn over innhald/spor",
         "design_type": {
+          "ArtisticDesignOther": "Anna",
           "ClothingDesign": "Klesdesign",
           "Exhibition": "Utstilling/messe",
           "GraphicDesign": "Grafisk design",
@@ -1249,6 +1254,7 @@
         "extent_in_minutes": "Varetid i minutt",
         "literary_arts_type": {
           "Essay": "Essay",
+          "LiteraryArtsOther": "Anna",
           "Novel": "Roman",
           "Novella": "Novelle/noveller",
           "Other": "Anna",
@@ -1265,6 +1271,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Langfilm",
           "InteractiveFilm": "Interaktiv produksjon",
+          "MovingPictureOther": "Anna",
           "Other": "Anna",
           "SerialFilmProduction": "Seriell produksjon",
           "ShortFilm": "Kortfilm"
@@ -1273,6 +1280,7 @@
           "CompactDisc": "CD",
           "DVD": "DVD",
           "DigitalFile": "Nedlasting",
+          "MusicMediaOther": "Anna",
           "Other": "Anna",
           "Streaming": "Strøyming",
           "Vinyl": "LP/EP"
@@ -1307,6 +1315,7 @@
         },
         "performance_type": "Type/formidlingsform",
         "performance_types": {
+          "LiteraryArtsPerformanceOther": "Anna",
           "Other": "Anna",
           "Play": "Skodespel/drama",
           "Reading": "Lesing"
@@ -1314,6 +1323,7 @@
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
           "Other": "Anna",
+          "PerformingArtsOther": "Anna",
           "TheatricalProduction": "Framsyning/vising"
         },
         "premiere": "Premiere",
@@ -1333,7 +1343,8 @@
           "IndividualExhibition": "Separat utstilling",
           "Installation": "Installasjon",
           "Other": "Anna",
-          "Performance": "Framsyning"
+          "Performance": "Framsyning",
+          "VisualArtsOther": "Anna"
         },
         "web_link": "Lenkje"
       },
@@ -1368,6 +1379,7 @@
         "medium_types": {
           "Internet": "Internett",
           "Journal": "Avis eller tidsskrift",
+          "MediaTypeOther": "Anna",
           "Other": "Anna",
           "Radio": "Radio",
           "TV": "TV"

@@ -361,6 +361,7 @@
       "get_customers": "Failed to retrieve customer institutions",
       "get_doi": "Failed to retrieve link data",
       "get_doi_agent": "Could not retrieve DOI configuration",
+      "get_funding_sources": "",
       "get_institution": "Failed to retrieve institution",
       "get_institutions": "Failed to retrieve institutions",
       "get_journal": "Failed to retrieve journal",
@@ -956,6 +957,7 @@
         "RelatedPerson": "Related person",
         "Researcher": "Researcher",
         "RightsHolder": "Rights holder",
+        "RoleOther": "Other",
         "Scenographer": "Scenographer",
         "Screenwriter": "Screenwriter",
         "Soloist": "Soloist",
@@ -1191,6 +1193,7 @@
         "announcement": "Announcement",
         "announcements": "Announcements",
         "architecture_type": {
+          "ArchitectureOther": "Other",
           "Building": "Building",
           "Interior": "Interior",
           "LandscapeArchitecture": "Landscape architecture",
@@ -1199,6 +1202,7 @@
         },
         "audio_video_type": {
           "Audiobook": "Audio book",
+          "LiteraryArtsAudioVisualOther": "Other",
           "Other": "Other",
           "Podcast": "Podcast",
           "RadioPlay": "Radio play",
@@ -1217,6 +1221,7 @@
         "content_track": "Content/tracks",
         "content_track_table_caption": "Overview over content/tracks",
         "design_type": {
+          "ArtisticDesignOther": "Other",
           "ClothingDesign": "Clothing design",
           "Exhibition": "Exhibition",
           "GraphicDesign": "Graphical design",
@@ -1249,6 +1254,7 @@
         "extent_in_minutes": "Duration in minutes",
         "literary_arts_type": {
           "Essay": "Essay",
+          "LiteraryArtsOther": "Other",
           "Novel": "Novel",
           "Novella": "Novella/novellas",
           "Other": "Other",
@@ -1265,6 +1271,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Feature film",
           "InteractiveFilm": "Interactive production",
+          "MovingPictureOther": "Other",
           "Other": "Other",
           "SerialFilmProduction": "Serial production",
           "ShortFilm": "Short film"
@@ -1273,6 +1280,7 @@
           "CompactDisc": "CD",
           "DVD": "DVD",
           "DigitalFile": "Download",
+          "MusicMediaOther": "Other",
           "Other": "Other",
           "Streaming": "Streaming",
           "Vinyl": "LP/EP"
@@ -1307,6 +1315,7 @@
         },
         "performance_type": "Type/performance form",
         "performance_types": {
+          "LiteraryArtsPerformanceOther": "Other",
           "Other": "Other",
           "Play": "Play",
           "Reading": "Reading"
@@ -1314,6 +1323,7 @@
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
           "Other": "Other",
+          "PerformingArtsOther": "Other",
           "TheatricalProduction": "Theater/show"
         },
         "premiere": "Premiere",
@@ -1333,7 +1343,8 @@
           "IndividualExhibition": "Individual exhibition",
           "Installation": "Installation",
           "Other": "Other",
-          "Performance": "Performance"
+          "Performance": "Performance",
+          "VisualArtsOther": "Other"
         },
         "web_link": "Link"
       },
@@ -1368,6 +1379,7 @@
         "medium_types": {
           "Internet": "Internet",
           "Journal": "Newspaper or journal",
+          "MediaTypeOther": "Other",
           "Other": "Other",
           "Radio": "Radio",
           "TV": "TV"

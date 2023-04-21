@@ -27,8 +27,13 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { StyledPageWithSideMenu, SidePanel, SideNavHeader } from '../../components/PageWithSideMenu';
 import { setNotification } from '../../redux/notificationSlice';
 import { fetchTickets } from '../../api/searchApi';
+import { TicketStatus } from '../../types/publication_types/messages.types';
 
 const rowsPerPageOptions = [10, 20, 50];
+
+type SelectedStatusState = {
+  [key in TicketStatus]: boolean;
+};
 
 const TasksPage = () => {
   const dispatch = useDispatch();
@@ -41,6 +46,12 @@ const TasksPage = () => {
     doiRequest: true,
     generalSupportCase: true,
     publishingRequest: true,
+  });
+
+  const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
+    Pending: true,
+    Completed: false,
+    Closed: false,
   });
 
   const [institutionUser] = useFetch<InstitutionUser>({
@@ -60,9 +71,20 @@ const TasksPage = () => {
   const typeQuery =
     selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
 
+  const selectedStatusesArray = Object.entries(selectedStatuses)
+    .filter(([_, selected]) => selected)
+    .map(([key]) => key);
+
+  const statusQuery =
+    selectedStatusesArray.length > 0
+      ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
+      : '';
+
+  const query = [typeQuery, statusQuery].filter(Boolean).join(' AND ');
+
   const ticketsQuery = useQuery({
-    queryKey: ['tickets', rowsPerPage, page, typeQuery],
-    queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, typeQuery),
+    queryKey: ['tickets', rowsPerPage, page, query],
+    queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, query),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 
@@ -71,6 +93,11 @@ const TasksPage = () => {
   const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
+
+  const statusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
+  const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
+  const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
+  const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
   return (
     <StyledPageWithSideMenu>
@@ -143,6 +170,51 @@ const TasksPage = () => {
               selectedTypes.generalSupportCase && generalSupportCaseCount
                 ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                 : t('my_page.messages.types.GeneralSupportCase')
+            }
+          />
+        </FormGroup>
+
+        <FormGroup sx={{ m: '1rem' }}>
+          <FormControlLabel
+            checked={selectedStatuses.Pending}
+            control={
+              <Checkbox
+                sx={{ py: '0.2rem' }}
+                onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
+              />
+            }
+            label={
+              selectedStatuses.Pending && pendingCount
+                ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
+                : t('my_page.messages.ticket_types.Pending')
+            }
+          />
+          <FormControlLabel
+            checked={selectedStatuses.Completed}
+            control={
+              <Checkbox
+                sx={{ py: '0.2rem' }}
+                onChange={() => setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })}
+              />
+            }
+            label={
+              selectedStatuses.Completed && completedCount
+                ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
+                : t('my_page.messages.ticket_types.Completed')
+            }
+          />
+          <FormControlLabel
+            checked={selectedStatuses.Closed}
+            control={
+              <Checkbox
+                sx={{ py: '0.2rem' }}
+                onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
+              />
+            }
+            label={
+              selectedStatuses.Closed && closedCount
+                ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
+                : t('my_page.messages.ticket_types.Closed')
             }
           />
         </FormGroup>
