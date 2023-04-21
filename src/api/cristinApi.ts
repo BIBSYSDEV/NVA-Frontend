@@ -1,5 +1,5 @@
 import { Organization } from '../types/organization.types';
-import { FundingSources } from '../types/project.types';
+import { CristinProject, FundingSources } from '../types/project.types';
 import {
   CreateCristinPerson,
   CristinPerson,
@@ -70,4 +70,11 @@ export const fetchPositions = async (includeDisabledPositions: boolean) => {
     url: includeDisabledPositions ? CristinApiPath.Position : `${CristinApiPath.Position}?active=true`,
   });
   return fetchPositionsResponse.data;
+};
+
+export const fetchProject = async (projectId: string) => {
+  const fetchProjectRespone = await apiRequest2<CristinProject>({
+    url: projectId,
+  });
+  return fetchProjectRespone.data;
 };
