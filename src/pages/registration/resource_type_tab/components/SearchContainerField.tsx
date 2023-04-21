@@ -117,7 +117,7 @@ export const SearchContainerField = ({
                   </Typography>
                   {descriptionToShow === 'year-and-contributors' ? (
                     <YearAndContributorsText
-                      date={option.entityDescription?.date}
+                      date={option.entityDescription?.publicationDate}
                       contributors={option.entityDescription?.contributors ?? []}
                     />
                   ) : (
@@ -136,7 +136,7 @@ export const SearchContainerField = ({
                       <Typography variant="subtitle1">{getTitleString(option.entityDescription?.mainTitle)}</Typography>
                       {descriptionToShow === 'year-and-contributors' ? (
                         <YearAndContributorsText
-                          date={option.entityDescription?.date}
+                          date={option.entityDescription?.publicationDate}
                           contributors={option.entityDescription?.contributors ?? []}
                         />
                       ) : (

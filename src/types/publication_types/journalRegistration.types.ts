@@ -58,7 +58,7 @@ export const emptyRegistrationEntityDescription: JournalEntityDescription = {
   alternativeAbstracts: {},
   alternativeTitles: {},
   contributors: [],
-  date: {
+  publicationDate: {
     type: 'PublicationDate',
     year: '',
     month: '',

@@ -88,7 +88,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           {t('registration.public_page.about_registration')}
         </Typography>
 
-        <Typography>{displayDate(entityDescription?.date)}</Typography>
+        <Typography>{displayDate(entityDescription?.publicationDate)}</Typography>
 
         {language && (
           <Typography data-testid={dataTestId.registrationLandingPage.primaryLanguage}>
