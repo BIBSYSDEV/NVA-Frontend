@@ -948,7 +948,7 @@
         "LightDesigner": "Lysdesigner",
         "Musician": "Ensemblemusiker",
         "Organizer": "Arrangør",
-        "Other": "Annet",
+        "RoleOther": "Annet",
         "Photographer": "Fotograf",
         "Producer": "Produsent",
         "ProductionDesigner": "Produksjonsdesigner",
@@ -1137,12 +1137,7 @@
       "MusicPerformance": "Musikk",
       "NonFictionChapter": "Faglig kapittel",
       "NonFictionMonograph": "Faglig monografi",
-      "Other": "Annen publikasjon",
-      "OtherFeatureArticle": "Kronikk",
-      "OtherMap": "Kart",
-      "OtherMusical": "Musikktrykk",
       "OtherPresentation": "Annen presentasjon",
-      "OtherPublication": "Annen publikasjon",
       "OtherStudentWork": "Annen studentoppgave",
       "PerformingArts": "Scenekunst",
       "PopularScienceArticle": "Populærvitenskapelig artikkel",
@@ -1195,12 +1190,12 @@
           "Building": "Bygg",
           "Interior": "Interiør",
           "LandscapeArchitecture": "Landskapsarkitektur",
-          "Other": "Annet",
+          "ArchitectureOther": "Annet",
           "PlanningProposal": "Planforslag"
         },
         "audio_video_type": {
           "Audiobook": "Lydbok",
-          "Other": "Annet",
+          "LiteraryArtsAudioVisualOther": "Annet",
           "Podcast": "Podkast",
           "RadioPlay": "Hørespill",
           "ShortFilm": "Kortfilm"
@@ -1225,7 +1220,7 @@
           "InteractionDesign": "Interaksjonsdesign",
           "InteriorDesign": "Interiørdesign",
           "LightDesign": "Lysdesign",
-          "Other": "Annet",
+          "ArtisticDesignOther": "Annet",
           "ProductDesign": "Produktdesign",
           "ServiceDesign": "Tjenestedesign",
           "WebDesign": "Webdesign"
@@ -1252,7 +1247,7 @@
           "Essay": "Essay",
           "Novel": "Roman",
           "Novella": "Novelle/noveller",
-          "Other": "Annet",
+          "LiteraryArtsOther": "Annet",
           "Play": "Drama/scenetekster",
           "Poetry": "Poesi",
           "Retelling": "Gjendikting",
@@ -1266,7 +1261,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Langfilm",
           "InteractiveFilm": "Interaktiv produksjon",
-          "Other": "Annet",
+          "MovingPictureOther": "Annet",
           "SerialFilmProduction": "Seriell produksjon",
           "ShortFilm": "Kortfilm"
         },
@@ -1274,7 +1269,7 @@
           "CompactDisc": "CD",
           "DVD": "DVD",
           "DigitalFile": "Nedlasting",
-          "Other": "Annet",
+          "MusicMediaOther": "Annet",
           "Streaming": "Strømming",
           "Vinyl": "LP/EP"
         },
@@ -1308,13 +1303,13 @@
         },
         "performance_type": "Type/formidlingsform",
         "performance_types": {
-          "Other": "Annet",
+          "LiteraryArtsPerformanceOther": "Annet",
           "Play": "Skuespill/drama",
           "Reading": "Lesing"
         },
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
-          "Other": "Annet",
+          "PerformingArtsOther": "Annet",
           "TheatricalProduction": "Forestilling/visning"
         },
         "premiere": "Premiere",
@@ -1333,7 +1328,7 @@
           "CollectiveExhibition": "Gruppe-/kollektivutstilling",
           "IndividualExhibition": "Separatutstilling",
           "Installation": "Installasjon",
-          "Other": "Annet",
+          "VisualArtsOther": "Annet",
           "Performance": "Performance"
         },
         "web_link": "Lenke"
@@ -1369,7 +1364,7 @@
         "medium_types": {
           "Internet": "Internett",
           "Journal": "Avis eller tidsskrift",
-          "Other": "Annet",
+          "MediaTypeOther": "Annet",
           "Radio": "Radio",
           "TV": "TV"
         },

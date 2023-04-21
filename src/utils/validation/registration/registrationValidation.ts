@@ -47,7 +47,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
       .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
         isBook(publicationInstanceType) ? schema.required(registrationErrorMessage.npiSubjectRequired) : schema
       ),
-    date: Yup.object<YupShape<RegistrationDate>>({
+    publicationDate: Yup.object<YupShape<RegistrationDate>>({
       year: Yup.number()
         .typeError(registrationErrorMessage.publishedDateInvalid)
         .required(registrationErrorMessage.publishedDateRequired),

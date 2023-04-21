@@ -13,7 +13,8 @@ import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
-import { isbnField } from '../../../../../../utils/validation/registration/referenceValidation';
+import { isbnListField } from '../../../../../../utils/validation/registration/referenceValidation';
+import { IsbnField } from '../../../components/isbn_and_pages/IsbnField';
 
 interface LiteraryArtsAudioVisualModalProps {
   audioVisual?: LiteraryArtsAudioVisual;
@@ -27,7 +28,7 @@ const emptyLiteraryArtsAudioVisual: LiteraryArtsAudioVisual = {
   subtype: '',
   publisher: emptyUnconfirmedPublisher,
   publicationDate: emptyRegistrationDate,
-  isbn: '',
+  isbnList: [],
   extent: '',
 };
 
@@ -71,7 +72,7 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsAudioVisual>>({
         })
       ),
   }),
-  isbn: isbnField,
+  isbnList: isbnListField,
 });
 
 export const LiteraryArtsAudioVisualModal = ({
@@ -149,19 +150,7 @@ export const LiteraryArtsAudioVisualModal = ({
                 )}
               </Field>
 
-              <Field name="isbn">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    variant="filled"
-                    fullWidth
-                    label={t('registration.resource_type.isbn')}
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.isbnField}
-                  />
-                )}
-              </Field>
+              <IsbnField fieldName="isbnList" />
 
               <Field name="extent">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
