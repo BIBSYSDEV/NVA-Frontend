@@ -11,22 +11,23 @@ import {
   Typography,
 } from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { PageHeader } from '../../components/PageHeader';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
-import { useFetch } from '../../utils/hooks/useFetch';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
-import { CristinPerson } from '../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RootState } from '../../redux/store';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { useQuery } from '@tanstack/react-query';
+import { fetchPerson } from '../../api/cristinApi';
+import { setNotification } from '../../redux/notificationSlice';
 
 const textContainerSx: SxProps = {
   width: '100%',
@@ -39,6 +40,7 @@ const lineSx: SxProps = {
 };
 
 const ResearchProfile = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
   const [page, setPage] = useState(0);
@@ -50,10 +52,13 @@ const ResearchProfile = () => {
     ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
 
-  const [person, isLoadingPerson] = useFetch<CristinPerson>({
-    url: personId,
-    errorMessage: t('feedback.error.get_person'),
+  const personQuery = useQuery({
+    queryKey: [personId],
+    queryFn: () => fetchPerson(personId),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
   });
+
+  const person = personQuery.data;
 
   const [registrations, isLoadingRegistrations] = useSearchRegistrations(
     {
@@ -76,7 +81,7 @@ const ResearchProfile = () => {
   return (
     <BackgroundDiv>
       <PageHeader>{fullName}</PageHeader>
-      {isLoadingPerson ? (
+      {personQuery.isLoading ? (
         <PageSpinner aria-label={t('my_page.research_profile')} />
       ) : (
         person && (
