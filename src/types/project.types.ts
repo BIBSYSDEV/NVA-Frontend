@@ -51,6 +51,17 @@ export interface ProjectContributor {
   identity: ProjectContributorIdentity;
 }
 
+export interface ProjectFunding extends Pick<Funding, 'identifier' | 'source' | 'labels'> {
+  type: 'Funding';
+}
+
+export const emptyProjectFunding: ProjectFunding = {
+  type: 'Funding',
+  identifier: '',
+  source: '',
+  labels: {},
+};
+
 export interface SaveCristinProject {
   type: 'Project';
   title: string;
@@ -64,7 +75,7 @@ export interface SaveCristinProject {
   projectCategories: TypedLabel[];
   keywords: TypedLabel[];
   relatedProjects: string[];
-  funding: Funding[];
+  funding: ProjectFunding[];
 }
 
 export interface CristinProject extends SaveCristinProject {

@@ -13,7 +13,7 @@ import {
   ResearchDataType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
+import { ArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../validationHelpers';
 import {
   JournalPublicationInstance,
@@ -147,16 +147,19 @@ const resourceErrorMessage = {
   typeWorkRequired: i18n.t('translation:feedback.validation.is_required', {
     field: i18n.t('translation:registration.resource_type.type_work'),
   }),
+  typeWorkDescriptionRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.type_work_specified'),
+  }),
 };
 
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
 
 // Common Fields
-export const isbnField = Yup.string()
-  .min(13, resourceErrorMessage.isbnTooShort)
-  .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? '')?.isIsbn13());
-
-const isbnListField = Yup.array().of(isbnField);
+export const isbnListField = Yup.array().of(
+  Yup.string()
+    .min(13, resourceErrorMessage.isbnTooShort)
+    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? '')?.isIsbn13())
+);
 
 const pagesMonographField = Yup.object()
   .nullable()
@@ -356,18 +359,16 @@ export const presentationReference = baseReference.shape({
 const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
-    type: Yup.string()
-      .nullable()
-      .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
-        publicationInstanceType === ArtisticType.MusicPerformance
-          ? schema.optional()
-          : schema.required(resourceErrorMessage.typeWorkRequired)
-      ),
-    description: Yup.string()
-      .nullable()
-      .when('type', ([type], schema) =>
-        type === DesignType.Other ? schema.required(resourceErrorMessage.typeWorkRequired) : schema
-      ),
+    type: Yup.string().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+      publicationInstanceType === ArtisticType.MusicPerformance
+        ? schema.optional()
+        : schema.required(resourceErrorMessage.typeWorkRequired)
+    ),
+    description: Yup.string().when('type', ([type], schema) =>
+      typeof type === 'string' && type.endsWith('Other')
+        ? schema.required(resourceErrorMessage.typeWorkDescriptionRequired)
+        : schema.nullable()
+    ),
   }),
   description: Yup.string().nullable(),
   venues: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
