@@ -3,7 +3,6 @@ import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import { IMaskInput } from 'react-imask';
-import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 
 const isbnFormat = '000-00-000-0000-0';
@@ -26,13 +25,17 @@ const MaskIsbnInput = forwardRef<HTMLElement, MaskInputProps>((props, ref) => {
   );
 });
 
-export const IsbnField = () => {
+interface IsbnFieldProps {
+  fieldName: string;
+}
+
+export const IsbnField = ({ fieldName }: IsbnFieldProps) => {
   const { t } = useTranslation();
 
   return (
-    <FieldArray name={ResourceFieldNames.IsbnList}>
+    <FieldArray name={fieldName}>
       {({ remove }: FieldArrayRenderProps) => (
-        <Field name={ResourceFieldNames.Isbn}>
+        <Field name={`${fieldName}[0]`}>
           {/* Support just a single ISBN entry for now */}
           {({ field, meta }: FieldProps<string>) => (
             <TextField
@@ -45,6 +48,7 @@ export const IsbnField = () => {
                   remove(0);
                 }
               }}
+              value={field.value ?? ''}
               label={t('registration.resource_type.isbn')}
               placeholder={isbnFormat}
               variant="filled"

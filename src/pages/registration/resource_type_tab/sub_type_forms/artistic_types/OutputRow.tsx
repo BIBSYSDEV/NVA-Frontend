@@ -38,7 +38,7 @@ import { MusicScoreModal } from './music_performance/MusicScoreModal';
 import { AudioVisualPublicationModal } from './music_performance/AudioVisualPublicationModal';
 import { ConcertModal } from './music_performance/ConcertModal';
 import { OtherPerformanceModal } from './music_performance/OtherPerformanceModal';
-import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModalModal';
+import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModal';
 import { LiteraryArtsWebPublicationModal } from './literary_art/LiteraryArtsWebPublicationModal';
 import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerformanceModal';
 import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVisualModal';
