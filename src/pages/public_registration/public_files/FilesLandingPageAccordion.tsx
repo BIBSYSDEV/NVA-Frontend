@@ -25,13 +25,15 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const hasPublishableFiles = associatedFiles.some(
     (file) => file.type === 'PublishedFile' || file.type === 'UnpublishedFile'
   );
-  const filesToShow = associatedFiles.filter((file) => userIsRegistrationAdmin || file.type === 'PublishedFile');
+  const filesToShow = userIsRegistrationAdmin
+    ? associatedFiles
+    : associatedFiles.filter((file) => file.type === 'PublishedFile');
 
   const showFileVersionField = isTypeWithFileVersionField(
     registration.entityDescription?.reference?.publicationInstance?.type
   );
 
-  return !hasPublishableFiles ? null : (
+  return !hasPublishableFiles && !userIsRegistrationAdmin ? null : (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
       defaultExpanded
