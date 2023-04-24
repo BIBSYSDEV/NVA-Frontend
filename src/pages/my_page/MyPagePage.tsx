@@ -7,6 +7,7 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import { Divider } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -30,7 +31,6 @@ import {
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import ResearchProfile from '../research_profile/ResearchProfile';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
-import { useQueryClient } from '@tanstack/react-query';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
