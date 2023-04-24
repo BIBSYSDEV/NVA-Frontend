@@ -1,5 +1,5 @@
 import { Organization } from '../types/organization.types';
-import { FundingSources } from '../types/project.types';
+import { CristinProject, FundingSources } from '../types/project.types';
 import {
   CreateCristinPerson,
   CristinPerson,
@@ -77,4 +77,11 @@ export const fetchPerson = async (personId: string) => {
     url: personId,
   });
   return fetchPersonResponse.data;
+};
+
+export const fetchProject = async (projectId: string) => {
+  const fetchProjectRespone = await apiRequest2<CristinProject>({
+    url: projectId,
+  });
+  return fetchProjectRespone.data;
 };
