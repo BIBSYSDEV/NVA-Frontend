@@ -72,6 +72,13 @@ export const fetchPositions = async (includeDisabledPositions: boolean) => {
   return fetchPositionsResponse.data;
 };
 
+export const fetchPerson = async (personId: string) => {
+  const fetchPersonResponse = await apiRequest2<CristinPerson>({
+    url: personId,
+  });
+  return fetchPersonResponse.data;
+};
+
 export const fetchProject = async (projectId: string) => {
   const fetchProjectRespone = await apiRequest2<CristinProject>({
     url: projectId,
