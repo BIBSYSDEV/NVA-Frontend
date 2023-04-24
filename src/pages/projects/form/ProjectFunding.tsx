@@ -83,7 +83,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                               if (project) {
                                 const { lead, ...rest } = project;
                                 const nfrFunding: ProjectFunding = {
-                                  type: 'Funding',
+                                  type: 'UnconfirmedFunding',
                                   ...rest,
                                 };
                                 setFieldValue(baseFieldName, nfrFunding);
