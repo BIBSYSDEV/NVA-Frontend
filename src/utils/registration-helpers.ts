@@ -104,8 +104,8 @@ const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?:
   const issnString =
     printIssn || onlineIssn
       ? [
-          printIssn ? `${i18n.t('translation:registration.resource_type.print_issn')}: ${printIssn}` : '',
-          onlineIssn ? `${i18n.t('translation:registration.resource_type.online_issn')}: ${onlineIssn}` : '',
+          printIssn ? `${i18n.t('registration.resource_type.print_issn')}: ${printIssn}` : '',
+          onlineIssn ? `${i18n.t('registration.resource_type.online_issn')}: ${onlineIssn}` : '',
         ]
           .filter((issn) => issn)
           .join(', ')
@@ -562,8 +562,7 @@ export const userCanEditRegistration = (user: User | null, registration: Registr
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
 
-export const getTitleString = (title: string | undefined) =>
-  title || `[${i18n.t('translation:registration.missing_title')}]`;
+export const getTitleString = (title: string | undefined) => title || `[${i18n.t('registration.missing_title')}]`;
 
 export const associatedArtifactIsFile = ({ type }: { type: string }) =>
   type === 'File' || type === 'UnpublishedFile' || type === 'PublishedFile' || type === 'UnpublishableFile';

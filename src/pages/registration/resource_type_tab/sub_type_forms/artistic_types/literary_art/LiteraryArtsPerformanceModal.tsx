@@ -35,15 +35,15 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsPerformance>>({
   ),
   place: Yup.object({
     label: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.place'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.place'),
       })
     ),
   }),
   publicationDate: Yup.object<YupShape<RegistrationDate>>({
     year: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.date'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.date'),
       })
     ),
   }),
