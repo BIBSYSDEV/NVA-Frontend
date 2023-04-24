@@ -80,13 +80,6 @@ export const fetchPerson = async (personId: string) => {
   return fetchPersonResponse.data;
 };
 
-export const fetchProjectsByCreator = async (creatorIdentifier: string) => {
-  const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject>>({
-    url: `${CristinApiPath.Project}?creator=${creatorIdentifier}`,
-  });
-  return fetchProjectsResponse.data;
-};
-
 export const searchForProjects = async (results: number, page: number, creator?: string) => {
   const searchParams = new URLSearchParams();
   searchParams.set('results', results.toString());
@@ -102,4 +95,11 @@ export const searchForProjects = async (results: number, page: number, creator?:
     url: `${CristinApiPath.Project}${query}`,
   });
   return fetchProjectsResponse.data;
+};
+
+export const fetchProject = async (projectId: string) => {
+  const fetchProjectRespone = await apiRequest2<CristinProject>({
+    url: projectId,
+  });
+  return fetchProjectRespone.data;
 };
