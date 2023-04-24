@@ -1,57 +1,53 @@
-import { List, TablePagination, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { CristinApiPath } from '../../../api/apiPaths';
-import { ListSkeleton } from '../../../components/ListSkeleton';
+import { Typography, List, TablePagination } from '@mui/material';
+import { searchForProjects } from '../../../api/cristinApi';
 import { RootState } from '../../../redux/store';
-import { SearchResponse } from '../../../types/common.types';
-import { CristinProject } from '../../../types/project.types';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { useState } from 'react';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
-import { useFetch } from '../../../utils/hooks/useFetch';
+import { ListSkeleton } from '../../../components/ListSkeleton';
 import { canEditProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
 
-export const MyProjects = () => {
+export const MyProjectRegistrations = () => {
   const { t } = useTranslation();
-
   const user = useSelector((store: RootState) => store.user);
-  const userCristinId = getIdentifierFromId(user?.cristinId ?? '');
+  const cristinIdentifier = getIdentifierFromId(user?.cristinId ?? '');
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const [projects, isLoadingProjects, refetchProjects] = useFetch<SearchResponse<CristinProject>>({
-    url: userCristinId
-      ? `${CristinApiPath.Project}?query=.&page=${page + 1}&results=${rowsPerPage}&participant=${userCristinId}`
-      : '',
-    errorMessage: t('feedback.error.project_search'),
+  const projectsQuery = useQuery({
+    enabled: !!cristinIdentifier,
+    queryKey: ['projects', rowsPerPage, page, cristinIdentifier],
+    queryFn: () => searchForProjects(rowsPerPage, page + 1, cristinIdentifier),
   });
 
   return (
     <div>
       <Typography variant="h2" gutterBottom>
-        {t('my_page.my_profile.my_projects')}
+        {t('my_page.project_registrations')}
       </Typography>
-      {isLoadingProjects ? (
+      {projectsQuery.isLoading ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : projects && projects.hits.length > 0 ? (
+      ) : projectsQuery.data && projectsQuery.data.size > 0 ? (
         <>
           <List>
-            {projects.hits.map((project) => (
+            {projectsQuery.data.hits.map((project) => (
               <ProjectListItem
                 key={project.id}
                 project={project}
                 showEdit={canEditProject(user, project)}
-                refetchProjects={refetchProjects}
+                refetchProjects={projectsQuery.refetch}
               />
             ))}
           </List>
           <TablePagination
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             component="div"
-            count={projects.size}
+            count={projectsQuery.data.size}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(_, newPage) => setPage(newPage)}
