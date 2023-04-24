@@ -8,7 +8,7 @@ import { Box } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { getDateFnsLocale } from './utils/date-helpers';
-import { getCurrentUserAttributes } from './api/userApi';
+import { getCurrentUserAttributes } from './api/authApi';
 import { AppRoutes } from './AppRoutes';
 import { Footer } from './layout/Footer';
 import { Header } from './layout/header/Header';

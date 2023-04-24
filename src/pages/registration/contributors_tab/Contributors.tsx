@@ -132,7 +132,9 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         ...emptyContributor,
         identity,
         affiliations: existingAffiliations,
-        role,
+        role: {
+          type: role,
+        },
         sequence: contributors.length + 1,
       };
       push(newContributor);
@@ -145,7 +147,9 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
       const verifiedContributor: Contributor = {
         ...relevantContributor,
-        role,
+        role: {
+          type: role,
+        },
         identity,
         affiliations: relevantAffiliations,
       };

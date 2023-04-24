@@ -7,6 +7,9 @@ import { API_URL } from '../constants';
 import { isValidUrl } from '../general-helpers';
 
 // This hook is used to fetch all top-level institutions and put them in Redux, to avoid fetching same data many times
+/**
+ * @deprecated Use react-query instead
+ */
 export const useFetchResource = <T>(id: string, errorMessage?: string): [T | undefined, boolean] => {
   const dispatch = useDispatch();
   const key = getKeyValue(id);
