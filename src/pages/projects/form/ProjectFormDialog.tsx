@@ -26,6 +26,7 @@ import { ProjectFormPanel2 } from './ProjectFormPanel2';
 import { ProjectFormPanel1 } from './ProjectFormPanel1';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 
 export enum ProjectFieldName {
   Title = 'title',
@@ -65,6 +66,8 @@ export const ProjectFormDialog = ({
 }: ProjectFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [showConfirmCloseDialog, setShowConfirmCloseDialog] = useState(false);
+  const toggleShowConfirmCloseDialog = () => setShowConfirmCloseDialog(!showConfirmCloseDialog);
   const [initialValues, setInitialValues] = useState<InitialProjectFormData>({ project: currentProject });
   const [selectedPanel, setSelectedPanel] = useState<0 | 1>(0);
   const editMode = !!currentProject;
@@ -73,6 +76,7 @@ export const ProjectFormDialog = ({
     onClose();
     setInitialValues({ project: currentProject });
     setSelectedPanel(0);
+    setShowConfirmCloseDialog(false);
   };
 
   const submitProjectForm = async (values: SaveCristinProject) => {
@@ -111,14 +115,14 @@ export const ProjectFormDialog = ({
     <Dialog
       maxWidth="md"
       fullWidth
-      onClose={handleClose}
+      onClose={toggleShowConfirmCloseDialog}
       open={open}
       PaperProps={{ sx: { bgcolor: 'info.light' } }}
       transitionDuration={0}>
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
       <ErrorBoundary>
         {!initialValues.project ? (
-          <CreateProjectStartPage onClose={handleClose} setInitialValues={setInitialValues} />
+          <CreateProjectStartPage onClose={toggleShowConfirmCloseDialog} setInitialValues={setInitialValues} />
         ) : (
           <Formik
             initialValues={initialValues.project}
@@ -199,7 +203,7 @@ export const ProjectFormDialog = ({
                     </Box>
 
                     <Box sx={{ gridArea: '1/3', display: 'flex', gap: '0.5rem', justifyContent: 'end' }}>
-                      <Button onClick={handleClose}>{t('common.cancel')}</Button>
+                      <Button onClick={toggleShowConfirmCloseDialog}>{t('common.cancel')}</Button>
                       {selectedPanel === 0 ? (
                         <Button variant="contained" onClick={goToNextTab}>
                           {t('common.next')}
@@ -221,6 +225,13 @@ export const ProjectFormDialog = ({
           </Formik>
         )}
       </ErrorBoundary>
+      <ConfirmDialog
+        open={showConfirmCloseDialog}
+        title={t('project.close_view')}
+        onAccept={handleClose}
+        onCancel={toggleShowConfirmCloseDialog}>
+        {t('project.close_view_description')}
+      </ConfirmDialog>
     </Dialog>
   );
 };
