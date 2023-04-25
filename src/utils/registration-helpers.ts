@@ -118,8 +118,6 @@ export const getPublicationChannelString = (title: string, onlineIssn?: string |
   return issnString ? `${title} (${issnString})` : title;
 };
 
-export const getRegistrationIdentifier = (id: string) => id.split('/').pop() ?? '';
-
 // Ensure Registration has correct type values, etc
 export const getFormattedRegistration = (registration: Registration) => {
   const type = registration.entityDescription?.reference?.publicationInstance?.type ?? '';

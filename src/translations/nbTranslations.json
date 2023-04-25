@@ -534,6 +534,7 @@
       "user_profile": "Brukerprofil",
       "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil."
     },
+    "project_registrations": "Prosjektregistreringer",
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
@@ -836,6 +837,8 @@
     }
   },
   "project": {
+    "close_view": "Lukk visning",
+    "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
     "coordinating_institution": "Koordinerende institusjon",
     "create_project": "Opprett prosjekt",
     "edit_project": "Endre prosjekt",
