@@ -1,11 +1,16 @@
 import { Box, Button, DialogActions, DialogContent, Divider, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch, useSelector } from 'react-redux';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 import { SaveCristinProject, NfrProject, emptyProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { InitialProjectFormData } from './ProjectFormDialog';
+import { RootState } from '../../../redux/store';
+import { fetchOrganization } from '../../../api/cristinApi';
+import { setNotification } from '../../../redux/notificationSlice';
 
 interface CreateProjectStartPageProps {
   onClose: () => void;
@@ -14,6 +19,17 @@ interface CreateProjectStartPageProps {
 
 export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProjectStartPageProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const user = useSelector((store: RootState) => store.user);
+
+  const currentInstitutionQuery = useQuery({
+    enabled: !!user?.topOrgCristinId,
+    queryKey: [user?.topOrgCristinId],
+    queryFn: () => (user?.topOrgCristinId ? fetchOrganization(user.topOrgCristinId) : undefined),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_institution'), variant: 'error' })),
+    staleTime: Infinity,
+    cacheTime: 1_800_000, // 30 minutes
+  });
 
   const [selectedNfrProject, setSelectedNfrProject] = useState<NfrProject | null>(null);
   const [emptyProjectSelected, setEmptyProjectSelected] = useState(false);
@@ -73,13 +89,15 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
         <Button
           data-testid={dataTestId.registrationWizard.description.projectForm.startCreateProjectButton}
           variant="contained"
-          disabled={!emptyProjectSelected && !selectedNfrProject}
+          disabled={currentInstitutionQuery.isLoading || (!emptyProjectSelected && !selectedNfrProject)}
           onClick={() => {
+            const coordinatingInstitution = currentInstitutionQuery.data ?? emptyProject.coordinatingInstitution;
             if (emptyProjectSelected) {
-              setInitialValues({ project: emptyProject });
+              setInitialValues({ project: { ...emptyProject, coordinatingInstitution } });
             } else if (selectedNfrProject) {
               const projectFromNfr: SaveCristinProject = {
                 ...emptyProject,
+                coordinatingInstitution,
                 title: getLanguageString(selectedNfrProject.labels),
                 startDate: selectedNfrProject.activeFrom,
                 endDate: selectedNfrProject.activeTo,
