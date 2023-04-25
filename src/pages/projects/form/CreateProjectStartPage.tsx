@@ -83,6 +83,14 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
                 title: getLanguageString(selectedNfrProject.labels),
                 startDate: selectedNfrProject.activeFrom,
                 endDate: selectedNfrProject.activeTo,
+                funding: [
+                  {
+                    type: 'Funding',
+                    source: selectedNfrProject.source,
+                    identifier: selectedNfrProject.identifier,
+                    labels: selectedNfrProject.labels,
+                  },
+                ],
               };
 
               setInitialValues({ project: projectFromNfr, suggestedProjectManager: selectedNfrProject.lead });
