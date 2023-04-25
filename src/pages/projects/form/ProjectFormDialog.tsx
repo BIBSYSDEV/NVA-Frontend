@@ -45,7 +45,7 @@ export enum ProjectFieldName {
 
 interface ProjectFormDialogProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
-  onCreateProject?: (project: CristinProject) => void;
+  onCreateProject?: (project: CristinProject) => void | Promise<unknown>;
   currentProject?: CristinProject;
   refetchData?: () => void;
 }
@@ -99,7 +99,7 @@ export const ProjectFormDialog = ({
 
       if (isSuccessStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.create_project'), variant: 'success' }));
-        onCreateProject?.(createProjectResponse.data);
+        await onCreateProject?.(createProjectResponse.data);
         handleClose();
       } else if (isErrorStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_project'), variant: 'error' }));
