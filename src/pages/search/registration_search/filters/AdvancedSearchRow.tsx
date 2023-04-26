@@ -25,7 +25,7 @@ export const registrationFilters: FilterItem[] = [
     field: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`,
     i18nKey: 'registration.contributors.contributor',
   },
-  { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'registration.year_published' },
+  { field: `${DescriptionFieldNames.PublicationDate}.year`, i18nKey: 'registration.year_published' },
 ];
 
 interface AdvancedSearchRowProps {
@@ -44,7 +44,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
           <TextField {...field} select variant="outlined" label={t('search.field_label')}>
             {registrationFilters.map((filter) => (
               <MenuItem key={filter.i18nKey} value={filter.field}>
-                {t(filter.i18nKey)}
+                {t<any>(filter.i18nKey)}
               </MenuItem>
             ))}
           </TextField>

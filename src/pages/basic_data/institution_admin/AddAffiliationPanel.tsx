@@ -11,6 +11,7 @@ import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { AddEmployeeData } from './AddEmployeePage';
 import { StartDateField } from '../fields/StartDateField';
 import { PositionField } from '../fields/PositionField';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation();
@@ -50,6 +51,7 @@ export const AddAffiliationPanel = () => {
                 fullWidth
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
+                data-testid={dataTestId.basicData.personAdmin.institution}
               />
             )}
           />
@@ -71,6 +73,7 @@ export const AddAffiliationPanel = () => {
               label={t('basic_data.add_employee.position_percent')}
               error={touched && !!error}
               helperText={<ErrorMessage name={field.name} />}
+              data-testid={dataTestId.basicData.personAdmin.positionPercent}
             />
           )}
         </Field>
@@ -80,6 +83,7 @@ export const AddAffiliationPanel = () => {
           fieldName="affiliation.startDate"
           disabled={isDisabled}
           maxDate={values.affiliation.endDate ? new Date(values.affiliation.endDate) : undefined}
+          dataTestId={dataTestId.basicData.personAdmin.startDate}
         />
 
         <Field name="affiliation.endDate">
@@ -105,6 +109,7 @@ export const AddAffiliationPanel = () => {
                   variant="filled"
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.basicData.personAdmin.endDate}
                 />
               )}
             />

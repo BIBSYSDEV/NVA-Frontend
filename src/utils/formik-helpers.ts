@@ -140,7 +140,7 @@ const getAllContributorFields = (contributors: Contributor[]): string[] => {
 const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown> => ({
   entityDescription: {
     abstract: true,
-    date: {
+    publicationDate: {
       day: true,
       month: true,
       year: true,
@@ -163,7 +163,7 @@ const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown
 });
 
 const touchedResourceTabFields = (registration: Registration): FormikTouched<unknown> => {
-  const mainType = getMainRegistrationType(registration.entityDescription?.reference?.publicationInstance.type ?? '');
+  const mainType = getMainRegistrationType(registration.entityDescription?.reference?.publicationInstance?.type ?? '');
 
   switch (mainType) {
     case PublicationType.PublicationInJournal:

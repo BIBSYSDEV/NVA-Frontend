@@ -11,7 +11,6 @@ import {
 } from '../../registration/description_tab/projects_field/projectHelpers';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 
 interface ProjectListItemProps {
   project: CristinProject;
@@ -43,7 +42,7 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
           </MuiLink>
         </Typography>
         {showEdit && (
-          <BetaFunctionality>
+          <>
             <Tooltip title={t('project.edit_project')}>
               <IconButton onClick={() => setOpenEditProject(true)}>
                 <EditIcon />
@@ -55,7 +54,7 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
               onClose={() => setOpenEditProject(false)}
               refetchData={refetchProjects}
             />
-          </BetaFunctionality>
+          </>
         )}
       </Box>
       <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '1rem' }}>

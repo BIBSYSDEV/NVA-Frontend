@@ -29,8 +29,8 @@ interface JournalFieldProps {
 export const JournalField = ({ confirmedContextType, unconfirmedContextType }: JournalFieldProps) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
-  const { reference, date } = values.entityDescription as JournalEntityDescription;
-  const year = date?.year ?? '';
+  const { reference, publicationDate } = values.entityDescription as JournalEntityDescription;
+  const year = publicationDate?.year ?? '';
 
   const [query, setQuery] = useState(
     !reference?.publicationContext.id ? reference?.publicationContext.title ?? '' : ''

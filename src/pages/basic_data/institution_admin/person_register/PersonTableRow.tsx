@@ -21,9 +21,10 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 import { DatePicker } from '@mui/x-date-pickers';
+import { useQuery } from '@tanstack/react-query';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
@@ -35,7 +36,7 @@ import {
 } from '../../../../utils/user-helpers';
 import { CristinPerson, Employment, emptyEmployment, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
-import { CristinApiPath, RoleApiPath } from '../../../../api/apiPaths';
+import { RoleApiPath } from '../../../../api/apiPaths';
 import { UserRolesSelector } from '../UserRolesSelector';
 import { authenticatedApiRequest } from '../../../../api/apiRequest';
 import { setNotification } from '../../../../redux/notificationSlice';
@@ -44,7 +45,6 @@ import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
-import { RootState } from '../../../../redux/store';
 import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
@@ -68,14 +68,15 @@ export const PersonTableRow = ({
 }: PersonTableRowProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const reduxResources = useSelector((store: RootState) => store.resources);
+
+  const positionsQuery = useQuery({ enabled: false, queryKey: ['positions', true] });
+  const hasFetchedPositions = positionsQuery.isFetched;
+
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
   const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(false);
   const toggleConfirmDeleteDialog = () => setOpenConfirmDeleteDialog(!openConfirmDeleteDialog);
   const [employmentIndex, setEmploymentIndex] = useState(0);
-
-  const hasFetchedPositions = Object.keys(reduxResources).some((id) => id.endsWith(CristinApiPath.Position));
 
   const { cristinIdentifier, firstName, lastName, employments, orcid, nationalId } =
     convertToFlatCristinPerson(cristinPerson);
@@ -206,8 +207,20 @@ export const PersonTableRow = ({
               <DialogContent>
                 <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <TextField variant="filled" disabled value={firstName} label={t('common.first_name')} />
-                    <TextField variant="filled" disabled value={lastName} label={t('common.last_name')} />
+                    <TextField
+                      variant="filled"
+                      disabled
+                      value={firstName}
+                      label={t('common.first_name')}
+                      data-testid={dataTestId.basicData.personAdmin.firstName}
+                    />
+                    <TextField
+                      variant="filled"
+                      disabled
+                      value={lastName}
+                      label={t('common.last_name')}
+                      data-testid={dataTestId.basicData.personAdmin.lastName}
+                    />
                     <NationalIdNumberField nationalId={nationalId} />
                     {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
                     {employmentsInOtherInstitutions.some(isActiveEmployment) && (
@@ -226,7 +239,7 @@ export const PersonTableRow = ({
                     )}
                   </Box>
                   <Divider flexItem orientation="vertical" />
-                  {isLoadingInstitutionUser ? (
+                  {isLoadingInstitutionUser || !hasFetchedPositions ? (
                     <CircularProgress sx={{ margin: 'auto' }} aria-labelledby="edit-person-label" />
                   ) : (
                     values.employments.length > 0 && (
@@ -235,7 +248,9 @@ export const PersonTableRow = ({
                           {t('common.employments')}
                         </Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                          <Field name={`${employmentBaseFieldName}.organization`}>
+                          <Field
+                            name={`${employmentBaseFieldName}.organization`}
+                            data-testid={dataTestId.basicData.personAdmin.employments()}>
                             {({ field }: FieldProps<string>) => (
                               <AffiliationHierarchy unitUri={field.value} commaSeparated />
                             )}
@@ -244,7 +259,7 @@ export const PersonTableRow = ({
                           <Box display={{ display: 'flex', gap: '1rem' }}>
                             <PositionField
                               fieldName={`${employmentBaseFieldName}.type`}
-                              disabled={isSubmitting || !hasFetchedPositions}
+                              disabled={isSubmitting}
                               includeDisabledPositions
                             />
 
@@ -254,7 +269,7 @@ export const PersonTableRow = ({
                                   {...field}
                                   value={field.value ?? ''}
                                   required
-                                  disabled={isSubmitting || !hasFetchedPositions}
+                                  disabled={isSubmitting}
                                   fullWidth
                                   type="number"
                                   inputProps={{ min: '0', max: '100' }}
@@ -262,6 +277,7 @@ export const PersonTableRow = ({
                                   label={t('basic_data.add_employee.position_percent')}
                                   error={touched && !!error}
                                   helperText={touched && error}
+                                  data-testid={dataTestId.basicData.personAdmin.positionPercent}
                                 />
                               )}
                             </Field>
@@ -269,18 +285,21 @@ export const PersonTableRow = ({
                           <Box display={{ display: 'flex', gap: '1rem' }}>
                             <StartDateField
                               fieldName={`${employmentBaseFieldName}.startDate`}
-                              disabled={isSubmitting || !hasFetchedPositions}
+                              disabled={isSubmitting}
                               maxDate={
                                 values.employments[employmentIndex].endDate
                                   ? new Date(values.employments[employmentIndex].endDate)
                                   : undefined
                               }
+                              dataTestId={dataTestId.basicData.personAdmin.startDate}
                             />
 
-                            <Field name={`${employmentBaseFieldName}.endDate`}>
+                            <Field
+                              name={`${employmentBaseFieldName}.endDate`}
+                              data-testid={dataTestId.basicData.personAdmin.endDate}>
                               {({ field, meta: { error, touched } }: FieldProps<string>) => (
                                 <DatePicker
-                                  disabled={isSubmitting || !hasFetchedPositions}
+                                  disabled={isSubmitting}
                                   label={t('common.end_date')}
                                   PopperProps={{
                                     'aria-label': t('common.end_date'),
@@ -298,6 +317,7 @@ export const PersonTableRow = ({
                                   renderInput={(params) => (
                                     <TextField
                                       {...params}
+                                      data-testid={dataTestId.basicData.personAdmin.endDate}
                                       variant="filled"
                                       error={touched && !!error}
                                       helperText={<ErrorMessage name={field.name} />}
@@ -308,11 +328,12 @@ export const PersonTableRow = ({
                             </Field>
                           </Box>
                           <Button
-                            disabled={isSubmitting || !hasFetchedPositions}
+                            disabled={isSubmitting}
                             color="error"
                             variant="outlined"
                             onClick={toggleConfirmDeleteDialog}
-                            endIcon={<CancelIcon />}>
+                            endIcon={<CancelIcon />}
+                            data-testid={dataTestId.basicData.personAdmin.removeEmployment}>
                             {t('basic_data.person_register.remove_employment')}
                           </Button>
                           {values.employments.length > 1 && (
@@ -342,11 +363,11 @@ export const PersonTableRow = ({
                           <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
                         )}
 
-                        <Box sx={{ mt: '1rem' }}>
+                        <Box sx={{ mt: '1rem' }} data-testid={dataTestId.basicData.personAdmin.roleSelector}>
                           <UserRolesSelector
                             selectedRoles={values.roles}
                             updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                            disabled={isSubmitting || !hasFetchedPositions}
+                            disabled={isSubmitting}
                           />
                         </Box>
                       </div>

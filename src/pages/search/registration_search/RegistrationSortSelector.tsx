@@ -1,5 +1,4 @@
 import { TextField, MenuItem } from '@mui/material';
-import { TFuncKey } from 'i18next';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -12,17 +11,6 @@ enum SortOptionValue {
   PublishedDateAsc,
   ModifiedDateDesc,
 }
-
-interface SortOption {
-  value: SortOptionValue;
-  i18nKey: TFuncKey;
-}
-
-const sortOptions: SortOption[] = [
-  { value: SortOptionValue.PublishedDateDesc, i18nKey: 'search.sort_by_published_date_desc' },
-  { value: SortOptionValue.PublishedDateAsc, i18nKey: 'search.sort_by_published_date_asc' },
-  { value: SortOptionValue.ModifiedDateDesc, i18nKey: 'search.sort_by_modified_date' },
-];
 
 export const RegistrationSortSelector = () => {
   const history = useHistory();
@@ -66,11 +54,9 @@ export const RegistrationSortSelector = () => {
       variant="outlined"
       fullWidth
       onChange={updateSortQuery}>
-      {sortOptions.map((option) => (
-        <MenuItem key={option.value} value={option.value}>
-          {t(option.i18nKey)}
-        </MenuItem>
-      ))}
+      <MenuItem value={SortOptionValue.PublishedDateDesc}>{t('search.sort_by_published_date_desc')}</MenuItem>
+      <MenuItem value={SortOptionValue.PublishedDateAsc}>{t('search.sort_by_published_date_asc')}</MenuItem>
+      <MenuItem value={SortOptionValue.ModifiedDateDesc}>{t('search.sort_by_modified_date')}</MenuItem>
     </TextField>
   );
 };

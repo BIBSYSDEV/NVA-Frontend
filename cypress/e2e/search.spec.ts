@@ -1,4 +1,5 @@
 import { dataTestId } from '../../src/utils/dataTestIds';
+import { a11yLogErrors } from '../support/logging';
 
 describe('Search', () => {
   beforeEach(() => {
@@ -16,7 +17,7 @@ describe('Search', () => {
     cy.url().should('include', 'results=10');
     cy.url().should('include', 'from=10');
     cy.injectAxe();
-    cy.checkA11y();
+    cy.checkA11y(null, undefined, a11yLogErrors);
   });
 
   it('The user should see formulas correctly formatted with MathJax', () => {
@@ -30,6 +31,6 @@ describe('Search', () => {
     cy.get(`[data-testid=${dataTestId.startPage.searchButton}]`).click();
     cy.url().should('include', `query=%22${searchTerm}%22`);
     cy.injectAxe();
-    cy.checkA11y();
+    cy.checkA11y(null, undefined, a11yLogErrors);
   });
 });

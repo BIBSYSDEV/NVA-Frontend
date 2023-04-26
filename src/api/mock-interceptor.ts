@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios, { AxiosRequestConfig } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
@@ -107,7 +107,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(RoleApiPath.InstitutionUsers)).reply(200, []);
   mock.onGet(new RegExp(RoleApiPath.Users)).reply(200, mockRoles);
 
-  mock.onAny().reply((config) => {
+  mock.onAny().reply((config: AxiosRequestConfig) => {
     throw new Error('Could not find mock for ' + config.url);
   });
 };

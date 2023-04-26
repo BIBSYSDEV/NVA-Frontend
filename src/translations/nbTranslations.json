@@ -322,8 +322,6 @@
       "files_and_licenses": "Filer og lisenser",
       "metadata": "Metadata",
       "publish_strategy": "Publiseringsstrategi",
-      "registrator_cannot_publish": "Registrator kan kun registrere",
-      "registrator_cannot_publish_description": "Metadata, filer og lisenser må godkjennes av Kurator før publisering.",
       "registrator_publishes_metadata": "Registrator publiserer metadata",
       "registrator_publishes_metadata_description": "Filer og lisenser må godkjennes av Kurator før de blir offentlig tilgjengelig.",
       "registrator_publishes_without_curator": "Registrator publiserer uten godkjenning av Kurator",
@@ -361,6 +359,7 @@
       "get_customers": "Kunne ikke hente kundeinstitusjoner",
       "get_doi": "Kunne ikke hente lenkedata",
       "get_doi_agent": "Kunne ikke hente DOI-konfigurasjon",
+      "get_funding_sources": "Kunne ikke hente finansieringskilder",
       "get_institution": "Kunne ikke laste inn institusjon",
       "get_institutions": "Kunne ikke laste inn institusjoner",
       "get_journal": "Kunne ikke hente tidsskrift",
@@ -383,6 +382,7 @@
       "orcid_login": "Kunne ikke logge inn på ORCID",
       "project_search": "Søk på prosjekt feilet",
       "remove_role": "Kunne ikke fjerne rolle",
+      "reserve_doi": "Reservasjon av DOI feilet",
       "search": "Søk feilet",
       "send_message": "Kunne ikke sende melding",
       "update_customer": "Kunne ikke oppdatere institusjon",
@@ -408,10 +408,10 @@
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
-      "doi_reserved": "DOI er reservert",
       "publishing_request_approved": "Registreringen ble publisert",
       "publishing_request_rejected": "Publiseringsforespørselen ble avvist",
       "removed_role": "Rollen ble fjernet",
+      "reserve_doi": "DOI er reservert",
       "send_message": "Melding sendt",
       "update_customer": "Institusjon er oppdatert",
       "update_institution_user": "Bruker er oppdatert",
@@ -430,7 +430,6 @@
       "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
       "employments_missing_data": "Alle ansettelser må ha stilling, stillingsprosent og startdato",
-      "exhibition_place_required": "Må ha minst ett visningssted",
       "has_invalid_format": "{{field}} har ugyldig format",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
       "invalid_symbol_in_name": "{{field}} kan ikke inneholde tall eller spesialtegn",
@@ -488,9 +487,9 @@
         "Pending": "Pågår"
       },
       "types": {
-        "doi": "DOI-forespørsel",
-        "publishing_request": "Publiseringsforespørsel",
-        "support": "Brukerstøtte"
+        "DoiRequest": "DOI-forespørsel",
+        "GeneralSupportCase": "Brukerstøtte",
+        "PublishingRequest": "Publiseringsforespørsel"
       }
     },
     "my_page": "Min side",
@@ -533,6 +532,7 @@
       "user_profile": "Brukerprofil",
       "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil."
     },
+    "project_registrations": "Prosjektregistreringer",
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
@@ -835,6 +835,8 @@
     }
   },
   "project": {
+    "close_view": "Lukk visning",
+    "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
     "coordinating_institution": "Koordinerende institusjon",
     "create_project": "Opprett prosjekt",
     "edit_project": "Endre prosjekt",
@@ -956,6 +958,7 @@
         "RelatedPerson": "Relatert person",
         "Researcher": "Forsker",
         "RightsHolder": "Rettighetsholder",
+        "RoleOther": "Annet",
         "Scenographer": "Scenograf",
         "Screenwriter": "Manusforfatter",
         "Soloist": "Solist",
@@ -981,7 +984,6 @@
       "funding": {
         "financing": "Finansiering",
         "funder": "Finansiør",
-        "funder_filter": "Filtrer på navn eller kode",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
@@ -1070,19 +1072,14 @@
         "has_doi_request": "Registreringen har en DOI-forespørsel til behandling for kurator.",
         "has_rejected_doi_request": "Registreringen har en avslått DOI-forespørsel.",
         "has_rejected_files_publishing_request": "Registreringen har en avslått publiseringsforespørsel for filene.",
-        "has_rejected_publishing_request": "Registreringen har en avslått publiseringsforespørsel.",
         "has_reserved_doi": "Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.",
         "metadata_published_waiting_for_files": "Metadata er publisert og synlig for andre brukere, men en kurator må godkjenne filene som er lastet opp før de blir synlige.",
         "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
         "reload": "Last på nytt",
-        "request_publishing": "Be om publisering",
         "review_preview_before_publishing": "Se over utkast før du går videre.",
-        "waiting_for_publishing_approval": "En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere.",
         "waiting_for_rejected_doi": "Det kan ta litt tid før en reservert DOI forsvinner. Last innholdet på nytt for å sjekke igjen.",
-        "waiting_for_reserved_doi": "Det kan ta litt tid før reservert DOI vises. Last innholdet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Du kan publisere registreringen på egen hånd. Innholdet vil da bli synlig for andre brukere.",
-        "you_can_publish_metadata": "Du kan publisere metadata selv, men en kurator må godkjenne filene som er lastet opp før de kan vises til andre brukere.",
-        "you_can_publish_metadata_after_curator_approval": "En kurator må godkjenne innholdet før det publiseres og blir synlig for andre brukere."
+        "you_can_publish_metadata": "Du kan publisere metadata selv, men en kurator må godkjenne filene som er lastet opp før de kan vises til andre brukere."
       },
       "validation_errors": "Valideringsfeil"
     },
@@ -1175,6 +1172,7 @@
     "resource_type": {
       "article_number": "Artikkelnummer",
       "artistic": {
+        "add_announcement": "Legg til offentliggjøring",
         "add_audio_visual_publication": "Legg til audio-/videoutgivelse",
         "add_award": "Legg til pris/utmerkelse",
         "add_book": "Legg til bok/trykksak",
@@ -1183,15 +1181,16 @@
         "add_competition": "Legg til konkurranse",
         "add_concert": "Legg til konsert/forestilling",
         "add_exhibition": "Legg til utstilling",
-        "add_exhibition_place": "Legg til visningssted",
         "add_music_score": "Legg til partitur/manuskript",
         "add_other_performance": "Legg til annen fremføring",
         "add_other_release": "Legg til annen offentliggjøring",
         "add_performance": "Legg til fremføring/forestilling",
         "add_publication_mention": "Legg til publisering/omtale",
         "add_web_publication": "Legg til webutgivelse",
+        "announcement": "Offentliggjøring",
         "announcements": "Offentliggjøringer",
         "architecture_type": {
+          "ArchitectureOther": "Annet",
           "Building": "Bygg",
           "Interior": "Interiør",
           "LandscapeArchitecture": "Landskapsarkitektur",
@@ -1200,6 +1199,7 @@
         },
         "audio_video_type": {
           "Audiobook": "Lydbok",
+          "LiteraryArtsAudioVisualOther": "Annet",
           "Other": "Annet",
           "Podcast": "Podkast",
           "RadioPlay": "Hørespill",
@@ -1218,6 +1218,7 @@
         "content_track": "Innhold/spor",
         "content_track_table_caption": "Oversikt over innhold/spor",
         "design_type": {
+          "ArtisticDesignOther": "Annet",
           "ClothingDesign": "Klesdesign",
           "Exhibition": "Utstilling/messe",
           "GraphicDesign": "Grafisk design",
@@ -1230,6 +1231,7 @@
           "ServiceDesign": "Tjenestedesign",
           "WebDesign": "Webdesign"
         },
+        "edit_announcement": "Endre offentliggjøring",
         "edit_audio_visual_publication": "Endre audio-/videoutgivelse",
         "edit_award": "Endre pris/utmerkelse",
         "edit_book": "Endre bok/trykksak",
@@ -1238,20 +1240,18 @@
         "edit_competition": "Endre konkurranse",
         "edit_concert": "Endre konsert",
         "edit_exhibition": "Endre utstilling",
-        "edit_exhibition_place": "Endre visningsted",
         "edit_music_score": "Endre partitur/manuskript",
         "edit_other_performance": "Endre annen fremføringsform",
         "edit_other_release": "Endre annen offentliggjøring",
         "edit_performance": "Endre fremføring/forestilling",
         "edit_publication_mention": "Endre publisering/omtale",
         "edit_web_publication": "Endre webutgivelse",
-        "exhibition_place": "Visningssted",
-        "exhibition_places": "Visningssteder",
         "exhibition_title": "Utstillingstittel",
         "extent": "Varighet",
         "extent_in_minutes": "Varighet i minutter",
         "literary_arts_type": {
           "Essay": "Essay",
+          "LiteraryArtsOther": "Annet",
           "Novel": "Roman",
           "Novella": "Novelle/noveller",
           "Other": "Annet",
@@ -1268,6 +1268,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Langfilm",
           "InteractiveFilm": "Interaktiv produksjon",
+          "MovingPictureOther": "Annet",
           "Other": "Annet",
           "SerialFilmProduction": "Seriell produksjon",
           "ShortFilm": "Kortfilm"
@@ -1276,6 +1277,7 @@
           "CompactDisc": "CD",
           "DVD": "DVD",
           "DigitalFile": "Nedlasting",
+          "MusicMediaOther": "Annet",
           "Other": "Annet",
           "Streaming": "Strømming",
           "Vinyl": "LP/EP"
@@ -1310,6 +1312,7 @@
         },
         "performance_type": "Type/formidlingsform",
         "performance_types": {
+          "LiteraryArtsPerformanceOther": "Annet",
           "Other": "Annet",
           "Play": "Skuespill/drama",
           "Reading": "Lesing"
@@ -1317,6 +1320,7 @@
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
           "Other": "Annet",
+          "PerformingArtsOther": "Annet",
           "TheatricalProduction": "Forestilling/visning"
         },
         "premiere": "Premiere",
@@ -1328,8 +1332,6 @@
         "remove_announcement_description": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over offentliggjøringer?",
         "remove_music_work": "Fjern verk",
         "remove_music_work_description": "Er du sikker på at du vil fjerne dette verket?",
-        "remove_venue_text": "Er du sikker på at du vil fjerne \"{{name}}\" fra listen over visningssteder?",
-        "remove_venue_title": "Fjern visningssted?",
         "visual_arts_type": {
           "ArtInPublicSpace": "Kunst i offentlig rom",
           "ArtistBook": "Artist book",
@@ -1338,7 +1340,8 @@
           "IndividualExhibition": "Separatutstilling",
           "Installation": "Installasjon",
           "Other": "Annet",
-          "Performance": "Performance"
+          "Performance": "Performance",
+          "VisualArtsOther": "Annet"
         },
         "web_link": "Lenke"
       },
@@ -1373,6 +1376,7 @@
         "medium_types": {
           "Internet": "Internett",
           "Journal": "Avis eller tidsskrift",
+          "MediaTypeOther": "Annet",
           "Other": "Annet",
           "Radio": "Radio",
           "TV": "TV"
