@@ -208,6 +208,7 @@ export const dataTestId = {
       fundingRemoveButton: 'funding-remove-button',
       nfrProjectSearchField: 'nfr-project-search-field',
       projectForm: {
+        addParticipantButton: 'add-participant-button',
         contributorAffiliationField: 'contributor-affiliation-field',
         contributorsSearchField: 'project-contributors-search-field',
         coordinatingInstitutionField: 'coordinating-institution-field',
