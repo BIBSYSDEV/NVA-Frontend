@@ -174,7 +174,8 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               <Button
                 startIcon={<AddCircleIcon />}
                 onClick={() => push(emptyProjectContributor)}
-                sx={{ width: 'fit-content' }}>
+                sx={{ width: 'fit-content' }}
+                data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
                 {t('common.add')}
               </Button>
             </>

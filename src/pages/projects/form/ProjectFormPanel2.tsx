@@ -7,13 +7,16 @@ import { TypedLabel } from '../../../types/project.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { ProjectFieldName } from './ProjectFormDialog';
 import { RelatedProjectsField } from './RelatedProjectsField';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 export const ProjectFormPanel2 = () => {
   const { t } = useTranslation();
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', rowGap: '1rem' }}>
-      <Field name={ProjectFieldName.Categories}>
+      <Field
+        name={ProjectFieldName.Categories}
+        data-testid={dataTestId.registrationWizard.description.projectForm.projectCategoryField}>
         {({ field, form: { setFieldValue } }: FieldProps<TypedLabel[]>) => (
           <Autocomplete
             options={cristinCategories}
@@ -27,7 +30,9 @@ export const ProjectFormPanel2 = () => {
         )}
       </Field>
 
-      <Field name={ProjectFieldName.Keywords}>
+      <Field
+        name={ProjectFieldName.Keywords}
+        data-testid={dataTestId.registrationWizard.description.projectForm.keywordsField}>
         {({ field, form: { setFieldValue } }: FieldProps<TypedLabel[]>) => (
           <Autocomplete
             options={cristinKeywords}
@@ -41,7 +46,9 @@ export const ProjectFormPanel2 = () => {
         )}
       </Field>
 
-      <Field name={ProjectFieldName.AcademicSummaryNo}>
+      <Field
+        name={ProjectFieldName.AcademicSummaryNo}
+        data-testid={dataTestId.registrationWizard.description.projectForm.scentificSummaryNorwegianField}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
@@ -54,7 +61,9 @@ export const ProjectFormPanel2 = () => {
           />
         )}
       </Field>
-      <Field name={ProjectFieldName.PopularScientificSummaryNo}>
+      <Field
+        name={ProjectFieldName.PopularScientificSummaryNo}
+        data-testid={dataTestId.registrationWizard.description.projectForm.popularScienceSummaryNorwegianField}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
@@ -67,7 +76,9 @@ export const ProjectFormPanel2 = () => {
           />
         )}
       </Field>
-      <Field name={ProjectFieldName.AcademicSummaryEn}>
+      <Field
+        name={ProjectFieldName.AcademicSummaryEn}
+        data-testid={dataTestId.registrationWizard.description.projectForm.scentificSummaryEnglishField}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
@@ -80,7 +91,9 @@ export const ProjectFormPanel2 = () => {
           />
         )}
       </Field>
-      <Field name={ProjectFieldName.PopularScientificSummaryEn}>
+      <Field
+        name={ProjectFieldName.PopularScientificSummaryEn}
+        data-testid={dataTestId.registrationWizard.description.projectForm.popularScienceSummaryEnglishField}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
