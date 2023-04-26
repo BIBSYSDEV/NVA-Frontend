@@ -94,6 +94,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                   <TextField
                     {...params}
                     data-testid={dataTestId.registrationWizard.description.projectForm.startDateField}
+                    onBlur={() => !touched && setFieldTouched(field.name)}
                     variant="filled"
                     required
                     error={touched && !!error}
@@ -124,6 +125,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                   <TextField
                     {...params}
                     data-testid={dataTestId.registrationWizard.description.projectForm.endDateField}
+                    onBlur={() => !touched && setFieldTouched(field.name)}
                     variant="filled"
                     required
                     error={touched && !!error}

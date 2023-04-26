@@ -14,7 +14,8 @@ import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { RootState } from '../../redux/store';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { getRegistrationIdentifier, getTitleString } from '../../utils/registration-helpers';
+import { getTitleString } from '../../utils/registration-helpers';
+import { getIdentifierFromId } from '../../utils/general-helpers';
 
 interface TicketAccordionProps {
   ticket: Ticket;
@@ -25,7 +26,7 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
   const dispatch = useDispatch();
   const username = useSelector((store: RootState) => store.user?.nvaUsername);
 
-  const registrationIdentifier = getRegistrationIdentifier(ticket.publication.id);
+  const registrationIdentifier = getIdentifierFromId(ticket.publication.id);
 
   const [messagesCopy, setMessagesCopy] = useState(ticket.messages);
 
