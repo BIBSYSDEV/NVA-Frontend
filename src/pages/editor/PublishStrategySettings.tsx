@@ -138,37 +138,6 @@ export const PublishStrategySettings = () => {
             <CircularProgress aria-labelledby="publish-strategy-label" />
           )}
         </StyledItemContainer>
-
-        <StyledItemContainer>
-          <PublishStrategyButton
-            focusRipple
-            disabled={!!isUpdating || currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
-            isSelected={!isUpdating && currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
-            data-testid={dataTestId.editor.workflowRegistratorRequiresApproval}
-            onClick={() => setPublicationWorkflow('RegistratorRequiresApprovalForMetadataAndFiles')}>
-            <Box>
-              <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_cannot_publish')}
-              </Typography>
-              <StyledAccessRightsContainer>
-                <StyledAccessRight>
-                  <RemoveCircleIcon color="error" />
-                  <Typography>{t('editor.publish_strategy.metadata')}</Typography>
-                </StyledAccessRight>
-                <StyledAccessRight>
-                  <RemoveCircleIcon color="error" />
-                  <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
-                </StyledAccessRight>
-              </StyledAccessRightsContainer>
-              <Typography sx={{ textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_cannot_publish_description')}
-              </Typography>
-            </Box>
-          </PublishStrategyButton>
-          {isUpdating === 'RegistratorRequiresApprovalForMetadataAndFiles' && (
-            <CircularProgress aria-labelledby="publish-strategy-label" />
-          )}
-        </StyledItemContainer>
       </Box>
     </>
   );
