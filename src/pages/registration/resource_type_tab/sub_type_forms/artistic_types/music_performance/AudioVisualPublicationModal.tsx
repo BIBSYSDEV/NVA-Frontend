@@ -40,6 +40,7 @@ const emptyAudioVisualPublication: AudioVisualPublication = {
   type: 'AudioVisualPublication',
   mediaType: {
     type: '',
+    description: '',
   },
   publisher: emptyUnconfirmedPublisher,
   catalogueNumber: '',
@@ -60,17 +61,26 @@ const emptyMusicTrack: MusicTrack = {
 const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
   mediaType: Yup.object().shape({
     type: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.artistic.media_type'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.artistic.media_type'),
       })
+    ),
+    description: Yup.string().when('type', ([type], schema) =>
+      typeof type === 'string' && type.endsWith('Other')
+        ? schema.required(
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('common.description'),
+            })
+          )
+        : schema.optional()
     ),
   }),
   publisher: Yup.object().shape({
     name: Yup.string()
       .nullable()
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.publisher'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.publisher'),
         })
       ),
   }),
@@ -98,33 +108,33 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
     .of(
       Yup.object<YupShape<MusicTrack>>({
         title: Yup.string().required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:common.title'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('common.title'),
           })
         ),
         composer: Yup.string().required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:registration.resource_type.artistic.composer'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('registration.resource_type.artistic.composer'),
           })
         ),
         extent: Yup.number()
           .typeError(
-            i18n.t('translation:feedback.validation.has_invalid_format', {
-              field: i18n.t('translation:registration.resource_type.artistic.extent_in_minutes'),
+            i18n.t('feedback.validation.has_invalid_format', {
+              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
             })
           )
           .required(
-            i18n.t('translation:feedback.validation.is_required', {
-              field: i18n.t('translation:registration.resource_type.artistic.extent_in_minutes'),
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
             })
           ),
       })
     )
     .min(
       1,
-      i18n.t('translation:feedback.validation.must_have_minimum', {
+      i18n.t('feedback.validation.must_have_minimum', {
         min: 1,
-        field: i18n.t('translation:registration.resource_type.artistic.content_track').toLocaleLowerCase(),
+        field: i18n.t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
       })
     ),
 });
@@ -166,6 +176,10 @@ export const AudioVisualPublicationModal = ({
                     label={t('registration.resource_type.artistic.media_type')}
                     fullWidth
                     {...field}
+                    onChange={(event) => {
+                      field.onChange(event);
+                      setFieldValue('mediaType.description', '');
+                    }}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
@@ -177,6 +191,22 @@ export const AudioVisualPublicationModal = ({
                   </TextField>
                 )}
               </Field>
+              {values.mediaType.type === 'MusicMediaOther' ? (
+                <Field name="mediaType.description">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      variant="filled"
+                      required
+                      label={t('common.description')}
+                      fullWidth
+                      {...field}
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                      data-testid={dataTestId.registrationWizard.resourceType.artisticSubtypeDescription}
+                    />
+                  )}
+                </Field>
+              ) : null}
               <Field name="publisher.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
@@ -198,7 +228,6 @@ export const AudioVisualPublicationModal = ({
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.artistic.catalogue_number')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.audioVideoCatalogueNumber}

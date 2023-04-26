@@ -10,7 +10,7 @@
       },
       "paragraph1": "NVA vert òg utvikla til bruk ved rapportering og vitskapeleg publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskingsadministrative oppgåver.",
       "paragraph2": "Sikt er databehandlar. Den enkelte Institusjon er handsamingsansvarleg og registrerer og vedlikeheld eiga innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett etc.). Tenesta får òg overført innhald frå andre datakjelder.",
-      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det tyder at ein registrering kan vert ferdigstilt slik at metadata om ressursen vert publisert, mens ressursen ikkje vert opent tilgjengeleg før angjeve dato. Tenesta tillèt ikkje handsaming av sensitive personopplysingar.",
+      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det betyr at ein registrering kan verte ferdigstilt slik at metadata om ressursen vert publisert, mens ressursen ikkje vert opent tilgjengeleg før angjeve dato. Tenesta tillèt ikkje handsaming av sensitive personopplysingar.",
       "paragraph4": "NVA vil gjere institusjonen sitt opne innhald tilgjengeleg via opne grensesnitt, med hensikt å gjere dette kjend og søkbart for omverda og fremje indeksering i søkjemotorar og søkjeportalar.",
       "paragraph5": "Sjølv om NVA er etablert og i bruk av fleire institusjonar, vil tenesta vere i kontinuerleg utvikling i heile sin levetid. Institusjonar som ikkje har eit vitenarkiv kan kontakte <0>Sikt</0> for å få nytte NVA som pilotinstitusjon."
     },
@@ -322,8 +322,6 @@
       "files_and_licenses": "Filer og lisensar",
       "metadata": "Metadata",
       "publish_strategy": "Publiseringsstrategi",
-      "registrator_cannot_publish": "Registrator kan kun registrera",
-      "registrator_cannot_publish_description": "Metadata, filer og lisensar må godkjennast av Kurator før publisering.",
       "registrator_publishes_metadata": "Registrator publiserer metadata",
       "registrator_publishes_metadata_description": "Filer og lisensar må godkjennast av Kurator før dei vert offentleg tilgjengeleg.",
       "registrator_publishes_without_curator": "Registrator publiserer utan godkjenning av Kurator",
@@ -361,6 +359,7 @@
       "get_customers": "Kunne ikkje hente kundeinstitusjonar",
       "get_doi": "Kunne ikkje hente lenkjedata",
       "get_doi_agent": "Kunne ikkje hente DOI-konfigurering",
+      "get_funding_sources": "",
       "get_institution": "Kunne ikkje laste inn institusjon",
       "get_institutions": "Kunne ikkje laste inn institusjonar",
       "get_journal": "Kunne ikkje hente tidsskrift",
@@ -918,11 +917,11 @@
         "Actor": "Skodespelar",
         "Architect": "Arkitekt",
         "ArchitecturalPlanner": "Planleggjar",
-        "Artist": "Kunstnar",
+        "Artist": "Kunstner",
         "ArtisticDirector": "Kunstnerisk leiar",
         "Choreographer": "Koreograf",
         "Composer": "Komponist",
-        "Conductor": "Dirigent/ensambleleiar",
+        "Conductor": "Dirigent/ensembleleiar",
         "Consultant": "Konsulent",
         "ContactPerson": "Kontaktperson",
         "CostumeDesigner": "Kostymedesigner",
@@ -956,6 +955,7 @@
         "RelatedPerson": "Relatert person",
         "Researcher": "Forskar",
         "RightsHolder": "Rettholdar",
+        "RoleOther": "Anna",
         "Scenographer": "Scenograf",
         "Screenwriter": "Manusforfattar",
         "Soloist": "Solist",
@@ -981,7 +981,6 @@
       "funding": {
         "financing": "Finansiering",
         "funder": "Finansiør",
-        "funder_filter": "Filtrer på namn eller kode",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnamn eller prosjektleiar",
@@ -1070,18 +1069,14 @@
         "has_doi_request": "Registreringa har ein DOI-førespurnad til handsaming for kurator.",
         "has_rejected_doi_request": "Registreringa har ein avslege DOI-førespurnad.",
         "has_rejected_files_publishing_request": "Registreringa har ein avslege publiseringsførespurnad for filene.",
-        "has_rejected_publishing_request": "Registreringa har ein avslege publiseringsførespurnad.",
         "has_reserved_doi": "Registreringa har fått ein reservert DOI. Når registreringa vert publisert vil ein DOI-førespurnad verte oppretta automatisk, som skal handsamast av ein kurator.",
         "metadata_published_waiting_for_files": "Metadata er publisert og synleg for andre brukarar, men ein kurator må godkjenne filene som er lasta opp før dei vert synlege.",
         "registration_will_soon_be_published": "Registreringa vil verte publisert om kort tid. Last inn siden på nytt om litt for å sjå oppdatert info.",
         "reload": "Last inn på nytt",
-        "request_publishing": "Be om publisering",
         "review_preview_before_publishing": "Sjå over utkast før du går vidare.",
-        "waiting_for_publishing_approval": "Ein kurator må godkjenne innholdet før det vert publisert og synleg for andre brukarar.",
         "waiting_for_rejected_doi": "Det kan ta noko tid før ein reservert DOI forsvinn. Last innhaldet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Du kan publisere registreringa på eiga hand. Innhaldet vil då verte synleg for andre brukarar.",
-        "you_can_publish_metadata": "Du kan publisere metadata sjølve, men ein kurator må godkjenne filene som er lasta opp før dei kan visast til andre brukarar.",
-        "you_can_publish_metadata_after_curator_approval": "Ein kurator må godkjenne innholdet før det vert publisert og synleg for andre brukarar."
+        "you_can_publish_metadata": "Du kan publisere metadata sjølve, men ein kurator må godkjenne filene som er lasta opp før dei kan visast til andre brukarar."
       },
       "validation_errors": "Valideringsfeil"
     },
@@ -1192,6 +1187,7 @@
         "announcement": "Offentleggjering",
         "announcements": "Offentleggjeringar",
         "architecture_type": {
+          "ArchitectureOther": "Anna",
           "Building": "Bygg",
           "Interior": "Interiør",
           "LandscapeArchitecture": "Landskapsarkitektur",
@@ -1200,6 +1196,7 @@
         },
         "audio_video_type": {
           "Audiobook": "Lydbok",
+          "LiteraryArtsAudioVisualOther": "Anna",
           "Other": "Anna",
           "Podcast": "Podkast",
           "RadioPlay": "Høyrespel",
@@ -1218,6 +1215,7 @@
         "content_track": "Innhald/spor",
         "content_track_table_caption": "Oversyn over innhald/spor",
         "design_type": {
+          "ArtisticDesignOther": "Anna",
           "ClothingDesign": "Klesdesign",
           "Exhibition": "Utstilling/messe",
           "GraphicDesign": "Grafisk design",
@@ -1230,6 +1228,7 @@
           "ServiceDesign": "Tenestedesign",
           "WebDesign": "Webdesign"
         },
+        "edit_announcement": "Endre offentleggjering",
         "edit_audio_visual_publication": "Endre audio-/videoutgjeving",
         "edit_award": "Endre pris",
         "edit_book": "Endre bok/trykksak",
@@ -1249,6 +1248,7 @@
         "extent_in_minutes": "Varetid i minutt",
         "literary_arts_type": {
           "Essay": "Essay",
+          "LiteraryArtsOther": "Anna",
           "Novel": "Roman",
           "Novella": "Novelle/noveller",
           "Other": "Anna",
@@ -1265,6 +1265,7 @@
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Langfilm",
           "InteractiveFilm": "Interaktiv produksjon",
+          "MovingPictureOther": "Anna",
           "Other": "Anna",
           "SerialFilmProduction": "Seriell produksjon",
           "ShortFilm": "Kortfilm"
@@ -1273,6 +1274,7 @@
           "CompactDisc": "CD",
           "DVD": "DVD",
           "DigitalFile": "Nedlasting",
+          "MusicMediaOther": "Anna",
           "Other": "Anna",
           "Streaming": "Strøyming",
           "Vinyl": "LP/EP"
@@ -1307,6 +1309,7 @@
         },
         "performance_type": "Type/formidlingsform",
         "performance_types": {
+          "LiteraryArtsPerformanceOther": "Anna",
           "Other": "Anna",
           "Play": "Skodespel/drama",
           "Reading": "Lesing"
@@ -1314,6 +1317,7 @@
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
           "Other": "Anna",
+          "PerformingArtsOther": "Anna",
           "TheatricalProduction": "Framsyning/vising"
         },
         "premiere": "Premiere",
@@ -1333,7 +1337,8 @@
           "IndividualExhibition": "Separat utstilling",
           "Installation": "Installasjon",
           "Other": "Anna",
-          "Performance": "Framsyning"
+          "Performance": "Framsyning",
+          "VisualArtsOther": "Anna"
         },
         "web_link": "Lenkje"
       },
@@ -1368,6 +1373,7 @@
         "medium_types": {
           "Internet": "Internett",
           "Journal": "Avis eller tidsskrift",
+          "MediaTypeOther": "Anna",
           "Other": "Anna",
           "Radio": "Radio",
           "TV": "TV"

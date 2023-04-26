@@ -38,7 +38,7 @@ import { MusicScoreModal } from './music_performance/MusicScoreModal';
 import { AudioVisualPublicationModal } from './music_performance/AudioVisualPublicationModal';
 import { ConcertModal } from './music_performance/ConcertModal';
 import { OtherPerformanceModal } from './music_performance/OtherPerformanceModal';
-import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModalModal';
+import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModal';
 import { LiteraryArtsWebPublicationModal } from './literary_art/LiteraryArtsWebPublicationModal';
 import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerformanceModal';
 import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVisualModal';
@@ -81,15 +81,19 @@ export const OutputRow = ({
       <TableCell>
         <Box sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
           <Tooltip title={t('common.move_down')} sx={{ gridArea: 'down' }}>
-            <Button disabled={index === maxIndex} onClick={() => moveItem(index + 1)}>
-              <ArrowDownwardIcon />
-            </Button>
+            <span>
+              <Button disabled={index === maxIndex} onClick={() => moveItem(index + 1)}>
+                <ArrowDownwardIcon />
+              </Button>
+            </span>
           </Tooltip>
 
           <Tooltip title={t('common.move_up')} sx={{ gridArea: 'up' }}>
-            <Button disabled={index === 0} onClick={() => moveItem(index - 1)}>
-              <ArrowUpwardIcon />
-            </Button>
+            <span>
+              <Button disabled={index === 0} onClick={() => moveItem(index - 1)}>
+                <ArrowUpwardIcon />
+              </Button>
+            </span>
           </Tooltip>
         </Box>
       </TableCell>
