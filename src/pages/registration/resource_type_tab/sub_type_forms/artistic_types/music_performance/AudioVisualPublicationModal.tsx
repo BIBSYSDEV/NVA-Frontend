@@ -38,7 +38,9 @@ interface AudioVisualPublicationModalProps {
 
 const emptyAudioVisualPublication: AudioVisualPublication = {
   type: 'AudioVisualPublication',
-  mediaType: '',
+  mediaType: {
+    type: '',
+  },
   publisher: emptyUnconfirmedPublisher,
   catalogueNumber: '',
   trackList: [],
@@ -56,11 +58,13 @@ const emptyMusicTrack: MusicTrack = {
 };
 
 const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
-  mediaType: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.media_type'),
-    })
-  ),
+  mediaType: Yup.object().shape({
+    type: Yup.string().required(
+      i18n.t('translation:feedback.validation.is_required', {
+        field: i18n.t('translation:registration.resource_type.artistic.media_type'),
+      })
+    ),
+  }),
   publisher: Yup.object().shape({
     name: Yup.string()
       .nullable()
@@ -80,8 +84,13 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       .nullable()
       .matches(
         /^[A-Z]{2}[A-Z\d]{3}\d{7}$/,
-        i18n.t('translation:feedback.validation.has_invalid_format', {
-          field: i18n.t('translation:registration.resource_type.artistic.music_score_isrc'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
+        })
+      )
+      .required(
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
         })
       ),
   }),
@@ -148,7 +157,7 @@ export const AudioVisualPublicationModal = ({
         {({ values, errors, touched, isSubmitting, setFieldValue }: FormikProps<AudioVisualPublication>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Field name="mediaType">
+              <Field name="mediaType.type">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     variant="filled"
@@ -206,6 +215,7 @@ export const AudioVisualPublicationModal = ({
                     }}
                     variant="filled"
                     fullWidth
+                    required
                     label={t('registration.resource_type.artistic.music_score_isrc')}
                     InputProps={{
                       inputComponent: MaskIsrcInput as any,

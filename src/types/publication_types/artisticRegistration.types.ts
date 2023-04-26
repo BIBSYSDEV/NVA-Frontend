@@ -173,7 +173,9 @@ export interface MusicTrack {
 
 export interface AudioVisualPublication extends ArtisticOutputBase {
   type: 'AudioVisualPublication';
-  mediaType: MusicMediaType | '';
+  mediaType: {
+    type: MusicMediaType | '';
+  };
   publisher: UnconfirmedPublisher;
   catalogueNumber: string;
   trackList: MusicTrack[];
