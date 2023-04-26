@@ -232,7 +232,7 @@ export const PublishingAccordion = ({
           </LoadingButton>
         )}
 
-        {canHandlePublishingRequest && hasPendingTicket && (
+        {canHandlePublishingRequest && !hasMismatchingPublishedStatus && (
           <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
             <LoadingButton
               variant="contained"
