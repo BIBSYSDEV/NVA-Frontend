@@ -497,12 +497,8 @@ const PublicAudioVisualPublicationDialogContent = ({
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
       <Typography paragraph>{catalogueNumber}</Typography>
-      {isrc.value !== null ? (
-        <>
-          <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
-          <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>
-        </>
-      ) : null}
+      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
+      {isrc.value && <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>}
       <Typography variant="h3" id="tracks-heading">
         {t('registration.resource_type.artistic.content_track')}
       </Typography>
