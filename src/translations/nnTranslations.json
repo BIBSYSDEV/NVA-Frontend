@@ -322,8 +322,6 @@
       "files_and_licenses": "Filer og lisensar",
       "metadata": "Metadata",
       "publish_strategy": "Publiseringsstrategi",
-      "registrator_cannot_publish": "Registrator kan kun registrera",
-      "registrator_cannot_publish_description": "Metadata, filer og lisensar må godkjennast av Kurator før publisering.",
       "registrator_publishes_metadata": "Registrator publiserer metadata",
       "registrator_publishes_metadata_description": "Filer og lisensar må godkjennast av Kurator før dei vert offentleg tilgjengeleg.",
       "registrator_publishes_without_curator": "Registrator publiserer utan godkjenning av Kurator",
@@ -1071,18 +1069,14 @@
         "has_doi_request": "Registreringa har ein DOI-førespurnad til handsaming for kurator.",
         "has_rejected_doi_request": "Registreringa har ein avslege DOI-førespurnad.",
         "has_rejected_files_publishing_request": "Registreringa har ein avslege publiseringsførespurnad for filene.",
-        "has_rejected_publishing_request": "Registreringa har ein avslege publiseringsførespurnad.",
         "has_reserved_doi": "Registreringa har fått ein reservert DOI. Når registreringa vert publisert vil ein DOI-førespurnad verte oppretta automatisk, som skal handsamast av ein kurator.",
         "metadata_published_waiting_for_files": "Metadata er publisert og synleg for andre brukarar, men ein kurator må godkjenne filene som er lasta opp før dei vert synlege.",
         "registration_will_soon_be_published": "Registreringa vil verte publisert om kort tid. Last inn siden på nytt om litt for å sjå oppdatert info.",
         "reload": "Last inn på nytt",
-        "request_publishing": "Be om publisering",
         "review_preview_before_publishing": "Sjå over utkast før du går vidare.",
-        "waiting_for_publishing_approval": "Ein kurator må godkjenne innholdet før det vert publisert og synleg for andre brukarar.",
         "waiting_for_rejected_doi": "Det kan ta noko tid før ein reservert DOI forsvinn. Last innhaldet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Du kan publisere registreringa på eiga hand. Innhaldet vil då verte synleg for andre brukarar.",
-        "you_can_publish_metadata": "Du kan publisere metadata sjølve, men ein kurator må godkjenne filene som er lasta opp før dei kan visast til andre brukarar.",
-        "you_can_publish_metadata_after_curator_approval": "Ein kurator må godkjenne innholdet før det vert publisert og synleg for andre brukarar."
+        "you_can_publish_metadata": "Du kan publisere metadata sjølve, men ein kurator må godkjenne filene som er lasta opp før dei kan visast til andre brukarar."
       },
       "validation_errors": "Valideringsfeil"
     },
