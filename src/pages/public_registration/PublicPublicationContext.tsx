@@ -31,7 +31,7 @@ import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import { getArtisticOutputName } from '../../utils/registration-helpers';
+import { getArtisticOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
 import {
   Award,
   Broadcast,
@@ -469,7 +469,6 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ismn')}</Typography>
       <Typography paragraph>{ismn.formatted ?? ismn.value}</Typography>
-      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
     </DialogContent>
   );
 };
@@ -480,7 +479,7 @@ const PublicAudioVisualPublicationDialogContent = ({
   audioVisualPublication: AudioVisualPublication;
 }) => {
   const { t } = useTranslation();
-  const { type, mediaType, publisher, catalogueNumber, trackList } = audioVisualPublication;
+  const { type, mediaType, publisher, catalogueNumber, isrc, trackList } = audioVisualPublication;
 
   return (
     <DialogContent>
@@ -498,6 +497,12 @@ const PublicAudioVisualPublicationDialogContent = ({
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
       <Typography paragraph>{catalogueNumber}</Typography>
+      {isrc.value !== null ? (
+        <>
+          <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
+          <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>
+        </>
+      ) : null}
       <Typography variant="h3" id="tracks-heading">
         {t('registration.resource_type.artistic.content_track')}
       </Typography>

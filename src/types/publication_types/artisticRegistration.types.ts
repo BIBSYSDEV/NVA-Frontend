@@ -181,7 +181,7 @@ export interface AudioVisualPublication extends ArtisticOutputBase {
   trackList: MusicTrack[];
   isrc: {
     type: 'Isrc';
-    value: string | null;
+    value: string;
   };
 }
 

@@ -239,9 +239,9 @@ export const AudioVisualPublicationModal = ({
                   <TextField
                     {...field}
                     value={field.value ?? ''}
-                    onChange={(event) => {
-                      setFieldValue(field.name, event.target.value === '' ? null : event.target.value);
-                    }}
+                    onChange={(event) =>
+                      setFieldValue(field.name, event.target.value === '' ? null : event.target.value)
+                    }
                     variant="filled"
                     fullWidth
                     required
