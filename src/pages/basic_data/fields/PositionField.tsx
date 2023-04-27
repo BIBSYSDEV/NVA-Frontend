@@ -36,7 +36,7 @@ export const PositionField = ({
   const sortedPositions = useMemo(
     () =>
       [...(positionsQuery.data?.positions ?? [])].sort((a, b) =>
-        getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
+        getLanguageString(a.labels).toLowerCase() > getLanguageString(b.labels).toLowerCase() ? 1 : -1
       ),
     [positionsQuery.data?.positions]
   );
@@ -49,7 +49,7 @@ export const PositionField = ({
             const inputValueLowerCase = state.inputValue.toLowerCase();
             return options.filter(
               (option) =>
-                getLanguageString(option.name).toLowerCase().includes(inputValueLowerCase) ||
+                getLanguageString(option.labels).toLowerCase().includes(inputValueLowerCase) ||
                 getPositionCode(option.id).toLowerCase().includes(inputValueLowerCase)
             );
           }}
@@ -59,7 +59,7 @@ export const PositionField = ({
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
               <div>
-                <Typography>{getLanguageString(option.name)}</Typography>
+                <Typography>{getLanguageString(option.labels)}</Typography>
                 <Typography variant="body2" color="textSecondary">
                   {getPositionCode(option.id)}
                 </Typography>
@@ -68,7 +68,7 @@ export const PositionField = ({
           )}
           getOptionDisabled={(option) => !option.enabled}
           onChange={(_, value) => setFieldValue(field.name, value?.id ?? '')}
-          getOptionLabel={(option) => getLanguageString(option.name)}
+          getOptionLabel={(option) => getLanguageString(option.labels)}
           fullWidth
           loading={positionsQuery.isLoading}
           renderInput={(params) => (
