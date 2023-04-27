@@ -115,7 +115,7 @@ const TasksPage = () => {
               viewingScopeOrganization && (
                 <Typography sx={{ fontWeight: 700 }}>
                   {t('tasks.limited_to', {
-                    name: getLanguageString(viewingScopeOrganization.name),
+                    name: getLanguageString(viewingScopeOrganization.labels),
                   })}
                 </Typography>
               )

@@ -101,7 +101,7 @@ export const CustomerInstitutionMetadataForm = ({
                 !editMode ? (
                   <OrganizationSearchField
                     onChange={(selectedInstitution) => {
-                      const name = selectedInstitution?.name ? getLanguageString(selectedInstitution.name) : '';
+                      const name = selectedInstitution?.labels ? getLanguageString(selectedInstitution.labels) : '';
                       setValues({
                         canAssignDoi: false,
                         customer: {

@@ -27,7 +27,7 @@ export const AffiliationHierarchy = ({ unitUri, commaSeparated, boldTopLevel = t
   });
   const organization = organizationQuery.data;
 
-  const unitNames = getOrganizationHierarchy(organizationQuery.data).map((unit) => getLanguageString(unit.name));
+  const unitNames = getOrganizationHierarchy(organizationQuery.data).map((unit) => getLanguageString(unit.labels));
 
   return organizationQuery.isLoading ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
