@@ -122,7 +122,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
                   </ErrorBoundary>
                 )}
               </Box>
-              <RegistrationFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} />
+              <RegistrationFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} validateForm={validateForm} />
             </BackgroundDiv>
           </Form>
         )}

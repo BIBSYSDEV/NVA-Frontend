@@ -1,4 +1,4 @@
-import { setNestedObjectValues, useFormikContext } from 'formik';
+import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -21,14 +21,15 @@ import { useQueryClient } from '@tanstack/react-query';
 interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
   setTabNumber: (newTab: RegistrationTab) => void;
+  validateForm: (values: Registration) => FormikErrors<Registration>;
 }
 
-export const RegistrationFormActions = ({ tabNumber, setTabNumber }: RegistrationFormActionsProps) => {
+export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm }: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
-  const { values, errors, setTouched } = useFormikContext<Registration>();
+  const { values, setTouched } = useFormikContext<Registration>();
 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
@@ -46,6 +47,8 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber }: Registratio
         ['registration', updateRegistrationResponse.data.identifier],
         updateRegistrationResponse.data
       );
+      const newErrors = validateForm(updateRegistrationResponse.data);
+      setTouched(setNestedObjectValues(newErrors, true)); // Set all fields with error to touched to ensure error messages are shown
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
     }
     setIsSaving(false);
@@ -115,11 +118,7 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber }: Registratio
                 variant="outlined"
                 loading={isSaving}
                 data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-                onClick={async () => {
-                  await saveRegistration(values);
-                  // Set all fields with error to touched to ensure error messages are shown
-                  setTouched(setNestedObjectValues(errors, true));
-                }}>
+                onClick={async () => await saveRegistration(values)}>
                 {t('common.save')}
               </LoadingButton>
             </Box>
