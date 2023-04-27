@@ -26,16 +26,16 @@ export const getLanguageString = (labels?: LanguageString) => {
 
   switch (preferredLanguageCode) {
     case 'nb':
-      translatedString = labels['nb'] ?? labels['no'] ?? labels['nn'] ?? labels['en'];
+      translatedString = labels['nb'] || labels['no'] || labels['nn'] || labels['en'];
       break;
     case 'nn':
-      translatedString = labels['nn'] ?? labels['no'] ?? labels['nb'] ?? labels['en'];
+      translatedString = labels['nn'] || labels['no'] || labels['nb'] || labels['en'];
       break;
     case 'no':
-      translatedString = labels['no'] ?? labels['nb'] ?? labels['nn'] ?? labels['en'];
+      translatedString = labels['no'] || labels['nb'] || labels['nn'] || labels['en'];
       break;
     case 'en':
-      translatedString = labels['en'] ?? labels['no'] ?? labels['nb'] ?? labels['nn'];
+      translatedString = labels['en'] || labels['no'] || labels['nb'] || labels['nn'];
       break;
     default:
       translatedString = labels[preferredLanguageCode];
