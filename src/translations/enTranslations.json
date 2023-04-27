@@ -532,6 +532,7 @@
       "user_profile": "User profile",
       "user_profile_description": "Here you can fill in and mark what you wish to display on your public researcher profile."
     },
+    "project_registrations": "",
     "registrations": {
       "delete_registration": "Delete unpublished registration",
       "delete_registration_message": "Do you want to delete \"{{title}}\"?",
@@ -834,6 +835,8 @@
     }
   },
   "project": {
+    "close_view": "",
+    "close_view_description": "",
     "coordinating_institution": "Coordinating institution",
     "create_project": "Create project",
     "edit_project": "Edit project",
@@ -946,7 +949,6 @@
         "LightDesigner": "Light designer",
         "Musician": "Ensemble musician",
         "Organizer": "Organizer",
-        "Other": "Other",
         "Photographer": "Photographer",
         "Producer": "Producer",
         "ProductionDesigner": "Production designer",
@@ -1132,12 +1134,7 @@
       "MusicPerformance": "Music",
       "NonFictionChapter": "Non-fiction chapter",
       "NonFictionMonograph": "Non-fiction monograph",
-      "Other": "Other publication",
-      "OtherFeatureArticle": "Feature article",
-      "OtherMap": "Map",
-      "OtherMusical": "Musical notation",
       "OtherPresentation": "Other presentation",
-      "OtherPublication": "Other publication",
       "OtherStudentWork": "Other student thesis",
       "PerformingArts": "Performing arts",
       "PopularScienceArticle": "Popular science article",
@@ -1191,13 +1188,11 @@
           "Building": "Building",
           "Interior": "Interior",
           "LandscapeArchitecture": "Landscape architecture",
-          "Other": "Other",
           "PlanningProposal": "Planning proposal"
         },
         "audio_video_type": {
           "Audiobook": "Audio book",
           "LiteraryArtsAudioVisualOther": "Other",
-          "Other": "Other",
           "Podcast": "Podcast",
           "RadioPlay": "Radio play",
           "ShortFilm": "Short film"
@@ -1223,7 +1218,6 @@
           "InteractionDesign": "Interaction design",
           "InteriorDesign": "Interior design",
           "LightDesign": "Lighting design",
-          "Other": "Other",
           "ProductDesign": "Product design",
           "ServiceDesign": "Service design",
           "WebDesign": "Web design"
@@ -1251,7 +1245,6 @@
           "LiteraryArtsOther": "Other",
           "Novel": "Novel",
           "Novella": "Novella/novellas",
-          "Other": "Other",
           "Play": "Play",
           "Poetry": "Poetry",
           "Retelling": "Retelling",
@@ -1266,7 +1259,6 @@
           "Film": "Feature film",
           "InteractiveFilm": "Interactive production",
           "MovingPictureOther": "Other",
-          "Other": "Other",
           "SerialFilmProduction": "Serial production",
           "ShortFilm": "Short film"
         },
@@ -1275,7 +1267,6 @@
           "DVD": "DVD",
           "DigitalFile": "Download",
           "MusicMediaOther": "Other",
-          "Other": "Other",
           "Streaming": "Streaming",
           "Vinyl": "LP/EP"
         },
@@ -1310,13 +1301,11 @@
         "performance_type": "Type/performance form",
         "performance_types": {
           "LiteraryArtsPerformanceOther": "Other",
-          "Other": "Other",
           "Play": "Play",
           "Reading": "Reading"
         },
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
-          "Other": "Other",
           "PerformingArtsOther": "Other",
           "TheatricalProduction": "Theater/show"
         },
@@ -1336,7 +1325,6 @@
           "CollectiveExhibition": "Collective exhibition",
           "IndividualExhibition": "Individual exhibition",
           "Installation": "Installation",
-          "Other": "Other",
           "Performance": "Performance",
           "VisualArtsOther": "Other"
         },
@@ -1374,7 +1362,6 @@
           "Internet": "Internet",
           "Journal": "Newspaper or journal",
           "MediaTypeOther": "Other",
-          "Other": "Other",
           "Radio": "Radio",
           "TV": "TV"
         },
