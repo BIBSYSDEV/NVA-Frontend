@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, PropsWithChildren } from 'react';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import nbTranslations from '../translations/nbTranslations.json';
@@ -6,7 +6,7 @@ import { LocalStorageKey } from '../utils/constants';
 
 type ErrorBoundaryClassProps = RouteComponentProps & WithTranslation;
 
-class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
+class ErrorBoundaryClass extends Component<PropsWithChildren<ErrorBoundaryClassProps>> {
   state = { hasError: false };
 
   static getDerivedStateFromError() {
@@ -54,7 +54,7 @@ class ErrorBoundaryClass extends Component<ErrorBoundaryClassProps> {
 
 export const ErrorBoundary = withTranslation()(withRouter(ErrorBoundaryClass));
 
-export class BasicErrorBoundary extends Component {
+export class BasicErrorBoundary extends Component<PropsWithChildren<unknown>> {
   state = { hasError: false };
 
   static getDerivedStateFromError() {

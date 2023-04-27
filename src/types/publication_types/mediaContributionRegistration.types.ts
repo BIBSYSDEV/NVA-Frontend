@@ -14,7 +14,7 @@ export enum MediaMedium {
   Radio = 'Radio',
   TV = 'TV',
   Internet = 'Internet',
-  Other = 'Other',
+  Other = 'MediaTypeOther',
 }
 
 export interface MediaContributionPublicationInstance {

@@ -1,4 +1,4 @@
-import { Field, FieldProps } from 'formik';
+import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import {
   Box,
@@ -106,14 +106,20 @@ export const ContributorRow = ({
       </TableCell>
       <TableCell align="left" width="1">
         <Box sx={{ display: 'flex', alignItems: 'end' }}>
-          {!contributorRoles.includes(contributor.role) && (
+          {!contributorRoles.includes(contributor.role.type) && (
             <Tooltip title={t('registration.contributors.invalid_role')}>
               <WarningIcon color="warning" />
             </Tooltip>
           )}
-          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.Role}`}>
-            {({ field }: FieldProps<ContributorRole>) => (
-              <TextField {...field} select variant="standard" fullWidth>
+          <Field name={`${baseFieldName}.${SpecificContributorFieldNames.RoleType}`}>
+            {({ field, meta: { error, touched } }: FieldProps<ContributorRole>) => (
+              <TextField
+                {...field}
+                select
+                variant="standard"
+                fullWidth
+                error={!!error && touched}
+                helperText={<ErrorMessage name={field.name} />}>
                 {contributorRoles.map((role) => (
                   <MenuItem key={role} value={role}>
                     {t(`registration.contributors.types.${role}`)}

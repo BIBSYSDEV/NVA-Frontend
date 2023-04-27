@@ -22,7 +22,7 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
   );
   const institutions = allContributorInstitutions ? [...new Set(allContributorInstitutions.flat())] : [];
 
-  const publicationInstanceType = publication.entityDescription?.reference?.publicationInstance.type ?? '';
+  const publicationInstanceType = publication.entityDescription?.reference?.publicationInstance?.type ?? '';
 
   return (
     <ListItem divider data-testid={`${dataTestId.basicData.centralImport.resultItem}-${publication.identifier}`}>

@@ -5,11 +5,7 @@ import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';
 import { dataTestId } from '../../src/utils/dataTestIds';
 
 Cypress.Commands.add('mocklogin', () => {
-  cy.get(`[data-testid=${dataTestId.header.logInButton}]`).click({ force: true });
-
-  // need to set language to english in order to check that the translated values are correct
-  cy.get(`[data-testid=${dataTestId.header.languageButton}]`).click({ force: true });
-  cy.get(`[data-testid=${dataTestId.header.languageMenu}] li`).eq(1).click({ force: true });
+  cy.get(`[data-testid=${dataTestId.header.logInButton}]`).click();
 });
 
 Cypress.Commands.add('startRegistrationWithDoi', () => {

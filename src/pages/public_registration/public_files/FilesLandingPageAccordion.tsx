@@ -1,9 +1,7 @@
-import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { RootState } from '../../../redux/store';
-import { RegistrationStatus } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   getAssociatedFiles,
@@ -21,32 +19,28 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   const userIsRegistrationAdmin = userCanEditRegistration(user, registration);
 
-  const showRegistrationHasFilesAwaitingApproval =
-    registration.status === RegistrationStatus.Published &&
-    userIsRegistrationAdmin &&
-    registration.associatedArtifacts.some((file) => file.type === 'UnpublishedFile');
+  const hasFilesAwaitingApproval = registration.associatedArtifacts.some((file) => file.type === 'UnpublishedFile');
 
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
-  const filesToShow = associatedFiles.filter(
-    (file) => file.type === 'PublishedFile' || (file.type === 'UnpublishedFile' && userIsRegistrationAdmin)
+  const hasPublishableFiles = associatedFiles.some(
+    (file) => file.type === 'PublishedFile' || file.type === 'UnpublishedFile'
   );
+  const filesToShow = userIsRegistrationAdmin
+    ? associatedFiles
+    : associatedFiles.filter((file) => file.type === 'PublishedFile');
 
   const showFileVersionField = isTypeWithFileVersionField(
-    registration.entityDescription?.reference?.publicationInstance.type
+    registration.entityDescription?.reference?.publicationInstance?.type
   );
 
-  return filesToShow.length === 0 ? null : (
+  return hasPublishableFiles || (userIsRegistrationAdmin && associatedFiles.length > 0) ? (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
       defaultExpanded
       heading={
-        showRegistrationHasFilesAwaitingApproval ? (
-          <Box component="span" sx={{ background: '#FEFBF3', p: '0.25rem' }}>
-            {t('registration.files_and_license.files_awaits_approval')}
-          </Box>
-        ) : (
-          t('registration.files_and_license.files')
-        )
+        hasFilesAwaitingApproval
+          ? t('registration.files_and_license.files_awaits_approval')
+          : t('registration.files_and_license.files')
       }>
       {filesToShow.map((file, index) => (
         <FileRow
@@ -58,5 +52,5 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
         />
       ))}
     </LandingPageAccordion>
-  );
+  ) : null;
 };

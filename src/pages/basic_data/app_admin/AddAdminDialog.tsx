@@ -12,7 +12,7 @@ import { StartDateField } from '../fields/StartDateField';
 import { PositionField } from '../fields/PositionField';
 import { addCustomerAdminValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 import { setNotification } from '../../../redux/notificationSlice';
-import { addEmployment } from '../../../api/userApi';
+import { addEmployment } from '../../../api/cristinApi';
 import { createUser } from '../../../api/roleApi';
 import { SearchForCristinPerson } from '../SearchForCristinPerson';
 

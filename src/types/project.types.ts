@@ -1,5 +1,6 @@
 import { LanguageString } from './common.types';
 import { Organization } from './organization.types';
+import { Funding } from './registration.types';
 
 export interface TypedLabel {
   type: string;
@@ -50,12 +51,16 @@ export interface ProjectContributor {
   identity: ProjectContributorIdentity;
 }
 
-interface Funding {
-  type: 'Funding';
-  source: string;
-  identifier?: string;
-  labels: LanguageString;
+export interface ProjectFunding extends Pick<Funding, 'identifier' | 'source' | 'labels'> {
+  type: 'UnconfirmedFunding';
 }
+
+export const emptyProjectFunding: ProjectFunding = {
+  type: 'UnconfirmedFunding',
+  identifier: '',
+  source: '',
+  labels: {},
+};
 
 export interface SaveCristinProject {
   type: 'Project';
@@ -70,6 +75,7 @@ export interface SaveCristinProject {
   projectCategories: TypedLabel[];
   keywords: TypedLabel[];
   relatedProjects: string[];
+  funding: ProjectFunding[];
 }
 
 export interface CristinProject extends SaveCristinProject {
@@ -79,7 +85,9 @@ export interface CristinProject extends SaveCristinProject {
   alternativeTitles: LanguageString[];
   coordinatingInstitution: ProjectOrganization;
   contributors: ProjectContributor[];
-  newFunding: Funding[];
+  created: {
+    sourceShortName: 'REK' | 'NVA' | 'FORSKDOK';
+  };
 }
 
 interface FundingSource {
@@ -126,4 +134,5 @@ export const emptyProject: SaveCristinProject = {
   projectCategories: [],
   keywords: [],
   relatedProjects: [],
+  funding: [],
 };
