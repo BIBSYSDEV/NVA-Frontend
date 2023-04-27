@@ -3,7 +3,7 @@ import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
 import { FacetItem } from './FacetItem';
-import { Aggregations } from '../../../../types/common.types';
+import { Aggregations, RegistrationInstitutionFacet } from '../../../../types/common.types';
 import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { getTranslatedAggregatedInstitutionLabel } from '../../../../utils/translation-helpers';
@@ -47,19 +47,20 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
   };
 
   const aggregationEntries = Object.entries(aggregations);
-  const registrationTypeFacet = aggregationEntries.find(
-    ([fieldName]) => fieldName === ResourceFieldNames.RegistrationType
+  const typeFacet = aggregationEntries.find(([fieldName]) => fieldName === ResourceFieldNames.RegistrationType)?.[1];
+
+  const topLevelOrganizationFacet = aggregationEntries.find(
+    ([fieldName]) =>
+      fieldName === SearchFieldName.TopLevelOrganization || fieldName === SearchFieldName.TopLevelOrganizationId
   )?.[1];
 
-  const registrationInstitutionFacet = aggregationEntries.find(
-    ([fieldName]) => fieldName === SearchFieldName.InstitutionId
-  )?.[1];
+  const topLevelOrganizationIdFacet = (topLevelOrganizationFacet as RegistrationInstitutionFacet | undefined)?.id;
 
   return (
     <>
-      {registrationTypeFacet && (
+      {typeFacet && (
         <FacetItem title={t('registration.resource_type.resource_type')}>
-          {registrationTypeFacet.buckets.map((bucket) => {
+          {typeFacet.buckets.map((bucket) => {
             const registrationType = bucket.key as PublicationInstanceType;
             return (
               <ListItem disablePadding key={registrationType}>
@@ -78,13 +79,13 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {registrationInstitutionFacet && (
+      {topLevelOrganizationIdFacet && (
         <FacetItem title={t('common.institution')}>
-          {registrationInstitutionFacet.buckets.map((bucket) => (
+          {topLevelOrganizationIdFacet.buckets.map((bucket) => (
             <ListItem disablePadding key={bucket.key}>
               <StyledListItemButton
                 disabled={isLoadingSearch}
-                onClick={() => updateFilter(SearchFieldName.InstitutionId, bucket.key)}
+                onClick={() => updateFilter(SearchFieldName.TopLevelOrganizationId, bucket.key)}
                 selected={properties.some(
                   (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
                 )}>

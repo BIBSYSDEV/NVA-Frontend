@@ -37,7 +37,7 @@ export const registrationFilters: FilterItem[] = [
     i18nKey: 'registration.year_published',
     manuallyAddable: true,
   },
-  { field: SearchFieldName.InstitutionId, i18nKey: 'common.institution', manuallyAddable: false },
+  { field: SearchFieldName.TopLevelOrganizationId, i18nKey: 'common.institution', manuallyAddable: false },
 ];
 
 interface AdvancedSearchRowProps {

@@ -221,5 +221,6 @@ export enum SpecificFundingFieldNames {
 }
 
 export enum SearchFieldName {
-  InstitutionId = 'topLevelOrganization.id',
+  TopLevelOrganizationId = 'topLevelOrganization.id',
+  TopLevelOrganization = 'topLevelOrganization',
 }

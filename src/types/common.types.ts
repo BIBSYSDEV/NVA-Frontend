@@ -37,14 +37,18 @@ export interface SearchResponse<T> {
   aggregations?: Aggregations;
 }
 
+type AggregationBuckets = { buckets: AggregationBucket[] };
+
 export type Aggregations = {
-  [fieldName: string]: {
-    buckets: AggregationBucket[];
-  };
+  [fieldName: string]: AggregationBuckets;
 };
 
 export interface AggregationBucket {
   key: string;
   docCount: number;
   labels?: Aggregations;
+}
+
+export interface RegistrationInstitutionFacet {
+  id: AggregationBuckets;
 }
