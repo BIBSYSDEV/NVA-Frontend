@@ -532,6 +532,7 @@
       "user_profile": "Brukarprofil",
       "user_profile_description": "Her kan du fylle inn og merke kva du ønskjer skal gå fram på din offisielle forskarprofil."
     },
+    "project_registrations": "",
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønskjer du å slette \"{{title}}\"?",
@@ -834,6 +835,8 @@
     }
   },
   "project": {
+    "close_view": "",
+    "close_view_description": "",
     "coordinating_institution": "Koordinerandre institusjon",
     "create_project": "Opprett prosjekt",
     "edit_project": "Endre prosjekt",
@@ -946,7 +949,6 @@
         "LightDesigner": "Lysdesigner",
         "Musician": "Ensemblemusiker",
         "Organizer": "Arrangør",
-        "Other": "Anna",
         "Photographer": "Fotograf",
         "Producer": "Produsent",
         "ProductionDesigner": "Produksjonsdesigner",
@@ -1132,12 +1134,7 @@
       "MusicPerformance": "Musikk",
       "NonFictionChapter": "Fagleg kapittel",
       "NonFictionMonograph": "Fagleg monografi",
-      "Other": "Anna publikasjon",
-      "OtherFeatureArticle": "Kronikk",
-      "OtherMap": "Kart",
-      "OtherMusical": "Musikktrykk",
       "OtherPresentation": "Anna presentasjon",
-      "OtherPublication": "Anna publikasjon",
       "OtherStudentWork": "Anna studentoppgåve",
       "PerformingArts": "Scenekunst",
       "PopularScienceArticle": "Populærvitskapeleg artikkel",
@@ -1191,13 +1188,11 @@
           "Building": "Bygg",
           "Interior": "Interiør",
           "LandscapeArchitecture": "Landskapsarkitektur",
-          "Other": "Anna",
           "PlanningProposal": "Planframlegg"
         },
         "audio_video_type": {
           "Audiobook": "Lydbok",
           "LiteraryArtsAudioVisualOther": "Anna",
-          "Other": "Anna",
           "Podcast": "Podkast",
           "RadioPlay": "Høyrespel",
           "ShortFilm": "Kortfilm"
@@ -1223,7 +1218,6 @@
           "InteractionDesign": "Interaksjonsdesign",
           "InteriorDesign": "Interiørdesign",
           "LightDesign": "Lysdesign",
-          "Other": "Anna",
           "ProductDesign": "Produktdesign",
           "ServiceDesign": "Tenestedesign",
           "WebDesign": "Webdesign"
@@ -1251,7 +1245,6 @@
           "LiteraryArtsOther": "Anna",
           "Novel": "Roman",
           "Novella": "Novelle/noveller",
-          "Other": "Anna",
           "Play": "Drama/scenetekstar",
           "Poetry": "Posei",
           "Retelling": "Gjendikting",
@@ -1266,7 +1259,6 @@
           "Film": "Langfilm",
           "InteractiveFilm": "Interaktiv produksjon",
           "MovingPictureOther": "Anna",
-          "Other": "Anna",
           "SerialFilmProduction": "Seriell produksjon",
           "ShortFilm": "Kortfilm"
         },
@@ -1275,7 +1267,6 @@
           "DVD": "DVD",
           "DigitalFile": "Nedlasting",
           "MusicMediaOther": "Anna",
-          "Other": "Anna",
           "Streaming": "Strøyming",
           "Vinyl": "LP/EP"
         },
@@ -1310,13 +1301,11 @@
         "performance_type": "Type/formidlingsform",
         "performance_types": {
           "LiteraryArtsPerformanceOther": "Anna",
-          "Other": "Anna",
           "Play": "Skodespel/drama",
           "Reading": "Lesing"
         },
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
-          "Other": "Anna",
           "PerformingArtsOther": "Anna",
           "TheatricalProduction": "Framsyning/vising"
         },
@@ -1336,7 +1325,6 @@
           "CollectiveExhibition": "Gruppe-/kolletivutstilling",
           "IndividualExhibition": "Separat utstilling",
           "Installation": "Installasjon",
-          "Other": "Anna",
           "Performance": "Framsyning",
           "VisualArtsOther": "Anna"
         },
@@ -1374,7 +1362,6 @@
           "Internet": "Internett",
           "Journal": "Avis eller tidsskrift",
           "MediaTypeOther": "Anna",
-          "Other": "Anna",
           "Radio": "Radio",
           "TV": "TV"
         },
