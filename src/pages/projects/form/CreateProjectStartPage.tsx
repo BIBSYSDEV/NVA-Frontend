@@ -103,7 +103,7 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
                 endDate: selectedNfrProject.activeTo,
                 funding: [
                   {
-                    type: 'Funding',
+                    type: 'UnconfirmedFunding',
                     source: selectedNfrProject.source,
                     identifier: selectedNfrProject.identifier,
                     labels: selectedNfrProject.labels,

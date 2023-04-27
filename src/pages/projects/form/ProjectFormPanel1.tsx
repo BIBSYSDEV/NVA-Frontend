@@ -54,7 +54,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                 const selectedCoordinatingInstitution: ProjectOrganization = {
                   type: 'Organization',
                   id: selectedInstitution?.id ?? '',
-                  name: selectedInstitution?.name ?? {},
+                  labels: selectedInstitution?.labels ?? {},
                 };
                 setFieldValue(field.name, selectedCoordinatingInstitution);
               }}
@@ -94,6 +94,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                   <TextField
                     {...params}
                     data-testid={dataTestId.registrationWizard.description.projectForm.startDateField}
+                    onBlur={() => !touched && setFieldTouched(field.name)}
                     variant="filled"
                     required
                     error={touched && !!error}
@@ -124,6 +125,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                   <TextField
                     {...params}
                     data-testid={dataTestId.registrationWizard.description.projectForm.endDateField}
+                    onBlur={() => !touched && setFieldTouched(field.name)}
                     variant="filled"
                     required
                     error={touched && !!error}
@@ -172,7 +174,8 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               <Button
                 startIcon={<AddCircleIcon />}
                 onClick={() => push(emptyProjectContributor)}
-                sx={{ width: 'fit-content' }}>
+                sx={{ width: 'fit-content' }}
+                data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
                 {t('common.add')}
               </Button>
             </>

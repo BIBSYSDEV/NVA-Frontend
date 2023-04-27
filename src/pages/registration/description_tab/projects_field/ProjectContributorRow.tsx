@@ -184,7 +184,7 @@ export const ProjectContributorRow = ({
               const selectedCoordinatingInstitution: ProjectOrganization = {
                 type: 'Organization',
                 id: institution?.id ?? '',
-                name: institution?.name ?? {},
+                labels: institution?.labels ?? {},
               };
               setFieldValue(field.name, selectedCoordinatingInstitution);
             }}

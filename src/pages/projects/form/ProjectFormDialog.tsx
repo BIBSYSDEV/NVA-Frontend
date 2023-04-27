@@ -130,12 +130,12 @@ export const ProjectFormDialog = ({
             onSubmit={submitProjectForm}>
             {({ isSubmitting, errors, setTouched, touched, values }: FormikProps<SaveCristinProject>) => {
               const errorOnTab1 =
-                errors.title ||
-                errors.contributors ||
-                errors.startDate ||
-                errors.endDate ||
-                errors.coordinatingInstitution ||
-                errors.funding;
+                (errors.title && touched.title) ||
+                (errors.contributors && touched.contributors) ||
+                (errors.startDate && touched.startDate) ||
+                (errors.endDate && touched.endDate) ||
+                (errors.coordinatingInstitution && touched.coordinatingInstitution) ||
+                (errors.funding && touched.funding);
               const errorOnTab2 = false;
 
               const touchFieldsOnPanel1: FormikTouched<SaveCristinProject> = {
