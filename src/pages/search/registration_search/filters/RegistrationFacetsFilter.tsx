@@ -6,7 +6,7 @@ import { FacetItem } from './FacetItem';
 import { Aggregations, RegistrationInstitutionFacet } from '../../../../types/common.types';
 import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
-import { getTranslatedAggregatedInstitutionLabel } from '../../../../utils/translation-helpers';
+import { getInstitutionLabelFromBucket } from '../../../../utils/translation-helpers';
 
 interface RegistrationFacetsFilterProps {
   aggregations: Aggregations;
@@ -50,11 +50,9 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
   const typeFacet = aggregationEntries.find(([fieldName]) => fieldName === ResourceFieldNames.RegistrationType)?.[1];
 
   const topLevelOrganizationFacet = aggregationEntries.find(
-    ([fieldName]) =>
-      fieldName === SearchFieldName.TopLevelOrganization || fieldName === SearchFieldName.TopLevelOrganizationId
-  )?.[1];
-
-  const topLevelOrganizationIdFacet = (topLevelOrganizationFacet as RegistrationInstitutionFacet | undefined)?.id;
+    ([fieldName]) => fieldName === SearchFieldName.TopLevelOrganization
+  )?.[1] as RegistrationInstitutionFacet | undefined;
+  const topLevelOrganizationIdFacet = topLevelOrganizationFacet?.id;
 
   return (
     <>
@@ -89,7 +87,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 selected={properties.some(
                   (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
                 )}>
-                <span>{getTranslatedAggregatedInstitutionLabel(bucket)}</span>
+                <span>{getInstitutionLabelFromBucket(bucket)}</span>
                 {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
               </StyledListItemButton>
             </ListItem>

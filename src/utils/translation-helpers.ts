@@ -49,7 +49,7 @@ export const getLanguageString = (labels?: LanguageString) => {
   return translatedString;
 };
 
-export const getTranslatedAggregatedInstitutionLabel = (aggregationBucket: AggregationBucket) => {
+export const getInstitutionLabelFromBucket = (aggregationBucket: AggregationBucket) => {
   const labels = aggregationBucket.labels;
 
   if (labels) {
