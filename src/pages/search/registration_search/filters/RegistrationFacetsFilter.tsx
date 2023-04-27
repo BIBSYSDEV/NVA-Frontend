@@ -3,7 +3,7 @@ import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
 import { FacetItem } from './FacetItem';
-import { Aggregations, RegistrationInstitutionFacet } from '../../../../types/common.types';
+import { Aggregations } from '../../../../types/common.types';
 import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { getInstitutionLabelFromBucket } from '../../../../utils/translation-helpers';
@@ -48,15 +48,13 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
 
   const aggregationEntries = Object.entries(aggregations);
   const typeFacet = aggregationEntries.find(([fieldName]) => fieldName === ResourceFieldNames.RegistrationType)?.[1];
-
   const topLevelOrganizationFacet = aggregationEntries.find(
     ([fieldName]) => fieldName === SearchFieldName.TopLevelOrganization
-  )?.[1] as RegistrationInstitutionFacet | undefined;
-  const topLevelOrganizationIdFacet = topLevelOrganizationFacet?.id;
+  )?.[1].id;
 
   return (
     <>
-      {typeFacet && (
+      {typeFacet?.buckets && (
         <FacetItem title={t('registration.resource_type.resource_type')}>
           {typeFacet.buckets.map((bucket) => {
             const registrationType = bucket.key as PublicationInstanceType;
@@ -77,9 +75,9 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {topLevelOrganizationIdFacet && (
+      {topLevelOrganizationFacet?.buckets && (
         <FacetItem title={t('common.institution')}>
-          {topLevelOrganizationIdFacet.buckets.map((bucket) => (
+          {topLevelOrganizationFacet.buckets.map((bucket) => (
             <ListItem disablePadding key={bucket.key}>
               <StyledListItemButton
                 disabled={isLoadingSearch}

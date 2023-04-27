@@ -54,9 +54,9 @@ export const getInstitutionLabelFromBucket = (aggregationBucket: AggregationBuck
 
   if (labels) {
     const languageString: LanguageString = {
-      nb: labels['nb']?.buckets[0]?.key,
-      nn: labels['nn']?.buckets[0]?.key,
-      en: labels['en']?.buckets[0]?.key,
+      nb: labels['nb']?.buckets?.[0]?.key ?? '',
+      nn: labels['nn']?.buckets?.[0]?.key ?? '',
+      en: labels['en']?.buckets?.[0]?.key ?? '',
     };
 
     const translatedString = getLanguageString(languageString);
