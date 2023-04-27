@@ -91,10 +91,6 @@ export interface MusicScore extends ArtisticOutputBase {
     value: string;
     formatted?: string;
   };
-  isrc: {
-    type: 'Isrc';
-    value: string;
-  };
 }
 
 export interface LiteraryArtsMonograph {
@@ -183,6 +179,10 @@ export interface AudioVisualPublication extends ArtisticOutputBase {
   publisher: UnconfirmedPublisher;
   catalogueNumber: string;
   trackList: MusicTrack[];
+  isrc: {
+    type: 'Isrc';
+    value: string;
+  };
 }
 
 export interface MusicalWork {

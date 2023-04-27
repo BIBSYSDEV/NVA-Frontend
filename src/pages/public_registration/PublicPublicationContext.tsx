@@ -453,7 +453,7 @@ const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: Other
 
 const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore }) => {
   const { t } = useTranslation();
-  const { type, ensemble, movements, extent, publisher, ismn, isrc } = musicScore;
+  const { type, ensemble, movements, extent, publisher, ismn } = musicScore;
 
   return (
     <DialogContent>
@@ -469,8 +469,6 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ismn')}</Typography>
       <Typography paragraph>{ismn.formatted ?? ismn.value}</Typography>
-      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
-      <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>
     </DialogContent>
   );
 };
@@ -481,7 +479,7 @@ const PublicAudioVisualPublicationDialogContent = ({
   audioVisualPublication: AudioVisualPublication;
 }) => {
   const { t } = useTranslation();
-  const { type, mediaType, publisher, catalogueNumber, trackList } = audioVisualPublication;
+  const { type, mediaType, publisher, catalogueNumber, isrc, trackList } = audioVisualPublication;
 
   return (
     <DialogContent>
@@ -499,6 +497,8 @@ const PublicAudioVisualPublicationDialogContent = ({
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
       <Typography paragraph>{catalogueNumber}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
+      {isrc.value && <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>}
       <Typography variant="h3" id="tracks-heading">
         {t('registration.resource_type.artistic.content_track')}
       </Typography>
