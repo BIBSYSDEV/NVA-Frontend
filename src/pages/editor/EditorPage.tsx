@@ -2,7 +2,10 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Switch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import StoreIcon from '@mui/icons-material/Store';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PeopleIcon from '@mui/icons-material/People';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { VocabularySettings } from './VocabularySettings';
 import { PublishStrategySettings } from './PublishStrategySettings';
@@ -37,39 +40,96 @@ const EditorPage = () => {
     <StyledPageWithSideMenu>
       <SidePanel aria-labelledby="editor-title">
         <SideNavHeader text={customer?.shortName} id="editor-title" icon={StoreIcon} />
-
-        <NavigationList>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorInstitution}
-            data-testid={dataTestId.editor.institutionsNameLinkButton}
-            to={UrlPathTemplate.EditorInstitution}>
-            {t('editor.institution.institution_name')}
-          </LinkButton>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorDoi}
-            data-testid={dataTestId.editor.doiLinkButton}
-            to={UrlPathTemplate.EditorDoi}>
-            {t('common.doi_long')}
-          </LinkButton>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
-            data-testid={dataTestId.editor.vocabularyLinkButton}
-            to={UrlPathTemplate.EditorVocabulary}>
-            {t('editor.vocabulary')}
-          </LinkButton>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
-            data-testid={dataTestId.editor.publishStrategyLinkButton}
-            to={UrlPathTemplate.EditorPublishStrategy}>
-            {t('editor.publish_strategy.publish_strategy')}
-          </LinkButton>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorCurators}
-            data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
-            to={UrlPathTemplate.EditorCurators}>
-            {t('editor.curators.areas_of_responsibility')}
-          </LinkButton>
-        </NavigationList>
+        <Accordion
+          elevation={0}
+          expanded={currentPath === UrlPathTemplate.EditorCurators}
+          sx={{
+            borderTop: '1px solid',
+            ':last-child': {
+              borderBottom: '1px solid',
+            },
+            '&.MuiAccordion-root.Mui-expanded': {
+              margin: 0,
+            },
+            bgcolor: 'secondary.light',
+          }}>
+          <AccordionSummary
+            onClick={() =>
+              !currentPath.startsWith(UrlPathTemplate.EditorOverview) && history.push(UrlPathTemplate.EditorCurators)
+            }
+            expandIcon={<ExpandMoreIcon color="primary" />}
+            sx={{
+              paddingRight: '0.2',
+            }}>
+            <Typography variant="h3">{t('common.overview')}</Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ paddingX: 0, margin: 0 }}>
+            <NavigationList>
+              <LinkButton
+                startIcon={<PeopleIcon />}
+                isSelected={currentPath === UrlPathTemplate.EditorCurators}
+                data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
+                to={UrlPathTemplate.EditorCurators}>
+                {t('editor.curators.areas_of_responsibility')}
+              </LinkButton>
+            </NavigationList>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          elevation={0}
+          expanded={
+            currentPath === UrlPathTemplate.EditorInstitution ||
+            currentPath === UrlPathTemplate.EditorDoi ||
+            currentPath === UrlPathTemplate.EditorPublishStrategy ||
+            currentPath === UrlPathTemplate.EditorVocabulary
+          }
+          sx={{
+            borderTop: '1px solid',
+            ':last-child': {
+              borderBottom: '1px solid',
+            },
+            '&.MuiAccordion-root.Mui-expanded': {
+              margin: 0,
+            },
+            bgcolor: 'secondary.light',
+          }}>
+          <AccordionSummary
+            onClick={() =>
+              !currentPath.startsWith(UrlPathTemplate.EditorSettings) && history.push(UrlPathTemplate.EditorInstitution)
+            }
+            expandIcon={<ExpandMoreIcon color="primary" />}
+            sx={{ padding: '0.2' }}>
+            <Typography variant="h3">{t('common.settings')}</Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ paddingX: 0 }}>
+            <NavigationList>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorInstitution}
+                data-testid={dataTestId.editor.institutionsNameLinkButton}
+                to={UrlPathTemplate.EditorInstitution}>
+                {t('editor.institution.institution_name')}
+              </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorDoi}
+                data-testid={dataTestId.editor.doiLinkButton}
+                to={UrlPathTemplate.EditorDoi}>
+                {t('common.doi_long')}
+              </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
+                data-testid={dataTestId.editor.vocabularyLinkButton}
+                to={UrlPathTemplate.EditorVocabulary}>
+                {t('editor.vocabulary')}
+              </LinkButton>
+              <LinkButton
+                isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
+                data-testid={dataTestId.editor.publishStrategyLinkButton}
+                to={UrlPathTemplate.EditorPublishStrategy}>
+                {t('editor.publish_strategy.publish_strategy')}
+              </LinkButton>
+            </NavigationList>
+          </AccordionDetails>
+        </Accordion>
       </SidePanel>
       <BackgroundDiv>
         <Switch>
