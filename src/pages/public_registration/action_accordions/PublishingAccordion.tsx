@@ -29,6 +29,7 @@ interface PublishingAccordionProps {
   refetchRegistrationAndTickets: () => void;
   publishingRequestTicket: Ticket | null;
   userIsCurator: boolean;
+  isLoadingData: boolean;
 }
 
 enum LoadingState {
@@ -43,6 +44,7 @@ export const PublishingAccordion = ({
   registration,
   refetchRegistrationAndTickets,
   userIsCurator,
+  isLoadingData,
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -75,11 +77,11 @@ export const PublishingAccordion = ({
     const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
-      setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
       refetchRegistrationAndTickets();
     }
+    setIsLoading(LoadingState.None);
   };
 
   const updatePendingPublishingRequest = async (status: TicketStatus) => {
@@ -97,7 +99,6 @@ export const PublishingAccordion = ({
       );
       if (isErrorStatus(updateTicketStatusResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_publishing_request'), variant: 'error' }));
-        setIsLoading(LoadingState.None);
       } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
         if (status === 'Completed') {
           dispatch(setNotification({ message: t('feedback.success.publishing_request_approved'), variant: 'success' }));
@@ -106,6 +107,7 @@ export const PublishingAccordion = ({
         }
         refetchRegistrationAndTickets();
       }
+      setIsLoading(LoadingState.None);
     }
   };
 
@@ -179,13 +181,14 @@ export const PublishingAccordion = ({
                 ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
                 : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
             </Typography>
-            <Button
+            <LoadingButton
               variant="outlined"
+              loading={isLoadingData}
               onClick={refetchRegistrationAndTickets}
               startIcon={<RefreshIcon />}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
               {t('registration.public_page.tasks_panel.reload')}
-            </Button>
+            </LoadingButton>
           </>
         )}
 
@@ -227,7 +230,7 @@ export const PublishingAccordion = ({
             endIcon={<CloudUploadIcon />}
             loadingPosition="end"
             onClick={onClickPublish}
-            loading={isLoading === LoadingState.CreatePublishingREquest}>
+            loading={isLoadingData || isLoading === LoadingState.CreatePublishingREquest}>
             {t('common.publish')}
           </LoadingButton>
         )}
@@ -241,7 +244,7 @@ export const PublishingAccordion = ({
               loadingPosition="end"
               onClick={() => updatePendingPublishingRequest('Completed')}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
-              disabled={isLoading !== LoadingState.None || !registrationIsValid}>
+              disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
               {t('registration.public_page.approve_publish_request')}
             </LoadingButton>
             <LoadingButton
@@ -251,7 +254,7 @@ export const PublishingAccordion = ({
               loadingPosition="end"
               onClick={() => updatePendingPublishingRequest('Closed')}
               loading={isLoading === LoadingState.RejectPublishingRequest}
-              disabled={isLoading !== LoadingState.None}>
+              disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('registration.public_page.reject_publish_request')}
             </LoadingButton>
           </Box>

@@ -39,12 +39,15 @@ export interface SearchResponse<T> {
 
 export type Aggregations = {
   [fieldName: string]: {
-    buckets: AggregationBucket[];
+    buckets?: AggregationBucket[];
+    id?: {
+      buckets: AggregationBucket[];
+    };
   };
 };
 
-interface AggregationBucket {
+export interface AggregationBucket {
   key: string;
-  doc_count?: number; // TODO: Remove when model is updated in all environments
-  docCount?: number;
+  docCount: number;
+  labels?: Aggregations;
 }

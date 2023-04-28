@@ -54,7 +54,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                 const selectedCoordinatingInstitution: ProjectOrganization = {
                   type: 'Organization',
                   id: selectedInstitution?.id ?? '',
-                  name: selectedInstitution?.name ?? {},
+                  labels: selectedInstitution?.labels ?? {},
                 };
                 setFieldValue(field.name, selectedCoordinatingInstitution);
               }}
