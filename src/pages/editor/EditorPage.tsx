@@ -42,6 +42,7 @@ const EditorPage = () => {
       <SidePanel aria-labelledby="editor-title">
         <SideNavHeader text={customer?.shortName} id="editor-title" icon={StoreIcon} />
         <Accordion
+          data-testid={dataTestId.editor.overviewAccordion}
           elevation={0}
           expanded={currentPath === UrlPathTemplate.EditorCurators}
           sx={{
@@ -101,6 +102,7 @@ const EditorPage = () => {
           </AccordionDetails>
         </Accordion>
         <Accordion
+          data-testid={dataTestId.editor.settingsAccordion}
           elevation={0}
           expanded={
             currentPath === UrlPathTemplate.EditorInstitution ||
