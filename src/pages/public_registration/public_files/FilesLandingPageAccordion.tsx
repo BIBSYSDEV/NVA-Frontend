@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { Box, Typography } from '@mui/material';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -10,7 +11,6 @@ import {
 } from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
-import { Box, Typography } from '@mui/material';
 
 const maxFileSizeForPreview = 10_000_000; //10 MB
 
