@@ -75,11 +75,11 @@ export const PublishingAccordion = ({
     const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
-      setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
       refetchRegistrationAndTickets();
     }
+    setIsLoading(LoadingState.None);
   };
 
   const updatePendingPublishingRequest = async (status: TicketStatus) => {
@@ -97,7 +97,6 @@ export const PublishingAccordion = ({
       );
       if (isErrorStatus(updateTicketStatusResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_publishing_request'), variant: 'error' }));
-        setIsLoading(LoadingState.None);
       } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
         if (status === 'Completed') {
           dispatch(setNotification({ message: t('feedback.success.publishing_request_approved'), variant: 'success' }));
@@ -106,6 +105,7 @@ export const PublishingAccordion = ({
         }
         refetchRegistrationAndTickets();
       }
+      setIsLoading(LoadingState.None);
     }
   };
 
