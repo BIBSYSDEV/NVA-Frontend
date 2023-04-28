@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Switch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import StoreIcon from '@mui/icons-material/Store';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import PeopleIcon from '@mui/icons-material/People';
+import ArchitectureIcon from '@mui/icons-material/Architecture';
+import GavelIcon from '@mui/icons-material/Gavel';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { VocabularySettings } from './VocabularySettings';
 import { PublishStrategySettings } from './PublishStrategySettings';
@@ -51,22 +52,46 @@ const EditorPage = () => {
             '&.MuiAccordion-root.Mui-expanded': {
               margin: 0,
             },
-            bgcolor: 'secondary.light',
+            bgcolor: 'secondary.main',
           }}>
           <AccordionSummary
+            sx={{
+              paddingRight: '0.2',
+              '&.MuiAccordionSummary-root.Mui-expanded': {
+                minHeight: 0,
+                height: '50px',
+              },
+            }}
             onClick={() =>
               !currentPath.startsWith(UrlPathTemplate.EditorOverview) && history.push(UrlPathTemplate.EditorCurators)
             }
-            expandIcon={<ExpandMoreIcon color="primary" />}
-            sx={{
-              paddingRight: '0.2',
-            }}>
-            <Typography variant="h3">{t('common.overview')}</Typography>
+            expandIcon={<ExpandMoreIcon color="primary" />}>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: '0.5rem',
+                alignItems: 'center',
+              }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  bgcolor: 'white',
+                  borderRadius: '50%',
+                  width: '1.6rem',
+                  height: '1.6rem',
+                }}>
+                <ArchitectureIcon fontSize="small" />
+              </Box>
+              <Typography variant="h3" fontWeight={500} textTransform="uppercase">
+                {t('common.overview')}
+              </Typography>
+            </Box>
           </AccordionSummary>
           <AccordionDetails sx={{ paddingX: 0, margin: 0 }}>
             <NavigationList>
               <LinkButton
-                startIcon={<PeopleIcon />}
                 isSelected={currentPath === UrlPathTemplate.EditorCurators}
                 data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
                 to={UrlPathTemplate.EditorCurators}>
@@ -91,15 +116,42 @@ const EditorPage = () => {
             '&.MuiAccordion-root.Mui-expanded': {
               margin: 0,
             },
-            bgcolor: 'secondary.light',
+            bgcolor: 'secondary.main',
           }}>
           <AccordionSummary
             onClick={() =>
               !currentPath.startsWith(UrlPathTemplate.EditorSettings) && history.push(UrlPathTemplate.EditorInstitution)
             }
             expandIcon={<ExpandMoreIcon color="primary" />}
-            sx={{ padding: '0.2' }}>
-            <Typography variant="h3">{t('common.settings')}</Typography>
+            sx={{
+              padding: '0.2',
+              '&.MuiAccordionSummary-root.Mui-expanded': {
+                minHeight: 0,
+                height: '50px',
+              },
+            }}>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: '0.5rem',
+                alignItems: 'center',
+              }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  bgcolor: 'white',
+                  borderRadius: '50%',
+                  width: '1.6rem',
+                  height: '1.6rem',
+                }}>
+                <GavelIcon fontSize="small" />
+              </Box>
+              <Typography variant="h3" fontWeight={500} textTransform="uppercase">
+                {t('common.settings')}
+              </Typography>
+            </Box>
           </AccordionSummary>
           <AccordionDetails sx={{ paddingX: 0 }}>
             <NavigationList>
