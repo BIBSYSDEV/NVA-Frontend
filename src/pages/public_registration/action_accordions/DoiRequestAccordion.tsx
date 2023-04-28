@@ -30,6 +30,7 @@ interface DoiRequestAccordionProps {
   refetchRegistrationAndTickets: () => void;
   doiRequestTicket: Ticket | null;
   userIsCurator: boolean;
+  isLoadingData: boolean;
 }
 
 enum LoadingState {
@@ -45,6 +46,7 @@ export const DoiRequestAccordion = ({
   doiRequestTicket,
   refetchRegistrationAndTickets,
   userIsCurator,
+  isLoadingData,
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -148,13 +150,14 @@ export const DoiRequestAccordion = ({
                 <Typography gutterBottom>
                   {t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}
                 </Typography>
-                <Button
+                <LoadingButton
                   variant="outlined"
                   onClick={refetchRegistrationAndTickets}
+                  loading={isLoadingData}
                   startIcon={<RefreshIcon />}
                   data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
                   {t('registration.public_page.tasks_panel.reload')}
-                </Button>
+                </LoadingButton>
               </>
             )}
           </>
@@ -167,7 +170,7 @@ export const DoiRequestAccordion = ({
                 variant="outlined"
                 endIcon={<LocalOfferIcon />}
                 loadingPosition="end"
-                loading={isLoading === LoadingState.RequestDoi}
+                loading={isLoadingData || isLoading === LoadingState.RequestDoi}
                 disabled={isLoading !== LoadingState.None}
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
                 onClick={toggleRequestDoiModal}>
@@ -179,7 +182,7 @@ export const DoiRequestAccordion = ({
                 variant="outlined"
                 endIcon={<LocalOfferIcon />}
                 loadingPosition="end"
-                loading={isLoading === LoadingState.DraftDoi}
+                loading={isLoadingData || isLoading === LoadingState.DraftDoi}
                 disabled={isLoading !== LoadingState.None}
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
                 onClick={addDraftDoi}>
@@ -208,7 +211,7 @@ export const DoiRequestAccordion = ({
                   variant="contained"
                   data-testid={dataTestId.registrationLandingPage.tasksPanel.sendDoiButton}
                   onClick={sendDoiRequest}
-                  loading={isLoading !== LoadingState.None}>
+                  loading={isLoadingData || isLoading !== LoadingState.None}>
                   {t('common.send')}
                 </LoadingButton>
               </DialogActions>
@@ -225,7 +228,7 @@ export const DoiRequestAccordion = ({
               loadingPosition="end"
               onClick={() => updatePendingDoiRequest('Completed')}
               loading={isLoading === LoadingState.ApproveDoi}
-              disabled={isLoading !== LoadingState.None}>
+              disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('common.create_doi')}
             </LoadingButton>
             <LoadingButton
@@ -235,7 +238,7 @@ export const DoiRequestAccordion = ({
               loadingPosition="end"
               onClick={() => updatePendingDoiRequest('Closed')}
               loading={isLoading === LoadingState.RejectDoi}
-              disabled={isLoading !== LoadingState.None}>
+              disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('common.reject_doi')}
             </LoadingButton>
           </Box>
