@@ -532,7 +532,7 @@
       "user_profile": "Brukarprofil",
       "user_profile_description": "Her kan du fylle inn og merke kva du ønskjer skal gå fram på din offisielle forskarprofil."
     },
-    "project_registrations": "",
+    "project_registrations": "Prosjektregistreringar",
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønskjer du å slette \"{{title}}\"?",
@@ -835,8 +835,8 @@
     }
   },
   "project": {
-    "close_view": "",
-    "close_view_description": "",
+    "close_view": "Lukk vising",
+    "close_view_description": "Ulagra data du har skrive inn vil gå tapt viss du lukker denne visinga. Ønskjer du likevel å lukke visinga?",
     "coordinating_institution": "Koordinerandre institusjon",
     "create_project": "Opprett prosjekt",
     "edit_project": "Endre prosjekt",
@@ -1015,6 +1015,7 @@
       "files": "Filer",
       "files_are_not_published": "Filer vert ikkje publisert",
       "files_awaits_approval": "Filer (avventar godkjenning)",
+      "files_count": "",
       "find_journal_in_channel_register": "Sjå informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Sjå informasjon om utgjevaren i Kanalregisteret",
       "find_series_in_channel_register": "Sjå informasjon om serien i Kanalregisteret",
