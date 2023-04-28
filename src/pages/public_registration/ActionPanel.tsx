@@ -15,9 +15,15 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
   refetchRegistrationAndTickets: () => void;
+  isLoadingData: boolean;
 }
 
-export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTickets }: ActionPanelProps) => {
+export const ActionPanel = ({
+  registration,
+  tickets,
+  refetchRegistrationAndTickets,
+  isLoadingData,
+}: ActionPanelProps) => {
   const { t } = useTranslation();
   const { user, customer } = useSelector((store: RootState) => store);
   const userIsCurator = userIsCuratorForRegistration(user, registration);
@@ -37,6 +43,7 @@ export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTicke
         <ErrorBoundary>
           <PublishingAccordion
             refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+            isLoadingData={isLoadingData}
             registration={registration}
             publishingRequestTicket={currentPublishingRequestTicket}
             userIsCurator={userIsCurator}
@@ -48,6 +55,7 @@ export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTicke
             customer?.doiAgent.username && (
               <DoiRequestAccordion
                 refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+                isLoadingData={isLoadingData}
                 registration={registration}
                 doiRequestTicket={doiRequestTicket}
                 userIsCurator={userIsCurator}
