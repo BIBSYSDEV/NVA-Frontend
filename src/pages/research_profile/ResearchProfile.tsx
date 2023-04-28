@@ -13,8 +13,8 @@ import {
 import WorkIcon from '@mui/icons-material/Work';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import { PageHeader } from '../../components/PageHeader';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
@@ -28,6 +28,7 @@ import { RegistrationSearchResults } from '../search/registration_search/Registr
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { fetchPerson } from '../../api/cristinApi';
 import { setNotification } from '../../redux/notificationSlice';
+import NotFound from '../errorpages/NotFound';
 
 const textContainerSx: SxProps = {
   width: '100%',
@@ -79,9 +80,17 @@ const ResearchProfile = () => {
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
-  return (
+  return !personQuery.isLoading && !person ? (
+    <NotFound />
+  ) : (
     <BackgroundDiv>
-      <PageHeader>{fullName}</PageHeader>
+      <Helmet>
+        <title>{fullName}</title>
+      </Helmet>
+      <Typography variant="h1" sx={{ mt: '1rem', mb: '2rem' }}>
+        {fullName}
+      </Typography>
+
       {personQuery.isLoading ? (
         <PageSpinner aria-label={t('my_page.research_profile')} />
       ) : (
