@@ -93,7 +93,7 @@ const ResearchProfile = () => {
         {fullName}
       </Typography>
       <Typography variant="h2">{t('common.employments')}</Typography>
-      {activeAffiliations.length > 0 && (
+      {activeAffiliations.length > 0 ? (
         <Box sx={lineSx}>
           <WorkIcon />
           <Box sx={textContainerSx}>
@@ -102,6 +102,8 @@ const ResearchProfile = () => {
             ))}
           </Box>
         </Box>
+      ) : (
+        <Typography>{t('my_page.no_employments')}</Typography>
       )}
       {orcidUri && (
         <Box sx={lineSx}>
@@ -116,8 +118,8 @@ const ResearchProfile = () => {
         </Box>
       )}
       {registrations && (
-        <Box sx={{ mt: '2rem' }}>
-          <Typography id="registration-label" variant="h2" gutterBottom>
+        <>
+          <Typography id="registration-label" variant="h2" sx={{ mt: '2rem' }}>
             {t('common.registrations')}
           </Typography>
           {isLoadingRegistrations && !registrations ? (
@@ -141,7 +143,7 @@ const ResearchProfile = () => {
           ) : (
             <Typography>{t('common.no_hits')}</Typography>
           )}
-        </Box>
+        </>
       )}
     </BackgroundDiv>
   );
