@@ -10,7 +10,7 @@ import {
 } from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const maxFileSizeForPreview = 10_000_000; //10 MB
 
@@ -34,13 +34,26 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   return publishableFilesLength > 0 || (userIsRegistrationAdmin && associatedFiles.length > 0) ? (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
-      defaultExpanded
-      heading={t('registration.files_and_license.files_count', { count: publishableFilesLength })}>
-      {unpublishedFiles.length > 0 && (
-        <Box sx={{ bgcolor: 'secondary.dark', p: '0.5rem 2.5rem', width: 'fit-content' }}>
-          {t('registration.files_and_license.files_awaits_approval', { count: unpublishedFiles.length })}
+      defaultExpanded={filesToShow.length > 0}
+      heading={
+        <Box
+          sx={{
+            width: '100%',
+            display: 'grid',
+            gridTemplateColumns: { xs: 'auto auto', sm: '1fr auto 1fr' },
+            gap: '0.5rem',
+            alignItems: 'center',
+          }}>
+          <Typography variant="h2" color="primary">
+            {t('registration.files_and_license.files_count', { count: publishableFilesLength })}
+          </Typography>
+          {unpublishedFiles.length > 0 && (
+            <Box sx={{ bgcolor: 'secondary.dark', p: { xs: '0.25rem 0.5rem', sm: '0.3rem 3rem' } }}>
+              {t('registration.files_and_license.files_awaits_approval', { count: unpublishedFiles.length })}
+            </Box>
+          )}
         </Box>
-      )}
+      }>
       {filesToShow.map((file, index) => (
         <FileRow
           key={file.identifier}
