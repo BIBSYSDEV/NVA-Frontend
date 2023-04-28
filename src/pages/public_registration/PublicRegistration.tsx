@@ -64,7 +64,7 @@ const PublicRegistration = () => {
                   registration={registration}
                   refetchRegistrationAndTickets={refetchRegistrationAndTickets}
                   tickets={ticketsQuery.data?.tickets ?? []}
-                  isLoadingData={registrationQuery.isLoading || ticketsQuery.isLoading}
+                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
                 />
               )}
               <PublicRegistrationContent registration={registration} />
