@@ -19,29 +19,23 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   const userIsRegistrationAdmin = userCanEditRegistration(user, registration);
 
-  const hasFilesAwaitingApproval = registration.associatedArtifacts.some((file) => file.type === 'UnpublishedFile');
-
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
-  const hasPublishableFiles = associatedFiles.some(
-    (file) => file.type === 'PublishedFile' || file.type === 'UnpublishedFile'
-  );
-  const filesToShow = userIsRegistrationAdmin
-    ? associatedFiles
-    : associatedFiles.filter((file) => file.type === 'PublishedFile');
+  const publishedFiles = associatedFiles.filter((file) => file.type === 'PublishedFile');
+  const unpublishedFiles = associatedFiles.filter((file) => file.type === 'UnpublishedFile');
+
+  const publishableFilesLength = publishedFiles.length + unpublishedFiles.length;
+
+  const filesToShow = userIsRegistrationAdmin ? associatedFiles : publishedFiles;
 
   const showFileVersionField = isTypeWithFileVersionField(
     registration.entityDescription?.reference?.publicationInstance?.type
   );
 
-  return hasPublishableFiles || (userIsRegistrationAdmin && associatedFiles.length > 0) ? (
+  return publishableFilesLength > 0 || (userIsRegistrationAdmin && associatedFiles.length > 0) ? (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
       defaultExpanded
-      heading={
-        hasFilesAwaitingApproval
-          ? t('registration.files_and_license.files_awaits_approval')
-          : t('registration.files_and_license.files')
-      }>
+      heading={t('registration.files_and_license.files_count', { count: publishableFilesLength })}>
       {filesToShow.map((file, index) => (
         <FileRow
           key={file.identifier}

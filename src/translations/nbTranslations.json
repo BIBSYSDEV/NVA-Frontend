@@ -1013,6 +1013,7 @@
       "file_publish_date": "Utsatt publisering",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "files": "Filer",
+      "files_count": "Filer ({{count}})",
       "files_are_not_published": "Filer publiseres ikke",
       "files_awaits_approval": "Filer (avventer godkjenning)",
       "find_journal_in_channel_register": "Se informasjon om tidsskriftet i Kanalregisteret",
