@@ -44,7 +44,7 @@
     "@uppy/progress-bar": "^3.0.2",
     "@uppy/react": "^3.1.2",
     "axios": "^1.4.0",
-    "date-fns": "^2.29.3",
+    "date-fns": "^2.30.0",
     "deepmerge": "^4.3.1",
     "formik": "^2.2.9",
     "i18n-iso-countries": "^7.6.0",
