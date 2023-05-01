@@ -27,7 +27,7 @@
   "dependencies": {
     "@aws-amplify/auth": "^5.3.4",
     "@emotion/react": "^11.10.8",
-    "@emotion/styled": "^11.10.6",
+    "@emotion/styled": "^11.10.8",
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "5.0.0-alpha.128",
