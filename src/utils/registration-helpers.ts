@@ -94,6 +94,8 @@ export const isPeriodicalMediaContribution = (instanceType: string) =>
 
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
 
+export const isExhibitionContent = (instanceType: any) => Object.values(ExhibitionContentType).includes(instanceType);
+
 export const nviApplicableTypes: string[] = [
   JournalType.AcademicArticle,
   JournalType.AcademicLiteratureReview,

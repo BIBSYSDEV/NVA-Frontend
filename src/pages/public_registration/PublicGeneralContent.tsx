@@ -36,6 +36,7 @@ import {
   isOtherRegistration,
   isPresentation,
   isReport,
+  isExhibitionContent,
 } from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
 import {
@@ -68,6 +69,7 @@ import {
   MediaContributionPublicationContext,
 } from '../../types/publication_types/mediaContributionRegistration.types';
 import { MapPublicationContext } from '../../types/publication_types/otherRegistration.types';
+import { ExhibitionPublicationInstance } from '../../types/publication_types/exhibitionContent.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
@@ -224,6 +226,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 publicationContext={publicationContext as MediaContributionPublicationContext}
               />
             )
+          ) : isExhibitionContent(publicationInstance.type) ? (
+            <PublicArtisticOutput
+              outputs={(publicationInstance as ExhibitionPublicationInstance).manifestations ?? []}
+            />
           ) : isOtherRegistration(publicationInstance.type) ? (
             <PublicPublisher publisher={(publicationContext as MapPublicationContext).publisher} />
           ) : null)}

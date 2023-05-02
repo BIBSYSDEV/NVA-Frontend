@@ -42,7 +42,7 @@ export interface ExhibitionCatalog {
   id: string;
 }
 
-interface ExhibitionPublicationInstance {
+export interface ExhibitionPublicationInstance {
   type: ExhibitionContentType;
   subtype: {
     type: ExhibitionProductionSubtype | '';

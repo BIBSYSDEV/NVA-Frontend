@@ -58,6 +58,12 @@ import {
 } from '../../types/publication_types/mediaContributionRegistration.types';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
 import { getPeriodString } from '../../utils/general-helpers';
+import {
+  ExhibitionBasic,
+  ExhibitionManifestation,
+  ExhibitionMentionInPublication,
+  ExhibitionOtherPresentation,
+} from '../../types/publication_types/exhibitionContent.types';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
@@ -230,7 +236,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 };
 
 interface PublicArtisticOutputProps {
-  outputs: ArtisticOutputItem[];
+  outputs: (ArtisticOutputItem | ExhibitionManifestation)[];
   showType?: boolean;
 }
 
@@ -239,22 +245,18 @@ export const PublicArtisticOutput = ({ outputs, showType = false }: PublicArtist
 
   return (
     <>
-      <Typography variant="h3">{t('registration.resource_type.artistic.announcements')}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.artistic.announcements')}
+      </Typography>
       {outputs.map((output, index) => (
-        <PublicOutputRow
-          key={index}
-          output={output}
-          heading={t('registration.resource_type.artistic.announcements')}
-          showType={showType}
-        />
+        <PublicOutputRow key={index} output={output} showType={showType} />
       ))}
     </>
   );
 };
 
 interface PublicOutputRowProps {
-  output: ArtisticOutputItem;
-  heading: string;
+  output: ArtisticOutputItem | ExhibitionManifestation;
   showType: boolean;
 }
 
@@ -312,6 +314,16 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
             <PublicLiteraryArtsPerformanceDialogContent performance={output as LiteraryArtsPerformance} />
           ) : output.type === 'LiteraryArtsAudioVisual' ? (
             <PublicLiteraryArtsAudioVisualDialogContent audioVisual={output as LiteraryArtsAudioVisual} />
+          ) : output.type === 'ExhibitionBasic' ? (
+            <PublicExhibitionBasicDialogContent exhibitionBasic={output as ExhibitionBasic} />
+          ) : output.type === 'ExhibitionMentionInPublication' ? (
+            <PublicExhibitionMentionInPublicationDialogContent
+              exhibitionMentionInPublication={output as ExhibitionMentionInPublication}
+            />
+          ) : output.type === 'ExhibitionOtherPresentation' ? (
+            <PublicExhibitionOtherPresentationDialogContent
+              exhibitionOtherPresentation={output as ExhibitionOtherPresentation}
+            />
           ) : null}
         </ErrorBoundary>
 
@@ -322,6 +334,107 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
         </DialogActions>
       </Dialog>
     </Box>
+  );
+};
+
+const PublicExhibitionBasicDialogContent = ({ exhibitionBasic }: { exhibitionBasic: ExhibitionBasic }) => {
+  const { t } = useTranslation();
+  return (
+    <DialogContent>
+      <Typography variant="h3" gutterBottom>
+        {t('common.type')}
+      </Typography>
+      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${exhibitionBasic.type}`)}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.exhibition_production.institution_name')}
+      </Typography>
+      <Typography paragraph>{exhibitionBasic.organization.name || '-'}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('common.place')}
+      </Typography>
+      <Typography paragraph>{exhibitionBasic.place?.label || '-'}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('common.date')}
+      </Typography>
+      <Typography>{getPeriodString(exhibitionBasic.date?.from, exhibitionBasic.date?.to)}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicExhibitionMentionInPublicationDialogContent = ({
+  exhibitionMentionInPublication,
+}: {
+  exhibitionMentionInPublication: ExhibitionMentionInPublication;
+}) => {
+  const { t } = useTranslation();
+  return (
+    <DialogContent>
+      <Typography variant="h3" gutterBottom>
+        {t('common.type')}
+      </Typography>
+      <Typography paragraph>
+        {t(`registration.resource_type.artistic.output_type.${exhibitionMentionInPublication.type}`)}
+      </Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.journal_book_medium')}
+      </Typography>
+      <Typography paragraph>{exhibitionMentionInPublication.title || '-'}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.issue')}
+      </Typography>
+      <Typography paragraph>{exhibitionMentionInPublication.issue || '-'}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('common.date')}
+      </Typography>
+      <Typography paragraph>{new Date(exhibitionMentionInPublication.date.value).toLocaleDateString()}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.other_publisher_isbn_etc')}
+      </Typography>
+      <Typography paragraph>{exhibitionMentionInPublication.otherInformation || '-'}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicExhibitionOtherPresentationDialogContent = ({
+  exhibitionOtherPresentation,
+}: {
+  exhibitionOtherPresentation: ExhibitionOtherPresentation;
+}) => {
+  const { t } = useTranslation();
+  return (
+    <DialogContent>
+      <Typography variant="h3" gutterBottom>
+        {t('common.type')}
+      </Typography>
+      <Typography paragraph>
+        {t(`registration.resource_type.artistic.output_type.${exhibitionOtherPresentation.type}`)}
+      </Typography>
+
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.exhibition_production.presentation_type')}
+      </Typography>
+      <Typography paragraph>{exhibitionOtherPresentation.typeDescription || '-'}</Typography>
+
+      <Typography variant="h3" gutterBottom>
+        {t('common.place')}
+      </Typography>
+      <Typography paragraph>{exhibitionOtherPresentation.place.label || '-'}</Typography>
+
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.publisher_or_organizer')}
+      </Typography>
+      <Typography paragraph>{exhibitionOtherPresentation.publisher.name || '-'}</Typography>
+
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.exhibition_production.more_info_about_elementet')}
+      </Typography>
+      <Typography paragraph>{exhibitionOtherPresentation.description || '-'}</Typography>
+
+      <Typography variant="h3" gutterBottom>
+        {t('common.date')}
+      </Typography>
+      <Typography paragraph>{new Date(exhibitionOtherPresentation.date.value).toLocaleDateString()}</Typography>
+    </DialogContent>
   );
 };
 

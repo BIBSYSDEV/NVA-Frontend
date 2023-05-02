@@ -25,7 +25,6 @@ const validationSchema = Yup.object({
       })
     ),
   }),
-
   place: Yup.object().shape({
     label: Yup.string()
       .nullable()
