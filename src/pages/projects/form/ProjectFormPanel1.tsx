@@ -1,5 +1,4 @@
-import { TextField, Typography, Button } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, TextField, Typography, Button } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +14,7 @@ import { OrganizationSearchField } from '../../basic_data/app_admin/Organization
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
 import { ProjectFieldName } from './ProjectFormDialog';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { ProjectFundingsField } from './ProjectFunding';
 
 interface ProjectFormPanel1Props {
   currentProject?: CristinProject;
@@ -54,7 +54,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                 const selectedCoordinatingInstitution: ProjectOrganization = {
                   type: 'Organization',
                   id: selectedInstitution?.id ?? '',
-                  name: selectedInstitution?.name ?? {},
+                  labels: selectedInstitution?.labels ?? {},
                 };
                 setFieldValue(field.name, selectedCoordinatingInstitution);
               }}
@@ -94,6 +94,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                   <TextField
                     {...params}
                     data-testid={dataTestId.registrationWizard.description.projectForm.startDateField}
+                    onBlur={() => !touched && setFieldTouched(field.name)}
                     variant="filled"
                     required
                     error={touched && !!error}
@@ -124,6 +125,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                   <TextField
                     {...params}
                     data-testid={dataTestId.registrationWizard.description.projectForm.endDateField}
+                    onBlur={() => !touched && setFieldTouched(field.name)}
                     variant="filled"
                     required
                     error={touched && !!error}
@@ -172,12 +174,15 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               <Button
                 startIcon={<AddCircleIcon />}
                 onClick={() => push(emptyProjectContributor)}
-                sx={{ width: 'fit-content', alignSelf: 'center' }}>
+                sx={{ width: 'fit-content' }}
+                data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
                 {t('common.add')}
               </Button>
             </>
           )}
         </FieldArray>
+
+        <ProjectFundingsField currentFundings={values.funding} />
       </Box>
     </>
   );

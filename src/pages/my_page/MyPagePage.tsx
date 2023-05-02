@@ -7,6 +7,7 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import { Divider } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -17,6 +18,7 @@ import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
+import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import {
   LinkButton,
   LinkButtonRow,
@@ -32,8 +34,10 @@ import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
   const history = useHistory();
+  const user = useSelector((store: RootState) => store.user);
+  const queryClient = useQueryClient();
+
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);
 
@@ -77,6 +81,24 @@ const MyPagePage = () => {
                 title={t('registration.new_registration')}
               />
             </LinkButtonRow>,
+            <LinkButtonRow key={dataTestId.myPage.myProjectRegistrationsLink}>
+              <LinkButton
+                data-testid={dataTestId.myPage.myProjectRegistrationsLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageMyProjectRegistrations}
+                to={UrlPathTemplate.MyPageMyProjectRegistrations}>
+                {t('my_page.project_registrations')}
+              </LinkButton>
+
+              {user?.isCreator && (
+                <LinkIconButton
+                  data-testid={dataTestId.myPage.createProjectButton}
+                  icon={<PostAddIcon />}
+                  isSelected={showCreateProject}
+                  onClick={() => setShowCreateProject(true)}
+                  title={t('project.create_project')}
+                />
+              )}
+            </LinkButtonRow>,
             <Divider key="divider2" />,
           ]}
           <LinkButton
@@ -106,16 +128,6 @@ const MyPagePage = () => {
               to={UrlPathTemplate.MyPageMyProjects}>
               {t('my_page.my_profile.projects')}
             </LinkButton>
-
-            {user?.isCreator && (
-              <LinkIconButton
-                data-testid={dataTestId.myPage.createProjectButton}
-                icon={<PostAddIcon />}
-                isSelected={showCreateProject}
-                onClick={() => setShowCreateProject(true)}
-                title={t('project.create_project')}
-              />
-            )}
           </LinkButtonRow>
           <Divider key="divider4" />
         </NavigationList>
@@ -129,9 +141,21 @@ const MyPagePage = () => {
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResults} component={MyResults} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations} component={MyProjectRegistrations} />
         </ErrorBoundary>
       </Switch>
-      {user?.isCreator && <ProjectFormDialog open={showCreateProject} onClose={() => setShowCreateProject(false)} />}
+      {user?.isCreator && (
+        <ProjectFormDialog
+          open={showCreateProject}
+          onClose={() => setShowCreateProject(false)}
+          onCreateProject={async () => {
+            await new Promise((resolve) => setTimeout(resolve, 10_000));
+            // Wait 10sec before refetching projects, and hope that it is indexed by then
+            // TODO: consider placing the new project in the cache manually instead of a fixed waiting time
+            queryClient.invalidateQueries({ queryKey: ['projects'] });
+          }}
+        />
+      )}
     </StyledPageWithSideMenu>
   );
 };

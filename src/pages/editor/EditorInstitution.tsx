@@ -33,12 +33,12 @@ export const EditorInstitution = () => {
           <Typography variant="h3" component="h2">
             {t('editor.institution.institution_name_norwegian')}
           </Typography>
-          <Typography paragraph>{institution?.name.nb ?? '-'}</Typography>
+          <Typography paragraph>{institution?.labels.nb ?? '-'}</Typography>
 
           <Typography variant="h3" component="h2">
             {t('editor.institution.institution_name_english')}
           </Typography>
-          <Typography paragraph>{institution?.name.en ?? '-'}</Typography>
+          <Typography paragraph>{institution?.labels.en ?? '-'}</Typography>
 
           <Typography variant="h3" component="h2">
             {t('editor.institution.institution_short_name')}

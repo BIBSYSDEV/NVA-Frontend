@@ -68,7 +68,7 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
         ? value.map((v) => formatValue(v)).join(Operator.OR)
         : formatValue(value);
 
-      return `${prefix}(${fieldName}:${valueString})`;
+      return `${prefix}(${fieldName}=${valueString})`;
     })
     .join(Operator.AND);
 
@@ -91,7 +91,7 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
   }
   const searchTermIndex = filters?.findIndex(
     // Find filter that does not point to specific field
-    (filter) => filter && !registrationFilters.some((f) => filter.includes(`${f.field}:`))
+    (filter) => filter && !registrationFilters.some((f) => filter.includes(`${f.field}=`))
   );
   const rawSearchTerm = searchTermIndex >= 0 ? filters.splice(searchTermIndex, 1)[0] : '';
   const searchTerm = stripQuotationMarks(rawSearchTerm);
@@ -103,7 +103,10 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
     const filterWithoutOperator = isNegated ? filter.replace('NOT', '') : filter;
     // Remove parentheses
     const formattedFilter = filterWithoutOperator.substring(1, filterWithoutOperator.length - 1);
-    const [fieldName, value] = formattedFilter.split(':');
+
+    const splitFieldAndValueIndex = formattedFilter.indexOf('=');
+    const fieldName = formattedFilter.substring(0, splitFieldAndValueIndex);
+    const value = formattedFilter.substring(splitFieldAndValueIndex + 1);
 
     return {
       fieldName,

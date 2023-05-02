@@ -231,18 +231,26 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 
 interface PublicArtisticOutputProps {
   outputs: ArtisticOutputItem[];
-  heading: string;
   showType?: boolean;
 }
 
-export const PublicArtisticOutput = ({ outputs, heading, showType = false }: PublicArtisticOutputProps) => (
-  <>
-    <Typography variant="h3">{heading}</Typography>
-    {outputs.map((output, index) => (
-      <PublicOutputRow key={index} output={output} heading={heading} showType={showType} />
-    ))}
-  </>
-);
+export const PublicArtisticOutput = ({ outputs, showType = false }: PublicArtisticOutputProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Typography variant="h3">{t('registration.resource_type.artistic.announcements')}</Typography>
+      {outputs.map((output, index) => (
+        <PublicOutputRow
+          key={index}
+          output={output}
+          heading={t('registration.resource_type.artistic.announcements')}
+          showType={showType}
+        />
+      ))}
+    </>
+  );
+};
 
 interface PublicOutputRowProps {
   output: ArtisticOutputItem;
@@ -250,7 +258,7 @@ interface PublicOutputRowProps {
   showType: boolean;
 }
 
-const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) => {
+const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
@@ -270,7 +278,7 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
       </Tooltip>
 
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
-        <DialogTitle>{heading}</DialogTitle>
+        <DialogTitle>{t('registration.resource_type.artistic.announcement')}</DialogTitle>
         <ErrorBoundary>
           {output.type === 'Venue' || output.type === 'PerformingArtsVenue' ? (
             <PublicVenueDialogContent venue={output as Venue} />
@@ -445,7 +453,7 @@ const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: Other
 
 const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore }) => {
   const { t } = useTranslation();
-  const { type, ensemble, movements, extent, publisher, ismn, isrc } = musicScore;
+  const { type, ensemble, movements, extent, publisher, ismn } = musicScore;
 
   return (
     <DialogContent>
@@ -461,8 +469,6 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ismn')}</Typography>
       <Typography paragraph>{ismn.formatted ?? ismn.value}</Typography>
-      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
-      <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>
     </DialogContent>
   );
 };
@@ -473,7 +479,7 @@ const PublicAudioVisualPublicationDialogContent = ({
   audioVisualPublication: AudioVisualPublication;
 }) => {
   const { t } = useTranslation();
-  const { type, mediaType, publisher, catalogueNumber, trackList } = audioVisualPublication;
+  const { type, mediaType, publisher, catalogueNumber, isrc, trackList } = audioVisualPublication;
 
   return (
     <DialogContent>
@@ -481,12 +487,18 @@ const PublicAudioVisualPublicationDialogContent = ({
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.media_type')}</Typography>
       <Typography paragraph>
-        {mediaType ? t(`registration.resource_type.artistic.music_media_type.${mediaType}`) : ''}
+        {mediaType.type
+          ? mediaType.type !== 'MusicMediaOther'
+            ? t(`registration.resource_type.artistic.music_media_type.${mediaType.type}`)
+            : mediaType.description
+          : ''}
       </Typography>
       <Typography variant="h3">{t('common.publisher')}</Typography>
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
       <Typography paragraph>{catalogueNumber}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
+      {isrc.value && <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>}
       <Typography variant="h3" id="tracks-heading">
         {t('registration.resource_type.artistic.content_track')}
       </Typography>
@@ -520,7 +532,7 @@ const PublicAudioVisualPublicationDialogContent = ({
 
 const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
   const { t } = useTranslation();
-  const { type, place, time, extent, concertProgramme, partOfSeries } = concert;
+  const { type, place, time, extent, concertProgramme, concertSeries } = concert;
 
   return (
     <DialogContent>
@@ -531,7 +543,13 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       <Typography paragraph>{place.label}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
-      <Typography paragraph>{partOfSeries ? t('common.yes') : t('common.no')}</Typography>
+      <Typography paragraph>{concertSeries ? t('common.yes') : t('common.no')} </Typography>
+      {concertSeries && (
+        <>
+          <Typography variant="h3">{t('common.description')} </Typography>
+          <Typography paragraph>{concertSeries}</Typography>
+        </>
+      )}
 
       <Typography variant="h3">{t('common.date')}</Typography>
       {time.type === 'Instant' ? (
@@ -634,7 +652,12 @@ const PublicLiteraryArtsMonographDialogContent = ({
       <Typography variant="h3">{t('common.year')}</Typography>
       <Typography paragraph>{literaryArtsMonograph.publicationDate.year}</Typography>
       <Typography variant="h3">{t('registration.resource_type.isbn')}</Typography>
-      <Typography paragraph>{hyphenate(literaryArtsMonograph.isbn)}</Typography>
+      <Typography paragraph>
+        {literaryArtsMonograph.isbnList
+          .filter((isbn) => isbn)
+          .map((isbn) => hyphenate(isbn))
+          .join(', ')}
+      </Typography>
       <Typography variant="h3">{t('registration.resource_type.number_of_pages')}</Typography>
       <Typography>{literaryArtsMonograph.pages.pages ?? '-'}</Typography>
     </DialogContent>
@@ -704,7 +727,12 @@ const PublicLiteraryArtsAudioVisualDialogContent = ({ audioVisual }: { audioVisu
       <Typography variant="h3">{t('common.year')}</Typography>
       <Typography paragraph>{audioVisual.publicationDate.year ?? '-'}</Typography>
       <Typography variant="h3">{t('registration.resource_type.isbn')}</Typography>
-      <Typography paragraph>{hyphenate(audioVisual.isbn) ?? '-'}</Typography>
+      <Typography paragraph>
+        {audioVisual.isbnList
+          .filter((isbn) => isbn)
+          .map((isbn) => hyphenate(isbn))
+          .join(', ')}
+      </Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{audioVisual.extent ?? '-'}</Typography>
     </DialogContent>

@@ -13,7 +13,7 @@ export const mockProject: CristinProject = {
   created: {
     sourceShortName: 'NVA',
   },
-  newFunding: [],
+  funding: [],
   academicSummary: {},
   popularScientificSummary: {},
   status: 'ACTIVE',
@@ -29,7 +29,7 @@ export const mockProject: CristinProject = {
   coordinatingInstitution: {
     id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
     type: 'Organization',
-    name: {
+    labels: {
       nb: 'UiT Norges arktiske universitet',
     },
   },
@@ -45,7 +45,7 @@ export const mockProject: CristinProject = {
       affiliation: {
         id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
         type: 'Organization',
-        name: {
+        labels: {
           nb: 'UiT Norges arktiske universitet',
         },
       },
@@ -61,7 +61,7 @@ export const mockProject: CristinProject = {
       affiliation: {
         id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
         type: 'Organization',
-        name: {
+        labels: {
           nb: 'UiT Norges arktiske universitet',
         },
       },
@@ -77,7 +77,7 @@ export const mockProject: CristinProject = {
       affiliation: {
         id: 'https://api.dev.nva.aws.unit.no/cristin/organization/186.0.0.0',
         type: 'Organization',
-        name: {
+        labels: {
           nb: 'UiT Norges arktiske universitet',
         },
       },
@@ -102,7 +102,7 @@ const mockProjects: CristinProject[] = [
     created: {
       sourceShortName: 'NVA',
     },
-    newFunding: [],
+    funding: [],
     academicSummary: {},
     popularScientificSummary: {},
     status: 'ACTIVE',
@@ -118,7 +118,7 @@ const mockProjects: CristinProject[] = [
     coordinatingInstitution: {
       id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
       type: 'Organization',
-      name: {
+      labels: {
         nb: 'Universitetet i Sørøst-Norge',
       },
     },
@@ -134,7 +134,7 @@ const mockProjects: CristinProject[] = [
         affiliation: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
-          name: {
+          labels: {
             nb: 'Universitetet i Sørøst-Norge',
           },
         },
@@ -156,7 +156,7 @@ const mockProjects: CristinProject[] = [
     created: {
       sourceShortName: 'NVA',
     },
-    newFunding: [],
+    funding: [],
     academicSummary: {},
     popularScientificSummary: {},
     status: 'ACTIVE',
@@ -172,7 +172,7 @@ const mockProjects: CristinProject[] = [
     coordinatingInstitution: {
       id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
       type: 'Organization',
-      name: {
+      labels: {
         nb: 'Universitetet i Sørøst-Norge',
       },
     },
@@ -188,7 +188,7 @@ const mockProjects: CristinProject[] = [
         affiliation: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
-          name: {
+          labels: {
             nb: 'Universitetet i Sørøst-Norge',
           },
         },
@@ -210,7 +210,7 @@ const mockProjects: CristinProject[] = [
     created: {
       sourceShortName: 'NVA',
     },
-    newFunding: [],
+    funding: [],
     academicSummary: {},
     popularScientificSummary: {},
     status: 'CONCLUDED',
@@ -226,7 +226,7 @@ const mockProjects: CristinProject[] = [
     coordinatingInstitution: {
       id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
       type: 'Organization',
-      name: {
+      labels: {
         nb: 'Universitetet i Sørøst-Norge',
       },
     },
@@ -242,7 +242,7 @@ const mockProjects: CristinProject[] = [
         affiliation: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
-          name: {
+          labels: {
             nb: 'Universitetet i Sørøst-Norge',
           },
         },
@@ -258,7 +258,7 @@ const mockProjects: CristinProject[] = [
         affiliation: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
-          name: {
+          labels: {
             nb: 'Universitetet i Sørøst-Norge',
           },
         },
@@ -274,7 +274,7 @@ const mockProjects: CristinProject[] = [
         affiliation: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
-          name: {
+          labels: {
             nb: 'Universitetet i Sørøst-Norge',
           },
         },
@@ -296,7 +296,7 @@ const mockProjects: CristinProject[] = [
     created: {
       sourceShortName: 'NVA',
     },
-    newFunding: [],
+    funding: [],
     academicSummary: {},
     popularScientificSummary: {},
     status: 'NOTSTARTED',
@@ -312,7 +312,7 @@ const mockProjects: CristinProject[] = [
     coordinatingInstitution: {
       id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
       type: 'Organization',
-      name: {
+      labels: {
         nb: 'Universitetet i Sørøst-Norge',
       },
     },
@@ -328,7 +328,7 @@ const mockProjects: CristinProject[] = [
         affiliation: {
           id: 'https://api.dev.nva.aws.unit.no/cristin/organization/222.0.0.0',
           type: 'Organization',
-          name: {
+          labels: {
             nb: 'Universitetet i Sørøst-Norge',
           },
         },

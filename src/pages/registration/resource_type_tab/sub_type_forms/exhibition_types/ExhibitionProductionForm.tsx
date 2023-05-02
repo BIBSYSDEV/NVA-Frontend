@@ -132,7 +132,7 @@ export const ExhibitionProductionForm = () => {
                   onClick={() => setOpenModal('ExhibitionBasic')}
                   variant="outlined"
                   startIcon={<AddCircleOutlineIcon />}>
-                  {t('registration.resource_type.artistic.add_exhibition_place')}
+                  {t('registration.resource_type.exhibition_production.add_exhibition_basic')}
                 </Button>
                 <Button
                   data-testid={dataTestId.registrationWizard.resourceType.addPublicationMentionButton}

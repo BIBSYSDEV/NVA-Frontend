@@ -38,7 +38,7 @@ import { MusicScoreModal } from './music_performance/MusicScoreModal';
 import { AudioVisualPublicationModal } from './music_performance/AudioVisualPublicationModal';
 import { ConcertModal } from './music_performance/ConcertModal';
 import { OtherPerformanceModal } from './music_performance/OtherPerformanceModal';
-import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModalModal';
+import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModal';
 import { LiteraryArtsWebPublicationModal } from './literary_art/LiteraryArtsWebPublicationModal';
 import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerformanceModal';
 import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVisualModal';
@@ -88,20 +88,6 @@ export const OutputRow = ({
   });
 
   const title = shouldFetchItem ? fetchedExhibitionCatalog?.entityDescription.mainTitle : getArtisticOutputName(item);
-  let removeItemTitle = '';
-  let removeItemDescription = '';
-
-  switch (item.type) {
-    case 'Venue':
-    case 'PerformingArtsVenue':
-      removeItemTitle = t('registration.resource_type.artistic.remove_venue_title');
-      removeItemDescription = t('registration.resource_type.artistic.remove_venue_text', { name: title });
-      break;
-    default:
-      removeItemTitle = t('registration.resource_type.artistic.remove_announcement');
-      removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
-      break;
-  }
 
   return (
     <TableRow>
@@ -124,15 +110,19 @@ export const OutputRow = ({
       <TableCell>
         <Box sx={{ display: 'flex' }}>
           <Tooltip title={t('common.move_down')}>
-            <Button disabled={index === maxIndex} onClick={() => moveItem(index + 1)}>
-              <ArrowDownwardIcon />
-            </Button>
+            <span>
+              <Button disabled={index === maxIndex} onClick={() => moveItem(index + 1)}>
+                <ArrowDownwardIcon />
+              </Button>
+            </span>
           </Tooltip>
 
           <Tooltip title={t('common.move_up')}>
-            <Button disabled={index === 0} onClick={() => moveItem(index - 1)}>
-              <ArrowUpwardIcon />
-            </Button>
+            <span>
+              <Button disabled={index === 0} onClick={() => moveItem(index - 1)}>
+                <ArrowUpwardIcon />
+              </Button>
+            </span>
           </Tooltip>
         </Box>
       </TableCell>
@@ -294,13 +284,13 @@ export const OutputRow = ({
       ) : null}
       <ConfirmDialog
         open={openRemoveItem}
-        title={removeItemTitle}
+        title={t('registration.resource_type.artistic.remove_announcement')}
         onCancel={() => setOpenRemoveItem(false)}
         onAccept={() => {
           removeItem();
           setOpenRemoveItem(false);
         }}>
-        {removeItemDescription}
+        {t('registration.resource_type.artistic.remove_announcement_description', { name: title })}
       </ConfirmDialog>
     </TableRow>
   );

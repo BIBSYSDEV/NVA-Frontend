@@ -132,7 +132,7 @@ export interface BaseEntityDescription {
   alternativeAbstracts: LanguageString;
   alternativeTitles: LanguageString;
   contributors: Contributor[];
-  date?: RegistrationDate;
+  publicationDate?: RegistrationDate;
   description: string;
   language: string;
   mainTitle: string;

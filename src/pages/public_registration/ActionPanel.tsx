@@ -15,15 +15,22 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
   refetchRegistrationAndTickets: () => void;
+  isLoadingData: boolean;
 }
 
-export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTickets }: ActionPanelProps) => {
+export const ActionPanel = ({
+  registration,
+  tickets,
+  refetchRegistrationAndTickets,
+  isLoadingData,
+}: ActionPanelProps) => {
   const { t } = useTranslation();
   const { user, customer } = useSelector((store: RootState) => store);
   const userIsCurator = userIsCuratorForRegistration(user, registration);
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
-  const publishingRequestTicket = tickets.find((ticket) => ticket.type === 'PublishingRequest') ?? null;
+  const publishingRequestTickets = tickets.filter((ticket) => ticket.type === 'PublishingRequest');
+  const currentPublishingRequestTicket = publishingRequestTickets.pop() ?? null;
 
   return (
     <Paper elevation={0} data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
@@ -36,8 +43,9 @@ export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTicke
         <ErrorBoundary>
           <PublishingAccordion
             refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+            isLoadingData={isLoadingData}
             registration={registration}
-            publishingRequestTicket={publishingRequestTicket}
+            publishingRequestTicket={currentPublishingRequestTicket}
             userIsCurator={userIsCurator}
           />
         </ErrorBoundary>
@@ -47,6 +55,7 @@ export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTicke
             customer?.doiAgent.username && (
               <DoiRequestAccordion
                 refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+                isLoadingData={isLoadingData}
                 registration={registration}
                 doiRequestTicket={doiRequestTicket}
                 userIsCurator={userIsCurator}

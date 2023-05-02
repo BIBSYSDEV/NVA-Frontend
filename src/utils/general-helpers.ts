@@ -12,3 +12,5 @@ export const getPeriodString = (from: string | undefined, to: string | undefined
     return fromDate === toDate ? fromDate : `${fromDate ?? '?'} - ${toDate ?? '?'}`;
   }
 };
+
+export const getIdentifierFromId = (id: string) => id.split('/').pop() ?? '';

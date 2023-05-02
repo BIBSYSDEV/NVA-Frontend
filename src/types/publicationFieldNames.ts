@@ -120,7 +120,6 @@ export enum ResourceFieldNames {
   CorrigendumFor = 'entityDescription.reference.publicationInstance.corrigendumFor',
   Doi = 'entityDescription.reference.doi',
   IsbnList = 'entityDescription.reference.publicationContext.isbnList',
-  Isbn = 'entityDescription.reference.publicationContext.isbnList[0]',
   Issue = 'entityDescription.reference.publicationInstance.issue',
   NpiSubjectHeading = 'entityDescription.npiSubjectHeading',
   PagesFrom = 'entityDescription.reference.publicationInstance.pages.begin',
@@ -171,14 +170,14 @@ export enum DescriptionFieldNames {
   Abstract = 'entityDescription.abstract',
   AlternativeAbstracts = 'entityDescription.alternativeAbstracts.und',
   AlternativeTitles = 'entityDescription.alternativeTitles.und',
-  Date = 'entityDescription.date',
   Description = 'entityDescription.description',
   Fundings = 'fundings',
   Language = 'entityDescription.language',
   Projects = 'projects',
-  PublicationDay = 'entityDescription.date.day',
-  PublicationMonth = 'entityDescription.date.month',
-  PublicationYear = 'entityDescription.date.year',
+  PublicationDate = 'entityDescription.publicationDate',
+  PublicationDay = 'entityDescription.publicationDate.day',
+  PublicationMonth = 'entityDescription.publicationDate.month',
+  PublicationYear = 'entityDescription.publicationDate.year',
   Subjects = 'subjects',
   Tags = 'entityDescription.tags',
   Title = 'entityDescription.mainTitle',
@@ -212,7 +211,7 @@ export enum SpecificContributorFieldNames {
   Corresponding = 'correspondingAuthor',
   Id = 'identity.id',
   Name = 'identity.name',
-  Role = 'role',
+  RoleType = 'role.type',
   Sequence = 'sequence',
 }
 
@@ -224,4 +223,9 @@ export enum SpecificFundingFieldNames {
   Amount = 'fundingAmount.amount',
   Currency = 'fundingAmount.currency',
   NorwegianLabel = 'labels.nb',
+}
+
+export enum SearchFieldName {
+  TopLevelOrganizationId = 'topLevelOrganization.id',
+  TopLevelOrganization = 'topLevelOrganization',
 }

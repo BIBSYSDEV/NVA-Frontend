@@ -11,22 +11,24 @@ import {
   Typography,
 } from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import { PageHeader } from '../../components/PageHeader';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
-import { useFetch } from '../../utils/hooks/useFetch';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
-import { CristinPerson } from '../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RootState } from '../../redux/store';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { fetchPerson } from '../../api/cristinApi';
+import { setNotification } from '../../redux/notificationSlice';
+import NotFound from '../errorpages/NotFound';
 
 const textContainerSx: SxProps = {
   width: '100%',
@@ -39,6 +41,7 @@ const lineSx: SxProps = {
 };
 
 const ResearchProfile = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
   const [page, setPage] = useState(0);
@@ -50,10 +53,14 @@ const ResearchProfile = () => {
     ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
 
-  const [person, isLoadingPerson] = useFetch<CristinPerson>({
-    url: personId,
-    errorMessage: t('feedback.error.get_person'),
+  const personQuery = useQuery({
+    enabled: !!personId,
+    queryKey: [personId],
+    queryFn: () => fetchPerson(personId),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
   });
+
+  const person = personQuery.data;
 
   const [registrations, isLoadingRegistrations] = useSearchRegistrations(
     {
@@ -73,67 +80,70 @@ const ResearchProfile = () => {
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
-  return (
+  return personQuery.isLoading ? (
+    <PageSpinner aria-label={t('my_page.research_profile')} />
+  ) : !person ? (
+    <NotFound />
+  ) : (
     <BackgroundDiv>
-      <PageHeader>{fullName}</PageHeader>
-      {isLoadingPerson ? (
-        <PageSpinner aria-label={t('my_page.research_profile')} />
+      <Helmet>
+        <title>{fullName}</title>
+      </Helmet>
+      <Typography variant="h1" sx={{ mt: '1rem', mb: '2rem' }}>
+        {fullName}
+      </Typography>
+      <Typography variant="h2">{t('common.employments')}</Typography>
+      {activeAffiliations.length > 0 ? (
+        <Box sx={lineSx}>
+          <WorkIcon />
+          <Box sx={textContainerSx}>
+            {activeAffiliations.map(({ organization }) => (
+              <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
+            ))}
+          </Box>
+        </Box>
       ) : (
-        person && (
-          <>
-            <Typography variant="h2">{t('common.employments')}</Typography>
-            {activeAffiliations.length > 0 && (
-              <Box sx={lineSx}>
-                <WorkIcon />
-                <Box sx={textContainerSx}>
-                  {activeAffiliations.map(({ organization }) => (
-                    <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
-                  ))}
-                </Box>
-              </Box>
-            )}
-            {orcidUri && (
-              <Box sx={lineSx}>
-                <IconButton size="small" href={orcidUri} target="_blank">
-                  <img src={orcidIcon} height="20" alt="orcid" />
-                </IconButton>
-                <Box sx={textContainerSx}>
-                  <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
-                    {orcidUri}
-                  </Typography>
-                </Box>
-              </Box>
-            )}
-            {registrations && (
-              <Box sx={{ mt: '2rem' }}>
-                <Typography id="registration-label" variant="h2" gutterBottom>
-                  {t('common.registrations')}
-                </Typography>
-                {isLoadingRegistrations && !registrations ? (
-                  <CircularProgress aria-labelledby="registration-label" />
-                ) : registrations.size > 0 ? (
-                  <>
-                    <RegistrationSearchResults searchResult={registrations} />
-                    <TablePagination
-                      rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                      component="div"
-                      count={registrations.size}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      onPageChange={(_, newPage) => setPage(newPage)}
-                      onRowsPerPageChange={(event) => {
-                        setRowsPerPage(+event.target.value);
-                        setPage(0);
-                      }}
-                    />
-                  </>
-                ) : (
-                  <Typography>{t('common.no_hits')}</Typography>
-                )}
-              </Box>
-            )}
-          </>
-        )
+        <Typography>{t('my_page.no_employments')}</Typography>
+      )}
+      {orcidUri && (
+        <Box sx={lineSx}>
+          <IconButton size="small" href={orcidUri} target="_blank">
+            <img src={orcidIcon} height="20" alt="orcid" />
+          </IconButton>
+          <Box sx={textContainerSx}>
+            <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
+              {orcidUri}
+            </Typography>
+          </Box>
+        </Box>
+      )}
+      {registrations && (
+        <>
+          <Typography id="registration-label" variant="h2" sx={{ mt: '2rem' }}>
+            {t('common.registrations')}
+          </Typography>
+          {isLoadingRegistrations && !registrations ? (
+            <CircularProgress aria-labelledby="registration-label" />
+          ) : registrations.size > 0 ? (
+            <>
+              <RegistrationSearchResults searchResult={registrations} />
+              <TablePagination
+                rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+                component="div"
+                count={registrations.size}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={(_, newPage) => setPage(newPage)}
+                onRowsPerPageChange={(event) => {
+                  setRowsPerPage(+event.target.value);
+                  setPage(0);
+                }}
+              />
+            </>
+          ) : (
+            <Typography>{t('common.no_hits')}</Typography>
+          )}
+        </>
       )}
     </BackgroundDiv>
   );

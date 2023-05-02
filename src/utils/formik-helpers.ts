@@ -141,7 +141,7 @@ const getAllContributorFields = (contributors: Contributor[]): string[] => {
 const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown> => ({
   entityDescription: {
     abstract: true,
-    date: {
+    publicationDate: {
       day: true,
       month: true,
       year: true,
