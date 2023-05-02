@@ -23,6 +23,7 @@ import { useState } from 'react';
 import { visuallyHidden } from '@mui/utils';
 import { hyphenate } from 'isbn-utils';
 import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
@@ -32,14 +33,13 @@ import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import { getArtisticOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
+import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
 import {
   Award,
   Broadcast,
   Competition,
   Exhibition,
   MentionInPublication,
-  ArtisticOutputItem,
   Venue,
   CinematicRelease,
   OtherRelease,
@@ -61,12 +61,13 @@ import { NpiLevelTypography } from '../../components/NpiLevelTypography';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import {
   ExhibitionBasic,
-  ExhibitionManifestation,
   ExhibitionMentionInPublication,
   ExhibitionOtherPresentation,
 } from '../../types/publication_types/exhibitionContent.types';
 import { fetchRegistration } from '../../api/registrationApi';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import { setNotification } from '../../redux/notificationSlice';
+import { OutputItem } from '../registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
@@ -239,7 +240,7 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
 };
 
 interface PublicOutputsProps {
-  outputs: (ArtisticOutputItem | ExhibitionManifestation)[];
+  outputs: OutputItem[];
   showType?: boolean;
 }
 
@@ -259,11 +260,12 @@ export const PublicOutputs = ({ outputs, showType = false }: PublicOutputsProps)
 };
 
 interface PublicOutputRowProps {
-  output: ArtisticOutputItem | ExhibitionManifestation;
+  output: OutputItem;
   showType: boolean;
 }
 
 const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
@@ -275,11 +277,12 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
     enabled: !!exhibitionCatalogIdentifier,
     queryKey: ['registration', exhibitionCatalogIdentifier],
     queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
   });
 
   const nameString = exhibitionCatalogIdentifier
     ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle
-    : getArtisticOutputName(output);
+    : getOutputName(output);
 
   const rowString = showType
     ? `${nameString} (${t(`registration.resource_type.artistic.output_type.${output.type}` as any)})`

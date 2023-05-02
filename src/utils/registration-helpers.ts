@@ -63,7 +63,7 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.MediaContribution
     : isResearchData(instanceType)
     ? PublicationType.ResearchData
-    : isExhibitionType(instanceType)
+    : isExhibitionContent(instanceType)
     ? PublicationType.ExhibitionContent
     : isOtherRegistration(instanceType)
     ? PublicationType.GeographicalContent
@@ -86,8 +86,6 @@ export const isArtistic = (instanceType: any) => Object.values(ArtisticType).inc
 export const isMediaContribution = (instanceType: any) => Object.values(MediaType).includes(instanceType);
 
 export const isResearchData = (instanceType: any) => Object.values(ResearchDataType).includes(instanceType);
-
-export const isExhibitionType = (instanceType: any) => Object.values(ExhibitionContentType).includes(instanceType);
 
 export const isPeriodicalMediaContribution = (instanceType: string) =>
   instanceType === MediaType.MediaFeatureArticle || instanceType === MediaType.MediaReaderOpinion;
@@ -534,7 +532,7 @@ export const groupContributors = (contributors: Contributor[], registrationType:
   return { primaryContributors, secondaryContributors };
 };
 
-export const getArtisticOutputName = (item: OutputItem): string => {
+export const getOutputName = (item: OutputItem): string => {
   switch (item.type) {
     case 'Venue':
     case 'PerformingArtsVenue':

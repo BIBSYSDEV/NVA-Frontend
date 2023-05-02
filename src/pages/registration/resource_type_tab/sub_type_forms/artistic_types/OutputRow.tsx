@@ -6,6 +6,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 import {
   Award,
   Broadcast,
@@ -31,7 +32,7 @@ import { VenueModal } from './design/VenueModal';
 import { PublicationMentionModal } from './architecture/PublicationMentionModal';
 import { AwardModal } from './architecture/AwardModal';
 import { ExhibitionModal } from './architecture/ExhibitionModal';
-import { getArtisticOutputName } from '../../../../../utils/registration-helpers';
+import { getOutputName } from '../../../../../utils/registration-helpers';
 import { BroadcastModal } from './moving_picture/BroadcastModal';
 import { CinematicReleaseModal } from './moving_picture/CinematicReleaseModal';
 import { OtherReleaseModal } from './moving_picture/OtherReleaseModal';
@@ -56,6 +57,7 @@ import { ExhibitionMentionInPublicationModal } from '../exhibition_types/Exhibit
 import { ExhibitionCatalogModal } from '../exhibition_types/ExhibitionCatalogModal';
 import { fetchRegistration } from '../../../../../api/registrationApi';
 import { getIdentifierFromId } from '../../../../../utils/general-helpers';
+import { setNotification } from '../../../../../redux/notificationSlice';
 
 export type OutputItem = ArtisticOutputItem | ExhibitionManifestation;
 
@@ -78,6 +80,7 @@ export const OutputRow = ({
   maxIndex,
   showTypeColumn = false,
 }: OutputRowProps) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [openEditItem, setOpenEditItem] = useState(false);
   const [openRemoveItem, setOpenRemoveItem] = useState(false);
@@ -89,11 +92,10 @@ export const OutputRow = ({
     enabled: !!exhibitionCatalogIdentifier,
     queryKey: ['registration', exhibitionCatalogIdentifier],
     queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
   });
 
-  const title = shouldFetchItem
-    ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle
-    : getArtisticOutputName(item);
+  const title = shouldFetchItem ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle : getOutputName(item);
 
   return (
     <TableRow>
