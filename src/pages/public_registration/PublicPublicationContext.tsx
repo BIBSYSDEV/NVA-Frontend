@@ -238,12 +238,12 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
   );
 };
 
-interface PublicArtisticOutputProps {
+interface PublicOutputsProps {
   outputs: (ArtisticOutputItem | ExhibitionManifestation)[];
   showType?: boolean;
 }
 
-export const PublicArtisticOutput = ({ outputs, showType = false }: PublicArtisticOutputProps) => {
+export const PublicOutputs = ({ outputs, showType = false }: PublicOutputsProps) => {
   const { t } = useTranslation();
 
   return (
