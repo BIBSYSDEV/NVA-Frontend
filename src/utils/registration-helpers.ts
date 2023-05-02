@@ -505,7 +505,18 @@ export const contributorConfig: ContributorConfig = {
   },
   // Exhibition
   [ExhibitionContentType.ExhibitionProduction]: {
-    primaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [
+      ContributorRole.ProjectLeader,
+      ContributorRole.Curator,
+      ContributorRole.LightDesigner,
+      ContributorRole.SoundDesigner,
+      ContributorRole.Designer,
+      ContributorRole.Architect,
+      ContributorRole.InteriorArchitect,
+      ContributorRole.Photographer,
+      ContributorRole.Sponsor,
+      ContributorRole.Other,
+    ],
     secondaryRoles: [],
   },
   // Other
