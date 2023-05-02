@@ -26,14 +26,14 @@ export interface ExhibitionOtherPresentation {
   description: string;
   place: Place;
   publisher: UnconfirmedPublisher;
-  date: Instant;
+  date?: Instant;
 }
 
 export interface ExhibitionMentionInPublication {
   type: 'ExhibitionMentionInPublication';
   title: string;
   issue: string;
-  date: Instant;
+  date?: Instant;
   otherInformation: string;
 }
 

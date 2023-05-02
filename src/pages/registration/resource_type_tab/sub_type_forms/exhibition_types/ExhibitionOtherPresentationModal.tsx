@@ -62,7 +62,11 @@ export const ExhibitionOtherPresentationModal = ({
         initialValues={exhibitionOtherPresentation ?? emptyExhibitionOtherPresentation}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          onSubmit(values);
+          const formattedValues: ExhibitionOtherPresentation = {
+            ...values,
+            date: values.date?.value ? values.date : undefined,
+          };
+          onSubmit(formattedValues);
           closeModal();
         }}>
         {({ isSubmitting }: FormikProps<ExhibitionOtherPresentation>) => (

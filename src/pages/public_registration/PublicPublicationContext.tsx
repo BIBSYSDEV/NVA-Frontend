@@ -406,7 +406,11 @@ const PublicExhibitionMentionInPublicationDialogContent = ({
       <Typography variant="h3" gutterBottom>
         {t('common.date')}
       </Typography>
-      <Typography paragraph>{new Date(exhibitionMentionInPublication.date.value).toLocaleDateString()}</Typography>
+      <Typography paragraph>
+        {exhibitionMentionInPublication.date?.value
+          ? new Date(exhibitionMentionInPublication.date.value).toLocaleDateString()
+          : '-'}
+      </Typography>
       <Typography variant="h3" gutterBottom>
         {t('registration.resource_type.other_publisher_isbn_etc')}
       </Typography>
@@ -453,7 +457,11 @@ const PublicExhibitionOtherPresentationDialogContent = ({
       <Typography variant="h3" gutterBottom>
         {t('common.date')}
       </Typography>
-      <Typography paragraph>{new Date(exhibitionOtherPresentation.date.value).toLocaleDateString()}</Typography>
+      <Typography paragraph>
+        {exhibitionOtherPresentation.date?.value
+          ? new Date(exhibitionOtherPresentation.date.value).toLocaleDateString()
+          : '-'}
+      </Typography>
     </DialogContent>
   );
 };

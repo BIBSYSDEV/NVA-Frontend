@@ -51,7 +51,11 @@ export const ExhibitionMentionInPublicationModal = ({
         initialValues={exhibitionMentionInPublication ?? emptyExhibitionMentionInPublication}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          onSubmit(values);
+          const formattedValues: ExhibitionMentionInPublication = {
+            ...values,
+            date: values.date?.value ? values.date : undefined,
+          };
+          onSubmit(formattedValues);
           closeModal();
         }}>
         {({ isSubmitting }: FormikProps<ExhibitionMentionInPublication>) => (
