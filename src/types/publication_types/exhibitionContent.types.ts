@@ -84,5 +84,5 @@ export enum ExhibitionProductionSubtype {
   AmbulatingExhibition = 'AmbulatingExhibition',
   DigitalExhibition = 'DigitalExhibition',
   HistoricalInterior = 'HistoricalInterior',
-  Other = 'Other',
+  Other = 'ExhibitionProductionOther',
 }

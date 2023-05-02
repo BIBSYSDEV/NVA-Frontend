@@ -54,6 +54,7 @@ import {
   PublicPublicationInstanceBook,
   PublicPublicationInstanceChapter,
   PublicPublicationInstanceDegree,
+  PublicPublicationInstanceExhibition,
   PublicPublicationInstanceJournal,
   PublicPublicationInstanceReport,
 } from './PublicPublicationInstance';
@@ -86,7 +87,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   return (
     <StyledGeneralInfo>
       <div data-testid={dataTestId.registrationLandingPage.generalInfo}>
-        <Typography variant="h3" component="h2">
+        <Typography variant="h3" component="h2" gutterBottom>
           {t('registration.public_page.about_registration')}
         </Typography>
 
@@ -139,6 +140,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           ) : isArtistic(publicationInstance.type) ? (
             <PublicPublicationInstanceArtistic
               publicationInstance={publicationInstance as ArtisticPublicationInstance}
+            />
+          ) : isExhibitionContent(publicationInstance.type) ? (
+            <PublicPublicationInstanceExhibition
+              publicationInstance={publicationInstance as ExhibitionPublicationInstance}
             />
           ) : null)}
 

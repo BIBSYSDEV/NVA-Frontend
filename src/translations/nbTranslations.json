@@ -1368,8 +1368,8 @@
           "AmbulatingExhibition": "Vandreutstilling",
           "BasicExhibition": "Basisutstilling",
           "DigitalExhibition": "Digital utstilling",
+          "ExhibitionProductionOther": "Annet",
           "HistoricalInterior": "Historisk interiør",
-          "Other": "Annet",
           "PopupExhibition": "Popup-utstilling",
           "TemporaryExhibition": "Temporær utstilling"
         }
