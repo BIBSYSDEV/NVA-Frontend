@@ -64,7 +64,12 @@ export const ExhibitionOtherPresentationModal = ({
         onSubmit={(values) => {
           const formattedValues: ExhibitionOtherPresentation = {
             ...values,
-            date: values.date?.value ? values.date : undefined,
+            date: values.date?.value
+              ? {
+                  type: 'Instant',
+                  value: values.date.value,
+                }
+              : undefined,
           };
           onSubmit(formattedValues);
           closeModal();
