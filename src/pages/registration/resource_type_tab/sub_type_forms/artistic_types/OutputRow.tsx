@@ -1,10 +1,12 @@
-import { TableRow, TableCell, Typography, Button, Tooltip, Box } from '@mui/material';
+import { TableRow, TableCell, Typography, Button, Tooltip, Box, Skeleton } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 import {
   Award,
   Broadcast,
@@ -30,7 +32,7 @@ import { VenueModal } from './design/VenueModal';
 import { PublicationMentionModal } from './architecture/PublicationMentionModal';
 import { AwardModal } from './architecture/AwardModal';
 import { ExhibitionModal } from './architecture/ExhibitionModal';
-import { getArtisticOutputName } from '../../../../../utils/registration-helpers';
+import { getOutputName } from '../../../../../utils/registration-helpers';
 import { BroadcastModal } from './moving_picture/BroadcastModal';
 import { CinematicReleaseModal } from './moving_picture/CinematicReleaseModal';
 import { OtherReleaseModal } from './moving_picture/OtherReleaseModal';
@@ -42,10 +44,26 @@ import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonograph
 import { LiteraryArtsWebPublicationModal } from './literary_art/LiteraryArtsWebPublicationModal';
 import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerformanceModal';
 import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVisualModal';
+import {
+  ExhibitionBasic,
+  ExhibitionCatalog,
+  ExhibitionManifestation,
+  ExhibitionMentionInPublication,
+  ExhibitionOtherPresentation,
+} from '../../../../../types/publication_types/exhibitionContent.types';
+import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
+import { ExhibitionOtherPresentationModal } from '../exhibition_types/ExhibitionOtherPresentationModal';
+import { ExhibitionMentionInPublicationModal } from '../exhibition_types/ExhibitionMentionInPublication';
+import { ExhibitionCatalogModal } from '../exhibition_types/ExhibitionCatalogModal';
+import { fetchRegistration } from '../../../../../api/registrationApi';
+import { getIdentifierFromId } from '../../../../../utils/general-helpers';
+import { setNotification } from '../../../../../redux/notificationSlice';
+
+export type OutputItem = ArtisticOutputItem | ExhibitionManifestation;
 
 interface OutputRowProps {
-  item: ArtisticOutputItem;
-  updateItem: (item: ArtisticOutputItem) => void;
+  item: OutputItem;
+  updateItem: (item: OutputItem) => void;
   removeItem: () => void;
   moveItem: (to: number) => void;
   index: number;
@@ -62,11 +80,22 @@ export const OutputRow = ({
   maxIndex,
   showTypeColumn = false,
 }: OutputRowProps) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [openEditItem, setOpenEditItem] = useState(false);
   const [openRemoveItem, setOpenRemoveItem] = useState(false);
 
-  const title = getArtisticOutputName(item);
+  const shouldFetchItem = item.type === 'ExhibitionCatalog';
+  const exhibitionCatalogIdentifier = shouldFetchItem && item.id ? getIdentifierFromId(item.id) : '';
+
+  const exhibitionCatalogQuery = useQuery({
+    enabled: !!exhibitionCatalogIdentifier,
+    queryKey: ['registration', exhibitionCatalogIdentifier],
+    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
+  });
+
+  const title = shouldFetchItem ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle : getOutputName(item);
 
   return (
     <TableRow>
@@ -76,11 +105,19 @@ export const OutputRow = ({
         </TableCell>
       )}
       <TableCell>
-        <Typography>{title}</Typography>
+        {shouldFetchItem ? (
+          exhibitionCatalogQuery.isLoading ? (
+            <Skeleton />
+          ) : (
+            <Typography>{exhibitionCatalogQuery.data?.entityDescription?.mainTitle}</Typography>
+          )
+        ) : (
+          <Typography>{title}</Typography>
+        )}
       </TableCell>
       <TableCell>
-        <Box sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
-          <Tooltip title={t('common.move_down')} sx={{ gridArea: 'down' }}>
+        <Box sx={{ display: 'flex' }}>
+          <Tooltip title={t('common.move_down')}>
             <span>
               <Button disabled={index === maxIndex} onClick={() => moveItem(index + 1)}>
                 <ArrowDownwardIcon />
@@ -88,7 +125,7 @@ export const OutputRow = ({
             </span>
           </Tooltip>
 
-          <Tooltip title={t('common.move_up')} sx={{ gridArea: 'up' }}>
+          <Tooltip title={t('common.move_up')}>
             <span>
               <Button disabled={index === 0} onClick={() => moveItem(index - 1)}>
                 <ArrowUpwardIcon />
@@ -98,22 +135,19 @@ export const OutputRow = ({
         </Box>
       </TableCell>
       <TableCell>
-        <Button
-          onClick={() => setOpenEditItem(true)}
-          variant="outlined"
-          sx={{ mr: '1rem' }}
-          size="small"
-          startIcon={<EditIcon />}>
-          {t('common.show')}/{t('common.edit')}
-        </Button>
-        <Button
-          onClick={() => setOpenRemoveItem(true)}
-          variant="outlined"
-          color="error"
-          size="small"
-          startIcon={<CancelIcon />}>
-          {t('common.remove')}
-        </Button>
+        <Box sx={{ display: 'flex', gap: '0.5rem 1rem' }}>
+          <Button onClick={() => setOpenEditItem(true)} variant="outlined" size="small" startIcon={<EditIcon />}>
+            {t('common.show')}/{t('common.edit')}
+          </Button>
+          <Button
+            onClick={() => setOpenRemoveItem(true)}
+            variant="outlined"
+            color="error"
+            size="small"
+            startIcon={<CancelIcon />}>
+            {t('common.remove')}
+          </Button>
+        </Box>
       </TableCell>
       {item.type === 'Broadcast' ? (
         <BroadcastModal
@@ -223,6 +257,34 @@ export const OutputRow = ({
       ) : item.type === 'LiteraryArtsAudioVisual' ? (
         <LiteraryArtsAudioVisualModal
           audioVisual={item as LiteraryArtsAudioVisual}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'ExhibitionBasic' ? (
+        <ExhibitionBasicModal
+          exhibitionBasic={item as ExhibitionBasic}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'ExhibitionOtherPresentation' ? (
+        <ExhibitionOtherPresentationModal
+          exhibitionOtherPresentation={item as ExhibitionOtherPresentation}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'ExhibitionMentionInPublication' ? (
+        <ExhibitionMentionInPublicationModal
+          exhibitionMentionInPublication={item as ExhibitionMentionInPublication}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'ExhibitionCatalog' ? (
+        <ExhibitionCatalogModal
+          exhibitionCatalog={item as ExhibitionCatalog}
           onSubmit={updateItem}
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
