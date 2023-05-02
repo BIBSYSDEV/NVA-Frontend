@@ -229,6 +229,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           ) : isExhibitionContent(publicationInstance.type) ? (
             <PublicArtisticOutput
               outputs={(publicationInstance as ExhibitionPublicationInstance).manifestations ?? []}
+              showType
             />
           ) : isOtherRegistration(publicationInstance.type) ? (
             <PublicPublisher publisher={(publicationContext as MapPublicationContext).publisher} />

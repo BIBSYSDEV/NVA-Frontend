@@ -57,13 +57,16 @@ import {
   MediaContributionPublicationContext,
 } from '../../types/publication_types/mediaContributionRegistration.types';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
-import { getPeriodString } from '../../utils/general-helpers';
+import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import {
   ExhibitionBasic,
   ExhibitionManifestation,
   ExhibitionMentionInPublication,
   ExhibitionOtherPresentation,
 } from '../../types/publication_types/exhibitionContent.types';
+import { useQuery } from '@tanstack/react-query';
+import { fetchRegistration } from '../../api/registrationApi';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
@@ -265,16 +268,33 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
 
-  const nameString = getArtisticOutputName(output);
+  const exhibitionCatalogIdentifier =
+    output.type === 'ExhibitionCatalog' && output.id ? getIdentifierFromId(output.id) : '';
+
+  const exhibitionCatalogQuery = useQuery({
+    enabled: !!exhibitionCatalogIdentifier,
+    queryKey: ['registration', exhibitionCatalogIdentifier],
+    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
+  });
+
+  const nameString = exhibitionCatalogIdentifier
+    ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle
+    : getArtisticOutputName(output);
+
   const rowString = showType
     ? `${nameString} (${t(`registration.resource_type.artistic.output_type.${output.type}` as any)})`
     : nameString;
 
   return (
-    <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
       <Typography>{rowString}</Typography>
       <Tooltip title={t('common.show_details')}>
-        <IconButton size="small" color="primary" onClick={toggleModal}>
+        <IconButton
+          size="small"
+          color="primary"
+          onClick={exhibitionCatalogIdentifier ? undefined : toggleModal}
+          href={exhibitionCatalogIdentifier ? getRegistrationLandingPagePath(exhibitionCatalogIdentifier) : ''}
+          target="_blank">
           <OpenInNewIcon fontSize="small" />
         </IconButton>
       </Tooltip>
