@@ -22,6 +22,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useState } from 'react';
 import { visuallyHidden } from '@mui/utils';
 import { hyphenate } from 'isbn-utils';
+import { useQuery } from '@tanstack/react-query';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
@@ -64,7 +65,6 @@ import {
   ExhibitionMentionInPublication,
   ExhibitionOtherPresentation,
 } from '../../types/publication_types/exhibitionContent.types';
-import { useQuery } from '@tanstack/react-query';
 import { fetchRegistration } from '../../api/registrationApi';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 

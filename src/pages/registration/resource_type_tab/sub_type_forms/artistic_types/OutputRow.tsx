@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import { useQuery } from '@tanstack/react-query';
 import {
   Award,
   Broadcast,
@@ -52,9 +53,9 @@ import {
 import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
 import { ExhibitionOtherPresentationModal } from '../exhibition_types/ExhibitionOtherPresentationModal';
 import { ExhibitionMentionInPublicationModal } from '../exhibition_types/ExhibitionMentionInPublication';
-import { useFetch } from '../../../../../utils/hooks/useFetch';
-import { BookRegistration } from '../../../../../types/publication_types/bookRegistration.types';
 import { ExhibitionCatalogModal } from '../exhibition_types/ExhibitionCatalogModal';
+import { fetchRegistration } from '../../../../../api/registrationApi';
+import { getIdentifierFromId } from '../../../../../utils/general-helpers';
 
 export type OutputItem = ArtisticOutputItem | ExhibitionManifestation;
 
@@ -82,12 +83,17 @@ export const OutputRow = ({
   const [openRemoveItem, setOpenRemoveItem] = useState(false);
 
   const shouldFetchItem = item.type === 'ExhibitionCatalog';
+  const exhibitionCatalogIdentifier = shouldFetchItem && item.id ? getIdentifierFromId(item.id) : '';
 
-  const [fetchedExhibitionCatalog, isLoadingExhibitionCatalog] = useFetch<BookRegistration>({
-    url: shouldFetchItem ? item.id : '',
+  const exhibitionCatalogQuery = useQuery({
+    enabled: !!exhibitionCatalogIdentifier,
+    queryKey: ['registration', exhibitionCatalogIdentifier],
+    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
   });
 
-  const title = shouldFetchItem ? fetchedExhibitionCatalog?.entityDescription.mainTitle : getArtisticOutputName(item);
+  const title = shouldFetchItem
+    ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle
+    : getArtisticOutputName(item);
 
   return (
     <TableRow>
@@ -98,10 +104,10 @@ export const OutputRow = ({
       )}
       <TableCell>
         {shouldFetchItem ? (
-          isLoadingExhibitionCatalog ? (
+          exhibitionCatalogQuery.isLoading ? (
             <Skeleton />
           ) : (
-            <Typography>{fetchedExhibitionCatalog?.entityDescription.mainTitle}</Typography>
+            <Typography>{exhibitionCatalogQuery.data?.entityDescription?.mainTitle}</Typography>
           )
         ) : (
           <Typography>{title}</Typography>
