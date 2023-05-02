@@ -18,11 +18,14 @@ interface ExhibitionBasicModalProps {
 }
 
 const validationSchema = Yup.object({
-  title: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.exhibition_production.institution_name'),
-    })
-  ),
+  organization: Yup.object({
+    name: Yup.string().required(
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.exhibition_production.institution_name'),
+      })
+    ),
+  }),
+
   place: Yup.object().shape({
     label: Yup.string()
       .nullable()
@@ -37,7 +40,6 @@ const validationSchema = Yup.object({
 
 const emptyExhibitionBasic: ExhibitionBasic = {
   type: 'ExhibitionBasic',
-  title: '',
   organization: {
     type: 'UnconfirmedOrganization',
     name: '',
@@ -66,7 +68,7 @@ export const ExhibitionBasicModal = ({ exhibitionBasic, onSubmit, open, closeMod
         {({ isSubmitting }: FormikProps<ExhibitionBasic>) => (
           <Form noValidate>
             <DialogContent>
-              <Field name="title">
+              <Field name="organization.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}

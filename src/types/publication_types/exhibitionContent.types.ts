@@ -15,7 +15,6 @@ export type ExhibitionManifestation =
 
 export interface ExhibitionBasic {
   type: 'ExhibitionBasic';
-  title: string;
   organization: UnconfirmedOrganization;
   place: Place;
   date: Period;

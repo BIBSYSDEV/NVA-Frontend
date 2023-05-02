@@ -559,7 +559,7 @@ export const getArtisticOutputName = (item: OutputItem): string => {
     case 'LiteraryArtsWeb':
       return (item as LiteraryArtsWeb).publisher.name;
     case 'ExhibitionBasic':
-      return (item as ExhibitionBasic).title;
+      return (item as ExhibitionBasic).organization.name;
     case 'ExhibitionOtherPresentation':
       return (item as ExhibitionOtherPresentation).typeDescription;
     case 'ExhibitionMentionInPublication':
