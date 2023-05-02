@@ -19,16 +19,16 @@ interface ExhibitionOtherPresentationModalProps {
 
 const validationSchema = Yup.object({
   typeDescription: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.exhibition_production.presentation_type'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.exhibition_production.presentation_type'),
     })
   ),
   place: Yup.object().shape({
     label: Yup.string()
       .nullable()
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.place'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.place'),
         })
       ),
   }),

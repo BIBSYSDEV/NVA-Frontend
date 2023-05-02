@@ -18,8 +18,8 @@ interface ExhibitionMentionInPublicationModalProps {
 
 const validationSchema = Yup.object({
   title: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.journal_book_medium'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.journal_book_medium'),
     })
   ),
 });

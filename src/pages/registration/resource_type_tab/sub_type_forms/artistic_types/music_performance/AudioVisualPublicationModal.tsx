@@ -85,8 +85,8 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       ),
   }),
   catalogueNumber: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.catalogue_number'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.catalogue_number'),
     })
   ),
   isrc: Yup.object().shape({
