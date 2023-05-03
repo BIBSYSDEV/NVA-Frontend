@@ -21,11 +21,12 @@ export const CreateProjectStartPage = ({ onClose, setInitialValues }: CreateProj
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
+  const topOrgCristinId = user?.topOrgCristinId ?? '';
 
   const currentInstitutionQuery = useQuery({
-    enabled: !!user?.topOrgCristinId,
-    queryKey: [user?.topOrgCristinId],
-    queryFn: () => (user?.topOrgCristinId ? fetchOrganization(user.topOrgCristinId) : undefined),
+    enabled: !!topOrgCristinId,
+    queryKey: [topOrgCristinId],
+    queryFn: () => fetchOrganization(topOrgCristinId),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_institution'), variant: 'error' })),
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes

@@ -1,5 +1,5 @@
 module.exports = {
-  plugins: ['@typescript-eslint', 'prettier', 'jsx-a11y'],
+  plugins: ['@typescript-eslint', 'prettier', 'jsx-a11y', '@tanstack/query'],
   extends: [
     'react-app', // Create React App base settings
     'eslint:recommended', // recommended ESLint rules
@@ -7,6 +7,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended', // recommended rules from @typescript-eslint/eslint-plugin
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display Prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
     'plugin:jsx-a11y/recommended',
+    'plugin:@tanstack/eslint-plugin-query/recommended',
   ],
   rules: {
     'no-console': 1,

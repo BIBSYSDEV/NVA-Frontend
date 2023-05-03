@@ -85,8 +85,8 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
       ),
   }),
   catalogueNumber: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.catalogue_number'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.catalogue_number'),
     })
   ),
   isrc: Yup.object().shape({
@@ -182,7 +182,7 @@ export const AudioVisualPublicationModal = ({
                     }}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    data-testid={dataTestId.registrationWizard.resourceType.subtypeField}>
                     {Object.values(MusicMediaType).map((mediaType) => (
                       <MenuItem key={mediaType} value={mediaType}>
                         {t(`registration.resource_type.artistic.music_media_type.${mediaType}`)}
