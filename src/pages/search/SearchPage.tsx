@@ -108,6 +108,7 @@ const SearchPage = () => {
                   gap: '0.5rem',
                   button: { textTransform: 'none' },
                   m: '1rem',
+                  width: 'fit-content',
                 }}>
                 <SelectableButton
                   startIcon={<SubjectIcon />}
