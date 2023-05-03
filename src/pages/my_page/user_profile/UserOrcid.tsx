@@ -25,7 +25,7 @@ interface UserOrcidProps {
   user: User;
 }
 
-const getOrcidCredentials = (search: string): OrcidCredentials => {
+const getOrcidCredentials = (search: string, orcidUrl: string): OrcidCredentials => {
   const searchParams = new URLSearchParams(search);
   return {
     expires_in: +(searchParams.get('expires_in') ?? '0'),
@@ -34,7 +34,7 @@ const getOrcidCredentials = (search: string): OrcidCredentials => {
     tokenId: +(searchParams.get('tokenId') ?? '0'),
     tokenVersion: searchParams.get('tokenVersion'),
     token_type: searchParams.get('token_type'),
-    orcid: '',
+    orcid: orcidUrl,
     access_token: searchParams.get('access_token'),
   };
 };
@@ -77,8 +77,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           method: 'PATCH',
           data: { orcid },
         });
-        const orcidCredentials = getOrcidCredentials(history.location.search);
-        orcidCredentials.orcid = orcidInfoResponse.data.id;
+        const orcidCredentials = getOrcidCredentials(history.location.search, orcidInfoResponse.data.id);
         await postOrcidCredentials(orcidCredentials);
         if (isSuccessStatus(addOrcidResponse.status)) {
           dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
