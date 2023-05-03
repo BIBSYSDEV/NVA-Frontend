@@ -22,7 +22,7 @@ import {
 import { RootState } from '../../redux/store';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
-import { NavigationListAccordion } from '../../components/NavigationLIstAccordion';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 
 const EditorPage = () => {
   const { t } = useTranslation();

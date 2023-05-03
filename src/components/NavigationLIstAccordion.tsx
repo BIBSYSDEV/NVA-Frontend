@@ -8,7 +8,7 @@ interface NavigationListAccordionProps extends AccordionProps {
   startIcon: ReactNode;
   accordionPath: string;
   defaultPath: string;
-  dataTestId?: string;
+  dataTestId: string;
 }
 
 export const NavigationListAccordion = ({
@@ -22,30 +22,27 @@ export const NavigationListAccordion = ({
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
+  const handleClick = () => {
+    !currentPath.includes(accordionPath) && history.push(defaultPath);
+  };
+
   return (
     <Accordion
-      data-testid={dataTestId ?? ''}
+      data-testid={dataTestId}
       disableGutters
       expanded={currentPath.includes(accordionPath)}
       elevation={0}
       sx={{
         mb: '0.5rem',
-        ':last-child': {
-          mt: '0.5rem',
-        },
-        '&.MuiAccordion-root.Mui-expanded': {
-          mt: 0,
-          mb: '0.5rem',
-        },
         bgcolor: 'secondary.dark',
       }}>
       <AccordionSummary
         sx={{ paddingX: '0.75rem' }}
-        expandIcon={<ExpandMoreIcon />}
-        onClick={() => !currentPath.startsWith(accordionPath) && history.push(defaultPath)}>
+        expandIcon={!currentPath.includes(accordionPath) ? <ExpandMoreIcon /> : null}
+        onClick={handleClick}>
         <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           {startIcon}
-          <Typography variant="h3" fontWeight={500}>
+          <Typography variant="h2" fontWeight={500}>
             {title}
           </Typography>
         </Box>
