@@ -29,7 +29,9 @@ export const TicketAccordionList = ({ tickets }: TicketAccordionListProps) => {
   ) : (
     <List>
       {tickets.map((ticket) => (
-        <SearchListItem key={ticket.id} sx={{ borderLeftColor: ticketColor[ticket.type], p: 0 }}>
+        <SearchListItem
+          key={ticket.id}
+          sx={{ borderLeftColor: ticket.status === 'Pending' ? ticketColor[ticket.type] : 'registration.main', p: 0 }}>
           <TicketAccordion ticket={ticket} />
         </SearchListItem>
       ))}
