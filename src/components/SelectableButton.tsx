@@ -8,7 +8,9 @@ interface SelectableButtonProps extends ButtonProps {
 export const SelectableButton = ({ isSelected, showCheckbox = false, children, ...rest }: SelectableButtonProps) => (
   <Button
     {...rest}
-    startIcon={showCheckbox ? <Checkbox disableRipple sx={{ p: 0 }} checked={isSelected} /> : rest.startIcon}
+    startIcon={
+      showCheckbox ? <Checkbox tabIndex={-1} disableRipple sx={{ p: 0 }} checked={isSelected} /> : rest.startIcon
+    }
     variant={isSelected ? 'contained' : 'outlined'}
     sx={{
       justifyContent: 'start',
