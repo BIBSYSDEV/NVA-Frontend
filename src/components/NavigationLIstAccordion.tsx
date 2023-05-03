@@ -8,6 +8,7 @@ interface NavigationListAccordionProps extends AccordionProps {
   startIcon: ReactNode;
   accordionPath: string;
   defaultPath: string;
+  dataTestId?: string;
 }
 
 export const NavigationListAccordion = ({
@@ -15,6 +16,7 @@ export const NavigationListAccordion = ({
   startIcon,
   accordionPath,
   defaultPath,
+  dataTestId,
   children,
 }: NavigationListAccordionProps) => {
   const history = useHistory();
@@ -22,8 +24,9 @@ export const NavigationListAccordion = ({
 
   return (
     <Accordion
+      data-testid={dataTestId ?? ''}
       disableGutters
-      expanded={currentPath.startsWith(accordionPath)}
+      expanded={currentPath.includes(accordionPath)}
       elevation={0}
       sx={{
         mb: '0.5rem',
@@ -37,10 +40,10 @@ export const NavigationListAccordion = ({
         bgcolor: 'secondary.dark',
       }}>
       <AccordionSummary
-        sx={{ paddingX: '0.5rem' }}
+        sx={{ paddingX: '0.75rem' }}
         expandIcon={<ExpandMoreIcon />}
         onClick={() => !currentPath.startsWith(accordionPath) && history.push(defaultPath)}>
-        <Box sx={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
           {startIcon}
           <Typography variant="h3" fontWeight={500}>
             {title}
