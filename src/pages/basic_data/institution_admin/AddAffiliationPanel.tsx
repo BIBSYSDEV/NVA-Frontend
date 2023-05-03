@@ -32,10 +32,10 @@ export const AddAffiliationPanel = () => {
             disabled={isDisabled}
             value={organizationOptions.find((option) => option.id === field.value) ?? null}
             options={organizationOptions}
-            getOptionLabel={(option) => getLanguageString(option.name)}
+            getOptionLabel={(option) => getLanguageString(option.labels)}
             renderOption={(props, option) => (
               <li {...props} key={option.id}>
-                {getLanguageString(option.name)}
+                {getLanguageString(option.labels)}
               </li>
             )}
             loading={isLoadingCurrentOrganization}

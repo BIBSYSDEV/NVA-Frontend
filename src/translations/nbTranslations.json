@@ -534,6 +534,7 @@
       "user_profile": "Brukerprofil",
       "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil."
     },
+    "no_employments": "Ingen ansettelser",
     "project_registrations": "Prosjektregistreringer",
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
@@ -951,7 +952,6 @@
         "LightDesigner": "Lysdesigner",
         "Musician": "Ensemblemusiker",
         "Organizer": "Arrangør",
-        "Other": "Annet",
         "Photographer": "Fotograf",
         "Producer": "Produsent",
         "ProductionDesigner": "Produksjonsdesigner",
@@ -1017,7 +1017,9 @@
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "files": "Filer",
       "files_are_not_published": "Filer publiseres ikke",
-      "files_awaits_approval": "Filer (avventer godkjenning)",
+      "files_awaits_approval_one": "{{count}} fil og valgt lisens venter på å bli verifisert",
+      "files_awaits_approval_other": "{{count}} filer og valgte lisenser venter på å bli verifisert",
+      "files_count": "Filer ({{count}})",
       "find_journal_in_channel_register": "Se informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
       "find_series_in_channel_register": "Se informasjon om serien i Kanalregisteret",
@@ -1137,12 +1139,7 @@
       "MusicPerformance": "Musikk",
       "NonFictionChapter": "Faglig kapittel",
       "NonFictionMonograph": "Faglig monografi",
-      "Other": "Annen publikasjon",
-      "OtherFeatureArticle": "Kronikk",
-      "OtherMap": "Kart",
-      "OtherMusical": "Musikktrykk",
       "OtherPresentation": "Annen presentasjon",
-      "OtherPublication": "Annen publikasjon",
       "OtherStudentWork": "Annen studentoppgave",
       "PerformingArts": "Scenekunst",
       "PopularScienceArticle": "Populærvitenskapelig artikkel",
@@ -1196,13 +1193,11 @@
           "Building": "Bygg",
           "Interior": "Interiør",
           "LandscapeArchitecture": "Landskapsarkitektur",
-          "Other": "Annet",
           "PlanningProposal": "Planforslag"
         },
         "audio_video_type": {
           "Audiobook": "Lydbok",
           "LiteraryArtsAudioVisualOther": "Annet",
-          "Other": "Annet",
           "Podcast": "Podkast",
           "RadioPlay": "Hørespill",
           "ShortFilm": "Kortfilm"
@@ -1228,7 +1223,6 @@
           "InteractionDesign": "Interaksjonsdesign",
           "InteriorDesign": "Interiørdesign",
           "LightDesign": "Lysdesign",
-          "Other": "Annet",
           "ProductDesign": "Produktdesign",
           "ServiceDesign": "Tjenestedesign",
           "WebDesign": "Webdesign"
@@ -1256,7 +1250,6 @@
           "LiteraryArtsOther": "Annet",
           "Novel": "Roman",
           "Novella": "Novelle/noveller",
-          "Other": "Annet",
           "Play": "Drama/scenetekster",
           "Poetry": "Poesi",
           "Retelling": "Gjendikting",
@@ -1271,7 +1264,6 @@
           "Film": "Langfilm",
           "InteractiveFilm": "Interaktiv produksjon",
           "MovingPictureOther": "Annet",
-          "Other": "Annet",
           "SerialFilmProduction": "Seriell produksjon",
           "ShortFilm": "Kortfilm"
         },
@@ -1280,7 +1272,6 @@
           "DVD": "DVD",
           "DigitalFile": "Nedlasting",
           "MusicMediaOther": "Annet",
-          "Other": "Annet",
           "Streaming": "Strømming",
           "Vinyl": "LP/EP"
         },
@@ -1315,13 +1306,11 @@
         "performance_type": "Type/formidlingsform",
         "performance_types": {
           "LiteraryArtsPerformanceOther": "Annet",
-          "Other": "Annet",
           "Play": "Skuespill/drama",
           "Reading": "Lesing"
         },
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
-          "Other": "Annet",
           "PerformingArtsOther": "Annet",
           "TheatricalProduction": "Forestilling/visning"
         },
@@ -1341,7 +1330,6 @@
           "CollectiveExhibition": "Gruppe-/kollektivutstilling",
           "IndividualExhibition": "Separatutstilling",
           "Installation": "Installasjon",
-          "Other": "Annet",
           "Performance": "Performance",
           "VisualArtsOther": "Annet"
         },
@@ -1379,7 +1367,6 @@
           "Internet": "Internett",
           "Journal": "Avis eller tidsskrift",
           "MediaTypeOther": "Annet",
-          "Other": "Annet",
           "Radio": "Radio",
           "TV": "TV"
         },
