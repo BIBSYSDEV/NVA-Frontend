@@ -13,7 +13,8 @@ import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
-import { isbnField } from '../../../../../../utils/validation/registration/referenceValidation';
+import { isbnListField } from '../../../../../../utils/validation/registration/referenceValidation';
+import { IsbnField } from '../../../components/isbn_and_pages/IsbnField';
 
 interface LiteraryArtsAudioVisualModalProps {
   audioVisual?: LiteraryArtsAudioVisual;
@@ -27,20 +28,20 @@ const emptyLiteraryArtsAudioVisual: LiteraryArtsAudioVisual = {
   subtype: '',
   publisher: emptyUnconfirmedPublisher,
   publicationDate: emptyRegistrationDate,
-  isbn: '',
+  isbnList: [],
   extent: '',
 };
 
 const validationSchema = Yup.object<YupShape<LiteraryArtsAudioVisual>>({
   subtype: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.type_work'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.output_type.LiteraryArtsAudioVisual'),
     })
   ),
   publisher: Yup.object<YupShape<UnconfirmedPublisher>>({
     name: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.artistic.publisher'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.artistic.publisher'),
       })
     ),
   }),
@@ -48,30 +49,30 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsAudioVisual>>({
     year: Yup.number()
       .min(
         1950,
-        i18n.t('translation:feedback.validation.must_be_bigger_than', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.must_be_bigger_than', {
+          field: i18n.t('common.year'),
           limit: 1950,
         })
       )
       .max(
         2100,
-        i18n.t('translation:feedback.validation.must_be_smaller_than', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.must_be_smaller_than', {
+          field: i18n.t('common.year'),
           limit: 2100,
         })
       )
       .typeError(
-        i18n.t('translation:feedback.validation.has_invalid_format', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.year'),
         })
       )
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.year'),
         })
       ),
   }),
-  isbn: isbnField,
+  isbnList: isbnListField,
 });
 
 export const LiteraryArtsAudioVisualModal = ({
@@ -106,11 +107,11 @@ export const LiteraryArtsAudioVisualModal = ({
                     variant="filled"
                     select
                     required
-                    label={t('registration.resource_type.type_work')}
+                    label={t('registration.resource_type.artistic.output_type.LiteraryArtsAudioVisual')}
                     fullWidth
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    data-testid={dataTestId.registrationWizard.resourceType.subtypeField}>
                     {Object.values(LiteraryArtsAudioVisualSubtype).map((audioVideoType) => (
                       <MenuItem key={audioVideoType} value={audioVideoType}>
                         {t(`registration.resource_type.artistic.audio_video_type.${audioVideoType}`)}
@@ -144,24 +145,12 @@ export const LiteraryArtsAudioVisualModal = ({
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                   />
                 )}
               </Field>
 
-              <Field name="isbn">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    variant="filled"
-                    fullWidth
-                    label={t('registration.resource_type.isbn')}
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.isbnField}
-                  />
-                )}
-              </Field>
+              <IsbnField fieldName="isbnList" />
 
               <Field name="extent">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (

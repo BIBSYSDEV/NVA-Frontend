@@ -35,12 +35,13 @@ export enum ContributorRole {
   LightDesigner = 'LightDesigner',
   Musician = 'Musician',
   Organizer = 'Organizer',
-  Other = 'Other',
+  Other = 'RoleOther',
   Photographer = 'Photographer',
   ProductionDesigner = 'ProductionDesigner',
   Producer = 'Producer',
   ProgrammeLeader = 'ProgrammeLeader',
   ProgrammeParticipant = 'ProgrammeParticipant',
+  ProjectLeader = 'ProjectLeader',
   RelatedPerson = 'RelatedPerson',
   Researcher = 'Researcher',
   RightsHolder = 'RightsHolder',
@@ -48,6 +49,7 @@ export enum ContributorRole {
   Screenwriter = 'Screenwriter',
   Soloist = 'Soloist',
   SoundDesigner = 'SoundDesigner',
+  Sponsor = 'Sponsor',
   Supervisor = 'Supervisor',
   TranslatorAdapter = 'TranslatorAdapter',
   VfxSupervisor = 'VfxSupervisor',
@@ -67,7 +69,10 @@ export interface Contributor {
   affiliations?: Institution[];
   correspondingAuthor?: boolean;
   identity: Identity;
-  role: ContributorRole;
+  role: {
+    type: ContributorRole;
+    description?: string;
+  };
   sequence: number;
 }
 
@@ -86,7 +91,7 @@ export const emptyContributor: Contributor = {
     type: 'Identity',
     name: '',
   },
-  role: ContributorRole.Creator,
+  role: { type: ContributorRole.Creator },
   sequence: 0,
   type: 'Contributor',
 };

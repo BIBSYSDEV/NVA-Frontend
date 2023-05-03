@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
 import { AffiliationSkeleton } from './AffiliationSkeleton';
-import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { fetchOrganization } from '../../api/cristinApi';
+import { setNotification } from '../../redux/notificationSlice';
 
 interface AffiliationHierarchyProps {
   unitUri: string;
@@ -14,13 +16,20 @@ interface AffiliationHierarchyProps {
 
 export const AffiliationHierarchy = ({ unitUri, commaSeparated, boldTopLevel = true }: AffiliationHierarchyProps) => {
   const { t } = useTranslation();
-  const [organization, isLoadingOrganization] = useFetchResource<Organization>(
-    unitUri,
-    t('feedback.error.get_institution')
-  );
-  const unitNames = getOrganizationHierarchy(organization).map((unit) => getLanguageString(unit.name));
+  const dispatch = useDispatch();
 
-  return isLoadingOrganization ? (
+  const organizationQuery = useQuery({
+    queryKey: [unitUri],
+    queryFn: () => fetchOrganization(unitUri),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_institution'), variant: 'error' })),
+    staleTime: Infinity,
+    cacheTime: 1_800_000, // 30 minutes
+  });
+  const organization = organizationQuery.data;
+
+  const unitNames = getOrganizationHierarchy(organizationQuery.data).map((unit) => getLanguageString(unit.labels));
+
+  return organizationQuery.isLoading ? (
     <AffiliationSkeleton commaSeparated={commaSeparated} />
   ) : organization ? (
     commaSeparated ? (

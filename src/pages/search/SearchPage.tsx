@@ -65,6 +65,8 @@ const SearchPage = () => {
   return (
     <Formik
       initialValues={initialSearchParams}
+      validateOnChange={false}
+      validateOnBlur={false}
       onSubmit={(values) => {
         const previousParamsResults = params.get(SearchParam.Results);
         const newSearchParams = new URLSearchParams();
@@ -100,7 +102,8 @@ const SearchPage = () => {
               <Box
                 sx={{
                   display: 'flex',
-                  flexDirection: 'column',
+                  flexDirection: { xs: 'row', md: 'column' },
+                  flexWrap: 'wrap',
                   gap: '0.5rem',
                   button: { textTransform: 'none' },
                   m: '1rem',

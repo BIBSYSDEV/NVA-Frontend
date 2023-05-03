@@ -23,7 +23,7 @@ export const mockRegistration: JournalRegistration = {
   publisher: { id: mockCustomerInstitution.id },
   associatedArtifacts: [
     {
-      type: 'File',
+      type: 'UnpublishedFile',
       identifier: '3214324',
       name: 'filename.pdf',
       size: 10,
@@ -49,7 +49,7 @@ export const mockRegistration: JournalRegistration = {
     tags: ['Ost', 'Loff', 'Majones'],
     language: 'http://lexvo.org/id/iso639-3/eng',
     npiSubjectHeading: '0003',
-    date: {
+    publicationDate: {
       type: 'PublicationDate',
       year: '1980',
       month: '12',
@@ -65,7 +65,7 @@ export const mockRegistration: JournalRegistration = {
           id: '901790000000',
           name: 'Test User',
         },
-        role: ContributorRole.Creator,
+        role: { type: ContributorRole.Creator },
         sequence: 1,
       },
       {
@@ -83,7 +83,7 @@ export const mockRegistration: JournalRegistration = {
           type: 'Identity',
           name: 'Osteloff, Oddny',
         },
-        role: ContributorRole.Creator,
+        role: { type: ContributorRole.Creator },
         sequence: 2,
       },
     ],

@@ -1,5 +1,5 @@
 import { Doi, Registration } from '../types/registration.types';
-import { authenticatedApiRequest } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/messages.types';
 import { PublicationsApiPath } from './apiPaths';
 
@@ -67,3 +67,23 @@ export const updateTicketStatus = async (ticketId: string, type: TicketType, sta
     method: 'PUT',
     data: { type, status },
   });
+
+export const createDraftDoi = async (registrationId: string) =>
+  await authenticatedApiRequest<{ doi: string }>({
+    url: `${registrationId}/doi`,
+    method: 'POST',
+  });
+
+export const fetchRegistration = async (registrationIdentifier: string) => {
+  const fetchRegistrationResponse = await apiRequest2<Registration>({
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
+  });
+  return fetchRegistrationResponse.data;
+};
+
+export const fetchRegistrationTickets = async (registrationId: string) => {
+  const getTickets = await authenticatedApiRequest2<TicketCollection>({
+    url: `${registrationId}/tickets`,
+  });
+  return getTickets.data;
+};

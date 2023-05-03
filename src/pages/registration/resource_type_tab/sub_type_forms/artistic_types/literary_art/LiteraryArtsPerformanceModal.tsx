@@ -4,6 +4,7 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
+import { emptyPlace } from '../../../../../../types/common.types';
 import {
   LiteraryArtsPerformance,
   LiteraryArtsPerformanceSubtype,
@@ -23,27 +24,27 @@ interface LiteraryArtsPerformanceModalProps {
 const emptyLiteraryArtsPerformance: LiteraryArtsPerformance = {
   type: 'LiteraryArtsPerformance',
   subtype: '',
-  place: { type: 'UnconfirmedPlace', label: '', country: '' },
+  place: emptyPlace,
   publicationDate: emptyRegistrationDate,
 };
 
 const validationSchema = Yup.object<YupShape<LiteraryArtsPerformance>>({
   subtype: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.type_work'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.output_type.LiteraryArtsPerformance'),
     })
   ),
   place: Yup.object({
     label: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.place'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.place'),
       })
     ),
   }),
   publicationDate: Yup.object<YupShape<RegistrationDate>>({
     year: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.date'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.date'),
       })
     ),
   }),
@@ -80,12 +81,12 @@ export const LiteraryArtsPerformanceModal = ({
                     variant="filled"
                     select
                     required
-                    label={t('registration.resource_type.type_work')}
+                    label={t('registration.resource_type.artistic.output_type.LiteraryArtsPerformance')}
                     fullWidth
                     {...field}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    data-testid={dataTestId.registrationWizard.resourceType.subtypeField}>
                     {Object.values(LiteraryArtsPerformanceSubtype).map((performanceType) => (
                       <MenuItem key={performanceType} value={performanceType}>
                         {t(`registration.resource_type.artistic.performance_types.${performanceType}`)}
@@ -137,7 +138,7 @@ export const LiteraryArtsPerformanceModal = ({
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                         variant="filled"
                         required
                         onBlur={() => !touched && setFieldTouched(field.name)}

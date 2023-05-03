@@ -55,10 +55,10 @@ export const ViewingScopeCell = ({ user, options }: ViewingScopeCellProps) => {
       data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
       options={options}
       value={selectedOption}
-      getOptionLabel={(option) => getLanguageString(option.name)}
+      getOptionLabel={(option) => getLanguageString(option.labels)}
       renderOption={(props, option) => (
         <li {...props} key={option.id}>
-          {getLanguageString(option.name)}
+          {getLanguageString(option.labels)}
         </li>
       )}
       disabled={isUpdating}

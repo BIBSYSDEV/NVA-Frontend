@@ -5,6 +5,7 @@ import {
   BookType,
   ChapterType,
   DegreeType,
+  ExhibitionContentType,
   JournalType,
   MediaType,
   OtherRegistrationType,
@@ -13,7 +14,7 @@ import {
   ResearchDataType,
 } from '../../../types/publicationFieldNames';
 import i18n from '../../../translations/i18n';
-import { ArtisticPublicationInstance, DesignType } from '../../../types/publication_types/artisticRegistration.types';
+import { ArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
 import { YupShape } from '../validationHelpers';
 import {
   JournalPublicationInstance,
@@ -55,108 +56,115 @@ import {
   MapPublicationInstance,
 } from '../../../types/publication_types/otherRegistration.types';
 import { ContextPublisher, PublicationChannelType } from '../../../types/registration.types';
+import { ExhibitionProductionSubtype } from '../../../types/publication_types/exhibitionContent.types';
 
 const resourceErrorMessage = {
-  announcementsRequired: i18n.t('translation:feedback.validation.announcement_required'),
-  corrigendumForRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.original_article'),
+  announcementsRequired: i18n.t('feedback.validation.announcement_required'),
+  corrigendumForRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.original_article'),
   }),
-  corrigendumForInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
-    field: i18n.t('translation:registration.resource_type.original_article'),
+  corrigendumForInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.original_article'),
   }),
-  countryRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:common.country'),
+  countryRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.country'),
   }),
-  dateToBeforeDateFrom: i18n.t('translation:feedback.validation.cannot_be_before', {
-    field: i18n.t('translation:common.end_date'),
-    limitField: i18n.t('translation:common.start_date'),
+  dateToBeforeDateFrom: i18n.t('feedback.validation.cannot_be_before', {
+    field: i18n.t('common.end_date'),
+    limitField: i18n.t('common.start_date'),
   }),
-  dateFromInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
-    field: i18n.t('translation:registration.resource_type.date_from'),
+  dateFromInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.date_from'),
   }),
-  dateFromRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.date_from'),
+  dateFromRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.date_from'),
   }),
-  dateToInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
-    field: i18n.t('translation:registration.resource_type.date_to'),
+  dateToInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.date_to'),
   }),
-  dateToRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.date_to'),
+  dateToRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.date_to'),
   }),
-  doiInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
-    field: i18n.t('translation:registration.registration.link_to_resource'),
+  doiInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.registration.link_to_resource'),
   }),
-  eventTitleRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.title_of_event'),
+  eventTitleRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.title_of_event'),
   }),
-  exhibitionRequired: i18n.t('translation:feedback.validation.exhibition_place_required'),
-  fromMustBeBeforeTo: i18n.t('translation:feedback.validation.cannot_be_after', {
-    field: i18n.t('translation:registration.resource_type.date_from'),
-    limitField: i18n.t('translation:registration.resource_type.date_to').toLowerCase(),
+  exhibitionRequired: i18n.t('feedback.validation.announcement_required'),
+  fromMustBeBeforeTo: i18n.t('feedback.validation.cannot_be_after', {
+    field: i18n.t('registration.resource_type.date_from'),
+    limitField: i18n.t('registration.resource_type.date_to').toLowerCase(),
   }),
-  isbnInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
-    field: i18n.t('translation:registration.resource_type.isbn'),
+  isbnInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.isbn'),
   }),
-  isbnTooShort: i18n.t('translation:feedback.validation.isbn_too_short'),
-  journalNotSelected: i18n.t('translation:feedback.validation.not_selected', {
-    field: i18n.t('translation:registration.resource_type.journal'),
+  isbnTooShort: i18n.t('feedback.validation.isbn_too_short'),
+  journalNotSelected: i18n.t('feedback.validation.not_selected', {
+    field: i18n.t('registration.resource_type.journal'),
   }),
-  journalRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.journal'),
+  journalRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.journal'),
   }),
-  organizerRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.organizer'),
+  organizerRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.organizer'),
   }),
-  pageBeginMustBeSmallerThanEnd: i18n.t('translation:feedback.validation.must_be_smaller_than', {
-    field: i18n.t('translation:registration.resource_type.pages_from'),
-    limit: i18n.t('translation:registration.resource_type.pages_to'),
+  pageBeginMustBeSmallerThanEnd: i18n.t('feedback.validation.must_be_smaller_than', {
+    field: i18n.t('registration.resource_type.pages_from'),
+    limit: i18n.t('registration.resource_type.pages_to'),
   }),
-  pageEndMustBeBiggerThanBegin: i18n.t('translation:feedback.validation.must_be_bigger_than', {
-    field: i18n.t('translation:registration.resource_type.pages_to'),
-    limit: i18n.t('translation:registration.resource_type.pages_from'),
+  pageEndMustBeBiggerThanBegin: i18n.t('feedback.validation.must_be_bigger_than', {
+    field: i18n.t('registration.resource_type.pages_to'),
+    limit: i18n.t('registration.resource_type.pages_from'),
   }),
-  pagesInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
-    field: i18n.t('translation:registration.resource_type.number_of_pages'),
+  pagesInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.resource_type.number_of_pages'),
   }),
-  pagesMustBeBigger: i18n.t('translation:feedback.validation.must_be_bigger_than', {
-    field: i18n.t('translation:registration.resource_type.number_of_pages'),
+  pagesMustBeBigger: i18n.t('feedback.validation.must_be_bigger_than', {
+    field: i18n.t('registration.resource_type.number_of_pages'),
     limit: 1,
   }),
-  partOfRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.chapter.published_in'),
+  partOfRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.chapter.published_in'),
   }),
-  placeRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.place_for_event'),
+  placeRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.place_for_event'),
   }),
-  publisherNotSelected: i18n.t('translation:feedback.validation.not_selected', {
-    field: i18n.t('translation:common.publisher'),
+  publisherNotSelected: i18n.t('feedback.validation.not_selected', {
+    field: i18n.t('common.publisher'),
   }),
-  publisherRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:common.publisher'),
+  publisherRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.publisher'),
   }),
-  seriesNotSelected: i18n.t('translation:feedback.validation.not_selected', {
-    field: i18n.t('translation:registration.resource_type.series'),
+  seriesNotSelected: i18n.t('feedback.validation.not_selected', {
+    field: i18n.t('registration.resource_type.series'),
   }),
-  toMustBeAfterFrom: i18n.t('translation:feedback.validation.cannot_be_before', {
-    field: i18n.t('translation:registration.resource_type.date_to'),
-    limitField: i18n.t('translation:registration.resource_type.date_from').toLowerCase(),
+  toMustBeAfterFrom: i18n.t('feedback.validation.cannot_be_before', {
+    field: i18n.t('registration.resource_type.date_to'),
+    limitField: i18n.t('registration.resource_type.date_from').toLowerCase(),
   }),
-  typeRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.resource_type'),
+  typeRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.resource_type'),
   }),
-  typeWorkRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.resource_type.type_work'),
+  typeWorkRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.type_work'),
+  }),
+  typeWorkDescriptionRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.type_work_specified'),
+  }),
+  typeWorkOtherRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.type_work_specified'),
   }),
 };
 
 export const emptyStringToNull = (value: string, originalValue: string) => (originalValue === '' ? null : value);
 
 // Common Fields
-export const isbnField = Yup.string()
-  .min(13, resourceErrorMessage.isbnTooShort)
-  .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? '')?.isIsbn13());
-
-const isbnListField = Yup.array().of(isbnField);
+export const isbnListField = Yup.array().of(
+  Yup.string()
+    .min(13, resourceErrorMessage.isbnTooShort)
+    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? '')?.isIsbn13())
+);
 
 const pagesMonographField = Yup.object()
   .nullable()
@@ -356,18 +364,16 @@ export const presentationReference = baseReference.shape({
 const artisticDesignPublicationInstance = Yup.object<YupShape<ArtisticPublicationInstance>>({
   type: Yup.string().oneOf(Object.values(ArtisticType)).required(resourceErrorMessage.typeRequired),
   subtype: Yup.object().shape({
-    type: Yup.string()
-      .nullable()
-      .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
-        publicationInstanceType === ArtisticType.MusicPerformance
-          ? schema.optional()
-          : schema.required(resourceErrorMessage.typeWorkRequired)
-      ),
-    description: Yup.string()
-      .nullable()
-      .when('type', ([type], schema) =>
-        type === DesignType.Other ? schema.required(resourceErrorMessage.typeWorkRequired) : schema
-      ),
+    type: Yup.string().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
+      publicationInstanceType === ArtisticType.MusicPerformance
+        ? schema.optional()
+        : schema.required(resourceErrorMessage.typeWorkRequired)
+    ),
+    description: Yup.string().when('type', ([type], schema) =>
+      typeof type === 'string' && type.endsWith('Other')
+        ? schema.required(resourceErrorMessage.typeWorkDescriptionRequired)
+        : schema.nullable()
+    ),
   }),
   description: Yup.string().nullable(),
   venues: Yup.array().when('$publicationInstanceType', ([publicationInstanceType], schema) =>
@@ -415,24 +421,24 @@ const mediaContributionPublicationContext = Yup.object().when(
         format: Yup.string()
           .nullable()
           .required(
-            i18n.t('translation:feedback.validation.is_required', {
-              field: i18n.t('translation:registration.resource_type.media_contribution.format'),
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('registration.resource_type.media_contribution.format'),
             })
           ),
         medium: Yup.object().shape({
           type: Yup.string()
             .nullable()
             .required(
-              i18n.t('translation:feedback.validation.is_required', {
-                field: i18n.t('translation:registration.resource_type.media_contribution.medium'),
+              i18n.t('feedback.validation.is_required', {
+                field: i18n.t('registration.resource_type.media_contribution.medium'),
               })
             ),
         }),
         disseminationChannel: Yup.string()
           .nullable()
           .required(
-            i18n.t('translation:feedback.validation.is_required', {
-              field: i18n.t('translation:registration.resource_type.media_contribution.channel'),
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('registration.resource_type.media_contribution.channel'),
             })
           ),
       });
@@ -479,7 +485,7 @@ const researchDataPublicationInstance = Yup.object<YupShape<ResearchDataPublicat
     .nullable()
     .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
       publicationInstanceType === ResearchDataType.Dataset
-        ? Yup.boolean().equals([true], i18n.t('translation:feedback.validation.must_accept_terms_for_dataset'))
+        ? Yup.boolean().equals([true], i18n.t('feedback.validation.must_accept_terms_for_dataset'))
         : schema
     ),
   related: Yup.array(),
@@ -502,4 +508,24 @@ const mapPublicationInstance = Yup.object<YupShape<MapPublicationInstance>>({
 export const mapReference = baseReference.shape({
   publicationContext: mapPublicationContext,
   publicationInstance: mapPublicationInstance,
+});
+
+// Exhibition
+const exhibitionProductionPublicationInstance = Yup.object({
+  type: Yup.string().oneOf(Object.values(ExhibitionContentType)).required(resourceErrorMessage.typeRequired),
+  subtype: Yup.object().shape({
+    type: Yup.string().required(resourceErrorMessage.typeWorkRequired),
+    description: Yup.string().when('type', ([type], schema) =>
+      type === ExhibitionProductionSubtype.Other
+        ? schema.required(resourceErrorMessage.typeWorkOtherRequired)
+        : schema.optional()
+    ),
+  }),
+  manifestations: Yup.array()
+    .min(1, resourceErrorMessage.announcementsRequired)
+    .required(resourceErrorMessage.announcementsRequired),
+});
+
+export const exhibitionProductionReference = baseReference.shape({
+  publicationInstance: exhibitionProductionPublicationInstance,
 });

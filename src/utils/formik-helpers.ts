@@ -23,6 +23,7 @@ import { ArtisticPublicationInstance } from '../types/publication_types/artistic
 import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import { Funding, Registration, RegistrationTab } from '../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
+import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];
@@ -140,7 +141,7 @@ const getAllContributorFields = (contributors: Contributor[]): string[] => {
 const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown> => ({
   entityDescription: {
     abstract: true,
-    date: {
+    publicationDate: {
       day: true,
       month: true,
       year: true,
@@ -163,7 +164,7 @@ const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown
 });
 
 const touchedResourceTabFields = (registration: Registration): FormikTouched<unknown> => {
-  const mainType = getMainRegistrationType(registration.entityDescription?.reference?.publicationInstance.type ?? '');
+  const mainType = getMainRegistrationType(registration.entityDescription?.reference?.publicationInstance?.type ?? '');
 
   switch (mainType) {
     case PublicationType.PublicationInJournal:
@@ -371,6 +372,23 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
         },
       };
       return touchedMap;
+    }
+    case PublicationType.ExhibitionContent: {
+      const touchedExhibition: FormikTouched<ExhibitionRegistration> = {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+            },
+            publicationInstance: {
+              type: true,
+              subtype: { type: true, description: true },
+              manifestations: [],
+            },
+          },
+        },
+      };
+      return touchedExhibition;
     }
     default:
       return {

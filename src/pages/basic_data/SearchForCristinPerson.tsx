@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { useFormikContext } from 'formik';
 import { CristinApiPath } from '../../api/apiPaths';
-import { searchByNationalIdNumber } from '../../api/userApi';
+import { searchByNationalIdNumber } from '../../api/cristinApi';
 import { AutocompleteTextField } from '../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../components/EmphasizeSubstring';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -107,7 +107,7 @@ export const SearchForCristinPerson = ({
               showSearchIcon
               isLoading={isLoadingSearchByName}
               placeholder={t('basic_data.add_employee.name_or_nin')}
-              dataTestId={dataTestId.basicData.personAdmin.personSearchField}
+              data-testid={dataTestId.basicData.personAdmin.personSearchField}
             />
           )}
         />

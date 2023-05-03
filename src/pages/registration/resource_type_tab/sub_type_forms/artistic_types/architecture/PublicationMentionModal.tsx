@@ -28,20 +28,20 @@ const emptyMentionInPublication: MentionInPublication = {
 
 const validationSchema = Yup.object<YupShape<MentionInPublication>>({
   title: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.mention_title'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.journal_book_medium'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date()
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.date'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
         })
       )
       .typeError(
-        i18n.t('translation:feedback.validation.has_invalid_format', {
-          field: i18n.t('translation:common.date'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
         })
       ),
   }),
@@ -78,11 +78,11 @@ export const PublicationMentionModal = ({
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('registration.resource_type.artistic.mention_title')}
+                    label={t('registration.resource_type.journal_book_medium')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionTitle}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputJournalBookMediumField}
                   />
                 )}
               </Field>
@@ -97,7 +97,7 @@ export const PublicationMentionModal = ({
                       label={t('registration.resource_type.issue')}
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
-                      data-testid={dataTestId.registrationWizard.resourceType.publicationMentionIssue}
+                      data-testid={dataTestId.registrationWizard.resourceType.outputIssueField}
                     />
                   )}
                 </Field>
@@ -129,7 +129,7 @@ export const PublicationMentionModal = ({
                           onBlur={() => !touched && setFieldTouched(field.name)}
                           error={touched && !!error}
                           helperText={<ErrorMessage name={field.name} />}
-                          data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                          data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                         />
                       )}
                     />
@@ -143,10 +143,10 @@ export const PublicationMentionModal = ({
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('registration.resource_type.artistic.mention_other_type')}
+                    label={t('registration.resource_type.other_publisher_isbn_etc')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionOther}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputDescriptionField}
                   />
                 )}
               </Field>

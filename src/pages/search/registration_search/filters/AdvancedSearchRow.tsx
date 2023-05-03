@@ -7,6 +7,7 @@ import {
   ResourceFieldNames,
   ContributorFieldNames,
   SpecificContributorFieldNames,
+  SearchFieldName,
 } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHelpers';
@@ -14,18 +15,29 @@ import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHel
 interface FilterItem {
   field: string;
   i18nKey: TFuncKey;
+  manuallyAddable: boolean;
 }
 
 export const registrationFilters: FilterItem[] = [
-  { field: DescriptionFieldNames.Title, i18nKey: 'common.title' },
-  { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract' },
-  { field: ResourceFieldNames.RegistrationType, i18nKey: 'registration.resource_type.resource_type' },
-  { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords' },
+  { field: DescriptionFieldNames.Title, i18nKey: 'common.title', manuallyAddable: true },
+  { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract', manuallyAddable: true },
+  {
+    field: ResourceFieldNames.RegistrationType,
+    i18nKey: 'registration.resource_type.resource_type',
+    manuallyAddable: false,
+  },
+  { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords', manuallyAddable: true },
   {
     field: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`,
     i18nKey: 'registration.contributors.contributor',
+    manuallyAddable: true,
   },
-  { field: `${DescriptionFieldNames.Date}.year`, i18nKey: 'registration.year_published' },
+  {
+    field: `${DescriptionFieldNames.PublicationDate}.year`,
+    i18nKey: 'registration.year_published',
+    manuallyAddable: true,
+  },
+  { field: SearchFieldName.TopLevelOrganizationId, i18nKey: 'common.institution', manuallyAddable: false },
 ];
 
 interface AdvancedSearchRowProps {
@@ -42,11 +54,13 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
           <TextField {...field} select variant="outlined" label={t('search.field_label')}>
-            {registrationFilters.map((filter) => (
-              <MenuItem key={filter.i18nKey} value={filter.field}>
-                {t(filter.i18nKey)}
-              </MenuItem>
-            ))}
+            {registrationFilters
+              .filter((filter) => filter.manuallyAddable)
+              .map((filter) => (
+                <MenuItem key={filter.i18nKey} value={filter.field}>
+                  {t<any>(filter.i18nKey)}
+                </MenuItem>
+              ))}
           </TextField>
         )}
       </Field>
@@ -62,7 +76,6 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            disabled={propertySearchItem.fieldName === ResourceFieldNames.RegistrationType}
             value={
               propertySearchItem.value && propertySearchItem.fieldName === ResourceFieldNames.RegistrationType
                 ? t(`registration.publication_types.${propertySearchItem.value as PublicationInstanceType}`)
