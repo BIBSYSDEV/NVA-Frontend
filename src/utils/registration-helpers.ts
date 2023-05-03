@@ -4,6 +4,7 @@ import {
   BookType,
   ChapterType,
   DegreeType,
+  ExhibitionContentType,
   JournalType,
   MediaType,
   OtherRegistrationType,
@@ -22,7 +23,6 @@ import {
   Competition,
   Exhibition,
   MentionInPublication,
-  ArtisticOutputItem,
   Venue,
   CinematicRelease,
   OtherRelease,
@@ -37,6 +37,12 @@ import {
 } from '../types/publication_types/artisticRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
+import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
+import {
+  ExhibitionBasic,
+  ExhibitionMentionInPublication,
+  ExhibitionOtherPresentation,
+} from '../types/publication_types/exhibitionContent.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -57,6 +63,8 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.MediaContribution
     : isResearchData(instanceType)
     ? PublicationType.ResearchData
+    : isExhibitionContent(instanceType)
+    ? PublicationType.ExhibitionContent
     : isOtherRegistration(instanceType)
     ? PublicationType.GeographicalContent
     : '';
@@ -83,6 +91,8 @@ export const isPeriodicalMediaContribution = (instanceType: string) =>
   instanceType === MediaType.MediaFeatureArticle || instanceType === MediaType.MediaReaderOpinion;
 
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
+
+export const isExhibitionContent = (instanceType: any) => Object.values(ExhibitionContentType).includes(instanceType);
 
 export const nviApplicableTypes: string[] = [
   JournalType.AcademicArticle,
@@ -117,8 +127,6 @@ export const getPublicationChannelString = (title: string, onlineIssn?: string |
   const issnString = getPublicationChannelIssnString(onlineIssn, printIssn);
   return issnString ? `${title} (${issnString})` : title;
 };
-
-export const getRegistrationIdentifier = (id: string) => id.split('/').pop() ?? '';
 
 // Ensure Registration has correct type values, etc
 export const getFormattedRegistration = (registration: Registration) => {
@@ -493,6 +501,22 @@ export const contributorConfig: ContributorConfig = {
     ],
     secondaryRoles: [],
   },
+  // Exhibition
+  [ExhibitionContentType.ExhibitionProduction]: {
+    primaryRoles: [
+      ContributorRole.ProjectLeader,
+      ContributorRole.Curator,
+      ContributorRole.LightDesigner,
+      ContributorRole.SoundDesigner,
+      ContributorRole.Designer,
+      ContributorRole.Architect,
+      ContributorRole.InteriorArchitect,
+      ContributorRole.Photographer,
+      ContributorRole.Sponsor,
+      ContributorRole.Other,
+    ],
+    secondaryRoles: [],
+  },
   // Other
   [OtherRegistrationType.Map]: {
     primaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
@@ -508,7 +532,7 @@ export const groupContributors = (contributors: Contributor[], registrationType:
   return { primaryContributors, secondaryContributors };
 };
 
-export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
+export const getOutputName = (item: OutputItem): string => {
   switch (item.type) {
     case 'Venue':
     case 'PerformingArtsVenue':
@@ -545,6 +569,12 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
       return (item as LiteraryArtsAudioVisual).publisher.name;
     case 'LiteraryArtsWeb':
       return (item as LiteraryArtsWeb).publisher.name;
+    case 'ExhibitionBasic':
+      return (item as ExhibitionBasic).organization.name;
+    case 'ExhibitionOtherPresentation':
+      return (item as ExhibitionOtherPresentation).typeDescription;
+    case 'ExhibitionMentionInPublication':
+      return (item as ExhibitionMentionInPublication).title;
     default:
       return '';
   }
@@ -581,7 +611,7 @@ export const getContributorInitials = (name: string) => {
   const splittedNames = name.split(' ');
   const firstNameInitial = splittedNames[0][0];
   const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
-  const initials = `${firstNameInitial}${lastNameInitial}`;
+  const initials = `${firstNameInitial}${lastNameInitial}`.toUpperCase();
   return initials;
 };
 

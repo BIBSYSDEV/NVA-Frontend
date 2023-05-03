@@ -52,11 +52,11 @@ export interface ProjectContributor {
 }
 
 export interface ProjectFunding extends Pick<Funding, 'identifier' | 'source' | 'labels'> {
-  type: 'Funding';
+  type: 'UnconfirmedFunding';
 }
 
 export const emptyProjectFunding: ProjectFunding = {
-  type: 'Funding',
+  type: 'UnconfirmedFunding',
   identifier: '',
   source: '',
   labels: {},
@@ -114,7 +114,7 @@ export interface NfrProject {
 export const emptyProjectContributor: ProjectContributor = {
   type: 'ProjectParticipant',
   identity: { type: 'Person', id: '', firstName: '', lastName: '' },
-  affiliation: { type: 'Organization', id: '', name: {} },
+  affiliation: { type: 'Organization', id: '', labels: {} },
 };
 
 export const emptyProject: SaveCristinProject = {
@@ -127,7 +127,7 @@ export const emptyProject: SaveCristinProject = {
   coordinatingInstitution: {
     type: 'Organization',
     id: '',
-    name: {},
+    labels: {},
   },
   academicSummary: {},
   popularScientificSummary: {},

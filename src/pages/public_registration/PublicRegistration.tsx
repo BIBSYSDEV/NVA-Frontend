@@ -30,14 +30,15 @@ const PublicRegistration = () => {
   });
 
   const registration = registrationQuery.data;
+  const registrationId = registration?.id ?? '';
 
   const isRegistrationAdmin = !!registration && userCanEditRegistration(user, registration);
   const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
 
   const ticketsQuery = useQuery({
-    enabled: isRegistrationAdmin,
-    queryKey: ['registrationTickets', identifier],
-    queryFn: () => registration && fetchRegistrationTickets(registration.id),
+    enabled: isRegistrationAdmin && !!registrationId,
+    queryKey: ['registrationTickets', registrationId],
+    queryFn: () => fetchRegistrationTickets(registrationId),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
   });
 
@@ -64,6 +65,7 @@ const PublicRegistration = () => {
                   registration={registration}
                   refetchRegistrationAndTickets={refetchRegistrationAndTickets}
                   tickets={ticketsQuery.data?.tickets ?? []}
+                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
                 />
               )}
               <PublicRegistrationContent registration={registration} />

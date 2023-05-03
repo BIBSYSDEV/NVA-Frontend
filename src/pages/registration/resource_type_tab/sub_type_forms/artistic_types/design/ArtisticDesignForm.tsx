@@ -63,7 +63,7 @@ export const ArtisticDesignForm = () => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               id={field.name}
-              data-testid={dataTestId.registrationWizard.resourceType.artisticOtherTypeField}
+              data-testid={dataTestId.registrationWizard.resourceType.subtypeDescriptionField}
               variant="filled"
               fullWidth
               {...field}
