@@ -212,6 +212,18 @@ export const PublishingAccordion = ({
               ) : null
             ) : null)}
 
+          {/* Tell user what they can publish */}
+          {!publishingRequestTicket && isDraftRegistration && registrationIsValid && (
+            <>
+              {registratorPublishesMetadataAndFiles ? (
+                <Typography>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
+              ) : registratorPublishesMetadataOnly ? (
+                <Typography>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
+              ) : null}
+              <Typography>{t('registration.public_page.tasks_panel.review_preview_before_publishing')}</Typography>
+            </>
+          )}
+
           {isDraftRegistration && !publishingRequestTicket && (
             <LoadingButton
               disabled={isLoading !== LoadingState.None || !registrationIsValid}
