@@ -1,12 +1,14 @@
-import { Button, ButtonProps } from '@mui/material';
+import { Button, ButtonProps, Checkbox } from '@mui/material';
 
 interface SelectableButtonProps extends ButtonProps {
   isSelected: boolean;
+  showCheckbox?: boolean;
 }
 
-export const SelectableButton = ({ isSelected, children, ...rest }: SelectableButtonProps) => (
+export const SelectableButton = ({ isSelected, showCheckbox = false, children, ...rest }: SelectableButtonProps) => (
   <Button
     {...rest}
+    startIcon={showCheckbox ? <Checkbox disableRipple sx={{ p: 0 }} checked={isSelected} /> : rest.startIcon}
     variant={isSelected ? 'contained' : 'outlined'}
     sx={{
       justifyContent: 'start',

@@ -128,7 +128,7 @@ const TasksPage = () => {
 
         <FormGroup sx={{ m: '1rem', gap: '0.5rem', width: 'fit-content' }}>
           <SelectableButton
-            startIcon={<Checkbox disableRipple sx={{ p: 0 }} checked={selectedTypes.publishingRequest} />}
+            showCheckbox
             isSelected={selectedTypes.publishingRequest}
             color="publishingRequest"
             onClick={() => setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })}>
@@ -138,7 +138,7 @@ const TasksPage = () => {
           </SelectableButton>
 
           <SelectableButton
-            startIcon={<Checkbox disableRipple sx={{ p: 0 }} checked={selectedTypes.doiRequest} />}
+            showCheckbox
             isSelected={selectedTypes.doiRequest}
             color="doiRequest"
             onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
@@ -148,7 +148,7 @@ const TasksPage = () => {
           </SelectableButton>
 
           <SelectableButton
-            startIcon={<Checkbox disableRipple sx={{ p: 0 }} checked={selectedTypes.generalSupportCase} />}
+            showCheckbox
             isSelected={selectedTypes.generalSupportCase}
             color="generalSupportCase"
             onClick={() =>
