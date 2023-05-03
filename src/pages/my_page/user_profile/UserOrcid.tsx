@@ -18,10 +18,26 @@ import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { fetchPerson } from '../../../api/cristinApi';
+import { postOrcidCredentials } from '../../../api/orcidApi';
+import { OrcidCredentials } from '../../../types/orcid.types';
 
 interface UserOrcidProps {
   user: User;
 }
+
+const getOrcidCredentials = (search: string): OrcidCredentials => {
+  const searchParams = new URLSearchParams(search);
+  return {
+    expires_in: +(searchParams.get('expires_in') ?? '0'),
+    id_token: searchParams.get('id_token'),
+    persistent: Boolean(searchParams.get('persistent') ?? false),
+    tokenId: +(searchParams.get('tokenId') ?? '0'),
+    tokenVersion: searchParams.get('tokenVersion'),
+    token_type: searchParams.get('token_type'),
+    orcid: '',
+    access_token: searchParams.get('access_token'),
+  };
+};
 
 export const UserOrcid = ({ user }: UserOrcidProps) => {
   const { t } = useTranslation();
@@ -61,6 +77,9 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           method: 'PATCH',
           data: { orcid },
         });
+        const orcidCredentials = getOrcidCredentials(history.location.search);
+        orcidCredentials.orcid = orcidInfoResponse.data.id;
+        await postOrcidCredentials(orcidCredentials);
         if (isSuccessStatus(addOrcidResponse.status)) {
           dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
           cristinPersonQuery.refetch();
