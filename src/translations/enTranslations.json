@@ -385,6 +385,7 @@
       "reserve_doi": "Reservation of DOI failed",
       "search": "Search failed",
       "send_message": "Could not send message",
+      "storing_orcid_credentials": "Could not store orcid credentials",
       "update_customer": "Failed to update customer institution",
       "update_doi_agent": "Could not update DOI configuration",
       "update_doi_request": "Failed to update DOI request",

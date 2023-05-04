@@ -7,12 +7,12 @@ export interface OrcidResponse {
 }
 
 export interface OrcidCredentials {
-  orcid: string | null;
-  access_token: string | null;
-  token_type: string | null;
-  expires_in: number | null;
-  tokenVersion: string | null;
-  persistent: boolean | null;
-  id_token: string | null;
-  tokenId: number | null;
+  orcid: string;
+  accessToken: string;
+  tokenType: string;
+  expiresIn: number;
+  tokenVersion: string;
+  persistent: boolean;
+  idToken: string;
+  tokenId: number;
 }

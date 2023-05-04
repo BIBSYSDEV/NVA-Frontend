@@ -385,6 +385,7 @@
       "reserve_doi": "Reservasjon av DOI feila",
       "search": "Søk feila",
       "send_message": "Kunne ikkje sende melding",
+      "storing_orcid_credentials": "Kunne ikje lagre orcid påloggings signatur",
       "update_customer": "Kunne ikkje oppdatere institusjon",
       "update_doi_agent": "Kunne ikkje oppdatere DOI-konfigurering",
       "update_doi_request": "Kunne ikkje oppdatere DOI-førespurnad",

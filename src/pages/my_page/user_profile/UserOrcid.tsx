@@ -25,18 +25,35 @@ interface UserOrcidProps {
   user: User;
 }
 
-const getOrcidCredentials = (search: string, orcidUrl: string): OrcidCredentials => {
+function allPropertiesAreInCredentialsObject(rawCredentials: { [p: string]: string }) {
+  return (
+    rawCredentials.hasOwnProperty('expires_in') &&
+    isNaN(+rawCredentials['expires_in']) &&
+    rawCredentials.hasOwnProperty('id_token') &&
+    rawCredentials.hasOwnProperty('persistent') &&
+    rawCredentials.hasOwnProperty('tokenId') &&
+    isNaN(+rawCredentials['tokenId']) &&
+    rawCredentials.hasOwnProperty('tokenVersion') &&
+    rawCredentials.hasOwnProperty('token_type') &&
+    rawCredentials.hasOwnProperty('access_token')
+  );
+}
+
+const getOrcidCredentials = (search: string, orcidUrl: string): OrcidCredentials | null => {
   const searchParams = new URLSearchParams(search);
-  return {
-    expires_in: +(searchParams.get('expires_in') ?? '0'),
-    id_token: searchParams.get('id_token'),
-    persistent: Boolean(searchParams.get('persistent') ?? false),
-    tokenId: +(searchParams.get('tokenId') ?? '0'),
-    tokenVersion: searchParams.get('tokenVersion'),
-    token_type: searchParams.get('token_type'),
-    orcid: orcidUrl,
-    access_token: searchParams.get('access_token'),
-  };
+  const rawCredentials = Object.fromEntries(searchParams);
+  return allPropertiesAreInCredentialsObject(rawCredentials)
+    ? {
+        expiresIn: +rawCredentials['expires_in'],
+        idToken: rawCredentials['id_token'],
+        persistent: rawCredentials['persistent'].toLowerCase() == 'true',
+        tokenId: +rawCredentials['tokenId'],
+        tokenVersion: rawCredentials['tokenVersion'],
+        tokenType: rawCredentials['token_type'],
+        orcid: orcidUrl,
+        accessToken: rawCredentials['access_token'],
+      }
+    : null;
 };
 
 export const UserOrcid = ({ user }: UserOrcidProps) => {
@@ -78,7 +95,13 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           data: { orcid },
         });
         const orcidCredentials = getOrcidCredentials(history.location.search, orcidInfoResponse.data.id);
-        await postOrcidCredentials(orcidCredentials);
+        if (!orcidCredentials) {
+          dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'success' }));
+        } else {
+          postOrcidCredentials(orcidCredentials).catch((_fail) => {
+            dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'success' }));
+          });
+        }
         if (isSuccessStatus(addOrcidResponse.status)) {
           dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
           cristinPersonQuery.refetch();
