@@ -21,12 +21,13 @@ export const NavigationListAccordion = ({
 }: NavigationListAccordionProps) => {
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const isExpanded = currentPath.startsWith(accordionPath);
 
   return (
     <Accordion
       data-testid={dataTestId}
       disableGutters
-      expanded={currentPath.includes(accordionPath)}
+      expanded={isExpanded}
       elevation={0}
       sx={{
         mb: '0.5rem',
@@ -34,8 +35,8 @@ export const NavigationListAccordion = ({
       }}>
       <AccordionSummary
         sx={{ paddingX: '0.75rem' }}
-        expandIcon={!currentPath.includes(accordionPath) ? <ExpandMoreIcon /> : null}
-        onClick={() => !currentPath.includes(accordionPath) && history.push(defaultPath)}>
+        expandIcon={!isExpanded ? <ExpandMoreIcon /> : null}
+        onClick={() => !isExpanded && history.push(defaultPath)}>
         <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center', svg: { borderRadius: '50%' } }}>
           {startIcon}
           <Typography variant="h2" fontWeight={500}>
