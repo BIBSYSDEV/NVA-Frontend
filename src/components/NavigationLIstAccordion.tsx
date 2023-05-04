@@ -22,10 +22,6 @@ export const NavigationListAccordion = ({
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  const handleClick = () => {
-    !currentPath.includes(accordionPath) && history.push(defaultPath);
-  };
-
   return (
     <Accordion
       data-testid={dataTestId}
@@ -39,8 +35,8 @@ export const NavigationListAccordion = ({
       <AccordionSummary
         sx={{ paddingX: '0.75rem' }}
         expandIcon={!currentPath.includes(accordionPath) ? <ExpandMoreIcon /> : null}
-        onClick={handleClick}>
-        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        onClick={() => !currentPath.includes(accordionPath) && history.push(defaultPath)}>
+        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center', svg: { borderRadius: '50%' } }}>
           {startIcon}
           <Typography variant="h2" fontWeight={500}>
             {title}

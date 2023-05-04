@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Switch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -23,18 +22,13 @@ import { RootState } from '../../redux/store';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import NotFound from '../../pages/errorpages/NotFound';
 
 const EditorPage = () => {
   const { t } = useTranslation();
   const { customer } = useSelector((store: RootState) => store);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
-
-  useEffect(() => {
-    if (currentPath === UrlPathTemplate.Editor) {
-      history.replace(UrlPathTemplate.EditorInstitution);
-    }
-  }, [history, currentPath]);
 
   return (
     <StyledPageWithSideMenu>
@@ -47,7 +41,6 @@ const EditorPage = () => {
             <ArchitectureIcon
               sx={{
                 bgcolor: 'white',
-                borderRadius: '50%',
               }}
             />
           }
@@ -70,7 +63,6 @@ const EditorPage = () => {
             <GavelIcon
               sx={{
                 bgcolor: 'white',
-                borderRadius: '50%',
                 padding: '0.1rem',
               }}
             />
@@ -112,6 +104,7 @@ const EditorPage = () => {
           <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
           <EditorRoute exact path={UrlPathTemplate.EditorCurators} component={EditorCurators} />
           <EditorRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} />
+          <EditorRoute path={UrlPathTemplate.Wildcard} component={NotFound} />
         </Switch>
       </BackgroundDiv>
     </StyledPageWithSideMenu>
