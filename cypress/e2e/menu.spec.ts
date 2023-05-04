@@ -83,10 +83,12 @@ describe('Menu', () => {
     cy.setUserRolesInRedux([RoleName.Editor]);
     cy.get(`[data-testid=${dataTestId.header.editorLink}]`).click();
 
+    cy.get(`[data-testid=${dataTestId.editor.overviewAccordion}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.areaOfResponsibilityLinkButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.editor.settingsAccordion}]`).click();
     cy.get(`[data-testid=${dataTestId.editor.institutionsNameLinkButton}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.editor.vocabularyLinkButton}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.editor.publishStrategyLinkButton}]`).should('be.visible');
-    cy.get(`[data-testid=${dataTestId.editor.areaOfResponsibilityLinkButton}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.editor.doiLinkButton}]`).should('be.visible');
   });
 
