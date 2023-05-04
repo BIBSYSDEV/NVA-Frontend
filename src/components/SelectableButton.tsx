@@ -9,7 +9,11 @@ export const SelectableButton = ({ isSelected, showCheckbox = false, children, .
   <Button
     {...rest}
     startIcon={
-      showCheckbox ? <Checkbox tabIndex={-1} disableRipple sx={{ p: 0 }} checked={isSelected} /> : rest.startIcon
+      showCheckbox ? (
+        <Checkbox tabIndex={-1} disableRipple sx={{ p: 0 }} checked={isSelected} /> // TODO: Fix a11y for checkbox (NP-44680)
+      ) : (
+        rest.startIcon
+      )
     }
     variant={isSelected ? 'contained' : 'outlined'}
     sx={{
