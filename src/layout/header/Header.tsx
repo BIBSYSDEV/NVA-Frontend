@@ -120,7 +120,7 @@ export const Header = () => {
                     isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
                     color="inherit"
                     data-testid={dataTestId.header.editorLink}
-                    to={UrlPathTemplate.Editor}>
+                    to={UrlPathTemplate.EditorCurators}>
                     {customer.shortName}
                   </MenuButton>
                 ) : (

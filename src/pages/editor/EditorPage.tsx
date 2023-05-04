@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Switch, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import StoreIcon from '@mui/icons-material/Store';
+import ArchitectureIcon from '@mui/icons-material/Architecture';
+import GavelIcon from '@mui/icons-material/Gavel';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { VocabularySettings } from './VocabularySettings';
 import { PublishStrategySettings } from './PublishStrategySettings';
@@ -20,6 +21,8 @@ import {
 import { RootState } from '../../redux/store';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import NotFound from '../../pages/errorpages/NotFound';
 
 const EditorPage = () => {
   const { t } = useTranslation();
@@ -27,49 +30,72 @@ const EditorPage = () => {
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  useEffect(() => {
-    if (currentPath === UrlPathTemplate.Editor) {
-      history.replace(UrlPathTemplate.EditorInstitution);
-    }
-  }, [history, currentPath]);
-
   return (
     <StyledPageWithSideMenu>
       <SidePanel aria-labelledby="editor-title">
         <SideNavHeader text={customer?.shortName} id="editor-title" icon={StoreIcon} />
+        <NavigationListAccordion
+          dataTestId={dataTestId.editor.overviewAccordion}
+          title={t('common.overview')}
+          startIcon={
+            <ArchitectureIcon
+              sx={{
+                bgcolor: 'white',
+              }}
+            />
+          }
+          accordionPath={UrlPathTemplate.EditorOverview}
+          defaultPath={UrlPathTemplate.EditorCurators}>
+          <NavigationList>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorCurators}
+              data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
+              to={UrlPathTemplate.EditorCurators}>
+              {t('editor.curators.areas_of_responsibility')}
+            </LinkButton>
+          </NavigationList>
+        </NavigationListAccordion>
 
-        <NavigationList>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorInstitution}
-            data-testid={dataTestId.editor.institutionsNameLinkButton}
-            to={UrlPathTemplate.EditorInstitution}>
-            {t('editor.institution.institution_name')}
-          </LinkButton>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorDoi}
-            data-testid={dataTestId.editor.doiLinkButton}
-            to={UrlPathTemplate.EditorDoi}>
-            {t('common.doi_long')}
-          </LinkButton>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
-            data-testid={dataTestId.editor.vocabularyLinkButton}
-            to={UrlPathTemplate.EditorVocabulary}>
-            {t('editor.vocabulary')}
-          </LinkButton>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
-            data-testid={dataTestId.editor.publishStrategyLinkButton}
-            to={UrlPathTemplate.EditorPublishStrategy}>
-            {t('editor.publish_strategy.publish_strategy')}
-          </LinkButton>
-          <LinkButton
-            isSelected={currentPath === UrlPathTemplate.EditorCurators}
-            data-testid={dataTestId.editor.areaOfResponsibilityLinkButton}
-            to={UrlPathTemplate.EditorCurators}>
-            {t('editor.curators.areas_of_responsibility')}
-          </LinkButton>
-        </NavigationList>
+        <NavigationListAccordion
+          dataTestId={dataTestId.editor.settingsAccordion}
+          title={t('common.settings')}
+          startIcon={
+            <GavelIcon
+              sx={{
+                bgcolor: 'white',
+                padding: '0.1rem',
+              }}
+            />
+          }
+          accordionPath={UrlPathTemplate.EditorSettings}
+          defaultPath={UrlPathTemplate.EditorInstitution}>
+          <NavigationList>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorInstitution}
+              data-testid={dataTestId.editor.institutionsNameLinkButton}
+              to={UrlPathTemplate.EditorInstitution}>
+              {t('editor.institution.institution_name')}
+            </LinkButton>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorDoi}
+              data-testid={dataTestId.editor.doiLinkButton}
+              to={UrlPathTemplate.EditorDoi}>
+              {t('common.doi_long')}
+            </LinkButton>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorVocabulary}
+              data-testid={dataTestId.editor.vocabularyLinkButton}
+              to={UrlPathTemplate.EditorVocabulary}>
+              {t('editor.vocabulary')}
+            </LinkButton>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorPublishStrategy}
+              data-testid={dataTestId.editor.publishStrategyLinkButton}
+              to={UrlPathTemplate.EditorPublishStrategy}>
+              {t('editor.publish_strategy.publish_strategy')}
+            </LinkButton>
+          </NavigationList>
+        </NavigationListAccordion>
       </SidePanel>
       <BackgroundDiv>
         <Switch>
@@ -78,6 +104,7 @@ const EditorPage = () => {
           <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
           <EditorRoute exact path={UrlPathTemplate.EditorCurators} component={EditorCurators} />
           <EditorRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} />
+          <EditorRoute path={UrlPathTemplate.Wildcard} component={NotFound} />
         </Switch>
       </BackgroundDiv>
     </StyledPageWithSideMenu>

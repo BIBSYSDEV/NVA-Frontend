@@ -69,8 +69,8 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
 
   const { reference } = registration.entityDescription;
 
-  const container = reference?.publicationContext.partOf
-    ? (resourceState[reference.publicationContext.partOf] as BookRegistration)
+  const container = reference?.publicationContext.id
+    ? (resourceState[reference.publicationContext.id] as BookRegistration)
     : null;
   const containerPublicationContext = container?.entityDescription.reference?.publicationContext;
 

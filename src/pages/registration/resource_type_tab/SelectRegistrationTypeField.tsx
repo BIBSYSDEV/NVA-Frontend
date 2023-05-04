@@ -128,8 +128,8 @@ export const SelectRegistrationTypeField = () => {
             );
           setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType }, false);
           break;
-        case PublicationType.Chapter:
-          newMainType && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Chapter }, false);
+        case PublicationType.Anthology:
+          newMainType && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Anthology }, false);
           setFieldValue(
             instanceTypeBaseFieldName,
             { ...emptyChapterPublicationInstance, type: newInstanceType },
@@ -323,7 +323,7 @@ export const SelectRegistrationTypeField = () => {
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
-            mainType={PublicationType.Chapter}
+            mainType={PublicationType.Anthology}
             registrationTypes={filterRegistrationTypes(
               Object.values(ChapterType).map((registrationType) => ({
                 value: registrationType,

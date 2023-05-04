@@ -42,7 +42,7 @@ import { PublicDoi } from './PublicDoi';
 import {
   PublicOutputs,
   PublicJournal,
-  PublicPartOfContent,
+  PublicPublishedInContent,
   PublicPresentation,
   PublicPublicationContextMediaContribution,
   PublicPublisher,
@@ -197,7 +197,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicSeries publicationContext={publicationContext as ReportPublicationContext} />
             </>
           ) : isChapter(publicationInstance.type) ? (
-            <PublicPartOfContent partOf={(publicationContext as ChapterPublicationContext).partOf} />
+            <PublicPublishedInContent id={(publicationContext as ChapterPublicationContext).id} />
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
           ) : isArtistic(publicationInstance.type) ? (
