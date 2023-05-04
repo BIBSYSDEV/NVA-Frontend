@@ -3,7 +3,7 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
-import { emptyPeriod } from '../../../../../../types/common.types';
+import { emptyPeriod, emptyPlace } from '../../../../../../types/common.types';
 import { Exhibition } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
@@ -22,7 +22,7 @@ const emptyExhibition: Exhibition = {
   type: 'Exhibition',
   name: '',
   organizer: '',
-  place: { type: 'UnconfirmedPlace', label: '', country: '' },
+  place: emptyPlace,
   date: emptyPeriod,
   otherInformation: '',
   sequence: 0,
@@ -93,7 +93,7 @@ export const ExhibitionModal = ({ exhibition, onSubmit, open, closeModal }: Exhi
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.exhibitionPlace}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>

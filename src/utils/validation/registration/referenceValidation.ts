@@ -5,6 +5,7 @@ import {
   BookType,
   ChapterType,
   DegreeType,
+  ExhibitionContentType,
   JournalType,
   MediaType,
   OtherRegistrationType,
@@ -55,6 +56,7 @@ import {
   MapPublicationInstance,
 } from '../../../types/publication_types/otherRegistration.types';
 import { ContextPublisher, PublicationChannelType } from '../../../types/registration.types';
+import { ExhibitionProductionSubtype } from '../../../types/publication_types/exhibitionContent.types';
 
 const resourceErrorMessage = {
   announcementsRequired: i18n.t('feedback.validation.announcement_required'),
@@ -148,6 +150,9 @@ const resourceErrorMessage = {
     field: i18n.t('registration.resource_type.type_work'),
   }),
   typeWorkDescriptionRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.type_work_specified'),
+  }),
+  typeWorkOtherRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.type_work_specified'),
   }),
 };
@@ -503,4 +508,24 @@ const mapPublicationInstance = Yup.object<YupShape<MapPublicationInstance>>({
 export const mapReference = baseReference.shape({
   publicationContext: mapPublicationContext,
   publicationInstance: mapPublicationInstance,
+});
+
+// Exhibition
+const exhibitionProductionPublicationInstance = Yup.object({
+  type: Yup.string().oneOf(Object.values(ExhibitionContentType)).required(resourceErrorMessage.typeRequired),
+  subtype: Yup.object().shape({
+    type: Yup.string().required(resourceErrorMessage.typeWorkRequired),
+    description: Yup.string().when('type', ([type], schema) =>
+      type === ExhibitionProductionSubtype.Other
+        ? schema.required(resourceErrorMessage.typeWorkOtherRequired)
+        : schema.optional()
+    ),
+  }),
+  manifestations: Yup.array()
+    .min(1, resourceErrorMessage.announcementsRequired)
+    .required(resourceErrorMessage.announcementsRequired),
+});
+
+export const exhibitionProductionReference = baseReference.shape({
+  publicationInstance: exhibitionProductionPublicationInstance,
 });

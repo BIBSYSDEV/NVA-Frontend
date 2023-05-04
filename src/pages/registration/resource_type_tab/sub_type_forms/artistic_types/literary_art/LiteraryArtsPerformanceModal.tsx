@@ -4,6 +4,7 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
+import { emptyPlace } from '../../../../../../types/common.types';
 import {
   LiteraryArtsPerformance,
   LiteraryArtsPerformanceSubtype,
@@ -23,7 +24,7 @@ interface LiteraryArtsPerformanceModalProps {
 const emptyLiteraryArtsPerformance: LiteraryArtsPerformance = {
   type: 'LiteraryArtsPerformance',
   subtype: '',
-  place: { type: 'UnconfirmedPlace', label: '', country: '' },
+  place: emptyPlace,
   publicationDate: emptyRegistrationDate,
 };
 
@@ -85,7 +86,7 @@ export const LiteraryArtsPerformanceModal = ({
                     {...field}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    data-testid={dataTestId.registrationWizard.resourceType.subtypeField}>
                     {Object.values(LiteraryArtsPerformanceSubtype).map((performanceType) => (
                       <MenuItem key={performanceType} value={performanceType}>
                         {t(`registration.resource_type.artistic.performance_types.${performanceType}`)}
@@ -137,7 +138,7 @@ export const LiteraryArtsPerformanceModal = ({
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                         variant="filled"
                         required
                         onBlur={() => !touched && setFieldTouched(field.name)}
