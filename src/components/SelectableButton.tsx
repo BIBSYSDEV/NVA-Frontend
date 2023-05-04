@@ -5,14 +5,20 @@ interface SelectableButtonProps extends ButtonProps {
   showCheckbox?: boolean;
 }
 
-export const SelectableButton = ({ isSelected, showCheckbox = false, children, ...rest }: SelectableButtonProps) => (
+export const SelectableButton = ({
+  isSelected,
+  showCheckbox = false,
+  children,
+  startIcon,
+  ...rest
+}: SelectableButtonProps) => (
   <Button
     {...rest}
     startIcon={
       showCheckbox ? (
         <Checkbox tabIndex={-1} disableRipple sx={{ p: 0 }} checked={isSelected} /> // TODO: Fix a11y for checkbox (NP-44680)
       ) : (
-        rest.startIcon
+        startIcon
       )
     }
     variant={isSelected ? 'contained' : 'outlined'}
