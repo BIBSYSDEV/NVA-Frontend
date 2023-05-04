@@ -27,15 +27,15 @@ interface UserOrcidProps {
 
 function allPropertiesAreInCredentialsObject(rawCredentials: { [p: string]: string }) {
   return (
-    rawCredentials.hasOwnProperty('expires_in') &&
-    isNaN(+rawCredentials['expires_in']) &&
-    rawCredentials.hasOwnProperty('id_token') &&
-    rawCredentials.hasOwnProperty('persistent') &&
-    rawCredentials.hasOwnProperty('tokenId') &&
-    isNaN(+rawCredentials['tokenId']) &&
-    rawCredentials.hasOwnProperty('tokenVersion') &&
-    rawCredentials.hasOwnProperty('token_type') &&
-    rawCredentials.hasOwnProperty('access_token')
+    'expires_in' in rawCredentials &&
+    !isNaN(+rawCredentials['expires_in']) &&
+    'id_token' in rawCredentials &&
+    'persistent' in rawCredentials &&
+    'tokenId' in rawCredentials &&
+    !isNaN(+rawCredentials['tokenId']) &&
+    'tokenVersion' in rawCredentials &&
+    'token_type' in rawCredentials &&
+    'access_token' in rawCredentials
   );
 }
 
@@ -46,7 +46,7 @@ const getOrcidCredentials = (search: string, orcidUrl: string): OrcidCredentials
     ? {
         expiresIn: +rawCredentials['expires_in'],
         idToken: rawCredentials['id_token'],
-        persistent: rawCredentials['persistent'].toLowerCase() == 'true',
+        persistent: rawCredentials['persistent'].toLowerCase() === 'true',
         tokenId: +rawCredentials['tokenId'],
         tokenVersion: rawCredentials['tokenVersion'],
         tokenType: rawCredentials['token_type'],
@@ -96,35 +96,29 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         });
         const orcidCredentials = getOrcidCredentials(history.location.search, orcidInfoResponse.data.id);
         if (!orcidCredentials) {
-          dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'success' }));
+          dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'warning' }));
         } else {
-          postOrcidCredentials(orcidCredentials).catch((_fail) => {
-            dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'success' }));
-          });
-        }
-        if (isSuccessStatus(addOrcidResponse.status)) {
-          dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
-          cristinPersonQuery.refetch();
-        } else if (isErrorStatus(addOrcidResponse.status)) {
-          dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'success' }));
+          const postOrcidCredentialsResponse = await postOrcidCredentials(orcidCredentials);
+          if (isSuccessStatus(addOrcidResponse.status) && isSuccessStatus(postOrcidCredentialsResponse.status)) {
+            dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
+          } else if (isErrorStatus(addOrcidResponse.status) || isErrorStatus(postOrcidCredentialsResponse.status)) {
+            dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'success' }));
+          }
         }
       }
-      history.push(UrlPathTemplate.MyPageMyProfile);
       setIsAddingOrcid(false);
+      history.replace(UrlPathTemplate.MyPageMyProfile);
     };
 
     const orcidAccessToken = new URLSearchParams(history.location.search).get('access_token');
     if (orcidAccessToken) {
       addOrcid(orcidAccessToken);
     }
-  }, [t, dispatch, history, userCristinId, cristinPersonQuery]);
-
-  useEffect(() => {
     const orcidError = new URLSearchParams(history.location.search).get('error');
     if (orcidError) {
       dispatch(setNotification({ message: t('feedback.error.orcid_login'), variant: 'error' }));
     }
-  }, [history.location.search, dispatch, t]);
+  }, [dispatch, t, history, userCristinId]);
 
   const removeOrcid = async () => {
     setIsRemovingOrcid(true);
