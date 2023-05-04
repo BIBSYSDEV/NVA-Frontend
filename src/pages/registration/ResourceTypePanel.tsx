@@ -41,7 +41,7 @@ export const ResourceTypePanel = () => {
         <ReportForm />
       ) : mainType === PublicationType.Degree ? (
         <DegreeForm subType={instanceType} />
-      ) : mainType === PublicationType.Chapter ? (
+      ) : mainType === PublicationType.Anthology ? (
         <ChapterForm />
       ) : mainType === PublicationType.Presentation ? (
         <PresentationForm />

@@ -54,7 +54,7 @@ export const getMainRegistrationType = (instanceType: string) =>
     : isReport(instanceType)
     ? PublicationType.Report
     : isChapter(instanceType)
-    ? PublicationType.Chapter
+    ? PublicationType.Anthology
     : isPresentation(instanceType)
     ? PublicationType.Presentation
     : isArtistic(instanceType)
