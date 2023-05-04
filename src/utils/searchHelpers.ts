@@ -69,7 +69,7 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
         ? value.map((v) => formatValue(v)).join(Operator.OR)
         : formatValue(value);
 
-      const equalOperator = fieldName === SearchFieldName.TopLevelOrganization ? '=' : ':';
+      const equalOperator = fieldName === SearchFieldName.TopLevelOrganizationId ? '=' : ':';
       const query = [fieldName, valueString].join(equalOperator);
       return `${prefix}(${query})`;
     })
@@ -108,7 +108,10 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
     // Remove parentheses
     const formattedFilter = filterWithoutOperator.substring(1, filterWithoutOperator.length - 1);
 
-    const splitFieldAndValueIndex = Math.max(formattedFilter.indexOf('='), formattedFilter.indexOf(':'));
+    const equalIndex = formattedFilter.indexOf('=');
+    const colonIndex = formattedFilter.indexOf(':');
+
+    const splitFieldAndValueIndex = equalIndex === -1 ? colonIndex : equalIndex;
     const fieldName = formattedFilter.substring(0, splitFieldAndValueIndex);
     const value = formattedFilter.substring(splitFieldAndValueIndex + 1);
 
