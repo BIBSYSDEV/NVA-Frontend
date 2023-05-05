@@ -9,6 +9,7 @@ import {
   chapterReference,
   degreeReference,
   emptyStringToNull,
+  exhibitionProductionReference,
   journalReference,
   mapReference,
   mediaContributionReference,
@@ -67,7 +68,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
           return reportReference;
         case PublicationType.Degree:
           return degreeReference;
-        case PublicationType.Chapter:
+        case PublicationType.Anthology:
           return chapterReference;
         case PublicationType.Presentation:
           return presentationReference;
@@ -79,6 +80,8 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
           return researchDataReference;
         case PublicationType.GeographicalContent:
           return mapReference;
+        case PublicationType.ExhibitionContent:
+          return exhibitionProductionReference;
         default:
           return baseReference;
       }

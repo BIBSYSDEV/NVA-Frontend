@@ -3,11 +3,12 @@ export enum PublicationType {
   Book = 'Book',
   Report = 'Report',
   Degree = 'Degree',
-  Chapter = 'Chapter',
+  Anthology = 'Anthology',
   Presentation = 'Event',
   Artistic = 'Artistic',
   MediaContribution = 'MediaContribution',
   ResearchData = 'ResearchData',
+  ExhibitionContent = 'ExhibitionContent',
   GeographicalContent = 'GeographicalContent',
 }
 
@@ -91,6 +92,10 @@ export enum MediaType {
   MediaParticipationInRadioOrTv = 'MediaParticipationInRadioOrTv',
 }
 
+export enum ExhibitionContentType {
+  ExhibitionProduction = 'ExhibitionProduction',
+}
+
 export enum OtherRegistrationType {
   Map = 'Map',
 }
@@ -121,7 +126,6 @@ export enum ResourceFieldNames {
   PagesTo = 'entityDescription.reference.publicationInstance.pages.end',
   PagesType = 'entityDescription.reference.publicationInstance.pages.type',
   PagesPages = 'entityDescription.reference.publicationInstance.pages.pages',
-  PartOf = 'entityDescription.reference.publicationContext.partOf',
   PublicationContextAgentName = 'entityDescription.reference.publicationContext.agent.name',
   PublicationContextId = 'entityDescription.reference.publicationContext.id',
   PublicationContextLabel = 'entityDescription.reference.publicationContext.label',

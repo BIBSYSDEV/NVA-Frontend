@@ -12,8 +12,8 @@ export interface ChapterPublicationInstance {
 }
 
 export interface ChapterPublicationContext {
-  type: PublicationType.Chapter;
-  partOf: string | null;
+  type: PublicationType.Anthology;
+  id: string | null;
 }
 
 export const emptyChapterPublicationInstance: ChapterPublicationInstance = {

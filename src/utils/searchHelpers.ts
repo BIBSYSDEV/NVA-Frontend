@@ -1,4 +1,5 @@
 import { registrationFilters } from '../pages/search/registration_search/filters/AdvancedSearchRow';
+import { SearchFieldName } from '../types/publicationFieldNames';
 
 export enum SearchParam {
   From = 'from',
@@ -68,7 +69,9 @@ const createPropertyFilter = (properties?: PropertySearch[]) => {
         ? value.map((v) => formatValue(v)).join(Operator.OR)
         : formatValue(value);
 
-      return `${prefix}(${fieldName}=${valueString})`;
+      const equalOperator = fieldName === SearchFieldName.TopLevelOrganizationId ? '=' : ':';
+      const query = [fieldName, valueString].join(equalOperator);
+      return `${prefix}(${query})`;
     })
     .join(Operator.AND);
 
@@ -91,7 +94,8 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
   }
   const searchTermIndex = filters?.findIndex(
     // Find filter that does not point to specific field
-    (filter) => filter && !registrationFilters.some((f) => filter.includes(`${f.field}=`))
+    (filter) =>
+      filter && !registrationFilters.some((f) => filter.includes(`${f.field}=`) || filter.includes(`${f.field}:`))
   );
   const rawSearchTerm = searchTermIndex >= 0 ? filters.splice(searchTermIndex, 1)[0] : '';
   const searchTerm = stripQuotationMarks(rawSearchTerm);
@@ -104,7 +108,10 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
     // Remove parentheses
     const formattedFilter = filterWithoutOperator.substring(1, filterWithoutOperator.length - 1);
 
-    const splitFieldAndValueIndex = formattedFilter.indexOf('=');
+    const equalIndex = formattedFilter.indexOf('=');
+    const colonIndex = formattedFilter.indexOf(':');
+
+    const splitFieldAndValueIndex = equalIndex === -1 ? colonIndex : equalIndex;
     const fieldName = formattedFilter.substring(0, splitFieldAndValueIndex);
     const value = formattedFilter.substring(splitFieldAndValueIndex + 1);
 

@@ -36,12 +36,13 @@ import {
   isOtherRegistration,
   isPresentation,
   isReport,
+  isExhibitionContent,
 } from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
 import {
-  PublicArtisticOutput,
+  PublicOutputs,
   PublicJournal,
-  PublicPartOfContent,
+  PublicPublishedInContent,
   PublicPresentation,
   PublicPublicationContextMediaContribution,
   PublicPublisher,
@@ -53,6 +54,7 @@ import {
   PublicPublicationInstanceBook,
   PublicPublicationInstanceChapter,
   PublicPublicationInstanceDegree,
+  PublicPublicationInstanceExhibition,
   PublicPublicationInstanceJournal,
   PublicPublicationInstanceReport,
 } from './PublicPublicationInstance';
@@ -68,6 +70,7 @@ import {
   MediaContributionPublicationContext,
 } from '../../types/publication_types/mediaContributionRegistration.types';
 import { MapPublicationContext } from '../../types/publication_types/otherRegistration.types';
+import { ExhibitionPublicationInstance } from '../../types/publication_types/exhibitionContent.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();
@@ -84,7 +87,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   return (
     <StyledGeneralInfo>
       <div data-testid={dataTestId.registrationLandingPage.generalInfo}>
-        <Typography variant="h3" component="h2">
+        <Typography variant="h3" component="h2" gutterBottom>
           {t('registration.public_page.about_registration')}
         </Typography>
 
@@ -138,6 +141,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             <PublicPublicationInstanceArtistic
               publicationInstance={publicationInstance as ArtisticPublicationInstance}
             />
+          ) : isExhibitionContent(publicationInstance.type) ? (
+            <PublicPublicationInstanceExhibition
+              publicationInstance={publicationInstance as ExhibitionPublicationInstance}
+            />
           ) : null)}
 
         <PublicDoi registration={registration} />
@@ -190,31 +197,27 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicSeries publicationContext={publicationContext as ReportPublicationContext} />
             </>
           ) : isChapter(publicationInstance.type) ? (
-            <PublicPartOfContent partOf={(publicationContext as ChapterPublicationContext).partOf} />
+            <PublicPublishedInContent id={(publicationContext as ChapterPublicationContext).id} />
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
           ) : isArtistic(publicationInstance.type) ? (
             (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.ArtisticDesign ? (
-              <PublicArtisticOutput outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []} />
+              <PublicOutputs outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []} />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.ArtisticArchitecture ? (
-              <PublicArtisticOutput
+              <PublicOutputs
                 outputs={(publicationInstance as ArtisticPublicationInstance).architectureOutput ?? []}
                 showType
               />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.PerformingArts ? (
-              <PublicArtisticOutput outputs={(publicationInstance as ArtisticPublicationInstance).outputs ?? []} />
+              <PublicOutputs outputs={(publicationInstance as ArtisticPublicationInstance).outputs ?? []} />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.MovingPicture ? (
-              <PublicArtisticOutput outputs={(publicationInstance as ArtisticPublicationInstance).outputs ?? []} />
+              <PublicOutputs outputs={(publicationInstance as ArtisticPublicationInstance).outputs ?? []} />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.MusicPerformance ? (
-              <PublicArtisticOutput
-                outputs={(publicationInstance as ArtisticPublicationInstance).manifestations ?? []}
-              />
+              <PublicOutputs outputs={(publicationInstance as ArtisticPublicationInstance).manifestations ?? []} />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.VisualArts ? (
-              <PublicArtisticOutput outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []} />
+              <PublicOutputs outputs={(publicationInstance as ArtisticPublicationInstance).venues ?? []} />
             ) : (publicationInstance as ArtisticPublicationInstance).type === ArtisticType.LiteraryArts ? (
-              <PublicArtisticOutput
-                outputs={(publicationInstance as ArtisticPublicationInstance).manifestations ?? []}
-              />
+              <PublicOutputs outputs={(publicationInstance as ArtisticPublicationInstance).manifestations ?? []} />
             ) : null
           ) : isMediaContribution(publicationInstance.type) ? (
             isPeriodicalMediaContribution(publicationInstance.type) ? (
@@ -224,6 +227,11 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 publicationContext={publicationContext as MediaContributionPublicationContext}
               />
             )
+          ) : isExhibitionContent(publicationInstance.type) ? (
+            <PublicOutputs
+              outputs={(publicationInstance as ExhibitionPublicationInstance).manifestations ?? []}
+              showType
+            />
           ) : isOtherRegistration(publicationInstance.type) ? (
             <PublicPublisher publisher={(publicationContext as MapPublicationContext).publisher} />
           ) : null)}

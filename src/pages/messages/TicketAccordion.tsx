@@ -48,14 +48,14 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
 
   return (
     <ErrorBoundary>
-      <Accordion data-testid={`message-${registrationIdentifier}`} elevation={2}>
+      <Accordion data-testid={`message-${registrationIdentifier}`} elevation={2} sx={{ width: '100%', py: '0.5rem' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon fontSize="large" />}
           sx={{
             '.MuiAccordionSummary-content': {
               display: 'grid',
-              gridTemplateAreas: { xs: '"type date status" "title title title"', md: '"type title date status"' },
-              gridTemplateColumns: { xs: '1fr 1fr 1fr', md: '1fr 5fr 1fr 1fr' },
+              gridTemplateAreas: { xs: '"type date status" "title title title"', md: '"title type date status"' },
+              gridTemplateColumns: { xs: '1fr 1fr 1fr', md: '4fr 2fr 1fr 1fr' },
               gap: '1rem',
             },
           }}>
