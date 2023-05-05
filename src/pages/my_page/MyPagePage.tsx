@@ -3,14 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PostAddIcon from '@mui/icons-material/PostAdd';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
@@ -35,6 +33,8 @@ import {
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import ResearchProfile from '../research_profile/ResearchProfile';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import NotFound from '../errorpages/NotFound';
 
 const MyPagePage = () => {
   const { t } = useTranslation();
@@ -59,255 +59,131 @@ const MyPagePage = () => {
     <StyledPageWithSideMenu>
       <SidePanel aria-labelledby="my-page-title">
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} id="my-page-title" />
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           {user?.isCreator && [
-            <Accordion
-              elevation={0}
-              expanded={currentPath === UrlPathTemplate.MyPageMessages}
-              sx={{
-                '&.MuiAccordion-root.Mui-expanded': {
-                  margin: 0,
-                },
-                bgcolor: 'secondary.dark',
-              }}>
-              <AccordionSummary
-                onClick={() =>
-                  !currentPath.startsWith(UrlPathTemplate.MyPageMessages) &&
-                  history.push(UrlPathTemplate.MyPageMessages)
-                }
-                expandIcon={<ExpandMoreIcon color="primary" />}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '1rem',
-                    alignItems: 'center',
-                  }}>
-                  <ChatBubbleIcon fontSize="small" />
-                  <Typography variant="h3" fontWeight={500}>
-                    {t('my_page.messages.messages')}
-                  </Typography>
-                </Box>
-              </AccordionSummary>
-              <AccordionDetails sx={{ paddingX: 0, margin: 0 }}>
-                <NavigationList>
+            <NavigationListAccordion
+              dataTestId={dataTestId.myPage.messagesAccordion}
+              title={t('my_page.messages.messages')}
+              startIcon={<ChatBubbleIcon fontSize="small" />}
+              accordionPath={UrlPathTemplate.MyPageMessages}
+              defaultPath={UrlPathTemplate.MyPageMyMessages}>
+              <NavigationList>
+                <LinkButton
+                  key={dataTestId.myPage.messagesLink}
+                  data-testid={dataTestId.myPage.messagesLink}
+                  isSelected={currentPath === UrlPathTemplate.MyPageMyMessages}
+                  to={UrlPathTemplate.MyPageMyMessages}>
+                  {t('my_page.messages.messages')}
+                </LinkButton>
+              </NavigationList>
+            </NavigationListAccordion>,
+
+            <NavigationListAccordion
+              title={t('common.registrations')}
+              startIcon={<AddIcon fontSize="small" />}
+              accordionPath={UrlPathTemplate.MyPageRegistrations}
+              defaultPath={UrlPathTemplate.MyPageMyRegistrations}
+              dataTestId={dataTestId.myPage.registrationsAccordion}>
+              <NavigationList>
+                <LinkButtonRow key={dataTestId.myPage.myRegistrationsLink}>
                   <LinkButton
-                    key={dataTestId.myPage.messagesLink}
-                    data-testid={dataTestId.myPage.messagesLink}
-                    isSelected={currentPath === UrlPathTemplate.MyPageMessages}
-                    to={UrlPathTemplate.MyPageMessages}>
-                    {t('my_page.messages.messages')}
-                  </LinkButton>
-                </NavigationList>
-              </AccordionDetails>
-            </Accordion>,
-
-            <Accordion
-              elevation={0}
-              expanded={currentPath === UrlPathTemplate.MyPageRegistrations}
-              sx={{
-                '&.MuiAccordion-root.Mui-expanded': {
-                  margin: 0,
-                },
-                bgcolor: 'secondary.dark',
-              }}>
-              <AccordionSummary
-                sx={{
-                  '&.MuiAccordionSummary-content': {
-                    paddingY: 0,
-                  },
-                }}
-                onClick={() =>
-                  !currentPath.startsWith(UrlPathTemplate.MyPageRegistrations) &&
-                  history.push(UrlPathTemplate.MyPageRegistrations)
-                }
-                expandIcon={<ExpandMoreIcon color="primary" />}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '1rem',
-                    alignItems: 'center',
-                  }}>
-                  <AddIcon fontSize="small" />
-                  <Typography variant="h3" fontWeight={500}>
+                    data-testid={dataTestId.myPage.myRegistrationsLink}
+                    isSelected={currentPath === UrlPathTemplate.MyPageMyRegistrations}
+                    to={UrlPathTemplate.MyPageMyRegistrations}>
                     {t('common.registrations')}
-                  </Typography>
-                </Box>
-              </AccordionSummary>
-              <AccordionDetails sx={{ paddingX: 0, margin: 0 }}>
-                <NavigationList>
-                  <LinkButtonRow key={dataTestId.myPage.myRegistrationsLink}>
-                    <LinkButton
-                      data-testid={dataTestId.myPage.myRegistrationsLink}
-                      isSelected={currentPath === UrlPathTemplate.MyPageRegistrations}
-                      to={UrlPathTemplate.MyPageRegistrations}>
-                      {t('common.registrations')}
-                    </LinkButton>
-                    <LinkIconButton
-                      data-testid={dataTestId.myPage.newRegistrationLink}
-                      to={UrlPathTemplate.RegistrationNew}
-                      icon={<AddCircleIcon />}
-                      title={t('registration.new_registration')}
-                    />
-                  </LinkButtonRow>
-                </NavigationList>
-              </AccordionDetails>
-            </Accordion>,
+                  </LinkButton>
+                  <LinkIconButton
+                    data-testid={dataTestId.myPage.newRegistrationLink}
+                    to={UrlPathTemplate.RegistrationNew}
+                    icon={<AddCircleIcon />}
+                    title={t('registration.new_registration')}
+                  />
+                </LinkButtonRow>
+              </NavigationList>
+            </NavigationListAccordion>,
 
-            <Accordion
-              elevation={0}
-              expanded={currentPath === UrlPathTemplate.MyPageMyProjectRegistrations}
-              sx={{
-                '&.MuiAccordion-root.Mui-expanded': {
-                  margin: 0,
-                },
-                bgcolor: 'secondary.dark',
-              }}>
-              <AccordionSummary
-                onClick={() =>
-                  !currentPath.startsWith(UrlPathTemplate.MyPageMyProjectRegistrations) &&
-                  history.push(UrlPathTemplate.MyPageMyProjectRegistrations)
-                }
-                expandIcon={<ExpandMoreIcon color="primary" />}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '1rem',
-                    alignItems: 'center',
-                  }}>
-                  <AddIcon sx={{ bgcolor: 'project.main', borderRadius: '50%' }} fontSize="small" />
-                  <Typography variant="h3" fontWeight={500}>
+            <NavigationListAccordion
+              title={t('my_page.project_registrations')}
+              startIcon={<AddIcon sx={{ bgcolor: 'project.main' }} fontSize="small" />}
+              accordionPath={UrlPathTemplate.MyPageProjectRegistrations}
+              defaultPath={UrlPathTemplate.MyPageMyProjectRegistrations}
+              dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
+              <NavigationList>
+                <LinkButtonRow key={dataTestId.myPage.myProjectRegistrationsLink}>
+                  <LinkButton
+                    data-testid={dataTestId.myPage.myProjectRegistrationsLink}
+                    isSelected={currentPath === UrlPathTemplate.MyPageMyProjectRegistrations}
+                    to={UrlPathTemplate.MyPageMyProjectRegistrations}>
                     {t('my_page.project_registrations')}
-                  </Typography>
-                </Box>
-              </AccordionSummary>
-              <AccordionDetails sx={{ paddingX: 0, margin: 0 }}>
-                <NavigationList>
-                  <LinkButtonRow key={dataTestId.myPage.myProjectRegistrationsLink}>
-                    <LinkButton
-                      data-testid={dataTestId.myPage.myProjectRegistrationsLink}
-                      isSelected={currentPath === UrlPathTemplate.MyPageMyProjectRegistrations}
-                      to={UrlPathTemplate.MyPageMyProjectRegistrations}>
-                      {t('my_page.project_registrations')}
-                    </LinkButton>
+                  </LinkButton>
 
-                    <LinkIconButton
-                      data-testid={dataTestId.myPage.createProjectButton}
-                      icon={<PostAddIcon />}
-                      isSelected={showCreateProject}
-                      onClick={() => setShowCreateProject(true)}
-                      title={t('project.create_project')}
-                    />
-                  </LinkButtonRow>
-                </NavigationList>
-              </AccordionDetails>
-            </Accordion>,
+                  <LinkIconButton
+                    data-testid={dataTestId.myPage.createProjectButton}
+                    icon={<PostAddIcon />}
+                    isSelected={showCreateProject}
+                    onClick={() => setShowCreateProject(true)}
+                    title={t('project.create_project')}
+                  />
+                </LinkButtonRow>
+              </NavigationList>
+            </NavigationListAccordion>,
           ]}
-          <Accordion
-            elevation={0}
-            expanded={currentPath === UrlPathTemplate.MyPageResearchProfile}
-            sx={{
-              '&.MuiAccordion-root.Mui-expanded': {
-                margin: 0,
-              },
-              bgcolor: 'secondary.dark',
-            }}>
-            <AccordionSummary
-              onClick={() =>
-                !currentPath.startsWith(UrlPathTemplate.MyPageResearchProfile) &&
-                history.push(UrlPathTemplate.MyPageResearchProfile)
-              }
-              expandIcon={<ExpandMoreIcon color="primary" />}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: '1rem',
-                  alignItems: 'center',
-                }}>
-                <img src={orcidIcon} height="20" alt={t('common.orcid')} />
+          <NavigationListAccordion
+            title={t('my_page.research_profile')}
+            startIcon={<img src={orcidIcon} height="20" alt={t('common.orcid')} />}
+            accordionPath={UrlPathTemplate.MyPageResearchProfile}
+            defaultPath={UrlPathTemplate.MyPageMyResearchProfile}
+            dataTestId={dataTestId.myPage.researchProfileAccordion}>
+            <NavigationList>
+              <LinkButton
+                data-testid={dataTestId.myPage.researchProfileLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageMyResearchProfile}
+                to={UrlPathTemplate.MyPageMyResearchProfile}>
+                {t('my_page.research_profile')}
+              </LinkButton>
+            </NavigationList>
+          </NavigationListAccordion>
 
-                <Typography variant="h3" fontWeight={500}>
-                  {t('my_page.research_profile')}
-                </Typography>
-              </Box>
-            </AccordionSummary>
-            <AccordionDetails sx={{ paddingX: 0, margin: 0 }}>
-              <NavigationList>
-                <LinkButton
-                  data-testid={dataTestId.myPage.researchProfileLink}
-                  isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
-                  to={UrlPathTemplate.MyPageResearchProfile}>
-                  {t('my_page.research_profile')}
-                </LinkButton>
-              </NavigationList>
-            </AccordionDetails>
-          </Accordion>
-
-          <Accordion
-            elevation={0}
-            expanded={
-              currentPath === UrlPathTemplate.MyPageMyProfile ||
-              currentPath === UrlPathTemplate.MyPageMyResults ||
-              currentPath === UrlPathTemplate.MyPageMyProjects
-            }
-            sx={{
-              '&.MuiAccordion-root.Mui-expanded': {
-                margin: 0,
-              },
-              bgcolor: 'secondary.dark',
-            }}>
-            <AccordionSummary
-              onClick={() =>
-                !currentPath.startsWith(UrlPathTemplate.MyPageMyProfile) &&
-                history.push(UrlPathTemplate.MyPageMyProfile)
-              }
-              expandIcon={<ExpandMoreIcon color="primary" />}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  gap: '1rem',
-                  alignItems: 'center',
-                }}>
-                <PersonIcon fontSize="small" />
-                <Typography variant="h3" fontWeight={500}>
-                  {t('my_page.my_profile.user_profile')}
-                </Typography>
-              </Box>
-            </AccordionSummary>
-            <AccordionDetails sx={{ paddingX: 0, margin: 0 }}>
-              <NavigationList>
-                <LinkButton
-                  data-testid={dataTestId.myPage.myProfileLink}
-                  isSelected={currentPath === UrlPathTemplate.MyPageMyProfile}
-                  to={UrlPathTemplate.MyPageMyProfile}>
-                  {t('my_page.my_profile.heading.personalia')}
-                </LinkButton>
-                <LinkButton
-                  data-testid={dataTestId.myPage.myResultsLink}
-                  isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
-                  to={UrlPathTemplate.MyPageMyResults}>
-                  {t('my_page.my_profile.results')}
-                </LinkButton>
-                <LinkButton
-                  data-testid={dataTestId.myPage.myProjectsLink}
-                  isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
-                  to={UrlPathTemplate.MyPageMyProjects}>
-                  {t('my_page.my_profile.projects')}
-                </LinkButton>
-              </NavigationList>
-            </AccordionDetails>
-          </Accordion>
+          <NavigationListAccordion
+            title={t('my_page.my_profile.user_profile')}
+            startIcon={<PersonIcon fontSize="small" />}
+            accordionPath={UrlPathTemplate.MyPageMyProfile}
+            defaultPath={UrlPathTemplate.MyPageMyPersonalia}
+            dataTestId={dataTestId.myPage.myProfileAccordion}>
+            <NavigationList>
+              <LinkButton
+                data-testid={dataTestId.myPage.myProfileLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageMyPersonalia}
+                to={UrlPathTemplate.MyPageMyPersonalia}>
+                {t('my_page.my_profile.heading.personalia')}
+              </LinkButton>
+              <LinkButton
+                data-testid={dataTestId.myPage.myResultsLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
+                to={UrlPathTemplate.MyPageMyResults}>
+                {t('my_page.my_profile.results')}
+              </LinkButton>
+              <LinkButton
+                data-testid={dataTestId.myPage.myProjectsLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
+                to={UrlPathTemplate.MyPageMyProjects}>
+                {t('my_page.my_profile.projects')}
+              </LinkButton>
+            </NavigationList>
+          </NavigationListAccordion>
         </Box>
       </SidePanel>
 
       <Switch>
         <ErrorBoundary>
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMessages} component={MyMessagesPage} />
-          <CreatorRoute exact path={UrlPathTemplate.MyPageRegistrations} component={MyRegistrations} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProfile} component={MyProfile} />
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages} component={MyMessagesPage} />
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageResearchProfile} component={ResearchProfile} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResearchProfile} component={ResearchProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResults} component={MyResults} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations} component={MyProjectRegistrations} />
+          <LoggedInRoute path={UrlPathTemplate.Wildcard} component={NotFound} />
         </ErrorBoundary>
       </Switch>
       {user?.isCreator && (

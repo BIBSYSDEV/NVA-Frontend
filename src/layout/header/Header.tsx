@@ -160,7 +160,7 @@ export const Header = () => {
                   color="inherit"
                   data-testid={dataTestId.header.myPageLink}
                   isSelected={currentPath.startsWith(UrlPathTemplate.MyPage)}
-                  to={UrlPathTemplate.MyPage}
+                  to={UrlPathTemplate.MyPageMyMessages}
                   startIcon={<FavoriteBorderIcon />}>
                   {t('my_page.my_page')}
                 </MenuButton>
