@@ -130,15 +130,15 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
   ) : null;
 };
 
-export const PublicPartOfContent = ({ partOf }: { partOf: string | null }) => {
+export const PublicPublishedInContent = ({ id }: { id: string | null }) => {
   const { t } = useTranslation();
 
-  return partOf ? (
+  return id ? (
     <>
       <Typography variant="h3" component="p">
         {t('registration.resource_type.chapter.published_in')}
       </Typography>
-      <RegistrationSummary id={partOf} />
+      <RegistrationSummary id={id} />
     </>
   ) : null;
 };
