@@ -43,7 +43,7 @@ export const ChapterForm = () => {
 
         {anthologyChapterTypes.includes(instanceType) ? (
           <SearchContainerField
-            fieldName={ResourceFieldNames.PartOf}
+            fieldName={ResourceFieldNames.PublicationContextId}
             searchSubtypes={[BookType.Anthology]}
             label={t('registration.resource_type.chapter.published_in')}
             placeholder={t('registration.resource_type.chapter.search_for_anthology')}
@@ -53,7 +53,7 @@ export const ChapterForm = () => {
           />
         ) : instanceType === ChapterType.ConferenceAbstract ? (
           <SearchContainerField
-            fieldName={ResourceFieldNames.PartOf}
+            fieldName={ResourceFieldNames.PublicationContextId}
             searchSubtypes={[ReportType.BookOfAbstracts]}
             label={t('registration.resource_type.chapter.published_in')}
             placeholder={t('registration.resource_type.chapter.search_for_book_of_abstracts')}
@@ -63,7 +63,7 @@ export const ChapterForm = () => {
           />
         ) : instanceType === ChapterType.ReportChapter ? (
           <SearchContainerField
-            fieldName={ResourceFieldNames.PartOf}
+            fieldName={ResourceFieldNames.PublicationContextId}
             searchSubtypes={Object.values(ReportType)}
             label={t('registration.resource_type.chapter.published_in')}
             placeholder={t('registration.resource_type.chapter.search_for_report')}

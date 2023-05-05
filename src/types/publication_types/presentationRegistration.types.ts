@@ -1,6 +1,6 @@
 import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { PresentationType, PublicationType } from '../publicationFieldNames';
-import { Place, Period, emptyPeriod } from '../common.types';
+import { Place, Period, emptyPeriod, UnconfirmedOrganization, emptyPlace } from '../common.types';
 
 export interface PresentationRegistration extends BaseRegistration {
   entityDescription: PresentationEntityDescription;
@@ -18,19 +18,14 @@ export const emptyPresentationPublicationContext: PresentationPublicationContext
   type: PublicationType.Presentation,
   label: '',
   agent: { type: 'UnconfirmedOrganization', name: '' },
-  place: { type: 'UnconfirmedPlace', label: '', country: '' },
+  place: emptyPlace,
   time: emptyPeriod,
 };
-
-interface Agent {
-  type: 'UnconfirmedOrganization';
-  name: string;
-}
 
 export interface PresentationPublicationContext {
   type: PublicationType.Presentation;
   label: string;
-  agent: Agent | null;
+  agent: UnconfirmedOrganization | null;
   place: Place | null;
   time: Period | null;
 }
