@@ -428,4 +428,7 @@ export const dataTestId = {
     newRegistrationLink: 'new-registration-link',
     researchProfileLink: 'research-profile-link',
   },
+  tasksPage: {
+    approvalAccordion: 'approval-accordion',
+  },
 };
