@@ -48,14 +48,20 @@ describe('Menu', () => {
     cy.setUserRolesInRedux([]);
     cy.get(`[data-testid=${dataTestId.myPage.messagesLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.myPage.myProfileAccordion}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.myProfileLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.researchProfileAccordion}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.researchProfileLink}]`).should('be.visible');
 
     cy.setUserRolesInRedux([RoleName.Creator]);
+    cy.get(`[data-testid=${dataTestId.myPage.messagesAccordion}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.messagesLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.registrationsAccordion}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).should('be.visible');
-    cy.get(`[data-testid=${dataTestId.myPage.myProfileLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.researchProfileAccordion}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.researchProfileLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.myPage.myProfileAccordion}]`).click();
+    cy.get(`[data-testid=${dataTestId.myPage.myProfileLink}]`).should('be.visible');
   });
 
   it('User sees Basic Data menu options', () => {
