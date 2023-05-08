@@ -25,8 +25,8 @@ interface UserOrcidProps {
   user: User;
 }
 
-const allPropertiesAreInCredentialsObject = (rawCredentials: { [p: string]: string }) => {
-  return (
+const allPropertiesAreInCredentialsObject = (rawCredentials: { [p: string]: string }) => 
+  (
     'expires_in' in rawCredentials &&
     !isNaN(+rawCredentials['expires_in']) &&
     'id_token' in rawCredentials &&
@@ -37,7 +37,6 @@ const allPropertiesAreInCredentialsObject = (rawCredentials: { [p: string]: stri
     'token_type' in rawCredentials &&
     'access_token' in rawCredentials
   );
-};
 
 const getOrcidCredentials = (search: string, orcidUrl: string): OrcidCredentials | null => {
   const searchParams = new URLSearchParams(search);
