@@ -131,7 +131,6 @@ const MyPagePage = () => {
           </NavigationListAccordion>,
         ]}
         <NavigationListAccordion
-          key={dataTestId.myPage.researchProfileAccordion}
           title={t('my_page.research_profile')}
           startIcon={<img src={orcidIcon} height="20" alt={t('common.orcid')} />}
           accordionPath={UrlPathTemplate.MyPageResearchProfile}
@@ -148,7 +147,6 @@ const MyPagePage = () => {
         </NavigationListAccordion>
 
         <NavigationListAccordion
-          key={dataTestId.myPage.myProfileAccordion}
           title={t('my_page.my_profile.user_profile')}
           startIcon={<PersonIcon fontSize="small" />}
           accordionPath={UrlPathTemplate.MyPageMyProfile}
