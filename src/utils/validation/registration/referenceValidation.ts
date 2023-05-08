@@ -124,11 +124,11 @@ const resourceErrorMessage = {
     field: i18n.t('registration.resource_type.number_of_pages'),
     limit: 1,
   }),
-  partOfRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('registration.resource_type.chapter.published_in'),
-  }),
   placeRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('registration.resource_type.place_for_event'),
+  }),
+  publishedInRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.resource_type.chapter.published_in'),
   }),
   publisherNotSelected: i18n.t('feedback.validation.not_selected', {
     field: i18n.t('common.publisher'),
@@ -330,7 +330,7 @@ const chapterPublicationInstance = Yup.object<YupShape<ChapterPublicationInstanc
 });
 
 const chapterPublicationContext = Yup.object<YupShape<ChapterPublicationContext>>({
-  partOf: Yup.string().nullable().required(resourceErrorMessage.partOfRequired),
+  id: Yup.string().nullable().required(resourceErrorMessage.publishedInRequired),
 });
 
 export const chapterReference = baseReference.shape({

@@ -240,13 +240,13 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
           },
         },
       };
-    case PublicationType.Chapter:
+    case PublicationType.Anthology:
       return {
         entityDescription: {
           reference: {
             publicationContext: {
               type: true,
-              partOf: true,
+              id: true,
             },
             publicationInstance: {
               type: true,

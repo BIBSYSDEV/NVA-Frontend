@@ -28,6 +28,7 @@ import { StyledPageWithSideMenu, SidePanel, SideNavHeader } from '../../componen
 import { setNotification } from '../../redux/notificationSlice';
 import { fetchTickets } from '../../api/searchApi';
 import { TicketStatus } from '../../types/publication_types/messages.types';
+import { SelectableButton } from '../../components/SelectableButton';
 
 const rowsPerPageOptions = [10, 20, 50];
 
@@ -125,53 +126,38 @@ const TasksPage = () => {
 
         <Divider />
 
-        <FormGroup sx={{ m: '1rem' }}>
-          <FormControlLabel
-            checked={selectedTypes.doiRequest}
-            control={
-              <Checkbox
-                sx={{ py: '0.2rem' }}
-                onChange={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}
-              />
-            }
-            label={
-              selectedTypes.doiRequest && doiRequestCount
-                ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
-                : t('my_page.messages.types.DoiRequest')
-            }
-          />
-          <FormControlLabel
-            checked={selectedTypes.publishingRequest}
-            control={
-              <Checkbox
-                sx={{ py: '0.2rem' }}
-                onChange={() =>
-                  setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
-                }
-              />
-            }
-            label={
-              selectedTypes.publishingRequest && publishingRequestCount
-                ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
-                : t('my_page.messages.types.PublishingRequest')
-            }
-          />
-          <FormControlLabel
-            checked={selectedTypes.generalSupportCase}
-            control={
-              <Checkbox
-                sx={{ py: '0.2rem' }}
-                onChange={() =>
-                  setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
-                }
-              />
-            }
-            label={
-              selectedTypes.generalSupportCase && generalSupportCaseCount
-                ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
-                : t('my_page.messages.types.GeneralSupportCase')
-            }
-          />
+        <FormGroup sx={{ m: '1rem', gap: '0.5rem', width: 'fit-content' }}>
+          <SelectableButton
+            showCheckbox
+            isSelected={selectedTypes.publishingRequest}
+            color="publishingRequest"
+            onClick={() => setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })}>
+            {selectedTypes.publishingRequest && publishingRequestCount
+              ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
+              : t('my_page.messages.types.PublishingRequest')}
+          </SelectableButton>
+
+          <SelectableButton
+            showCheckbox
+            isSelected={selectedTypes.doiRequest}
+            color="doiRequest"
+            onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
+            {selectedTypes.doiRequest && doiRequestCount
+              ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
+              : t('my_page.messages.types.DoiRequest')}
+          </SelectableButton>
+
+          <SelectableButton
+            showCheckbox
+            isSelected={selectedTypes.generalSupportCase}
+            color="generalSupportCase"
+            onClick={() =>
+              setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
+            }>
+            {selectedTypes.generalSupportCase && generalSupportCaseCount
+              ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
+              : t('my_page.messages.types.GeneralSupportCase')}
+          </SelectableButton>
         </FormGroup>
 
         <FormGroup sx={{ m: '1rem' }}>
