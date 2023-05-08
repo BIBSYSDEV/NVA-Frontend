@@ -55,19 +55,19 @@ export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
 };
 
 export const NavigationList = ({ sx, ...props }: BoxProps) => (
-  <nav>
-    <Box
-      sx={{
-        pt: '0.5rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.5rem',
-        a: { textTransform: 'none' },
-        ...sx,
-      }}
-      {...props}
-    />
-  </nav>
+  <Box
+    component="nav"
+    sx={{
+      mx: '0.5rem',
+      display: 'flex',
+      width: 'fit-content',
+      flexDirection: 'column',
+      gap: '0.5rem',
+      a: { textTransform: 'none' },
+      ...sx,
+    }}
+    {...props}
+  />
 );
 
 interface LinkButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
@@ -76,7 +76,7 @@ interface LinkButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
 
 export const LinkButton = ({ isSelected, sx, ...rest }: LinkButtonProps) => (
   <Button
-    sx={{ bgcolor: isSelected ? 'primary.main' : 'background.default', ml: '1rem', width: 'fit-content', ...sx }}
+    sx={{ bgcolor: isSelected ? 'primary.main' : 'background.default', justifyContent: 'start', ...sx }}
     variant={isSelected ? 'contained' : 'outlined'}
     LinkComponent={rest.to ? Link : undefined}
     {...rest}
