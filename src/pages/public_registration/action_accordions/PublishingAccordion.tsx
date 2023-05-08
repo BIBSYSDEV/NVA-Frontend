@@ -24,6 +24,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { RootState } from '../../../redux/store';
 import { MessageList } from '../../messages/MessageList';
+import { MessageForm } from '../../../components/MessageForm';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -31,6 +32,7 @@ interface PublishingAccordionProps {
   publishingRequestTicket: Ticket | null;
   userIsCurator: boolean;
   isLoadingData: boolean;
+  addMessage: (ticketId: string, message: string) => void;
 }
 
 enum LoadingState {
@@ -46,6 +48,7 @@ export const PublishingAccordion = ({
   refetchRegistrationAndTickets,
   userIsCurator,
   isLoadingData,
+  addMessage,
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -224,6 +227,24 @@ export const PublishingAccordion = ({
             </>
           )}
 
+          <Accordion elevation={3}>
+            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+              {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
+            </AccordionSummary>
+            <AccordionDetails>
+              <>
+                <MessageList messages={ticketMessages} />
+                {hasPendingTicket && (
+                  <MessageForm
+                    confirmAction={(message) => {
+                      addMessage(publishingRequestTicket.id, message);
+                    }}
+                  />
+                )}
+              </>
+            </AccordionDetails>
+          </Accordion>
+
           {isDraftRegistration && !publishingRequestTicket && (
             <LoadingButton
               disabled={isLoading !== LoadingState.None || !registrationIsValid}
@@ -264,14 +285,6 @@ export const PublishingAccordion = ({
             </Box>
           )}
         </AccordionDetails>
-        <Accordion>
-          <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-            {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
-          </AccordionSummary>
-          <AccordionDetails>
-            {ticketMessages.length > 0 ? <MessageList messages={ticketMessages} /> : t('my_page.messages.no_messages')}
-          </AccordionDetails>
-        </Accordion>
       </Accordion>
     </>
   );
