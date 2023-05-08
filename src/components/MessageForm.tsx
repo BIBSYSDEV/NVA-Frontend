@@ -49,7 +49,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
                 data-testid="message-field"
                 variant="filled"
                 multiline
-                rows="2"
+                maxRows={Infinity}
                 fullWidth
                 label={t('common.message')}
                 required

@@ -137,153 +137,149 @@ export const PublishingAccordion = ({
 
   const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
 
-  const ticketMessages = publishingRequestTicket !== null ? publishingRequestTicket?.messages : [];
+  const ticketMessages = publishingRequestTicket?.messages ?? [];
 
   return (
-    <>
-      <Accordion
-        data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
-        elevation={3}
-        defaultExpanded={isDraftRegistration || canHandlePublishingRequest || hasMismatchingPublishedStatus}>
-        <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-          {t('registration.public_page.publishing_request')} - {t(`registration.status.${registration.status}`)}
-          {!registrationIsValid && (
-            <Tooltip title={t('registration.public_page.validation_errors')}>
-              <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
-            </Tooltip>
-          )}
-        </AccordionSummary>
-        <AccordionDetails>
-          {tabErrors && (
-            <ErrorList
-              tabErrors={tabErrors}
-              description={<Typography>{t('registration.public_page.error_description')}</Typography>}
-              actions={
-                <Button
-                  variant="outlined"
-                  component={RouterLink}
-                  to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
-                  endIcon={<EditIcon />}
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
-                  {t('registration.public_page.go_back_to_wizard')}
-                </Button>
-              }
-            />
-          )}
-
-          {isPublishedRegistration && (
-            <Typography paragraph>
-              {t('registration.public_page.published_date', {
-                date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
-                interpolation: { escapeValue: false },
-              })}
-            </Typography>
-          )}
-
-          {/* Option to reload data if status is not up to date with ticket */}
-          {hasMismatchingPublishedStatus && (
-            <>
-              <Typography gutterBottom>
-                {hasUnpublishedFiles && isPublishedRegistration
-                  ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
-                  : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
-              </Typography>
-              <LoadingButton
+    <Accordion
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
+      elevation={3}
+      defaultExpanded={isDraftRegistration || canHandlePublishingRequest || hasMismatchingPublishedStatus}>
+      <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+        {t('registration.public_page.publishing_request')} - {t(`registration.status.${registration.status}`)}
+        {!registrationIsValid && (
+          <Tooltip title={t('registration.public_page.validation_errors')}>
+            <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
+          </Tooltip>
+        )}
+      </AccordionSummary>
+      <AccordionDetails>
+        {tabErrors && (
+          <ErrorList
+            tabErrors={tabErrors}
+            description={<Typography>{t('registration.public_page.error_description')}</Typography>}
+            actions={
+              <Button
                 variant="outlined"
-                loading={isLoadingData}
-                onClick={refetchRegistrationAndTickets}
-                startIcon={<RefreshIcon />}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
-                {t('registration.public_page.tasks_panel.reload')}
-              </LoadingButton>
-            </>
-          )}
+                component={RouterLink}
+                to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
+                endIcon={<EditIcon />}
+                data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
+                {t('registration.public_page.go_back_to_wizard')}
+              </Button>
+            }
+          />
+        )}
 
-          {/* Show current status info */}
-          {!!publishingRequestTicket &&
-            !hasMismatchingPublishedStatus &&
-            (isDraftRegistration || hasUnpublishedFiles) &&
-            (registratorPublishesMetadataOnly ? (
-              hasClosedTicket ? (
-                <Typography paragraph>
-                  {t('registration.public_page.tasks_panel.has_rejected_files_publishing_request')}
-                </Typography>
-              ) : hasPendingTicket ? (
-                <Typography paragraph>
-                  {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}
-                </Typography>
-              ) : null
-            ) : null)}
+        {isPublishedRegistration && (
+          <Typography paragraph>
+            {t('registration.public_page.published_date', {
+              date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
+              interpolation: { escapeValue: false },
+            })}
+          </Typography>
+        )}
 
-          {/* Tell user what they can publish */}
-          {!publishingRequestTicket && isDraftRegistration && registrationIsValid && (
-            <>
-              {registratorPublishesMetadataAndFiles ? (
-                <Typography>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
-              ) : registratorPublishesMetadataOnly ? (
-                <Typography>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
-              ) : null}
-              <Typography>{t('registration.public_page.tasks_panel.review_preview_before_publishing')}</Typography>
-            </>
-          )}
-
-          <Accordion elevation={3} sx={{ maxWidth: '60rem' }} color="inherit">
-            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-              {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <MessageList messages={ticketMessages} />
-                {hasPendingTicket && (
-                  <MessageForm
-                    confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)}
-                  />
-                )}
-              </Box>
-            </AccordionDetails>
-          </Accordion>
-
-          {isDraftRegistration && !publishingRequestTicket && (
+        {/* Option to reload data if status is not up to date with ticket */}
+        {hasMismatchingPublishedStatus && (
+          <>
+            <Typography gutterBottom>
+              {hasUnpublishedFiles && isPublishedRegistration
+                ? t('registration.public_page.tasks_panel.files_will_soon_be_published')
+                : t('registration.public_page.tasks_panel.registration_will_soon_be_published')}
+            </Typography>
             <LoadingButton
-              disabled={isLoading !== LoadingState.None || !registrationIsValid}
-              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
-              sx={{ mt: '1rem' }}
-              color="primary"
-              variant="contained"
-              endIcon={<CloudUploadIcon />}
-              loadingPosition="end"
-              onClick={onClickPublish}
-              loading={isLoadingData || isLoading === LoadingState.CreatePublishingREquest}>
-              {t('common.publish')}
+              variant="outlined"
+              loading={isLoadingData}
+              onClick={refetchRegistrationAndTickets}
+              startIcon={<RefreshIcon />}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
+              {t('registration.public_page.tasks_panel.reload')}
             </LoadingButton>
-          )}
+          </>
+        )}
 
-          {canHandlePublishingRequest && !hasMismatchingPublishedStatus && (
-            <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
-              <LoadingButton
-                variant="contained"
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
-                endIcon={<CheckIcon />}
-                loadingPosition="end"
-                onClick={() => updatePendingPublishingRequest('Completed')}
-                loading={isLoading === LoadingState.ApprovePulishingRequest}
-                disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-                {t('registration.public_page.approve_publish_request')}
-              </LoadingButton>
-              <LoadingButton
-                variant="contained"
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
-                endIcon={<CloseIcon />}
-                loadingPosition="end"
-                onClick={() => updatePendingPublishingRequest('Closed')}
-                loading={isLoading === LoadingState.RejectPublishingRequest}
-                disabled={isLoadingData || isLoading !== LoadingState.None}>
-                {t('registration.public_page.reject_publish_request')}
-              </LoadingButton>
+        {/* Show current status info */}
+        {!!publishingRequestTicket &&
+          !hasMismatchingPublishedStatus &&
+          (isDraftRegistration || hasUnpublishedFiles) &&
+          (registratorPublishesMetadataOnly ? (
+            hasClosedTicket ? (
+              <Typography paragraph>
+                {t('registration.public_page.tasks_panel.has_rejected_files_publishing_request')}
+              </Typography>
+            ) : hasPendingTicket ? (
+              <Typography paragraph>
+                {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}
+              </Typography>
+            ) : null
+          ) : null)}
+
+        {/* Tell user what they can publish */}
+        {!publishingRequestTicket && isDraftRegistration && registrationIsValid && (
+          <>
+            {registratorPublishesMetadataAndFiles ? (
+              <Typography>{t('registration.public_page.tasks_panel.you_can_publish_everything')}</Typography>
+            ) : registratorPublishesMetadataOnly ? (
+              <Typography>{t('registration.public_page.tasks_panel.you_can_publish_metadata')}</Typography>
+            ) : null}
+            <Typography>{t('registration.public_page.tasks_panel.review_preview_before_publishing')}</Typography>
+          </>
+        )}
+
+        <Accordion elevation={3} sx={{ maxWidth: '60rem' }} color="inherit">
+          <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+            {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <MessageList messages={ticketMessages} />
+              {hasPendingTicket && (
+                <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
+              )}
             </Box>
-          )}
-        </AccordionDetails>
-      </Accordion>
-    </>
+          </AccordionDetails>
+        </Accordion>
+
+        {isDraftRegistration && !publishingRequestTicket && (
+          <LoadingButton
+            disabled={isLoading !== LoadingState.None || !registrationIsValid}
+            data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
+            sx={{ mt: '1rem' }}
+            color="primary"
+            variant="contained"
+            endIcon={<CloudUploadIcon />}
+            loadingPosition="end"
+            onClick={onClickPublish}
+            loading={isLoadingData || isLoading === LoadingState.CreatePublishingREquest}>
+            {t('common.publish')}
+          </LoadingButton>
+        )}
+
+        {canHandlePublishingRequest && !hasMismatchingPublishedStatus && (
+          <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+            <LoadingButton
+              variant="contained"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
+              endIcon={<CheckIcon />}
+              loadingPosition="end"
+              onClick={() => updatePendingPublishingRequest('Completed')}
+              loading={isLoading === LoadingState.ApprovePulishingRequest}
+              disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
+              {t('registration.public_page.approve_publish_request')}
+            </LoadingButton>
+            <LoadingButton
+              variant="contained"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
+              endIcon={<CloseIcon />}
+              loadingPosition="end"
+              onClick={() => updatePendingPublishingRequest('Closed')}
+              loading={isLoading === LoadingState.RejectPublishingRequest}
+              disabled={isLoadingData || isLoading !== LoadingState.None}>
+              {t('registration.public_page.reject_publish_request')}
+            </LoadingButton>
+          </Box>
+        )}
+      </AccordionDetails>
+    </Accordion>
   );
 };
