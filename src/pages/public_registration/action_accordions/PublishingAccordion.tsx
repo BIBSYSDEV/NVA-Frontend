@@ -32,7 +32,7 @@ interface PublishingAccordionProps {
   publishingRequestTicket: Ticket | null;
   userIsCurator: boolean;
   isLoadingData: boolean;
-  addMessage: (ticketId: string, message: string) => void;
+  addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
 
 enum LoadingState {
@@ -232,16 +232,14 @@ export const PublishingAccordion = ({
               {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
             </AccordionSummary>
             <AccordionDetails>
-              <>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <MessageList messages={ticketMessages} />
                 {hasPendingTicket && (
                   <MessageForm
-                    confirmAction={(message) => {
-                      addMessage(publishingRequestTicket.id, message);
-                    }}
+                    confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)}
                   />
                 )}
-              </>
+              </Box>
             </AccordionDetails>
           </Accordion>
 

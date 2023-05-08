@@ -42,14 +42,8 @@ export const ActionPanel = ({
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(addMessageResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
-      // const newMessage: Message = {
-      //   ...messagesCopy[0],
-      //   createdDate: new Date().toString(),
-      //   sender: username ?? '',
-      //   text: message,
-      // };
-      // setMessagesCopy([...messagesCopy, newMessage]);
       refetchRegistrationAndTickets();
+      return true;
     }
   };
 
