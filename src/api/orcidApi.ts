@@ -1,4 +1,4 @@
-import { authenticatedApiRequest2 } from './apiRequest';
+import { authenticatedApiRequest } from './apiRequest';
 import { OrcidApiPath } from './apiPaths';
 import { OrcidCredentials } from '../types/orcid.types';
 
