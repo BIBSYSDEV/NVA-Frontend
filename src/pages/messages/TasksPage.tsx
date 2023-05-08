@@ -128,7 +128,7 @@ const TasksPage = () => {
 
         <Divider />
         <NavigationListAccordion
-          title={t('common.approval')}
+          title={t('tasks.user_dialog')}
           startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} fontSize="small" />}
           accordionPath={UrlPathTemplate.Tasks}
           defaultPath={UrlPathTemplate.Tasks}

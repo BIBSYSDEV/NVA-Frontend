@@ -109,7 +109,6 @@
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
     "all": "Alle",
-    "approval": "Godkjenning",
     "cancel": "Avbryt",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
@@ -1502,6 +1501,7 @@
   },
   "tasks": {
     "limited_to": "Avgrenset til: \"{{name}}\"",
-    "tasks": "Oppgaver"
+    "tasks": "Oppgaver",
+    "user_dialog": "Brukerdialog"
   }
 }
