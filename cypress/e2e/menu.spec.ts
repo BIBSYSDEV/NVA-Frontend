@@ -104,7 +104,7 @@ describe('Menu', () => {
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
 
-    cy.visit(UrlPathTemplate.MyPageRegistrations);
+    cy.visit(UrlPathTemplate.MyPageMyRegistrations);
     cy.mocklogin();
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');

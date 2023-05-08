@@ -174,8 +174,8 @@ const MyPagePage = () => {
         </Box>
       </SidePanel>
 
-      <Switch>
-        <ErrorBoundary>
+      <ErrorBoundary>
+        <Switch>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages} component={MyMessagesPage} />
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
@@ -183,9 +183,9 @@ const MyPagePage = () => {
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResearchProfile} component={ResearchProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResults} component={MyResults} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations} component={MyProjectRegistrations} />
-          <LoggedInRoute path={UrlPathTemplate.Wildcard} component={NotFound} />
-        </ErrorBoundary>
-      </Switch>
+          <LoggedInRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} />
+        </Switch>
+      </ErrorBoundary>
       {user?.isCreator && (
         <ProjectFormDialog
           open={showCreateProject}
