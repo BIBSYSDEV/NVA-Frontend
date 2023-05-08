@@ -96,7 +96,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         });
         const orcidCredentials = getOrcidCredentials(history.location.search, orcidInfoResponse.data.id);
         if (!orcidCredentials) {
-          dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'warning' }));
+          dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'error' }));
         } else {
           const postOrcidCredentialsResponse = await postOrcidCredentials(orcidCredentials);
           if (isSuccessStatus(addOrcidResponse.status) && isSuccessStatus(postOrcidCredentialsResponse.status)) {
