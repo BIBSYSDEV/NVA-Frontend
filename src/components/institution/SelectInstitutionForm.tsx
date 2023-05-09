@@ -108,11 +108,11 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                 <Autocomplete
                   {...field}
                   options={options}
-                  inputValue={field.value ? getLanguageString(field.value.name) : searchTerm}
-                  getOptionLabel={(option) => getLanguageString(option.name)}
+                  inputValue={field.value ? getLanguageString(field.value.labels) : searchTerm}
+                  getOptionLabel={(option) => getLanguageString(option.labels)}
                   renderOption={(props, option) => (
                     <li {...props} key={option.id}>
-                      {getLanguageString(option.name)}
+                      {getLanguageString(option.labels)}
                     </li>
                   )}
                   filterOptions={(options) => options}
@@ -146,10 +146,10 @@ export const SelectInstitutionForm = ({ onSubmit, onClose, suggestedInstitutions
                 {({ field }: FieldProps<Organization>) => (
                   <Autocomplete
                     options={getSortedSubUnits(values.unit?.hasPart)}
-                    getOptionLabel={(option) => getLanguageString(option.name)}
+                    getOptionLabel={(option) => getLanguageString(option.labels)}
                     renderOption={(props, option) => (
                       <li {...props} key={option.id}>
-                        {getLanguageString(option.name)}
+                        {getLanguageString(option.labels)}
                       </li>
                     )}
                     onChange={(_, value) => setFieldValue(field.name, value)}

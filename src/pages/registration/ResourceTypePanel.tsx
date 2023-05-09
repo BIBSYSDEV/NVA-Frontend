@@ -22,10 +22,11 @@ import { MediaContributionForm } from './resource_type_tab/sub_type_forms/media_
 import { MediaContributionPeriodicalForm } from './resource_type_tab/sub_type_forms/media_types/MediaContributionPeriodicalForm';
 import { DataManagementPlanForm } from './resource_type_tab/sub_type_forms/research_data_types/DataManagementPlanForm';
 import { DatasetForm } from './resource_type_tab/sub_type_forms/research_data_types/DatasetForm';
+import { ExhibitionProductionForm } from './resource_type_tab/sub_type_forms/exhibition_types/ExhibitionProductionForm';
 
 export const ResourceTypePanel = () => {
   const { values } = useFormikContext<Registration>();
-  const instanceType = values.entityDescription?.reference?.publicationInstance.type ?? '';
+  const instanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
   const mainType = getMainRegistrationType(instanceType);
 
   return (
@@ -40,7 +41,7 @@ export const ResourceTypePanel = () => {
         <ReportForm />
       ) : mainType === PublicationType.Degree ? (
         <DegreeForm subType={instanceType} />
-      ) : mainType === PublicationType.Chapter ? (
+      ) : mainType === PublicationType.Anthology ? (
         <ChapterForm />
       ) : mainType === PublicationType.Presentation ? (
         <PresentationForm />
@@ -72,6 +73,8 @@ export const ResourceTypePanel = () => {
         ) : instanceType === ResearchDataType.Dataset ? (
           <DatasetForm />
         ) : null
+      ) : mainType === PublicationType.ExhibitionContent ? (
+        <ExhibitionProductionForm />
       ) : mainType === PublicationType.GeographicalContent ? (
         <MapForm />
       ) : null}

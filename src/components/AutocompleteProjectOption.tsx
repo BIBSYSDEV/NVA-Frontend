@@ -19,7 +19,7 @@ export const AutocompleteProjectOption = ({ project, inputValue, ...props }: Aut
         <EmphasizeSubstring text={project.title} emphasized={inputValue} />
       </Typography>
       <Typography variant="body2" color="textSecondary">
-        {getLanguageString(project.coordinatingInstitution.name)}
+        {getLanguageString(project.coordinatingInstitution.labels)}
       </Typography>
     </Box>
   </li>

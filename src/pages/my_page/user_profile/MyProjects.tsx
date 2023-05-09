@@ -11,12 +11,13 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { canEditProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 
 export const MyProjects = () => {
   const { t } = useTranslation();
 
   const user = useSelector((store: RootState) => store.user);
-  const userCristinId = user?.cristinId?.split('/').pop() ?? '';
+  const userCristinId = getIdentifierFromId(user?.cristinId ?? '');
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);

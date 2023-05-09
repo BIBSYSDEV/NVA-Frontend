@@ -7,6 +7,7 @@ import { TypedLabel } from '../../../types/project.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { ProjectFieldName } from './ProjectFormDialog';
 import { RelatedProjectsField } from './RelatedProjectsField';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 export const ProjectFormPanel2 = () => {
   const { t } = useTranslation();
@@ -18,6 +19,7 @@ export const ProjectFormPanel2 = () => {
           <Autocomplete
             options={cristinCategories}
             multiple
+            data-testid={dataTestId.registrationWizard.description.projectForm.projectCategoryField}
             getOptionLabel={(option) => getLanguageString(option.label)}
             isOptionEqualToValue={(option, value) => option.type === value.type}
             value={field.value}
@@ -32,6 +34,7 @@ export const ProjectFormPanel2 = () => {
           <Autocomplete
             options={cristinKeywords}
             multiple
+            data-testid={dataTestId.registrationWizard.description.projectForm.keywordsField}
             getOptionLabel={(option) => getLanguageString(option.label)}
             isOptionEqualToValue={(option, value) => option.type === value.type}
             value={field.value}
@@ -50,6 +53,7 @@ export const ProjectFormPanel2 = () => {
             fullWidth
             multiline
             rows="4"
+            data-testid={dataTestId.registrationWizard.description.projectForm.scentificSummaryNorwegianField}
             label={t('project.scientific_summary_norwegian')}
           />
         )}
@@ -63,6 +67,7 @@ export const ProjectFormPanel2 = () => {
             fullWidth
             multiline
             rows="4"
+            data-testid={dataTestId.registrationWizard.description.projectForm.popularScienceSummaryNorwegianField}
             label={t('project.popular_science_summary_norwegian')}
           />
         )}
@@ -76,6 +81,7 @@ export const ProjectFormPanel2 = () => {
             fullWidth
             multiline
             rows="4"
+            data-testid={dataTestId.registrationWizard.description.projectForm.scentificSummaryEnglishField}
             label={t('project.scientific_summary_english')}
           />
         )}
@@ -89,6 +95,7 @@ export const ProjectFormPanel2 = () => {
             fullWidth
             multiline
             rows="4"
+            data-testid={dataTestId.registrationWizard.description.projectForm.popularScienceSummaryEnglishField}
             label={t('project.popular_science_summary_english')}
           />
         )}

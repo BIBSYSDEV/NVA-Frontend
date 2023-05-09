@@ -3,7 +3,7 @@ import { CristinPerson, User } from '../../../../types/user.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const getProjectCoordinatingInstitutionName = (project?: CristinProject) =>
-  project ? getLanguageString(project.coordinatingInstitution.name) : '';
+  project ? getLanguageString(project.coordinatingInstitution.labels) : '';
 
 export const getProjectManagerName = (project?: CristinProject) => {
   const projectManager = project?.contributors.find((contributor) => contributor.type === 'ProjectManager');
@@ -62,5 +62,7 @@ export const projectContributorToCristinPerson = (
         employments: [],
       }
     : null;
+
+export const isRekProject = (project?: CristinProject) => project?.created.sourceShortName === 'REK';
 
 export const fundingSourceIsNfr = (sourceId = '') => sourceId.split('/').pop()?.toUpperCase() === 'NFR';

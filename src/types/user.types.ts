@@ -122,7 +122,7 @@ export interface FlatCristinPerson {
 interface Position {
   id: string;
   enabled: boolean;
-  name: LanguageString;
+  labels: LanguageString;
 }
 
 export interface PositionResponse {
