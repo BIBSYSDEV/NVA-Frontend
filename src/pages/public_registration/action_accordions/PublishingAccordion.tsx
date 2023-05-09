@@ -23,6 +23,8 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { RootState } from '../../../redux/store';
+import { MessageList } from '../../messages/MessageList';
+import { MessageForm } from '../../../components/MessageForm';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -30,6 +32,7 @@ interface PublishingAccordionProps {
   publishingRequestTicket: Ticket | null;
   userIsCurator: boolean;
   isLoadingData: boolean;
+  addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
 
 enum LoadingState {
@@ -45,6 +48,7 @@ export const PublishingAccordion = ({
   refetchRegistrationAndTickets,
   userIsCurator,
   isLoadingData,
+  addMessage,
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -133,6 +137,8 @@ export const PublishingAccordion = ({
 
   const hasMismatchingPublishedStatus = mismatchingPublishedStatusWorkflow1 || mismatchingPublishedStatusWorkflow2;
 
+  const ticketMessages = publishingRequestTicket?.messages ?? [];
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
@@ -219,6 +225,20 @@ export const PublishingAccordion = ({
             <Typography>{t('registration.public_page.tasks_panel.review_preview_before_publishing')}</Typography>
           </>
         )}
+
+        <Accordion elevation={3} sx={{ maxWidth: '60rem' }} color="inherit">
+          <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+            {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
+          </AccordionSummary>
+          <AccordionDetails>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <MessageList messages={ticketMessages} />
+              {hasPendingTicket && (
+                <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
+              )}
+            </Box>
+          </AccordionDetails>
+        </Accordion>
 
         {isDraftRegistration && !publishingRequestTicket && (
           <LoadingButton
