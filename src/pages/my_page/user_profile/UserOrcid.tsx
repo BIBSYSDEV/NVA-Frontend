@@ -107,7 +107,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         }
       }
       setIsAddingOrcid(false);
-      history.replace(UrlPathTemplate.MyPageMyPersonalia + '?refresh=true');
+      history.replace(`${UrlPathTemplate.MyPageMyPersonalia}?refresh=true`);
     };
 
     const orcidAccessToken = new URLSearchParams(history.location.search).get('access_token');
