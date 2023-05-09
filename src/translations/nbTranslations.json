@@ -1501,6 +1501,7 @@
   },
   "tasks": {
     "limited_to": "Avgrenset til: \"{{name}}\"",
-    "tasks": "Oppgaver"
+    "tasks": "Oppgaver",
+    "user_dialog": "Brukerdialog"
   }
 }
