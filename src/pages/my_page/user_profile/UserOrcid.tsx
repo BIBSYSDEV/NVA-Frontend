@@ -91,16 +91,19 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
           method: 'PATCH',
           data: { orcid },
         });
-        const orcidCredentials = getOrcidCredentials(history.location.search, orcidInfoResponse.data.id);
-        if (!orcidCredentials) {
-          dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'error' }));
-        } else {
-          const postOrcidCredentialsResponse = await postOrcidCredentials(orcidCredentials);
-          if (isSuccessStatus(addOrcidResponse.status) && isSuccessStatus(postOrcidCredentialsResponse.status)) {
-            dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
-          } else if (isErrorStatus(addOrcidResponse.status) || isErrorStatus(postOrcidCredentialsResponse.status)) {
-            dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'success' }));
+        if (isSuccessStatus(addOrcidResponse.status)) {
+          dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
+          const orcidCredentials = getOrcidCredentials(history.location.search, orcidInfoResponse.data.id);
+          if (!orcidCredentials) {
+            dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'error' }));
+          } else {
+            const postOrcidCredentialsResponse = await postOrcidCredentials(orcidCredentials);
+            if (isErrorStatus(postOrcidCredentialsResponse.status)) {
+              dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'error' }));
+            }
           }
+        } else if (isErrorStatus(addOrcidResponse.status)) {
+          dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'error' }));
         }
       }
       setIsAddingOrcid(false);
