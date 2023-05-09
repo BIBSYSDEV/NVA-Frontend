@@ -1,22 +1,21 @@
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { PublicationsApiPath } from '../../api/apiPaths';
+import { useQuery } from '@tanstack/react-query';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { TicketCollection } from '../../types/publication_types/messages.types';
-import { useFetch } from '../../utils/hooks/useFetch';
 import { TicketAccordionList } from './TicketAccordionList';
+import { fetchTickets } from '../../api/searchApi';
 
 export const MyMessagesPage = () => {
   const { t } = useTranslation();
 
-  const [ticketsCollection, isLoadingTicketsCollection] = useFetch<TicketCollection>({
-    url: PublicationsApiPath.Tickets,
-    errorMessage: t('feedback.error.get_messages'),
-    withAuthentication: true,
+  const ticketsQuery = useQuery({
+    queryKey: ['tickets', 30, 0, false],
+    queryFn: () => fetchTickets(30, 0, true),
+    onError: () => t('feedback.error.get_messages'),
   });
 
-  const tickets = ticketsCollection?.tickets ?? [];
+  const tickets = ticketsQuery.data?.hits ?? [];
 
   return (
     <>
@@ -24,7 +23,7 @@ export const MyMessagesPage = () => {
         <title>{t('my_page.messages.messages')}</title>
       </Helmet>
       <BackgroundDiv>
-        {isLoadingTicketsCollection ? (
+        {ticketsQuery.isLoading ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <TicketAccordionList tickets={tickets} />
