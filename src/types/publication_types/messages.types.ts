@@ -32,7 +32,9 @@ export interface Ticket {
 }
 
 interface Person {
+  preferredFirstName?: string;
   firstName: string;
+  preferredLastName?: string;
   lastName: string;
   username: string;
 }
