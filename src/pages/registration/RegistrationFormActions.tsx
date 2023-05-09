@@ -97,22 +97,23 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
             </Tooltip>
           </Box>
         )}
-
-        <Box sx={{ gridArea: 'support-button', display: 'flex', justifyContent: 'space-evenly' }}>
-          <Button
-            sx={{
-              borderRadius: '15px 0px 15px 0px',
-              bgcolor: 'white',
-              border: '2px solid #4A7AC1',
-              borderRight: '5px solid #4A7AC1',
-              borderLeft: '5px solid #4A7AC1',
-            }}
-            size="small"
-            data-testid={dataTestId.registrationWizard.formActions.openSupportButton}
-            onClick={toggleSupportModal}>
-            {t('registration.curator_support')}
-          </Button>
-        </Box>
+        <Button
+          sx={{
+            height: '1.4rem',
+            bgcolor: 'white',
+            borderStyle: 'solid',
+            borderRadius: '8px 0px',
+            borderWidth: '2px 5px',
+            borderColor: 'generalSupportCase.main',
+            gridArea: 'support-button',
+            width: 'fit-content',
+            justifySelf: 'center',
+          }}
+          size="small"
+          data-testid={dataTestId.registrationWizard.formActions.openSupportButton}
+          onClick={toggleSupportModal}>
+          {t('registration.curator_support')}
+        </Button>
         {!isLastTab ? (
           <Box
             sx={{
@@ -128,40 +129,31 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
               onClick={async () => await saveRegistration(values)}>
               {t('common.save')}
             </LoadingButton>
-            <Box sx={{ gridArea: 'next-button' }}>
-              <Tooltip title={t('common.next')}>
-                <IconButton
-                  onClick={() => setTabNumber(tabNumber + 1)}
-                  data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
-                  <KeyboardArrowRightIcon
-                    sx={{
-                      color: 'white',
-                      borderRadius: '50%',
-                      bgcolor: 'primary.light',
-                      height: '1.875rem',
-                      width: '1.875rem',
-                    }}
-                  />
-                </IconButton>
-              </Tooltip>
-            </Box>
+            <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
+              <IconButton
+                onClick={() => setTabNumber(tabNumber + 1)}
+                data-testid={dataTestId.registrationWizard.formActions.nextTabButton}>
+                <KeyboardArrowRightIcon
+                  sx={{
+                    color: 'white',
+                    borderRadius: '50%',
+                    bgcolor: 'primary.light',
+                    height: '1.875rem',
+                    width: '1.875rem',
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
           </Box>
         ) : (
-          <Box
-            sx={{
-              gridArea: 'save-button',
-              display: 'flex',
-              justifyContent: 'end',
-            }}>
-            <LoadingButton
-              variant="contained"
-              loading={isSaving}
-              data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={onClickSaveAndPresent}
-              sx={{ gridArea: 'save-button', width: 'fit-content' }}>
-              {t('common.save_and_view')}
-            </LoadingButton>
-          </Box>
+          <LoadingButton
+            variant="contained"
+            loading={isSaving}
+            data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
+            onClick={onClickSaveAndPresent}
+            sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
+            {t('common.save_and_view')}
+          </LoadingButton>
         )}
       </Box>
 
