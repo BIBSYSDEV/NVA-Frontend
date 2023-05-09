@@ -132,7 +132,7 @@ const TasksPage = () => {
           startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} fontSize="small" />}
           accordionPath={UrlPathTemplate.Tasks}
           defaultPath={UrlPathTemplate.Tasks}
-          dataTestId={dataTestId.tasksPage.approvalAccordion}>
+          dataTestId={dataTestId.tasksPage.userDialogAccordion}>
           <FormGroup sx={{ m: '1rem', gap: '0.5rem', width: 'fit-content' }}>
             <SelectableButton
               showCheckbox

@@ -429,6 +429,6 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
-    approvalAccordion: 'approval-accordion',
+    userDialogAccordion: 'user-dialog-accordion',
   },
 };
