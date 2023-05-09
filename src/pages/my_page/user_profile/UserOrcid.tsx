@@ -107,8 +107,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         }
       }
       setIsAddingOrcid(false);
-      await cristinPersonQuery.refetch();
-      history.replace(UrlPathTemplate.MyPageMyPersonalia);
+      history.replace(UrlPathTemplate.MyPageMyPersonalia + '?refresh=true');
     };
 
     const orcidAccessToken = new URLSearchParams(history.location.search).get('access_token');
@@ -119,7 +118,18 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     if (orcidError) {
       dispatch(setNotification({ message: t('feedback.error.orcid_login'), variant: 'error' }));
     }
-  }, [dispatch, t, history, userCristinId, cristinPersonQuery]);
+  }, [dispatch, t, history, userCristinId]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      await cristinPersonQuery.refetch();
+      history.replace(UrlPathTemplate.MyPageMyPersonalia);
+    };
+    const refresh = new URLSearchParams(history.location.search).get('refresh');
+    if (refresh) {
+      fetchUser();
+    }
+  }, [cristinPersonQuery, history]);
 
   const removeOrcid = async () => {
     setIsRemovingOrcid(true);
