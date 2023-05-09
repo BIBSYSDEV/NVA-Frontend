@@ -10,7 +10,7 @@ export const MessageList = ({ messages }: MessageListProps) => (
   <Box
     sx={{
       display: 'grid',
-      gridTemplateColumns: 'auto 1fr',
+      gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
       columnGap: '0.5rem',
     }}>
     {messages.map((message) => (
