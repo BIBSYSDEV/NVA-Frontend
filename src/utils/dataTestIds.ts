@@ -171,6 +171,7 @@ export const dataTestId = {
       requestDoiButton: 'button-toggle-request-doi',
       requestDoiModal: 'request-doi-modal',
       sendDoiButton: 'button-send-doi-request',
+      supportAccordion: 'support-accordion',
     },
     title: 'public-registration-title',
     twitterButton: 'twitter-button',
