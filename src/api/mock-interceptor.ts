@@ -20,6 +20,7 @@ import {
   CristinApiPath,
   CustomerInstitutionApiPath,
   FileApiPath,
+  OrcidApiPath,
   PublicationChannelApiPath,
   PublicationsApiPath,
   RoleApiPath,
@@ -79,6 +80,7 @@ export const interceptRequestsOnMock = () => {
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
+  mock.onPost(new RegExp(OrcidApiPath.Orcid)).reply(201);
 
   // Person Registry
   mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinPersonSearch);
