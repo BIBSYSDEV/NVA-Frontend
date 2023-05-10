@@ -1,3 +1,5 @@
+import { PublishStrategy } from '../customerInstitution.types';
+
 export interface Message {
   id: string;
   identifier: string;
@@ -29,6 +31,10 @@ export interface Ticket {
     mainTitle: string;
   };
   messages: Message[];
+}
+
+export interface PublishingTicket extends Ticket {
+  workflow: PublishStrategy;
 }
 
 interface Person {
