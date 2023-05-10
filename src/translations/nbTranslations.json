@@ -192,7 +192,6 @@
     "start_date": "Startdato",
     "start_page": "Startside",
     "status": "Status",
-    "support": "Brukerstøtte",
     "tasks": "Oppgaver",
     "title": "Tittel",
     "type": "Type",
@@ -1474,7 +1473,6 @@
       "PUBLISHED": "Publisert",
       "PUBLISHED_METADATA": "Publisert metadata"
     },
-    "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
     "year_published": "Publiseringsår"
   },
   "search": {
