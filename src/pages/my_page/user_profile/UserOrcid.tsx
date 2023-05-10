@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -18,10 +18,40 @@ import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { fetchPerson } from '../../../api/cristinApi';
+import { postOrcidCredentials } from '../../../api/orcidApi';
+import { OrcidCredentials } from '../../../types/orcid.types';
 
 interface UserOrcidProps {
   user: User;
 }
+
+const allPropertiesAreInCredentialsObject = (rawCredentials: { [p: string]: string }) =>
+  'expires_in' in rawCredentials &&
+  !isNaN(+rawCredentials['expires_in']) &&
+  'id_token' in rawCredentials &&
+  'persistent' in rawCredentials &&
+  'tokenId' in rawCredentials &&
+  !isNaN(+rawCredentials['tokenId']) &&
+  'tokenVersion' in rawCredentials &&
+  'token_type' in rawCredentials &&
+  'access_token' in rawCredentials;
+
+const getOrcidCredentials = (search: string, orcidUrl: string): OrcidCredentials | null => {
+  const searchParams = new URLSearchParams(search);
+  const rawCredentials = Object.fromEntries(searchParams);
+  return allPropertiesAreInCredentialsObject(rawCredentials)
+    ? {
+        expiresIn: +rawCredentials['expires_in'],
+        idToken: rawCredentials['id_token'],
+        persistent: rawCredentials['persistent'].toLowerCase() === 'true',
+        tokenId: +rawCredentials['tokenId'],
+        tokenVersion: rawCredentials['tokenVersion'],
+        tokenType: rawCredentials['token_type'],
+        orcid: orcidUrl,
+        accessToken: rawCredentials['access_token'],
+      }
+    : null;
+};
 
 export const UserOrcid = ({ user }: UserOrcidProps) => {
   const { t } = useTranslation();
@@ -39,6 +69,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
     queryFn: () => fetchPerson(userCristinId),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
   });
+  const fetchCristinPersonRef = useRef(cristinPersonQuery.refetch);
   const cristinPerson = cristinPersonQuery.data;
 
   const currentOrcid = getValueByKey('ORCID', cristinPerson?.identifiers);
@@ -63,27 +94,36 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         });
         if (isSuccessStatus(addOrcidResponse.status)) {
           dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
-          cristinPersonQuery.refetch();
+          await fetchCristinPersonRef.current();
+          const orcidCredentials = getOrcidCredentials(history.location.search, orcidInfoResponse.data.id);
+          if (!orcidCredentials) {
+            dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'error' }));
+          } else {
+            const postOrcidCredentialsResponse = await postOrcidCredentials(orcidCredentials);
+            if (postOrcidCredentialsResponse.status !== 409 && isErrorStatus(postOrcidCredentialsResponse.status)) {
+              // Ignore 409 Conflict, since this means that the data is correct anyway
+              dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'error' }));
+            }
+          }
         } else if (isErrorStatus(addOrcidResponse.status)) {
-          dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'success' }));
+          dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'error' }));
         }
       }
-      history.push(UrlPathTemplate.MyPageMyProfile);
       setIsAddingOrcid(false);
+      history.replace(UrlPathTemplate.MyPageMyPersonalia);
     };
 
-    const orcidAccessToken = new URLSearchParams(history.location.search).get('access_token');
+    const searchParams = new URLSearchParams(history.location.search);
+
+    const orcidAccessToken = searchParams.get('access_token');
     if (orcidAccessToken) {
       addOrcid(orcidAccessToken);
     }
-  }, [t, dispatch, history, userCristinId, cristinPersonQuery]);
-
-  useEffect(() => {
-    const orcidError = new URLSearchParams(history.location.search).get('error');
+    const orcidError = searchParams.get('error');
     if (orcidError) {
       dispatch(setNotification({ message: t('feedback.error.orcid_login'), variant: 'error' }));
     }
-  }, [history.location.search, dispatch, t]);
+  }, [dispatch, t, history, userCristinId]);
 
   const removeOrcid = async () => {
     setIsRemovingOrcid(true);
@@ -95,7 +135,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
       });
       if (isSuccessStatus(removeOrcidResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.update_orcid'), variant: 'success' }));
-        cristinPersonQuery.refetch();
+        await cristinPersonQuery.refetch();
       } else if (isErrorStatus(removeOrcidResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_orcid'), variant: 'success' }));
       }

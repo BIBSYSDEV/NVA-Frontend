@@ -33,6 +33,10 @@ export enum PublicationsApiPath {
   Tickets = '/publication/tickets',
 }
 
+export enum OrcidApiPath {
+  Orcid = '/orcid',
+}
+
 export enum RoleApiPath {
   InstitutionUsers = '/users-roles/institutions/users',
   Login = '/users-roles/login',

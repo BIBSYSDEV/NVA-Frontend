@@ -434,4 +434,7 @@ export const dataTestId = {
     researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',
   },
+  tasksPage: {
+    userDialogAccordion: 'user-dialog-accordion',
+  },
 };
