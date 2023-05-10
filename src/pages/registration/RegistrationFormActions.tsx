@@ -74,7 +74,7 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
         sx={{
           display: 'grid',
           gridTemplateAreas: "'back-button support-button save-button'",
-          gridTemplateColumns: { xs: 'auto', sm: '1fr 1fr 1fr' },
+          gridTemplateColumns: '1fr 1fr 1fr',
           alignItems: 'center',
           gap: '1rem',
         }}>
@@ -99,11 +99,11 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
         )}
         <Button
           sx={{
-            height: '1.4rem',
+            height: '1.375rem',
             bgcolor: 'white',
             borderStyle: 'solid',
             borderRadius: '8px 0px',
-            borderWidth: '2px 5px',
+            borderWidth: '1px 5px',
             borderColor: 'generalSupportCase.main',
             gridArea: 'support-button',
             width: 'fit-content',
