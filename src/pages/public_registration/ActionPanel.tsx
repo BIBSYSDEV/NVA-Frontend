@@ -35,7 +35,7 @@ export const ActionPanel = ({
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
   const publishingRequestTickets = tickets.filter((ticket) => ticket.type === 'PublishingRequest');
-  const currentPublishingRequestTicket = (publishingRequestTickets.pop() as PublishingTicket) ?? null;
+  const currentPublishingRequestTicket = (publishingRequestTickets.pop() as PublishingTicket | undefined) ?? null;
   const supportTickets = tickets.filter((ticket) => ticket.type === 'GeneralSupportCase');
   const currentSupportTicket = supportTickets.pop() ?? null;
 
