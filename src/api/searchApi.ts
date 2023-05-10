@@ -3,7 +3,7 @@ import { Ticket } from '../types/publication_types/messages.types';
 import { SearchApiPath } from './apiPaths';
 import { authenticatedApiRequest2 } from './apiRequest';
 
-export const fetchTickets = async (results: number, from: number, onlyCreator = false, query = '') => {
+export const fetchTickets = async (results: number, from: number, query = '', onlyCreator = false) => {
   const paginationQuery = `results=${results}&from=${from}`;
   const roleQuery = onlyCreator ? 'role=creator' : '';
   const searchQuery = query ? `query=${query}` : '';

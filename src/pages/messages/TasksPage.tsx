@@ -86,8 +86,8 @@ const TasksPage = () => {
   const query = [typeQuery, statusQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
-    queryKey: ['tickets', rowsPerPage, page, false, query],
-    queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, false, query),
+    queryKey: ['tickets', rowsPerPage, page, query],
+    queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, query),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 

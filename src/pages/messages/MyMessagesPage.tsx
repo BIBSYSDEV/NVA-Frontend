@@ -10,8 +10,8 @@ export const MyMessagesPage = () => {
   const { t } = useTranslation();
 
   const ticketsQuery = useQuery({
-    queryKey: ['tickets', 30, 0, false],
-    queryFn: () => fetchTickets(30, 0, true),
+    queryKey: ['tickets', 30, 0, true],
+    queryFn: () => fetchTickets(30, 0, '', true),
     onError: () => t('feedback.error.get_messages'),
   });
 
