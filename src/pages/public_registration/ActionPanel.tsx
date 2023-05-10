@@ -14,6 +14,7 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { addTicketMessage } from '../../api/registrationApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { SupportAccordion } from './action_accordions/SupportAccordion';
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
@@ -35,6 +36,8 @@ export const ActionPanel = ({
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
   const publishingRequestTickets = tickets.filter((ticket) => ticket.type === 'PublishingRequest');
   const currentPublishingRequestTicket = publishingRequestTickets.pop() ?? null;
+  const supportTickets = tickets.filter((ticket) => ticket.type === 'GeneralSupportCase');
+  const currentSupportTicket = supportTickets.pop() ?? null;
 
   const addMessage = async (ticketId: string, message: string) => {
     const addMessageResponse = await addTicketMessage(ticketId, message);
@@ -77,6 +80,9 @@ export const ActionPanel = ({
                 userIsCurator={userIsCurator}
               />
             )}
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <SupportAccordion registration={registration} supportTicket={currentSupportTicket} addMessage={addMessage} />
         </ErrorBoundary>
       </BackgroundDiv>
     </Paper>
