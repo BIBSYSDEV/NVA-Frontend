@@ -100,7 +100,8 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
             dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'error' }));
           } else {
             const postOrcidCredentialsResponse = await postOrcidCredentials(orcidCredentials);
-            if (isErrorStatus(postOrcidCredentialsResponse.status)) {
+            if (postOrcidCredentialsResponse.status !== 409 && isErrorStatus(postOrcidCredentialsResponse.status)) {
+              // Ignore 409 Conflict, since this means that the data is correct anyway
               dispatch(setNotification({ message: t('feedback.error.storing_orcid_credentials'), variant: 'error' }));
             }
           }
