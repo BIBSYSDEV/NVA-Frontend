@@ -160,7 +160,7 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
       <Modal
         open={openSupportModal}
         onClose={toggleSupportModal}
-        headingText={t('common.support')}
+        headingText={t('registration.curator_support')}
         dataTestId={dataTestId.registrationWizard.formActions.supportModal}>
         <SupportModalContent closeModal={toggleSupportModal} registrationId={values.id} />
       </Modal>

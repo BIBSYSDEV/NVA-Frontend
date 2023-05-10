@@ -1,12 +1,14 @@
-import { Trans, useTranslation } from 'react-i18next';
-import { Link, Typography } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
-import { MessageForm } from '../../components/MessageForm';
-import { addTicketMessage, createTicket } from '../../api/registrationApi';
-import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import { fetchRegistration, fetchRegistrationTickets } from '../../api/registrationApi';
+import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from '../../redux/notificationSlice';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { UrlPathTemplate } from '../../utils/urlPaths';
+import { RegistrationParams } from '../../utils/urlPaths';
+import { useQuery } from '@tanstack/react-query';
+import { RootState } from '../../redux/store';
+import { userCanEditRegistration } from '../../utils/registration-helpers';
+import { ActionPanel } from '../public_registration/ActionPanel';
+import { Typography } from '@mui/material';
 
 interface SupportModalContentProps {
   closeModal: () => void;
@@ -16,37 +18,33 @@ interface SupportModalContentProps {
 export const SupportModalContent = ({ closeModal, registrationId }: SupportModalContentProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { user } = useSelector((store: RootState) => store);
+  const { identifier } = useParams<RegistrationParams>();
 
-  const sendMessage = async (message: string) => {
-    if (message) {
-      // Create ticket
-      const createTicketResponse = await createTicket(registrationId, 'GeneralSupportCase', true);
-      if (isErrorStatus(createTicketResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
-      } else if (isSuccessStatus(createTicketResponse.status)) {
-        const ticketId = createTicketResponse.data?.id;
-        if (ticketId) {
-          const addMessageResponse = await addTicketMessage(ticketId, message);
-          if (isErrorStatus(addMessageResponse.status)) {
-            dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
-          } else if (isSuccessStatus(addMessageResponse.status)) {
-            dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
-            closeModal();
-          }
-        }
-      }
-    }
-  };
+  const registrationQuery = useQuery({
+    queryKey: ['registration', identifier],
+    queryFn: () => fetchRegistration(identifier),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
+  });
 
-  return (
-    <>
-      <Typography paragraph>
-        <Trans i18nKey="registration.support_description">
-          <Link component={RouterLink} to={UrlPathTemplate.MyPageMessages} />
-        </Trans>
-      </Typography>
+  const registration = registrationQuery.data;
+  const isRegistrationAdmin = !!registration && userCanEditRegistration(user, registration);
 
-      <MessageForm confirmAction={sendMessage} cancelAction={closeModal} />
-    </>
+  const ticketsQuery = useQuery({
+    enabled: isRegistrationAdmin && !!registrationId,
+    queryKey: ['registrationTickets', registrationId],
+    queryFn: () => fetchRegistrationTickets(registrationId),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
+  });
+
+  return registration ? (
+    <ActionPanel
+      tickets={ticketsQuery.data?.tickets ?? []}
+      refetchRegistrationAndTickets={() => ticketsQuery.refetch()}
+      isLoadingData={false}
+      registration={registration}
+    />
+  ) : (
+    <Typography>{t('common.error_occurred')}</Typography>
   );
 };
