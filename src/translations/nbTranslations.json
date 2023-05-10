@@ -387,6 +387,7 @@
       "reserve_doi": "Reservasjon av DOI feilet",
       "search": "Søk feilet",
       "send_message": "Kunne ikke sende melding",
+      "storing_orcid_credentials": "Kunne ikke lagre orcid-data",
       "update_customer": "Kunne ikke oppdatere institusjon",
       "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
       "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
@@ -1501,6 +1502,7 @@
   },
   "tasks": {
     "limited_to": "Avgrenset til: \"{{name}}\"",
-    "tasks": "Oppgaver"
+    "tasks": "Oppgaver",
+    "user_dialog": "Brukerdialog"
   }
 }
