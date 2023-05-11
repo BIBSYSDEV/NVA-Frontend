@@ -225,7 +225,7 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        <Accordion elevation={3} sx={{ maxWidth: '60rem' }} color="inherit">
+        <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
           <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
             {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
           </AccordionSummary>
