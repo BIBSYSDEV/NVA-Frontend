@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
+import FilterDramaIcon from '@mui/icons-material/FilterDrama';
+import PeopleIcon from '@mui/icons-material/People';
+import StoreIcon from '@mui/icons-material/Store';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
@@ -26,7 +29,7 @@ import {
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { Divider } from '@mui/material';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
@@ -51,54 +54,100 @@ const BasicDataPage = () => {
     <StyledPageWithSideMenu>
       <SidePanel aria-labelledby="basic-data-title">
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
+        {user?.isInstitutionAdmin && (
+          <NavigationListAccordion
+            title={t('basic_data.person_register.person_register')}
+            startIcon={
+              <PeopleIcon
+                sx={{
+                  bgcolor: 'person.main',
+                  padding: '0.1rem',
+                }}
+              />
+            }
+            accordionPath={'/basic-data/person-register'}
+            defaultPath={'/basic-data/person-register'}
+            dataTestId={dataTestId.basicData.personRegisterAccordion}>
+            <NavigationList>
+              <LinkButtonRow>
+                <LinkButton
+                  data-testid={dataTestId.basicData.personRegisterLink}
+                  isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
+                  to={UrlPathTemplate.BasicDataPersonRegister}>
+                  {t('basic_data.person_register.person_register')}
+                </LinkButton>
+                <LinkIconButton
+                  data-testid={dataTestId.basicData.addEmployeeLink}
+                  isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
+                  to={UrlPathTemplate.BasicDataAddEmployee}
+                  title={t('basic_data.add_employee.add_employee')}
+                  icon={<PersonAddIcon />}
+                />
+              </LinkButtonRow>
+            </NavigationList>
+          </NavigationListAccordion>
+        )}
 
-        <NavigationList>
-          {user?.isInstitutionAdmin && [
-            <LinkButtonRow key={dataTestId.basicData.personRegisterLink}>
-              <LinkButton
-                data-testid={dataTestId.basicData.personRegisterLink}
-                isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
-                to={UrlPathTemplate.BasicDataPersonRegister}>
-                {t('basic_data.person_register.person_register')}
-              </LinkButton>
-              <LinkIconButton
-                data-testid={dataTestId.basicData.addEmployeeLink}
-                isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
-                to={UrlPathTemplate.BasicDataAddEmployee}
-                title={t('basic_data.add_employee.add_employee')}
-                icon={<PersonAddIcon />}
-              />
-            </LinkButtonRow>,
-            <Divider key="divider1" />,
-          ]}
-          {user?.isAppAdmin && [
-            <BetaFunctionality key={dataTestId.basicData.centralImportLink}>
-              <LinkButton
-                key={dataTestId.basicData.centralImportLink}
-                data-testid={dataTestId.basicData.centralImportLink}
-                isSelected={currentPath === UrlPathTemplate.BasicDataCentralImport}
-                to={UrlPathTemplate.BasicDataCentralImport}>
-                {t('basic_data.central_import.central_import')}
-              </LinkButton>
-            </BetaFunctionality>,
-            <LinkButtonRow key={dataTestId.basicData.adminInstitutionsLink}>
-              <LinkButton
-                data-testid={dataTestId.basicData.adminInstitutionsLink}
-                isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
-                to={UrlPathTemplate.BasicDataInstitutions}>
-                {t('common.institutions')}
-              </LinkButton>
-              <LinkIconButton
-                data-testid={dataTestId.basicData.addCustomerLink}
-                isSelected={newCustomerIsSelected}
-                to={getAdminInstitutionPath('new')}
-                title={t('basic_data.institutions.add_institution')}
-                icon={<AddBusinessIcon />}
-              />
-            </LinkButtonRow>,
-            <Divider key="divider2" />,
-          ]}
-        </NavigationList>
+        {user?.isAppAdmin && (
+          <>
+            <NavigationListAccordion
+              title={t('common.institutions')}
+              startIcon={
+                <StoreIcon
+                  sx={{
+                    bgcolor: 'grey.500',
+                    padding: '0.1rem',
+                  }}
+                />
+              }
+              accordionPath={'/basic-data/institutions'}
+              defaultPath={'/basic-data/institutions'}
+              dataTestId={dataTestId.basicData.institutionsAccordion}>
+              <NavigationList>
+                <LinkButtonRow>
+                  <LinkButton
+                    data-testid={dataTestId.basicData.adminInstitutionsLink}
+                    isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
+                    to={UrlPathTemplate.BasicDataInstitutions}>
+                    {t('common.institutions')}
+                  </LinkButton>
+                  <LinkIconButton
+                    data-testid={dataTestId.basicData.addCustomerLink}
+                    isSelected={newCustomerIsSelected}
+                    to={getAdminInstitutionPath('new')}
+                    title={t('basic_data.institutions.add_institution')}
+                    icon={<AddBusinessIcon />}
+                  />
+                </LinkButtonRow>
+              </NavigationList>
+            </NavigationListAccordion>
+
+            <BetaFunctionality>
+              <NavigationListAccordion
+                title={t('basic_data.central_import.central_import')}
+                startIcon={
+                  <FilterDramaIcon
+                    sx={{
+                      bgcolor: 'grey.400',
+                      padding: '0.1rem',
+                    }}
+                  />
+                }
+                accordionPath={'/basic-data/central-import'}
+                defaultPath={'/basic-data/central-import'}
+                dataTestId={dataTestId.basicData.centralImportAccordion}>
+                <NavigationList>
+                  <LinkButton
+                    data-testid={dataTestId.basicData.centralImportLink}
+                    isSelected={currentPath === UrlPathTemplate.BasicDataCentralImport}
+                    to={UrlPathTemplate.BasicDataCentralImport}>
+                    {t('basic_data.central_import.central_import')}
+                  </LinkButton>
+                </NavigationList>
+              </NavigationListAccordion>
+            </BetaFunctionality>
+          </>
+        )}
       </SidePanel>
       <BackgroundDiv>
         <Switch>
