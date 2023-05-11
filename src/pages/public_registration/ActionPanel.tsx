@@ -78,6 +78,7 @@ export const ActionPanel = ({
                 registration={registration}
                 doiRequestTicket={doiRequestTicket}
                 userIsCurator={userIsCurator}
+                addMessage={addMessage}
               />
             )}
         </ErrorBoundary>
