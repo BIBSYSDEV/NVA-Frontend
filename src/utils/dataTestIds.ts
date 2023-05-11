@@ -20,10 +20,12 @@ export const dataTestId = {
       textFieldTitle: 'duplicate-search-title-textfield',
       textFieldYear: 'duplicate-search-year-textfield',
     },
+    centralImportAccordion: 'central-import-accordion',
     customers: {
       customerList: 'customer-institutions-list',
       editInstitutionButton: (name: string) => `edit-institution-button-${name.toLowerCase().replaceAll(' ', '-')}`,
     },
+    institutionsAccordion: 'institutions-accordion',
     institutionAdmin: {
       archiveNameField: 'archive-field',
       canAssignDoiCheckbox: 'can-assign-doi-checkbox',
@@ -57,6 +59,7 @@ export const dataTestId = {
       startDate: 'start-date',
       endDate: 'end-date',
     },
+    personRegisterAccordion: 'person-register-accordion',
     personRegisterLink: 'person-register-link',
   },
   confirmDialog: {

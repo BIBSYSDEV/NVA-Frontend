@@ -5,7 +5,7 @@ export interface RegistrationParams {
 export enum UrlPathTemplate {
   About = '/about',
   BasicData = '/basic-data',
-  BasicDataAddEmployee = '/basic-data/add-employee',
+  BasicDataAddEmployee = '/basic-data/person-register/new',
   BasicDataCentralImport = '/basic-data/central-import',
   BasicDataCentralImportDuplicateCheck = '/basic-data/central-import-duplicate-check/:identifier',
   BasicDataInstitutions = '/basic-data/institutions',
