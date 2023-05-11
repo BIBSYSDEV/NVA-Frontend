@@ -1,4 +1,6 @@
 import { PublishStrategy } from '../customerInstitution.types';
+import { BaseEntityDescription, PublicationInstanceType, Registration } from '../registration.types';
+import { JournalPublicationInstance } from './journalRegistration.types';
 
 export interface Message {
   id: string;
@@ -24,14 +26,14 @@ export interface Ticket {
   createdDate: string;
   modifiedDate: string;
   id: string;
-  identifier: string;
-  publication: {
-    id: string;
-    identifier: string;
-    mainTitle: string;
-  };
+  publication: TicketPublication;
   messages: Message[];
 }
+
+type TicketPublication = Pick<Registration, 'id' | 'identifier' | 'status' | 'modifiedDate' | 'createdDate'> &
+  Pick<BaseEntityDescription, 'contributors' | 'mainTitle'> & {
+    publicationInstance: { type: PublicationInstanceType };
+  };
 
 export interface PublishingTicket extends Ticket {
   workflow: PublishStrategy;

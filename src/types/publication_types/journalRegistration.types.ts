@@ -45,7 +45,7 @@ const emptyPublicationContext: JournalPublicationContext = {
   type: '',
 };
 
-const emptyReference: JournalReference = {
+export const emptyJournalReference: JournalReference = {
   type: 'Reference',
   doi: '',
   publicationContext: emptyPublicationContext,
@@ -68,6 +68,6 @@ export const emptyRegistrationEntityDescription: JournalEntityDescription = {
   language: '',
   mainTitle: '',
   npiSubjectHeading: '',
-  reference: emptyReference,
+  reference: emptyJournalReference,
   tags: [],
 };

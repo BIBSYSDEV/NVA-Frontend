@@ -119,6 +119,8 @@
     "create_doi": "Opprett DOI",
     "created_date": "Opprettet",
     "date": "Dato",
+    "x_days_one": "{{count}} dag",
+    "x_days_other": "{{count}} dager",
     "delete": "Slett",
     "description": "Beskrivelse",
     "doi": "DOI",
