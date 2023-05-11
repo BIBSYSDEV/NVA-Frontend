@@ -40,11 +40,16 @@ export const getNfrProjectUrl = (identifier: string) => {
 };
 
 export const canEditProject = (user: User | null, project?: CristinProject) => {
-  if (!user || !project) {
+  if (!user || !project || !user.cristinId) {
     return false;
   }
-  const projectManagers = getProjectManagers(project.contributors);
-  return !!user.cristinId && projectManagers.some((projectManager) => projectManager.identity.id === user.cristinId);
+
+  const isProjectManager = getProjectManagers(project.contributors).some(
+    (projectManager) => projectManager.identity.id === user.cristinId
+  );
+  const isProjectOwner = project.creator.identity.id === user.cristinId;
+
+  return isProjectManager || isProjectOwner;
 };
 
 export const projectContributorToCristinPerson = (
