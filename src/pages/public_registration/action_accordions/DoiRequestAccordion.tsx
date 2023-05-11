@@ -24,6 +24,8 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { MessageList } from '../../messages/MessageList';
+import { MessageForm } from '../../../components/MessageForm';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
@@ -31,6 +33,7 @@ interface DoiRequestAccordionProps {
   doiRequestTicket: Ticket | null;
   userIsCurator: boolean;
   isLoadingData: boolean;
+  addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
 
 enum LoadingState {
@@ -47,10 +50,10 @@ export const DoiRequestAccordion = ({
   refetchRegistrationAndTickets,
   userIsCurator,
   isLoadingData,
+  addMessage,
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -124,6 +127,7 @@ export const DoiRequestAccordion = ({
   };
 
   const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
+  const messages = doiRequestTicket?.messages ?? [];
 
   return (
     <Accordion
@@ -217,6 +221,20 @@ export const DoiRequestAccordion = ({
               </DialogActions>
             </Modal>
           </>
+        )}
+
+        {isPendingDoiRequest && (
+          <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
+            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+              {`${t('my_page.messages.messages')} (${messages.length})`}
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <MessageList messages={messages} />
+                <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
+              </Box>
+            </AccordionDetails>
+          </Accordion>
         )}
 
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
