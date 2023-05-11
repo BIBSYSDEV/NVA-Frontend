@@ -24,7 +24,7 @@ interface TicketAccordionProps {
 export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const username = useSelector((store: RootState) => store.user?.nvaUsername);
+  const user = useSelector((store: RootState) => store.user);
 
   const registrationIdentifier = getIdentifierFromId(ticket.publication.id);
 
@@ -39,7 +39,11 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
       const newMessage: Message = {
         ...messagesCopy[0],
         createdDate: new Date().toString(),
-        sender: username ?? '',
+        sender: {
+          firstName: user?.givenName ?? '?',
+          lastName: user?.familyName ?? '?',
+          username: user?.nvaUsername ?? '',
+        },
         text: message,
       };
       setMessagesCopy([...messagesCopy, newMessage]);

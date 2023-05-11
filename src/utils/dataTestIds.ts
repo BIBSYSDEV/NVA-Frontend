@@ -171,6 +171,7 @@ export const dataTestId = {
       requestDoiButton: 'button-toggle-request-doi',
       requestDoiModal: 'request-doi-modal',
       sendDoiButton: 'button-send-doi-request',
+      supportAccordion: 'support-accordion',
     },
     title: 'public-registration-title',
     twitterButton: 'twitter-button',
@@ -408,6 +409,7 @@ export const dataTestId = {
   },
   myPage: {
     createProjectButton: 'create-project-button',
+    messagesAccordion: 'messages-accordion',
     messagesLink: 'messages-link',
     myProfileLink: 'my-profile-link',
     myProfile: {
@@ -421,11 +423,18 @@ export const dataTestId = {
       showFullNinButton: 'show-full-nin-button',
       telephoneField: 'telephone-field',
     },
+    myProfileAccordion: 'my-profile-accordion',
     myProjectRegistrationsLink: 'my-project-registrations-link',
     myProjectsLink: 'my-projects-link',
     myRegistrationsLink: 'my-registrations-link',
     myResultsLink: "my-publications'link",
     newRegistrationLink: 'new-registration-link',
+    projectRegistrationsAccordion: 'project-registrations-accordion',
+    registrationsAccordion: 'registrations-accordion',
+    researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',
+  },
+  tasksPage: {
+    userDialogAccordion: 'user-dialog-accordion',
   },
 };
