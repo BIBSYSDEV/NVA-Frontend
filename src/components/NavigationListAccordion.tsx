@@ -44,7 +44,7 @@ export const NavigationListAccordion = ({
           </Typography>
         </Box>
       </AccordionSummary>
-      <AccordionDetails sx={{ paddingTop: 0, paddingX: '0.5rem' }}>{children}</AccordionDetails>
+      <AccordionDetails sx={{ p: 0 }}>{children}</AccordionDetails>
     </Accordion>
   );
 };

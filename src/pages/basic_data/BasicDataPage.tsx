@@ -2,12 +2,11 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
+import { Divider } from '@mui/material';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import PeopleIcon from '@mui/icons-material/People';
 import StoreIcon from '@mui/icons-material/Store';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
@@ -21,7 +20,6 @@ import { CentralImportDuplicationCheckPage } from './app_admin/central_import/Ce
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 import {
   LinkButton,
-  LinkButtonRow,
   LinkIconButton,
   NavigationList,
   SidePanel,
@@ -69,22 +67,24 @@ const BasicDataPage = () => {
             defaultPath={'/basic-data/person-register'}
             dataTestId={dataTestId.basicData.personRegisterAccordion}>
             <NavigationList>
-              <LinkButtonRow>
-                <LinkButton
-                  data-testid={dataTestId.basicData.personRegisterLink}
-                  isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
-                  to={UrlPathTemplate.BasicDataPersonRegister}>
-                  {t('basic_data.person_register.person_register')}
-                </LinkButton>
-                <LinkIconButton
-                  data-testid={dataTestId.basicData.addEmployeeLink}
-                  isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
-                  to={UrlPathTemplate.BasicDataAddEmployee}
-                  title={t('basic_data.add_employee.add_employee')}
-                  icon={<PersonAddIcon />}
-                />
-              </LinkButtonRow>
+              <LinkButton
+                data-testid={dataTestId.basicData.personRegisterLink}
+                isSelected={currentPath === UrlPathTemplate.BasicDataPersonRegister}
+                to={UrlPathTemplate.BasicDataPersonRegister}>
+                {t('basic_data.person_register.person_register')}
+              </LinkButton>
             </NavigationList>
+
+            <Divider sx={{ mt: '0.5rem' }} />
+
+            <LinkIconButton
+              data-testid={dataTestId.basicData.addEmployeeLink}
+              variant="outlined"
+              isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
+              selectedColor="person.main"
+              to={UrlPathTemplate.BasicDataAddEmployee}
+              title={t('basic_data.add_employee.add_employee')}
+            />
           </NavigationListAccordion>
         )}
 
@@ -104,22 +104,21 @@ const BasicDataPage = () => {
               defaultPath={'/basic-data/institutions'}
               dataTestId={dataTestId.basicData.institutionsAccordion}>
               <NavigationList>
-                <LinkButtonRow>
-                  <LinkButton
-                    data-testid={dataTestId.basicData.adminInstitutionsLink}
-                    isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
-                    to={UrlPathTemplate.BasicDataInstitutions}>
-                    {t('common.institutions')}
-                  </LinkButton>
-                  <LinkIconButton
-                    data-testid={dataTestId.basicData.addCustomerLink}
-                    isSelected={newCustomerIsSelected}
-                    to={getAdminInstitutionPath('new')}
-                    title={t('basic_data.institutions.add_institution')}
-                    icon={<AddBusinessIcon />}
-                  />
-                </LinkButtonRow>
+                <LinkButton
+                  data-testid={dataTestId.basicData.adminInstitutionsLink}
+                  isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
+                  to={UrlPathTemplate.BasicDataInstitutions}>
+                  {t('common.institutions')}
+                </LinkButton>
               </NavigationList>
+              <Divider sx={{ mt: '0.5rem' }} />
+              <LinkIconButton
+                data-testid={dataTestId.basicData.addCustomerLink}
+                isSelected={newCustomerIsSelected}
+                selectedColor="grey.500"
+                to={getAdminInstitutionPath('new')}
+                title={t('basic_data.institutions.add_institution')}
+              />
             </NavigationListAccordion>
 
             <BetaFunctionality>

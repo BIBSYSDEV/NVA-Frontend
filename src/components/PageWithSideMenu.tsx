@@ -1,7 +1,8 @@
-import { ReactNode } from 'react';
 import { SvgIconComponent } from '@mui/icons-material';
 import { Box, BoxProps, Button, ButtonProps, styled, Typography } from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Link, LinkProps } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -58,9 +59,10 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
   <Box
     component="nav"
     sx={{
+      pb: '0.5rem',
       mx: '0.5rem',
       display: 'flex',
-      width: 'fit-content',
+      maxWidth: '75%',
       flexDirection: 'column',
       gap: '0.5rem',
       a: { textTransform: 'none' },
@@ -84,14 +86,28 @@ export const LinkButton = ({ isSelected, sx, ...rest }: LinkButtonProps) => (
 );
 
 interface LinkIconButtonProps extends LinkButtonProps {
-  icon: ReactNode;
+  selectedColor?: string;
 }
 
-export const LinkIconButton = ({ sx, icon, ...rest }: LinkIconButtonProps) => (
-  <LinkButton sx={{ ml: '0rem', mr: '1rem', ...sx }} {...rest}>
-    {icon}
-  </LinkButton>
-);
+export const LinkIconButton = ({ sx, title, isSelected, selectedColor, ...rest }: LinkIconButtonProps) => {
+  const { t } = useTranslation();
+  return (
+    <LinkButton
+      sx={{
+        border: isSelected ? '1px solid primary.main' : 'none',
+        bgcolor: isSelected ? selectedColor : 'none',
+        width: '100%',
+        justifyContent: 'center',
+        ...sx,
+      }}
+      {...rest}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+        <AddCircleOutlineIcon />
+        <Typography>{t('common.add')}</Typography>
+      </Box>
+    </LinkButton>
+  );
+};
 
 export const LinkButtonRow = ({ sx, ...props }: BoxProps) => (
   <Box
