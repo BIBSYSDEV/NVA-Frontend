@@ -20,18 +20,18 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => (
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
-          <RegistrationListItem registration={registration} />
+          <RegistrationListItemContent registration={registration} />
         </SearchListItem>
       </ErrorBoundary>
     ))}
   </List>
 );
 
-interface RegistrationListItemProps {
+interface RegistrationListItemContentProps {
   registration: Registration;
 }
 
-export const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
+export const RegistrationListItemContent = ({ registration }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
 
@@ -42,11 +42,12 @@ export const RegistrationListItem = ({ registration }: RegistrationListItemProps
   const typeString = entityDescription?.reference?.publicationInstance?.type
     ? t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)
     : '';
+
   const publicationDate = displayDate(entityDescription?.publicationDate);
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
 
   return (
-    <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem} sx={{ my: 0 }}>
+    <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
       <Typography variant="overline" sx={{ color: 'primary.main', display: 'flex', gap: '0.25rem' }}>
         {heading}
       </Typography>

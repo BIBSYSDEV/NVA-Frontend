@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { RegistrationListItem } from '../../../components/RegistrationList';
+import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { Ticket, PublishingTicket } from '../../../types/publication_types/messages.types';
 import { Registration, emptyRegistration } from '../../../types/registration.types';
@@ -19,11 +19,12 @@ interface TicketListItemProps {
 export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const { t } = useTranslation();
 
-  const { id, identifier, mainTitle, contributors, publicationInstance } = ticket.publication;
-  const registration: Registration = {
+  const { id, identifier, mainTitle, contributors, publicationInstance, status } = ticket.publication;
+  const registrationCopy: Registration = {
     ...emptyRegistration,
     identifier,
     id,
+    status,
     entityDescription: emptyRegistration.entityDescription
       ? {
           ...emptyRegistration.entityDescription,
@@ -32,8 +33,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         }
       : undefined,
   };
-  if (registration.entityDescription?.reference?.publicationInstance) {
-    registration.entityDescription.reference.publicationInstance.type = publicationInstance.type;
+  if (registrationCopy.entityDescription?.reference?.publicationInstance) {
+    registrationCopy.entityDescription.reference.publicationInstance.type = publicationInstance.type;
   }
 
   const msAge = new Date().getTime() - new Date(ticket.modifiedDate).getTime();
@@ -46,7 +47,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         borderLeftColor: ticket.status === 'Pending' ? ticketColor[ticket.type] : 'registration.main',
       }}>
       <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '6fr 2fr 1fr 1fr' }}>
-        <RegistrationListItem registration={registration} />
+        <RegistrationListItemContent registration={registrationCopy} />
         {ticket.type === 'PublishingRequest' ? (
           <PublishingRequestMessagesColumn ticket={ticket as PublishingTicket} />
         ) : (
