@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { SearchListItem } from '../../components/styled/Wrappers';
 import { Ticket } from '../../types/publication_types/messages.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
-import { Registration, emptyRegistration } from '../../types/registration.types';
+import { Registration, RegistrationStatus, emptyRegistration } from '../../types/registration.types';
 import { RegistrationListItem } from '../../components/RegistrationList';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 
@@ -72,12 +72,48 @@ const TicketListItem = ({ ticket }: TicketListItemProps) => {
       sx={{
         borderLeftColor: ticket.status === 'Pending' ? ticketColor[ticket.type] : 'registration.main',
       }}>
-      <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '5fr 3fr 1fr 1fr' }}>
+      <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '5fr 2fr 1fr 1fr' }}>
         <RegistrationListItem registration={registration} />
-        <Box></Box>
+        {ticket.type === 'PublishingRequest' ? <PublishingRequestMessagesColumn ticket={ticket} /> : <Box />}
         <Typography variant="overline">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
         <Typography variant="overline">{t('common.x_days', { count: daysAge })}</Typography>
       </Box>
     </SearchListItem>
+  );
+};
+
+const PublishingRequestMessagesColumn = ({ ticket }: TicketListItemProps) => {
+  return (
+    <>
+      {ticket.publication.status === RegistrationStatus.Published ? (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.1rem' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '1rem',
+              bgcolor: 'publishingRequest.main',
+              justifyContent: 'space-evenly',
+              p: '0.2rem',
+            }}>
+            <Typography>Metadata publisert</Typography>
+            {ticket.publication.publishedDate && (
+              <Typography>{new Date(ticket.publication.publishedDate).toLocaleDateString()}</Typography>
+            )}
+          </Box>
+          {ticket.status === 'Pending' && (
+            <Box
+              sx={{
+                display: 'flex',
+                gap: '1rem',
+                bgcolor: 'secondary.dark',
+                justifyContent: 'space-evenly',
+                p: '0.2rem',
+              }}>
+              <Typography>Filer avventer</Typography>
+            </Box>
+          )}
+        </Box>
+      ) : null}
+    </>
   );
 };

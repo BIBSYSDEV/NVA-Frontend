@@ -30,7 +30,10 @@ export interface Ticket {
   messages: Message[];
 }
 
-type TicketPublication = Pick<Registration, 'id' | 'identifier' | 'status' | 'modifiedDate' | 'createdDate'> &
+type TicketPublication = Pick<
+  Registration,
+  'id' | 'identifier' | 'status' | 'modifiedDate' | 'createdDate' | 'publishedDate'
+> &
   Pick<BaseEntityDescription, 'contributors' | 'mainTitle'> & {
     publicationInstance: { type: PublicationInstanceType };
   };
