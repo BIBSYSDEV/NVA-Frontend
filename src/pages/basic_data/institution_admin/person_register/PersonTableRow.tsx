@@ -47,6 +47,7 @@ import { personDataValidationSchema } from '../../../../utils/validation/basic_d
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { fetchPositions } from '../../../../api/cristinApi';
 
 export interface PersonData {
   employments: Employment[];
@@ -69,7 +70,13 @@ export const PersonTableRow = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const positionsQuery = useQuery({ enabled: false, queryKey: ['positions', true] });
+  const positionsQuery = useQuery({
+    queryKey: ['positions', true],
+    queryFn: () => fetchPositions(true),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_positions'), variant: 'error' })),
+    staleTime: Infinity,
+    cacheTime: 900_000, // 15 minutes
+  });
   const hasFetchedPositions = positionsQuery.isFetched;
 
   const [openDialog, setOpenDialog] = useState(false);
