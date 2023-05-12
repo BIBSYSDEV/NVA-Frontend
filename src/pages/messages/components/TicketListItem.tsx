@@ -37,7 +37,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   }
 
   const msAge = new Date().getTime() - new Date(ticket.modifiedDate).getTime();
-  const daysAge = Math.ceil(msAge / (1000 * 3600 * 24));
+  const daysAge = Math.ceil(msAge / 86_400_000); // 1000 * 60 * 60 * 24 = 86_400_000 ms in one day
 
   return (
     <SearchListItem
