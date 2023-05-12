@@ -387,6 +387,7 @@
       "reserve_doi": "Reservation of DOI failed",
       "search": "Search failed",
       "send_message": "Could not send message",
+      "storing_orcid_credentials": "Failed to save orcid-data",
       "update_customer": "Failed to update customer institution",
       "update_doi_agent": "Could not update DOI configuration",
       "update_doi_request": "Failed to update DOI request",
@@ -976,6 +977,7 @@
       "verify_affiliation": "Verify affiliation",
       "verify_person": "Verify person"
     },
+    "curator_support": "Curator support",
     "description": {
       "abstract": "Abstract",
       "add_vocabulary": "Add vocabulary",
@@ -1367,7 +1369,7 @@
         "institution_name": "Institution name",
         "more_info_about_elementet": "More information about the element",
         "presentation_type": "",
-        "search_for_exhibition_catalog": "Search for exhibition catalogue",
+        "search_for_exhibition_catalog": "Search for exhibition catalog",
         "subtype": {
           "AmbulatingExhibition": "Travelling exhibition",
           "BasicExhibition": "Basic exhibition",
@@ -1501,6 +1503,7 @@
   },
   "tasks": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "tasks": "Tasks"
+    "tasks": "Tasks",
+    "user_dialog": "User dialogue"
   }
 }

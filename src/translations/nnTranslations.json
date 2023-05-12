@@ -387,6 +387,7 @@
       "reserve_doi": "Reservasjon av DOI feila",
       "search": "Søk feila",
       "send_message": "Kunne ikkje sende melding",
+      "storing_orcid_credentials": "Kunne ikkje lagre orcid-data",
       "update_customer": "Kunne ikkje oppdatere institusjon",
       "update_doi_agent": "Kunne ikkje oppdatere DOI-konfigurering",
       "update_doi_request": "Kunne ikkje oppdatere DOI-førespurnad",
@@ -976,6 +977,7 @@
       "verify_affiliation": "Bekreft tilknyting",
       "verify_person": "Verifiser person"
     },
+    "curator_support": "Kuratorstøtte",
     "description": {
       "abstract": "Samandrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1501,6 +1503,7 @@
   },
   "tasks": {
     "limited_to": "Avgrensa til: \"{{name}}\"",
-    "tasks": "Oppgåver"
+    "tasks": "Oppgåver",
+    "user_dialog": "Brukardialog"
   }
 }
