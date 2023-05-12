@@ -62,7 +62,7 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
       mb: '0.5rem',
       mx: '0.5rem',
       display: 'flex',
-      maxWidth: '75%',
+      maxWidth: 'fit-content',
       flexDirection: 'column',
       gap: '0.5rem',
       a: { textTransform: 'none' },
@@ -85,11 +85,11 @@ export const LinkButton = ({ isSelected, sx, ...rest }: LinkButtonProps) => (
   />
 );
 
-interface LinkIconButtonProps extends LinkButtonProps {
+interface LinkCreateButtonProps extends LinkButtonProps {
   selectedColor?: string;
 }
 
-export const LinkIconButton = ({ sx, title, isSelected, selectedColor, ...rest }: LinkIconButtonProps) => {
+export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest }: LinkCreateButtonProps) => {
   const { t } = useTranslation();
   return (
     <LinkButton
@@ -110,16 +110,3 @@ export const LinkIconButton = ({ sx, title, isSelected, selectedColor, ...rest }
     </LinkButton>
   );
 };
-
-export const LinkButtonRow = ({ sx, ...props }: BoxProps) => (
-  <Box
-    sx={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      gap: '0.5rem',
-      ...sx,
-    }}
-    {...props}
-  />
-);

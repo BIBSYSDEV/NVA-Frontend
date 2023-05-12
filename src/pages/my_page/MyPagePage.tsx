@@ -21,7 +21,7 @@ import { MyResults } from './user_profile/MyResults';
 import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import {
   LinkButton,
-  LinkIconButton,
+  LinkCreateButton,
   NavigationList,
   SidePanel,
   SideNavHeader,
@@ -93,7 +93,7 @@ const MyPagePage = () => {
               </LinkButton>
             </NavigationList>
             <Divider sx={{ mt: '0.5rem' }} />
-            <LinkIconButton
+            <LinkCreateButton
               data-testid={dataTestId.myPage.newRegistrationLink}
               to={UrlPathTemplate.RegistrationNew}
               title={t('registration.new_registration')}
@@ -117,7 +117,7 @@ const MyPagePage = () => {
               </LinkButton>
             </NavigationList>
             <Divider sx={{ mt: '0.5rem' }} />
-            <LinkIconButton
+            <LinkCreateButton
               data-testid={dataTestId.myPage.createProjectButton}
               isSelected={showCreateProject}
               selectedColor="project.main"

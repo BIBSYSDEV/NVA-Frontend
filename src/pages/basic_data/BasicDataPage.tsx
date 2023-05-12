@@ -20,7 +20,7 @@ import { CentralImportDuplicationCheckPage } from './app_admin/central_import/Ce
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 import {
   LinkButton,
-  LinkIconButton,
+  LinkCreateButton,
   NavigationList,
   SidePanel,
   SideNavHeader,
@@ -77,7 +77,7 @@ const BasicDataPage = () => {
 
             <Divider sx={{ mt: '0.5rem' }} />
 
-            <LinkIconButton
+            <LinkCreateButton
               data-testid={dataTestId.basicData.addEmployeeLink}
               variant="outlined"
               isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
@@ -112,7 +112,7 @@ const BasicDataPage = () => {
                 </LinkButton>
               </NavigationList>
               <Divider sx={{ mt: '0.5rem' }} />
-              <LinkIconButton
+              <LinkCreateButton
                 data-testid={dataTestId.basicData.addCustomerLink}
                 isSelected={newCustomerIsSelected}
                 selectedColor="grey.500"
