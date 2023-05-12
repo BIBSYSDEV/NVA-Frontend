@@ -480,7 +480,6 @@
   },
   "my_page": {
     "messages": {
-      "go_to_registration": "Go to registration",
       "messages": "Messages",
       "no_messages": "You have no messages",
       "ticket_types": {

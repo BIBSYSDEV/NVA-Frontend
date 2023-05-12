@@ -24,7 +24,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
-import { MessageList } from '../../messages/MessageList';
+import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
 
 interface DoiRequestAccordionProps {
