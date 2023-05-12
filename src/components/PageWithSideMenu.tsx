@@ -94,7 +94,9 @@ export const LinkIconButton = ({ sx, title, isSelected, selectedColor, ...rest }
   return (
     <LinkButton
       sx={{
-        border: isSelected ? '1px solid primary.main' : 'none',
+        borderWidth: '1px',
+        borderRadius: 0,
+        borderColor: isSelected ? 'primary.main' : 'secondary.dark',
         bgcolor: isSelected ? selectedColor : 'none',
         width: '100%',
         justifyContent: 'center',
