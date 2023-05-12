@@ -92,7 +92,7 @@ export interface CristinProject extends SaveCristinProject {
   created: {
     sourceShortName: 'REK' | 'NVA' | 'FORSKDOK';
   };
-  creator: ProjectCreator;
+  creator?: ProjectCreator;
 }
 
 interface FundingSource {
