@@ -59,7 +59,7 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
   <Box
     component="nav"
     sx={{
-      pb: '0.5rem',
+      mb: '0.5rem',
       mx: '0.5rem',
       display: 'flex',
       maxWidth: '75%',
