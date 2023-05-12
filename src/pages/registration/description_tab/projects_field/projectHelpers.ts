@@ -47,7 +47,7 @@ export const canEditProject = (user: User | null, project?: CristinProject) => {
   const isProjectManager = getProjectManagers(project.contributors).some(
     (projectManager) => projectManager.identity.id === user.cristinId
   );
-  const isProjectOwner = project.creator.identity.id === user.cristinId;
+  const isProjectOwner = project.creator?.identity.id === user.cristinId;
 
   return isProjectManager || isProjectOwner;
 };
