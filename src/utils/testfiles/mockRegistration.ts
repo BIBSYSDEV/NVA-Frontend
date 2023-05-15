@@ -135,11 +135,17 @@ export const mockTicketCollection: TicketCollection = {
       createdDate: new Date(2020, 1).toISOString(),
       modifiedDate: new Date(2020, 1).toISOString(),
       id: `${mockRegistration.id}/ticket/1`,
-      identifier: '1',
       publication: {
         id: mockRegistration.id,
         identifier: mockRegistration.identifier,
         mainTitle: mockRegistration.entityDescription.mainTitle,
+        contributors: [],
+        status: RegistrationStatus.Published,
+        createdDate: new Date(2020, 1).toISOString(),
+        modifiedDate: new Date(2020, 1).toISOString(),
+        publicationInstance: {
+          type: JournalType.AcademicArticle,
+        },
       },
       messages: [
         {

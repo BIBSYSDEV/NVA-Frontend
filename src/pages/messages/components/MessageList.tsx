@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
-import { Message } from '../../types/publication_types/messages.types';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { Message } from '../../../types/publication_types/messages.types';
+import { ErrorBoundary } from '../../../components/ErrorBoundary';
 
 interface MessageListProps {
   messages: Message[];
