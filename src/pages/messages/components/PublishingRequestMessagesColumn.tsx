@@ -22,7 +22,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: { ticket: Publishing
               <Typography>{new Date(ticket.publication.publishedDate).toLocaleDateString()}</Typography>
             )}
           </StatusMessageBox>
-          {ticket.status === 'Pending' ? (
+          {ticket.status === 'Pending' || ticket.status === 'New' ? (
             <StatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
               <Typography>{t('registration.files_and_license.files_awaits_approval_unknown')}</Typography>
             </StatusMessageBox>
