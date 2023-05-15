@@ -52,6 +52,7 @@ const TasksPage = () => {
   });
 
   const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
+    New: true,
     Pending: true,
     Completed: false,
     Closed: false,

@@ -39,7 +39,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     <SearchListItem
       key={ticket.id}
       sx={{
-        borderLeftColor: ticket.status === 'Pending' ? ticketColor[ticket.type] : 'registration.main',
+        borderLeftColor:
+          ticket.status === 'Pending' || ticket.status === 'New' ? ticketColor[ticket.type] : 'registration.main',
       }}>
       <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '6fr 2fr 1fr 1fr' }}>
         <RegistrationListItemContent registration={registrationCopy} />

@@ -490,6 +490,7 @@
       "ticket_types": {
         "Closed": "Lukket",
         "Completed": "Ferdig",
+        "New": "Ny",
         "Pending": "Pågår"
       },
       "types": {

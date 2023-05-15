@@ -61,7 +61,7 @@ export const DoiRequestAccordion = ({
 
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
-  const isPendingDoiRequest = doiRequestTicket?.status === 'Pending';
+  const isPendingDoiRequest = doiRequestTicket?.status === 'Pending' || doiRequestTicket?.status === 'New';
   const isClosedDoiRequest = doiRequestTicket?.status === 'Closed';
 
   const addDraftDoi = async () => {
