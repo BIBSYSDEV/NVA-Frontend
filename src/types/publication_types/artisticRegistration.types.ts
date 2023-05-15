@@ -179,7 +179,7 @@ export interface AudioVisualPublication extends ArtisticOutputBase {
   publisher: UnconfirmedPublisher;
   catalogueNumber: string;
   trackList: MusicTrack[];
-  isrc: {
+  isrc?: {
     type: 'Isrc';
     value: string;
   };
