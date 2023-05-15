@@ -6,6 +6,7 @@ import { Ticket, PublishingTicket } from '../../../types/publication_types/messa
 import { Registration, emptyRegistration } from '../../../types/registration.types';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
+import { SupportMessagesColumn } from './SupportMessagesColumn';
 
 const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
@@ -49,8 +50,10 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           <PublishingRequestMessagesColumn ticket={ticket as PublishingTicket} />
         ) : ticket.type === 'DoiRequest' ? (
           <DoiRequestMessagesColumn ticket={ticket} />
+        ) : ticket.type === 'GeneralSupportCase' ? (
+          <SupportMessagesColumn ticket={ticket} />
         ) : (
-          <Box />
+          <div />
         )}
         <Typography variant="overline">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
         <Typography variant="overline">{t('common.x_days', { count: daysAge })}</Typography>
