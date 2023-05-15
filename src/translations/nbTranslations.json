@@ -483,6 +483,9 @@
   },
   "my_page": {
     "messages": {
+      "doi_closed": "DOI avvist",
+      "doi_completed": "DOI tildelt",
+      "doi_pending": "Venter på DOI-tildeling",
       "files_published": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
       "messages": "Meldinger",
