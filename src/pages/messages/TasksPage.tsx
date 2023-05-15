@@ -10,6 +10,7 @@ import {
   FormGroup,
   TablePagination,
   Typography,
+  styled,
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
@@ -37,6 +38,11 @@ const rowsPerPageOptions = [10, 20, 50];
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
 };
+
+const StyledCheckbox = styled(Checkbox)({
+  paddingTop: '0.2rem',
+  paddingBottom: '0.2rem',
+});
 
 const TasksPage = () => {
   const dispatch = useDispatch();
@@ -175,8 +181,7 @@ const TasksPage = () => {
             <FormControlLabel
               checked={selectedStatuses.New}
               control={
-                <Checkbox
-                  sx={{ py: '0.2rem' }}
+                <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
                 />
               }
@@ -189,8 +194,7 @@ const TasksPage = () => {
             <FormControlLabel
               checked={selectedStatuses.Pending}
               control={
-                <Checkbox
-                  sx={{ py: '0.2rem' }}
+                <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
                 />
               }
@@ -203,8 +207,7 @@ const TasksPage = () => {
             <FormControlLabel
               checked={selectedStatuses.Completed}
               control={
-                <Checkbox
-                  sx={{ py: '0.2rem' }}
+                <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })}
                 />
               }
@@ -217,8 +220,7 @@ const TasksPage = () => {
             <FormControlLabel
               checked={selectedStatuses.Closed}
               control={
-                <Checkbox
-                  sx={{ py: '0.2rem' }}
+                <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
                 />
               }
