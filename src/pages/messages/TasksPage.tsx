@@ -21,7 +21,7 @@ import { RootState } from '../../redux/store';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { TicketAccordionList } from './TicketAccordionList';
+import { TicketList } from './components/TicketList';
 import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { StyledPageWithSideMenu, SidePanel, SideNavHeader } from '../../components/PageWithSideMenu';
@@ -221,7 +221,7 @@ const TasksPage = () => {
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <>
-            <TicketAccordionList tickets={tickets} />
+            <TicketList tickets={tickets} />
             <TablePagination
               aria-live="polite"
               data-testid={dataTestId.startPage.searchPagination}
