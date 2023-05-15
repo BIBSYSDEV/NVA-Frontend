@@ -20,22 +20,17 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const { t } = useTranslation();
 
   const { id, identifier, mainTitle, contributors, publicationInstance, status } = ticket.publication;
-  const registrationCopy: Registration = {
+  const registrationCopy = {
     ...emptyRegistration,
     identifier,
     id,
     status,
-    entityDescription: emptyRegistration.entityDescription
-      ? {
-          ...emptyRegistration.entityDescription,
-          mainTitle,
-          contributors,
-        }
-      : undefined,
-  };
-  if (registrationCopy.entityDescription?.reference?.publicationInstance) {
-    registrationCopy.entityDescription.reference.publicationInstance.type = publicationInstance.type;
-  }
+    entityDescription: {
+      mainTitle,
+      contributors,
+      reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
+    },
+  } as Registration;
 
   const msAge = new Date().getTime() - new Date(ticket.modifiedDate).getTime();
   const daysAge = Math.ceil(msAge / 86_400_000); // 1000 * 60 * 60 * 24 = 86_400_000 ms in one day
