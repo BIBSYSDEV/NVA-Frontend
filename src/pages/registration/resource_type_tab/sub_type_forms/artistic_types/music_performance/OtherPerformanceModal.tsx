@@ -14,6 +14,7 @@ import {
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyPlace } from '../../../../../../types/common.types';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -24,11 +25,7 @@ interface OtherPerformanceModalProps {
 
 const emptyOtherPerformance: OtherMusicPerformance = {
   type: 'OtherPerformance',
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
+  place: emptyPlace,
   performanceType: '',
   extent: '',
   musicalWorks: [],
@@ -42,30 +39,30 @@ const emptyMusicalWork: MusicalWork = {
 
 const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
   performanceType: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.performance_type'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.performance_type'),
     })
   ),
   musicalWorks: Yup.array()
     .of(
       Yup.object<YupShape<MusicalWork>>({
         title: Yup.string().required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:common.title'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('common.title'),
           })
         ),
         composer: Yup.string().required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:registration.resource_type.artistic.composer'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('registration.resource_type.artistic.composer'),
           })
         ),
       })
     )
     .min(
       1,
-      i18n.t('translation:feedback.validation.must_have_minimum', {
+      i18n.t('feedback.validation.must_have_minimum', {
         min: 1,
-        field: i18n.t('translation:registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
+        field: i18n.t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
       })
     ),
 });
@@ -116,7 +113,7 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     label={t('common.place')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.otherPerformancePlace}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>

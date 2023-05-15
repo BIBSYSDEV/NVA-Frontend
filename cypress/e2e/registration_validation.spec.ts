@@ -17,6 +17,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.mocklogin();
 
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.myPage.registrationsAccordion}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).click();
     cy.get('[data-testid=edit-registration-4327439]').click({ force: true });
   });
@@ -139,7 +140,7 @@ describe('User opens registration form and can see validation errors', () => {
     );
 
     // NPI Subject
-    cy.selectNpiDiscipline('Linguistics');
+    cy.selectNpiDiscipline('Lingvistikk');
 
     // ISBN
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.isbnField}]`).within(() => {

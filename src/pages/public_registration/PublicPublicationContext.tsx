@@ -22,6 +22,8 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useState } from 'react';
 import { visuallyHidden } from '@mui/utils';
 import { hyphenate } from 'isbn-utils';
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
@@ -31,14 +33,13 @@ import { RegistrationSummary } from './RegistrationSummary';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import { getArtisticOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
+import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
 import {
   Award,
   Broadcast,
   Competition,
   Exhibition,
   MentionInPublication,
-  ArtisticOutputItem,
   Venue,
   CinematicRelease,
   OtherRelease,
@@ -57,7 +58,16 @@ import {
   MediaContributionPublicationContext,
 } from '../../types/publication_types/mediaContributionRegistration.types';
 import { NpiLevelTypography } from '../../components/NpiLevelTypography';
-import { getPeriodString } from '../../utils/general-helpers';
+import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
+import {
+  ExhibitionBasic,
+  ExhibitionMentionInPublication,
+  ExhibitionOtherPresentation,
+} from '../../types/publication_types/exhibitionContent.types';
+import { fetchRegistration } from '../../api/registrationApi';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
+import { setNotification } from '../../redux/notificationSlice';
+import { OutputItem } from '../registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;
@@ -120,15 +130,15 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
   ) : null;
 };
 
-export const PublicPartOfContent = ({ partOf }: { partOf: string | null }) => {
+export const PublicPublishedInContent = ({ id }: { id: string | null }) => {
   const { t } = useTranslation();
 
-  return partOf ? (
+  return id ? (
     <>
       <Typography variant="h3" component="p">
         {t('registration.resource_type.chapter.published_in')}
       </Typography>
-      <RegistrationSummary id={partOf} />
+      <RegistrationSummary id={id} />
     </>
   ) : null;
 };
@@ -229,48 +239,71 @@ export const PublicPresentation = ({ publicationContext }: PublicPresentationPro
   );
 };
 
-interface PublicArtisticOutputProps {
-  outputs: ArtisticOutputItem[];
-  heading: string;
+interface PublicOutputsProps {
+  outputs: OutputItem[];
   showType?: boolean;
 }
 
-export const PublicArtisticOutput = ({ outputs, heading, showType = false }: PublicArtisticOutputProps) => (
-  <>
-    <Typography variant="h3">{heading}</Typography>
-    {outputs.map((output, index) => (
-      <PublicOutputRow key={index} output={output} heading={heading} showType={showType} />
-    ))}
-  </>
-);
+export const PublicOutputs = ({ outputs, showType = false }: PublicOutputsProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <>
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.artistic.announcements')}
+      </Typography>
+      {outputs.map((output, index) => (
+        <PublicOutputRow key={index} output={output} showType={showType} />
+      ))}
+    </>
+  );
+};
 
 interface PublicOutputRowProps {
-  output: ArtisticOutputItem;
-  heading: string;
+  output: OutputItem;
   showType: boolean;
 }
 
-const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) => {
+const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [openModal, setOpenModal] = useState(false);
   const toggleModal = () => setOpenModal(!openModal);
 
-  const nameString = getArtisticOutputName(output);
+  const exhibitionCatalogIdentifier =
+    output.type === 'ExhibitionCatalog' && output.id ? getIdentifierFromId(output.id) : '';
+
+  const exhibitionCatalogQuery = useQuery({
+    enabled: !!exhibitionCatalogIdentifier,
+    queryKey: ['registration', exhibitionCatalogIdentifier],
+    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
+  });
+
+  const nameString = exhibitionCatalogIdentifier
+    ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle
+    : getOutputName(output);
+
   const rowString = showType
     ? `${nameString} (${t(`registration.resource_type.artistic.output_type.${output.type}` as any)})`
     : nameString;
 
   return (
-    <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
       <Typography>{rowString}</Typography>
       <Tooltip title={t('common.show_details')}>
-        <IconButton size="small" color="primary" onClick={toggleModal}>
+        <IconButton
+          size="small"
+          color="primary"
+          onClick={exhibitionCatalogIdentifier ? undefined : toggleModal}
+          href={exhibitionCatalogIdentifier ? getRegistrationLandingPagePath(exhibitionCatalogIdentifier) : ''}
+          target="_blank">
           <OpenInNewIcon fontSize="small" />
         </IconButton>
       </Tooltip>
 
       <Dialog open={openModal} onClose={toggleModal} fullWidth>
-        <DialogTitle>{heading}</DialogTitle>
+        <DialogTitle>{t('registration.resource_type.artistic.announcement')}</DialogTitle>
         <ErrorBoundary>
           {output.type === 'Venue' || output.type === 'PerformingArtsVenue' ? (
             <PublicVenueDialogContent venue={output as Venue} />
@@ -304,6 +337,16 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
             <PublicLiteraryArtsPerformanceDialogContent performance={output as LiteraryArtsPerformance} />
           ) : output.type === 'LiteraryArtsAudioVisual' ? (
             <PublicLiteraryArtsAudioVisualDialogContent audioVisual={output as LiteraryArtsAudioVisual} />
+          ) : output.type === 'ExhibitionBasic' ? (
+            <PublicExhibitionBasicDialogContent exhibitionBasic={output as ExhibitionBasic} />
+          ) : output.type === 'ExhibitionMentionInPublication' ? (
+            <PublicExhibitionMentionInPublicationDialogContent
+              exhibitionMentionInPublication={output as ExhibitionMentionInPublication}
+            />
+          ) : output.type === 'ExhibitionOtherPresentation' ? (
+            <PublicExhibitionOtherPresentationDialogContent
+              exhibitionOtherPresentation={output as ExhibitionOtherPresentation}
+            />
           ) : null}
         </ErrorBoundary>
 
@@ -314,6 +357,115 @@ const PublicOutputRow = ({ output, heading, showType }: PublicOutputRowProps) =>
         </DialogActions>
       </Dialog>
     </Box>
+  );
+};
+
+const PublicExhibitionBasicDialogContent = ({ exhibitionBasic }: { exhibitionBasic: ExhibitionBasic }) => {
+  const { t } = useTranslation();
+  return (
+    <DialogContent>
+      <Typography variant="h3" gutterBottom>
+        {t('common.type')}
+      </Typography>
+      <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${exhibitionBasic.type}`)}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.exhibition_production.institution_name')}
+      </Typography>
+      <Typography paragraph>{exhibitionBasic.organization.name || '-'}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('common.place')}
+      </Typography>
+      <Typography paragraph>{exhibitionBasic.place?.label || '-'}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('common.date')}
+      </Typography>
+      <Typography>{getPeriodString(exhibitionBasic.date?.from, exhibitionBasic.date?.to)}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicExhibitionMentionInPublicationDialogContent = ({
+  exhibitionMentionInPublication,
+}: {
+  exhibitionMentionInPublication: ExhibitionMentionInPublication;
+}) => {
+  const { t } = useTranslation();
+  return (
+    <DialogContent>
+      <Typography variant="h3" gutterBottom>
+        {t('common.type')}
+      </Typography>
+      <Typography paragraph>
+        {t(`registration.resource_type.artistic.output_type.${exhibitionMentionInPublication.type}`)}
+      </Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.journal_book_medium')}
+      </Typography>
+      <Typography paragraph>{exhibitionMentionInPublication.title || '-'}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.issue')}
+      </Typography>
+      <Typography paragraph>{exhibitionMentionInPublication.issue || '-'}</Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('common.date')}
+      </Typography>
+      <Typography paragraph>
+        {exhibitionMentionInPublication.date?.value
+          ? new Date(exhibitionMentionInPublication.date.value).toLocaleDateString()
+          : '-'}
+      </Typography>
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.other_publisher_isbn_etc')}
+      </Typography>
+      <Typography paragraph>{exhibitionMentionInPublication.otherInformation || '-'}</Typography>
+    </DialogContent>
+  );
+};
+
+const PublicExhibitionOtherPresentationDialogContent = ({
+  exhibitionOtherPresentation,
+}: {
+  exhibitionOtherPresentation: ExhibitionOtherPresentation;
+}) => {
+  const { t } = useTranslation();
+  return (
+    <DialogContent>
+      <Typography variant="h3" gutterBottom>
+        {t('common.type')}
+      </Typography>
+      <Typography paragraph>
+        {t(`registration.resource_type.artistic.output_type.${exhibitionOtherPresentation.type}`)}
+      </Typography>
+
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.exhibition_production.presentation_type')}
+      </Typography>
+      <Typography paragraph>{exhibitionOtherPresentation.typeDescription || '-'}</Typography>
+
+      <Typography variant="h3" gutterBottom>
+        {t('common.place')}
+      </Typography>
+      <Typography paragraph>{exhibitionOtherPresentation.place.label || '-'}</Typography>
+
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.publisher_or_organizer')}
+      </Typography>
+      <Typography paragraph>{exhibitionOtherPresentation.publisher.name || '-'}</Typography>
+
+      <Typography variant="h3" gutterBottom>
+        {t('registration.resource_type.exhibition_production.more_info_about_elementet')}
+      </Typography>
+      <Typography paragraph>{exhibitionOtherPresentation.description || '-'}</Typography>
+
+      <Typography variant="h3" gutterBottom>
+        {t('common.date')}
+      </Typography>
+      <Typography paragraph>
+        {exhibitionOtherPresentation.date?.value
+          ? new Date(exhibitionOtherPresentation.date.value).toLocaleDateString()
+          : '-'}
+      </Typography>
+    </DialogContent>
   );
 };
 
@@ -365,13 +517,13 @@ const PublicMentionDialogContent = ({ mention }: { mention: MentionInPublication
   const { t } = useTranslation();
   return (
     <DialogContent>
-      <Typography variant="h3">{t('registration.resource_type.artistic.mention_title')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.journal_book_medium')}</Typography>
       <Typography paragraph>{mention.title}</Typography>
       <Typography variant="h3">{t('registration.resource_type.issue')}</Typography>
       <Typography paragraph>{mention.issue}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
       <Typography>{new Date(mention.date.value).toLocaleDateString()}</Typography>
-      <Typography variant="h3">{t('registration.resource_type.artistic.mention_other_type')}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.other_publisher_isbn_etc')}</Typography>
       <Typography paragraph>{mention.otherInformation}</Typography>
     </DialogContent>
   );
@@ -445,7 +597,7 @@ const PublicOtherReleaseDialogContent = ({ otherRelease }: { otherRelease: Other
 
 const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore }) => {
   const { t } = useTranslation();
-  const { type, ensemble, movements, extent, publisher, ismn, isrc } = musicScore;
+  const { type, ensemble, movements, extent, publisher, ismn } = musicScore;
 
   return (
     <DialogContent>
@@ -461,8 +613,6 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ismn')}</Typography>
       <Typography paragraph>{ismn.formatted ?? ismn.value}</Typography>
-      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
-      <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>
     </DialogContent>
   );
 };
@@ -473,18 +623,26 @@ const PublicAudioVisualPublicationDialogContent = ({
   audioVisualPublication: AudioVisualPublication;
 }) => {
   const { t } = useTranslation();
-  const { type, mediaType, publisher, catalogueNumber, trackList } = audioVisualPublication;
+  const { type, mediaType, publisher, catalogueNumber, isrc, trackList } = audioVisualPublication;
 
   return (
     <DialogContent>
       <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${type}`)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.media_type')}</Typography>
-      <Typography paragraph>{t(`registration.resource_type.artistic.music_media_type.${mediaType}` as any)}</Typography>
+      <Typography paragraph>
+        {mediaType.type
+          ? mediaType.type !== 'MusicMediaOther'
+            ? t(`registration.resource_type.artistic.music_media_type.${mediaType.type}`)
+            : mediaType.description
+          : ''}
+      </Typography>
       <Typography variant="h3">{t('common.publisher')}</Typography>
-      <Typography paragraph>{publisher}</Typography>
+      <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
       <Typography paragraph>{catalogueNumber}</Typography>
+      <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
+      {isrc.value && <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>}
       <Typography variant="h3" id="tracks-heading">
         {t('registration.resource_type.artistic.content_track')}
       </Typography>
@@ -518,7 +676,7 @@ const PublicAudioVisualPublicationDialogContent = ({
 
 const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
   const { t } = useTranslation();
-  const { type, place, time, extent, concertProgramme, partOfSeries } = concert;
+  const { type, place, time, extent, concertProgramme, concertSeries } = concert;
 
   return (
     <DialogContent>
@@ -529,7 +687,13 @@ const PublicConcertDialogContent = ({ concert }: { concert: Concert }) => {
       <Typography paragraph>{place.label}</Typography>
 
       <Typography variant="h3">{t('registration.resource_type.artistic.concert_part_of_series')}</Typography>
-      <Typography paragraph>{partOfSeries ? t('common.yes') : t('common.no')}</Typography>
+      <Typography paragraph>{concertSeries ? t('common.yes') : t('common.no')} </Typography>
+      {concertSeries && (
+        <>
+          <Typography variant="h3">{t('common.description')} </Typography>
+          <Typography paragraph>{concertSeries}</Typography>
+        </>
+      )}
 
       <Typography variant="h3">{t('common.date')}</Typography>
       {time.type === 'Instant' ? (
@@ -632,7 +796,12 @@ const PublicLiteraryArtsMonographDialogContent = ({
       <Typography variant="h3">{t('common.year')}</Typography>
       <Typography paragraph>{literaryArtsMonograph.publicationDate.year}</Typography>
       <Typography variant="h3">{t('registration.resource_type.isbn')}</Typography>
-      <Typography paragraph>{hyphenate(literaryArtsMonograph.isbn)}</Typography>
+      <Typography paragraph>
+        {literaryArtsMonograph.isbnList
+          .filter((isbn) => isbn)
+          .map((isbn) => hyphenate(isbn))
+          .join(', ')}
+      </Typography>
       <Typography variant="h3">{t('registration.resource_type.number_of_pages')}</Typography>
       <Typography>{literaryArtsMonograph.pages.pages ?? '-'}</Typography>
     </DialogContent>
@@ -702,7 +871,12 @@ const PublicLiteraryArtsAudioVisualDialogContent = ({ audioVisual }: { audioVisu
       <Typography variant="h3">{t('common.year')}</Typography>
       <Typography paragraph>{audioVisual.publicationDate.year ?? '-'}</Typography>
       <Typography variant="h3">{t('registration.resource_type.isbn')}</Typography>
-      <Typography paragraph>{hyphenate(audioVisual.isbn) ?? '-'}</Typography>
+      <Typography paragraph>
+        {audioVisual.isbnList
+          .filter((isbn) => isbn)
+          .map((isbn) => hyphenate(isbn))
+          .join(', ')}
+      </Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.extent_in_minutes')}</Typography>
       <Typography paragraph>{audioVisual.extent ?? '-'}</Typography>
     </DialogContent>

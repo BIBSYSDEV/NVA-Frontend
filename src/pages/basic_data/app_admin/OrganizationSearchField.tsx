@@ -48,7 +48,7 @@ export const OrganizationSearchField = ({
       options={options}
       inputMode="search"
       disabled={disabled}
-      getOptionLabel={(option) => getLanguageString(option.name)}
+      getOptionLabel={(option) => getLanguageString(option.labels)}
       filterOptions={(options) => options}
       onInputChange={(_, value, reason) => {
         if (reason !== 'reset') {

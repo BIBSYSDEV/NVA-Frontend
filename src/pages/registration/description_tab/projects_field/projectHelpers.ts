@@ -3,7 +3,7 @@ import { CristinPerson, User } from '../../../../types/user.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const getProjectCoordinatingInstitutionName = (project?: CristinProject) =>
-  project ? getLanguageString(project.coordinatingInstitution.name) : '';
+  project ? getLanguageString(project.coordinatingInstitution.labels) : '';
 
 export const getProjectManagerName = (project?: CristinProject) => {
   const projectManager = project?.contributors.find((contributor) => contributor.type === 'ProjectManager');
@@ -40,11 +40,16 @@ export const getNfrProjectUrl = (identifier: string) => {
 };
 
 export const canEditProject = (user: User | null, project?: CristinProject) => {
-  if (!user || !project) {
+  if (!user || !project || !user.cristinId) {
     return false;
   }
-  const projectManagers = getProjectManagers(project.contributors);
-  return !!user.cristinId && projectManagers.some((projectManager) => projectManager.identity.id === user.cristinId);
+
+  const isProjectManager = getProjectManagers(project.contributors).some(
+    (projectManager) => projectManager.identity.id === user.cristinId
+  );
+  const isProjectOwner = project.creator?.identity.id === user.cristinId;
+
+  return isProjectManager || isProjectOwner;
 };
 
 export const projectContributorToCristinPerson = (
@@ -62,3 +67,7 @@ export const projectContributorToCristinPerson = (
         employments: [],
       }
     : null;
+
+export const isRekProject = (project?: CristinProject) => project?.created.sourceShortName === 'REK';
+
+export const fundingSourceIsNfr = (sourceId = '') => sourceId.split('/').pop()?.toUpperCase() === 'NFR';

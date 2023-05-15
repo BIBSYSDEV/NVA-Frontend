@@ -6,7 +6,7 @@ import SubjectIcon from '@mui/icons-material/Subject';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
   createSearchConfigFromSearchParams,
@@ -25,6 +25,7 @@ import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../componen
 import { PersonSearch } from './person_search/PersonSearch';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { ProjectSearch } from './project_search/ProjectSearch';
+import { SelectableButton } from '../../components/SelectableButton';
 
 /*
  * The Search Page allows for users to search for 3 things (types): Registrations/Results, Persons, and Projects
@@ -65,6 +66,8 @@ const SearchPage = () => {
   return (
     <Formik
       initialValues={initialSearchParams}
+      validateOnChange={false}
+      validateOnBlur={false}
       onSubmit={(values) => {
         const previousParamsResults = params.get(SearchParam.Results);
         const newSearchParams = new URLSearchParams();
@@ -100,32 +103,31 @@ const SearchPage = () => {
               <Box
                 sx={{
                   display: 'flex',
-                  flexDirection: 'column',
+                  flexDirection: { xs: 'row', md: 'column' },
+                  flexWrap: 'wrap',
                   gap: '0.5rem',
                   button: { textTransform: 'none' },
                   m: '1rem',
+                  width: 'fit-content',
                 }}>
-                <Button
-                  variant={resultIsSelected ? 'contained' : 'outlined'}
+                <SelectableButton
+                  startIcon={<SubjectIcon />}
+                  color="registration"
+                  isSelected={resultIsSelected}
                   onClick={() => {
                     if (!resultIsSelected) {
                       const resultParams = new URLSearchParams();
                       history.push({ search: resultParams.toString() });
                       setValues(emptySearchConfig);
                     }
-                  }}
-                  color="registration"
-                  sx={{
-                    width: 'fit-content',
-                    color: 'common.black',
-                    bgcolor: resultIsSelected ? undefined : 'background.default',
-                    borderColor: 'registration.main',
-                  }}
-                  startIcon={<SubjectIcon />}>
+                  }}>
                   {t('search.result')}
-                </Button>
-                <Button
-                  variant={personIsSeleced ? 'contained' : 'outlined'}
+                </SelectableButton>
+
+                <SelectableButton
+                  startIcon={<PersonIcon />}
+                  color="person"
+                  isSelected={personIsSeleced}
                   onClick={() => {
                     if (!personIsSeleced) {
                       const personParams = new URLSearchParams();
@@ -133,19 +135,14 @@ const SearchPage = () => {
                       history.push({ search: personParams.toString() });
                       setValues(emptySearchConfig);
                     }
-                  }}
-                  color="person"
-                  sx={{
-                    width: 'fit-content',
-                    color: 'common.black',
-                    bgcolor: personIsSeleced ? undefined : 'background.default',
-                    borderColor: 'person.main',
-                  }}
-                  startIcon={<PersonIcon />}>
+                  }}>
                   {t('search.persons')}
-                </Button>
-                <Button
-                  variant={projectIsSelected ? 'contained' : 'outlined'}
+                </SelectableButton>
+
+                <SelectableButton
+                  startIcon={<ShowChartIcon />}
+                  color="project"
+                  isSelected={projectIsSelected}
                   onClick={() => {
                     if (!projectIsSelected) {
                       const projectParams = new URLSearchParams();
@@ -153,17 +150,9 @@ const SearchPage = () => {
                       history.push({ search: projectParams.toString() });
                       setValues(emptySearchConfig);
                     }
-                  }}
-                  color="project"
-                  sx={{
-                    width: 'fit-content',
-                    color: 'common.black',
-                    bgcolor: projectIsSelected ? undefined : 'background.default',
-                    borderColor: 'project.main',
-                  }}
-                  startIcon={<ShowChartIcon />}>
+                  }}>
                   {t('project.project')}
-                </Button>
+                </SelectableButton>
               </Box>
 
               {resultIsSelected && searchResults?.aggregations && (
@@ -193,14 +182,8 @@ const SearchPage = () => {
             {resultIsSelected && (
               <Box
                 sx={{
-                  display: 'grid',
-                  gridTemplateRows: 'auto auto 1fr',
-                  gridTemplateColumns: { xs: '1fr', md: '5fr 2fr' },
-                  gridTemplateAreas: {
-                    xs: "'searchbar' 'sorting' 'advanced' 'results'",
-                    md: "'searchbar sorting' 'advanced advanced' 'results results'",
-                  },
-                  columnGap: '2rem',
+                  display: 'flex',
+                  flexDirection: 'column',
                   rowGap: '1rem',
                 }}>
                 <RegistrationSearchBar />

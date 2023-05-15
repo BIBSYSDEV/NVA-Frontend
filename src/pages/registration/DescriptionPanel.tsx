@@ -10,7 +10,7 @@ import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
 import { InputContainerBox } from '../../components/styled/Wrappers';
 import { dataTestId } from '../../utils/dataTestIds';
-import { FundingsField } from './description_tab/FundingsField';
+import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const languageOptions = [
@@ -34,16 +34,16 @@ const languageOptions = [
 
 export const DescriptionPanel = () => {
   const { t, i18n } = useTranslation();
-  const { setFieldValue } = useFormikContext<Registration>();
+  const { values, setFieldValue } = useFormikContext<Registration>();
 
   return (
     <InputContainerBox>
       <Box
         sx={{
-          display: 'grid',
-          rowGap: '1rem',
-          columnGap: '0.5rem',
-          gridTemplateColumns: '1fr auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+          alignItems: 'start',
         }}>
         <Field name={DescriptionFieldNames.Title}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -63,13 +63,6 @@ export const DescriptionPanel = () => {
         <Field name={DescriptionFieldNames.AlternativeTitles}>
           {({ field }: FieldProps<string>) => (
             <>
-              <Button
-                sx={{ height: 'fit-content', alignSelf: 'center' }}
-                startIcon={<AddCircleOutlineIcon />}
-                disabled={field.value !== undefined}
-                onClick={() => setFieldValue(field.name, '')}>
-                {t('common.add')}
-              </Button>
               {field.value !== undefined ? (
                 <TextField
                   {...field}
@@ -80,24 +73,67 @@ export const DescriptionPanel = () => {
                   label={t('registration.description.alternative_title')}
                 />
               ) : null}
+              {field.value || field.value === '' ? null : (
+                <Button
+                  startIcon={<AddCircleOutlineIcon />}
+                  disabled={!values.entityDescription?.mainTitle}
+                  onClick={() => setFieldValue(field.name, '')}>
+                  {t('common.add')}
+                </Button>
+              )}
             </>
           )}
         </Field>
       </Box>
-      <Field name={DescriptionFieldNames.Abstract}>
-        {({ field }: FieldProps<string>) => (
-          <TextField
-            {...field}
-            value={field.value ?? ''}
-            data-testid={dataTestId.registrationWizard.description.abstractField}
-            variant="filled"
-            fullWidth
-            multiline
-            rows="4"
-            label={t('registration.description.abstract')}
-          />
-        )}
-      </Field>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+          alignItems: 'start',
+        }}>
+        <Field name={DescriptionFieldNames.Abstract}>
+          {({ field }: FieldProps<string>) => (
+            <TextField
+              {...field}
+              value={field.value ?? ''}
+              data-testid={dataTestId.registrationWizard.description.abstractField}
+              variant="filled"
+              fullWidth
+              multiline
+              rows="4"
+              label={t('registration.description.abstract')}
+            />
+          )}
+        </Field>
+        <Field name={DescriptionFieldNames.AlternativeAbstracts}>
+          {({ field }: FieldProps<string>) => (
+            <>
+              {field.value !== undefined ? (
+                <TextField
+                  {...field}
+                  value={field.value ?? ''}
+                  data-testid={dataTestId.registrationWizard.description.alternativeAbstractField}
+                  variant="filled"
+                  fullWidth
+                  multiline
+                  rows="4"
+                  label={t('registration.description.alternative_abstract')}
+                />
+              ) : null}
+
+              {field.value || field.value === '' ? null : (
+                <Button
+                  startIcon={<AddCircleOutlineIcon />}
+                  disabled={!values.entityDescription?.abstract}
+                  onClick={() => setFieldValue(field.name, '')}>
+                  {t('common.add')}
+                </Button>
+              )}
+            </>
+          )}
+        </Field>
+      </Box>
       <Field name={DescriptionFieldNames.Description}>
         {({ field }: FieldProps<string>) => (
           <TextField
@@ -185,7 +221,7 @@ export const DescriptionPanel = () => {
 
       <ProjectsField />
       <Divider />
-      <FundingsField />
+      <RegistrationFunding currentFundings={values.fundings} />
     </InputContainerBox>
   );
 };

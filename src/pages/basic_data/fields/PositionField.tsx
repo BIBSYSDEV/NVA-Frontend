@@ -2,10 +2,12 @@ import { Autocomplete, TextField, Typography } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CristinApiPath } from '../../../api/apiPaths';
-import { PositionResponse } from '../../../types/user.types';
-import { useFetchResource } from '../../../utils/hooks/useFetchResource';
+import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { setNotification } from '../../../redux/notificationSlice';
+import { fetchPositions } from '../../../api/cristinApi';
 
 interface PositionFieldProps {
   fieldName: string;
@@ -21,17 +23,22 @@ export const PositionField = ({
   includeDisabledPositions = false,
 }: PositionFieldProps) => {
   const { t } = useTranslation();
-  const [positionResponse, isLoadingPositions] = useFetchResource<PositionResponse>(
-    includeDisabledPositions ? CristinApiPath.Position : `${CristinApiPath.Position}?active=true`,
-    t('feedback.error.get_positions')
-  );
+  const dispatch = useDispatch();
+
+  const positionsQuery = useQuery({
+    queryKey: ['positions', includeDisabledPositions],
+    queryFn: () => fetchPositions(includeDisabledPositions),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_positions'), variant: 'error' })),
+    staleTime: Infinity,
+    cacheTime: 900_000, // 15 minutes
+  });
 
   const sortedPositions = useMemo(
     () =>
-      [...(positionResponse?.positions ?? [])].sort((a, b) =>
-        getLanguageString(a.name).toLowerCase() > getLanguageString(b.name).toLowerCase() ? 1 : -1
+      [...(positionsQuery.data?.positions ?? [])].sort((a, b) =>
+        getLanguageString(a.labels).toLowerCase() > getLanguageString(b.labels).toLowerCase() ? 1 : -1
       ),
-    [positionResponse?.positions]
+    [positionsQuery.data?.positions]
   );
 
   return (
@@ -42,7 +49,7 @@ export const PositionField = ({
             const inputValueLowerCase = state.inputValue.toLowerCase();
             return options.filter(
               (option) =>
-                getLanguageString(option.name).toLowerCase().includes(inputValueLowerCase) ||
+                getLanguageString(option.labels).toLowerCase().includes(inputValueLowerCase) ||
                 getPositionCode(option.id).toLowerCase().includes(inputValueLowerCase)
             );
           }}
@@ -52,7 +59,7 @@ export const PositionField = ({
           renderOption={(props, option) => (
             <li {...props} key={option.id}>
               <div>
-                <Typography>{getLanguageString(option.name)}</Typography>
+                <Typography>{getLanguageString(option.labels)}</Typography>
                 <Typography variant="body2" color="textSecondary">
                   {getPositionCode(option.id)}
                 </Typography>
@@ -61,9 +68,9 @@ export const PositionField = ({
           )}
           getOptionDisabled={(option) => !option.enabled}
           onChange={(_, value) => setFieldValue(field.name, value?.id ?? '')}
-          getOptionLabel={(option) => getLanguageString(option.name)}
+          getOptionLabel={(option) => getLanguageString(option.labels)}
           fullWidth
-          loading={isLoadingPositions}
+          loading={positionsQuery.isLoading}
           renderInput={(params) => (
             <TextField
               type="search"
@@ -74,6 +81,7 @@ export const PositionField = ({
               variant="filled"
               error={touched && !!error}
               helperText={touched && error}
+              data-testid={dataTestId.basicData.personAdmin.position}
             />
           )}
         />

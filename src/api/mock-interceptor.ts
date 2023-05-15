@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios, { AxiosRequestConfig } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
@@ -20,6 +20,7 @@ import {
   CristinApiPath,
   CustomerInstitutionApiPath,
   FileApiPath,
+  OrcidApiPath,
   PublicationChannelApiPath,
   PublicationsApiPath,
   RoleApiPath,
@@ -48,7 +49,6 @@ export const interceptRequestsOnMock = () => {
 
   //MY MESSAGES
   mock.onGet(new RegExp(SearchApiPath.Tickets)).reply(200, mockSearchTasks);
-  mock.onGet(new RegExp(PublicationsApiPath.Tickets)).reply(200, mockTicketCollection);
   mock.onGet(new RegExp('/tickets')).reply(200, mockTicketCollection);
 
   // PUBLICATION CHANNEL
@@ -80,6 +80,7 @@ export const interceptRequestsOnMock = () => {
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
+  mock.onPost(new RegExp(OrcidApiPath.Orcid)).reply(201);
 
   // Person Registry
   mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinPersonSearch);
@@ -107,7 +108,7 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp(RoleApiPath.InstitutionUsers)).reply(200, []);
   mock.onGet(new RegExp(RoleApiPath.Users)).reply(200, mockRoles);
 
-  mock.onAny().reply((config) => {
+  mock.onAny().reply((config: AxiosRequestConfig) => {
     throw new Error('Could not find mock for ' + config.url);
   });
 };

@@ -23,7 +23,7 @@ export const mockRegistration: JournalRegistration = {
   publisher: { id: mockCustomerInstitution.id },
   associatedArtifacts: [
     {
-      type: 'File',
+      type: 'UnpublishedFile',
       identifier: '3214324',
       name: 'filename.pdf',
       size: 10,
@@ -42,13 +42,14 @@ export const mockRegistration: JournalRegistration = {
       'Computer simulations show that Neanderthal facial morphology represents adaptation to cold and high energy demands, but not heavy biting',
     abstract:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt, ante vitae convallis interdum, ipsum enim tempor dolor, sit amet condimentum lorem neque non sem. Nulla volutpat turpis elit. Nam fringilla sed nisi quis blandit. Nulla porttitor egestas massa, a fringilla nunc. Fusce at ornare urna. Sed luctus odio et velit dignissim, vel suscipit eros maximus. Nullam volutpat velit vel ante vestibulum, vitae accumsan lacus faucibus.\n\nNulla ultrices porta elit non scelerisque. In hac habitasse platea dictumst. Maecenas cursus lacinia magna non ultrices. Proin id porttitor mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae tempus nunc. Maecenas eu leo gravida, dictum velit sit amet, faucibus tortor. Nam ut lacus pretium, aliquam risus sed, faucibus enim ',
+    alternativeAbstracts: {},
     alternativeTitles: {},
     description:
       'Morbi sed neque egestas, egestas lacus ac, tincidunt metus. Donec quis ipsum vulputate, tempus nisi vulputate, commodo orci. Suspendisse blandit condimentum ex quis egestas. Ut rhoncus eros non condimentum mattis. Ut lectus nisi, molestie sit amet hendrerit ut, mollis vel odio. In a risus tellus. Morbi rutrum augue metus, ut malesuada ex posuere vitae. Nam nec rhoncus turpis.',
     tags: ['Ost', 'Loff', 'Majones'],
     language: 'http://lexvo.org/id/iso639-3/eng',
     npiSubjectHeading: '0003',
-    date: {
+    publicationDate: {
       type: 'PublicationDate',
       year: '1980',
       month: '12',
@@ -64,7 +65,7 @@ export const mockRegistration: JournalRegistration = {
           id: '901790000000',
           name: 'Test User',
         },
-        role: ContributorRole.Creator,
+        role: { type: ContributorRole.Creator },
         sequence: 1,
       },
       {
@@ -82,7 +83,7 @@ export const mockRegistration: JournalRegistration = {
           type: 'Identity',
           name: 'Osteloff, Oddny',
         },
-        role: ContributorRole.Creator,
+        role: { type: ContributorRole.Creator },
         sequence: 2,
       },
     ],
@@ -124,6 +125,11 @@ export const mockTicketCollection: TicketCollection = {
   type: 'TicketCollection',
   tickets: [
     {
+      owner: {
+        firstName: 'Bob',
+        lastName: 'Boffaloe',
+        username: 'creator@unit.no',
+      },
       type: 'GeneralSupportCase',
       status: 'Pending',
       createdDate: new Date(2020, 1).toISOString(),
@@ -135,12 +141,14 @@ export const mockTicketCollection: TicketCollection = {
         identifier: mockRegistration.identifier,
         mainTitle: mockRegistration.entityDescription.mainTitle,
       },
-      viewedBy: [],
       messages: [
         {
           text: 'Hello Mr. Curator! A have a question about this publication, okay?',
-          sender: 'creator@unit.no',
-          owner: 'creator@unit.no',
+          sender: {
+            firstName: 'Bob',
+            lastName: 'Boffaloe',
+            username: 'creator@unit.no',
+          },
           createdDate: new Date(2020, 1).toISOString(),
           id: 'http://test.no/1',
           identifier: '1',
@@ -148,8 +156,11 @@ export const mockTicketCollection: TicketCollection = {
         },
         {
           text: 'Yes, how may I assist you my dear friend?',
-          sender: 'curator@unit.no',
-          owner: 'creator@unit.no',
+          sender: {
+            firstName: 'Bob',
+            lastName: 'Ryder',
+            username: 'curator@unit.no',
+          },
           createdDate: new Date(2020, 2).toISOString(),
           id: 'http://test.no/2',
           identifier: '2',
@@ -157,8 +168,11 @@ export const mockTicketCollection: TicketCollection = {
         },
         {
           text: "I don't know...",
-          sender: 'creator@unit.no',
-          owner: 'creator@unit.no',
+          sender: {
+            firstName: 'Bob',
+            lastName: 'Boffaloe',
+            username: 'creator@unit.no',
+          },
           createdDate: new Date(2020, 3).toISOString(),
           id: 'http://test.no/3',
           identifier: '3',

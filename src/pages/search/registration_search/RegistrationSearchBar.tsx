@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
-import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
+import { AdvancedSearchRow, registrationFilters } from '../registration_search/filters/AdvancedSearchRow';
 import { SearchTextField } from '../SearchTextField';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
 
@@ -13,8 +13,27 @@ export const RegistrationSearchBar = () => {
   const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
 
+  const showAdvancedSearch = properties.some(
+    (property) =>
+      !property.fieldName ||
+      registrationFilters.some((filter) => filter.field === property.fieldName && filter.manuallyAddable)
+  );
+
   return (
-    <>
+    <Box
+      sx={{
+        mx: {
+          xs: '1rem',
+          md: 0,
+        },
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', md: '5fr 2fr' },
+        gridTemplateAreas: {
+          xs: "'searchbar' 'sorting' 'advanced'",
+          sm: "'searchbar sorting' 'advanced advanced'",
+        },
+        gap: '0.75rem 1rem',
+      }}>
       <Field name="searchTerm">
         {({ field }: FieldProps<string>) => (
           <SearchTextField
@@ -29,20 +48,25 @@ export const RegistrationSearchBar = () => {
         )}
       </Field>
       <RegistrationSortSelector />
+
       <FieldArray name="properties">
         {({ push, remove }: FieldArrayRenderProps) => (
           <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {properties.map((property, index) => (
-              <AdvancedSearchRow
-                key={index}
-                propertySearchItem={property}
-                removeFilter={() => {
-                  remove(index);
-                  submitForm();
-                }}
-                baseFieldName={`properties[${index}]`}
-              />
-            ))}
+            {properties.map(
+              (property, index) =>
+                !property.fieldName ||
+                registrationFilters.find((filter) => filter.field === property.fieldName)?.manuallyAddable ? (
+                  <AdvancedSearchRow
+                    key={index}
+                    propertySearchItem={property}
+                    removeFilter={() => {
+                      remove(index);
+                      submitForm();
+                    }}
+                    baseFieldName={`properties[${index}]`}
+                  />
+                ) : null // Hide fields where user cannot set values themself. Typically terms based on aggregations (facets)
+            )}
             <Box sx={{ display: 'flex', gap: '1rem' }}>
               <Button
                 variant="outlined"
@@ -57,7 +81,7 @@ export const RegistrationSearchBar = () => {
                 startIcon={<FilterAltIcon />}>
                 {t('search.add_filter')}
               </Button>
-              {properties.length > 0 && (
+              {showAdvancedSearch && (
                 <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
                   {t('common.search')}
                 </Button>
@@ -66,6 +90,6 @@ export const RegistrationSearchBar = () => {
           </Box>
         )}
       </FieldArray>
-    </>
+    </Box>
   );
 };

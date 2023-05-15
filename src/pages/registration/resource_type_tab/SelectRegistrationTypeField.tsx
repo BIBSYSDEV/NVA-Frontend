@@ -12,6 +12,7 @@ import {
   ChapterType,
   contextTypeBaseFieldName,
   DegreeType,
+  ExhibitionContentType,
   instanceTypeBaseFieldName,
   JournalType,
   MediaType,
@@ -54,15 +55,25 @@ import {
 } from '../../../utils/registration-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { RegistrationTypeElement, RegistrationTypesRow } from './components/RegistrationTypesRow';
+import {
+  emptyExhibitionPublicationContext,
+  emptyExhibitionPublicationInstance,
+} from '../../../types/publication_types/exhibitionContent.types';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
-  const currentInstanceType = values.entityDescription?.reference?.publicationInstance.type ?? '';
+  const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
 
+  const [searchValue, setSearchValue] = useState('');
   const [openSelectType, setOpenSelectType] = useState(!currentInstanceType);
   const [confirmNewType, setConfirmNewType] = useState<PublicationInstanceType | ''>('');
   const [showDatasetConditions, setShowDatasetConditions] = useState(false);
+
+  const closeSelectType = () => {
+    setOpenSelectType(false);
+    setSearchValue('');
+  };
 
   const updateRegistrationData = (newInstanceType: PublicationInstanceType) => {
     if (newInstanceType !== currentInstanceType) {
@@ -117,8 +128,8 @@ export const SelectRegistrationTypeField = () => {
             );
           setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType }, false);
           break;
-        case PublicationType.Chapter:
-          newMainType && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Chapter }, false);
+        case PublicationType.Anthology:
+          newMainType && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Anthology }, false);
           setFieldValue(
             instanceTypeBaseFieldName,
             { ...emptyChapterPublicationInstance, type: newInstanceType },
@@ -180,6 +191,10 @@ export const SelectRegistrationTypeField = () => {
             false
           );
           break;
+        case PublicationType.ExhibitionContent:
+          newMainType && setFieldValue(contextTypeBaseFieldName, emptyExhibitionPublicationContext, false);
+          setFieldValue(instanceTypeBaseFieldName, emptyExhibitionPublicationInstance, false);
+          break;
         case PublicationType.GeographicalContent:
           newMainType && setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
           setFieldValue(instanceTypeBaseFieldName, { ...emptyMapPublicationInstance, type: newInstanceType }, false);
@@ -194,7 +209,7 @@ export const SelectRegistrationTypeField = () => {
       if (newInstanceType !== currentInstanceType) {
         setConfirmNewType(newInstanceType);
       } else {
-        setOpenSelectType(false);
+        closeSelectType();
       }
     } else {
       if (newInstanceType === ResearchDataType.Dataset) {
@@ -202,17 +217,17 @@ export const SelectRegistrationTypeField = () => {
         setShowDatasetConditions(true);
       } else {
         updateRegistrationData(newInstanceType);
-        setOpenSelectType(false);
+        closeSelectType();
       }
     }
   };
 
-  const [searchValue, setSearchValue] = useState('');
-
-  const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) =>
-    registrationTypes.filter((registrationType) =>
-      registrationType.text.toLowerCase().includes(searchValue.toLowerCase())
+  const filterRegistrationTypes = (registrationTypes: RegistrationTypeElement[]) => {
+    const lowerCaseSearchValue = searchValue.toLowerCase();
+    return registrationTypes.filter((registrationType) =>
+      registrationType.text.toLowerCase().includes(lowerCaseSearchValue)
     );
+  };
 
   return openSelectType || !currentInstanceType ? (
     <>
@@ -223,7 +238,7 @@ export const SelectRegistrationTypeField = () => {
             <IconButton
               data-testid={dataTestId.registrationWizard.resourceType.closeResourceTypeSelectorButton}
               title={t('common.close')}
-              onClick={() => setOpenSelectType(false)}>
+              onClick={closeSelectType}>
               <CloseIcon />
             </IconButton>
           )}
@@ -308,7 +323,7 @@ export const SelectRegistrationTypeField = () => {
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
-            mainType={PublicationType.Chapter}
+            mainType={PublicationType.Anthology}
             registrationTypes={filterRegistrationTypes(
               Object.values(ChapterType).map((registrationType) => ({
                 value: registrationType,
@@ -363,6 +378,17 @@ export const SelectRegistrationTypeField = () => {
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
+            mainType={PublicationType.ExhibitionContent}
+            registrationTypes={filterRegistrationTypes(
+              Object.values(ExhibitionContentType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
+              }))
+            )}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <RegistrationTypesRow
             mainType={PublicationType.GeographicalContent}
             registrationTypes={filterRegistrationTypes(
               Object.values(OtherRegistrationType).map((registrationType) => ({
@@ -384,12 +410,12 @@ export const SelectRegistrationTypeField = () => {
         open={!!confirmNewType}
         title={t('registration.resource_type.change_registration_type')}
         onAccept={() => {
-          if (confirmNewType && confirmNewType !== values.entityDescription?.reference?.publicationInstance.type) {
+          if (confirmNewType && confirmNewType !== values.entityDescription?.reference?.publicationInstance?.type) {
             if (confirmNewType === ResearchDataType.Dataset) {
               setShowDatasetConditions(true);
             } else {
               updateRegistrationData(confirmNewType);
-              setOpenSelectType(false);
+              closeSelectType();
             }
           }
 
@@ -404,7 +430,7 @@ export const SelectRegistrationTypeField = () => {
       <ConfirmDialog
         open={
           showDatasetConditions ||
-          (values.entityDescription?.reference?.publicationInstance.type === ResearchDataType.Dataset &&
+          (values.entityDescription?.reference?.publicationInstance?.type === ResearchDataType.Dataset &&
             !values.entityDescription.reference.publicationInstance.userAgreesToTermsAndConditions)
         }
         title={t('registration.resource_type.research_data.accept_dataset_terms.dialog_title')}
@@ -417,7 +443,7 @@ export const SelectRegistrationTypeField = () => {
           updateRegistrationData(ResearchDataType.Dataset);
           setShowDatasetConditions(false);
           setFieldValue(ResourceFieldNames.PublicationInstanceAgreeTerms, true, false); // Set validation to false to avoid Form and Type fields shown as errors
-          setOpenSelectType(false);
+          closeSelectType();
         }}
         dialogDataTestId={dataTestId.registrationWizard.resourceType.confirmDatasetTypeDialog}>
         <Typography fontWeight={500}>
@@ -453,7 +479,7 @@ export const SelectRegistrationTypeField = () => {
         variant="filled"
         color="primary"
         label={t(`registration.publication_types.${currentInstanceType}`)}
-        onClick={() => setOpenSelectType(!openSelectType)}
+        onClick={() => setOpenSelectType(true)}
         sx={{ mt: '0.5rem', width: 'max-content' }}
       />
       <FormHelperText>{t('registration.resource_type.click_to_change_resource_type')}</FormHelperText>

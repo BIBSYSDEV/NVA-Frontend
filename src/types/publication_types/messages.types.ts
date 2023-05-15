@@ -1,8 +1,9 @@
+import { PublishStrategy } from '../customerInstitution.types';
+
 export interface Message {
   id: string;
   identifier: string;
-  sender: string;
-  owner: string;
+  sender: Person;
   text: string;
   createdDate: string;
   recipient: string;
@@ -17,6 +18,7 @@ export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingReques
 export type TicketStatus = 'Pending' | 'Closed' | 'Completed';
 
 export interface Ticket {
+  owner: Person;
   type: TicketType;
   status: TicketStatus;
   createdDate: string;
@@ -28,6 +30,17 @@ export interface Ticket {
     identifier: string;
     mainTitle: string;
   };
-  viewedBy: string[];
   messages: Message[];
+}
+
+export interface PublishingTicket extends Ticket {
+  workflow: PublishStrategy;
+}
+
+interface Person {
+  preferredFirstName?: string;
+  firstName: string;
+  preferredLastName?: string;
+  lastName: string;
+  username: string;
 }

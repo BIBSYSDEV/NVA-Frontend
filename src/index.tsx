@@ -1,9 +1,11 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { StrictMode } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { Provider as ReduxProvider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { HelmetProvider } from 'react-helmet-async';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { App } from './App';
 import { store } from './redux/store';
@@ -25,20 +27,34 @@ if ((window as any).Cypress) {
   (window as any).store = store;
 }
 
-ReactDOM.render(
-  <StrictMode>
-    <BasicErrorBoundary>
-      <I18nextProvider i18n={i18n}>
-        <ReduxProvider store={store}>
-          <ThemeProvider theme={mainTheme}>
-            <CssBaseline />
-            <HelmetProvider>
-              <App />
-            </HelmetProvider>
-          </ThemeProvider>
-        </ReduxProvider>
-      </I18nextProvider>
-    </BasicErrorBoundary>
-  </StrictMode>,
-  document.getElementById('root')
-);
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(
+    <StrictMode>
+      <BasicErrorBoundary>
+        <I18nextProvider i18n={i18n}>
+          <ReduxProvider store={store}>
+            <ThemeProvider theme={mainTheme}>
+              <CssBaseline />
+              <HelmetProvider>
+                <QueryClientProvider client={queryClient}>
+                  <App />
+                  <ReactQueryDevtools />
+                </QueryClientProvider>
+              </HelmetProvider>
+            </ThemeProvider>
+          </ReduxProvider>
+        </I18nextProvider>
+      </BasicErrorBoundary>
+    </StrictMode>
+  );
+}

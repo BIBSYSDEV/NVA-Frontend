@@ -1,19 +1,19 @@
 import * as Yup from 'yup';
+import { fundingSourceIsNfr } from '../../../pages/registration/description_tab/projects_field/projectHelpers';
 import i18n from '../../../translations/i18n';
-import { fundingSourceIsNfr } from '../../registration-helpers';
 
 const fundingErrorMessage = {
-  fundingSourceRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.description.funding.funder'),
+  fundingSourceRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.description.funding.funder'),
   }),
-  fundingProjectRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.description.funding.project'),
+  fundingProjectRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.description.funding.project'),
   }),
-  fundingNfrProjectRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.description.funding.nfr_project'),
+  fundingNfrProjectRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.description.funding.nfr_project'),
   }),
-  fundingAmountMustBeAPositiveNumber: i18n.t('translation:feedback.validation.must_be_a_positive_number', {
-    field: i18n.t('translation:registration.description.funding.funding_sum'),
+  fundingAmountMustBeAPositiveNumber: i18n.t('feedback.validation.must_be_a_positive_number', {
+    field: i18n.t('registration.description.funding.funding_sum'),
   }),
 };
 
@@ -51,4 +51,9 @@ export const fundingValidationSchema = Yup.object({
             .required(fundingErrorMessage.fundingAmountMustBeAPositiveNumber),
         })
   ),
+});
+
+export const projectFundingValidationSchema = Yup.object({
+  identifier: Yup.string().optional(),
+  source: Yup.string().required(fundingErrorMessage.fundingSourceRequired),
 });

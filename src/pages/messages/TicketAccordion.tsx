@@ -14,7 +14,8 @@ import { MessageList } from './MessageList';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { RootState } from '../../redux/store';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { getRegistrationIdentifier, getTitleString } from '../../utils/registration-helpers';
+import { getTitleString } from '../../utils/registration-helpers';
+import { getIdentifierFromId } from '../../utils/general-helpers';
 
 interface TicketAccordionProps {
   ticket: Ticket;
@@ -23,9 +24,9 @@ interface TicketAccordionProps {
 export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const username = useSelector((store: RootState) => store.user?.nvaUsername);
+  const user = useSelector((store: RootState) => store.user);
 
-  const registrationIdentifier = getRegistrationIdentifier(ticket.publication.id);
+  const registrationIdentifier = getIdentifierFromId(ticket.publication.id);
 
   const [messagesCopy, setMessagesCopy] = useState(ticket.messages);
 
@@ -38,7 +39,11 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
       const newMessage: Message = {
         ...messagesCopy[0],
         createdDate: new Date().toString(),
-        sender: username ?? '',
+        sender: {
+          firstName: user?.givenName ?? '?',
+          lastName: user?.familyName ?? '?',
+          username: user?.nvaUsername ?? '',
+        },
         text: message,
       };
       setMessagesCopy([...messagesCopy, newMessage]);
@@ -47,27 +52,21 @@ export const TicketAccordion = ({ ticket }: TicketAccordionProps) => {
 
   return (
     <ErrorBoundary>
-      <Accordion data-testid={`message-${registrationIdentifier}`} elevation={2}>
+      <Accordion data-testid={`message-${registrationIdentifier}`} elevation={2} sx={{ width: '100%', py: '0.5rem' }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon fontSize="large" />}
           sx={{
             '.MuiAccordionSummary-content': {
               display: 'grid',
-              gridTemplateAreas: { xs: '"type date status" "title title title"', md: '"type title date status"' },
-              gridTemplateColumns: { xs: '1fr 1fr 1fr', md: '1fr 5fr 1fr 1fr' },
+              gridTemplateAreas: { xs: '"type date status" "title title title"', md: '"title type date status"' },
+              gridTemplateColumns: { xs: '1fr 1fr 1fr', md: '4fr 2fr 1fr 1fr' },
               gap: '1rem',
             },
           }}>
           <Typography
             data-testid={`message-type-${registrationIdentifier}`}
             sx={{ gridArea: 'type', fontWeight: 'bold' }}>
-            {ticket.type === 'DoiRequest'
-              ? t('my_page.messages.types.doi')
-              : ticket.type === 'GeneralSupportCase'
-              ? t('my_page.messages.types.support')
-              : ticket.type === 'PublishingRequest'
-              ? t('my_page.messages.types.publishing_request')
-              : null}
+            {t(`my_page.messages.types.${ticket.type}`)}
           </Typography>
           <Typography
             data-testid={`message-title-${registrationIdentifier}`}
