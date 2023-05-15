@@ -99,7 +99,7 @@ export const LinkButtonRow = ({ sx, ...props }: BoxProps) => (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      gap: '5rem',
+      gap: '0.5rem',
       ...sx,
     }}
     {...props}

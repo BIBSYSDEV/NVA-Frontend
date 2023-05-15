@@ -151,6 +151,7 @@
     "orcid_profile": "ORCID profile",
     "order": "Order",
     "other": "Other",
+    "overview": "Overview",
     "page_title": "Nasjonalt Vitenarkiv",
     "place": "Place",
     "previous": "Previous",
@@ -179,6 +180,7 @@
     "select_institution": "Select institution",
     "selected": "Selected",
     "send": "Send",
+    "settings": "Settings",
     "show": "Show",
     "show_all": "Show all",
     "show_details": "Show details",
@@ -322,8 +324,6 @@
       "files_and_licenses": "Files and licenses",
       "metadata": "Metadata",
       "publish_strategy": "Publishing strategy",
-      "registrator_cannot_publish": "Registrar can only register",
-      "registrator_cannot_publish_description": "Metadata, files and licenses must be approved by the Curator before publishing.",
       "registrator_publishes_metadata": "Registrar publishes metadata",
       "registrator_publishes_metadata_description": "Files and licenses must be approved by the Curator before they become publicly available.",
       "registrator_publishes_without_curator": "The registrar publishes without approval from Curator",
@@ -361,6 +361,7 @@
       "get_customers": "Failed to retrieve customer institutions",
       "get_doi": "Failed to retrieve link data",
       "get_doi_agent": "Could not retrieve DOI configuration",
+      "get_funding_sources": "",
       "get_institution": "Failed to retrieve institution",
       "get_institutions": "Failed to retrieve institutions",
       "get_journal": "Failed to retrieve journal",
@@ -386,6 +387,7 @@
       "reserve_doi": "Reservation of DOI failed",
       "search": "Search failed",
       "send_message": "Could not send message",
+      "storing_orcid_credentials": "Failed to save orcid-data",
       "update_customer": "Failed to update customer institution",
       "update_doi_agent": "Could not update DOI configuration",
       "update_doi_request": "Failed to update DOI request",
@@ -479,7 +481,6 @@
   },
   "my_page": {
     "messages": {
-      "go_to_registration": "Go to registration",
       "messages": "Messages",
       "no_messages": "You have no messages",
       "ticket_types": {
@@ -533,6 +534,8 @@
       "user_profile": "User profile",
       "user_profile_description": "Here you can fill in and mark what you wish to display on your public researcher profile."
     },
+    "no_employments": "No employments",
+    "project_registrations": "Project registrations",
     "registrations": {
       "delete_registration": "Delete unpublished registration",
       "delete_registration_message": "Do you want to delete \"{{title}}\"?",
@@ -835,6 +838,8 @@
     }
   },
   "project": {
+    "close_view": "Close view",
+    "close_view_description": "Unsaved data you have entered will be lost if you close this view. Do you still want to close it?",
     "coordinating_institution": "Coordinating institution",
     "create_project": "Create project",
     "edit_project": "Edit project",
@@ -947,19 +952,21 @@
         "LightDesigner": "Light designer",
         "Musician": "Ensemble musician",
         "Organizer": "Organizer",
-        "Other": "Other",
         "Photographer": "Photographer",
         "Producer": "Producer",
         "ProductionDesigner": "Production designer",
         "ProgrammeLeader": "Programme leader",
         "ProgrammeParticipant": "Programme participant",
+        "ProjectLeader": "Project manager",
         "RelatedPerson": "Related person",
         "Researcher": "Researcher",
         "RightsHolder": "Rights holder",
+        "RoleOther": "Other",
         "Scenographer": "Scenographer",
         "Screenwriter": "Screenwriter",
         "Soloist": "Soloist",
         "SoundDesigner": "Sound designer",
+        "Sponsor": "Sponsor",
         "Supervisor": "Supervisor",
         "TranslatorAdapter": "Translator/adapter",
         "VfxSupervisor": "VFX supervisor",
@@ -969,6 +976,7 @@
       "verify_affiliation": "Verify affiliation",
       "verify_person": "Verify person"
     },
+    "curator_support": "Curator support",
     "description": {
       "abstract": "Abstract",
       "add_vocabulary": "Add vocabulary",
@@ -1012,7 +1020,9 @@
       "file_publish_date_helper_text": "File is locked until the specified date",
       "files": "Files",
       "files_are_not_published": "Files are not published",
-      "files_awaits_approval": "Files (awaits approval)",
+      "files_awaits_approval_one": "",
+      "files_awaits_approval_other": "",
+      "files_count": "Files {{count}}",
       "find_journal_in_channel_register": "See information about the journal in the Norwegian Register",
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
       "find_series_in_channel_register": "See information about the series in the Norwegian Register",
@@ -1069,18 +1079,14 @@
         "has_doi_request": "Registration has a DOI request for approval to curator.",
         "has_rejected_doi_request": "Registration has a rejected DOI request.",
         "has_rejected_files_publishing_request": "Registration has a rejected publishing request for its files.",
-        "has_rejected_publishing_request": "Registration has a rejected publishing request.",
         "has_reserved_doi": "Registration has received a reserved DOI. When the registration is published a DOI request will be created and sent to curator.",
         "metadata_published_waiting_for_files": "Metadata is published and visible to other users, but a curator must approve the uploaded files before they will be visible.",
         "registration_will_soon_be_published": "The registration will be published soon. Reload page to see updated status.",
         "reload": "Reload",
-        "request_publishing": "Request publishing",
         "review_preview_before_publishing": "Review content before publishing.",
-        "waiting_for_publishing_approval": "A curator must approve content before it can be published and visible to other users.",
         "waiting_for_rejected_doi": "It can take some time before the reserved DOI is removed. Reload to check again.",
         "you_can_publish_everything": "You can publish on your own. The content will then be visible to other users.",
-        "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the files you uploaded before they can be displayed to other users.",
-        "you_can_publish_metadata_after_curator_approval": "A curator must approve the content before it can be published and visible for other users."
+        "you_can_publish_metadata": "You can publish metadata yourself, but a curator must approve the files you uploaded before they can be displayed to other users."
       },
       "validation_errors": "Validation errors"
     },
@@ -1089,13 +1095,13 @@
       "AcademicChapter": "Academic chapter",
       "AcademicLiteratureReview": "Academic literature review",
       "AcademicMonograph": "Academic monograph",
+      "Anthology": "Part of book or report",
       "Architecture": "Architecture",
       "Artistic": "Artistic result",
       "ArtisticDesign": "Design",
       "Book": "Book",
       "BookAnthology": "Anthology",
       "CaseReport": "Case report",
-      "Chapter": "Part of book or report",
       "ChapterConferenceAbstract": "Conference abstract",
       "ChapterInReport": "Chapter in report",
       "ConferenceAbstract": "Conference abstract",
@@ -1114,6 +1120,8 @@
       "Event": "Presentation",
       "ExhibitionCatalog": "Exhibition catalog",
       "ExhibitionCatalogChapter": "Chapter in Exhibition catalog",
+      "ExhibitionContent": "Exhibition",
+      "ExhibitionProduction": "",
       "GeographicalContent": "Other publication",
       "Introduction": "Introduction in anthology",
       "Journal": "Publication in journal",
@@ -1136,12 +1144,7 @@
       "MusicPerformance": "Music",
       "NonFictionChapter": "Non-fiction chapter",
       "NonFictionMonograph": "Non-fiction monograph",
-      "Other": "Other publication",
-      "OtherFeatureArticle": "Feature article",
-      "OtherMap": "Map",
-      "OtherMusical": "Musical notation",
       "OtherPresentation": "Other presentation",
-      "OtherPublication": "Other publication",
       "OtherStudentWork": "Other student thesis",
       "PerformingArts": "Performing arts",
       "PopularScienceArticle": "Popular science article",
@@ -1191,15 +1194,15 @@
         "announcement": "Announcement",
         "announcements": "Announcements",
         "architecture_type": {
+          "ArchitectureOther": "Other",
           "Building": "Building",
           "Interior": "Interior",
           "LandscapeArchitecture": "Landscape architecture",
-          "Other": "Other",
           "PlanningProposal": "Planning proposal"
         },
         "audio_video_type": {
           "Audiobook": "Audio book",
-          "Other": "Other",
+          "LiteraryArtsAudioVisualOther": "Other",
           "Podcast": "Podcast",
           "RadioPlay": "Radio play",
           "ShortFilm": "Short film"
@@ -1217,6 +1220,7 @@
         "content_track": "Content/tracks",
         "content_track_table_caption": "Overview over content/tracks",
         "design_type": {
+          "ArtisticDesignOther": "Other",
           "ClothingDesign": "Clothing design",
           "Exhibition": "Exhibition",
           "GraphicDesign": "Graphical design",
@@ -1224,7 +1228,6 @@
           "InteractionDesign": "Interaction design",
           "InteriorDesign": "Interior design",
           "LightDesign": "Lighting design",
-          "Other": "Other",
           "ProductDesign": "Product design",
           "ServiceDesign": "Service design",
           "WebDesign": "Web design"
@@ -1249,9 +1252,9 @@
         "extent_in_minutes": "Duration in minutes",
         "literary_arts_type": {
           "Essay": "Essay",
+          "LiteraryArtsOther": "Other",
           "Novel": "Novel",
           "Novella": "Novella/novellas",
-          "Other": "Other",
           "Play": "Play",
           "Poetry": "Poetry",
           "Retelling": "Retelling",
@@ -1259,13 +1262,11 @@
           "Translation": "Translation"
         },
         "media_type": "Media type",
-        "mention_other_type": "Other (publisher, ISBN, etc.)",
-        "mention_title": "Journal/Book/medium",
         "moving_picture_type": {
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Feature film",
           "InteractiveFilm": "Interactive production",
-          "Other": "Other",
+          "MovingPictureOther": "Other",
           "SerialFilmProduction": "Serial production",
           "ShortFilm": "Short film"
         },
@@ -1273,7 +1274,7 @@
           "CompactDisc": "CD",
           "DVD": "DVD",
           "DigitalFile": "Download",
-          "Other": "Other",
+          "MusicMediaOther": "Other",
           "Streaming": "Streaming",
           "Vinyl": "LP/EP"
         },
@@ -1295,6 +1296,10 @@
           "Competition": "Competition",
           "Concert": "Concert/show",
           "Exhibition": "Exhibition",
+          "ExhibitionBasic": "",
+          "ExhibitionCatalog": "Exhibition catalog",
+          "ExhibitionMentionInPublication": "Publication/mention",
+          "ExhibitionOtherPresentation": "Presentation",
           "LiteraryArtsAudioVisual": "Audio/video publication",
           "LiteraryArtsMonograph": "Book/printed matter",
           "LiteraryArtsPerformance": "Performance",
@@ -1307,13 +1312,13 @@
         },
         "performance_type": "Type/performance form",
         "performance_types": {
-          "Other": "Other",
+          "LiteraryArtsPerformanceOther": "Other",
           "Play": "Play",
           "Reading": "Reading"
         },
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
-          "Other": "Other",
+          "PerformingArtsOther": "Other",
           "TheatricalProduction": "Theater/show"
         },
         "premiere": "Premiere",
@@ -1332,8 +1337,8 @@
           "CollectiveExhibition": "Collective exhibition",
           "IndividualExhibition": "Individual exhibition",
           "Installation": "Installation",
-          "Other": "Other",
-          "Performance": "Performance"
+          "Performance": "Performance",
+          "VisualArtsOther": "Other"
         },
         "web_link": "Link"
       },
@@ -1351,10 +1356,34 @@
       "click_to_change_resource_type": "Click on selected resource type to change it",
       "date_from": "Date from",
       "date_to": "Date to",
+      "exhibition_production": {
+        "add_exhibition_basic": "",
+        "add_exhibition_catalog": "Add exhibition catalog",
+        "add_exhibition_other_presentation": "Add exhibition presentation",
+        "add_mention_in_publication": "",
+        "edit_exhibition_basic": "Change exhibition venue",
+        "edit_exhibition_catalog": "Change exhibition catalog",
+        "edit_exhibition_other_presentation": "Change presentation",
+        "edit_mention_in_publication": "Change publication/mention",
+        "institution_name": "Institution name",
+        "more_info_about_elementet": "More information about the element",
+        "presentation_type": "",
+        "search_for_exhibition_catalog": "Search for exhibition catalog",
+        "subtype": {
+          "AmbulatingExhibition": "Travelling exhibition",
+          "BasicExhibition": "Basic exhibition",
+          "DigitalExhibition": "Digital exhibition",
+          "ExhibitionProductionOther": "Other",
+          "HistoricalInterior": "Historical interior",
+          "PopupExhibition": "Pop-up exhibition",
+          "TemporaryExhibition": "Temporary exhibition"
+        }
+      },
       "isbn": "ISBN",
       "issn": "ISSN",
       "issue": "Issue",
       "journal": "Journal",
+      "journal_book_medium": "Journal/Book/medium",
       "level": "Level in Norwegian publication indicator",
       "media_contribution": {
         "channel": "Channel",
@@ -1368,7 +1397,7 @@
         "medium_types": {
           "Internet": "Internet",
           "Journal": "Newspaper or journal",
-          "Other": "Other",
+          "MediaTypeOther": "Other",
           "Radio": "Radio",
           "TV": "TV"
         },
@@ -1387,11 +1416,13 @@
       "organizer": "Organizer",
       "original_article": "Original article",
       "original_article_title": "Title on article",
+      "other_publisher_isbn_etc": "Other (publisher, ISBN, etc.)",
       "page": "Page",
       "pages_from": "Page numbers from",
       "pages_to": "to",
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
+      "publisher_or_organizer": "Publisher/organizer etc.",
       "remove_doi": "Remove DOI",
       "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you want to remove the link to the original DOI?",
       "research_data": {
@@ -1471,6 +1502,7 @@
   },
   "tasks": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "tasks": "Tasks"
+    "tasks": "Tasks",
+    "user_dialog": "User dialogue"
   }
 }

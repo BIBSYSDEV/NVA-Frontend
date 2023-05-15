@@ -14,8 +14,9 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { RegistrationParams } from '../../utils/urlPaths';
 import { StyledPageContent } from '../../components/styled/Wrappers';
 import { ActionPanel } from './ActionPanel';
-import { fetchRegistration, fetchRegistrationTickets } from '../../api/registrationApi';
+import { fetchRegistration } from '../../api/registrationApi';
 import { setNotification } from '../../redux/notificationSlice';
+import { fetchTickets } from '../../api/searchApi';
 
 const PublicRegistration = () => {
   const { t } = useTranslation();
@@ -30,14 +31,15 @@ const PublicRegistration = () => {
   });
 
   const registration = registrationQuery.data;
+  const registrationId = registration?.id ?? '';
 
   const isRegistrationAdmin = !!registration && userCanEditRegistration(user, registration);
   const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
 
   const ticketsQuery = useQuery({
-    enabled: isRegistrationAdmin,
-    queryKey: ['registrationTickets', identifier],
-    queryFn: () => registration && fetchRegistrationTickets(registration.id),
+    enabled: isRegistrationAdmin && !!registrationId,
+    queryKey: ['tickets', 10, 0, identifier],
+    queryFn: () => fetchTickets(10, 0, `publication.identifier:${identifier}`),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
   });
 
@@ -63,7 +65,8 @@ const PublicRegistration = () => {
                 <ActionPanel
                   registration={registration}
                   refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                  tickets={ticketsQuery.data?.tickets ?? []}
+                  tickets={ticketsQuery.data.hits ?? []}
+                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
                 />
               )}
               <PublicRegistrationContent registration={registration} />

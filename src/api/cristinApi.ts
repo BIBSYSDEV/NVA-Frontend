@@ -1,5 +1,6 @@
+import { SearchResponse } from '../types/common.types';
 import { Organization } from '../types/organization.types';
-import { FundingSources } from '../types/project.types';
+import { CristinProject, FundingSources } from '../types/project.types';
 import {
   CreateCristinPerson,
   CristinPerson,
@@ -70,4 +71,35 @@ export const fetchPositions = async (includeDisabledPositions: boolean) => {
     url: includeDisabledPositions ? CristinApiPath.Position : `${CristinApiPath.Position}?active=true`,
   });
   return fetchPositionsResponse.data;
+};
+
+export const fetchPerson = async (personId: string) => {
+  const fetchPersonResponse = await apiRequest2<CristinPerson>({
+    url: personId,
+  });
+  return fetchPersonResponse.data;
+};
+
+export const searchForProjects = async (results: number, page: number, creator?: string) => {
+  const searchParams = new URLSearchParams();
+  searchParams.set('results', results.toString());
+  searchParams.set('page', page.toString());
+  if (creator) {
+    searchParams.set('creator', creator);
+  }
+
+  const queryContent = searchParams.toString();
+  const query = queryContent ? `?${queryContent}` : '';
+
+  const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject>>({
+    url: `${CristinApiPath.Project}${query}`,
+  });
+  return fetchProjectsResponse.data;
+};
+
+export const fetchProject = async (projectId: string) => {
+  const fetchProjectRespone = await apiRequest2<CristinProject>({
+    url: projectId,
+  });
+  return fetchProjectRespone.data;
 };

@@ -6,15 +6,15 @@ import { Box, Divider, IconButton, TextField, Tooltip, Typography } from '@mui/m
 import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { useQuery } from '@tanstack/react-query';
 import { UserOrcid } from './UserOrcid';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 import { RootState } from '../../../redux/store';
 import { setNotification } from '../../../redux/notificationSlice';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { CristinPerson, FlatCristinPerson } from '../../../types/user.types';
-import { updateCristinPerson } from '../../../api/cristinApi';
-import { useFetch } from '../../../utils/hooks/useFetch';
+import { FlatCristinPerson } from '../../../types/user.types';
+import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
 import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-helpers';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { UserIdentity } from './UserIdentity';
@@ -31,10 +31,12 @@ export const MyProfile = () => {
 
   const personId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
 
-  const [person, isLoadingPerson, refetchPerson] = useFetch<CristinPerson>({
-    url: personId,
-    errorMessage: t('feedback.error.get_person'),
+  const personQuery = useQuery({
+    queryKey: [personId],
+    queryFn: () => fetchPerson(personId),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
   });
+  const person = personQuery.data;
 
   const hasActiveEmployment = filterActiveAffiliations(person?.affiliations).length > 0;
 
@@ -62,7 +64,7 @@ export const MyProfile = () => {
       } else if (isSuccessStatus(updatePersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' }));
         setEditPreferredNames(false);
-        refetchPerson();
+        personQuery.refetch();
       }
     }
   };
@@ -94,7 +96,7 @@ export const MyProfile = () => {
             <Typography variant="h2" id="personalia-id">
               {t('my_page.my_profile.heading.personalia')}
             </Typography>
-            {isLoadingPerson && !person ? (
+            {personQuery.isLoading && !person ? (
               <PageSpinner aria-labelledby="personalia-id" />
             ) : (
               <>
@@ -171,7 +173,7 @@ export const MyProfile = () => {
         <UserIdentity user={user} hasActiveEmployment={hasActiveEmployment} />
 
         <Box sx={{ gridArea: 'research-profile' }}>
-          <ResearchProfilePanel person={person} isLoadingPerson={isLoadingPerson} />
+          <ResearchProfilePanel person={person} isLoadingPerson={personQuery.isLoading} />
         </Box>
       </Box>
     </>

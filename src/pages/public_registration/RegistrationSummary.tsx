@@ -3,7 +3,7 @@ import { Skeleton } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
-import { getRegistrationIdentifier } from '../../utils/registration-helpers';
+import { getIdentifierFromId } from '../../utils/general-helpers';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
 import { getTitleString } from '../../utils/registration-helpers';
@@ -13,7 +13,7 @@ interface RegistrationSummaryProps {
 }
 
 export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
-  const identifier = getRegistrationIdentifier(id);
+  const identifier = getIdentifierFromId(id);
   const [searchContainer, isLoadingSearchContainer] = useSearchRegistrations({
     properties: [
       { fieldName: RegistrationFieldName.Identifier, value: identifier, operator: ExpressionStatement.Contains },

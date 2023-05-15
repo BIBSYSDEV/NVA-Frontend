@@ -30,21 +30,21 @@ const emptyBroadcast: Broadcast = {
 const validationSchema = Yup.object<YupShape<Broadcast>>({
   publisher: Yup.object().shape({
     name: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.publisher'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.publisher'),
       })
     ),
   }),
   date: Yup.object().shape({
     value: Yup.date()
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.date'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
         })
       )
       .typeError(
-        i18n.t('translation:feedback.validation.has_invalid_format', {
-          field: i18n.t('translation:common.date'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
         })
       ),
   }),
@@ -110,7 +110,7 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
                         required
                         error={touched && !!error}
                         helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                       />
                     )}
                   />

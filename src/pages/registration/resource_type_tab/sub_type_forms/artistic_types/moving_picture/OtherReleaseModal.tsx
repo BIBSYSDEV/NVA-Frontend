@@ -3,12 +3,15 @@ import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { OtherRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
+import {
+  emptyUnconfirmedPublisher,
+  OtherRelease,
+} from '../../../../../../types/publication_types/artisticRegistration.types';
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { emptyInstant } from '../../../../../../types/common.types';
+import { emptyInstant, emptyPlace } from '../../../../../../types/common.types';
 
 interface OtherReleaseModalProps {
   otherRelease?: OtherRelease;
@@ -20,28 +23,21 @@ interface OtherReleaseModalProps {
 const emptyOtherRelease: OtherRelease = {
   type: 'OtherRelease',
   description: '',
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
-  publisher: {
-    type: 'UnconfirmedPublisher',
-    name: '',
-  },
+  place: emptyPlace,
+  publisher: emptyUnconfirmedPublisher,
   date: emptyInstant,
 };
 
 const validationSchema = Yup.object<YupShape<OtherRelease>>({
   description: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.other_release_description'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.other_release_description'),
     })
   ),
   place: Yup.object().shape({
     label: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.place'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.place'),
       })
     ),
   }),
@@ -51,13 +47,13 @@ const validationSchema = Yup.object<YupShape<OtherRelease>>({
   date: Yup.object().shape({
     value: Yup.date()
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.date'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
         })
       )
       .typeError(
-        i18n.t('translation:feedback.validation.has_invalid_format', {
-          field: i18n.t('translation:common.date'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
         })
       ),
   }),
@@ -93,7 +89,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.otherReleaseType}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputDescriptionField}
                   />
                 )}
               </Field>
@@ -107,7 +103,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     label={t('common.place')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.otherReleasePlace}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>
@@ -145,7 +141,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     renderInput={(params) => (
                       <TextField
                         {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                        data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                         sx={{ maxWidth: '13rem' }}
                         variant="filled"
                         required

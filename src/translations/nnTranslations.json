@@ -151,6 +151,7 @@
     "orcid_profile": "ORCID-profil",
     "order": "Rekkjefølgje",
     "other": "Anna",
+    "overview": "Oversyn",
     "page_title": "Nasjonalt Vitenarkiv",
     "place": "Stad",
     "previous": "Førre",
@@ -179,6 +180,7 @@
     "select_institution": "Vel institusjon",
     "selected": "Vald",
     "send": "Send",
+    "settings": "Innstillingar",
     "show": "Vis",
     "show_all": "Vis alle",
     "show_details": "Vis detaljar",
@@ -322,8 +324,6 @@
       "files_and_licenses": "Filer og lisensar",
       "metadata": "Metadata",
       "publish_strategy": "Publiseringsstrategi",
-      "registrator_cannot_publish": "Registrator kan kun registrera",
-      "registrator_cannot_publish_description": "Metadata, filer og lisensar må godkjennast av Kurator før publisering.",
       "registrator_publishes_metadata": "Registrator publiserer metadata",
       "registrator_publishes_metadata_description": "Filer og lisensar må godkjennast av Kurator før dei vert offentleg tilgjengeleg.",
       "registrator_publishes_without_curator": "Registrator publiserer utan godkjenning av Kurator",
@@ -361,6 +361,7 @@
       "get_customers": "Kunne ikkje hente kundeinstitusjonar",
       "get_doi": "Kunne ikkje hente lenkjedata",
       "get_doi_agent": "Kunne ikkje hente DOI-konfigurering",
+      "get_funding_sources": "",
       "get_institution": "Kunne ikkje laste inn institusjon",
       "get_institutions": "Kunne ikkje laste inn institusjonar",
       "get_journal": "Kunne ikkje hente tidsskrift",
@@ -386,6 +387,7 @@
       "reserve_doi": "Reservasjon av DOI feila",
       "search": "Søk feila",
       "send_message": "Kunne ikkje sende melding",
+      "storing_orcid_credentials": "Kunne ikkje lagre orcid-data",
       "update_customer": "Kunne ikkje oppdatere institusjon",
       "update_doi_agent": "Kunne ikkje oppdatere DOI-konfigurering",
       "update_doi_request": "Kunne ikkje oppdatere DOI-førespurnad",
@@ -479,7 +481,6 @@
   },
   "my_page": {
     "messages": {
-      "go_to_registration": "Gå til registrering",
       "messages": "Meldingar",
       "no_messages": "Du har inga meldingar",
       "ticket_types": {
@@ -533,6 +534,8 @@
       "user_profile": "Brukarprofil",
       "user_profile_description": "Her kan du fylle inn og merke kva du ønskjer skal gå fram på din offisielle forskarprofil."
     },
+    "no_employments": "Ingen tilsettingar",
+    "project_registrations": "Prosjektregistreringar",
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønskjer du å slette \"{{title}}\"?",
@@ -835,6 +838,8 @@
     }
   },
   "project": {
+    "close_view": "Lukk vising",
+    "close_view_description": "Ulagra data du har skrive inn vil gå tapt viss du lukker denne visinga. Ønskjer du likevel å lukke visinga?",
     "coordinating_institution": "Koordinerandre institusjon",
     "create_project": "Opprett prosjekt",
     "edit_project": "Endre prosjekt",
@@ -947,19 +952,21 @@
         "LightDesigner": "Lysdesigner",
         "Musician": "Ensemblemusiker",
         "Organizer": "Arrangør",
-        "Other": "Anna",
         "Photographer": "Fotograf",
         "Producer": "Produsent",
         "ProductionDesigner": "Produksjonsdesigner",
         "ProgrammeLeader": "Programleiar",
         "ProgrammeParticipant": "Programdeltakar",
+        "ProjectLeader": "Prosjektleiar",
         "RelatedPerson": "Relatert person",
         "Researcher": "Forskar",
         "RightsHolder": "Rettholdar",
+        "RoleOther": "Anna",
         "Scenographer": "Scenograf",
         "Screenwriter": "Manusforfattar",
         "Soloist": "Solist",
         "SoundDesigner": "Lyddesigner",
+        "Sponsor": "Sponsor",
         "Supervisor": "Rettleiar",
         "TranslatorAdapter": "Omsetjar/gjendiktar",
         "VfxSupervisor": "VFX supervisor",
@@ -969,6 +976,7 @@
       "verify_affiliation": "Bekreft tilknyting",
       "verify_person": "Verifiser person"
     },
+    "curator_support": "Kuratorstøtte",
     "description": {
       "abstract": "Samandrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1012,7 +1020,9 @@
       "file_publish_date_helper_text": "Fila er låst fram til angjeve dato",
       "files": "Filer",
       "files_are_not_published": "Filer vert ikkje publisert",
-      "files_awaits_approval": "Filer (avventar godkjenning)",
+      "files_awaits_approval_one": "",
+      "files_awaits_approval_other": "",
+      "files_count": "Filer ({{count}})",
       "find_journal_in_channel_register": "Sjå informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Sjå informasjon om utgjevaren i Kanalregisteret",
       "find_series_in_channel_register": "Sjå informasjon om serien i Kanalregisteret",
@@ -1069,18 +1079,14 @@
         "has_doi_request": "Registreringa har ein DOI-førespurnad til handsaming for kurator.",
         "has_rejected_doi_request": "Registreringa har ein avslege DOI-førespurnad.",
         "has_rejected_files_publishing_request": "Registreringa har ein avslege publiseringsførespurnad for filene.",
-        "has_rejected_publishing_request": "Registreringa har ein avslege publiseringsførespurnad.",
         "has_reserved_doi": "Registreringa har fått ein reservert DOI. Når registreringa vert publisert vil ein DOI-førespurnad verte oppretta automatisk, som skal handsamast av ein kurator.",
         "metadata_published_waiting_for_files": "Metadata er publisert og synleg for andre brukarar, men ein kurator må godkjenne filene som er lasta opp før dei vert synlege.",
         "registration_will_soon_be_published": "Registreringa vil verte publisert om kort tid. Last inn siden på nytt om litt for å sjå oppdatert info.",
         "reload": "Last inn på nytt",
-        "request_publishing": "Be om publisering",
         "review_preview_before_publishing": "Sjå over utkast før du går vidare.",
-        "waiting_for_publishing_approval": "Ein kurator må godkjenne innholdet før det vert publisert og synleg for andre brukarar.",
         "waiting_for_rejected_doi": "Det kan ta noko tid før ein reservert DOI forsvinn. Last innhaldet på nytt for å sjekke igjen.",
         "you_can_publish_everything": "Du kan publisere registreringa på eiga hand. Innhaldet vil då verte synleg for andre brukarar.",
-        "you_can_publish_metadata": "Du kan publisere metadata sjølve, men ein kurator må godkjenne filene som er lasta opp før dei kan visast til andre brukarar.",
-        "you_can_publish_metadata_after_curator_approval": "Ein kurator må godkjenne innholdet før det vert publisert og synleg for andre brukarar."
+        "you_can_publish_metadata": "Du kan publisere metadata sjølve, men ein kurator må godkjenne filene som er lasta opp før dei kan visast til andre brukarar."
       },
       "validation_errors": "Valideringsfeil"
     },
@@ -1089,13 +1095,13 @@
       "AcademicChapter": "Vitskapeleg kapittel",
       "AcademicLiteratureReview": "Vitskapeleg oversynsartikkel",
       "AcademicMonograph": "Vitskapeleg monografi",
+      "Anthology": "Del av bok eller rapport",
       "Architecture": "Arkitektur",
       "Artistic": "Kunstnerisk resultat",
       "ArtisticDesign": "Design",
       "Book": "Bokpublikasjon",
       "BookAnthology": "Antologi",
       "CaseReport": "Kasuistikk",
-      "Chapter": "Del av bok eller rapport",
       "ChapterConferenceAbstract": "Konferanseabstrakt",
       "ChapterInReport": "Kapittel i rapport",
       "ConferenceAbstract": "Konferanseabstrakt",
@@ -1114,6 +1120,8 @@
       "Event": "Presentasjon",
       "ExhibitionCatalog": "Utstillingskatalog",
       "ExhibitionCatalogChapter": "Kapittel i utstillingskatalog",
+      "ExhibitionContent": "Utstilling",
+      "ExhibitionProduction": "Utstillingsproduksjon",
       "GeographicalContent": "Anna publikasjon",
       "Introduction": "Innleiing i antologi",
       "Journal": "Tidsskriftspublikasjon",
@@ -1136,12 +1144,7 @@
       "MusicPerformance": "Musikk",
       "NonFictionChapter": "Fagleg kapittel",
       "NonFictionMonograph": "Fagleg monografi",
-      "Other": "Anna publikasjon",
-      "OtherFeatureArticle": "Kronikk",
-      "OtherMap": "Kart",
-      "OtherMusical": "Musikktrykk",
       "OtherPresentation": "Anna presentasjon",
-      "OtherPublication": "Anna publikasjon",
       "OtherStudentWork": "Anna studentoppgåve",
       "PerformingArts": "Scenekunst",
       "PopularScienceArticle": "Populærvitskapeleg artikkel",
@@ -1191,15 +1194,15 @@
         "announcement": "Offentleggjering",
         "announcements": "Offentleggjeringar",
         "architecture_type": {
+          "ArchitectureOther": "Anna",
           "Building": "Bygg",
           "Interior": "Interiør",
           "LandscapeArchitecture": "Landskapsarkitektur",
-          "Other": "Anna",
           "PlanningProposal": "Planframlegg"
         },
         "audio_video_type": {
           "Audiobook": "Lydbok",
-          "Other": "Anna",
+          "LiteraryArtsAudioVisualOther": "Anna",
           "Podcast": "Podkast",
           "RadioPlay": "Høyrespel",
           "ShortFilm": "Kortfilm"
@@ -1217,6 +1220,7 @@
         "content_track": "Innhald/spor",
         "content_track_table_caption": "Oversyn over innhald/spor",
         "design_type": {
+          "ArtisticDesignOther": "Anna",
           "ClothingDesign": "Klesdesign",
           "Exhibition": "Utstilling/messe",
           "GraphicDesign": "Grafisk design",
@@ -1224,7 +1228,6 @@
           "InteractionDesign": "Interaksjonsdesign",
           "InteriorDesign": "Interiørdesign",
           "LightDesign": "Lysdesign",
-          "Other": "Anna",
           "ProductDesign": "Produktdesign",
           "ServiceDesign": "Tenestedesign",
           "WebDesign": "Webdesign"
@@ -1249,9 +1252,9 @@
         "extent_in_minutes": "Varetid i minutt",
         "literary_arts_type": {
           "Essay": "Essay",
+          "LiteraryArtsOther": "Anna",
           "Novel": "Roman",
           "Novella": "Novelle/noveller",
-          "Other": "Anna",
           "Play": "Drama/scenetekstar",
           "Poetry": "Posei",
           "Retelling": "Gjendikting",
@@ -1259,13 +1262,11 @@
           "Translation": "Omsetjing"
         },
         "media_type": "Medietype",
-        "mention_other_type": "Anna (utgjevar, ISBN, m.m.)",
-        "mention_title": "Tidsskrift/Boktittel/medium",
         "moving_picture_type": {
           "AugmentedVirtualRealityFilm": "AR/VR",
           "Film": "Langfilm",
           "InteractiveFilm": "Interaktiv produksjon",
-          "Other": "Anna",
+          "MovingPictureOther": "Anna",
           "SerialFilmProduction": "Seriell produksjon",
           "ShortFilm": "Kortfilm"
         },
@@ -1273,7 +1274,7 @@
           "CompactDisc": "CD",
           "DVD": "DVD",
           "DigitalFile": "Nedlasting",
-          "Other": "Anna",
+          "MusicMediaOther": "Anna",
           "Streaming": "Strøyming",
           "Vinyl": "LP/EP"
         },
@@ -1295,6 +1296,10 @@
           "Competition": "Konkurranse",
           "Concert": "Konsert/framsyning",
           "Exhibition": "Utstilling",
+          "ExhibitionBasic": "Visingsstad",
+          "ExhibitionCatalog": "Utstillingskatalog",
+          "ExhibitionMentionInPublication": "Publisering/omtale",
+          "ExhibitionOtherPresentation": "Formidling",
           "LiteraryArtsAudioVisual": "Audio/videoutgjeving",
           "LiteraryArtsMonograph": "Bok/trykksak",
           "LiteraryArtsPerformance": "Framsyning",
@@ -1307,13 +1312,13 @@
         },
         "performance_type": "Type/formidlingsform",
         "performance_types": {
-          "Other": "Anna",
+          "LiteraryArtsPerformanceOther": "Anna",
           "Play": "Skodespel/drama",
           "Reading": "Lesing"
         },
         "performing_arts_type": {
           "Broadcast": "TV/film/radio",
-          "Other": "Anna",
+          "PerformingArtsOther": "Anna",
           "TheatricalProduction": "Framsyning/vising"
         },
         "premiere": "Premiere",
@@ -1332,8 +1337,8 @@
           "CollectiveExhibition": "Gruppe-/kolletivutstilling",
           "IndividualExhibition": "Separat utstilling",
           "Installation": "Installasjon",
-          "Other": "Anna",
-          "Performance": "Framsyning"
+          "Performance": "Framsyning",
+          "VisualArtsOther": "Anna"
         },
         "web_link": "Lenkje"
       },
@@ -1351,10 +1356,34 @@
       "click_to_change_resource_type": "Trykk på vald ressurstype om du vil endre",
       "date_from": "Dato frå",
       "date_to": "Dato til",
+      "exhibition_production": {
+        "add_exhibition_basic": "Legg til visingsstad",
+        "add_exhibition_catalog": "Legg til utstillingskatalog",
+        "add_exhibition_other_presentation": "Legg til formidling",
+        "add_mention_in_publication": "Legg til publisering/omtale",
+        "edit_exhibition_basic": "Endre visingsstad",
+        "edit_exhibition_catalog": "Endre utstillingskatalog",
+        "edit_exhibition_other_presentation": "Endre formidling",
+        "edit_mention_in_publication": "Endre til publisering/omtale",
+        "institution_name": "Institusjonen sitt namn",
+        "more_info_about_elementet": "Meir om elementet",
+        "presentation_type": "Type formidlingsform",
+        "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
+        "subtype": {
+          "AmbulatingExhibition": "Vandreutstilling",
+          "BasicExhibition": "Basisutstilling",
+          "DigitalExhibition": "Digital utstilling",
+          "ExhibitionProductionOther": "Anna",
+          "HistoricalInterior": "Historisk interiør",
+          "PopupExhibition": "Popup-utstilling",
+          "TemporaryExhibition": "Mellombels utstilling"
+        }
+      },
       "isbn": "ISBN",
       "issn": "ISSN",
       "issue": "Hefte",
       "journal": "Tidsskrift",
+      "journal_book_medium": "Tidsskrift/Boktittel/medium",
       "level": "Nivå i Norsk publiseringsindikator",
       "media_contribution": {
         "channel": "Formidlingskanal",
@@ -1368,7 +1397,7 @@
         "medium_types": {
           "Internet": "Internett",
           "Journal": "Avis eller tidsskrift",
-          "Other": "Anna",
+          "MediaTypeOther": "Anna",
           "Radio": "Radio",
           "TV": "TV"
         },
@@ -1387,11 +1416,13 @@
       "organizer": "Arrangør",
       "original_article": "Original artikkel",
       "original_article_title": "Tittel på artikkel",
+      "other_publisher_isbn_etc": "Anna (utgjevar, ISBN, m.m.)",
       "page": "Side",
       "pages_from": "Sidetal frå",
       "pages_to": "til",
       "place_for_event": "Stad for arrangement",
       "print_issn": "Print ISSN",
+      "publisher_or_organizer": "Tidsskrift/Boktittel/medium",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som vart nytta ved registeringsstart. Ønskjer du å fjerne kobling til original DOI?",
       "research_data": {
@@ -1471,6 +1502,7 @@
   },
   "tasks": {
     "limited_to": "Avgrensa til: \"{{name}}\"",
-    "tasks": "Oppgåver"
+    "tasks": "Oppgåver",
+    "user_dialog": "Brukardialog"
   }
 }

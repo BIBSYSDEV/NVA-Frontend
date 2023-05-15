@@ -27,8 +27,9 @@ import { getRegistrationLandingPagePath, getRegistrationWizardPath } from '../..
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
-import { getRegistrationIdentifier, getTitleString } from '../../utils/registration-helpers';
+import { getTitleString } from '../../utils/registration-helpers';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { getIdentifierFromId } from '../../utils/general-helpers';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -57,7 +58,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     if (!registrationToDelete) {
       return;
     }
-    const identifierToDelete = getRegistrationIdentifier(registrationToDelete.id);
+    const identifierToDelete = getIdentifierFromId(registrationToDelete.id);
     setIsDeleting(true);
     const deleteRegistrationResponse = await deleteRegistration(identifierToDelete);
     if (isErrorStatus(deleteRegistrationResponse.status)) {
@@ -96,7 +97,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
           </TableHead>
           <TableBody>
             {registrationsOnPage.map((registration) => {
-              const identifier = getRegistrationIdentifier(registration.id);
+              const identifier = getIdentifierFromId(registration.id);
               return (
                 <TableRow key={identifier}>
                   <TableCell component="th" scope="row" data-testid={`registration-title-${identifier}`}>

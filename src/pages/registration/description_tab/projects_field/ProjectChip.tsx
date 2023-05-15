@@ -29,7 +29,7 @@ export const ProjectChip = ({ id, fallbackName, ...rest }: ProjectChipProps) => 
             </Typography>
             {project && (
               <Typography variant="body2" color="textSecondary">
-                {getLanguageString(project.coordinatingInstitution.name)}
+                {getLanguageString(project.coordinatingInstitution.labels)}
               </Typography>
             )}
           </>

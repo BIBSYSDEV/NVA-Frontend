@@ -24,12 +24,16 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { MessageList } from '../../messages/components/MessageList';
+import { MessageForm } from '../../../components/MessageForm';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
   refetchRegistrationAndTickets: () => void;
   doiRequestTicket: Ticket | null;
   userIsCurator: boolean;
+  isLoadingData: boolean;
+  addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
 
 enum LoadingState {
@@ -45,10 +49,11 @@ export const DoiRequestAccordion = ({
   doiRequestTicket,
   refetchRegistrationAndTickets,
   userIsCurator,
+  isLoadingData,
+  addMessage,
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -122,6 +127,7 @@ export const DoiRequestAccordion = ({
   };
 
   const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
+  const messages = doiRequestTicket?.messages ?? [];
 
   return (
     <Accordion
@@ -148,13 +154,14 @@ export const DoiRequestAccordion = ({
                 <Typography gutterBottom>
                   {t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}
                 </Typography>
-                <Button
+                <LoadingButton
                   variant="outlined"
                   onClick={refetchRegistrationAndTickets}
+                  loading={isLoadingData}
                   startIcon={<RefreshIcon />}
                   data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
                   {t('registration.public_page.tasks_panel.reload')}
-                </Button>
+                </LoadingButton>
               </>
             )}
           </>
@@ -167,7 +174,7 @@ export const DoiRequestAccordion = ({
                 variant="outlined"
                 endIcon={<LocalOfferIcon />}
                 loadingPosition="end"
-                loading={isLoading === LoadingState.RequestDoi}
+                loading={isLoadingData || isLoading === LoadingState.RequestDoi}
                 disabled={isLoading !== LoadingState.None}
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.requestDoiButton}
                 onClick={toggleRequestDoiModal}>
@@ -179,7 +186,7 @@ export const DoiRequestAccordion = ({
                 variant="outlined"
                 endIcon={<LocalOfferIcon />}
                 loadingPosition="end"
-                loading={isLoading === LoadingState.DraftDoi}
+                loading={isLoadingData || isLoading === LoadingState.DraftDoi}
                 disabled={isLoading !== LoadingState.None}
                 data-testid={dataTestId.registrationLandingPage.tasksPanel.reserveDoiButton}
                 onClick={addDraftDoi}>
@@ -208,12 +215,26 @@ export const DoiRequestAccordion = ({
                   variant="contained"
                   data-testid={dataTestId.registrationLandingPage.tasksPanel.sendDoiButton}
                   onClick={sendDoiRequest}
-                  loading={isLoading !== LoadingState.None}>
+                  loading={isLoadingData || isLoading !== LoadingState.None}>
                   {t('common.send')}
                 </LoadingButton>
               </DialogActions>
             </Modal>
           </>
+        )}
+
+        {isPendingDoiRequest && (
+          <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
+            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+              {`${t('my_page.messages.messages')} (${messages.length})`}
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <MessageList messages={messages} />
+                <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
+              </Box>
+            </AccordionDetails>
+          </Accordion>
         )}
 
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
@@ -225,7 +246,7 @@ export const DoiRequestAccordion = ({
               loadingPosition="end"
               onClick={() => updatePendingDoiRequest('Completed')}
               loading={isLoading === LoadingState.ApproveDoi}
-              disabled={isLoading !== LoadingState.None}>
+              disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('common.create_doi')}
             </LoadingButton>
             <LoadingButton
@@ -235,7 +256,7 @@ export const DoiRequestAccordion = ({
               loadingPosition="end"
               onClick={() => updatePendingDoiRequest('Closed')}
               loading={isLoading === LoadingState.RejectDoi}
-              disabled={isLoading !== LoadingState.None}>
+              disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('common.reject_doi')}
             </LoadingButton>
           </Box>

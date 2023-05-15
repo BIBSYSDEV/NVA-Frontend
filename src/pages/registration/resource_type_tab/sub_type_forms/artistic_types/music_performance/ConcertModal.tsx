@@ -35,7 +35,7 @@ import { Concert, MusicalWorkPerformance } from '../../../../../../types/publica
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { emptyInstant, emptyPeriod } from '../../../../../../types/common.types';
+import { emptyInstant, emptyPeriod, emptyPlace } from '../../../../../../types/common.types';
 import { PeriodFields } from '../../../components/PeriodFields';
 import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
 
@@ -48,11 +48,7 @@ interface ConcertModalProps {
 
 const emptyConcert: Concert = {
   type: 'Concert',
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
+  place: emptyPlace,
   time: emptyInstant,
   extent: '',
   concertProgramme: [],
@@ -70,16 +66,16 @@ const validationSchema = Yup.object<YupShape<Concert>>({
   concertSeries: Yup.string().when('$partOfSeries', ([partOfSeries], schema) =>
     partOfSeries
       ? schema.required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:common.description'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('common.description'),
           })
         )
       : schema.optional()
   ),
   place: Yup.object().shape({
     label: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.place'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.place'),
       })
     ),
   }),
@@ -89,34 +85,34 @@ const validationSchema = Yup.object<YupShape<Concert>>({
       : schema.shape({
           value: Yup.date()
             .required(
-              i18n.t('translation:feedback.validation.is_required', {
-                field: i18n.t('translation:common.date'),
+              i18n.t('feedback.validation.is_required', {
+                field: i18n.t('common.date'),
               })
             )
             .typeError(
-              i18n.t('translation:feedback.validation.has_invalid_format', {
-                field: i18n.t('translation:common.date'),
+              i18n.t('feedback.validation.has_invalid_format', {
+                field: i18n.t('common.date'),
               })
             ),
         })
   ),
 
   extent: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.extent_in_minutes'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
     })
   ),
   concertProgramme: Yup.array()
     .of(
       Yup.object<YupShape<MusicalWorkPerformance>>({
         title: Yup.string().required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:common.title'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('common.title'),
           })
         ),
         composer: Yup.string().required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:registration.resource_type.artistic.composer'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('registration.resource_type.artistic.composer'),
           })
         ),
         premiere: Yup.boolean(),
@@ -124,9 +120,9 @@ const validationSchema = Yup.object<YupShape<Concert>>({
     )
     .min(
       1,
-      i18n.t('translation:feedback.validation.must_have_minimum', {
+      i18n.t('feedback.validation.must_have_minimum', {
         min: 1,
-        field: i18n.t('translation:registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
+        field: i18n.t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
       })
     ),
 });
@@ -218,7 +214,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.concertPlace}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>
@@ -251,7 +247,7 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                           error={touched && !!error}
                           onBlur={() => !touched && setFieldTouched(field.name)}
                           helperText={<ErrorMessage name={field.name} />}
-                          data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                          data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                         />
                       )}
                     />

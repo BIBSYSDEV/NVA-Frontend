@@ -91,17 +91,13 @@ export interface MusicScore extends ArtisticOutputBase {
     value: string;
     formatted?: string;
   };
-  isrc: {
-    type: 'Isrc';
-    value: string;
-  };
 }
 
 export interface LiteraryArtsMonograph {
   type: 'LiteraryArtsMonograph';
   publisher: UnconfirmedPublisher;
   publicationDate: RegistrationDate;
-  isbn: string;
+  isbnList: string[];
   pages: PagesMonograph;
 }
 
@@ -110,7 +106,7 @@ export enum LiteraryArtsAudioVisualSubtype {
   RadioPlay = 'RadioPlay',
   ShortFilm = 'ShortFilm',
   Podcast = 'Podcast',
-  Other = 'Other',
+  Other = 'LiteraryArtsAudioVisualOther',
 }
 
 export interface LiteraryArtsAudioVisual {
@@ -121,14 +117,14 @@ export interface LiteraryArtsAudioVisual {
   };
   publisher: UnconfirmedPublisher;
   publicationDate: RegistrationDate;
-  isbn: string;
+  isbnList: string[];
   extent: string;
 }
 
 export enum LiteraryArtsPerformanceSubtype {
   Reading = 'Reading',
   Play = 'Play',
-  Other = 'Other',
+  Other = 'LiteraryArtsPerformanceOther',
 }
 
 export interface LiteraryArtsPerformance {
@@ -167,7 +163,7 @@ export enum MusicMediaType {
   Streaming = 'Streaming',
   DigitalFile = 'DigitalFile',
   Vinyl = 'Vinyl',
-  Other = 'Other',
+  Other = 'MusicMediaOther',
 }
 
 export interface MusicTrack {
@@ -186,6 +182,10 @@ export interface AudioVisualPublication extends ArtisticOutputBase {
   publisher: UnconfirmedPublisher;
   catalogueNumber: string;
   trackList: MusicTrack[];
+  isrc: {
+    type: 'Isrc';
+    value: string;
+  };
 }
 
 export interface MusicalWork {
@@ -259,7 +259,7 @@ export enum DesignType {
   WebDesign = 'WebDesign',
   InteractionDesign = 'InteractionDesign',
   ServiceDesign = 'ServiceDesign',
-  Other = 'Other',
+  Other = 'ArtisticDesignOther',
 }
 
 export enum ArchitectureType {
@@ -267,13 +267,13 @@ export enum ArchitectureType {
   PlanningProposal = 'PlanningProposal',
   LandscapeArchitecture = 'LandscapeArchitecture',
   Interior = 'Interior',
-  Other = 'Other',
+  Other = 'ArchitectureOther',
 }
 
 export enum PerformingArtType {
   TheatricalProduction = 'TheatricalProduction',
   Broadcast = 'Broadcast',
-  Other = 'Other',
+  Other = 'PerformingArtsOther',
 }
 
 export enum MovingPictureType {
@@ -282,7 +282,7 @@ export enum MovingPictureType {
   Seruial = 'SerialFilmProduction',
   InteractiveFilm = 'InteractiveFilm',
   AugmentedVirtualRealityFilm = 'AugmentedVirtualRealityFilm',
-  Other = 'Other',
+  Other = 'MovingPictureOther',
 }
 
 export enum VisualArtType {
@@ -293,7 +293,7 @@ export enum VisualArtType {
   Performance = 'Performance',
   AudioArt = 'AudioArt',
   ArtistBook = 'ArtistBook',
-  Other = 'Other',
+  Other = 'VisualArtsOther',
 }
 
 export enum LiteraryArtsType {
@@ -305,5 +305,5 @@ export enum LiteraryArtsType {
   Translation = 'Translation',
   Retelling = 'Retelling',
   Play = 'Play',
-  Other = 'Other',
+  Other = 'LiteraryArtsOther',
 }

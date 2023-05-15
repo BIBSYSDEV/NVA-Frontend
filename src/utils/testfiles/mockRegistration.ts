@@ -49,7 +49,7 @@ export const mockRegistration: JournalRegistration = {
     tags: ['Ost', 'Loff', 'Majones'],
     language: 'http://lexvo.org/id/iso639-3/eng',
     npiSubjectHeading: '0003',
-    date: {
+    publicationDate: {
       type: 'PublicationDate',
       year: '1980',
       month: '12',
@@ -125,23 +125,36 @@ export const mockTicketCollection: TicketCollection = {
   type: 'TicketCollection',
   tickets: [
     {
+      owner: {
+        firstName: 'Bob',
+        lastName: 'Boffaloe',
+        username: 'creator@unit.no',
+      },
       type: 'GeneralSupportCase',
       status: 'Pending',
       createdDate: new Date(2020, 1).toISOString(),
       modifiedDate: new Date(2020, 1).toISOString(),
       id: `${mockRegistration.id}/ticket/1`,
-      identifier: '1',
       publication: {
         id: mockRegistration.id,
         identifier: mockRegistration.identifier,
         mainTitle: mockRegistration.entityDescription.mainTitle,
+        contributors: [],
+        status: RegistrationStatus.Published,
+        createdDate: new Date(2020, 1).toISOString(),
+        modifiedDate: new Date(2020, 1).toISOString(),
+        publicationInstance: {
+          type: JournalType.AcademicArticle,
+        },
       },
-      viewedBy: [],
       messages: [
         {
           text: 'Hello Mr. Curator! A have a question about this publication, okay?',
-          sender: 'creator@unit.no',
-          owner: 'creator@unit.no',
+          sender: {
+            firstName: 'Bob',
+            lastName: 'Boffaloe',
+            username: 'creator@unit.no',
+          },
           createdDate: new Date(2020, 1).toISOString(),
           id: 'http://test.no/1',
           identifier: '1',
@@ -149,8 +162,11 @@ export const mockTicketCollection: TicketCollection = {
         },
         {
           text: 'Yes, how may I assist you my dear friend?',
-          sender: 'curator@unit.no',
-          owner: 'creator@unit.no',
+          sender: {
+            firstName: 'Bob',
+            lastName: 'Ryder',
+            username: 'curator@unit.no',
+          },
           createdDate: new Date(2020, 2).toISOString(),
           id: 'http://test.no/2',
           identifier: '2',
@@ -158,8 +174,11 @@ export const mockTicketCollection: TicketCollection = {
         },
         {
           text: "I don't know...",
-          sender: 'creator@unit.no',
-          owner: 'creator@unit.no',
+          sender: {
+            firstName: 'Bob',
+            lastName: 'Boffaloe',
+            username: 'creator@unit.no',
+          },
           createdDate: new Date(2020, 3).toISOString(),
           id: 'http://test.no/3',
           identifier: '3',

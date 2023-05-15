@@ -5,15 +5,16 @@ import i18n from '../../../translations/i18n';
 import {
   isArtistic,
   isDegree,
+  isExhibitionContent,
   isMediaContribution,
   isOtherRegistration,
   isPresentation,
 } from '../../registration-helpers';
 
 const contributorErrorMessage = {
-  authorRequired: i18n.t('translation:feedback.validation.author_required'),
-  contributorRequired: i18n.t('translation:feedback.validation.contributor_required'),
-  editorRequired: i18n.t('translation:feedback.validation.editor_required'),
+  authorRequired: i18n.t('feedback.validation.author_required'),
+  contributorRequired: i18n.t('feedback.validation.contributor_required'),
+  editorRequired: i18n.t('feedback.validation.editor_required'),
 };
 
 const contributorValidationSchema = Yup.object().shape({
@@ -48,6 +49,7 @@ export const contributorsValidationSchema = Yup.array().when(
       isArtistic(publicationInstanceType) ||
       isMediaContribution(publicationInstanceType) ||
       isOtherRegistration(publicationInstanceType) ||
+      isExhibitionContent(publicationInstanceType) ||
       publicationInstanceType === ResearchDataType.Dataset
     ) {
       return Yup.array()
