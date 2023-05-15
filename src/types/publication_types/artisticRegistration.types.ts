@@ -86,7 +86,7 @@ export interface MusicScore extends ArtisticOutputBase {
   movements: string;
   extent: string;
   publisher: UnconfirmedPublisher;
-  ismn: {
+  ismn?: {
     type: 'Ismn';
     value: string;
     formatted?: string;
