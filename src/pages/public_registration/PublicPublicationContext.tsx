@@ -612,7 +612,7 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
       <Typography variant="h3">{t('common.publisher')}</Typography>
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ismn')}</Typography>
-      <Typography paragraph>{ismn.formatted ?? ismn.value}</Typography>
+      <Typography paragraph>{ismn?.formatted ?? ismn?.value ?? '-'}</Typography>
     </DialogContent>
   );
 };
