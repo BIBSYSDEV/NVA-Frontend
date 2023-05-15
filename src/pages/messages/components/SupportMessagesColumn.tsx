@@ -13,7 +13,7 @@ export const SupportMessagesColumn = ({ ticket }: SupportMessagesColumnProps) =>
   const lastSender = lastMessage
     ? `${lastMessage.sender.preferredFirstName || lastMessage.sender.firstName} ${
         lastMessage.sender.preferredLastName || lastMessage.sender.lastName
-      }`
+      }`.trim()
     : '';
 
   return (
