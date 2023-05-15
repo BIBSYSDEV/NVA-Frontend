@@ -1,6 +1,5 @@
 import { PublishStrategy } from '../customerInstitution.types';
 import { BaseEntityDescription, PublicationInstanceType, Registration } from '../registration.types';
-import { JournalPublicationInstance } from './journalRegistration.types';
 
 export interface Message {
   id: string;
