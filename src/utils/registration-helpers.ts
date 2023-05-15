@@ -561,7 +561,9 @@ export const getOutputName = (item: OutputItem): string => {
       return (item as Concert).place.label;
     case 'OtherPerformance': {
       const otherMusicPerformance = item as OtherMusicPerformance;
-      return otherMusicPerformance.place.label ? otherMusicPerformance.place.label : '-';
+      return otherMusicPerformance.place.label
+        ? otherMusicPerformance.place.label
+        : otherMusicPerformance.performanceType;
     }
     case 'LiteraryArtsMonograph':
       return (item as LiteraryArtsMonograph).publisher.name;
