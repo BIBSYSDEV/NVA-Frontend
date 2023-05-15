@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Ticket } from '../../../types/publication_types/messages.types';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { MessageList } from '../../messages/MessageList';
+import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
 import { createTicket } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';

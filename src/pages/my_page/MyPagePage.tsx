@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
+import { Divider } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import PostAddIcon from '@mui/icons-material/PostAdd';
 import { useQueryClient } from '@tanstack/react-query';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
@@ -22,8 +21,7 @@ import { MyResults } from './user_profile/MyResults';
 import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import {
   LinkButton,
-  LinkButtonRow,
-  LinkIconButton,
+  LinkCreateButton,
   NavigationList,
   SidePanel,
   SideNavHeader,
@@ -86,21 +84,20 @@ const MyPagePage = () => {
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
             <NavigationList>
-              <LinkButtonRow key={dataTestId.myPage.myRegistrationsLink}>
-                <LinkButton
-                  data-testid={dataTestId.myPage.myRegistrationsLink}
-                  isSelected={currentPath === UrlPathTemplate.MyPageMyRegistrations}
-                  to={UrlPathTemplate.MyPageMyRegistrations}>
-                  {t('common.registrations')}
-                </LinkButton>
-                <LinkIconButton
-                  data-testid={dataTestId.myPage.newRegistrationLink}
-                  to={UrlPathTemplate.RegistrationNew}
-                  icon={<AddCircleIcon />}
-                  title={t('registration.new_registration')}
-                />
-              </LinkButtonRow>
+              <LinkButton
+                key={dataTestId.myPage.myRegistrationsLink}
+                data-testid={dataTestId.myPage.myRegistrationsLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageMyRegistrations}
+                to={UrlPathTemplate.MyPageMyRegistrations}>
+                {t('common.registrations')}
+              </LinkButton>
             </NavigationList>
+            <Divider sx={{ mt: '0.5rem' }} />
+            <LinkCreateButton
+              data-testid={dataTestId.myPage.newRegistrationLink}
+              to={UrlPathTemplate.RegistrationNew}
+              title={t('registration.new_registration')}
+            />
           </NavigationListAccordion>,
 
           <NavigationListAccordion
@@ -111,23 +108,22 @@ const MyPagePage = () => {
             defaultPath={UrlPathTemplate.MyPageMyProjectRegistrations}
             dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
             <NavigationList>
-              <LinkButtonRow key={dataTestId.myPage.myProjectRegistrationsLink}>
-                <LinkButton
-                  data-testid={dataTestId.myPage.myProjectRegistrationsLink}
-                  isSelected={currentPath === UrlPathTemplate.MyPageMyProjectRegistrations}
-                  to={UrlPathTemplate.MyPageMyProjectRegistrations}>
-                  {t('my_page.project_registrations')}
-                </LinkButton>
-
-                <LinkIconButton
-                  data-testid={dataTestId.myPage.createProjectButton}
-                  icon={<PostAddIcon />}
-                  isSelected={showCreateProject}
-                  onClick={() => setShowCreateProject(true)}
-                  title={t('project.create_project')}
-                />
-              </LinkButtonRow>
+              <LinkButton
+                key={dataTestId.myPage.myProjectRegistrationsLink}
+                data-testid={dataTestId.myPage.myProjectRegistrationsLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageMyProjectRegistrations}
+                to={UrlPathTemplate.MyPageMyProjectRegistrations}>
+                {t('my_page.project_registrations')}
+              </LinkButton>
             </NavigationList>
+            <Divider sx={{ mt: '0.5rem' }} />
+            <LinkCreateButton
+              data-testid={dataTestId.myPage.createProjectButton}
+              isSelected={showCreateProject}
+              selectedColor="project.main"
+              onClick={() => setShowCreateProject(true)}
+              title={t('project.create_project')}
+            />
           </NavigationListAccordion>,
         ]}
         <NavigationListAccordion

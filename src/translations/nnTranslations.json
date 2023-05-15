@@ -481,7 +481,6 @@
   },
   "my_page": {
     "messages": {
-      "go_to_registration": "Gå til registrering",
       "messages": "Meldingar",
       "no_messages": "Du har inga meldingar",
       "ticket_types": {

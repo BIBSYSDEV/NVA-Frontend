@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { TicketAccordionList } from './TicketAccordionList';
+import { TicketList } from './components/TicketList';
 import { fetchTickets } from '../../api/searchApi';
 
 export const MyMessagesPage = () => {
@@ -26,7 +26,7 @@ export const MyMessagesPage = () => {
         {ticketsQuery.isLoading ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
-          <TicketAccordionList tickets={tickets} />
+          <TicketList tickets={tickets} />
         )}
       </BackgroundDiv>
     </>
