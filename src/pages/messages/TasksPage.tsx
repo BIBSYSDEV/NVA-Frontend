@@ -53,7 +53,7 @@ const TasksPage = () => {
 
   const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
     New: true,
-    Pending: true,
+    Pending: false,
     Completed: false,
     Closed: false,
   });
@@ -99,6 +99,7 @@ const TasksPage = () => {
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
 
   const statusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
+  const newCount = statusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
   const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
@@ -171,6 +172,20 @@ const TasksPage = () => {
           </FormGroup>
 
           <FormGroup sx={{ m: '1rem' }}>
+            <FormControlLabel
+              checked={selectedStatuses.New}
+              control={
+                <Checkbox
+                  sx={{ py: '0.2rem' }}
+                  onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
+                />
+              }
+              label={
+                selectedStatuses.New && newCount
+                  ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
+                  : t('my_page.messages.ticket_types.New')
+              }
+            />
             <FormControlLabel
               checked={selectedStatuses.Pending}
               control={
