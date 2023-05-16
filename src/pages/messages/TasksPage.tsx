@@ -28,7 +28,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { StyledPageWithSideMenu, SidePanel, SideNavHeader } from '../../components/PageWithSideMenu';
 import { setNotification } from '../../redux/notificationSlice';
 import { fetchTickets } from '../../api/searchApi';
-import { TicketStatus } from '../../types/publication_types/messages.types';
+import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { SelectableButton } from '../../components/SelectableButton';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { UrlPathTemplate } from '../../utils/urlPaths';

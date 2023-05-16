@@ -1,5 +1,5 @@
 import { SearchResponse } from '../../types/common.types';
-import { Ticket } from '../../types/publication_types/messages.types';
+import { Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
 import { mockMathJaxRegistration, mockTicketCollection, mockRegistration } from './mockRegistration';
 

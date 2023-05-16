@@ -1,6 +1,6 @@
 import { Doi, Registration } from '../types/registration.types';
-import { apiRequest2, authenticatedApiRequest } from './apiRequest';
-import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/messages.types';
+import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { PublicationsApiPath } from './apiPaths';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
@@ -79,4 +79,11 @@ export const fetchRegistration = async (registrationIdentifier: string) => {
     url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
   });
   return fetchRegistrationResponse.data;
+};
+
+export const fetchRegistrationTickets = async (registrationId: string) => {
+  const getTickets = await authenticatedApiRequest2<TicketCollection>({
+    url: `${registrationId}/tickets`,
+  });
+  return getTickets.data;
 };

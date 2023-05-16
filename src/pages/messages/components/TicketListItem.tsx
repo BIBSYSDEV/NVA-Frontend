@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
-import { Ticket, PublishingTicket } from '../../../types/publication_types/messages.types';
+import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, emptyRegistration } from '../../../types/registration.types';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
@@ -15,7 +15,7 @@ const ticketColor = {
 };
 
 interface TicketListItemProps {
-  ticket: Ticket;
+  ticket: ExpandedTicket;
 }
 
 export const TicketListItem = ({ ticket }: TicketListItemProps) => {
@@ -47,7 +47,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '6fr 2fr 1fr 1fr' }}>
         <RegistrationListItemContent registration={registrationCopy} />
         {ticket.type === 'PublishingRequest' ? (
-          <PublishingRequestMessagesColumn ticket={ticket as PublishingTicket} />
+          <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
         ) : ticket.type === 'DoiRequest' ? (
           <DoiRequestMessagesColumn ticket={ticket} />
         ) : ticket.type === 'GeneralSupportCase' ? (

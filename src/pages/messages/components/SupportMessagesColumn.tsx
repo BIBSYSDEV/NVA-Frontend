@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
-import { Ticket } from '../../../types/publication_types/messages.types';
+import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { StyledMessagesContainer, StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 
 interface SupportMessagesColumnProps {
-  ticket: Ticket;
+  ticket: ExpandedTicket;
 }
 
 export const SupportMessagesColumn = ({ ticket }: SupportMessagesColumnProps) => {

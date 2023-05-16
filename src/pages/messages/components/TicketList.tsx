@@ -2,12 +2,12 @@ import { List, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { Ticket } from '../../../types/publication_types/messages.types';
+import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketAccordionListProps {
-  tickets: Ticket[];
+  tickets: ExpandedTicket[];
 }
 
 export const TicketList = ({ tickets }: TicketAccordionListProps) => {
