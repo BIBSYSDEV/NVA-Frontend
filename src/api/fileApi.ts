@@ -87,11 +87,11 @@ export const listParts = async (uploadId: string, key: string) => {
   return listPartsResponse.data;
 };
 
-export const signPart = async (uploadId: string, key: string, number: number) => {
+export const signPart = async (uploadId: string, key: string, number: number, body: Blob) => {
   const payload = {
     uploadId,
     key,
-    body: JSON.stringify('ignored'),
+    body: JSON.stringify(body),
     number,
   };
 
