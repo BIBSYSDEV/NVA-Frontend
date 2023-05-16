@@ -1,7 +1,8 @@
-import { ReactNode } from 'react';
 import { SvgIconComponent } from '@mui/icons-material';
 import { Box, BoxProps, Button, ButtonProps, styled, Typography } from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Link, LinkProps } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -55,19 +56,20 @@ export const SideNavHeader = ({ icon, text, id }: SideNavHeaderProps) => {
 };
 
 export const NavigationList = ({ sx, ...props }: BoxProps) => (
-  <nav>
-    <Box
-      sx={{
-        pt: '0.5rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0.5rem',
-        a: { textTransform: 'none' },
-        ...sx,
-      }}
-      {...props}
-    />
-  </nav>
+  <Box
+    component="nav"
+    sx={{
+      mb: '0.5rem',
+      mx: '0.5rem',
+      display: 'flex',
+      maxWidth: 'fit-content',
+      flexDirection: 'column',
+      gap: '0.5rem',
+      a: { textTransform: 'none' },
+      ...sx,
+    }}
+    {...props}
+  />
 );
 
 interface LinkButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
@@ -76,32 +78,35 @@ interface LinkButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
 
 export const LinkButton = ({ isSelected, sx, ...rest }: LinkButtonProps) => (
   <Button
-    sx={{ bgcolor: isSelected ? 'primary.main' : 'background.default', ml: '1rem', width: 'fit-content', ...sx }}
+    sx={{ bgcolor: isSelected ? 'primary.main' : 'background.default', justifyContent: 'start', ...sx }}
     variant={isSelected ? 'contained' : 'outlined'}
     LinkComponent={rest.to ? Link : undefined}
     {...rest}
   />
 );
 
-interface LinkIconButtonProps extends LinkButtonProps {
-  icon: ReactNode;
+interface LinkCreateButtonProps extends LinkButtonProps {
+  selectedColor?: string;
 }
 
-export const LinkIconButton = ({ sx, icon, ...rest }: LinkIconButtonProps) => (
-  <LinkButton sx={{ ml: '0rem', mr: '1rem', ...sx }} {...rest}>
-    {icon}
-  </LinkButton>
-);
-
-export const LinkButtonRow = ({ sx, ...props }: BoxProps) => (
-  <Box
-    sx={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      gap: '0.5rem',
-      ...sx,
-    }}
-    {...props}
-  />
-);
+export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest }: LinkCreateButtonProps) => {
+  const { t } = useTranslation();
+  return (
+    <LinkButton
+      sx={{
+        borderWidth: '1px',
+        borderRadius: 0,
+        borderColor: isSelected ? 'primary.main' : 'secondary.dark',
+        bgcolor: isSelected ? selectedColor : 'none',
+        width: '100%',
+        justifyContent: 'center',
+        ...sx,
+      }}
+      {...rest}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+        <AddCircleOutlineIcon />
+        <Typography>{t('common.add')}</Typography>
+      </Box>
+    </LinkButton>
+  );
+};
