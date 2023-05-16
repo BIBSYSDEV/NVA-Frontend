@@ -5,6 +5,7 @@ import { SearchListItem } from '../../../components/styled/Wrappers';
 import { Ticket, PublishingTicket } from '../../../types/publication_types/messages.types';
 import { Registration, emptyRegistration } from '../../../types/registration.types';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
+import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 
 const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
@@ -46,6 +47,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         <RegistrationListItemContent registration={registrationCopy} />
         {ticket.type === 'PublishingRequest' ? (
           <PublishingRequestMessagesColumn ticket={ticket as PublishingTicket} />
+        ) : ticket.type === 'DoiRequest' ? (
+          <DoiRequestMessagesColumn ticket={ticket} />
         ) : (
           <Box />
         )}
