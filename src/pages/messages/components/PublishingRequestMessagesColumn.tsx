@@ -1,6 +1,6 @@
 import { Box, Typography, styled } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ExpandedPublishingTicket } from '../../../types/publication_types/messages.types';
+import { ExpandedPublishingTicket } from '../../../types/publication_types/ticket.types';
 
 export const StyledMessagesContainer = styled(Box)({
   display: 'flex',

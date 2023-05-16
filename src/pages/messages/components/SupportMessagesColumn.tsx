@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { ExpandedTicket } from '../../../types/publication_types/messages.types';
+import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { StyledMessagesContainer, StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 

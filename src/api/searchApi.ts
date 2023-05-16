@@ -1,5 +1,5 @@
 import { SearchResponse } from '../types/common.types';
-import { ExpandedTicket } from '../types/publication_types/messages.types';
+import { ExpandedTicket } from '../types/publication_types/ticket.types';
 import { SearchApiPath } from './apiPaths';
 import { authenticatedApiRequest2 } from './apiRequest';
 

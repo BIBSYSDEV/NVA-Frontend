@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
-import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/messages.types';
+import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, emptyRegistration } from '../../../types/registration.types';
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';

@@ -2,7 +2,7 @@ import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useDispatch } from 'react-redux';
-import { Ticket } from '../../../types/publication_types/messages.types';
+import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { MessageList } from '../../messages/components/MessageList';

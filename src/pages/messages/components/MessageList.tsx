@@ -2,7 +2,7 @@ import { Box, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Message } from '../../../types/publication_types/messages.types';
+import { Message } from '../../../types/publication_types/ticket.types';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { fetchUser } from '../../../api/roleApi';
 import { getFullName } from '../../../utils/user-helpers';
