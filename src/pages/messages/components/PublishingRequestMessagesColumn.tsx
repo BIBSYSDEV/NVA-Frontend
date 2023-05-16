@@ -11,8 +11,9 @@ export const StyledMessagesContainer = styled(Box)({
 export const StyledStatusMessageBox = styled(Box)({
   display: 'grid',
   gridTemplateColumns: '1fr auto',
-  gap: '1rem',
+  gap: '0.5rem 1rem',
   padding: '0.2rem 1rem',
+  borderRadius: '4px',
 });
 
 export const PublishingRequestMessagesColumn = ({ ticket }: { ticket: PublishingTicket }) => {
