@@ -125,11 +125,7 @@ export const mockTicketCollection: TicketCollection = {
   type: 'TicketCollection',
   tickets: [
     {
-      owner: {
-        firstName: 'Bob',
-        lastName: 'Boffaloe',
-        username: 'creator@unit.no',
-      },
+      owner: 'creator@unit.no',
       type: 'GeneralSupportCase',
       status: 'Pending',
       createdDate: new Date(2020, 1).toISOString(),
@@ -150,39 +146,24 @@ export const mockTicketCollection: TicketCollection = {
       messages: [
         {
           text: 'Hello Mr. Curator! A have a question about this publication, okay?',
-          sender: {
-            firstName: 'Bob',
-            lastName: 'Boffaloe',
-            username: 'creator@unit.no',
-          },
+          sender: 'creator@unit.no',
           createdDate: new Date(2020, 1).toISOString(),
           id: 'http://test.no/1',
           identifier: '1',
-          recipient: 'SupportService',
         },
         {
           text: 'Yes, how may I assist you my dear friend?',
-          sender: {
-            firstName: 'Bob',
-            lastName: 'Ryder',
-            username: 'curator@unit.no',
-          },
+          sender: 'curator@unit.no',
           createdDate: new Date(2020, 2).toISOString(),
           id: 'http://test.no/2',
           identifier: '2',
-          recipient: 'SupportService',
         },
         {
           text: "I don't know...",
-          sender: {
-            firstName: 'Bob',
-            lastName: 'Boffaloe',
-            username: 'creator@unit.no',
-          },
+          sender: 'creator@unit.no',
           createdDate: new Date(2020, 3).toISOString(),
           id: 'http://test.no/3',
           identifier: '3',
-          recipient: 'SupportService',
         },
       ],
     },
