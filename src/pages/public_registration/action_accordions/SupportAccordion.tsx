@@ -37,7 +37,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage }: Su
   return (
     <Accordion data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion} elevation={3}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {t('common.support')}
+        {t('my_page.messages.types.GeneralSupportCase')}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <MessageList messages={supportTicket?.messages ?? []} />
