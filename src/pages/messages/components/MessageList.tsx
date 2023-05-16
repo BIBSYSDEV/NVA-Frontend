@@ -1,9 +1,13 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { Message } from '../../../types/publication_types/messages.types';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { fetchUser } from '../../../api/roleApi';
 import { getFullName } from '../../../utils/user-helpers';
+import { setNotification } from '../../../redux/notificationSlice';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface MessageListProps {
   messages: Message[];
@@ -22,7 +26,7 @@ export const MessageList = ({ messages }: MessageListProps) => (
         gap: '0.25rem',
       }}>
       {messages.map((message) => (
-        <MessageItem message={message} />
+        <MessageItem key={message.identifier} message={message} />
       ))}
     </Box>
   </ErrorBoundary>
@@ -33,19 +37,33 @@ interface MessageItemProps {
 }
 
 const MessageItem = ({ message }: MessageItemProps) => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const senderQuery = useQuery({
     queryKey: [message.sender],
     queryFn: () => fetchUser(message.sender),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
   });
+
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
   return (
-    <li key={message.identifier}>
-      <Typography>
-        <b data-testid="message-author">{senderName}</b>{' '}
-        <span data-testid="message-timestamp">({new Date(message.createdDate).toLocaleString()})</span>
+    <li>
+      <Typography sx={{ display: 'flex', gap: '0.25rem' }}>
+        <span>
+          {senderQuery.isLoading ? (
+            <Skeleton sx={{ width: '8rem' }} />
+          ) : (
+            <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>{senderName}</b>
+          )}
+        </span>
+        <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
+          ({new Date(message.createdDate).toLocaleString()})
+        </span>
       </Typography>
-      <Typography data-testid="message-text">{message.text}</Typography>
+
+      <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{message.text}</Typography>
     </li>
   );
 };
