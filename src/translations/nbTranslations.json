@@ -194,7 +194,6 @@
     "start_date": "Startdato",
     "start_page": "Startside",
     "status": "Status",
-    "support": "Brukerstøtte",
     "tasks": "Oppgaver",
     "title": "Tittel",
     "type": "Type",
@@ -498,7 +497,7 @@
       },
       "types": {
         "DoiRequest": "DOI-forespørsel",
-        "GeneralSupportCase": "Brukerstøtte",
+        "GeneralSupportCase": "Kuratorstøtte",
         "PublishingRequest": "Publiseringsforespørsel"
       }
     },
@@ -1441,7 +1440,7 @@
           "contains_sensitive_data": "Datasettet inneholder andre sensitive eller konfidensielle data?*",
           "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger, bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, etc.",
           "dialog_title": "For å legge til forskningsdata må du først avklare om",
-          "further_info": "Når du trykker JA eller er usikker så må du sende melding til brukerstøtte der din kurator avklarer videre prosess for å publisere datasettet."
+          "further_info": "Når du trykker JA eller er usikker så må du sende melding til kuratorstøtte der din kurator avklarer videre prosess for å publisere datasettet."
         },
         "add_link": "Legg til lenke",
         "external_link": "Ekstern lenke",
@@ -1483,7 +1482,7 @@
       "PUBLISHED": "Publisert",
       "PUBLISHED_METADATA": "Metadata publisert"
     },
-    "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
+    "support_description": "Når du ber om kuratorstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
     "year_published": "Publiseringsår"
   },
   "search": {
