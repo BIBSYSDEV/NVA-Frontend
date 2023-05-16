@@ -122,7 +122,7 @@ export const PublishingAccordion = ({
   const hasUnpublishedFiles = registration.associatedArtifacts.some((artifact) => artifact.type === 'UnpublishedFile');
 
   const hasClosedTicket = publishingRequestTicket?.status === 'Closed';
-  const hasPendingTicket = publishingRequestTicket?.status === 'Pending';
+  const hasPendingTicket = publishingRequestTicket?.status === 'Pending' || publishingRequestTicket?.status === 'New';
   const hasCompletedTicket = publishingRequestTicket?.status === 'Completed';
 
   const canHandlePublishingRequest = userIsCurator && !registratorPublishesMetadataAndFiles && hasPendingTicket;

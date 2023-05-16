@@ -22,7 +22,7 @@ export interface TicketCollection {
 }
 
 export type TicketType = 'DoiRequest' | 'GeneralSupportCase' | 'PublishingRequest';
-export type TicketStatus = 'Pending' | 'Closed' | 'Completed';
+export type TicketStatus = 'New' | 'Pending' | 'Closed' | 'Completed';
 
 interface BaseTicket {
   type: TicketType;

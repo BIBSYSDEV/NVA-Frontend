@@ -10,6 +10,7 @@ import {
   FormGroup,
   TablePagination,
   Typography,
+  styled,
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
@@ -38,6 +39,11 @@ type SelectedStatusState = {
   [key in TicketStatus]: boolean;
 };
 
+const StyledCheckbox = styled(Checkbox)({
+  paddingTop: '0.2rem',
+  paddingBottom: '0.2rem',
+});
+
 const TasksPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -52,7 +58,8 @@ const TasksPage = () => {
   });
 
   const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
-    Pending: true,
+    New: true,
+    Pending: false,
     Completed: false,
     Closed: false,
   });
@@ -98,6 +105,7 @@ const TasksPage = () => {
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
 
   const statusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
+  const newCount = statusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
   const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
@@ -171,10 +179,22 @@ const TasksPage = () => {
 
           <FormGroup sx={{ m: '1rem' }}>
             <FormControlLabel
+              checked={selectedStatuses.New}
+              control={
+                <StyledCheckbox
+                  onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
+                />
+              }
+              label={
+                selectedStatuses.New && newCount
+                  ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
+                  : t('my_page.messages.ticket_types.New')
+              }
+            />
+            <FormControlLabel
               checked={selectedStatuses.Pending}
               control={
-                <Checkbox
-                  sx={{ py: '0.2rem' }}
+                <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
                 />
               }
@@ -187,8 +207,7 @@ const TasksPage = () => {
             <FormControlLabel
               checked={selectedStatuses.Completed}
               control={
-                <Checkbox
-                  sx={{ py: '0.2rem' }}
+                <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })}
                 />
               }
@@ -201,8 +220,7 @@ const TasksPage = () => {
             <FormControlLabel
               checked={selectedStatuses.Closed}
               control={
-                <Checkbox
-                  sx={{ py: '0.2rem' }}
+                <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
                 />
               }
