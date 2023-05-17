@@ -199,6 +199,8 @@
     "username": "Username",
     "version": "Version",
     "will_be_available": "Will be available",
+    "x_days_one": "{{count}} day",
+    "x_days_other": "{{count}} days",
     "x_others_one": "+ {{count}} other",
     "x_others_other": "+ {{count}} others",
     "year": "Year",
@@ -480,11 +482,17 @@
   },
   "my_page": {
     "messages": {
+      "doi_closed": "DOI rejected",
+      "doi_completed": "DOI allocated",
+      "doi_pending": "Pending DOI allocation",
+      "files_published": "File(s) published",
+      "files_rejected": "File(s) rejected",
       "messages": "Messages",
       "no_messages": "You have no messages",
       "ticket_types": {
         "Closed": "Closed",
         "Completed": "Completed",
+        "New": "New",
         "Pending": "Pending"
       },
       "types": {
@@ -1021,6 +1029,7 @@
       "files_are_not_published": "Files are not published",
       "files_awaits_approval_one": "",
       "files_awaits_approval_other": "",
+      "files_awaits_approval_unknown": "File(s) pending verification",
       "files_count": "Files {{count}}",
       "find_journal_in_channel_register": "See information about the journal in the Norwegian Register",
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
