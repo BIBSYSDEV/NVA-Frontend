@@ -128,27 +128,27 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('common.date')}
-                    PopperProps={{
-                      'aria-label': t('common.date'),
-                    }}
                     value={field.value ?? null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date ?? '');
                     }}
-                    inputFormat="dd.MM.yyyy"
-                    mask="__.__.____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
-                        sx={{ maxWidth: '13rem' }}
-                        variant="filled"
-                        required
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
+                    format="dd.MM.yyyy"
+                    slotProps={{
+                      popper: {
+                        'aria-label': t('common.date'),
+                      },
+                      textField: {
+                        inputProps: {
+                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                        },
+                        sx: { maxWidth: '13rem' },
+                        variant: 'filled',
+                        required: true,
+                        error: touched && !!error,
+                        helperText: <ErrorMessage name={field.name} />,
+                      },
+                    }}
                   />
                 )}
               </Field>

@@ -1,7 +1,7 @@
 import { FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Checkbox, FormControlLabel, Typography, TextField } from '@mui/material';
+import { Checkbox, FormControlLabel, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { DescriptionFieldNames } from '../../../types/publicationFieldNames';
 import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
@@ -59,28 +59,26 @@ export const DatePickerField = () => {
       <DatePicker
         label={t('registration.description.date_published')}
         value={date}
-        PopperProps={{
-          'aria-label': t('registration.description.date_published'),
-        }}
         onChange={(newDate) => {
           updateDateValues(newDate, yearOnly);
           setDate(newDate);
         }}
-        inputFormat={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
+        format={yearOnly ? 'yyyy' : 'dd.MM.yyyy'}
         views={yearOnly ? ['year'] : ['year', 'month', 'day']}
         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-        mask={yearOnly ? '____' : '__.__.____'}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            data-testid={dataTestId.registrationWizard.description.datePublishedField}
-            variant="filled"
-            required
-            onBlur={() => !touchedYear && setFieldTouched(DescriptionFieldNames.PublicationYear)}
-            error={hasError}
-            helperText={hasError && errorYear}
-          />
-        )}
+        slotProps={{
+          popper: {
+            'aria-label': t('registration.description.date_published'),
+          },
+          textField: {
+            inputProps: { 'data-testid': dataTestId.registrationWizard.description.datePublishedField },
+            variant: 'filled',
+            required: true,
+            onBlur: () => !touchedYear && setFieldTouched(DescriptionFieldNames.PublicationYear),
+            error: hasError,
+            helperText: hasError && errorYear,
+          },
+        }}
       />
       <FormControlLabel
         sx={{ alignSelf: 'start', mt: '0.4rem' }} // Center field regardless of error state of published date field

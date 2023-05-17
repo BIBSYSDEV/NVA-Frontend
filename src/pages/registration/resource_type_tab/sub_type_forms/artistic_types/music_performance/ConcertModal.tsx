@@ -228,28 +228,28 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                   {({ field, meta: { error, touched } }: FieldProps<string>) => (
                     <DatePicker
                       label={t('common.date')}
-                      PopperProps={{
-                        'aria-label': t('common.date'),
-                      }}
                       value={field.value ?? null}
                       onChange={(date) => {
                         !touched && setFieldTouched(field.name, true, false);
                         setFieldValue(field.name, date ?? '');
                       }}
-                      inputFormat="dd.MM.yyyy"
-                      mask="__.__.____"
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          sx={{ maxWidth: '15rem' }}
-                          variant="filled"
-                          required
-                          error={touched && !!error}
-                          onBlur={() => !touched && setFieldTouched(field.name)}
-                          helperText={<ErrorMessage name={field.name} />}
-                          data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
-                        />
-                      )}
+                      format="dd.MM.yyyy"
+                      slotProps={{
+                        popper: {
+                          'aria-label': t('common.date'),
+                        },
+                        textField: {
+                          inputProps: {
+                            'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                          },
+                          sx: { maxWidth: '15rem' },
+                          onBlur: () => !touched && setFieldTouched(field.name),
+                          variant: 'filled',
+                          required: true,
+                          error: touched && !!error,
+                          helperText: <ErrorMessage name={field.name} />,
+                        },
+                      }}
                     />
                   )}
                 </Field>

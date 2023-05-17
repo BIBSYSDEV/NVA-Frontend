@@ -1,6 +1,5 @@
 import { DatePicker } from '@mui/x-date-pickers';
-import { TextField } from '@mui/material';
-import { Field, FieldProps } from 'formik';
+import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 interface StartDateFieldProps {
@@ -19,28 +18,26 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false, dataTestI
         <DatePicker
           disabled={disabled}
           label={t('common.start_date')}
-          PopperProps={{
-            'aria-label': t('common.start_date'),
-          }}
-          value={field.value ? field.value : null}
+          value={field.value ? new Date(field.value) : null}
           onChange={(date) => {
             !touched && setFieldTouched(field.name, true, false);
             setFieldValue(field.name, date ?? '');
           }}
-          inputFormat="dd.MM.yyyy"
+          format="dd.MM.yyyy"
           views={['year', 'month', 'day']}
-          mask="__.__.____"
           maxDate={maxDate}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              data-testid={dataTestId}
-              required
-              variant="filled"
-              error={touched && !!error}
-              helperText={touched && error}
-            />
-          )}
+          slotProps={{
+            popper: {
+              'aria-label': t('common.start_date'),
+            },
+            textField: {
+              inputProps: { 'data-testid': dataTestId },
+              variant: 'filled',
+              error: touched && !!error,
+              helperText: <ErrorMessage name={field.name} />,
+              required: true,
+            },
+          }}
         />
       )}
     </Field>
