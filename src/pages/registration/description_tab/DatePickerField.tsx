@@ -67,9 +67,6 @@ export const DatePickerField = () => {
         views={yearOnly ? ['year'] : ['year', 'month', 'day']}
         maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
         slotProps={{
-          popper: {
-            'aria-label': t('registration.description.date_published'),
-          },
           textField: {
             inputProps: { 'data-testid': dataTestId.registrationWizard.description.datePublishedField },
             variant: 'filled',

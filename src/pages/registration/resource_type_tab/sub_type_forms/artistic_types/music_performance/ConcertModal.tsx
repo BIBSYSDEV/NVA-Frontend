@@ -235,9 +235,6 @@ export const ConcertModal = ({ concert, onSubmit, open, closeModal }: ConcertMod
                       }}
                       format="dd.MM.yyyy"
                       slotProps={{
-                        popper: {
-                          'aria-label': t('common.date'),
-                        },
                         textField: {
                           inputProps: {
                             'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,

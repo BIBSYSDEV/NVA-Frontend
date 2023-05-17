@@ -89,9 +89,6 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                     }}
                     format="dd.MM.yyyy"
                     slotProps={{
-                      popper: {
-                        'aria-label': t('registration.resource_type.artistic.premiere_date'),
-                      },
                       textField: {
                         inputProps: {
                           'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,

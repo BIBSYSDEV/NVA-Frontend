@@ -100,9 +100,6 @@ export const AddAffiliationPanel = () => {
               views={['year', 'month', 'day']}
               minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : null}
               slotProps={{
-                popper: {
-                  'aria-label': t('common.end_date'),
-                },
                 textField: {
                   inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
                   variant: 'filled',

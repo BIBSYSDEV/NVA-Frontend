@@ -318,9 +318,6 @@ export const PersonTableRow = ({
                                       : undefined
                                   }
                                   slotProps={{
-                                    popper: {
-                                      'aria-label': t('common.end_date'),
-                                    },
                                     textField: {
                                       inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
                                       variant: 'filled',

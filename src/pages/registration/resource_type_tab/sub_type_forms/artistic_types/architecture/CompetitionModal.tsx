@@ -123,9 +123,6 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                     format="dd.MM.yyyy"
                     views={['year', 'month', 'day']}
                     slotProps={{
-                      popper: {
-                        'aria-label': t('registration.resource_type.artistic.competition_date'),
-                      },
                       textField: {
                         inputProps: {
                           'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,

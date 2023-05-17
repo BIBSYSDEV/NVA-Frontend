@@ -142,9 +142,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
                 disabled={file.administrativeAgreement}
                 slotProps={{
-                  popper: {
-                    'aria-label': t('registration.files_and_license.file_publish_date'),
-                  },
                   textField: {
                     inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
                     variant: 'filled',

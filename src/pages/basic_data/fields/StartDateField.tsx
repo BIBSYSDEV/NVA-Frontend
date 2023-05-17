@@ -27,9 +27,6 @@ export const StartDateField = ({ fieldName, maxDate, disabled = false, dataTestI
           views={['year', 'month', 'day']}
           maxDate={maxDate}
           slotProps={{
-            popper: {
-              'aria-label': t('common.start_date'),
-            },
             textField: {
               inputProps: { 'data-testid': dataTestId },
               variant: 'filled',

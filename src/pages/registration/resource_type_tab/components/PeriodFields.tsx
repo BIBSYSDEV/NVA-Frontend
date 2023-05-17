@@ -31,11 +31,8 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
             views={['year', 'month', 'day']}
             maxDate={toValue ? new Date(toValue) : maxDate}
             slotProps={{
-              popper: {
-                'aria-label': t('registration.resource_type.date_from'),
-              },
               textField: {
-                // inputProps: { dataTestId: dataTestId.registrationWizard.resourceType.dateFromField },
+                inputProps: { 'data-testid': dataTestId.registrationWizard.resourceType.dateFromField },
                 variant: 'filled',
                 error: touched && !!error,
                 required: true,
@@ -60,9 +57,6 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
             minDate={fromValue ? new Date(fromValue) : undefined}
             maxDate={maxDate}
             slotProps={{
-              popper: {
-                'aria-label': t('registration.resource_type.date_to'),
-              },
               textField: {
                 inputProps: { 'data-testid': dataTestId.registrationWizard.resourceType.dateToField },
                 variant: 'filled',

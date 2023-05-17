@@ -99,9 +99,6 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
                     }}
                     format="dd.MM.yyyy"
                     slotProps={{
-                      popper: {
-                        'aria-label': t('common.date'),
-                      },
                       textField: {
                         inputProps: {
                           'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,

@@ -87,9 +87,6 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                 maxDate={values.endDate ? new Date(values.endDate) : null}
                 format="dd.MM.yyyy"
                 slotProps={{
-                  popper: {
-                    'aria-label': t('common.start_date'),
-                  },
                   textField: {
                     inputProps: { 'data-testid': dataTestId.registrationWizard.description.projectForm.startDateField },
                     variant: 'filled',
@@ -116,9 +113,6 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                 minDate={values.startDate ? new Date(values.startDate) : null}
                 format="dd.MM.yyyy"
                 slotProps={{
-                  popper: {
-                    'aria-label': t('common.end_date'),
-                  },
                   textField: {
                     inputProps: { 'data-testid': dataTestId.registrationWizard.description.projectForm.endDateField },
                     variant: 'filled',

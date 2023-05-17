@@ -110,9 +110,6 @@ export const ExhibitionMentionInPublicationModal = ({
                       }}
                       format="dd.MM.yyyy"
                       slotProps={{
-                        popper: {
-                          'aria-label': t('common.date'),
-                        },
                         textField: {
                           inputProps: {
                             'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,

@@ -118,9 +118,6 @@ export const PublicationMentionModal = ({
                       format="dd.MM.yyyy"
                       views={['year', 'month', 'day']}
                       slotProps={{
-                        popper: {
-                          'aria-label': t('common.date'),
-                        },
                         textField: {
                           inputProps: {
                             'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,

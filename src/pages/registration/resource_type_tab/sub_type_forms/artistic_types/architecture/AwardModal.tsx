@@ -113,9 +113,6 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                     format="yyyy"
                     views={['year']}
                     slotProps={{
-                      popper: {
-                        'aria-label': t('common.year'),
-                      },
                       textField: {
                         inputProps: {
                           'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
