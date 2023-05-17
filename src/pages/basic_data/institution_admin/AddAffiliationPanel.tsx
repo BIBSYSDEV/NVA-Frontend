@@ -98,7 +98,7 @@ export const AddAffiliationPanel = () => {
               }}
               format="dd.MM.yyyy"
               views={['year', 'month', 'day']}
-              minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : null}
+              minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
               slotProps={{
                 textField: {
                   inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
