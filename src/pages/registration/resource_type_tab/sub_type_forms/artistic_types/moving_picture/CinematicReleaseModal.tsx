@@ -82,7 +82,7 @@ export const CinematicReleaseModal = ({ cinematicRelease, onSubmit, open, closeM
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('registration.resource_type.artistic.premiere_date')}
-                    value={field.value ?? null}
+                    value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date);

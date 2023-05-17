@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Ticket } from '../../../types/publication_types/messages.types';
+import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { StyledMessagesContainer, StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 
 interface DoiRequestMessagesColumnProps {
-  ticket: Ticket;
+  ticket: ExpandedTicket;
 }
 
 export const DoiRequestMessagesColumn = ({ ticket }: DoiRequestMessagesColumnProps) => {

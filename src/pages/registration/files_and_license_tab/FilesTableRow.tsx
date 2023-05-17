@@ -136,7 +136,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               <DatePicker
                 {...field}
                 label={t('registration.files_and_license.file_publish_date')}
-                value={field.value ?? null}
+                value={field.value ? new Date(field.value) : null}
                 onChange={(date) => setFieldValue(field.name, date ?? '')}
                 format="dd.MM.yyyy"
                 maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}

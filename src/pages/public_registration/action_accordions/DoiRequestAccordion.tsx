@@ -17,7 +17,7 @@ import { useDispatch } from 'react-redux';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { Ticket, TicketStatus } from '../../../types/publication_types/messages.types';
+import { Ticket, TicketStatus } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';

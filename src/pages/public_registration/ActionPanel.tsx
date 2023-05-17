@@ -5,7 +5,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { PublishingTicket, Ticket } from '../../types/publication_types/messages.types';
+import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { userIsCuratorForRegistration } from '../../utils/registration-helpers';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';

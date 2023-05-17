@@ -16,7 +16,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { ErrorList } from '../../registration/ErrorList';
-import { PublishingTicket, TicketStatus } from '../../../types/publication_types/messages.types';
+import { PublishingTicket, TicketStatus } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -225,19 +225,19 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
-          <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-            {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <MessageList messages={ticketMessages} />
-              {hasPendingTicket && (
+        {hasPendingTicket && (
+          <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
+            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+              {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <MessageList messages={ticketMessages} />
                 <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
-              )}
-            </Box>
-          </AccordionDetails>
-        </Accordion>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        )}
 
         {isDraftRegistration && !publishingRequestTicket && (
           <LoadingButton
