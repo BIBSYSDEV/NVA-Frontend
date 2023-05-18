@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
@@ -7,6 +7,9 @@ import { Registration, emptyRegistration } from '../../../types/registration.typ
 import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
 import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
 import { SupportMessagesColumn } from './SupportMessagesColumn';
+import { getFullName } from '../../../utils/user-helpers';
+import { getContributorInitials } from '../../../utils/registration-helpers';
+import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
 
 const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
@@ -33,9 +36,15 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
     },
   } as Registration;
-
   const msAge = new Date().getTime() - new Date(ticket.modifiedDate).getTime();
   const daysAge = Math.ceil(msAge / 86_400_000); // 1000 * 60 * 60 * 24 = 86_400_000 ms in one day
+
+  const assigneeFullName = ticket.assignee
+    ? getFullName(
+        ticket.assignee.preferredFirstName || ticket.assignee.firstName,
+        ticket.assignee.preferredLastName || ticket.assignee.lastName
+      )
+    : '';
 
   return (
     <SearchListItem
@@ -44,7 +53,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         borderLeftColor:
           ticket.status === 'Pending' || ticket.status === 'New' ? ticketColor[ticket.type] : 'registration.main',
       }}>
-      <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '6fr 2fr 1fr 1fr' }}>
+      <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '10fr 4fr 2fr 2fr 1fr' }}>
         <RegistrationListItemContent registration={registrationCopy} />
         {ticket.type === 'PublishingRequest' ? (
           <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
@@ -57,6 +66,11 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         )}
         <Typography variant="overline">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
         <Typography variant="overline">{t('common.x_days', { count: daysAge })}</Typography>
+        {assigneeFullName && (
+          <Tooltip title={assigneeFullName}>
+            <StyledVerifiedContributor>{getContributorInitials(assigneeFullName)}</StyledVerifiedContributor>
+          </Tooltip>
+        )}
       </Box>
     </SearchListItem>
   );
