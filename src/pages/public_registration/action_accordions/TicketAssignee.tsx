@@ -25,21 +25,18 @@ export const TicketAssignee = ({ ticket }: TicketAssigneeProps) => {
   const assigneeName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
   return (
-    <Paper
-      sx={{ p: '0.5rem 1rem', mb: '1rem', width: 'fit-content', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+    <Paper sx={{ p: '0.5rem 1rem', mb: '1rem', width: 'fit-content' }}>
       <Typography sx={{ display: 'flex', gap: '0.25rem', fontWeight: 700 }}>
         <span>{t('common.assignee')}:</span>
-        <span>
-          {ticket.assignee ? (
-            senderQuery.isLoading ? (
-              <Skeleton sx={{ width: '8rem' }} />
-            ) : (
-              assigneeName
-            )
+        {ticket.assignee ? (
+          senderQuery.isLoading ? (
+            <Skeleton sx={{ width: '8rem' }} />
           ) : (
-            <i>{t('common.none')}</i>
-          )}
-        </span>
+            assigneeName
+          )
+        ) : (
+          <i>{t('common.none')}</i>
+        )}
       </Typography>
     </Paper>
   );

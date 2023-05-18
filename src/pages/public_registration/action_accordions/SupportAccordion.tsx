@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useDispatch } from 'react-redux';
@@ -40,22 +40,24 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage }: Su
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
       </AccordionSummary>
-      <AccordionDetails>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {supportTicket && <TicketAssignee ticket={supportTicket} />}
-          {supportTicket && supportTicket.messages.length > 0 && <MessageList messages={supportTicket.messages} />}
-          <MessageForm
-            confirmAction={async (message) => {
-              if (message) {
-                if (supportTicket) {
-                  await addMessage(supportTicket.id, message);
-                } else {
-                  await createSupportTicket(message);
-                }
+      <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {supportTicket && (
+          <>
+            <TicketAssignee ticket={supportTicket} />
+            {supportTicket.messages.length > 0 && <MessageList messages={supportTicket.messages} />}
+          </>
+        )}
+        <MessageForm
+          confirmAction={async (message) => {
+            if (message) {
+              if (supportTicket) {
+                await addMessage(supportTicket.id, message);
+              } else {
+                await createSupportTicket(message);
               }
-            }}
-          />
-        </Box>
+            }
+          }}
+        />
       </AccordionDetails>
     </Accordion>
   );
