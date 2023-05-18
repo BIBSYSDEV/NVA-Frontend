@@ -24,6 +24,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
+import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -152,6 +153,8 @@ export const PublishingAccordion = ({
         )}
       </AccordionSummary>
       <AccordionDetails>
+        {publishingRequestTicket && <TicketAssignee ticket={publishingRequestTicket} />}
+
         {tabErrors && (
           <ErrorList
             tabErrors={tabErrors}
