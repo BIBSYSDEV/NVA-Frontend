@@ -1,5 +1,6 @@
 module.exports = {
   localesPath: 'src/translations',
+  localeNameResolver: (fileName) => fileName === 'nbTranslations.json',
   srcPath: 'src',
   translationKeyMatcher: /t\([`"'].*[`"'][\),]|(i18nKey(: )[`"'].*?[`"'])|(i18nKey=[`"'].*?[`"'])/g,
   excludeKey: [

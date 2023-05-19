@@ -82,7 +82,8 @@
       "sector_values": {
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)"
+        "UHI": "Universitet og høyskoler (UH)",
+        "ABM": "Arkiv, Bibliotek og Museum"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },

@@ -84,22 +84,12 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
         })
       ),
   }),
-  catalogueNumber: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.catalogue_number'),
-    })
-  ),
   isrc: Yup.object().shape({
     value: Yup.string()
       .nullable()
       .matches(
         /^[A-Z]{2}[A-Z\d]{3}\d{7}$/,
         i18n.t('feedback.validation.has_invalid_format', {
-          field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
-        })
-      )
-      .required(
-        i18n.t('feedback.validation.is_required', {
           field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
         })
       ),
@@ -161,7 +151,11 @@ export const AudioVisualPublicationModal = ({
         initialValues={audioVisualPublication ?? emptyAudioVisualPublication}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          onSubmit(values);
+          const { isrc, ...rest } = values;
+          const formattedValues: AudioVisualPublication = isrc?.value
+            ? { ...rest, isrc: { ...isrc, type: 'Isrc' } }
+            : rest;
+          onSubmit(formattedValues);
           closeModal();
         }}>
         {({ values, errors, touched, isSubmitting, setFieldValue }: FormikProps<AudioVisualPublication>) => (
@@ -241,7 +235,6 @@ export const AudioVisualPublicationModal = ({
                     value={field.value ?? ''}
                     variant="filled"
                     fullWidth
-                    required
                     label={t('registration.resource_type.artistic.music_score_isrc')}
                     InputProps={{
                       inputComponent: MaskIsrcInput as any,
