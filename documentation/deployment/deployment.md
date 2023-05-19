@@ -18,6 +18,38 @@ We currently have 4 enviroments (dev, test, sandbox, prod) as described by the f
 
 All 4 branches mentioned are protected, and should never be deleted. If that happens anyway for some reason, Amplify should still keep the last deployment running as normal, but one can not deploy a new version before the deleted branch is recreated. In the case where a faulty version is deployed, one can redeploy a previous version with the click of a button in AWS Amplify.
 
+The following figure is a simple representation of our process in practice.
+
+```mermaid
+---
+title: Branching strategy (GitFlow)
+---
+gitGraph
+    commit
+    branch staging
+    branch develop
+    commit
+    branch NP-1-feature1
+    checkout NP-1-feature1
+    commit
+    checkout develop
+    branch NP-2-bugfix
+    checkout NP-2-bugfix
+    commit
+    checkout develop
+    merge NP-2-bugfix tag:"deploy: dev"
+    checkout staging
+    merge develop tag:"deploy: test"
+    checkout NP-1-feature1
+    commit
+    commit
+    checkout develop
+    merge NP-1-feature1 tag:"deploy: dev"
+    checkout staging
+    checkout main
+    merge staging tag:"deploy: prod"
+```
+
 ### Update dev
 
 When working on new features, bug fixes, etc, one should branch out from the `develop` branch. When the job is done, one should create a new PR back into the `develop` branch. Hence, `develop` should include all the newest features, and should always have the newest code. Once a PR is merged into `develop`, Amplify will detect the update and automatically update the app deployed for the dev environment.
