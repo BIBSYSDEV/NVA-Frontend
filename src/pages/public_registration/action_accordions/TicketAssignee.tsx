@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Typography, Skeleton } from '@mui/material';
@@ -8,12 +8,14 @@ import { fetchUser } from '../../../api/roleApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { getFullName } from '../../../utils/user-helpers';
 import { RootState } from '../../../redux/store';
+import { UpdateTicketData, updateTicket } from '../../../api/registrationApi';
 
 interface TicketAssigneeProps {
   ticket: Ticket;
+  refetchRegistrationAndTickets: () => void;
 }
 
-export const TicketAssignee = ({ ticket }: TicketAssigneeProps) => {
+export const TicketAssignee = ({ ticket, refetchRegistrationAndTickets }: TicketAssigneeProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { user } = useSelector((store: RootState) => store);
@@ -25,6 +27,12 @@ export const TicketAssignee = ({ ticket }: TicketAssigneeProps) => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
   });
   const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
+
+  const ticketMutation = useMutation({
+    mutationFn: (newTicketData: UpdateTicketData) => updateTicket(ticket.id, newTicketData),
+    onSuccess: refetchRegistrationAndTickets,
+    onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
+  });
 
   return (
     <Paper
@@ -41,8 +49,12 @@ export const TicketAssignee = ({ ticket }: TicketAssigneeProps) => {
           <i>{t('common.none')}</i>
         )}
       </Typography>
-      {ticket.status === 'Pending' && ticket.assignee !== user?.nvaUsername && (
-        <LoadingButton variant="outlined" size="small">
+      {ticket.status === 'Pending' && user && ticket.assignee !== user?.nvaUsername && (
+        <LoadingButton
+          variant="outlined"
+          size="small"
+          loading={ticketMutation.isLoading}
+          onClick={() => ticketMutation.mutate({ assignee: user.nvaUsername })}>
           {t('registration.public_page.tasks_panel.assign_ticket')}
         </LoadingButton>
       )}

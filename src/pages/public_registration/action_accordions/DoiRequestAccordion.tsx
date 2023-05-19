@@ -143,7 +143,9 @@ export const DoiRequestAccordion = ({
         {t('common.doi_long')}
       </AccordionSummary>
       <AccordionDetails>
-        {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} />}
+        {doiRequestTicket && (
+          <TicketAssignee ticket={doiRequestTicket} refetchRegistrationAndTickets={refetchRegistrationAndTickets} />
+        )}
 
         {!doiRequestTicket && registration.doi && (
           <Typography paragraph>{t('registration.public_page.tasks_panel.has_reserved_doi')}</Typography>

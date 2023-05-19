@@ -402,6 +402,7 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
+      "update_ticket_assignee": "Kunne ikke sette saksbehandler",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "success": {
