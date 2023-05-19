@@ -1,8 +1,7 @@
-import { Skeleton } from '@mui/lab';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Paper, Typography } from '@mui/material';
+import { Paper, Typography, Skeleton } from '@mui/material';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { fetchUser } from '../../../api/roleApi';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -16,20 +15,20 @@ export const TicketAssignee = ({ ticket }: TicketAssigneeProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const senderQuery = useQuery({
+  const assigneeQuery = useQuery({
     enabled: !!ticket.assignee,
     queryKey: [ticket.assignee],
     queryFn: () => (ticket.assignee ? fetchUser(ticket.assignee) : undefined),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
   });
-  const assigneeName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
+  const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
 
   return (
     <Paper sx={{ p: '0.5rem 1rem', mb: '1rem', width: 'fit-content' }}>
       <Typography sx={{ display: 'flex', gap: '0.25rem', fontWeight: 700 }}>
         <span>{t('common.assignee')}:</span>
         {ticket.assignee ? (
-          senderQuery.isLoading ? (
+          assigneeQuery.isLoading ? (
             <Skeleton sx={{ width: '8rem' }} />
           ) : (
             assigneeName
