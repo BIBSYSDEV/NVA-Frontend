@@ -133,6 +133,10 @@ export const DoiRequestAccordion = ({
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
+      sx={{
+        borderLeft: '1.25rem solid',
+        borderLeftColor: 'doiRequest.main',
+      }}
       elevation={3}
       defaultExpanded={waitingForRemovalOfDoi || (userIsCurator && isPendingDoiRequest)}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>

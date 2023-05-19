@@ -36,7 +36,13 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage }: Su
   };
 
   return (
-    <Accordion data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion} elevation={3}>
+    <Accordion
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
+      sx={{
+        borderLeft: '1.25rem solid',
+        borderLeftColor: 'generalSupportCase.main',
+      }}
+      elevation={3}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
       </AccordionSummary>
