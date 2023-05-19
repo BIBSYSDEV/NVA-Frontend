@@ -4,8 +4,6 @@ import { I18nextProvider } from 'react-i18next';
 import { Provider as ReduxProvider } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { HelmetProvider } from 'react-helmet-async';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { App } from './App';
 import { store } from './redux/store';
@@ -17,6 +15,7 @@ import { BasicErrorBoundary } from './components/ErrorBoundary';
 // Fonts
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
+import { QueryProvider } from './QueryProvider';
 
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
@@ -26,14 +25,6 @@ if (USE_MOCK_DATA) {
 if ((window as any).Cypress) {
   (window as any).store = store;
 }
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-});
 
 const container = document.getElementById('root');
 if (container) {
@@ -46,10 +37,9 @@ if (container) {
             <ThemeProvider theme={mainTheme}>
               <CssBaseline />
               <HelmetProvider>
-                <QueryClientProvider client={queryClient}>
+                <QueryProvider>
                   <App />
-                  <ReactQueryDevtools />
-                </QueryClientProvider>
+                </QueryProvider>
               </HelmetProvider>
             </ThemeProvider>
           </ReduxProvider>

@@ -1,10 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { Paper, Typography, Skeleton } from '@mui/material';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { fetchUser } from '../../../api/roleApi';
-import { setNotification } from '../../../redux/notificationSlice';
 import { getFullName } from '../../../utils/user-helpers';
 
 interface TicketAssigneeProps {
@@ -13,13 +11,12 @@ interface TicketAssigneeProps {
 
 export const TicketAssignee = ({ ticket }: TicketAssigneeProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const assigneeQuery = useQuery({
     enabled: !!ticket.assignee,
     queryKey: [ticket.assignee],
     queryFn: () => (ticket.assignee ? fetchUser(ticket.assignee) : undefined),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
   const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
 
@@ -30,8 +27,10 @@ export const TicketAssignee = ({ ticket }: TicketAssigneeProps) => {
         {ticket.assignee ? (
           assigneeQuery.isLoading ? (
             <Skeleton sx={{ width: '8rem' }} />
-          ) : (
+          ) : assigneeName ? (
             assigneeName
+          ) : (
+            <i>{t('common.unknown')}</i>
           )
         ) : (
           <i>{t('common.none')}</i>

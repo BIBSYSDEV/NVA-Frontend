@@ -198,6 +198,7 @@
     "tasks": "Oppgaver",
     "title": "Tittel",
     "type": "Type",
+    "unknown": "Ukjent",
     "update": "Oppdater",
     "username": "Brukernavn",
     "version": "Versjon",
