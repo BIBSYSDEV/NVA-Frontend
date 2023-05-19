@@ -20,7 +20,7 @@ export const createUser = async (newUserPayload: CreateUserPayload) =>
 
 export const fetchUser = async (username: string) => {
   const userResponse = await authenticatedApiRequest2<InstitutionUser>({
-    url: `${RoleApiPath.Users}/${username}fweewf`,
+    url: `${RoleApiPath.Users}/${username}`,
   });
   return userResponse.data;
 };
