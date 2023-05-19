@@ -8,7 +8,7 @@ import { fetchUser } from '../../../api/roleApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { getFullName } from '../../../utils/user-helpers';
 import { RootState } from '../../../redux/store';
-import { UpdateTicketData, updateTicket } from '../../../api/registrationApi';
+import { updateTicket } from '../../../api/registrationApi';
 
 interface TicketAssigneeProps {
   ticket: Ticket;
@@ -29,7 +29,7 @@ export const TicketAssignee = ({ ticket, refetchRegistrationAndTickets }: Ticket
   const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
 
   const ticketMutation = useMutation({
-    mutationFn: (newTicketData: UpdateTicketData) => updateTicket(ticket.id, newTicketData),
+    mutationFn: user?.nvaUsername ? () => updateTicket(ticket.id, { assignee: user.nvaUsername }) : undefined,
     onSuccess: refetchRegistrationAndTickets,
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
   });
@@ -54,7 +54,7 @@ export const TicketAssignee = ({ ticket, refetchRegistrationAndTickets }: Ticket
           variant="outlined"
           size="small"
           loading={ticketMutation.isLoading}
-          onClick={() => ticketMutation.mutate({ assignee: user.nvaUsername })}>
+          onClick={() => ticketMutation.mutate()}>
           {t('registration.public_page.tasks_panel.assign_ticket')}
         </LoadingButton>
       )}

@@ -88,7 +88,7 @@ export const fetchRegistrationTickets = async (registrationId: string) => {
   return getTickets.data;
 };
 
-export interface UpdateTicketData {
+interface UpdateTicketData {
   assignee?: string;
   status?: TicketStatus;
   viewStatus?: string;
