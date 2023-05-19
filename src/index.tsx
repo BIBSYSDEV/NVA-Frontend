@@ -11,11 +11,11 @@ import { mainTheme } from './themes/mainTheme';
 import i18n from './translations/i18n';
 import { USE_MOCK_DATA } from './utils/constants';
 import { BasicErrorBoundary } from './components/ErrorBoundary';
+import { QueryProvider } from './QueryProvider';
 
 // Fonts
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
-import { QueryProvider } from './QueryProvider';
 
 if (USE_MOCK_DATA) {
   interceptRequestsOnMock();
