@@ -199,6 +199,8 @@
     "username": "Brukarnamn",
     "version": "Versjon",
     "will_be_available": "Vert tilgjengeleg",
+    "x_days_one": "",
+    "x_days_other": "",
     "x_others_one": "+ {{count}} annan",
     "x_others_other": "+ {{count}} andre",
     "year": "År",
@@ -480,11 +482,17 @@
   },
   "my_page": {
     "messages": {
+      "doi_closed": "",
+      "doi_completed": "",
+      "doi_pending": "",
+      "files_published": "",
+      "files_rejected": "",
       "messages": "Meldingar",
       "no_messages": "Du har inga meldingar",
       "ticket_types": {
         "Closed": "Lukka",
         "Completed": "Ferdeg",
+        "New": "",
         "Pending": "Pågår"
       },
       "types": {
@@ -1021,6 +1029,7 @@
       "files_are_not_published": "Filer vert ikkje publisert",
       "files_awaits_approval_one": "",
       "files_awaits_approval_other": "",
+      "files_awaits_approval_unknown": "",
       "files_count": "Filer ({{count}})",
       "find_journal_in_channel_register": "Sjå informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Sjå informasjon om utgjevaren i Kanalregisteret",

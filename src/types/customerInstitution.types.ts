@@ -10,6 +10,7 @@ export enum Sector {
   Uhi = 'UHI',
   Health = 'HEALTH',
   Institute = 'INSTITUTE',
+  Abm = 'ABM',
 }
 
 export interface CustomerInstitution extends SimpleCustomerInstitution {

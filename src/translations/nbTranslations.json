@@ -82,7 +82,8 @@
       "sector_values": {
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)"
+        "UHI": "Universitet og høyskoler (UH)",
+        "ABM": "Arkiv, Bibliotek og Museum"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -119,8 +120,6 @@
     "create_doi": "Opprett DOI",
     "created_date": "Opprettet",
     "date": "Dato",
-    "x_days_one": "{{count}} dag",
-    "x_days_other": "{{count}} dager",
     "delete": "Slett",
     "description": "Beskrivelse",
     "doi": "DOI",
@@ -201,6 +200,8 @@
     "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
+    "x_days_one": "{{count}} dag",
+    "x_days_other": "{{count}} dager",
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
     "year": "År",
