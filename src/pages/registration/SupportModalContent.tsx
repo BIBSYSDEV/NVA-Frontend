@@ -7,15 +7,15 @@ import { RegistrationParams } from '../../utils/urlPaths';
 import { useQuery } from '@tanstack/react-query';
 import { RootState } from '../../redux/store';
 import { userCanEditRegistration } from '../../utils/registration-helpers';
-import { ActionPanel } from '../public_registration/ActionPanel';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { ActionPanelContent } from '../public_registration/ActionPanelContent';
 
 interface SupportModalContentProps {
   closeModal: () => void;
   registrationId: string;
 }
 
-export const SupportModalContent = ({ closeModal, registrationId }: SupportModalContentProps) => {
+export const SupportModalContent = ({ registrationId }: SupportModalContentProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { user } = useSelector((store: RootState) => store);
@@ -38,12 +38,14 @@ export const SupportModalContent = ({ closeModal, registrationId }: SupportModal
   });
 
   return registration ? (
-    <ActionPanel
-      tickets={ticketsQuery.data?.tickets ?? []}
-      refetchRegistrationAndTickets={() => ticketsQuery.refetch()}
-      isLoadingData={false}
-      registration={registration}
-    />
+    <Box sx={{ minWidth: { sm: '25rem', md: '35rem' } }}>
+      <ActionPanelContent
+        tickets={ticketsQuery.data?.tickets ?? []}
+        refetchRegistrationAndTickets={() => ticketsQuery.refetch()}
+        isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
+        registration={registration}
+      />
+    </Box>
   ) : (
     <Typography>{t('common.error_occurred')}</Typography>
   );
