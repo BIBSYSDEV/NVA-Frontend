@@ -61,13 +61,6 @@ export const createTicket = async (registrationId: string, type: TicketType, ret
   }
 };
 
-export const updateTicketStatus = async (ticketId: string, type: TicketType, status: TicketStatus) =>
-  await authenticatedApiRequest({
-    url: ticketId,
-    method: 'PUT',
-    data: { type, status },
-  });
-
 export const createDraftDoi = async (registrationId: string) =>
   await authenticatedApiRequest<{ doi: string }>({
     url: `${registrationId}/doi`,
@@ -86,4 +79,19 @@ export const fetchRegistrationTickets = async (registrationId: string) => {
     url: `${registrationId}/tickets`,
   });
   return getTickets.data;
+};
+
+export interface UpdateTicketData {
+  assignee?: string;
+  status?: TicketStatus;
+  viewStatus?: string;
+}
+
+export const updateTicket = async (ticketId: string, ticketData: UpdateTicketData) => {
+  const updateTicket = await authenticatedApiRequest2<null>({
+    url: ticketId,
+    method: 'PUT',
+    data: ticketData,
+  });
+  return updateTicket.data;
 };

@@ -83,7 +83,12 @@ export const ActionPanel = ({
             )}
         </ErrorBoundary>
         <ErrorBoundary>
-          <SupportAccordion registration={registration} supportTicket={currentSupportTicket} addMessage={addMessage} />
+          <SupportAccordion
+            registration={registration}
+            supportTicket={currentSupportTicket}
+            addMessage={addMessage}
+            refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+          />
         </ErrorBoundary>
       </BackgroundDiv>
     </Paper>
