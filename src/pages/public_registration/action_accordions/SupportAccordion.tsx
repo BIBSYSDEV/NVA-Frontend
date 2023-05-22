@@ -50,7 +50,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {supportTicket && (
           <>
-            <TicketAssignee ticket={supportTicket} refetchRegistrationAndTickets={refetchData} />
+            <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {supportTicket.messages.length > 0 && <MessageList messages={supportTicket.messages} />}
           </>
         )}

@@ -158,6 +158,8 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
       </Box>
 
       <Modal
+        maxWidth="md"
+        fullWidth
         open={openSupportModal}
         onClose={toggleSupportModal}
         headingText={t('my_page.messages.types.GeneralSupportCase')}

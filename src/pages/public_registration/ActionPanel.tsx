@@ -5,6 +5,7 @@ import { Ticket } from '../../types/publication_types/ticket.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { ActionPanelContent } from './ActionPanelContent';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
@@ -27,12 +28,14 @@ export const ActionPanel = ({
           {t('common.tasks')}
         </Typography>
       </StyledPaperHeader>
-      <ActionPanelContent
-        tickets={tickets}
-        refetchData={refetchRegistrationAndTickets}
-        isLoadingData={isLoadingData}
-        registration={registration}
-      />
+      <BackgroundDiv>
+        <ActionPanelContent
+          tickets={tickets}
+          refetchData={refetchRegistrationAndTickets}
+          isLoadingData={isLoadingData}
+          registration={registration}
+        />
+      </BackgroundDiv>
     </Paper>
   );
 };

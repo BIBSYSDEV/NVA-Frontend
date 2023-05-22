@@ -29,7 +29,7 @@ import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
   registration: Registration;
-  refetchRegistrationAndTickets: () => void;
+  refetchData: () => void;
   publishingRequestTicket: PublishingTicket | null;
   userIsCurator: boolean;
   isLoadingData: boolean;
@@ -46,7 +46,7 @@ enum LoadingState {
 export const PublishingAccordion = ({
   publishingRequestTicket,
   registration,
-  refetchRegistrationAndTickets,
+  refetchData,
   userIsCurator,
   isLoadingData,
   addMessage,
@@ -75,7 +75,7 @@ export const PublishingAccordion = ({
       } else if (variables.status === 'Closed') {
         dispatch(setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' }));
       }
-      refetchRegistrationAndTickets();
+      refetchData();
     },
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.update_publishing_request'), variant: 'error' })),
@@ -107,7 +107,7 @@ export const PublishingAccordion = ({
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
-      refetchRegistrationAndTickets();
+      refetchData();
     }
     setIsLoading(LoadingState.None);
   };
@@ -152,12 +152,7 @@ export const PublishingAccordion = ({
         )}
       </AccordionSummary>
       <AccordionDetails>
-        {publishingRequestTicket && (
-          <TicketAssignee
-            ticket={publishingRequestTicket}
-            refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-          />
-        )}
+        {publishingRequestTicket && <TicketAssignee ticket={publishingRequestTicket} refetchTickets={refetchData} />}
 
         {tabErrors && (
           <ErrorList
@@ -196,7 +191,7 @@ export const PublishingAccordion = ({
             <LoadingButton
               variant="outlined"
               loading={isLoadingData}
-              onClick={refetchRegistrationAndTickets}
+              onClick={refetchData}
               startIcon={<RefreshIcon />}
               data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshPublishingRequestButton}>
               {t('registration.public_page.tasks_panel.reload')}

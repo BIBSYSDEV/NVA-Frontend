@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTicketMessage } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
@@ -48,10 +47,10 @@ export const ActionPanelContent = ({
   };
 
   return (
-    <BackgroundDiv>
+    <>
       <ErrorBoundary>
         <PublishingAccordion
-          refetchRegistrationAndTickets={refetchData}
+          refetchData={refetchData}
           isLoadingData={isLoadingData}
           registration={registration}
           publishingRequestTicket={currentPublishingRequestTicket}
@@ -64,7 +63,7 @@ export const ActionPanelContent = ({
           doiRequestTicket?.status !== 'Completed' &&
           customer?.doiAgent.username && (
             <DoiRequestAccordion
-              refetchRegistrationAndTickets={refetchData}
+              refetchData={refetchData}
               isLoadingData={isLoadingData}
               registration={registration}
               doiRequestTicket={doiRequestTicket}
@@ -81,6 +80,6 @@ export const ActionPanelContent = ({
           refetchData={refetchData}
         />
       </ErrorBoundary>
-    </BackgroundDiv>
+    </>
   );
 };
