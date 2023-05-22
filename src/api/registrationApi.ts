@@ -61,13 +61,6 @@ export const createTicket = async (registrationId: string, type: TicketType, ret
   }
 };
 
-export const updateTicketStatus = async (ticketId: string, type: TicketType, status: TicketStatus) =>
-  await authenticatedApiRequest({
-    url: ticketId,
-    method: 'PUT',
-    data: { type, status },
-  });
-
 export const createDraftDoi = async (registrationId: string) =>
   await authenticatedApiRequest<{ doi: string }>({
     url: `${registrationId}/doi`,
@@ -88,7 +81,7 @@ export const fetchRegistrationTickets = async (registrationId: string) => {
   return getTickets.data;
 };
 
-interface UpdateTicketData {
+export interface UpdateTicketData {
   assignee?: string;
   status?: TicketStatus;
   viewStatus?: string;
