@@ -26,6 +26,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
+import { TicketAssignee } from './TicketAssignee';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
@@ -142,6 +143,8 @@ export const DoiRequestAccordion = ({
         {t('common.doi_long')}
       </AccordionSummary>
       <AccordionDetails>
+        {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} />}
+
         {!doiRequestTicket && registration.doi && (
           <Typography paragraph>{t('registration.public_page.tasks_panel.has_reserved_doi')}</Typography>
         )}
