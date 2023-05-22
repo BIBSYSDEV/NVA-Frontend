@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
-import { Divider } from '@mui/material';
+import { Checkbox, Divider, FormGroup, styled } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -32,12 +32,72 @@ import ResearchProfile from '../research_profile/ResearchProfile';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import NotFound from '../errorpages/NotFound';
+import { SelectableButton } from '../../components/SelectableButton';
+import { fetchTickets } from '../../api/searchApi';
+import { setNotification } from '../../redux/notificationSlice';
+import { TicketStatus } from '../../types/publication_types/ticket.types';
+
+const rowsPerPageOptions = [10, 20, 50];
+
+type SelectedStatusState = {
+  [key in TicketStatus]: boolean;
+};
+
+const StyledCheckbox = styled(Checkbox)({
+  paddingTop: '0.2rem',
+  paddingBottom: '0.2rem',
+});
 
 const MyPagePage = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
   const user = useSelector((store: RootState) => store.user);
   const queryClient = useQueryClient();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+
+  const [selectedTypes, setSelectedTypes] = useState({
+    doiRequest: true,
+    generalSupportCase: true,
+    publishingRequest: true,
+  });
+
+  const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
+    New: true,
+    Pending: false,
+    Completed: false,
+    Closed: false,
+  });
+
+  const selectedTypesArray = Object.entries(selectedTypes)
+    .filter(([_, selected]) => selected)
+    .map(([key]) => key);
+
+  const typeQuery =
+    selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
+
+  const selectedStatusesArray = Object.entries(selectedStatuses)
+    .filter(([_, selected]) => selected)
+    .map(([key]) => key);
+
+  const statusQuery =
+    selectedStatusesArray.length > 0
+      ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
+      : '';
+
+  const query = [typeQuery, statusQuery].filter(Boolean).join(' AND ');
+
+  const ticketsQuery = useQuery({
+    queryKey: ['tickets', rowsPerPage, page, query],
+    queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, query),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
+  });
+
+  const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
+  const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
+  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
+  const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
 
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);
@@ -65,15 +125,41 @@ const MyPagePage = () => {
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
-            <NavigationList>
-              <LinkButton
-                key={dataTestId.myPage.messagesLink}
-                data-testid={dataTestId.myPage.messagesLink}
-                isSelected={currentPath === UrlPathTemplate.MyPageMyMessages}
-                to={UrlPathTemplate.MyPageMyMessages}>
-                {t('my_page.messages.messages')}
-              </LinkButton>
-            </NavigationList>
+            <FormGroup sx={{ m: '1rem', gap: '0.5rem', width: 'fit-content' }}>
+              <SelectableButton
+                showCheckbox
+                isSelected={selectedTypes.publishingRequest}
+                color="publishingRequest"
+                onClick={() =>
+                  setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
+                }>
+                {selectedTypes.publishingRequest && publishingRequestCount
+                  ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
+                  : t('my_page.messages.types.PublishingRequest')}
+              </SelectableButton>
+
+              <SelectableButton
+                showCheckbox
+                isSelected={selectedTypes.doiRequest}
+                color="doiRequest"
+                onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
+                {selectedTypes.doiRequest && doiRequestCount
+                  ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
+                  : t('my_page.messages.types.DoiRequest')}
+              </SelectableButton>
+
+              <SelectableButton
+                showCheckbox
+                isSelected={selectedTypes.generalSupportCase}
+                color="generalSupportCase"
+                onClick={() =>
+                  setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
+                }>
+                {selectedTypes.generalSupportCase && generalSupportCaseCount
+                  ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
+                  : t('my_page.messages.types.GeneralSupportCase')}
+              </SelectableButton>
+            </FormGroup>
           </NavigationListAccordion>,
 
           <NavigationListAccordion
