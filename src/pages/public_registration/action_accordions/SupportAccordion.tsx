@@ -16,9 +16,15 @@ interface SupportAccordionProps {
   registration: Registration;
   supportTicket: Ticket | null;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
+  refetchRegistrationAndTickets: () => void;
 }
 
-export const SupportAccordion = ({ registration, supportTicket, addMessage }: SupportAccordionProps) => {
+export const SupportAccordion = ({
+  registration,
+  supportTicket,
+  addMessage,
+  refetchRegistrationAndTickets,
+}: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -49,7 +55,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage }: Su
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {supportTicket && (
           <>
-            <TicketAssignee ticket={supportTicket} />
+            <TicketAssignee ticket={supportTicket} refetchRegistrationAndTickets={refetchRegistrationAndTickets} />
             {supportTicket.messages.length > 0 && <MessageList messages={supportTicket.messages} />}
           </>
         )}

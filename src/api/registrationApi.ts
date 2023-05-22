@@ -87,3 +87,18 @@ export const fetchRegistrationTickets = async (registrationId: string) => {
   });
   return getTickets.data;
 };
+
+interface UpdateTicketData {
+  assignee?: string;
+  status?: TicketStatus;
+  viewStatus?: string;
+}
+
+export const updateTicket = async (ticketId: string, ticketData: UpdateTicketData) => {
+  const updateTicket = await authenticatedApiRequest2<null>({
+    url: ticketId,
+    method: 'PUT',
+    data: ticketData,
+  });
+  return updateTicket.data;
+};

@@ -154,7 +154,12 @@ export const PublishingAccordion = ({
         )}
       </AccordionSummary>
       <AccordionDetails>
-        {publishingRequestTicket && <TicketAssignee ticket={publishingRequestTicket} />}
+        {publishingRequestTicket && (
+          <TicketAssignee
+            ticket={publishingRequestTicket}
+            refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+          />
+        )}
 
         {tabErrors && (
           <ErrorList
