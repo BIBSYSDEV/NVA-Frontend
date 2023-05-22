@@ -1,19 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@tanstack/react-query';
-import { ListSkeleton } from '../../components/ListSkeleton';
+import { UseQueryResult } from '@tanstack/react-query';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { TicketList } from './components/TicketList';
-import { fetchTickets } from '../../api/searchApi';
+import { ExpandedTicket } from '../../types/publication_types/ticket.types';
+import { SearchResponse } from '../../types/common.types';
 
-export const MyMessagesPage = () => {
+interface MyMessagesPageProps {
+  ticketsQuery: UseQueryResult<SearchResponse<ExpandedTicket>, unknown>;
+}
+
+export const MyMessagesPage = ({ ticketsQuery }: MyMessagesPageProps) => {
   const { t } = useTranslation();
-
-  const ticketsQuery = useQuery({
-    queryKey: ['tickets', 30, 0, true],
-    queryFn: () => fetchTickets(30, 0, '', true),
-    onError: () => t('feedback.error.get_messages'),
-  });
 
   const tickets = ticketsQuery.data?.hits ?? [];
 
@@ -23,11 +21,7 @@ export const MyMessagesPage = () => {
         <title>{t('my_page.messages.messages')}</title>
       </Helmet>
       <BackgroundDiv>
-        {ticketsQuery.isLoading ? (
-          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-        ) : (
-          <TicketList tickets={tickets} />
-        )}
+        <TicketList tickets={tickets} />
       </BackgroundDiv>
     </>
   );

@@ -1,12 +1,22 @@
-import { ComponentType } from 'react';
-import { Route, RouteComponentProps, RouteProps } from 'react-router-dom';
+import { Route, RouteProps } from 'react-router-dom';
 import { Forbidden } from '../../pages/errorpages/Forbidden';
 
 interface PrivateRouteProps extends RouteProps {
-  component: ComponentType<RouteComponentProps<any>> | ComponentType<any>;
   isAuthorized: boolean;
 }
 
-export const PrivateRoute = ({ component: ProtectedComponent, isAuthorized, ...rest }: PrivateRouteProps) => (
-  <Route {...rest} render={(props) => (isAuthorized ? <ProtectedComponent {...props} {...rest} /> : <Forbidden />)} />
-);
+export const PrivateRoute = ({ component, children, isAuthorized, ...rest }: PrivateRouteProps) => {
+  if (!isAuthorized) {
+    return (
+      <Route {...rest}>
+        <Forbidden />;
+      </Route>
+    );
+  } else if (component) {
+    return <Route {...rest} component={component} />;
+  } else if (children) {
+    return <Route {...rest}>{children}</Route>;
+  } else {
+    return null;
+  }
+};

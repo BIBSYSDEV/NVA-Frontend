@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
-import { Checkbox, Divider, FormGroup, styled } from '@mui/material';
+import { Checkbox, Divider, FormControlLabel, FormGroup, styled } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
@@ -99,6 +99,12 @@ const MyPagePage = () => {
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
 
+  const statusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
+  const newCount = statusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
+  const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
+  const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
+  const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
+
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);
 
@@ -159,6 +165,63 @@ const MyPagePage = () => {
                   ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                   : t('my_page.messages.types.GeneralSupportCase')}
               </SelectableButton>
+            </FormGroup>
+
+            <FormGroup sx={{ m: '1rem' }}>
+              <FormControlLabel
+                checked={selectedStatuses.New}
+                control={
+                  <StyledCheckbox
+                    onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
+                  />
+                }
+                label={
+                  selectedStatuses.New && newCount
+                    ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
+                    : t('my_page.messages.ticket_types.New')
+                }
+              />
+              <FormControlLabel
+                checked={selectedStatuses.Pending}
+                control={
+                  <StyledCheckbox
+                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
+                  />
+                }
+                label={
+                  selectedStatuses.Pending && pendingCount
+                    ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
+                    : t('my_page.messages.ticket_types.Pending')
+                }
+              />
+              <FormControlLabel
+                checked={selectedStatuses.Completed}
+                control={
+                  <StyledCheckbox
+                    onChange={() =>
+                      setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })
+                    }
+                  />
+                }
+                label={
+                  selectedStatuses.Completed && completedCount
+                    ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
+                    : t('my_page.messages.ticket_types.Completed')
+                }
+              />
+              <FormControlLabel
+                checked={selectedStatuses.Closed}
+                control={
+                  <StyledCheckbox
+                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
+                  />
+                }
+                label={
+                  selectedStatuses.Closed && closedCount
+                    ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
+                    : t('my_page.messages.ticket_types.Closed')
+                }
+              />
             </FormGroup>
           </NavigationListAccordion>,
 
@@ -259,7 +322,9 @@ const MyPagePage = () => {
 
       <ErrorBoundary>
         <Switch>
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages} component={MyMessagesPage} />
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages}>
+            <MyMessagesPage ticketsQuery={ticketsQuery} />
+          </CreatorRoute>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
