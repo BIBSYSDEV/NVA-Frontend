@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Paper, Typography, Skeleton } from '@mui/material';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { fetchUser } from '../../../api/roleApi';
-import { setNotification } from '../../../redux/notificationSlice';
 import { getFullName } from '../../../utils/user-helpers';
 import { RootState } from '../../../redux/store';
 import { updateTicket } from '../../../api/registrationApi';
+import { setNotification } from '../../../redux/notificationSlice';
 
 interface TicketAssigneeProps {
   ticket: Ticket;
@@ -24,7 +24,7 @@ export const TicketAssignee = ({ ticket, refetchRegistrationAndTickets }: Ticket
     enabled: !!ticket.assignee,
     queryKey: [ticket.assignee],
     queryFn: () => (ticket.assignee ? fetchUser(ticket.assignee) : undefined),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
   const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
 
@@ -42,8 +42,10 @@ export const TicketAssignee = ({ ticket, refetchRegistrationAndTickets }: Ticket
         {ticket.assignee ? (
           assigneeQuery.isLoading ? (
             <Skeleton sx={{ width: '8rem' }} />
-          ) : (
+          ) : assigneeName ? (
             assigneeName
+          ) : (
+            <i>{t('common.unknown')}</i>
           )
         ) : (
           <i>{t('common.none')}</i>
