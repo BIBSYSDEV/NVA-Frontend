@@ -30,7 +30,6 @@ export enum PublicationsApiPath {
   Registration = '/publication',
   RegistrationsByOwner = '/publication/by-owner',
   DoiLookup = '/doi-fetch',
-  Tickets = '/publication/tickets',
 }
 
 export enum OrcidApiPath {

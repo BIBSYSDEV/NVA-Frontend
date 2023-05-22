@@ -192,7 +192,6 @@
     "start_date": "Startdato",
     "start_page": "Startside",
     "status": "Status",
-    "support": "Brukarstøtte",
     "tasks": "Oppgåver",
     "title": "Tittel",
     "type": "Type",
@@ -200,6 +199,8 @@
     "username": "Brukarnamn",
     "version": "Versjon",
     "will_be_available": "Vert tilgjengeleg",
+    "x_days_one": "",
+    "x_days_other": "",
     "x_others_one": "+ {{count}} annan",
     "x_others_other": "+ {{count}} andre",
     "year": "År",
@@ -387,6 +388,7 @@
       "reserve_doi": "Reservasjon av DOI feila",
       "search": "Søk feila",
       "send_message": "Kunne ikkje sende melding",
+      "storing_orcid_credentials": "Kunne ikkje lagre orcid-data",
       "update_customer": "Kunne ikkje oppdatere institusjon",
       "update_doi_agent": "Kunne ikkje oppdatere DOI-konfigurering",
       "update_doi_request": "Kunne ikkje oppdatere DOI-førespurnad",
@@ -480,12 +482,17 @@
   },
   "my_page": {
     "messages": {
-      "go_to_registration": "Gå til registrering",
+      "doi_closed": "",
+      "doi_completed": "",
+      "doi_pending": "",
+      "files_published": "",
+      "files_rejected": "",
       "messages": "Meldingar",
       "no_messages": "Du har inga meldingar",
       "ticket_types": {
         "Closed": "Lukka",
         "Completed": "Ferdeg",
+        "New": "",
         "Pending": "Pågår"
       },
       "types": {
@@ -976,6 +983,7 @@
       "verify_affiliation": "Bekreft tilknyting",
       "verify_person": "Verifiser person"
     },
+    "curator_support": "Kuratorstøtte",
     "description": {
       "abstract": "Samandrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1021,6 +1029,7 @@
       "files_are_not_published": "Filer vert ikkje publisert",
       "files_awaits_approval_one": "",
       "files_awaits_approval_other": "",
+      "files_awaits_approval_unknown": "",
       "files_count": "Filer ({{count}})",
       "find_journal_in_channel_register": "Sjå informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Sjå informasjon om utgjevaren i Kanalregisteret",
@@ -1501,6 +1510,7 @@
   },
   "tasks": {
     "limited_to": "Avgrensa til: \"{{name}}\"",
-    "tasks": "Oppgåver"
+    "tasks": "Oppgåver",
+    "user_dialog": "Brukardialog"
   }
 }

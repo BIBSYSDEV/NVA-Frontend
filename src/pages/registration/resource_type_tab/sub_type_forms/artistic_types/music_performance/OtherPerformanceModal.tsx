@@ -38,21 +38,9 @@ const emptyMusicalWork: MusicalWork = {
 };
 
 const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
-  place: Yup.object().shape({
-    label: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.place'),
-      })
-    ),
-  }),
   performanceType: Yup.string().required(
     i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.performance_type'),
-    })
-  ),
-  extent: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
     })
   ),
   musicalWorks: Yup.array()
@@ -123,7 +111,6 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     variant="filled"
                     fullWidth
                     label={t('common.place')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.placeField}
@@ -139,7 +126,6 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.artistic.extent_in_minutes')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDuration}

@@ -51,6 +51,10 @@ export interface ProjectContributor {
   identity: ProjectContributorIdentity;
 }
 
+interface ProjectCreator extends Omit<ProjectContributor, 'type'> {
+  type: 'ProjectCreator';
+}
+
 export interface ProjectFunding extends Pick<Funding, 'identifier' | 'source' | 'labels'> {
   type: 'UnconfirmedFunding';
 }
@@ -88,6 +92,7 @@ export interface CristinProject extends SaveCristinProject {
   created: {
     sourceShortName: 'REK' | 'NVA' | 'FORSKDOK';
   };
+  creator?: ProjectCreator;
 }
 
 interface FundingSource {

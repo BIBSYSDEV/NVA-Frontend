@@ -192,7 +192,6 @@
     "start_date": "Start date",
     "start_page": "Start page",
     "status": "Status",
-    "support": "Support",
     "tasks": "Tasks",
     "title": "Title",
     "type": "Type",
@@ -200,6 +199,8 @@
     "username": "Username",
     "version": "Version",
     "will_be_available": "Will be available",
+    "x_days_one": "{{count}} day",
+    "x_days_other": "{{count}} days",
     "x_others_one": "+ {{count}} other",
     "x_others_other": "+ {{count}} others",
     "year": "Year",
@@ -387,6 +388,7 @@
       "reserve_doi": "Reservation of DOI failed",
       "search": "Search failed",
       "send_message": "Could not send message",
+      "storing_orcid_credentials": "Failed to save orcid-data",
       "update_customer": "Failed to update customer institution",
       "update_doi_agent": "Could not update DOI configuration",
       "update_doi_request": "Failed to update DOI request",
@@ -480,12 +482,17 @@
   },
   "my_page": {
     "messages": {
-      "go_to_registration": "Go to registration",
+      "doi_closed": "DOI rejected",
+      "doi_completed": "DOI allocated",
+      "doi_pending": "Pending DOI allocation",
+      "files_published": "File(s) published",
+      "files_rejected": "File(s) rejected",
       "messages": "Messages",
       "no_messages": "You have no messages",
       "ticket_types": {
         "Closed": "Closed",
         "Completed": "Completed",
+        "New": "New",
         "Pending": "Pending"
       },
       "types": {
@@ -976,6 +983,7 @@
       "verify_affiliation": "Verify affiliation",
       "verify_person": "Verify person"
     },
+    "curator_support": "Curator support",
     "description": {
       "abstract": "Abstract",
       "add_vocabulary": "Add vocabulary",
@@ -1021,6 +1029,7 @@
       "files_are_not_published": "Files are not published",
       "files_awaits_approval_one": "",
       "files_awaits_approval_other": "",
+      "files_awaits_approval_unknown": "File(s) pending verification",
       "files_count": "Files {{count}}",
       "find_journal_in_channel_register": "See information about the journal in the Norwegian Register",
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
@@ -1367,7 +1376,7 @@
         "institution_name": "Institution name",
         "more_info_about_elementet": "More information about the element",
         "presentation_type": "",
-        "search_for_exhibition_catalog": "Search for exhibition catalogue",
+        "search_for_exhibition_catalog": "Search for exhibition catalog",
         "subtype": {
           "AmbulatingExhibition": "Travelling exhibition",
           "BasicExhibition": "Basic exhibition",
@@ -1501,6 +1510,7 @@
   },
   "tasks": {
     "limited_to": "Limited to: \"{{name}}\"",
-    "tasks": "Tasks"
+    "tasks": "Tasks",
+    "user_dialog": "User dialogue"
   }
 }

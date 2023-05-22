@@ -5,7 +5,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { Ticket } from '../../types/publication_types/messages.types';
+import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { userIsCuratorForRegistration } from '../../utils/registration-helpers';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
@@ -14,6 +14,7 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { addTicketMessage } from '../../api/registrationApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { SupportAccordion } from './action_accordions/SupportAccordion';
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
@@ -34,7 +35,9 @@ export const ActionPanel = ({
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
   const publishingRequestTickets = tickets.filter((ticket) => ticket.type === 'PublishingRequest');
-  const currentPublishingRequestTicket = publishingRequestTickets.pop() ?? null;
+  const currentPublishingRequestTicket = (publishingRequestTickets.pop() as PublishingTicket | undefined) ?? null;
+  const supportTickets = tickets.filter((ticket) => ticket.type === 'GeneralSupportCase');
+  const currentSupportTicket = supportTickets.pop() ?? null;
 
   const addMessage = async (ticketId: string, message: string) => {
     const addMessageResponse = await addTicketMessage(ticketId, message);
@@ -75,8 +78,12 @@ export const ActionPanel = ({
                 registration={registration}
                 doiRequestTicket={doiRequestTicket}
                 userIsCurator={userIsCurator}
+                addMessage={addMessage}
               />
             )}
+        </ErrorBoundary>
+        <ErrorBoundary>
+          <SupportAccordion registration={registration} supportTicket={currentSupportTicket} addMessage={addMessage} />
         </ErrorBoundary>
       </BackgroundDiv>
     </Paper>

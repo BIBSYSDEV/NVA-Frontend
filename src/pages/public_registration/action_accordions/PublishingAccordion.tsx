@@ -10,26 +10,25 @@ import CheckIcon from '@mui/icons-material/Check';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { validateYupSchema, yupToFormErrors } from 'formik';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { ErrorList } from '../../registration/ErrorList';
-import { Ticket, TicketStatus } from '../../../types/publication_types/messages.types';
+import { PublishingTicket, TicketStatus } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
-import { RootState } from '../../../redux/store';
-import { MessageList } from '../../messages/MessageList';
+import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
 
 interface PublishingAccordionProps {
   registration: Registration;
   refetchRegistrationAndTickets: () => void;
-  publishingRequestTicket: Ticket | null;
+  publishingRequestTicket: PublishingTicket | null;
   userIsCurator: boolean;
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
@@ -52,7 +51,6 @@ export const PublishingAccordion = ({
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { customer } = useSelector((store: RootState) => store);
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
@@ -115,15 +113,16 @@ export const PublishingAccordion = ({
     }
   };
 
-  const registratorPublishesMetadataAndFiles = customer?.publicationWorkflow === 'RegistratorPublishesMetadataAndFiles';
-  const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
+  const registratorPublishesMetadataAndFiles =
+    publishingRequestTicket?.workflow === 'RegistratorPublishesMetadataAndFiles';
+  const registratorPublishesMetadataOnly = publishingRequestTicket?.workflow === 'RegistratorPublishesMetadataOnly';
 
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const hasUnpublishedFiles = registration.associatedArtifacts.some((artifact) => artifact.type === 'UnpublishedFile');
 
   const hasClosedTicket = publishingRequestTicket?.status === 'Closed';
-  const hasPendingTicket = publishingRequestTicket?.status === 'Pending';
+  const hasPendingTicket = publishingRequestTicket?.status === 'Pending' || publishingRequestTicket?.status === 'New';
   const hasCompletedTicket = publishingRequestTicket?.status === 'Completed';
 
   const canHandlePublishingRequest = userIsCurator && !registratorPublishesMetadataAndFiles && hasPendingTicket;
@@ -142,6 +141,7 @@ export const PublishingAccordion = ({
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
+      sx={{ borderLeft: '1.25rem solid', borderLeftColor: 'publishingRequest.main' }}
       elevation={3}
       defaultExpanded={isDraftRegistration || canHandlePublishingRequest || hasMismatchingPublishedStatus}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -226,19 +226,19 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        <Accordion elevation={3} sx={{ maxWidth: '60rem' }} color="inherit">
-          <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-            {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <MessageList messages={ticketMessages} />
-              {hasPendingTicket && (
+        {hasPendingTicket && (
+          <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
+            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+              {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <MessageList messages={ticketMessages} />
                 <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
-              )}
-            </Box>
-          </AccordionDetails>
-        </Accordion>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        )}
 
         {isDraftRegistration && !publishingRequestTicket && (
           <LoadingButton

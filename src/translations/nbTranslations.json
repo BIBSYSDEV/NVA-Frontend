@@ -82,7 +82,8 @@
       "sector_values": {
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)"
+        "UHI": "Universitet og høyskoler (UH)",
+        "ABM": "Arkiv, Bibliotek og Museum"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -199,6 +200,8 @@
     "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
+    "x_days_one": "{{count}} dag",
+    "x_days_other": "{{count}} dager",
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
     "year": "År",
@@ -480,17 +483,22 @@
   },
   "my_page": {
     "messages": {
-      "go_to_registration": "Gå til registrering",
+      "doi_closed": "DOI avvist",
+      "doi_completed": "DOI tildelt",
+      "doi_pending": "Venter på DOI-tildeling",
+      "files_published": "Fil(er) publisert",
+      "files_rejected": "Fil(er) avvist",
       "messages": "Meldinger",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
         "Closed": "Lukket",
         "Completed": "Ferdig",
+        "New": "Ny",
         "Pending": "Pågår"
       },
       "types": {
         "DoiRequest": "DOI-forespørsel",
-        "GeneralSupportCase": "Brukerstøtte",
+        "GeneralSupportCase": "Kuratorstøtte",
         "PublishingRequest": "Publiseringsforespørsel"
       }
     },
@@ -1022,6 +1030,7 @@
       "files_are_not_published": "Filer publiseres ikke",
       "files_awaits_approval_one": "{{count}} fil og valgt lisens venter på å bli verifisert",
       "files_awaits_approval_other": "{{count}} filer og valgte lisenser venter på å bli verifisert",
+      "files_awaits_approval_unknown": "Venter på verifisering av fil(er)",
       "files_count": "Filer ({{count}})",
       "find_journal_in_channel_register": "Se informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
@@ -1278,7 +1287,7 @@
           "Streaming": "Strømming",
           "Vinyl": "LP/EP"
         },
-        "music_score_ensemble": "Ensemble",
+        "music_score_ensemble": "Besetning",
         "music_score_ismn": "ISMN",
         "music_score_isrc": "ISRC",
         "music_score_movements": "Satser",
@@ -1432,7 +1441,7 @@
           "contains_sensitive_data": "Datasettet inneholder andre sensitive eller konfidensielle data?*",
           "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger, bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, etc.",
           "dialog_title": "For å legge til forskningsdata må du først avklare om",
-          "further_info": "Når du trykker JA eller er usikker så må du sende melding til brukerstøtte der din kurator avklarer videre prosess for å publisere datasettet."
+          "further_info": "Når du trykker JA eller er usikker så må du sende melding til kuratorstøtte der din kurator avklarer videre prosess for å publisere datasettet."
         },
         "add_link": "Legg til lenke",
         "external_link": "Ekstern lenke",
@@ -1472,8 +1481,9 @@
       "DRAFT_FOR_DELETION": "Slettet",
       "NEW": "Ny",
       "PUBLISHED": "Publisert",
-      "PUBLISHED_METADATA": "Publisert metadata"
+      "PUBLISHED_METADATA": "Metadata publisert"
     },
+    "support_description": "Når du ber om kuratorstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
     "year_published": "Publiseringsår"
   },
   "search": {

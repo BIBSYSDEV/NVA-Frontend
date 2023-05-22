@@ -17,13 +17,15 @@ import { useDispatch } from 'react-redux';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { Ticket, TicketStatus } from '../../../types/publication_types/messages.types';
+import { Ticket, TicketStatus } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { Modal } from '../../../components/Modal';
 import { setNotification } from '../../../redux/notificationSlice';
 import { addTicketMessage, createDraftDoi, createTicket, updateTicketStatus } from '../../../api/registrationApi';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { MessageList } from '../../messages/components/MessageList';
+import { MessageForm } from '../../../components/MessageForm';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
@@ -31,6 +33,7 @@ interface DoiRequestAccordionProps {
   doiRequestTicket: Ticket | null;
   userIsCurator: boolean;
   isLoadingData: boolean;
+  addMessage: (ticketId: string, message: string) => Promise<unknown>;
 }
 
 enum LoadingState {
@@ -47,10 +50,10 @@ export const DoiRequestAccordion = ({
   refetchRegistrationAndTickets,
   userIsCurator,
   isLoadingData,
+  addMessage,
 }: DoiRequestAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [messageToCurator, setMessageToCurator] = useState('');
   const [openRequestDoiModal, setOpenRequestDoiModal] = useState(false);
@@ -58,7 +61,7 @@ export const DoiRequestAccordion = ({
 
   const isPublishedRegistration = registration.status === RegistrationStatus.Published;
   const isDraftRegistration = registration.status === RegistrationStatus.Draft;
-  const isPendingDoiRequest = doiRequestTicket?.status === 'Pending';
+  const isPendingDoiRequest = doiRequestTicket?.status === 'Pending' || doiRequestTicket?.status === 'New';
   const isClosedDoiRequest = doiRequestTicket?.status === 'Closed';
 
   const addDraftDoi = async () => {
@@ -124,10 +127,15 @@ export const DoiRequestAccordion = ({
   };
 
   const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
+  const messages = doiRequestTicket?.messages ?? [];
 
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
+      sx={{
+        borderLeft: '1.25rem solid',
+        borderLeftColor: 'doiRequest.main',
+      }}
       elevation={3}
       defaultExpanded={waitingForRemovalOfDoi || (userIsCurator && isPendingDoiRequest)}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -217,6 +225,20 @@ export const DoiRequestAccordion = ({
               </DialogActions>
             </Modal>
           </>
+        )}
+
+        {isPendingDoiRequest && (
+          <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
+            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+              {`${t('my_page.messages.messages')} (${messages.length})`}
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <MessageList messages={messages} />
+                <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
+              </Box>
+            </AccordionDetails>
+          </Accordion>
         )}
 
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
