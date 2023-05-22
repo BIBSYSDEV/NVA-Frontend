@@ -13,7 +13,7 @@ const StyledBaseContributorIndicator = styled('div')({
   justifyContent: 'space-around',
 });
 
-const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
+export const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
   background: theme.palette.primary.main,
   color: theme.palette.primary.contrastText,
 }));

@@ -12,18 +12,20 @@ import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { validateYupSchema, yupToFormErrors } from 'formik';
+import { useMutation } from '@tanstack/react-query';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
 import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { ErrorList } from '../../registration/ErrorList';
-import { PublishingTicket, TicketStatus } from '../../../types/publication_types/ticket.types';
+import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
-import { createTicket, updateTicketStatus } from '../../../api/registrationApi';
+import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
+import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -55,6 +57,30 @@ export const PublishingAccordion = ({
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
 
+  const ticketMutation = useMutation({
+    mutationFn: publishingRequestTicket
+      ? (newTicketData: UpdateTicketData) => {
+          if (newTicketData.status === 'Completed') {
+            setIsLoading(LoadingState.ApprovePulishingRequest);
+          } else if (newTicketData.status === 'Closed') {
+            setIsLoading(LoadingState.RejectPublishingRequest);
+          }
+          return updateTicket(publishingRequestTicket.id, newTicketData);
+        }
+      : undefined,
+    onSettled: () => setIsLoading(LoadingState.None),
+    onSuccess: (_, variables) => {
+      if (variables.status === 'Completed') {
+        dispatch(setNotification({ message: t('feedback.success.publishing_request_approved'), variant: 'success' }));
+      } else if (variables.status === 'Closed') {
+        dispatch(setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' }));
+      }
+      refetchRegistrationAndTickets();
+    },
+    onError: () =>
+      dispatch(setNotification({ message: t('feedback.error.update_publishing_request'), variant: 'error' })),
+  });
+
   const [tabErrors, setTabErrors] = useState<TabErrors>();
   useEffect(() => {
     const publicationInstance = registration.entityDescription?.reference?.publicationInstance;
@@ -84,33 +110,6 @@ export const PublishingAccordion = ({
       refetchRegistrationAndTickets();
     }
     setIsLoading(LoadingState.None);
-  };
-
-  const updatePendingPublishingRequest = async (status: TicketStatus) => {
-    if (publishingRequestTicket) {
-      if (status === 'Completed') {
-        setIsLoading(LoadingState.ApprovePulishingRequest);
-      } else {
-        setIsLoading(LoadingState.RejectPublishingRequest);
-      }
-
-      const updateTicketStatusResponse = await updateTicketStatus(
-        publishingRequestTicket.id,
-        'PublishingRequest',
-        status
-      );
-      if (isErrorStatus(updateTicketStatusResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.update_publishing_request'), variant: 'error' }));
-      } else if (isSuccessStatus(updateTicketStatusResponse.status)) {
-        if (status === 'Completed') {
-          dispatch(setNotification({ message: t('feedback.success.publishing_request_approved'), variant: 'success' }));
-        } else {
-          dispatch(setNotification({ message: t('feedback.success.publishing_request_rejected'), variant: 'success' }));
-        }
-        refetchRegistrationAndTickets();
-      }
-      setIsLoading(LoadingState.None);
-    }
   };
 
   const registratorPublishesMetadataAndFiles =
@@ -153,6 +152,13 @@ export const PublishingAccordion = ({
         )}
       </AccordionSummary>
       <AccordionDetails>
+        {publishingRequestTicket && (
+          <TicketAssignee
+            ticket={publishingRequestTicket}
+            refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+          />
+        )}
+
         {tabErrors && (
           <ErrorList
             tabErrors={tabErrors}
@@ -262,7 +268,7 @@ export const PublishingAccordion = ({
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
               endIcon={<CheckIcon />}
               loadingPosition="end"
-              onClick={() => updatePendingPublishingRequest('Completed')}
+              onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
               {t('registration.public_page.approve_publish_request')}
@@ -272,7 +278,7 @@ export const PublishingAccordion = ({
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
               endIcon={<CloseIcon />}
               loadingPosition="end"
-              onClick={() => updatePendingPublishingRequest('Closed')}
+              onClick={() => ticketMutation.mutate({ status: 'Closed' })}
               loading={isLoading === LoadingState.RejectPublishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('registration.public_page.reject_publish_request')}

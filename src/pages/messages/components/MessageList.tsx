@@ -1,12 +1,10 @@
 import { Box, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Message } from '../../../types/publication_types/ticket.types';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { fetchUser } from '../../../api/roleApi';
 import { getFullName } from '../../../utils/user-helpers';
-import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface MessageListProps {
@@ -37,13 +35,12 @@ interface MessageItemProps {
 }
 
 const MessageItem = ({ message }: MessageItemProps) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const senderQuery = useQuery({
     queryKey: [message.sender],
     queryFn: () => fetchUser(message.sender),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
 
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
@@ -55,7 +52,9 @@ const MessageItem = ({ message }: MessageItemProps) => {
           {senderQuery.isLoading ? (
             <Skeleton sx={{ width: '8rem' }} />
           ) : (
-            <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>{senderName}</b>
+            <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>
+              {senderName ? senderName : <i>{t('common.unknown')}</i>}
+            </b>
           )}
         </span>
         <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>

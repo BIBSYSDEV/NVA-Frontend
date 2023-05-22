@@ -10,14 +10,21 @@ import { MessageForm } from '../../../components/MessageForm';
 import { createTicket } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { TicketAssignee } from './TicketAssignee';
 
 interface SupportAccordionProps {
   registration: Registration;
   supportTicket: Ticket | null;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
+  refetchRegistrationAndTickets: () => void;
 }
 
-export const SupportAccordion = ({ registration, supportTicket, addMessage }: SupportAccordionProps) => {
+export const SupportAccordion = ({
+  registration,
+  supportTicket,
+  addMessage,
+  refetchRegistrationAndTickets,
+}: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -46,7 +53,12 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage }: Su
         {t('my_page.messages.types.GeneralSupportCase')}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <MessageList messages={supportTicket?.messages ?? []} />
+        {supportTicket && (
+          <>
+            <TicketAssignee ticket={supportTicket} refetchRegistrationAndTickets={refetchRegistrationAndTickets} />
+            {supportTicket.messages.length > 0 && <MessageList messages={supportTicket.messages} />}
+          </>
+        )}
         <MessageForm
           confirmAction={async (message) => {
             if (message) {

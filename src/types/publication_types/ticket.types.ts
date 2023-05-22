@@ -34,11 +34,13 @@ interface BaseTicket {
 }
 
 export interface Ticket extends BaseTicket {
+  assignee?: string;
   owner: string;
   messages: Message[];
 }
 
 export interface ExpandedTicket extends BaseTicket {
+  assignee?: Person;
   owner: Person;
   messages: ExpandedMessage[];
 }

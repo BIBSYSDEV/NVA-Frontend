@@ -28,7 +28,7 @@
     "@aws-amplify/auth": "^5.3.6",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
-    "@fontsource/roboto": "^4.5.8",
+    "@fontsource/roboto": "^5.0.0",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "5.0.0-alpha.130",
     "@mui/material": "^5.13.1",
@@ -60,7 +60,7 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.10.4",
+    "@cypress/code-coverage": "^3.10.5",
     "@cypress/instrument-cra": "^1.4.0",
     "@tanstack/eslint-plugin-query": "^4.29.8",
     "@tanstack/react-query-devtools": "^4.29.7",
