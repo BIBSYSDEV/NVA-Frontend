@@ -15,15 +15,15 @@ import { SupportAccordion } from './action_accordions/SupportAccordion';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
-  refetchRegistrationAndTickets: () => void;
-  isLoadingData: boolean;
+  refetchData: () => void;
+  isLoadingData?: boolean;
 }
 
 export const ActionPanelContent = ({
   registration,
   tickets,
-  refetchRegistrationAndTickets,
-  isLoadingData,
+  refetchData,
+  isLoadingData = false,
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ export const ActionPanelContent = ({
       dispatch(setNotification({ message: t('feedback.error.send_message'), variant: 'error' }));
     } else if (isSuccessStatus(addMessageResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.send_message'), variant: 'success' }));
-      refetchRegistrationAndTickets();
+      refetchData();
       return true;
     }
   };
@@ -51,7 +51,7 @@ export const ActionPanelContent = ({
     <BackgroundDiv>
       <ErrorBoundary>
         <PublishingAccordion
-          refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+          refetchRegistrationAndTickets={refetchData}
           isLoadingData={isLoadingData}
           registration={registration}
           publishingRequestTicket={currentPublishingRequestTicket}
@@ -64,7 +64,7 @@ export const ActionPanelContent = ({
           doiRequestTicket?.status !== 'Completed' &&
           customer?.doiAgent.username && (
             <DoiRequestAccordion
-              refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+              refetchRegistrationAndTickets={refetchData}
               isLoadingData={isLoadingData}
               registration={registration}
               doiRequestTicket={doiRequestTicket}
@@ -78,7 +78,7 @@ export const ActionPanelContent = ({
           registration={registration}
           supportTicket={currentSupportTicket}
           addMessage={addMessage}
-          refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+          refetchData={refetchData}
         />
       </ErrorBoundary>
     </BackgroundDiv>

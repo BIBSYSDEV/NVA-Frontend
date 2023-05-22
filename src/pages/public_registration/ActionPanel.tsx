@@ -29,7 +29,7 @@ export const ActionPanel = ({
       </StyledPaperHeader>
       <ActionPanelContent
         tickets={tickets}
-        refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+        refetchData={refetchRegistrationAndTickets}
         isLoadingData={isLoadingData}
         registration={registration}
       />
