@@ -25,7 +25,7 @@ import { getLanguageString } from '../../utils/translation-helpers';
 import { TicketList } from './components/TicketList';
 import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { StyledPageWithSideMenu, SidePanel, SideNavHeader } from '../../components/PageWithSideMenu';
+import { StyledPageWithSideMenu, SidePanel, SideNavHeader, LinkButton } from '../../components/PageWithSideMenu';
 import { setNotification } from '../../redux/notificationSlice';
 import { fetchTickets } from '../../api/searchApi';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
@@ -44,12 +44,19 @@ const StyledCheckbox = styled(Checkbox)({
   paddingBottom: '0.2rem',
 });
 
+const StyledFormGroup = styled(FormGroup)({
+  margin: '1rem',
+});
+
 const TasksPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const user = useSelector((store: RootState) => store.user);
+  const { user } = useSelector((store: RootState) => store);
+  const nvaUsername = user?.nvaUsername ?? '';
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+
+  const [selectedMyAssignedTickets, setSelectedMyAssignedTickets] = useState(false);
 
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
@@ -59,13 +66,13 @@ const TasksPage = () => {
 
   const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
     New: true,
-    Pending: false,
+    Pending: true,
     Completed: false,
     Closed: false,
   });
 
   const [institutionUser] = useFetch<InstitutionUser>({
-    url: user?.nvaUsername ? `${RoleApiPath.Users}/${user.nvaUsername}` : '',
+    url: nvaUsername ? `${RoleApiPath.Users}/${nvaUsername}` : '',
     errorMessage: t('feedback.error.get_roles'),
     withAuthentication: true,
   });
@@ -90,7 +97,9 @@ const TasksPage = () => {
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const query = [typeQuery, statusQuery].filter(Boolean).join(' AND ');
+  const assigneeQuery = selectedMyAssignedTickets && nvaUsername ? `(assignee.username:${nvaUsername})` : '';
+
+  const query = [typeQuery, statusQuery, assigneeQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
     queryKey: ['tickets', rowsPerPage, page, query],
@@ -141,7 +150,22 @@ const TasksPage = () => {
           accordionPath={UrlPathTemplate.Tasks}
           defaultPath={UrlPathTemplate.Tasks}
           dataTestId={dataTestId.tasksPage.userDialogAccordion}>
-          <FormGroup sx={{ m: '1rem', gap: '0.5rem', width: 'fit-content' }}>
+          <StyledFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
+            <LinkButton
+              isSelected={selectedMyAssignedTickets}
+              onClick={() => setSelectedMyAssignedTickets(true)}
+              sx={{ justifyContent: 'center' }}>
+              {t('tasks.my_user_dialogs')}
+            </LinkButton>
+            <LinkButton
+              isSelected={!selectedMyAssignedTickets}
+              onClick={() => setSelectedMyAssignedTickets(false)}
+              sx={{ justifyContent: 'center' }}>
+              {t('tasks.all_user_dialogs')}
+            </LinkButton>
+          </StyledFormGroup>
+
+          <StyledFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
             <SelectableButton
               showCheckbox
               isSelected={selectedTypes.publishingRequest}
@@ -175,9 +199,9 @@ const TasksPage = () => {
                 ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                 : t('my_page.messages.types.GeneralSupportCase')}
             </SelectableButton>
-          </FormGroup>
+          </StyledFormGroup>
 
-          <FormGroup sx={{ m: '1rem' }}>
+          <StyledFormGroup>
             <FormControlLabel
               checked={selectedStatuses.New}
               control={
@@ -230,7 +254,7 @@ const TasksPage = () => {
                   : t('my_page.messages.ticket_types.Closed')
               }
             />
-          </FormGroup>
+          </StyledFormGroup>
         </NavigationListAccordion>
       </SidePanel>
 
