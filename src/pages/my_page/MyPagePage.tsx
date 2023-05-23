@@ -137,6 +137,7 @@ const MyPagePage = () => {
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
             <FormGroup sx={{ m: '1rem', gap: '0.5rem', width: 'fit-content' }}>
               <SelectableButton
+                data-testid={dataTestId.myPage.publishingRequestSelectButton}
                 showCheckbox
                 isSelected={selectedTypes.publishingRequest}
                 color="publishingRequest"
@@ -149,6 +150,7 @@ const MyPagePage = () => {
               </SelectableButton>
 
               <SelectableButton
+                data-testid={dataTestId.myPage.doiRequestSelectButton}
                 showCheckbox
                 isSelected={selectedTypes.doiRequest}
                 color="doiRequest"
@@ -159,6 +161,7 @@ const MyPagePage = () => {
               </SelectableButton>
 
               <SelectableButton
+                data-testid={dataTestId.myPage.generalSupportCaseSelectButton}
                 showCheckbox
                 isSelected={selectedTypes.generalSupportCase}
                 color="generalSupportCase"
