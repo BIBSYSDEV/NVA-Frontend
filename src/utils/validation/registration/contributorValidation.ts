@@ -5,6 +5,7 @@ import i18n from '../../../translations/i18n';
 import {
   isArtistic,
   isDegree,
+  isExhibitionContent,
   isMediaContribution,
   isOtherRegistration,
   isPresentation,
@@ -48,6 +49,7 @@ export const contributorsValidationSchema = Yup.array().when(
       isArtistic(publicationInstanceType) ||
       isMediaContribution(publicationInstanceType) ||
       isOtherRegistration(publicationInstanceType) ||
+      isExhibitionContent(publicationInstanceType) ||
       publicationInstanceType === ResearchDataType.Dataset
     ) {
       return Yup.array()

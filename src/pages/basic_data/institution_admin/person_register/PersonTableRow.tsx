@@ -47,6 +47,7 @@ import { personDataValidationSchema } from '../../../../utils/validation/basic_d
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { fetchPositions } from '../../../../api/cristinApi';
 
 export interface PersonData {
   employments: Employment[];
@@ -69,7 +70,13 @@ export const PersonTableRow = ({
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const positionsQuery = useQuery({ enabled: false, queryKey: ['positions', true] });
+  const positionsQuery = useQuery({
+    queryKey: ['positions', true],
+    queryFn: () => fetchPositions(true),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_positions'), variant: 'error' })),
+    staleTime: Infinity,
+    cacheTime: 900_000, // 15 minutes
+  });
   const hasFetchedPositions = positionsQuery.isFetched;
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -301,28 +308,23 @@ export const PersonTableRow = ({
                                 <DatePicker
                                   disabled={isSubmitting}
                                   label={t('common.end_date')}
-                                  PopperProps={{
-                                    'aria-label': t('common.end_date'),
-                                  }}
-                                  value={field.value ? field.value : null}
+                                  value={field.value ? new Date(field.value) : null}
                                   onChange={(date) => setFieldValue(field.name, date ?? '')}
-                                  inputFormat="dd.MM.yyyy"
+                                  format="dd.MM.yyyy"
                                   views={['year', 'month', 'day']}
-                                  mask="__.__.____"
                                   minDate={
                                     values.employments[employmentIndex].startDate
                                       ? new Date(values.employments[employmentIndex].startDate)
                                       : undefined
                                   }
-                                  renderInput={(params) => (
-                                    <TextField
-                                      {...params}
-                                      data-testid={dataTestId.basicData.personAdmin.endDate}
-                                      variant="filled"
-                                      error={touched && !!error}
-                                      helperText={<ErrorMessage name={field.name} />}
-                                    />
-                                  )}
+                                  slotProps={{
+                                    textField: {
+                                      inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
+                                      variant: 'filled',
+                                      error: touched && !!error,
+                                      helperText: <ErrorMessage name={field.name} />,
+                                    },
+                                  }}
                                 />
                               )}
                             </Field>

@@ -20,6 +20,7 @@ import {
   CristinApiPath,
   CustomerInstitutionApiPath,
   FileApiPath,
+  OrcidApiPath,
   PublicationChannelApiPath,
   PublicationsApiPath,
   RoleApiPath,
@@ -48,7 +49,6 @@ export const interceptRequestsOnMock = () => {
 
   //MY MESSAGES
   mock.onGet(new RegExp(SearchApiPath.Tickets)).reply(200, mockSearchTasks);
-  mock.onGet(new RegExp(PublicationsApiPath.Tickets)).reply(200, mockTicketCollection);
   mock.onGet(new RegExp('/tickets')).reply(200, mockTicketCollection);
 
   // PUBLICATION CHANNEL
@@ -80,6 +80,7 @@ export const interceptRequestsOnMock = () => {
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
+  mock.onPost(new RegExp(OrcidApiPath.Orcid)).reply(201);
 
   // Person Registry
   mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinPersonSearch);

@@ -612,7 +612,7 @@ const PublicMusicScoreDialogContent = ({ musicScore }: { musicScore: MusicScore 
       <Typography variant="h3">{t('common.publisher')}</Typography>
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_ismn')}</Typography>
-      <Typography paragraph>{ismn.formatted ?? ismn.value}</Typography>
+      <Typography paragraph>{ismn?.formatted ?? ismn?.value ?? '-'}</Typography>
     </DialogContent>
   );
 };
@@ -640,9 +640,9 @@ const PublicAudioVisualPublicationDialogContent = ({
       <Typography variant="h3">{t('common.publisher')}</Typography>
       <Typography paragraph>{publisher.name}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.catalogue_number')}</Typography>
-      <Typography paragraph>{catalogueNumber}</Typography>
+      <Typography paragraph>{catalogueNumber ? catalogueNumber : '-'}</Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.music_score_isrc')}</Typography>
-      {isrc.value && <Typography paragraph>{hyphenateIsrc(isrc.value)}</Typography>}
+      <Typography paragraph>{isrc?.value ? hyphenateIsrc(isrc?.value) : '-'}</Typography>
       <Typography variant="h3" id="tracks-heading">
         {t('registration.resource_type.artistic.content_track')}
       </Typography>

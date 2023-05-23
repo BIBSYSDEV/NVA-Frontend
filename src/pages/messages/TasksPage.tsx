@@ -10,6 +10,7 @@ import {
   FormGroup,
   TablePagination,
   Typography,
+  styled,
 } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
@@ -21,20 +22,27 @@ import { RootState } from '../../redux/store';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { TicketAccordionList } from './TicketAccordionList';
+import { TicketList } from './components/TicketList';
 import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { StyledPageWithSideMenu, SidePanel, SideNavHeader } from '../../components/PageWithSideMenu';
 import { setNotification } from '../../redux/notificationSlice';
 import { fetchTickets } from '../../api/searchApi';
-import { TicketStatus } from '../../types/publication_types/messages.types';
+import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { SelectableButton } from '../../components/SelectableButton';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 const rowsPerPageOptions = [10, 20, 50];
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
 };
+
+const StyledCheckbox = styled(Checkbox)({
+  paddingTop: '0.2rem',
+  paddingBottom: '0.2rem',
+});
 
 const TasksPage = () => {
   const dispatch = useDispatch();
@@ -50,7 +58,8 @@ const TasksPage = () => {
   });
 
   const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
-    Pending: true,
+    New: true,
+    Pending: false,
     Completed: false,
     Closed: false,
   });
@@ -96,6 +105,7 @@ const TasksPage = () => {
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
 
   const statusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
+  const newCount = statusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
   const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
@@ -125,85 +135,103 @@ const TasksPage = () => {
         </Box>
 
         <Divider />
+        <NavigationListAccordion
+          title={t('tasks.user_dialog')}
+          startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} fontSize="small" />}
+          accordionPath={UrlPathTemplate.Tasks}
+          defaultPath={UrlPathTemplate.Tasks}
+          dataTestId={dataTestId.tasksPage.userDialogAccordion}>
+          <FormGroup sx={{ m: '1rem', gap: '0.5rem', width: 'fit-content' }}>
+            <SelectableButton
+              showCheckbox
+              isSelected={selectedTypes.publishingRequest}
+              color="publishingRequest"
+              onClick={() =>
+                setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
+              }>
+              {selectedTypes.publishingRequest && publishingRequestCount
+                ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
+                : t('my_page.messages.types.PublishingRequest')}
+            </SelectableButton>
 
-        <FormGroup sx={{ m: '1rem', gap: '0.5rem', width: 'fit-content' }}>
-          <SelectableButton
-            showCheckbox
-            isSelected={selectedTypes.publishingRequest}
-            color="publishingRequest"
-            onClick={() => setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })}>
-            {selectedTypes.publishingRequest && publishingRequestCount
-              ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
-              : t('my_page.messages.types.PublishingRequest')}
-          </SelectableButton>
+            <SelectableButton
+              showCheckbox
+              isSelected={selectedTypes.doiRequest}
+              color="doiRequest"
+              onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
+              {selectedTypes.doiRequest && doiRequestCount
+                ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
+                : t('my_page.messages.types.DoiRequest')}
+            </SelectableButton>
 
-          <SelectableButton
-            showCheckbox
-            isSelected={selectedTypes.doiRequest}
-            color="doiRequest"
-            onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
-            {selectedTypes.doiRequest && doiRequestCount
-              ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
-              : t('my_page.messages.types.DoiRequest')}
-          </SelectableButton>
+            <SelectableButton
+              showCheckbox
+              isSelected={selectedTypes.generalSupportCase}
+              color="generalSupportCase"
+              onClick={() =>
+                setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
+              }>
+              {selectedTypes.generalSupportCase && generalSupportCaseCount
+                ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
+                : t('my_page.messages.types.GeneralSupportCase')}
+            </SelectableButton>
+          </FormGroup>
 
-          <SelectableButton
-            showCheckbox
-            isSelected={selectedTypes.generalSupportCase}
-            color="generalSupportCase"
-            onClick={() =>
-              setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
-            }>
-            {selectedTypes.generalSupportCase && generalSupportCaseCount
-              ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
-              : t('my_page.messages.types.GeneralSupportCase')}
-          </SelectableButton>
-        </FormGroup>
-
-        <FormGroup sx={{ m: '1rem' }}>
-          <FormControlLabel
-            checked={selectedStatuses.Pending}
-            control={
-              <Checkbox
-                sx={{ py: '0.2rem' }}
-                onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
-              />
-            }
-            label={
-              selectedStatuses.Pending && pendingCount
-                ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
-                : t('my_page.messages.ticket_types.Pending')
-            }
-          />
-          <FormControlLabel
-            checked={selectedStatuses.Completed}
-            control={
-              <Checkbox
-                sx={{ py: '0.2rem' }}
-                onChange={() => setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })}
-              />
-            }
-            label={
-              selectedStatuses.Completed && completedCount
-                ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
-                : t('my_page.messages.ticket_types.Completed')
-            }
-          />
-          <FormControlLabel
-            checked={selectedStatuses.Closed}
-            control={
-              <Checkbox
-                sx={{ py: '0.2rem' }}
-                onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
-              />
-            }
-            label={
-              selectedStatuses.Closed && closedCount
-                ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
-                : t('my_page.messages.ticket_types.Closed')
-            }
-          />
-        </FormGroup>
+          <FormGroup sx={{ m: '1rem' }}>
+            <FormControlLabel
+              checked={selectedStatuses.New}
+              control={
+                <StyledCheckbox
+                  onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
+                />
+              }
+              label={
+                selectedStatuses.New && newCount
+                  ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
+                  : t('my_page.messages.ticket_types.New')
+              }
+            />
+            <FormControlLabel
+              checked={selectedStatuses.Pending}
+              control={
+                <StyledCheckbox
+                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
+                />
+              }
+              label={
+                selectedStatuses.Pending && pendingCount
+                  ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
+                  : t('my_page.messages.ticket_types.Pending')
+              }
+            />
+            <FormControlLabel
+              checked={selectedStatuses.Completed}
+              control={
+                <StyledCheckbox
+                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })}
+                />
+              }
+              label={
+                selectedStatuses.Completed && completedCount
+                  ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
+                  : t('my_page.messages.ticket_types.Completed')
+              }
+            />
+            <FormControlLabel
+              checked={selectedStatuses.Closed}
+              control={
+                <StyledCheckbox
+                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
+                />
+              }
+              label={
+                selectedStatuses.Closed && closedCount
+                  ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
+                  : t('my_page.messages.ticket_types.Closed')
+              }
+            />
+          </FormGroup>
+        </NavigationListAccordion>
       </SidePanel>
 
       <section>
@@ -211,7 +239,7 @@ const TasksPage = () => {
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <>
-            <TicketAccordionList tickets={tickets} />
+            <TicketList tickets={tickets} />
             <TablePagination
               aria-live="polite"
               data-testid={dataTestId.startPage.searchPagination}

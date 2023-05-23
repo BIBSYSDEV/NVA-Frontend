@@ -13,6 +13,22 @@ export const mockProject: CristinProject = {
   created: {
     sourceShortName: 'NVA',
   },
+  creator: {
+    type: 'ProjectCreator',
+    identity: {
+      type: 'Person',
+      id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
+      firstName: 'Bob',
+      lastName: 'Boffaloe',
+    },
+    affiliation: {
+      id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
+      type: 'Organization',
+      labels: {
+        nb: 'Jamaica',
+      },
+    },
+  },
   funding: [],
   academicSummary: {},
   popularScientificSummary: {},
@@ -69,7 +85,7 @@ export const mockProject: CristinProject = {
     {
       type: 'ProjectParticipant',
       identity: {
-        id: 'https://api.dev.nva.aws.unit.no/cristin/person/325305',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
         type: 'Person',
         firstName: 'Peder',
         lastName: 'Pedersen',
@@ -101,6 +117,22 @@ const mockProjects: CristinProject[] = [
     ],
     created: {
       sourceShortName: 'NVA',
+    },
+    creator: {
+      type: 'ProjectCreator',
+      identity: {
+        type: 'Person',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
+        firstName: 'Bob',
+        lastName: 'Boffaloe',
+      },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'Jamaica',
+        },
+      },
     },
     funding: [],
     academicSummary: {},
@@ -156,6 +188,22 @@ const mockProjects: CristinProject[] = [
     created: {
       sourceShortName: 'NVA',
     },
+    creator: {
+      type: 'ProjectCreator',
+      identity: {
+        type: 'Person',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
+        firstName: 'Bob',
+        lastName: 'Boffaloe',
+      },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'Jamaica',
+        },
+      },
+    },
     funding: [],
     academicSummary: {},
     popularScientificSummary: {},
@@ -209,6 +257,22 @@ const mockProjects: CristinProject[] = [
     ],
     created: {
       sourceShortName: 'NVA',
+    },
+    creator: {
+      type: 'ProjectCreator',
+      identity: {
+        type: 'Person',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
+        firstName: 'Bob',
+        lastName: 'Boffaloe',
+      },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'Jamaica',
+        },
+      },
     },
     funding: [],
     academicSummary: {},
@@ -295,6 +359,22 @@ const mockProjects: CristinProject[] = [
     ],
     created: {
       sourceShortName: 'NVA',
+    },
+    creator: {
+      type: 'ProjectCreator',
+      identity: {
+        type: 'Person',
+        id: 'https://api.dev.nva.aws.unit.no/cristin/person/1',
+        firstName: 'Bob',
+        lastName: 'Boffaloe',
+      },
+      affiliation: {
+        id: 'https://api.dev.nva.aws.unit.no/cristin/organization/1.0.0.0',
+        type: 'Organization',
+        labels: {
+          nb: 'Jamaica',
+        },
+      },
     },
     funding: [],
     academicSummary: {},
