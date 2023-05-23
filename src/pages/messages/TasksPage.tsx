@@ -38,8 +38,9 @@ const rowsPerPageOptions = [10, 20, 50];
 type SelectedStatusState = {
   [key in Exclude<TicketStatus, 'New'>]: boolean;
 };
+const newStatus: TicketStatus = 'New';
 
-type SearchType = 'new' | 'current-user' | 'all';
+type SearchMode = 'new' | 'current-user' | 'all';
 
 const StyledCheckbox = styled(Checkbox)({
   paddingTop: '0.2rem',
@@ -63,7 +64,7 @@ const TasksPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
-  const [searchType, setSearchType] = useState<SearchType>('new');
+  const [searchMode, setSearchMode] = useState<SearchMode>('new');
 
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
@@ -99,18 +100,15 @@ const TasksPage = () => {
     .map(([key]) => key);
 
   const statusQuery =
-    searchType === 'new'
-      ? '(status:New)'
+    searchMode === 'new'
+      ? `(status:${newStatus})`
       : selectedStatusesArray.length > 0
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const assigneeQuery = searchType === 'current-user' && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
+  const assigneeQuery = searchMode === 'current-user' && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
 
-  const query =
-    searchType === 'new'
-      ? [typeQuery, statusQuery].filter(Boolean).join(' AND ')
-      : [typeQuery, statusQuery, assigneeQuery].filter(Boolean).join(' AND ');
+  const query = [typeQuery, statusQuery, assigneeQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
     queryKey: ['tickets', rowsPerPage, page, query],
@@ -125,7 +123,6 @@ const TasksPage = () => {
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
 
   const statusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
-  const newCount = statusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
   const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
@@ -162,15 +159,15 @@ const TasksPage = () => {
           defaultPath={UrlPathTemplate.Tasks}
           dataTestId={dataTestId.tasksPage.userDialogAccordion}>
           <StyledFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
-            <StyledSearchTypeButton isSelected={searchType === 'new'} onClick={() => setSearchType('new')}>
-              {newCount ? `${t('tasks.new_user_dialogs')} (${newCount})` : t('tasks.new_user_dialogs')}
+            <StyledSearchTypeButton isSelected={searchMode === 'new'} onClick={() => setSearchMode('new')}>
+              {t('tasks.new_user_dialogs')}
             </StyledSearchTypeButton>
             <StyledSearchTypeButton
-              isSelected={searchType === 'current-user'}
-              onClick={() => setSearchType('current-user')}>
+              isSelected={searchMode === 'current-user'}
+              onClick={() => setSearchMode('current-user')}>
               {t('tasks.my_user_dialogs')}
             </StyledSearchTypeButton>
-            <StyledSearchTypeButton isSelected={searchType === 'all'} onClick={() => setSearchType('all')}>
+            <StyledSearchTypeButton isSelected={searchMode === 'all'} onClick={() => setSearchMode('all')}>
               {t('tasks.all_user_dialogs')}
             </StyledSearchTypeButton>
           </StyledFormGroup>
@@ -214,7 +211,7 @@ const TasksPage = () => {
           <StyledFormGroup>
             <FormControlLabel
               checked={selectedStatuses.Pending}
-              disabled={searchType === 'new'}
+              disabled={searchMode === 'new'}
               control={
                 <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
@@ -228,7 +225,7 @@ const TasksPage = () => {
             />
             <FormControlLabel
               checked={selectedStatuses.Completed}
-              disabled={searchType === 'new'}
+              disabled={searchMode === 'new'}
               control={
                 <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })}
@@ -242,7 +239,7 @@ const TasksPage = () => {
             />
             <FormControlLabel
               checked={selectedStatuses.Closed}
-              disabled={searchType === 'new'}
+              disabled={searchMode === 'new'}
               control={
                 <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
