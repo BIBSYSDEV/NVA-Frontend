@@ -50,6 +50,11 @@ const StyledFormGroup = styled(FormGroup)({
   margin: '1rem',
 });
 
+const StyledSearchTypeButton = styled(LinkButton)({
+  justifyContent: 'center',
+  borderRadius: '1.5rem',
+});
+
 const TasksPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -157,28 +162,17 @@ const TasksPage = () => {
           defaultPath={UrlPathTemplate.Tasks}
           dataTestId={dataTestId.tasksPage.userDialogAccordion}>
           <StyledFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
-            <LinkButton
-              isSelected={searchType === 'new'}
-              onClick={() => {
-                setSearchType('new');
-              }}
-              sx={{ justifyContent: 'center' }}>
+            <StyledSearchTypeButton isSelected={searchType === 'new'} onClick={() => setSearchType('new')}>
               {newCount ? `${t('tasks.new_user_dialogs')} (${newCount})` : t('tasks.new_user_dialogs')}
-            </LinkButton>
-            <LinkButton
+            </StyledSearchTypeButton>
+            <StyledSearchTypeButton
               isSelected={searchType === 'current-user'}
-              onClick={() => {
-                setSearchType('current-user');
-              }}
-              sx={{ justifyContent: 'center' }}>
+              onClick={() => setSearchType('current-user')}>
               {t('tasks.my_user_dialogs')}
-            </LinkButton>
-            <LinkButton
-              isSelected={searchType === 'all'}
-              onClick={() => setSearchType('all')}
-              sx={{ justifyContent: 'center' }}>
+            </StyledSearchTypeButton>
+            <StyledSearchTypeButton isSelected={searchType === 'all'} onClick={() => setSearchType('all')}>
               {t('tasks.all_user_dialogs')}
-            </LinkButton>
+            </StyledSearchTypeButton>
           </StyledFormGroup>
 
           <StyledFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
