@@ -82,7 +82,8 @@
       "sector_values": {
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)"
+        "UHI": "Universitet og høyskoler (UH)",
+        "ABM": "Arkiv, Bibliotek og Museum"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -109,6 +110,7 @@
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
     "all": "Alle",
+    "assignee": "Saksbehandler",
     "cancel": "Avbryt",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
@@ -143,6 +145,7 @@
     "next": "Neste",
     "no": "Nei",
     "no_hits": "Ingen treff",
+    "none": "Ingen",
     "not_decided": "Ikke bestemt",
     "number_short": "Nr.",
     "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
@@ -192,24 +195,22 @@
     "start_date": "Startdato",
     "start_page": "Startside",
     "status": "Status",
-    "support": "Brukerstøtte",
     "tasks": "Oppgaver",
     "title": "Tittel",
     "type": "Type",
+    "unknown": "Ukjent",
     "update": "Oppdater",
     "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
+    "x_days_one": "{{count}} dag",
+    "x_days_other": "{{count}} dager",
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
     "year": "År",
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -295,7 +296,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "curators": {
@@ -387,6 +392,7 @@
       "reserve_doi": "Reservasjon av DOI feilet",
       "search": "Søk feilet",
       "send_message": "Kunne ikke sende melding",
+      "storing_orcid_credentials": "Kunne ikke lagre orcid-data",
       "update_customer": "Kunne ikke oppdatere institusjon",
       "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
       "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
@@ -397,6 +403,7 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
+      "update_ticket_assignee": "Kunne ikke sette saksbehandler",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "success": {
@@ -480,17 +487,22 @@
   },
   "my_page": {
     "messages": {
-      "go_to_registration": "Gå til registrering",
+      "doi_closed": "DOI avvist",
+      "doi_completed": "DOI tildelt",
+      "doi_pending": "Venter på DOI-tildeling",
+      "files_published": "Fil(er) publisert",
+      "files_rejected": "Fil(er) avvist",
       "messages": "Meldinger",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
         "Closed": "Lukket",
         "Completed": "Ferdig",
+        "New": "Ny",
         "Pending": "Pågår"
       },
       "types": {
         "DoiRequest": "DOI-forespørsel",
-        "GeneralSupportCase": "Brukerstøtte",
+        "GeneralSupportCase": "Kuratorstøtte",
         "PublishingRequest": "Publiseringsforespørsel"
       }
     },
@@ -976,6 +988,7 @@
       "verify_affiliation": "Bekreft tilknytning",
       "verify_person": "Verifiser person"
     },
+    "curator_support": "Kuratorstøtte",
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1021,6 +1034,7 @@
       "files_are_not_published": "Filer publiseres ikke",
       "files_awaits_approval_one": "{{count}} fil og valgt lisens venter på å bli verifisert",
       "files_awaits_approval_other": "{{count}} filer og valgte lisenser venter på å bli verifisert",
+      "files_awaits_approval_unknown": "Venter på verifisering av fil(er)",
       "files_count": "Filer ({{count}})",
       "find_journal_in_channel_register": "Se informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
@@ -1074,6 +1088,7 @@
       "reserve_doi": "Reserver en DOI",
       "reserved_doi": "Reservert DOI",
       "tasks_panel": {
+        "assign_ticket": "Ta sak",
         "files_will_soon_be_published": "Filene vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
         "has_doi_request": "Registreringen har en DOI-forespørsel til behandling for kurator.",
         "has_rejected_doi_request": "Registreringen har en avslått DOI-forespørsel.",
@@ -1277,7 +1292,7 @@
           "Streaming": "Strømming",
           "Vinyl": "LP/EP"
         },
-        "music_score_ensemble": "Ensemble",
+        "music_score_ensemble": "Besetning",
         "music_score_ismn": "ISMN",
         "music_score_isrc": "ISRC",
         "music_score_movements": "Satser",
@@ -1431,7 +1446,7 @@
           "contains_sensitive_data": "Datasettet inneholder andre sensitive eller konfidensielle data?*",
           "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger, bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, etc.",
           "dialog_title": "For å legge til forskningsdata må du først avklare om",
-          "further_info": "Når du trykker JA eller er usikker så må du sende melding til brukerstøtte der din kurator avklarer videre prosess for å publisere datasettet."
+          "further_info": "Når du trykker JA eller er usikker så må du sende melding til kuratorstøtte der din kurator avklarer videre prosess for å publisere datasettet."
         },
         "add_link": "Legg til lenke",
         "external_link": "Ekstern lenke",
@@ -1471,9 +1486,9 @@
       "DRAFT_FOR_DELETION": "Slettet",
       "NEW": "Ny",
       "PUBLISHED": "Publisert",
-      "PUBLISHED_METADATA": "Publisert metadata"
+      "PUBLISHED_METADATA": "Metadata publisert"
     },
-    "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
+    "support_description": "Når du ber om kuratorstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
     "year_published": "Publiseringsår"
   },
   "search": {
@@ -1501,6 +1516,7 @@
   },
   "tasks": {
     "limited_to": "Avgrenset til: \"{{name}}\"",
-    "tasks": "Oppgaver"
+    "tasks": "Oppgaver",
+    "user_dialog": "Brukerdialog"
   }
 }

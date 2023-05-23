@@ -63,11 +63,6 @@ const validationSchema = Yup.object<YupShape<MusicScore>>({
         i18n.t('feedback.validation.has_invalid_format', {
           field: i18n.t('registration.resource_type.artistic.music_score_ismn'),
         })
-      )
-      .required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('registration.resource_type.artistic.music_score_ismn'),
-        })
       ),
   }),
 });
@@ -86,7 +81,9 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
         initialValues={musicScore ?? emptyMusicScore}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          onSubmit(values);
+          const { ismn, ...rest } = values;
+          const formattedValues: MusicScore = ismn?.value ? { ...rest, ismn: { ...ismn, type: 'Ismn' } } : rest;
+          onSubmit(formattedValues);
           closeModal();
         }}>
         {({ isSubmitting }: FormikProps<MusicScore>) => (
@@ -159,7 +156,6 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.artistic.music_score_ismn')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.scoreIsmn}
