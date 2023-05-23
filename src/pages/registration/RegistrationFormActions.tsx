@@ -112,7 +112,7 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
           size="small"
           data-testid={dataTestId.registrationWizard.formActions.openSupportButton}
           onClick={toggleSupportModal}>
-          {t('registration.curator_support')}
+          {t('my_page.messages.types.GeneralSupportCase')}
         </Button>
         {!isLastTab ? (
           <Box
@@ -158,11 +158,13 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
       </Box>
 
       <Modal
+        maxWidth="md"
+        fullWidth
         open={openSupportModal}
         onClose={toggleSupportModal}
         headingText={t('my_page.messages.types.GeneralSupportCase')}
         dataTestId={dataTestId.registrationWizard.formActions.supportModal}>
-        <SupportModalContent closeModal={toggleSupportModal} registrationId={values.id} />
+        <SupportModalContent closeModal={toggleSupportModal} registration={values} />
       </Modal>
     </>
   );
