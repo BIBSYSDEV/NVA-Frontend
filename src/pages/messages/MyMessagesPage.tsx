@@ -1,12 +1,12 @@
+import { Dispatch, SetStateAction } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { UseQueryResult } from '@tanstack/react-query';
+import { TablePagination } from '@mui/material';
 import { TicketList } from './components/TicketList';
 import { ExpandedTicket } from '../../types/publication_types/ticket.types';
 import { SearchResponse } from '../../types/common.types';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { TablePagination } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface MyMessagesPageProps {
@@ -29,7 +29,6 @@ export const MyMessagesPage = ({ ticketsQuery, rowsPerPage, setRowsPerPage, page
       <Helmet>
         <title>{t('my_page.messages.messages')}</title>
       </Helmet>
-
       <section>
         {ticketsQuery.isLoading ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
