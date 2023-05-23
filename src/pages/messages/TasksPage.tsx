@@ -6,6 +6,7 @@ import {
   Checkbox,
   CircularProgress,
   Divider,
+  FormControl,
   FormControlLabel,
   FormGroup,
   TablePagination,
@@ -209,48 +210,49 @@ const TasksPage = () => {
           </StyledFormGroup>
 
           <StyledFormGroup>
-            <FormControlLabel
-              checked={selectedStatuses.Pending}
-              disabled={searchMode === 'new'}
-              control={
-                <StyledCheckbox
-                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
-                />
-              }
-              label={
-                selectedStatuses.Pending && pendingCount
-                  ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
-                  : t('my_page.messages.ticket_types.Pending')
-              }
-            />
-            <FormControlLabel
-              checked={selectedStatuses.Completed}
-              disabled={searchMode === 'new'}
-              control={
-                <StyledCheckbox
-                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })}
-                />
-              }
-              label={
-                selectedStatuses.Completed && completedCount
-                  ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
-                  : t('my_page.messages.ticket_types.Completed')
-              }
-            />
-            <FormControlLabel
-              checked={selectedStatuses.Closed}
-              disabled={searchMode === 'new'}
-              control={
-                <StyledCheckbox
-                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
-                />
-              }
-              label={
-                selectedStatuses.Closed && closedCount
-                  ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
-                  : t('my_page.messages.ticket_types.Closed')
-              }
-            />
+            <FormControl disabled={searchMode === 'new'}>
+              <FormControlLabel
+                checked={selectedStatuses.Pending}
+                control={
+                  <StyledCheckbox
+                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
+                  />
+                }
+                label={
+                  selectedStatuses.Pending && pendingCount
+                    ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
+                    : t('my_page.messages.ticket_types.Pending')
+                }
+              />
+              <FormControlLabel
+                checked={selectedStatuses.Completed}
+                control={
+                  <StyledCheckbox
+                    onChange={() =>
+                      setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })
+                    }
+                  />
+                }
+                label={
+                  selectedStatuses.Completed && completedCount
+                    ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
+                    : t('my_page.messages.ticket_types.Completed')
+                }
+              />
+              <FormControlLabel
+                checked={selectedStatuses.Closed}
+                control={
+                  <StyledCheckbox
+                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
+                  />
+                }
+                label={
+                  selectedStatuses.Closed && closedCount
+                    ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
+                    : t('my_page.messages.ticket_types.Closed')
+                }
+              />
+            </FormControl>
           </StyledFormGroup>
         </NavigationListAccordion>
       </SidePanel>
