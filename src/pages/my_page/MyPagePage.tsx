@@ -89,6 +89,10 @@ const MyPagePage = () => {
   const query = [typeQuery, statusQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
+    meta: {
+      page: page,
+      rowsPerPage: rowsPerPage,
+    },
     queryKey: ['tickets', rowsPerPage, page, query],
     queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, query),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
@@ -323,7 +327,13 @@ const MyPagePage = () => {
       <ErrorBoundary>
         <Switch>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages}>
-            <MyMessagesPage ticketsQuery={ticketsQuery} />
+            <MyMessagesPage
+              ticketsQuery={ticketsQuery}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+              page={page}
+              setPage={setPage}
+            />
           </CreatorRoute>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
