@@ -36,8 +36,10 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 const rowsPerPageOptions = [10, 20, 50];
 
 type SelectedStatusState = {
-  [key in TicketStatus]: boolean;
+  [key in Exclude<TicketStatus, 'New'>]: boolean;
 };
+
+type SearchType = 'new' | 'current-user' | 'all';
 
 const StyledCheckbox = styled(Checkbox)({
   paddingTop: '0.2rem',
@@ -56,7 +58,7 @@ const TasksPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
 
-  const [selectedMyAssignedTickets, setSelectedMyAssignedTickets] = useState(false);
+  const [searchType, setSearchType] = useState<SearchType>('new');
 
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
@@ -65,7 +67,6 @@ const TasksPage = () => {
   });
 
   const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
-    New: true,
     Pending: true,
     Completed: false,
     Closed: false,
@@ -93,13 +94,18 @@ const TasksPage = () => {
     .map(([key]) => key);
 
   const statusQuery =
-    selectedStatusesArray.length > 0
+    searchType === 'new'
+      ? '(status:New)'
+      : selectedStatusesArray.length > 0
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const assigneeQuery = selectedMyAssignedTickets && nvaUsername ? `(assignee.username:${nvaUsername})` : '';
+  const assigneeQuery = searchType === 'current-user' && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
 
-  const query = [typeQuery, statusQuery, assigneeQuery].filter(Boolean).join(' AND ');
+  const query =
+    searchType === 'new'
+      ? [typeQuery, statusQuery].filter(Boolean).join(' AND ')
+      : [typeQuery, statusQuery, assigneeQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
     queryKey: ['tickets', rowsPerPage, page, query],
@@ -152,14 +158,24 @@ const TasksPage = () => {
           dataTestId={dataTestId.tasksPage.userDialogAccordion}>
           <StyledFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
             <LinkButton
-              isSelected={selectedMyAssignedTickets}
-              onClick={() => setSelectedMyAssignedTickets(true)}
+              isSelected={searchType === 'new'}
+              onClick={() => {
+                setSearchType('new');
+              }}
+              sx={{ justifyContent: 'center' }}>
+              {newCount ? `${t('tasks.new_user_dialogs')} (${newCount})` : t('tasks.new_user_dialogs')}
+            </LinkButton>
+            <LinkButton
+              isSelected={searchType === 'current-user'}
+              onClick={() => {
+                setSearchType('current-user');
+              }}
               sx={{ justifyContent: 'center' }}>
               {t('tasks.my_user_dialogs')}
             </LinkButton>
             <LinkButton
-              isSelected={!selectedMyAssignedTickets}
-              onClick={() => setSelectedMyAssignedTickets(false)}
+              isSelected={searchType === 'all'}
+              onClick={() => setSearchType('all')}
               sx={{ justifyContent: 'center' }}>
               {t('tasks.all_user_dialogs')}
             </LinkButton>
@@ -203,20 +219,8 @@ const TasksPage = () => {
 
           <StyledFormGroup>
             <FormControlLabel
-              checked={selectedStatuses.New}
-              control={
-                <StyledCheckbox
-                  onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
-                />
-              }
-              label={
-                selectedStatuses.New && newCount
-                  ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
-                  : t('my_page.messages.ticket_types.New')
-              }
-            />
-            <FormControlLabel
               checked={selectedStatuses.Pending}
+              disabled={searchType === 'new'}
               control={
                 <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
@@ -230,6 +234,7 @@ const TasksPage = () => {
             />
             <FormControlLabel
               checked={selectedStatuses.Completed}
+              disabled={searchType === 'new'}
               control={
                 <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })}
@@ -243,6 +248,7 @@ const TasksPage = () => {
             />
             <FormControlLabel
               checked={selectedStatuses.Closed}
+              disabled={searchType === 'new'}
               control={
                 <StyledCheckbox
                   onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
