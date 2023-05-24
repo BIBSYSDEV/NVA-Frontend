@@ -152,7 +152,7 @@ export const Header = () => {
                   isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
                   to={UrlPathTemplate.Tasks}
                   startIcon={<AssignmentIcon />}>
-                  {t('tasks.tasks')}
+                  {t('common.tasks')}
                 </MenuButton>
               )}
               {user && (

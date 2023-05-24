@@ -37,7 +37,7 @@ import { TicketAssignee } from './TicketAssignee';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
-  refetchRegistrationAndTickets: () => void;
+  refetchData: () => void;
   doiRequestTicket: Ticket | null;
   userIsCurator: boolean;
   isLoadingData: boolean;
@@ -55,7 +55,7 @@ enum LoadingState {
 export const DoiRequestAccordion = ({
   registration,
   doiRequestTicket,
-  refetchRegistrationAndTickets,
+  refetchData,
   userIsCurator,
   isLoadingData,
   addMessage,
@@ -81,7 +81,7 @@ export const DoiRequestAccordion = ({
     onSettled: () => setIsLoading(LoadingState.None),
     onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.doi_request_updated'), variant: 'success' }));
-      refetchRegistrationAndTickets();
+      refetchData();
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_doi_request'), variant: 'error' })),
   });
@@ -101,7 +101,7 @@ export const DoiRequestAccordion = ({
       setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createDraftDoiResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.reserve_doi'), variant: 'success' }));
-      refetchRegistrationAndTickets();
+      refetchData();
     }
   };
 
@@ -130,7 +130,7 @@ export const DoiRequestAccordion = ({
           variant: 'success',
         })
       );
-      refetchRegistrationAndTickets();
+      refetchData();
     }
   };
 
@@ -150,9 +150,7 @@ export const DoiRequestAccordion = ({
         {t('common.doi_long')}
       </AccordionSummary>
       <AccordionDetails>
-        {doiRequestTicket && (
-          <TicketAssignee ticket={doiRequestTicket} refetchRegistrationAndTickets={refetchRegistrationAndTickets} />
-        )}
+        {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
 
         {!doiRequestTicket && registration.doi && (
           <Typography paragraph>{t('registration.public_page.tasks_panel.has_reserved_doi')}</Typography>
@@ -172,7 +170,7 @@ export const DoiRequestAccordion = ({
                 </Typography>
                 <LoadingButton
                   variant="outlined"
-                  onClick={refetchRegistrationAndTickets}
+                  onClick={refetchData}
                   loading={isLoadingData}
                   startIcon={<RefreshIcon />}
                   data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
