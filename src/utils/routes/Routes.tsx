@@ -1,7 +1,20 @@
-import { RouteProps } from 'react-router-dom';
+import { Route, RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { PrivateRoute } from './PrivateRoute';
+import { Forbidden } from '../../pages/errorpages/Forbidden';
+
+interface PrivateRouteProps extends RouteProps {
+  isAuthorized: boolean;
+}
+
+export const PrivateRoute = ({ isAuthorized, ...rest }: PrivateRouteProps) =>
+  isAuthorized ? (
+    <Route {...rest} />
+  ) : (
+    <Route {...rest}>
+      <Forbidden />
+    </Route>
+  );
 
 export const LoggedInRoute = ({ component, ...rest }: RouteProps) => {
   const { user } = useSelector((store: RootState) => store);

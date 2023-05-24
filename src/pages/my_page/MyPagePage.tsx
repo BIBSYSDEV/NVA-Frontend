@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
-import { Checkbox, Divider, FormControlLabel, FormGroup, styled } from '@mui/material';
+import { Divider, FormControlLabel, FormGroup } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
@@ -36,17 +36,13 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { fetchTickets } from '../../api/searchApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
+import { StyledStatusCheckbox } from '../../components/styled/Wrappers';
 
 const rowsPerPageOptions = [10, 20, 50];
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
 };
-
-const StyledCheckbox = styled(Checkbox)({
-  paddingTop: '0.2rem',
-  paddingBottom: '0.2rem',
-});
 
 const MyPagePage = () => {
   const dispatch = useDispatch();
@@ -65,7 +61,7 @@ const MyPagePage = () => {
 
   const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
     New: true,
-    Pending: false,
+    Pending: true,
     Completed: false,
     Closed: false,
   });
@@ -174,7 +170,7 @@ const MyPagePage = () => {
               <FormControlLabel
                 checked={selectedStatuses.New}
                 control={
-                  <StyledCheckbox
+                  <StyledStatusCheckbox
                     onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
                   />
                 }
@@ -187,7 +183,7 @@ const MyPagePage = () => {
               <FormControlLabel
                 checked={selectedStatuses.Pending}
                 control={
-                  <StyledCheckbox
+                  <StyledStatusCheckbox
                     onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
                   />
                 }
@@ -200,7 +196,7 @@ const MyPagePage = () => {
               <FormControlLabel
                 checked={selectedStatuses.Completed}
                 control={
-                  <StyledCheckbox
+                  <StyledStatusCheckbox
                     onChange={() =>
                       setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })
                     }
@@ -215,7 +211,7 @@ const MyPagePage = () => {
               <FormControlLabel
                 checked={selectedStatuses.Closed}
                 control={
-                  <StyledCheckbox
+                  <StyledStatusCheckbox
                     onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
                   />
                 }
