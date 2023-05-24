@@ -29,7 +29,7 @@ export const mockImportCandidate: ImportCandidate = {
     id: '12345',
   },
   publicationInstance: {
-    type: JournalType.AcademicArticle,
+    type: JournalType.Corrigendum,
     pages: {
       type: 'Range',
       begin: '',

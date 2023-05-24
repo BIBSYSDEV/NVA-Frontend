@@ -1,15 +1,13 @@
 import { Grid, Link as MuiLink, ListItem, ListItemText, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
 import { ImportCandidate } from '../../../../types/importCandidate';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 
 interface CentralImportResultItemProps {
   importCandidate: ImportCandidate;
-  publication: Registration;
 }
 
 export const CentralImportResultItem = ({ importCandidate }: CentralImportResultItemProps) => {
@@ -18,9 +16,11 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
   const verifiedContributorCount = importCandidate.totalVerifiedContributors;
   const contributorsCount = importCandidate.totalContributors;
 
-  const allContributorInstitutions = importCandidate.organizations;
+  const allContributorInstitutions = importCandidate.organizations?.map(
+    (affiliation) => affiliation.labels && getLanguageString(affiliation.labels)
+  );
   const institutions = allContributorInstitutions ? [...new Set(allContributorInstitutions.flat())] : [];
-  const publicationInstanceType = importCandidate?.publicationInstance;
+  const publicationInstanceType = importCandidate?.publicationInstance.type;
 
   return (
     <ListItem divider data-testid={`${dataTestId.basicData.centralImport.resultItem}-${importCandidate.id}`}>
@@ -42,7 +42,12 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
             {importCandidate.mainTitle && (
               <Typography
                 gutterBottom
-                sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic', wordBreak: 'break-word' }}>
+                sx={{
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  fontStyle: 'italic',
+                  wordBreak: 'break-word',
+                }}>
                 <MuiLink component={Link} to={`${getDuplicateCheckPagePath(importCandidate.id)}`}>
                   {importCandidate.mainTitle}
                 </MuiLink>

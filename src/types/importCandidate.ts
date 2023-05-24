@@ -1,5 +1,15 @@
 import { Organization } from './organization.types';
-import { PublicationInstanceType } from './registration.types';
+import { JournalPublicationInstance } from './publication_types/journalRegistration.types';
+import { DegreePublicationInstance } from './publication_types/degreeRegistration.types';
+import { BookPublicationInstance } from './publication_types/bookRegistration.types';
+import { ReportPublicationInstance } from './publication_types/reportRegistration.types';
+import { ChapterPublicationInstance } from './publication_types/chapterRegistration.types';
+import { PresentationPublicationInstance } from './publication_types/presentationRegistration.types';
+import { ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
+import { MediaContributionPeriodicalPublicationInstance } from './publication_types/mediaContributionRegistration.types';
+import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
+import { MapPublicationInstance } from './publication_types/otherRegistration.types';
+import { ExhibitionPublicationInstance } from './publication_types/exhibitionContent.types';
 
 export enum ImportStatus {
   Imported = 'IMPORTED',
@@ -29,5 +39,17 @@ export interface ImportCandidate {
   organizations: Organization[];
   publisher: Publisher;
   journal: Journal;
-  publicationInstance: PublicationInstanceType;
+  publicationInstance: PublicationInstance;
 }
+export type PublicationInstance =
+  | JournalPublicationInstance
+  | DegreePublicationInstance
+  | BookPublicationInstance
+  | ReportPublicationInstance
+  | ChapterPublicationInstance
+  | PresentationPublicationInstance
+  | ArtisticPublicationInstance
+  | MediaContributionPeriodicalPublicationInstance
+  | ResearchDataPublicationInstance
+  | MapPublicationInstance
+  | ExhibitionPublicationInstance;
