@@ -114,38 +114,34 @@ export const LiteraryArtsPerformanceModal = ({
                 {({ field, form: { setFieldTouched, setFieldValue } }: FieldProps<RegistrationDate>) => (
                   <DatePicker
                     label={t('common.date')}
-                    PopperProps={{
-                      'aria-label': t('common.date'),
-                    }}
                     value={field.value.year ? new Date(+field.value.year, +field.value.month, +field.value.day) : null}
-                    onChange={(date, keyboardInput) => {
+                    onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      const isTriggeredByInvalidKeyboardInput = keyboardInput && keyboardInput.length !== 10;
-                      if (date && !isTriggeredByInvalidKeyboardInput) {
+                      if (date) {
                         setFieldValue('publicationDate', {
                           ...emptyRegistrationDate,
                           year: date.getFullYear(),
                           month: date.getMonth(),
                           day: date.getDate(),
                         });
-                      } else if (!date) {
+                      } else {
                         setFieldValue('publicationDate', emptyRegistrationDate);
                       }
                     }}
-                    inputFormat="dd.MM.yyyy"
+                    format="dd.MM.yyyy"
                     views={['year', 'month', 'day']}
-                    mask="__.__.____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
-                        variant="filled"
-                        required
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched.publicationDate && !!errors.publicationDate?.year}
-                        helperText={touched.publicationDate && errors.publicationDate?.year}
-                      />
-                    )}
+                    slotProps={{
+                      textField: {
+                        inputProps: {
+                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                        },
+                        onBlur: () => !touched && setFieldTouched(field.name),
+                        variant: 'filled',
+                        required: true,
+                        error: touched.publicationDate && !!errors.publicationDate?.year,
+                        helperText: touched.publicationDate && errors.publicationDate?.year,
+                      },
+                    }}
                   />
                 )}
               </Field>

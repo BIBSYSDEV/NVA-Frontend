@@ -12,10 +12,10 @@ import { setNotification } from '../../../redux/notificationSlice';
 
 interface TicketAssigneeProps {
   ticket: Ticket;
-  refetchRegistrationAndTickets: () => void;
+  refetchTickets: () => void;
 }
 
-export const TicketAssignee = ({ ticket, refetchRegistrationAndTickets }: TicketAssigneeProps) => {
+export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { user } = useSelector((store: RootState) => store);
@@ -30,7 +30,7 @@ export const TicketAssignee = ({ ticket, refetchRegistrationAndTickets }: Ticket
 
   const ticketMutation = useMutation({
     mutationFn: user?.nvaUsername ? () => updateTicket(ticket.id, { assignee: user.nvaUsername }) : undefined,
-    onSuccess: refetchRegistrationAndTickets,
+    onSuccess: refetchTickets,
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
   });
 

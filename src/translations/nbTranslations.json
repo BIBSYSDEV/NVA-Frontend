@@ -988,7 +988,6 @@
       "verify_affiliation": "Bekreft tilknytning",
       "verify_person": "Verifiser person"
     },
-    "curator_support": "Kuratorstøtte",
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1488,7 +1487,6 @@
       "PUBLISHED": "Publisert",
       "PUBLISHED_METADATA": "Metadata publisert"
     },
-    "support_description": "Når du ber om kuratorstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
     "year_published": "Publiseringsår"
   },
   "search": {
