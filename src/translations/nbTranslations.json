@@ -1513,8 +1513,10 @@
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
   },
   "tasks": {
+    "all_user_dialogs": "Alle brukerdialoger",
     "limited_to": "Avgrenset til: \"{{name}}\"",
-    "tasks": "Oppgaver",
+    "my_user_dialogs": "Mine brukerdialoger",
+    "new_user_dialogs": "Nye brukerdialoger",
     "user_dialog": "Brukerdialog"
   }
 }

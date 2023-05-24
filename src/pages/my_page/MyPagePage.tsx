@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
-import { Divider, FormControlLabel, FormGroup } from '@mui/material';
+import { Divider, FormControlLabel } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
@@ -36,7 +36,7 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { fetchTickets } from '../../api/searchApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
-import { StyledStatusCheckbox } from '../../components/styled/Wrappers';
+import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 
 const rowsPerPageOptions = [10, 20, 50];
 
@@ -127,9 +127,9 @@ const MyPagePage = () => {
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
-            <FormGroup sx={{ m: '1rem', gap: '0.5rem', width: 'fit-content' }}>
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
               <SelectableButton
-                data-testid={dataTestId.myPage.publishingRequestSelectButton}
+                data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 showCheckbox
                 isSelected={selectedTypes.publishingRequest}
                 color="publishingRequest"
@@ -142,7 +142,7 @@ const MyPagePage = () => {
               </SelectableButton>
 
               <SelectableButton
-                data-testid={dataTestId.myPage.doiRequestSelectButton}
+                data-testid={dataTestId.tasksPage.typeSearch.doiButton}
                 showCheckbox
                 isSelected={selectedTypes.doiRequest}
                 color="doiRequest"
@@ -153,7 +153,7 @@ const MyPagePage = () => {
               </SelectableButton>
 
               <SelectableButton
-                data-testid={dataTestId.myPage.generalSupportCaseSelectButton}
+                data-testid={dataTestId.tasksPage.typeSearch.supportButton}
                 showCheckbox
                 isSelected={selectedTypes.generalSupportCase}
                 color="generalSupportCase"
@@ -164,10 +164,11 @@ const MyPagePage = () => {
                   ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                   : t('my_page.messages.types.GeneralSupportCase')}
               </SelectableButton>
-            </FormGroup>
+            </StyledTicketSearchFormGroup>
 
-            <FormGroup sx={{ m: '1rem' }}>
+            <StyledTicketSearchFormGroup>
               <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
                 checked={selectedStatuses.New}
                 control={
                   <StyledStatusCheckbox
@@ -181,6 +182,7 @@ const MyPagePage = () => {
                 }
               />
               <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
                 checked={selectedStatuses.Pending}
                 control={
                   <StyledStatusCheckbox
@@ -194,6 +196,7 @@ const MyPagePage = () => {
                 }
               />
               <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
                 checked={selectedStatuses.Completed}
                 control={
                   <StyledStatusCheckbox
@@ -209,6 +212,7 @@ const MyPagePage = () => {
                 }
               />
               <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
                 checked={selectedStatuses.Closed}
                 control={
                   <StyledStatusCheckbox
@@ -221,7 +225,7 @@ const MyPagePage = () => {
                     : t('my_page.messages.ticket_types.Closed')
                 }
               />
-            </FormGroup>
+            </StyledTicketSearchFormGroup>
           </NavigationListAccordion>,
 
           <NavigationListAccordion

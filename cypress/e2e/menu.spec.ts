@@ -55,9 +55,9 @@ describe('Menu', () => {
 
     cy.setUserRolesInRedux([RoleName.Creator]);
     cy.get(`[data-testid=${dataTestId.myPage.messagesAccordion}]`).click();
-    cy.get(`[data-testid=${dataTestId.myPage.publishingRequestSelectButton}]`).should('be.visible');
-    cy.get(`[data-testid=${dataTestId.myPage.doiRequestSelectButton}]`).should('be.visible');
-    cy.get(`[data-testid=${dataTestId.myPage.generalSupportCaseSelectButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.publishingButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.doiButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.supportButton}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.myPage.registrationsAccordion}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.myPage.researchProfileAccordion}]`).click();
