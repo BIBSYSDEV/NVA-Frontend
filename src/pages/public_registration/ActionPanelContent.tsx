@@ -24,7 +24,7 @@ export const ActionPanelContent = ({
   tickets,
   refetchData,
   isLoadingData = false,
-  canCreateTickets = true,
+  canCreateTickets,
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
