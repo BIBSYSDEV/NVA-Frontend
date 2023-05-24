@@ -7,7 +7,6 @@ import {
   Divider,
   FormControl,
   FormControlLabel,
-  FormGroup,
   TablePagination,
   Typography,
   styled,
@@ -46,6 +45,7 @@ type SearchMode = 'new' | 'current-user' | 'all';
 const StyledSearchModeButton = styled(LinkButton)({
   justifyContent: 'center',
   borderRadius: '1.5rem',
+  textTransform: 'none',
 });
 
 const TasksPage = () => {
@@ -151,21 +151,29 @@ const TasksPage = () => {
           defaultPath={UrlPathTemplate.Tasks}
           dataTestId={dataTestId.tasksPage.userDialogAccordion}>
           <StyledTicketSearchFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
-            <StyledSearchModeButton isSelected={searchMode === 'new'} onClick={() => setSearchMode('new')}>
+            <StyledSearchModeButton
+              data-testid={dataTestId.tasksPage.searchMode.newUserDialogsButton}
+              isSelected={searchMode === 'new'}
+              onClick={() => setSearchMode('new')}>
               {t('tasks.new_user_dialogs')}
             </StyledSearchModeButton>
             <StyledSearchModeButton
+              data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
               isSelected={searchMode === 'current-user'}
               onClick={() => setSearchMode('current-user')}>
               {t('tasks.my_user_dialogs')}
             </StyledSearchModeButton>
-            <StyledSearchModeButton isSelected={searchMode === 'all'} onClick={() => setSearchMode('all')}>
+            <StyledSearchModeButton
+              data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
+              isSelected={searchMode === 'all'}
+              onClick={() => setSearchMode('all')}>
               {t('tasks.all_user_dialogs')}
             </StyledSearchModeButton>
           </StyledTicketSearchFormGroup>
 
           <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
             <SelectableButton
+              data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
               showCheckbox
               isSelected={selectedTypes.publishingRequest}
               color="publishingRequest"
@@ -178,6 +186,7 @@ const TasksPage = () => {
             </SelectableButton>
 
             <SelectableButton
+              data-testid={dataTestId.tasksPage.typeSearch.doiButton}
               showCheckbox
               isSelected={selectedTypes.doiRequest}
               color="doiRequest"
@@ -188,6 +197,7 @@ const TasksPage = () => {
             </SelectableButton>
 
             <SelectableButton
+              data-testid={dataTestId.tasksPage.typeSearch.supportButton}
               showCheckbox
               isSelected={selectedTypes.generalSupportCase}
               color="generalSupportCase"
@@ -203,6 +213,7 @@ const TasksPage = () => {
           <StyledTicketSearchFormGroup>
             <FormControl disabled={searchMode === 'new'}>
               <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
                 checked={selectedStatuses.Pending}
                 control={
                   <StyledStatusCheckbox
@@ -216,6 +227,7 @@ const TasksPage = () => {
                 }
               />
               <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
                 checked={selectedStatuses.Completed}
                 control={
                   <StyledStatusCheckbox
@@ -231,6 +243,7 @@ const TasksPage = () => {
                 }
               />
               <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
                 checked={selectedStatuses.Closed}
                 control={
                   <StyledStatusCheckbox

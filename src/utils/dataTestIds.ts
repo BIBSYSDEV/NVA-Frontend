@@ -415,8 +415,6 @@ export const dataTestId = {
   },
   myPage: {
     createProjectButton: 'create-project-button',
-    doiRequestSelectButton: 'doi-request-select-button',
-    generalSupportCaseSelectButton: 'general-support-case-select-button',
     messagesAccordion: 'messages-accordion',
     myProfileLink: 'my-profile-link',
     myProfile: {
@@ -437,12 +435,27 @@ export const dataTestId = {
     myResultsLink: "my-publications'link",
     newRegistrationLink: 'new-registration-link',
     projectRegistrationsAccordion: 'project-registrations-accordion',
-    publishingRequestSelectButton: 'publishing-request-select-button',
     registrationsAccordion: 'registrations-accordion',
     researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
     userDialogAccordion: 'user-dialog-accordion',
+    searchMode: {
+      allUserDialogsButton: 'all-user-dialogs-button',
+      myUserDialogsButton: 'my-user-dialogs-button',
+      newUserDialogsButton: 'new-user-dialogs-button',
+    },
+    statusSearch: {
+      closedCheckbox: 'new-status-checkbox',
+      completedCheckbox: 'new-status-checkbox',
+      newCheckbox: 'new-status-checkbox',
+      pendingCheckbox: 'pending-status-checkbox',
+    },
+    typeSearch: {
+      doiButton: 'doi-button',
+      publishingButton: 'publishing-request-button',
+      supportButton: 'support-button',
+    },
   },
 };
