@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import {
   Box,
-  Checkbox,
   CircularProgress,
   Divider,
   FormControl,
@@ -33,6 +32,7 @@ import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { SelectableButton } from '../../components/SelectableButton';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 
 const rowsPerPageOptions = [10, 20, 50];
 
@@ -43,16 +43,7 @@ const newStatus: TicketStatus = 'New';
 
 type SearchMode = 'new' | 'current-user' | 'all';
 
-const StyledCheckbox = styled(Checkbox)({
-  paddingTop: '0.2rem',
-  paddingBottom: '0.2rem',
-});
-
-const StyledFormGroup = styled(FormGroup)({
-  margin: '1rem',
-});
-
-const StyledSearchTypeButton = styled(LinkButton)({
+const StyledSearchModeButton = styled(LinkButton)({
   justifyContent: 'center',
   borderRadius: '1.5rem',
 });
@@ -159,21 +150,21 @@ const TasksPage = () => {
           accordionPath={UrlPathTemplate.Tasks}
           defaultPath={UrlPathTemplate.Tasks}
           dataTestId={dataTestId.tasksPage.userDialogAccordion}>
-          <StyledFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
-            <StyledSearchTypeButton isSelected={searchMode === 'new'} onClick={() => setSearchMode('new')}>
+          <StyledTicketSearchFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
+            <StyledSearchModeButton isSelected={searchMode === 'new'} onClick={() => setSearchMode('new')}>
               {t('tasks.new_user_dialogs')}
-            </StyledSearchTypeButton>
-            <StyledSearchTypeButton
+            </StyledSearchModeButton>
+            <StyledSearchModeButton
               isSelected={searchMode === 'current-user'}
               onClick={() => setSearchMode('current-user')}>
               {t('tasks.my_user_dialogs')}
-            </StyledSearchTypeButton>
-            <StyledSearchTypeButton isSelected={searchMode === 'all'} onClick={() => setSearchMode('all')}>
+            </StyledSearchModeButton>
+            <StyledSearchModeButton isSelected={searchMode === 'all'} onClick={() => setSearchMode('all')}>
               {t('tasks.all_user_dialogs')}
-            </StyledSearchTypeButton>
-          </StyledFormGroup>
+            </StyledSearchModeButton>
+          </StyledTicketSearchFormGroup>
 
-          <StyledFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
+          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
             <SelectableButton
               showCheckbox
               isSelected={selectedTypes.publishingRequest}
@@ -207,14 +198,14 @@ const TasksPage = () => {
                 ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                 : t('my_page.messages.types.GeneralSupportCase')}
             </SelectableButton>
-          </StyledFormGroup>
+          </StyledTicketSearchFormGroup>
 
-          <StyledFormGroup>
+          <StyledTicketSearchFormGroup>
             <FormControl disabled={searchMode === 'new'}>
               <FormControlLabel
                 checked={selectedStatuses.Pending}
                 control={
-                  <StyledCheckbox
+                  <StyledStatusCheckbox
                     onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
                   />
                 }
@@ -227,7 +218,7 @@ const TasksPage = () => {
               <FormControlLabel
                 checked={selectedStatuses.Completed}
                 control={
-                  <StyledCheckbox
+                  <StyledStatusCheckbox
                     onChange={() =>
                       setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })
                     }
@@ -242,7 +233,7 @@ const TasksPage = () => {
               <FormControlLabel
                 checked={selectedStatuses.Closed}
                 control={
-                  <StyledCheckbox
+                  <StyledStatusCheckbox
                     onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
                   />
                 }
@@ -253,7 +244,7 @@ const TasksPage = () => {
                 }
               />
             </FormControl>
-          </StyledFormGroup>
+          </StyledTicketSearchFormGroup>
         </NavigationListAccordion>
       </SidePanel>
 

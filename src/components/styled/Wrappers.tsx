@@ -1,4 +1,4 @@
-import { Box, Checkbox, ListItem } from '@mui/material';
+import { Box, Checkbox, FormGroup, ListItem } from '@mui/material';
 import { styled } from '@mui/system';
 
 export const StyledRightAlignedWrapper = styled(Box)({
@@ -68,4 +68,8 @@ export const SearchListItem = styled(ListItem)(({ theme }) => ({
 export const StyledStatusCheckbox = styled(Checkbox)({
   paddingTop: '0.2rem',
   paddingBottom: '0.2rem',
+});
+
+export const StyledTicketSearchFormGroup = styled(FormGroup)({
+  margin: '1rem',
 });
