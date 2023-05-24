@@ -415,8 +415,9 @@ export const dataTestId = {
   },
   myPage: {
     createProjectButton: 'create-project-button',
+    doiRequestSelectButton: 'doi-request-select-button',
+    generalSupportCaseSelectButton: 'general-support-case-select-button',
     messagesAccordion: 'messages-accordion',
-    messagesLink: 'messages-link',
     myProfileLink: 'my-profile-link',
     myProfile: {
       cristinIdField: 'cristin-id-field',
@@ -436,6 +437,7 @@ export const dataTestId = {
     myResultsLink: "my-publications'link",
     newRegistrationLink: 'new-registration-link',
     projectRegistrationsAccordion: 'project-registrations-accordion',
+    publishingRequestSelectButton: 'publishing-request-select-button',
     registrationsAccordion: 'registrations-accordion',
     researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',
