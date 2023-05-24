@@ -16,6 +16,7 @@ interface ActionPanelContentProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
   refetchData: () => void;
   isLoadingData?: boolean;
+  canCreateTickets: boolean;
 }
 
 export const ActionPanelContent = ({
@@ -23,6 +24,7 @@ export const ActionPanelContent = ({
   tickets,
   refetchData,
   isLoadingData = false,
+  canCreateTickets = true,
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -48,30 +50,35 @@ export const ActionPanelContent = ({
 
   return (
     <>
-      <ErrorBoundary>
-        <PublishingAccordion
-          refetchData={refetchData}
-          isLoadingData={isLoadingData}
-          registration={registration}
-          publishingRequestTicket={currentPublishingRequestTicket}
-          userIsCurator={userIsCurator}
-          addMessage={addMessage}
-        />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        {!registration.entityDescription?.reference?.doi &&
-          doiRequestTicket?.status !== 'Completed' &&
-          customer?.doiAgent.username && (
-            <DoiRequestAccordion
-              refetchData={refetchData}
-              isLoadingData={isLoadingData}
-              registration={registration}
-              doiRequestTicket={doiRequestTicket}
-              userIsCurator={userIsCurator}
-              addMessage={addMessage}
-            />
-          )}
-      </ErrorBoundary>
+      {(canCreateTickets || publishingRequestTickets) && (
+        <ErrorBoundary>
+          <PublishingAccordion
+            refetchData={refetchData}
+            isLoadingData={isLoadingData}
+            registration={registration}
+            publishingRequestTicket={currentPublishingRequestTicket}
+            userIsCurator={userIsCurator}
+            addMessage={addMessage}
+          />
+        </ErrorBoundary>
+      )}
+      {(canCreateTickets || doiRequestTicket) && (
+        <ErrorBoundary>
+          {!registration.entityDescription?.reference?.doi &&
+            doiRequestTicket?.status !== 'Completed' &&
+            customer?.doiAgent.username && (
+              <DoiRequestAccordion
+                refetchData={refetchData}
+                isLoadingData={isLoadingData}
+                registration={registration}
+                doiRequestTicket={doiRequestTicket}
+                userIsCurator={userIsCurator}
+                addMessage={addMessage}
+              />
+            )}
+        </ErrorBoundary>
+      )}
+
       <ErrorBoundary>
         <SupportAccordion
           registration={registration}
