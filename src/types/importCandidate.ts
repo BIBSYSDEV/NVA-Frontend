@@ -41,6 +41,7 @@ export interface ImportCandidate {
   journal: Journal;
   publicationInstance: PublicationInstance;
 }
+
 export type PublicationInstance =
   | JournalPublicationInstance
   | DegreePublicationInstance
