@@ -1,7 +1,6 @@
 import { Divider, List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFetch } from '../../../../utils/hooks/useFetch';
-import { Registration } from '../../../../types/registration.types';
 import { SearchApiPath } from '../../../../api/apiPaths';
 import { SearchResponse } from '../../../../types/common.types';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
@@ -9,6 +8,7 @@ import { CentralImportResultItem } from './CentralImportResultItem';
 import { DescriptionFieldNames, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { DuplicateSearchFilters } from '../../../../types/duplicateSearchTypes';
+import { ImportCandidate } from '../../../../types/importCandidate';
 
 interface CentralImportDuplicateSearchProps {
   duplicateSearchFilters: DuplicateSearchFilters;
@@ -31,8 +31,8 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
 
   const searchQuery = queryArray.length > 0 ? `query=(${queryArray.join(' AND ')})` : '';
 
-  const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}?${searchQuery}&results=${maxHits}`,
+  const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<ImportCandidate>>({
+    url: `${SearchApiPath.ImportCandidates}?${searchQuery}&results=${maxHits}`,
     errorMessage: t('feedback.error.search'),
   });
 
@@ -52,8 +52,8 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
             </Typography>
             <Divider />
             <List>
-              {searchResults.hits.map((publication) => (
-                <CentralImportResultItem publication={publication} key={publication.identifier} />
+              {searchResults.hits.map((importCandidate) => (
+                <CentralImportResultItem importCandidate={importCandidate} key={importCandidate.id} />
               ))}
             </List>
           </>

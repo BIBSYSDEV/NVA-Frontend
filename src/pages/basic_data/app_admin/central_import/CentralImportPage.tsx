@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Divider, List, TablePagination, Typography } from '@mui/material';
 import { useFetch } from '../../../../utils/hooks/useFetch';
-import { Registration } from '../../../../types/registration.types';
 import { SearchApiPath } from '../../../../api/apiPaths';
 import { SearchResponse } from '../../../../types/common.types';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
@@ -12,6 +11,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { SearchParam } from '../../../../utils/searchHelpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
+import { ImportCandidate } from '../../../../types/importCandidate';
 
 export const CentralImportPage = () => {
   const { t } = useTranslation();
@@ -22,8 +22,8 @@ export const CentralImportPage = () => {
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
-  const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}?${params.toString()}`,
+  const [searchResults, isLoadingSearchResults] = useFetch<SearchResponse<ImportCandidate>>({
+    url: `${SearchApiPath.ImportCandidates}?${params.toString()}`,
     errorMessage: t('feedback.error.search'),
   });
 
@@ -33,10 +33,10 @@ export const CentralImportPage = () => {
     history.push({ search: params.toString() });
   };
 
-  const publications = searchResults?.hits ?? [];
+  const importCandidates = searchResults?.hits ?? [];
 
   useEffect(() => {
-    if (searchResults?.hits.some(({ entityDescription }) => stringIncludesMathJax(entityDescription?.mainTitle))) {
+    if (searchResults?.hits.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
       typesetMathJax();
     }
   }, [searchResults]);
@@ -52,11 +52,11 @@ export const CentralImportPage = () => {
             <Typography variant="subtitle1">{t('search.hits', { count: searchResults.size })}:</Typography>
             <Divider />
             <List>
-              {publications.map((publication) => (
-                <CentralImportResultItem publication={publication} key={publication.identifier} />
+              {importCandidates.map((publication) => (
+                <CentralImportResultItem importCandidate={publication} key={publication.id} />
               ))}
             </List>
-            {publications.length > 0 && (
+            {importCandidates.length > 0 && (
               <TablePagination
                 data-testid={dataTestId.basicData.centralImport.searchPagination}
                 rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
