@@ -495,10 +495,11 @@
       "messages": "Meldinger",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
-        "Closed": "Lukket",
+        "Closed": "Avvist",
         "Completed": "Ferdig",
         "New": "Ny",
-        "Pending": "Pågår"
+        "Pending": "Behandles",
+        "Registered": "Innmeldt"
       },
       "types": {
         "DoiRequest": "DOI-forespørsel",
