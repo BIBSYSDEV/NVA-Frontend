@@ -497,9 +497,8 @@
       "ticket_types": {
         "Closed": "Avvist",
         "Completed": "Ferdig",
-        "New": "Ny",
-        "Pending": "Behandles",
-        "Registered": "Innmeldt"
+        "New": "Innmeldt",
+        "Pending": "Behandles"
       },
       "types": {
         "DoiRequest": "DOI-forespørsel",

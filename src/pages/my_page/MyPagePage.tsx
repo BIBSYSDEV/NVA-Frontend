@@ -177,8 +177,8 @@ const MyPagePage = () => {
                 }
                 label={
                   selectedStatuses.New && newCount
-                    ? `${t('my_page.messages.ticket_types.Registered')} (${newCount})`
-                    : t('my_page.messages.ticket_types.Registered')
+                    ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
+                    : t('my_page.messages.ticket_types.New')
                 }
               />
               <FormControlLabel
