@@ -490,8 +490,10 @@
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
+      "doi_requested": "Bedt om DOI",
       "files_published": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
+      "general_support_pending": "Venter på oppfølging",
       "messages": "Meldinger",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {

@@ -13,9 +13,15 @@ export const DoiRequestMessagesColumn = ({ ticket }: DoiRequestMessagesColumnPro
   return (
     <StyledMessagesContainer>
       {ticket.status === 'New' || ticket.status === 'Pending' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-          <Typography>{t('my_page.messages.doi_pending')}</Typography>
-        </StyledStatusMessageBox>
+        <>
+          <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
+            <Typography>{t('my_page.messages.doi_requested')}</Typography>
+            <Typography>{new Date(ticket.createdDate).toLocaleDateString()}</Typography>
+          </StyledStatusMessageBox>
+          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+            <Typography>{t('my_page.messages.doi_pending')}</Typography>
+          </StyledStatusMessageBox>
+        </>
       ) : ticket.status === 'Completed' ? (
         <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
           <Typography>{t('my_page.messages.doi_completed')}</Typography>
