@@ -104,6 +104,7 @@ export const mainTheme = createTheme(
       },
       publishingRequest: {
         main: Color.publishingRequest,
+        light: '#FFF0D3',
       },
       doiRequest: {
         main: Color.DoiRequest,
