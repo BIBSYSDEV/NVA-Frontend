@@ -81,6 +81,7 @@ export const ActionPanelContent = ({
 
       <ErrorBoundary>
         <SupportAccordion
+          userIsCurator={userIsCurator}
           registration={registration}
           supportTicket={currentSupportTicket}
           addMessage={addMessage}

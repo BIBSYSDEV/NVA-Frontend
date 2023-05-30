@@ -7,7 +7,7 @@ import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
-import { createTicket } from '../../../api/registrationApi';
+import { createTicket, updateTicket } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { TicketAssignee } from './TicketAssignee';
@@ -15,11 +15,18 @@ import { TicketAssignee } from './TicketAssignee';
 interface SupportAccordionProps {
   registration: Registration;
   supportTicket: Ticket | null;
+  userIsCurator: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
   refetchData: () => void;
 }
 
-export const SupportAccordion = ({ registration, supportTicket, addMessage, refetchData }: SupportAccordionProps) => {
+export const SupportAccordion = ({
+  registration,
+  supportTicket,
+  userIsCurator,
+  addMessage,
+  refetchData,
+}: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -59,6 +66,9 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
             if (message) {
               if (supportTicket) {
                 await addMessage(supportTicket.id, message);
+                if (userIsCurator) {
+                  await updateTicket(supportTicket.id, { status: 'Completed' });
+                }
               } else {
                 await createSupportTicket(message);
               }
