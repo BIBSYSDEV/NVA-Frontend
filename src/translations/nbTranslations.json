@@ -1081,7 +1081,6 @@
       "published": "Publisert",
       "published_date": "Publisert: {{date}}",
       "publishing_request": "Publiseringsgodkjenning",
-      "publishment": "Publisering",
       "reject_publish_request": "Avvis publisering",
       "request_doi": "Be om en DOI",
       "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",

@@ -1,21 +1,12 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  MenuItem,
-  TextField,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Tooltip, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import WarningIcon from '@mui/icons-material/Warning';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
@@ -36,8 +27,6 @@ import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
 import { TicketAssignee } from './TicketAssignee';
 import { PublishingRequestMessagesColumn } from '../../messages/components/PublishingRequestMessagesColumn';
-import { ExpandedPublishingTicket } from '../../../types/publication_types/ticket.types';
-import { associatedArtifactIsFile } from '../../../utils/registration-helpers';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -55,8 +44,6 @@ enum LoadingState {
   None,
 }
 
-const registrationStatus = Object.values(RegistrationStatus);
-
 export const PublishingAccordion = ({
   publishingRequestTicket,
   registration,
@@ -70,7 +57,6 @@ export const PublishingAccordion = ({
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
-  const registrationFileCount = registration.associatedArtifacts.filter(associatedArtifactIsFile).length;
 
   const ticketMutation = useMutation({
     mutationFn: publishingRequestTicket
@@ -163,22 +149,7 @@ export const PublishingAccordion = ({
       elevation={3}
       defaultExpanded={isDraftRegistration || canHandlePublishingRequest || hasMismatchingPublishedStatus}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          {t('registration.public_page.publishment')}
-          <TextField
-            sx={{ minWidth: 'fit-content' }}
-            size="small"
-            variant="filled"
-            fullWidth
-            select
-            defaultValue={registration.status}>
-            {registrationStatus.map((status) => (
-              <MenuItem value={status} key={status}>
-                {t(`registration.status.${status}`)}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Box>
+        {t('registration.public_page.publishing_request')} - {t(`registration.status.${registration.status}`)}
         {!registrationIsValid && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
             <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
@@ -282,18 +253,16 @@ export const PublishingAccordion = ({
         {canHandlePublishingRequest && !hasMismatchingPublishedStatus && (
           <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
             <LoadingButton
-              sx={{ bgcolor: 'white' }}
-              variant="outlined"
+              variant="contained"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
-              startIcon={<AttachFileIcon />}
+              endIcon={<CheckIcon />}
               loadingPosition="end"
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-              {t('registration.public_page.approve_publish_request')}{' '}
-              {registrationFileCount > 0 ? `(${registrationFileCount})` : null}
+              {t('registration.public_page.approve_publish_request')}
             </LoadingButton>
-            {/* <LoadingButton
+            <LoadingButton
               variant="contained"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
               endIcon={<CloseIcon />}
@@ -302,7 +271,7 @@ export const PublishingAccordion = ({
               loading={isLoading === LoadingState.RejectPublishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('registration.public_page.reject_publish_request')}
-            </LoadingButton> */}
+            </LoadingButton>
           </Box>
         )}
 

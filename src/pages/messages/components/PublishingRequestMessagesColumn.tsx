@@ -49,7 +49,9 @@ export const PublishingRequestMessagesColumn = ({
             </StyledStatusMessageBox>
           )}
         </>
-      ) : null}
+      ) : (
+        'NO WORKFLOW'
+      )}
     </StyledMessagesContainer>
   );
 };
