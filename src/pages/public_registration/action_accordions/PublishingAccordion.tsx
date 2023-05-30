@@ -165,7 +165,13 @@ export const PublishingAccordion = ({
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           {t('registration.public_page.publishment')}
-          <TextField sx={{ minWidth: 'fit-content' }} variant="filled" fullWidth select>
+          <TextField
+            sx={{ minWidth: 'fit-content' }}
+            size="small"
+            variant="filled"
+            fullWidth
+            select
+            defaultValue={registration.status}>
             {registrationStatus.map((status) => (
               <MenuItem value={status} key={status}>
                 {t(`registration.status.${status}`)}
@@ -201,7 +207,7 @@ export const PublishingAccordion = ({
 
         {isPublishedRegistration && (
           <>
-            <PublishingRequestMessagesColumn ticket={publishingRequestTicket as unknown as ExpandedPublishingTicket} />
+            {publishingRequestTicket && <PublishingRequestMessagesColumn ticket={publishingRequestTicket} />}
             <Typography paragraph>
               {t('registration.public_page.published_date', {
                 date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
