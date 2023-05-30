@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
-import { ImportCandidate } from '../../../../types/importCandidate';
 import { getLanguageString } from '../../../../utils/translation-helpers';
+import { ImportCandidate } from '../../../../types/importCandidate.types';
 
 interface CentralImportResultItemProps {
   importCandidate: ImportCandidate;

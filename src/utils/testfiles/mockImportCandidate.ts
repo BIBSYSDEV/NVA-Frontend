@@ -1,4 +1,4 @@
-import { ImportCandidate, ImportStatus } from '../../types/importCandidate';
+import { ImportCandidate, ImportStatus } from '../../types/importCandidate.types';
 import { JournalType } from '../../types/publicationFieldNames';
 
 export const mockImportCandidate: ImportCandidate = {

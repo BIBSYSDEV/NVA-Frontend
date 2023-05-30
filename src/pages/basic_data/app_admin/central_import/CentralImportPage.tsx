@@ -8,8 +8,8 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { SearchParam } from '../../../../utils/searchHelpers';
 import { useQuery } from '@tanstack/react-query';
 import { fetchImportCandidates } from '../../../../api/searchApi';
-import { setNotification } from '../../../../redux/notificationSlice';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 
 export const CentralImportPage = () => {
   const { t } = useTranslation();
@@ -20,17 +20,10 @@ export const CentralImportPage = () => {
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
-  const dispatch = useDispatch();
   const importCandidateQuery = useQuery({
-    queryKey: ['importCandidates', []],
-    queryFn: () => fetchImportCandidates(),
-    onError: () =>
-      dispatch(
-        setNotification({
-          message: t('feedback.error.get_messages'),
-          variant: 'error',
-        })
-      ),
+    queryKey: ['importCandidates'],
+    queryFn: fetchImportCandidates,
+    meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
   const updatePath = (from: string, results: string) => {
@@ -38,6 +31,12 @@ export const CentralImportPage = () => {
     params.set(SearchParam.Results, results);
     history.push({ search: params.toString() });
   };
+
+  useEffect(() => {
+    if (importCandidateQuery.data?.hits.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
+      typesetMathJax();
+    }
+  }, [importCandidateQuery.data?.hits]);
 
   const searchResults = importCandidateQuery.data?.hits ?? [];
 
@@ -49,7 +48,7 @@ export const CentralImportPage = () => {
       ) : (
         searchResults && (
           <>
-            <Typography variant="subtitle1">{t('search.hits', { count: searchResults.length })}:</Typography>
+            <Typography variant="subtitle1">{t('search.hits', { count: importCandidateQuery.data?.size })}:</Typography>
             <Divider />
             <List>
               {searchResults.map((importCandidate) => (
@@ -61,7 +60,7 @@ export const CentralImportPage = () => {
                 data-testid={dataTestId.basicData.centralImport.searchPagination}
                 rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
                 component="div"
-                count={searchResults.length}
+                count={importCandidateQuery.data?.size ?? -1}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString(), rowsPerPage.toString())}

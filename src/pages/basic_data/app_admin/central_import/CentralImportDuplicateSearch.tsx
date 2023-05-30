@@ -7,7 +7,6 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { DuplicateSearchFilters } from '../../../../types/duplicateSearchTypes';
 import { useQuery } from '@tanstack/react-query';
 import { fetchImportCandidates } from '../../../../api/searchApi';
-import { setNotification } from '../../../../redux/notificationSlice';
 import { useDispatch } from 'react-redux';
 
 interface CentralImportDuplicateSearchProps {
@@ -33,14 +32,8 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates', searchQuery],
-    queryFn: () => fetchImportCandidates(),
-    onError: () =>
-      dispatch(
-        setNotification({
-          message: t('feedback.error.get_messages'),
-          variant: 'error',
-        })
-      ),
+    queryFn: fetchImportCandidates,
+    meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
   const searchResults = importCandidateQuery.data?.hits ?? [];
@@ -55,7 +48,7 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
             <Typography variant="subtitle1">
               {t('basic_data.central_import.duplicate_search_hits_shown', {
                 ShownResultsCount: searchResults.length,
-                TotalResultsCount: searchResults,
+                TotalResultsCount: importCandidateQuery.data?.size,
               })}
               :
             </Typography>

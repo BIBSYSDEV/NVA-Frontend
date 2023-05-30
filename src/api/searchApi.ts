@@ -2,7 +2,7 @@ import { SearchResponse } from '../types/common.types';
 import { ExpandedTicket } from '../types/publication_types/ticket.types';
 import { SearchApiPath } from './apiPaths';
 import { authenticatedApiRequest2 } from './apiRequest';
-import { ImportCandidate } from '../types/importCandidate';
+import { ImportCandidate } from '../types/importCandidate.types';
 
 export const fetchTickets = async (results: number, from: number, query = '', onlyCreator = false) => {
   const paginationQuery = `results=${results}&from=${from}`;

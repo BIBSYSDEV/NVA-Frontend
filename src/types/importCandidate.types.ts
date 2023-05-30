@@ -37,8 +37,8 @@ export interface ImportCandidate {
   totalContributors: number;
   totalVerifiedContributors: number;
   organizations: Organization[];
-  publisher: Publisher;
-  journal: Journal;
+  publisher: Pick<Publisher, 'id' | 'name'>;
+  journal: Pick<Journal, 'id'>;
   publicationInstance: PublicationInstance;
 }
 
