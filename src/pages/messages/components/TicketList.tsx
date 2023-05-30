@@ -12,6 +12,7 @@ interface TicketAccordionListProps {
 
 export const TicketList = ({ tickets }: TicketAccordionListProps) => {
   const { t } = useTranslation();
+
   useEffect(() => {
     if (tickets.some(({ publication }) => stringIncludesMathJax(publication.mainTitle))) {
       typesetMathJax();
