@@ -10,6 +10,7 @@ import { SupportMessagesColumn } from './SupportMessagesColumn';
 import { getFullName } from '../../../utils/user-helpers';
 import { getContributorInitials } from '../../../utils/registration-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
+import { getTasksRegistrationPath } from '../../../utils/urlPaths';
 
 const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
@@ -53,7 +54,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         borderLeftColor: ticketColor[ticket.type],
       }}>
       <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '10fr 4fr 2fr 2fr 1fr' }}>
-        <RegistrationListItemContent registration={registrationCopy} />
+        <RegistrationListItemContent registration={registrationCopy} linkPath={getTasksRegistrationPath(identifier)} />
         {ticket.type === 'PublishingRequest' ? (
           <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
         ) : ticket.type === 'DoiRequest' ? (

@@ -14,6 +14,7 @@ import {
 import { Helmet } from 'react-helmet-async';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { useQuery } from '@tanstack/react-query';
+import { Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -32,6 +33,9 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { CuratorRoute } from '../../utils/routes/Routes';
+import PublicRegistration from '../public_registration/PublicRegistration';
 
 const rowsPerPageOptions = [10, 20, 50];
 
@@ -51,6 +55,7 @@ const StyledSearchModeButton = styled(LinkButton)({
 const TasksPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const history = useHistory();
   const { user } = useSelector((store: RootState) => store);
   const nvaUsername = user?.nvaUsername ?? '';
   const [page, setPage] = useState(0);
@@ -75,6 +80,12 @@ const TasksPage = () => {
     errorMessage: t('feedback.error.get_roles'),
     withAuthentication: true,
   });
+
+  const openTasksPage = () => {
+    if (history.location.pathname !== UrlPathTemplate.Tasks) {
+      history.push(UrlPathTemplate.Tasks);
+    }
+  };
 
   const viewingScopes = institutionUser?.viewingScope?.includedUnits ?? [];
   const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
@@ -154,19 +165,28 @@ const TasksPage = () => {
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.newUserDialogsButton}
               isSelected={searchMode === 'new'}
-              onClick={() => setSearchMode('new')}>
+              onClick={() => {
+                setSearchMode('new');
+                openTasksPage();
+              }}>
               {t('tasks.new_user_dialogs')}
             </StyledSearchModeButton>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
               isSelected={searchMode === 'current-user'}
-              onClick={() => setSearchMode('current-user')}>
+              onClick={() => {
+                setSearchMode('current-user');
+                openTasksPage();
+              }}>
               {t('tasks.my_user_dialogs')}
             </StyledSearchModeButton>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
               isSelected={searchMode === 'all'}
-              onClick={() => setSearchMode('all')}>
+              onClick={() => {
+                setSearchMode('all');
+                openTasksPage();
+              }}>
               {t('tasks.all_user_dialogs')}
             </StyledSearchModeButton>
           </StyledTicketSearchFormGroup>
@@ -262,24 +282,32 @@ const TasksPage = () => {
       </SidePanel>
 
       <section>
-        {ticketsQuery.isLoading ? (
-          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-        ) : (
-          <>
-            <TicketList tickets={tickets} />
-            <TablePagination
-              aria-live="polite"
-              data-testid={dataTestId.startPage.searchPagination}
-              rowsPerPageOptions={rowsPerPageOptions}
-              component="div"
-              count={ticketsQuery.data?.size ?? 0}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={(_, newPage) => setPage(newPage)}
-              onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
-            />
-          </>
-        )}
+        <ErrorBoundary>
+          <Switch>
+            <CuratorRoute exact path={UrlPathTemplate.Tasks}>
+              {ticketsQuery.isLoading ? (
+                <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+              ) : (
+                <>
+                  <TicketList tickets={tickets} />
+                  <TablePagination
+                    aria-live="polite"
+                    data-testid={dataTestId.startPage.searchPagination}
+                    rowsPerPageOptions={rowsPerPageOptions}
+                    component="div"
+                    count={ticketsQuery.data?.size ?? 0}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={(_, newPage) => setPage(newPage)}
+                    onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
+                  />
+                </>
+              )}
+            </CuratorRoute>
+
+            <CuratorRoute exact path={UrlPathTemplate.TasksRegistration} component={PublicRegistration} />
+          </Switch>
+        </ErrorBoundary>
       </section>
     </StyledPageWithSideMenu>
   );
