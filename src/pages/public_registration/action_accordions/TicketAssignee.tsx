@@ -51,7 +51,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
           <i>{t('common.none')}</i>
         )}
       </Typography>
-      {ticket.status === 'Pending' && user && ticket.assignee !== user?.nvaUsername && (
+      {ticket.status === 'Pending' && user?.isCurator && ticket.assignee !== user?.nvaUsername && (
         <LoadingButton
           variant="outlined"
           size="small"
