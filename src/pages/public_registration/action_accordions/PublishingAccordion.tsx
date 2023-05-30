@@ -26,7 +26,6 @@ import { registrationValidationSchema } from '../../../utils/validation/registra
 import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
 import { TicketAssignee } from './TicketAssignee';
-import { PublishingRequestMessagesColumn } from '../../messages/components/PublishingRequestMessagesColumn';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -177,15 +176,12 @@ export const PublishingAccordion = ({
         )}
 
         {isPublishedRegistration && (
-          <>
-            {publishingRequestTicket && <PublishingRequestMessagesColumn ticket={publishingRequestTicket} />}
-            <Typography paragraph>
-              {t('registration.public_page.published_date', {
-                date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
-                interpolation: { escapeValue: false },
-              })}
-            </Typography>
-          </>
+          <Typography paragraph>
+            {t('registration.public_page.published_date', {
+              date: registration.publishedDate ? new Date(registration.publishedDate).toLocaleDateString() : '',
+              interpolation: { escapeValue: false },
+            })}
+          </Typography>
         )}
 
         {/* Option to reload data if status is not up to date with ticket */}

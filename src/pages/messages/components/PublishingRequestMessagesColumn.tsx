@@ -1,6 +1,6 @@
 import { Box, Typography, styled } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publication_types/ticket.types';
+import { ExpandedPublishingTicket } from '../../../types/publication_types/ticket.types';
 
 export const StyledMessagesContainer = styled(Box)({
   display: 'flex',
@@ -16,11 +16,7 @@ export const StyledStatusMessageBox = styled(Box)({
   borderRadius: '4px',
 });
 
-export const PublishingRequestMessagesColumn = ({
-  ticket,
-}: {
-  ticket: ExpandedPublishingTicket | PublishingTicket;
-}) => {
+export const PublishingRequestMessagesColumn = ({ ticket }: { ticket: ExpandedPublishingTicket }) => {
   const { t } = useTranslation();
 
   return (
@@ -49,9 +45,7 @@ export const PublishingRequestMessagesColumn = ({
             </StyledStatusMessageBox>
           )}
         </>
-      ) : (
-        'NO WORKFLOW'
-      )}
+      ) : null}
     </StyledMessagesContainer>
   );
 };
