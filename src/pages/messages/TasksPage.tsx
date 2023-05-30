@@ -35,7 +35,7 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { CuratorRoute } from '../../utils/routes/Routes';
-import PublicRegistration from '../public_registration/PublicRegistration';
+import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 
 const rowsPerPageOptions = [10, 20, 50];
 
@@ -305,7 +305,7 @@ const TasksPage = () => {
               )}
             </CuratorRoute>
 
-            <CuratorRoute exact path={UrlPathTemplate.TasksRegistration} component={PublicRegistration} />
+            <CuratorRoute exact path={UrlPathTemplate.TasksRegistration} component={RegistrationLandingPage} />
           </Switch>
         </ErrorBoundary>
       </section>
