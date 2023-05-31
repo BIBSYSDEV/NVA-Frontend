@@ -26,8 +26,6 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { CuratorRoute } from '../../utils/routes/Routes';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 
-const rowsPerPageOptions = [10, 20, 50];
-
 type SelectedStatusState = {
   [key in Exclude<TicketStatus, 'New'>]: boolean;
 };
@@ -48,7 +46,7 @@ const TasksPage = () => {
   const { user } = useSelector((store: RootState) => store);
   const nvaUsername = user?.nvaUsername ?? '';
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const [searchMode, setSearchMode] = useState<SearchMode>('new');
 
@@ -266,24 +264,22 @@ const TasksPage = () => {
         </NavigationListAccordion>
       </SidePanel>
 
-      <section>
-        <ErrorBoundary>
-          <Switch>
-            <CuratorRoute exact path={UrlPathTemplate.Tasks}>
-              <TicketList
-                ticketsQuery={ticketsQuery}
-                rowsPerPage={rowsPerPage}
-                setRowsPerPage={setRowsPerPage}
-                page={page}
-                setPage={setPage}
-                helmetTitle={t('common.tasks')}
-              />
-            </CuratorRoute>
+      <ErrorBoundary>
+        <Switch>
+          <CuratorRoute exact path={UrlPathTemplate.Tasks}>
+            <TicketList
+              ticketsQuery={ticketsQuery}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+              page={page}
+              setPage={setPage}
+              helmetTitle={t('common.tasks')}
+            />
+          </CuratorRoute>
 
-            <CuratorRoute exact path={UrlPathTemplate.TasksRegistration} component={RegistrationLandingPage} />
-          </Switch>
-        </ErrorBoundary>
-      </section>
+          <CuratorRoute exact path={UrlPathTemplate.TasksRegistration} component={RegistrationLandingPage} />
+        </Switch>
+      </ErrorBoundary>
     </StyledPageWithSideMenu>
   );
 };

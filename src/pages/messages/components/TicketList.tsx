@@ -41,41 +41,40 @@ export const TicketList = ({
   }, [tickets]);
 
   return (
-    <>
+    <section>
       <Helmet>
         <title>{helmetTitle}</title>
       </Helmet>
-      <section>
-        {ticketsQuery.isLoading ? (
-          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-        ) : (
-          <>
-            {tickets.length === 0 ? (
-              <Typography>{t('my_page.messages.no_messages')}</Typography>
-            ) : (
-              <List disablePadding>
-                {tickets.map((ticket) => (
-                  <ErrorBoundary key={ticket.id}>
-                    <TicketListItem key={ticket.id} ticket={ticket} />
-                  </ErrorBoundary>
-                ))}
-              </List>
-            )}
 
-            <TablePagination
-              aria-live="polite"
-              data-testid={dataTestId.startPage.searchPagination}
-              rowsPerPageOptions={rowsPerPageOptions}
-              component="div"
-              count={ticketsQuery.data?.size ?? 0}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={(_, newPage) => setPage(newPage)}
-              onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
-            />
-          </>
-        )}
-      </section>
-    </>
+      {ticketsQuery.isLoading ? (
+        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+      ) : (
+        <>
+          {tickets.length === 0 ? (
+            <Typography>{t('my_page.messages.no_messages')}</Typography>
+          ) : (
+            <List disablePadding>
+              {tickets.map((ticket) => (
+                <ErrorBoundary key={ticket.id}>
+                  <TicketListItem key={ticket.id} ticket={ticket} />
+                </ErrorBoundary>
+              ))}
+            </List>
+          )}
+
+          <TablePagination
+            aria-live="polite"
+            data-testid={dataTestId.startPage.searchPagination}
+            rowsPerPageOptions={rowsPerPageOptions}
+            component="div"
+            count={ticketsQuery.data?.size ?? 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={(_, newPage) => setPage(newPage)}
+            onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
+          />
+        </>
+      )}
+    </section>
   );
 };

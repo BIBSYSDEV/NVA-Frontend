@@ -38,8 +38,6 @@ import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketList } from '../messages/components/TicketList';
 
-const rowsPerPageOptions = [10, 20, 50];
-
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
 };
@@ -51,7 +49,7 @@ const MyPagePage = () => {
   const user = useSelector((store: RootState) => store.user);
   const queryClient = useQueryClient();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
