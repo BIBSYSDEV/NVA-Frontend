@@ -10,7 +10,7 @@ import { SupportMessagesColumn } from './SupportMessagesColumn';
 import { getFullName } from '../../../utils/user-helpers';
 import { getContributorInitials } from '../../../utils/registration-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
-import { UrlPathTemplate, getTasksRegistrationPath } from '../../../utils/urlPaths';
+import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
 
 const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
@@ -57,7 +57,11 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         <RegistrationListItemContent
           registration={registrationCopy}
           linkPath={
-            window.location.pathname === UrlPathTemplate.Tasks ? getTasksRegistrationPath(identifier) : undefined
+            window.location.pathname === UrlPathTemplate.Tasks
+              ? getTasksRegistrationPath(identifier)
+              : window.location.pathname === UrlPathTemplate.MyPageMyMessages
+              ? getMyMessagesRegistrationPath(identifier)
+              : undefined
           }
         />
         {ticket.type === 'PublishingRequest' ? (

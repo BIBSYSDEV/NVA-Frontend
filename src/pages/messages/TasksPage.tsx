@@ -69,6 +69,7 @@ const TasksPage = () => {
   });
 
   const openTasksPage = () => {
+    // TODO: Redundant when NP-44809 is completed
     if (history.location.pathname !== UrlPathTemplate.Tasks) {
       history.push(UrlPathTemplate.Tasks);
     }

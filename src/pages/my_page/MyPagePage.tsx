@@ -37,6 +37,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { TicketList, ticketsPerPageOptions } from '../messages/components/TicketList';
+import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
@@ -333,6 +334,7 @@ const MyPagePage = () => {
               helmetTitle={t('my_page.messages.messages')}
             />
           </CreatorRoute>
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />

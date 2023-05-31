@@ -24,6 +24,7 @@ export enum UrlPathTemplate {
   MyPage = '/my-page',
   MyPageMessages = '/my-page/messages',
   MyPageMyMessages = '/my-page/messages/my-messages',
+  MyPageMyMessagesRegistration = '/my-page/messages/my-messages/:identifier',
   MyPageMyProfile = '/my-page/my-profile',
   MyPageMyPersonalia = '/my-page/my-profile/my-personalia',
   MyPageMyProjectRegistrations = '/my-page/project-registrations/my-project-registrations',
@@ -65,3 +66,6 @@ export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${
 
 export const getTasksRegistrationPath = (identifier: string) =>
   UrlPathTemplate.TasksRegistration.replace(':identifier', encodeURIComponent(identifier));
+
+export const getMyMessagesRegistrationPath = (identifier: string) =>
+  UrlPathTemplate.MyPageMyMessagesRegistration.replace(':identifier', encodeURIComponent(identifier));
