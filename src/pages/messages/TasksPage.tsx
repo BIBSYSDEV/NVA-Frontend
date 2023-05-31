@@ -1,23 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  TablePagination,
-  Typography,
-  styled,
-} from '@mui/material';
+import { Box, CircularProgress, Divider, FormControl, FormControlLabel, Typography, styled } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { useQuery } from '@tanstack/react-query';
 import { Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { ListSkeleton } from '../../components/ListSkeleton';
 import { RootState } from '../../redux/store';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
@@ -119,7 +109,6 @@ const TasksPage = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 
-  const tickets = ticketsQuery.data?.hits ?? [];
   const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
   const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
@@ -285,24 +274,14 @@ const TasksPage = () => {
         <ErrorBoundary>
           <Switch>
             <CuratorRoute exact path={UrlPathTemplate.Tasks}>
-              {ticketsQuery.isLoading ? (
-                <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-              ) : (
-                <>
-                  <TicketList tickets={tickets} />
-                  <TablePagination
-                    aria-live="polite"
-                    data-testid={dataTestId.startPage.searchPagination}
-                    rowsPerPageOptions={rowsPerPageOptions}
-                    component="div"
-                    count={ticketsQuery.data?.size ?? 0}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={(_, newPage) => setPage(newPage)}
-                    onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
-                  />
-                </>
-              )}
+              <TicketList
+                ticketsQuery={ticketsQuery}
+                rowsPerPage={rowsPerPage}
+                setRowsPerPage={setRowsPerPage}
+                page={page}
+                setPage={setPage}
+                helmetTitle="TODO"
+              />
             </CuratorRoute>
 
             <CuratorRoute exact path={UrlPathTemplate.TasksRegistration} component={RegistrationLandingPage} />
