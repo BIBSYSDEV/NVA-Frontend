@@ -7,7 +7,6 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { DuplicateSearchFilters } from '../../../../types/duplicateSearchTypes';
 import { useQuery } from '@tanstack/react-query';
 import { fetchImportCandidates } from '../../../../api/searchApi';
-import { useDispatch } from 'react-redux';
 
 interface CentralImportDuplicateSearchProps {
   duplicateSearchFilters: DuplicateSearchFilters;
@@ -15,7 +14,6 @@ interface CentralImportDuplicateSearchProps {
 
 export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: CentralImportDuplicateSearchProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const maxHits = ROWS_PER_PAGE_OPTIONS[0];
   const queryArray = [];
   duplicateSearchFilters.doi.length > 0 && queryArray.push(`${ResourceFieldNames.Doi}:"${duplicateSearchFilters.doi}"`);

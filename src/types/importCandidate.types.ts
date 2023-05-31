@@ -10,20 +10,12 @@ import { MediaContributionPeriodicalPublicationInstance } from './publication_ty
 import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
 import { MapPublicationInstance } from './publication_types/otherRegistration.types';
 import { ExhibitionPublicationInstance } from './publication_types/exhibitionContent.types';
+import { Journal, Publisher } from './registration.types';
 
 export enum ImportStatus {
   Imported = 'IMPORTED',
   NotImported = 'NOT_IMPORTED',
   NotApplicable = 'NOT_APPLICABLE',
-}
-
-export interface Publisher {
-  id: string;
-  name: string;
-}
-
-export interface Journal {
-  id: string;
 }
 
 export interface ImportCandidate {
