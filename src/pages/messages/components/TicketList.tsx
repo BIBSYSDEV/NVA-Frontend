@@ -20,7 +20,7 @@ interface TicketListProps {
   helmetTitle: string;
 }
 
-const rowsPerPageOptions = [10, 20, 50];
+export const ticketsPerPageOptions = [10, 20, 50];
 
 export const TicketList = ({
   ticketsQuery,
@@ -53,26 +53,27 @@ export const TicketList = ({
           {tickets.length === 0 ? (
             <Typography>{t('my_page.messages.no_messages')}</Typography>
           ) : (
-            <List disablePadding>
-              {tickets.map((ticket) => (
-                <ErrorBoundary key={ticket.id}>
-                  <TicketListItem key={ticket.id} ticket={ticket} />
-                </ErrorBoundary>
-              ))}
-            </List>
+            <>
+              <List disablePadding>
+                {tickets.map((ticket) => (
+                  <ErrorBoundary key={ticket.id}>
+                    <TicketListItem key={ticket.id} ticket={ticket} />
+                  </ErrorBoundary>
+                ))}
+              </List>
+              <TablePagination
+                aria-live="polite"
+                data-testid={dataTestId.startPage.searchPagination}
+                rowsPerPageOptions={ticketsPerPageOptions}
+                component="div"
+                count={ticketsQuery.data?.size ?? 0}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={(_, newPage) => setPage(newPage)}
+                onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
+              />
+            </>
           )}
-
-          <TablePagination
-            aria-live="polite"
-            data-testid={dataTestId.startPage.searchPagination}
-            rowsPerPageOptions={rowsPerPageOptions}
-            component="div"
-            count={ticketsQuery.data?.size ?? 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
-            onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
-          />
         </>
       )}
     </section>

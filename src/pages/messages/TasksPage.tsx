@@ -11,7 +11,7 @@ import { RootState } from '../../redux/store';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { TicketList } from './components/TicketList';
+import { TicketList, ticketsPerPageOptions } from './components/TicketList';
 import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { StyledPageWithSideMenu, SidePanel, SideNavHeader, LinkButton } from '../../components/PageWithSideMenu';
@@ -46,7 +46,7 @@ const TasksPage = () => {
   const { user } = useSelector((store: RootState) => store);
   const nvaUsername = user?.nvaUsername ?? '';
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
 
   const [searchMode, setSearchMode] = useState<SearchMode>('new');
 
