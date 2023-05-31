@@ -20,6 +20,7 @@ enum Color {
   DoiRequest = '#FFAA8E',
   DoiRequestLight = '#FFE2DA',
   GeneralSupportCase = '#4A7AC1',
+  GeneralSupportCaseLight = '#C2D3EA',
   Registration = '#DAC48E',
   Person = '#B3D6D9',
   Project = '#E48F8F',
@@ -114,6 +115,7 @@ export const mainTheme = createTheme(
       },
       generalSupportCase: {
         main: Color.GeneralSupportCase,
+        light: Color.GeneralSupportCaseLight,
       },
       background: {
         default: Color.White,
