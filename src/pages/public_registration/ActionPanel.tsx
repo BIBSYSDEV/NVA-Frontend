@@ -28,15 +28,13 @@ export const ActionPanel = ({
           {t('common.tasks')}
         </Typography>
       </StyledPaperHeader>
-      <BackgroundDiv>
-        <ActionPanelContent
-          canCreateTickets
-          tickets={tickets}
-          refetchData={refetchRegistrationAndTickets}
-          isLoadingData={isLoadingData}
-          registration={registration}
-        />
-      </BackgroundDiv>
+      <ActionPanelContent
+        canCreateTickets
+        tickets={tickets}
+        refetchData={refetchRegistrationAndTickets}
+        isLoadingData={isLoadingData}
+        registration={registration}
+      />
     </Paper>
   );
 };

@@ -55,10 +55,12 @@ export const RegistrationLandingPage = () => {
           <ErrorBoundary>
             <Box
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
+                display: 'grid',
+                gridTemplateColumns: '5fr 1fr',
                 gap: '1rem',
               }}>
+              <PublicRegistrationContent registration={registration} />
+
               {isRegistrationAdmin && ticketsQuery.isSuccess && (
                 <ActionPanel
                   registration={registration}
@@ -67,7 +69,6 @@ export const RegistrationLandingPage = () => {
                   isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
                 />
               )}
-              <PublicRegistrationContent registration={registration} />
             </Box>
           </ErrorBoundary>
         ) : (
