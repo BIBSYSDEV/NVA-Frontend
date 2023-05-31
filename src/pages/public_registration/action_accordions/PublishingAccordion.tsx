@@ -272,7 +272,7 @@ export const PublishingAccordion = ({
         )}
 
         {hasPendingTicket && (
-          <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
+          <Accordion elevation={3} sx={{ maxWidth: '60rem', mt: '1rem' }}>
             <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
               {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
             </AccordionSummary>

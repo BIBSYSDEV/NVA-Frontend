@@ -18,11 +18,13 @@ enum Color {
   TextPrimary = 'rgba(0, 0, 0, 0.87)',
   White = '#fff',
   DoiRequest = '#FFAA8E',
+  DoiRequestLight = '#FFE2DA',
   GeneralSupportCase = '#4A7AC1',
   Registration = '#DAC48E',
   Person = '#B3D6D9',
   Project = '#E48F8F',
-  publishingRequest = '#FFD27B',
+  PublishingRequest = '#FFD27B',
+  PublishingRequestLight = '#FFF0D3',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
@@ -103,11 +105,12 @@ export const mainTheme = createTheme(
         main: Color.Project,
       },
       publishingRequest: {
-        main: Color.publishingRequest,
-        light: '#FFF0D3',
+        main: Color.PublishingRequest,
+        light: Color.PublishingRequestLight,
       },
       doiRequest: {
         main: Color.DoiRequest,
+        light: Color.DoiRequestLight,
       },
       generalSupportCase: {
         main: Color.GeneralSupportCase,

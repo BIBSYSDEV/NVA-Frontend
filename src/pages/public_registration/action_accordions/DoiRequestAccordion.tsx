@@ -143,6 +143,7 @@ export const DoiRequestAccordion = ({
       sx={{
         borderLeft: '1.25rem solid',
         borderLeftColor: 'doiRequest.main',
+        bgcolor: 'doiRequest.light',
       }}
       elevation={3}
       defaultExpanded={waitingForRemovalOfDoi || (userIsCurator && isPendingDoiRequest)}>
