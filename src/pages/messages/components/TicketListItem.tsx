@@ -66,7 +66,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         <Typography lineHeight={'2rem'}>{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
         <Typography lineHeight={'2rem'}>{t('common.x_days', { count: daysAge })}</Typography>
         {assigneeFullName && (
-          <Tooltip title={`${t('common.assignee')}: ${assigneeFullName}`}>
+          <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
             <StyledVerifiedContributor>{getContributorInitials(assigneeFullName)}</StyledVerifiedContributor>
           </Tooltip>
         )}
