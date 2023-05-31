@@ -2,12 +2,14 @@ import { Typography } from '@mui/material';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { StyledMessagesContainer, StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
+import { useTranslation } from 'react-i18next';
 
 interface SupportMessagesColumnProps {
   ticket: ExpandedTicket;
 }
 
 export const SupportMessagesColumn = ({ ticket }: SupportMessagesColumnProps) => {
+  const { t } = useTranslation();
   const lastMessage = ticket.messages.at(-1);
 
   const lastSender = lastMessage
@@ -18,15 +20,30 @@ export const SupportMessagesColumn = ({ ticket }: SupportMessagesColumnProps) =>
 
   return (
     <StyledMessagesContainer>
-      {lastMessage ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'generalSupportCase.main' }}>
-          <Typography>{lastSender}</Typography>
-          <Typography>{new Date(lastMessage.createdDate).toLocaleDateString()}</Typography>
-          <TruncatableTypography lines={5} sx={{ gridColumn: '1/3' }}>
-            {lastMessage.text}
-          </TruncatableTypography>
-        </StyledStatusMessageBox>
-      ) : null}
+      {ticket.status === 'New' || ticket.status === 'Pending' ? (
+        <>
+          {lastMessage && (
+            <StyledStatusMessageBox sx={{ bgcolor: 'generalSupportCase.main' }}>
+              <TruncatableTypography lines={5} sx={{ gridColumn: '1/3' }}>
+                {lastMessage.text}
+              </TruncatableTypography>
+            </StyledStatusMessageBox>
+          )}
+          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+            <Typography>{t('my_page.messages.general_support_pending')}</Typography>
+          </StyledStatusMessageBox>
+        </>
+      ) : (
+        lastMessage && (
+          <StyledStatusMessageBox sx={{ bgcolor: 'generalSupportCase.main' }}>
+            <Typography>{lastSender}</Typography>
+            <Typography>{new Date(lastMessage.createdDate).toLocaleDateString()}</Typography>
+            <TruncatableTypography lines={5} sx={{ gridColumn: '1/3' }}>
+              {lastMessage.text}
+            </TruncatableTypography>
+          </StyledStatusMessageBox>
+        )
+      )}
     </StyledMessagesContainer>
   );
 };

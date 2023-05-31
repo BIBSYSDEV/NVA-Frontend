@@ -50,8 +50,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     <SearchListItem
       key={ticket.id}
       sx={{
-        borderLeftColor:
-          ticket.status === 'Pending' || ticket.status === 'New' ? ticketColor[ticket.type] : 'registration.main',
+        borderLeftColor: ticketColor[ticket.type],
       }}>
       <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '10fr 4fr 2fr 2fr 1fr' }}>
         <RegistrationListItemContent registration={registrationCopy} />
@@ -64,8 +63,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         ) : (
           <div />
         )}
-        <Typography variant="overline">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
-        <Typography variant="overline">{t('common.x_days', { count: daysAge })}</Typography>
+        <Typography lineHeight={'2rem'}>{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
+        <Typography lineHeight={'2rem'}>{t('common.x_days', { count: daysAge })}</Typography>
         {assigneeFullName && (
           <Tooltip title={`${t('common.assignee')}: ${assigneeFullName}`}>
             <StyledVerifiedContributor>{getContributorInitials(assigneeFullName)}</StyledVerifiedContributor>

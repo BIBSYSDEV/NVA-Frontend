@@ -490,15 +490,17 @@
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
+      "doi_requested": "Bedt om DOI",
       "files_published": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
+      "general_support_pending": "Venter på oppfølging",
       "messages": "Meldinger",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
-        "Closed": "Lukket",
+        "Closed": "Avvist",
         "Completed": "Ferdig",
-        "New": "Ny",
-        "Pending": "Pågår"
+        "New": "Innmeldt",
+        "Pending": "Behandles"
       },
       "types": {
         "DoiRequest": "DOI-forespørsel",
@@ -1513,8 +1515,10 @@
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
   },
   "tasks": {
+    "all_user_dialogs": "Alle brukerdialoger",
     "limited_to": "Avgrenset til: \"{{name}}\"",
-    "tasks": "Oppgaver",
+    "my_user_dialogs": "Mine brukerdialoger",
+    "new_user_dialogs": "Nye brukerdialoger",
     "user_dialog": "Brukerdialog"
   }
 }

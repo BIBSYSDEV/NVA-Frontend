@@ -30,6 +30,7 @@ export const ActionPanel = ({
       </StyledPaperHeader>
       <BackgroundDiv>
         <ActionPanelContent
+          canCreateTickets
           tickets={tickets}
           refetchData={refetchRegistrationAndTickets}
           isLoadingData={isLoadingData}
