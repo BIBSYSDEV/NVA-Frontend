@@ -278,7 +278,7 @@ export const PublishingAccordion = ({
             </AccordionSummary>
             <AccordionDetails>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <MessageList messages={ticketMessages} />
+                <MessageList ticket={publishingRequestTicket} />
                 <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
               </Box>
             </AccordionDetails>
