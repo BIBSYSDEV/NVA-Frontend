@@ -37,7 +37,7 @@ interface PublishingAccordionProps {
 }
 
 enum LoadingState {
-  CreatePublishingREquest,
+  CreatePublishingRequest,
   ApprovePulishingRequest,
   RejectPublishingRequest,
   None,
@@ -101,7 +101,7 @@ export const PublishingAccordion = ({
   const firstErrorTab = Math.max(getFirstErrorTab(tabErrors), 0);
 
   const onClickPublish = async () => {
-    setIsLoading(LoadingState.CreatePublishingREquest);
+    setIsLoading(LoadingState.CreatePublishingRequest);
     const createPublishingRequestTicketResponse = await createTicket(registration.id, 'PublishingRequest');
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
@@ -140,7 +140,11 @@ export const PublishingAccordion = ({
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
-      sx={{ borderLeft: '1.25rem solid', borderLeftColor: 'publishingRequest.main' }}
+      sx={{
+        borderLeft: '1.25rem solid',
+        borderLeftColor: 'publishingRequest.main',
+        bgcolor: 'publishingRequest.light',
+      }}
       elevation={3}
       defaultExpanded={isDraftRegistration || canHandlePublishingRequest || hasMismatchingPublishedStatus}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -227,20 +231,6 @@ export const PublishingAccordion = ({
           </>
         )}
 
-        {hasPendingTicket && (
-          <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
-            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-              {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <MessageList messages={ticketMessages} />
-                <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
-              </Box>
-            </AccordionDetails>
-          </Accordion>
-        )}
-
         {isDraftRegistration && !publishingRequestTicket && (
           <LoadingButton
             disabled={isLoading !== LoadingState.None || !registrationIsValid}
@@ -251,7 +241,7 @@ export const PublishingAccordion = ({
             endIcon={<CloudUploadIcon />}
             loadingPosition="end"
             onClick={onClickPublish}
-            loading={isLoadingData || isLoading === LoadingState.CreatePublishingREquest}>
+            loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
             {t('common.publish')}
           </LoadingButton>
         )}
@@ -279,6 +269,20 @@ export const PublishingAccordion = ({
               {t('registration.public_page.reject_publish_request')}
             </LoadingButton>
           </Box>
+        )}
+
+        {hasPendingTicket && (
+          <Accordion elevation={3} sx={{ maxWidth: '60rem', mt: '1rem' }}>
+            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
+              {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <MessageList messages={ticketMessages} />
+                <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
+              </Box>
+            </AccordionDetails>
+          </Accordion>
         )}
       </AccordionDetails>
     </Accordion>

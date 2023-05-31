@@ -42,6 +42,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
       sx={{
         borderLeft: '1.25rem solid',
         borderLeftColor: 'generalSupportCase.main',
+        bgcolor: 'generalSupportCase.light',
       }}
       elevation={3}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>

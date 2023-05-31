@@ -110,7 +110,6 @@
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
     "all": "Alle",
-    "assignee": "Saksbehandler",
     "cancel": "Avbryt",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
@@ -1066,7 +1065,7 @@
     "new_registration": "Ny registrering",
     "public_page": {
       "about_registration": "Om registreringen",
-      "approve_publish_request": "Godkjenn publisering",
+      "approve_publish_request": "Publiser fil med lisens",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
