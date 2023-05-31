@@ -50,7 +50,7 @@ export const ActionPanelContent = ({
 
   return (
     <>
-      {(canCreateTickets || publishingRequestTickets) && (
+      {(canCreateTickets || currentPublishingRequestTicket) && (
         <ErrorBoundary>
           <PublishingAccordion
             refetchData={refetchData}
