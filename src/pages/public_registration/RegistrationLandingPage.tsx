@@ -47,29 +47,27 @@ export const RegistrationLandingPage = () => {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        display: 'grid',
+        gridTemplateColumns: '5fr 1fr',
+        gap: '1rem',
+      }}>
       {registrationQuery.isLoading || (isRegistrationAdmin && ticketsQuery.isLoading) ? (
         <PageSpinner aria-label={t('common.registration')} />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
           <ErrorBoundary>
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: '5fr 1fr',
-                gap: '1rem',
-              }}>
-              <PublicRegistrationContent registration={registration} />
+            <PublicRegistrationContent registration={registration} />
 
-              {isRegistrationAdmin && ticketsQuery.isSuccess && (
-                <ActionPanel
-                  registration={registration}
-                  refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                  tickets={ticketsQuery.data?.tickets ?? []}
-                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
-                />
-              )}
-            </Box>
+            {isRegistrationAdmin && ticketsQuery.isSuccess && (
+              <ActionPanel
+                registration={registration}
+                refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+                tickets={ticketsQuery.data?.tickets ?? []}
+                isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
+              />
+            )}
           </ErrorBoundary>
         ) : (
           <NotPublished />
@@ -77,6 +75,6 @@ export const RegistrationLandingPage = () => {
       ) : (
         <NotFound />
       )}
-    </>
+    </Box>
   );
 };
