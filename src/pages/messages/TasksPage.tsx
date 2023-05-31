@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { Box, CircularProgress, Divider, FormControl, FormControlLabel, Typography, styled } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { useQuery } from '@tanstack/react-query';
 import { Switch, useHistory } from 'react-router-dom';
@@ -121,9 +120,6 @@ const TasksPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <Helmet>
-        <title>{t('common.tasks')}</title>
-      </Helmet>
       <SidePanel>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
@@ -280,7 +276,7 @@ const TasksPage = () => {
                 setRowsPerPage={setRowsPerPage}
                 page={page}
                 setPage={setPage}
-                helmetTitle="TODO"
+                helmetTitle={t('common.tasks')}
               />
             </CuratorRoute>
 

@@ -13,7 +13,6 @@ import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjects } from './user_profile/MyProjects';
@@ -37,6 +36,7 @@ import { fetchTickets } from '../../api/searchApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { TicketList } from '../messages/components/TicketList';
 
 const rowsPerPageOptions = [10, 20, 50];
 
@@ -326,12 +326,13 @@ const MyPagePage = () => {
       <ErrorBoundary>
         <Switch>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages}>
-            <MyMessagesPage
+            <TicketList
               ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
               setRowsPerPage={setRowsPerPage}
               page={page}
               setPage={setPage}
+              helmetTitle={t('my_page.messages.messages')}
             />
           </CreatorRoute>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />

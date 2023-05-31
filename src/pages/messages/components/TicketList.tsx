@@ -11,7 +11,7 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchResponse } from '../../../types/common.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 
-interface TicketAccordionListProps {
+interface TicketListProps {
   ticketsQuery: UseQueryResult<SearchResponse<ExpandedTicket>, unknown>;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
@@ -29,7 +29,7 @@ export const TicketList = ({
   setPage,
   page,
   helmetTitle,
-}: TicketAccordionListProps) => {
+}: TicketListProps) => {
   const { t } = useTranslation();
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
