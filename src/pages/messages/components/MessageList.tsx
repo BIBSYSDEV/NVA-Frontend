@@ -52,27 +52,27 @@ const MessageItem = ({ message, ticketType }: MessageItemProps) => {
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
   return (
-    <li>
-      <Box sx={{ bgcolor: ticketColor[ticketType], p: '0.5rem', borderRadius: '4px', maxWidth: '20rem' }}>
-        <Typography flexWrap="wrap" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <span>
-            {senderQuery.isLoading ? (
-              <Skeleton sx={{ width: '8rem' }} />
-            ) : (
-              <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>
-                {senderName ? senderName : <i>{t('common.unknown')}</i>}
-              </b>
-            )}
-          </span>
-          <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
-            {new Date(message.createdDate).toLocaleDateString()}
-          </span>
-        </Typography>
+    <Box
+      component={'li'}
+      sx={{ bgcolor: ticketColor[ticketType], p: '0.5rem', borderRadius: '4px', maxWidth: '20rem' }}>
+      <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+        <span>
+          {senderQuery.isLoading ? (
+            <Skeleton sx={{ width: '8rem' }} />
+          ) : (
+            <b data-testid={dataTestId.registrationLandingPage.tasksPanel.messageSender}>
+              {senderName ? senderName : <i>{t('common.unknown')}</i>}
+            </b>
+          )}
+        </span>
+        <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
+          {new Date(message.createdDate).toLocaleDateString()}
+        </span>
+      </Typography>
 
-        <Divider sx={{ mb: '0.5rem', bgcolor: '#B4A98E' }} />
+      <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
-        <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{message.text}</Typography>
-      </Box>
-    </li>
+      <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{message.text}</Typography>
+    </Box>
   );
 };
