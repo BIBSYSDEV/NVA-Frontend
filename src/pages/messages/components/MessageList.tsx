@@ -51,8 +51,6 @@ const MessageItem = ({ message, ticketType }: MessageItemProps) => {
 
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
-  console.log(senderQuery.data);
-
   return (
     <li>
       <Box sx={{ bgcolor: ticketColor[ticketType], p: '0.5rem', borderRadius: '4px', maxWidth: '20rem' }}>
