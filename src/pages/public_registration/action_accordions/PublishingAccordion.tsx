@@ -272,17 +272,13 @@ export const PublishingAccordion = ({
         )}
 
         {hasPendingTicket && (
-          <Accordion elevation={3} sx={{ maxWidth: '60rem', mt: '1rem' }}>
-            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-              {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <MessageList ticket={publishingRequestTicket} />
-                <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
-              </Box>
-            </AccordionDetails>
-          </Accordion>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
+            {ticketMessages.length < 0 && (
+              <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
+            )}
+            <MessageList ticket={publishingRequestTicket} />
+            <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
+          </Box>
         )}
       </AccordionDetails>
     </Accordion>
