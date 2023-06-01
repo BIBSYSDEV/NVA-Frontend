@@ -65,7 +65,7 @@
     "@tanstack/eslint-plugin-query": "^4.29.9",
     "@tanstack/react-query-devtools": "^4.29.12",
     "@types/isbn-utils": "^1.1.3",
-    "@types/jest": "^29.5.1",
+    "@types/jest": "^29.5.2",
     "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
     "@types/react-router-dom": "^5.3.3",
