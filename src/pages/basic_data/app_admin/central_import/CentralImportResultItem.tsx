@@ -48,7 +48,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
                   fontStyle: 'italic',
                   wordBreak: 'break-word',
                 }}>
-                <MuiLink component={Link} to={`${getDuplicateCheckPagePath(importCandidate.id)}`}>
+                <MuiLink component={Link} to={`${getDuplicateCheckPagePath(importCandidate.id.split('/', 5)[4])}`}>
                   {importCandidate.mainTitle}
                 </MuiLink>
               </Typography>

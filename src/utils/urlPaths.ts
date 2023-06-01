@@ -52,6 +52,9 @@ export const getRegistrationLandingPagePath = (identifier: string) =>
 export const getDuplicateCheckPagePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportDuplicateCheck.replace(':identifier', encodeURIComponent(identifier));
 
+export const getImportCandidatePagePath = (identifier: string) =>
+  UrlPathTemplate.BasicDataCentralImportRegistration.replace(':identifier', encodeURIComponent(identifier));
+
 export const getRegistrationWizardPath = (identifier: string) =>
   UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
 

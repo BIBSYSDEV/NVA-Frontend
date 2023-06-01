@@ -103,3 +103,12 @@ export const fetchImportCandidate = async (importCandidateIdentifier: string) =>
   });
   return fetchImportCandidateResponse.data;
 };
+
+export const createRegistrationFromImportCandidate = async (importCandidate: ImportCandidate) => {
+  const creatRegistrationResponse = await authenticatedApiRequest2<Registration>({
+    url: `${PublicationsApiPath.ImportCandidate}/${importCandidate.identifier}`,
+    method: 'POST',
+    data: importCandidate,
+  });
+  return creatRegistrationResponse.data; // Denne vil da returnere opprettet Publication
+};

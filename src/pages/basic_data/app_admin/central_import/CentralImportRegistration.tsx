@@ -1,14 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { RegistrationParams } from '../../../../utils/urlPaths';
 import { useQuery } from '@tanstack/react-query';
-import { fetchImportCandidate } from '../../../../api/registrationApi';
+import { createRegistrationFromImportCandidate, fetchImportCandidate } from '../../../../api/registrationApi';
 import { useTranslation } from 'react-i18next';
-
-// eslint-disable-next-line react-hooks/rules-of-hooks
+import { Button } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
 export const CentralImportRegistration = () => {
   const { t } = useTranslation();
   const { identifier } = useParams<RegistrationParams>();
+  const dispatch = useDispatch();
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidate', identifier],
@@ -17,5 +18,20 @@ export const CentralImportRegistration = () => {
   });
 
   const importCandidate = importCandidateQuery.data;
-  return <>app</>;
+
+  const createPublication = async () => {
+    if (importCandidate) {
+      const createPublicationResponse = await createRegistrationFromImportCandidate(importCandidate);
+    }
+  };
+
+  return (
+    <>
+      {importCandidate?.entityDescription?.mainTitle}
+      <br />
+      <Button variant="outlined" color="primary" onClick={createPublication}>
+        Import
+      </Button>
+    </>
+  );
 };
