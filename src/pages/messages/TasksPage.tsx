@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Box, CircularProgress, Divider, FormControl, FormControlLabel, Typography, styled } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { useQuery } from '@tanstack/react-query';
-import { Switch, useHistory } from 'react-router-dom';
+import { Link, Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RootState } from '../../redux/store';
@@ -14,7 +14,7 @@ import { getLanguageString } from '../../utils/translation-helpers';
 import { TicketList, ticketsPerPageOptions } from './components/TicketList';
 import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { StyledPageWithSideMenu, SidePanel, SideNavHeader, LinkButton } from '../../components/PageWithSideMenu';
+import { StyledPageWithSideMenu, SideNavHeader, LinkButton } from '../../components/PageWithSideMenu';
 import { setNotification } from '../../redux/notificationSlice';
 import { fetchTickets } from '../../api/searchApi';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
@@ -25,6 +25,7 @@ import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../compone
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { CuratorRoute } from '../../utils/routes/Routes';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 
 type SelectedStatusState = {
   [key in Exclude<TicketStatus, 'New'>]: boolean;
@@ -68,13 +69,6 @@ const TasksPage = () => {
     withAuthentication: true,
   });
 
-  const openTasksPage = () => {
-    // TODO: Redundant when NP-44809 is completed
-    if (history.location.pathname !== UrlPathTemplate.Tasks) {
-      history.push(UrlPathTemplate.Tasks);
-    }
-  };
-
   const viewingScopes = institutionUser?.viewingScope?.includedUnits ?? [];
   const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
@@ -117,153 +111,161 @@ const TasksPage = () => {
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
+  const showSearchFilters = history.location.pathname === UrlPathTemplate.Tasks;
+
   return (
     <StyledPageWithSideMenu>
-      <SidePanel>
+      <SideMenu
+        expanded={showSearchFilters}
+        minimizedMenu={
+          <Link to={UrlPathTemplate.Tasks}>
+            <StyledMinimizedMenuButton title={t('common.tasks')}>
+              <AssignmentIcon />
+            </StyledMinimizedMenuButton>
+          </Link>
+        }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
+        {showSearchFilters && (
+          <>
+            <Box component="article" sx={{ m: '1rem' }}>
+              {viewingScopeId ? (
+                isLoadingViewingScopeOrganization ? (
+                  <CircularProgress aria-label={t('common.tasks')} />
+                ) : (
+                  viewingScopeOrganization && (
+                    <Typography sx={{ fontWeight: 700 }}>
+                      {t('tasks.limited_to', {
+                        name: getLanguageString(viewingScopeOrganization.labels),
+                      })}
+                    </Typography>
+                  )
+                )
+              ) : null}
+            </Box>
 
-        <Box component="article" sx={{ m: '1rem' }}>
-          {viewingScopeId ? (
-            isLoadingViewingScopeOrganization ? (
-              <CircularProgress aria-label={t('common.tasks')} />
-            ) : (
-              viewingScopeOrganization && (
-                <Typography sx={{ fontWeight: 700 }}>
-                  {t('tasks.limited_to', {
-                    name: getLanguageString(viewingScopeOrganization.labels),
-                  })}
-                </Typography>
-              )
-            )
-          ) : null}
-        </Box>
+            <Divider />
+            <NavigationListAccordion
+              title={t('tasks.user_dialog')}
+              startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} fontSize="small" />}
+              accordionPath={UrlPathTemplate.Tasks}
+              defaultPath={UrlPathTemplate.Tasks}
+              dataTestId={dataTestId.tasksPage.userDialogAccordion}>
+              <StyledTicketSearchFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
+                <StyledSearchModeButton
+                  data-testid={dataTestId.tasksPage.searchMode.newUserDialogsButton}
+                  isSelected={searchMode === 'new'}
+                  onClick={() => setSearchMode('new')}>
+                  {t('tasks.new_user_dialogs')}
+                </StyledSearchModeButton>
+                <StyledSearchModeButton
+                  data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
+                  isSelected={searchMode === 'current-user'}
+                  onClick={() => setSearchMode('current-user')}>
+                  {t('tasks.my_user_dialogs')}
+                </StyledSearchModeButton>
+                <StyledSearchModeButton
+                  data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
+                  isSelected={searchMode === 'all'}
+                  onClick={() => setSearchMode('all')}>
+                  {t('tasks.all_user_dialogs')}
+                </StyledSearchModeButton>
+              </StyledTicketSearchFormGroup>
 
-        <Divider />
-        <NavigationListAccordion
-          title={t('tasks.user_dialog')}
-          startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} fontSize="small" />}
-          accordionPath={UrlPathTemplate.Tasks}
-          defaultPath={UrlPathTemplate.Tasks}
-          dataTestId={dataTestId.tasksPage.userDialogAccordion}>
-          <StyledTicketSearchFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
-            <StyledSearchModeButton
-              data-testid={dataTestId.tasksPage.searchMode.newUserDialogsButton}
-              isSelected={searchMode === 'new'}
-              onClick={() => {
-                setSearchMode('new');
-                openTasksPage();
-              }}>
-              {t('tasks.new_user_dialogs')}
-            </StyledSearchModeButton>
-            <StyledSearchModeButton
-              data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
-              isSelected={searchMode === 'current-user'}
-              onClick={() => {
-                setSearchMode('current-user');
-                openTasksPage();
-              }}>
-              {t('tasks.my_user_dialogs')}
-            </StyledSearchModeButton>
-            <StyledSearchModeButton
-              data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
-              isSelected={searchMode === 'all'}
-              onClick={() => {
-                setSearchMode('all');
-                openTasksPage();
-              }}>
-              {t('tasks.all_user_dialogs')}
-            </StyledSearchModeButton>
-          </StyledTicketSearchFormGroup>
+              <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
+                <SelectableButton
+                  data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
+                  showCheckbox
+                  isSelected={selectedTypes.publishingRequest}
+                  color="publishingRequest"
+                  onClick={() =>
+                    setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
+                  }>
+                  {selectedTypes.publishingRequest && publishingRequestCount
+                    ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
+                    : t('my_page.messages.types.PublishingRequest')}
+                </SelectableButton>
 
-          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
-            <SelectableButton
-              data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
-              showCheckbox
-              isSelected={selectedTypes.publishingRequest}
-              color="publishingRequest"
-              onClick={() =>
-                setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
-              }>
-              {selectedTypes.publishingRequest && publishingRequestCount
-                ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
-                : t('my_page.messages.types.PublishingRequest')}
-            </SelectableButton>
+                <SelectableButton
+                  data-testid={dataTestId.tasksPage.typeSearch.doiButton}
+                  showCheckbox
+                  isSelected={selectedTypes.doiRequest}
+                  color="doiRequest"
+                  onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
+                  {selectedTypes.doiRequest && doiRequestCount
+                    ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
+                    : t('my_page.messages.types.DoiRequest')}
+                </SelectableButton>
 
-            <SelectableButton
-              data-testid={dataTestId.tasksPage.typeSearch.doiButton}
-              showCheckbox
-              isSelected={selectedTypes.doiRequest}
-              color="doiRequest"
-              onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
-              {selectedTypes.doiRequest && doiRequestCount
-                ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
-                : t('my_page.messages.types.DoiRequest')}
-            </SelectableButton>
+                <SelectableButton
+                  data-testid={dataTestId.tasksPage.typeSearch.supportButton}
+                  showCheckbox
+                  isSelected={selectedTypes.generalSupportCase}
+                  color="generalSupportCase"
+                  onClick={() =>
+                    setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
+                  }>
+                  {selectedTypes.generalSupportCase && generalSupportCaseCount
+                    ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
+                    : t('my_page.messages.types.GeneralSupportCase')}
+                </SelectableButton>
+              </StyledTicketSearchFormGroup>
 
-            <SelectableButton
-              data-testid={dataTestId.tasksPage.typeSearch.supportButton}
-              showCheckbox
-              isSelected={selectedTypes.generalSupportCase}
-              color="generalSupportCase"
-              onClick={() =>
-                setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
-              }>
-              {selectedTypes.generalSupportCase && generalSupportCaseCount
-                ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
-                : t('my_page.messages.types.GeneralSupportCase')}
-            </SelectableButton>
-          </StyledTicketSearchFormGroup>
-
-          <StyledTicketSearchFormGroup>
-            <FormControl disabled={searchMode === 'new'}>
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
-                checked={selectedStatuses.Pending}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
-                  />
-                }
-                label={
-                  selectedStatuses.Pending && pendingCount
-                    ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
-                    : t('my_page.messages.ticket_types.Pending')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
-                checked={selectedStatuses.Completed}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() =>
-                      setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })
+              <StyledTicketSearchFormGroup>
+                <FormControl disabled={searchMode === 'new'}>
+                  <FormControlLabel
+                    data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
+                    checked={selectedStatuses.Pending}
+                    control={
+                      <StyledStatusCheckbox
+                        onChange={() =>
+                          setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })
+                        }
+                      />
+                    }
+                    label={
+                      selectedStatuses.Pending && pendingCount
+                        ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
+                        : t('my_page.messages.ticket_types.Pending')
                     }
                   />
-                }
-                label={
-                  selectedStatuses.Completed && completedCount
-                    ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
-                    : t('my_page.messages.ticket_types.Completed')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
-                checked={selectedStatuses.Closed}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
+                  <FormControlLabel
+                    data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
+                    checked={selectedStatuses.Completed}
+                    control={
+                      <StyledStatusCheckbox
+                        onChange={() =>
+                          setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })
+                        }
+                      />
+                    }
+                    label={
+                      selectedStatuses.Completed && completedCount
+                        ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
+                        : t('my_page.messages.ticket_types.Completed')
+                    }
                   />
-                }
-                label={
-                  selectedStatuses.Closed && closedCount
-                    ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
-                    : t('my_page.messages.ticket_types.Closed')
-                }
-              />
-            </FormControl>
-          </StyledTicketSearchFormGroup>
-        </NavigationListAccordion>
-      </SidePanel>
+                  <FormControlLabel
+                    data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
+                    checked={selectedStatuses.Closed}
+                    control={
+                      <StyledStatusCheckbox
+                        onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
+                      />
+                    }
+                    label={
+                      selectedStatuses.Closed && closedCount
+                        ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
+                        : t('my_page.messages.ticket_types.Closed')
+                    }
+                  />
+                </FormControl>
+              </StyledTicketSearchFormGroup>
+            </NavigationListAccordion>
+          </>
+        )}
+      </SideMenu>
+      {/* <SidePanel> */}
+      {/* </SidePanel> */}
 
       <ErrorBoundary>
         <Switch>
