@@ -42,6 +42,7 @@ export enum UrlPathTemplate {
   ResearchProfile = '/research-profile',
   Search = '/search',
   Tasks = '/tasks',
+  TasksRegistration = '/tasks/:identifier',
   Wildcard = '*',
 }
 
@@ -61,3 +62,6 @@ export const getAdminInstitutionPath = (id: string) =>
   `${UrlPathTemplate.BasicDataInstitutions}?id=${encodeURIComponent(id)}`;
 
 export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${encodeURIComponent(id)}`;
+
+export const getTasksRegistrationPath = (identifier: string) =>
+  UrlPathTemplate.TasksRegistration.replace(':identifier', encodeURIComponent(identifier));
