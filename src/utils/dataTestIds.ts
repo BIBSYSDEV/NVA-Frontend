@@ -416,7 +416,6 @@ export const dataTestId = {
   myPage: {
     createProjectButton: 'create-project-button',
     messagesAccordion: 'messages-accordion',
-    messagesLink: 'messages-link',
     myProfileLink: 'my-profile-link',
     myProfile: {
       cristinIdField: 'cristin-id-field',
@@ -442,5 +441,21 @@ export const dataTestId = {
   },
   tasksPage: {
     userDialogAccordion: 'user-dialog-accordion',
+    searchMode: {
+      allUserDialogsButton: 'all-user-dialogs-button',
+      myUserDialogsButton: 'my-user-dialogs-button',
+      newUserDialogsButton: 'new-user-dialogs-button',
+    },
+    statusSearch: {
+      closedCheckbox: 'new-status-checkbox',
+      completedCheckbox: 'new-status-checkbox',
+      newCheckbox: 'new-status-checkbox',
+      pendingCheckbox: 'pending-status-checkbox',
+    },
+    typeSearch: {
+      doiButton: 'doi-button',
+      publishingButton: 'publishing-request-button',
+      supportButton: 'support-button',
+    },
   },
 };
