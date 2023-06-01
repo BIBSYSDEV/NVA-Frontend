@@ -264,8 +264,6 @@ const TasksPage = () => {
           </>
         )}
       </SideMenu>
-      {/* <SidePanel> */}
-      {/* </SidePanel> */}
 
       <ErrorBoundary>
         <Switch>
