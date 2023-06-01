@@ -243,7 +243,7 @@ export const DoiRequestAccordion = ({
             </AccordionSummary>
             <AccordionDetails>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <MessageList messages={messages} />
+                <MessageList ticket={doiRequestTicket} />
                 <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
               </Box>
             </AccordionDetails>
