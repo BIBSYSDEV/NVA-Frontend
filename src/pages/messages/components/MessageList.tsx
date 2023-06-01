@@ -51,10 +51,12 @@ const MessageItem = ({ message, ticketType }: MessageItemProps) => {
 
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
+  console.log(senderQuery.data);
+
   return (
     <li>
       <Box sx={{ bgcolor: ticketColor[ticketType], p: '0.5rem', borderRadius: '4px', maxWidth: '20rem' }}>
-        <Typography sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography flexWrap="wrap" sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <span>
             {senderQuery.isLoading ? (
               <Skeleton sx={{ width: '8rem' }} />
@@ -65,7 +67,7 @@ const MessageItem = ({ message, ticketType }: MessageItemProps) => {
             )}
           </span>
           <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
-            ({new Date(message.createdDate).toLocaleString()})
+            {new Date(message.createdDate).toLocaleDateString()}
           </span>
         </Typography>
 
