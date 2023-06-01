@@ -110,5 +110,5 @@ export const createRegistrationFromImportCandidate = async (importCandidate: Imp
     method: 'POST',
     data: importCandidate,
   });
-  return creatRegistrationResponse.data; // Denne vil da returnere opprettet Publication
+  return creatRegistrationResponse.data;
 };

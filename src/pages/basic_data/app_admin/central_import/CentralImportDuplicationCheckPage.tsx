@@ -74,21 +74,20 @@ export const CentralImportDuplicationCheckPage = () => {
               publication={registration}
               setDuplicateSearchFilters={setDuplicateSearchFilters}
             />
+            <Button
+              variant="outlined"
+              color="primary"
+              component={Link}
+              to={`${getImportCandidatePagePath(identifier)}`}>
+              Import
+            </Button>
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'flex-start',
                 marginBottom: '1rem',
                 alignItems: 'center',
-              }}>
-              <Button
-                variant="outlined"
-                color="primary"
-                component={Link}
-                to={`${getImportCandidatePagePath(identifier)}`}>
-                Import
-              </Button>
-            </Box>
+              }}></Box>
             <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 2rem' } }}>
               <CentralImportDuplicateSearch duplicateSearchFilters={duplicateSearchFilters} />
             </Box>
