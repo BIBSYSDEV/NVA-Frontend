@@ -100,29 +100,47 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.editor.doiLinkButton}]`).should('be.visible');
   });
 
-  it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
+  it('Unauthorized user should see Forbidden page when visiting new registration', () => {
     cy.visit(UrlPathTemplate.RegistrationNew);
+    cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
+  });
 
+  it('Unauthorized user should see Forbidden page when visiting my registrations', () => {
     cy.visit(UrlPathTemplate.MyPageMyRegistrations);
+    cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
+  });
 
+  it('Unauthorized user should see Forbidden page when visiting tasks', () => {
     cy.visit(UrlPathTemplate.Tasks);
+    cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
+  });
 
+  it('Unauthorized user should see Forbidden page when visiting basic data', () => {
     cy.visit(UrlPathTemplate.BasicData);
+    cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
+  });
 
+  it('Unauthorized user should see Forbidden page when visiting editor page', () => {
     cy.visit(UrlPathTemplate.Editor);
+    cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
   });
