@@ -10,16 +10,7 @@ import { MediaContributionPeriodicalPublicationInstance } from './publication_ty
 import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
 import { MapPublicationInstance } from './publication_types/otherRegistration.types';
 import { ExhibitionPublicationInstance } from './publication_types/exhibitionContent.types';
-import {
-  EntityDescription,
-  Funding,
-  Journal,
-  Publisher,
-  RegistrationPublisher,
-  RegistrationStatus,
-} from './registration.types';
-import { ResearchProject } from './project.types';
-import { AssociatedArtifact } from './associatedArtifact.types';
+import { Journal, Publisher, Registration } from './registration.types';
 
 export enum ImportStatus {
   Imported = 'IMPORTED',
@@ -27,26 +18,8 @@ export enum ImportStatus {
   NotApplicable = 'NOT_APPLICABLE',
 }
 
-export interface ImportCandidate {
-  readonly type: 'ImportCandidate';
-  readonly id: string;
-  readonly identifier: string;
-  readonly createdDate: string;
-  readonly modifiedDate: string;
-  readonly publishedDate?: string;
-  readonly resourceOwner: {
-    readonly owner: string;
-    readonly ownerAffiliation: string;
-  };
-  readonly status: RegistrationStatus;
-  readonly doi?: string;
-  readonly publisher: RegistrationPublisher;
-  readonly handle?: string;
-  subjects: string[];
-  projects: ResearchProject[];
-  associatedArtifacts: AssociatedArtifact[];
-  fundings: Funding[];
-  entityDescription?: EntityDescription;
+export interface ImportCandidate extends Omit<Registration, 'type'> {
+  type: 'ImportCandidate';
   importStatus: ImportStatus;
 }
 

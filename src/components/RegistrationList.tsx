@@ -29,9 +29,10 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => (
 
 interface RegistrationListItemContentProps {
   registration: Registration;
+  linkPath?: string;
 }
 
-export const RegistrationListItemContent = ({ registration }: RegistrationListItemContentProps) => {
+export const RegistrationListItemContent = ({ registration, linkPath }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
 
@@ -52,7 +53,7 @@ export const RegistrationListItemContent = ({ registration }: RegistrationListIt
         {heading}
       </Typography>
       <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-        <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
+        <MuiLink component={Link} to={linkPath ?? getRegistrationLandingPagePath(identifier)}>
           {getTitleString(entityDescription?.mainTitle)}
         </MuiLink>
       </Typography>

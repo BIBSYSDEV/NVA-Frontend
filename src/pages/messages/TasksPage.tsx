@@ -1,27 +1,17 @@
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  TablePagination,
-  Typography,
-  styled,
-} from '@mui/material';
-import { Helmet } from 'react-helmet-async';
+import { Box, CircularProgress, Divider, FormControl, FormControlLabel, Typography, styled } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { useQuery } from '@tanstack/react-query';
+import { Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { ListSkeleton } from '../../components/ListSkeleton';
 import { RootState } from '../../redux/store';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
 import { getLanguageString } from '../../utils/translation-helpers';
-import { TicketList } from './components/TicketList';
+import { TicketList, ticketsPerPageOptions } from './components/TicketList';
 import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { StyledPageWithSideMenu, SidePanel, SideNavHeader, LinkButton } from '../../components/PageWithSideMenu';
@@ -32,8 +22,9 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
-
-const rowsPerPageOptions = [10, 20, 50];
+import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { CuratorRoute } from '../../utils/routes/Routes';
+import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 
 type SelectedStatusState = {
   [key in Exclude<TicketStatus, 'New'>]: boolean;
@@ -51,10 +42,11 @@ const StyledSearchModeButton = styled(LinkButton)({
 const TasksPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const history = useHistory();
   const { user } = useSelector((store: RootState) => store);
   const nvaUsername = user?.nvaUsername ?? '';
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
 
   const [searchMode, setSearchMode] = useState<SearchMode>('new');
 
@@ -75,6 +67,13 @@ const TasksPage = () => {
     errorMessage: t('feedback.error.get_roles'),
     withAuthentication: true,
   });
+
+  const openTasksPage = () => {
+    // TODO: Redundant when NP-44809 is completed
+    if (history.location.pathname !== UrlPathTemplate.Tasks) {
+      history.push(UrlPathTemplate.Tasks);
+    }
+  };
 
   const viewingScopes = institutionUser?.viewingScope?.includedUnits ?? [];
   const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
@@ -108,7 +107,6 @@ const TasksPage = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 
-  const tickets = ticketsQuery.data?.hits ?? [];
   const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
   const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
@@ -121,9 +119,6 @@ const TasksPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <Helmet>
-        <title>{t('common.tasks')}</title>
-      </Helmet>
       <SidePanel>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
@@ -154,19 +149,28 @@ const TasksPage = () => {
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.newUserDialogsButton}
               isSelected={searchMode === 'new'}
-              onClick={() => setSearchMode('new')}>
+              onClick={() => {
+                setSearchMode('new');
+                openTasksPage();
+              }}>
               {t('tasks.new_user_dialogs')}
             </StyledSearchModeButton>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
               isSelected={searchMode === 'current-user'}
-              onClick={() => setSearchMode('current-user')}>
+              onClick={() => {
+                setSearchMode('current-user');
+                openTasksPage();
+              }}>
               {t('tasks.my_user_dialogs')}
             </StyledSearchModeButton>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
               isSelected={searchMode === 'all'}
-              onClick={() => setSearchMode('all')}>
+              onClick={() => {
+                setSearchMode('all');
+                openTasksPage();
+              }}>
               {t('tasks.all_user_dialogs')}
             </StyledSearchModeButton>
           </StyledTicketSearchFormGroup>
@@ -261,26 +265,22 @@ const TasksPage = () => {
         </NavigationListAccordion>
       </SidePanel>
 
-      <section>
-        {ticketsQuery.isLoading ? (
-          <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-        ) : (
-          <>
-            <TicketList tickets={tickets} />
-            <TablePagination
-              aria-live="polite"
-              data-testid={dataTestId.startPage.searchPagination}
-              rowsPerPageOptions={rowsPerPageOptions}
-              component="div"
-              count={ticketsQuery.data?.size ?? 0}
+      <ErrorBoundary>
+        <Switch>
+          <CuratorRoute exact path={UrlPathTemplate.Tasks}>
+            <TicketList
+              ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
               page={page}
-              onPageChange={(_, newPage) => setPage(newPage)}
-              onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
+              setPage={setPage}
+              helmetTitle={t('common.tasks')}
             />
-          </>
-        )}
-      </section>
+          </CuratorRoute>
+
+          <CuratorRoute exact path={UrlPathTemplate.TasksRegistration} component={RegistrationLandingPage} />
+        </Switch>
+      </ErrorBoundary>
     </StyledPageWithSideMenu>
   );
 };

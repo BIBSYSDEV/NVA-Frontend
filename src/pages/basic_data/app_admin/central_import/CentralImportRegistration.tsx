@@ -1,15 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { RegistrationParams } from '../../../../utils/urlPaths';
 import { useQuery } from '@tanstack/react-query';
 import { createRegistrationFromImportCandidate, fetchImportCandidate } from '../../../../api/registrationApi';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { RegistrationParams } from '../../../../utils/urlPaths';
 
 export const CentralImportRegistration = () => {
   const { t } = useTranslation();
   const { identifier } = useParams<RegistrationParams>();
-  const dispatch = useDispatch();
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidate', identifier],
@@ -21,7 +19,7 @@ export const CentralImportRegistration = () => {
 
   const createPublication = async () => {
     if (importCandidate) {
-      const createPublicationResponse = await createRegistrationFromImportCandidate(importCandidate);
+      return await createRegistrationFromImportCandidate(importCandidate);
     }
   };
 
