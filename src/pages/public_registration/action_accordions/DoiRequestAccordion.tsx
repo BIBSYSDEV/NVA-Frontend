@@ -141,8 +141,6 @@ export const DoiRequestAccordion = ({
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
       sx={{
-        borderLeft: '1.25rem solid',
-        borderLeftColor: 'doiRequest.main',
         bgcolor: 'doiRequest.light',
       }}
       elevation={3}

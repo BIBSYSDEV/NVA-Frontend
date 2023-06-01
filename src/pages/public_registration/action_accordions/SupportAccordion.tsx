@@ -40,8 +40,6 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{
-        borderLeft: '1.25rem solid',
-        borderLeftColor: 'generalSupportCase.main',
         bgcolor: 'generalSupportCase.light',
       }}
       elevation={3}>
