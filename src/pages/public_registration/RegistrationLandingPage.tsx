@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useQuery } from '@tanstack/react-query';
 import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
@@ -11,7 +12,7 @@ import { NotPublished } from '../errorpages/NotPublished';
 import { PageSpinner } from '../../components/PageSpinner';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { RegistrationParams } from '../../utils/urlPaths';
+import { RegistrationParams, UrlPathTemplate } from '../../utils/urlPaths';
 import { ActionPanel } from './ActionPanel';
 import { fetchRegistration, fetchRegistrationTickets } from '../../api/registrationApi';
 import { setNotification } from '../../redux/notificationSlice';
@@ -46,35 +47,52 @@ export const RegistrationLandingPage = () => {
     registrationQuery.refetch();
   };
 
-  return (
-    <Box
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: '5fr 1fr',
-        gap: '1rem',
-      }}>
-      {registrationQuery.isLoading || (isRegistrationAdmin && ticketsQuery.isLoading) ? (
-        <PageSpinner aria-label={t('common.registration')} />
-      ) : registration ? (
-        isAllowedToSeePublicRegistration ? (
-          <ErrorBoundary>
-            <PublicRegistrationContent registration={registration} />
+  const backNavigationPath = window.location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages)
+    ? UrlPathTemplate.MyPageMyMessages
+    : window.location.pathname.startsWith(UrlPathTemplate.Tasks)
+    ? UrlPathTemplate.Tasks
+    : '';
 
-            {isRegistrationAdmin && ticketsQuery.isSuccess && (
-              <ActionPanel
-                registration={registration}
-                refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                tickets={ticketsQuery.data?.tickets ?? []}
-                isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
-              />
-            )}
-          </ErrorBoundary>
-        ) : (
-          <NotPublished />
-        )
-      ) : (
-        <NotFound />
+  return (
+    <section>
+      {backNavigationPath && (
+        // TODO: Redundant when NP-44809 is completed
+        <Link to={backNavigationPath}>
+          <Button startIcon={<ArrowBackIcon />} variant="outlined" sx={{ mb: '0.5rem', textTransform: 'none' }}>
+            {t('common.back')}
+          </Button>
+        </Link>
       )}
-    </Box>
+
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: '5fr 1fr',
+          gap: '1rem',
+        }}>
+        {registrationQuery.isLoading || (isRegistrationAdmin && ticketsQuery.isLoading) ? (
+          <PageSpinner aria-label={t('common.registration')} />
+        ) : registration ? (
+          isAllowedToSeePublicRegistration ? (
+            <ErrorBoundary>
+              <PublicRegistrationContent registration={registration} />
+
+              {isRegistrationAdmin && ticketsQuery.isSuccess && (
+                <ActionPanel
+                  registration={registration}
+                  refetchRegistrationAndTickets={refetchRegistrationAndTickets}
+                  tickets={ticketsQuery.data?.tickets ?? []}
+                  isLoadingData={registrationQuery.isFetching || ticketsQuery.isFetching}
+                />
+              )}
+            </ErrorBoundary>
+          ) : (
+            <NotPublished />
+          )
+        ) : (
+          <NotFound />
+        )}
+      </Box>
+    </section>
   );
 };
