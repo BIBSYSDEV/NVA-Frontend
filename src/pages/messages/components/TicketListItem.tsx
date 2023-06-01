@@ -12,7 +12,7 @@ import { getContributorInitials } from '../../../utils/registration-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
 import { UrlPathTemplate, getTasksRegistrationPath } from '../../../utils/urlPaths';
 
-const ticketColor = {
+export const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',

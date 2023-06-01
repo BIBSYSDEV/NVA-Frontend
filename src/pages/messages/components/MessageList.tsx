@@ -6,6 +6,7 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { fetchUser } from '../../../api/roleApi';
 import { getFullName } from '../../../utils/user-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { ticketColor } from './TicketListItem';
 
 interface MessageListProps {
   ticket: Ticket;
@@ -25,7 +26,6 @@ export const MessageList = ({ ticket }: MessageListProps) => {
           p: 0,
           m: 0,
           gap: '0.25rem',
-          width: 'fit-content',
         }}>
         {messages.map((message) => (
           <MessageItem key={message.identifier} message={message} ticketType={ticket.type} />
@@ -39,12 +39,6 @@ interface MessageItemProps {
   message: Message;
   ticketType: TicketType;
 }
-
-const ticketColor = {
-  PublishingRequest: 'publishingRequest.main',
-  DoiRequest: 'doiRequest.main',
-  GeneralSupportCase: 'generalSupportCase.main',
-};
 
 const MessageItem = ({ message, ticketType }: MessageItemProps) => {
   const { t } = useTranslation();
@@ -75,7 +69,7 @@ const MessageItem = ({ message, ticketType }: MessageItemProps) => {
           </span>
         </Typography>
 
-        <Divider sx={{ mb: '0.5rem' }} />
+        <Divider sx={{ mb: '0.5rem', bgcolor: '#B4A98E' }} />
 
         <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{message.text}</Typography>
       </Box>
