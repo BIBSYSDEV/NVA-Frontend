@@ -8,6 +8,7 @@ export enum UrlPathTemplate {
   BasicDataAddEmployee = '/basic-data/person-register/new',
   BasicDataCentralImport = '/basic-data/central-import',
   BasicDataCentralImportDuplicateCheck = '/basic-data/central-import-duplicate-check/:identifier',
+  BasicDataCentralImportRegistration = '/basic-data/central-import/:identifier',
   BasicDataInstitutions = '/basic-data/institutions',
   BasicDataPersonRegister = '/basic-data/person-register',
   Editor = '/editor',

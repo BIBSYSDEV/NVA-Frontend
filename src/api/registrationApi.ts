@@ -2,6 +2,7 @@ import { Doi, Registration } from '../types/registration.types';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { PublicationsApiPath } from './apiPaths';
+import { ImportCandidate } from '../types/importCandidate.types';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({
@@ -94,4 +95,11 @@ export const updateTicket = async (ticketId: string, ticketData: UpdateTicketDat
     data: ticketData,
   });
   return updateTicket.data;
+};
+
+export const fetchImportCandidate = async (importCandidateIdentifier: string) => {
+  const fetchImportCandidateResponse = await apiRequest2<ImportCandidate>({
+    url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}`,
+  });
+  return fetchImportCandidateResponse.data;
 };

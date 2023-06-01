@@ -22,12 +22,13 @@ import {
   LinkButton,
   LinkCreateButton,
   NavigationList,
-  SidePanel,
   SideNavHeader,
+  SidePanel,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import { CentralImportRegistration } from './app_admin/central_import/CentralImportRegistration';
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
@@ -161,6 +162,11 @@ const BasicDataPage = () => {
               exact
               path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
               component={CentralImportDuplicationCheckPage}
+            />
+            <AppAdminRoute
+              exact
+              path={UrlPathTemplate.BasicDataCentralImportRegistration}
+              component={CentralImportRegistration}
             />
             <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
             <InstitutionAdminRoute

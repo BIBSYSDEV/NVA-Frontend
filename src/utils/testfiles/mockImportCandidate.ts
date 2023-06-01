@@ -1,7 +1,7 @@
-import { ImportCandidate, ImportStatus } from '../../types/importCandidate.types';
+import { ExpandedImportCandidate, ImportStatus } from '../../types/importCandidate.types';
 import { JournalType } from '../../types/publicationFieldNames';
 
-export const mockImportCandidate: ImportCandidate = {
+export const mockImportCandidate: ExpandedImportCandidate = {
   type: `ImportCandidate`,
   id: 'https://api.dev.nva.aws.unit.no/registration/12345679',
   additionalIdentifiers: ['12345'],

@@ -3,7 +3,7 @@ import { Ticket } from '../../types/publication_types/ticket.types';
 import { Registration } from '../../types/registration.types';
 import { mockMathJaxRegistration, mockRegistration, mockTicketCollection } from './mockRegistration';
 import { mockImportCandidate } from './mockImportCandidate';
-import { ImportCandidate } from '../../types/importCandidate.types';
+import { ExpandedImportCandidate } from '../../types/importCandidate.types';
 
 export const mockSearchResults: SearchResponse<Registration> = {
   processingTime: 10,
@@ -28,7 +28,7 @@ export const mockSearchTasks: SearchResponse<Ticket> = {
   hits: mockTicketCollection.tickets,
 };
 
-export const mockSearchImportCandidates: SearchResponse<ImportCandidate> = {
+export const mockSearchImportCandidates: SearchResponse<ExpandedImportCandidate> = {
   processingTime: 2,
   size: 1,
   hits: [mockImportCandidate],
