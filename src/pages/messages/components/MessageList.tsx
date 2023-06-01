@@ -52,9 +52,7 @@ const MessageItem = ({ message, ticketType }: MessageItemProps) => {
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
   return (
-    <Box
-      component={'li'}
-      sx={{ bgcolor: ticketColor[ticketType], p: '0.5rem', borderRadius: '4px', maxWidth: '20rem' }}>
+    <Box component={'li'} sx={{ bgcolor: ticketColor[ticketType], p: '0.5rem', borderRadius: '4px' }}>
       <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
         <span>
           {senderQuery.isLoading ? (
