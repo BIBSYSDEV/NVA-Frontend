@@ -61,6 +61,7 @@ export const dataTestId = {
     },
     personRegisterAccordion: 'person-register-accordion',
     personRegisterLink: 'person-register-link',
+    personRegisterSearchBar: 'person-register-search-bar',
   },
   confirmDialog: {
     acceptButton: 'accept-button',

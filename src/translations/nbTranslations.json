@@ -1080,6 +1080,7 @@
       "participants_other": "{{count}} deltakere",
       "preview_of": "Forhåndsvisning av {{fileName}}",
       "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
+      "publication": "Publisering",
       "published": "Publisert",
       "published_date": "Publisert: {{date}}",
       "publishing_request": "Publiseringsgodkjenning",
