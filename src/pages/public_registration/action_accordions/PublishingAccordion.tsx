@@ -3,10 +3,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import WarningIcon from '@mui/icons-material/Warning';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
-import CheckIcon from '@mui/icons-material/Check';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
@@ -234,10 +233,8 @@ export const PublishingAccordion = ({
           <LoadingButton
             disabled={isLoading !== LoadingState.None || !registrationIsValid}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
-            sx={{ mt: '1rem' }}
-            color="primary"
-            variant="contained"
-            endIcon={<CloudUploadIcon />}
+            sx={{ mt: '1rem', bgcolor: 'white' }}
+            variant="outlined"
             loadingPosition="end"
             onClick={onClickPublish}
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
@@ -246,21 +243,23 @@ export const PublishingAccordion = ({
         )}
 
         {canHandlePublishingRequest && !hasMismatchingPublishedStatus && (
-          <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+          <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <LoadingButton
-              variant="contained"
+              sx={{ bgcolor: 'white' }}
+              variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
-              endIcon={<CheckIcon />}
+              startIcon={<AttachFileIcon fontSize="large" />}
               loadingPosition="end"
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-              {t('registration.public_page.approve_publish_request')}
+              {t('registration.public_page.approve_publish_request')} ({registration.associatedArtifacts.length})
             </LoadingButton>
             <LoadingButton
-              variant="contained"
+              sx={{ bgcolor: 'white' }}
+              variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
-              endIcon={<CloseIcon />}
+              startIcon={<CloseIcon />}
               loadingPosition="end"
               onClick={() => ticketMutation.mutate({ status: 'Closed' })}
               loading={isLoading === LoadingState.RejectPublishingRequest}
