@@ -5,6 +5,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { ExpandedImportCandidate } from '../../../../types/importCandidate.types';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 
 interface CentralImportResultItemProps {
   importCandidate: ExpandedImportCandidate;
@@ -48,7 +49,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
                   fontStyle: 'italic',
                   wordBreak: 'break-word',
                 }}>
-                <MuiLink component={Link} to={`${getDuplicateCheckPagePath(importCandidate.id.split('/', 5)[4])}`}>
+                <MuiLink component={Link} to={getDuplicateCheckPagePath(getIdentifierFromId(importCandidate.id))}>
                   {importCandidate.mainTitle}
                 </MuiLink>
               </Typography>

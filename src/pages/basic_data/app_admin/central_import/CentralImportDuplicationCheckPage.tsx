@@ -74,12 +74,8 @@ export const CentralImportDuplicationCheckPage = () => {
               publication={registration}
               setDuplicateSearchFilters={setDuplicateSearchFilters}
             />
-            <Button
-              variant="outlined"
-              color="primary"
-              component={Link}
-              to={`${getImportCandidatePagePath(identifier)}`}>
-              Import
+            <Button variant="outlined" color="primary" component={Link} to={getImportCandidatePagePath(identifier)}>
+              {t('basic_data.central_import.import')}
             </Button>
             <Box
               sx={{

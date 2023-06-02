@@ -55,7 +55,9 @@
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})"
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})",
+      "import": "importer",
+      "see_publication": "Se publikasjon"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -414,6 +416,7 @@
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
+      "create_registration": "Publikasjon er opprettet",
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
