@@ -273,10 +273,11 @@ export const PublishingAccordion = ({
 
         {hasPendingTicket && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
-            {ticketMessages.length < 0 && (
+            {ticketMessages.length > 0 ? (
+              <MessageList ticket={publishingRequestTicket} />
+            ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}
-            <MessageList ticket={publishingRequestTicket} />
             <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
           </Box>
         )}
