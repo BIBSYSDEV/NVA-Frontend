@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { Button, DialogActions, TextField } from '@mui/material';
+import { Box, Button, DialogActions, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
@@ -31,18 +31,22 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
         <Form noValidate>
           <Field name="message">
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                disabled={isSubmitting}
-                data-testid="message-field"
-                variant="filled"
-                multiline
-                maxRows={Infinity}
-                fullWidth
-                label={t('common.message')}
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <TextField
+                  {...field}
+                  inputProps={{ maxLength: 160 }}
+                  disabled={isSubmitting}
+                  data-testid="message-field"
+                  variant="filled"
+                  multiline
+                  maxRows={Infinity}
+                  fullWidth
+                  label={t('common.message')}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
+                <span style={{ alignSelf: 'end', color: 'gray' }}>{(field.value as string).length}/160</span>
+              </Box>
             )}
           </Field>
 
