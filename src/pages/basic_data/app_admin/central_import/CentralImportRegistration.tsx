@@ -3,11 +3,12 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import React, { useState } from 'react';
+import React from 'react';
 import { createRegistrationFromImportCandidate, fetchImportCandidate } from '../../../../api/registrationApi';
 import { getRegistrationLandingPagePath, RegistrationParams } from '../../../../utils/urlPaths';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
+import { LoadingButton } from '@mui/lab';
 
 export const CentralImportRegistration = () => {
   const { t } = useTranslation();
@@ -20,10 +21,6 @@ export const CentralImportRegistration = () => {
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
-  const activateRedirectButton = () => {
-    setIsActive(false);
-  };
-
   const importCandidateMutation = useMutation({
     mutationFn: importCandidateQuery.data
       ? () => createRegistrationFromImportCandidate(importCandidateQuery.data)
@@ -35,7 +32,6 @@ export const CentralImportRegistration = () => {
           variant: 'success',
         })
       );
-      activateRedirectButton();
     },
     onError: () =>
       dispatch(
@@ -45,26 +41,27 @@ export const CentralImportRegistration = () => {
         })
       ),
   });
-  const [active, setIsActive] = useState(true);
 
   const registrationIdentifier = importCandidateMutation.data?.identifier ?? '';
 
   return (
-    <>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <Typography>{importCandidateQuery.data?.entityDescription?.mainTitle}</Typography>
-        <Button variant="outlined" color="primary" onClick={() => importCandidateMutation.mutate()}>
-          {t('basic_data.central_import.import')}
-        </Button>
-        <Button
-          variant="outlined"
-          color="primary"
-          disabled={active}
-          component={RouterLink}
-          to={getRegistrationLandingPagePath(getIdentifierFromId(registrationIdentifier))}>
-          {t('basic_data.central_import.see_publication')}
-        </Button>
-      </Box>
-    </>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Typography>{importCandidateQuery.data?.entityDescription?.mainTitle}</Typography>
+      <LoadingButton
+        loading={importCandidateQuery.isLoading}
+        variant="outlined"
+        color="primary"
+        onClick={() => importCandidateMutation.mutate()}>
+        {t('basic_data.central_import.import')}
+      </LoadingButton>
+      <Button
+        variant="outlined"
+        color="primary"
+        disabled={!importCandidateMutation.isSuccess}
+        component={RouterLink}
+        to={getRegistrationLandingPagePath(getIdentifierFromId(registrationIdentifier))}>
+        {t('basic_data.central_import.see_publication')}
+      </Button>
+    </Box>
   );
 };
