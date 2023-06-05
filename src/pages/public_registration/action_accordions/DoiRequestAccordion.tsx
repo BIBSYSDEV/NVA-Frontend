@@ -147,7 +147,7 @@ export const DoiRequestAccordion = ({
       elevation={3}
       defaultExpanded={waitingForRemovalOfDoi || (userIsCurator && isPendingDoiRequest)}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {t('common.doi_long')}
+        {t('common.doi')}
       </AccordionSummary>
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}

@@ -486,6 +486,7 @@
   },
   "my_page": {
     "messages": {
+      "dialogue": "Dialog",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -493,7 +494,6 @@
       "files_published": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
       "general_support_pending": "Venter på oppfølging",
-      "messages": "Meldinger",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
         "Closed": "Avvist",
@@ -502,9 +502,9 @@
         "Pending": "Behandles"
       },
       "types": {
-        "DoiRequest": "DOI-forespørsel",
+        "DoiRequest": "DOI",
         "GeneralSupportCase": "Kuratorstøtte",
-        "PublishingRequest": "Publiseringsforespørsel"
+        "PublishingRequest": "Publisering"
       }
     },
     "my_page": "Min side",

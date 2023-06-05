@@ -135,11 +135,11 @@ const MyPagePage = () => {
           <NavigationListAccordion
             key={dataTestId.myPage.messagesAccordion}
             dataTestId={dataTestId.myPage.messagesAccordion}
-            title={t('my_page.messages.messages')}
+            title={t('my_page.messages.dialogue')}
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 showCheckbox
@@ -344,7 +344,7 @@ const MyPagePage = () => {
               setRowsPerPage={setRowsPerPage}
               page={page}
               setPage={setPage}
-              helmetTitle={t('my_page.messages.messages')}
+              helmetTitle={t('my_page.messages.dialogue')}
             />
           </CreatorRoute>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
