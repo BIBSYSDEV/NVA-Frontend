@@ -63,7 +63,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               data-testid={dataTestId.header.editorLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.Editor}>
+              to={UrlPathTemplate.EditorCurators}>
               <Typography>{customer?.shortName}</Typography>
             </MenuItem>
           ),
