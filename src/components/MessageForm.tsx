@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, DialogActions, TextField } from '@mui/material';
+import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
@@ -45,7 +45,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
                   error={touched && !!error}
                   helperText={<ErrorMessage name={field.name} />}
                 />
-                <span style={{ alignSelf: 'end', color: 'gray' }}>{(field.value as string).length}/160</span>
+                <Typography sx={{ alignSelf: 'end', color: 'gray' }}>{field.value.length}/160</Typography>
               </Box>
             )}
           </Field>
