@@ -344,7 +344,7 @@ const MyPagePage = () => {
               setRowsPerPage={setRowsPerPage}
               page={page}
               setPage={setPage}
-              helmetTitle={t('my_page.messages.messages')}
+              helmetTitle={t('my_page.messages.dialogue')}
             />
           </CreatorRoute>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
