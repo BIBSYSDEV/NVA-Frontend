@@ -114,14 +114,14 @@ const MyPagePage = () => {
   }, [history, currentPath, user?.isCreator]);
 
   // Hide menu when opening a ticket on Messages path
-  const showMenu =
+  const expandMenu =
     !history.location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
     history.location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
 
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={showMenu}
+        expanded={expandMenu}
         minimizedMenu={
           <Link to={UrlPathTemplate.MyPageMyMessages}>
             <StyledMinimizedMenuButton title={t('my_page.my_page')}>

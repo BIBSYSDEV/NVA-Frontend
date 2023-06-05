@@ -111,12 +111,12 @@ const TasksPage = () => {
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
-  const showSearchFilters = history.location.pathname === UrlPathTemplate.Tasks;
+  const expandMenu = history.location.pathname === UrlPathTemplate.Tasks;
 
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={showSearchFilters}
+        expanded={expandMenu}
         minimizedMenu={
           <Link to={UrlPathTemplate.Tasks}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
