@@ -122,11 +122,11 @@ const MyPagePage = () => {
           <NavigationListAccordion
             key={dataTestId.myPage.messagesAccordion}
             dataTestId={dataTestId.myPage.messagesAccordion}
-            title={t('my_page.messages.messages')}
+            title={t('my_page.messages.dialogue')}
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '60%' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 showCheckbox
@@ -136,8 +136,8 @@ const MyPagePage = () => {
                   setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
                 }>
                 {selectedTypes.publishingRequest && publishingRequestCount
-                  ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
-                  : t('my_page.messages.types.PublishingRequest')}
+                  ? `${t('my_page.messages.types.Publication')} (${publishingRequestCount})`
+                  : t('my_page.messages.types.Publication')}
               </SelectableButton>
 
               <SelectableButton
@@ -147,8 +147,8 @@ const MyPagePage = () => {
                 color="doiRequest"
                 onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
                 {selectedTypes.doiRequest && doiRequestCount
-                  ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
-                  : t('my_page.messages.types.DoiRequest')}
+                  ? `${t('my_page.messages.types.Doi')} (${doiRequestCount})`
+                  : t('my_page.messages.types.Doi')}
               </SelectableButton>
 
               <SelectableButton

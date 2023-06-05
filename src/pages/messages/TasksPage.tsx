@@ -185,8 +185,8 @@ const TasksPage = () => {
                 setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
               }>
               {selectedTypes.publishingRequest && publishingRequestCount
-                ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
-                : t('my_page.messages.types.PublishingRequest')}
+                ? `${t('my_page.messages.types.Publication')} (${publishingRequestCount})`
+                : t('my_page.messages.types.Publication')}
             </SelectableButton>
 
             <SelectableButton
@@ -196,8 +196,8 @@ const TasksPage = () => {
               color="doiRequest"
               onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
               {selectedTypes.doiRequest && doiRequestCount
-                ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
-                : t('my_page.messages.types.DoiRequest')}
+                ? `${t('my_page.messages.types.Doi')} (${doiRequestCount})`
+                : t('my_page.messages.types.Doi')}
             </SelectableButton>
 
             <SelectableButton

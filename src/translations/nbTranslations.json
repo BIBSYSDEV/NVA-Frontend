@@ -487,6 +487,7 @@
   },
   "my_page": {
     "messages": {
+      "dialogue": "Dialog",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -503,9 +504,9 @@
         "Pending": "Behandles"
       },
       "types": {
-        "DoiRequest": "DOI-forespørsel",
+        "Doi": "DOI",
         "GeneralSupportCase": "Kuratorstøtte",
-        "PublishingRequest": "Publiseringsforespørsel"
+        "Publication": "Publisering"
       }
     },
     "my_page": "Min side",
