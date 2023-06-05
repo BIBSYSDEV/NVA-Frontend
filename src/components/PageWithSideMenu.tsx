@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   width: '100%',
-  minHeight: '40vh',
+  // minHeight: '40vh',
   display: 'grid',
   gap: '1rem',
   padding: '1rem',
@@ -32,10 +32,6 @@ const StyledSideMenuHeader = styled(StyledPaperHeader)({
   gap: '0.5rem',
   padding: '0.5rem',
 });
-
-export const SidePanel = (props: BoxProps) => (
-  <Box component="section" sx={{ bgcolor: 'secondary.main', width: { xs: '100%', md: '20rem' } }} {...props} />
-);
 
 interface SideNavHeaderProps {
   icon?: SvgIconComponent;
