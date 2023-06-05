@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   width: '100%',
-  // minHeight: '40vh',
   display: 'grid',
   gap: '1rem',
   padding: '1rem',
