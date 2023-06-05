@@ -5,6 +5,7 @@ import { Ticket } from '../../types/publication_types/ticket.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { ActionPanelContent } from './ActionPanelContent';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
@@ -20,15 +21,20 @@ export const ActionPanel = ({
 }: ActionPanelProps) => {
   const { t } = useTranslation();
 
+  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.Tasks);
+
   return (
-    <Paper elevation={0} data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
+    <Paper
+      elevation={0}
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}
+      sx={{ gridArea: 'tasks' }}>
       <StyledPaperHeader>
         <Typography color="inherit" variant="h1">
           {t('common.tasks')}
         </Typography>
       </StyledPaperHeader>
       <ActionPanelContent
-        canCreateTickets
+        canCreateTickets={canCreateTickets}
         tickets={tickets}
         refetchData={refetchRegistrationAndTickets}
         isLoadingData={isLoadingData}
