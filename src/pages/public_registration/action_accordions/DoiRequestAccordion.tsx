@@ -158,23 +158,17 @@ export const DoiRequestAccordion = ({
           <Typography paragraph>{t('registration.public_page.tasks_panel.has_reserved_doi')}</Typography>
         )}
 
-        {isClosedDoiRequest && (
+        {waitingForRemovalOfDoi && (
           <>
-            {waitingForRemovalOfDoi && (
-              <>
-                <Typography gutterBottom>
-                  {t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}
-                </Typography>
-                <LoadingButton
-                  variant="outlined"
-                  onClick={refetchData}
-                  loading={isLoadingData}
-                  startIcon={<RefreshIcon />}
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
-                  {t('registration.public_page.tasks_panel.reload')}
-                </LoadingButton>
-              </>
-            )}
+            <Typography gutterBottom>{t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}</Typography>
+            <LoadingButton
+              variant="outlined"
+              onClick={refetchData}
+              loading={isLoadingData}
+              startIcon={<RefreshIcon />}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
+              {t('registration.public_page.tasks_panel.reload')}
+            </LoadingButton>
           </>
         )}
 
