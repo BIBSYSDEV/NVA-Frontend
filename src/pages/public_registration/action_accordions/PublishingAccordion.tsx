@@ -3,10 +3,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import WarningIcon from '@mui/icons-material/Warning';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CloseIcon from '@mui/icons-material/Close';
-import CheckIcon from '@mui/icons-material/Check';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
@@ -141,14 +140,13 @@ export const PublishingAccordion = ({
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
       sx={{
-        borderLeft: '1.25rem solid',
-        borderLeftColor: 'publishingRequest.main',
         bgcolor: 'publishingRequest.light',
       }}
       elevation={3}
       defaultExpanded={isDraftRegistration || canHandlePublishingRequest || hasMismatchingPublishedStatus}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {t('registration.public_page.publishing_request')} - {t(`registration.status.${registration.status}`)}
+        {t('registration.public_page.publication')}
+        {publishingRequestTicket && ` - ${t(`my_page.messages.ticket_types.${publishingRequestTicket.status}`)}`}
         {!registrationIsValid && (
           <Tooltip title={t('registration.public_page.validation_errors')}>
             <WarningIcon color="warning" sx={{ ml: '0.5rem' }} />
@@ -235,10 +233,8 @@ export const PublishingAccordion = ({
           <LoadingButton
             disabled={isLoading !== LoadingState.None || !registrationIsValid}
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
-            sx={{ mt: '1rem' }}
-            color="primary"
-            variant="contained"
-            endIcon={<CloudUploadIcon />}
+            sx={{ mt: '1rem', bgcolor: 'white' }}
+            variant="outlined"
             loadingPosition="end"
             onClick={onClickPublish}
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
@@ -247,21 +243,23 @@ export const PublishingAccordion = ({
         )}
 
         {canHandlePublishingRequest && !hasMismatchingPublishedStatus && (
-          <Box sx={{ mt: '1rem', display: 'flex', gap: '1rem' }}>
+          <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <LoadingButton
-              variant="contained"
+              sx={{ bgcolor: 'white' }}
+              variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
-              endIcon={<CheckIcon />}
+              startIcon={<AttachFileIcon fontSize="large" />}
               loadingPosition="end"
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-              {t('registration.public_page.approve_publish_request')}
+              {t('registration.public_page.approve_publish_request')} ({registration.associatedArtifacts.length})
             </LoadingButton>
             <LoadingButton
-              variant="contained"
+              sx={{ bgcolor: 'white' }}
+              variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
-              endIcon={<CloseIcon />}
+              startIcon={<CloseIcon />}
               loadingPosition="end"
               onClick={() => ticketMutation.mutate({ status: 'Closed' })}
               loading={isLoading === LoadingState.RejectPublishingRequest}
@@ -272,17 +270,14 @@ export const PublishingAccordion = ({
         )}
 
         {hasPendingTicket && (
-          <Accordion elevation={3} sx={{ maxWidth: '60rem', mt: '1rem' }}>
-            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-              {`${t('my_page.messages.messages')} (${ticketMessages.length})`}
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <MessageList messages={ticketMessages} />
-                <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
-              </Box>
-            </AccordionDetails>
-          </Accordion>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
+            {ticketMessages.length > 0 ? (
+              <MessageList ticket={publishingRequestTicket} />
+            ) : (
+              <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
+            )}
+            <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
+          </Box>
         )}
       </AccordionDetails>
     </Accordion>
