@@ -504,9 +504,9 @@
         "Pending": "Behandles"
       },
       "types": {
-        "Doi": "DOI",
+        "DoiRequest": "DOI",
         "GeneralSupportCase": "Kuratorstøtte",
-        "Publication": "Publisering"
+        "PublishingRequest": "Publisering"
       }
     },
     "my_page": "Min side",

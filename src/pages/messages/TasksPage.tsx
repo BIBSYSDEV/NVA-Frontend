@@ -175,7 +175,7 @@ const TasksPage = () => {
             </StyledSearchModeButton>
           </StyledTicketSearchFormGroup>
 
-          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
+          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
             <SelectableButton
               data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
               showCheckbox
@@ -185,8 +185,8 @@ const TasksPage = () => {
                 setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
               }>
               {selectedTypes.publishingRequest && publishingRequestCount
-                ? `${t('my_page.messages.types.Publication')} (${publishingRequestCount})`
-                : t('my_page.messages.types.Publication')}
+                ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
+                : t('my_page.messages.types.PublishingRequest')}
             </SelectableButton>
 
             <SelectableButton
@@ -196,8 +196,8 @@ const TasksPage = () => {
               color="doiRequest"
               onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
               {selectedTypes.doiRequest && doiRequestCount
-                ? `${t('my_page.messages.types.Doi')} (${doiRequestCount})`
-                : t('my_page.messages.types.Doi')}
+                ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
+                : t('my_page.messages.types.DoiRequest')}
             </SelectableButton>
 
             <SelectableButton
