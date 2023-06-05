@@ -78,15 +78,16 @@ export const ActionPanelContent = ({
             )}
         </ErrorBoundary>
       )}
-
-      <ErrorBoundary>
-        <SupportAccordion
-          registration={registration}
-          supportTicket={currentSupportTicket}
-          addMessage={addMessage}
-          refetchData={refetchData}
-        />
-      </ErrorBoundary>
+      {(canCreateTickets || currentSupportTicket) && (
+        <ErrorBoundary>
+          <SupportAccordion
+            registration={registration}
+            supportTicket={currentSupportTicket}
+            addMessage={addMessage}
+            refetchData={refetchData}
+          />
+        </ErrorBoundary>
+      )}
     </>
   );
 };
