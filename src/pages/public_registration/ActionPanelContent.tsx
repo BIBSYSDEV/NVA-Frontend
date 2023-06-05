@@ -64,18 +64,16 @@ export const ActionPanelContent = ({
       )}
       {(canCreateTickets || doiRequestTicket) && (
         <ErrorBoundary>
-          {!registration.entityDescription?.reference?.doi &&
-            doiRequestTicket?.status !== 'Completed' &&
-            customer?.doiAgent.username && (
-              <DoiRequestAccordion
-                refetchData={refetchData}
-                isLoadingData={isLoadingData}
-                registration={registration}
-                doiRequestTicket={doiRequestTicket}
-                userIsCurator={userIsCurator}
-                addMessage={addMessage}
-              />
-            )}
+          {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
+            <DoiRequestAccordion
+              refetchData={refetchData}
+              isLoadingData={isLoadingData}
+              registration={registration}
+              doiRequestTicket={doiRequestTicket}
+              userIsCurator={userIsCurator}
+              addMessage={addMessage}
+            />
+          )}
         </ErrorBoundary>
       )}
       {(canCreateTickets || currentSupportTicket) && (

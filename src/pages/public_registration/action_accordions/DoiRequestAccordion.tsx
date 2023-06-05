@@ -34,6 +34,7 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
 import { TicketAssignee } from './TicketAssignee';
+import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
@@ -151,32 +152,23 @@ export const DoiRequestAccordion = ({
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
 
+        {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} />}
+
         {!doiRequestTicket && registration.doi && (
           <Typography paragraph>{t('registration.public_page.tasks_panel.has_reserved_doi')}</Typography>
         )}
 
-        {isPendingDoiRequest && (
-          <Typography paragraph>{t('registration.public_page.tasks_panel.has_doi_request')}</Typography>
-        )}
-
-        {isClosedDoiRequest && (
+        {waitingForRemovalOfDoi && (
           <>
-            <Typography paragraph>{t('registration.public_page.tasks_panel.has_rejected_doi_request')}</Typography>
-            {waitingForRemovalOfDoi && (
-              <>
-                <Typography gutterBottom>
-                  {t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}
-                </Typography>
-                <LoadingButton
-                  variant="outlined"
-                  onClick={refetchData}
-                  loading={isLoadingData}
-                  startIcon={<RefreshIcon />}
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
-                  {t('registration.public_page.tasks_panel.reload')}
-                </LoadingButton>
-              </>
-            )}
+            <Typography gutterBottom>{t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}</Typography>
+            <LoadingButton
+              variant="outlined"
+              onClick={refetchData}
+              loading={isLoadingData}
+              startIcon={<RefreshIcon />}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
+              {t('registration.public_page.tasks_panel.reload')}
+            </LoadingButton>
           </>
         )}
 
@@ -236,19 +228,8 @@ export const DoiRequestAccordion = ({
           </>
         )}
 
-        {isPendingDoiRequest && (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {messages.length > 0 ? (
-              <MessageList ticket={doiRequestTicket} />
-            ) : (
-              <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
-            )}
-            <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
-          </Box>
-        )}
-
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
-          <Box sx={{ display: 'flex', gap: '1rem' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
             <LoadingButton
               variant="contained"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
@@ -269,6 +250,17 @@ export const DoiRequestAccordion = ({
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('common.reject_doi')}
             </LoadingButton>
+          </Box>
+        )}
+
+        {isPendingDoiRequest && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
+            {messages.length > 0 ? (
+              <MessageList ticket={doiRequestTicket} />
+            ) : (
+              <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
+            )}
+            <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
           </Box>
         )}
       </AccordionDetails>
