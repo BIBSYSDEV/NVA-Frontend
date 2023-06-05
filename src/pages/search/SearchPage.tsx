@@ -21,11 +21,12 @@ import { SearchResponse } from '../../types/common.types';
 import { Registration } from '../../types/registration.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchApiPath } from '../../api/apiPaths';
-import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { ProjectSearch } from './project_search/ProjectSearch';
 import { SelectableButton } from '../../components/SelectableButton';
+import { SideMenu } from '../../components/SideMenu';
 
 /*
  * The Search Page allows for users to search for 3 things (types): Registrations/Results, Persons, and Projects
@@ -98,7 +99,7 @@ const SearchPage = () => {
       {({ setValues }: FormikProps<SearchConfig>) => (
         <Form style={{ width: '100%' }}>
           <StyledPageWithSideMenu>
-            <SidePanel>
+            <SideMenu>
               <SideNavHeader icon={SearchIcon} text={t('common.search')} />
               <Box
                 sx={{
@@ -177,7 +178,7 @@ const SearchPage = () => {
                   </Box>
                 </>
               )}
-            </SidePanel>
+            </SideMenu>
 
             {resultIsSelected && (
               <Box

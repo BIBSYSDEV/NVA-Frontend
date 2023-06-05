@@ -21,7 +21,10 @@ export const ActionPanel = ({
   const { t } = useTranslation();
 
   return (
-    <Paper elevation={0} data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
+    <Paper
+      elevation={0}
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}
+      sx={{ gridArea: 'tasks' }}>
       <StyledPaperHeader>
         <Typography color="inherit" variant="h1">
           {t('common.tasks')}
