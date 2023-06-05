@@ -141,8 +141,6 @@ export const DoiRequestAccordion = ({
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
       sx={{
-        borderLeft: '1.25rem solid',
-        borderLeftColor: 'doiRequest.main',
         bgcolor: 'doiRequest.light',
       }}
       elevation={3}
@@ -239,17 +237,14 @@ export const DoiRequestAccordion = ({
         )}
 
         {isPendingDoiRequest && (
-          <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
-            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-              {`${t('my_page.messages.messages')} (${messages.length})`}
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <MessageList ticket={doiRequestTicket} />
-                <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
-              </Box>
-            </AccordionDetails>
-          </Accordion>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {messages.length > 0 ? (
+              <MessageList ticket={doiRequestTicket} />
+            ) : (
+              <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
+            )}
+            <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
+          </Box>
         )}
 
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
