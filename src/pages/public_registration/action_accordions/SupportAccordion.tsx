@@ -79,7 +79,6 @@ export const SupportAccordion = ({
                 sx={{ bgcolor: 'white' }}
                 loading={ticketMutation.isLoading}
                 variant="outlined"
-                loadingPosition="end"
                 disabled={supportTicket.status === 'Completed'}
                 onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
                 {t('my_page.messages.mark_as_completed')}
