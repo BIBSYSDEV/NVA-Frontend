@@ -148,6 +148,7 @@ export const DoiRequestAccordion = ({
       defaultExpanded={waitingForRemovalOfDoi || (userIsCurator && isPendingDoiRequest)}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('common.doi')}
+        {doiRequestTicket && ` - ${t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)}`}
       </AccordionSummary>
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
@@ -230,18 +231,21 @@ export const DoiRequestAccordion = ({
 
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
+            <Typography>{t('registration.public_page.tasks_panel.assign_doi_about')}</Typography>
             <LoadingButton
-              variant="contained"
+              sx={{ bgcolor: 'white' }}
+              variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
               endIcon={<CheckIcon />}
               loadingPosition="end"
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApproveDoi}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
-              {t('common.create_doi')}
+              {t('registration.public_page.tasks_panel.assign_doi')}
             </LoadingButton>
             <LoadingButton
-              variant="contained"
+              sx={{ bgcolor: 'white' }}
+              variant="outlined"
               data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
               endIcon={<CloseIcon />}
               loadingPosition="end"
