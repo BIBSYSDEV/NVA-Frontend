@@ -99,11 +99,11 @@ export const DoiRequestAccordion = ({
 
     if (isErrorStatus(createDraftDoiResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.reserve_doi'), variant: 'error' }));
-      setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createDraftDoiResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.reserve_doi'), variant: 'success' }));
       refetchData();
     }
+    setIsLoading(LoadingState.None);
   };
 
   const sendDoiRequest = async () => {
