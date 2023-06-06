@@ -11,9 +11,9 @@ import { UpdateTicketData, createTicket, updateTicket } from '../../../api/regis
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { TicketAssignee } from './TicketAssignee';
-import { useHistory } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { useMutation } from '@tanstack/react-query';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 interface SupportAccordionProps {
   registration: Registration;
@@ -32,18 +32,12 @@ export const SupportAccordion = ({
 }: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const history = useHistory();
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
   const ticketMutation = useMutation({
     mutationFn: supportTicket
-      ? (newTicketData: UpdateTicketData) => {
-          return updateTicket(supportTicket.id, newTicketData);
-        }
+      ? (newTicketData: UpdateTicketData) => updateTicket(supportTicket.id, newTicketData)
       : undefined,
-    onSuccess: () => {
-      refetchData();
-    },
+    onSuccess: refetchData,
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_status'), variant: 'error' })),
   });
 
@@ -74,17 +68,21 @@ export const SupportAccordion = ({
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {supportTicket && (
           <>
-            {userIsCurator && !currentPath.startsWith('/registration') && (
+            <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
+            {userIsCurator && window.location.pathname.startsWith(UrlPathTemplate.Tasks) && (
               <LoadingButton
-                sx={{ bgcolor: 'white' }}
+                sx={{
+                  alignSelf: 'end',
+                  width: 'fit-content',
+                  bgcolor: 'white',
+                  display: supportTicket.status === 'Completed' ? 'none' : 'visible',
+                }}
                 loading={ticketMutation.isLoading}
                 variant="outlined"
-                disabled={supportTicket.status === 'Completed'}
                 onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
                 {t('my_page.messages.mark_as_completed')}
               </LoadingButton>
             )}
-            <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {supportTicket.messages.length > 0 && <MessageList ticket={supportTicket} />}
           </>
         )}
@@ -93,6 +91,9 @@ export const SupportAccordion = ({
             if (message) {
               if (supportTicket) {
                 await addMessage(supportTicket.id, message);
+                if (userIsCurator) {
+                  await updateTicket(supportTicket.id, { status: 'Completed' });
+                }
               } else {
                 await createSupportTicket(message);
               }
