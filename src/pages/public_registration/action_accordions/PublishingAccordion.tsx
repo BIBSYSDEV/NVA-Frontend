@@ -248,7 +248,6 @@ export const PublishingAccordion = ({
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
               startIcon={<AttachFileIcon fontSize="large" />}
-              loadingPosition="end"
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
@@ -259,7 +258,6 @@ export const PublishingAccordion = ({
               variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
               startIcon={<CloseIcon />}
-              loadingPosition="end"
               onClick={() => ticketMutation.mutate({ status: 'Closed' })}
               loading={isLoading === LoadingState.RejectPublishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
