@@ -20,7 +20,7 @@ export const StyledPageContent = styled(Box)(({ theme }) => ({
   width: '100%',
   maxWidth: theme.breakpoints.values.lg,
   [theme.breakpoints.up('sm')]: {
-    padding: '1rem 2rem',
+    padding: '1rem',
   },
   [theme.breakpoints.down('sm')]: {
     padding: '0.5rem',

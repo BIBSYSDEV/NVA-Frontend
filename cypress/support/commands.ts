@@ -41,6 +41,7 @@ Cypress.Commands.add('setUserRolesInRedux', (roles) => {
         })
       )
     );
+  cy.wait(500);
 });
 
 Cypress.Commands.add('setNotificationInRedux', (notification) => {

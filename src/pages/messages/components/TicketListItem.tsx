@@ -10,8 +10,9 @@ import { SupportMessagesColumn } from './SupportMessagesColumn';
 import { getFullName } from '../../../utils/user-helpers';
 import { getContributorInitials } from '../../../utils/registration-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
+import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
 
-const ticketColor = {
+export const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
@@ -50,11 +51,25 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     <SearchListItem
       key={ticket.id}
       sx={{
-        borderLeftColor:
-          ticket.status === 'Pending' || ticket.status === 'New' ? ticketColor[ticket.type] : 'registration.main',
+        borderLeftColor: ticketColor[ticket.type],
       }}>
-      <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '10fr 4fr 2fr 2fr 1fr' }}>
-        <RegistrationListItemContent registration={registrationCopy} />
+      <Box
+        sx={{
+          width: '100%',
+          display: 'grid',
+          gap: '0 1rem',
+          gridTemplateColumns: { xs: '1fr', sm: '10fr 4fr 2fr 2fr 1fr' },
+        }}>
+        <RegistrationListItemContent
+          registration={registrationCopy}
+          linkPath={
+            window.location.pathname === UrlPathTemplate.Tasks
+              ? getTasksRegistrationPath(identifier)
+              : window.location.pathname === UrlPathTemplate.MyPageMyMessages
+              ? getMyMessagesRegistrationPath(identifier)
+              : undefined
+          }
+        />
         {ticket.type === 'PublishingRequest' ? (
           <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
         ) : ticket.type === 'DoiRequest' ? (
@@ -64,10 +79,10 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         ) : (
           <div />
         )}
-        <Typography variant="overline">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
-        <Typography variant="overline">{t('common.x_days', { count: daysAge })}</Typography>
+        <Typography lineHeight={'2rem'}>{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
+        <Typography lineHeight={'2rem'}>{t('common.x_days', { count: daysAge })}</Typography>
         {assigneeFullName && (
-          <Tooltip title={`${t('common.assignee')}: ${assigneeFullName}`}>
+          <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
             <StyledVerifiedContributor>{getContributorInitials(assigneeFullName)}</StyledVerifiedContributor>
           </Tooltip>
         )}

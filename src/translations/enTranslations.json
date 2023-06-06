@@ -80,6 +80,7 @@
       "ror": "Research Organization Registry (ROR)",
       "sector": "Sector",
       "sector_values": {
+        "ABM": "Archives, Libraries and Museums",
         "HEALTH": "Health sector",
         "INSTITUTE": "Institute sector",
         "UHI": "University and college"
@@ -143,6 +144,7 @@
     "next": "Next",
     "no": "No",
     "no_hits": "No hits",
+    "none": "None",
     "not_decided": "Not decided",
     "number_short": "No.",
     "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
@@ -195,6 +197,7 @@
     "tasks": "Tasks",
     "title": "Title",
     "type": "Type",
+    "unknown": "Unknown",
     "update": "Update",
     "username": "Username",
     "version": "Version",
@@ -399,6 +402,7 @@
       "update_publish_strategy": "Failed to update publishing strategy",
       "update_publishing_request": "Could not update publishing request",
       "update_registration": "Failed to update registration",
+      "update_ticket_assignee": "Failed to assign case",
       "update_vocabulary": "Failed to update {{vocabulary}}"
     },
     "success": {
@@ -482,12 +486,14 @@
   },
   "my_page": {
     "messages": {
+      "dialogue": "",
       "doi_closed": "DOI rejected",
       "doi_completed": "DOI allocated",
       "doi_pending": "Pending DOI allocation",
+      "doi_requested": "DOI requested",
       "files_published": "File(s) published",
       "files_rejected": "File(s) rejected",
-      "messages": "Messages",
+      "general_support_pending": "Pending follow-up",
       "no_messages": "You have no messages",
       "ticket_types": {
         "Closed": "Closed",
@@ -983,7 +989,6 @@
       "verify_affiliation": "Verify affiliation",
       "verify_person": "Verify person"
     },
-    "curator_support": "Curator support",
     "description": {
       "abstract": "Abstract",
       "add_vocabulary": "Add vocabulary",
@@ -1074,18 +1079,19 @@
       "participants_other": "{{count}} participants",
       "preview_of": "Preview of {{fileName}}",
       "preview_unavailable": "Preview not available. Open file in suited program.",
+      "publication": "Publication",
       "published": "Published",
       "published_date": "Published: {{date}}",
-      "publishing_request": "Publishing request",
+      "publishing_request": "Publication approval",
+      "publishing_request_message_about": "You can use the message field for dialogue with the registrar if needed.",
       "reject_publish_request": "Reject publishing request",
       "request_doi": "Request a DOI",
       "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
       "reserve_doi": "Reserve a DOI",
       "reserved_doi": "Reserved DOI",
       "tasks_panel": {
+        "assign_ticket": "Claim case",
         "files_will_soon_be_published": "The Files will be published soon. Reload page to see updated status.",
-        "has_doi_request": "Registration has a DOI request for approval to curator.",
-        "has_rejected_doi_request": "Registration has a rejected DOI request.",
         "has_rejected_files_publishing_request": "Registration has a rejected publishing request for its files.",
         "has_reserved_doi": "Registration has received a reserved DOI. When the registration is published a DOI request will be created and sent to curator.",
         "metadata_published_waiting_for_files": "Metadata is published and visible to other users, but a curator must approve the uploaded files before they will be visible.",
@@ -1482,7 +1488,6 @@
       "PUBLISHED": "Published",
       "PUBLISHED_METADATA": "Published metadata"
     },
-    "support_description": "When you request support, your message will be sent to a curator at your institution. You can view responses at <0>My Messages</0>.",
     "year_published": "Publication year"
   },
   "search": {
@@ -1509,8 +1514,10 @@
     "sort_by_published_date_desc": "Publication date (newest first)"
   },
   "tasks": {
+    "all_user_dialogs": "All user dialogs",
     "limited_to": "Limited to: \"{{name}}\"",
-    "tasks": "Tasks",
+    "my_user_dialogs": "My user dialogs",
+    "new_user_dialogs": "New user dialogs",
     "user_dialog": "User dialogue"
   }
 }

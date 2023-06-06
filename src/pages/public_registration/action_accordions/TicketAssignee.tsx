@@ -38,7 +38,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
     <Paper
       sx={{ p: '0.5rem 1rem', mb: '1rem', width: 'fit-content', display: 'flex', gap: '1rem', alignItems: 'center' }}>
       <Typography sx={{ display: 'flex', gap: '0.25rem', fontWeight: 700 }}>
-        <span>{t('common.assignee')}:</span>
+        <span>{t('my_page.roles.curator')}:</span>
         {ticket.assignee ? (
           assigneeQuery.isLoading ? (
             <Skeleton sx={{ width: '8rem' }} />
@@ -51,7 +51,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
           <i>{t('common.none')}</i>
         )}
       </Typography>
-      {ticket.status === 'Pending' && user && ticket.assignee !== user?.nvaUsername && (
+      {ticket.status === 'Pending' && user?.isCurator && ticket.assignee !== user?.nvaUsername && (
         <LoadingButton
           variant="outlined"
           size="small"

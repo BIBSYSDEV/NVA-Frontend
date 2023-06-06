@@ -40,8 +40,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{
-        borderLeft: '1.25rem solid',
-        borderLeftColor: 'generalSupportCase.main',
+        bgcolor: 'generalSupportCase.light',
       }}
       elevation={3}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
@@ -51,7 +50,7 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
         {supportTicket && (
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
-            {supportTicket.messages.length > 0 && <MessageList messages={supportTicket.messages} />}
+            {supportTicket.messages.length > 0 && <MessageList ticket={supportTicket} />}
           </>
         )}
         <MessageForm

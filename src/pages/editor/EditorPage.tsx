@@ -11,18 +11,13 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { EditorRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { EditorInstitution } from './EditorInstitution';
-import {
-  LinkButton,
-  NavigationList,
-  SidePanel,
-  SideNavHeader,
-  StyledPageWithSideMenu,
-} from '../../components/PageWithSideMenu';
+import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { RootState } from '../../redux/store';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import NotFound from '../../pages/errorpages/NotFound';
+import { SideMenu } from '../../components/SideMenu';
 
 const EditorPage = () => {
   const { t } = useTranslation();
@@ -32,8 +27,8 @@ const EditorPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SidePanel aria-labelledby="editor-title">
-        <SideNavHeader text={customer?.shortName} id="editor-title" icon={StoreIcon} />
+      <SideMenu>
+        <SideNavHeader text={customer?.shortName} icon={StoreIcon} />
         <NavigationListAccordion
           dataTestId={dataTestId.editor.overviewAccordion}
           title={t('common.overview')}
@@ -96,7 +91,7 @@ const EditorPage = () => {
             </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
-      </SidePanel>
+      </SideMenu>
       <BackgroundDiv>
         <Switch>
           <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />

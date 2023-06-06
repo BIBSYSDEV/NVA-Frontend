@@ -50,7 +50,7 @@ export const ActionPanelContent = ({
 
   return (
     <>
-      {(canCreateTickets || publishingRequestTickets) && (
+      {(canCreateTickets || currentPublishingRequestTicket) && (
         <ErrorBoundary>
           <PublishingAccordion
             refetchData={refetchData}
@@ -64,29 +64,28 @@ export const ActionPanelContent = ({
       )}
       {(canCreateTickets || doiRequestTicket) && (
         <ErrorBoundary>
-          {!registration.entityDescription?.reference?.doi &&
-            doiRequestTicket?.status !== 'Completed' &&
-            customer?.doiAgent.username && (
-              <DoiRequestAccordion
-                refetchData={refetchData}
-                isLoadingData={isLoadingData}
-                registration={registration}
-                doiRequestTicket={doiRequestTicket}
-                userIsCurator={userIsCurator}
-                addMessage={addMessage}
-              />
-            )}
+          {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
+            <DoiRequestAccordion
+              refetchData={refetchData}
+              isLoadingData={isLoadingData}
+              registration={registration}
+              doiRequestTicket={doiRequestTicket}
+              userIsCurator={userIsCurator}
+              addMessage={addMessage}
+            />
+          )}
         </ErrorBoundary>
       )}
-
-      <ErrorBoundary>
-        <SupportAccordion
-          registration={registration}
-          supportTicket={currentSupportTicket}
-          addMessage={addMessage}
-          refetchData={refetchData}
-        />
-      </ErrorBoundary>
+      {(canCreateTickets || currentSupportTicket) && (
+        <ErrorBoundary>
+          <SupportAccordion
+            registration={registration}
+            supportTicket={currentSupportTicket}
+            addMessage={addMessage}
+            refetchData={refetchData}
+          />
+        </ErrorBoundary>
+      )}
     </>
   );
 };
