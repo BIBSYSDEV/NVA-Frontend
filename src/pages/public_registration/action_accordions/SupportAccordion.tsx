@@ -69,20 +69,21 @@ export const SupportAccordion = ({
         {supportTicket && (
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
-            {userIsCurator && window.location.pathname.startsWith(UrlPathTemplate.Tasks) && (
-              <LoadingButton
-                sx={{
-                  alignSelf: 'end',
-                  width: 'fit-content',
-                  bgcolor: 'white',
-                  display: supportTicket.status === 'Completed' ? 'none' : 'visible',
-                }}
-                loading={ticketMutation.isLoading}
-                variant="outlined"
-                onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
-                {t('my_page.messages.mark_as_completed')}
-              </LoadingButton>
-            )}
+            {userIsCurator &&
+              window.location.pathname.startsWith(UrlPathTemplate.Tasks) &&
+              supportTicket.status !== 'Completed' && (
+                <LoadingButton
+                  sx={{
+                    alignSelf: 'end',
+                    width: 'fit-content',
+                    bgcolor: 'white',
+                  }}
+                  loading={ticketMutation.isLoading}
+                  variant="outlined"
+                  onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
+                  {t('my_page.messages.mark_as_completed')}
+                </LoadingButton>
+              )}
             {supportTicket.messages.length > 0 && <MessageList ticket={supportTicket} />}
           </>
         )}
