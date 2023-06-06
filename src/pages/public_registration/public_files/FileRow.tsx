@@ -27,9 +27,16 @@ interface FileRowProps {
   registrationIdentifier: string;
   openPreviewByDefault: boolean;
   showFileVersionField: boolean;
+  registrationMetadataIsPublished: boolean;
 }
 
-export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, showFileVersionField }: FileRowProps) => {
+export const FileRow = ({
+  file,
+  registrationIdentifier,
+  openPreviewByDefault,
+  showFileVersionField,
+  registrationMetadataIsPublished,
+}: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -83,7 +90,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, sh
         columnGap: '1rem',
         alignItems: 'center',
         marginBottom: '2rem',
-        opacity: file.type === 'UnpublishedFile' ? 0.6 : 1,
+        opacity: registrationMetadataIsPublished && file.type === 'UnpublishedFile' ? 0.6 : 1,
       }}>
       <Typography
         data-testid={dataTestId.registrationLandingPage.fileName}
