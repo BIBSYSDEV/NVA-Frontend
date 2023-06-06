@@ -91,8 +91,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                 {t('common.title')}
               </TableCell>
               <TableCell data-testid="header-registration-status">{t('common.status')}</TableCell>
-              {/* TODO: Add creation date when it is added to the model again */}
-              <TableCell data-testid="header-registration-created">{/*t('common.created_date')*/}</TableCell>
               <TableCell>{t('common.actions')}</TableCell>
             </TableRow>
           </TableHead>
@@ -106,9 +104,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
                   </TableCell>
                   <TableCell data-testid={`registration-status-${identifier}`}>
                     <Typography>{t(`registration.status.${registration.status}`)}</Typography>
-                  </TableCell>
-                  <TableCell data-testid={`registration-created-${identifier}`}>
-                    <Typography>{/*new Date(registration.createdDate).toLocaleString()*/}</Typography>
                   </TableCell>
                   <TableCell>
                     <Box sx={{ display: 'flex', gap: '1rem' }}>
