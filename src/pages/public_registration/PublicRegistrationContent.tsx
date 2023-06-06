@@ -86,6 +86,20 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
         <PublicGeneralContent registration={registration} />
 
+        {(registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
+          <Box sx={{ display: 'flex', justifyContent: 'space-around', mb: '0.5rem' }}>
+            <Typography
+              sx={{
+                py: '0.3rem',
+                px: { xs: '2rem', sm: '3rem' },
+                bgcolor: 'primary.light',
+                color: 'primary.contrastText',
+              }}>
+              {t('registration.public_page.metadata_not_published')}
+            </Typography>
+          </Box>
+        )}
+
         {entityDescription?.alternativeTitles.und && (
           <Box sx={{ borderTop: '1px solid', py: '1rem' }}>
             <Typography variant="h3" component="h2">

@@ -7,21 +7,41 @@ import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
-import { createTicket } from '../../../api/registrationApi';
+import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { TicketAssignee } from './TicketAssignee';
+import { LoadingButton } from '@mui/lab';
+import { useMutation } from '@tanstack/react-query';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 interface SupportAccordionProps {
   registration: Registration;
   supportTicket: Ticket | null;
+  userIsCurator: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
   refetchData: () => void;
+  defaultExpanded?: boolean;
 }
 
-export const SupportAccordion = ({ registration, supportTicket, addMessage, refetchData }: SupportAccordionProps) => {
+export const SupportAccordion = ({
+  registration,
+  supportTicket,
+  userIsCurator,
+  addMessage,
+  refetchData,
+  defaultExpanded = false,
+}: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const ticketMutation = useMutation({
+    mutationFn: supportTicket
+      ? (newTicketData: UpdateTicketData) => updateTicket(supportTicket.id, newTicketData)
+      : undefined,
+    onSuccess: refetchData,
+    onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_status'), variant: 'error' })),
+  });
 
   const createSupportTicket = async (message: string) => {
     const createTicketResponse = await createTicket(registration.id, 'GeneralSupportCase', true);
@@ -39,17 +59,32 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
-      sx={{
-        bgcolor: 'generalSupportCase.light',
-      }}
-      elevation={3}>
+      sx={{ bgcolor: 'generalSupportCase.light' }}
+      elevation={3}
+      defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
+        {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {supportTicket && (
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
+            {userIsCurator &&
+              window.location.pathname.startsWith(UrlPathTemplate.Tasks) &&
+              supportTicket.status !== 'Completed' && (
+                <LoadingButton
+                  sx={{
+                    alignSelf: 'end',
+                    width: 'fit-content',
+                    bgcolor: 'white',
+                  }}
+                  loading={ticketMutation.isLoading}
+                  variant="outlined"
+                  onClick={() => ticketMutation.mutate({ status: 'Completed' })}>
+                  {t('my_page.messages.mark_as_completed')}
+                </LoadingButton>
+              )}
             {supportTicket.messages.length > 0 && <MessageList ticket={supportTicket} />}
           </>
         )}
@@ -58,6 +93,9 @@ export const SupportAccordion = ({ registration, supportTicket, addMessage, refe
             if (message) {
               if (supportTicket) {
                 await addMessage(supportTicket.id, message);
+                if (userIsCurator) {
+                  await updateTicket(supportTicket.id, { status: 'Completed' });
+                }
               } else {
                 await createSupportTicket(message);
               }

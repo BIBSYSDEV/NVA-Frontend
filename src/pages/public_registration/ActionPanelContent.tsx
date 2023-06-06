@@ -11,12 +11,12 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { SupportAccordion } from './action_accordions/SupportAccordion';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
   refetchData: () => void;
   isLoadingData?: boolean;
-  canCreateTickets: boolean;
 }
 
 export const ActionPanelContent = ({
@@ -24,7 +24,6 @@ export const ActionPanelContent = ({
   tickets,
   refetchData,
   isLoadingData = false,
-  canCreateTickets,
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -48,41 +47,53 @@ export const ActionPanelContent = ({
     }
   };
 
+  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.Tasks);
+
+  const isInRegistrationWizard =
+    window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
+
   return (
     <>
-      {(canCreateTickets || currentPublishingRequestTicket) && (
-        <ErrorBoundary>
-          <PublishingAccordion
-            refetchData={refetchData}
-            isLoadingData={isLoadingData}
-            registration={registration}
-            publishingRequestTicket={currentPublishingRequestTicket}
-            userIsCurator={userIsCurator}
-            addMessage={addMessage}
-          />
-        </ErrorBoundary>
-      )}
-      {(canCreateTickets || doiRequestTicket) && (
-        <ErrorBoundary>
-          {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
-            <DoiRequestAccordion
-              refetchData={refetchData}
-              isLoadingData={isLoadingData}
-              registration={registration}
-              doiRequestTicket={doiRequestTicket}
-              userIsCurator={userIsCurator}
-              addMessage={addMessage}
-            />
+      {!isInRegistrationWizard && (
+        <>
+          {(canCreateTickets || currentPublishingRequestTicket) && (
+            <ErrorBoundary>
+              <PublishingAccordion
+                refetchData={refetchData}
+                isLoadingData={isLoadingData}
+                registration={registration}
+                publishingRequestTicket={currentPublishingRequestTicket}
+                userIsCurator={userIsCurator}
+                addMessage={addMessage}
+              />
+            </ErrorBoundary>
           )}
-        </ErrorBoundary>
+          {(canCreateTickets || doiRequestTicket) && (
+            <ErrorBoundary>
+              {!registration.entityDescription?.reference?.doi && customer?.doiAgent.username && (
+                <DoiRequestAccordion
+                  refetchData={refetchData}
+                  isLoadingData={isLoadingData}
+                  registration={registration}
+                  doiRequestTicket={doiRequestTicket}
+                  userIsCurator={userIsCurator}
+                  addMessage={addMessage}
+                />
+              )}
+            </ErrorBoundary>
+          )}
+        </>
       )}
-      {(canCreateTickets || currentSupportTicket) && (
+
+      {(canCreateTickets || currentSupportTicket || isInRegistrationWizard) && (
         <ErrorBoundary>
           <SupportAccordion
+            userIsCurator={userIsCurator}
             registration={registration}
             supportTicket={currentSupportTicket}
             addMessage={addMessage}
             refetchData={refetchData}
+            defaultExpanded={isInRegistrationWizard}
           />
         </ErrorBoundary>
       )}
