@@ -235,7 +235,6 @@ export const PublishingAccordion = ({
             data-testid={dataTestId.registrationLandingPage.tasksPanel.publishButton}
             sx={{ mt: '1rem', bgcolor: 'white' }}
             variant="outlined"
-            loadingPosition="end"
             onClick={onClickPublish}
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
             {t('common.publish')}
