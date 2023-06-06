@@ -79,6 +79,7 @@ export const ActionPanelContent = ({
       {(canCreateTickets || currentSupportTicket) && (
         <ErrorBoundary>
           <SupportAccordion
+            userIsCurator={userIsCurator}
             registration={registration}
             supportTicket={currentSupportTicket}
             addMessage={addMessage}

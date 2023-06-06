@@ -402,6 +402,7 @@
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
       "update_ticket_assignee": "Kunne ikke sette saksbehandler",
+      "update_ticket_status": "Kunne ikke oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "success": {
@@ -493,6 +494,7 @@
       "files_published": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
       "general_support_pending": "Venter på oppfølging",
+      "mark_as_completed": "Sett til ferdig",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
         "Closed": "Avvist",
@@ -1071,6 +1073,7 @@
       "handle": "Handle",
       "in_progress": "Under behandling",
       "message_to_curator": "Melding til kurator",
+      "metadata_not_published": "Metadata er ikke publisert",
       "other_contributors_one": "(+{{count}} annen)",
       "other_contributors_other": "(+{{count}} andre)",
       "other_related_registrations": "Andre relaterte registreringer",
