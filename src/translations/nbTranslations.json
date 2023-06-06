@@ -1082,8 +1082,6 @@
       "preview_of": "Forhåndsvisning av {{fileName}}",
       "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
       "publication": "Publisering",
-      "published": "Publisert",
-      "published_date": "Publisert: {{date}}",
       "publishing_request": "Publiseringsgodkjenning",
       "publishing_request_message_about": "Du kan bruke meldingsfeltet for dialog med registrator ved behov.",
       "reject_publish_request": "Avvis publisering",
