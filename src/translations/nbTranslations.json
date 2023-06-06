@@ -110,7 +110,6 @@
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
     "all": "Alle",
-    "assignee": "Saksbehandler",
     "cancel": "Avbryt",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
@@ -487,6 +486,7 @@
   },
   "my_page": {
     "messages": {
+      "dialogue": "Dialog",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -494,7 +494,6 @@
       "files_published": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
       "general_support_pending": "Venter på oppfølging",
-      "messages": "Meldinger",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
         "Closed": "Avvist",
@@ -503,9 +502,9 @@
         "Pending": "Behandles"
       },
       "types": {
-        "DoiRequest": "DOI-forespørsel",
+        "DoiRequest": "DOI",
         "GeneralSupportCase": "Kuratorstøtte",
-        "PublishingRequest": "Publiseringsforespørsel"
+        "PublishingRequest": "Publisering"
       }
     },
     "my_page": "Min side",
@@ -1066,7 +1065,7 @@
     "new_registration": "Ny registrering",
     "public_page": {
       "about_registration": "Om registreringen",
-      "approve_publish_request": "Godkjenn publisering",
+      "approve_publish_request": "Publiser fil med lisens",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
@@ -1080,9 +1079,11 @@
       "participants_other": "{{count}} deltakere",
       "preview_of": "Forhåndsvisning av {{fileName}}",
       "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
+      "publication": "Publisering",
       "published": "Publisert",
       "published_date": "Publisert: {{date}}",
       "publishing_request": "Publiseringsgodkjenning",
+      "publishing_request_message_about": "Du kan bruke meldingsfeltet for dialog med registrator ved behov.",
       "reject_publish_request": "Avvis publisering",
       "request_doi": "Be om en DOI",
       "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
@@ -1091,8 +1092,6 @@
       "tasks_panel": {
         "assign_ticket": "Ta sak",
         "files_will_soon_be_published": "Filene vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
-        "has_doi_request": "Registreringen har en DOI-forespørsel til behandling for kurator.",
-        "has_rejected_doi_request": "Registreringen har en avslått DOI-forespørsel.",
         "has_rejected_files_publishing_request": "Registreringen har en avslått publiseringsforespørsel for filene.",
         "has_reserved_doi": "Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.",
         "metadata_published_waiting_for_files": "Metadata er publisert og synlig for andre brukere, men en kurator må godkjenne filene som er lastet opp før de blir synlige.",
