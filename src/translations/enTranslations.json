@@ -1072,6 +1072,7 @@
       "handle": "Handle",
       "in_progress": "In progress",
       "message_to_curator": "Message to curator",
+      "metadata_not_published": "Metadata is not published",
       "other_contributors_one": "(+{{count}} other)",
       "other_contributors_other": "(+{{count}} others)",
       "other_related_registrations": "Other related registrations",

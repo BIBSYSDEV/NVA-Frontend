@@ -11,6 +11,7 @@ import {
 } from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
+import { RegistrationStatus } from '../../../types/registration.types';
 
 const maxFileSizeForPreview = 10_000_000; //10 MB
 
@@ -31,6 +32,10 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
     registration.entityDescription?.reference?.publicationInstance?.type
   );
 
+  const registrationMetadataIsPublished =
+    registration.status === RegistrationStatus.Published ||
+    registration.status === RegistrationStatus.PublishedMetadata;
+
   return publishableFilesLength > 0 || (userIsRegistrationAdmin && associatedFiles.length > 0) ? (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
@@ -47,10 +52,10 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           <Typography variant="h2" color="primary">
             {t('registration.files_and_license.files_count', { count: publishableFilesLength })}
           </Typography>
-          {unpublishedFiles.length > 0 && (
-            <Box sx={{ bgcolor: 'secondary.dark', p: { xs: '0.25rem 0.5rem', sm: '0.3rem 3rem' } }}>
+          {registrationMetadataIsPublished && unpublishedFiles.length > 0 && (
+            <Typography sx={{ bgcolor: 'secondary.dark', p: { xs: '0.25rem 0.5rem', sm: '0.3rem 3rem' } }}>
               {t('registration.files_and_license.files_awaits_approval', { count: unpublishedFiles.length })}
-            </Box>
+            </Typography>
           )}
         </Box>
       }>
@@ -61,6 +66,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           registrationIdentifier={registration.identifier}
           openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
           showFileVersionField={showFileVersionField}
+          registrationMetadataIsPublished={registrationMetadataIsPublished}
         />
       ))}
     </LandingPageAccordion>
