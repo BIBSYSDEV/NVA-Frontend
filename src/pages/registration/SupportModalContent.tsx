@@ -24,7 +24,6 @@ export const SupportModalContent = ({ registration }: SupportModalContentProps) 
 
   return (
     <ActionPanelContent
-      canCreateTickets={false}
       tickets={ticketsQuery.data?.tickets ?? []}
       refetchData={() => ticketsQuery.refetch()}
       registration={registration}
