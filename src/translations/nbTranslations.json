@@ -80,10 +80,10 @@
       "ror": "Research Organization Registry (ROR)",
       "sector": "Sektor",
       "sector_values": {
+        "ABM": "Arkiv, Bibliotek og Museum",
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)",
-        "ABM": "Arkiv, Bibliotek og Museum"
+        "UHI": "Universitet og høyskoler (UH)"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -210,6 +210,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -295,11 +299,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
