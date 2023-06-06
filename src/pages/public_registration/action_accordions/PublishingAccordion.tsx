@@ -241,9 +241,13 @@ export const PublishingAccordion = ({
             onClick={onClickPublish}
             loading={isLoadingData || isLoading === LoadingState.CreatePublishingRequest}>
             {customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly'
-              ? t('common.publish_metadata')
-              : t('common.publish_metadata_and_files')}
+              ? t('registration.public_page.tasks_panel.publish_metadata')
+              : t('registration.public_page.tasks_panel.publish_metadata_and_files')}
           </LoadingButton>
+        )}
+
+        {publishingRequestTicket && !window.location.pathname.startsWith(UrlPathTemplate.Tasks) && (
+          <Typography>{t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}</Typography>
         )}
 
         {canHandlePublishingRequest &&
@@ -251,7 +255,7 @@ export const PublishingAccordion = ({
           window.location.pathname.startsWith(UrlPathTemplate.Tasks) && (
             <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <Typography paragraph>
-                {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}
+                {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files_curator')}
               </Typography>
               <LoadingButton
                 sx={{ bgcolor: 'white' }}

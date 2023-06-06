@@ -16,11 +16,11 @@ export const StyledStatusMessageBox = styled(Box)({
   borderRadius: '4px',
 });
 
-export const PublishingRequestMessagesColumn = ({
-  ticket,
-}: {
+interface PublishingRequestMessagesColumnProps {
   ticket: ExpandedPublishingTicket | PublishingTicket;
-}) => {
+}
+
+export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMessagesColumnProps) => {
   const { t } = useTranslation();
 
   return (
