@@ -21,6 +21,7 @@ interface SupportAccordionProps {
   userIsCurator: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
   refetchData: () => void;
+  defaultExpanded?: boolean;
 }
 
 export const SupportAccordion = ({
@@ -29,6 +30,7 @@ export const SupportAccordion = ({
   userIsCurator,
   addMessage,
   refetchData,
+  defaultExpanded = false,
 }: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -57,10 +59,9 @@ export const SupportAccordion = ({
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
-      sx={{
-        bgcolor: 'generalSupportCase.light',
-      }}
-      elevation={3}>
+      sx={{ bgcolor: 'generalSupportCase.light' }}
+      elevation={3}
+      defaultExpanded={defaultExpanded}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
         {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
