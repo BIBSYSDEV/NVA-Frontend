@@ -151,11 +151,9 @@ export const PublishingAccordion = ({
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
-      sx={{
-        bgcolor: 'publishingRequest.light',
-      }}
+      sx={{ bgcolor: 'publishingRequest.light' }}
       elevation={3}
-      defaultExpanded={isDraftRegistration || canHandlePublishingRequest || hasMismatchingPublishedStatus}>
+      defaultExpanded={isDraftRegistration || hasPendingTicket || hasMismatchingPublishedStatus}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('registration.public_page.publication')}
         {publishingRequestTicket && ` - ${t(`my_page.messages.ticket_types.${publishingRequestTicket.status}`)}`}
