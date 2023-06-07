@@ -31,6 +31,7 @@ export const fetchUsers = async (customerId: string, role: RoleName) => {
   const filteredUsers = usersResponse.data.users.filter((user) =>
     user.roles.some((userRole) => userRole.rolename === role)
   );
+
   return filteredUsers.sort((a, b) => {
     const nameA = getFullName(a.givenName, a.familyName);
     const nameB = getFullName(b.givenName, b.familyName);

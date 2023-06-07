@@ -1,8 +1,7 @@
-import { LoadingButton } from '@mui/lab';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Autocomplete, Box, IconButton, TextField, Tooltip } from '@mui/material';
+import { Autocomplete, Box, IconButton, Tooltip } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { fetchUser, fetchUsers } from '../../../api/roleApi';
@@ -36,7 +35,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
     queryKey: ['curators', customerId],
     enabled: showCuratorSearch && !!customerId,
     queryFn: () => (customerId ? fetchUsers(customerId, RoleName.Curator) : undefined),
-    //TODO: meta error
+    meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
   // Ensure current user is first in list curators
@@ -54,10 +53,11 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
   const assigneeInitials = getContributorInitials(assigneeName);
 
   const ticketMutation = useMutation({
-    mutationFn: (assigneeUsername: string) => updateTicket(ticket.id, { assignee: assigneeUsername }),
+    mutationFn: async (assigneeUsername: string) => await updateTicket(ticket.id, { assignee: assigneeUsername }),
     onSuccess: () => {
       refetchTickets();
-      //TODO: success message
+      dispatch(setNotification({ message: t('feedback.success.update_ticket_assignee'), variant: 'success' }));
+      setShowCuratorSearch(false);
     },
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
   });
@@ -83,7 +83,6 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
       }}
       onChange={async (_, value) => {
         await ticketMutation.mutateAsync(value?.username ?? '');
-        setShowCuratorSearch(false);
       }}
       onBlur={() => setShowCuratorSearch(false)}
       getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
@@ -114,7 +113,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
       {canSetAssignee && (
         <IconButton
           data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeButton}
-          title="TODO"
+          title={t('registration.public_page.tasks_panel.assign_curator')}
           onClick={() => setShowCuratorSearch(true)}>
           <MoreHorizIcon />
         </IconButton>
