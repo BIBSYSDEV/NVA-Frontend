@@ -246,8 +246,14 @@ export const PublishingAccordion = ({
           </LoadingButton>
         )}
 
-        {isPublishedRegistration && hasPendingTicket && !isOnTasksPath && (
+        {isPublishedRegistration && !isOnTasksPath && hasPendingTicket && (
           <Typography>{t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}</Typography>
+        )}
+
+        {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
+          <Typography sx={{ mt: '0.5rem' }}>
+            {t('registration.public_page.tasks_panel.registration_is_published')}
+          </Typography>
         )}
 
         {canHandlePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
