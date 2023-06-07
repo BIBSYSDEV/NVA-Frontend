@@ -56,12 +56,14 @@ export const SupportAccordion = ({
     }
   };
 
+  const isPendingSupportTicket = supportTicket?.status === 'New' || supportTicket?.status === 'Pending';
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{ bgcolor: 'generalSupportCase.light' }}
       elevation={3}
-      defaultExpanded={defaultExpanded}>
+      defaultExpanded={defaultExpanded || isPendingSupportTicket}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
         {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
