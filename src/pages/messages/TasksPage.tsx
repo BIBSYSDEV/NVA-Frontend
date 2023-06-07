@@ -118,7 +118,7 @@ const TasksPage = () => {
       <SideMenu
         expanded={expandMenu}
         minimizedMenu={
-          <Link to={UrlPathTemplate.Tasks}>
+          <Link to={UrlPathTemplate.Tasks} onClick={() => ticketsQuery.refetch()}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
             </StyledMinimizedMenuButton>

@@ -123,7 +123,7 @@ const MyPagePage = () => {
       <SideMenu
         expanded={expandMenu}
         minimizedMenu={
-          <Link to={UrlPathTemplate.MyPageMyMessages}>
+          <Link to={UrlPathTemplate.MyPageMyMessages} onClick={() => ticketsQuery.refetch()}>
             <StyledMinimizedMenuButton title={t('my_page.my_page')}>
               <FavoriteBorderIcon />
             </StyledMinimizedMenuButton>
