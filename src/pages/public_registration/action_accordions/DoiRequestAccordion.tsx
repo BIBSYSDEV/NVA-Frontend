@@ -141,11 +141,9 @@ export const DoiRequestAccordion = ({
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
-      sx={{
-        bgcolor: 'doiRequest.light',
-      }}
+      sx={{ bgcolor: 'doiRequest.light' }}
       elevation={3}
-      defaultExpanded={waitingForRemovalOfDoi || (userIsCurator && isPendingDoiRequest)}>
+      defaultExpanded={waitingForRemovalOfDoi || isPendingDoiRequest}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('common.doi')}
         {doiRequestTicket && ` - ${t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)}`}
