@@ -148,6 +148,8 @@ export const PublishingAccordion = ({
 
   const ticketMessages = publishingRequestTicket?.messages ?? [];
 
+  const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.Tasks);
+
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAccordion}
@@ -244,39 +246,37 @@ export const PublishingAccordion = ({
           </LoadingButton>
         )}
 
-        {publishingRequestTicket && !window.location.pathname.startsWith(UrlPathTemplate.Tasks) && (
+        {isPublishedRegistration && hasPendingTicket && !isOnTasksPath && (
           <Typography>{t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}</Typography>
         )}
 
-        {canHandlePublishingRequest &&
-          !hasMismatchingPublishedStatus &&
-          window.location.pathname.startsWith(UrlPathTemplate.Tasks) && (
-            <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <Typography paragraph>
-                {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files_curator')}
-              </Typography>
-              <LoadingButton
-                sx={{ bgcolor: 'white' }}
-                variant="outlined"
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
-                startIcon={<AttachFileIcon fontSize="large" />}
-                onClick={() => ticketMutation.mutate({ status: 'Completed' })}
-                loading={isLoading === LoadingState.ApprovePulishingRequest}
-                disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-                {t('registration.public_page.approve_publish_request')} ({registration.associatedArtifacts.length})
-              </LoadingButton>
-              <LoadingButton
-                sx={{ bgcolor: 'white' }}
-                variant="outlined"
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
-                startIcon={<CloseIcon />}
-                onClick={() => ticketMutation.mutate({ status: 'Closed' })}
-                loading={isLoading === LoadingState.RejectPublishingRequest}
-                disabled={isLoadingData || isLoading !== LoadingState.None}>
-                {t('registration.public_page.reject_publish_request')}
-              </LoadingButton>
-            </Box>
-          )}
+        {canHandlePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
+          <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <Typography paragraph>
+              {t('registration.public_page.tasks_panel.metadata_published_waiting_for_files_curator')}
+            </Typography>
+            <LoadingButton
+              sx={{ bgcolor: 'white' }}
+              variant="outlined"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestAcceptButton}
+              startIcon={<AttachFileIcon fontSize="large" />}
+              onClick={() => ticketMutation.mutate({ status: 'Completed' })}
+              loading={isLoading === LoadingState.ApprovePulishingRequest}
+              disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
+              {t('registration.public_page.approve_publish_request')} ({registration.associatedArtifacts.length})
+            </LoadingButton>
+            <LoadingButton
+              sx={{ bgcolor: 'white' }}
+              variant="outlined"
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.publishingRequestRejectButton}
+              startIcon={<CloseIcon />}
+              onClick={() => ticketMutation.mutate({ status: 'Closed' })}
+              loading={isLoading === LoadingState.RejectPublishingRequest}
+              disabled={isLoadingData || isLoading !== LoadingState.None}>
+              {t('registration.public_page.reject_publish_request')}
+            </LoadingButton>
+          </Box>
+        )}
 
         {hasPendingTicket && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
