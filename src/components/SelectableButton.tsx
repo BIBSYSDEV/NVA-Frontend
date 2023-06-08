@@ -1,4 +1,6 @@
-import { Button, ButtonProps, Checkbox } from '@mui/material';
+import { Button, ButtonProps } from '@mui/material';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
 interface SelectableButtonProps extends ButtonProps {
   isSelected: boolean;
@@ -14,13 +16,7 @@ export const SelectableButton = ({
 }: SelectableButtonProps) => (
   <Button
     {...rest}
-    startIcon={
-      showCheckbox ? (
-        <Checkbox tabIndex={-1} disableRipple sx={{ p: 0 }} checked={isSelected} /> // TODO: Fix a11y for checkbox (NP-44680)
-      ) : (
-        startIcon
-      )
-    }
+    startIcon={showCheckbox ? isSelected ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon /> : startIcon}
     variant={isSelected ? 'contained' : 'outlined'}
     sx={{
       justifyContent: 'start',
