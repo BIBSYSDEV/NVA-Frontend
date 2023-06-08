@@ -81,9 +81,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
           return name.includes(filter);
         });
       }}
-      onChange={async (_, value) => {
-        await ticketMutation.mutateAsync(value?.username ?? '');
-      }}
+      onChange={async (_, value) => await ticketMutation.mutateAsync(value?.username ?? '')}
       onBlur={() => setShowCuratorSearch(false)}
       getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
       isOptionEqualToValue={(option, value) => option.username === value.username}

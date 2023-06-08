@@ -1,4 +1,5 @@
 import { InstitutionUser, RoleName, UserList, UserRole } from '../types/user.types';
+import { filterUsersByRole } from '../utils/role-helpers';
 import { getFullName } from '../utils/user-helpers';
 import { RoleApiPath } from './apiPaths';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
@@ -28,9 +29,7 @@ export const fetchUsers = async (customerId: string, role: RoleName) => {
   const usersResponse = await authenticatedApiRequest2<UserList>({
     url: `${RoleApiPath.InstitutionUsers}?institution=${customerId}`,
   });
-  const filteredUsers = usersResponse.data.users.filter((user) =>
-    user.roles.some((userRole) => userRole.rolename === role)
-  );
+  const filteredUsers = filterUsersByRole(usersResponse.data.users, role);
 
   return filteredUsers.sort((a, b) => {
     const nameA = getFullName(a.givenName, a.familyName);
