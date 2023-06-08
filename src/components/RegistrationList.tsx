@@ -29,10 +29,13 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => (
 
 interface RegistrationListItemContentProps {
   registration: Registration;
-  linkPath?: string;
+  disableLinks?: boolean;
 }
 
-export const RegistrationListItemContent = ({ registration, linkPath }: RegistrationListItemContentProps) => {
+export const RegistrationListItemContent = ({
+  registration,
+  disableLinks = false,
+}: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
 
@@ -53,9 +56,13 @@ export const RegistrationListItemContent = ({ registration, linkPath }: Registra
         {heading}
       </Typography>
       <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-        <MuiLink component={Link} to={linkPath ?? getRegistrationLandingPagePath(identifier)}>
-          {getTitleString(entityDescription?.mainTitle)}
-        </MuiLink>
+        {disableLinks ? (
+          getTitleString(entityDescription?.mainTitle)
+        ) : (
+          <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
+            {getTitleString(entityDescription?.mainTitle)}
+          </MuiLink>
+        )}
       </Typography>
       <Box
         sx={{
@@ -68,7 +75,7 @@ export const RegistrationListItemContent = ({ registration, linkPath }: Registra
           {focusedContributors.map((contributor, index) => (
             <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography variant="body2">
-                {contributor.identity.id ? (
+                {contributor.identity.id && !disableLinks ? (
                   <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                     {contributor.identity.name}
                   </MuiLink>
@@ -76,7 +83,7 @@ export const RegistrationListItemContent = ({ registration, linkPath }: Registra
                   contributor.identity.name
                 )}
               </Typography>
-              <ContributorIndicators contributor={contributor} />
+              <ContributorIndicators contributor={contributor} disableLinks={disableLinks} />
             </Box>
           ))}
           {countRestContributors > 0 && (
