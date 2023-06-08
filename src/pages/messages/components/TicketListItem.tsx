@@ -48,11 +48,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     : '';
 
   return (
-    <SearchListItem
-      key={ticket.id}
-      sx={{
-        borderLeftColor: ticketColor[ticket.type],
-      }}>
+    <SearchListItem key={ticket.id} sx={{ borderLeftColor: ticketColor[ticket.type] }}>
       <Box
         sx={{
           width: '100%',
@@ -69,6 +65,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
               ? getMyMessagesRegistrationPath(identifier)
               : undefined
           }
+          disableLinks
         />
         {ticket.type === 'PublishingRequest' ? (
           <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
