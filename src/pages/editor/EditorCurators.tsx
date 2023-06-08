@@ -92,20 +92,18 @@ export const EditorCurators = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {curators.length > ROWS_PER_PAGE_OPTIONS[0] && (
-        <TablePagination
-          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-          component="div"
-          count={curators.length}
-          rowsPerPage={rowsPerPage}
-          page={validPage}
-          onPageChange={(_, newPage) => setPage(newPage)}
-          onRowsPerPageChange={(event) => {
-            setRowsPerPage(parseInt(event.target.value));
-            setPage(0);
-          }}
-        />
-      )}
+      <TablePagination
+        rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+        component="div"
+        count={curators.length}
+        rowsPerPage={rowsPerPage}
+        page={validPage}
+        onPageChange={(_, newPage) => setPage(newPage)}
+        onRowsPerPageChange={(event) => {
+          setRowsPerPage(parseInt(event.target.value));
+          setPage(0);
+        }}
+      />
     </>
   );
 };
