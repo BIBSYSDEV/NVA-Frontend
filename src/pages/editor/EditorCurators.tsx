@@ -19,11 +19,10 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { ViewingScopeCell } from '../basic_data/institution_admin/ViewingScopeCell';
 import { RootState } from '../../redux/store';
-import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { Organization } from '../../types/organization.types';
 import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { RoleName } from '../../types/user.types';
 import { fetchUsers } from '../../api/roleApi';
+import { fetchOrganization } from '../../api/cristinApi';
 
 export const EditorCurators = () => {
   const { t } = useTranslation();
@@ -31,12 +30,19 @@ export const EditorCurators = () => {
   const [page, setPage] = useState(0);
 
   const { user } = useSelector((store: RootState) => store);
-
-  const [currentOrganization, isLoadingCurrentOrganization] = useFetchResource<Organization>(
-    user?.topOrgCristinId ?? ''
-  );
-
+  const topOrgCristinId = user?.topOrgCristinId ?? '';
   const customerId = user?.customerId ?? '';
+
+  const organizationQuery = useQuery({
+    enabled: !!topOrgCristinId,
+    queryKey: [topOrgCristinId],
+    queryFn: () => fetchOrganization(topOrgCristinId),
+    meta: { errorMessage: t('feedback.error.get_institution') },
+    staleTime: Infinity,
+    cacheTime: 1_800_000, // 30 minutes
+  });
+  const currentOrganization = organizationQuery.data;
+
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId],
     enabled: !!customerId,
@@ -78,7 +84,7 @@ export const EditorCurators = () => {
                       {curator.givenName} {curator.familyName}
                     </TableCell>
                     <TableCell>
-                      {isLoadingCurrentOrganization ? (
+                      {organizationQuery.isLoading ? (
                         <CircularProgress />
                       ) : (
                         <ViewingScopeCell
