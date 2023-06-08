@@ -29,7 +29,7 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => (
 
 interface RegistrationListItemContentProps {
   registration: Registration;
-  ticketView?: boolean; // Should have a slightly different layout
+  ticketView?: boolean;
 }
 
 export const RegistrationListItemContent = ({ registration, ticketView = false }: RegistrationListItemContentProps) => {
