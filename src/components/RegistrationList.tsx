@@ -29,13 +29,11 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => (
 
 interface RegistrationListItemContentProps {
   registration: Registration;
-  linkPath?: string;
   disableLinks?: boolean;
 }
 
 export const RegistrationListItemContent = ({
   registration,
-  linkPath,
   disableLinks = false,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
