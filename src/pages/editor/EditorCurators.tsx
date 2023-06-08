@@ -54,65 +54,57 @@ export const EditorCurators = () => {
   // Ensure selected page is not out of bounds due to manipulated userList
   const validPage = curators.length <= page * rowsPerPage ? 0 : page;
 
-  return curatorsQuery.isLoading ? (
+  return curatorsQuery.isLoading || organizationQuery.isLoading ? (
     <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: '2rem' }}>
       <CircularProgress aria-label={t('editor.curators.areas_of_responsibility')} />
     </Box>
+  ) : curators.length === 0 ? (
+    <Typography>
+      <i>{t('editor.curators.no_users_found')}</i>
+    </Typography>
   ) : (
     <>
-      {curators.length === 0 ? (
-        <Typography>
-          <i>{t('editor.curators.no_users_found')}</i>
-        </Typography>
-      ) : (
-        <>
-          <TableContainer component={Paper}>
-            <Table size="small" sx={alternatingTableRowColor}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>{t('common.name')}</TableCell>
-                  <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
-                    {t('editor.curators.area_of_responsibility')}
-                  </TableCell>
-                </TableRow>
-              </TableHead>
+      <TableContainer component={Paper}>
+        <Table size="small" sx={alternatingTableRowColor}>
+          <TableHead>
+            <TableRow>
+              <TableCell>{t('common.name')}</TableCell>
+              <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
+                {t('editor.curators.area_of_responsibility')}
+              </TableCell>
+            </TableRow>
+          </TableHead>
 
-              <TableBody>
-                {curators.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((curator) => (
-                  <TableRow key={curator.username}>
-                    <TableCell>
-                      {curator.givenName} {curator.familyName}
-                    </TableCell>
-                    <TableCell>
-                      {organizationQuery.isLoading ? (
-                        <CircularProgress />
-                      ) : (
-                        <ViewingScopeCell
-                          user={curator}
-                          options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
-                        />
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          {curators.length > ROWS_PER_PAGE_OPTIONS[0] && (
-            <TablePagination
-              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-              component="div"
-              count={curators.length}
-              rowsPerPage={rowsPerPage}
-              page={validPage}
-              onPageChange={(_, newPage) => setPage(newPage)}
-              onRowsPerPageChange={(event) => {
-                setRowsPerPage(parseInt(event.target.value));
-                setPage(0);
-              }}
-            />
-          )}
-        </>
+          <TableBody>
+            {curators.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((curator) => (
+              <TableRow key={curator.username}>
+                <TableCell>
+                  {curator.givenName} {curator.familyName}
+                </TableCell>
+                <TableCell>
+                  <ViewingScopeCell
+                    user={curator}
+                    options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {curators.length > ROWS_PER_PAGE_OPTIONS[0] && (
+        <TablePagination
+          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+          component="div"
+          count={curators.length}
+          rowsPerPage={rowsPerPage}
+          page={validPage}
+          onPageChange={(_, newPage) => setPage(newPage)}
+          onRowsPerPageChange={(event) => {
+            setRowsPerPage(parseInt(event.target.value));
+            setPage(0);
+          }}
+        />
       )}
     </>
   );
