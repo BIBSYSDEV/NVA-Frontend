@@ -161,6 +161,9 @@ export const dataTestId = {
     relatedRegistrationsAccordion: 'related-registrations-accordion',
     subtypeFields: 'public-registration-subtype-fields',
     tasksPanel: {
+      assigneeButton: 'assignee-button',
+      assigneeIndicator: 'assignee-indicator',
+      assigneeSearchField: 'assignee-search-field',
       backToWizard: 'back-to-wizard-button',
       createDoiButton: 'button-create-doi',
       doiRequestAccordion: 'doi-request-accordion',

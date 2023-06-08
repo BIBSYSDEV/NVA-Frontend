@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Box, Link as MuiLink, List, ListItemText, Typography } from '@mui/material';
 import { getRegistrationLandingPagePath, getResearchProfilePath } from '../utils/urlPaths';
-import { Registration } from '../types/registration.types';
+import { Registration, RegistrationStatus } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
 import { dataTestId } from '../utils/dataTestIds';
 import { getTitleString } from '../utils/registration-helpers';
@@ -29,10 +29,10 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => (
 
 interface RegistrationListItemContentProps {
   registration: Registration;
-  linkPath?: string;
+  ticketView?: boolean;
 }
 
-export const RegistrationListItemContent = ({ registration, linkPath }: RegistrationListItemContentProps) => {
+export const RegistrationListItemContent = ({ registration, ticketView = false }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
 
@@ -49,13 +49,32 @@ export const RegistrationListItemContent = ({ registration, linkPath }: Registra
 
   return (
     <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
-      <Typography variant="overline" sx={{ color: 'primary.main', display: 'flex', gap: '0.25rem' }}>
-        {heading}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' } }}>
+        {heading && (
+          <Typography variant="overline" sx={{ color: 'primary.main' }}>
+            {heading}
+          </Typography>
+        )}
+        {ticketView &&
+          (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
+            <Typography
+              sx={{
+                p: '0.1rem 0.75rem',
+                bgcolor: 'primary.light',
+                color: 'primary.contrastText',
+              }}>
+              {t('registration.public_page.metadata_not_published')}
+            </Typography>
+          )}
+      </Box>
       <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-        <MuiLink component={Link} to={linkPath ?? getRegistrationLandingPagePath(identifier)}>
-          {getTitleString(entityDescription?.mainTitle)}
-        </MuiLink>
+        {ticketView ? (
+          getTitleString(entityDescription?.mainTitle)
+        ) : (
+          <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
+            {getTitleString(entityDescription?.mainTitle)}
+          </MuiLink>
+        )}
       </Typography>
       <Box
         sx={{
@@ -68,7 +87,7 @@ export const RegistrationListItemContent = ({ registration, linkPath }: Registra
           {focusedContributors.map((contributor, index) => (
             <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
               <Typography variant="body2">
-                {contributor.identity.id ? (
+                {contributor.identity.id && !ticketView ? (
                   <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                     {contributor.identity.name}
                   </MuiLink>
@@ -76,7 +95,7 @@ export const RegistrationListItemContent = ({ registration, linkPath }: Registra
                   contributor.identity.name
                 )}
               </Typography>
-              <ContributorIndicators contributor={contributor} />
+              <ContributorIndicators contributor={contributor} ticketView={ticketView} />
             </Box>
           ))}
           {countRestContributors > 0 && (
