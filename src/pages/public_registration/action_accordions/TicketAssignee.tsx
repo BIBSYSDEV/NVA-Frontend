@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Autocomplete, Box, IconButton, Tooltip } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { useState } from 'react';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { fetchUser, fetchUsers } from '../../../api/roleApi';
 import { getFullName } from '../../../utils/user-helpers';
@@ -13,7 +14,6 @@ import { getContributorInitials } from '../../../utils/registration-helpers';
 import { ticketColor } from '../../messages/components/TicketListItem';
 import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import { useState } from 'react';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -38,7 +38,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
-  // Ensure current user is first in list curators
+  // Ensure current user is first in list of curators
   const curatorOptions = (curatorsQuery.data ?? []).sort((a, b) =>
     a.username === user?.nvaUsername ? -1 : b.username === user?.nvaUsername ? 1 : 0
   );
@@ -63,7 +63,9 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
   });
 
   const canSetAssignee =
-    window.location.pathname.startsWith(UrlPathTemplate.Tasks) && user?.isCurator && ticket.status === 'Pending';
+    window.location.pathname.startsWith(UrlPathTemplate.Tasks) &&
+    user?.isCurator &&
+    (ticket.status === 'Pending' || ticket.status === 'New');
 
   return showCuratorSearch ? (
     <Autocomplete
@@ -73,7 +75,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
           {getFullName(option.givenName, option.familyName)}
         </li>
       )}
-      disabled={ticketMutation.isLoading}
+      disabled={ticketMutation.isLoading || curatorsQuery.isLoading}
       filterOptions={(options, state) => {
         const filter = state.inputValue.toLocaleLowerCase();
         return options.filter((option) => {
