@@ -6,7 +6,7 @@ import { Contributor } from '../types/contributor.types';
 
 interface ContributorIndicatorsProps {
   contributor: Contributor;
-  disableLinks?: boolean;
+  ticketView?: boolean;
 }
 
 export const ContributorIndicators = ({
@@ -14,7 +14,7 @@ export const ContributorIndicators = ({
     identity: { orcId },
     correspondingAuthor,
   },
-  disableLinks = false,
+  ticketView = false,
 }: ContributorIndicatorsProps) => {
   const { t } = useTranslation();
 
@@ -22,7 +22,7 @@ export const ContributorIndicators = ({
     <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
       {orcId && (
         <Tooltip title={t('common.orcid_profile')}>
-          {disableLinks ? (
+          {ticketView ? (
             <img src={OrcidLogo} height="20" alt="orcid" style={{ marginLeft: '0.2rem' }} />
           ) : (
             <IconButton size="small" href={orcId} target="_blank">
