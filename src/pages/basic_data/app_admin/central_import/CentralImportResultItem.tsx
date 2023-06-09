@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { ImportCandidate } from '../../../../types/importCandidate.types';
+import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 
 interface CentralImportResultItemProps {
-  importCandidate: ImportCandidate;
+  importCandidate: ImportCandidateSummary;
 }
 
 export const CentralImportResultItem = ({ importCandidate }: CentralImportResultItemProps) => {
@@ -48,7 +49,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
                   fontStyle: 'italic',
                   wordBreak: 'break-word',
                 }}>
-                <MuiLink component={Link} to={`${getDuplicateCheckPagePath(importCandidate.id)}`}>
+                <MuiLink component={Link} to={getDuplicateCheckPagePath(getIdentifierFromId(importCandidate.id))}>
                   {importCandidate.mainTitle}
                 </MuiLink>
               </Typography>

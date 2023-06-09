@@ -55,7 +55,9 @@
       "reset_search_values": "Reset values",
       "search_again": "Search again",
       "search_for_duplicates": "Search for duplicates",
-      "verified_contributor_count": "({{verifiedContributorCount}} of {{contributorsCount}})"
+      "verified_contributor_count": "({{verifiedContributorCount}} of {{contributorsCount}})",
+      "import": "import",
+      "see_publication": "See publication"
     },
     "institutions": {
       "add_institution": "Add institution",
@@ -413,6 +415,7 @@
       "create_publishing_request": "The publishing request was created",
       "create_user": "Your user was created",
       "created_customer": "Created customer institution",
+      "create_registration": "Registration was created",
       "delete_registration": "Deleted registration",
       "doi_request_sent": "DOI request sent",
       "doi_request_updated": "DOI request is updated",

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { IconButton, Paper, Tooltip, Typography, Box } from '@mui/material';
+import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
