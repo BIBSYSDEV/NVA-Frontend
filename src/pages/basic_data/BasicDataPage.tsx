@@ -23,12 +23,12 @@ import {
   LinkCreateButton,
   NavigationList,
   SideNavHeader,
-  SidePanel,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { CentralImportRegistration } from './app_admin/central_import/CentralImportRegistration';
+import { SideMenu } from '../../components/SideMenu';
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
@@ -51,7 +51,7 @@ const BasicDataPage = () => {
 
   return (
     <StyledPageWithSideMenu>
-      <SidePanel aria-labelledby="basic-data-title">
+      <SideMenu aria-labelledby="basic-data-title">
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
         {user?.isInstitutionAdmin && (
           <NavigationListAccordion
@@ -148,7 +148,7 @@ const BasicDataPage = () => {
             </BetaFunctionality>
           </>
         )}
-      </SidePanel>
+      </SideMenu>
       <BackgroundDiv>
         <Switch>
           <ErrorBoundary>

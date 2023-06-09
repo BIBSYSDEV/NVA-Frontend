@@ -1,10 +1,10 @@
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
+import { ExpandedTicket, Ticket } from '../../../types/publication_types/ticket.types';
 import { StyledMessagesContainer, StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
 
 interface DoiRequestMessagesColumnProps {
-  ticket: ExpandedTicket;
+  ticket: ExpandedTicket | Ticket;
 }
 
 export const DoiRequestMessagesColumn = ({ ticket }: DoiRequestMessagesColumnProps) => {
@@ -12,16 +12,14 @@ export const DoiRequestMessagesColumn = ({ ticket }: DoiRequestMessagesColumnPro
 
   return (
     <StyledMessagesContainer>
+      <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
+        <Typography>{t('my_page.messages.doi_requested')}</Typography>
+        <Typography>{new Date(ticket.createdDate).toLocaleDateString()}</Typography>
+      </StyledStatusMessageBox>
       {ticket.status === 'New' || ticket.status === 'Pending' ? (
-        <>
-          <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
-            <Typography>{t('my_page.messages.doi_requested')}</Typography>
-            <Typography>{new Date(ticket.createdDate).toLocaleDateString()}</Typography>
-          </StyledStatusMessageBox>
-          <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-            <Typography>{t('my_page.messages.doi_pending')}</Typography>
-          </StyledStatusMessageBox>
-        </>
+        <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+          <Typography>{t('my_page.messages.doi_pending')}</Typography>
+        </StyledStatusMessageBox>
       ) : ticket.status === 'Completed' ? (
         <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
           <Typography>{t('my_page.messages.doi_completed')}</Typography>

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Box, CircularProgress, Divider, FormControl, FormControlLabel, Typography, styled } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import { useQuery } from '@tanstack/react-query';
-import { Switch, useHistory } from 'react-router-dom';
+import { Link, Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { RootState } from '../../redux/store';
@@ -14,7 +14,7 @@ import { getLanguageString } from '../../utils/translation-helpers';
 import { TicketList, ticketsPerPageOptions } from './components/TicketList';
 import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { StyledPageWithSideMenu, SidePanel, SideNavHeader, LinkButton } from '../../components/PageWithSideMenu';
+import { StyledPageWithSideMenu, SideNavHeader, LinkButton } from '../../components/PageWithSideMenu';
 import { setNotification } from '../../redux/notificationSlice';
 import { fetchTickets } from '../../api/searchApi';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
@@ -25,6 +25,7 @@ import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../compone
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { CuratorRoute } from '../../utils/routes/Routes';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 
 type SelectedStatusState = {
   [key in Exclude<TicketStatus, 'New'>]: boolean;
@@ -68,13 +69,6 @@ const TasksPage = () => {
     withAuthentication: true,
   });
 
-  const openTasksPage = () => {
-    // TODO: Redundant when NP-44809 is completed
-    if (history.location.pathname !== UrlPathTemplate.Tasks) {
-      history.push(UrlPathTemplate.Tasks);
-    }
-  };
-
   const viewingScopes = institutionUser?.viewingScope?.includedUnits ?? [];
   const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
@@ -117,11 +111,20 @@ const TasksPage = () => {
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
+  const expandMenu = history.location.pathname === UrlPathTemplate.Tasks;
+
   return (
     <StyledPageWithSideMenu>
-      <SidePanel>
+      <SideMenu
+        expanded={expandMenu}
+        minimizedMenu={
+          <Link to={UrlPathTemplate.Tasks} onClick={() => ticketsQuery.refetch()}>
+            <StyledMinimizedMenuButton title={t('common.tasks')}>
+              <AssignmentIcon />
+            </StyledMinimizedMenuButton>
+          </Link>
+        }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
-
         <Box component="article" sx={{ m: '1rem' }}>
           {viewingScopeId ? (
             isLoadingViewingScopeOrganization ? (
@@ -137,7 +140,6 @@ const TasksPage = () => {
             )
           ) : null}
         </Box>
-
         <Divider />
         <NavigationListAccordion
           title={t('tasks.user_dialog')}
@@ -149,33 +151,24 @@ const TasksPage = () => {
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.newUserDialogsButton}
               isSelected={searchMode === 'new'}
-              onClick={() => {
-                setSearchMode('new');
-                openTasksPage();
-              }}>
+              onClick={() => setSearchMode('new')}>
               {t('tasks.new_user_dialogs')}
             </StyledSearchModeButton>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
               isSelected={searchMode === 'current-user'}
-              onClick={() => {
-                setSearchMode('current-user');
-                openTasksPage();
-              }}>
+              onClick={() => setSearchMode('current-user')}>
               {t('tasks.my_user_dialogs')}
             </StyledSearchModeButton>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
               isSelected={searchMode === 'all'}
-              onClick={() => {
-                setSearchMode('all');
-                openTasksPage();
-              }}>
+              onClick={() => setSearchMode('all')}>
               {t('tasks.all_user_dialogs')}
             </StyledSearchModeButton>
           </StyledTicketSearchFormGroup>
 
-          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
+          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
             <SelectableButton
               data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
               showCheckbox
@@ -263,7 +256,7 @@ const TasksPage = () => {
             </FormControl>
           </StyledTicketSearchFormGroup>
         </NavigationListAccordion>
-      </SidePanel>
+      </SideMenu>
 
       <ErrorBoundary>
         <Switch>

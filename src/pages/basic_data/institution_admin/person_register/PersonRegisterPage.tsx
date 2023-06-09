@@ -23,6 +23,7 @@ import { CristinPerson } from '../../../../types/user.types';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PersonTableRow } from './PersonTableRow';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 const rowsPerPageOptions = [10, 25, 50];
 
@@ -69,6 +70,7 @@ export const PersonRegisterPage = () => {
       </Helmet>
 
       <TextField
+        datatest-id={dataTestId.basicData.personRegisterSearchBar}
         type="search"
         variant="filled"
         value={searchQuery}
