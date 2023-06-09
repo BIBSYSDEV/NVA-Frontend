@@ -23,7 +23,7 @@ export interface ImportCandidate extends Omit<Registration, 'type'> {
   importStatus: ImportStatus;
 }
 
-export interface ExpandedImportCandidate {
+export interface ImportCandidateSummary {
   type: 'ImportCandidate';
   id: string;
   additionalIdentifiers: string[];

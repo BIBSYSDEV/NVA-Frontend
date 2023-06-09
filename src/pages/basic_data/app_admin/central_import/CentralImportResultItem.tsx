@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { ExpandedImportCandidate } from '../../../../types/importCandidate.types';
+import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 
 interface CentralImportResultItemProps {
-  importCandidate: ExpandedImportCandidate;
+  importCandidate: ImportCandidateSummary;
 }
 
 export const CentralImportResultItem = ({ importCandidate }: CentralImportResultItemProps) => {
