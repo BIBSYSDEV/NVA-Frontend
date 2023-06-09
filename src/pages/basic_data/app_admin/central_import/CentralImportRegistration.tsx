@@ -48,7 +48,7 @@ export const CentralImportRegistration = () => {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Typography>{importCandidateQuery.data?.entityDescription?.mainTitle}</Typography>
       <LoadingButton
-        loading={importCandidateQuery.isLoading}
+        loading={importCandidateMutation.isLoading}
         variant="outlined"
         color="primary"
         onClick={() => importCandidateMutation.mutate()}>
@@ -57,9 +57,9 @@ export const CentralImportRegistration = () => {
       <Button
         variant="outlined"
         color="primary"
-        disabled={!importCandidateMutation.isSuccess}
+        disabled={!registrationIdentifier}
         component={RouterLink}
-        to={getRegistrationLandingPagePath(getIdentifierFromId(registrationIdentifier))}>
+        to={getRegistrationLandingPagePath(registrationIdentifier)}>
         {t('basic_data.central_import.see_publication')}
       </Button>
     </Box>

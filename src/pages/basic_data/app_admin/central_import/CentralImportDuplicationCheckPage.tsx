@@ -77,7 +77,7 @@ export const CentralImportDuplicationCheckPage = () => {
             <Button variant="outlined" color="primary" component={Link} to={getImportCandidatePagePath(identifier)}>
               {t('basic_data.central_import.import')}
             </Button>
-            <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 2rem' } }}>
+            <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 2rem' }, mt: '1rem' }}>
               <CentralImportDuplicateSearch duplicateSearchFilters={duplicateSearchFilters} />
             </Box>
           </>
