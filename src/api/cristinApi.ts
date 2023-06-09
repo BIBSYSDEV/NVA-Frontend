@@ -80,12 +80,12 @@ export const fetchPerson = async (personId: string) => {
   return fetchPersonResponse.data;
 };
 
-interface SearchForProjectsSearchParams {
+interface ProjectsSearchParams {
   query?: string;
   creator?: string;
 }
 
-export const searchForProjects = async (results: number, page: number, params?: SearchForProjectsSearchParams) => {
+export const searchForProjects = async (results: number, page: number, params?: ProjectsSearchParams) => {
   const searchParams = new URLSearchParams();
   if (params?.query) {
     searchParams.set('query', params.query);

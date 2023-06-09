@@ -9,19 +9,14 @@ import { SearchTextField } from '../SearchTextField';
 import { ProjectListItem } from './ProjectListItem';
 import { useQuery } from '@tanstack/react-query';
 import { searchForProjects } from '../../../api/cristinApi';
-import { useDispatch } from 'react-redux';
-import { setNotification } from '../../../redux/notificationSlice';
 
 export const ProjectSearch = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+
   const location = useLocation();
   const projectSearchQueryParams = new URLSearchParams(location.search);
   projectSearchQueryParams.delete(SearchParam.Type);
 
-  if (!projectSearchQueryParams.get(SearchParam.Query)) {
-    projectSearchQueryParams.set(SearchParam.Query, '.');
-  }
   if (!projectSearchQueryParams.get(SearchParam.Results)) {
     projectSearchQueryParams.set(SearchParam.Results, '10');
   }
@@ -31,12 +26,12 @@ export const ProjectSearch = () => {
 
   const rowsPerPage = Number(projectSearchQueryParams.get(SearchParam.Results));
   const page = Number(projectSearchQueryParams.get(SearchParam.Page));
-  const titleQuery = projectSearchQueryParams.get(SearchParam.Query);
+  const query = projectSearchQueryParams.get(SearchParam.Query);
 
   const projectsQuery = useQuery({
-    queryKey: ['projects', rowsPerPage, page, titleQuery],
-    queryFn: () => searchForProjects(rowsPerPage, page, { query: titleQuery ?? undefined }),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.search'), variant: 'error' })),
+    queryKey: ['projects', rowsPerPage, page, query],
+    queryFn: () => searchForProjects(rowsPerPage, page, { query: query ?? undefined }),
+    meta: { errorMessage: t('feedback.error.project_search') },
   });
 
   const projectsSearchResults = projectsQuery.data?.hits ?? [];
