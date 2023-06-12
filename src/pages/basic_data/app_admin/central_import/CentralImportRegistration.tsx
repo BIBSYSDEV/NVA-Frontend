@@ -3,11 +3,9 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Box, Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import React from 'react';
 import { createRegistrationFromImportCandidate, fetchImportCandidate } from '../../../../api/registrationApi';
 import { getRegistrationLandingPagePath, RegistrationParams } from '../../../../utils/urlPaths';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { LoadingButton } from '@mui/lab';
 
 export const CentralImportRegistration = () => {
