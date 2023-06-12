@@ -14,7 +14,6 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
 import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
 import { searchForProjects } from '../../../../api/cristinApi';
-import { setNotification } from '../../../../redux/notificationSlice';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
@@ -27,7 +26,7 @@ export const ProjectsField = () => {
     enabled: debouncedSearchTerm.length > 0,
     queryKey: ['projects', debouncedSearchTerm],
     queryFn: () => searchForProjects(10, 1, { query: debouncedSearchTerm }),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.project_search'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.project_search') },
   });
 
   const projects = projectsQuery.data?.hits ?? [];
@@ -81,7 +80,7 @@ export const ProjectsField = () => {
                   <AutocompleteTextField
                     {...params}
                     label={t('registration.description.project_association')}
-                    isLoading={debouncedSearchTerm.length > 0 && projectsQuery.isLoading}
+                    isLoading={projectsQuery.isLoading}
                     placeholder={t('registration.description.search_for_project')}
                     showSearchIcon={field.value.length === 0}
                   />
