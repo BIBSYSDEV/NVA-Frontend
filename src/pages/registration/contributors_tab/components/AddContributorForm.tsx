@@ -5,20 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, TablePagination, TextField, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { LoadingButton } from '@mui/lab';
+import { useQuery } from '@tanstack/react-query';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { RootState } from '../../../../redux/store';
 import { Registration } from '../../../../types/registration.types';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { CristinApiPath } from '../../../../api/apiPaths';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { SearchResponse } from '../../../../types/common.types';
 import { CristinPerson } from '../../../../types/user.types';
 import { CristinPersonList } from './CristinPersonList';
 import { apiRequest } from '../../../../api/apiRequest';
 import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { setNotification } from '../../../../redux/notificationSlice';
+import { searchForPerson } from '../../../../api/cristinApi';
 
 const resultsPerPage = 10;
 
@@ -48,12 +47,14 @@ export const AddContributorForm = ({
 
   const [page, setPage] = useState(0);
 
-  const [userSearch, isLoadingUserSearch] = useFetch<SearchResponse<CristinPerson>>({
-    url: debouncedSearchTerm
-      ? `${CristinApiPath.Person}?name=${debouncedSearchTerm}&results=${resultsPerPage}&page=${page + 1}`
-      : '',
-    errorMessage: t('feedback.error.search'),
+  const personQuery = useQuery({
+    enabled: debouncedSearchTerm.length > 0,
+    queryKey: ['person', resultsPerPage, page, debouncedSearchTerm],
+    queryFn: () => searchForPerson(resultsPerPage, page + 1, debouncedSearchTerm),
+    meta: { errorMessage: t('feedback.error.search') },
   });
+
+  const userSearch = personQuery.data?.hits ?? [];
 
   const { values } = useFormikContext<Registration>();
   const contributors = values.entityDescription?.contributors ?? [];
@@ -100,12 +101,12 @@ export const AddContributorForm = ({
         sx={{ my: '1rem' }}
       />
 
-      {isLoadingUserSearch ? (
+      {personQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={100} height={80} />
-      ) : userSearch && userSearch.size > 0 && debouncedSearchTerm ? (
+      ) : userSearch && personQuery.data && personQuery.data.size > 0 && debouncedSearchTerm ? (
         <>
           <CristinPersonList
-            personSearch={userSearch}
+            personSearch={personQuery.data}
             userId={selectedUser?.id}
             onSelectContributor={setSelectedUser}
             searchTerm={debouncedSearchTerm}
@@ -113,7 +114,7 @@ export const AddContributorForm = ({
           <TablePagination
             rowsPerPageOptions={[resultsPerPage]}
             component="div"
-            count={userSearch.size}
+            count={personQuery.data?.size ?? 0}
             rowsPerPage={resultsPerPage}
             page={page}
             onPageChange={(_, newPage) => setPage(newPage)}
