@@ -85,67 +85,72 @@ const ResearchProfile = () => {
   ) : !person ? (
     <NotFound />
   ) : (
-    <BackgroundDiv>
-      <Helmet>
-        <title>{fullName}</title>
-      </Helmet>
-      <Typography variant="h1" sx={{ mt: '1rem', mb: '2rem' }}>
-        {fullName}
-      </Typography>
-      <Typography variant="h2">{t('common.employments')}</Typography>
-      {activeAffiliations.length > 0 ? (
-        <Box sx={lineSx}>
-          <WorkIcon />
-          <Box sx={textContainerSx}>
-            {activeAffiliations.map(({ organization }) => (
-              <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
-            ))}
+    <Box>
+      <Box sx={{ bgcolor: 'person.main', py: '1.5rem' }}>
+        <Typography variant="h1" sx={{ ml: '2rem' }}>
+          {fullName}
+        </Typography>
+      </Box>
+      <BackgroundDiv>
+        <Helmet>
+          <title>{fullName}</title>
+        </Helmet>
+
+        <Typography variant="h2">{t('common.employments')}</Typography>
+        {activeAffiliations.length > 0 ? (
+          <Box sx={lineSx}>
+            <WorkIcon />
+            <Box sx={textContainerSx}>
+              {activeAffiliations.map(({ organization }) => (
+                <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
+              ))}
+            </Box>
           </Box>
-        </Box>
-      ) : (
-        <Typography>{t('my_page.no_employments')}</Typography>
-      )}
-      {orcidUri && (
-        <Box sx={lineSx}>
-          <IconButton size="small" href={orcidUri} target="_blank">
-            <img src={orcidIcon} height="20" alt="orcid" />
-          </IconButton>
-          <Box sx={textContainerSx}>
-            <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
-              {orcidUri}
+        ) : (
+          <Typography>{t('my_page.no_employments')}</Typography>
+        )}
+        {orcidUri && (
+          <Box sx={lineSx}>
+            <IconButton size="small" href={orcidUri} target="_blank">
+              <img src={orcidIcon} height="20" alt="orcid" />
+            </IconButton>
+            <Box sx={textContainerSx}>
+              <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
+                {orcidUri}
+              </Typography>
+            </Box>
+          </Box>
+        )}
+        {registrations && (
+          <>
+            <Typography id="registration-label" variant="h2" sx={{ mt: '2rem' }}>
+              {t('common.registrations')}
             </Typography>
-          </Box>
-        </Box>
-      )}
-      {registrations && (
-        <>
-          <Typography id="registration-label" variant="h2" sx={{ mt: '2rem' }}>
-            {t('common.registrations')}
-          </Typography>
-          {isLoadingRegistrations && !registrations ? (
-            <CircularProgress aria-labelledby="registration-label" />
-          ) : registrations.size > 0 ? (
-            <>
-              <RegistrationSearchResults searchResult={registrations} />
-              <TablePagination
-                rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                component="div"
-                count={registrations.size}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(_, newPage) => setPage(newPage)}
-                onRowsPerPageChange={(event) => {
-                  setRowsPerPage(+event.target.value);
-                  setPage(0);
-                }}
-              />
-            </>
-          ) : (
-            <Typography>{t('common.no_hits')}</Typography>
-          )}
-        </>
-      )}
-    </BackgroundDiv>
+            {isLoadingRegistrations && !registrations ? (
+              <CircularProgress aria-labelledby="registration-label" />
+            ) : registrations.size > 0 ? (
+              <>
+                <RegistrationSearchResults searchResult={registrations} />
+                <TablePagination
+                  rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+                  component="div"
+                  count={registrations.size}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={(_, newPage) => setPage(newPage)}
+                  onRowsPerPageChange={(event) => {
+                    setRowsPerPage(+event.target.value);
+                    setPage(0);
+                  }}
+                />
+              </>
+            ) : (
+              <Typography>{t('common.no_hits')}</Typography>
+            )}
+          </>
+        )}
+      </BackgroundDiv>
+    </Box>
   );
 };
 
