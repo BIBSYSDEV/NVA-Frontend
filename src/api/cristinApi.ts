@@ -83,6 +83,7 @@ export const fetchPerson = async (personId: string) => {
 interface ProjectsSearchParams {
   query?: string;
   creator?: string;
+  participant?: string;
 }
 
 export const searchForProjects = async (results: number, page: number, params?: ProjectsSearchParams) => {
@@ -94,6 +95,9 @@ export const searchForProjects = async (results: number, page: number, params?: 
   searchParams.set('page', page.toString());
   if (params?.creator) {
     searchParams.set('creator', params.creator);
+  }
+  if (params?.participant) {
+    searchParams.set('participant', params.participant);
   }
 
   const queryContent = searchParams.toString();
