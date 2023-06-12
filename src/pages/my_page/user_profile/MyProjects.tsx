@@ -22,7 +22,7 @@ export const MyProjects = () => {
 
   const projectsQuery = useQuery({
     queryKey: ['projects', rowsPerPage, page, userCristinId],
-    queryFn: () => searchForProjects(rowsPerPage, page + 1, { creator: userCristinId }),
+    queryFn: () => searchForProjects(rowsPerPage, page + 1, { participant: userCristinId }),
     meta: { errorMessage: t('feedback.error.project_search') },
   });
 
