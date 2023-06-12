@@ -19,7 +19,7 @@ export const RelatedProjectsField = () => {
 
   const projectsQuery = useQuery({
     enabled: debouncedSearchTerm.length > 0,
-    queryKey: ['projects', debouncedSearchTerm],
+    queryKey: ['projects', 10, 1, debouncedSearchTerm],
     queryFn: () => searchForProjects(10, 1, { query: debouncedSearchTerm }),
     meta: { errorMessage: t('feedback.error.project_search') },
   });
