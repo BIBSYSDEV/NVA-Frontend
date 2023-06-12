@@ -34,6 +34,7 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
 import { TicketAssignee } from './TicketAssignee';
+import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
@@ -98,11 +99,11 @@ export const DoiRequestAccordion = ({
 
     if (isErrorStatus(createDraftDoiResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.reserve_doi'), variant: 'error' }));
-      setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createDraftDoiResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.reserve_doi'), variant: 'success' }));
       refetchData();
     }
+    setIsLoading(LoadingState.None);
   };
 
   const sendDoiRequest = async () => {
@@ -140,44 +141,33 @@ export const DoiRequestAccordion = ({
   return (
     <Accordion
       data-testid={dataTestId.registrationLandingPage.tasksPanel.doiRequestAccordion}
-      sx={{
-        borderLeft: '1.25rem solid',
-        borderLeftColor: 'doiRequest.main',
-      }}
+      sx={{ bgcolor: 'doiRequest.light' }}
       elevation={3}
-      defaultExpanded={waitingForRemovalOfDoi || (userIsCurator && isPendingDoiRequest)}>
+      defaultExpanded={waitingForRemovalOfDoi || isPendingDoiRequest}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-        {t('common.doi_long')}
+        {t('common.doi')}
+        {doiRequestTicket && ` - ${t(`my_page.messages.ticket_types.${doiRequestTicket.status}`)}`}
       </AccordionSummary>
       <AccordionDetails>
         {doiRequestTicket && <TicketAssignee ticket={doiRequestTicket} refetchTickets={refetchData} />}
+
+        {doiRequestTicket && <DoiRequestMessagesColumn ticket={doiRequestTicket} />}
 
         {!doiRequestTicket && registration.doi && (
           <Typography paragraph>{t('registration.public_page.tasks_panel.has_reserved_doi')}</Typography>
         )}
 
-        {isPendingDoiRequest && (
-          <Typography paragraph>{t('registration.public_page.tasks_panel.has_doi_request')}</Typography>
-        )}
-
-        {isClosedDoiRequest && (
+        {waitingForRemovalOfDoi && (
           <>
-            <Typography paragraph>{t('registration.public_page.tasks_panel.has_rejected_doi_request')}</Typography>
-            {waitingForRemovalOfDoi && (
-              <>
-                <Typography gutterBottom>
-                  {t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}
-                </Typography>
-                <LoadingButton
-                  variant="outlined"
-                  onClick={refetchData}
-                  loading={isLoadingData}
-                  startIcon={<RefreshIcon />}
-                  data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
-                  {t('registration.public_page.tasks_panel.reload')}
-                </LoadingButton>
-              </>
-            )}
+            <Typography gutterBottom>{t('registration.public_page.tasks_panel.waiting_for_rejected_doi')}</Typography>
+            <LoadingButton
+              variant="outlined"
+              onClick={refetchData}
+              loading={isLoadingData}
+              startIcon={<RefreshIcon />}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.refreshDoiRequestButton}>
+              {t('registration.public_page.tasks_panel.reload')}
+            </LoadingButton>
           </>
         )}
 
@@ -237,34 +227,23 @@ export const DoiRequestAccordion = ({
           </>
         )}
 
-        {isPendingDoiRequest && (
-          <Accordion elevation={3} sx={{ maxWidth: '60rem', my: '1rem' }}>
-            <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
-              {`${t('my_page.messages.messages')} (${messages.length})`}
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <MessageList messages={messages} />
-                <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
-              </Box>
-            </AccordionDetails>
-          </Accordion>
-        )}
-
         {userIsCurator && isPublishedRegistration && isPendingDoiRequest && (
-          <Box sx={{ display: 'flex', gap: '1rem' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
+            <Typography>{t('registration.public_page.tasks_panel.assign_doi_about')}</Typography>
             <LoadingButton
-              variant="contained"
+              sx={{ bgcolor: 'white' }}
+              variant="outlined"
               data-testid={dataTestId.registrationLandingPage.tasksPanel.createDoiButton}
               endIcon={<CheckIcon />}
               loadingPosition="end"
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApproveDoi}
               disabled={isLoadingData || isLoading !== LoadingState.None}>
-              {t('common.create_doi')}
+              {t('registration.public_page.tasks_panel.assign_doi')}
             </LoadingButton>
             <LoadingButton
-              variant="contained"
+              sx={{ bgcolor: 'white' }}
+              variant="outlined"
               data-testid={dataTestId.registrationLandingPage.rejectDoiButton}
               endIcon={<CloseIcon />}
               loadingPosition="end"
@@ -273,6 +252,17 @@ export const DoiRequestAccordion = ({
               disabled={isLoadingData || isLoading !== LoadingState.None}>
               {t('common.reject_doi')}
             </LoadingButton>
+          </Box>
+        )}
+
+        {isPendingDoiRequest && (
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
+            {messages.length > 0 ? (
+              <MessageList ticket={doiRequestTicket} />
+            ) : (
+              <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
+            )}
+            <MessageForm confirmAction={async (message) => await addMessage(doiRequestTicket.id, message)} />
           </Box>
         )}
       </AccordionDetails>

@@ -5,7 +5,6 @@ import { Ticket } from '../../types/publication_types/ticket.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { ActionPanelContent } from './ActionPanelContent';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
@@ -22,21 +21,21 @@ export const ActionPanel = ({
   const { t } = useTranslation();
 
   return (
-    <Paper elevation={0} data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
+    <Paper
+      elevation={0}
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}
+      sx={{ gridArea: 'tasks' }}>
       <StyledPaperHeader>
         <Typography color="inherit" variant="h1">
           {t('common.tasks')}
         </Typography>
       </StyledPaperHeader>
-      <BackgroundDiv>
-        <ActionPanelContent
-          canCreateTickets
-          tickets={tickets}
-          refetchData={refetchRegistrationAndTickets}
-          isLoadingData={isLoadingData}
-          registration={registration}
-        />
-      </BackgroundDiv>
+      <ActionPanelContent
+        tickets={tickets}
+        refetchData={refetchRegistrationAndTickets}
+        isLoadingData={isLoadingData}
+        registration={registration}
+      />
     </Paper>
   );
 };

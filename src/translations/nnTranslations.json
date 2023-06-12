@@ -80,6 +80,7 @@
       "ror": "Research Organization Registry (ROR)",
       "sector": "Sektor",
       "sector_values": {
+        "ABM": "Arkiv, Bibliotek og Museum",
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
         "UHI": "Universitet og høgskuler (UH)"
@@ -143,6 +144,7 @@
     "next": "Neste",
     "no": "Nei",
     "no_hits": "Inga treff",
+    "none": "Ingen",
     "not_decided": "Ikkje bestemd",
     "number_short": "Nr.",
     "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
@@ -195,12 +197,13 @@
     "tasks": "Oppgåver",
     "title": "Tittel",
     "type": "Type",
+    "unknown": "Ukjend",
     "update": "Oppdater",
     "username": "Brukarnamn",
     "version": "Versjon",
     "will_be_available": "Vert tilgjengeleg",
-    "x_days_one": "",
-    "x_days_other": "",
+    "x_days_one": "{{count}} dag",
+    "x_days_other": "{{count}} dagar",
     "x_others_one": "+ {{count}} annan",
     "x_others_other": "+ {{count}} andre",
     "year": "År",
@@ -399,6 +402,7 @@
       "update_publish_strategy": "Kunne ikkje oppdatere publiseringsstrategi",
       "update_publishing_request": "Kunne ikkje oppdatere publiseringsførespurnad",
       "update_registration": "Kunne ikkje oppdatere registrering",
+      "update_ticket_assignee": "Kunne ikkje setje til saksbehandlar",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feila"
     },
     "success": {
@@ -482,17 +486,19 @@
   },
   "my_page": {
     "messages": {
-      "doi_closed": "",
-      "doi_completed": "",
-      "doi_pending": "",
-      "files_published": "",
-      "files_rejected": "",
-      "messages": "Meldingar",
+      "dialogue": "",
+      "doi_closed": "DOI avvist",
+      "doi_completed": "DOI tildelt",
+      "doi_pending": "Ventar på DOI-tildeling",
+      "doi_requested": "Bede om DOI",
+      "files_published": "Fil(er) publisert",
+      "files_rejected": "Fil(er) avvist",
+      "general_support_pending": "Venter på oppfølging",
       "no_messages": "Du har inga meldingar",
       "ticket_types": {
         "Closed": "Lukka",
         "Completed": "Ferdeg",
-        "New": "",
+        "New": "Ny",
         "Pending": "Pågår"
       },
       "types": {
@@ -983,7 +989,6 @@
       "verify_affiliation": "Bekreft tilknyting",
       "verify_person": "Verifiser person"
     },
-    "curator_support": "Kuratorstøtte",
     "description": {
       "abstract": "Samandrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1029,7 +1034,7 @@
       "files_are_not_published": "Filer vert ikkje publisert",
       "files_awaits_approval_one": "",
       "files_awaits_approval_other": "",
-      "files_awaits_approval_unknown": "",
+      "files_awaits_approval_unknown": "Ventar på verifisering av fil(er)",
       "files_count": "Filer ({{count}})",
       "find_journal_in_channel_register": "Sjå informasjon om tidsskriftet i Kanalregisteret",
       "find_publisher_in_channel_register": "Sjå informasjon om utgjevaren i Kanalregisteret",
@@ -1074,18 +1079,19 @@
       "participants_other": "{{count}} deltakarar",
       "preview_of": "Førehandsvising av {{fileName}}",
       "preview_unavailable": "Førehandsvising ikkje tilgjengeleg. Opne fila i eigna program.",
+      "publication": "Publisering",
       "published": "Publisert",
       "published_date": "Publisert: {{date}}",
       "publishing_request": "Publiseringsgodkjenning",
+      "publishing_request_message_about": "Du kan bruke meldingsfeltet for dialog med registrator ved behov.",
       "reject_publish_request": "Avvis publisering",
       "request_doi": "Be om ein DOI",
       "request_doi_description": "Når du ber om ein DOI (Digital Object Identifier) vil bestillinga gå via ein kurator ved din institusjon for kvalitetskontroll. Legg til ein melding ved eventuelle spørsmål eller avklaringar.",
       "reserve_doi": "Reserver ein DOI",
       "reserved_doi": "Reservert DOI",
       "tasks_panel": {
+        "assign_ticket": "Ta sak",
         "files_will_soon_be_published": "Filene vil verte publisert om kort tid. Last inn siden på nytt om litt for å sjå oppdatert info.",
-        "has_doi_request": "Registreringa har ein DOI-førespurnad til handsaming for kurator.",
-        "has_rejected_doi_request": "Registreringa har ein avslege DOI-førespurnad.",
         "has_rejected_files_publishing_request": "Registreringa har ein avslege publiseringsførespurnad for filene.",
         "has_reserved_doi": "Registreringa har fått ein reservert DOI. Når registreringa vert publisert vil ein DOI-førespurnad verte oppretta automatisk, som skal handsamast av ein kurator.",
         "metadata_published_waiting_for_files": "Metadata er publisert og synleg for andre brukarar, men ein kurator må godkjenne filene som er lasta opp før dei vert synlege.",
@@ -1482,7 +1488,6 @@
       "PUBLISHED": "Publisert",
       "PUBLISHED_METADATA": "Publisert metadata"
     },
-    "support_description": "Når du ber om brukarstøtte vil meldinga gå til ein kurator ved din institusjon. Du kan sjå svar i <0>Mine Meldingar</0>.",
     "year_published": "Publiseringsår"
   },
   "search": {
@@ -1509,8 +1514,10 @@
     "sort_by_published_date_desc": "Publiseringsdato (nyaste fyrst)"
   },
   "tasks": {
+    "all_user_dialogs": "Alle brukardialoger",
     "limited_to": "Avgrensa til: \"{{name}}\"",
-    "tasks": "Oppgåver",
+    "my_user_dialogs": "Mine brukardialoger",
+    "new_user_dialogs": "Nye brukardialoger",
     "user_dialog": "Brukardialog"
   }
 }

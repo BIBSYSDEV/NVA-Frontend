@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Switch, useHistory } from 'react-router-dom';
+import { Link, Switch, useHistory } from 'react-router-dom';
 import { Divider, FormControlLabel } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
@@ -13,7 +13,6 @@ import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjects } from './user_profile/MyProjects';
@@ -23,7 +22,6 @@ import {
   LinkButton,
   LinkCreateButton,
   NavigationList,
-  SidePanel,
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
@@ -37,8 +35,9 @@ import { fetchTickets } from '../../api/searchApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
-
-const rowsPerPageOptions = [10, 20, 50];
+import { TicketList, ticketsPerPageOptions } from '../messages/components/TicketList';
+import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
@@ -51,7 +50,7 @@ const MyPagePage = () => {
   const user = useSelector((store: RootState) => store.user);
   const queryClient = useQueryClient();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
 
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
@@ -114,20 +113,33 @@ const MyPagePage = () => {
     }
   }, [history, currentPath, user?.isCreator]);
 
+  // Hide menu when opening a ticket on Messages path
+  const expandMenu =
+    !history.location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
+    history.location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
+
   return (
     <StyledPageWithSideMenu>
-      <SidePanel aria-labelledby="my-page-title">
-        <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} id="my-page-title" />
+      <SideMenu
+        expanded={expandMenu}
+        minimizedMenu={
+          <Link to={UrlPathTemplate.MyPageMyMessages} onClick={() => ticketsQuery.refetch()}>
+            <StyledMinimizedMenuButton title={t('my_page.my_page')}>
+              <FavoriteBorderIcon />
+            </StyledMinimizedMenuButton>
+          </Link>
+        }>
+        <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
 
         {user?.isCreator && [
           <NavigationListAccordion
             key={dataTestId.myPage.messagesAccordion}
             dataTestId={dataTestId.myPage.messagesAccordion}
-            title={t('my_page.messages.messages')}
+            title={t('my_page.messages.dialogue')}
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content' }}>
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 showCheckbox
@@ -321,19 +333,21 @@ const MyPagePage = () => {
             </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
-      </SidePanel>
+      </SideMenu>
 
       <ErrorBoundary>
         <Switch>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages}>
-            <MyMessagesPage
+            <TicketList
               ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
               setRowsPerPage={setRowsPerPage}
               page={page}
               setPage={setPage}
+              helmetTitle={t('my_page.messages.dialogue')}
             />
           </CreatorRoute>
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />

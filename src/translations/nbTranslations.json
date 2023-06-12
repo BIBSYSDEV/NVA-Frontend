@@ -80,10 +80,10 @@
       "ror": "Research Organization Registry (ROR)",
       "sector": "Sektor",
       "sector_values": {
+        "ABM": "Arkiv, Bibliotek og Museum",
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)",
-        "ABM": "Arkiv, Bibliotek og Museum"
+        "UHI": "Universitet og høyskoler (UH)"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -110,7 +110,6 @@
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
     "all": "Alle",
-    "assignee": "Saksbehandler",
     "cancel": "Avbryt",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
@@ -118,8 +117,6 @@
     "close_forever": "Lukk og ikke vis igjen",
     "country": "Land",
     "create": "Opprett",
-    "create_doi": "Opprett DOI",
-    "created_date": "Opprettet",
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskrivelse",
@@ -158,7 +155,6 @@
     "page_title": "Nasjonalt Vitenarkiv",
     "place": "Sted",
     "previous": "Forrige",
-    "publish": "Publiser",
     "publisher": "Utgiver",
     "read": "Les",
     "read_less": "Les mindre",
@@ -211,6 +207,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -296,11 +296,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -403,7 +399,8 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
-      "update_ticket_assignee": "Kunne ikke sette saksbehandler",
+      "update_ticket_assignee": "Kunne ikke sette kurator",
+      "update_ticket_status": "Kunne ikke oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "success": {
@@ -429,6 +426,7 @@
       "update_project": "Prosjektet ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
+      "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
     },
     "validation": {
@@ -487,23 +485,26 @@
   },
   "my_page": {
     "messages": {
+      "dialogue": "Dialog",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
+      "doi_requested": "Bedt om DOI",
       "files_published": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
-      "messages": "Meldinger",
+      "general_support_pending": "Venter på oppfølging",
+      "mark_as_completed": "Sett til ferdig",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
-        "Closed": "Lukket",
+        "Closed": "Avvist",
         "Completed": "Ferdig",
-        "New": "Ny",
-        "Pending": "Pågår"
+        "New": "Innmeldt",
+        "Pending": "Behandles"
       },
       "types": {
-        "DoiRequest": "DOI-forespørsel",
+        "DoiRequest": "DOI",
         "GeneralSupportCase": "Kuratorstøtte",
-        "PublishingRequest": "Publiseringsforespørsel"
+        "PublishingRequest": "Publisering"
       }
     },
     "my_page": "Min side",
@@ -1064,13 +1065,14 @@
     "new_registration": "Ny registrering",
     "public_page": {
       "about_registration": "Om registreringen",
-      "approve_publish_request": "Godkjenn publisering",
+      "approve_publish_request": "Publiser fil med lisens",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",
       "in_progress": "Under behandling",
       "message_to_curator": "Melding til kurator",
+      "metadata_not_published": "Metadata er ikke publisert",
       "other_contributors_one": "(+{{count}} annen)",
       "other_contributors_other": "(+{{count}} andre)",
       "other_related_registrations": "Andre relaterte registreringer",
@@ -1078,22 +1080,26 @@
       "participants_other": "{{count}} deltakere",
       "preview_of": "Forhåndsvisning av {{fileName}}",
       "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
-      "published": "Publisert",
-      "published_date": "Publisert: {{date}}",
+      "publication": "Publisering",
       "publishing_request": "Publiseringsgodkjenning",
+      "publishing_request_message_about": "Du kan bruke meldingsfeltet for dialog med registrator ved behov.",
       "reject_publish_request": "Avvis publisering",
       "request_doi": "Be om en DOI",
       "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
       "reserve_doi": "Reserver en DOI",
       "reserved_doi": "Reservert DOI",
       "tasks_panel": {
-        "assign_ticket": "Ta sak",
+        "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
+        "assign_doi": "Tildel DOI",
+        "assign_curator": "Sett kurator",
         "files_will_soon_be_published": "Filene vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
-        "has_doi_request": "Registreringen har en DOI-forespørsel til behandling for kurator.",
-        "has_rejected_doi_request": "Registreringen har en avslått DOI-forespørsel.",
         "has_rejected_files_publishing_request": "Registreringen har en avslått publiseringsforespørsel for filene.",
-        "has_reserved_doi": "Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.",
+        "has_reserved_doi": "Du har reservert en DOI til denne registreringen. Den kan deles med de som ønsker å sitere dette resultatet. Når registreringen blir publisert og blir offentlig tilgjengelig, må en kurator validere metadata før DOI blir offentlig tilgjengelig.",
         "metadata_published_waiting_for_files": "Metadata er publisert og synlig for andre brukere, men en kurator må godkjenne filene som er lastet opp før de blir synlige.",
+        "metadata_published_waiting_for_files_curator": "Alle filer og valgte lisenser blir publisert og vil umiddelbart bli tilgjengelig for andre.",
+        "publish_metadata": "Publiser metadata",
+        "publish_metadata_and_files": "Publiser metadata og fil(er)",
+        "registration_is_published": "Registreringen er publisert. Metadata og eventuelle filer er offentlig tilgjengelig.",
         "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
         "reload": "Last på nytt",
         "review_preview_before_publishing": "Se over utkast før du går videre.",

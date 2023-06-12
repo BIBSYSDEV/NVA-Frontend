@@ -14,7 +14,7 @@ import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
-import { mockSearchResults, mockSearchTasks } from '../utils/testfiles/mockSearchResults';
+import { mockSearchImportCandidates, mockSearchResults, mockSearchTasks } from '../utils/testfiles/mockSearchResults';
 import { mockTicketCollection, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
 import {
   CristinApiPath,
@@ -37,7 +37,7 @@ export const interceptRequestsOnMock = () => {
 
   // SEARCH
   mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);
-
+  mock.onGet(new RegExp(SearchApiPath.ImportCandidates)).reply(200, mockSearchImportCandidates);
   // File
   mock.onGet(new RegExp(FileApiPath.Download)).reply(200, mockDownload);
   mock.onPost(new RegExp(FileApiPath.Create)).reply(200, mockCreateUpload);

@@ -1,5 +1,6 @@
-import { Box, Tooltip, Typography } from '@mui/material';
+import { Box, Tooltip, Typography, Link as MuiLink } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
@@ -10,8 +11,9 @@ import { SupportMessagesColumn } from './SupportMessagesColumn';
 import { getFullName } from '../../../utils/user-helpers';
 import { getContributorInitials } from '../../../utils/registration-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
+import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
 
-const ticketColor = {
+export const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
   DoiRequest: 'doiRequest.main',
   GeneralSupportCase: 'generalSupportCase.main',
@@ -47,31 +49,42 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     : '';
 
   return (
-    <SearchListItem
-      key={ticket.id}
-      sx={{
-        borderLeftColor:
-          ticket.status === 'Pending' || ticket.status === 'New' ? ticketColor[ticket.type] : 'registration.main',
-      }}>
-      <Box sx={{ width: '100%', display: 'grid', gap: '1rem', gridTemplateColumns: '10fr 4fr 2fr 2fr 1fr' }}>
-        <RegistrationListItemContent registration={registrationCopy} />
-        {ticket.type === 'PublishingRequest' ? (
-          <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
-        ) : ticket.type === 'DoiRequest' ? (
-          <DoiRequestMessagesColumn ticket={ticket} />
-        ) : ticket.type === 'GeneralSupportCase' ? (
-          <SupportMessagesColumn ticket={ticket} />
-        ) : (
-          <div />
-        )}
-        <Typography variant="overline">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
-        <Typography variant="overline">{t('common.x_days', { count: daysAge })}</Typography>
-        {assigneeFullName && (
-          <Tooltip title={`${t('common.assignee')}: ${assigneeFullName}`}>
-            <StyledVerifiedContributor>{getContributorInitials(assigneeFullName)}</StyledVerifiedContributor>
-          </Tooltip>
-        )}
-      </Box>
+    <SearchListItem key={ticket.id} sx={{ borderLeftColor: ticketColor[ticket.type], p: 0 }}>
+      <MuiLink
+        component={Link}
+        to={
+          window.location.pathname === UrlPathTemplate.Tasks
+            ? getTasksRegistrationPath(identifier)
+            : window.location.pathname === UrlPathTemplate.MyPageMyMessages
+            ? getMyMessagesRegistrationPath(identifier)
+            : ''
+        }
+        sx={{ width: '100%', textDecoration: 'none', p: '0.5rem 1rem' }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gap: '0 1rem',
+            gridTemplateColumns: { xs: '1fr', sm: '10fr 4fr 2fr 2fr 1fr' },
+          }}>
+          <RegistrationListItemContent registration={registrationCopy} ticketView />
+          {ticket.type === 'PublishingRequest' ? (
+            <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
+          ) : ticket.type === 'DoiRequest' ? (
+            <DoiRequestMessagesColumn ticket={ticket} />
+          ) : ticket.type === 'GeneralSupportCase' ? (
+            <SupportMessagesColumn ticket={ticket} />
+          ) : (
+            <div />
+          )}
+          <Typography lineHeight="2rem">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
+          <Typography lineHeight="2rem">{t('common.x_days', { count: daysAge })}</Typography>
+          {assigneeFullName && (
+            <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
+              <StyledVerifiedContributor>{getContributorInitials(assigneeFullName)}</StyledVerifiedContributor>
+            </Tooltip>
+          )}
+        </Box>
+      </MuiLink>
     </SearchListItem>
   );
 };
