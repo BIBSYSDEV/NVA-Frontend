@@ -70,7 +70,7 @@ export const ProjectsField = () => {
                   ))
                 }
                 getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
-                loading={debouncedSearchTerm.length > 0 && projectsQuery.isLoading}
+                loading={projectsQuery.isFetching}
                 renderOption={(props, option: CristinProject, state) => (
                   <AutocompleteProjectOption project={option} inputValue={state.inputValue} {...props} />
                 )}
@@ -78,7 +78,7 @@ export const ProjectsField = () => {
                   <AutocompleteTextField
                     {...params}
                     label={t('registration.description.project_association')}
-                    isLoading={projectsQuery.isLoading}
+                    isLoading={projectsQuery.isFetching}
                     placeholder={t('registration.description.search_for_project')}
                     showSearchIcon={field.value.length === 0}
                   />
