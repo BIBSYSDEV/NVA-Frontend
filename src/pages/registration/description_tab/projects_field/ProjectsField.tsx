@@ -2,7 +2,6 @@ import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
 import AddIcon from '@mui/icons-material/Add';
 import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -17,7 +16,6 @@ import { searchForProjects } from '../../../../api/cristinApi';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const [openNewProjectDialog, setOpenNewProjectDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
