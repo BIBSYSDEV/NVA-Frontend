@@ -104,10 +104,8 @@ const ResearchProfile = () => {
               {activeAffiliations.map(({ organization, role }) => (
                 <Box
                   sx={{
-                    border: '2px solid',
-                    borderColor: 'secondary.light',
+                    borderRight: '1px solid',
                     borderRightColor: 'primary.main',
-                    borderRightWidth: '1px',
                     width: 'fit-content',
                     pr: '1.5rem',
                     ':last-child': {
