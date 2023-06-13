@@ -59,9 +59,7 @@ const ResearchProfile = () => {
     ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
 
-  const personIdNumber = isPublicPage
-    ? new URLSearchParams(history.location.search).get('id')?.split('/').pop() ?? ''
-    : getIdentifierFromId(currentCristinId ?? '');
+  const personIdNumber = getIdentifierFromId(personId);
 
   const personQuery = useQuery({
     enabled: !!personId,
@@ -137,7 +135,7 @@ const ResearchProfile = () => {
       )}
       {registrations && (
         <>
-          <Typography id="registration-label" variant="h2" sx={{ mt: '2rem', mb: '0.5rem' }}>
+          <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
             {t('common.registrations')} ({registrations.size})
           </Typography>
           {isLoadingRegistrations && !registrations ? (
@@ -164,36 +162,34 @@ const ResearchProfile = () => {
         </>
       )}
 
-      {projects.length > 0 && (
+      {projectsQuery.isFetching ? (
+        <CircularProgress aria-labelledby="project-label" />
+      ) : projects.length > 0 ? (
         <>
           <Divider />
           <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
             {t('my_page.my_profile.projects')} ({projectsQuery.data?.size})
           </Typography>
-          {personQuery.isFetching ? (
-            <CircularProgress aria-labelledby="project-label" />
-          ) : (
-            <>
-              <List>
-                {projects.map((project) => (
-                  <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
-                ))}
-              </List>
-              <TablePagination
-                rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                component="div"
-                count={projectsQuery.data?.size ?? 0}
-                rowsPerPage={projectRowsPerPage}
-                page={projectsPage}
-                onPageChange={(_, newPage) => setProjectsPage(newPage)}
-                onRowsPerPageChange={(event) => {
-                  setProjectRowsPerPage(+event.target.value);
-                  setProjectsPage(0);
-                }}
-              />
-            </>
-          )}
+          <List>
+            {projects.map((project) => (
+              <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
+            ))}
+          </List>
+          <TablePagination
+            rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+            component="div"
+            count={projectsQuery.data?.size ?? 0}
+            rowsPerPage={projectRowsPerPage}
+            page={projectsPage}
+            onPageChange={(_, newPage) => setProjectsPage(newPage)}
+            onRowsPerPageChange={(event) => {
+              setProjectRowsPerPage(+event.target.value);
+              setProjectsPage(0);
+            }}
+          />
         </>
+      ) : (
+        <Typography>{t('common.no_hits')}</Typography>
       )}
     </BackgroundDiv>
   );
