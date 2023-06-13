@@ -82,9 +82,15 @@ export const fetchPerson = async (personId: string) => {
 
 export const searchForPerson = async (results: number, page: number, name: string) => {
   const searchParams = new URLSearchParams();
-  searchParams.set('results', results.toString());
-  searchParams.set('page', page.toString());
-  searchParams.set('name', name);
+  if (name) {
+    searchParams.set('name', name);
+  }
+  if (results) {
+    searchParams.set('results', results.toString());
+  }
+  if (page) {
+    searchParams.set('page', page.toString());
+  }
 
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';
