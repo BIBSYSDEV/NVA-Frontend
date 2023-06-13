@@ -2,19 +2,19 @@ import { Uppy as UppyType } from '@uppy/core';
 import * as LicenseImages from '../resources/images/licenses';
 import i18n from '../translations/i18n';
 
-export enum LicenseName {
-  CC_BY = 'https://creativecommons.org/licenses/by/4.0/',
-  CC_BY_SA = 'https://creativecommons.org/licenses/by-sa/4.0/',
-  CC_BY_ND = 'https://creativecommons.org/licenses/by-nd/4.0/',
-  CC_BY_NC = 'https://creativecommons.org/licenses/by-nc/4.0/',
-  CC_BY_NC_SA = 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
-  CC_BY_NC_ND = 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
-  CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/',
-  RightsReserved = 'https://rightsstatements.org/page/InC/1.0/',
+export enum LicenseUri {
+  CC_BY = 'https://creativecommons.org/licenses/by/4.0',
+  CC_BY_SA = 'https://creativecommons.org/licenses/by-sa/4.0',
+  CC_BY_ND = 'https://creativecommons.org/licenses/by-nd/4.0',
+  CC_BY_NC = 'https://creativecommons.org/licenses/by-nc/4.0',
+  CC_BY_NC_SA = 'https://creativecommons.org/licenses/by-nc-sa/4.0',
+  CC_BY_NC_ND = 'https://creativecommons.org/licenses/by-nc-nd/4.0',
+  CC0 = 'https://creativecommons.org/publicdomain/zero/1.0',
+  RightsReserved = 'https://rightsstatements.org/page/InC/1.0',
 }
 
 interface LicenseInfo {
-  id: LicenseName;
+  id: LicenseUri;
   name: string;
   description: string;
   logo: string;
@@ -23,55 +23,56 @@ interface LicenseInfo {
 
 export const licenses: LicenseInfo[] = [
   {
-    id: LicenseName.RightsReserved,
-    name: 'Rights Reserved',
+    id: LicenseUri.RightsReserved,
+    name: i18n.t('licenses.labels.RightsReserved'),
     description: i18n.t('licenses.description.rights_reserved'),
     logo: LicenseImages.rightsReservedLogo,
+    link: i18n.t('licenses.links.rights_reserved'),
   },
   {
-    id: LicenseName.CC_BY,
+    id: LicenseUri.CC_BY,
     name: 'CC BY',
     description: i18n.t('licenses.description.cc_by'),
     logo: LicenseImages.ccByLogo,
     link: i18n.t('licenses.links.cc_by'),
   },
   {
-    id: LicenseName.CC_BY_SA,
+    id: LicenseUri.CC_BY_SA,
     name: 'CC BY-SA',
     description: i18n.t('licenses.description.cc_by_sa'),
     logo: LicenseImages.ccBySaLogo,
     link: i18n.t('licenses.links.cc_by_sa'),
   },
   {
-    id: LicenseName.CC_BY_ND,
+    id: LicenseUri.CC_BY_ND,
     name: 'CC BY-ND',
     description: i18n.t('licenses.description.cc_by_nd'),
     logo: LicenseImages.ccByNdLogo,
     link: i18n.t('licenses.links.cc_by_nd'),
   },
   {
-    id: LicenseName.CC_BY_NC,
+    id: LicenseUri.CC_BY_NC,
     name: 'CC BY-NC',
     description: i18n.t('licenses.description.cc_by_nc'),
     logo: LicenseImages.ccByNcLogo,
     link: i18n.t('licenses.links.cc_by_nc'),
   },
   {
-    id: LicenseName.CC_BY_NC_SA,
+    id: LicenseUri.CC_BY_NC_SA,
     name: 'CC BY-NC-SA',
     description: i18n.t('licenses.description.cc_by_nc_sa'),
     logo: LicenseImages.ccByNcSaLogo,
     link: i18n.t('licenses.links.cc_by_nc_sa'),
   },
   {
-    id: LicenseName.CC_BY_NC_ND,
+    id: LicenseUri.CC_BY_NC_ND,
     name: 'CC BY-NC-ND',
     description: i18n.t('licenses.description.cc_by_nc_nd'),
     logo: LicenseImages.ccByNcNdLogo,
     link: i18n.t('licenses.links.cc_by_nc_nd'),
   },
   {
-    id: LicenseName.CC0,
+    id: LicenseUri.CC0,
     name: 'CC0',
     description: i18n.t('licenses.description.cc0'),
     logo: LicenseImages.cc0Logo,

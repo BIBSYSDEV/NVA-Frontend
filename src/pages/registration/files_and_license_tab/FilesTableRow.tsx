@@ -155,7 +155,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           )}
         </Field>
       </TableCell>
-
       <TableCell>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.License}`}>
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -169,14 +168,16 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   const selectedLicense = licenses.find((license) => license.id === option);
                   return selectedLicense ? (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <img style={{ width: '5rem' }} src={selectedLicense.logo} alt="" />
+                      <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
                       <span>{selectedLicense.name}</span>
                     </Box>
                   ) : null;
                 },
               }}
               variant="filled"
-              value={licenses.find((license) => license.id === field.value)?.id ?? ''}
+              value={
+                licenses.find((license) => license.id.toLocaleLowerCase() === field.value.toLocaleLowerCase())?.id ?? ''
+              }
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}
               label={t('registration.files_and_license.conditions_for_using_file')}
