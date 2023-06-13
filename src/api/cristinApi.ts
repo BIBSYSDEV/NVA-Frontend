@@ -80,6 +80,27 @@ export const fetchPerson = async (personId: string) => {
   return fetchPersonResponse.data;
 };
 
+export const searchForPerson = async (results: number, page: number, name: string) => {
+  const searchParams = new URLSearchParams();
+  if (name) {
+    searchParams.set('name', name);
+  }
+  if (results) {
+    searchParams.set('results', results.toString());
+  }
+  if (page) {
+    searchParams.set('page', page.toString());
+  }
+
+  const queryContent = searchParams.toString();
+  const queryParams = queryContent ? `?${queryContent}` : '';
+
+  const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson>>({
+    url: `${CristinApiPath.Person}${queryParams}`,
+  });
+  return fetchPersonResponse.data;
+};
+
 interface ProjectsSearchParams {
   query?: string;
   creator?: string;
