@@ -38,6 +38,7 @@ const lineSx: SxProps = {
   display: 'flex',
   gap: '1rem',
   mt: '1rem',
+  alignItems: 'center',
 };
 
 const ResearchProfile = () => {
@@ -86,10 +87,11 @@ const ResearchProfile = () => {
     <NotFound />
   ) : (
     <Box>
-      <Box sx={{ bgcolor: 'person.main', py: '1.5rem' }}>
+      <Box sx={{ bgcolor: 'person.main', py: '1.1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <Typography variant="h1" sx={{ ml: '2rem' }}>
           {fullName}
         </Typography>
+        {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
       </Box>
       <BackgroundDiv>
         <Helmet>
