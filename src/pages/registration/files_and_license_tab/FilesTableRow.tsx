@@ -22,7 +22,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import prettyBytes from 'pretty-bytes';
 import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
-import { AssociatedFile, AssociatedFileType, LicenseNames, licenses } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, AssociatedFileType, licenses } from '../../../types/associatedArtifact.types';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -158,7 +158,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
       <TableCell>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.License}`}>
-          {({ field, meta: { error, touched } }: FieldProps) => (
+          {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               id={field.name}
               data-testid={dataTestId.registrationWizard.files.selectLicenseField}
@@ -166,42 +166,36 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               select
               SelectProps={{
                 renderValue: (option) => {
-                  const selectedLicense = licenses.find((license) => license.identifier === option);
+                  const selectedLicense = licenses.find((license) => license.id === option);
                   return selectedLicense ? (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <img style={{ width: '5rem' }} src={selectedLicense.logo} alt="" />
-                      <span>{t(`licenses.labels.${option}` as any)}</span>
+                      <span>{selectedLicense.name}</span>
                     </Box>
                   ) : null;
                 },
               }}
               variant="filled"
-              value={field.value?.identifier || ''}
+              value={licenses.find((license) => license.id === field.value)?.id ?? ''}
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}
               label={t('registration.files_and_license.conditions_for_using_file')}
               required
-              onChange={({ target: { value } }) =>
-                setFieldValue(field.name, {
-                  type: 'License',
-                  identifier: value as LicenseNames,
-                  labels: { nb: value },
-                })
-              }
+              onChange={({ target: { value } }) => setFieldValue(field.name, value)}
               disabled={file.administrativeAgreement}>
               {licenses.map((license) => (
                 <MenuItem
                   data-testid={dataTestId.registrationWizard.files.licenseItem}
-                  key={license.identifier}
-                  value={license.identifier}
+                  key={license.id}
+                  value={license.id}
                   divider
                   dense
                   sx={{ gap: '1rem' }}>
                   <ListItemIcon>
-                    <img style={{ width: '5rem' }} src={license.logo} alt={license.identifier} />
+                    <img style={{ width: '5rem' }} src={license.logo} alt={license.id} />
                   </ListItemIcon>
                   <ListItemText>
-                    <Typography>{t(`licenses.labels.${license.identifier}`)}</Typography>
+                    <Typography>{license.name}</Typography>
                   </ListItemText>
                 </MenuItem>
               ))}

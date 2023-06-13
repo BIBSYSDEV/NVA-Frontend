@@ -2,19 +2,20 @@ import { Uppy as UppyType } from '@uppy/core';
 import * as LicenseImages from '../resources/images/licenses';
 import i18n from '../translations/i18n';
 
-export enum LicenseNames {
-  CC_BY = 'CC BY',
-  CC_BY_SA = 'CC BY-SA',
-  CC_BY_ND = 'CC BY-ND',
-  CC_BY_NC = 'CC BY-NC',
-  CC_BY_NC_SA = 'CC BY-NC-SA',
-  CC_BY_NC_ND = 'CC BY-NC-ND',
-  CC0 = 'CC0',
-  RightsReserved = 'RightsReserved',
+export enum LicenseName {
+  CC_BY = 'https://creativecommons.org/licenses/by/4.0/',
+  CC_BY_SA = 'https://creativecommons.org/licenses/by-sa/4.0/',
+  CC_BY_ND = 'https://creativecommons.org/licenses/by-nd/4.0/',
+  CC_BY_NC = 'https://creativecommons.org/licenses/by-nc/4.0/',
+  CC_BY_NC_SA = 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
+  CC_BY_NC_ND = 'https://creativecommons.org/licenses/by-nc-nd/4.0/',
+  CC0 = 'https://creativecommons.org/publicdomain/zero/1.0/',
+  RightsReserved = 'https://rightsstatements.org/page/InC/1.0/',
 }
 
 interface LicenseInfo {
-  identifier: LicenseNames;
+  id: LicenseName;
+  name: string;
   description: string;
   logo: string;
   link?: string;
@@ -22,62 +23,61 @@ interface LicenseInfo {
 
 export const licenses: LicenseInfo[] = [
   {
-    identifier: LicenseNames.RightsReserved,
+    id: LicenseName.RightsReserved,
+    name: 'Rights Reserved',
     description: i18n.t('licenses.description.rights_reserved'),
     logo: LicenseImages.rightsReservedLogo,
   },
   {
-    identifier: LicenseNames.CC_BY,
+    id: LicenseName.CC_BY,
+    name: 'CC BY',
     description: i18n.t('licenses.description.cc_by'),
     logo: LicenseImages.ccByLogo,
     link: i18n.t('licenses.links.cc_by'),
   },
   {
-    identifier: LicenseNames.CC_BY_SA,
+    id: LicenseName.CC_BY_SA,
+    name: 'CC BY-SA',
     description: i18n.t('licenses.description.cc_by_sa'),
     logo: LicenseImages.ccBySaLogo,
     link: i18n.t('licenses.links.cc_by_sa'),
   },
   {
-    identifier: LicenseNames.CC_BY_ND,
+    id: LicenseName.CC_BY_ND,
+    name: 'CC BY-ND',
     description: i18n.t('licenses.description.cc_by_nd'),
     logo: LicenseImages.ccByNdLogo,
     link: i18n.t('licenses.links.cc_by_nd'),
   },
   {
-    identifier: LicenseNames.CC_BY_NC,
+    id: LicenseName.CC_BY_NC,
+    name: 'CC BY-NC',
     description: i18n.t('licenses.description.cc_by_nc'),
     logo: LicenseImages.ccByNcLogo,
     link: i18n.t('licenses.links.cc_by_nc'),
   },
   {
-    identifier: LicenseNames.CC_BY_NC_SA,
+    id: LicenseName.CC_BY_NC_SA,
+    name: 'CC BY-NC-SA',
     description: i18n.t('licenses.description.cc_by_nc_sa'),
     logo: LicenseImages.ccByNcSaLogo,
     link: i18n.t('licenses.links.cc_by_nc_sa'),
   },
   {
-    identifier: LicenseNames.CC_BY_NC_ND,
+    id: LicenseName.CC_BY_NC_ND,
+    name: 'CC BY-NC-ND',
     description: i18n.t('licenses.description.cc_by_nc_nd'),
     logo: LicenseImages.ccByNcNdLogo,
     link: i18n.t('licenses.links.cc_by_nc_nd'),
   },
   {
-    identifier: LicenseNames.CC0,
+    id: LicenseName.CC0,
+    name: 'CC0',
     description: i18n.t('licenses.description.cc0'),
     logo: LicenseImages.cc0Logo,
     link: i18n.t('licenses.links.cc0'),
   },
 ];
-
-interface License {
-  type: 'License';
-  identifier: LicenseNames;
-  labels: {
-    [key: string]: string;
-  };
-  link: string;
-}
 
 export type AssociatedFileType = 'PublishedFile' | 'UnpublishedFile' | 'UnpublishableFile';
 
@@ -90,7 +90,7 @@ export interface AssociatedFile {
   administrativeAgreement: boolean;
   publisherAuthority: boolean | null;
   embargoDate: Date | null;
-  license: License | null;
+  license: string | null;
 }
 
 export const emptyFile: AssociatedFile = {
@@ -102,7 +102,7 @@ export const emptyFile: AssociatedFile = {
   administrativeAgreement: false,
   publisherAuthority: null,
   embargoDate: null,
-  license: null,
+  license: '',
 };
 
 export interface AssociatedLink {

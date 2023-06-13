@@ -73,8 +73,8 @@ export const FileRow = ({
     }
   }, [handleDownload, openPreviewAccordion, previewFileUrl, fileIsEmbargoed]);
 
-  const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
-  const licenseTitle = file.license?.identifier ? t(`licenses.labels.${file.license.identifier}`) : '';
+  const licenseData = licenses.find((license) => license.id === file.license);
+  const licenseTitle = licenseData?.name ?? '';
 
   return (
     <Box

@@ -40,7 +40,7 @@ export const associatedFileValidationSchema = Yup.object({
         ? schema.required(associatedArtifactErrorMessage.fileVersionRequired)
         : schema
     ),
-  license: Yup.object()
+  license: Yup.string()
     .nullable()
     .when(['type', 'administrativeAgreement'], ([type, administrativeAgreement], schema) =>
       associatedArtifactIsFile({ type }) && administrativeAgreement === false
