@@ -10,7 +10,6 @@ import {
   TablePagination,
   Typography,
 } from '@mui/material';
-import WorkIcon from '@mui/icons-material/Work';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
@@ -29,6 +28,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { fetchPerson } from '../../api/cristinApi';
 import { setNotification } from '../../redux/notificationSlice';
 import NotFound from '../errorpages/NotFound';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 const textContainerSx: SxProps = {
   width: '100%',
@@ -98,13 +98,25 @@ const ResearchProfile = () => {
           <title>{fullName}</title>
         </Helmet>
 
-        <Typography variant="h2">{t('common.employments')}</Typography>
         {activeAffiliations.length > 0 ? (
           <Box sx={lineSx}>
-            <WorkIcon />
-            <Box sx={textContainerSx}>
-              {activeAffiliations.map(({ organization }) => (
-                <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
+            <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+              {activeAffiliations.map(({ organization, role }) => (
+                <Box
+                  sx={{
+                    border: '2px solid',
+                    borderColor: 'secondary.light',
+                    borderRightColor: 'primary.main',
+                    borderRightWidth: '1px',
+                    width: 'fit-content',
+                    pr: '1.5rem',
+                    ':last-child': {
+                      border: 'none',
+                    },
+                  }}>
+                  <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(role.labels)} |</Typography>
+                  <AffiliationHierarchy key={organization} unitUri={organization} />
+                </Box>
               ))}
             </Box>
           </Box>
