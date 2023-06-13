@@ -1,34 +1,38 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Box, Link as MuiLink, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { Box, Link as MuiLink, List, ListItemText, Typography } from '@mui/material';
 import { getRegistrationLandingPagePath, getResearchProfilePath } from '../utils/urlPaths';
-import { Registration } from '../types/registration.types';
+import { Registration, RegistrationStatus } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
 import { dataTestId } from '../utils/dataTestIds';
 import { getTitleString } from '../utils/registration-helpers';
 import { displayDate } from '../utils/date-helpers';
 import { TruncatableTypography } from './TruncatableTypography';
 import { ContributorIndicators } from './ContributorIndicators';
+import { SearchListItem } from './styled/Wrappers';
 
 interface RegistrationListProps {
   registrations: Registration[];
 }
 
 export const RegistrationList = ({ registrations }: RegistrationListProps) => (
-  <List>
+  <List disablePadding>
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
-        <RegistrationListItem registration={registration} />
+        <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+          <RegistrationListItemContent registration={registration} />
+        </SearchListItem>
       </ErrorBoundary>
     ))}
   </List>
 );
 
-interface RegistrationListItemProps {
+interface RegistrationListItemContentProps {
   registration: Registration;
+  ticketView?: boolean;
 }
 
-const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
+export const RegistrationListItemContent = ({ registration, ticketView = false }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
 
@@ -36,56 +40,71 @@ const RegistrationListItem = ({ registration }: RegistrationListItemProps) => {
   const focusedContributors = contributors.slice(0, 5);
   const countRestContributors = contributors.length - focusedContributors.length;
 
+  const typeString = entityDescription?.reference?.publicationInstance?.type
+    ? t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)
+    : '';
+
+  const publicationDate = displayDate(entityDescription?.publicationDate);
+  const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
+
   return (
-    <ListItem
-      sx={{
-        border: '2px solid',
-        borderColor: 'secondary.dark',
-        borderLeft: '1.25rem solid',
-        borderLeftColor: 'registration.main',
-      }}>
-      <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
-        <Typography variant="overline" sx={{ color: 'primary.main' }}>
-          {entityDescription?.reference?.publicationInstance?.type
-            ? t(`registration.publication_types.${entityDescription.reference.publicationInstance.type}`)
-            : '?'}{' '}
-          — {displayDate(entityDescription?.publicationDate)}
-        </Typography>
-        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+    <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' } }}>
+        {heading && (
+          <Typography variant="overline" sx={{ color: 'primary.main' }}>
+            {heading}
+          </Typography>
+        )}
+        {ticketView &&
+          (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
+            <Typography
+              sx={{
+                p: '0.1rem 0.75rem',
+                bgcolor: 'primary.light',
+                color: 'primary.contrastText',
+              }}>
+              {t('registration.public_page.metadata_not_published')}
+            </Typography>
+          )}
+      </Box>
+      <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+        {ticketView ? (
+          getTitleString(entityDescription?.mainTitle)
+        ) : (
           <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
             {getTitleString(entityDescription?.mainTitle)}
           </MuiLink>
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            columnGap: '1rem',
-            whiteSpace: 'nowrap',
-          }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem', flexWrap: 'wrap' }}>
-            {focusedContributors.map((contributor, index) => (
-              <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="body2">
-                  {contributor.identity.id ? (
-                    <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-                      {contributor.identity.name}
-                    </MuiLink>
-                  ) : (
-                    contributor.identity.name
-                  )}
-                </Typography>
-                <ContributorIndicators contributor={contributor} />
-              </Box>
-            ))}
-            {countRestContributors > 0 && (
-              <Typography variant="body2">({t('common.x_others', { count: countRestContributors })})</Typography>
-            )}
-          </Box>
+        )}
+      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          columnGap: '1rem',
+          whiteSpace: 'nowrap',
+        }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem', flexWrap: 'wrap' }}>
+          {focusedContributors.map((contributor, index) => (
+            <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography variant="body2">
+                {contributor.identity.id && !ticketView ? (
+                  <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+                    {contributor.identity.name}
+                  </MuiLink>
+                ) : (
+                  contributor.identity.name
+                )}
+              </Typography>
+              <ContributorIndicators contributor={contributor} ticketView={ticketView} />
+            </Box>
+          ))}
+          {countRestContributors > 0 && (
+            <Typography variant="body2">({t('common.x_others', { count: countRestContributors })})</Typography>
+          )}
         </Box>
+      </Box>
 
-        <TruncatableTypography sx={{ mt: '0.5rem' }}>{entityDescription?.abstract}</TruncatableTypography>
-      </ListItemText>
-    </ListItem>
+      <TruncatableTypography sx={{ mt: '0.5rem' }}>{entityDescription?.abstract}</TruncatableTypography>
+    </ListItemText>
   );
 };

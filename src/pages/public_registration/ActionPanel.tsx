@@ -1,60 +1,41 @@
 import { Paper, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { RootState } from '../../redux/store';
-import { Ticket } from '../../types/publication_types/messages.types';
+import { Ticket } from '../../types/publication_types/ticket.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { userIsCuratorForRegistration } from '../../utils/registration-helpers';
-import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
-import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
+import { ActionPanelContent } from './ActionPanelContent';
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
   refetchRegistrationAndTickets: () => void;
+  isLoadingData: boolean;
 }
 
-export const ActionPanel = ({ registration, tickets, refetchRegistrationAndTickets }: ActionPanelProps) => {
+export const ActionPanel = ({
+  registration,
+  tickets,
+  refetchRegistrationAndTickets,
+  isLoadingData,
+}: ActionPanelProps) => {
   const { t } = useTranslation();
-  const { user, customer } = useSelector((store: RootState) => store);
-  const userIsCurator = userIsCuratorForRegistration(user, registration);
-
-  const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
-  const publishingRequestTickets = tickets.filter((ticket) => ticket.type === 'PublishingRequest');
-  const currentPublishingRequestTicket = publishingRequestTickets.pop() ?? null;
 
   return (
-    <Paper elevation={0} data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}>
+    <Paper
+      elevation={0}
+      data-testid={dataTestId.registrationLandingPage.tasksPanel.panelRoot}
+      sx={{ gridArea: 'tasks' }}>
       <StyledPaperHeader>
         <Typography color="inherit" variant="h1">
           {t('common.tasks')}
         </Typography>
       </StyledPaperHeader>
-      <BackgroundDiv>
-        <ErrorBoundary>
-          <PublishingAccordion
-            refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-            registration={registration}
-            publishingRequestTicket={currentPublishingRequestTicket}
-            userIsCurator={userIsCurator}
-          />
-        </ErrorBoundary>
-        <ErrorBoundary>
-          {!registration.entityDescription?.reference?.doi &&
-            doiRequestTicket?.status !== 'Completed' &&
-            customer?.doiAgent.username && (
-              <DoiRequestAccordion
-                refetchRegistrationAndTickets={refetchRegistrationAndTickets}
-                registration={registration}
-                doiRequestTicket={doiRequestTicket}
-                userIsCurator={userIsCurator}
-              />
-            )}
-        </ErrorBoundary>
-      </BackgroundDiv>
+      <ActionPanelContent
+        tickets={tickets}
+        refetchData={refetchRegistrationAndTickets}
+        isLoadingData={isLoadingData}
+        registration={registration}
+      />
     </Paper>
   );
 };

@@ -51,6 +51,10 @@ export interface ProjectContributor {
   identity: ProjectContributorIdentity;
 }
 
+interface ProjectCreator extends Omit<ProjectContributor, 'type'> {
+  type: 'ProjectCreator';
+}
+
 export interface ProjectFunding extends Pick<Funding, 'identifier' | 'source' | 'labels'> {
   type: 'UnconfirmedFunding';
 }
@@ -88,6 +92,7 @@ export interface CristinProject extends SaveCristinProject {
   created: {
     sourceShortName: 'REK' | 'NVA' | 'FORSKDOK';
   };
+  creator?: ProjectCreator;
 }
 
 interface FundingSource {
@@ -114,7 +119,7 @@ export interface NfrProject {
 export const emptyProjectContributor: ProjectContributor = {
   type: 'ProjectParticipant',
   identity: { type: 'Person', id: '', firstName: '', lastName: '' },
-  affiliation: { type: 'Organization', id: '', name: {} },
+  affiliation: { type: 'Organization', id: '', labels: {} },
 };
 
 export const emptyProject: SaveCristinProject = {
@@ -127,7 +132,7 @@ export const emptyProject: SaveCristinProject = {
   coordinatingInstitution: {
     type: 'Organization',
     id: '',
-    name: {},
+    labels: {},
   },
   academicSummary: {},
   popularScientificSummary: {},

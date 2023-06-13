@@ -22,11 +22,7 @@ export const getFullCristinName = (names: CristinArrayValue[] = []) => {
   const preferredFirstName = getValueByKey('PreferredFirstName', names);
   const preferredLastName = getValueByKey('PreferredLastName', names);
 
-  if (preferredFirstName || preferredLastName) {
-    return `${preferredFirstName} ${preferredLastName}`.trim();
-  } else {
-    return `${firstName} ${lastName}`.trim();
-  }
+  return getFullName(preferredFirstName || firstName, preferredLastName || lastName);
 };
 
 export const filterActiveAffiliations = (affiliations: CristinPersonAffiliation[] = []) =>
@@ -68,3 +64,5 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
   employments: user.employments,
   orcid: getValueByKey('ORCID', user.identifiers),
 });
+
+export const getFullName = (firstName?: string, lastName?: string) => [firstName, lastName].filter(Boolean).join(' ');

@@ -29,7 +29,7 @@ const emptyMentionInPublication: MentionInPublication = {
 const validationSchema = Yup.object<YupShape<MentionInPublication>>({
   title: Yup.string().required(
     i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.mention_title'),
+      field: i18n.t('registration.resource_type.journal_book_medium'),
     })
   ),
   date: Yup.object().shape({
@@ -78,11 +78,11 @@ export const PublicationMentionModal = ({
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('registration.resource_type.artistic.mention_title')}
+                    label={t('registration.resource_type.journal_book_medium')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionTitle}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputJournalBookMediumField}
                   />
                 )}
               </Field>
@@ -97,7 +97,7 @@ export const PublicationMentionModal = ({
                       label={t('registration.resource_type.issue')}
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
-                      data-testid={dataTestId.registrationWizard.resourceType.publicationMentionIssue}
+                      data-testid={dataTestId.registrationWizard.resourceType.outputIssueField}
                     />
                   )}
                 </Field>
@@ -110,28 +110,25 @@ export const PublicationMentionModal = ({
                   }: FieldProps<string>) => (
                     <DatePicker
                       label={t('common.date')}
-                      PopperProps={{
-                        'aria-label': t('common.date'),
-                      }}
-                      value={field.value ?? null}
+                      value={field.value ? new Date(field.value) : null}
                       onChange={(date) => {
                         !touched && setFieldTouched(field.name, true, false);
                         setFieldValue(field.name, date ?? '');
                       }}
-                      inputFormat="dd.MM.yyyy"
+                      format="dd.MM.yyyy"
                       views={['year', 'month', 'day']}
-                      mask="__.__.____"
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          variant="filled"
-                          required
-                          onBlur={() => !touched && setFieldTouched(field.name)}
-                          error={touched && !!error}
-                          helperText={<ErrorMessage name={field.name} />}
-                          data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
-                        />
-                      )}
+                      slotProps={{
+                        textField: {
+                          inputProps: {
+                            'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                          },
+                          variant: 'filled',
+                          required: true,
+                          onBlur: () => !touched && setFieldTouched(field.name),
+                          error: touched && !!error,
+                          helperText: <ErrorMessage name={field.name} />,
+                        },
+                      }}
                     />
                   )}
                 </Field>
@@ -143,10 +140,10 @@ export const PublicationMentionModal = ({
                     {...field}
                     variant="filled"
                     fullWidth
-                    label={t('registration.resource_type.artistic.mention_other_type')}
+                    label={t('registration.resource_type.other_publisher_isbn_etc')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.publicationMentionOther}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputDescriptionField}
                   />
                 )}
               </Field>

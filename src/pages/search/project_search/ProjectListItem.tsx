@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ListItem, Typography, Link as MuiLink, Box, IconButton, Tooltip } from '@mui/material';
+import { Typography, Link as MuiLink, Box, IconButton, Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,6 +11,7 @@ import {
 } from '../../registration/description_tab/projects_field/projectHelpers';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
+import { SearchListItem } from '../../../components/styled/Wrappers';
 
 interface ProjectListItemProps {
   project: CristinProject;
@@ -26,15 +27,7 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
   const projectParticipantsLength = getProjectParticipants(project.contributors).length;
 
   return (
-    <ListItem
-      sx={{
-        border: '2px solid',
-        borderColor: 'secondary.dark',
-        borderLeft: '1.25rem solid',
-        borderLeftColor: 'project.main',
-        flexDirection: 'column',
-        alignItems: 'start',
-      }}>
+    <SearchListItem sx={{ borderLeftColor: 'project.main' }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
         <Typography sx={{ fontSize: '1rem', fontWeight: '600' }} gutterBottom>
           <MuiLink component={Link} to={getProjectPath(project.id)}>
@@ -71,6 +64,6 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
         )}
       </Box>
       <AffiliationHierarchy unitUri={project.coordinatingInstitution.id} />
-    </ListItem>
+    </SearchListItem>
   );
 };

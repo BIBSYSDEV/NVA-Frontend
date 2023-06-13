@@ -14,6 +14,7 @@ import {
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { emptyPlace } from '../../../../../../types/common.types';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -24,11 +25,7 @@ interface OtherPerformanceModalProps {
 
 const emptyOtherPerformance: OtherMusicPerformance = {
   type: 'OtherPerformance',
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
+  place: emptyPlace,
   performanceType: '',
   extent: '',
   musicalWorks: [],
@@ -41,21 +38,9 @@ const emptyMusicalWork: MusicalWork = {
 };
 
 const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
-  place: Yup.object().shape({
-    label: Yup.string().required(
-      i18n.t('feedback.validation.is_required', {
-        field: i18n.t('common.place'),
-      })
-    ),
-  }),
   performanceType: Yup.string().required(
     i18n.t('feedback.validation.is_required', {
       field: i18n.t('registration.resource_type.artistic.performance_type'),
-    })
-  ),
-  extent: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
     })
   ),
   musicalWorks: Yup.array()
@@ -126,10 +111,9 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     variant="filled"
                     fullWidth
                     label={t('common.place')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.otherPerformancePlace}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>
@@ -142,7 +126,6 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.artistic.extent_in_minutes')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDuration}

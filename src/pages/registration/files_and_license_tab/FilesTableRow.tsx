@@ -136,25 +136,20 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               <DatePicker
                 {...field}
                 label={t('registration.files_and_license.file_publish_date')}
-                PopperProps={{
-                  'aria-label': t('registration.files_and_license.file_publish_date'),
-                }}
-                value={field.value ?? null}
+                value={field.value ? new Date(field.value) : null}
                 onChange={(date) => setFieldValue(field.name, date ?? '')}
-                inputFormat="dd.MM.yyyy"
+                format="dd.MM.yyyy"
                 maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                mask="__.__.____"
                 disabled={file.administrativeAgreement}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    data-testid={dataTestId.registrationWizard.files.embargoDateField}
-                    variant="filled"
-                    onBlur={() => !touched && setFieldTouched(field.name)}
-                    error={!!error && touched}
-                    helperText={<ErrorMessage name={field.name} />}
-                  />
-                )}
+                slotProps={{
+                  textField: {
+                    inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
+                    variant: 'filled',
+                    onBlur: () => !touched && setFieldTouched(field.name),
+                    error: !!error && touched,
+                    helperText: <ErrorMessage name={field.name} />,
+                  },
+                }}
               />
             </Box>
           )}

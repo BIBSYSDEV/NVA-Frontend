@@ -86,14 +86,10 @@ export interface MusicScore extends ArtisticOutputBase {
   movements: string;
   extent: string;
   publisher: UnconfirmedPublisher;
-  ismn: {
+  ismn?: {
     type: 'Ismn';
     value: string;
     formatted?: string;
-  };
-  isrc: {
-    type: 'Isrc';
-    value: string;
   };
 }
 
@@ -183,6 +179,10 @@ export interface AudioVisualPublication extends ArtisticOutputBase {
   publisher: UnconfirmedPublisher;
   catalogueNumber: string;
   trackList: MusicTrack[];
+  isrc?: {
+    type: 'Isrc';
+    value: string;
+  };
 }
 
 export interface MusicalWork {

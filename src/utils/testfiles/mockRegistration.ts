@@ -2,7 +2,7 @@ import { ContributorRole } from '../../types/contributor.types';
 import { JournalType } from '../../types/publicationFieldNames';
 import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
-import { TicketCollection } from '../../types/publication_types/messages.types';
+import { TicketCollection } from '../../types/publication_types/ticket.types';
 import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { mockUser } from './mock_feide_user';
 
@@ -125,45 +125,45 @@ export const mockTicketCollection: TicketCollection = {
   type: 'TicketCollection',
   tickets: [
     {
+      owner: 'creator@unit.no',
       type: 'GeneralSupportCase',
       status: 'Pending',
       createdDate: new Date(2020, 1).toISOString(),
       modifiedDate: new Date(2020, 1).toISOString(),
       id: `${mockRegistration.id}/ticket/1`,
-      identifier: '1',
       publication: {
         id: mockRegistration.id,
         identifier: mockRegistration.identifier,
         mainTitle: mockRegistration.entityDescription.mainTitle,
+        contributors: [],
+        status: RegistrationStatus.Published,
+        createdDate: new Date(2020, 1).toISOString(),
+        modifiedDate: new Date(2020, 1).toISOString(),
+        publicationInstance: {
+          type: JournalType.AcademicArticle,
+        },
       },
-      viewedBy: [],
       messages: [
         {
           text: 'Hello Mr. Curator! A have a question about this publication, okay?',
           sender: 'creator@unit.no',
-          owner: 'creator@unit.no',
           createdDate: new Date(2020, 1).toISOString(),
           id: 'http://test.no/1',
           identifier: '1',
-          recipient: 'SupportService',
         },
         {
           text: 'Yes, how may I assist you my dear friend?',
           sender: 'curator@unit.no',
-          owner: 'creator@unit.no',
           createdDate: new Date(2020, 2).toISOString(),
           id: 'http://test.no/2',
           identifier: '2',
-          recipient: 'SupportService',
         },
         {
           text: "I don't know...",
           sender: 'creator@unit.no',
-          owner: 'creator@unit.no',
           createdDate: new Date(2020, 3).toISOString(),
           id: 'http://test.no/3',
           identifier: '3',
-          recipient: 'SupportService',
         },
       ],
     },

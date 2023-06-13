@@ -1,12 +1,9 @@
 import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
-import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IMaskInput } from 'react-imask';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
 import { MusicScore } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
@@ -29,10 +26,6 @@ const emptyMusicScore: MusicScore = {
   },
   ismn: {
     type: 'Ismn',
-    value: '',
-  },
-  isrc: {
-    type: 'Isrc',
     value: '',
   },
 };
@@ -70,26 +63,6 @@ const validationSchema = Yup.object<YupShape<MusicScore>>({
         i18n.t('feedback.validation.has_invalid_format', {
           field: i18n.t('registration.resource_type.artistic.music_score_ismn'),
         })
-      )
-      .required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('registration.resource_type.artistic.music_score_ismn'),
-        })
-      ),
-  }),
-  isrc: Yup.object().shape({
-    value: Yup.string()
-      .nullable()
-      .matches(
-        /^[A-Z]{2}[A-Z\d]{3}\d{7}$/,
-        i18n.t('feedback.validation.has_invalid_format', {
-          field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
-        })
-      )
-      .required(
-        i18n.t('feedback.validation.is_required', {
-          field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
-        })
       ),
   }),
 });
@@ -108,7 +81,9 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
         initialValues={musicScore ?? emptyMusicScore}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          onSubmit(values);
+          const { ismn, ...rest } = values;
+          const formattedValues: MusicScore = ismn?.value ? { ...rest, ismn: { ...ismn, type: 'Ismn' } } : rest;
+          onSubmit(formattedValues);
           closeModal();
         }}>
         {({ isSubmitting }: FormikProps<MusicScore>) => (
@@ -181,27 +156,9 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.artistic.music_score_ismn')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.scoreIsmn}
-                  />
-                )}
-              </Field>
-              <Field name="isrc.value">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    variant="filled"
-                    fullWidth
-                    label={t('registration.resource_type.artistic.music_score_isrc')}
-                    required
-                    InputProps={{
-                      inputComponent: MaskIsrcInput as any,
-                    }}
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.scoreIsrc}
                   />
                 )}
               </Field>
@@ -213,12 +170,3 @@ export const MusicScoreModal = ({ musicScore, onSubmit, open, closeModal }: Musi
     </Dialog>
   );
 };
-
-const MaskIsrcInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...props }, ref) => (
-  <IMaskInput
-    {...props}
-    mask="aa-***-00-00000"
-    inputRef={ref}
-    onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll('-', '') } })}
-  />
-));

@@ -3,12 +3,15 @@ import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { OtherRelease } from '../../../../../../types/publication_types/artisticRegistration.types';
+import {
+  emptyUnconfirmedPublisher,
+  OtherRelease,
+} from '../../../../../../types/publication_types/artisticRegistration.types';
 import i18n from '../../../../../../translations/i18n';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { emptyInstant } from '../../../../../../types/common.types';
+import { emptyInstant, emptyPlace } from '../../../../../../types/common.types';
 
 interface OtherReleaseModalProps {
   otherRelease?: OtherRelease;
@@ -20,15 +23,8 @@ interface OtherReleaseModalProps {
 const emptyOtherRelease: OtherRelease = {
   type: 'OtherRelease',
   description: '',
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
-  publisher: {
-    type: 'UnconfirmedPublisher',
-    name: '',
-  },
+  place: emptyPlace,
+  publisher: emptyUnconfirmedPublisher,
   date: emptyInstant,
 };
 
@@ -93,7 +89,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.otherReleaseType}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputDescriptionField}
                   />
                 )}
               </Field>
@@ -107,7 +103,7 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                     label={t('common.place')}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.otherReleasePlace}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>
@@ -132,27 +128,24 @@ export const OtherReleaseModal = ({ otherRelease, onSubmit, open, closeModal }: 
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('common.date')}
-                    PopperProps={{
-                      'aria-label': t('common.date'),
-                    }}
-                    value={field.value ?? null}
+                    value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date ?? '');
                     }}
-                    inputFormat="dd.MM.yyyy"
-                    mask="__.__.____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
-                        sx={{ maxWidth: '13rem' }}
-                        variant="filled"
-                        required
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
+                    format="dd.MM.yyyy"
+                    slotProps={{
+                      textField: {
+                        inputProps: {
+                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                        },
+                        sx: { maxWidth: '13rem' },
+                        variant: 'filled',
+                        required: true,
+                        error: touched && !!error,
+                        helperText: <ErrorMessage name={field.name} />,
+                      },
+                    }}
                   />
                 )}
               </Field>

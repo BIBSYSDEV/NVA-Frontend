@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { Box, Typography } from '@mui/material';
 import { LandingPageAccordion } from '../../../components/landing_page/LandingPageAccordion';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -10,6 +11,7 @@ import {
 } from '../../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from '../PublicRegistrationContent';
 import { FileRow } from './FileRow';
+import { RegistrationStatus } from '../../../types/registration.types';
 
 const maxFileSizeForPreview = 10_000_000; //10 MB
 
@@ -19,28 +21,43 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
 
   const userIsRegistrationAdmin = userCanEditRegistration(user, registration);
 
-  const hasFilesAwaitingApproval = registration.associatedArtifacts.some((file) => file.type === 'UnpublishedFile');
-
   const associatedFiles = getAssociatedFiles(registration.associatedArtifacts);
-  const hasPublishableFiles = associatedFiles.some(
-    (file) => file.type === 'PublishedFile' || file.type === 'UnpublishedFile'
-  );
-  const filesToShow = userIsRegistrationAdmin
-    ? associatedFiles
-    : associatedFiles.filter((file) => file.type === 'PublishedFile');
+  const publishedFiles = associatedFiles.filter((file) => file.type === 'PublishedFile');
+  const unpublishedFiles = associatedFiles.filter((file) => file.type === 'UnpublishedFile');
+  const publishableFilesLength = publishedFiles.length + unpublishedFiles.length;
+
+  const filesToShow = userIsRegistrationAdmin ? associatedFiles : publishedFiles;
 
   const showFileVersionField = isTypeWithFileVersionField(
     registration.entityDescription?.reference?.publicationInstance?.type
   );
 
-  return hasPublishableFiles || (userIsRegistrationAdmin && associatedFiles.length > 0) ? (
+  const registrationMetadataIsPublished =
+    registration.status === RegistrationStatus.Published ||
+    registration.status === RegistrationStatus.PublishedMetadata;
+
+  return publishableFilesLength > 0 || (userIsRegistrationAdmin && associatedFiles.length > 0) ? (
     <LandingPageAccordion
       dataTestId={dataTestId.registrationLandingPage.filesAccordion}
-      defaultExpanded
+      defaultExpanded={filesToShow.length > 0}
       heading={
-        hasFilesAwaitingApproval
-          ? t('registration.files_and_license.files_awaits_approval')
-          : t('registration.files_and_license.files')
+        <Box
+          sx={{
+            width: '100%',
+            display: 'grid',
+            gridTemplateColumns: { xs: 'auto auto', sm: '1fr auto 1fr' },
+            gap: '0.5rem',
+            alignItems: 'center',
+          }}>
+          <Typography variant="h2" color="primary">
+            {t('registration.files_and_license.files_count', { count: publishableFilesLength })}
+          </Typography>
+          {registrationMetadataIsPublished && unpublishedFiles.length > 0 && (
+            <Typography sx={{ bgcolor: 'secondary.dark', p: { xs: '0.25rem 0.5rem', sm: '0.3rem 3rem' } }}>
+              {t('registration.files_and_license.files_awaits_approval', { count: unpublishedFiles.length })}
+            </Typography>
+          )}
+        </Box>
       }>
       {filesToShow.map((file, index) => (
         <FileRow
@@ -49,6 +66,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
           registrationIdentifier={registration.identifier}
           openPreviewByDefault={index === 0 && file.size < maxFileSizeForPreview}
           showFileVersionField={showFileVersionField}
+          registrationMetadataIsPublished={registrationMetadataIsPublished}
         />
       ))}
     </LandingPageAccordion>
