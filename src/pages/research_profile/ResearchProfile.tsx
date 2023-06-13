@@ -4,7 +4,9 @@ import { useHistory } from 'react-router-dom';
 import {
   Box,
   CircularProgress,
+  Divider,
   IconButton,
+  List,
   Link as MuiLink,
   SxProps,
   TablePagination,
@@ -26,9 +28,11 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RootState } from '../../redux/store';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { fetchPerson } from '../../api/cristinApi';
+import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { setNotification } from '../../redux/notificationSlice';
 import NotFound from '../errorpages/NotFound';
+import { getIdentifierFromId } from '../../utils/general-helpers';
+import { ProjectListItem } from '../search/project_search/ProjectListItem';
 
 const textContainerSx: SxProps = {
   width: '100%',
@@ -44,14 +48,20 @@ const ResearchProfile = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const [registrationsPage, setRegistrationsPage] = useState(0);
+  const [projectsPage, setProjectsPage] = useState(0);
+  const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
   const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
   const personId = isPublicPage
     ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
+
+  const personIdNumber = isPublicPage
+    ? new URLSearchParams(history.location.search).get('id')?.split('/').pop() ?? ''
+    : getIdentifierFromId(currentCristinId ?? '');
 
   const personQuery = useQuery({
     enabled: !!personId,
@@ -72,9 +82,17 @@ const ResearchProfile = () => {
         },
       ],
     },
-    rowsPerPage,
-    rowsPerPage * page
+    registrationRowsPerPage,
+    registrationRowsPerPage * registrationsPage
   );
+
+  const projectsQuery = useQuery({
+    queryKey: ['projects', projectRowsPerPage, projectsPage, personIdNumber],
+    queryFn: () => searchForProjects(projectRowsPerPage, projectsPage + 1, { participant: personIdNumber }),
+    meta: { errorMessage: t('feedback.error.project_search') },
+  });
+
+  const projects = projectsQuery.data?.hits ?? [];
 
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
@@ -119,8 +137,8 @@ const ResearchProfile = () => {
       )}
       {registrations && (
         <>
-          <Typography id="registration-label" variant="h2" sx={{ mt: '2rem' }}>
-            {t('common.registrations')}
+          <Typography id="registration-label" variant="h2" sx={{ mt: '2rem', mb: '0.5rem' }}>
+            {t('common.registrations')} ({registrations.size})
           </Typography>
           {isLoadingRegistrations && !registrations ? (
             <CircularProgress aria-labelledby="registration-label" />
@@ -131,17 +149,49 @@ const ResearchProfile = () => {
                 rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
                 component="div"
                 count={registrations.size}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(_, newPage) => setPage(newPage)}
+                rowsPerPage={registrationRowsPerPage}
+                page={registrationsPage}
+                onPageChange={(_, newPage) => setRegistrationsPage(newPage)}
                 onRowsPerPageChange={(event) => {
-                  setRowsPerPage(+event.target.value);
-                  setPage(0);
+                  setRegistrationRowsPerPage(+event.target.value);
+                  setRegistrationsPage(0);
                 }}
               />
             </>
           ) : (
             <Typography>{t('common.no_hits')}</Typography>
+          )}
+        </>
+      )}
+
+      {projects.length > 0 && (
+        <>
+          <Divider />
+          <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
+            {t('my_page.my_profile.projects')} ({projectsQuery.data?.size})
+          </Typography>
+          {personQuery.isFetching ? (
+            <CircularProgress aria-labelledby="project-label" />
+          ) : (
+            <>
+              <List>
+                {projects.map((project) => (
+                  <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
+                ))}
+              </List>
+              <TablePagination
+                rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+                component="div"
+                count={projectsQuery.data?.size ?? 0}
+                rowsPerPage={projectRowsPerPage}
+                page={projectsPage}
+                onPageChange={(_, newPage) => setProjectsPage(newPage)}
+                onRowsPerPageChange={(event) => {
+                  setProjectRowsPerPage(+event.target.value);
+                  setProjectsPage(0);
+                }}
+              />
+            </>
           )}
         </>
       )}
