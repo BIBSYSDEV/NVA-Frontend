@@ -28,6 +28,7 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { administrativeAgreementId } from '../FilesAndLicensePanel';
+import { equalUris } from '../../../utils/general-helpers';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -165,7 +166,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               select
               SelectProps={{
                 renderValue: (option) => {
-                  const selectedLicense = licenses.find((license) => license.id === option);
+                  const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
                   return selectedLicense ? (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
@@ -175,9 +176,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 },
               }}
               variant="filled"
-              value={
-                licenses.find((license) => license.id.toLocaleLowerCase() === field.value.toLocaleLowerCase())?.id ?? ''
-              }
+              value={licenses.find((license) => equalUris(license.id, field.value))?.id ?? ''}
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}
               label={t('registration.files_and_license.conditions_for_using_file')}

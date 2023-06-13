@@ -18,7 +18,7 @@ interface LicenseInfo {
   name: string;
   description: string;
   logo: string;
-  link?: string;
+  link: string;
 }
 
 export const licenses: LicenseInfo[] = [
