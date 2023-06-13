@@ -34,13 +34,6 @@ const textContainerSx: SxProps = {
   width: '100%',
 };
 
-const lineSx: SxProps = {
-  display: 'flex',
-  gap: '1rem',
-  mt: '1rem',
-  alignItems: 'center',
-};
-
 const ResearchProfile = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -99,30 +92,29 @@ const ResearchProfile = () => {
         </Helmet>
 
         {activeAffiliations.length > 0 ? (
-          <Box sx={lineSx}>
-            <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-              {activeAffiliations.map(({ organization, role }) => (
-                <Box
-                  sx={{
-                    borderRight: '1px solid',
-                    borderRightColor: 'primary.main',
-                    width: 'fit-content',
-                    pr: '1.5rem',
-                    ':last-child': {
-                      border: 'none',
-                    },
-                  }}>
-                  <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(role.labels)} |</Typography>
-                  <AffiliationHierarchy key={organization} unitUri={organization} />
-                </Box>
-              ))}
-            </Box>
+          <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem' }}>
+            {activeAffiliations.map(({ organization, role }) => (
+              <Box
+                key={organization}
+                sx={{
+                  borderRight: '1px solid',
+                  borderRightColor: 'primary.main',
+                  width: 'fit-content',
+                  pr: '1.5rem',
+                  ':last-child': {
+                    border: 'none',
+                  },
+                }}>
+                <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(role.labels)} &bull;</Typography>
+                <AffiliationHierarchy key={organization} unitUri={organization} />
+              </Box>
+            ))}
           </Box>
         ) : (
           <Typography>{t('my_page.no_employments')}</Typography>
         )}
         {orcidUri && (
-          <Box sx={lineSx}>
+          <Box sx={{ display: 'flex', gap: '1rem', mt: '1rem', alignItems: 'center' }}>
             <IconButton size="small" href={orcidUri} target="_blank">
               <img src={orcidIcon} height="20" alt="orcid" />
             </IconButton>
