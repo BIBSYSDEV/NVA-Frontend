@@ -73,7 +73,7 @@ export interface MyRegistrationsResponse {
   publications?: RegistrationPreview[]; // "publications" is undefined if user has no registrations
 }
 
-export interface RegistrationPublisher {
+interface RegistrationPublisher {
   id: string;
 }
 

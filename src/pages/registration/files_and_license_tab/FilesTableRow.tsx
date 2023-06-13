@@ -192,7 +192,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   dense
                   sx={{ gap: '1rem' }}>
                   <ListItemIcon>
-                    <img style={{ width: '5rem' }} src={license.logo} alt={license.id} />
+                    <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
                   </ListItemIcon>
                   <ListItemText>
                     <Typography>{license.name}</Typography>
