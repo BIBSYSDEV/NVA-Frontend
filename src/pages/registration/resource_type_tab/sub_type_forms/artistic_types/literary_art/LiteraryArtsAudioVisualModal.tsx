@@ -38,14 +38,14 @@ const emptyLiteraryArtsAudioVisual: LiteraryArtsAudioVisual = {
 const validationSchema = Yup.object<YupShape<LiteraryArtsAudioVisual>>({
   subtype: Yup.object().shape({
     type: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.type_work'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.type_work'),
       })
     ),
     description: Yup.string().when('type', ([type], schema) =>
-      type === 'Other'
+      type === LiteraryArtsAudioVisualSubtype.Other
         ? schema.required(
-            i18n.t('translation:feedback.validation.is_required', {
+            i18n.t('feedback.validation.is_required', {
               field: i18n.t('common.description'),
             })
           )
@@ -135,7 +135,7 @@ export const LiteraryArtsAudioVisualModal = ({
                 )}
               </Field>
 
-              {values.subtype.type === 'Other' ? (
+              {values.subtype.type === LiteraryArtsAudioVisualSubtype.Other ? (
                 <Field name="subtype.description">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
