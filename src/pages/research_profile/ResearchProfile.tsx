@@ -79,7 +79,7 @@ const ResearchProfile = () => {
   ) : !person ? (
     <NotFound />
   ) : (
-    <Box>
+    <div>
       <Box sx={{ bgcolor: 'person.main', py: '1.1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <Typography variant="h1" sx={{ ml: '2rem' }}>
           {fullName}
@@ -154,7 +154,7 @@ const ResearchProfile = () => {
           </>
         )}
       </BackgroundDiv>
-    </Box>
+    </div>
   );
 };
 
