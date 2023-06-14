@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { IconButton, Paper, Tooltip, Typography, Box } from '@mui/material';
+import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -50,7 +50,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   });
 
   return (
-    <Paper elevation={0}>
+    <Paper elevation={0} sx={{ gridArea: 'registration' }}>
       {registration.status === RegistrationStatus.Published && <StructuredSeoData uri={registration.id} />}
       <Helmet>
         <title>{mainTitle}</title>
@@ -85,6 +85,20 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
         )}
 
         <PublicGeneralContent registration={registration} />
+
+        {(registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
+          <Box sx={{ display: 'flex', justifyContent: 'space-around', mb: '0.5rem' }}>
+            <Typography
+              sx={{
+                py: '0.3rem',
+                px: { xs: '2rem', sm: '3rem' },
+                bgcolor: 'primary.light',
+                color: 'primary.contrastText',
+              }}>
+              {t('registration.public_page.metadata_not_published')}
+            </Typography>
+          </Box>
+        )}
 
         {entityDescription?.alternativeTitles.und && (
           <Box sx={{ borderTop: '1px solid', py: '1rem' }}>

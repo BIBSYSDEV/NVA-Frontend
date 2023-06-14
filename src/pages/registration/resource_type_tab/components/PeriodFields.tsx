@@ -1,5 +1,4 @@
 import { DatePicker } from '@mui/x-date-pickers';
-import { TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -23,29 +22,24 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
             label={t('registration.resource_type.date_from')}
-            PopperProps={{
-              'aria-label': t('registration.resource_type.date_from'),
-            }}
-            value={field.value ?? null}
+            value={field.value ? new Date(field.value) : null}
             onChange={(date) => {
               !touched && setFieldTouched(field.name, true, false);
               setFieldValue(field.name, date ?? '');
             }}
-            inputFormat="dd.MM.yyyy"
+            format="dd.MM.yyyy"
             views={['year', 'month', 'day']}
             maxDate={toValue ? new Date(toValue) : maxDate}
-            mask="__.__.____"
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                data-testid={dataTestId.registrationWizard.resourceType.dateFromField}
-                variant="filled"
-                required
-                onBlur={() => !touched && setFieldTouched(field.name)}
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
-            )}
+            slotProps={{
+              textField: {
+                inputProps: { 'data-testid': dataTestId.registrationWizard.resourceType.dateFromField },
+                variant: 'filled',
+                error: touched && !!error,
+                required: true,
+                onBlur: () => !touched && setFieldTouched(field.name),
+                helperText: <ErrorMessage name={field.name} />,
+              },
+            }}
           />
         )}
       </Field>
@@ -53,30 +47,25 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <DatePicker
             label={t('registration.resource_type.date_to')}
-            PopperProps={{
-              'aria-label': t('registration.resource_type.date_to'),
-            }}
-            value={field.value ?? null}
+            value={field.value ? new Date(field.value) : null}
             onChange={(date) => {
               !touched && setFieldTouched(field.name, true, false);
               setFieldValue(field.name, date ?? '');
             }}
-            inputFormat="dd.MM.yyyy"
+            format="dd.MM.yyyy"
             views={['year', 'month', 'day']}
             minDate={fromValue ? new Date(fromValue) : undefined}
             maxDate={maxDate}
-            mask="__.__.____"
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                data-testid={dataTestId.registrationWizard.resourceType.dateToField}
-                variant="filled"
-                required
-                onBlur={() => !touched && setFieldTouched(field.name)}
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
-            )}
+            slotProps={{
+              textField: {
+                inputProps: { 'data-testid': dataTestId.registrationWizard.resourceType.dateToField },
+                variant: 'filled',
+                required: true,
+                onBlur: () => !touched && setFieldTouched(field.name),
+                error: touched && !!error,
+                helperText: <ErrorMessage name={field.name} />,
+              },
+            }}
           />
         )}
       </Field>

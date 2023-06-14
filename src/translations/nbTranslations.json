@@ -55,7 +55,9 @@
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})"
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})",
+      "import": "Importer",
+      "see_publication": "Se publikasjon"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -80,6 +82,7 @@
       "ror": "Research Organization Registry (ROR)",
       "sector": "Sektor",
       "sector_values": {
+        "ABM": "Arkiv, Bibliotek og Museum",
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
         "UHI": "Universitet og høyskoler (UH)"
@@ -116,11 +119,7 @@
     "close_forever": "Lukk og ikke vis igjen",
     "country": "Land",
     "create": "Opprett",
-    "create_doi": "Opprett DOI",
-    "created_date": "Opprettet",
     "date": "Dato",
-    "x_days_one": "{{count}} dag",
-    "x_days_other": "{{count}} dager",
     "delete": "Slett",
     "description": "Beskrivelse",
     "doi": "DOI",
@@ -145,6 +144,7 @@
     "next": "Neste",
     "no": "Nei",
     "no_hits": "Ingen treff",
+    "none": "Ingen",
     "not_decided": "Ikke bestemt",
     "number_short": "Nr.",
     "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
@@ -157,7 +157,6 @@
     "page_title": "Nasjonalt Vitenarkiv",
     "place": "Sted",
     "previous": "Forrige",
-    "publish": "Publiser",
     "publisher": "Utgiver",
     "read": "Les",
     "read_less": "Les mindre",
@@ -194,24 +193,22 @@
     "start_date": "Startdato",
     "start_page": "Startside",
     "status": "Status",
-    "support": "Brukerstøtte",
     "tasks": "Oppgaver",
     "title": "Tittel",
     "type": "Type",
+    "unknown": "Ukjent",
     "update": "Oppdater",
     "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
+    "x_days_one": "{{count}} dag",
+    "x_days_other": "{{count}} dager",
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
     "year": "År",
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -297,7 +294,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "curators": {
@@ -400,6 +401,8 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
+      "update_ticket_assignee": "Kunne ikke sette kurator",
+      "update_ticket_status": "Kunne ikke oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
     },
     "success": {
@@ -410,6 +413,7 @@
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
+      "create_registration": "Publikasjon er opprettet",
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
@@ -425,6 +429,7 @@
       "update_project": "Prosjektet ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
+      "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
     },
     "validation": {
@@ -478,24 +483,32 @@
       "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/4.0/deed.no",
       "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.no",
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/4.0/deed.no",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/deed.no"
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/deed.no",
+      "rights_reserved": "https://rightsstatements.org/page/InC/1.0/"
     }
   },
   "my_page": {
     "messages": {
+      "dialogue": "Dialog",
+      "doi_closed": "DOI avvist",
+      "doi_completed": "DOI tildelt",
+      "doi_pending": "Venter på DOI-tildeling",
+      "doi_requested": "Bedt om DOI",
       "files_published": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
-      "messages": "Meldinger",
+      "general_support_pending": "Venter på oppfølging",
+      "mark_as_completed": "Sett til ferdig",
       "no_messages": "Du har ingen meldinger",
       "ticket_types": {
-        "Closed": "Lukket",
+        "Closed": "Avvist",
         "Completed": "Ferdig",
-        "Pending": "Pågår"
+        "New": "Innmeldt",
+        "Pending": "Behandles"
       },
       "types": {
-        "DoiRequest": "DOI-forespørsel",
-        "GeneralSupportCase": "Brukerstøtte",
-        "PublishingRequest": "Publiseringsforespørsel"
+        "DoiRequest": "DOI",
+        "GeneralSupportCase": "Kuratorstøtte",
+        "PublishingRequest": "Publisering"
       }
     },
     "my_page": "Min side",
@@ -980,7 +993,7 @@
       "verify_affiliation": "Bekreft tilknytning",
       "verify_person": "Verifiser person"
     },
-    "curator_support": "Kuratorstøtte",
+    "curator_support_info": "Her kan du spørre din kurator om hjelp med alt som har med registrering og publisering av forskningsresultat. Du finner svar på dine spørsmål på \"Min side\" og på registreringens presentasjonsside.",
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1057,13 +1070,14 @@
     "new_registration": "Ny registrering",
     "public_page": {
       "about_registration": "Om registreringen",
-      "approve_publish_request": "Godkjenn publisering",
+      "approve_publish_request": "Publiser fil med lisens",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
       "handle": "Handle",
       "in_progress": "Under behandling",
       "message_to_curator": "Melding til kurator",
+      "metadata_not_published": "Metadata er ikke publisert",
       "other_contributors_one": "(+{{count}} annen)",
       "other_contributors_other": "(+{{count}} andre)",
       "other_related_registrations": "Andre relaterte registreringer",
@@ -1071,21 +1085,26 @@
       "participants_other": "{{count}} deltakere",
       "preview_of": "Forhåndsvisning av {{fileName}}",
       "preview_unavailable": "Forhåndsvisning ikke tilgjengelig. Åpne filen i egnet program.",
-      "published": "Publisert",
-      "published_date": "Publisert: {{date}}",
+      "publication": "Publisering",
       "publishing_request": "Publiseringsgodkjenning",
+      "publishing_request_message_about": "Du kan bruke meldingsfeltet for dialog med registrator ved behov.",
       "reject_publish_request": "Avvis publisering",
       "request_doi": "Be om en DOI",
       "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
       "reserve_doi": "Reserver en DOI",
       "reserved_doi": "Reservert DOI",
       "tasks_panel": {
+        "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
+        "assign_doi": "Tildel DOI",
+        "assign_curator": "Sett kurator",
         "files_will_soon_be_published": "Filene vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
-        "has_doi_request": "Registreringen har en DOI-forespørsel til behandling for kurator.",
-        "has_rejected_doi_request": "Registreringen har en avslått DOI-forespørsel.",
         "has_rejected_files_publishing_request": "Registreringen har en avslått publiseringsforespørsel for filene.",
-        "has_reserved_doi": "Registreringen har fått en reservert DOI. Når registreringen publiseres vil det automatisk bli opprettet en DOI-forespørsel som skal behandles av en kurator.",
+        "has_reserved_doi": "Du har reservert en DOI til denne registreringen. Den kan deles med de som ønsker å sitere dette resultatet. Når registreringen blir publisert og blir offentlig tilgjengelig, må en kurator validere metadata før DOI blir offentlig tilgjengelig.",
         "metadata_published_waiting_for_files": "Metadata er publisert og synlig for andre brukere, men en kurator må godkjenne filene som er lastet opp før de blir synlige.",
+        "metadata_published_waiting_for_files_curator": "Alle filer og valgte lisenser blir publisert og vil umiddelbart bli tilgjengelig for andre.",
+        "publish_metadata": "Publiser metadata",
+        "publish_metadata_and_files": "Publiser metadata og fil(er)",
+        "registration_is_published": "Registreringen er publisert. Metadata og eventuelle filer er offentlig tilgjengelig.",
         "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
         "reload": "Last på nytt",
         "review_preview_before_publishing": "Se over utkast før du går videre.",
@@ -1283,7 +1302,7 @@
           "Streaming": "Strømming",
           "Vinyl": "LP/EP"
         },
-        "music_score_ensemble": "Ensemble",
+        "music_score_ensemble": "Besetning",
         "music_score_ismn": "ISMN",
         "music_score_isrc": "ISRC",
         "music_score_movements": "Satser",
@@ -1437,7 +1456,7 @@
           "contains_sensitive_data": "Datasettet inneholder andre sensitive eller konfidensielle data?*",
           "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger, bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, etc.",
           "dialog_title": "For å legge til forskningsdata må du først avklare om",
-          "further_info": "Når du trykker JA eller er usikker så må du sende melding til brukerstøtte der din kurator avklarer videre prosess for å publisere datasettet."
+          "further_info": "Når du trykker JA eller er usikker så må du sende melding til kuratorstøtte der din kurator avklarer videre prosess for å publisere datasettet."
         },
         "add_link": "Legg til lenke",
         "external_link": "Ekstern lenke",
@@ -1479,7 +1498,6 @@
       "PUBLISHED": "Publisert",
       "PUBLISHED_METADATA": "Metadata publisert"
     },
-    "support_description": "Når du ber om brukerstøtte vil meldingen gå til en kurator ved din institusjon. Du kan se besvarelser i <0>Mine Meldinger</0>.",
     "year_published": "Publiseringsår"
   },
   "search": {
@@ -1506,8 +1524,10 @@
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
   },
   "tasks": {
+    "all_user_dialogs": "Alle brukerdialoger",
     "limited_to": "Avgrenset til: \"{{name}}\"",
-    "tasks": "Oppgaver",
+    "my_user_dialogs": "Mine brukerdialoger",
+    "new_user_dialogs": "Nye brukerdialoger",
     "user_dialog": "Brukerdialog"
   }
 }

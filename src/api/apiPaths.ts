@@ -30,6 +30,7 @@ export enum PublicationsApiPath {
   Registration = '/publication',
   RegistrationsByOwner = '/publication/by-owner',
   DoiLookup = '/doi-fetch',
+  ImportCandidate = '/publication/import-candidate',
 }
 
 export enum OrcidApiPath {
@@ -45,6 +46,7 @@ export enum RoleApiPath {
 export enum SearchApiPath {
   Registrations = '/search/resources',
   Tickets = '/search/tickets',
+  ImportCandidates = '/search/import-candidates',
 }
 
 export enum VerifiedFundingApiPath {

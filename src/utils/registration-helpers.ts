@@ -1,4 +1,4 @@
-import { PublicationInstanceType, Registration } from '../types/registration.types';
+import { PublicationInstanceType, Registration, RegistrationStatus } from '../types/registration.types';
 import {
   ArtisticType,
   BookType,
@@ -559,8 +559,12 @@ export const getOutputName = (item: OutputItem): string => {
       return (item as AudioVisualPublication).publisher.name;
     case 'Concert':
       return (item as Concert).place.label;
-    case 'OtherPerformance':
-      return (item as OtherMusicPerformance).place.label;
+    case 'OtherPerformance': {
+      const otherMusicPerformance = item as OtherMusicPerformance;
+      return otherMusicPerformance.place.label
+        ? otherMusicPerformance.place.label
+        : otherMusicPerformance.performanceType;
+    }
     case 'LiteraryArtsMonograph':
       return (item as LiteraryArtsMonograph).publisher.name;
     case 'LiteraryArtsPerformance':
@@ -586,8 +590,17 @@ const userIsOwnerOfRegistration = (user: User | null, registration: Registration
 export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
   !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
+const userIsContributorOnPublishedRegistration = (user: User | null, registration: Registration) =>
+  !!user?.isCreator &&
+  !!user.cristinId &&
+  (registration.status === RegistrationStatus.Published ||
+    registration.status === RegistrationStatus.PublishedMetadata) &&
+  !!registration.entityDescription?.contributors.some((contributor) => contributor.identity.id === user.cristinId);
+
 export const userCanEditRegistration = (user: User | null, registration: Registration) =>
-  userIsOwnerOfRegistration(user, registration) || userIsCuratorForRegistration(user, registration);
+  userIsOwnerOfRegistration(user, registration) ||
+  userIsCuratorForRegistration(user, registration) ||
+  userIsContributorOnPublishedRegistration(user, registration);
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
@@ -608,6 +621,8 @@ export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
 
 export const getContributorInitials = (name: string) => {
+  if (!name) return '';
+
   const splittedNames = name.split(' ');
   const firstNameInitial = splittedNames[0][0];
   const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';

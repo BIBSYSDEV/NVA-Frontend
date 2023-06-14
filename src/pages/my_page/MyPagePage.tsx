@@ -1,20 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { Switch, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Switch, useHistory } from 'react-router-dom';
+import { Divider, FormControlLabel } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import PostAddIcon from '@mui/icons-material/PostAdd';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { MyMessagesPage } from '../messages/MyMessagesPage';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjects } from './user_profile/MyProjects';
@@ -22,10 +20,8 @@ import { MyResults } from './user_profile/MyResults';
 import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import {
   LinkButton,
-  LinkButtonRow,
-  LinkIconButton,
+  LinkCreateButton,
   NavigationList,
-  SidePanel,
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
@@ -34,12 +30,75 @@ import ResearchProfile from '../research_profile/ResearchProfile';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import NotFound from '../errorpages/NotFound';
+import { SelectableButton } from '../../components/SelectableButton';
+import { fetchTickets } from '../../api/searchApi';
+import { setNotification } from '../../redux/notificationSlice';
+import { TicketStatus } from '../../types/publication_types/ticket.types';
+import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { TicketList, ticketsPerPageOptions } from '../messages/components/TicketList';
+import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+
+type SelectedStatusState = {
+  [key in TicketStatus]: boolean;
+};
 
 const MyPagePage = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
   const user = useSelector((store: RootState) => store.user);
   const queryClient = useQueryClient();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
+
+  const [selectedTypes, setSelectedTypes] = useState({
+    doiRequest: true,
+    generalSupportCase: true,
+    publishingRequest: true,
+  });
+
+  const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
+    New: true,
+    Pending: true,
+    Completed: false,
+    Closed: false,
+  });
+
+  const selectedTypesArray = Object.entries(selectedTypes)
+    .filter(([_, selected]) => selected)
+    .map(([key]) => key);
+
+  const typeQuery =
+    selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
+
+  const selectedStatusesArray = Object.entries(selectedStatuses)
+    .filter(([_, selected]) => selected)
+    .map(([key]) => key);
+
+  const statusQuery =
+    selectedStatusesArray.length > 0
+      ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
+      : '';
+
+  const query = [typeQuery, statusQuery].filter(Boolean).join(' AND ');
+
+  const ticketsQuery = useQuery({
+    queryKey: ['tickets', rowsPerPage, page, query],
+    queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, query, true),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
+  });
+
+  const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
+  const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
+  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
+  const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
+
+  const statusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
+  const newCount = statusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
+  const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
+  const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
+  const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);
@@ -54,28 +113,131 @@ const MyPagePage = () => {
     }
   }, [history, currentPath, user?.isCreator]);
 
+  // Hide menu when opening a ticket on Messages path
+  const expandMenu =
+    !history.location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
+    history.location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
+
   return (
     <StyledPageWithSideMenu>
-      <SidePanel aria-labelledby="my-page-title">
-        <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} id="my-page-title" />
+      <SideMenu
+        expanded={expandMenu}
+        minimizedMenu={
+          <Link to={UrlPathTemplate.MyPageMyMessages} onClick={() => ticketsQuery.refetch()}>
+            <StyledMinimizedMenuButton title={t('my_page.my_page')}>
+              <FavoriteBorderIcon />
+            </StyledMinimizedMenuButton>
+          </Link>
+        }>
+        <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
 
         {user?.isCreator && [
           <NavigationListAccordion
             key={dataTestId.myPage.messagesAccordion}
             dataTestId={dataTestId.myPage.messagesAccordion}
-            title={t('my_page.messages.messages')}
+            title={t('my_page.messages.dialogue')}
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
-            <NavigationList>
-              <LinkButton
-                key={dataTestId.myPage.messagesLink}
-                data-testid={dataTestId.myPage.messagesLink}
-                isSelected={currentPath === UrlPathTemplate.MyPageMyMessages}
-                to={UrlPathTemplate.MyPageMyMessages}>
-                {t('my_page.messages.messages')}
-              </LinkButton>
-            </NavigationList>
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
+              <SelectableButton
+                data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
+                showCheckbox
+                isSelected={selectedTypes.publishingRequest}
+                color="publishingRequest"
+                onClick={() =>
+                  setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
+                }>
+                {selectedTypes.publishingRequest && publishingRequestCount
+                  ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
+                  : t('my_page.messages.types.PublishingRequest')}
+              </SelectableButton>
+
+              <SelectableButton
+                data-testid={dataTestId.tasksPage.typeSearch.doiButton}
+                showCheckbox
+                isSelected={selectedTypes.doiRequest}
+                color="doiRequest"
+                onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
+                {selectedTypes.doiRequest && doiRequestCount
+                  ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
+                  : t('my_page.messages.types.DoiRequest')}
+              </SelectableButton>
+
+              <SelectableButton
+                data-testid={dataTestId.tasksPage.typeSearch.supportButton}
+                showCheckbox
+                isSelected={selectedTypes.generalSupportCase}
+                color="generalSupportCase"
+                onClick={() =>
+                  setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
+                }>
+                {selectedTypes.generalSupportCase && generalSupportCaseCount
+                  ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
+                  : t('my_page.messages.types.GeneralSupportCase')}
+              </SelectableButton>
+            </StyledTicketSearchFormGroup>
+
+            <StyledTicketSearchFormGroup>
+              <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
+                checked={selectedStatuses.New}
+                control={
+                  <StyledStatusCheckbox
+                    onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
+                  />
+                }
+                label={
+                  selectedStatuses.New && newCount
+                    ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
+                    : t('my_page.messages.ticket_types.New')
+                }
+              />
+              <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
+                checked={selectedStatuses.Pending}
+                control={
+                  <StyledStatusCheckbox
+                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
+                  />
+                }
+                label={
+                  selectedStatuses.Pending && pendingCount
+                    ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
+                    : t('my_page.messages.ticket_types.Pending')
+                }
+              />
+              <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
+                checked={selectedStatuses.Completed}
+                control={
+                  <StyledStatusCheckbox
+                    onChange={() =>
+                      setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })
+                    }
+                  />
+                }
+                label={
+                  selectedStatuses.Completed && completedCount
+                    ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
+                    : t('my_page.messages.ticket_types.Completed')
+                }
+              />
+              <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
+                checked={selectedStatuses.Closed}
+                control={
+                  <StyledStatusCheckbox
+                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
+                  />
+                }
+                label={
+                  selectedStatuses.Closed && closedCount
+                    ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
+                    : t('my_page.messages.ticket_types.Closed')
+                }
+              />
+            </StyledTicketSearchFormGroup>
           </NavigationListAccordion>,
 
           <NavigationListAccordion
@@ -86,21 +248,20 @@ const MyPagePage = () => {
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
             <NavigationList>
-              <LinkButtonRow key={dataTestId.myPage.myRegistrationsLink}>
-                <LinkButton
-                  data-testid={dataTestId.myPage.myRegistrationsLink}
-                  isSelected={currentPath === UrlPathTemplate.MyPageMyRegistrations}
-                  to={UrlPathTemplate.MyPageMyRegistrations}>
-                  {t('common.registrations')}
-                </LinkButton>
-                <LinkIconButton
-                  data-testid={dataTestId.myPage.newRegistrationLink}
-                  to={UrlPathTemplate.RegistrationNew}
-                  icon={<AddCircleIcon />}
-                  title={t('registration.new_registration')}
-                />
-              </LinkButtonRow>
+              <LinkButton
+                key={dataTestId.myPage.myRegistrationsLink}
+                data-testid={dataTestId.myPage.myRegistrationsLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageMyRegistrations}
+                to={UrlPathTemplate.MyPageMyRegistrations}>
+                {t('common.registrations')}
+              </LinkButton>
             </NavigationList>
+            <Divider sx={{ mt: '0.5rem' }} />
+            <LinkCreateButton
+              data-testid={dataTestId.myPage.newRegistrationLink}
+              to={UrlPathTemplate.RegistrationNew}
+              title={t('registration.new_registration')}
+            />
           </NavigationListAccordion>,
 
           <NavigationListAccordion
@@ -111,23 +272,22 @@ const MyPagePage = () => {
             defaultPath={UrlPathTemplate.MyPageMyProjectRegistrations}
             dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
             <NavigationList>
-              <LinkButtonRow key={dataTestId.myPage.myProjectRegistrationsLink}>
-                <LinkButton
-                  data-testid={dataTestId.myPage.myProjectRegistrationsLink}
-                  isSelected={currentPath === UrlPathTemplate.MyPageMyProjectRegistrations}
-                  to={UrlPathTemplate.MyPageMyProjectRegistrations}>
-                  {t('my_page.project_registrations')}
-                </LinkButton>
-
-                <LinkIconButton
-                  data-testid={dataTestId.myPage.createProjectButton}
-                  icon={<PostAddIcon />}
-                  isSelected={showCreateProject}
-                  onClick={() => setShowCreateProject(true)}
-                  title={t('project.create_project')}
-                />
-              </LinkButtonRow>
+              <LinkButton
+                key={dataTestId.myPage.myProjectRegistrationsLink}
+                data-testid={dataTestId.myPage.myProjectRegistrationsLink}
+                isSelected={currentPath === UrlPathTemplate.MyPageMyProjectRegistrations}
+                to={UrlPathTemplate.MyPageMyProjectRegistrations}>
+                {t('my_page.project_registrations')}
+              </LinkButton>
             </NavigationList>
+            <Divider sx={{ mt: '0.5rem' }} />
+            <LinkCreateButton
+              data-testid={dataTestId.myPage.createProjectButton}
+              isSelected={showCreateProject}
+              selectedColor="project.main"
+              onClick={() => setShowCreateProject(true)}
+              title={t('project.create_project')}
+            />
           </NavigationListAccordion>,
         ]}
         <NavigationListAccordion
@@ -173,11 +333,21 @@ const MyPagePage = () => {
             </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
-      </SidePanel>
+      </SideMenu>
 
       <ErrorBoundary>
         <Switch>
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages} component={MyMessagesPage} />
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages}>
+            <TicketList
+              ticketsQuery={ticketsQuery}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+              page={page}
+              setPage={setPage}
+              helmetTitle={t('my_page.messages.dialogue')}
+            />
+          </CreatorRoute>
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />

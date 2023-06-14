@@ -1,29 +1,33 @@
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@tanstack/react-query';
 import AddIcon from '@mui/icons-material/Add';
 import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { CristinApiPath } from '../../../../api/apiPaths';
 import { ProjectChip } from './ProjectChip';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
-import { SearchResponse } from '../../../../types/common.types';
 import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
+import { searchForProjects } from '../../../../api/cristinApi';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();
   const [openNewProjectDialog, setOpenNewProjectDialog] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
-  const [projects, isLoadingProjects] = useFetch<SearchResponse<CristinProject>>({
-    url: debouncedSearchTerm ? `${CristinApiPath.Project}?query=${encodeURIComponent(debouncedSearchTerm)}` : '',
-    errorMessage: t('feedback.error.project_search'),
+
+  const projectsQuery = useQuery({
+    enabled: debouncedSearchTerm.length > 0,
+    queryKey: ['projects', 10, 1, debouncedSearchTerm],
+    queryFn: () => searchForProjects(10, 1, { query: debouncedSearchTerm }),
+    meta: { errorMessage: t('feedback.error.project_search') },
   });
+
+  const projects = projectsQuery.data?.hits ?? [];
 
   return (
     <>
@@ -37,7 +41,7 @@ export const ProjectsField = () => {
                 id={field.name}
                 aria-labelledby={`${field.name}-label`}
                 data-testid={dataTestId.registrationWizard.description.projectSearchField}
-                options={projects?.hits ?? []}
+                options={projects}
                 filterOptions={(options) => options}
                 getOptionLabel={(option) => option.title}
                 onInputChange={(_, newInputValue, reason) => {
@@ -66,7 +70,7 @@ export const ProjectsField = () => {
                   ))
                 }
                 getOptionDisabled={(option) => field.value.some((project) => project.id === option.id)}
-                loading={isLoadingProjects}
+                loading={projectsQuery.isFetching}
                 renderOption={(props, option: CristinProject, state) => (
                   <AutocompleteProjectOption project={option} inputValue={state.inputValue} {...props} />
                 )}
@@ -74,7 +78,7 @@ export const ProjectsField = () => {
                   <AutocompleteTextField
                     {...params}
                     label={t('registration.description.project_association')}
-                    isLoading={isLoadingProjects}
+                    isLoading={projectsQuery.isFetching}
                     placeholder={t('registration.description.search_for_project')}
                     showSearchIcon={field.value.length === 0}
                   />

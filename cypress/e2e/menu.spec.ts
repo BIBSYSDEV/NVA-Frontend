@@ -46,7 +46,7 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
 
     cy.setUserRolesInRedux([]);
-    cy.get(`[data-testid=${dataTestId.myPage.messagesLink}]`).should('not.exist');
+    cy.get(`[data-testid=${dataTestId.myPage.messagesAccordion}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.myPage.myProfileAccordion}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.myProfileLink}]`).should('be.visible');
@@ -55,7 +55,9 @@ describe('Menu', () => {
 
     cy.setUserRolesInRedux([RoleName.Creator]);
     cy.get(`[data-testid=${dataTestId.myPage.messagesAccordion}]`).click();
-    cy.get(`[data-testid=${dataTestId.myPage.messagesLink}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.publishingButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.doiButton}]`).should('be.visible');
+    cy.get(`[data-testid=${dataTestId.tasksPage.typeSearch.supportButton}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.myPage.registrationsAccordion}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.myPage.researchProfileAccordion}]`).click();
@@ -98,29 +100,47 @@ describe('Menu', () => {
     cy.get(`[data-testid=${dataTestId.editor.doiLinkButton}]`).should('be.visible');
   });
 
-  it('Unauthorized user should see Forbidden page when visiting protected URLs', () => {
+  it('Unauthorized user should see Forbidden page when visiting new registration', () => {
     cy.visit(UrlPathTemplate.RegistrationNew);
+    cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
+  });
 
+  it('Unauthorized user should see Forbidden page when visiting my registrations', () => {
     cy.visit(UrlPathTemplate.MyPageMyRegistrations);
+    cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
+  });
 
+  it('Unauthorized user should see Forbidden page when visiting tasks', () => {
     cy.visit(UrlPathTemplate.Tasks);
+    cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
+  });
 
+  it('Unauthorized user should see Forbidden page when visiting basic data', () => {
     cy.visit(UrlPathTemplate.BasicData);
+    cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
+  });
 
+  it('Unauthorized user should see Forbidden page when visiting editor page', () => {
     cy.visit(UrlPathTemplate.Editor);
+    cy.get('[data-testid=forbidden]').should('be.visible');
     cy.mocklogin();
+    cy.get('[data-testid=forbidden]').should('not.exist');
     cy.setUserRolesInRedux([]);
     cy.get('[data-testid=forbidden]').should('be.visible');
   });
