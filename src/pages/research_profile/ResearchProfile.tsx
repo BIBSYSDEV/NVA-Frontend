@@ -88,6 +88,7 @@ const ResearchProfile = () => {
     queryKey: ['projects', projectRowsPerPage, projectsPage, personIdNumber],
     queryFn: () => searchForProjects(projectRowsPerPage, projectsPage + 1, { participant: personIdNumber }),
     meta: { errorMessage: t('feedback.error.project_search') },
+    keepPreviousData: true,
   });
 
   const projects = projectsQuery.data?.hits ?? [];
@@ -134,7 +135,7 @@ const ResearchProfile = () => {
         </Box>
       )}
       <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
-        {t('common.registrations')} ({registrations && registrations.size})
+        {`${t('common.registrations')} ${registrations && `(${registrations.size}`})`}
       </Typography>
       {registrations && (
         <>
@@ -164,7 +165,7 @@ const ResearchProfile = () => {
 
       <Divider />
       <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
-        {t('my_page.my_profile.projects')} ({projectsQuery.data && projectsQuery.data.size})
+        {`${t('my_page.my_profile.projects')} ${projectsQuery.data && `(${projectsQuery.data?.size})`} `}
       </Typography>
       {projectsQuery.isLoading ? (
         <Box sx={{ display: 'flex' }}>
