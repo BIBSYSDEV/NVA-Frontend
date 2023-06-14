@@ -14,6 +14,8 @@ import { getContributorInitials } from '../../../utils/registration-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
 import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
 import { RootState } from '../../../redux/store';
+import { useMutation } from '@tanstack/react-query';
+import { updateTicket } from '../../../api/registrationApi';
 
 export const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
@@ -51,6 +53,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       )
     : '';
 
+  const ticketViewStatusMutation = useMutation({ mutationFn: () => updateTicket(ticket.id, { viewStatus: 'Read' }) });
+
   return (
     <SearchListItem
       key={ticket.id}
@@ -71,6 +75,11 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             ? getMyMessagesRegistrationPath(identifier)
             : ''
         }
+        onClick={() => {
+          if (user?.nvaUsername && !ticket.viewedBy.some((viewer) => viewer.username === user.nvaUsername)) {
+            ticketViewStatusMutation.mutate();
+          }
+        }}
         sx={{ width: '100%', textDecoration: 'none', p: '0.5rem 1rem' }}>
         <Box
           sx={{
