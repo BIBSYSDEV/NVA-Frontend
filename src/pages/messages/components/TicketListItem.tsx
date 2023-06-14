@@ -1,6 +1,7 @@
 import { Box, Tooltip, Typography, Link as MuiLink } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
@@ -12,6 +13,7 @@ import { getFullName } from '../../../utils/user-helpers';
 import { getContributorInitials } from '../../../utils/registration-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
 import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
+import { RootState } from '../../../redux/store';
 
 export const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
@@ -25,6 +27,7 @@ interface TicketListItemProps {
 
 export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const { t } = useTranslation();
+  const { user } = useSelector((store: RootState) => store);
 
   const { id, identifier, mainTitle, contributors, publicationInstance, status } = ticket.publication;
   const registrationCopy = {
@@ -49,7 +52,16 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     : '';
 
   return (
-    <SearchListItem key={ticket.id} sx={{ borderLeftColor: ticketColor[ticket.type], p: 0 }}>
+    <SearchListItem
+      key={ticket.id}
+      sx={{
+        borderLeftColor: ticketColor[ticket.type],
+        p: 0,
+        bgcolor:
+          user?.nvaUsername && ticket.viewedBy.some((viewer) => viewer.username === user.nvaUsername)
+            ? ''
+            : 'secondary.main',
+      }}>
       <MuiLink
         component={Link}
         to={
