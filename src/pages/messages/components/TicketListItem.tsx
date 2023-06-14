@@ -1,6 +1,8 @@
 import { Box, Tooltip, Typography, Link as MuiLink } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useMutation } from '@tanstack/react-query';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
@@ -12,6 +14,8 @@ import { getFullName } from '../../../utils/user-helpers';
 import { getContributorInitials } from '../../../utils/registration-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
 import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
+import { RootState } from '../../../redux/store';
+import { updateTicket } from '../../../api/registrationApi';
 
 export const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
@@ -25,6 +29,7 @@ interface TicketListItemProps {
 
 export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const { t } = useTranslation();
+  const { user } = useSelector((store: RootState) => store);
 
   const { id, identifier, mainTitle, contributors, publicationInstance, status } = ticket.publication;
   const registrationCopy = {
@@ -48,8 +53,18 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       )
     : '';
 
+  const viewStatusMutation = useMutation({ mutationFn: () => updateTicket(ticket.id, { viewStatus: 'Read' }) });
+
+  const viewedByUser = user?.nvaUsername && ticket.viewedBy.some((viewer) => viewer.username === user.nvaUsername);
+
   return (
-    <SearchListItem key={ticket.id} sx={{ borderLeftColor: ticketColor[ticket.type], p: 0 }}>
+    <SearchListItem
+      key={ticket.id}
+      sx={{
+        borderLeftColor: ticketColor[ticket.type],
+        p: 0,
+        bgcolor: !viewedByUser ? 'secondary.main' : undefined,
+      }}>
       <MuiLink
         component={Link}
         to={
@@ -59,6 +74,11 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             ? getMyMessagesRegistrationPath(identifier)
             : ''
         }
+        onClick={() => {
+          if (!viewedByUser) {
+            viewStatusMutation.mutate();
+          }
+        }}
         sx={{ width: '100%', textDecoration: 'none', p: '0.5rem 1rem' }}>
         <Box
           sx={{

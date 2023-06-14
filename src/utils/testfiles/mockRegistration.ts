@@ -128,6 +128,7 @@ export const mockTicketCollection: TicketCollection = {
       owner: 'creator@unit.no',
       type: 'GeneralSupportCase',
       status: 'Pending',
+      viewedBy: [],
       createdDate: new Date(2020, 1).toISOString(),
       modifiedDate: new Date(2020, 1).toISOString(),
       id: `${mockRegistration.id}/ticket/1`,
