@@ -2,6 +2,7 @@ import { Box, Tooltip, Typography, Link as MuiLink } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useMutation } from '@tanstack/react-query';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
@@ -14,7 +15,6 @@ import { getContributorInitials } from '../../../utils/registration-helpers';
 import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
 import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
 import { RootState } from '../../../redux/store';
-import { useMutation } from '@tanstack/react-query';
 import { updateTicket } from '../../../api/registrationApi';
 
 export const ticketColor = {
@@ -55,16 +55,15 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
 
   const ticketViewStatusMutation = useMutation({ mutationFn: () => updateTicket(ticket.id, { viewStatus: 'Read' }) });
 
+  const viewedByUser = user?.nvaUsername && ticket.viewedBy.some((viewer) => viewer.username === user.nvaUsername);
+
   return (
     <SearchListItem
       key={ticket.id}
       sx={{
         borderLeftColor: ticketColor[ticket.type],
         p: 0,
-        bgcolor:
-          user?.nvaUsername && ticket.viewedBy.some((viewer) => viewer.username === user.nvaUsername)
-            ? ''
-            : 'secondary.main',
+        bgcolor: !viewedByUser ? 'secondary.main' : undefined,
       }}>
       <MuiLink
         component={Link}
@@ -76,7 +75,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             : ''
         }
         onClick={() => {
-          if (user?.nvaUsername && !ticket.viewedBy.some((viewer) => viewer.username === user.nvaUsername)) {
+          if (!viewedByUser) {
             ticketViewStatusMutation.mutate();
           }
         }}
