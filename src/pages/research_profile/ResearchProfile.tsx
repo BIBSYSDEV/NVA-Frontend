@@ -165,7 +165,7 @@ const ResearchProfile = () => {
 
       <Divider />
       <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
-        {`${t('my_page.my_profile.projects')} ${projectsQuery.data && `(${projectsQuery.data?.size})`} `}
+        {`${t('my_page.my_profile.projects')} ${projectsQuery.data ? `(${projectsQuery.data?.size})` : '(0)'} `}
       </Typography>
       {projectsQuery.isLoading ? (
         <CircularProgress aria-labelledby="project-label" />
