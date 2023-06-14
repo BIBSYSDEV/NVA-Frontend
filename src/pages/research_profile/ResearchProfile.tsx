@@ -133,11 +133,11 @@ const ResearchProfile = () => {
           </Box>
         </Box>
       )}
+      <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
+        {t('common.registrations')} ({registrations && registrations.size})
+      </Typography>
       {registrations && (
         <>
-          <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
-            {t('common.registrations')} ({registrations.size})
-          </Typography>
           {isLoadingRegistrations && !registrations ? (
             <CircularProgress aria-labelledby="registration-label" />
           ) : registrations.size > 0 ? (
@@ -162,14 +162,16 @@ const ResearchProfile = () => {
         </>
       )}
 
-      {projectsQuery.isFetching ? (
-        <CircularProgress aria-labelledby="project-label" />
+      <Divider />
+      <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
+        {t('my_page.my_profile.projects')} ({projectsQuery.data && projectsQuery.data.size})
+      </Typography>
+      {projectsQuery.isLoading ? (
+        <Box sx={{ display: 'flex' }}>
+          <CircularProgress sx={{ justifySelf: 'center' }} aria-labelledby="project-label" />
+        </Box>
       ) : projects.length > 0 ? (
         <>
-          <Divider />
-          <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
-            {t('my_page.my_profile.projects')} ({projectsQuery.data?.size})
-          </Typography>
           <List>
             {projects.map((project) => (
               <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
