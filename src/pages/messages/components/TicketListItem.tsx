@@ -53,7 +53,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       )
     : '';
 
-  const ticketViewStatusMutation = useMutation({ mutationFn: () => updateTicket(ticket.id, { viewStatus: 'Read' }) });
+  const viewStatusMutation = useMutation({ mutationFn: () => updateTicket(ticket.id, { viewStatus: 'Read' }) });
 
   const viewedByUser = user?.nvaUsername && ticket.viewedBy.some((viewer) => viewer.username === user.nvaUsername);
 
@@ -76,7 +76,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
         }
         onClick={() => {
           if (!viewedByUser) {
-            ticketViewStatusMutation.mutate();
+            viewStatusMutation.mutate();
           }
         }}
         sx={{ width: '100%', textDecoration: 'none', p: '0.5rem 1rem' }}>
