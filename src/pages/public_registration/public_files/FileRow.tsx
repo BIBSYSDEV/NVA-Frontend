@@ -21,6 +21,7 @@ import { RootState } from '../../../redux/store';
 import { AssociatedFile, licenses } from '../../../types/associatedArtifact.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { PreviewFile } from './preview_file/PreviewFile';
+import { equalUris } from '../../../utils/general-helpers';
 
 interface FileRowProps {
   file: AssociatedFile;
@@ -73,8 +74,8 @@ export const FileRow = ({
     }
   }, [handleDownload, openPreviewAccordion, previewFileUrl, fileIsEmbargoed]);
 
-  const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
-  const licenseTitle = file.license?.identifier ? t(`licenses.labels.${file.license.identifier}`) : '';
+  const licenseData = licenses.find((license) => equalUris(license.id, file.license));
+  const licenseTitle = licenseData?.name ?? '';
 
   return (
     <Box
