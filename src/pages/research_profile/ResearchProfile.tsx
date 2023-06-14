@@ -168,9 +168,7 @@ const ResearchProfile = () => {
         {`${t('my_page.my_profile.projects')} ${projectsQuery.data && `(${projectsQuery.data?.size})`} `}
       </Typography>
       {projectsQuery.isLoading ? (
-        <Box sx={{ display: 'flex' }}>
-          <CircularProgress sx={{ justifySelf: 'center' }} aria-labelledby="project-label" />
-        </Box>
+        <CircularProgress aria-labelledby="project-label" />
       ) : projects.length > 0 ? (
         <>
           <List>
