@@ -92,19 +92,23 @@ const ResearchProfile = () => {
         </Helmet>
 
         {activeAffiliations.length > 0 ? (
-          <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem', flexDirection: { xs: 'column', lg: 'row' } }}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '0.5rem',
+              mt: '1rem',
+              flexDirection: { xs: 'column', sm: 'row' },
+              flexWrap: 'wrap',
+            }}>
             {activeAffiliations.map(({ organization, role }) => (
               <Box
                 key={organization}
                 sx={{
                   width: 'fit-content',
                   pr: '1.5rem',
-                  ':not(:last-child)': {
-                    borderRight: { xs: 'none', lg: '1px solid' },
-                    borderRightColor: 'primary.main',
-                    borderBottom: { xs: '1px solid', lg: 'none' },
-                    borderBottomColor: 'primary.main',
-                  },
+                  borderRight: { xs: 'none', sm: '1px solid' },
+                  borderBottom: { xs: '1px solid', sm: 'none' },
+                  borderColor: 'primary.main',
                 }}>
                 <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(role.labels)} &bull;</Typography>
                 <AffiliationHierarchy key={organization} unitUri={organization} />
