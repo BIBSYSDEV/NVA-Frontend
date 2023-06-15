@@ -107,6 +107,14 @@ export const dataTestId = {
     tasksLink: 'tasks-link',
   },
   startPage: {
+    advancedSearch: {
+      addFilterButton: 'add-filter-button',
+      advancedFieldSelect: 'advanced-field-select',
+      advancedOperatorSelect: 'advanced-operator-select',
+      advancedValueField: 'advanced-value-field',
+      removeFilterButton: 'remove-filter-button',
+      searchButton: 'search-button',
+    },
     facetItem: (value: string) => `facet-item-${value}`,
     orderBySelect: 'order-by-select',
     personSearchButton: 'person-search-button',
