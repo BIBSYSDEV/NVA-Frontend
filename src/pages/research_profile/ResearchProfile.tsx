@@ -38,12 +38,6 @@ const textContainerSx: SxProps = {
   width: '100%',
 };
 
-const lineSx: SxProps = {
-  display: 'flex',
-  gap: '1rem',
-  mt: '1rem',
-};
-
 const ResearchProfile = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -142,7 +136,7 @@ const ResearchProfile = () => {
           <Typography>{t('my_page.no_employments')}</Typography>
         )}
         {orcidUri && (
-          <Box sx={lineSx}>
+          <Box sx={{ display: 'flex', gap: '1rem', mt: '1rem' }}>
             <IconButton size="small" href={orcidUri} target="_blank">
               <img src={orcidIcon} height="20" alt="orcid" />
             </IconButton>
