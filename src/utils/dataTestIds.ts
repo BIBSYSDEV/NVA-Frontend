@@ -107,12 +107,18 @@ export const dataTestId = {
     tasksLink: 'tasks-link',
   },
   startPage: {
+    facetItem: (value: string) => `facet-item-${value}`,
     orderBySelect: 'order-by-select',
+    personSearchButton: 'person-search-button',
+    projectSearchButton: 'project-search-button',
+    resultSearchButton: 'result-search-button',
     readMoreButton: 'button-read-more',
     searchButton: 'search-button',
     searchField: 'search-field',
     searchPagination: 'search-pagination',
     searchResultItem: 'result-list-item',
+    typeFacets: 'type-facets',
+    institutionFacets: 'institution-facets',
   },
   projectLandingPage: {
     editProjectButton: 'edit-project-button',
