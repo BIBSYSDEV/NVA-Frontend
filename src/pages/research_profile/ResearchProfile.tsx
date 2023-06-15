@@ -135,11 +135,9 @@ const ResearchProfile = () => {
             <IconButton size="small" href={orcidUri} target="_blank">
               <img src={orcidIcon} height="20" alt="orcid" />
             </IconButton>
-            <Box>
-              <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
-                {orcidUri}
-              </Typography>
-            </Box>
+            <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
+              {orcidUri}
+            </Typography>
           </Box>
         )}
         <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
