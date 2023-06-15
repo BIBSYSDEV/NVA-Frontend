@@ -27,6 +27,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { ProjectSearch } from './project_search/ProjectSearch';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/SideMenu';
+import { dataTestId } from '../../utils/dataTestIds';
 
 /*
  * The Search Page allows for users to search for 3 things (types): Registrations/Results, Persons, and Projects
@@ -112,6 +113,7 @@ const SearchPage = () => {
                   width: 'fit-content',
                 }}>
                 <SelectableButton
+                  data-testid={dataTestId.startPage.resultSearchButton}
                   startIcon={<SubjectIcon />}
                   color="registration"
                   isSelected={resultIsSelected}
@@ -126,6 +128,7 @@ const SearchPage = () => {
                 </SelectableButton>
 
                 <SelectableButton
+                  data-testid={dataTestId.startPage.personSearchButton}
                   startIcon={<PersonIcon />}
                   color="person"
                   isSelected={personIsSeleced}
@@ -141,6 +144,7 @@ const SearchPage = () => {
                 </SelectableButton>
 
                 <SelectableButton
+                  data-testid={dataTestId.startPage.projectSearchButton}
                   startIcon={<ShowChartIcon />}
                   color="project"
                   isSelected={projectIsSelected}

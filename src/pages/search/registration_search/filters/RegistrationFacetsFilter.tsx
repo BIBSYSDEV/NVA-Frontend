@@ -7,6 +7,8 @@ import { Aggregations } from '../../../../types/common.types';
 import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { getInstitutionLabelFromBucket } from '../../../../utils/translation-helpers';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 
 interface RegistrationFacetsFilterProps {
   aggregations: Aggregations;
@@ -55,11 +57,11 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
   return (
     <>
       {typeFacet?.buckets && (
-        <FacetItem title={t('registration.resource_type.resource_type')}>
+        <FacetItem title={t('registration.resource_type.resource_type')} dataTestId={dataTestId.startPage.typeFacets}>
           {typeFacet.buckets.map((bucket) => {
             const registrationType = bucket.key as PublicationInstanceType;
             return (
-              <ListItem disablePadding key={registrationType}>
+              <ListItem disablePadding key={registrationType} data-testid={dataTestId.startPage.facetItem(bucket.key)}>
                 <StyledListItemButton
                   disabled={isLoadingSearch}
                   onClick={() => updateFilter(ResourceFieldNames.RegistrationType, registrationType)}
@@ -76,9 +78,12 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
       )}
 
       {topLevelOrganizationFacet?.buckets && (
-        <FacetItem title={t('common.institution')}>
+        <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
           {topLevelOrganizationFacet.buckets.map((bucket) => (
-            <ListItem disablePadding key={bucket.key}>
+            <ListItem
+              disablePadding
+              key={bucket.key}
+              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(bucket.key))}>
               <StyledListItemButton
                 disabled={isLoadingSearch}
                 onClick={() => updateFilter(SearchFieldName.TopLevelOrganizationId, bucket.key)}
