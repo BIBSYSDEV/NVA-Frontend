@@ -51,6 +51,8 @@ const TasksPage = () => {
 
   const [searchMode, setSearchMode] = useState<SearchMode>('new');
 
+  const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
+
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
     generalSupportCase: true,
@@ -93,7 +95,9 @@ const TasksPage = () => {
 
   const assigneeQuery = searchMode === 'current-user' && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
 
-  const query = [typeQuery, statusQuery, assigneeQuery].filter(Boolean).join(' AND ');
+  const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
+
+  const query = [typeQuery, statusQuery, assigneeQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
     queryKey: ['tickets', rowsPerPage, page, query],
@@ -147,6 +151,16 @@ const TasksPage = () => {
           accordionPath={UrlPathTemplate.Tasks}
           defaultPath={UrlPathTemplate.Tasks}
           dataTestId={dataTestId.tasksPage.userDialogAccordion}>
+          <StyledTicketSearchFormGroup>
+            <FormControlLabel
+              sx={{ ml: '2rem' }}
+              data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
+              checked={filterUnreadOnly}
+              control={<StyledStatusCheckbox onChange={() => setFilterUnreadOnly(!filterUnreadOnly)} />}
+              label={t('tasks.unread')}
+            />
+          </StyledTicketSearchFormGroup>
+
           <StyledTicketSearchFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.newUserDialogsButton}

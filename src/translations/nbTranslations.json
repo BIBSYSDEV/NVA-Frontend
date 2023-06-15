@@ -1528,6 +1528,7 @@
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
     "new_user_dialogs": "Nye brukerdialoger",
+    "unread": "Ulest",
     "user_dialog": "Brukerdialog"
   }
 }
