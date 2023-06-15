@@ -8,7 +8,6 @@ import {
   IconButton,
   List,
   Link as MuiLink,
-  SxProps,
   TablePagination,
   Typography,
 } from '@mui/material';
@@ -33,10 +32,6 @@ import NotFound from '../errorpages/NotFound';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { ProjectListItem } from '../search/project_search/ProjectListItem';
 import { getLanguageString } from '../../utils/translation-helpers';
-
-const textContainerSx: SxProps = {
-  width: '100%',
-};
 
 const ResearchProfile = () => {
   const dispatch = useDispatch();
@@ -136,11 +131,11 @@ const ResearchProfile = () => {
           <Typography>{t('my_page.no_employments')}</Typography>
         )}
         {orcidUri && (
-          <Box sx={{ display: 'flex', gap: '1rem', mt: '1rem' }}>
+          <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem', alignItems: 'center' }}>
             <IconButton size="small" href={orcidUri} target="_blank">
               <img src={orcidIcon} height="20" alt="orcid" />
             </IconButton>
-            <Box sx={textContainerSx}>
+            <Box>
               <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
                 {orcidUri}
               </Typography>
