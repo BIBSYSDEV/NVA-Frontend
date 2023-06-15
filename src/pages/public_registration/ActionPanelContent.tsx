@@ -93,7 +93,7 @@ export const ActionPanelContent = ({
             supportTicket={currentSupportTicket}
             addMessage={addMessage}
             refetchData={refetchData}
-            defaultExpanded={isInRegistrationWizard}
+            isRegistrationWizard={isInRegistrationWizard}
           />
         </ErrorBoundary>
       )}
