@@ -201,12 +201,17 @@ export const emptyRegistrationDate: RegistrationDate = {
 };
 
 export interface RegistrationPreview {
+  contributors?: Contributor[];
+  identifier?: string;
   id: string;
   mainTitle: string;
   createdDate: string;
   modifiedDate: string;
   status: RegistrationStatus;
   owner: string;
+  publicationInstance?: {
+    type: PublicationInstanceType;
+  };
 }
 
 export interface Doi {
