@@ -185,7 +185,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               onChange={({ target: { value } }) => setFieldValue(field.name, value)}
               disabled={file.administrativeAgreement}>
               {licenses
-                .filter((license) => license.version === 4 || license.version === undefined)
+                .filter((license) => license.version === 4 || !license.version)
                 .map((license) => (
                   <MenuItem
                     data-testid={dataTestId.registrationWizard.files.licenseItem}

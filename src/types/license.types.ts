@@ -42,7 +42,7 @@ interface LicenseInfo {
 export const licenses: LicenseInfo[] = [
   {
     id: LicenseUri.CC_BY_4,
-    name: i18n.t('licenses.labels.CC BY', { version: '4.0' }),
+    name: i18n.t('licenses.labels.cc_by', { version: '4.0' }),
     description: i18n.t('licenses.description.cc_by'),
     link: i18n.t('licenses.links.cc_by', { version: '4.0' }),
     logo: LicenseImages.ccByLogo,
@@ -50,7 +50,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_3,
-    name: i18n.t('licenses.labels.CC BY', { version: '3.0' }),
+    name: i18n.t('licenses.labels.cc_by', { version: '3.0' }),
     description: i18n.t('licenses.description.cc_by'),
     link: i18n.t('licenses.links.cc_by', { version: '3.0' }),
     logo: LicenseImages.ccByLogo,
@@ -58,7 +58,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_2,
-    name: i18n.t('licenses.labels.CC BY', { version: '2.0' }),
+    name: i18n.t('licenses.labels.cc_by', { version: '2.0' }),
     description: i18n.t('licenses.description.cc_by'),
     link: i18n.t('licenses.links.cc_by', { version: '2.0' }),
     logo: LicenseImages.ccByLogo,
@@ -66,7 +66,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_1,
-    name: i18n.t('licenses.labels.CC BY', { version: '1.0' }),
+    name: i18n.t('licenses.labels.cc_by', { version: '1.0' }),
     description: i18n.t('licenses.description.cc_by'),
     link: i18n.t('licenses.links.cc_by', { version: '1.0' }),
     logo: LicenseImages.ccByLogo,
@@ -74,7 +74,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_SA_4,
-    name: i18n.t('licenses.labels.CC BY-SA', { version: '4.0' }),
+    name: i18n.t('licenses.labels.cc_by_sa', { version: '4.0' }),
     description: i18n.t('licenses.description.cc_by_sa'),
     link: i18n.t('licenses.links.cc_by_sa', { version: '4.0' }),
     logo: LicenseImages.ccBySaLogo,
@@ -82,7 +82,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_SA_3,
-    name: i18n.t('licenses.labels.CC BY-SA', { version: '3.0' }),
+    name: i18n.t('licenses.labels.cc_by_sa', { version: '3.0' }),
     description: i18n.t('licenses.description.cc_by_sa'),
     link: i18n.t('licenses.links.cc_by_sa', { version: '3.0' }),
     logo: LicenseImages.ccBySaLogo,
@@ -90,7 +90,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_SA_2,
-    name: i18n.t('licenses.labels.CC BY-SA', { version: '2.0' }),
+    name: i18n.t('licenses.labels.cc_by_sa', { version: '2.0' }),
     description: i18n.t('licenses.description.cc_by_sa'),
     link: i18n.t('licenses.links.cc_by_sa', { version: '2.0' }),
     logo: LicenseImages.ccBySaLogo,
@@ -98,7 +98,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_SA_1,
-    name: i18n.t('licenses.labels.CC BY-SA', { version: '1.0' }),
+    name: i18n.t('licenses.labels.cc_by_sa', { version: '1.0' }),
     description: i18n.t('licenses.description.cc_by_sa'),
     link: i18n.t('licenses.links.cc_by_sa', { version: '1.0' }),
     logo: LicenseImages.ccBySaLogo,
@@ -106,7 +106,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_ND_4,
-    name: i18n.t('licenses.labels.CC BY-ND', { version: '4.0' }),
+    name: i18n.t('licenses.labels.cc_by_nd', { version: '4.0' }),
     description: i18n.t('licenses.description.cc_by_nd'),
     link: i18n.t('licenses.links.cc_by_nd', { version: '4.0' }),
     logo: LicenseImages.ccByNdLogo,
@@ -114,7 +114,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_ND_3,
-    name: i18n.t('licenses.labels.CC BY-ND', { version: '3.0' }),
+    name: i18n.t('licenses.labels.cc_by_nd', { version: '3.0' }),
     description: i18n.t('licenses.description.cc_by_nd'),
     link: i18n.t('licenses.links.cc_by_nd', { version: '3.0' }),
     logo: LicenseImages.ccByNdLogo,
@@ -122,7 +122,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_ND_2,
-    name: i18n.t('licenses.labels.CC BY-ND', { version: '2.0' }),
+    name: i18n.t('licenses.labels.cc_by_nd', { version: '2.0' }),
     description: i18n.t('licenses.description.cc_by_nd'),
     link: i18n.t('licenses.links.cc_by_nd', { version: '2.0' }),
     logo: LicenseImages.ccByNdLogo,
@@ -130,7 +130,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_ND_1,
-    name: i18n.t('licenses.labels.CC BY-ND', { version: '1.0' }),
+    name: i18n.t('licenses.labels.cc_by_nd', { version: '1.0' }),
     description: i18n.t('licenses.description.cc_by_nd'),
     link: i18n.t('licenses.links.cc_by_nd', { version: '1.0' }),
     logo: LicenseImages.ccByNdLogo,
@@ -138,7 +138,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_4,
-    name: i18n.t('licenses.labels.CC BY-NC', { version: '4.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc', { version: '4.0' }),
     description: i18n.t('licenses.description.cc_by_nc'),
     link: i18n.t('licenses.links.cc_by_nc', { version: '4.0' }),
     logo: LicenseImages.ccByNcLogo,
@@ -146,7 +146,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_3,
-    name: i18n.t('licenses.labels.CC BY-NC', { version: '3.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc', { version: '3.0' }),
     description: i18n.t('licenses.description.cc_by_nc'),
     link: i18n.t('licenses.links.cc_by_nc', { version: '3.0' }),
     logo: LicenseImages.ccByNcLogo,
@@ -154,7 +154,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_2,
-    name: i18n.t('licenses.labels.CC BY-NC', { version: '2.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc', { version: '2.0' }),
     description: i18n.t('licenses.description.cc_by_nc'),
     link: i18n.t('licenses.links.cc_by_nc', { version: '2.0' }),
     logo: LicenseImages.ccByNcLogo,
@@ -162,7 +162,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_1,
-    name: i18n.t('licenses.labels.CC BY-NC', { version: '1.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc', { version: '1.0' }),
     description: i18n.t('licenses.description.cc_by_nc'),
     link: i18n.t('licenses.links.cc_by_nc', { version: '1.0' }),
     logo: LicenseImages.ccByNcLogo,
@@ -170,7 +170,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_SA_4,
-    name: i18n.t('licenses.labels.CC BY-NC-SA', { version: '4.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc_sa', { version: '4.0' }),
     description: i18n.t('licenses.description.cc_by_nc_sa'),
     link: i18n.t('licenses.links.cc_by_nc_sa', { version: '4.0' }),
     logo: LicenseImages.ccByNcSaLogo,
@@ -178,7 +178,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_SA_3,
-    name: i18n.t('licenses.labels.CC BY-NC-SA', { version: '3.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc_sa', { version: '3.0' }),
     description: i18n.t('licenses.description.cc_by_nc_sa'),
     link: i18n.t('licenses.links.cc_by_nc_sa', { version: '3.0' }),
     logo: LicenseImages.ccByNcSaLogo,
@@ -186,7 +186,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_SA_2,
-    name: i18n.t('licenses.labels.CC BY-NC-SA', { version: '2.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc_sa', { version: '2.0' }),
     description: i18n.t('licenses.description.cc_by_nc_sa'),
     link: i18n.t('licenses.links.cc_by_nc_sa', { version: '2.0' }),
     logo: LicenseImages.ccByNcSaLogo,
@@ -194,7 +194,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_SA_1,
-    name: i18n.t('licenses.labels.CC BY-NC-SA', { version: '1.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc_sa', { version: '1.0' }),
     description: i18n.t('licenses.description.cc_by_nc_sa'),
     link: i18n.t('licenses.links.cc_by_nc_sa', { version: '1.0' }),
     logo: LicenseImages.ccByNcSaLogo,
@@ -202,7 +202,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_ND_4,
-    name: i18n.t('licenses.labels.CC BY-NC-ND', { version: '4.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc_nd', { version: '4.0' }),
     description: i18n.t('licenses.description.cc_by_nc_nd'),
     link: i18n.t('licenses.links.cc_by_nc_nd', { version: '4.0' }),
     logo: LicenseImages.ccByNcNdLogo,
@@ -210,7 +210,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_ND_3,
-    name: i18n.t('licenses.labels.CC BY-NC-ND', { version: '3.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc_nd', { version: '3.0' }),
     description: i18n.t('licenses.description.cc_by_nc_nd'),
     link: i18n.t('licenses.links.cc_by_nc_nd', { version: '3.0' }),
     logo: LicenseImages.ccByNcNdLogo,
@@ -218,7 +218,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_NC_ND_2,
-    name: i18n.t('licenses.labels.CC BY-NC-ND', { version: '2.0' }),
+    name: i18n.t('licenses.labels.cc_by_nc_nd', { version: '2.0' }),
     description: i18n.t('licenses.description.cc_by_nc_nd'),
     link: i18n.t('licenses.links.cc_by_nc_nd', { version: '2.0' }),
     logo: LicenseImages.ccByNcNdLogo,
@@ -226,7 +226,7 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC_BY_ND_NC_1,
-    name: i18n.t('licenses.labels.CC BY-ND-NC', { version: '1.0' }),
+    name: i18n.t('licenses.labels.cc_by_nd_nc', { version: '1.0' }),
     description: i18n.t('licenses.description.cc_by_nc_nd'),
     link: i18n.t('licenses.links.cc_by_nd_nc', { version: '1.0' }),
     logo: LicenseImages.ccByNcNdLogo,
@@ -234,14 +234,14 @@ export const licenses: LicenseInfo[] = [
   },
   {
     id: LicenseUri.CC0,
-    name: i18n.t('licenses.labels.CC0', { version: '1.0' }),
+    name: i18n.t('licenses.labels.cc0', { version: '1.0' }),
     description: i18n.t('licenses.description.cc0'),
     link: i18n.t('licenses.links.cc0'),
     logo: LicenseImages.cc0Logo,
   },
   {
     id: LicenseUri.RightsReserved,
-    name: i18n.t('licenses.labels.RightsReserved'),
+    name: i18n.t('licenses.labels.rights_reserved'),
     description: i18n.t('licenses.description.rights_reserved'),
     link: i18n.t('licenses.links.rights_reserved'),
     logo: LicenseImages.rightsReservedLogo,
