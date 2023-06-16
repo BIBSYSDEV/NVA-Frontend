@@ -408,7 +408,9 @@ const MyPagePage = () => {
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations}>
             <Box>
-              <Typography variant="h2">Resultatregistreringer</Typography>
+              <Typography sx={{ lineHeight: '2.5rem' }} variant="h2">
+                {t('common.registrations')}
+              </Typography>
               <MyRegistrationsList
                 registrations={displayRegistrations()}
                 refetchRegistrations={registrationsQuery.refetch}
