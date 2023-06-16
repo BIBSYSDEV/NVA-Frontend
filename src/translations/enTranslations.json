@@ -49,15 +49,15 @@
       "central_import": "Central import",
       "duplicate_check": "Duplicate check",
       "duplicate_search_hits_shown": "Hits (Showing {{ShownResultsCount}} of {{TotalResultsCount}})",
+      "import": "Import",
       "import_publication": "Import publication",
       "or_search_with": "or search with",
       "publications": "Publications",
       "reset_search_values": "Reset values",
       "search_again": "Search again",
       "search_for_duplicates": "Search for duplicates",
-      "verified_contributor_count": "({{verifiedContributorCount}} of {{contributorsCount}})",
-      "import": "import",
-      "see_publication": "See publication"
+      "see_publication": "View publication",
+      "verified_contributor_count": "({{verifiedContributorCount}} of {{contributorsCount}})"
     },
     "institutions": {
       "add_institution": "Add institution",
@@ -119,8 +119,6 @@
     "close_forever": "Close and do not show again",
     "country": "Country",
     "create": "Create",
-    "create_doi": "Create DOI",
-    "created_date": "Created",
     "date": "Date",
     "delete": "Delete",
     "description": "Description",
@@ -159,7 +157,6 @@
     "page_title": "Nasjonalt Vitenarkiv",
     "place": "Place",
     "previous": "Previous",
-    "publish": "Publish",
     "publisher": "Publisher",
     "read": "Read",
     "read_less": "Read less",
@@ -405,6 +402,7 @@
       "update_publishing_request": "Could not update publishing request",
       "update_registration": "Failed to update registration",
       "update_ticket_assignee": "Failed to assign case",
+      "update_ticket_status": "Failed to update status",
       "update_vocabulary": "Failed to update {{vocabulary}}"
     },
     "success": {
@@ -413,9 +411,9 @@
       "admin_added": "User added as administrator",
       "create_project": "Project created",
       "create_publishing_request": "The publishing request was created",
+      "create_registration": "Publication created successfully",
       "create_user": "Your user was created",
       "created_customer": "Created customer institution",
-      "create_registration": "Registration was created",
       "delete_registration": "Deleted registration",
       "doi_request_sent": "DOI request sent",
       "doi_request_updated": "DOI request is updated",
@@ -431,6 +429,7 @@
       "update_project": "Successfully updated project",
       "update_publish_strategy": "Updated publishing strategy",
       "update_registration": "Updated registration",
+      "update_ticket_assignee": "Successfully updated curator",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"
     },
     "validation": {
@@ -484,12 +483,13 @@
       "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
       "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/4.0/",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/"
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "rights_reserved": "https://rightsstatements.org/page/InC/1.0/"
     }
   },
   "my_page": {
     "messages": {
-      "dialogue": "",
+      "dialogue": "Dialogue",
       "doi_closed": "DOI rejected",
       "doi_completed": "DOI allocated",
       "doi_pending": "Pending DOI allocation",
@@ -497,6 +497,7 @@
       "files_published": "File(s) published",
       "files_rejected": "File(s) rejected",
       "general_support_pending": "Pending follow-up",
+      "mark_as_completed": "Mark as completed",
       "no_messages": "You have no messages",
       "ticket_types": {
         "Closed": "Closed",
@@ -992,6 +993,7 @@
       "verify_affiliation": "Verify affiliation",
       "verify_person": "Verify person"
     },
+    "curator_support_info": "Here you can ask your curator for help with everything related to the registration and publication of research results. You can find answers to your questions on \"My page\" and on the registration presentation page.",
     "description": {
       "abstract": "Abstract",
       "add_vocabulary": "Add vocabulary",
@@ -1075,7 +1077,7 @@
       "handle": "Handle",
       "in_progress": "In progress",
       "message_to_curator": "Message to curator",
-      "metadata_not_published": "Metadata is not published",
+      "metadata_not_published": "Metadata not published",
       "other_contributors_one": "(+{{count}} other)",
       "other_contributors_other": "(+{{count}} others)",
       "other_related_registrations": "Other related registrations",
@@ -1084,8 +1086,6 @@
       "preview_of": "Preview of {{fileName}}",
       "preview_unavailable": "Preview not available. Open file in suited program.",
       "publication": "Publication",
-      "published": "Published",
-      "published_date": "Published: {{date}}",
       "publishing_request": "Publication approval",
       "publishing_request_message_about": "You can use the message field for dialogue with the registrar if needed.",
       "reject_publish_request": "Reject publishing request",
@@ -1094,12 +1094,17 @@
       "reserve_doi": "Reserve a DOI",
       "reserved_doi": "Reserved DOI",
       "tasks_panel": {
-        "assign_ticket": "Claim case",
+        "assign_curator": "Assign curator",
+        "assign_doi": "Assign DOI",
+        "assign_doi_about": "In order for others to be able to use the DOI, you must assign it. Metadata must be published.",
         "files_will_soon_be_published": "The Files will be published soon. Reload page to see updated status.",
         "has_rejected_files_publishing_request": "Registration has a rejected publishing request for its files.",
         "has_reserved_doi": "Registration has received a reserved DOI. When the registration is published a DOI request will be created and sent to curator.",
         "metadata_published_waiting_for_files": "Metadata is published and visible to other users, but a curator must approve the uploaded files before they will be visible.",
-        "registration_is_published": "Registration is published. Metadata (and files) are publicly available.",
+        "metadata_published_waiting_for_files_curator": "All files and selected licenses are published and will immediately become available to others.",
+        "publish_metadata": "Publish metadata",
+        "publish_metadata_and_files": "Publish metadata and file(s)",
+        "registration_is_published": "The registration has been published. Metadata and any files are publicly available.",
         "registration_will_soon_be_published": "The registration will be published soon. Reload page to see updated status.",
         "reload": "Reload",
         "review_preview_before_publishing": "Review content before publishing.",
@@ -1523,6 +1528,7 @@
     "limited_to": "Limited to: \"{{name}}\"",
     "my_user_dialogs": "My user dialogs",
     "new_user_dialogs": "New user dialogs",
+    "unread": "",
     "user_dialog": "User dialogue"
   }
 }
