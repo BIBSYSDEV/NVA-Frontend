@@ -22,13 +22,14 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import prettyBytes from 'pretty-bytes';
 import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
-import { AssociatedFile, AssociatedFileType, licenses } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { administrativeAgreementId } from '../FilesAndLicensePanel';
 import { equalUris } from '../../../utils/general-helpers';
+import { licenses } from '../../../types/license.types';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
