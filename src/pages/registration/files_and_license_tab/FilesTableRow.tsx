@@ -183,22 +183,24 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               required
               onChange={({ target: { value } }) => setFieldValue(field.name, value)}
               disabled={file.administrativeAgreement}>
-              {licenses.map((license) => (
-                <MenuItem
-                  data-testid={dataTestId.registrationWizard.files.licenseItem}
-                  key={license.id}
-                  value={license.id}
-                  divider
-                  dense
-                  sx={{ gap: '1rem' }}>
-                  <ListItemIcon>
-                    <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Typography>{license.name}</Typography>
-                  </ListItemText>
-                </MenuItem>
-              ))}
+              {licenses
+                .filter((license) => license.version === 4 || license.version === undefined)
+                .map((license) => (
+                  <MenuItem
+                    data-testid={dataTestId.registrationWizard.files.licenseItem}
+                    key={license.id}
+                    value={license.id}
+                    divider
+                    dense
+                    sx={{ gap: '1rem' }}>
+                    <ListItemIcon>
+                      <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <Typography>{license.name}</Typography>
+                    </ListItemText>
+                  </MenuItem>
+                ))}
             </TextField>
           )}
         </Field>
