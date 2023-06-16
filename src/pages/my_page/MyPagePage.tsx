@@ -65,6 +65,8 @@ const MyPagePage = () => {
     Closed: false,
   });
 
+  const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
+
   const selectedTypesArray = Object.entries(selectedTypes)
     .filter(([_, selected]) => selected)
     .map(([key]) => key);
@@ -81,7 +83,9 @@ const MyPagePage = () => {
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const query = [typeQuery, statusQuery].filter(Boolean).join(' AND ');
+  const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
+
+  const query = [typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
     queryKey: ['tickets', rowsPerPage, page, query],
@@ -139,6 +143,16 @@ const MyPagePage = () => {
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
+            <StyledTicketSearchFormGroup>
+              <FormControlLabel
+                sx={{ ml: '2rem' }}
+                data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
+                checked={filterUnreadOnly}
+                control={<StyledStatusCheckbox onChange={() => setFilterUnreadOnly(!filterUnreadOnly)} />}
+                label={t('tasks.unread')}
+              />
+            </StyledTicketSearchFormGroup>
+
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}

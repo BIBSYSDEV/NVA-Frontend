@@ -475,5 +475,6 @@ export const dataTestId = {
       publishingButton: 'publishing-request-button',
       supportButton: 'support-button',
     },
+    unreadSearchCheckbox: 'unread-search-checkbox',
   },
 };
