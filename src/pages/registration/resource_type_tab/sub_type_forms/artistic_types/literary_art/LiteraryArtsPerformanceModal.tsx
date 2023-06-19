@@ -4,7 +4,6 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
-import { emptyPlace } from '../../../../../../types/common.types';
 import {
   LiteraryArtsPerformance,
   LiteraryArtsPerformanceSubtype,
@@ -109,7 +108,7 @@ export const LiteraryArtsPerformanceModal = ({
                   </TextField>
                 )}
               </Field>
-              {values.subtype.type === 'Other' ? (
+              {values.subtype.type === 'LiteraryArtsPerformanceOther' ? (
                 <Field name="subtype.description">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
