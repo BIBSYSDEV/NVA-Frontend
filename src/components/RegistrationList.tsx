@@ -163,6 +163,7 @@ export const RegistrationListItemContent = ({
           <Box sx={{ display: 'flex', alignItems: 'start', justifySelf: 'end', gap: '0.5rem' }}>
             <Tooltip title={t('common.edit')}>
               <IconButton
+                data-testid={`edit-registration-${identifier}`}
                 component={Link}
                 to={getRegistrationWizardPath(identifier)}
                 size="small"

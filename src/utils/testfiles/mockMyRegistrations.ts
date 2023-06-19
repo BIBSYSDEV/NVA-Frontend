@@ -3,6 +3,7 @@ import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registr
 export const mockMyRegistrations: MyRegistrationsResponse = {
   publications: [
     {
+      identifier: '12345678',
       id: 'https://nva.no/publication/12345678',
       mainTitle:
         'A longitudinal analysis of estimation, counting skills, and mathematical ability across the first school year.',
@@ -12,6 +13,7 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'kare@unit.no',
     },
     {
+      identifier: '4327439',
       id: 'https://nva.no/publication/4327439',
       mainTitle:
         "Relationships between number line estimation, counting, and mathematical abilities. Ninety-nine 5-year-olds were tested on 4 occasions at 3 monthly intervals. Correlations between the 3 types of ability were evident, but while the quality of children's estimations changed over time and performance on the mathematical tasks improve.",
@@ -21,6 +23,7 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'kari@ntnu.no',
     },
     {
+      identifier: '53453453',
       id: 'https://nva.no/publication/53453453',
       mainTitle: 'Potchefstroom electronic law journal : PER = Potchefstroomse elektroniese regsblad',
       createdDate: '2020-01-01',
@@ -29,6 +32,7 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'arne@uio.no',
     },
     {
+      identifier: '3333439',
       id: 'https://nva.no/publication/3333439',
       mainTitle: 'Attføring av attføringen : særlig om stoffmisbrukere : hedersskrift til Per Alveberg',
       createdDate: '2021-01-01',
@@ -37,6 +41,7 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'bob@boffaloe.com',
     },
     {
+      identifier: '3533439',
       id: 'https://nva.no/publication/3533439',
       mainTitle: 'Attføring av attføringen : særlig om stoffmisbrukere : hedersskrift til Per Alveberg',
       createdDate: '2021-01-01',
@@ -45,6 +50,7 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'bob@ryder.net',
     },
     {
+      identifier: '12345679',
       id: 'https://nva.no/publication/12345679',
       mainTitle:
         'A longitudinal analysis of estimation, counting skills, and mathematical ability across the first school year.',
