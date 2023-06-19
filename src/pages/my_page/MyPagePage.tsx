@@ -379,7 +379,10 @@ const MyPagePage = () => {
           </CreatorRoute>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations}>
-            <MyRegistrations selectedRegistrationStatus={selectedRegistrationStatus} />
+            <MyRegistrations
+              selectedPublished={selectedRegistrationStatus.published}
+              selectedUnpublished={selectedRegistrationStatus.unpublished}
+            />
           </CreatorRoute>
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />

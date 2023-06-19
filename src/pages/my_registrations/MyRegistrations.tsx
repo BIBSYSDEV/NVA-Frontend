@@ -8,13 +8,11 @@ import { MyRegistrationsList } from './MyRegistrationsList';
 import { fetchRegistrationsByOwner } from '../../api/registrationApi';
 
 interface MyRegistrationsProps {
-  selectedRegistrationStatus: {
-    published: boolean;
-    unpublished: boolean;
-  };
+  selectedPublished: boolean;
+  selectedUnpublished: boolean;
 }
 
-export const MyRegistrations = ({ selectedRegistrationStatus }: MyRegistrationsProps) => {
+export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRegistrationsProps) => {
   const { t } = useTranslation();
 
   const registrationsQuery = useQuery({
@@ -25,23 +23,21 @@ export const MyRegistrations = ({ selectedRegistrationStatus }: MyRegistrationsP
 
   const registrations = registrationsQuery.data?.publications ?? [];
 
-  const unpublishedRegistrations = registrations
-    .filter(({ status }) => status === RegistrationStatus.Draft)
-    .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
-
-  const publishedRegistrations = registrations
-    .filter(({ status }) => status === RegistrationStatus.Published || status === RegistrationStatus.PublishedMetadata)
-    .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
-
-  const displayRegistrations = () => {
-    if (selectedRegistrationStatus.published && !selectedRegistrationStatus.unpublished) {
-      return publishedRegistrations;
-    } else if (!selectedRegistrationStatus.published && selectedRegistrationStatus.unpublished) {
-      return unpublishedRegistrations;
-    } else {
-      return unpublishedRegistrations.concat(publishedRegistrations);
-    }
-  };
+  const filteredRegistrations = registrations
+    .filter(
+      ({ status }) =>
+        (status === RegistrationStatus.Draft && selectedUnpublished) ||
+        ((status === RegistrationStatus.Published || status === RegistrationStatus.PublishedMetadata) &&
+          selectedPublished)
+    )
+    .sort((a, b) => {
+      if (a.status === RegistrationStatus.Draft || b.status !== RegistrationStatus.Draft) {
+        return -1;
+      } else if (b.status === RegistrationStatus.Draft) {
+        return 1;
+      }
+      return 0;
+    });
 
   return (
     <>
@@ -57,7 +53,7 @@ export const MyRegistrations = ({ selectedRegistrationStatus }: MyRegistrationsP
               {t('common.registrations')}
             </Typography>
             <MyRegistrationsList
-              registrations={displayRegistrations()}
+              registrations={filteredRegistrations}
               refetchRegistrations={registrationsQuery.refetch}
             />
           </Box>
