@@ -555,9 +555,7 @@
     "project_registrations": "Prosjektregistreringer",
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
-      "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "published_registrations": "Publiserte registreringer",
-      "unpublished_registrations": "Upubliserte registreringer"
+      "delete_registration_message": "Ønsker du å slette \"{{title}}\"?"
     },
     "research_profile": "Forskerprofil",
     "roles": {
