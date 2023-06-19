@@ -49,15 +49,15 @@
       "central_import": "Sentralimport",
       "duplicate_check": "Duplikatsjekk",
       "duplicate_search_hits_shown": "Søket ga følgende treff: (viser {{ShownResultsCount}} av {{TotalResultsCount}})",
+      "import": "Importer",
       "import_publication": "Import publication",
       "or_search_with": "eller søk med",
       "publications": "Publikasjoner",
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})",
-      "import": "Importer",
-      "see_publication": "Se publikasjon"
+      "see_publication": "Se publikasjon",
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -209,6 +209,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -294,11 +298,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -411,9 +411,9 @@
       "admin_added": "Bruker lagt til som administrator",
       "create_project": "Prosjekt er opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
+      "create_registration": "Publikasjon er opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
-      "create_registration": "Publikasjon er opprettet",
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
@@ -1096,9 +1096,9 @@
       "reserve_doi": "Reserver en DOI",
       "reserved_doi": "Reservert DOI",
       "tasks_panel": {
-        "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
-        "assign_doi": "Tildel DOI",
         "assign_curator": "Sett kurator",
+        "assign_doi": "Tildel DOI",
+        "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
         "files_will_soon_be_published": "Filene vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
         "has_rejected_files_publishing_request": "Registreringen har en avslått publiseringsforespørsel for filene.",
         "has_reserved_doi": "Du har reservert en DOI til denne registreringen. Den kan deles med de som ønsker å sitere dette resultatet. Når registreringen blir publisert og blir offentlig tilgjengelig, må en kurator validere metadata før DOI blir offentlig tilgjengelig.",
