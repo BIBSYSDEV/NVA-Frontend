@@ -11,6 +11,7 @@ import {
 import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { emptyPlace } from '../../../../../../types/common.types';
 import { OutputModalActions } from '../OutputModalActions';
 
 interface LiteraryArtsPerformanceModalProps {
@@ -26,22 +27,22 @@ const emptyLiteraryArtsPerformance: LiteraryArtsPerformance = {
     type: '',
     description: '',
   },
-  place: { type: 'UnconfirmedPlace', label: '', country: '' },
+  place: emptyPlace,
   publicationDate: emptyRegistrationDate,
 };
 
 const validationSchema = Yup.object<YupShape<LiteraryArtsPerformance>>({
   subtype: Yup.object().shape({
     type: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.type_work'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.type_work'),
       })
     ),
     description: Yup.string().when('type', ([type], schema) =>
       type === 'Other'
         ? schema.required(
-            i18n.t('translation:feedback.validation.is_required', {
-              field: i18n.t('translation:common.description'),
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('common.description'),
             })
           )
         : schema.optional()
