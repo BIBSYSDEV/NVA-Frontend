@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Box, Link as MuiLink, List, ListItemText, Typography, IconButton } from '@mui/material';
+import { Box, Link as MuiLink, List, ListItemText, Typography, IconButton, Tooltip } from '@mui/material';
 import { getRegistrationLandingPagePath, getRegistrationWizardPath, getResearchProfilePath } from '../utils/urlPaths';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
@@ -161,24 +161,28 @@ export const RegistrationListItemContent = ({
       {canEditRegistration && (
         <>
           <Box sx={{ display: 'flex', alignItems: 'start', justifySelf: 'end', gap: '0.5rem' }}>
-            <IconButton
-              component={Link}
-              to={getRegistrationWizardPath(identifier)}
-              size="small"
-              sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
-              <EditIcon />
-            </IconButton>
-            {registration.status === 'DRAFT' && (
+            <Tooltip title={t('common.edit')}>
               <IconButton
-                data-testid={`delete-registration-${identifier}`}
-                onClick={() => {
-                  setRegistrationToDelete(registration);
-                  setShowDeleteModal(true);
-                }}
+                component={Link}
+                to={getRegistrationWizardPath(identifier)}
                 size="small"
                 sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
-                <CloseOutlinedIcon />
+                <EditIcon />
               </IconButton>
+            </Tooltip>
+            {registration.status === 'DRAFT' && (
+              <Tooltip title={t('common.delete')}>
+                <IconButton
+                  data-testid={`delete-registration-${identifier}`}
+                  onClick={() => {
+                    setRegistrationToDelete(registration);
+                    setShowDeleteModal(true);
+                  }}
+                  size="small"
+                  sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
+                  <CloseOutlinedIcon />
+                </IconButton>
+              </Tooltip>
             )}
           </Box>
           <ConfirmDialog
