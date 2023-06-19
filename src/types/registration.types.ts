@@ -27,7 +27,7 @@ import {
 } from './publicationFieldNames';
 import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 import { MapEntityDescription } from './publication_types/otherRegistration.types';
-import { LanguageString } from './common.types';
+import { AggregationBucket, Aggregations, LanguageString, SearchResponse } from './common.types';
 import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
 
 export enum RegistrationStatus {
@@ -249,3 +249,35 @@ export const emptyContextPublisher: ContextPublisher = {
   type: PublicationChannelType.Publisher,
   id: '',
 };
+
+interface InstitutionAggregationBucket extends AggregationBucket {
+  labels: Aggregations;
+}
+
+interface ContributorAggregationBucket extends AggregationBucket {
+  name: any;
+}
+
+export interface RegistrationSearchAggregations {
+  'entityDescription.reference.publicationInstance.type'?: {
+    buckets: AggregationBucket[];
+  };
+  topLevelOrganization?: {
+    id?: {
+      buckets: InstitutionAggregationBucket[];
+    };
+  };
+  entityDescription: {
+    contributors: {
+      identity?: {
+        id?: {
+          buckets: ContributorAggregationBucket[];
+        };
+      };
+    };
+  };
+}
+
+export interface RegistrationSearchResponse extends Omit<SearchResponse<Registration>, 'aggregations'> {
+  aggregations?: RegistrationSearchAggregations;
+}

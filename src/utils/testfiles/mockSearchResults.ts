@@ -1,11 +1,11 @@
 import { SearchResponse } from '../../types/common.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
-import { Registration } from '../../types/registration.types';
+import { RegistrationSearchResponse } from '../../types/registration.types';
 import { mockMathJaxRegistration, mockRegistration, mockTicketCollection } from './mockRegistration';
 import { mockImportCandidate } from './mockImportCandidate';
 import { ImportCandidateSummary } from '../../types/importCandidate.types';
 
-export const mockSearchResults: SearchResponse<Registration> = {
+export const mockSearchResults: RegistrationSearchResponse = {
   processingTime: 10,
   size: 50,
   hits: [
@@ -20,6 +20,30 @@ export const mockSearchResults: SearchResponse<Registration> = {
     mockRegistration,
     mockRegistration,
   ],
+  aggregations: {
+    entityDescription: {
+      contributors: {
+        identity: {
+          id: {
+            buckets: [
+              {
+                key: '1234',
+                docCount: 1,
+                name: {
+                  buckets: [
+                    {
+                      key: 'Test Testesen',
+                      docCount: 1,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+  },
 };
 
 export const mockSearchTasks: SearchResponse<Ticket> = {
