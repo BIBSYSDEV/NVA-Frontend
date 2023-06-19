@@ -1,5 +1,6 @@
 module.exports = {
   localesPath: 'src/translations',
+  localeNameResolver: (fileName) => fileName === 'nbTranslations.json',
   srcPath: 'src',
   translationKeyMatcher: /t\([`"'].*[`"'][\),]|(i18nKey(: )[`"'].*?[`"'])|(i18nKey=[`"'].*?[`"'])/g,
   excludeKey: [
@@ -26,6 +27,7 @@ module.exports = {
     'registration.resource_type.artistic.performance_types.',
     'registration.resource_type.artistic.performing_arts_type.',
     'registration.resource_type.artistic.visual_arts_type.',
+    'registration.resource_type.exhibition_production.subtype.',
     'registration.resource_type.media_contribution.format_types.',
     'registration.resource_type.media_contribution.medium_types.',
     'registration.status.',

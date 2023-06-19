@@ -21,15 +21,23 @@ import { RootState } from '../../../redux/store';
 import { AssociatedFile, licenses } from '../../../types/associatedArtifact.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { PreviewFile } from './preview_file/PreviewFile';
+import { equalUris } from '../../../utils/general-helpers';
 
 interface FileRowProps {
   file: AssociatedFile;
   registrationIdentifier: string;
   openPreviewByDefault: boolean;
   showFileVersionField: boolean;
+  registrationMetadataIsPublished: boolean;
 }
 
-export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, showFileVersionField }: FileRowProps) => {
+export const FileRow = ({
+  file,
+  registrationIdentifier,
+  openPreviewByDefault,
+  showFileVersionField,
+  registrationMetadataIsPublished,
+}: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -66,8 +74,8 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, sh
     }
   }, [handleDownload, openPreviewAccordion, previewFileUrl, fileIsEmbargoed]);
 
-  const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
-  const licenseTitle = file.license?.identifier ? t(`licenses.labels.${file.license.identifier}`) : '';
+  const licenseData = licenses.find((license) => equalUris(license.id, file.license));
+  const licenseTitle = licenseData?.name ?? '';
 
   return (
     <Box
@@ -83,7 +91,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, sh
         columnGap: '1rem',
         alignItems: 'center',
         marginBottom: '2rem',
-        opacity: file.type === 'UnpublishedFile' ? 0.6 : 1,
+        opacity: registrationMetadataIsPublished && file.type === 'UnpublishedFile' ? 0.6 : 1,
       }}>
       <Typography
         data-testid={dataTestId.registrationLandingPage.fileName}

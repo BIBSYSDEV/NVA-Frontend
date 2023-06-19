@@ -29,19 +29,19 @@ const emptyAward: Award = {
 
 const validationSchema = Yup.object<YupShape<Award>>({
   name: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.award_name'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.award_name'),
     })
   ),
   organizer: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.award_organizer'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.award_organizer'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.year'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.year'),
       })
     ),
   }),
@@ -105,28 +105,25 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('common.year')}
-                    PopperProps={{
-                      'aria-label': t('common.year'),
-                    }}
-                    value={field.value ?? null}
+                    value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date ?? '');
                     }}
-                    inputFormat="yyyy"
+                    format="yyyy"
                     views={['year']}
-                    mask="____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="filled"
-                        required
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
-                      />
-                    )}
+                    slotProps={{
+                      textField: {
+                        inputProps: {
+                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                        },
+                        onBlur: () => !touched && setFieldTouched(field.name),
+                        variant: 'filled',
+                        required: true,
+                        error: touched && !!error,
+                        helperText: <ErrorMessage name={field.name} />,
+                      },
+                    }}
                   />
                 )}
               </Field>

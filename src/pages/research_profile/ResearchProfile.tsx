@@ -4,45 +4,43 @@ import { useHistory } from 'react-router-dom';
 import {
   Box,
   CircularProgress,
+  Divider,
   IconButton,
+  List,
   Link as MuiLink,
-  SxProps,
   TablePagination,
   Typography,
 } from '@mui/material';
-import WorkIcon from '@mui/icons-material/Work';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
-import { PageHeader } from '../../components/PageHeader';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { PageSpinner } from '../../components/PageSpinner';
-import { useFetch } from '../../utils/hooks/useFetch';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ExpressionStatement } from '../../utils/searchHelpers';
-import { CristinPerson } from '../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RootState } from '../../redux/store';
 import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-
-const textContainerSx: SxProps = {
-  width: '100%',
-};
-
-const lineSx: SxProps = {
-  display: 'flex',
-  gap: '1rem',
-  mt: '1rem',
-};
+import { fetchPerson, searchForProjects } from '../../api/cristinApi';
+import { setNotification } from '../../redux/notificationSlice';
+import NotFound from '../errorpages/NotFound';
+import { getIdentifierFromId } from '../../utils/general-helpers';
+import { ProjectListItem } from '../search/project_search/ProjectListItem';
+import { getLanguageString } from '../../utils/translation-helpers';
 
 const ResearchProfile = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const [registrationsPage, setRegistrationsPage] = useState(0);
+  const [projectsPage, setProjectsPage] = useState(0);
+  const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const currentCristinId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
   const isPublicPage = history.location.pathname === UrlPathTemplate.ResearchProfile;
@@ -50,10 +48,16 @@ const ResearchProfile = () => {
     ? new URLSearchParams(history.location.search).get('id') ?? '' // Page for Research Profile of anyone
     : currentCristinId; // Page for My Research Profile
 
-  const [person, isLoadingPerson] = useFetch<CristinPerson>({
-    url: personId,
-    errorMessage: t('feedback.error.get_person'),
+  const personIdNumber = getIdentifierFromId(personId);
+
+  const personQuery = useQuery({
+    enabled: !!personId,
+    queryKey: [personId],
+    queryFn: () => fetchPerson(personId),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
   });
+
+  const person = personQuery.data;
 
   const [registrations, isLoadingRegistrations] = useSearchRegistrations(
     {
@@ -65,77 +69,137 @@ const ResearchProfile = () => {
         },
       ],
     },
-    rowsPerPage,
-    rowsPerPage * page
+    registrationRowsPerPage,
+    registrationRowsPerPage * registrationsPage
   );
+
+  const projectsQuery = useQuery({
+    queryKey: ['projects', projectRowsPerPage, projectsPage, personIdNumber],
+    queryFn: () => searchForProjects(projectRowsPerPage, projectsPage + 1, { participant: personIdNumber }),
+    meta: { errorMessage: t('feedback.error.project_search') },
+    keepPreviousData: true,
+  });
+
+  const projects = projectsQuery.data?.hits ?? [];
 
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
-  return (
-    <BackgroundDiv>
-      <PageHeader>{fullName}</PageHeader>
-      {isLoadingPerson ? (
-        <PageSpinner aria-label={t('my_page.research_profile')} />
-      ) : (
-        person && (
+  return personQuery.isLoading ? (
+    <PageSpinner aria-label={t('my_page.research_profile')} />
+  ) : !person ? (
+    <NotFound />
+  ) : (
+    <div>
+      <Box sx={{ bgcolor: 'person.main', py: '1.1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <Typography variant="h1" sx={{ ml: '2rem' }}>
+          {fullName}
+        </Typography>
+        {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
+      </Box>
+      <BackgroundDiv>
+        <Helmet>
+          <title>{fullName}</title>
+        </Helmet>
+
+        {activeAffiliations.length > 0 ? (
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '0.5rem',
+              mt: '1rem',
+              flexDirection: { xs: 'column', sm: 'row' },
+              flexWrap: 'wrap',
+            }}>
+            {activeAffiliations.map(({ organization, role }) => (
+              <Box
+                key={organization}
+                sx={{
+                  width: 'fit-content',
+                  pr: '1.5rem',
+                  borderRight: { xs: 'none', sm: '1px solid' },
+                  borderBottom: { xs: '1px solid', sm: 'none' },
+                  borderColor: 'primary.main',
+                }}>
+                <Typography sx={{ fontWeight: 'bold' }}>{getLanguageString(role.labels)} &bull;</Typography>
+                <AffiliationHierarchy key={organization} unitUri={organization} />
+              </Box>
+            ))}
+          </Box>
+        ) : (
+          <Typography>{t('my_page.no_employments')}</Typography>
+        )}
+        {orcidUri && (
+          <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem', alignItems: 'center' }}>
+            <IconButton size="small" href={orcidUri} target="_blank">
+              <img src={orcidIcon} height="20" alt="orcid" />
+            </IconButton>
+            <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
+              {orcidUri}
+            </Typography>
+          </Box>
+        )}
+        <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
+          {`${t('common.registrations')} ${registrations && `(${registrations.size}`})`}
+        </Typography>
+        {registrations && (
           <>
-            <Typography variant="h2">{t('common.employments')}</Typography>
-            {activeAffiliations.length > 0 && (
-              <Box sx={lineSx}>
-                <WorkIcon />
-                <Box sx={textContainerSx}>
-                  {activeAffiliations.map(({ organization }) => (
-                    <AffiliationHierarchy key={organization} unitUri={organization} commaSeparated />
-                  ))}
-                </Box>
-              </Box>
-            )}
-            {orcidUri && (
-              <Box sx={lineSx}>
-                <IconButton size="small" href={orcidUri} target="_blank">
-                  <img src={orcidIcon} height="20" alt="orcid" />
-                </IconButton>
-                <Box sx={textContainerSx}>
-                  <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
-                    {orcidUri}
-                  </Typography>
-                </Box>
-              </Box>
-            )}
-            {registrations && (
-              <Box sx={{ mt: '2rem' }}>
-                <Typography id="registration-label" variant="h2" gutterBottom>
-                  {t('common.registrations')}
-                </Typography>
-                {isLoadingRegistrations && !registrations ? (
-                  <CircularProgress aria-labelledby="registration-label" />
-                ) : registrations.size > 0 ? (
-                  <>
-                    <RegistrationSearchResults searchResult={registrations} />
-                    <TablePagination
-                      rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                      component="div"
-                      count={registrations.size}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      onPageChange={(_, newPage) => setPage(newPage)}
-                      onRowsPerPageChange={(event) => {
-                        setRowsPerPage(+event.target.value);
-                        setPage(0);
-                      }}
-                    />
-                  </>
-                ) : (
-                  <Typography>{t('common.no_hits')}</Typography>
-                )}
-              </Box>
+            {isLoadingRegistrations && !registrations ? (
+              <CircularProgress aria-labelledby="registration-label" />
+            ) : registrations.size > 0 ? (
+              <>
+                <RegistrationSearchResults searchResult={registrations} />
+                <TablePagination
+                  rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+                  component="div"
+                  count={registrations.size}
+                  rowsPerPage={registrationRowsPerPage}
+                  page={registrationsPage}
+                  onPageChange={(_, newPage) => setRegistrationsPage(newPage)}
+                  onRowsPerPageChange={(event) => {
+                    setRegistrationRowsPerPage(+event.target.value);
+                    setRegistrationsPage(0);
+                  }}
+                />
+              </>
+            ) : (
+              <Typography>{t('common.no_hits')}</Typography>
             )}
           </>
-        )
-      )}
-    </BackgroundDiv>
+        )}
+
+        <Divider />
+        <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
+          {`${t('my_page.my_profile.projects')} (${projectsQuery.data?.size ?? 0})`}
+        </Typography>
+        {projectsQuery.isLoading ? (
+          <CircularProgress aria-labelledby="project-label" />
+        ) : projects.length > 0 ? (
+          <>
+            <List>
+              {projects.map((project) => (
+                <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
+              ))}
+            </List>
+            <TablePagination
+              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
+              component="div"
+              count={projectsQuery.data?.size ?? 0}
+              rowsPerPage={projectRowsPerPage}
+              page={projectsPage}
+              onPageChange={(_, newPage) => setProjectsPage(newPage)}
+              onRowsPerPageChange={(event) => {
+                setProjectRowsPerPage(+event.target.value);
+                setProjectsPage(0);
+              }}
+            />
+          </>
+        ) : (
+          <Typography>{t('common.no_hits')}</Typography>
+        )}
+      </BackgroundDiv>
+    </div>
   );
 };
 

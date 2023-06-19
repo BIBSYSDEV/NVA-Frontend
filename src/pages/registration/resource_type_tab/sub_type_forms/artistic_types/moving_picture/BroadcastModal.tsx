@@ -30,21 +30,21 @@ const emptyBroadcast: Broadcast = {
 const validationSchema = Yup.object<YupShape<Broadcast>>({
   publisher: Yup.object().shape({
     name: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.publisher'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.publisher'),
       })
     ),
   }),
   date: Yup.object().shape({
     value: Yup.date()
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.date'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.date'),
         })
       )
       .typeError(
-        i18n.t('translation:feedback.validation.has_invalid_format', {
-          field: i18n.t('translation:common.date'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.date'),
         })
       ),
   }),
@@ -92,27 +92,24 @@ export const BroadcastModal = ({ broadcast, onSubmit, open, closeModal }: Broadc
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('common.date')}
-                    PopperProps={{
-                      'aria-label': t('common.date'),
-                    }}
-                    value={field.value ?? null}
+                    value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date ?? '');
                     }}
-                    inputFormat="dd.MM.yyyy"
-                    mask="__.__.____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        sx={{ maxWidth: '13rem' }}
-                        variant="filled"
-                        required
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
-                      />
-                    )}
+                    format="dd.MM.yyyy"
+                    slotProps={{
+                      textField: {
+                        inputProps: {
+                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                        },
+                        sx: { maxWidth: '13rem' },
+                        variant: 'filled',
+                        required: true,
+                        error: touched && !!error,
+                        helperText: <ErrorMessage name={field.name} />,
+                      },
+                    }}
                   />
                 )}
               </Field>

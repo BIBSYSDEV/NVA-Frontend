@@ -5,13 +5,14 @@ import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface FacetItemProps {
+  dataTestId: string;
   title: string;
   children: ReactNode[];
 }
 
 const itemsToShowByDefault = 3;
 
-export const FacetItem = ({ title, children }: FacetItemProps) => {
+export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'), { noSsr: true });
   const [isOpen, setIsOpen] = useState(!isMobile);
@@ -22,6 +23,7 @@ export const FacetItem = ({ title, children }: FacetItemProps) => {
 
   return (
     <Box
+      data-testid={dataTestId}
       sx={{
         bgcolor: 'background.default',
         border: '2px solid',

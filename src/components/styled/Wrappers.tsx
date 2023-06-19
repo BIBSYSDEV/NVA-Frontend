@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Checkbox, FormGroup, ListItem } from '@mui/material';
 import { styled } from '@mui/system';
 
 export const StyledRightAlignedWrapper = styled(Box)({
@@ -20,7 +20,7 @@ export const StyledPageContent = styled(Box)(({ theme }) => ({
   width: '100%',
   maxWidth: theme.breakpoints.values.lg,
   [theme.breakpoints.up('sm')]: {
-    padding: '1rem 2rem',
+    padding: '1rem',
   },
   [theme.breakpoints.down('sm')]: {
     padding: '0.5rem',
@@ -56,3 +56,20 @@ export const StyledGeneralInfo = styled('div')(({ theme }) => ({
     gridTemplateColumns: '1fr',
   },
 }));
+
+export const SearchListItem = styled(ListItem)(({ theme }) => ({
+  border: '2px solid',
+  borderColor: theme.palette.secondary.dark,
+  borderLeft: '1.25rem solid',
+  flexDirection: 'column',
+  alignItems: 'start',
+}));
+
+export const StyledStatusCheckbox = styled(Checkbox)({
+  paddingTop: '0.2rem',
+  paddingBottom: '0.2rem',
+});
+
+export const StyledTicketSearchFormGroup = styled(FormGroup)({
+  margin: '1rem',
+});

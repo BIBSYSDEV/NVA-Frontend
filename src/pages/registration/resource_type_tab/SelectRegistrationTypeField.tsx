@@ -12,6 +12,7 @@ import {
   ChapterType,
   contextTypeBaseFieldName,
   DegreeType,
+  ExhibitionContentType,
   instanceTypeBaseFieldName,
   JournalType,
   MediaType,
@@ -54,6 +55,10 @@ import {
 } from '../../../utils/registration-helpers';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { RegistrationTypeElement, RegistrationTypesRow } from './components/RegistrationTypesRow';
+import {
+  emptyExhibitionPublicationContext,
+  emptyExhibitionPublicationInstance,
+} from '../../../types/publication_types/exhibitionContent.types';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
@@ -123,8 +128,8 @@ export const SelectRegistrationTypeField = () => {
             );
           setFieldValue(instanceTypeBaseFieldName, { ...emptyDegreePublicationInstance, type: newInstanceType }, false);
           break;
-        case PublicationType.Chapter:
-          newMainType && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Chapter }, false);
+        case PublicationType.Anthology:
+          newMainType && setFieldValue(contextTypeBaseFieldName, { type: PublicationType.Anthology }, false);
           setFieldValue(
             instanceTypeBaseFieldName,
             { ...emptyChapterPublicationInstance, type: newInstanceType },
@@ -185,6 +190,10 @@ export const SelectRegistrationTypeField = () => {
             { ...emptyResearchDataPublicationInstance, type: newInstanceType },
             false
           );
+          break;
+        case PublicationType.ExhibitionContent:
+          newMainType && setFieldValue(contextTypeBaseFieldName, emptyExhibitionPublicationContext, false);
+          setFieldValue(instanceTypeBaseFieldName, emptyExhibitionPublicationInstance, false);
           break;
         case PublicationType.GeographicalContent:
           newMainType && setFieldValue(contextTypeBaseFieldName, emptyMapPublicationContext, false);
@@ -314,7 +323,7 @@ export const SelectRegistrationTypeField = () => {
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
-            mainType={PublicationType.Chapter}
+            mainType={PublicationType.Anthology}
             registrationTypes={filterRegistrationTypes(
               Object.values(ChapterType).map((registrationType) => ({
                 value: registrationType,
@@ -361,6 +370,17 @@ export const SelectRegistrationTypeField = () => {
             mainType={PublicationType.ResearchData}
             registrationTypes={filterRegistrationTypes(
               Object.values(ResearchDataType).map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
+              }))
+            )}
+            value={currentInstanceType}
+            onChangeType={onChangeType}
+          />
+          <RegistrationTypesRow
+            mainType={PublicationType.ExhibitionContent}
+            registrationTypes={filterRegistrationTypes(
+              Object.values(ExhibitionContentType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
               }))

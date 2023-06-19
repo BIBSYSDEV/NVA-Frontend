@@ -5,7 +5,6 @@ import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
-import { emptyFunding, Funding } from '../../../types/registration.types';
 import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -13,9 +12,10 @@ import { API_URL } from '../../../utils/constants';
 import { fundingSourceIsNfr, getNfrProjectUrl } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectFieldName } from './ProjectFormDialog';
 import { FundingSourceField } from '../../../components/FundingSourceField';
+import { ProjectFunding, emptyProjectFunding } from '../../../types/project.types';
 
 interface FundingsFieldProps {
-  currentFundings: Funding[];
+  currentFundings: ProjectFunding[];
 }
 
 export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) => {
@@ -34,11 +34,10 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
               const baseFieldName = `${name}[${index}]`;
               const hasSelectedSource = !!funding.source;
               const hasSelectedNfrSource = fundingSourceIsNfr(funding.source);
-              let fundingId = funding.id ?? '';
-              if (hasSelectedNfrSource && !fundingId && funding.identifier) {
-                // TODO: Remove this when(/if) NP-43030 is solved
-                fundingId = `${API_URL}${VerifiedFundingApiPath.Nfr.substring(1)}/${funding.identifier}`;
-              }
+              const fundingId =
+                hasSelectedNfrSource && funding.identifier
+                  ? `${API_URL}${VerifiedFundingApiPath.Nfr.substring(1)}/${funding.identifier}` // TODO: Remove this when(/if) NP-43030 is solved
+                  : '';
 
               const hasSelectedNfrProject = hasSelectedNfrSource && fundingId;
 
@@ -83,8 +82,8 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
                             onSelectProject={(project) => {
                               if (project) {
                                 const { lead, ...rest } = project;
-                                const nfrFunding: Funding = {
-                                  type: 'ConfirmedFunding',
+                                const nfrFunding: ProjectFunding = {
+                                  type: 'UnconfirmedFunding',
                                   ...rest,
                                 };
                                 setFieldValue(baseFieldName, nfrFunding);
@@ -128,7 +127,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
               sx={{ width: 'fit-content' }}
               data-testid={dataTestId.registrationWizard.description.addFundingButton}
               startIcon={<AddIcon />}
-              onClick={() => push(emptyFunding)}>
+              onClick={() => push(emptyProjectFunding)}>
               {t('common.add')}
             </Button>
           </Box>

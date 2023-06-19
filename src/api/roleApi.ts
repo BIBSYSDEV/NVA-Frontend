@@ -1,6 +1,8 @@
-import { InstitutionUser, UserRole } from '../types/user.types';
+import { InstitutionUser, RoleName, UserList, UserRole } from '../types/user.types';
+import { filterUsersByRole } from '../utils/role-helpers';
+import { getFullName } from '../utils/user-helpers';
 import { RoleApiPath } from './apiPaths';
-import { authenticatedApiRequest } from './apiRequest';
+import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
 interface CreateUserPayload {
   nationalIdentityNumber: string;
@@ -17,3 +19,21 @@ export const updateUser = async (username: string, newUser: InstitutionUser) =>
 
 export const createUser = async (newUserPayload: CreateUserPayload) =>
   await authenticatedApiRequest<InstitutionUser>({ url: RoleApiPath.Users, method: 'POST', data: newUserPayload });
+
+export const fetchUser = async (username: string) => {
+  const userResponse = await authenticatedApiRequest2<InstitutionUser>({ url: `${RoleApiPath.Users}/${username}` });
+  return userResponse.data;
+};
+
+export const fetchUsers = async (customerId: string, role: RoleName) => {
+  const usersResponse = await authenticatedApiRequest2<UserList>({
+    url: `${RoleApiPath.InstitutionUsers}?institution=${customerId}`,
+  });
+  const filteredUsers = filterUsersByRole(usersResponse.data.users, role);
+
+  return filteredUsers.sort((a, b) => {
+    const nameA = getFullName(a.givenName, a.familyName);
+    const nameB = getFullName(b.givenName, b.familyName);
+    return nameA.localeCompare(nameB);
+  });
+};

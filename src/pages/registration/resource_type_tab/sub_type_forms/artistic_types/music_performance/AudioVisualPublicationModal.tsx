@@ -10,7 +10,7 @@ import {
   Box,
 } from '@mui/material';
 import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
@@ -26,6 +26,8 @@ import {
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { IMaskInput } from 'react-imask';
+import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;
@@ -43,6 +45,10 @@ const emptyAudioVisualPublication: AudioVisualPublication = {
   publisher: emptyUnconfirmedPublisher,
   catalogueNumber: '',
   trackList: [],
+  isrc: {
+    type: 'Isrc',
+    value: '',
+  },
 };
 
 const emptyMusicTrack: MusicTrack = {
@@ -55,15 +61,15 @@ const emptyMusicTrack: MusicTrack = {
 const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
   mediaType: Yup.object().shape({
     type: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.artistic.media_type'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.artistic.media_type'),
       })
     ),
     description: Yup.string().when('type', ([type], schema) =>
-      type === 'Other'
+      typeof type === 'string' && type.endsWith('Other')
         ? schema.required(
-            i18n.t('translation:feedback.validation.is_required', {
-              field: i18n.t('translation:common.description'),
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('common.description'),
             })
           )
         : schema.optional()
@@ -73,43 +79,52 @@ const validationSchema = Yup.object<YupShape<AudioVisualPublication>>({
     name: Yup.string()
       .nullable()
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.publisher'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.publisher'),
         })
       ),
   }),
-  catalogueNumber: Yup.string(),
+  isrc: Yup.object().shape({
+    value: Yup.string()
+      .nullable()
+      .matches(
+        /^[A-Z]{2}[A-Z\d]{3}\d{7}$/,
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('registration.resource_type.artistic.music_score_isrc'),
+        })
+      ),
+  }),
   trackList: Yup.array()
     .of(
       Yup.object<YupShape<MusicTrack>>({
         title: Yup.string().required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:common.title'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('common.title'),
           })
         ),
         composer: Yup.string().required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:registration.resource_type.artistic.composer'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('registration.resource_type.artistic.composer'),
           })
         ),
         extent: Yup.number()
           .typeError(
-            i18n.t('translation:feedback.validation.has_invalid_format', {
-              field: i18n.t('translation:registration.resource_type.artistic.extent_in_minutes'),
+            i18n.t('feedback.validation.has_invalid_format', {
+              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
             })
           )
           .required(
-            i18n.t('translation:feedback.validation.is_required', {
-              field: i18n.t('translation:registration.resource_type.artistic.extent_in_minutes'),
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('registration.resource_type.artistic.extent_in_minutes'),
             })
           ),
       })
     )
     .min(
       1,
-      i18n.t('translation:feedback.validation.must_have_minimum', {
+      i18n.t('feedback.validation.must_have_minimum', {
         min: 1,
-        field: i18n.t('translation:registration.resource_type.artistic.content_track').toLocaleLowerCase(),
+        field: i18n.t('registration.resource_type.artistic.content_track').toLocaleLowerCase(),
       })
     ),
 });
@@ -136,7 +151,11 @@ export const AudioVisualPublicationModal = ({
         initialValues={audioVisualPublication ?? emptyAudioVisualPublication}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          onSubmit(values);
+          const { isrc, ...rest } = values;
+          const formattedValues: AudioVisualPublication = isrc?.value
+            ? { ...rest, isrc: { ...isrc, type: 'Isrc' } }
+            : rest;
+          onSubmit(formattedValues);
           closeModal();
         }}>
         {({ values, errors, touched, isSubmitting, setFieldValue }: FormikProps<AudioVisualPublication>) => (
@@ -157,7 +176,7 @@ export const AudioVisualPublicationModal = ({
                     }}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    data-testid={dataTestId.registrationWizard.resourceType.subtypeField}>
                     {Object.values(MusicMediaType).map((mediaType) => (
                       <MenuItem key={mediaType} value={mediaType}>
                         {t(`registration.resource_type.artistic.music_media_type.${mediaType}`)}
@@ -166,7 +185,7 @@ export const AudioVisualPublicationModal = ({
                   </TextField>
                 )}
               </Field>
-              {values.mediaType.type === 'Other' ? (
+              {values.mediaType.type === 'MusicMediaOther' ? (
                 <Field name="mediaType.description">
                   {({ field, meta: { touched, error } }: FieldProps<string>) => (
                     <TextField
@@ -206,6 +225,23 @@ export const AudioVisualPublicationModal = ({
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.audioVideoCatalogueNumber}
+                  />
+                )}
+              </Field>
+              <Field name="isrc.value">
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <TextField
+                    {...field}
+                    value={field.value ?? ''}
+                    variant="filled"
+                    fullWidth
+                    label={t('registration.resource_type.artistic.music_score_isrc')}
+                    InputProps={{
+                      inputComponent: MaskIsrcInput as any,
+                    }}
+                    error={touched && !!error}
+                    helperText={<ErrorMessage name={field.name} />}
+                    data-testid={dataTestId.registrationWizard.resourceType.scoreIsrc}
                   />
                 )}
               </Field>
@@ -312,3 +348,12 @@ export const AudioVisualPublicationModal = ({
     </Dialog>
   );
 };
+
+const MaskIsrcInput = forwardRef<HTMLElement, MaskInputProps>(({ onChange, ...props }, ref) => (
+  <IMaskInput
+    {...props}
+    mask="aa-***-00-00000"
+    inputRef={ref}
+    onAccept={(value) => onChange({ target: { name: props.name, value: value.replaceAll('-', '') } })}
+  />
+));

@@ -6,7 +6,7 @@ import SubjectIcon from '@mui/icons-material/Subject';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
   createSearchConfigFromSearchParams,
@@ -21,10 +21,13 @@ import { SearchResponse } from '../../types/common.types';
 import { Registration } from '../../types/registration.types';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { SearchApiPath } from '../../api/apiPaths';
-import { SidePanel, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { ProjectSearch } from './project_search/ProjectSearch';
+import { SelectableButton } from '../../components/SelectableButton';
+import { SideMenu } from '../../components/SideMenu';
+import { dataTestId } from '../../utils/dataTestIds';
 
 /*
  * The Search Page allows for users to search for 3 things (types): Registrations/Results, Persons, and Projects
@@ -65,6 +68,8 @@ const SearchPage = () => {
   return (
     <Formik
       initialValues={initialSearchParams}
+      validateOnChange={false}
+      validateOnBlur={false}
       onSubmit={(values) => {
         const previousParamsResults = params.get(SearchParam.Results);
         const newSearchParams = new URLSearchParams();
@@ -95,7 +100,7 @@ const SearchPage = () => {
       {({ setValues }: FormikProps<SearchConfig>) => (
         <Form style={{ width: '100%' }}>
           <StyledPageWithSideMenu>
-            <SidePanel>
+            <SideMenu>
               <SideNavHeader icon={SearchIcon} text={t('common.search')} />
               <Box
                 sx={{
@@ -105,28 +110,28 @@ const SearchPage = () => {
                   gap: '0.5rem',
                   button: { textTransform: 'none' },
                   m: '1rem',
+                  width: 'fit-content',
                 }}>
-                <Button
-                  variant={resultIsSelected ? 'contained' : 'outlined'}
+                <SelectableButton
+                  data-testid={dataTestId.startPage.resultSearchButton}
+                  startIcon={<SubjectIcon />}
+                  color="registration"
+                  isSelected={resultIsSelected}
                   onClick={() => {
                     if (!resultIsSelected) {
                       const resultParams = new URLSearchParams();
                       history.push({ search: resultParams.toString() });
                       setValues(emptySearchConfig);
                     }
-                  }}
-                  color="registration"
-                  sx={{
-                    width: 'fit-content',
-                    color: 'common.black',
-                    bgcolor: resultIsSelected ? undefined : 'background.default',
-                    borderColor: 'registration.main',
-                  }}
-                  startIcon={<SubjectIcon />}>
+                  }}>
                   {t('search.result')}
-                </Button>
-                <Button
-                  variant={personIsSeleced ? 'contained' : 'outlined'}
+                </SelectableButton>
+
+                <SelectableButton
+                  data-testid={dataTestId.startPage.personSearchButton}
+                  startIcon={<PersonIcon />}
+                  color="person"
+                  isSelected={personIsSeleced}
                   onClick={() => {
                     if (!personIsSeleced) {
                       const personParams = new URLSearchParams();
@@ -134,19 +139,15 @@ const SearchPage = () => {
                       history.push({ search: personParams.toString() });
                       setValues(emptySearchConfig);
                     }
-                  }}
-                  color="person"
-                  sx={{
-                    width: 'fit-content',
-                    color: 'common.black',
-                    bgcolor: personIsSeleced ? undefined : 'background.default',
-                    borderColor: 'person.main',
-                  }}
-                  startIcon={<PersonIcon />}>
+                  }}>
                   {t('search.persons')}
-                </Button>
-                <Button
-                  variant={projectIsSelected ? 'contained' : 'outlined'}
+                </SelectableButton>
+
+                <SelectableButton
+                  data-testid={dataTestId.startPage.projectSearchButton}
+                  startIcon={<ShowChartIcon />}
+                  color="project"
+                  isSelected={projectIsSelected}
                   onClick={() => {
                     if (!projectIsSelected) {
                       const projectParams = new URLSearchParams();
@@ -154,17 +155,9 @@ const SearchPage = () => {
                       history.push({ search: projectParams.toString() });
                       setValues(emptySearchConfig);
                     }
-                  }}
-                  color="project"
-                  sx={{
-                    width: 'fit-content',
-                    color: 'common.black',
-                    bgcolor: projectIsSelected ? undefined : 'background.default',
-                    borderColor: 'project.main',
-                  }}
-                  startIcon={<ShowChartIcon />}>
+                  }}>
                   {t('project.project')}
-                </Button>
+                </SelectableButton>
               </Box>
 
               {resultIsSelected && searchResults?.aggregations && (
@@ -189,7 +182,7 @@ const SearchPage = () => {
                   </Box>
                 </>
               )}
-            </SidePanel>
+            </SideMenu>
 
             {resultIsSelected && (
               <Box

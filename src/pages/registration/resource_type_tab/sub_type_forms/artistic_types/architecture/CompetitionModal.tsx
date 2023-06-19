@@ -33,25 +33,25 @@ const emptyCompetition: Competition = {
 
 const validationSchema = Yup.object<YupShape<Competition>>({
   name: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.competition_name'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.competition_name'),
     })
   ),
   description: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.competition_rank'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.competition_rank'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date()
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:registration.resource_type.artistic.competition_date'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('registration.resource_type.artistic.competition_date'),
         })
       )
       .typeError(
-        i18n.t('translation:feedback.validation.has_invalid_format', {
-          field: i18n.t('translation:registration.resource_type.artistic.competition_date'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('registration.resource_type.artistic.competition_date'),
         })
       ),
   }),
@@ -115,28 +115,25 @@ export const CompetitionModal = ({ competition, onSubmit, open, closeModal }: Co
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('registration.resource_type.artistic.competition_date')}
-                    PopperProps={{
-                      'aria-label': t('registration.resource_type.artistic.competition_date'),
-                    }}
-                    value={field.value ?? null}
+                    value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date ?? '');
                     }}
-                    inputFormat="dd.MM.yyyy"
+                    format="dd.MM.yyyy"
                     views={['year', 'month', 'day']}
-                    mask="__.__.____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
-                        variant="filled"
-                        required
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                      />
-                    )}
+                    slotProps={{
+                      textField: {
+                        inputProps: {
+                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                        },
+                        onBlur: () => !touched && setFieldTouched(field.name),
+                        variant: 'filled',
+                        required: true,
+                        error: touched && !!error,
+                        helperText: <ErrorMessage name={field.name} />,
+                      },
+                    }}
                   />
                 )}
               </Field>

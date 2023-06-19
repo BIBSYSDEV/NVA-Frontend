@@ -28,7 +28,7 @@ export const getOrganizationHierarchy = (unit?: Organization, result: Organizati
 
 export const getSortedSubUnits = (subUnits: Organization[] = []) => {
   const units = getAllChildOrganizations(subUnits);
-  return units.sort((a, b) => (getLanguageString(a.name) < getLanguageString(b.name) ? -1 : 1));
+  return units.sort((a, b) => (getLanguageString(a.labels) < getLanguageString(b.labels) ? -1 : 1));
 };
 
 const getAllChildOrganizations = (units: Organization[] = [], result: Organization[] = []): Organization[] => {

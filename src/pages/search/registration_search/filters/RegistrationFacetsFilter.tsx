@@ -1,16 +1,28 @@
-import { Box, ListItemButton } from '@mui/material';
+import { Box, ListItem, ListItemButton, styled } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
 import { FacetItem } from './FacetItem';
 import { Aggregations } from '../../../../types/common.types';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
+import { getInstitutionLabelFromBucket } from '../../../../utils/translation-helpers';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 
 interface RegistrationFacetsFilterProps {
   aggregations: Aggregations;
   isLoadingSearch: boolean;
 }
+
+const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
+  display: 'flex',
+  gap: '1rem',
+  justifyContent: 'space-between',
+  '&.Mui-selected': {
+    background: theme.palette.info.light,
+  },
+}));
 
 export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: RegistrationFacetsFilterProps) => {
   const { t } = useTranslation();
@@ -37,34 +49,51 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
   };
 
   const aggregationEntries = Object.entries(aggregations);
-  const registrationTypeFacet = aggregationEntries.find(
-    ([fieldName]) => fieldName === ResourceFieldNames.RegistrationType
-  )?.[1];
+  const typeFacet = aggregationEntries.find(([fieldName]) => fieldName === ResourceFieldNames.RegistrationType)?.[1];
+  const topLevelOrganizationFacet = aggregationEntries.find(
+    ([fieldName]) => fieldName === SearchFieldName.TopLevelOrganization
+  )?.[1].id;
 
   return (
     <>
-      {registrationTypeFacet && (
-        <FacetItem title={t('registration.resource_type.resource_type')}>
-          {registrationTypeFacet.buckets.map((bucket) => (
-            <Box key={bucket.key} component="li">
-              <ListItemButton
+      {typeFacet?.buckets && (
+        <FacetItem title={t('registration.resource_type.resource_type')} dataTestId={dataTestId.startPage.typeFacets}>
+          {typeFacet.buckets.map((bucket) => {
+            const registrationType = bucket.key as PublicationInstanceType;
+            return (
+              <ListItem disablePadding key={registrationType} data-testid={dataTestId.startPage.facetItem(bucket.key)}>
+                <StyledListItemButton
+                  disabled={isLoadingSearch}
+                  onClick={() => updateFilter(ResourceFieldNames.RegistrationType, registrationType)}
+                  selected={properties.some((searchProperty) => searchProperty.value === registrationType)}>
+                  <Box component="span" sx={{ wordBreak: 'break-word' }}>
+                    {t(`registration.publication_types.${registrationType}`)}
+                  </Box>
+                  {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
+                </StyledListItemButton>
+              </ListItem>
+            );
+          })}
+        </FacetItem>
+      )}
+
+      {topLevelOrganizationFacet?.buckets && (
+        <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
+          {topLevelOrganizationFacet.buckets.map((bucket) => (
+            <ListItem
+              disablePadding
+              key={bucket.key}
+              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(bucket.key))}>
+              <StyledListItemButton
                 disabled={isLoadingSearch}
-                sx={{
-                  display: 'flex',
-                  gap: '1rem',
-                  justifyContent: 'space-between',
-                  '&.Mui-selected': {
-                    bgcolor: 'info.light',
-                  },
-                }}
-                onClick={() => updateFilter(ResourceFieldNames.RegistrationType, bucket.key)}
-                selected={properties.some((searchProperty) => searchProperty.value === bucket.key)}>
-                <Box component="span" sx={{ wordBreak: 'break-word' }}>
-                  {t(`registration.publication_types.${bucket.key as PublicationInstanceType}`)}
-                </Box>
-                {(bucket.docCount || bucket.doc_count) && <span>({bucket.docCount ?? bucket.doc_count})</span>}
-              </ListItemButton>
-            </Box>
+                onClick={() => updateFilter(SearchFieldName.TopLevelOrganizationId, bucket.key)}
+                selected={properties.some(
+                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
+                )}>
+                <span>{getInstitutionLabelFromBucket(bucket)}</span>
+                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
+              </StyledListItemButton>
+            </ListItem>
           ))}
         </FacetItem>
       )}

@@ -1,11 +1,8 @@
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import * as Yup from 'yup';
-import { Button, DialogActions, TextField } from '@mui/material';
+import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import i18n from '../translations/i18n';
-import { YupShape } from '../utils/validation/validationHelpers';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;
@@ -20,42 +17,36 @@ const initValues: MessageFormData = {
   message: '',
 };
 
-const validationSchema = Yup.object<YupShape<MessageFormData>>({
-  message: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:common.message'),
-    })
-  ),
-});
-
 export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) => {
   const { t } = useTranslation();
 
   return (
     <Formik
       initialValues={initValues}
-      validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         await confirmAction(values.message);
         resetForm();
       }}>
-      {({ isSubmitting }) => (
+      {({ values, isSubmitting }) => (
         <Form noValidate>
           <Field name="message">
             {({ field, meta: { touched, error } }: FieldProps<string>) => (
-              <TextField
-                {...field}
-                disabled={isSubmitting}
-                data-testid="message-field"
-                variant="filled"
-                multiline
-                rows="4"
-                fullWidth
-                label={t('common.message')}
-                required
-                error={touched && !!error}
-                helperText={<ErrorMessage name={field.name} />}
-              />
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <TextField
+                  {...field}
+                  inputProps={{ maxLength: 160 }}
+                  disabled={isSubmitting}
+                  data-testid="message-field"
+                  variant="filled"
+                  multiline
+                  maxRows={Infinity}
+                  fullWidth
+                  label={t('common.message')}
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                />
+                <Typography sx={{ alignSelf: 'end', color: 'gray' }}>{field.value.length}/160</Typography>
+              </Box>
             )}
           </Field>
 
@@ -71,6 +62,7 @@ export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) =
               variant="contained"
               endIcon={<MailOutlineIcon />}
               loadingPosition="end"
+              disabled={!values.message}
               loading={isSubmitting}>
               {t('common.send')}
             </LoadingButton>

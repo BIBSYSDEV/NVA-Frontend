@@ -4,6 +4,7 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
+import { emptyPlace } from '../../../../../../types/common.types';
 import {
   LiteraryArtsPerformance,
   LiteraryArtsPerformanceSubtype,
@@ -49,15 +50,15 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsPerformance>>({
   }),
   place: Yup.object({
     label: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.place'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.place'),
       })
     ),
   }),
   publicationDate: Yup.object<YupShape<RegistrationDate>>({
     year: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.date'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.date'),
       })
     ),
   }),
@@ -94,12 +95,12 @@ export const LiteraryArtsPerformanceModal = ({
                     variant="filled"
                     select
                     required
-                    label={t('registration.resource_type.type_work')}
+                    label={t('registration.resource_type.artistic.output_type.LiteraryArtsPerformance')}
                     fullWidth
                     {...field}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    data-testid={dataTestId.registrationWizard.resourceType.subtypeField}>
                     {Object.values(LiteraryArtsPerformanceSubtype).map((performanceType) => (
                       <MenuItem key={performanceType} value={performanceType}>
                         {t(`registration.resource_type.artistic.performance_types.${performanceType}`)}
@@ -144,38 +145,34 @@ export const LiteraryArtsPerformanceModal = ({
                 {({ field, form: { setFieldTouched, setFieldValue } }: FieldProps<RegistrationDate>) => (
                   <DatePicker
                     label={t('common.date')}
-                    PopperProps={{
-                      'aria-label': t('common.date'),
-                    }}
                     value={field.value.year ? new Date(+field.value.year, +field.value.month, +field.value.day) : null}
-                    onChange={(date, keyboardInput) => {
+                    onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
-                      const isTriggeredByInvalidKeyboardInput = keyboardInput && keyboardInput.length !== 10;
-                      if (date && !isTriggeredByInvalidKeyboardInput) {
+                      if (date) {
                         setFieldValue('publicationDate', {
                           ...emptyRegistrationDate,
                           year: date.getFullYear(),
                           month: date.getMonth(),
                           day: date.getDate(),
                         });
-                      } else if (!date) {
+                      } else {
                         setFieldValue('publicationDate', emptyRegistrationDate);
                       }
                     }}
-                    inputFormat="dd.MM.yyyy"
+                    format="dd.MM.yyyy"
                     views={['year', 'month', 'day']}
-                    mask="__.__.____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
-                        variant="filled"
-                        required
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched.publicationDate && !!errors.publicationDate?.year}
-                        helperText={touched.publicationDate && errors.publicationDate?.year}
-                      />
-                    )}
+                    slotProps={{
+                      textField: {
+                        inputProps: {
+                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                        },
+                        onBlur: () => !touched && setFieldTouched(field.name),
+                        variant: 'filled',
+                        required: true,
+                        error: touched.publicationDate && !!errors.publicationDate?.year,
+                        helperText: touched.publicationDate && errors.publicationDate?.year,
+                      },
+                    }}
                   />
                 )}
               </Field>
