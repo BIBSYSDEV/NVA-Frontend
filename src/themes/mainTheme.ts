@@ -19,7 +19,7 @@ enum Color {
   White = '#fff',
   DoiRequest = '#FFAA8E',
   DoiRequestLight = '#FFE2DA',
-  GeneralSupportCase = '#4A7AC1',
+  GeneralSupportCase = '#7E9DCC',
   GeneralSupportCaseLight = '#C2D3EA',
   Registration = '#DAC48E',
   Person = '#B3D6D9',
