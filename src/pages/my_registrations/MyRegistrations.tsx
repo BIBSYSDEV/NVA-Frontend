@@ -1,29 +1,29 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
+import { useQuery } from '@tanstack/react-query';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { TabButton } from '../../components/TabButton';
-import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registration.types';
+import { RegistrationStatus } from '../../types/registration.types';
 import { MyRegistrationsList } from './MyRegistrationsList';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { PublicationsApiPath } from '../../api/apiPaths';
+import { fetchRegistrationsByOwner } from '../../api/registrationApi';
 
-enum Tab {
-  Published,
-  Unpublished,
+interface MyRegistrationsProps {
+  selectedRegistrationStatus: {
+    published: boolean;
+    unpublished: boolean;
+  };
 }
 
-export const MyRegistrations = () => {
+export const MyRegistrations = ({ selectedRegistrationStatus }: MyRegistrationsProps) => {
   const { t } = useTranslation();
-  const [selectedTab, setSelectedTab] = useState(Tab.Unpublished);
-  const [myRegistrationsResponse, isLoading, refetchRegistrations] = useFetch<MyRegistrationsResponse>({
-    url: PublicationsApiPath.RegistrationsByOwner,
-    errorMessage: t('feedback.error.get_registrations'),
-    withAuthentication: true,
+
+  const registrationsQuery = useQuery({
+    queryKey: ['by-owner'],
+    queryFn: fetchRegistrationsByOwner,
+    meta: { errorMessage: t('feedback.error.search') },
   });
-  const registrations = myRegistrationsResponse?.publications ?? [];
+
+  const registrations = registrationsQuery.data?.publications ?? [];
 
   const unpublishedRegistrations = registrations
     .filter(({ status }) => status === RegistrationStatus.Draft)
@@ -33,35 +33,36 @@ export const MyRegistrations = () => {
     .filter(({ status }) => status === RegistrationStatus.Published || status === RegistrationStatus.PublishedMetadata)
     .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
 
+  const displayRegistrations = () => {
+    if (selectedRegistrationStatus.published && !selectedRegistrationStatus.unpublished) {
+      return publishedRegistrations;
+    } else if (!selectedRegistrationStatus.published && selectedRegistrationStatus.unpublished) {
+      return unpublishedRegistrations;
+    } else {
+      return unpublishedRegistrations.concat(publishedRegistrations);
+    }
+  };
+
   return (
     <>
       <Helmet>
         <title>{t('common.registrations')}</title>
       </Helmet>
-      <BackgroundDiv>
-        <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-          <TabButton
-            data-testid="unpublished-button"
-            onClick={() => setSelectedTab(Tab.Unpublished)}
-            isSelected={selectedTab === Tab.Unpublished}>
-            {t('my_page.registrations.unpublished_registrations')} ({unpublishedRegistrations.length})
-          </TabButton>
-          <TabButton
-            data-testid="published-button"
-            onClick={() => setSelectedTab(Tab.Published)}
-            isSelected={selectedTab === Tab.Published}>
-            {t('my_page.registrations.published_registrations')} ({publishedRegistrations.length})
-          </TabButton>
-        </Box>
-        {isLoading ? (
+      <>
+        {registrationsQuery.isLoading ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
-          <MyRegistrationsList
-            registrations={selectedTab === Tab.Unpublished ? unpublishedRegistrations : publishedRegistrations}
-            refetchRegistrations={refetchRegistrations}
-          />
+          <Box>
+            <Typography sx={{ lineHeight: '2.5rem' }} variant="h2">
+              {t('common.registrations')}
+            </Typography>
+            <MyRegistrationsList
+              registrations={displayRegistrations()}
+              refetchRegistrations={registrationsQuery.refetch}
+            />
+          </Box>
         )}
-      </BackgroundDiv>
+      </>
     </>
   );
 };

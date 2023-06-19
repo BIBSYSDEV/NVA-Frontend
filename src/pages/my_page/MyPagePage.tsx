@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Switch, useHistory } from 'react-router-dom';
-import { Box, Divider, FormControlLabel, Typography } from '@mui/material';
+import { Divider, FormControlLabel } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
@@ -37,9 +37,7 @@ import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../compone
 import { TicketList, ticketsPerPageOptions } from '../messages/components/TicketList';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
-import { fetchRegistrationsByOwner } from '../../api/registrationApi';
-import { MyRegistrationsList } from '../my_registrations/MyRegistrationsList';
-import { RegistrationStatus } from '../../types/registration.types';
+import { MyRegistrations } from '../my_registrations/MyRegistrations';
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
@@ -95,32 +93,6 @@ const MyPagePage = () => {
     queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, query, true),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
-
-  const registrationsQuery = useQuery({
-    queryKey: ['registrations'],
-    queryFn: () => fetchRegistrationsByOwner(),
-    meta: { errorMessage: t('feedback.error.search') },
-  });
-
-  const registrations = registrationsQuery.data?.publications ?? [];
-
-  const unpublishedRegistrations = registrations
-    .filter(({ status }) => status === RegistrationStatus.Draft)
-    .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
-
-  const publishedRegistrations = registrations
-    .filter(({ status }) => status === RegistrationStatus.Published || status === RegistrationStatus.PublishedMetadata)
-    .sort((a, b) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime());
-
-  const displayRegistrations = () => {
-    if (selectedRegistrationStatus.published && !selectedRegistrationStatus.unpublished) {
-      return publishedRegistrations;
-    } else if (!selectedRegistrationStatus.published && selectedRegistrationStatus.unpublished) {
-      return unpublishedRegistrations;
-    } else {
-      return unpublishedRegistrations.concat(publishedRegistrations);
-    }
-  };
 
   const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
   const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
@@ -407,15 +379,7 @@ const MyPagePage = () => {
           </CreatorRoute>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations}>
-            <Box>
-              <Typography sx={{ lineHeight: '2.5rem' }} variant="h2">
-                {t('common.registrations')}
-              </Typography>
-              <MyRegistrationsList
-                registrations={displayRegistrations()}
-                refetchRegistrations={registrationsQuery.refetch}
-              />
-            </Box>
+            <MyRegistrations selectedRegistrationStatus={selectedRegistrationStatus} />
           </CreatorRoute>
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
