@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import PersonIcon from '@mui/icons-material/PersonOutlineRounded';
 import { Link as RouterLink } from 'react-router-dom';
 import { RootState } from '../../redux/store';
 import { Menu } from './Menu';
@@ -35,18 +35,17 @@ export const LoginButton = () => {
 
   return user ? (
     <Menu handleLogout={handleLogoutWrapper} />
-  ) : isLoading ? (
-    <LoadingButton variant="contained" color="secondary" loading>
-      {t('common.loading')}
-    </LoadingButton>
   ) : (
-    <Button
+    <LoadingButton
       variant="outlined"
-      color="secondary"
+      loading={isLoading}
+      endIcon={<PersonIcon />}
+      color="inherit"
+      sx={{ borderRadius: '1rem' }}
       data-testid={dataTestId.header.logInButton}
       component={RouterLink}
       to={{ pathname: UrlPathTemplate.Login, state: previousPathState }}>
       {t('authorization.login')}
-    </Button>
+    </LoadingButton>
   );
 };

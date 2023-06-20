@@ -25,6 +25,12 @@ export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
       <Button
         color="inherit"
         fullWidth={!!isMobile}
+        sx={{
+          flexDirection: 'column',
+          '.MuiButton-startIcon': {
+            margin: 0,
+          },
+        }}
         data-testid={dataTestId.header.languageButton}
         startIcon={<LanguageIcon />}
         onClick={(event) => setAnchorEl(event.currentTarget)}>

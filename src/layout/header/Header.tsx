@@ -100,12 +100,6 @@ export const Header = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '1rem',
-            'a, button': {
-              flexDirection: 'column',
-              '.MuiButton-startIcon': {
-                margin: 0,
-              },
-            },
           }}>
           {!isMobile && (
             <>
