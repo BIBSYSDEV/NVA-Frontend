@@ -111,7 +111,10 @@ export enum LiteraryArtsAudioVisualSubtype {
 
 export interface LiteraryArtsAudioVisual {
   type: 'LiteraryArtsAudioVisual';
-  subtype: LiteraryArtsAudioVisualSubtype | '';
+  subtype: {
+    type: LiteraryArtsAudioVisualSubtype | '';
+    description: string;
+  };
   publisher: UnconfirmedPublisher;
   publicationDate: RegistrationDate;
   isbnList: string[];
