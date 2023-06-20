@@ -49,9 +49,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
 
   const typeFacet = aggregations?.['entityDescription.reference.publicationInstance.type'];
   const topLevelOrganizationFacet = aggregations.topLevelOrganization?.id;
-  const contributorFacet = aggregations?.entityDescription?.contributors?.identity?.id;
-
-  console.log(contributorFacet?.buckets);
+  const contributorFacet = aggregations?.entityDescription.contributors.identity.id;
 
   return (
     <>
