@@ -38,13 +38,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           data-testid={dataTestId.header.menuButton}
           onClick={handleClickMenuAnchor}
           startIcon={<AccountCircle />}
-          sx={{
-            textTransform: 'none',
-            flexDirection: 'column',
-            '.MuiButton-startIcon': {
-              margin: 0,
-            },
-          }}>
+          sx={{ textTransform: 'none' }}>
           <Typography noWrap color="inherit">
             {name}
           </Typography>

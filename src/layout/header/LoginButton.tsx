@@ -41,7 +41,7 @@ export const LoginButton = () => {
       loading={isLoading}
       endIcon={<PersonIcon />}
       color="inherit"
-      sx={{ borderRadius: '1rem' }}
+      sx={{ borderRadius: '1rem', flexDirection: 'row !important' }}
       data-testid={dataTestId.header.logInButton}
       component={RouterLink}
       to={{ pathname: UrlPathTemplate.Login, state: previousPathState }}>
