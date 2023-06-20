@@ -51,6 +51,8 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
   const topLevelOrganizationFacet = aggregations.topLevelOrganization?.id;
   const contributorFacet = aggregations?.entityDescription?.contributors?.identity?.id;
 
+  console.log(contributorFacet?.buckets);
+
   return (
     <>
       {typeFacet?.buckets && (
@@ -106,11 +108,13 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
               data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(bucket.key))}>
               <StyledListItemButton
                 disabled={isLoadingSearch}
-                onClick={() => updateFilter(SearchFieldName.TopLevelOrganizationId, bucket.key)}
+                onClick={() => updateFilter(SearchFieldName.ContributorId, bucket.key)}
                 selected={properties.some(
                   (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
                 )}>
-                <span>{getInstitutionLabelFromBucket(bucket)}</span>
+                <span>
+                  {bucket.name.buckets.length > 0 ? bucket.name.buckets[0].key : <i>{t('common.unknown')}</i>}
+                </span>
                 {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
               </StyledListItemButton>
             </ListItem>

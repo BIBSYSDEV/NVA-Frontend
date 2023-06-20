@@ -250,12 +250,14 @@ export const emptyContextPublisher: ContextPublisher = {
   id: '',
 };
 
-interface InstitutionAggregationBucket extends AggregationBucket {
+export interface InstitutionAggregationBucket extends AggregationBucket {
   labels: Aggregations;
 }
 
 interface ContributorAggregationBucket extends AggregationBucket {
-  name: any;
+  name: {
+    buckets: AggregationBucket[];
+  };
 }
 
 export interface RegistrationSearchAggregations {
@@ -269,8 +271,8 @@ export interface RegistrationSearchAggregations {
   };
   entityDescription: {
     contributors: {
-      identity?: {
-        id?: {
+      identity: {
+        id: {
           buckets: ContributorAggregationBucket[];
         };
       };
