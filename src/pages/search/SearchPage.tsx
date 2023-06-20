@@ -1,12 +1,11 @@
 import { Formik, Form, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import SearchIcon from '@mui/icons-material/Search';
 import SubjectIcon from '@mui/icons-material/Subject';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
   createSearchConfigFromSearchParams,
@@ -101,7 +100,7 @@ const SearchPage = () => {
         <Form style={{ width: '100%' }}>
           <StyledPageWithSideMenu>
             <SideMenu>
-              <SideNavHeader icon={SearchIcon} text={t('common.search')} />
+              <SideNavHeader icon={FilterAltOutlined} text={t('search.filter')} />
               <Box
                 sx={{
                   display: 'flex',
@@ -162,11 +161,6 @@ const SearchPage = () => {
 
               {resultIsSelected && searchResults?.aggregations && (
                 <>
-                  <Divider />
-                  <Box sx={{ m: '0.5rem 1rem', display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="h2">{t('search.search_filter')}</Typography>
-                    <FilterAltOutlined />
-                  </Box>
                   <Divider />
                   <Box
                     sx={{
