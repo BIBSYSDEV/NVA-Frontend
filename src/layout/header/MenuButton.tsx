@@ -15,10 +15,6 @@ export const MenuButton = ({ isSelected, sx, ...rest }: MenuButtonProps) => (
     }}>
     <Button
       sx={{
-        flexDirection: 'column',
-        '.MuiButton-startIcon': {
-          margin: 0,
-        },
         mb: isSelected ? '-0.375rem' : 'none',
         whiteSpace: 'nowrap',
         ...sx,
