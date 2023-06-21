@@ -115,6 +115,7 @@ export const dataTestId = {
       removeFilterButton: 'remove-filter-button',
       searchButton: 'search-button',
     },
+    contributorFacets: 'contributor-facets',
     facetItem: (value: string) => `facet-item-${value}`,
     orderBySelect: 'order-by-select',
     personSearchButton: 'person-search-button',
