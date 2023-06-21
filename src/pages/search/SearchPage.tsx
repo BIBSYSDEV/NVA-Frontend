@@ -1,12 +1,11 @@
 import { Formik, Form, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import SearchIcon from '@mui/icons-material/Search';
-import SubjectIcon from '@mui/icons-material/Subject';
+import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 import {
   createSearchConfigFromSearchParams,
@@ -100,7 +99,7 @@ const SearchPage = () => {
         <Form style={{ width: '100%' }}>
           <StyledPageWithSideMenu>
             <SideMenu>
-              <SideNavHeader icon={SearchIcon} text={t('common.search')} />
+              <SideNavHeader icon={FilterAltOutlined} text={t('common.filter')} />
               <Box
                 sx={{
                   display: 'flex',
@@ -109,11 +108,10 @@ const SearchPage = () => {
                   gap: '0.5rem',
                   button: { textTransform: 'none' },
                   m: '1rem',
-                  width: 'fit-content',
                 }}>
                 <SelectableButton
                   data-testid={dataTestId.startPage.resultSearchButton}
-                  startIcon={<SubjectIcon />}
+                  startIcon={<NotesIcon />}
                   color="registration"
                   isSelected={resultIsSelected}
                   onClick={() => {
@@ -161,11 +159,6 @@ const SearchPage = () => {
 
               {resultIsSelected && searchResults?.aggregations && (
                 <>
-                  <Divider />
-                  <Box sx={{ m: '0.5rem 1rem', display: 'flex', justifyContent: 'space-between' }}>
-                    <Typography variant="h2">{t('search.search_filter')}</Typography>
-                    <FilterAltOutlined />
-                  </Box>
                   <Divider />
                   <Box
                     sx={{

@@ -54,7 +54,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
   return (
     <>
       {typeFacet?.buckets && (
-        <FacetItem title={t('registration.resource_type.resource_type')} dataTestId={dataTestId.startPage.typeFacets}>
+        <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
           {typeFacet.buckets.map((bucket) => {
             const registrationType = bucket.key as PublicationInstanceType;
             return (
