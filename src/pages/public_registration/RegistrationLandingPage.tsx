@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
-import { userCanEditRegistration } from '../../utils/registration-helpers';
+import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { PageSpinner } from '../../components/PageSpinner';
@@ -31,11 +31,12 @@ export const RegistrationLandingPage = () => {
   const registration = registrationQuery.data;
   const registrationId = registration?.id ?? '';
 
-  const isRegistrationAdmin = !!registration && userCanEditRegistration(user, registration);
+  const isRegistrationAdmin =
+    userIsRegistrationOwner(user, registration) || userIsRegistrationCurator(user, registration);
   const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
 
   const ticketsQuery = useQuery({
-    enabled: isRegistrationAdmin && !!registrationId,
+    enabled: isRegistrationAdmin,
     queryKey: ['registrationTickets', registrationId],
     queryFn: () => fetchRegistrationTickets(registrationId),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
