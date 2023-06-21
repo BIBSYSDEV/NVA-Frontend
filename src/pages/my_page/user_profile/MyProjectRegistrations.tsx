@@ -22,7 +22,7 @@ export const MyProjectRegistrations = () => {
   const projectsQuery = useQuery({
     enabled: !!cristinIdentifier,
     queryKey: ['projects', rowsPerPage, page, cristinIdentifier],
-    queryFn: () => searchForProjects(rowsPerPage, page + 1, cristinIdentifier),
+    queryFn: () => searchForProjects(rowsPerPage, page + 1, { creator: cristinIdentifier }),
   });
 
   return (

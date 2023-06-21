@@ -14,3 +14,8 @@ export const getPeriodString = (from: string | undefined, to: string | undefined
 };
 
 export const getIdentifierFromId = (id: string) => id.split('/').pop() ?? '';
+
+export const equalUris = (uri1: string | null, uri2: string | null) =>
+  uri1 && uri2 && removeTrailingSlash(uri1).toLocaleLowerCase() === removeTrailingSlash(uri2).toLocaleLowerCase();
+
+const removeTrailingSlash = (value: string) => (value.endsWith('/') ? value.slice(0, -1) : value);

@@ -6,11 +6,10 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { SearchParam } from '../../../utils/searchHelpers';
-import { SearchResponse } from '../../../types/common.types';
-import { Registration } from '../../../types/registration.types';
+import { RegistrationSearchResponse } from '../../../types/registration.types';
 
 interface RegistrationSearchProps {
-  searchResults?: SearchResponse<Registration>;
+  searchResults?: RegistrationSearchResponse;
   isLoadingSearch: boolean;
 }
 

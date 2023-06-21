@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useDispatch } from 'react-redux';
@@ -21,7 +21,7 @@ interface SupportAccordionProps {
   userIsCurator: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
   refetchData: () => void;
-  defaultExpanded?: boolean;
+  isRegistrationWizard?: boolean;
 }
 
 export const SupportAccordion = ({
@@ -30,7 +30,7 @@ export const SupportAccordion = ({
   userIsCurator,
   addMessage,
   refetchData,
-  defaultExpanded = false,
+  isRegistrationWizard = false,
 }: SupportAccordionProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -63,12 +63,13 @@ export const SupportAccordion = ({
       data-testid={dataTestId.registrationLandingPage.tasksPanel.supportAccordion}
       sx={{ bgcolor: 'generalSupportCase.light' }}
       elevation={3}
-      defaultExpanded={defaultExpanded || isPendingSupportTicket}>
+      defaultExpanded={isRegistrationWizard || isPendingSupportTicket}>
       <AccordionSummary sx={{ fontWeight: 700 }} expandIcon={<ExpandMoreIcon fontSize="large" />}>
         {t('my_page.messages.types.GeneralSupportCase')}
         {supportTicket && ` - ${t(`my_page.messages.ticket_types.${supportTicket.status}`)}`}
       </AccordionSummary>
       <AccordionDetails sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {isRegistrationWizard && <Typography>{t('registration.curator_support_info')}</Typography>}
         {supportTicket && (
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />

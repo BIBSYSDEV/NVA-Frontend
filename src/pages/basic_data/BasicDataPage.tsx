@@ -27,6 +27,7 @@ import {
 } from '../../components/PageWithSideMenu';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import { CentralImportRegistration } from './app_admin/central_import/CentralImportRegistration';
 import { SideMenu } from '../../components/SideMenu';
 
 const BasicDataPage = () => {
@@ -161,6 +162,11 @@ const BasicDataPage = () => {
               exact
               path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
               component={CentralImportDuplicationCheckPage}
+            />
+            <AppAdminRoute
+              exact
+              path={UrlPathTemplate.BasicDataCentralImportRegistration}
+              component={CentralImportRegistration}
             />
             <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
             <InstitutionAdminRoute

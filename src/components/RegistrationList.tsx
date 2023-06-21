@@ -104,7 +104,9 @@ export const RegistrationListItemContent = ({ registration, ticketView = false }
         </Box>
       </Box>
 
-      <TruncatableTypography sx={{ mt: '0.5rem' }}>{entityDescription?.abstract}</TruncatableTypography>
+      <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
+        {entityDescription?.abstract}
+      </TruncatableTypography>
     </ListItemText>
   );
 };
