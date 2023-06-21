@@ -600,7 +600,8 @@ const userIsContributorOnPublishedRegistration = (user: User | null, registratio
 export const userCanEditRegistration = (user: User | null, registration: Registration) =>
   userIsOwnerOfRegistration(user, registration) ||
   userIsCuratorForRegistration(user, registration) ||
-  userIsContributorOnPublishedRegistration(user, registration);
+  userIsContributorOnPublishedRegistration(user, registration) ||
+  user?.isEditor;
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
