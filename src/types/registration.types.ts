@@ -261,15 +261,19 @@ interface ContributorAggregationBucket extends AggregationBucket {
 }
 
 export interface RegistrationSearchAggregations {
-  'entityDescription.reference.publicationInstance.type'?: {
-    buckets: AggregationBucket[];
-  };
   topLevelOrganization?: {
     id?: {
       buckets: InstitutionAggregationBucket[];
     };
   };
   entityDescription: {
+    reference: {
+      publicationInstance: {
+        type: {
+          buckets: AggregationBucket[];
+        };
+      };
+    };
     contributors: {
       identity: {
         id: {

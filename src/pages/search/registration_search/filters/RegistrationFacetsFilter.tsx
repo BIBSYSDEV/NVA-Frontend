@@ -47,9 +47,9 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
     submitForm();
   };
 
-  const typeFacet = aggregations?.['entityDescription.reference.publicationInstance.type'];
   const topLevelOrganizationFacet = aggregations.topLevelOrganization?.id;
-  const contributorFacet = aggregations?.entityDescription.contributors.identity.id;
+  const typeFacet = aggregations.entityDescription.reference.publicationInstance.type;
+  const contributorFacet = aggregations.entityDescription.contributors.identity.id;
 
   return (
     <>

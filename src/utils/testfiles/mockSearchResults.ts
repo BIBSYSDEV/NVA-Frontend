@@ -42,6 +42,18 @@ export const mockSearchResults: RegistrationSearchResponse = {
           },
         },
       },
+      reference: {
+        publicationInstance: {
+          type: {
+            buckets: [
+              {
+                key: 'AcademicArticle',
+                docCount: 3,
+              },
+            ],
+          },
+        },
+      },
     },
   },
 };
