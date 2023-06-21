@@ -7,7 +7,7 @@ interface PrivateRouteProps extends RouteProps {
   isAuthorized: boolean;
 }
 
-const PrivateRoute = ({ isAuthorized, ...rest }: PrivateRouteProps) =>
+export const PrivateRoute = ({ isAuthorized, ...rest }: PrivateRouteProps) =>
   isAuthorized ? (
     <Route {...rest} />
   ) : (
