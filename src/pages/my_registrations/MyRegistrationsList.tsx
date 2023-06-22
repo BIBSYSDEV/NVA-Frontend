@@ -75,6 +75,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
       refetchRegistrations && refetchRegistrations();
+      setShowDeleteModal(false);
     }
   };
 

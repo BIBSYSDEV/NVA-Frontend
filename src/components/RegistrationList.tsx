@@ -34,7 +34,6 @@ export const RegistrationList = ({
             onDeleteDraftRegistration={onDeleteDraftRegistration}
             registration={registration}
             canEditRegistration={canEditRegistration}
-            refetchRegistrations={refetchRegistrations}
           />
         </SearchListItem>
       </ErrorBoundary>
@@ -46,7 +45,6 @@ interface RegistrationListItemContentProps {
   registration: Registration;
   ticketView?: boolean;
   canEditRegistration?: boolean;
-  refetchRegistrations?: () => void;
   onDeleteDraftRegistration?: (registration: Registration) => void;
 }
 
@@ -54,7 +52,6 @@ export const RegistrationListItemContent = ({
   registration,
   ticketView = false,
   canEditRegistration,
-  refetchRegistrations,
   onDeleteDraftRegistration,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
