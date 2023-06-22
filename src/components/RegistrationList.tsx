@@ -16,14 +16,12 @@ import { SearchListItem } from './styled/Wrappers';
 interface RegistrationListProps {
   registrations: Registration[];
   canEditRegistration?: boolean;
-  refetchRegistrations?: () => void;
   onDeleteDraftRegistration?: (registration: Registration) => void;
 }
 
 export const RegistrationList = ({
   registrations,
   canEditRegistration = false,
-  refetchRegistrations,
   onDeleteDraftRegistration,
 }: RegistrationListProps) => (
   <List disablePadding>

@@ -93,7 +93,6 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
             onDeleteDraftRegistration={onClickDeleteRegistration}
             registrations={registrationsCopy}
             canEditRegistration={true}
-            refetchRegistrations={refetchRegistrations}
           />
           <TablePagination
             rowsPerPageOptions={[10, 25, { value: registrations.length, label: t('common.all') }]}
