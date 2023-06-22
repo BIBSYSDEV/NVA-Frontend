@@ -3,6 +3,7 @@ import { MyRegistrationsResponse, RegistrationStatus } from '../../types/registr
 export const mockMyRegistrations: MyRegistrationsResponse = {
   publications: [
     {
+      contributors: [],
       identifier: '12345678',
       id: 'https://nva.no/publication/12345678',
       mainTitle:
@@ -13,6 +14,7 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'kare@unit.no',
     },
     {
+      contributors: [],
       identifier: '4327439',
       id: 'https://nva.no/publication/4327439',
       mainTitle:
@@ -23,6 +25,7 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'kari@ntnu.no',
     },
     {
+      contributors: [],
       identifier: '53453453',
       id: 'https://nva.no/publication/53453453',
       mainTitle: 'Potchefstroom electronic law journal : PER = Potchefstroomse elektroniese regsblad',
@@ -32,6 +35,7 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'arne@uio.no',
     },
     {
+      contributors: [],
       identifier: '3333439',
       id: 'https://nva.no/publication/3333439',
       mainTitle: 'Attføring av attføringen : særlig om stoffmisbrukere : hedersskrift til Per Alveberg',
@@ -41,6 +45,7 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'bob@boffaloe.com',
     },
     {
+      contributors: [],
       identifier: '3533439',
       id: 'https://nva.no/publication/3533439',
       mainTitle: 'Attføring av attføringen : særlig om stoffmisbrukere : hedersskrift til Per Alveberg',
@@ -50,6 +55,7 @@ export const mockMyRegistrations: MyRegistrationsResponse = {
       owner: 'bob@ryder.net',
     },
     {
+      contributors: [],
       identifier: '12345679',
       id: 'https://nva.no/publication/12345679',
       mainTitle:

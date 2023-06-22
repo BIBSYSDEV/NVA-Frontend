@@ -160,7 +160,7 @@ export const RegistrationListItemContent = ({
 
       {canEditRegistration && (
         <>
-          <Box sx={{ display: 'flex', alignItems: 'start', justifySelf: 'end', gap: '0.5rem' }}>
+          <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
             <Tooltip title={t('common.edit')}>
               <IconButton
                 data-testid={`edit-registration-${identifier}`}
@@ -190,9 +190,7 @@ export const RegistrationListItemContent = ({
             open={!!showDeleteModal}
             title={t('my_page.registrations.delete_registration')}
             onAccept={deleteDraftRegistration}
-            onCancel={() => {
-              setShowDeleteModal(false);
-            }}
+            onCancel={() => setShowDeleteModal(false)}
             isLoading={isDeleting}
             dialogDataTestId="confirm-delete-dialog">
             <Typography>
