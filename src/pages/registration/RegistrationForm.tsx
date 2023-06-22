@@ -76,7 +76,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   return registrationQuery.isLoading ? (
     <PageSpinner aria-label={t('common.registration')} />
-  ) : !isValidOwner && !isValidCurator ? (
+  ) : !isValidOwner && !isValidCurator && !user?.isEditor ? (
     <Forbidden />
   ) : registration ? (
     <>
