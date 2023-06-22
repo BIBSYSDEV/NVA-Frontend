@@ -1,34 +1,15 @@
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-  Typography,
-} from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
-import EditIcon from '@mui/icons-material/Edit';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { visuallyHidden } from '@mui/utils';
-import { deleteRegistration } from '../../api/registrationApi';
-import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { setNotification } from '../../redux/notificationSlice';
-import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
-import { getRegistrationLandingPagePath, getRegistrationWizardPath } from '../../utils/urlPaths';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { alternatingTableRowColor } from '../../themes/mainTheme';
+import { TablePagination, Typography } from '@mui/material';
+import { Registration, RegistrationPreview, emptyRegistration } from '../../types/registration.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
+import { RegistrationList } from '../../components/RegistrationList';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { getTitleString } from '../../utils/registration-helpers';
-import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { deleteRegistration } from '../../api/registrationApi';
+import { setNotification } from '../../redux/notificationSlice';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 
 interface MyRegistrationsListProps {
@@ -39,9 +20,7 @@ interface MyRegistrationsListProps {
 export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyRegistrationsListProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationPreview>();
-  const [isDeleting, setIsDeleting] = useState(false);
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -53,6 +32,35 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  useEffect(() => setPage(0), [registrations]); // Reset page if user changes focus between Published and Unpublished
+
+  useEffect(() => {
+    if (registrations.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
+      typesetMathJax();
+    }
+  }, [registrations, page, rowsPerPage]);
+
+  const registrationsOnPage = registrations.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+
+  const registrationsCopy = registrationsOnPage.map((registrationPreview) => {
+    const { identifier, id, contributors, mainTitle, publicationInstance, status } = registrationPreview;
+    return {
+      ...emptyRegistration,
+      identifier,
+      id,
+      status,
+      entityDescription: {
+        mainTitle,
+        contributors,
+        reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
+      },
+    } as Registration;
+  });
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [registrationToDelete, setRegistrationToDelete] = useState<Registration>();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const deleteDraftRegistration = async () => {
     if (!registrationToDelete) {
@@ -66,105 +74,50 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
+      setIsDeleting(false);
       refetchRegistrations();
+      setShowDeleteModal(false);
     }
   };
 
-  useEffect(() => setPage(0), [registrations]); // Reset page if user changes focus between Published and Unpublished
-
-  useEffect(() => {
-    if (registrations.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
-      typesetMathJax();
-    }
-  }, [registrations, page, rowsPerPage]);
-
-  const registrationsOnPage = registrations.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+  const onClickDeleteRegistration = (registration: Registration) => {
+    setRegistrationToDelete(registration);
+    setShowDeleteModal(true);
+  };
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table sx={alternatingTableRowColor}>
-          <caption style={visuallyHidden}>{t('common.registrations')}</caption>
-          <TableHead>
-            <TableRow>
-              <TableCell data-testid="header-registration-title" sx={{ minWidth: '12rem' }}>
-                {t('common.title')}
-              </TableCell>
-              <TableCell data-testid="header-registration-status">{t('common.status')}</TableCell>
-              <TableCell>{t('common.actions')}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {registrationsOnPage.map((registration) => {
-              const identifier = getIdentifierFromId(registration.id);
-              return (
-                <TableRow key={identifier}>
-                  <TableCell component="th" scope="row" data-testid={`registration-title-${identifier}`}>
-                    <TruncatableTypography>{getTitleString(registration.mainTitle)}</TruncatableTypography>
-                  </TableCell>
-                  <TableCell data-testid={`registration-status-${identifier}`}>
-                    <Typography>{t(`registration.status.${registration.status}`)}</Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Box sx={{ display: 'flex', gap: '1rem' }}>
-                      <Button
-                        variant="outlined"
-                        component={RouterLink}
-                        to={getRegistrationLandingPagePath(identifier)}
-                        startIcon={<MenuBookIcon />}
-                        data-testid={`open-registration-${identifier}`}>
-                        {t('common.show')}
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        component={RouterLink}
-                        to={getRegistrationWizardPath(identifier)}
-                        startIcon={<EditIcon />}
-                        data-testid={`edit-registration-${identifier}`}>
-                        {t('common.edit')}
-                      </Button>
-                      {registration.status === RegistrationStatus.Draft && (
-                        <Button
-                          color="error"
-                          variant="outlined"
-                          data-testid={`delete-registration-${identifier}`}
-                          startIcon={<CancelIcon />}
-                          onClick={() => {
-                            setRegistrationToDelete(registration);
-                            setShowDeleteModal(true);
-                          }}>
-                          {t('common.delete')}
-                        </Button>
-                      )}
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, { value: registrations.length, label: t('common.all') }]}
-        component="div"
-        count={registrations.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      {registrationsCopy.length > 0 ? (
+        <>
+          <RegistrationList
+            onDeleteDraftRegistration={onClickDeleteRegistration}
+            registrations={registrationsCopy}
+            canEditRegistration={true}
+          />
+          <TablePagination
+            rowsPerPageOptions={[10, 25, { value: registrations.length, label: t('common.all') }]}
+            component="div"
+            count={registrations.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </>
+      ) : (
+        <Typography>{t('common.no_hits')}</Typography>
+      )}
+
       <ConfirmDialog
         open={!!showDeleteModal}
         title={t('my_page.registrations.delete_registration')}
         onAccept={deleteDraftRegistration}
-        onCancel={() => {
-          setShowDeleteModal(false);
-        }}
+        onCancel={() => setShowDeleteModal(false)}
         isLoading={isDeleting}
         dialogDataTestId="confirm-delete-dialog">
         <Typography>
           {t('my_page.registrations.delete_registration_message', {
-            title: getTitleString(registrationToDelete?.mainTitle),
+            title: getTitleString(registrationToDelete?.entityDescription?.mainTitle),
           })}
         </Typography>
       </ConfirmDialog>
