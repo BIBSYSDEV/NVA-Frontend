@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Box, Link as MuiLink, List, ListItemText, Typography, IconButton, Tooltip } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { getRegistrationLandingPagePath, getRegistrationWizardPath, getResearchProfilePath } from '../utils/urlPaths';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
@@ -10,32 +12,26 @@ import { displayDate } from '../utils/date-helpers';
 import { TruncatableTypography } from './TruncatableTypography';
 import { ContributorIndicators } from './ContributorIndicators';
 import { SearchListItem } from './styled/Wrappers';
-import EditIcon from '@mui/icons-material/Edit';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import { ConfirmDialog } from './ConfirmDialog';
-import { useState } from 'react';
-import { deleteRegistration } from '../api/registrationApi';
-import { setNotification } from '../redux/notificationSlice';
-import { isErrorStatus, isSuccessStatus } from '../utils/constants';
-import { getIdentifierFromId } from '../utils/general-helpers';
-import { useDispatch } from 'react-redux';
 
 interface RegistrationListProps {
   registrations: Registration[];
   canEditRegistration?: boolean;
   refetchRegistrations?: () => void;
+  onDeleteDraftRegistration?: (registration: Registration) => void;
 }
 
 export const RegistrationList = ({
   registrations,
   canEditRegistration = false,
   refetchRegistrations,
+  onDeleteDraftRegistration,
 }: RegistrationListProps) => (
   <List disablePadding>
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
           <RegistrationListItemContent
+            onDeleteDraftRegistration={onDeleteDraftRegistration}
             registration={registration}
             canEditRegistration={canEditRegistration}
             refetchRegistrations={refetchRegistrations}
@@ -51,6 +47,7 @@ interface RegistrationListItemContentProps {
   ticketView?: boolean;
   canEditRegistration?: boolean;
   refetchRegistrations?: () => void;
+  onDeleteDraftRegistration?: (registration: Registration) => void;
 }
 
 export const RegistrationListItemContent = ({
@@ -58,14 +55,10 @@ export const RegistrationListItemContent = ({
   ticketView = false,
   canEditRegistration,
   refetchRegistrations,
+  onDeleteDraftRegistration,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const { identifier, entityDescription } = registration;
-
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [registrationToDelete, setRegistrationToDelete] = useState<Registration>();
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const contributors = entityDescription?.contributors ?? [];
   const focusedContributors = contributors.slice(0, 5);
@@ -77,22 +70,6 @@ export const RegistrationListItemContent = ({
 
   const publicationDate = displayDate(entityDescription?.publicationDate);
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
-
-  const deleteDraftRegistration = async () => {
-    if (!registrationToDelete) {
-      return;
-    }
-    const identifierToDelete = getIdentifierFromId(registrationToDelete.id);
-    setIsDeleting(true);
-    const deleteRegistrationResponse = await deleteRegistration(identifierToDelete);
-    if (isErrorStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
-      setIsDeleting(false);
-    } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
-      refetchRegistrations && refetchRegistrations();
-    }
-  };
 
   return (
     <Box sx={{ display: 'flex', width: '100%' }}>
@@ -159,47 +136,29 @@ export const RegistrationListItemContent = ({
       </ListItemText>
 
       {canEditRegistration && (
-        <>
-          <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
-            <Tooltip title={t('common.edit')}>
+        <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
+          <Tooltip title={t('common.edit')}>
+            <IconButton
+              data-testid={`edit-registration-${identifier}`}
+              component={Link}
+              to={getRegistrationWizardPath(identifier)}
+              size="small"
+              sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+          {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
+            <Tooltip title={t('common.delete')}>
               <IconButton
-                data-testid={`edit-registration-${identifier}`}
-                component={Link}
-                to={getRegistrationWizardPath(identifier)}
+                data-testid={`delete-registration-${identifier}`}
+                onClick={() => onDeleteDraftRegistration(registration)}
                 size="small"
                 sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
-                <EditIcon />
+                <CloseOutlinedIcon />
               </IconButton>
             </Tooltip>
-            {registration.status === 'DRAFT' && (
-              <Tooltip title={t('common.delete')}>
-                <IconButton
-                  data-testid={`delete-registration-${identifier}`}
-                  onClick={() => {
-                    setRegistrationToDelete(registration);
-                    setShowDeleteModal(true);
-                  }}
-                  size="small"
-                  sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
-                  <CloseOutlinedIcon />
-                </IconButton>
-              </Tooltip>
-            )}
-          </Box>
-          <ConfirmDialog
-            open={!!showDeleteModal}
-            title={t('my_page.registrations.delete_registration')}
-            onAccept={deleteDraftRegistration}
-            onCancel={() => setShowDeleteModal(false)}
-            isLoading={isDeleting}
-            dialogDataTestId="confirm-delete-dialog">
-            <Typography>
-              {t('my_page.registrations.delete_registration_message', {
-                title: getTitleString(registrationToDelete?.entityDescription?.mainTitle),
-              })}
-            </Typography>
-          </ConfirmDialog>
-        </>
+          )}
+        </Box>
       )}
     </Box>
   );

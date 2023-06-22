@@ -4,6 +4,13 @@ import { TablePagination, Typography } from '@mui/material';
 import { Registration, RegistrationPreview, emptyRegistration } from '../../types/registration.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { RegistrationList } from '../../components/RegistrationList';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { getTitleString } from '../../utils/registration-helpers';
+import { deleteRegistration } from '../../api/registrationApi';
+import { setNotification } from '../../redux/notificationSlice';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { getIdentifierFromId } from '../../utils/general-helpers';
+import { useDispatch } from 'react-redux';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -12,6 +19,7 @@ interface MyRegistrationsListProps {
 
 export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyRegistrationsListProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -50,11 +58,37 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     } as Registration;
   });
 
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [registrationToDelete, setRegistrationToDelete] = useState<Registration>();
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const deleteDraftRegistration = async () => {
+    if (!registrationToDelete) {
+      return;
+    }
+    const identifierToDelete = getIdentifierFromId(registrationToDelete.id);
+    setIsDeleting(true);
+    const deleteRegistrationResponse = await deleteRegistration(identifierToDelete);
+    if (isErrorStatus(deleteRegistrationResponse.status)) {
+      dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
+      setIsDeleting(false);
+    } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
+      dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
+      refetchRegistrations && refetchRegistrations();
+    }
+  };
+
+  const onDeleteDraftRegistration = (registration: Registration) => {
+    setRegistrationToDelete(registration);
+    setShowDeleteModal(true);
+  };
+
   return (
     <>
       {registrationsCopy.length > 0 ? (
         <>
           <RegistrationList
+            onDeleteDraftRegistration={onDeleteDraftRegistration}
             registrations={registrationsCopy}
             canEditRegistration={true}
             refetchRegistrations={refetchRegistrations}
@@ -72,6 +106,20 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}
+
+      <ConfirmDialog
+        open={!!showDeleteModal}
+        title={t('my_page.registrations.delete_registration')}
+        onAccept={deleteDraftRegistration}
+        onCancel={() => setShowDeleteModal(false)}
+        isLoading={isDeleting}
+        dialogDataTestId="confirm-delete-dialog">
+        <Typography>
+          {t('my_page.registrations.delete_registration_message', {
+            title: getTitleString(registrationToDelete?.entityDescription?.mainTitle),
+          })}
+        </Typography>
+      </ConfirmDialog>
     </>
   );
 };
