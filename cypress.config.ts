@@ -4,6 +4,7 @@ import codeCoverageTask from '@cypress/code-coverage/task';
 export default defineConfig({
   projectId: 'kigtb6',
   video: false,
+  viewportWidth: 1600,
   e2e: {
     setupNodeEvents(on, config) {
       codeCoverageTask(on, config);
