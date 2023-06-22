@@ -1,4 +1,4 @@
-import { Doi, Registration } from '../types/registration.types';
+import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { PublicationsApiPath } from './apiPaths';
@@ -75,6 +75,12 @@ export const fetchRegistration = async (registrationIdentifier: string) => {
   return fetchRegistrationResponse.data;
 };
 
+export const fetchRegistrationsByOwner = async () => {
+  const fetchRegistrationsByOwnerResponse = await authenticatedApiRequest2<MyRegistrationsResponse>({
+    url: PublicationsApiPath.RegistrationsByOwner,
+  });
+  return fetchRegistrationsByOwnerResponse.data;
+};
 export const fetchRegistrationTickets = async (registrationId: string) => {
   const getTickets = await authenticatedApiRequest2<TicketCollection>({
     url: `${registrationId}/tickets`,

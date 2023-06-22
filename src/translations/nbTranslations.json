@@ -559,8 +559,8 @@
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "published_registrations": "Publiserte registreringer",
-      "unpublished_registrations": "Upubliserte registreringer"
+      "published": "Publisert",
+      "unpublished": "Upublisert"
     },
     "research_profile": "Forskerprofil",
     "roles": {

@@ -18,7 +18,6 @@ describe('User opens registration form and can see validation errors', () => {
 
     cy.get(`[data-testid=${dataTestId.header.myPageLink}]`).click();
     cy.get(`[data-testid=${dataTestId.myPage.registrationsAccordion}]`).click();
-    cy.get(`[data-testid=${dataTestId.myPage.myRegistrationsLink}]`).click();
     cy.get('[data-testid=edit-registration-4327439]').click({ force: true });
   });
 

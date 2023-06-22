@@ -13,7 +13,6 @@ import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
@@ -38,6 +37,7 @@ import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../compone
 import { TicketList, ticketsPerPageOptions } from '../messages/components/TicketList';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MyRegistrations } from '../my_registrations/MyRegistrations';
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
@@ -51,6 +51,11 @@ const MyPagePage = () => {
   const queryClient = useQueryClient();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
+
+  const [selectedRegistrationStatus, setSelectedRegistrationStatus] = useState({
+    published: false,
+    unpublished: true,
+  });
 
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
@@ -262,13 +267,38 @@ const MyPagePage = () => {
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
             <NavigationList>
-              <LinkButton
-                key={dataTestId.myPage.myRegistrationsLink}
-                data-testid={dataTestId.myPage.myRegistrationsLink}
-                isSelected={currentPath === UrlPathTemplate.MyPageMyRegistrations}
-                to={UrlPathTemplate.MyPageMyRegistrations}>
-                {t('common.registrations')}
-              </LinkButton>
+              <StyledTicketSearchFormGroup>
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
+                  checked={selectedRegistrationStatus.unpublished}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedRegistrationStatus({
+                          ...selectedRegistrationStatus,
+                          unpublished: !selectedRegistrationStatus.unpublished,
+                        })
+                      }
+                    />
+                  }
+                  label={t('my_page.registrations.unpublished')}
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
+                  checked={selectedRegistrationStatus.published}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedRegistrationStatus({
+                          ...selectedRegistrationStatus,
+                          published: !selectedRegistrationStatus.published,
+                        })
+                      }
+                    />
+                  }
+                  label={t('my_page.registrations.published')}
+                />
+              </StyledTicketSearchFormGroup>
             </NavigationList>
             <Divider sx={{ mt: '0.5rem' }} />
             <LinkCreateButton
@@ -362,7 +392,12 @@ const MyPagePage = () => {
             />
           </CreatorRoute>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations}>
+            <MyRegistrations
+              selectedPublished={selectedRegistrationStatus.published}
+              selectedUnpublished={selectedRegistrationStatus.unpublished}
+            />
+          </CreatorRoute>
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResearchProfile} component={ResearchProfile} />
