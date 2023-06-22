@@ -105,7 +105,7 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
   !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCurator && user.customerId === registration.publisher.id;
+  !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
 export const getYearQuery = (yearValue: string) =>
   yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();
@@ -584,12 +584,6 @@ export const getOutputName = (item: OutputItem): string => {
   }
 };
 
-const userIsOwnerOfRegistration = (user: User | null, registration: Registration) =>
-  !!user?.isCreator && !!user.nvaUsername && user.nvaUsername === registration.resourceOwner.owner;
-
-export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
-  !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
-
 const userIsContributorOnPublishedRegistration = (user: User | null, registration: Registration) =>
   !!user?.isCreator &&
   !!user.cristinId &&
@@ -598,8 +592,8 @@ const userIsContributorOnPublishedRegistration = (user: User | null, registratio
   !!registration.entityDescription?.contributors.some((contributor) => contributor.identity.id === user.cristinId);
 
 export const userCanEditRegistration = (user: User | null, registration: Registration) =>
-  userIsOwnerOfRegistration(user, registration) ||
-  userIsCuratorForRegistration(user, registration) ||
+  userIsRegistrationOwner(user, registration) ||
+  userIsRegistrationCurator(user, registration) ||
   userIsContributorOnPublishedRegistration(user, registration);
 
 export const hyphenateIsrc = (isrc: string) =>

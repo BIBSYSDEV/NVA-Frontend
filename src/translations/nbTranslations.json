@@ -113,6 +113,7 @@
     "add_custom": "Legg til {{- name}}",
     "all": "Alle",
     "cancel": "Avbryt",
+    "category": "Kategori",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
     "close": "Lukk",
@@ -128,6 +129,7 @@
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
     "error_occurred": "En uventet feil har oppstått",
+    "filter": "Filter",
     "first_name": "Fornavn",
     "help": "Hjelp",
     "id": "ID",
@@ -135,7 +137,6 @@
     "institutions": "Institusjoner",
     "last_name": "Etternavn",
     "link": "Lenke",
-    "loading": "Laster",
     "menu": "Meny",
     "message": "Melding",
     "move_down": "Flytt ned",
@@ -467,24 +468,26 @@
       "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner."
     },
     "labels": {
-      "CC BY": "CC BY",
-      "CC BY-NC": "CC BY-NC",
-      "CC BY-NC-ND": "CC BY-NC-ND",
-      "CC BY-NC-SA": "CC BY-NC-SA",
-      "CC BY-ND": "CC BY-ND",
-      "CC BY-SA": "CC BY-SA",
-      "CC0": "CC0",
-      "RightsReserved": "Utgivers betingelser"
+      "cc_by": "CC BY ({{version}})",
+      "cc_by_nc": "CC BY-NC ({{version}})",
+      "cc_by_nc_nd": "CC BY-NC-ND ({{version}})",
+      "cc_by_nc_sa": "CC BY-NC-SA ({{version}})",
+      "cc_by_nd": "CC BY-ND ({{version}})",
+      "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
+      "cc_by_sa": "CC BY-SA ({{version}})",
+      "cc0": "CC0 ({{version}})",
+      "rights_reserved": "Utgivers betingelser"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
-      "cc_by": "https://creativecommons.org/licenses/by/4.0/deed.no",
-      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/4.0/deed.no",
-      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/4.0/deed.no",
-      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.no",
-      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/4.0/deed.no",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/deed.no",
-      "rights_reserved": "https://rightsstatements.org/page/InC/1.0/"
+      "cc_by": "https://creativecommons.org/licenses/by/{{version}}/deed.no",
+      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/{{version}}/deed.no",
+      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/{{version}}/deed.no",
+      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/{{version}}/deed.no",
+      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}/deed.no",
+      "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
+      "rights_reserved": "https://rightsstatements.org/vocab/InC/1.0/"
     }
   },
   "my_page": {
@@ -1515,7 +1518,6 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "result": "Resultat",
-    "search_filter": "Søkefilter",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",
     "sort_by": "Sorter etter",

@@ -1,5 +1,6 @@
 import i18n from '../translations/i18n';
-import { AggregationBucket, LanguageString } from '../types/common.types';
+import { LanguageString } from '../types/common.types';
+import { InstitutionAggregationBucket } from '../types/registration.types';
 
 // Map from three letter language to two ("nob" -> "no")
 export const getPreferredLanguageCode = (language?: string) => {
@@ -49,7 +50,7 @@ export const getLanguageString = (labels?: LanguageString) => {
   return translatedString;
 };
 
-export const getInstitutionLabelFromBucket = (aggregationBucket: AggregationBucket) => {
+export const getInstitutionLabelFromBucket = (aggregationBucket: InstitutionAggregationBucket) => {
   const labels = aggregationBucket.labels;
 
   if (labels) {
