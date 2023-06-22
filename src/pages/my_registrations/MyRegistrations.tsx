@@ -33,7 +33,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
     .sort((a, b) => {
       if (a.status === RegistrationStatus.Draft && b.status !== RegistrationStatus.Draft) {
         return -1;
-      } else if (b.status === RegistrationStatus.Draft) {
+      } else if (a.status !== RegistrationStatus.Draft && b.status === RegistrationStatus.Draft) {
         return 1;
       }
       return 0;
