@@ -202,7 +202,7 @@ export const emptyRegistrationDate: RegistrationDate = {
 
 export interface RegistrationPreview {
   contributors: Contributor[];
-  identifier?: string;
+  identifier: string;
   id: string;
   mainTitle: string;
   createdDate: string;
