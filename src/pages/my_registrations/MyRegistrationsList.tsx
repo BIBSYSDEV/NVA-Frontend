@@ -1,5 +1,6 @@
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { TablePagination, Typography } from '@mui/material';
 import { Registration, RegistrationPreview, emptyRegistration } from '../../types/registration.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
@@ -10,7 +11,6 @@ import { deleteRegistration } from '../../api/registrationApi';
 import { setNotification } from '../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
-import { useDispatch } from 'react-redux';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -74,12 +74,13 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       setIsDeleting(false);
     } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
-      refetchRegistrations && refetchRegistrations();
+      setIsDeleting(false);
+      refetchRegistrations();
       setShowDeleteModal(false);
     }
   };
 
-  const onDeleteDraftRegistration = (registration: Registration) => {
+  const onClickDeleteRegistration = (registration: Registration) => {
     setRegistrationToDelete(registration);
     setShowDeleteModal(true);
   };
@@ -89,7 +90,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
       {registrationsCopy.length > 0 ? (
         <>
           <RegistrationList
-            onDeleteDraftRegistration={onDeleteDraftRegistration}
+            onDeleteDraftRegistration={onClickDeleteRegistration}
             registrations={registrationsCopy}
             canEditRegistration={true}
             refetchRegistrations={refetchRegistrations}
