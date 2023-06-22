@@ -267,7 +267,7 @@ const MyPagePage = () => {
                       }
                     />
                   }
-                  label={'Upublisert'}
+                  label={t('registration.files_and_license.unpublished')}
                 />
                 <FormControlLabel
                   data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
@@ -282,7 +282,7 @@ const MyPagePage = () => {
                       }
                     />
                   }
-                  label={'Publisert'}
+                  label={t('registration.files_and_license.published')}
                 />
               </StyledTicketSearchFormGroup>
             </NavigationList>

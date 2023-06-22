@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@tanstack/react-query';
 import { ListSkeleton } from '../../components/ListSkeleton';
@@ -31,7 +31,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
           selectedPublished)
     )
     .sort((a, b) => {
-      if (a.status === RegistrationStatus.Draft || b.status !== RegistrationStatus.Draft) {
+      if (a.status === RegistrationStatus.Draft && b.status !== RegistrationStatus.Draft) {
         return -1;
       } else if (b.status === RegistrationStatus.Draft) {
         return 1;
@@ -44,21 +44,21 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       <Helmet>
         <title>{t('common.registrations')}</title>
       </Helmet>
-      <>
+      <div>
         {registrationsQuery.isLoading ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
-          <Box>
-            <Typography sx={{ lineHeight: '2.5rem' }} variant="h2">
+          <>
+            <Typography gutterBottom variant="h2">
               {t('common.registrations')}
             </Typography>
             <MyRegistrationsList
               registrations={filteredRegistrations}
               refetchRegistrations={registrationsQuery.refetch}
             />
-          </Box>
+          </>
         )}
-      </>
+      </div>
     </>
   );
 };
