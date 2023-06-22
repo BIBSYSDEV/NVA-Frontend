@@ -22,13 +22,14 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import prettyBytes from 'pretty-bytes';
 import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
-import { AssociatedFile, AssociatedFileType, licenses } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { administrativeAgreementId } from '../FilesAndLicensePanel';
 import { equalUris } from '../../../utils/general-helpers';
+import { licenses } from '../../../types/license.types';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -183,22 +184,24 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               required
               onChange={({ target: { value } }) => setFieldValue(field.name, value)}
               disabled={file.administrativeAgreement}>
-              {licenses.map((license) => (
-                <MenuItem
-                  data-testid={dataTestId.registrationWizard.files.licenseItem}
-                  key={license.id}
-                  value={license.id}
-                  divider
-                  dense
-                  sx={{ gap: '1rem' }}>
-                  <ListItemIcon>
-                    <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Typography>{license.name}</Typography>
-                  </ListItemText>
-                </MenuItem>
-              ))}
+              {licenses
+                .filter((license) => license.version === 4 || !license.version)
+                .map((license) => (
+                  <MenuItem
+                    data-testid={dataTestId.registrationWizard.files.licenseItem}
+                    key={license.id}
+                    value={license.id}
+                    divider
+                    dense
+                    sx={{ gap: '1rem' }}>
+                    <ListItemIcon>
+                      <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <Typography>{license.name}</Typography>
+                    </ListItemText>
+                  </MenuItem>
+                ))}
             </TextField>
           )}
         </Field>

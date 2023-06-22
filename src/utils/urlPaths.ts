@@ -42,7 +42,6 @@ export enum UrlPathTemplate {
   RegistrationNew = '/registration',
   RegistrationWizard = '/registration/:identifier/edit',
   ResearchProfile = '/research-profile',
-  Search = '/search',
   Tasks = '/tasks',
   TasksRegistration = '/tasks/:identifier',
   Wildcard = '*',

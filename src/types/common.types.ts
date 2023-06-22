@@ -51,14 +51,10 @@ export interface SearchResponse<T> {
 export type Aggregations = {
   [fieldName: string]: {
     buckets?: AggregationBucket[];
-    id?: {
-      buckets: AggregationBucket[];
-    };
   };
 };
 
 export interface AggregationBucket {
   key: string;
   docCount: number;
-  labels?: Aggregations;
 }

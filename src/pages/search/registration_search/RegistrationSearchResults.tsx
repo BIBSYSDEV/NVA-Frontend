@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import { Box } from '@mui/material';
 import { RegistrationList } from '../../../components/RegistrationList';
-import { SearchResponse } from '../../../types/common.types';
-import { Registration } from '../../../types/registration.types';
+import { RegistrationSearchResponse } from '../../../types/registration.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 
 interface SearchResultsProps {
-  searchResult: SearchResponse<Registration>;
+  searchResult: RegistrationSearchResponse;
 }
 
 export const RegistrationSearchResults = ({ searchResult }: SearchResultsProps) => {

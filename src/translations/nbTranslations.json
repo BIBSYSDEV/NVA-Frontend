@@ -49,15 +49,15 @@
       "central_import": "Sentralimport",
       "duplicate_check": "Duplikatsjekk",
       "duplicate_search_hits_shown": "Søket ga følgende treff: (viser {{ShownResultsCount}} av {{TotalResultsCount}})",
+      "import": "Importer",
       "import_publication": "Import publication",
       "or_search_with": "eller søk med",
       "publications": "Publikasjoner",
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})",
-      "import": "Importer",
-      "see_publication": "Se publikasjon"
+      "see_publication": "Se publikasjon",
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -113,6 +113,7 @@
     "add_custom": "Legg til {{- name}}",
     "all": "Alle",
     "cancel": "Avbryt",
+    "category": "Kategori",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
     "close": "Lukk",
@@ -128,6 +129,7 @@
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
     "error_occurred": "En uventet feil har oppstått",
+    "filter": "Filter",
     "first_name": "Fornavn",
     "help": "Hjelp",
     "id": "ID",
@@ -135,7 +137,6 @@
     "institutions": "Institusjoner",
     "last_name": "Etternavn",
     "link": "Lenke",
-    "loading": "Laster",
     "menu": "Meny",
     "message": "Melding",
     "move_down": "Flytt ned",
@@ -208,6 +209,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -293,11 +298,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -410,9 +411,9 @@
       "admin_added": "Bruker lagt til som administrator",
       "create_project": "Prosjekt er opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
+      "create_registration": "Publikasjon er opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
-      "create_registration": "Publikasjon er opprettet",
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
@@ -466,24 +467,26 @@
       "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner."
     },
     "labels": {
-      "CC BY": "CC BY",
-      "CC BY-NC": "CC BY-NC",
-      "CC BY-NC-ND": "CC BY-NC-ND",
-      "CC BY-NC-SA": "CC BY-NC-SA",
-      "CC BY-ND": "CC BY-ND",
-      "CC BY-SA": "CC BY-SA",
-      "CC0": "CC0",
-      "RightsReserved": "Utgivers betingelser"
+      "cc_by": "CC BY ({{version}})",
+      "cc_by_nc": "CC BY-NC ({{version}})",
+      "cc_by_nc_nd": "CC BY-NC-ND ({{version}})",
+      "cc_by_nc_sa": "CC BY-NC-SA ({{version}})",
+      "cc_by_nd": "CC BY-ND ({{version}})",
+      "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
+      "cc_by_sa": "CC BY-SA ({{version}})",
+      "cc0": "CC0 ({{version}})",
+      "rights_reserved": "Utgivers betingelser"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
-      "cc_by": "https://creativecommons.org/licenses/by/4.0/deed.no",
-      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/4.0/deed.no",
-      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/4.0/deed.no",
-      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.no",
-      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/4.0/deed.no",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/deed.no",
-      "rights_reserved": "https://rightsstatements.org/page/InC/1.0/"
+      "cc_by": "https://creativecommons.org/licenses/by/{{version}}/deed.no",
+      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/{{version}}/deed.no",
+      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/{{version}}/deed.no",
+      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/{{version}}/deed.no",
+      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}/deed.no",
+      "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
+      "rights_reserved": "https://rightsstatements.org/vocab/InC/1.0/"
     }
   },
   "my_page": {
@@ -555,8 +558,8 @@
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "published_registrations": "Publiserte registreringer",
-      "unpublished_registrations": "Upubliserte registreringer"
+      "published": "Publisert",
+      "unpublished": "Upublisert"
     },
     "research_profile": "Forskerprofil",
     "roles": {
@@ -1093,9 +1096,9 @@
       "reserve_doi": "Reserver en DOI",
       "reserved_doi": "Reservert DOI",
       "tasks_panel": {
-        "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
-        "assign_doi": "Tildel DOI",
         "assign_curator": "Sett kurator",
+        "assign_doi": "Tildel DOI",
+        "assign_doi_about": "For at andre skal kunne benytte DOI, må du tildele denne. Metadata må være publisert.",
         "files_will_soon_be_published": "Filene vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
         "has_rejected_files_publishing_request": "Registreringen har en avslått publiseringsforespørsel for filene.",
         "has_reserved_doi": "Du har reservert en DOI til denne registreringen. Den kan deles med de som ønsker å sitere dette resultatet. Når registreringen blir publisert og blir offentlig tilgjengelig, må en kurator validere metadata før DOI blir offentlig tilgjengelig.",
@@ -1514,7 +1517,6 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "result": "Resultat",
-    "search_filter": "Søkefilter",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",
     "sort_by": "Sorter etter",
@@ -1527,6 +1529,7 @@
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
     "new_user_dialogs": "Nye brukerdialoger",
+    "unread": "Ulest",
     "user_dialog": "Brukerdialog"
   }
 }

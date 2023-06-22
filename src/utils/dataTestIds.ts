@@ -115,6 +115,7 @@ export const dataTestId = {
       removeFilterButton: 'remove-filter-button',
       searchButton: 'search-button',
     },
+    contributorFacets: 'contributor-facets',
     facetItem: (value: string) => `facet-item-${value}`,
     orderBySelect: 'order-by-select',
     personSearchButton: 'person-search-button',
@@ -450,6 +451,8 @@ export const dataTestId = {
     myProjectRegistrationsLink: 'my-project-registrations-link',
     myProjectsLink: 'my-projects-link',
     myRegistrationsLink: 'my-registrations-link',
+    myRegistrationsPublishedCheckbox: 'my-registrations-published-checkbox',
+    myRegistrationsUnpublishedCheckbox: 'my-registrations-unpublished-checkbox',
     myResultsLink: "my-publications'link",
     newRegistrationLink: 'new-registration-link',
     projectRegistrationsAccordion: 'project-registrations-accordion',
@@ -475,5 +478,6 @@ export const dataTestId = {
       publishingButton: 'publishing-request-button',
       supportButton: 'support-button',
     },
+    unreadSearchCheckbox: 'unread-search-checkbox',
   },
 };
