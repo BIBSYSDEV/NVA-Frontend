@@ -42,7 +42,7 @@ export const MyResults = () => {
         </Box>
       ) : registrations && registrations.size > 0 ? (
         <>
-          <RegistrationSearchResults searchResult={registrations} />
+          <RegistrationSearchResults canEditRegistration={true} searchResult={registrations} />
           <TablePagination
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             component="div"
