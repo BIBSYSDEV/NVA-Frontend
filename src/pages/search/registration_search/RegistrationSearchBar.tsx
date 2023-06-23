@@ -7,6 +7,7 @@ import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../util
 import { AdvancedSearchRow, registrationFilters } from '../registration_search/filters/AdvancedSearchRow';
 import { SearchTextField } from '../SearchTextField';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 export const RegistrationSearchBar = () => {
   const { t } = useTranslation();
@@ -69,6 +70,7 @@ export const RegistrationSearchBar = () => {
             )}
             <Box sx={{ display: 'flex', gap: '1rem' }}>
               <Button
+                data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
                 variant="outlined"
                 onClick={() => {
                   const newPropertyFilter: PropertySearch = {
@@ -82,7 +84,11 @@ export const RegistrationSearchBar = () => {
                 {t('search.add_filter')}
               </Button>
               {showAdvancedSearch && (
-                <Button variant="contained" type="submit" startIcon={<SearchIcon />}>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  startIcon={<SearchIcon />}
+                  data-testid={dataTestId.startPage.advancedSearch.searchButton}>
                   {t('common.search')}
                 </Button>
               )}

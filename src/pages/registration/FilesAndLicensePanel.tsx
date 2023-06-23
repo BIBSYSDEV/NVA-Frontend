@@ -22,13 +22,7 @@ import { UppyFile } from '@uppy/core';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Modal } from '../../components/Modal';
-import {
-  AssociatedFile,
-  AssociatedLink,
-  licenses,
-  NullAssociatedArtifact,
-  Uppy,
-} from '../../types/associatedArtifact.types';
+import { AssociatedFile, AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { FileUploader } from './files_and_license_tab/FileUploader';
@@ -49,6 +43,7 @@ import { DoiField } from './resource_type_tab/components/DoiField';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
+import { licenses } from '../../types/license.types';
 
 export const administrativeAgreementId = 'administrative-agreement';
 
@@ -395,8 +390,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         maxWidth="sm"
         dataTestId={dataTestId.registrationWizard.files.licenseModal}>
         {licenses.map((license) => (
-          <Box key={license.identifier} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-            <Typography variant="h3">{t(`licenses.labels.${license.identifier}`)}</Typography>
+          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+            <Typography variant="h3" gutterBottom>
+              {license.name}
+            </Typography>
             <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
             <Typography paragraph>{license.description}</Typography>
             {license.link && (

@@ -14,6 +14,7 @@ export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     padding: 0,
     gridTemplateColumns: '1fr',
+    marginTop: '1px',
   },
 }));
 

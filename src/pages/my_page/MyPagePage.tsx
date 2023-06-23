@@ -13,7 +13,6 @@ import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
@@ -38,6 +37,7 @@ import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../compone
 import { TicketList, ticketsPerPageOptions } from '../messages/components/TicketList';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MyRegistrations } from '../my_registrations/MyRegistrations';
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
@@ -52,6 +52,11 @@ const MyPagePage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
 
+  const [selectedRegistrationStatus, setSelectedRegistrationStatus] = useState({
+    published: false,
+    unpublished: true,
+  });
+
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
     generalSupportCase: true,
@@ -64,6 +69,8 @@ const MyPagePage = () => {
     Completed: false,
     Closed: false,
   });
+
+  const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
 
   const selectedTypesArray = Object.entries(selectedTypes)
     .filter(([_, selected]) => selected)
@@ -81,7 +88,9 @@ const MyPagePage = () => {
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const query = [typeQuery, statusQuery].filter(Boolean).join(' AND ');
+  const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
+
+  const query = [typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
     queryKey: ['tickets', rowsPerPage, page, query],
@@ -139,6 +148,16 @@ const MyPagePage = () => {
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
+            <StyledTicketSearchFormGroup>
+              <FormControlLabel
+                sx={{ ml: '2rem' }}
+                data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
+                checked={filterUnreadOnly}
+                control={<StyledStatusCheckbox onChange={() => setFilterUnreadOnly(!filterUnreadOnly)} />}
+                label={t('tasks.unread')}
+              />
+            </StyledTicketSearchFormGroup>
+
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
@@ -248,13 +267,38 @@ const MyPagePage = () => {
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
             <NavigationList>
-              <LinkButton
-                key={dataTestId.myPage.myRegistrationsLink}
-                data-testid={dataTestId.myPage.myRegistrationsLink}
-                isSelected={currentPath === UrlPathTemplate.MyPageMyRegistrations}
-                to={UrlPathTemplate.MyPageMyRegistrations}>
-                {t('common.registrations')}
-              </LinkButton>
+              <StyledTicketSearchFormGroup>
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
+                  checked={selectedRegistrationStatus.unpublished}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedRegistrationStatus({
+                          ...selectedRegistrationStatus,
+                          unpublished: !selectedRegistrationStatus.unpublished,
+                        })
+                      }
+                    />
+                  }
+                  label={t('my_page.registrations.unpublished')}
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
+                  checked={selectedRegistrationStatus.published}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedRegistrationStatus({
+                          ...selectedRegistrationStatus,
+                          published: !selectedRegistrationStatus.published,
+                        })
+                      }
+                    />
+                  }
+                  label={t('my_page.registrations.published')}
+                />
+              </StyledTicketSearchFormGroup>
             </NavigationList>
             <Divider sx={{ mt: '0.5rem' }} />
             <LinkCreateButton
@@ -348,7 +392,12 @@ const MyPagePage = () => {
             />
           </CreatorRoute>
           <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />
+          <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations}>
+            <MyRegistrations
+              selectedPublished={selectedRegistrationStatus.published}
+              selectedUnpublished={selectedRegistrationStatus.unpublished}
+            />
+          </CreatorRoute>
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResearchProfile} component={ResearchProfile} />
