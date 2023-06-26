@@ -10,6 +10,7 @@ import {
   Employment,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
+import { VerificationStatus } from '../types/contributor.types';
 
 export const getValueByKey = (
   key: CristinPersonIdentifierType | CristinPersonNameType,
@@ -38,6 +39,10 @@ export const isActiveEmployment = (employment: Employment) => {
 export const getOrcidUri = (identifiers: CristinPersonIdentifier[] = []) => {
   const orcid = getValueByKey('ORCID', identifiers);
   return orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
+};
+
+export const getVerificationStatus = (verifiedStatus: boolean) => {
+  return verifiedStatus ? VerificationStatus.Verified : VerificationStatus.NotVerified;
 };
 
 export const getMaskedNationalIdentityNumber = (nationalIdentityNumber: string) =>
