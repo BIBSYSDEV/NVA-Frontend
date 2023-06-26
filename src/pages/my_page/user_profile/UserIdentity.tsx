@@ -5,6 +5,7 @@ import { User } from '../../../types/user.types';
 import { UserRoles } from './UserRoles';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
+import { UserOrcid } from './UserOrcid';
 
 interface UserIdentitiesProps {
   user: User;
@@ -54,6 +55,10 @@ export const UserIdentity = ({ user, hasActiveEmployment }: UserIdentitiesProps)
               variant="filled"
               disabled
             />
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+            <Typography fontWeight={600}>{t('common.orcid')}</Typography>
+            <UserOrcid user={user} />
           </Box>
         </Box>
         <Divider orientation="vertical" />
