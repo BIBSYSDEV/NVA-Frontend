@@ -11,7 +11,17 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { canEditProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 
-export const MyProjectRegistrations = () => {
+interface MyProjectRegistrationsProps {
+  selectedOngoing?: boolean;
+  selectedNotStarted?: boolean;
+  selectedEnded?: boolean;
+}
+
+export const MyProjectRegistrations = ({
+  selectedOngoing,
+  selectedNotStarted,
+  selectedEnded,
+}: MyProjectRegistrationsProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const cristinIdentifier = getIdentifierFromId(user?.cristinId ?? '');
@@ -25,6 +35,14 @@ export const MyProjectRegistrations = () => {
     queryFn: () => searchForProjects(rowsPerPage, page + 1, { creator: cristinIdentifier }),
   });
 
+  const projects = projectsQuery.data?.hits ?? [];
+  const filteredProjects = projects.filter(
+    ({ status }) =>
+      (status === 'ACTIVE' && selectedOngoing) ||
+      (status === 'CONCLUDED' && selectedEnded) ||
+      (status === 'NOTSTARTED' && selectedNotStarted)
+  );
+
   return (
     <div>
       <Typography variant="h2" gutterBottom>
@@ -35,7 +53,7 @@ export const MyProjectRegistrations = () => {
       ) : projectsQuery.data && projectsQuery.data.size > 0 ? (
         <>
           <List>
-            {projectsQuery.data.hits.map((project) => (
+            {filteredProjects.map((project) => (
               <ProjectListItem
                 key={project.id}
                 project={project}

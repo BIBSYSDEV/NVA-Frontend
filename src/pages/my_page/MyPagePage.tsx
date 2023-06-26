@@ -57,6 +57,12 @@ const MyPagePage = () => {
     unpublished: true,
   });
 
+  const [selectedProjectStatus, setSelectedProjectStatus] = useState({
+    notStarted: false,
+    ongoing: true,
+    concluded: false,
+  });
+
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
     generalSupportCase: true,
@@ -316,13 +322,53 @@ const MyPagePage = () => {
             defaultPath={UrlPathTemplate.MyPageMyProjectRegistrations}
             dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
             <NavigationList>
-              <LinkButton
-                key={dataTestId.myPage.myProjectRegistrationsLink}
-                data-testid={dataTestId.myPage.myProjectRegistrationsLink}
-                isSelected={currentPath === UrlPathTemplate.MyPageMyProjectRegistrations}
-                to={UrlPathTemplate.MyPageMyProjectRegistrations}>
-                {t('my_page.project_registrations')}
-              </LinkButton>
+              <StyledTicketSearchFormGroup>
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
+                  checked={selectedProjectStatus.ongoing}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedProjectStatus({
+                          ...selectedProjectStatus,
+                          ongoing: !selectedProjectStatus.ongoing,
+                        })
+                      }
+                    />
+                  }
+                  label={'Pågående'}
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
+                  checked={selectedProjectStatus.notStarted}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedProjectStatus({
+                          ...selectedProjectStatus,
+                          notStarted: !selectedProjectStatus.notStarted,
+                        })
+                      }
+                    />
+                  }
+                  label={'Ikke startet'}
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
+                  checked={selectedProjectStatus.concluded}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedProjectStatus({
+                          ...selectedProjectStatus,
+                          concluded: !selectedProjectStatus.concluded,
+                        })
+                      }
+                    />
+                  }
+                  label={'Avsluttet'}
+                />
+              </StyledTicketSearchFormGroup>
             </NavigationList>
             <Divider sx={{ mt: '0.5rem' }} />
             <LinkCreateButton
@@ -402,7 +448,13 @@ const MyPagePage = () => {
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResearchProfile} component={ResearchProfile} />
           <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResults} component={MyResults} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations} component={MyProjectRegistrations} />
+          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations}>
+            <MyProjectRegistrations
+              selectedOngoing={selectedProjectStatus.ongoing}
+              selectedNotStarted={selectedProjectStatus.notStarted}
+              selectedEnded={selectedProjectStatus.concluded}
+            />
+          </LoggedInRoute>
           <LoggedInRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} />
         </Switch>
       </ErrorBoundary>
