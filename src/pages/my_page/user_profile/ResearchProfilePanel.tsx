@@ -5,11 +5,13 @@ import PreviewIcon from '@mui/icons-material/Preview';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { CristinPerson } from '../../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
-import { AccountCircle } from '@mui/icons-material';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { useLocation } from 'react-router-dom';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { PageSpinner } from '../../../components/PageSpinner';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
+import { getContributorInitials } from '../../../utils/registration-helpers';
 
 interface ResearchProfilePanelProps {
   person?: CristinPerson;
@@ -46,12 +48,16 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
               </Box>
             )}
 
-            <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center' }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center', mt: '1rem' }}>
               <Typography variant="h2">{t('my_page.my_profile.research_profile_summary.research_profile')}</Typography>
-              <AccountCircle sx={{ fontSize: '3rem' }} />
+              <StyledBaseContributorIndicator
+                sx={{ bgcolor: 'primary.main', color: 'white', height: '2.5rem', width: '2.5rem', fontSize: '1.5rem' }}
+                data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
+                {getContributorInitials(fullName)}
+              </StyledBaseContributorIndicator>
             </Box>
 
-            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mt: '0.5rem' }}>
               <Typography variant="h3">{fullName}</Typography>
               {orcidUri && (
                 <IconButton size="small" href={orcidUri} target="_blank">
@@ -64,11 +70,11 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
               {t('my_page.my_profile.research_profile_summary.affiliations')}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {activeAffiliations.map((affiliation) => (
-                <>
-                  <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />
-                  <Divider />
-                </>
+              {activeAffiliations.map((affiliation, index) => (
+                <div key={index}>
+                  <AffiliationHierarchy key={affiliation.organization + index} unitUri={affiliation.organization} />
+                  <Divider key={index} />
+                </div>
               ))}
             </Box>
           </>
