@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import PreviewIcon from '@mui/icons-material/Preview';
@@ -10,7 +10,6 @@ import { AffiliationHierarchy } from '../../../components/institution/Affiliatio
 import { useLocation } from 'react-router-dom';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { BackgroundDiv } from '../../../components/styled/Wrappers';
 
 interface ResearchProfilePanelProps {
   person?: CristinPerson;
@@ -26,20 +25,20 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
   const currentPath = location.pathname.replace(/\/$/, '').toLowerCase();
-  const isPreview = currentPath === UrlPathTemplate.MyPageMyProfile;
+  const isPreview = currentPath === UrlPathTemplate.MyPageMyPersonalia;
 
   return (
     <>
       <Helmet>
         <title>{fullName}</title>
       </Helmet>
-      <BackgroundDiv sx={{ bgcolor: 'secondary.main', height: '100%', padding: '1rem' }}>
+      <Box sx={{ bgcolor: 'person.main', height: '100%', padding: '0.5rem' }}>
         {isLoadingPerson ? (
           <PageSpinner aria-label={t('my_page.research_profile')} />
         ) : (
           <>
             {isPreview && (
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <PreviewIcon />
                 <Typography variant="h3" component="span" sx={{ textTransform: 'none' }}>
                   {t('my_page.my_profile.research_profile_summary.preview')}
@@ -66,12 +65,15 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               {activeAffiliations.map((affiliation) => (
-                <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />
+                <>
+                  <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />
+                  <Divider />
+                </>
               ))}
             </Box>
           </>
         )}
-      </BackgroundDiv>
+      </Box>
     </>
   );
 };
