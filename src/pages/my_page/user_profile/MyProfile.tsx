@@ -2,12 +2,11 @@ import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet-async';
-import { Box, Divider, IconButton, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useQuery } from '@tanstack/react-query';
-import { UserOrcid } from './UserOrcid';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 import { RootState } from '../../../redux/store';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -160,9 +159,6 @@ export const MyProfile = () => {
                           {t('common.save')}
                         </LoadingButton>
                       </Box>
-                      <Divider sx={{ my: '1rem' }} />
-                      <Typography fontWeight={600}>{t('common.orcid')}</Typography>
-                      <UserOrcid user={user} />
                     </Form>
                   )}
                 </Formik>
