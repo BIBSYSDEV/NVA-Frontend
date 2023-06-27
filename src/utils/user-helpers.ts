@@ -41,8 +41,13 @@ export const getOrcidUri = (identifiers: CristinPersonIdentifier[] = []) => {
   return orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
 };
 
-export const getVerificationStatus = (verifiedStatus: boolean) => {
-  return verifiedStatus ? VerificationStatus.Verified : VerificationStatus.NotVerified;
+export const getVerificationStatus = (verifiedStatus: boolean | undefined) => {
+  if (verifiedStatus) {
+    return VerificationStatus.Verified;
+  } else if (!verifiedStatus) {
+    return VerificationStatus.NotVerified;
+  }
+  return VerificationStatus.CannotBeEstablished;
 };
 
 export const getMaskedNationalIdentityNumber = (nationalIdentityNumber: string) =>

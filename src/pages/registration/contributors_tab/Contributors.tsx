@@ -130,9 +130,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       id: selectedContributor.id,
       name: getFullCristinName(selectedContributor.names),
       orcId: getOrcidUri(selectedContributor.identifiers),
-      verificationStatus: selectedContributor.verified
-        ? getVerificationStatus(selectedContributor.verified)
-        : VerificationStatus.CannotBeEstablished,
+      verificationStatus: getVerificationStatus(selectedContributor.verified),
     };
 
     const activeAffiliations = filterActiveAffiliations(selectedContributor.affiliations);
