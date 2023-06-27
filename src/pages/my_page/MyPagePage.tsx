@@ -324,7 +324,7 @@ const MyPagePage = () => {
             <NavigationList>
               <StyledTicketSearchFormGroup>
                 <FormControlLabel
-                  data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
+                  data-testid={dataTestId.myPage.myProjectRegistrationsOngoingCheckbox}
                   checked={selectedProjectStatus.ongoing}
                   control={
                     <StyledStatusCheckbox
@@ -339,7 +339,7 @@ const MyPagePage = () => {
                   label={t('my_page.project_registration_status.ongoing')}
                 />
                 <FormControlLabel
-                  data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
+                  data-testid={dataTestId.myPage.myProjectRegistrationsNotStartedCheckbox}
                   checked={selectedProjectStatus.notStarted}
                   control={
                     <StyledStatusCheckbox
@@ -354,7 +354,7 @@ const MyPagePage = () => {
                   label={t('my_page.project_registration_status.not_started')}
                 />
                 <FormControlLabel
-                  data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
+                  data-testid={dataTestId.myPage.myProjectRegistrationsConcludedCheckbox}
                   checked={selectedProjectStatus.concluded}
                   control={
                     <StyledStatusCheckbox
