@@ -15,9 +15,10 @@ interface UnpublishableFileRowProps {
   removeFile: () => void;
   toggleLicenseModal: () => void;
   baseFieldName: string;
+  disabled: boolean;
 }
 
-export const UnpublishableFileRow = ({ file, removeFile, baseFieldName }: UnpublishableFileRowProps) => {
+export const UnpublishableFileRow = ({ file, removeFile, baseFieldName, disabled }: UnpublishableFileRowProps) => {
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
@@ -29,7 +30,7 @@ export const UnpublishableFileRow = ({ file, removeFile, baseFieldName }: Unpubl
         <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
           <Tooltip title={t('registration.files_and_license.remove_file')}>
-            <IconButton onClick={toggleOpenConfirmDialog}>
+            <IconButton onClick={toggleOpenConfirmDialog} disabled={disabled}>
               <CancelIcon color="error" />
             </IconButton>
           </Tooltip>
@@ -56,6 +57,7 @@ export const UnpublishableFileRow = ({ file, removeFile, baseFieldName }: Unpubl
             <Tooltip title={t('registration.files_and_license.administrative_contract')}>
               <Checkbox
                 {...field}
+                disabled={disabled}
                 data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
                 checked={field.value}
                 onChange={(event) => {

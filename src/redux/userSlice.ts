@@ -37,10 +37,10 @@ const userSlice = createSlice({
         topOrgCristinId,
         allowedCustomers,
         isCreator: !!customerId && roles.includes(RoleName.Creator),
-        isAppAdmin: !!customerId && roles.includes(RoleName.AppAdmin),
-        isInstitutionAdmin: !!customerId && roles.includes(RoleName.InstitutionAdmin),
-        isCurator: !!customerId && roles.includes(RoleName.Curator),
-        isEditor: !!customerId && roles.includes(RoleName.Editor),
+        isAppAdmin: false, //!!customerId && roles.includes(RoleName.AppAdmin),
+        isInstitutionAdmin: false, // !!customerId && roles.includes(RoleName.InstitutionAdmin),
+        isCurator: false, // !!customerId && roles.includes(RoleName.Curator),
+        isEditor: false, //!!customerId && roles.includes(RoleName.Editor),
       };
       state = user;
       return state;

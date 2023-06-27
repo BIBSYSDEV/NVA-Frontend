@@ -49,9 +49,10 @@ export const administrativeAgreementId = 'administrative-agreement';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
+  canEditFiles: boolean;
 }
 
-export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
+export const FilesAndLicensePanel = ({ uppy, canEditFiles }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
@@ -228,6 +229,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   <FilesTableRow
                                     key={file.identifier}
                                     file={file}
+                                    disabled={!canEditFiles}
                                     removeFile={() => {
                                       const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                                       const remainingFiles = uppy
@@ -281,6 +283,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   <UnpublishableFileRow
                                     key={file.identifier}
                                     file={file}
+                                    disabled={!canEditFiles}
                                     removeFile={() => {
                                       const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                                       const remainingFiles = uppy
@@ -305,7 +308,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       </Box>
                     )}
 
-                    <FileUploader uppy={uppy} addFile={push} />
+                    <FileUploader uppy={uppy} addFile={push} disabled={!canEditFiles} />
                   </BackgroundDiv>
                 </Paper>
 
@@ -315,12 +318,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       {t('common.link')}
                     </Typography>
                     {originalDoi ? (
-                      <DoiField />
+                      <DoiField canEditDoi={canEditFiles} />
                     ) : (
                       <TextField
                         fullWidth
                         variant="filled"
                         label={t('registration.files_and_license.link_to_resource')}
+                        disabled={!canEditFiles}
                         value={
                           associatedLinkIndex >= 0
                             ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id
@@ -370,6 +374,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <Button
                     sx={{ width: 'fit-content', m: 'auto' }}
                     variant="outlined"
+                    disabled={!canEditFiles}
                     data-testid={dataTestId.registrationWizard.files.noFilesOrLinksButton}
                     onClick={() => {
                       const nullAssociatedArtifact: NullAssociatedArtifact = { type: 'NullAssociatedArtifact' };
