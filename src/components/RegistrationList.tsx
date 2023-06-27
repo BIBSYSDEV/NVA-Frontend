@@ -138,8 +138,8 @@ export const RegistrationListItemContent = ({
               component={Link}
               to={getRegistrationWizardPath(identifier)}
               size="small"
-              sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
-              <EditIcon />
+              sx={{ borderRadius: '50%', bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+              <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
           {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
@@ -148,8 +148,8 @@ export const RegistrationListItemContent = ({
                 data-testid={`delete-registration-${identifier}`}
                 onClick={() => onDeleteDraftRegistration(registration)}
                 size="small"
-                sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
-                <CloseOutlinedIcon />
+                sx={{ borderRadius: '50%', bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+                <CloseOutlinedIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
           )}
