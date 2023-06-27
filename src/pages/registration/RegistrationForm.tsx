@@ -11,7 +11,7 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { getTitleString, userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
+import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
@@ -57,8 +57,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
-  const isValidOwner = userIsRegistrationOwner(user, registration);
-  const isValidCurator = userIsRegistrationCurator(user, registration);
+  const canEditRegistration = registration && userCanEditRegistration(user, registration);
 
   const validateForm = (values: Registration): FormikErrors<Registration> => {
     const publicationInstance = values.entityDescription?.reference?.publicationInstance;
@@ -76,7 +75,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   return registrationQuery.isLoading ? (
     <PageSpinner aria-label={t('common.registration')} />
-  ) : !isValidOwner && !isValidCurator && !user?.isEditor ? (
+  ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
     <>
