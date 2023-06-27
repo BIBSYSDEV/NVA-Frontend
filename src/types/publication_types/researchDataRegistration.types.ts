@@ -4,7 +4,7 @@ import {
   BaseReference,
   BaseRegistration,
   ContextPublisher,
-  emptyContextPublisher,
+  PublicationChannelType,
 } from '../registration.types';
 
 export interface ResearchDataRegistration extends BaseRegistration {
@@ -31,7 +31,10 @@ export const emptyResearchDataPublicationInstance: ResearchDataPublicationInstan
 
 export const emptyResearchDataPublicationContext: ResearchDataPublicationContext = {
   type: PublicationType.ResearchData,
-  publisher: emptyContextPublisher,
+  publisher: {
+    type: PublicationChannelType.UnconfirmedPublisher,
+    id: '',
+  },
 };
 
 export interface ResearchDataPublicationContext extends Partial<DataManagementPlanPublicationContext> {
