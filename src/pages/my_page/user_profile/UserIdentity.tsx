@@ -25,7 +25,7 @@ export const UserIdentity = ({ user, hasActiveEmployment }: UserIdentitiesProps)
           display: 'grid',
           gridTemplateColumns: {
             xs: '1fr',
-            md: '4fr auto 3fr',
+            lg: '4fr auto 3fr',
           },
           columnGap: '2rem',
           rowGap: { xs: '1rem' },
@@ -45,7 +45,8 @@ export const UserIdentity = ({ user, hasActiveEmployment }: UserIdentitiesProps)
             sx={{
               display: 'flex',
               flexDirection: { xs: 'column', md: 'row' },
-              gap: { xs: '1rem', md: '5rem' },
+              gap: '0.5rem',
+              justifyContent: 'space-between',
             }}>
             <NationalIdNumberField nationalId={nationalId} />
             <TextField

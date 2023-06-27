@@ -12,6 +12,7 @@ import { PageSpinner } from '../../../components/PageSpinner';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
 import { getContributorInitials } from '../../../utils/registration-helpers';
+import { Fragment } from 'react';
 
 interface ResearchProfilePanelProps {
   person?: CristinPerson;
@@ -71,10 +72,10 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               {activeAffiliations.map((affiliation, index) => (
-                <div key={index}>
+                <Fragment key={index}>
                   <AffiliationHierarchy key={affiliation.organization + index} unitUri={affiliation.organization} />
-                  <Divider key={index} />
-                </div>
+                  <Divider />
+                </Fragment>
               ))}
             </Box>
           </>
