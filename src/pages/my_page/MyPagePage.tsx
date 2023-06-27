@@ -336,7 +336,7 @@ const MyPagePage = () => {
                       }
                     />
                   }
-                  label={'Pågående'}
+                  label={t('my_page.project_registration_status.ongoing')}
                 />
                 <FormControlLabel
                   data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
@@ -351,7 +351,7 @@ const MyPagePage = () => {
                       }
                     />
                   }
-                  label={'Ikke startet'}
+                  label={t('my_page.project_registration_status.not_started')}
                 />
                 <FormControlLabel
                   data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
@@ -366,7 +366,7 @@ const MyPagePage = () => {
                       }
                     />
                   }
-                  label={'Avsluttet'}
+                  label={t('my_page.project_registration_status.concluded')}
                 />
               </StyledTicketSearchFormGroup>
             </NavigationList>
@@ -452,7 +452,7 @@ const MyPagePage = () => {
             <MyProjectRegistrations
               selectedOngoing={selectedProjectStatus.ongoing}
               selectedNotStarted={selectedProjectStatus.notStarted}
-              selectedEnded={selectedProjectStatus.concluded}
+              selectedConcluded={selectedProjectStatus.concluded}
             />
           </LoggedInRoute>
           <LoggedInRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} />

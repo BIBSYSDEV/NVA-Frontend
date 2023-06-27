@@ -14,13 +14,13 @@ import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 interface MyProjectRegistrationsProps {
   selectedOngoing?: boolean;
   selectedNotStarted?: boolean;
-  selectedEnded?: boolean;
+  selectedConcluded?: boolean;
 }
 
 export const MyProjectRegistrations = ({
   selectedOngoing,
   selectedNotStarted,
-  selectedEnded,
+  selectedConcluded,
 }: MyProjectRegistrationsProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -36,12 +36,25 @@ export const MyProjectRegistrations = ({
   });
 
   const projects = projectsQuery.data?.hits ?? [];
-  const filteredProjects = projects.filter(
-    ({ status }) =>
-      (status === 'ACTIVE' && selectedOngoing) ||
-      (status === 'CONCLUDED' && selectedEnded) ||
-      (status === 'NOTSTARTED' && selectedNotStarted)
-  );
+  const filteredProjects = projects
+    .filter(
+      ({ status }) =>
+        (status === 'ACTIVE' && selectedOngoing) ||
+        (status === 'NOTSTARTED' && selectedNotStarted) ||
+        (status === 'CONCLUDED' && selectedConcluded)
+    )
+    .sort((a, b) => {
+      if (a.status === 'ACTIVE' && b.status !== 'ACTIVE') {
+        return -1;
+      } else if (a.status !== 'ACTIVE' && b.status === 'ACTIVE') {
+        return 1;
+      } else if (a.status === 'NOTSTARTED' && b.status !== 'NOTSTARTED') {
+        return -1;
+      } else if (a.status !== 'NOTSTARTED' && b.status === 'NOTSTARTED') {
+        return 1;
+      }
+      return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+    });
 
   return (
     <div>
