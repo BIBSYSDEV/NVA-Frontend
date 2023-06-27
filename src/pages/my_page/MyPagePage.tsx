@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Switch, useHistory } from 'react-router-dom';
-import { Divider, FormControlLabel } from '@mui/material';
+import { Button, Divider, FormControlLabel } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
@@ -149,13 +150,14 @@ const MyPagePage = () => {
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
             <StyledTicketSearchFormGroup>
-              <FormControlLabel
-                sx={{ ml: '2rem' }}
+              <Button
                 data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
-                checked={filterUnreadOnly}
-                control={<StyledStatusCheckbox onChange={() => setFilterUnreadOnly(!filterUnreadOnly)} />}
-                label={t('tasks.unread')}
-              />
+                sx={{ width: 'fit-content', background: filterUnreadOnly ? undefined : 'white', textTransform: 'none' }}
+                variant={filterUnreadOnly ? 'contained' : 'outlined'}
+                startIcon={<MarkEmailUnreadIcon />}
+                onClick={() => setFilterUnreadOnly(!filterUnreadOnly)}>
+                {t('tasks.unread')}
+              </Button>
             </StyledTicketSearchFormGroup>
 
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
