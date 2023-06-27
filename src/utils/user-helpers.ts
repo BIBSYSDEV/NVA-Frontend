@@ -44,7 +44,7 @@ export const getOrcidUri = (identifiers: CristinPersonIdentifier[] = []) => {
 export const getVerificationStatus = (verifiedStatus: boolean | undefined) => {
   if (verifiedStatus) {
     return VerificationStatus.Verified;
-  } else if (!verifiedStatus) {
+  } else if (verifiedStatus === false) {
     return VerificationStatus.NotVerified;
   }
   return VerificationStatus.CannotBeEstablished;
