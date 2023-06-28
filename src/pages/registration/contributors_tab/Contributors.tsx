@@ -26,7 +26,6 @@ import {
   emptyContributor,
   Identity,
   Institution,
-  VerificationStatus,
 } from '../../../types/contributor.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
