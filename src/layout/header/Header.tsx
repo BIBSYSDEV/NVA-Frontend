@@ -51,10 +51,12 @@ export const Header = () => {
             xs: '"language logo user-menu"',
             lg: '"language logo search new-result user-menu"',
           },
-          gridTemplateColumns: { xs: 'auto auto auto', lg: '1fr auto 1fr 10fr 5fr' },
+          gridTemplateColumns: { xs: 'auto auto auto', lg: '3fr auto 1fr 10fr 5fr' },
           gap: '1rem',
           px: '1rem',
         }}>
+        <LanguageSelector isMobile={isMobile} />
+
         <Logo />
 
         {isLargeScreen && (
@@ -130,7 +132,6 @@ export const Header = () => {
                 orientation="vertical"
                 flexItem
               />
-              <LanguageSelector />
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
                 <MenuButton
                   color="inherit"
