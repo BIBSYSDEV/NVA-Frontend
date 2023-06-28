@@ -14,7 +14,8 @@ interface MenuProps {
 
 export const Menu = ({ handleLogout }: MenuProps) => {
   const { t } = useTranslation();
-  const { user, customer } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));

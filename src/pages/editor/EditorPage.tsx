@@ -21,7 +21,7 @@ import { SideMenu } from '../../components/SideMenu';
 
 const EditorPage = () => {
   const { t } = useTranslation();
-  const { customer } = useSelector((store: RootState) => store);
+  const customer = useSelector((store: RootState) => store.customer);
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 

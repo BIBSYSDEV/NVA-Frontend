@@ -20,7 +20,7 @@ export const RegistrationLandingPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { identifier } = useParams<RegistrationParams>();
-  const { user } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
 
   const registrationQuery = useQuery({
     queryKey: ['registration', identifier],
