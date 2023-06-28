@@ -113,6 +113,7 @@
     "add_custom": "Add {{- name}}",
     "all": "All",
     "cancel": "Cancel",
+    "category": "",
     "clear": "Clear",
     "click_to_show_all": "Click to show all",
     "close": "Close",
@@ -128,6 +129,7 @@
     "employments": "Employments",
     "end_date": "End date",
     "error_occurred": "An unexpected error has occurred",
+    "filter": "",
     "first_name": "First name",
     "help": "Help",
     "id": "ID",
@@ -135,7 +137,6 @@
     "institutions": "Institutions",
     "last_name": "Last name",
     "link": "Link",
-    "loading": "Loading",
     "menu": "Menu",
     "message": "Message",
     "move_down": "Move down",
@@ -192,7 +193,6 @@
     "start": "Start",
     "start_date": "Start date",
     "start_page": "Start page",
-    "status": "Status",
     "tasks": "Tasks",
     "title": "Title",
     "type": "Type",
@@ -467,6 +467,7 @@
       "rights_reserved": "This work is posted here for your personal use and only in accordance with the publisher's terms and conditions for use of self-archived versions."
     },
     "labels": {
+      "cc0": "CC0 ({{version}})",
       "cc_by": "CC BY ({{version}})",
       "cc_by_nc": "CC BY-NC ({{version}})",
       "cc_by_nc_nd": "CC BY-NC-ND ({{version}})",
@@ -474,19 +475,18 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "cc0": "CC0 ({{version}})",
-      "rights_reserved": "Publisher Terms"
+      "rights_reserved": ""
     },
     "links": {
-      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "cc0": "https://creativecommons.org/publicdomain/zero/{{version}}",
       "cc_by": "https://creativecommons.org/licenses/by/{{version}}",
       "cc_by_nc": "https://creativecommons.org/licenses/by-nc/{{version}}",
       "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/{{version}}",
       "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/{{version}}",
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}",
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/",
-      "rights_reserved": "https://rightsstatements.org/page/InC/1.0/"
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}",
+      "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
     }
   },
   "my_page": {
@@ -554,12 +554,17 @@
       "user_profile_description": "Here you can fill in and mark what you wish to display on your public researcher profile."
     },
     "no_employments": "No employments",
+    "project_registration_status": {
+      "concluded": "",
+      "not_started": "",
+      "ongoing": ""
+    },
     "project_registrations": "Project registrations",
     "registrations": {
       "delete_registration": "Delete unpublished registration",
       "delete_registration_message": "Do you want to delete \"{{title}}\"?",
-      "published_registrations": "Published registrations",
-      "unpublished_registrations": "Unpublished registrations"
+      "published": "",
+      "unpublished": ""
     },
     "research_profile": "Research profile",
     "roles": {
@@ -1517,7 +1522,6 @@
     "project_search_placeholder": "Search for title",
     "remove_filter": "Remove filter",
     "result": "Result",
-    "search_filter": "Search filter",
     "search_placeholder": "Search for title, contributor, abstract, etc.",
     "search_term_label": "Value",
     "sort_by": "Order by",
