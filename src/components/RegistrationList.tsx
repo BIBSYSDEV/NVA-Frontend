@@ -104,9 +104,11 @@ export const RegistrationListItemContent = ({
             columnGap: '1rem',
             whiteSpace: 'nowrap',
           }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem', flexWrap: 'wrap' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
             {focusedContributors.map((contributor, index) => (
-              <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box
+                key={index}
+                sx={{ display: 'flex', alignItems: 'center', '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
                 <Typography variant="body2">
                   {contributor.identity.id && !ticketView ? (
                     <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
