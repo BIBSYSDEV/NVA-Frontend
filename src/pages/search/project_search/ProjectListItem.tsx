@@ -41,7 +41,7 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
           <>
             <Tooltip title={t('project.edit_project')}>
               <IconButton
-                sx={{ borderRadius: '50%', bgcolor: 'project.main', width: '1.5rem', height: '1.5rem' }}
+                sx={{ bgcolor: 'project.main', width: '1.5rem', height: '1.5rem' }}
                 size="small"
                 onClick={() => setOpenEditProject(true)}>
                 <EditIcon fontSize="inherit" />
