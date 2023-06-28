@@ -75,18 +75,3 @@ export const EditorRoute = ({ component, ...rest }: RouteProps) => {
 
   return <PrivateRoute {...rest} component={component} isAuthorized={!!user && !!user.customerId && user.isEditor} />;
 };
-
-/**
- * @deprecated Use <PrivateRoute /> with isAuthorized prop instead
- */
-export const BasicDataRoute = ({ component, ...rest }: RouteProps) => {
-  const user = useSelector((store: RootState) => store.user);
-
-  return (
-    <PrivateRoute
-      {...rest}
-      component={component}
-      isAuthorized={!!user && !!user.customerId && (user.isInstitutionAdmin || user.isAppAdmin)}
-    />
-  );
-};
