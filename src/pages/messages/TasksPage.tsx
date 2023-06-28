@@ -33,7 +33,7 @@ import { NavigationListAccordion } from '../../components/NavigationListAccordio
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { CuratorRoute } from '../../utils/routes/Routes';
+import { PrivateRoute } from '../../utils/routes/Routes';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 
@@ -54,7 +54,8 @@ const TasksPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
-  const { user } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
+  const isCurator = !user?.customerId && !!user?.isCurator;
   const nvaUsername = user?.nvaUsername ?? '';
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
@@ -285,7 +286,7 @@ const TasksPage = () => {
 
       <ErrorBoundary>
         <Switch>
-          <CuratorRoute exact path={UrlPathTemplate.Tasks}>
+          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isCurator}>
             <TicketList
               ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
@@ -294,9 +295,14 @@ const TasksPage = () => {
               setPage={setPage}
               helmetTitle={t('common.tasks')}
             />
-          </CuratorRoute>
+          </PrivateRoute>
 
-          <CuratorRoute exact path={UrlPathTemplate.TasksRegistration} component={RegistrationLandingPage} />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.TasksRegistration}
+            component={RegistrationLandingPage}
+            isAuthorized={isCurator}
+          />
         </Switch>
       </ErrorBoundary>
     </StyledPageWithSideMenu>

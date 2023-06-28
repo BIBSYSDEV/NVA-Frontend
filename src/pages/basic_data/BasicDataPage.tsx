@@ -11,7 +11,7 @@ import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
-import { AppAdminRoute, InstitutionAdminRoute } from '../../utils/routes/Routes';
+import { PrivateRoute } from '../../utils/routes/Routes';
 import { getAdminInstitutionPath, UrlPathTemplate } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
@@ -33,6 +33,8 @@ import { SideMenu } from '../../components/SideMenu';
 const BasicDataPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
+  const isAppAdmin = !!user?.customerId && user.isAppAdmin;
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -152,27 +154,41 @@ const BasicDataPage = () => {
       <BackgroundDiv>
         <Switch>
           <ErrorBoundary>
-            <AppAdminRoute
+            <PrivateRoute
               exact
               path={UrlPathTemplate.BasicDataInstitutions}
               component={AdminCustomerInstitutionsContainer}
+              isAuthorized={isAppAdmin}
             />
-            <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImportPage} />
-            <AppAdminRoute
+            <PrivateRoute
+              exact
+              path={UrlPathTemplate.BasicDataCentralImport}
+              component={CentralImportPage}
+              isAuthorized={isAppAdmin}
+            />
+            <PrivateRoute
               exact
               path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
               component={CentralImportDuplicationCheckPage}
+              isAuthorized={isAppAdmin}
             />
-            <AppAdminRoute
+            <PrivateRoute
               exact
               path={UrlPathTemplate.BasicDataCentralImportRegistration}
               component={CentralImportRegistration}
+              isAuthorized={isAppAdmin}
             />
-            <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
-            <InstitutionAdminRoute
+            <PrivateRoute
+              exact
+              path={UrlPathTemplate.BasicDataAddEmployee}
+              component={AddEmployeePage}
+              isAuthorized={isInstitutionAdmin}
+            />
+            <PrivateRoute
               exact
               path={UrlPathTemplate.BasicDataPersonRegister}
               component={PersonRegisterPage}
+              isAuthorized={isInstitutionAdmin}
             />
           </ErrorBoundary>
         </Switch>

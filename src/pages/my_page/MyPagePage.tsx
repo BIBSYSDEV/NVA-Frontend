@@ -12,7 +12,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
-import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
+import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjects } from './user_profile/MyProjects';
@@ -49,6 +49,9 @@ const MyPagePage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const user = useSelector((store: RootState) => store.user);
+  const isAuthenticated = !!user;
+  const isCreator = !!user?.customerId && (user.isCreator || user.isCurator);
+
   const queryClient = useQueryClient();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
@@ -429,7 +432,7 @@ const MyPagePage = () => {
 
       <ErrorBoundary>
         <Switch>
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages}>
+          <PrivateRoute exact path={UrlPathTemplate.MyPageMyMessages} isAuthorized={isCreator}>
             <TicketList
               ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
@@ -438,28 +441,54 @@ const MyPagePage = () => {
               setPage={setPage}
               helmetTitle={t('my_page.messages.dialogue')}
             />
-          </CreatorRoute>
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations}>
+          </PrivateRoute>
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyMessagesRegistration}
+            component={RegistrationLandingPage}
+            isAuthorized={isCreator}
+          />
+          <PrivateRoute exact path={UrlPathTemplate.MyPageMyRegistrations} isAuthorized={isCreator}>
             <MyRegistrations
               selectedPublished={selectedRegistrationStatus.published}
               selectedUnpublished={selectedRegistrationStatus.unpublished}
             />
-          </CreatorRoute>
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResearchProfile} component={ResearchProfile} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResults} component={MyResults} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations}>
+          </PrivateRoute>
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyPersonalia}
+            component={MyProfile}
+            isAuthorized={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyProjects}
+            component={MyProjects}
+            isAuthorized={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyResearchProfile}
+            component={ResearchProfile}
+            isAuthorized={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyResults}
+            component={MyResults}
+            isAuthorized={isAuthenticated}
+          />
+          <PrivateRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations} isAuthorized={isAuthenticated}>
             <MyProjectRegistrations
               selectedOngoing={selectedProjectStatus.ongoing}
               selectedNotStarted={selectedProjectStatus.notStarted}
               selectedConcluded={selectedProjectStatus.concluded}
             />
-          </LoggedInRoute>
-          <LoggedInRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} />
+          </PrivateRoute>
+          <PrivateRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isAuthenticated} />
         </Switch>
       </ErrorBoundary>
+
       {user?.isCreator && (
         <ProjectFormDialog
           open={showCreateProject}
