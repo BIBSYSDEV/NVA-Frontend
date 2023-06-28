@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Menu, MenuItem } from '@mui/material';
-import LanguageIcon from '@mui/icons-material/Language';
+import { Button, IconButton, Menu, MenuItem } from '@mui/material';
+import PublicIcon from '@mui/icons-material/Public';
 import { getLanguageByIso6393Code } from 'nva-language';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface LanguageSelectorProps {
-  isMobile?: boolean;
+  isMobile: boolean;
 }
 
 const englishTitle = getLanguageByIso6393Code('eng').eng;
 
 export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
+  const { i18n, t } = useTranslation();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const { i18n } = useTranslation();
 
   const setLanguage = (languageCode: 'nob' | 'eng' | 'nno') => {
     setAnchorEl(null);
@@ -22,24 +22,39 @@ export const LanguageSelector = ({ isMobile }: LanguageSelectorProps) => {
 
   return (
     <>
-      <Button
-        color="inherit"
-        fullWidth={!!isMobile}
-        data-testid={dataTestId.header.languageButton}
-        startIcon={<LanguageIcon />}
-        onClick={(event) => setAnchorEl(event.currentTarget)}>
-        {i18n.language === 'nob' ? 'Bokmål' : i18n.language === 'nno' ? 'Nynorsk' : englishTitle}
-      </Button>
+      {isMobile ? (
+        <IconButton
+          title={t('common.select_language')}
+          color="inherit"
+          data-testid={dataTestId.header.languageButton}
+          onClick={(event) => setAnchorEl(event.currentTarget)}>
+          <PublicIcon fontSize="large" />
+        </IconButton>
+      ) : (
+        <Button
+          color="inherit"
+          data-testid={dataTestId.header.languageButton}
+          onClick={(event) => setAnchorEl(event.currentTarget)}
+          title={t('common.select_language')}
+          sx={{
+            gridArea: 'language',
+            justifySelf: 'start',
+            display: 'flex',
+            flexDirection: 'column',
+            '.MuiButton-startIcon': {
+              margin: 0,
+            },
+          }}
+          startIcon={<PublicIcon />}>
+          {i18n.language === 'nob' ? 'Bokmål' : i18n.language === 'nno' ? 'Nynorsk' : englishTitle}
+        </Button>
+      )}
       <Menu
         data-testid={dataTestId.header.languageMenu}
         anchorEl={anchorEl}
         keepMounted
         open={!!anchorEl}
-        onClose={() => setAnchorEl(null)}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}>
+        onClose={() => setAnchorEl(null)}>
         <MenuItem disabled={i18n.language === 'nob'} onClick={() => setLanguage('nob')} lang="nb">
           Norsk, bokmål
         </MenuItem>

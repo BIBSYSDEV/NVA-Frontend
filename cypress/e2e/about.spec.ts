@@ -8,8 +8,7 @@ describe('About and Privacy policy', () => {
   });
 
   it('The user should see about page', () => {
-    cy.get(`[data-testid=${dataTestId.header.generalMenuButton}]`).click();
-    cy.get(`[data-testid=${dataTestId.header.aboutLink}]`).click();
+    cy.get(`[data-testid=${dataTestId.footer.aboutLink}]`).click({ force: true });
     cy.url().should('include', UrlPathTemplate.About);
     cy.injectAxe();
     cy.checkA11y(null, { retries: 3, interval: 250 }, a11yLogErrors);
