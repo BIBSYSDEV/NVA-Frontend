@@ -1,10 +1,10 @@
+import { Box, Typography, Chip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { hrcsCategories } from '../../resources/vocabularies/hrcsCategories';
 import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../utils/constants';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { hrcsActivityOptions } from '../registration/description_tab/vocabularies/HrcsActivityInput';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
-import { Box, Typography, Chip } from '@mui/material';
 import { dataTestId } from '../../utils/dataTestIds';
 
 export const PublicSubjectAndClassificationContent = ({ registration }: PublicRegistrationContentProps) => {
