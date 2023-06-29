@@ -29,7 +29,7 @@ interface TicketListItemProps {
 
 export const TicketListItem = ({ ticket }: TicketListItemProps) => {
   const { t } = useTranslation();
-  const { user } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
 
   const { id, identifier, mainTitle, contributors, publicationInstance, status } = ticket.publication;
   const registrationCopy = {

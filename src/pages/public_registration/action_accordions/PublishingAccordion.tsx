@@ -63,7 +63,7 @@ export const PublishingAccordion = ({
 }: PublishingAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { customer } = useSelector((store: RootState) => store);
+  const customer = useSelector((store: RootState) => store.customer);
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);

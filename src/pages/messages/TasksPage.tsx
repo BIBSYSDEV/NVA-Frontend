@@ -57,6 +57,7 @@ const TasksPage = () => {
   const user = useSelector((store: RootState) => store.user);
   const isCurator = !user?.customerId && !!user?.isCurator;
   const nvaUsername = user?.nvaUsername ?? '';
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
 

@@ -26,7 +26,7 @@ interface TicketAssigneeProps {
 export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { user } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
 
   const [showCuratorSearch, setShowCuratorSearch] = useState(false);

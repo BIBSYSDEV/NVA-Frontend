@@ -27,7 +27,8 @@ export const ActionPanelContent = ({
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { user, customer } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const userIsCurator = userIsRegistrationCurator(user, registration);
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
