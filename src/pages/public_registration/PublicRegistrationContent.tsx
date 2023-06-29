@@ -169,7 +169,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.projectsAccordion}
             defaultExpanded
-            heading={t('registration.description.project_association')}>
+            heading={`${t('registration.description.project_association')} (${projects.length})`}>
             <PublicProjectsContent projects={projects} />
           </LandingPageAccordion>
         )}
@@ -178,7 +178,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.fundingsAccordion}
             defaultExpanded
-            heading={t('project.financing')}>
+            heading={`${t('project.financing')} (${projects.length})`}>
             <PublicFundingsContent fundings={fundings} />
           </LandingPageAccordion>
         )}
@@ -199,7 +199,9 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <LandingPageAccordion
               dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
               defaultExpanded
-              heading={t('registration.resource_type.research_data.external_links')}>
+              heading={`${t('registration.resource_type.research_data.external_links')} (${
+                entityDescription.reference.publicationInstance.related?.length ?? 0
+              })`}>
               <ListExternalRelations links={entityDescription.reference.publicationInstance.related} />
             </LandingPageAccordion>
           </>
@@ -208,11 +210,11 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
             defaultExpanded
-            heading={t('registration.resource_type.research_data.external_links')}>
+            heading={`${t('registration.resource_type.research_data.external_links')} (${
+              filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related) ?? 0 // DMP can have both internal and external links in .related
+            })`}>
             <ListExternalRelations
-              links={entityDescription.reference.publicationInstance.related?.filter(
-                (uri) => !uri.includes(API_URL) // DMP can have both internal and external links in .related
-              )}
+              links={filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related)}
             />
           </LandingPageAccordion>
         )}
@@ -221,7 +223,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
-            heading={t('registration.public_page.other_related_registrations')}>
+            heading={`${t('registration.public_page.other_related_registrations')} (${relatedRegistrations.size})`}>
             <ListRegistrationRelations registrations={relatedRegistrations.hits} />
           </LandingPageAccordion>
         )}
@@ -231,3 +233,5 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     </Paper>
   );
 };
+
+const filterExternalRelatedLinks = (links: string[] = []) => links.filter((link) => !link.includes(API_URL));
