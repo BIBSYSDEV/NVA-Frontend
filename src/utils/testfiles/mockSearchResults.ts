@@ -55,6 +55,11 @@ export const mockSearchResults: RegistrationSearchResponse = {
         },
       },
     },
+    fundings: {
+      identifier: {
+        buckets: [],
+      },
+    },
   },
 };
 
