@@ -266,8 +266,8 @@ interface ContributorAggregationBucket extends AggregationBucket {
 }
 
 export interface RegistrationSearchAggregations {
-  topLevelOrganization?: {
-    id?: {
+  topLevelOrganization: {
+    id: {
       buckets: LabelAggregationBucket[];
     };
   };

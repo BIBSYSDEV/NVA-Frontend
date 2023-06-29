@@ -55,11 +55,8 @@ export const mockSearchResults: RegistrationSearchResponse = {
         },
       },
     },
-    fundings: {
-      identifier: {
-        buckets: [],
-      },
-    },
+    fundings: { identifier: { buckets: [] } },
+    topLevelOrganization: { id: { buckets: [] } },
   },
 };
 

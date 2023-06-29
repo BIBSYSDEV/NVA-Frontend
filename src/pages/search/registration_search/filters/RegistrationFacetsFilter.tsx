@@ -47,14 +47,14 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
     submitForm();
   };
 
-  const topLevelOrganizationFacet = aggregations.topLevelOrganization?.id;
+  const topLevelOrganizationFacet = aggregations.topLevelOrganization.id;
   const typeFacet = aggregations.entityDescription.reference.publicationInstance.type;
   const contributorFacet = aggregations.entityDescription.contributors.identity.id;
   const fundingFacet = aggregations.fundings.identifier;
 
   return (
     <>
-      {typeFacet?.buckets && (
+      {typeFacet.buckets.length > 0 && (
         <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
           {typeFacet.buckets.map((bucket) => {
             const registrationType = bucket.key as PublicationInstanceType;
@@ -75,7 +75,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {topLevelOrganizationFacet?.buckets && (
+      {topLevelOrganizationFacet.buckets.length > 0 && (
         <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
           {topLevelOrganizationFacet.buckets.map((bucket) => (
             <ListItem
@@ -96,7 +96,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {contributorFacet?.buckets && (
+      {contributorFacet.buckets.length > 0 && (
         <FacetItem
           title={t('registration.contributors.contributor')}
           dataTestId={dataTestId.startPage.contributorFacets}>
@@ -121,7 +121,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {fundingFacet.buckets && (
+      {fundingFacet.buckets.length > 0 && (
         <FacetItem
           title={t('registration.description.funding.financing')}
           dataTestId={dataTestId.startPage.institutionFacets}>
