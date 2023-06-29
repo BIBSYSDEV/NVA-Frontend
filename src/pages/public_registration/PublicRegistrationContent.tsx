@@ -29,6 +29,7 @@ import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { PublicFundingsContent } from './PublicFundingsContent';
+import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -119,6 +120,15 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             defaultExpanded
             heading={t('registration.description.abstract')}>
             <PublicSummaryContent registration={registration} />
+          </LandingPageAccordion>
+        )}
+
+        {entityDescription && (entityDescription.tags.length > 0 || subjects.length > 0) && (
+          <LandingPageAccordion
+            dataTestId={dataTestId.registrationLandingPage.subjectAndClassificationAccordion}
+            defaultExpanded
+            heading={t('registration.public_page.subject_and_classification')}>
+            <PublicSubjectAndClassificationContent registration={registration} />
           </LandingPageAccordion>
         )}
 
