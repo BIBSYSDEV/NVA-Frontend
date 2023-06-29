@@ -55,7 +55,7 @@ const TasksPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const user = useSelector((store: RootState) => store.user);
-  const isCurator = !user?.customerId && !!user?.isCurator;
+  const isCurator = !!user?.customerId && !!user?.isCurator;
   const nvaUsername = user?.nvaUsername ?? '';
 
   const [page, setPage] = useState(0);
