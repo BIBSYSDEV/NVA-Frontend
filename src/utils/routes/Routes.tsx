@@ -20,7 +20,7 @@ export const PrivateRoute = ({ isAuthorized, ...rest }: PrivateRouteProps) =>
  * @deprecated Use <PrivateRoute /> with isAuthorized prop instead
  */
 export const LoggedInRoute = ({ component, ...rest }: RouteProps) => {
-  const { user } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
 
   return <PrivateRoute {...rest} component={component} isAuthorized={!!user} />;
 };

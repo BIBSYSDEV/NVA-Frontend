@@ -54,7 +54,7 @@ const TasksPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
-  const { user } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
   const nvaUsername = user?.nvaUsername ?? '';
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
