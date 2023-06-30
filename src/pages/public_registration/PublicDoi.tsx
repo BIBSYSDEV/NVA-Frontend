@@ -10,7 +10,7 @@ import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
-  const { user } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
 
   const nvaDoi = registration.doi;
   const originalDoi = registration.entityDescription?.reference?.doi ?? '';

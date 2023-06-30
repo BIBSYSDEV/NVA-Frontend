@@ -5,7 +5,7 @@ import { RootState } from '../../redux/store';
 
 export const EditorDoi = () => {
   const { t } = useTranslation();
-  const { customer } = useSelector((store: RootState) => store);
+  const customer = useSelector((store: RootState) => store.customer);
 
   return (
     <>

@@ -37,9 +37,10 @@ interface FilesTableRowProps {
   toggleLicenseModal: () => void;
   baseFieldName: string;
   showFileVersion: boolean;
+  disabled: boolean;
 }
 
-export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion }: FilesTableRowProps) => {
+export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion, disabled }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
@@ -51,7 +52,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
           <Tooltip title={t('registration.files_and_license.remove_file')}>
-            <IconButton onClick={toggleOpenConfirmDialog}>
+            <IconButton onClick={toggleOpenConfirmDialog} disabled={disabled}>
               <CancelIcon color="error" />
             </IconButton>
           </Tooltip>
@@ -82,6 +83,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
                 checked={field.value}
+                disabled={disabled}
                 inputProps={{
                   'aria-labelledby': administrativeAgreementId,
                 }}
@@ -108,7 +110,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               <FormControl
                 data-testid={dataTestId.registrationWizard.files.version}
                 required
-                disabled={file.administrativeAgreement}>
+                disabled={file.administrativeAgreement || disabled}>
                 <RadioGroup
                   {...field}
                   row
@@ -142,7 +144,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 onChange={(date) => setFieldValue(field.name, date ?? '')}
                 format="dd.MM.yyyy"
                 maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                disabled={file.administrativeAgreement}
+                disabled={file.administrativeAgreement || disabled}
                 slotProps={{
                   textField: {
                     inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
@@ -165,6 +167,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               data-testid={dataTestId.registrationWizard.files.selectLicenseField}
               sx={{ minWidth: '15rem' }}
               select
+              disabled={disabled}
               SelectProps={{
                 renderValue: (option) => {
                   const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
@@ -182,8 +185,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               helperText={<ErrorMessage name={field.name} />}
               label={t('registration.files_and_license.conditions_for_using_file')}
               required
-              onChange={({ target: { value } }) => setFieldValue(field.name, value)}
-              disabled={file.administrativeAgreement}>
+              onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
               {licenses
                 .filter((license) => license.version === 4 || !license.version)
                 .map((license) => (

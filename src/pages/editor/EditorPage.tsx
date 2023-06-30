@@ -8,7 +8,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { VocabularySettings } from './VocabularySettings';
 import { PublishStrategySettings } from './PublishStrategySettings';
 import { dataTestId } from '../../utils/dataTestIds';
-import { EditorRoute } from '../../utils/routes/Routes';
+import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { EditorInstitution } from './EditorInstitution';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -21,7 +21,10 @@ import { SideMenu } from '../../components/SideMenu';
 
 const EditorPage = () => {
   const { t } = useTranslation();
-  const { customer } = useSelector((store: RootState) => store);
+  const customer = useSelector((store: RootState) => store.customer);
+  const user = useSelector((store: RootState) => store.user);
+  const isEditor = !!user?.customerId && user.isEditor;
+
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -94,12 +97,32 @@ const EditorPage = () => {
       </SideMenu>
       <BackgroundDiv>
         <Switch>
-          <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />
-          <EditorRoute exact path={UrlPathTemplate.EditorPublishStrategy} component={PublishStrategySettings} />
-          <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
-          <EditorRoute exact path={UrlPathTemplate.EditorCurators} component={EditorCurators} />
-          <EditorRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} />
-          <EditorRoute path={UrlPathTemplate.Wildcard} component={NotFound} />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorVocabulary}
+            component={VocabularySettings}
+            isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorPublishStrategy}
+            component={PublishStrategySettings}
+            isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorInstitution}
+            component={EditorInstitution}
+            isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorCurators}
+            component={EditorCurators}
+            isAuthorized={isEditor}
+          />
+          <PrivateRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} isAuthorized={isEditor} />
+          <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>
       </BackgroundDiv>
     </StyledPageWithSideMenu>

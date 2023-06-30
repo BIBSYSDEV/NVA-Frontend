@@ -1,8 +1,18 @@
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { Box, CircularProgress, Divider, FormControl, FormControlLabel, Typography, styled } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  Typography,
+  styled,
+} from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import { useQuery } from '@tanstack/react-query';
 import { Link, Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
@@ -23,7 +33,7 @@ import { NavigationListAccordion } from '../../components/NavigationListAccordio
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { CuratorRoute } from '../../utils/routes/Routes';
+import { PrivateRoute } from '../../utils/routes/Routes';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 
@@ -44,8 +54,10 @@ const TasksPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
-  const { user } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
+  const isCurator = !!user?.customerId && !!user?.isCurator;
   const nvaUsername = user?.nvaUsername ?? '';
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
 
@@ -152,13 +164,14 @@ const TasksPage = () => {
           defaultPath={UrlPathTemplate.Tasks}
           dataTestId={dataTestId.tasksPage.userDialogAccordion}>
           <StyledTicketSearchFormGroup>
-            <FormControlLabel
-              sx={{ ml: '2rem' }}
+            <Button
               data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
-              checked={filterUnreadOnly}
-              control={<StyledStatusCheckbox onChange={() => setFilterUnreadOnly(!filterUnreadOnly)} />}
-              label={t('tasks.unread')}
-            />
+              sx={{ width: 'fit-content', background: filterUnreadOnly ? undefined : 'white', textTransform: 'none' }}
+              variant={filterUnreadOnly ? 'contained' : 'outlined'}
+              startIcon={<MarkEmailUnreadIcon />}
+              onClick={() => setFilterUnreadOnly(!filterUnreadOnly)}>
+              {t('tasks.unread')}
+            </Button>
           </StyledTicketSearchFormGroup>
 
           <StyledTicketSearchFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
@@ -274,7 +287,7 @@ const TasksPage = () => {
 
       <ErrorBoundary>
         <Switch>
-          <CuratorRoute exact path={UrlPathTemplate.Tasks}>
+          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isCurator}>
             <TicketList
               ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
@@ -283,9 +296,14 @@ const TasksPage = () => {
               setPage={setPage}
               helmetTitle={t('common.tasks')}
             />
-          </CuratorRoute>
+          </PrivateRoute>
 
-          <CuratorRoute exact path={UrlPathTemplate.TasksRegistration} component={RegistrationLandingPage} />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.TasksRegistration}
+            component={RegistrationLandingPage}
+            isAuthorized={isCurator}
+          />
         </Switch>
       </ErrorBoundary>
     </StyledPageWithSideMenu>

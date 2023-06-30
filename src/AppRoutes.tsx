@@ -1,9 +1,11 @@
 import { lazy, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { BasicDataRoute, CreatorRoute, CuratorRoute, EditorRoute, LoggedInRoute } from './utils/routes/Routes';
+import { PrivateRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
 import { PageSpinner } from './components/PageSpinner';
+import { useSelector } from 'react-redux';
+import { RootState } from './redux/store';
 
 const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
@@ -22,6 +24,14 @@ const LoginPage = lazy(() => import('./layout/LoginPage'));
 
 export const AppRoutes = () => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
+
+  const isAuthenticated = !!user;
+  const hasCustomerId = isAuthenticated && !!user.customerId;
+  const isCreator = hasCustomerId && user.isCreator;
+  const isCurator = hasCustomerId && user.isCurator;
+  const isEditor = hasCustomerId && user.isEditor;
+  const isAdmin = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin);
 
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
@@ -36,20 +46,30 @@ export const AppRoutes = () => {
         <Route exact path={UrlPathTemplate.Logout} component={Logout} />
 
         {/* LoggedInRoute */}
-        <LoggedInRoute path={UrlPathTemplate.MyPage} component={MyPagePage} />
+        <PrivateRoute path={UrlPathTemplate.MyPage} component={MyPagePage} isAuthorized={isAuthenticated} />
 
         {/* CreatorRoutes */}
-        <CreatorRoute exact path={UrlPathTemplate.RegistrationWizard} component={EditRegistration} />
-        <CreatorRoute exact path={UrlPathTemplate.RegistrationNew} component={EditRegistration} />
+        <PrivateRoute
+          exact
+          path={UrlPathTemplate.RegistrationWizard}
+          component={EditRegistration}
+          isAuthorized={isCreator || isCurator || isEditor}
+        />
+        <PrivateRoute
+          exact
+          path={UrlPathTemplate.RegistrationNew}
+          component={EditRegistration}
+          isAuthorized={isCreator}
+        />
 
         {/* CuratorRoutes */}
-        <CuratorRoute path={UrlPathTemplate.Tasks} component={TasksPage} />
+        <PrivateRoute path={UrlPathTemplate.Tasks} component={TasksPage} isAuthorized={isCurator} />
 
         {/* BasicDataRoutes */}
-        <BasicDataRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} />
+        <PrivateRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} isAuthorized={isAdmin} />
 
         {/* EditorRoutes */}
-        <EditorRoute path={UrlPathTemplate.Editor} component={EditorPage} />
+        <PrivateRoute path={UrlPathTemplate.Editor} component={EditorPage} isAuthorized={isEditor} />
 
         {/* Wildcard path must be last, otherwise it will catch all routes */}
         <Route path={UrlPathTemplate.Wildcard} component={NotFound} />

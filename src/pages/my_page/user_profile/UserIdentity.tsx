@@ -1,10 +1,11 @@
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, Divider, TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { User } from '../../../types/user.types';
 import { UserRoles } from './UserRoles';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
+import { UserOrcid } from './UserOrcid';
 
 interface UserIdentitiesProps {
   user: User;
@@ -19,19 +20,19 @@ export const UserIdentity = ({ user, hasActiveEmployment }: UserIdentitiesProps)
 
   return (
     <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
-      <Typography variant="h2">{t('my_page.my_profile.identity.identity')}</Typography>
       <Box
         sx={{
           display: 'grid',
           gridTemplateColumns: {
             xs: '1fr',
-            md: '4fr 3fr',
+            lg: '4fr auto 3fr',
           },
           columnGap: '2rem',
           rowGap: { xs: '1rem' },
           mt: '1rem',
         }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '30rem' }}>
+          <Typography variant="h2">{t('my_page.my_profile.identity.identity')}</Typography>
           <Typography>{t('my_page.my_profile.identity.not_shown_publicly')}</Typography>
           <TextField
             data-testid={dataTestId.myPage.myProfile.fullNameField}
@@ -44,7 +45,8 @@ export const UserIdentity = ({ user, hasActiveEmployment }: UserIdentitiesProps)
             sx={{
               display: 'flex',
               flexDirection: { xs: 'column', md: 'row' },
-              gap: { xs: '1rem', md: '5rem' },
+              gap: '0.5rem',
+              justifyContent: 'space-between',
             }}>
             <NationalIdNumberField nationalId={nationalId} />
             <TextField
@@ -55,17 +57,18 @@ export const UserIdentity = ({ user, hasActiveEmployment }: UserIdentitiesProps)
               disabled
             />
           </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+            <Typography fontWeight={600}>{t('common.orcid')}</Typography>
+            <UserOrcid user={user} />
+          </Box>
         </Box>
-
+        <Divider orientation="vertical" />
         <Box>
           <Box
             sx={{
-              backgroundColor: 'background.default',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.5rem',
-              p: '1rem',
-              borderRadius: '4px',
             }}>
             <UserRoles user={user} hasActiveEmployment={hasActiveEmployment} />
           </Box>

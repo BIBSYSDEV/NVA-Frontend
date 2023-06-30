@@ -193,7 +193,6 @@
     "start": "Start",
     "start_date": "Startdato",
     "start_page": "Startside",
-    "status": "Status",
     "tasks": "Oppgaver",
     "title": "Tittel",
     "type": "Type",
@@ -468,6 +467,7 @@
       "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner."
     },
     "labels": {
+      "cc0": "CC0 ({{version}})",
       "cc_by": "CC BY ({{version}})",
       "cc_by_nc": "CC BY-NC ({{version}})",
       "cc_by_nc_nd": "CC BY-NC-ND ({{version}})",
@@ -475,7 +475,6 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "cc0": "CC0 ({{version}})",
       "rights_reserved": "Utgivers betingelser"
     },
     "links": {
@@ -487,7 +486,7 @@
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}/deed.no",
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
       "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
-      "rights_reserved": "https://rightsstatements.org/vocab/InC/1.0/"
+      "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
     }
   },
   "my_page": {
@@ -555,12 +554,17 @@
       "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil."
     },
     "no_employments": "Ingen ansettelser",
+    "project_registration_status": {
+      "concluded": "Avsluttet",
+      "not_started": "Ikke startet",
+      "ongoing": "Pågående"
+    },
     "project_registrations": "Prosjektregistreringer",
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
-      "published_registrations": "Publiserte registreringer",
-      "unpublished_registrations": "Upubliserte registreringer"
+      "published": "Publisert",
+      "unpublished": "Ikke publisert"
     },
     "research_profile": "Forskerprofil",
     "roles": {
@@ -1096,6 +1100,7 @@
       "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
       "reserve_doi": "Reserver en DOI",
       "reserved_doi": "Reservert DOI",
+      "subject_and_classification": "Emne og klassifisering",
       "tasks_panel": {
         "assign_curator": "Sett kurator",
         "assign_doi": "Tildel DOI",
@@ -1530,7 +1535,7 @@
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
     "new_user_dialogs": "Nye brukerdialoger",
-    "unread": "Ulest",
+    "unread": "Uleste",
     "user_dialog": "Brukerdialog"
   }
 }

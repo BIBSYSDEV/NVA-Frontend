@@ -5,9 +5,10 @@ import { UppyDashboard } from '../../../components/UppyDashboard';
 interface FileUploaderProps {
   addFile: (file: AssociatedFile) => void;
   uppy: Uppy;
+  disabled?: boolean;
 }
 
-export const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
+export const FileUploader = ({ addFile, uppy, disabled = false }: FileUploaderProps) => {
   useEffect(() => {
     if (uppy && !uppy.hasUploadSuccessEventListener) {
       uppy.on('upload-success', (file, response) => {
@@ -25,5 +26,5 @@ export const FileUploader = ({ addFile, uppy }: FileUploaderProps) => {
     }
   }, [addFile, uppy]);
 
-  return uppy ? <UppyDashboard uppy={uppy} /> : null;
+  return uppy ? <UppyDashboard uppy={uppy} disabled={disabled} /> : null;
 };

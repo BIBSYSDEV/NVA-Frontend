@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Box, Link as MuiLink, List, ListItemText, Typography } from '@mui/material';
-import { getRegistrationLandingPagePath, getResearchProfilePath } from '../utils/urlPaths';
+import { Box, Link as MuiLink, List, ListItemText, Typography, IconButton, Tooltip } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { getRegistrationLandingPagePath, getRegistrationWizardPath, getResearchProfilePath } from '../utils/urlPaths';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { ErrorBoundary } from './ErrorBoundary';
 import { dataTestId } from '../utils/dataTestIds';
@@ -13,14 +15,24 @@ import { SearchListItem } from './styled/Wrappers';
 
 interface RegistrationListProps {
   registrations: Registration[];
+  canEditRegistration?: boolean;
+  onDeleteDraftRegistration?: (registration: Registration) => void;
 }
 
-export const RegistrationList = ({ registrations }: RegistrationListProps) => (
+export const RegistrationList = ({
+  registrations,
+  canEditRegistration = false,
+  onDeleteDraftRegistration,
+}: RegistrationListProps) => (
   <List disablePadding>
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
-          <RegistrationListItemContent registration={registration} />
+          <RegistrationListItemContent
+            onDeleteDraftRegistration={onDeleteDraftRegistration}
+            registration={registration}
+            canEditRegistration={canEditRegistration}
+          />
         </SearchListItem>
       </ErrorBoundary>
     ))}
@@ -30,9 +42,16 @@ export const RegistrationList = ({ registrations }: RegistrationListProps) => (
 interface RegistrationListItemContentProps {
   registration: Registration;
   ticketView?: boolean;
+  canEditRegistration?: boolean;
+  onDeleteDraftRegistration?: (registration: Registration) => void;
 }
 
-export const RegistrationListItemContent = ({ registration, ticketView = false }: RegistrationListItemContentProps) => {
+export const RegistrationListItemContent = ({
+  registration,
+  ticketView = false,
+  canEditRegistration,
+  onDeleteDraftRegistration,
+}: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
 
@@ -48,65 +67,94 @@ export const RegistrationListItemContent = ({ registration, ticketView = false }
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
 
   return (
-    <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' } }}>
-        {heading && (
-          <Typography variant="overline" sx={{ color: 'primary.main' }}>
-            {heading}
-          </Typography>
-        )}
-        {ticketView &&
-          (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
-            <Typography
-              sx={{
-                p: '0.1rem 0.75rem',
-                bgcolor: 'primary.light',
-                color: 'primary.contrastText',
-              }}>
-              {t('registration.public_page.metadata_not_published')}
+    <Box sx={{ display: 'flex', width: '100%' }}>
+      <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' } }}>
+          {heading && (
+            <Typography variant="overline" sx={{ color: 'primary.main' }}>
+              {heading}
             </Typography>
           )}
-      </Box>
-      <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-        {ticketView ? (
-          getTitleString(entityDescription?.mainTitle)
-        ) : (
-          <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
-            {getTitleString(entityDescription?.mainTitle)}
-          </MuiLink>
-        )}
-      </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          columnGap: '1rem',
-          whiteSpace: 'nowrap',
-        }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem', flexWrap: 'wrap' }}>
-          {focusedContributors.map((contributor, index) => (
-            <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
-              <Typography variant="body2">
-                {contributor.identity.id && !ticketView ? (
-                  <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-                    {contributor.identity.name}
-                  </MuiLink>
-                ) : (
-                  contributor.identity.name
-                )}
+
+          {ticketView &&
+            (registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
+              <Typography
+                sx={{
+                  p: '0.1rem 0.75rem',
+                  bgcolor: 'primary.light',
+                  color: 'primary.contrastText',
+                }}>
+                {t('registration.public_page.metadata_not_published')}
               </Typography>
-              <ContributorIndicators contributor={contributor} ticketView={ticketView} />
-            </Box>
-          ))}
-          {countRestContributors > 0 && (
-            <Typography variant="body2">({t('common.x_others', { count: countRestContributors })})</Typography>
+            )}
+        </Box>
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+          {ticketView ? (
+            getTitleString(entityDescription?.mainTitle)
+          ) : (
+            <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
+              {getTitleString(entityDescription?.mainTitle)}
+            </MuiLink>
+          )}
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            columnGap: '1rem',
+            whiteSpace: 'nowrap',
+          }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem', flexWrap: 'wrap' }}>
+            {focusedContributors.map((contributor, index) => (
+              <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography variant="body2">
+                  {contributor.identity.id && !ticketView ? (
+                    <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+                      {contributor.identity.name}
+                    </MuiLink>
+                  ) : (
+                    contributor.identity.name
+                  )}
+                </Typography>
+                <ContributorIndicators contributor={contributor} ticketView={ticketView} />
+              </Box>
+            ))}
+            {countRestContributors > 0 && (
+              <Typography variant="body2">({t('common.x_others', { count: countRestContributors })})</Typography>
+            )}
+          </Box>
+        </Box>
+
+        <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
+          {entityDescription?.abstract}
+        </TruncatableTypography>
+      </ListItemText>
+
+      {canEditRegistration && (
+        <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
+          <Tooltip title={t('common.edit')}>
+            <IconButton
+              data-testid={`edit-registration-${identifier}`}
+              component={Link}
+              to={getRegistrationWizardPath(identifier)}
+              size="small"
+              sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+          {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
+            <Tooltip title={t('common.delete')}>
+              <IconButton
+                data-testid={`delete-registration-${identifier}`}
+                onClick={() => onDeleteDraftRegistration(registration)}
+                size="small"
+                sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
+                <CloseOutlinedIcon />
+              </IconButton>
+            </Tooltip>
           )}
         </Box>
-      </Box>
-
-      <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
-        {entityDescription?.abstract}
-      </TruncatableTypography>
-    </ListItemText>
+      )}
+    </Box>
   );
 };

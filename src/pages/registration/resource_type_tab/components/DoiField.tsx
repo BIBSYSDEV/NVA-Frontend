@@ -7,7 +7,11 @@ import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 
-export const DoiField = () => {
+interface DoiFieldProps {
+  canEditDoi: boolean;
+}
+
+export const DoiField = ({ canEditDoi }: DoiFieldProps) => {
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const { setFieldValue, values } = useFormikContext<Registration>();
@@ -34,7 +38,12 @@ export const DoiField = () => {
 
       {referenceDoi && (
         <>
-          <Button color="error" variant="outlined" endIcon={<CancelIcon />} onClick={toggleConfirmDialog}>
+          <Button
+            color="error"
+            variant="outlined"
+            endIcon={<CancelIcon />}
+            onClick={toggleConfirmDialog}
+            disabled={!canEditDoi}>
             {t('registration.resource_type.remove_doi')}
           </Button>
           <ConfirmDialog

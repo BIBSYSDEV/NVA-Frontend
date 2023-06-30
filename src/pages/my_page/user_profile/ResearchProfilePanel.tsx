@@ -1,16 +1,18 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import PreviewIcon from '@mui/icons-material/Preview';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { CristinPerson } from '../../../types/user.types';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
-import { AccountCircle } from '@mui/icons-material';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { useLocation } from 'react-router-dom';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { BackgroundDiv } from '../../../components/styled/Wrappers';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
+import { getContributorInitials } from '../../../utils/registration-helpers';
+import { Fragment } from 'react';
 
 interface ResearchProfilePanelProps {
   person?: CristinPerson;
@@ -26,20 +28,20 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
 
   const currentPath = location.pathname.replace(/\/$/, '').toLowerCase();
-  const isPreview = currentPath === UrlPathTemplate.MyPageMyProfile;
+  const isPreview = currentPath === UrlPathTemplate.MyPageMyPersonalia;
 
   return (
     <>
       <Helmet>
         <title>{fullName}</title>
       </Helmet>
-      <BackgroundDiv sx={{ bgcolor: 'secondary.main', height: '100%', padding: '1rem' }}>
+      <Box sx={{ bgcolor: 'person.main', height: '100%', padding: '0.5rem' }}>
         {isLoadingPerson ? (
           <PageSpinner aria-label={t('my_page.research_profile')} />
         ) : (
           <>
             {isPreview && (
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <PreviewIcon />
                 <Typography variant="h3" component="span" sx={{ textTransform: 'none' }}>
                   {t('my_page.my_profile.research_profile_summary.preview')}
@@ -47,12 +49,16 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
               </Box>
             )}
 
-            <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center' }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center', mt: '1rem' }}>
               <Typography variant="h2">{t('my_page.my_profile.research_profile_summary.research_profile')}</Typography>
-              <AccountCircle sx={{ fontSize: '3rem' }} />
+              <StyledBaseContributorIndicator
+                sx={{ bgcolor: 'primary.main', color: 'white', height: '2.5rem', width: '2.5rem', fontSize: '1.5rem' }}
+                data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
+                {getContributorInitials(fullName)}
+              </StyledBaseContributorIndicator>
             </Box>
 
-            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mt: '0.5rem' }}>
               <Typography variant="h3">{fullName}</Typography>
               {orcidUri && (
                 <IconButton size="small" href={orcidUri} target="_blank">
@@ -65,13 +71,16 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
               {t('my_page.my_profile.research_profile_summary.affiliations')}
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              {activeAffiliations.map((affiliation) => (
-                <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />
+              {activeAffiliations.map((affiliation, index) => (
+                <Fragment key={index}>
+                  <AffiliationHierarchy key={affiliation.organization + index} unitUri={affiliation.organization} />
+                  <Divider />
+                </Fragment>
               ))}
             </Box>
           </>
         )}
-      </BackgroundDiv>
+      </Box>
     </>
   );
 };

@@ -4,7 +4,6 @@ import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'form
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
-import { emptyPlace } from '../../../../../../types/common.types';
 import {
   LiteraryArtsPerformance,
   LiteraryArtsPerformanceSubtype,
@@ -12,6 +11,7 @@ import {
 import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { emptyPlace } from '../../../../../../types/common.types';
 import { OutputModalActions } from '../OutputModalActions';
 
 interface LiteraryArtsPerformanceModalProps {
@@ -23,17 +23,31 @@ interface LiteraryArtsPerformanceModalProps {
 
 const emptyLiteraryArtsPerformance: LiteraryArtsPerformance = {
   type: 'LiteraryArtsPerformance',
-  subtype: '',
+  subtype: {
+    type: '',
+    description: '',
+  },
   place: emptyPlace,
   publicationDate: emptyRegistrationDate,
 };
 
 const validationSchema = Yup.object<YupShape<LiteraryArtsPerformance>>({
-  subtype: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.output_type.LiteraryArtsPerformance'),
-    })
-  ),
+  subtype: Yup.object().shape({
+    type: Yup.string().required(
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.type_work'),
+      })
+    ),
+    description: Yup.string().when('type', ([type], schema) =>
+      type === 'Other'
+        ? schema.required(
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('common.description'),
+            })
+          )
+        : schema.optional()
+    ),
+  }),
   place: Yup.object({
     label: Yup.string().required(
       i18n.t('feedback.validation.is_required', {
@@ -72,10 +86,10 @@ export const LiteraryArtsPerformanceModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ isSubmitting, errors, touched }: FormikProps<LiteraryArtsPerformance>) => (
+        {({ isSubmitting, errors, touched, values }: FormikProps<LiteraryArtsPerformance>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Field name="subtype">
+              <Field name="subtype.type">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     variant="filled"
@@ -95,6 +109,23 @@ export const LiteraryArtsPerformanceModal = ({
                   </TextField>
                 )}
               </Field>
+              {values.subtype.type === 'LiteraryArtsPerformanceOther' ? (
+                <Field name="subtype.description">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      variant="filled"
+                      required
+                      label={t('common.description')}
+                      fullWidth
+                      {...field}
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                      data-testid={dataTestId.registrationWizard.resourceType.artisticSubtypeDescription}
+                    />
+                  )}
+                </Field>
+              ) : null}
+
               <Field name="place.label">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
