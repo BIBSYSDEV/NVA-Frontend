@@ -89,13 +89,14 @@ export const dataTestId = {
     workflowRegistratorRequiresApproval: 'workflow-registrator-requires-approval',
   },
   footer: {
-    aboutLink: 'about-link',
     availabilityStatement: 'availability-statement',
     privacyLink: 'privacy-link',
   },
   header: {
+    aboutLink: 'about-link',
     basicDataLink: 'basic-data-link',
     editorLink: 'editor-link',
+    generalMenuButton: 'general-menu-button',
     languageButton: 'language-button',
     languageMenu: 'language-menu',
     logInButton: 'log-in-link',
@@ -175,6 +176,7 @@ export const dataTestId = {
     relatedPublicationsAccordion: 'related-publications-accordion',
     relatedRegistrationsAccordion: 'related-registrations-accordion',
     subtypeFields: 'public-registration-subtype-fields',
+    subjectAndClassificationAccordion: 'subject-and-classification-accordion',
     tasksPanel: {
       assigneeButton: 'assignee-button',
       assigneeIndicator: 'assignee-indicator',

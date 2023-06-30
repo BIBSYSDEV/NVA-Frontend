@@ -6,6 +6,7 @@ import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface MenuProps {
@@ -14,7 +15,8 @@ interface MenuProps {
 
 export const Menu = ({ handleLogout }: MenuProps) => {
   const { t } = useTranslation();
-  const { user, customer } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
@@ -29,7 +31,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   return (
     <Box sx={{ gridArea: 'user-items' }}>
       {isMobile ? (
-        <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit">
+        <IconButton onClick={handleClickMenuAnchor} title={name} color="inherit">
           <AccountCircle fontSize="large" />
         </IconButton>
       ) : (
@@ -64,6 +66,9 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           </MenuItem>
         )}
         {isMobile && [
+          <MenuItem divider key={dataTestId.header.languageButton}>
+            <LanguageSelector isMobile={true} />
+          </MenuItem>,
           user?.isEditor && (
             <MenuItem
               key={dataTestId.header.editorLink}
