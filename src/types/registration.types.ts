@@ -255,7 +255,7 @@ export const emptyContextPublisher: ContextPublisher = {
   id: '',
 };
 
-export interface InstitutionAggregationBucket extends AggregationBucket {
+export interface LabelAggregationBucket extends AggregationBucket {
   labels: Aggregations;
 }
 
@@ -266,9 +266,9 @@ interface ContributorAggregationBucket extends AggregationBucket {
 }
 
 export interface RegistrationSearchAggregations {
-  topLevelOrganization?: {
-    id?: {
-      buckets: InstitutionAggregationBucket[];
+  topLevelOrganization: {
+    id: {
+      buckets: LabelAggregationBucket[];
     };
   };
   entityDescription: {
@@ -285,6 +285,11 @@ export interface RegistrationSearchAggregations {
           buckets: ContributorAggregationBucket[];
         };
       };
+    };
+  };
+  fundings: {
+    identifier: {
+      buckets: LabelAggregationBucket[];
     };
   };
 }

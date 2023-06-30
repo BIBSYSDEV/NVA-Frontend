@@ -5,7 +5,7 @@ import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../u
 import { FacetItem } from './FacetItem';
 import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType, RegistrationSearchAggregations } from '../../../../types/registration.types';
-import { getInstitutionLabelFromBucket } from '../../../../utils/translation-helpers';
+import { getLabelFromBucket } from '../../../../utils/translation-helpers';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 
@@ -47,13 +47,14 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
     submitForm();
   };
 
-  const topLevelOrganizationFacet = aggregations.topLevelOrganization?.id;
+  const topLevelOrganizationFacet = aggregations.topLevelOrganization.id;
   const typeFacet = aggregations.entityDescription.reference.publicationInstance.type;
   const contributorFacet = aggregations.entityDescription.contributors.identity.id;
+  const fundingFacet = aggregations.fundings.identifier;
 
   return (
     <>
-      {typeFacet?.buckets && (
+      {typeFacet.buckets.length > 0 && (
         <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
           {typeFacet.buckets.map((bucket) => {
             const registrationType = bucket.key as PublicationInstanceType;
@@ -74,7 +75,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {topLevelOrganizationFacet?.buckets && (
+      {topLevelOrganizationFacet.buckets.length > 0 && (
         <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
           {topLevelOrganizationFacet.buckets.map((bucket) => (
             <ListItem
@@ -87,7 +88,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 selected={properties.some(
                   (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
                 )}>
-                <span>{getInstitutionLabelFromBucket(bucket)}</span>
+                <span>{getLabelFromBucket(bucket)}</span>
                 {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
               </StyledListItemButton>
             </ListItem>
@@ -95,7 +96,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {contributorFacet?.buckets && (
+      {contributorFacet.buckets.length > 0 && (
         <FacetItem
           title={t('registration.contributors.contributor')}
           dataTestId={dataTestId.startPage.contributorFacets}>
@@ -113,6 +114,26 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
                 <span>
                   {bucket.name.buckets.length > 0 ? bucket.name.buckets[0].key : <i>{t('common.unknown')}</i>}
                 </span>
+                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
+              </StyledListItemButton>
+            </ListItem>
+          ))}
+        </FacetItem>
+      )}
+
+      {fundingFacet.buckets.length > 0 && (
+        <FacetItem
+          title={t('registration.description.funding.financing')}
+          dataTestId={dataTestId.startPage.institutionFacets}>
+          {fundingFacet.buckets.map((bucket) => (
+            <ListItem disablePadding key={bucket.key} data-testid={dataTestId.startPage.facetItem(bucket.key)}>
+              <StyledListItemButton
+                disabled={isLoadingSearch}
+                onClick={() => updateFilter(SearchFieldName.FundingSource, bucket.key)}
+                selected={properties.some(
+                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
+                )}>
+                <span>{getLabelFromBucket(bucket)}</span>
                 {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
               </StyledListItemButton>
             </ListItem>
