@@ -564,7 +564,7 @@
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
       "published": "Publisert",
-      "unpublished": "Ikke publisert"
+      "unpublished": "Kladd"
     },
     "research_profile": "Forskerprofil",
     "roles": {
