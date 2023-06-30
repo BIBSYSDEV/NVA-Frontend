@@ -3,16 +3,21 @@ import { Box, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { AdvancedSearchRow, registrationFilters } from '../registration_search/filters/AdvancedSearchRow';
 import { SearchTextField } from '../SearchTextField';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useState } from 'react';
+import { LoadingButton } from '@mui/lab';
 
 export const RegistrationSearchBar = () => {
   const { t } = useTranslation();
   const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
+
+  const [isExporting, setIsExporting] = useState(false);
 
   const showAdvancedSearch = properties.some(
     (property) =>
@@ -28,10 +33,10 @@ export const RegistrationSearchBar = () => {
           md: 0,
         },
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', md: '5fr 2fr' },
+        gridTemplateColumns: { xs: '1fr', md: '5fr auto auto' },
         gridTemplateAreas: {
-          xs: "'searchbar' 'sorting' 'advanced'",
-          sm: "'searchbar sorting' 'advanced advanced'",
+          xs: "'searchbar' 'sorting' 'export' 'advanced'",
+          sm: "'searchbar sorting export' 'advanced advanced advanced'",
         },
         gap: '0.75rem 1rem',
       }}>
@@ -49,6 +54,34 @@ export const RegistrationSearchBar = () => {
         )}
       </Field>
       <RegistrationSortSelector />
+
+      <LoadingButton
+        variant="outlined"
+        startIcon={<FileDownloadIcon />}
+        loadingPosition="start"
+        sx={{ gridArea: 'export' }}
+        loading={isExporting}
+        onClick={async () => {
+          setIsExporting(true);
+          try {
+            // TODO: Should set 'text/csv' in Accept header when it is supported by the API
+            const fetchExportData = await fetch('https://api.dev.nva.aws.unit.no/search/resources/export'); // TODO: Include query params
+
+            const exportData = await fetchExportData.text();
+            const blob = new Blob([exportData], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = 'result-export.csv';
+            link.href = url;
+            link.click();
+          } catch {
+            // TODO: Show error message
+          } finally {
+            setIsExporting(false);
+          }
+        }}>
+        {t('search.export')}
+      </LoadingButton>
 
       <FieldArray name="properties">
         {({ push, remove }: FieldArrayRenderProps) => (

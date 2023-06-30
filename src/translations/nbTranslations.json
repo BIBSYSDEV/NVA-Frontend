@@ -1513,6 +1513,7 @@
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
     "contains": "Inneholder",
+    "export": "Eksporter",
     "field_label": "Felt",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
