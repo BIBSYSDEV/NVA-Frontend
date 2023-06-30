@@ -57,7 +57,7 @@ const TagsList = ({ title, values }: TagsListProps) => (
       alignItems: 'center',
       marginBottom: '0.5rem',
     }}>
-    <Typography variant="h3" color="primary">
+    <Typography variant="h3" color="primary" sx={{ mb: { xs: '0.5rem', md: 0 } }}>
       {title}
     </Typography>
     <Box
