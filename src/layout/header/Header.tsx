@@ -112,7 +112,7 @@ export const Header = () => {
           sx={{
             gridArea: 'user-menu',
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'stretch',
             gap: '1rem',
             'a, button': {
               flexDirection: 'column',
