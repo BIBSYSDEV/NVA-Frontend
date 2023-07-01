@@ -11,6 +11,7 @@ import { RegistrationSortSelector } from './RegistrationSortSelector';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useState } from 'react';
 import { LoadingButton } from '@mui/lab';
+import { fetchRegistrationsExport } from '../../../api/searchApi';
 
 export const RegistrationSearchBar = () => {
   const { t } = useTranslation();
@@ -64,11 +65,10 @@ export const RegistrationSearchBar = () => {
         onClick={async () => {
           setIsExporting(true);
           try {
-            // TODO: Should set 'text/csv' in Accept header when it is supported by the API
-            const fetchExportData = await fetch('https://api.dev.nva.aws.unit.no/search/resources/export'); // TODO: Include query params
+            const queryParam = new URLSearchParams(window.location.search).get('query') ?? '';
+            const fetchExportData = await fetchRegistrationsExport(queryParam);
 
-            const exportData = await fetchExportData.text();
-            const blob = new Blob([exportData], { type: 'text/csv' });
+            const blob = new Blob([fetchExportData], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.download = 'result-export.csv';

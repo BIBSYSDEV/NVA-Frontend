@@ -1,7 +1,7 @@
 import { SearchResponse } from '../types/common.types';
 import { ExpandedTicket } from '../types/publication_types/ticket.types';
 import { SearchApiPath } from './apiPaths';
-import { authenticatedApiRequest2 } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 import { ImportCandidateSummary } from '../types/importCandidate.types';
 
 export const fetchTickets = async (results: number, from: number, query = '', onlyCreator = false) => {
@@ -19,7 +19,18 @@ export const fetchTickets = async (results: number, from: number, query = '', on
 
 export const fetchImportCandidates = async () => {
   const getImportCandidates = await authenticatedApiRequest2<SearchResponse<ImportCandidateSummary>>({
-    url: `${SearchApiPath.ImportCandidates}`,
+    url: SearchApiPath.ImportCandidates,
   });
   return getImportCandidates.data;
+};
+
+export const fetchRegistrationsExport = async (queryParam: string) => {
+  let url: string = SearchApiPath.RegistrationsExport;
+  if (queryParam) {
+    url += `?query=${queryParam}`;
+  }
+
+  // TODO: Set 'Accept: text/csv' in request header when supported by the API (NP-44982)
+  const fetchExport = await apiRequest2<string>({ url });
+  return fetchExport.data;
 };
