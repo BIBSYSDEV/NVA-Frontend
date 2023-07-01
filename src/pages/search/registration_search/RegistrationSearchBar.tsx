@@ -21,7 +21,7 @@ export const RegistrationSearchBar = () => {
   const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
 
-  const [isExporting, setIsExporting] = useState(false);
+  const [isLoadingExport, setIsLoadingExport] = useState(false);
 
   const showAdvancedSearch = properties.some(
     (property) =>
@@ -64,9 +64,9 @@ export const RegistrationSearchBar = () => {
         startIcon={<FileDownloadIcon />}
         loadingPosition="start"
         sx={{ gridArea: 'export' }}
-        loading={isExporting}
+        loading={isLoadingExport}
         onClick={async () => {
-          setIsExporting(true);
+          setIsLoadingExport(true);
           try {
             const queryParam = new URLSearchParams(window.location.search).get('query') ?? '';
             const fetchExportData = await fetchRegistrationsExport(queryParam);
@@ -80,7 +80,7 @@ export const RegistrationSearchBar = () => {
           } catch {
             dispatch(setNotification({ message: t('feedback.error.get_registrations_export'), variant: 'error' }));
           } finally {
-            setIsExporting(false);
+            setIsLoadingExport(false);
           }
         }}>
         {t('search.export')}
