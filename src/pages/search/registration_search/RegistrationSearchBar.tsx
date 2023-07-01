@@ -4,17 +4,20 @@ import SearchIcon from '@mui/icons-material/Search';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { useState } from 'react';
+import { LoadingButton } from '@mui/lab';
+import { useDispatch } from 'react-redux';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { AdvancedSearchRow, registrationFilters } from '../registration_search/filters/AdvancedSearchRow';
 import { SearchTextField } from '../SearchTextField';
 import { RegistrationSortSelector } from './RegistrationSortSelector';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { useState } from 'react';
-import { LoadingButton } from '@mui/lab';
 import { fetchRegistrationsExport } from '../../../api/searchApi';
+import { setNotification } from '../../../redux/notificationSlice';
 
 export const RegistrationSearchBar = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
 
@@ -75,7 +78,7 @@ export const RegistrationSearchBar = () => {
             link.href = url;
             link.click();
           } catch {
-            // TODO: Show error message
+            dispatch(setNotification({ message: t('feedback.error.get_registrations_export'), variant: 'error' }));
           } finally {
             setIsExporting(false);
           }
