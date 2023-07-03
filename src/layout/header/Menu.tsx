@@ -29,7 +29,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const closeMenu = () => setAnchorEl(null);
 
   return (
-    <Box sx={{ gridArea: 'user-items' }}>
+    <Box sx={{ gridArea: 'user-items', display: 'flex' }}>
       {isMobile ? (
         <IconButton onClick={handleClickMenuAnchor} title={name} color="inherit">
           <AccountCircle fontSize="large" />
