@@ -25,7 +25,7 @@ export const ContributorIndicators = ({
           {ticketView ? (
             <img src={OrcidLogo} height="20" alt="orcid" style={{ marginLeft: '0.2rem' }} />
           ) : (
-            <IconButton size="small" href={orcId} target="_blank">
+            <IconButton size="small" href={orcId} target="_blank" style={{ paddingRight: 0 }}>
               <img src={OrcidLogo} height="20" alt="orcid" />
             </IconButton>
           )}
