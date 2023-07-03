@@ -89,14 +89,13 @@ export const dataTestId = {
     workflowRegistratorRequiresApproval: 'workflow-registrator-requires-approval',
   },
   footer: {
+    aboutLink: 'about-link',
     availabilityStatement: 'availability-statement',
     privacyLink: 'privacy-link',
   },
   header: {
-    aboutLink: 'about-link',
     basicDataLink: 'basic-data-link',
     editorLink: 'editor-link',
-    generalMenuButton: 'general-menu-button',
     languageButton: 'language-button',
     languageMenu: 'language-menu',
     logInButton: 'log-in-link',
