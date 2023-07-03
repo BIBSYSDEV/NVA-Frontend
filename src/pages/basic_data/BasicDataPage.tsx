@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Switch, useHistory } from 'react-router-dom';
+import { Redirect, Switch, useLocation } from 'react-router-dom';
 import { Divider } from '@mui/material';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
@@ -35,21 +34,10 @@ const BasicDataPage = () => {
   const user = useSelector((store: RootState) => store.user);
   const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
-  const history = useHistory();
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const location = useLocation();
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  useEffect(() => {
-    if (currentPath === UrlPathTemplate.BasicData) {
-      if (user?.isInstitutionAdmin) {
-        history.replace(UrlPathTemplate.BasicDataPersonRegister);
-      } else if (user?.isAppAdmin) {
-        history.replace(UrlPathTemplate.BasicDataInstitutions);
-      }
-    }
-  }, [history, currentPath, user?.isInstitutionAdmin, user?.isAppAdmin]);
-
-  const newCustomerIsSelected =
-    currentPath === UrlPathTemplate.BasicDataInstitutions && history.location.search === '?id=new';
+  const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
 
   return (
     <StyledPageWithSideMenu>
@@ -154,6 +142,14 @@ const BasicDataPage = () => {
       <BackgroundDiv>
         <Switch>
           <ErrorBoundary>
+            <PrivateRoute exact path={UrlPathTemplate.BasicData} isAuthorized={isAppAdmin || isInstitutionAdmin}>
+              {isInstitutionAdmin ? (
+                <Redirect to={UrlPathTemplate.BasicDataPersonRegister} />
+              ) : isAppAdmin ? (
+                <Redirect to={UrlPathTemplate.BasicDataInstitutions} />
+              ) : null}
+            </PrivateRoute>
+
             <PrivateRoute
               exact
               path={UrlPathTemplate.BasicDataInstitutions}
