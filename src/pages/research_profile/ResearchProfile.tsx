@@ -141,7 +141,7 @@ const ResearchProfile = () => {
           </Box>
         )}
         <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
-          {`${t('common.registrations')} ${registrations && `(${registrations.size}`})`}
+          {`${t('my_page.my_profile.results')} ${registrations && `(${registrations.size}`})`}
         </Typography>
         {registrations && (
           <>

@@ -19,13 +19,13 @@ export const ContributorIndicators = ({
   const { t } = useTranslation();
 
   return orcId || correspondingAuthor ? (
-    <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
+    <Box sx={{ display: 'inline-flex', alignItems: 'center', ml: '0.2rem' }}>
       {orcId && (
         <Tooltip title={t('common.orcid_profile')}>
           {ticketView ? (
-            <img src={OrcidLogo} height="20" alt="orcid" style={{ marginLeft: '0.2rem' }} />
+            <img src={OrcidLogo} height="20" alt="orcid" />
           ) : (
-            <IconButton size="small" href={orcId} target="_blank">
+            <IconButton size="small" href={orcId} target="_blank" style={{ padding: 0 }}>
               <img src={OrcidLogo} height="20" alt="orcid" />
             </IconButton>
           )}
