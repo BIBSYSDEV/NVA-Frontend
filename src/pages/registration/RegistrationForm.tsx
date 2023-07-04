@@ -81,7 +81,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const canEditFiles = userIsRegistrationOwner(user, registration) || userIsRegistrationCurator(user, registration);
 
   return registrationQuery.isLoading ? (
-    <PageSpinner aria-label={t('common.registration')} />
+    <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (

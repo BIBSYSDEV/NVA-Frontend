@@ -81,7 +81,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         {doi && (
           <div data-testid={dataTestId.registrationWizard.new.linkMetadata}>
             <Typography sx={{ mt: '1rem' }} variant="h3" gutterBottom>
-              {t('common.registration')}:
+              {t('common.result')}:
             </Typography>
             <Typography>{doi.title}</Typography>
           </div>

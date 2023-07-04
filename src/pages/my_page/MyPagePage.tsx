@@ -262,7 +262,7 @@ const MyPagePage = () => {
 
           <NavigationListAccordion
             key={dataTestId.myPage.registrationsAccordion}
-            title={t('common.registrations')}
+            title={t('common.result_registrations')}
             startIcon={<AddIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}

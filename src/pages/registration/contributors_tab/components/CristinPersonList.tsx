@@ -53,7 +53,7 @@ export const CristinPersonList = ({
               </TableCell>
               <TableCell>{t('common.name')}</TableCell>
               <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
-              <TableCell>{t('common.registrations')}</TableCell>
+              <TableCell>{t('common.result_registrations')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
