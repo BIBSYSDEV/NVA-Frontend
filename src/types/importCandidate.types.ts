@@ -10,7 +10,7 @@ import { MediaContributionPeriodicalPublicationInstance } from './publication_ty
 import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
 import { MapPublicationInstance } from './publication_types/otherRegistration.types';
 import { ExhibitionPublicationInstance } from './publication_types/exhibitionContent.types';
-import { Journal, Publisher } from './registration.types';
+import { Journal, Publisher, Registration } from './registration.types';
 
 export enum ImportStatus {
   Imported = 'IMPORTED',
@@ -18,7 +18,12 @@ export enum ImportStatus {
   NotApplicable = 'NOT_APPLICABLE',
 }
 
-export interface ImportCandidate {
+export interface ImportCandidate extends Omit<Registration, 'type'> {
+  type: 'ImportCandidate';
+  importStatus: ImportStatus;
+}
+
+export interface ImportCandidateSummary {
   type: 'ImportCandidate';
   id: string;
   additionalIdentifiers: string[];

@@ -6,7 +6,6 @@ import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface MenuProps {
@@ -15,9 +14,11 @@ interface MenuProps {
 
 export const Menu = ({ handleLogout }: MenuProps) => {
   const { t } = useTranslation();
-  const { user, customer } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
   const name = user?.givenName ?? '';
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
@@ -27,9 +28,9 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const closeMenu = () => setAnchorEl(null);
 
   return (
-    <Box sx={{ gridArea: 'user-items' }}>
+    <Box sx={{ gridArea: 'user-items', display: 'flex' }}>
       {isMobile ? (
-        <IconButton onClick={handleClickMenuAnchor} title={name} color="inherit">
+        <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit">
           <AccountCircle fontSize="large" />
         </IconButton>
       ) : (
@@ -53,10 +54,17 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
+        {user?.isCreator && !isMobile && !isLargeScreen && (
+          <MenuItem
+            key={dataTestId.header.newRegistrationLink}
+            data-testid={dataTestId.header.newRegistrationLink}
+            onClick={closeMenu}
+            component={Link}
+            to={UrlPathTemplate.RegistrationNew}>
+            <Typography>{t('registration.new_registration')}</Typography>
+          </MenuItem>
+        )}
         {isMobile && [
-          <MenuItem divider key={dataTestId.header.languageButton}>
-            <LanguageSelector isMobile={true} />
-          </MenuItem>,
           user?.isEditor && (
             <MenuItem
               key={dataTestId.header.editorLink}

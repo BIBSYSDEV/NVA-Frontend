@@ -6,7 +6,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { userIsCuratorForRegistration } from '../../utils/registration-helpers';
+import { userIsRegistrationCurator } from '../../utils/registration-helpers';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
@@ -27,8 +27,9 @@ export const ActionPanelContent = ({
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { user, customer } = useSelector((store: RootState) => store);
-  const userIsCurator = userIsCuratorForRegistration(user, registration);
+  const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
+  const userIsCurator = userIsRegistrationCurator(user, registration);
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;
   const publishingRequestTickets = tickets.filter((ticket) => ticket.type === 'PublishingRequest');
@@ -93,7 +94,7 @@ export const ActionPanelContent = ({
             supportTicket={currentSupportTicket}
             addMessage={addMessage}
             refetchData={refetchData}
-            defaultExpanded={isInRegistrationWizard}
+            isRegistrationWizard={isInRegistrationWizard}
           />
         </ErrorBoundary>
       )}

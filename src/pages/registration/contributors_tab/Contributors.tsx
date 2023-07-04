@@ -35,7 +35,12 @@ import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { ContributorRow } from './components/ContributorRow';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { CristinPerson } from '../../../types/user.types';
-import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
+import {
+  filterActiveAffiliations,
+  getFullCristinName,
+  getOrcidUri,
+  getVerificationStatus,
+} from '../../../utils/user-helpers';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
@@ -110,7 +115,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     contributorIndex?: number
   ) => {
     if (contributors.some((contributor) => contributor.identity.id === selectedContributor.id)) {
-      dispatch(setNotification({ message: t('registration.contributors.contributor_already_added'), variant: 'info' }));
+      dispatch(
+        setNotification({
+          message: t('registration.contributors.contributor_already_added'),
+          variant: 'info',
+        })
+      );
       return;
     }
 
@@ -119,6 +129,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       id: selectedContributor.id,
       name: getFullCristinName(selectedContributor.names),
       orcId: getOrcidUri(selectedContributor.identifiers),
+      verificationStatus: getVerificationStatus(selectedContributor.verified),
     };
 
     const activeAffiliations = filterActiveAffiliations(selectedContributor.affiliations);

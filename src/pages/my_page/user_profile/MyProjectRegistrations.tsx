@@ -11,7 +11,17 @@ import { ListSkeleton } from '../../../components/ListSkeleton';
 import { canEditProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 
-export const MyProjectRegistrations = () => {
+interface MyProjectRegistrationsProps {
+  selectedOngoing?: boolean;
+  selectedNotStarted?: boolean;
+  selectedConcluded?: boolean;
+}
+
+export const MyProjectRegistrations = ({
+  selectedOngoing,
+  selectedNotStarted,
+  selectedConcluded,
+}: MyProjectRegistrationsProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const cristinIdentifier = getIdentifierFromId(user?.cristinId ?? '');
@@ -22,8 +32,29 @@ export const MyProjectRegistrations = () => {
   const projectsQuery = useQuery({
     enabled: !!cristinIdentifier,
     queryKey: ['projects', rowsPerPage, page, cristinIdentifier],
-    queryFn: () => searchForProjects(rowsPerPage, page + 1, cristinIdentifier),
+    queryFn: () => searchForProjects(rowsPerPage, page + 1, { creator: cristinIdentifier }),
   });
+
+  const projects = projectsQuery.data?.hits ?? [];
+  const filteredProjects = projects
+    .filter(
+      ({ status }) =>
+        (status === 'ACTIVE' && selectedOngoing) ||
+        (status === 'NOTSTARTED' && selectedNotStarted) ||
+        (status === 'CONCLUDED' && selectedConcluded)
+    )
+    .sort((a, b) => {
+      if (a.status === 'ACTIVE' && b.status !== 'ACTIVE') {
+        return -1;
+      } else if (a.status !== 'ACTIVE' && b.status === 'ACTIVE') {
+        return 1;
+      } else if (a.status === 'NOTSTARTED' && b.status !== 'NOTSTARTED') {
+        return -1;
+      } else if (a.status !== 'NOTSTARTED' && b.status === 'NOTSTARTED') {
+        return 1;
+      }
+      return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+    });
 
   return (
     <div>
@@ -35,7 +66,7 @@ export const MyProjectRegistrations = () => {
       ) : projectsQuery.data && projectsQuery.data.size > 0 ? (
         <>
           <List>
-            {projectsQuery.data.hits.map((project) => (
+            {filteredProjects.map((project) => (
               <ProjectListItem
                 key={project.id}
                 project={project}

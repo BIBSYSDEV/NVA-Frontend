@@ -2,7 +2,7 @@ import { SearchResponse } from '../types/common.types';
 import { ExpandedTicket } from '../types/publication_types/ticket.types';
 import { SearchApiPath } from './apiPaths';
 import { authenticatedApiRequest2 } from './apiRequest';
-import { ImportCandidate } from '../types/importCandidate.types';
+import { ImportCandidateSummary } from '../types/importCandidate.types';
 
 export const fetchTickets = async (results: number, from: number, query = '', onlyCreator = false) => {
   const paginationQuery = `results=${results}&from=${from}`;
@@ -18,7 +18,7 @@ export const fetchTickets = async (results: number, from: number, query = '', on
 };
 
 export const fetchImportCandidates = async () => {
-  const getImportCandidates = await authenticatedApiRequest2<SearchResponse<ImportCandidate>>({
+  const getImportCandidates = await authenticatedApiRequest2<SearchResponse<ImportCandidateSummary>>({
     url: `${SearchApiPath.ImportCandidates}`,
   });
   return getImportCandidates.data;

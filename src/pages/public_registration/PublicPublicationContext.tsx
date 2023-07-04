@@ -51,6 +51,8 @@ import {
   LiteraryArtsWeb,
   LiteraryArtsPerformance,
   LiteraryArtsAudioVisual,
+  LiteraryArtsAudioVisualSubtype,
+  LiteraryArtsPerformanceSubtype,
 } from '../../types/publication_types/artisticRegistration.types';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import {
@@ -835,11 +837,13 @@ const PublicLiteraryArtsPerformanceDialogContent = ({ performance }: { performan
       <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${performance.type}`)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.type_work')}</Typography>
-      {performance.subtype && (
-        <Typography paragraph>
-          {t(`registration.resource_type.artistic.performance_types.${performance.subtype}`)}
-        </Typography>
-      )}
+      <Typography paragraph>
+        {performance.subtype.type
+          ? performance.subtype.type === LiteraryArtsPerformanceSubtype.Other
+            ? performance.subtype.description
+            : t(`registration.resource_type.artistic.performance_types.${performance.subtype.type}`)
+          : '-'}
+      </Typography>
       <Typography variant="h3">{t('common.place')}</Typography>
       <Typography paragraph>{performance.place.label}</Typography>
       <Typography variant="h3">{t('common.date')}</Typography>
@@ -861,11 +865,13 @@ const PublicLiteraryArtsAudioVisualDialogContent = ({ audioVisual }: { audioVisu
       <Typography variant="h3">{t('common.type')}</Typography>
       <Typography paragraph>{t(`registration.resource_type.artistic.output_type.${audioVisual.type}`)}</Typography>
       <Typography variant="h3">{t('registration.resource_type.type_work')}</Typography>
-      {audioVisual.subtype && (
-        <Typography paragraph>
-          {t(`registration.resource_type.artistic.audio_video_type.${audioVisual.subtype}`)}
-        </Typography>
-      )}
+      <Typography paragraph>
+        {audioVisual.subtype.type
+          ? audioVisual.subtype.type === LiteraryArtsAudioVisualSubtype.Other
+            ? audioVisual.subtype.description
+            : t(`registration.resource_type.artistic.audio_video_type.${audioVisual.subtype.type}`)
+          : '-'}
+      </Typography>
       <Typography variant="h3">{t('registration.resource_type.artistic.publisher')}</Typography>
       <Typography paragraph>{audioVisual.publisher.name}</Typography>
       <Typography variant="h3">{t('common.year')}</Typography>

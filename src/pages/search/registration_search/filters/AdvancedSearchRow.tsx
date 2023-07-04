@@ -11,6 +11,7 @@ import {
 } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHelpers';
+import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface FilterItem {
   field: string;
@@ -33,11 +34,21 @@ export const registrationFilters: FilterItem[] = [
     manuallyAddable: true,
   },
   {
+    field: SearchFieldName.ContributorId,
+    i18nKey: 'registration.contributors.contributor',
+    manuallyAddable: false,
+  },
+  {
     field: `${DescriptionFieldNames.PublicationDate}.year`,
     i18nKey: 'registration.year_published',
     manuallyAddable: true,
   },
   { field: SearchFieldName.TopLevelOrganizationId, i18nKey: 'common.institution', manuallyAddable: false },
+  {
+    field: SearchFieldName.FundingSource,
+    i18nKey: 'registration.description.funding.financing',
+    manuallyAddable: false,
+  },
 ];
 
 interface AdvancedSearchRowProps {
@@ -53,7 +64,12 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
     <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '3fr 3fr 5fr 2fr' }, gap: '1rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
-          <TextField {...field} select variant="outlined" label={t('search.field_label')}>
+          <TextField
+            {...field}
+            select
+            variant="outlined"
+            label={t('search.field_label')}
+            data-testid={dataTestId.startPage.advancedSearch.advancedFieldSelect}>
             {registrationFilters
               .filter((filter) => filter.manuallyAddable)
               .map((filter) => (
@@ -66,7 +82,12 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
       </Field>
       <Field name={`${baseFieldName}.operator`}>
         {({ field }: FieldProps<string>) => (
-          <TextField {...field} select variant="outlined" label={t('search.operator')}>
+          <TextField
+            {...field}
+            select
+            variant="outlined"
+            label={t('search.operator')}
+            data-testid={dataTestId.startPage.advancedSearch.advancedOperatorSelect}>
             <MenuItem value={ExpressionStatement.Contains}>{t('search.contains')}</MenuItem>
             <MenuItem value={ExpressionStatement.NotContaining}>{t('search.not_containing')}</MenuItem>
           </TextField>
@@ -76,6 +97,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
+            data-testid={dataTestId.startPage.advancedSearch.advancedValueField}
             value={
               propertySearchItem.value && propertySearchItem.fieldName === ResourceFieldNames.RegistrationType
                 ? t(`registration.publication_types.${propertySearchItem.value as PublicationInstanceType}`)
@@ -86,7 +108,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
           />
         )}
       </Field>
-      <Button onClick={removeFilter} color="error">
+      <Button onClick={removeFilter} color="error" data-testid={dataTestId.startPage.advancedSearch.removeFilterButton}>
         {t('search.remove_filter')}
       </Button>
     </Box>

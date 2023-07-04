@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { IconButton, Paper, Tooltip, Typography, Box } from '@mui/material';
+import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -29,6 +29,7 @@ import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { PublicFundingsContent } from './PublicFundingsContent';
+import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -122,6 +123,15 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </LandingPageAccordion>
         )}
 
+        {entityDescription && (entityDescription.tags.length > 0 || subjects.length > 0) && (
+          <LandingPageAccordion
+            dataTestId={dataTestId.registrationLandingPage.subjectAndClassificationAccordion}
+            defaultExpanded
+            heading={t('registration.public_page.subject_and_classification')}>
+            <PublicSubjectAndClassificationContent registration={registration} />
+          </LandingPageAccordion>
+        )}
+
         {entityDescription?.reference?.publicationInstance?.type === ResearchDataType.Dataset && (
           <>
             <LandingPageAccordion
@@ -169,7 +179,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.projectsAccordion}
             defaultExpanded
-            heading={t('registration.description.project_association')}>
+            heading={`${t('registration.description.project_association')} (${projects.length})`}>
             <PublicProjectsContent projects={projects} />
           </LandingPageAccordion>
         )}
@@ -178,7 +188,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.fundingsAccordion}
             defaultExpanded
-            heading={t('project.financing')}>
+            heading={`${t('project.financing')} (${fundings.length})`}>
             <PublicFundingsContent fundings={fundings} />
           </LandingPageAccordion>
         )}
@@ -199,7 +209,9 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <LandingPageAccordion
               dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
               defaultExpanded
-              heading={t('registration.resource_type.research_data.external_links')}>
+              heading={`${t('registration.resource_type.research_data.external_links')} (${
+                entityDescription.reference.publicationInstance.related?.length ?? 0
+              })`}>
               <ListExternalRelations links={entityDescription.reference.publicationInstance.related} />
             </LandingPageAccordion>
           </>
@@ -208,11 +220,11 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
             defaultExpanded
-            heading={t('registration.resource_type.research_data.external_links')}>
+            heading={`${t('registration.resource_type.research_data.external_links')} (${
+              filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related) ?? 0 // DMP can have both internal and external links in .related
+            })`}>
             <ListExternalRelations
-              links={entityDescription.reference.publicationInstance.related?.filter(
-                (uri) => !uri.includes(API_URL) // DMP can have both internal and external links in .related
-              )}
+              links={filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related)}
             />
           </LandingPageAccordion>
         )}
@@ -221,7 +233,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
-            heading={t('registration.public_page.other_related_registrations')}>
+            heading={`${t('registration.public_page.other_related_registrations')} (${relatedRegistrations.size})`}>
             <ListRegistrationRelations registrations={relatedRegistrations.hits} />
           </LandingPageAccordion>
         )}
@@ -231,3 +243,5 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     </Paper>
   );
 };
+
+const filterExternalRelatedLinks = (links: string[] = []) => links.filter((link) => !link.includes(API_URL));

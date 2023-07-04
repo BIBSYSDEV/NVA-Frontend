@@ -25,7 +25,10 @@ interface LiteraryArtsAudioVisualModalProps {
 
 const emptyLiteraryArtsAudioVisual: LiteraryArtsAudioVisual = {
   type: 'LiteraryArtsAudioVisual',
-  subtype: '',
+  subtype: {
+    type: '',
+    description: '',
+  },
   publisher: emptyUnconfirmedPublisher,
   publicationDate: emptyRegistrationDate,
   isbnList: [],
@@ -33,11 +36,22 @@ const emptyLiteraryArtsAudioVisual: LiteraryArtsAudioVisual = {
 };
 
 const validationSchema = Yup.object<YupShape<LiteraryArtsAudioVisual>>({
-  subtype: Yup.string().required(
-    i18n.t('feedback.validation.is_required', {
-      field: i18n.t('registration.resource_type.artistic.output_type.LiteraryArtsAudioVisual'),
-    })
-  ),
+  subtype: Yup.object().shape({
+    type: Yup.string().required(
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.type_work'),
+      })
+    ),
+    description: Yup.string().when('type', ([type], schema) =>
+      type === LiteraryArtsAudioVisualSubtype.Other
+        ? schema.required(
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('common.description'),
+            })
+          )
+        : schema.optional()
+    ),
+  }),
   publisher: Yup.object<YupShape<UnconfirmedPublisher>>({
     name: Yup.string().required(
       i18n.t('feedback.validation.is_required', {
@@ -97,10 +111,10 @@ export const LiteraryArtsAudioVisualModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ isSubmitting }: FormikProps<LiteraryArtsAudioVisual>) => (
+        {({ isSubmitting, values }: FormikProps<LiteraryArtsAudioVisual>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Field name="subtype">
+              <Field name="subtype.type">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
@@ -120,6 +134,23 @@ export const LiteraryArtsAudioVisualModal = ({
                   </TextField>
                 )}
               </Field>
+
+              {values.subtype.type === LiteraryArtsAudioVisualSubtype.Other ? (
+                <Field name="subtype.description">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      variant="filled"
+                      required
+                      label={t('common.description')}
+                      fullWidth
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                      data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}
+                    />
+                  )}
+                </Field>
+              ) : null}
 
               <Field name="publisher.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (

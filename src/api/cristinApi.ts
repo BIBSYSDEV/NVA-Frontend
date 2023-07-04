@@ -80,19 +80,52 @@ export const fetchPerson = async (personId: string) => {
   return fetchPersonResponse.data;
 };
 
-export const searchForProjects = async (results: number, page: number, creator?: string) => {
+export const searchForPerson = async (results: number, page: number, name: string) => {
   const searchParams = new URLSearchParams();
-  searchParams.set('results', results.toString());
-  searchParams.set('page', page.toString());
-  if (creator) {
-    searchParams.set('creator', creator);
+  if (name) {
+    searchParams.set('name', name);
+  }
+  if (results) {
+    searchParams.set('results', results.toString());
+  }
+  if (page) {
+    searchParams.set('page', page.toString());
   }
 
   const queryContent = searchParams.toString();
-  const query = queryContent ? `?${queryContent}` : '';
+  const queryParams = queryContent ? `?${queryContent}` : '';
+
+  const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson>>({
+    url: `${CristinApiPath.Person}${queryParams}`,
+  });
+  return fetchPersonResponse.data;
+};
+
+interface ProjectsSearchParams {
+  query?: string;
+  creator?: string;
+  participant?: string;
+}
+
+export const searchForProjects = async (results: number, page: number, params?: ProjectsSearchParams) => {
+  const searchParams = new URLSearchParams();
+  if (params?.query) {
+    searchParams.set('query', params.query);
+  }
+  searchParams.set('results', results.toString());
+  searchParams.set('page', page.toString());
+  if (params?.creator) {
+    searchParams.set('creator', params.creator);
+  }
+  if (params?.participant) {
+    searchParams.set('participant', params.participant);
+  }
+
+  const queryContent = searchParams.toString();
+  const queryParams = queryContent ? `?${queryContent}` : '';
 
   const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject>>({
-    url: `${CristinApiPath.Project}${query}`,
+    url: `${CristinApiPath.Project}${queryParams}`,
   });
   return fetchProjectsResponse.data;
 };

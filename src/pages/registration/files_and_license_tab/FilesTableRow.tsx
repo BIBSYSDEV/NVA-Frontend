@@ -22,12 +22,14 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import prettyBytes from 'pretty-bytes';
 import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
-import { AssociatedFile, AssociatedFileType, LicenseNames, licenses } from '../../../types/associatedArtifact.types';
+import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { administrativeAgreementId } from '../FilesAndLicensePanel';
+import { equalUris } from '../../../utils/general-helpers';
+import { licenses } from '../../../types/license.types';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -35,9 +37,10 @@ interface FilesTableRowProps {
   toggleLicenseModal: () => void;
   baseFieldName: string;
   showFileVersion: boolean;
+  disabled: boolean;
 }
 
-export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion }: FilesTableRowProps) => {
+export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion, disabled }: FilesTableRowProps) => {
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
@@ -49,7 +52,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
           <Tooltip title={t('registration.files_and_license.remove_file')}>
-            <IconButton onClick={toggleOpenConfirmDialog}>
+            <IconButton onClick={toggleOpenConfirmDialog} disabled={disabled}>
               <CancelIcon color="error" />
             </IconButton>
           </Tooltip>
@@ -80,6 +83,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 {...field}
                 data-testid={dataTestId.registrationWizard.files.administrativeAgreement}
                 checked={field.value}
+                disabled={disabled}
                 inputProps={{
                   'aria-labelledby': administrativeAgreementId,
                 }}
@@ -106,7 +110,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               <FormControl
                 data-testid={dataTestId.registrationWizard.files.version}
                 required
-                disabled={file.administrativeAgreement}>
+                disabled={file.administrativeAgreement || disabled}>
                 <RadioGroup
                   {...field}
                   row
@@ -140,7 +144,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 onChange={(date) => setFieldValue(field.name, date ?? '')}
                 format="dd.MM.yyyy"
                 maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                disabled={file.administrativeAgreement}
+                disabled={file.administrativeAgreement || disabled}
                 slotProps={{
                   textField: {
                     inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
@@ -155,56 +159,51 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           )}
         </Field>
       </TableCell>
-
       <TableCell>
         <Field name={`${baseFieldName}.${SpecificFileFieldNames.License}`}>
-          {({ field, meta: { error, touched } }: FieldProps) => (
+          {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               id={field.name}
               data-testid={dataTestId.registrationWizard.files.selectLicenseField}
               sx={{ minWidth: '15rem' }}
               select
+              disabled={disabled}
               SelectProps={{
                 renderValue: (option) => {
-                  const selectedLicense = licenses.find((license) => license.identifier === option);
+                  const selectedLicense = licenses.find((license) => equalUris(license.id, option as string));
                   return selectedLicense ? (
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <img style={{ width: '5rem' }} src={selectedLicense.logo} alt="" />
-                      <span>{t(`licenses.labels.${option}` as any)}</span>
+                      <img style={{ width: '5rem' }} src={selectedLicense.logo} alt={selectedLicense.name} />
+                      <span>{selectedLicense.name}</span>
                     </Box>
                   ) : null;
                 },
               }}
               variant="filled"
-              value={field.value?.identifier || ''}
+              value={licenses.find((license) => equalUris(license.id, field.value))?.id ?? ''}
               error={!!error && touched}
               helperText={<ErrorMessage name={field.name} />}
               label={t('registration.files_and_license.conditions_for_using_file')}
               required
-              onChange={({ target: { value } }) =>
-                setFieldValue(field.name, {
-                  type: 'License',
-                  identifier: value as LicenseNames,
-                  labels: { nb: value },
-                })
-              }
-              disabled={file.administrativeAgreement}>
-              {licenses.map((license) => (
-                <MenuItem
-                  data-testid={dataTestId.registrationWizard.files.licenseItem}
-                  key={license.identifier}
-                  value={license.identifier}
-                  divider
-                  dense
-                  sx={{ gap: '1rem' }}>
-                  <ListItemIcon>
-                    <img style={{ width: '5rem' }} src={license.logo} alt={license.identifier} />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Typography>{t(`licenses.labels.${license.identifier}`)}</Typography>
-                  </ListItemText>
-                </MenuItem>
-              ))}
+              onChange={({ target: { value } }) => setFieldValue(field.name, value)}>
+              {licenses
+                .filter((license) => license.version === 4 || !license.version)
+                .map((license) => (
+                  <MenuItem
+                    data-testid={dataTestId.registrationWizard.files.licenseItem}
+                    key={license.id}
+                    value={license.id}
+                    divider
+                    dense
+                    sx={{ gap: '1rem' }}>
+                    <ListItemIcon>
+                      <img style={{ width: '5rem' }} src={license.logo} alt={license.name} />
+                    </ListItemIcon>
+                    <ListItemText>
+                      <Typography>{license.name}</Typography>
+                    </ListItemText>
+                  </MenuItem>
+                ))}
             </TextField>
           )}
         </Field>

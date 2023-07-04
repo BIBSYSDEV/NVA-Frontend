@@ -27,7 +27,7 @@ import {
 } from './publicationFieldNames';
 import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 import { MapEntityDescription } from './publication_types/otherRegistration.types';
-import { LanguageString } from './common.types';
+import { AggregationBucket, Aggregations, LanguageString, SearchResponse } from './common.types';
 import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
 
 export enum RegistrationStatus {
@@ -201,12 +201,17 @@ export const emptyRegistrationDate: RegistrationDate = {
 };
 
 export interface RegistrationPreview {
+  contributors: Contributor[];
+  identifier: string;
   id: string;
   mainTitle: string;
   createdDate: string;
   modifiedDate: string;
   status: RegistrationStatus;
   owner: string;
+  publicationInstance?: {
+    type: PublicationInstanceType;
+  };
 }
 
 export interface Doi {
@@ -249,3 +254,46 @@ export const emptyContextPublisher: ContextPublisher = {
   type: PublicationChannelType.Publisher,
   id: '',
 };
+
+export interface LabelAggregationBucket extends AggregationBucket {
+  labels: Aggregations;
+}
+
+interface ContributorAggregationBucket extends AggregationBucket {
+  name: {
+    buckets: AggregationBucket[];
+  };
+}
+
+export interface RegistrationSearchAggregations {
+  topLevelOrganization: {
+    id: {
+      buckets: LabelAggregationBucket[];
+    };
+  };
+  entityDescription: {
+    reference: {
+      publicationInstance: {
+        type: {
+          buckets: AggregationBucket[];
+        };
+      };
+    };
+    contributors: {
+      identity: {
+        id: {
+          buckets: ContributorAggregationBucket[];
+        };
+      };
+    };
+  };
+  fundings: {
+    identifier: {
+      buckets: LabelAggregationBucket[];
+    };
+  };
+}
+
+export interface RegistrationSearchResponse extends Omit<SearchResponse<Registration>, 'aggregations'> {
+  aggregations?: RegistrationSearchAggregations;
+}

@@ -49,12 +49,14 @@
       "central_import": "Sentralimport",
       "duplicate_check": "Duplikatsjekk",
       "duplicate_search_hits_shown": "Søkjet gav følgjande treff: (viser {{ShownResultsCount}} av {{TotalResultsCount}})",
+      "import": "Importer",
       "import_publication": "Import publication",
       "or_search_with": "eller søk med",
       "publications": "Publikasjonar",
       "reset_search_values": "Tilbakestill verdiar",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikat",
+      "see_publication": "Sjå publikasjon",
       "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})"
     },
     "institutions": {
@@ -111,14 +113,13 @@
     "add_custom": "Legg til {{- name}}",
     "all": "Alle",
     "cancel": "Avbryt",
+    "category": "Kategori",
     "clear": "Fjern",
     "click_to_show_all": "Trykk for å vise alt",
     "close": "Lukk",
     "close_forever": "Lukk og ikkje vis igjen",
     "country": "Land",
     "create": "Opprett",
-    "create_doi": "Opprett DOI",
-    "created_date": "Oppretta",
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskriving",
@@ -128,6 +129,7 @@
     "employments": "Tilsettingar",
     "end_date": "Sluttdato",
     "error_occurred": "Ein uventa feil har oppstått",
+    "filter": "Filter",
     "first_name": "Fornamn",
     "help": "Hjelp",
     "id": "ID",
@@ -135,7 +137,6 @@
     "institutions": "Institusjonar",
     "last_name": "Etternamn",
     "link": "Lenkje",
-    "loading": "Lastar",
     "menu": "Meny",
     "message": "Melding",
     "move_down": "Flytt ned",
@@ -157,7 +158,6 @@
     "page_title": "Nasjonalt Vitenarkiv",
     "place": "Stad",
     "previous": "Førre",
-    "publish": "Publiser",
     "publisher": "Utgjevar",
     "read": "Les",
     "read_less": "Les mindre",
@@ -193,7 +193,6 @@
     "start": "Start",
     "start_date": "Startdato",
     "start_page": "Startside",
-    "status": "Status",
     "tasks": "Oppgåver",
     "title": "Tittel",
     "type": "Type",
@@ -403,6 +402,7 @@
       "update_publishing_request": "Kunne ikkje oppdatere publiseringsførespurnad",
       "update_registration": "Kunne ikkje oppdatere registrering",
       "update_ticket_assignee": "Kunne ikkje setje til saksbehandlar",
+      "update_ticket_status": "",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feila"
     },
     "success": {
@@ -411,6 +411,7 @@
       "admin_added": "Brukar lagt til som administrator",
       "create_project": "Prosjekt er oppretta",
       "create_publishing_request": "Publiseringsførespurnad vart oppretta",
+      "create_registration": "Publikasjon er oppretta",
       "create_user": "Din brukar vart oppretta",
       "created_customer": "Institusjon er oppretta",
       "delete_registration": "Registrering vart sletta",
@@ -428,6 +429,7 @@
       "update_project": "Prosjektet vart oppdatert",
       "update_publish_strategy": "Publiseringsstrategi vart oppdatert",
       "update_registration": "Registreringa er oppdatert",
+      "update_ticket_assignee": "Kurator vart oppdatert",
       "update_vocabulary": "{{vocabulary}} er no {{status}}"
     },
     "validation": {
@@ -465,28 +467,31 @@
       "rights_reserved": "Dette arbeidet er publisert her for personleg bruk og kun i samsvar med utgjevar sine reglar og føresetnadar for bruk av eigenaktiverte versjonar."
     },
     "labels": {
-      "CC BY": "CC BY",
-      "CC BY-NC": "CC BY-NC",
-      "CC BY-NC-ND": "CC BY-NC-ND",
-      "CC BY-NC-SA": "CC BY-NC-SA",
-      "CC BY-ND": "CC BY-ND",
-      "CC BY-SA": "CC BY-SA",
-      "CC0": "CC0",
-      "RightsReserved": "Utgjevar sine føresetnadar"
+      "cc0": "CC0 ({{version}})",
+      "cc_by": "CC BY ({{version}})",
+      "cc_by_nc": "CC BY-NC ({{version}})",
+      "cc_by_nc_nd": "CC BY-NC-ND ({{version}})",
+      "cc_by_nc_sa": "CC BY-NC-SA ({{version}})",
+      "cc_by_nd": "CC BY-ND ({{version}})",
+      "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
+      "cc_by_sa": "CC BY-SA ({{version}})",
+      "rights_reserved": "Utgjevar sine føresetnadar"
     },
     "links": {
       "cc0": "https://creativecommons.org/publicdomain/zero/1.0/deed.no",
-      "cc_by": "https://creativecommons.org/licenses/by/4.0/deed.no",
-      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/4.0/deed.no",
-      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/4.0/deed.no",
-      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.no",
-      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/4.0/deed.no",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/4.0/deed.no"
+      "cc_by": "https://creativecommons.org/licenses/by/{{version}}/deed.no",
+      "cc_by_nc": "https://creativecommons.org/licenses/by-nc/{{version}}/deed.no",
+      "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/{{version}}/deed.no",
+      "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/{{version}}/deed.no",
+      "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}/deed.no",
+      "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}/deed.no",
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/deed.no",
+      "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
     }
   },
   "my_page": {
     "messages": {
-      "dialogue": "",
+      "dialogue": "Dialog",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Ventar på DOI-tildeling",
@@ -494,17 +499,18 @@
       "files_published": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
       "general_support_pending": "Venter på oppfølging",
+      "mark_as_completed": "Sett til ferdig",
       "no_messages": "Du har inga meldingar",
       "ticket_types": {
         "Closed": "Lukka",
         "Completed": "Ferdeg",
         "New": "Ny",
-        "Pending": "Pågår"
+        "Pending": "Under handsaming"
       },
       "types": {
         "DoiRequest": "DOI-førespurnad",
         "GeneralSupportCase": "Brukarstøtte",
-        "PublishingRequest": "Publiseringsførespurnad"
+        "PublishingRequest": "Publisering"
       }
     },
     "my_page": "Mi side",
@@ -548,12 +554,17 @@
       "user_profile_description": "Her kan du fylle inn og merke kva du ønskjer skal gå fram på din offisielle forskarprofil."
     },
     "no_employments": "Ingen tilsettingar",
+    "project_registration_status": {
+      "concluded": "Avslutta",
+      "not_started": "Ikkje starta",
+      "ongoing": "Pågåande"
+    },
     "project_registrations": "Prosjektregistreringar",
     "registrations": {
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønskjer du å slette \"{{title}}\"?",
-      "published_registrations": "Publiserte registreringar",
-      "unpublished_registrations": "Upubliserte registreringar"
+      "published": "Publisert",
+      "unpublished": "Ikkje publisert"
     },
     "research_profile": "Forskarprofil",
     "roles": {
@@ -989,6 +1000,7 @@
       "verify_affiliation": "Bekreft tilknyting",
       "verify_person": "Verifiser person"
     },
+    "curator_support_info": "",
     "description": {
       "abstract": "Samandrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1072,6 +1084,7 @@
       "handle": "Handle",
       "in_progress": "Under handsaming",
       "message_to_curator": "Melding til kurator",
+      "metadata_not_published": "Metadata er ikkje publisert",
       "other_contributors_one": "(+{{count}}) annan)",
       "other_contributors_other": "(+{{count}} andre)",
       "other_related_registrations": "Andre relaterte registreringar",
@@ -1080,8 +1093,6 @@
       "preview_of": "Førehandsvising av {{fileName}}",
       "preview_unavailable": "Førehandsvising ikkje tilgjengeleg. Opne fila i eigna program.",
       "publication": "Publisering",
-      "published": "Publisert",
-      "published_date": "Publisert: {{date}}",
       "publishing_request": "Publiseringsgodkjenning",
       "publishing_request_message_about": "Du kan bruke meldingsfeltet for dialog med registrator ved behov.",
       "reject_publish_request": "Avvis publisering",
@@ -1090,11 +1101,17 @@
       "reserve_doi": "Reserver ein DOI",
       "reserved_doi": "Reservert DOI",
       "tasks_panel": {
-        "assign_ticket": "Ta sak",
+        "assign_curator": "Sett kurator",
+        "assign_doi": "Tildel DOI",
+        "assign_doi_about": "",
         "files_will_soon_be_published": "Filene vil verte publisert om kort tid. Last inn siden på nytt om litt for å sjå oppdatert info.",
         "has_rejected_files_publishing_request": "Registreringa har ein avslege publiseringsførespurnad for filene.",
         "has_reserved_doi": "Registreringa har fått ein reservert DOI. Når registreringa vert publisert vil ein DOI-førespurnad verte oppretta automatisk, som skal handsamast av ein kurator.",
         "metadata_published_waiting_for_files": "Metadata er publisert og synleg for andre brukarar, men ein kurator må godkjenne filene som er lasta opp før dei vert synlege.",
+        "metadata_published_waiting_for_files_curator": "",
+        "publish_metadata": "Publiser metadata",
+        "publish_metadata_and_files": "Publiser metadata og fil(er)",
+        "registration_is_published": "",
         "registration_will_soon_be_published": "Registreringa vil verte publisert om kort tid. Last inn siden på nytt om litt for å sjå oppdatert info.",
         "reload": "Last inn på nytt",
         "review_preview_before_publishing": "Sjå over utkast før du går vidare.",
@@ -1486,7 +1503,7 @@
       "DRAFT_FOR_DELETION": "Sletta",
       "NEW": "Ny",
       "PUBLISHED": "Publisert",
-      "PUBLISHED_METADATA": "Publisert metadata"
+      "PUBLISHED_METADATA": "Metadata publisert"
     },
     "year_published": "Publiseringsår"
   },
@@ -1505,7 +1522,6 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "result": "Resultat",
-    "search_filter": "Søkjefilter",
     "search_placeholder": "Søk etter tittel, bidragsytar, samandrag, etc.",
     "search_term_label": "Verdi",
     "sort_by": "Sorter etter",
@@ -1518,6 +1534,7 @@
     "limited_to": "Avgrensa til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukardialoger",
     "new_user_dialogs": "Nye brukardialoger",
+    "unread": "",
     "user_dialog": "Brukardialog"
   }
 }

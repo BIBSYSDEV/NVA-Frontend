@@ -9,9 +9,9 @@ import {
   getProjectManagers,
   getProjectParticipants,
 } from '../../registration/description_tab/projects_field/projectHelpers';
-import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
 import { SearchListItem } from '../../../components/styled/Wrappers';
+import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface ProjectListItemProps {
   project: CristinProject;
@@ -27,7 +27,10 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
   const projectParticipantsLength = getProjectParticipants(project.contributors).length;
 
   return (
-    <SearchListItem sx={{ borderLeftColor: 'project.main' }}>
+    <SearchListItem
+      sx={{
+        borderLeftColor: 'project.main',
+      }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
         <Typography sx={{ fontSize: '1rem', fontWeight: '600' }} gutterBottom>
           <MuiLink component={Link} to={getProjectPath(project.id)}>
@@ -37,8 +40,11 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
         {showEdit && (
           <>
             <Tooltip title={t('project.edit_project')}>
-              <IconButton onClick={() => setOpenEditProject(true)}>
-                <EditIcon />
+              <IconButton
+                sx={{ bgcolor: 'project.main', width: '1.5rem', height: '1.5rem' }}
+                size="small"
+                onClick={() => setOpenEditProject(true)}>
+                <EditIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
             <ProjectFormDialog
@@ -50,7 +56,7 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
           </>
         )}
       </Box>
-      <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '1rem' }}>
+      <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '0.5rem' }}>
         {projectManagers.map((projectManager) => (
           <MuiLink
             key={projectManager.identity.id}
@@ -63,7 +69,8 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
           <Typography>({t('search.additional_participants', { count: projectParticipantsLength })})</Typography>
         )}
       </Box>
-      <AffiliationHierarchy unitUri={project.coordinatingInstitution.id} />
+
+      <Typography>{getLanguageString(project.coordinatingInstitution.labels)}</Typography>
     </SearchListItem>
   );
 };

@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Switch, useHistory } from 'react-router-dom';
-import { Divider, FormControlLabel } from '@mui/material';
+import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
+import { Button, Divider, FormControlLabel } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
-import { CreatorRoute, LoggedInRoute } from '../../utils/routes/Routes';
+import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjects } from './user_profile/MyProjects';
 import { MyResults } from './user_profile/MyResults';
@@ -38,6 +38,7 @@ import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../compone
 import { TicketList, ticketsPerPageOptions } from '../messages/components/TicketList';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { MyRegistrations } from '../my_registrations/MyRegistrations';
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
@@ -46,11 +47,25 @@ type SelectedStatusState = {
 const MyPagePage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const history = useHistory();
+  const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
+  const isAuthenticated = !!user;
+  const isCreator = !!user?.customerId && (user.isCreator || user.isCurator);
+
   const queryClient = useQueryClient();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
+
+  const [selectedRegistrationStatus, setSelectedRegistrationStatus] = useState({
+    published: false,
+    unpublished: true,
+  });
+
+  const [selectedProjectStatus, setSelectedProjectStatus] = useState({
+    notStarted: false,
+    ongoing: true,
+    concluded: false,
+  });
 
   const [selectedTypes, setSelectedTypes] = useState({
     doiRequest: true,
@@ -64,6 +79,8 @@ const MyPagePage = () => {
     Completed: false,
     Closed: false,
   });
+
+  const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
 
   const selectedTypesArray = Object.entries(selectedTypes)
     .filter(([_, selected]) => selected)
@@ -81,7 +98,9 @@ const MyPagePage = () => {
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const query = [typeQuery, statusQuery].filter(Boolean).join(' AND ');
+  const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
+
+  const query = [typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
     queryKey: ['tickets', rowsPerPage, page, query],
@@ -100,23 +119,13 @@ const MyPagePage = () => {
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);
-
-  useEffect(() => {
-    if (currentPath === UrlPathTemplate.MyPage) {
-      if (user?.isCreator) {
-        history.replace(UrlPathTemplate.MyPageMyMessages);
-      } else {
-        history.replace(UrlPathTemplate.MyPageMyResearchProfile);
-      }
-    }
-  }, [history, currentPath, user?.isCreator]);
 
   // Hide menu when opening a ticket on Messages path
   const expandMenu =
-    !history.location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
-    history.location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
+    !location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
+    location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
 
   return (
     <StyledPageWithSideMenu>
@@ -139,6 +148,17 @@ const MyPagePage = () => {
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
+            <StyledTicketSearchFormGroup>
+              <Button
+                data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
+                sx={{ width: 'fit-content', background: filterUnreadOnly ? undefined : 'white', textTransform: 'none' }}
+                variant={filterUnreadOnly ? 'contained' : 'outlined'}
+                startIcon={<MarkEmailUnreadIcon />}
+                onClick={() => setFilterUnreadOnly(!filterUnreadOnly)}>
+                {t('tasks.unread')}
+              </Button>
+            </StyledTicketSearchFormGroup>
+
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
@@ -248,13 +268,38 @@ const MyPagePage = () => {
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
             <NavigationList>
-              <LinkButton
-                key={dataTestId.myPage.myRegistrationsLink}
-                data-testid={dataTestId.myPage.myRegistrationsLink}
-                isSelected={currentPath === UrlPathTemplate.MyPageMyRegistrations}
-                to={UrlPathTemplate.MyPageMyRegistrations}>
-                {t('common.registrations')}
-              </LinkButton>
+              <StyledTicketSearchFormGroup>
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsUnpublishedCheckbox}
+                  checked={selectedRegistrationStatus.unpublished}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedRegistrationStatus({
+                          ...selectedRegistrationStatus,
+                          unpublished: !selectedRegistrationStatus.unpublished,
+                        })
+                      }
+                    />
+                  }
+                  label={t('my_page.registrations.unpublished')}
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myRegistrationsPublishedCheckbox}
+                  checked={selectedRegistrationStatus.published}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedRegistrationStatus({
+                          ...selectedRegistrationStatus,
+                          published: !selectedRegistrationStatus.published,
+                        })
+                      }
+                    />
+                  }
+                  label={t('my_page.registrations.published')}
+                />
+              </StyledTicketSearchFormGroup>
             </NavigationList>
             <Divider sx={{ mt: '0.5rem' }} />
             <LinkCreateButton
@@ -272,13 +317,53 @@ const MyPagePage = () => {
             defaultPath={UrlPathTemplate.MyPageMyProjectRegistrations}
             dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
             <NavigationList>
-              <LinkButton
-                key={dataTestId.myPage.myProjectRegistrationsLink}
-                data-testid={dataTestId.myPage.myProjectRegistrationsLink}
-                isSelected={currentPath === UrlPathTemplate.MyPageMyProjectRegistrations}
-                to={UrlPathTemplate.MyPageMyProjectRegistrations}>
-                {t('my_page.project_registrations')}
-              </LinkButton>
+              <StyledTicketSearchFormGroup>
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myProjectRegistrationsOngoingCheckbox}
+                  checked={selectedProjectStatus.ongoing}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedProjectStatus({
+                          ...selectedProjectStatus,
+                          ongoing: !selectedProjectStatus.ongoing,
+                        })
+                      }
+                    />
+                  }
+                  label={t('my_page.project_registration_status.ongoing')}
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myProjectRegistrationsNotStartedCheckbox}
+                  checked={selectedProjectStatus.notStarted}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedProjectStatus({
+                          ...selectedProjectStatus,
+                          notStarted: !selectedProjectStatus.notStarted,
+                        })
+                      }
+                    />
+                  }
+                  label={t('my_page.project_registration_status.not_started')}
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.myPage.myProjectRegistrationsConcludedCheckbox}
+                  checked={selectedProjectStatus.concluded}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() =>
+                        setSelectedProjectStatus({
+                          ...selectedProjectStatus,
+                          concluded: !selectedProjectStatus.concluded,
+                        })
+                      }
+                    />
+                  }
+                  label={t('my_page.project_registration_status.concluded')}
+                />
+              </StyledTicketSearchFormGroup>
             </NavigationList>
             <Divider sx={{ mt: '0.5rem' }} />
             <LinkCreateButton
@@ -337,7 +422,15 @@ const MyPagePage = () => {
 
       <ErrorBoundary>
         <Switch>
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessages}>
+          <PrivateRoute exact path={UrlPathTemplate.MyPage} isAuthorized={isAuthenticated}>
+            {isCreator ? (
+              <Redirect to={UrlPathTemplate.MyPageMyMessages} />
+            ) : (
+              <Redirect to={UrlPathTemplate.MyPageMyResearchProfile} />
+            )}
+          </PrivateRoute>
+
+          <PrivateRoute exact path={UrlPathTemplate.MyPageMyMessages} isAuthorized={isCreator}>
             <TicketList
               ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
@@ -346,17 +439,54 @@ const MyPagePage = () => {
               setPage={setPage}
               helmetTitle={t('my_page.messages.dialogue')}
             />
-          </CreatorRoute>
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMyMessagesRegistration} component={RegistrationLandingPage} />
-          <CreatorRoute exact path={UrlPathTemplate.MyPageMyRegistrations} component={MyRegistrations} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyPersonalia} component={MyProfile} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjects} component={MyProjects} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResearchProfile} component={ResearchProfile} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyResults} component={MyResults} />
-          <LoggedInRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations} component={MyProjectRegistrations} />
-          <LoggedInRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} />
+          </PrivateRoute>
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyMessagesRegistration}
+            component={RegistrationLandingPage}
+            isAuthorized={isCreator}
+          />
+          <PrivateRoute exact path={UrlPathTemplate.MyPageMyRegistrations} isAuthorized={isCreator}>
+            <MyRegistrations
+              selectedPublished={selectedRegistrationStatus.published}
+              selectedUnpublished={selectedRegistrationStatus.unpublished}
+            />
+          </PrivateRoute>
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyPersonalia}
+            component={MyProfile}
+            isAuthorized={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyProjects}
+            component={MyProjects}
+            isAuthorized={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyResearchProfile}
+            component={ResearchProfile}
+            isAuthorized={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyResults}
+            component={MyResults}
+            isAuthorized={isAuthenticated}
+          />
+          <PrivateRoute exact path={UrlPathTemplate.MyPageMyProjectRegistrations} isAuthorized={isAuthenticated}>
+            <MyProjectRegistrations
+              selectedOngoing={selectedProjectStatus.ongoing}
+              selectedNotStarted={selectedProjectStatus.notStarted}
+              selectedConcluded={selectedProjectStatus.concluded}
+            />
+          </PrivateRoute>
+          <PrivateRoute exact path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isAuthenticated} />
         </Switch>
       </ErrorBoundary>
+
       {user?.isCreator && (
         <ProjectFormDialog
           open={showCreateProject}

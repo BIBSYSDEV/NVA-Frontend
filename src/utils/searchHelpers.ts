@@ -88,7 +88,7 @@ export const createRegistrationSearchQuery = (searchConfig: SearchConfig) => {
 
 export const createSearchConfigFromSearchParams = (params: URLSearchParams): SearchConfig => {
   const query = params.get(SearchParam.Query);
-  const filters = query?.split('AND').map((a) => a.trim());
+  const filters = query?.split(' AND ').map((filter) => filter.trim());
   if (!filters) {
     return { searchTerm: '', properties: [] };
   }

@@ -3,13 +3,14 @@ import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
 import { FacetItem } from './FacetItem';
-import { Aggregations } from '../../../../types/common.types';
 import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
-import { PublicationInstanceType } from '../../../../types/registration.types';
-import { getInstitutionLabelFromBucket } from '../../../../utils/translation-helpers';
+import { PublicationInstanceType, RegistrationSearchAggregations } from '../../../../types/registration.types';
+import { getLabelFromBucket } from '../../../../utils/translation-helpers';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 
 interface RegistrationFacetsFilterProps {
-  aggregations: Aggregations;
+  aggregations: RegistrationSearchAggregations;
   isLoadingSearch: boolean;
 }
 
@@ -46,20 +47,19 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
     submitForm();
   };
 
-  const aggregationEntries = Object.entries(aggregations);
-  const typeFacet = aggregationEntries.find(([fieldName]) => fieldName === ResourceFieldNames.RegistrationType)?.[1];
-  const topLevelOrganizationFacet = aggregationEntries.find(
-    ([fieldName]) => fieldName === SearchFieldName.TopLevelOrganization
-  )?.[1].id;
+  const topLevelOrganizationFacet = aggregations.topLevelOrganization.id;
+  const typeFacet = aggregations.entityDescription.reference.publicationInstance.type;
+  const contributorFacet = aggregations.entityDescription.contributors.identity.id;
+  const fundingFacet = aggregations.fundings.identifier;
 
   return (
     <>
-      {typeFacet?.buckets && (
-        <FacetItem title={t('registration.resource_type.resource_type')}>
+      {typeFacet.buckets.length > 0 && (
+        <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
           {typeFacet.buckets.map((bucket) => {
             const registrationType = bucket.key as PublicationInstanceType;
             return (
-              <ListItem disablePadding key={registrationType}>
+              <ListItem disablePadding key={registrationType} data-testid={dataTestId.startPage.facetItem(bucket.key)}>
                 <StyledListItemButton
                   disabled={isLoadingSearch}
                   onClick={() => updateFilter(ResourceFieldNames.RegistrationType, registrationType)}
@@ -75,17 +75,65 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {topLevelOrganizationFacet?.buckets && (
-        <FacetItem title={t('common.institution')}>
+      {topLevelOrganizationFacet.buckets.length > 0 && (
+        <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
           {topLevelOrganizationFacet.buckets.map((bucket) => (
-            <ListItem disablePadding key={bucket.key}>
+            <ListItem
+              disablePadding
+              key={bucket.key}
+              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(bucket.key))}>
               <StyledListItemButton
                 disabled={isLoadingSearch}
                 onClick={() => updateFilter(SearchFieldName.TopLevelOrganizationId, bucket.key)}
                 selected={properties.some(
                   (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
                 )}>
-                <span>{getInstitutionLabelFromBucket(bucket)}</span>
+                <span>{getLabelFromBucket(bucket)}</span>
+                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
+              </StyledListItemButton>
+            </ListItem>
+          ))}
+        </FacetItem>
+      )}
+
+      {contributorFacet.buckets.length > 0 && (
+        <FacetItem
+          title={t('registration.contributors.contributor')}
+          dataTestId={dataTestId.startPage.contributorFacets}>
+          {contributorFacet.buckets.map((bucket) => (
+            <ListItem
+              disablePadding
+              key={bucket.key}
+              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(bucket.key))}>
+              <StyledListItemButton
+                disabled={isLoadingSearch}
+                onClick={() => updateFilter(SearchFieldName.ContributorId, bucket.key)}
+                selected={properties.some(
+                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
+                )}>
+                <span>
+                  {bucket.name.buckets.length > 0 ? bucket.name.buckets[0].key : <i>{t('common.unknown')}</i>}
+                </span>
+                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
+              </StyledListItemButton>
+            </ListItem>
+          ))}
+        </FacetItem>
+      )}
+
+      {fundingFacet.buckets.length > 0 && (
+        <FacetItem
+          title={t('registration.description.funding.financing')}
+          dataTestId={dataTestId.startPage.institutionFacets}>
+          {fundingFacet.buckets.map((bucket) => (
+            <ListItem disablePadding key={bucket.key} data-testid={dataTestId.startPage.facetItem(bucket.key)}>
+              <StyledListItemButton
+                disabled={isLoadingSearch}
+                onClick={() => updateFilter(SearchFieldName.FundingSource, bucket.key)}
+                selected={properties.some(
+                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
+                )}>
+                <span>{getLabelFromBucket(bucket)}</span>
                 {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
               </StyledListItemButton>
             </ListItem>
