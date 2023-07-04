@@ -57,7 +57,7 @@ export const RegistrationLandingPage = () => {
         gap: '1rem',
       }}>
       {registrationQuery.isLoading || (isRegistrationAdmin && ticketsQuery.isLoading) ? (
-        <PageSpinner aria-label={t('common.registration')} />
+        <PageSpinner aria-label={t('common.result')} />
       ) : registration ? (
         isAllowedToSeePublicRegistration ? (
           <ErrorBoundary>
