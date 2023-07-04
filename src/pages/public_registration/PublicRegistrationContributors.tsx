@@ -146,6 +146,7 @@ const ContributorsRow = ({
                 )}
               </Typography>
               <ContributorIndicators contributor={contributor} />
+              {index < contributors.length - 1 && <span>;</span>}
             </Box>
           );
         })}
