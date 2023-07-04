@@ -27,7 +27,10 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
   const projectParticipantsLength = getProjectParticipants(project.contributors).length;
 
   return (
-    <SearchListItem sx={{ borderLeftColor: 'project.main' }}>
+    <SearchListItem
+      sx={{
+        borderLeftColor: 'project.main',
+      }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
         <Typography sx={{ fontSize: '1rem', fontWeight: '600' }} gutterBottom>
           <MuiLink component={Link} to={getProjectPath(project.id)}>
@@ -37,8 +40,11 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
         {showEdit && (
           <>
             <Tooltip title={t('project.edit_project')}>
-              <IconButton onClick={() => setOpenEditProject(true)}>
-                <EditIcon />
+              <IconButton
+                sx={{ bgcolor: 'project.main', width: '1.5rem', height: '1.5rem' }}
+                size="small"
+                onClick={() => setOpenEditProject(true)}>
+                <EditIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
             <ProjectFormDialog

@@ -113,7 +113,6 @@ export const DoiRequestAccordion = ({
     const createDoiRequestResponse = await createTicket(registration.id, 'DoiRequest', !!message);
     if (isErrorStatus(createDoiRequestResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_doi_request'), variant: 'error' }));
-      setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
       const ticketId = createDoiRequestResponse.data?.id;
       // Add message
@@ -133,6 +132,7 @@ export const DoiRequestAccordion = ({
       );
       refetchData();
     }
+    setIsLoading(LoadingState.None);
   };
 
   const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;
