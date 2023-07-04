@@ -152,6 +152,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                   return (
                     <Button
                       key={property.fieldName + index}
+                      data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
                       variant="outlined"
                       size="small"
                       title={t('search.remove_filter')}
