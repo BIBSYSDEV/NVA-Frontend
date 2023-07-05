@@ -23,6 +23,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { PreviewFile } from './preview_file/PreviewFile';
 import { equalUris } from '../../../utils/general-helpers';
 import { licenses } from '../../../types/license.types';
+import { isEmbargoed } from '../../../utils/registration-helpers';
 
 interface FileRowProps {
   file: AssociatedFile;
@@ -66,8 +67,7 @@ export const FileRow = ({
     [t, dispatch, user, registrationIdentifier, file.identifier]
   );
 
-  const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
-  const fileIsEmbargoed = fileEmbargoDate ? fileEmbargoDate > new Date() : false;
+  const fileIsEmbargoed = isEmbargoed(file.embargoDate);
 
   useEffect(() => {
     if (openPreviewAccordion && !previewFileUrl && !fileIsEmbargoed) {
@@ -125,10 +125,10 @@ export const FileRow = ({
       </Link>
 
       <Box sx={{ gridArea: 'download' }}>
-        {fileIsEmbargoed ? (
+        {file.embargoDate && fileIsEmbargoed ? (
           <Typography data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}>
             <LockIcon />
-            {t('common.will_be_available')} {fileEmbargoDate?.toLocaleDateString()}
+            {t('common.will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
           </Typography>
         ) : (
           <Button

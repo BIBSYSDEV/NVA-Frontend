@@ -36,7 +36,11 @@ import {
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isEmbargoed,
+  isProtectedDegree,
   isTypeWithFileVersionField,
+  userIsRegistrationCurator,
+  userIsRegistrationOwner,
 } from '../../utils/registration-helpers';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { DoiField } from './resource_type_tab/components/DoiField';
@@ -44,16 +48,18 @@ import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
 import { licenses } from '../../types/license.types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 export const administrativeAgreementId = 'administrative-agreement';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
-  canEditFiles: boolean;
 }
 
-export const FilesAndLicensePanel = ({ uppy, canEditFiles }: FilesAndLicensePanelProps) => {
+export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
   const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
@@ -106,6 +112,13 @@ export const FilesAndLicensePanel = ({ uppy, canEditFiles }: FilesAndLicensePane
 
   const originalDoi = entityDescription?.reference?.doi;
   const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance?.type);
+
+  const isProtectedDegreeFiles = isProtectedDegree(entityDescription?.reference?.publicationInstance?.type);
+  const canEditUnprotectedFiles =
+    !isProtectedDegreeFiles && (userIsRegistrationOwner(user, values) || userIsRegistrationCurator(user, values));
+  const canEditDegreeFiles =
+    isProtectedDegreeFiles && userIsRegistrationCurator(user, values) && !!user?.isThesisCurator;
+  const canEditFiles = canEditUnprotectedFiles || canEditDegreeFiles;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -225,11 +238,16 @@ export const FilesAndLicensePanel = ({ uppy, canEditFiles }: FilesAndLicensePane
                                   return false;
                                 });
 
+                                const isEmbargoedDegreeFile = isProtectedDegreeFiles && isEmbargoed(file.embargoDate);
+                                const canEditThisFile = isEmbargoedDegreeFile
+                                  ? canEditDegreeFiles && !!user.isEmbargoThesisCurator
+                                  : canEditFiles;
+
                                 return (
                                   <FilesTableRow
                                     key={file.identifier}
                                     file={file}
-                                    disabled={!canEditFiles}
+                                    disabled={!canEditThisFile}
                                     removeFile={() => {
                                       const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                                       const remainingFiles = uppy
