@@ -75,7 +75,7 @@ export const isBook = (instanceType: any) => Object.values(BookType).includes(in
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
 
-export const isProtectedDegree = (instanceType: any) =>
+export const isDegreeWithProtectedFiles = (instanceType: any) =>
   instanceType === DegreeType.Bachelor ||
   instanceType === DegreeType.Master ||
   instanceType === DegreeType.Phd ||

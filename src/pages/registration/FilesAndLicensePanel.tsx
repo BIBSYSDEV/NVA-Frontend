@@ -37,7 +37,7 @@ import {
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
   isEmbargoed,
-  isProtectedDegree,
+  isDegreeWithProtectedFiles,
   isTypeWithFileVersionField,
   userIsRegistrationCurator,
   userIsRegistrationOwner,
@@ -113,12 +113,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const originalDoi = entityDescription?.reference?.doi;
   const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance?.type);
 
-  const isProtectedDegreeFiles = isProtectedDegree(entityDescription?.reference?.publicationInstance?.type);
-  const canEditUnprotectedFiles =
-    !isProtectedDegreeFiles && (userIsRegistrationOwner(user, values) || userIsRegistrationCurator(user, values));
-  const canEditDegreeFiles =
-    isProtectedDegreeFiles && userIsRegistrationCurator(user, values) && !!user?.isThesisCurator;
-  const canEditFiles = canEditUnprotectedFiles || canEditDegreeFiles;
+  const isRegistrationCurator = userIsRegistrationCurator(user, values);
+  const isProtectedDegree = isDegreeWithProtectedFiles(entityDescription?.reference?.publicationInstance?.type);
+  const canEditDegreeFiles = isRegistrationCurator && !!user?.isThesisCurator;
+  const canEditOtherFiles = isRegistrationCurator || userIsRegistrationOwner(user, values);
+  const canEditFiles = (!isProtectedDegree && canEditOtherFiles) || (isProtectedDegree && canEditDegreeFiles);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -238,7 +237,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   return false;
                                 });
 
-                                const isEmbargoedDegreeFile = isProtectedDegreeFiles && isEmbargoed(file.embargoDate);
+                                const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
                                 const canEditThisFile = isEmbargoedDegreeFile
                                   ? canEditDegreeFiles && !!user.isEmbargoThesisCurator
                                   : canEditFiles;
