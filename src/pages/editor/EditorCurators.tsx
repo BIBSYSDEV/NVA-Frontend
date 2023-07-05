@@ -70,9 +70,7 @@ export const EditorCurators = () => {
           <TableHead>
             <TableRow>
               <TableCell>{t('common.name')}</TableCell>
-              <TableCell sx={{ minWidth: { xs: '30%', md: '50%' } }}>
-                {t('editor.curators.area_of_responsibility')}
-              </TableCell>
+              <TableCell>{t('editor.curators.area_of_responsibility')}</TableCell>
               <TableCell sx={{ width: 0 }}>{t('editor.curators.extended_area_of_resposibility')}</TableCell>
             </TableRow>
           </TableHead>

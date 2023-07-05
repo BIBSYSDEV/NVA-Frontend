@@ -306,10 +306,10 @@
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensninger",
       "areas_of_responsibility": "Ansvarsområder",
-      "extended_area_of_resposibility": "Utvidet ansvarsområde",
-      "no_users_found": "Ingen brukere funnet",
       "curator_has_extended_privileges": "Kurator har rettigheter til å redigere:",
-      "edit_extended_responsibility": "Endre utvidet ansvarsområde"
+      "edit_extended_responsibility": "Endre utvidet ansvarsområde",
+      "extended_area_of_resposibility": "Utvidet ansvarsområde",
+      "no_users_found": "Ingen brukere funnet"
     },
     "doi": {
       "doi_information_bullet_points": "$t(common.doi_long) er en persistent identifikator.|Gjør det enklere å sitere publikasjoner korrekt.|Metadata om resultatet blir delt internasjonalt.|Synligheten til resultatet øker.|Bidrar til å oppfylle FAIR-prinsippene.|Understøtter åpen forskning.",
