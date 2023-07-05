@@ -105,6 +105,7 @@ export interface CristinPerson extends CreateCristinPerson {
   employments: Employment[];
   contactDetails?: CristinPersonContactDetails;
   verified?: boolean;
+  image?: string;
 }
 
 export interface FlatCristinPerson {

@@ -18,6 +18,7 @@ import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-hel
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { UserIdentity } from './UserIdentity';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { ProfilePictureUploader } from './ProfilePictureUploader';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
@@ -148,6 +149,9 @@ export const MyProfile = () => {
                           size="small"
                           variant="filled"
                         />
+                        <Box>
+                          <ProfilePictureUploader id={user.cristinId} />
+                        </Box>
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
                         <LoadingButton
