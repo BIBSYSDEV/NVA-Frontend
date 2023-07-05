@@ -1,4 +1,4 @@
-import { TableCell, IconButton, Popover, Typography, Checkbox, FormControlLabel, Box } from '@mui/material';
+import { TableCell, IconButton, Popover, Typography, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import LabelIcon from '@mui/icons-material/Label';
 import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
@@ -67,9 +67,10 @@ export const EditorThesisCuratorTableCell = ({ curator }: EditorThesisCuratorTab
         sx={{ p: '1rem' }}
         slotProps={{ paper: { sx: { p: '1rem' } } }}>
         <Typography>{t('editor.curators.curator_has_extended_privileges')}</Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', mt: '0.5rem', mb: '1rem' }}>
+        <FormGroup sx={{ display: 'flex', flexDirection: 'column', mt: '0.5rem', mb: '1rem' }}>
           <FormControlLabel
             label={t('registration.publication_types.Degree')}
+            disabled={userMutation.isLoading}
             control={<Checkbox checked={isThesisCurator} />}
             onChange={() => {
               if (isThesisCurator && isEmbargoThesisCurator) {
@@ -81,11 +82,11 @@ export const EditorThesisCuratorTableCell = ({ curator }: EditorThesisCuratorTab
           <FormControlLabel
             label={t('registration.files_and_license.embargo')}
             sx={{ ml: '1rem' }}
-            disabled={!isThesisCurator}
+            disabled={!isThesisCurator || userMutation.isLoading}
             control={<Checkbox checked={isEmbargoThesisCurator} />}
             onChange={() => setIsEmbargoThesisCurator(!isEmbargoThesisCurator)}
           />
-        </Box>
+        </FormGroup>
         <LoadingButton
           variant="contained"
           loading={userMutation.isLoading}
