@@ -4,6 +4,8 @@ export enum RoleName {
   InstitutionAdmin = 'Institution-admin',
   AppAdmin = 'App-admin',
   Curator = 'Curator',
+  CuratorThesis = 'Curator-thesis',
+  CuratorThesisEmbargo = 'Curator-thesis-embargo',
   Creator = 'Creator',
   Editor = 'Editor',
 }
