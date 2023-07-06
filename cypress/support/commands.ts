@@ -37,6 +37,8 @@ Cypress.Commands.add('setUserRolesInRedux', (roles) => {
           isAppAdmin: roles.includes(RoleName.AppAdmin),
           isInstitutionAdmin: roles.includes(RoleName.InstitutionAdmin),
           isCurator: roles.includes(RoleName.Curator),
+          isThesisCurator: roles.includes(RoleName.CuratorThesis),
+          isEmbargoThesisCurator: roles.includes(RoleName.CuratorThesisEmbargo),
           isEditor: roles.includes(RoleName.Editor),
         })
       )
