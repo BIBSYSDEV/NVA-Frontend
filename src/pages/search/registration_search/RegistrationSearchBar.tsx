@@ -77,7 +77,8 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
           setIsLoadingExport(true);
           try {
             const fetchExportData = await fetchRegistrationsExport(window.location.search);
-            const blob = new Blob([fetchExportData], { type: 'text/csv' });
+            // Force UTF-8 for excel with '\uFEFF': https://stackoverflow.com/a/42466254
+            const blob = new Blob(['\uFEFF', fetchExportData], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.download = 'result-export.csv';
