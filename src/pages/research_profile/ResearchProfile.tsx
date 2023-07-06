@@ -100,7 +100,7 @@ const ResearchProfile = () => {
           alignItems: 'center',
           gap: '1rem',
           borderLeft: 'solid 1rem',
-          borderColor: 'person.main',
+          borderLeftColor: 'person.main',
         }}>
         <Typography variant="h1" sx={{ ml: '2rem', color: 'primary.contrastText' }}>
           {fullName}
