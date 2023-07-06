@@ -21,6 +21,8 @@ export interface User {
   feideId: string;
   isAppAdmin: boolean;
   isCurator: boolean;
+  isThesisCurator: boolean;
+  isEmbargoThesisCurator: boolean;
   isInstitutionAdmin: boolean;
   isCreator: boolean;
   isEditor: boolean;

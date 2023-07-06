@@ -75,6 +75,12 @@ export const isBook = (instanceType: any) => Object.values(BookType).includes(in
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
 
+export const isDegreeWithProtectedFiles = (instanceType: any) =>
+  instanceType === DegreeType.Bachelor ||
+  instanceType === DegreeType.Master ||
+  instanceType === DegreeType.Phd ||
+  instanceType === DegreeType.Other;
+
 export const isReport = (instanceType: any) => Object.values(ReportType).includes(instanceType);
 
 export const isChapter = (instanceType: any) => Object.values(ChapterType).includes(instanceType);
@@ -628,3 +634,10 @@ export const getContributorInitials = (name: string) => {
 export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
+
+export const isEmbargoed = (embargoDate: Date | null) => {
+  if (!embargoDate) {
+    return false;
+  }
+  return new Date(embargoDate) > new Date();
+};

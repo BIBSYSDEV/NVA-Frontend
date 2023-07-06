@@ -40,6 +40,8 @@ const userSlice = createSlice({
         isAppAdmin: !!customerId && roles.includes(RoleName.AppAdmin),
         isInstitutionAdmin: !!customerId && roles.includes(RoleName.InstitutionAdmin),
         isCurator: !!customerId && roles.includes(RoleName.Curator),
+        isThesisCurator: !!customerId && roles.includes(RoleName.CuratorThesis),
+        isEmbargoThesisCurator: !!customerId && roles.includes(RoleName.CuratorThesisEmbargo),
         isEditor: !!customerId && roles.includes(RoleName.Editor),
       };
       state = user;

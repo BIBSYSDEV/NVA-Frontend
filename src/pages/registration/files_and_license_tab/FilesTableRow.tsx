@@ -51,23 +51,27 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
       <TableCell sx={{ minWidth: '13rem' }}>
         <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
-          <Tooltip title={t('registration.files_and_license.remove_file')}>
-            <IconButton onClick={toggleOpenConfirmDialog} disabled={disabled}>
-              <CancelIcon color="error" />
-            </IconButton>
-          </Tooltip>
-          <ConfirmDialog
-            open={openConfirmDialog}
-            title={t('registration.files_and_license.remove_file')}
-            onAccept={() => {
-              removeFile();
-              toggleOpenConfirmDialog();
-            }}
-            onCancel={toggleOpenConfirmDialog}>
-            <Typography>
-              {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
-            </Typography>
-          </ConfirmDialog>
+          {!disabled && (
+            <>
+              <Tooltip title={t('registration.files_and_license.remove_file')}>
+                <IconButton onClick={toggleOpenConfirmDialog}>
+                  <CancelIcon color="error" />
+                </IconButton>
+              </Tooltip>
+              <ConfirmDialog
+                open={openConfirmDialog}
+                title={t('registration.files_and_license.remove_file')}
+                onAccept={() => {
+                  removeFile();
+                  toggleOpenConfirmDialog();
+                }}
+                onCancel={toggleOpenConfirmDialog}>
+                <Typography>
+                  {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
+                </Typography>
+              </ConfirmDialog>
+            </>
+          )}
         </Box>
       </TableCell>
 
