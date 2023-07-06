@@ -24,13 +24,9 @@ export const fetchImportCandidates = async () => {
   return getImportCandidates.data;
 };
 
-export const fetchRegistrationsExport = async (queryParam: string) => {
-  let url: string = SearchApiPath.RegistrationsExport;
-  if (queryParam) {
-    url += `?query=${queryParam}`;
-  }
+export const fetchRegistrationsExport = async (searchParams: string) => {
+  const url = `${SearchApiPath.Registrations}${searchParams}`;
 
-  // TODO: Set 'Accept: text/csv' in request header when supported by the API (NP-44982)
-  const fetchExport = await apiRequest2<string>({ url });
+  const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });
   return fetchExport.data;
 };

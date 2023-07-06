@@ -76,9 +76,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
         onClick={async () => {
           setIsLoadingExport(true);
           try {
-            const queryParam = new URLSearchParams(window.location.search).get('query') ?? '';
-            const fetchExportData = await fetchRegistrationsExport(queryParam);
-
+            const fetchExportData = await fetchRegistrationsExport(window.location.search);
             const blob = new Blob([fetchExportData], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
