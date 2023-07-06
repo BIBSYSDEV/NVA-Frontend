@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Switch, useHistory } from 'react-router-dom';
+import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { Button, Divider, FormControlLabel } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
@@ -47,7 +47,7 @@ type SelectedStatusState = {
 const MyPagePage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const history = useHistory();
+  const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
   const isCreator = !!user?.customerId && (user.isCreator || user.isCurator);
@@ -119,23 +119,13 @@ const MyPagePage = () => {
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
   const [showCreateProject, setShowCreateProject] = useState(false);
-
-  useEffect(() => {
-    if (currentPath === UrlPathTemplate.MyPage) {
-      if (user?.isCreator) {
-        history.replace(UrlPathTemplate.MyPageMyMessages);
-      } else {
-        history.replace(UrlPathTemplate.MyPageMyResearchProfile);
-      }
-    }
-  }, [history, currentPath, user?.isCreator]);
 
   // Hide menu when opening a ticket on Messages path
   const expandMenu =
-    !history.location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
-    history.location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
+    !location.pathname.startsWith(UrlPathTemplate.MyPageMyMessages) ||
+    location.pathname.endsWith(UrlPathTemplate.MyPageMyMessages);
 
   return (
     <StyledPageWithSideMenu>
@@ -272,7 +262,7 @@ const MyPagePage = () => {
 
           <NavigationListAccordion
             key={dataTestId.myPage.registrationsAccordion}
-            title={t('common.registrations')}
+            title={t('common.result_registrations')}
             startIcon={<AddIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
@@ -432,6 +422,14 @@ const MyPagePage = () => {
 
       <ErrorBoundary>
         <Switch>
+          <PrivateRoute exact path={UrlPathTemplate.MyPage} isAuthorized={isAuthenticated}>
+            {isCreator ? (
+              <Redirect to={UrlPathTemplate.MyPageMyMessages} />
+            ) : (
+              <Redirect to={UrlPathTemplate.MyPageMyResearchProfile} />
+            )}
+          </PrivateRoute>
+
           <PrivateRoute exact path={UrlPathTemplate.MyPageMyMessages} isAuthorized={isCreator}>
             <TicketList
               ticketsQuery={ticketsQuery}

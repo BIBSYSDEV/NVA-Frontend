@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 import FilterVintageIcon from '@mui/icons-material/FilterVintage';
+import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import {
   ArtisticType,
@@ -50,6 +51,7 @@ import {
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import {
   getMainRegistrationType,
+  isDegreeWithProtectedFiles,
   isPeriodicalMediaContribution,
   nviApplicableTypes,
 } from '../../../utils/registration-helpers';
@@ -59,9 +61,11 @@ import {
   emptyExhibitionPublicationContext,
   emptyExhibitionPublicationInstance,
 } from '../../../types/publication_types/exhibitionContent.types';
+import { RootState } from '../../../redux/store';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
 
@@ -317,6 +321,7 @@ export const SelectRegistrationTypeField = () => {
               Object.values(DegreeType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                disabled: isDegreeWithProtectedFiles(registrationType) && !user?.isEmbargoThesisCurator,
               }))
             )}
             value={currentInstanceType}

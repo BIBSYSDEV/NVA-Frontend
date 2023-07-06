@@ -22,7 +22,7 @@
     "back_to_home": "Tilbake til startsiden",
     "cancel_create_user_text": "Du må opprette bruker for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
     "cancel_create_user_title": "Ønsker du å avbryte?",
-    "create_user_info": "Som bruker blir du tilgjengelig for alle som skal legge til forfatter eller annen bidragsyter på resultater.",
+    "create_user_info": "Som bruker blir du tilgjengelig for alle som skal legge til forfatter eller medvirkende på resultater.",
     "expired_token_info": "Sesjonen din har utløpt. Vennligst logg inn på nytt.",
     "forbidden": "Forbudt",
     "forbidden_description": "Du er ikke autorisert til å se innholdet på denne siden. Kontakt administrator om dette ikke stemmer.",
@@ -164,11 +164,11 @@
     "read_less_about_nva": "Les mindre om NVA",
     "read_more": "Les mer",
     "read_more_about_nva": "Les mer om NVA",
-    "registration": "Registrering",
-    "registrations": "Registreringer",
     "reject_doi": "Avvis DOI",
     "reload_page_info": "En ny versjon av NVA er tilgjengelig og siden må lastes på nytt.",
     "remove": "Fjern",
+    "result": "Resultat",
+    "result_registrations": "Resultatregistreringer",
     "required_description": "Felt med stjerne er obligatorisk",
     "role": "Rolle",
     "save": "Lagre",
@@ -180,6 +180,7 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
     "select_institution": "Velg institusjon",
+    "select_language": "Velg språk",
     "selected": "Valgt",
     "send": "Send",
     "settings": "Innstillinger",
@@ -209,10 +210,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -298,13 +295,20 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensninger",
       "areas_of_responsibility": "Ansvarsområder",
+      "curator_has_extended_privileges": "Kurator har rettigheter til å redigere:",
+      "edit_extended_responsibility": "Endre utvidet ansvarsområde",
+      "extended_area_of_resposibility": "Utvidet ansvarsområde",
       "no_users_found": "Ingen brukere funnet"
     },
     "doi": {
@@ -346,7 +350,7 @@
   "feedback": {
     "error": {
       "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
-      "add_contributor": "Kunne ikke legge til bidragsyter",
+      "add_contributor": "Kunne ikke legge til medvirkende",
       "add_employment": "Kunne ikke legge til ansettelse",
       "add_role": "Kunne ikke legge til rolle",
       "an_error_occurred": "En feil oppstod",
@@ -437,7 +441,7 @@
       "author_required": "Du må ha minst en forfatter på denne registreringen",
       "cannot_be_after": "{{field}} kan ikke være etter {{limitField}}",
       "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
-      "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
+      "contributor_required": "Du må ha minst en medvirkende på denne registreringen",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
       "employments_missing_data": "Alle ansettelser må ha stilling, stillingsprosent og startdato",
       "has_invalid_format": "{{field}} har ugyldig format",
@@ -564,7 +568,7 @@
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
       "published": "Publisert",
-      "unpublished": "Ikke publisert"
+      "unpublished": "Kladd"
     },
     "research_profile": "Forskerprofil",
     "roles": {
@@ -670,12 +674,12 @@
           },
           "row4": {
             "col0": "Felles autoritetsregister",
-            "col1": "Etablere kobling til autoritetsregister for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
+            "col1": "Etablere kobling til autoritetsregister for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller medvirkende som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
             "col2": "Sikt"
           },
           "row5": {
             "col0": "$t(common.orcid)",
-            "col1": "Etablere kobling til ORCID for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
+            "col1": "Etablere kobling til ORCID for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller medvirkende som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
             "col2": "$t(common.orcid)"
           }
         }
@@ -708,7 +712,7 @@
         },
         "row3": {
           "col0": "Bibliografiske data - personer knyttet til registrert ressurs",
-          "col1": "Forfatter, redaktør, veileder eller annen opphavsperson eller bidragsyter til ressurs registrert i tjenesten.",
+          "col1": "Forfatter, redaktør, veileder eller annen opphavsperson eller medvirkende til ressurs registrert i tjenesten.",
           "col2": "Katalogisering, kreditering og ansvarliggjøring av personene bak ressursen."
         },
         "row4": {
@@ -744,7 +748,7 @@
           "heading": "Andre persondata",
           "row0": {
             "col0": "Metadata for ressurs",
-            "col1": "Fullt navn og rolle for forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter",
+            "col1": "Fullt navn og rolle for forfatter, redaktør, veileder og annen opphavsperson eller medvirkende",
             "col2": "Opprettet i NVA ved registrering eller overført fra ekstern datakilde"
           },
           "row1": {
@@ -865,7 +869,7 @@
     "close_view": "Lukk visning",
     "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
     "coordinating_institution": "Koordinerende institusjon",
-    "create_project": "Opprett prosjekt",
+    "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
     "financing": "Finansiering",
     "form": {
@@ -911,16 +915,16 @@
   "registration": {
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
-      "add_contributor": "Legg til bidragsyter",
+      "add_contributor": "Legg til medvirkende",
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
-      "add_self_as_contributor": "Legg meg til som bidragsyter",
-      "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
+      "add_self_as_contributor": "Legg meg til som medvirkende",
+      "add_unverified_contributor": "Legg til en ikke-verifisert medvirkende.",
       "authors": "Forfattere",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "confirmed": "Bekreftet",
-      "contributor": "Bidragsyter",
-      "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
-      "contributor_not_found": "Finner ikke bidragsyter",
+      "contributor": "Medvirkende",
+      "contributor_already_added": "Valgt medvirkende er allerede lagt til",
+      "contributor_not_found": "Finner ikke person",
       "corresponding": "Korresponderende",
       "department": "Enhet",
       "identity_status": {
@@ -928,8 +932,8 @@
         "confirmed_identity_without_affiliation": "Bekreftet identitet uten tilhørighet",
         "unknown_identity": "Ukjent identitet"
       },
-      "invalid_role": "Bidragsyteren må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
-      "must_select_type_first": "Du må velge ressurstype før du kan legge til bidragsytere.",
+      "invalid_role": "Medvirkende må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
+      "must_select_type_first": "Du må velge kategori før du kan legge til medvirkende.",
       "no_affiliations_found": "Ingen tilknytninger funnet",
       "no_registrations_found": "Ingen registreringer funnet",
       "other_registrations_one": "+ {{count}} annen registrering",
@@ -937,9 +941,9 @@
       "prefilled_affiliation": "Forhåndsutfylt tilknytning",
       "prefilled_name": "Forhåndsutfylt navn",
       "remove_affiliation": "Fjern tilknytning",
-      "remove_contributor": "Fjern bidragsyter",
+      "remove_contributor": "Fjern medvirkende",
       "search_for_institution": "Søk etter institusjon",
-      "select_contributor_type": "Velg type bidragsyter",
+      "select_contributor_type": "Velg type medvirkende",
       "suggested_affiliations": "Foreslåtte tilknytninger",
       "type": "Bidragstype",
       "types": {
@@ -1066,17 +1070,17 @@
       "size": "Størrelse"
     },
     "heading": {
-      "contributors": "Bidragsytere",
+      "contributors": "Medvirkende",
       "description": "$t(common.description)",
-      "files_and_license": "Filer og lisens",
-      "resource_type": "Ressurstype"
+      "files_and_license": "Fil, lisens og lenke",
+      "resource_type": "Kategori"
     },
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
-    "new_registration": "Ny registrering",
+    "new_registration": "Nytt resultat",
     "public_page": {
-      "about_registration": "Om registreringen",
+      "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
@@ -1385,7 +1389,7 @@
         "search_for_book_of_abstracts": "Søk etter abstraktsamlingen hvor abstraktet er publisert",
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
-      "click_to_change_resource_type": "Trykk på valgt ressurstype om du vil endre",
+      "click_to_change_resource_type": "Trykk på valgt kategori om du vil endre",
       "date_from": "Dato fra",
       "date_to": "Dato til",
       "exhibition_production": {
@@ -1454,6 +1458,7 @@
       "pages_to": "til",
       "place_for_event": "Sted for arrangement",
       "print_issn": "Print ISSN",
+      "protected_type": "Du mangler tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
       "publisher_or_organizer": "Utgiver/arrangør eller lignende",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
@@ -1485,12 +1490,12 @@
         "search_for_related_registrations": "Søk etter relaterte registreringer",
         "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
       },
-      "resource_type": "Ressurstype",
+      "resource_type": "Kategori",
       "search_for_journal": "Søk etter tidsskrift",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
       "search_for_series": "Søk etter serie",
-      "select_resource_type": "Velg ressurstype",
+      "select_resource_type": "Velg kategori",
       "series": "Serie",
       "series_info": "Hvis publikasjonen inngår i en serie",
       "series_number": "Serienummer",
@@ -1524,7 +1529,7 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "result": "Resultat",
-    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
+    "search_placeholder": "Søk etter tittel, medvirkende, sammendrag, etc.",
     "search_term_label": "Verdi",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",

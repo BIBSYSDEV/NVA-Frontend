@@ -183,7 +183,7 @@ const SearchPage = () => {
                   flexDirection: 'column',
                   rowGap: '1rem',
                 }}>
-                <RegistrationSearchBar />
+                <RegistrationSearchBar aggregations={searchResults?.aggregations} />
                 <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
               </Box>
             )}

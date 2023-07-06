@@ -6,7 +6,6 @@ import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface MenuProps {
@@ -29,9 +28,9 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const closeMenu = () => setAnchorEl(null);
 
   return (
-    <Box sx={{ gridArea: 'user-items' }}>
+    <Box sx={{ gridArea: 'user-items', display: 'flex' }}>
       {isMobile ? (
-        <IconButton onClick={handleClickMenuAnchor} title={name} color="inherit">
+        <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit">
           <AccountCircle fontSize="large" />
         </IconButton>
       ) : (
@@ -66,9 +65,6 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           </MenuItem>
         )}
         {isMobile && [
-          <MenuItem divider key={dataTestId.header.languageButton}>
-            <LanguageSelector isMobile={true} />
-          </MenuItem>,
           user?.isEditor && (
             <MenuItem
               key={dataTestId.header.editorLink}

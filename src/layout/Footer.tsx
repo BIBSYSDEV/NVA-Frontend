@@ -15,8 +15,15 @@ export const Footer = () => {
         bgcolor: 'info.light',
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', lg: '1fr 2fr 1fr' },
-        gap: '1rem',
+        gap: '0.5rem 1rem',
       }}>
+      <MuiLink
+        data-testid={dataTestId.footer.aboutLink}
+        component={Link}
+        to={UrlPathTemplate.About}
+        sx={{ justifySelf: { xs: 'center', lg: 'start' }, gridRow: { xs: 3, lg: 1 } }}>
+        {t('about.about_nva')}
+      </MuiLink>
       <Typography sx={{ color: 'primary.main', gridColumn: { xs: 1, lg: 2 }, justifySelf: 'center' }}>
         {t('about.footer_text')}
       </Typography>
