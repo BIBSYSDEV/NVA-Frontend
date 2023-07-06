@@ -86,7 +86,7 @@ export const MyProjectRegistrations = ({
             component="div"
             count={filteredProjects.length}
             rowsPerPage={rowsPerPage}
-            page={projectsToShow.length <= 0 ? 0 : page}
+            page={projectsToShow.length < 0 ? 0 : page}
             onPageChange={(_, newPage) => setPage(newPage)}
             onRowsPerPageChange={(event) => {
               setRowsPerPage(+event.target.value);
