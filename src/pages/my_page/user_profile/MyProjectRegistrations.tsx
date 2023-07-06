@@ -26,7 +26,7 @@ export const MyProjectRegistrations = ({
   const user = useSelector((store: RootState) => store.user);
   const cristinIdentifier = getIdentifierFromId(user?.cristinId ?? '');
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const projectsQuery = useQuery({
@@ -86,7 +86,7 @@ export const MyProjectRegistrations = ({
             component="div"
             count={filteredProjects.length}
             rowsPerPage={rowsPerPage}
-            page={page}
+            page={projectsToShow.length <= 0 ? 0 : page}
             onPageChange={(_, newPage) => setPage(newPage)}
             onRowsPerPageChange={(event) => {
               setRowsPerPage(+event.target.value);
