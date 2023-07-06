@@ -598,15 +598,20 @@ const userIsContributorOnPublishedRegistration = (user: User | null, registratio
   !!registration.entityDescription?.contributors.some((contributor) => contributor.identity.id === user.cristinId);
 
 export const userCanEditRegistration = (user: User | null, registration: Registration) => {
+  if (!user) {
+    return false;
+  }
+
   const isValidCurator = userIsRegistrationCurator(user, registration);
   if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance.type)) {
-    return isValidCurator && !!user?.isThesisCurator;
+    return isValidCurator && user.isThesisCurator;
   }
+
   return (
     isValidCurator ||
     userIsRegistrationOwner(user, registration) ||
     userIsContributorOnPublishedRegistration(user, registration) ||
-    user?.isEditor
+    user.isEditor
   );
 };
 
