@@ -1,7 +1,7 @@
 import { SearchResponse } from '../types/common.types';
 import { ExpandedTicket } from '../types/publication_types/ticket.types';
 import { SearchApiPath } from './apiPaths';
-import { authenticatedApiRequest2 } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 import { ImportCandidateSummary } from '../types/importCandidate.types';
 
 export const fetchTickets = async (results: number, from: number, query = '', onlyCreator = false) => {
@@ -19,7 +19,14 @@ export const fetchTickets = async (results: number, from: number, query = '', on
 
 export const fetchImportCandidates = async () => {
   const getImportCandidates = await authenticatedApiRequest2<SearchResponse<ImportCandidateSummary>>({
-    url: `${SearchApiPath.ImportCandidates}`,
+    url: SearchApiPath.ImportCandidates,
   });
   return getImportCandidates.data;
+};
+
+export const fetchRegistrationsExport = async (searchParams: string) => {
+  const url = `${SearchApiPath.Registrations}${searchParams}`;
+
+  const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });
+  return fetchExport.data;
 };

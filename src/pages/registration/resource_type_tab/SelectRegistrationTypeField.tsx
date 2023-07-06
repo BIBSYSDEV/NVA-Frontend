@@ -321,7 +321,7 @@ export const SelectRegistrationTypeField = () => {
               Object.values(DegreeType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
-                disabled: isDegreeWithProtectedFiles(registrationType) && !user?.isEmbargoThesisCurator,
+                disabled: isDegreeWithProtectedFiles(registrationType) && !user?.isThesisCurator,
               }))
             )}
             value={currentInstanceType}
