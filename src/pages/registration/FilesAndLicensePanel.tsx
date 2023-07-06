@@ -239,7 +239,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
                                 const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
                                 const canEditThisFile = isEmbargoedDegreeFile
-                                  ? canEditDegreeFiles && !!user.isEmbargoThesisCurator
+                                  ? canEditDegreeFiles && user.isEmbargoThesisCurator
                                   : canEditFiles;
 
                                 return (
