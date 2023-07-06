@@ -58,6 +58,10 @@ export const MyProjectRegistrations = ({
 
   const projectsToShow = filteredProjects.slice(rowsPerPage * page, rowsPerPage * (page + 1));
 
+  if (page > projectsToShow.length * rowsPerPage) {
+    setPage(0);
+  }
+
   return (
     <div>
       <Typography variant="h2" gutterBottom>
