@@ -31,8 +31,8 @@ export const MyProjectRegistrations = ({
 
   const projectsQuery = useQuery({
     enabled: !!cristinIdentifier,
-    queryKey: ['projects', rowsPerPage, page, cristinIdentifier],
-    queryFn: () => searchForProjects(rowsPerPage, page + 1, { creator: cristinIdentifier }),
+    queryKey: ['projects', 50, 1, cristinIdentifier],
+    queryFn: () => searchForProjects(50, 1, { creator: cristinIdentifier }),
   });
 
   const projects = projectsQuery.data?.hits ?? [];
@@ -56,6 +56,8 @@ export const MyProjectRegistrations = ({
       return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
     });
 
+  const projectsToShow = filteredProjects.slice(rowsPerPage * page, rowsPerPage * (page + 1));
+
   return (
     <div>
       <Typography variant="h2" gutterBottom>
@@ -66,7 +68,7 @@ export const MyProjectRegistrations = ({
       ) : projectsQuery.data && projectsQuery.data.size > 0 ? (
         <>
           <List>
-            {filteredProjects.map((project) => (
+            {projectsToShow.map((project) => (
               <ProjectListItem
                 key={project.id}
                 project={project}
@@ -78,7 +80,7 @@ export const MyProjectRegistrations = ({
           <TablePagination
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             component="div"
-            count={projectsQuery.data.size}
+            count={filteredProjects.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(_, newPage) => setPage(newPage)}
