@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Typography, List, TablePagination } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { searchForProjects } from '../../../api/cristinApi';
 import { RootState } from '../../../redux/store';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
@@ -57,10 +57,11 @@ export const MyProjectRegistrations = ({
     });
 
   const projectsToShow = filteredProjects.slice(rowsPerPage * page, rowsPerPage * (page + 1));
+  const validPage = page < Math.ceil(filteredProjects.length / rowsPerPage) ? page : 0;
 
-  if (page > projectsToShow.length * rowsPerPage) {
-    setPage(page - 1);
-  }
+  useEffect(() => {
+    setPage(0);
+  }, [selectedOngoing, selectedNotStarted, selectedConcluded]);
 
   return (
     <div>
@@ -86,7 +87,7 @@ export const MyProjectRegistrations = ({
             component="div"
             count={filteredProjects.length}
             rowsPerPage={rowsPerPage}
-            page={projectsToShow.length <= 0 ? 0 : page}
+            page={validPage}
             onPageChange={(_, newPage) => setPage(newPage)}
             onRowsPerPageChange={(event) => {
               setRowsPerPage(+event.target.value);
