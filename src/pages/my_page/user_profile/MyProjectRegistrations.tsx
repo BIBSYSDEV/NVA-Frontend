@@ -26,7 +26,7 @@ export const MyProjectRegistrations = ({
   const user = useSelector((store: RootState) => store.user);
   const cristinIdentifier = getIdentifierFromId(user?.cristinId ?? '');
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const projectsQuery = useQuery({
