@@ -68,7 +68,7 @@ export const MyProjectRegistrations = ({
       <Typography variant="h2" gutterBottom>
         {t('my_page.project_registrations')}
       </Typography>
-      {projectsQuery.isLoading ? (
+      {projectsQuery.isLoading || projectsQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : projectsQuery.data && projectsQuery.data.size > 0 ? (
         <>
