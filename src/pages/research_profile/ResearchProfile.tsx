@@ -92,8 +92,17 @@ const ResearchProfile = () => {
     <NotFound />
   ) : (
     <div>
-      <Box sx={{ bgcolor: 'person.main', py: '1.1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <Typography variant="h1" sx={{ ml: '2rem' }}>
+      <Box
+        sx={{
+          bgcolor: 'primary.main',
+          py: '1.1rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem',
+          borderLeft: 'solid 1rem',
+          borderLeftColor: 'person.main',
+        }}>
+        <Typography variant="h1" sx={{ ml: '2rem', color: 'primary.contrastText' }}>
           {fullName}
         </Typography>
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
@@ -141,7 +150,7 @@ const ResearchProfile = () => {
           </Box>
         )}
         <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
-          {`${t('common.registrations')} ${registrations && `(${registrations.size}`})`}
+          {`${t('my_page.my_profile.results')} ${registrations && `(${registrations.size}`})`}
         </Typography>
         {registrations && (
           <>

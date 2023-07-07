@@ -62,9 +62,11 @@ export const interceptRequestsOnMock = () => {
 
   //PUBLICATION
   mock.onPost(new RegExp(PublicationsApiPath.Registration)).reply(201, mockRegistration);
-  mock
-    .onGet(new RegExp(`${PublicationsApiPath.Registration}/4327439`))
-    .reply(200, { ...emptyRegistration, resourceOwner: { owner: mockUser['custom:nvaUsername'] } });
+  mock.onGet(new RegExp(`${PublicationsApiPath.Registration}/4327439`)).reply(200, {
+    ...emptyRegistration,
+    publisher: { id: mockCustomerInstitution.id },
+    resourceOwner: { owner: mockUser['custom:nvaUsername'] },
+  });
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/${mockPublishedRegistration.identifier}`))
     .reply(200, mockPublishedRegistration);

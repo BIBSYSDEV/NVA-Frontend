@@ -2,7 +2,6 @@ import { SvgIconComponent } from '@mui/icons-material';
 import { Box, BoxProps, Button, ButtonProps, styled, Typography } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Link, LinkProps } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
   width: '100%',
@@ -86,7 +85,6 @@ interface LinkCreateButtonProps extends LinkButtonProps {
 }
 
 export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest }: LinkCreateButtonProps) => {
-  const { t } = useTranslation();
   return (
     <LinkButton
       sx={{
@@ -101,7 +99,7 @@ export const LinkCreateButton = ({ sx, title, isSelected, selectedColor, ...rest
       {...rest}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
         <AddCircleOutlineIcon />
-        <Typography>{t('common.add')}</Typography>
+        <Typography>{title}</Typography>
       </Box>
     </LinkButton>
   );

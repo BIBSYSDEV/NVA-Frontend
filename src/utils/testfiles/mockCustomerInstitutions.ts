@@ -26,7 +26,7 @@ export const mockCustomerInstitutionVocabularies: VocabularyList = {
 };
 
 export const mockCustomerInstitution: CustomerInstitution = {
-  id: 'https://api.dev.nva.aws.unit.no/customer/1',
+  id: 'https://api.dev.nva.aws.unit.no/customer/a-a-a-a-a',
   name: 'Norwegian University of Science and Technology',
   identifier: '1',
   createdDate: '2020-11-01',
