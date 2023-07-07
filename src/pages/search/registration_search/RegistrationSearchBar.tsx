@@ -224,7 +224,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                         remove(index);
                         submitForm();
                       }}>
-                      {fieldName}: {fieldValueText ? fieldValueText : t('common.unknown')}
+                      {fieldName}: {fieldValueText}
                     </Button>
                   );
                 })}
@@ -242,12 +242,14 @@ interface SelectedContributorFacetButtonProps {
 }
 
 const SelectedContributorFacetButton = ({ personId }: SelectedContributorFacetButtonProps) => {
+  const { t } = useTranslation();
+
   const personQuery = useQuery({
     queryKey: [personId],
     queryFn: () => (personId ? fetchPerson(personId) : undefined),
   });
 
-  const personName = getFullCristinName(personQuery.data?.names);
+  const personName = getFullCristinName(personQuery.data?.names) || t('common.unknown');
 
   return <>{personQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName}</>;
 };
@@ -257,12 +259,14 @@ interface SelectedInstitutionFacetButtonProps {
 }
 
 const SelectedInstitutionFacetButton = ({ institutionId }: SelectedInstitutionFacetButtonProps) => {
+  const { t } = useTranslation();
+
   const institutionIdQuery = useQuery({
     queryKey: [institutionId],
     queryFn: () => (institutionId ? fetchOrganization(institutionId) : undefined),
   });
 
-  const institutionName = getLanguageString(institutionIdQuery.data?.labels);
+  const institutionName = getLanguageString(institutionIdQuery.data?.labels) || t('common.unknown');
 
   return <>{institutionIdQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;
 };
@@ -272,6 +276,8 @@ interface SelectedFundingFacetButtonProps {
 }
 
 const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetButtonProps) => {
+  const { t } = useTranslation();
+
   const fundingSourcesQuery = useQuery({
     queryKey: ['fundingSources', fundingIdentifier],
     queryFn: () => (fundingIdentifier ? fetchFundingSource(fundingIdentifier) : undefined),
@@ -279,7 +285,7 @@ const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetB
     cacheTime: 1_800_000,
   });
 
-  const fundingName = getLanguageString(fundingSourcesQuery.data?.name);
+  const fundingName = getLanguageString(fundingSourcesQuery.data?.name) || t('common.unknown');
 
   return <>{fundingSourcesQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName}</>;
 };
