@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Skeleton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
@@ -18,6 +18,9 @@ import { ResourceFieldNames, SearchFieldName } from '../../../types/publicationF
 import { getLabelFromBucket } from '../../../utils/translation-helpers';
 import { fetchRegistrationsExport } from '../../../api/searchApi';
 import { setNotification } from '../../../redux/notificationSlice';
+import { useQuery } from '@tanstack/react-query';
+import { fetchPerson } from '../../../api/cristinApi';
+import { getFullCristinName } from '../../../utils/user-helpers';
 
 interface RegistrationSearchBarProps {
   aggregations?: RegistrationSearchAggregations;
@@ -151,17 +154,28 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                   }
 
                   const fieldName = t(thisFilter.i18nKey) as string;
-                  let fieldValueText = '';
+                  let fieldValueText: ReactNode = '';
+
                   switch (thisFilter.field) {
                     case ResourceFieldNames.RegistrationType:
                       fieldValueText = t(`registration.publication_types.${property.value as PublicationInstanceType}`);
                       break;
-                    case SearchFieldName.ContributorId:
-                      fieldValueText =
-                        aggregations.entityDescription.contributors.identity.id.buckets.find(
-                          (bucket) => bucket.key === property.value
-                        )?.name.buckets[0].key ?? t('common.unknown');
+                    case SearchFieldName.ContributorId: {
+                      const personName = aggregations.entityDescription.contributors.identity.id.buckets.find(
+                        (bucket) => bucket.key === property.value
+                      )?.name.buckets[0].key;
+
+                      if (personName) {
+                        fieldValueText = personName;
+                      } else {
+                        fieldValueText = (
+                          <SelectedContributorFacetButton
+                            personId={typeof property.value === 'string' ? property.value : property.value[0]}
+                          />
+                        );
+                      }
                       break;
+                    }
                     case SearchFieldName.TopLevelOrganizationId: {
                       const institutionLabels = aggregations.topLevelOrganization.id.buckets.find(
                         (bucket) => bucket.key === property.value
@@ -186,7 +200,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
 
                   return (
                     <Button
-                      key={property.fieldName + index}
+                      key={property.fieldName + property.value}
                       data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
                       variant="outlined"
                       size="small"
@@ -208,4 +222,21 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
       </FieldArray>
     </Box>
   );
+};
+
+interface SelectedContributorFacetButtonProps {
+  personId: string;
+}
+
+const SelectedContributorFacetButton = ({ personId }: SelectedContributorFacetButtonProps) => {
+  const { t } = useTranslation();
+
+  const personQuery = useQuery({
+    queryKey: [personId],
+    queryFn: () => (personId ? fetchPerson(personId) : undefined),
+  });
+
+  const personName = getFullCristinName(personQuery.data?.names) ?? t('common.unknown');
+
+  return <>{personQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName}</>;
 };
