@@ -15,11 +15,11 @@ import { RegistrationSortSelector } from './RegistrationSortSelector';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { PublicationInstanceType, RegistrationSearchAggregations } from '../../../types/registration.types';
 import { ResourceFieldNames, SearchFieldName } from '../../../types/publicationFieldNames';
-import { getLabelFromBucket } from '../../../utils/translation-helpers';
+import { getLabelFromBucket, getLanguageString } from '../../../utils/translation-helpers';
 import { fetchRegistrationsExport } from '../../../api/searchApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { useQuery } from '@tanstack/react-query';
-import { fetchPerson } from '../../../api/cristinApi';
+import { fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { getFullCristinName } from '../../../utils/user-helpers';
 
 interface RegistrationSearchBarProps {
@@ -164,7 +164,6 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       const personName = aggregations.entityDescription.contributors.identity.id.buckets.find(
                         (bucket) => bucket.key === property.value
                       )?.name.buckets[0].key;
-
                       if (personName) {
                         fieldValueText = personName;
                       } else {
@@ -180,9 +179,16 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       const institutionLabels = aggregations.topLevelOrganization.id.buckets.find(
                         (bucket) => bucket.key === property.value
                       );
-                      fieldValueText = institutionLabels
-                        ? getLabelFromBucket(institutionLabels) ?? t('common.unknown')
-                        : t('common.unknown');
+                      const institutionName = institutionLabels ? getLabelFromBucket(institutionLabels) : '';
+                      if (institutionName) {
+                        fieldValueText = institutionName;
+                      } else {
+                        fieldValueText = (
+                          <SelectedInstitutionFacetButton
+                            institutionId={typeof property.value === 'string' ? property.value : property.value[0]}
+                          />
+                        );
+                      }
                       break;
                     }
                     case SearchFieldName.FundingSource: {
@@ -211,7 +217,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                         remove(index);
                         submitForm();
                       }}>
-                      {fieldName}: {fieldValueText}
+                      {fieldName}: {fieldValueText ? fieldValueText : t('common.unknown')}
                     </Button>
                   );
                 })}
@@ -229,14 +235,27 @@ interface SelectedContributorFacetButtonProps {
 }
 
 const SelectedContributorFacetButton = ({ personId }: SelectedContributorFacetButtonProps) => {
-  const { t } = useTranslation();
-
   const personQuery = useQuery({
     queryKey: [personId],
     queryFn: () => (personId ? fetchPerson(personId) : undefined),
   });
 
-  const personName = getFullCristinName(personQuery.data?.names) ?? t('common.unknown');
+  const personName = getFullCristinName(personQuery.data?.names);
 
   return <>{personQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName}</>;
+};
+
+interface SelectedInstitutionFacetButtonProps {
+  institutionId: string;
+}
+
+const SelectedInstitutionFacetButton = ({ institutionId }: SelectedInstitutionFacetButtonProps) => {
+  const institutionIdQuery = useQuery({
+    queryKey: [institutionId],
+    queryFn: () => (institutionId ? fetchOrganization(institutionId) : undefined),
+  });
+
+  const institutionName = getLanguageString(institutionIdQuery.data?.labels);
+
+  return <>{institutionIdQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;
 };
