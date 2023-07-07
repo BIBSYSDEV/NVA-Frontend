@@ -1,6 +1,6 @@
 import { SearchResponse } from '../types/common.types';
 import { Organization } from '../types/organization.types';
-import { CristinProject, FundingSources } from '../types/project.types';
+import { CristinProject, FundingSource, FundingSources } from '../types/project.types';
 import {
   CreateCristinPerson,
   CristinPerson,
@@ -53,10 +53,21 @@ export const searchByNationalIdNumber = async (nationalIdNumber: string) => {
 };
 
 export const fetchFundingSources = async () => {
-  const getTickets = await apiRequest2<FundingSources>({
+  const getFundingSources = await apiRequest2<FundingSources>({
     url: CristinApiPath.FundingSources,
   });
-  return getTickets.data;
+  return getFundingSources.data;
+};
+
+export const fetchFundingSource = async (fundingIdentifier?: string, fundingId?: string) => {
+  if (!fundingId && !fundingIdentifier) {
+    return null;
+  }
+  const url = fundingId ?? `${CristinApiPath.FundingSources}/${fundingIdentifier}`;
+  const getFundingSource = await apiRequest2<FundingSource>({
+    url,
+  });
+  return getFundingSource.data;
 };
 
 export const fetchOrganization = async (id: string) => {

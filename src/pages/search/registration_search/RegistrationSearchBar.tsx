@@ -8,6 +8,7 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { ReactNode, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { AdvancedSearchRow, registrationFilters } from '../registration_search/filters/AdvancedSearchRow';
 import { SearchTextField } from '../SearchTextField';
@@ -18,8 +19,7 @@ import { ResourceFieldNames, SearchFieldName } from '../../../types/publicationF
 import { getLabelFromBucket, getLanguageString } from '../../../utils/translation-helpers';
 import { fetchRegistrationsExport } from '../../../api/searchApi';
 import { setNotification } from '../../../redux/notificationSlice';
-import { useQuery } from '@tanstack/react-query';
-import { fetchOrganization, fetchPerson } from '../../../api/cristinApi';
+import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { getFullCristinName } from '../../../utils/user-helpers';
 
 interface RegistrationSearchBarProps {
@@ -195,9 +195,16 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       const fundingLabels = aggregations.fundings.identifier.buckets.find(
                         (bucket) => bucket.key === property.value
                       );
-                      fieldValueText = fundingLabels
-                        ? getLabelFromBucket(fundingLabels) ?? t('common.unknown')
-                        : t('common.unknown');
+                      const fundingName = fundingLabels ? getLabelFromBucket(fundingLabels) : '';
+                      if (fundingName) {
+                        fieldValueText = fundingName;
+                      } else {
+                        fieldValueText = (
+                          <SelectedFundingFacetButton
+                            fundingIdentifier={typeof property.value === 'string' ? property.value : property.value[0]}
+                          />
+                        );
+                      }
                       break;
                     }
                     default:
@@ -258,4 +265,21 @@ const SelectedInstitutionFacetButton = ({ institutionId }: SelectedInstitutionFa
   const institutionName = getLanguageString(institutionIdQuery.data?.labels);
 
   return <>{institutionIdQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;
+};
+
+interface SelectedFundingFacetButtonProps {
+  fundingIdentifier: string;
+}
+
+const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetButtonProps) => {
+  const fundingSourcesQuery = useQuery({
+    queryKey: ['fundingSources', fundingIdentifier],
+    queryFn: () => (fundingIdentifier ? fetchFundingSource(fundingIdentifier) : undefined),
+    staleTime: Infinity,
+    cacheTime: 1_800_000,
+  });
+
+  const fundingName = getLanguageString(fundingSourcesQuery.data?.name);
+
+  return <>{fundingSourcesQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName}</>;
 };
