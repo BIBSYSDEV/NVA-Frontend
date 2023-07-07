@@ -58,11 +58,8 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
       </Box>
       <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '0.5rem' }}>
         {projectManagers.map((projectManager, index) => (
-          <span>
-            <MuiLink
-              key={projectManager.identity.id}
-              component={Link}
-              to={getResearchProfilePath(projectManager.identity.id)}>
+          <span key={projectManager.identity.id}>
+            <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
               {`${projectManager.identity.firstName} ${projectManager.identity.lastName}`}
             </MuiLink>
             {index < projectManagers.length - 1 && <span>;</span>}

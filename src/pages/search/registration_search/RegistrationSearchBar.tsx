@@ -4,6 +4,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { useState } from 'react';
+import { LoadingButton } from '@mui/lab';
+import { useDispatch } from 'react-redux';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { AdvancedSearchRow, registrationFilters } from '../registration_search/filters/AdvancedSearchRow';
 import { SearchTextField } from '../SearchTextField';
@@ -12,6 +16,8 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { PublicationInstanceType, RegistrationSearchAggregations } from '../../../types/registration.types';
 import { ResourceFieldNames, SearchFieldName } from '../../../types/publicationFieldNames';
 import { getLabelFromBucket } from '../../../utils/translation-helpers';
+import { fetchRegistrationsExport } from '../../../api/searchApi';
+import { setNotification } from '../../../redux/notificationSlice';
 
 interface RegistrationSearchBarProps {
   aggregations?: RegistrationSearchAggregations;
@@ -19,8 +25,11 @@ interface RegistrationSearchBarProps {
 
 export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
+
+  const [isLoadingExport, setIsLoadingExport] = useState(false);
 
   const showAdvancedSearch = properties.some(
     (property) =>
@@ -36,10 +45,10 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
           md: 0,
         },
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', md: '5fr 2fr' },
+        gridTemplateColumns: { xs: '1fr', md: '5fr auto auto' },
         gridTemplateAreas: {
-          xs: "'searchbar' 'sorting' 'advanced' 'facets'",
-          sm: "'searchbar sorting' 'advanced advanced' 'facets facets'",
+          xs: "'searchbar' 'sorting' 'export' 'advanced' 'facets'",
+          sm: "'searchbar sorting export' 'advanced advanced advanced' 'facets facets facets'",
         },
         gap: '0.75rem 1rem',
       }}>
@@ -57,6 +66,32 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
         )}
       </Field>
       <RegistrationSortSelector />
+
+      <LoadingButton
+        variant="outlined"
+        startIcon={<FileDownloadIcon />}
+        loadingPosition="start"
+        sx={{ gridArea: 'export' }}
+        loading={isLoadingExport}
+        onClick={async () => {
+          setIsLoadingExport(true);
+          try {
+            const fetchExportData = await fetchRegistrationsExport(window.location.search);
+            // Force UTF-8 for excel with '\uFEFF': https://stackoverflow.com/a/42466254
+            const blob = new Blob(['\uFEFF', fetchExportData], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = 'result-export.csv';
+            link.href = url;
+            link.click();
+          } catch {
+            dispatch(setNotification({ message: t('feedback.error.get_registrations_export'), variant: 'error' }));
+          } finally {
+            setIsLoadingExport(false);
+          }
+        }}>
+        {t('search.export')}
+      </LoadingButton>
 
       <FieldArray name="properties">
         {({ push, remove }: FieldArrayRenderProps) => (

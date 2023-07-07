@@ -164,12 +164,12 @@
     "read_less_about_nva": "Les mindre om NVA",
     "read_more": "Les meir",
     "read_more_about_nva": "Les meir om NVA",
-    "registration": "Registrering",
-    "registrations": "Registreringar",
     "reject_doi": "Avvis DOI",
     "reload_page_info": "Ein ny versjon av NVA er tilgjengeleg og sida må lastast på nytt.",
     "remove": "Fjern",
     "required_description": "Felt med stjerne er obligatorisk",
+    "result": "",
+    "result_registrations": "",
     "role": "Rolle",
     "save": "Lagre",
     "save_and_view": "Lagre og sjå",
@@ -180,6 +180,7 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Vel",
     "select_institution": "Vel institusjon",
+    "select_language": "Vel språk",
     "selected": "Vald",
     "send": "Send",
     "settings": "Innstillingar",
@@ -305,6 +306,9 @@
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensingar",
       "areas_of_responsibility": "Ansvarsområder",
+      "curator_has_extended_privileges": "",
+      "edit_extended_responsibility": "",
+      "extended_area_of_resposibility": "",
       "no_users_found": "Ingen brukarar funne"
     },
     "doi": {
@@ -379,6 +383,7 @@
       "get_publishers": "Søk på utgjevarar feila",
       "get_registration": "Kunne ikkje laste inn registrering",
       "get_registrations": "Kunne ikkje laste inn registreringar",
+      "get_registrations_export": "",
       "get_roles": "Kunne ikkje hente roller",
       "get_series": "Kunne ikkje hente serie",
       "get_tickets": "Kunne ikkje hente saker",
@@ -564,7 +569,7 @@
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønskjer du å slette \"{{title}}\"?",
       "published": "Publisert",
-      "unpublished": "Ikkje publisert"
+      "unpublished": "Kladd"
     },
     "research_profile": "Forskarprofil",
     "roles": {
@@ -1100,6 +1105,7 @@
       "request_doi_description": "Når du ber om ein DOI (Digital Object Identifier) vil bestillinga gå via ein kurator ved din institusjon for kvalitetskontroll. Legg til ein melding ved eventuelle spørsmål eller avklaringar.",
       "reserve_doi": "Reserver ein DOI",
       "reserved_doi": "Reservert DOI",
+      "subject_and_classification": "Emne og klassifisering",
       "tasks_panel": {
         "assign_curator": "Sett kurator",
         "assign_doi": "Tildel DOI",
@@ -1453,6 +1459,7 @@
       "pages_to": "til",
       "place_for_event": "Stad for arrangement",
       "print_issn": "Print ISSN",
+      "protected_type": "",
       "publisher_or_organizer": "Tidsskrift/Boktittel/medium",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som vart nytta ved registeringsstart. Ønskjer du å fjerne kobling til original DOI?",
@@ -1512,6 +1519,7 @@
     "additional_participants_one": "+{{count}} deltakar",
     "additional_participants_other": "+{{count}} deltakarar",
     "contains": "Inneheld",
+    "export": "",
     "field_label": "Felt",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",

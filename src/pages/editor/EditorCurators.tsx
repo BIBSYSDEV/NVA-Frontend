@@ -23,6 +23,7 @@ import { getSortedSubUnits } from '../../utils/institutions-helpers';
 import { RoleName } from '../../types/user.types';
 import { fetchUsers } from '../../api/roleApi';
 import { fetchOrganization } from '../../api/cristinApi';
+import { EditorThesisCuratorTableCell } from './EditorThesisCuratorTableCell';
 
 export const EditorCurators = () => {
   const { t } = useTranslation();
@@ -69,9 +70,8 @@ export const EditorCurators = () => {
           <TableHead>
             <TableRow>
               <TableCell>{t('common.name')}</TableCell>
-              <TableCell sx={{ minWidth: { xs: '15rem', md: '40%' } }}>
-                {t('editor.curators.area_of_responsibility')}
-              </TableCell>
+              <TableCell>{t('editor.curators.area_of_responsibility')}</TableCell>
+              <TableCell sx={{ width: 0 }}>{t('editor.curators.extended_area_of_resposibility')}</TableCell>
             </TableRow>
           </TableHead>
 
@@ -87,6 +87,7 @@ export const EditorCurators = () => {
                     options={currentOrganization ? getSortedSubUnits([currentOrganization]) : []}
                   />
                 </TableCell>
+                <EditorThesisCuratorTableCell curator={curator} />
               </TableRow>
             ))}
           </TableBody>
