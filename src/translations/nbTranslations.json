@@ -167,9 +167,9 @@
     "reject_doi": "Avvis DOI",
     "reload_page_info": "En ny versjon av NVA er tilgjengelig og siden må lastes på nytt.",
     "remove": "Fjern",
+    "required_description": "Felt med stjerne er obligatorisk",
     "result": "Resultat",
     "result_registrations": "Resultatregistreringer",
-    "required_description": "Felt med stjerne er obligatorisk",
     "role": "Rolle",
     "save": "Lagre",
     "save_and_view": "Lagre og se",
@@ -210,6 +210,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -295,11 +299,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
