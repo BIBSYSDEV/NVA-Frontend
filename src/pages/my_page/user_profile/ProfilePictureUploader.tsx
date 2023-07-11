@@ -2,6 +2,8 @@ import { Box, Button, Typography } from '@mui/material';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { uploadProfilePicture } from '../../../api/cristinApi';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { setNotification } from '../../../redux/notificationSlice';
 
 interface ProfilePictureUploaderProps {
   id: string | undefined;
@@ -9,6 +11,7 @@ interface ProfilePictureUploaderProps {
 
 export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -18,7 +21,10 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
         const rawBase64String = reader.result as string;
         const base64String = rawBase64String.replace(/^data:image\/\w+;base64,/, '');
 
-        id && uploadProfilePicture(id, base64String);
+        id &&
+          uploadProfilePicture(id, base64String).then(() => {
+            dispatch(setNotification({ message: 'File uploaded successfully', variant: 'success' }));
+          });
       };
       reader.readAsDataURL(file);
     }
