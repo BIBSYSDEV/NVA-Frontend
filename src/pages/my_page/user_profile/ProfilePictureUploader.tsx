@@ -1,12 +1,15 @@
 import { Box, Button, Typography } from '@mui/material';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { uploadProfilePicture } from '../../../api/cristinApi';
+import { useTranslation } from 'react-i18next';
 
 interface ProfilePictureUploaderProps {
   id: string | undefined;
 }
 
 export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
+  const { t } = useTranslation();
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -54,7 +57,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
             <AddAPhotoIcon />
           </Button>
         </label>
-        <Typography>Legg til profilfoto</Typography>
+        <Typography>{t('my_page.my_profile.identity.upload_profile_photo')}</Typography>
       </Box>
     </Box>
   );
