@@ -11,7 +11,9 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = reader.result as string;
+        const rawBase64String = reader.result as string;
+        const base64String = rawBase64String.replace(/^data:image\/\w+;base64,/, '');
+
         id && uploadProfilePicture(id, base64String);
       };
       reader.readAsDataURL(file);
