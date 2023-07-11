@@ -45,7 +45,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
     },
   } as Registration;
 
-  const getTodayDateString = (): string => {
+  const getTodayDateString = () => {
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');

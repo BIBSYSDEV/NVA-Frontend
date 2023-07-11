@@ -21,12 +21,13 @@ export const equalUris = (uri1: string | null, uri2: string | null) =>
 
 const removeTrailingSlash = (value: string) => (value.endsWith('/') ? value.slice(0, -1) : value);
 
-export const getTimePeriodString = (date1: string, date2: string, t: TFunction): string => {
+export const getTimePeriodString = (date1: string, date2: string, t: TFunction) => {
   const date1Obj = new Date(date1);
   const date2Obj = new Date(date2);
 
-  const timezoneOffset1 = date1Obj.getTimezoneOffset() * 60 * 1000; // Convert minutes to milliseconds
-  const timezoneOffset2 = date2Obj.getTimezoneOffset() * 60 * 1000; // Convert minutes to milliseconds
+  // Convert minutes to milliseconds
+  const timezoneOffset1 = date1Obj.getTimezoneOffset() * 60 * 1000;
+  const timezoneOffset2 = date2Obj.getTimezoneOffset() * 60 * 1000;
 
   const dateDiff = Math.abs(date1Obj.getTime() - timezoneOffset1 - (date2Obj.getTime() - timezoneOffset2));
   const minutesDiff = Math.floor(dateDiff / (1000 * 60));
