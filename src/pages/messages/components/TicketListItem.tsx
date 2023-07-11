@@ -16,6 +16,7 @@ import { StyledVerifiedContributor } from '../../registration/contributors_tab/C
 import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
 import { RootState } from '../../../redux/store';
 import { updateTicket } from '../../../api/registrationApi';
+import { getTimePeriodString } from '../../../utils/general-helpers';
 
 export const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
@@ -43,8 +44,20 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
     },
   } as Registration;
-  const msAge = new Date().getTime() - new Date(ticket.modifiedDate).getTime();
-  const daysAge = Math.ceil(msAge / 86_400_000); // 1000 * 60 * 60 * 24 = 86_400_000 ms in one day
+
+  const getTodayDateString = (): string => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const hours = String(today.getHours()).padStart(2, '0');
+    const minutes = String(today.getMinutes()).padStart(2, '0');
+    const seconds = String(today.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
+
+  const ticketAge = getTimePeriodString(ticket.createdDate, getTodayDateString(), t);
 
   const assigneeFullName = ticket.assignee
     ? getFullName(
@@ -97,7 +110,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             <div />
           )}
           <Typography lineHeight="2rem">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
-          <Typography lineHeight="2rem">{t('common.x_days', { count: daysAge })}</Typography>
+          <Typography lineHeight="2rem">{ticketAge}</Typography>
           {assigneeFullName && (
             <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
               <StyledVerifiedContributor>{getContributorInitials(assigneeFullName)}</StyledVerifiedContributor>
