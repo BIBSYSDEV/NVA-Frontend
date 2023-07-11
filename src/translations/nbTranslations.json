@@ -404,7 +404,8 @@
       "update_registration": "Kunne ikke oppdatere registrering",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
-      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
+      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
+      "upload_profile_photo": "Kunne ikke laste opp profilfoto"
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
@@ -431,7 +432,8 @@
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
-      "update_vocabulary": "{{vocabulary}} er nå {{status}}"
+      "update_vocabulary": "{{vocabulary}} er nå {{status}}",
+      "upload_profile_photo": "Profilfoto er lagret"
     },
     "validation": {
       "announcement_required": "Du må ha minst en offentliggjøring",

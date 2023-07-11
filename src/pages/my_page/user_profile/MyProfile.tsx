@@ -150,7 +150,7 @@ export const MyProfile = () => {
                           variant="filled"
                         />
                         <Box>
-                          <ProfilePictureUploader id={user.cristinId} />
+                          <ProfilePictureUploader id={personId} />
                         </Box>
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
