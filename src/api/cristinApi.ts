@@ -143,3 +143,10 @@ export const uploadProfilePicture = async (userId: string, base64String: string)
     method: 'PUT',
     data: { base64Data: base64String },
   });
+
+export const fetchProfilePicture = async (cristinId: string) => {
+  const fetchProfilePictureResponse = await apiRequest2<{ base64Data: string }>({
+    url: `${cristinId}/picture`,
+  });
+  return fetchProfilePictureResponse.data;
+};
