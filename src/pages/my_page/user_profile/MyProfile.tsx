@@ -19,6 +19,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { UserIdentity } from './UserIdentity';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
+import { BetaFunctionality } from '../../../components/BetaFunctionality';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
@@ -164,19 +165,21 @@ export const MyProfile = () => {
                             variant="filled"
                           />
                         </Box>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '2rem',
-                            alignItems: { xs: 'start', md: 'center' },
-                            gridArea: 'profile-picture',
-                          }}>
-                          <Typography variant="h3" sx={{ alignSelf: 'start' }}>
-                            {t('my_page.my_profile.profile_picture')}
-                          </Typography>
-                          <ProfilePictureUploader id={personId} />
-                        </Box>
+                        <BetaFunctionality>
+                          <Box
+                            sx={{
+                              display: 'flex',
+                              flexDirection: 'column',
+                              gap: '2rem',
+                              alignItems: { xs: 'start', md: 'center' },
+                              gridArea: 'profile-picture',
+                            }}>
+                            <Typography variant="h3" sx={{ alignSelf: 'start' }}>
+                              {t('my_page.my_profile.profile_picture')}
+                            </Typography>
+                            <ProfilePictureUploader id={personId} />
+                          </Box>
+                        </BetaFunctionality>
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
                         <LoadingButton
