@@ -173,7 +173,7 @@ export const MyProfile = () => {
                             gridArea: 'profile-picture',
                           }}>
                           <Typography variant="h3" sx={{ alignSelf: 'start' }}>
-                            Profilfoto
+                            {t('my_page.my_profile.profile_picture')}
                           </Typography>
                           <ProfilePictureUploader id={personId} />
                         </Box>
