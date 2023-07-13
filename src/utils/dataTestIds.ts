@@ -111,6 +111,7 @@ export const dataTestId = {
       advancedFieldSelect: 'advanced-field-select',
       advancedOperatorSelect: 'advanced-operator-select',
       advancedValueField: 'advanced-value-field',
+      removeFacetButton: 'remove-facet-button',
       removeFilterButton: 'remove-filter-button',
       searchButton: 'search-button',
     },

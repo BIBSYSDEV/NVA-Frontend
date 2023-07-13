@@ -87,7 +87,16 @@ export const Header = () => {
             data-testid={dataTestId.header.newRegistrationLink}
             to={UrlPathTemplate.RegistrationNew}
             startIcon={
-              <AddIcon sx={{ color: 'white', bgcolor: 'primary.light', borderRadius: '50%', padding: '0.1rem' }} />
+              <AddIcon
+                sx={{
+                  color: 'white',
+                  bgcolor: 'primary.light',
+                  borderRadius: '50%',
+                  padding: '0.2rem',
+                  width: '3.125rem',
+                  height: '3.125rem',
+                }}
+              />
             }>
             {t('registration.new_registration')}
           </Button>
@@ -122,7 +131,10 @@ export const Header = () => {
                     {customer.shortName}
                   </MenuButton>
                 ) : (
-                  <Typography variant="h1" component="span" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
+                  <Typography
+                    variant="h1"
+                    component="span"
+                    sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
                     {customer.shortName}
                   </Typography>
                 ))}

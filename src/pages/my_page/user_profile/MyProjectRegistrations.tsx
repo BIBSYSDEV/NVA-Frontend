@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Typography, List, TablePagination } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { searchForProjects } from '../../../api/cristinApi';
 import { RootState } from '../../../redux/store';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
@@ -31,8 +31,8 @@ export const MyProjectRegistrations = ({
 
   const projectsQuery = useQuery({
     enabled: !!cristinIdentifier,
-    queryKey: ['projects', rowsPerPage, page, cristinIdentifier],
-    queryFn: () => searchForProjects(rowsPerPage, page + 1, { creator: cristinIdentifier }),
+    queryKey: ['projects', 50, 1, cristinIdentifier],
+    queryFn: () => searchForProjects(50, 1, { creator: cristinIdentifier }),
   });
 
   const projects = projectsQuery.data?.hits ?? [];
@@ -56,17 +56,24 @@ export const MyProjectRegistrations = ({
       return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
     });
 
+  const projectsToShow = filteredProjects.slice(rowsPerPage * page, rowsPerPage * (page + 1));
+  const validPage = page < Math.ceil(filteredProjects.length / rowsPerPage) ? page : 0;
+
+  useEffect(() => {
+    setPage(0);
+  }, [selectedOngoing, selectedNotStarted, selectedConcluded]);
+
   return (
     <div>
       <Typography variant="h2" gutterBottom>
         {t('my_page.project_registrations')}
       </Typography>
-      {projectsQuery.isLoading ? (
+      {projectsQuery.isLoading || projectsQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : projectsQuery.data && projectsQuery.data.size > 0 ? (
         <>
           <List>
-            {filteredProjects.map((project) => (
+            {projectsToShow.map((project) => (
               <ProjectListItem
                 key={project.id}
                 project={project}
@@ -78,9 +85,9 @@ export const MyProjectRegistrations = ({
           <TablePagination
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             component="div"
-            count={projectsQuery.data.size}
+            count={filteredProjects.length}
             rowsPerPage={rowsPerPage}
-            page={page}
+            page={validPage}
             onPageChange={(_, newPage) => setPage(newPage)}
             onRowsPerPageChange={(event) => {
               setRowsPerPage(+event.target.value);

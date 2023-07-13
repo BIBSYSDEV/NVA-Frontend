@@ -42,7 +42,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
   return (
     <>
       <Helmet>
-        <title>{t('common.registrations')}</title>
+        <title>{t('common.result_registrations')}</title>
       </Helmet>
       <div>
         {registrationsQuery.isLoading ? (
@@ -50,7 +50,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
         ) : (
           <>
             <Typography gutterBottom variant="h2">
-              {t('common.registrations')}
+              {t('common.result_registrations')}
             </Typography>
             <MyRegistrationsList
               registrations={filteredRegistrations}

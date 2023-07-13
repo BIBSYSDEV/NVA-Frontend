@@ -11,12 +11,7 @@ import { PageSpinner } from '../../components/PageSpinner';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import {
-  getTitleString,
-  userCanEditRegistration,
-  userIsRegistrationCurator,
-  userIsRegistrationOwner,
-} from '../../utils/registration-helpers';
+import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
@@ -78,10 +73,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   };
 
   const canEditRegistration = registration && userCanEditRegistration(user, registration);
-  const canEditFiles = userIsRegistrationOwner(user, registration) || userIsRegistrationCurator(user, registration);
 
   return registrationQuery.isLoading ? (
-    <PageSpinner aria-label={t('common.registration')} />
+    <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
@@ -124,7 +118,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
                 )}
                 {tabNumber === RegistrationTab.FilesAndLicenses && (
                   <ErrorBoundary>
-                    <FilesAndLicensePanel uppy={uppy} canEditFiles={canEditFiles} />
+                    <FilesAndLicensePanel uppy={uppy} />
                   </ErrorBoundary>
                 )}
               </Box>
