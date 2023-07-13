@@ -8,6 +8,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { useState } from 'react';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { useQuery } from '@tanstack/react-query';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 interface ProfilePictureUploaderProps {
   id: string;
@@ -64,6 +65,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
         />
         <label htmlFor="raised-button-file" style={{ alignSelf: 'end', marginRight: '3.3rem' }}>
           <IconButton
+            data-testid={dataTestId.myPage.myProfile.updateProfilePictureButton}
             sx={{
               border: 'hidden',
               borderRadius: '50%',
@@ -112,6 +114,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
           <label htmlFor="raised-button-file">
             <Button
+              data-testid={dataTestId.myPage.myProfile.uploadProfilePictureButton}
               sx={{
                 border: 'hidden',
                 borderRadius: '50%',
