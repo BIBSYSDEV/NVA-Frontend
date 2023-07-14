@@ -22,7 +22,7 @@ export const CentralImportPage = () => {
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates'],
-    queryFn: fetchImportCandidates,
+    queryFn: () => fetchImportCandidates(10, 0),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
