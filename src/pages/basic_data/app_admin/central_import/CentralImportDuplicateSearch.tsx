@@ -2,7 +2,6 @@ import { Divider, List, TablePagination, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { CentralImportResultItem } from './CentralImportResultItem';
-import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { DuplicateSearchFilters } from '../../../../types/duplicateSearchTypes';
 import { useQuery } from '@tanstack/react-query';
