@@ -1,13 +1,14 @@
 import { useTranslation } from 'react-i18next';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Skeleton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { AdvancedSearchRow, registrationFilters } from '../registration_search/filters/AdvancedSearchRow';
 import { SearchTextField } from '../SearchTextField';
@@ -15,9 +16,11 @@ import { RegistrationSortSelector } from './RegistrationSortSelector';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { PublicationInstanceType, RegistrationSearchAggregations } from '../../../types/registration.types';
 import { ResourceFieldNames, SearchFieldName } from '../../../types/publicationFieldNames';
-import { getLabelFromBucket } from '../../../utils/translation-helpers';
+import { getLabelFromBucket, getLanguageString } from '../../../utils/translation-helpers';
 import { fetchRegistrationsExport } from '../../../api/searchApi';
 import { setNotification } from '../../../redux/notificationSlice';
+import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
+import { getFullCristinName } from '../../../utils/user-helpers';
 
 interface RegistrationSearchBarProps {
   aggregations?: RegistrationSearchAggregations;
@@ -151,33 +154,57 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                   }
 
                   const fieldName = t(thisFilter.i18nKey) as string;
-                  let fieldValueText = '';
+                  let fieldValueText: ReactNode = '';
+
                   switch (thisFilter.field) {
                     case ResourceFieldNames.RegistrationType:
                       fieldValueText = t(`registration.publication_types.${property.value as PublicationInstanceType}`);
                       break;
-                    case SearchFieldName.ContributorId:
-                      fieldValueText =
-                        aggregations.entityDescription.contributors.identity.id.buckets.find(
-                          (bucket) => bucket.key === property.value
-                        )?.name.buckets[0].key ?? t('common.unknown');
+                    case SearchFieldName.ContributorId: {
+                      const personName = aggregations.entityDescription.contributors.identity.id.buckets.find(
+                        (bucket) => bucket.key === property.value
+                      )?.name.buckets[0].key;
+                      if (personName) {
+                        fieldValueText = personName;
+                      } else {
+                        fieldValueText = (
+                          <SelectedContributorFacetButton
+                            personId={typeof property.value === 'string' ? property.value : property.value[0]}
+                          />
+                        );
+                      }
                       break;
+                    }
                     case SearchFieldName.TopLevelOrganizationId: {
                       const institutionLabels = aggregations.topLevelOrganization.id.buckets.find(
                         (bucket) => bucket.key === property.value
                       );
-                      fieldValueText = institutionLabels
-                        ? getLabelFromBucket(institutionLabels) ?? t('common.unknown')
-                        : t('common.unknown');
+                      const institutionName = institutionLabels ? getLabelFromBucket(institutionLabels) : '';
+                      if (institutionName) {
+                        fieldValueText = institutionName;
+                      } else {
+                        fieldValueText = (
+                          <SelectedInstitutionFacetButton
+                            institutionId={typeof property.value === 'string' ? property.value : property.value[0]}
+                          />
+                        );
+                      }
                       break;
                     }
                     case SearchFieldName.FundingSource: {
                       const fundingLabels = aggregations.fundings.identifier.buckets.find(
                         (bucket) => bucket.key === property.value
                       );
-                      fieldValueText = fundingLabels
-                        ? getLabelFromBucket(fundingLabels) ?? t('common.unknown')
-                        : t('common.unknown');
+                      const fundingName = fundingLabels ? getLabelFromBucket(fundingLabels) : '';
+                      if (fundingName) {
+                        fieldValueText = fundingName;
+                      } else {
+                        fieldValueText = (
+                          <SelectedFundingFacetButton
+                            fundingIdentifier={typeof property.value === 'string' ? property.value : property.value[0]}
+                          />
+                        );
+                      }
                       break;
                     }
                     default:
@@ -186,7 +213,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
 
                   return (
                     <Button
-                      key={property.fieldName + index}
+                      key={`${property.fieldName}-${property.value}`}
                       data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
                       variant="outlined"
                       size="small"
@@ -208,4 +235,59 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
       </FieldArray>
     </Box>
   );
+};
+
+interface SelectedContributorFacetButtonProps {
+  personId: string;
+}
+
+const SelectedContributorFacetButton = ({ personId }: SelectedContributorFacetButtonProps) => {
+  const { t } = useTranslation();
+
+  const personQuery = useQuery({
+    queryKey: [personId],
+    queryFn: () => (personId ? fetchPerson(personId) : undefined),
+  });
+
+  const personName = getFullCristinName(personQuery.data?.names) || t('common.unknown');
+
+  return <>{personQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : personName}</>;
+};
+
+interface SelectedInstitutionFacetButtonProps {
+  institutionId: string;
+}
+
+const SelectedInstitutionFacetButton = ({ institutionId }: SelectedInstitutionFacetButtonProps) => {
+  const { t } = useTranslation();
+
+  const organizationQuery = useQuery({
+    queryKey: [institutionId],
+    queryFn: () => (institutionId ? fetchOrganization(institutionId) : undefined),
+    staleTime: Infinity,
+    cacheTime: 1_800_000,
+  });
+
+  const institutionName = getLanguageString(organizationQuery.data?.labels) || t('common.unknown');
+
+  return <>{organizationQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;
+};
+
+interface SelectedFundingFacetButtonProps {
+  fundingIdentifier: string;
+}
+
+const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetButtonProps) => {
+  const { t } = useTranslation();
+
+  const fundingSourcesQuery = useQuery({
+    queryKey: ['fundingSources', fundingIdentifier],
+    queryFn: () => (fundingIdentifier ? fetchFundingSource(fundingIdentifier) : undefined),
+    staleTime: Infinity,
+    cacheTime: 1_800_000,
+  });
+
+  const fundingName = getLanguageString(fundingSourcesQuery.data?.name) || t('common.unknown');
+
+  return <>{fundingSourcesQuery.isLoading ? <Skeleton sx={{ width: '7rem', ml: '0.25rem' }} /> : fundingName}</>;
 };
