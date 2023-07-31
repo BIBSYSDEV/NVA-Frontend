@@ -28,7 +28,12 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       ({ status }) =>
         (status === RegistrationStatus.Draft && selectedUnpublished) ||
         ((status === RegistrationStatus.Published || status === RegistrationStatus.PublishedMetadata) &&
-          selectedPublished)
+          selectedPublished) ||
+        ((status === RegistrationStatus.Draft ||
+          status === RegistrationStatus.Published ||
+          status === RegistrationStatus.PublishedMetadata) &&
+          !selectedPublished &&
+          !selectedUnpublished)
     )
     .sort((a, b) => {
       if (a.status === RegistrationStatus.Draft && b.status !== RegistrationStatus.Draft) {
@@ -53,7 +58,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
               {t('common.result_registrations')}
             </Typography>
             <MyRegistrationsList
-              registrations={filteredRegistrations}
+              registrations={filteredRegistrations.length > 0 ? filteredRegistrations : registrations}
               refetchRegistrations={registrationsQuery.refetch}
             />
           </>
