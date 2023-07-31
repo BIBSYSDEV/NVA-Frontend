@@ -45,6 +45,18 @@ export enum RegistrationTab {
   FilesAndLicenses = 3,
 }
 
+export type ScientificValue = 'Unassigned' | 'LevelZero' | 'LevelOne' | 'LevelTwo';
+
+export interface Journal2 {
+  type: 'Journal';
+  id: string;
+  name: string;
+  scientificValue: ScientificValue;
+  sameAs: string;
+  printIssn?: string;
+  onlineIssn?: string;
+}
+
 export interface Journal {
   id: string;
   identifier: string;

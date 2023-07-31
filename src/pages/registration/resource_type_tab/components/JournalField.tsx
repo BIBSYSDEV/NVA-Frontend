@@ -5,7 +5,7 @@ import { Box, Chip, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { Journal, PublicationChannelType } from '../../../../types/registration.types';
+import { Journal2, PublicationChannelType } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -17,7 +17,8 @@ import {
 } from '../../../../types/publication_types/journalRegistration.types';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { NpiLevelTypography2 } from '../../../../components/NpiLevelTypography';
+import { SearchResponse } from '../../../../types/common.types';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
@@ -36,10 +37,10 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     !reference?.publicationContext.id ? reference?.publicationContext.title ?? '' : ''
   );
   const debouncedQuery = useDebounce(query);
-  const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
+  const [journalOptions, isLoadingJournalOptions] = useFetch<SearchResponse<Journal2>>({
     url:
       debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
+        ? `${PublicationChannelApiPath.JournalSearch2}?year=${getYearQuery(year)}&query=${encodeURIComponent(
             debouncedQuery
           )}`
         : '',
@@ -47,11 +48,11 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   });
 
   // Fetch Journals with matching ISSN
-  const [journalsByIssn] = useFetch<Journal[]>({
+  const [journalsByIssn] = useFetch<Journal2[]>({
     url:
       !reference?.publicationContext.id &&
       (reference?.publicationContext.printIssn || reference?.publicationContext.onlineIssn)
-        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${
+        ? `${PublicationChannelApiPath.JournalSearch2}?year=${getYearQuery(year)}&query=${
             reference.publicationContext.printIssn ?? reference.publicationContext.onlineIssn
           }`
         : '',
@@ -68,7 +69,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   }, [setFieldValue, journalsByIssn, confirmedContextType]);
 
   // Fetch selected journal
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(
+  const [journal, isLoadingJournal] = useFetchResource<Journal2>(
     reference?.publicationContext.id ?? '',
     t('feedback.error.get_journal')
   );
@@ -82,7 +83,9 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
           data-testid={journalFieldTestId}
           aria-labelledby={`${journalFieldTestId}-label`}
           popupIcon={null}
-          options={debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []}
+          options={
+            debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions?.hits ?? [] : []
+          }
           filterOptions={(options) => options}
           inputValue={query}
           onInputChange={(_, newInputValue, reason) => {
@@ -119,7 +122,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
                     emphasized={state.inputValue}
                   />
                 </Typography>
-                <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
+                <NpiLevelTypography2 variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
               </Box>
             </li>
           )}
@@ -133,7 +136,11 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
                     <Typography variant="subtitle1" component="h2">
                       {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
                     </Typography>
-                    <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
+                    <NpiLevelTypography2
+                      variant="body2"
+                      color="textSecondary"
+                      scientificValue={option.scientificValue}
+                    />
                   </>
                 }
               />
