@@ -8,6 +8,7 @@ import {
   Employment,
   PositionResponse,
 } from '../types/user.types';
+import { getIdentifierFromId } from '../utils/general-helpers';
 import { CristinApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest } from './apiRequest';
 
@@ -59,14 +60,15 @@ export const fetchFundingSources = async () => {
   return getFundingSources.data;
 };
 
-export const fetchFundingSource = async (fundingIdentifier?: string, fundingId?: string) => {
-  if (!fundingId && !fundingIdentifier) {
+export const fetchFundingSource = async (fundingId: string) => {
+  if (!fundingId) {
     return null;
   }
-  const url = fundingId ?? `${CristinApiPath.FundingSources}/${fundingIdentifier}`;
-  const getFundingSource = await apiRequest2<FundingSource>({
-    url,
-  });
+
+  const fundingIdentifier = getIdentifierFromId(fundingId);
+  const url = `${CristinApiPath.FundingSources}/${fundingIdentifier}`;
+  const getFundingSource = await apiRequest2<FundingSource>({ url });
+
   return getFundingSource.data;
 };
 

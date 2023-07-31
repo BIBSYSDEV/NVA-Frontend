@@ -213,7 +213,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
 
                   return (
                     <Button
-                      key={property.fieldName + property.value}
+                      key={`${property.fieldName}-${property.value}`}
                       data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
                       variant="outlined"
                       size="small"
@@ -261,14 +261,16 @@ interface SelectedInstitutionFacetButtonProps {
 const SelectedInstitutionFacetButton = ({ institutionId }: SelectedInstitutionFacetButtonProps) => {
   const { t } = useTranslation();
 
-  const institutionIdQuery = useQuery({
+  const organizationQuery = useQuery({
     queryKey: [institutionId],
     queryFn: () => (institutionId ? fetchOrganization(institutionId) : undefined),
+    staleTime: Infinity,
+    cacheTime: 1_800_000,
   });
 
-  const institutionName = getLanguageString(institutionIdQuery.data?.labels) || t('common.unknown');
+  const institutionName = getLanguageString(organizationQuery.data?.labels) || t('common.unknown');
 
-  return <>{institutionIdQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;
+  return <>{organizationQuery.isLoading ? <Skeleton sx={{ width: '10rem', ml: '0.25rem' }} /> : institutionName}</>;
 };
 
 interface SelectedFundingFacetButtonProps {
