@@ -13,7 +13,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { NpiLevelTypography2 } from '../../../../components/NpiLevelTypography';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { SearchResponse } from '../../../../types/common.types';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
@@ -30,7 +30,7 @@ export const SeriesField = () => {
   const [seriesOptions, isLoadingSeriesOptions] = useFetch<SearchResponse<Series>>({
     url:
       debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.SeriesSearch2}?year=${getYearQuery(year)}&query=${encodeURIComponent(
+        ? `${PublicationChannelApiPath.SeriesSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
             debouncedQuery
           )}`
         : '',
@@ -100,7 +100,7 @@ export const SeriesField = () => {
                     emphasized={state.inputValue}
                   />
                 </Typography>
-                <NpiLevelTypography2 variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
+                <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
               </Box>
             </li>
           )}
@@ -114,7 +114,7 @@ export const SeriesField = () => {
                     <Typography variant="subtitle1">
                       {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
                     </Typography>
-                    <NpiLevelTypography2
+                    <NpiLevelTypography
                       variant="body2"
                       color="textSecondary"
                       scientificValue={option.scientificValue}

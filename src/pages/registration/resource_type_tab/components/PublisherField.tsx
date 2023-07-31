@@ -14,7 +14,7 @@ import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { getYearQuery } from '../../../../utils/registration-helpers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { NpiLevelTypography2 } from '../../../../components/NpiLevelTypography';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { SearchResponse } from '../../../../types/common.types';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
@@ -31,7 +31,7 @@ export const PublisherField = () => {
   const [publisherOptions, isLoadingPublisherOptions] = useFetch<SearchResponse<Publisher>>({
     url:
       debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.PublisherSearch2}?year=${getYearQuery(year)}&query=${encodeURIComponent(
+        ? `${PublicationChannelApiPath.PublisherSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
             debouncedQuery
           )}`
         : '',
@@ -104,7 +104,7 @@ export const PublisherField = () => {
                 <Typography variant="subtitle1">
                   <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
                 </Typography>
-                <NpiLevelTypography2 variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
+                <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
               </Box>
             </li>
           )}
@@ -116,7 +116,7 @@ export const PublisherField = () => {
                 label={
                   <>
                     <Typography variant="subtitle1">{option.name}</Typography>
-                    <NpiLevelTypography2
+                    <NpiLevelTypography
                       variant="body2"
                       color="textSecondary"
                       scientificValue={option.scientificValue}

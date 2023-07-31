@@ -22,7 +22,7 @@ import { BookPublicationContext } from '../../../../types/publication_types/book
 import { ExpressionStatement } from '../../../../utils/searchHelpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
-import { NpiLevelTypography2 } from '../../../../components/NpiLevelTypography';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -208,12 +208,12 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
         value={series?.name}
         isLoading={isLoadingSeries}
       />
-      <NpiLevelTypography2 variant="body2" color="textSecondary" scientificValue={series?.scientificValue} />
+      <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={series?.scientificValue} />
     </>
   ) : publisherId ? (
     <>
       <ContainerDisplayName label={t('common.publisher')} value={publisher?.name} isLoading={isLoadingPublisher} />
-      <NpiLevelTypography2 variant="body2" color="textSecondary" scientificValue={publisher?.scientificValue} />
+      <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={publisher?.scientificValue} />
     </>
   ) : null;
 };

@@ -59,7 +59,7 @@ import {
   MediaContributionPeriodicalPublicationContext,
   MediaContributionPublicationContext,
 } from '../../types/publication_types/mediaContributionRegistration.types';
-import { NpiLevelTypography2 } from '../../components/NpiLevelTypography';
+import { NpiLevelTypography } from '../../components/NpiLevelTypography';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import {
   ExhibitionBasic,
@@ -117,7 +117,7 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
       ) : fetchedPublisher ? (
         <>
           <Typography>{fetchedPublisher.name}</Typography>
-          <NpiLevelTypography2 scientificValue={fetchedPublisher.scientificValue} />
+          <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} />
           {fetchedPublisher.sameAs && (
             <Typography component={Link} href={fetchedPublisher.sameAs} target="_blank">
               {t('registration.public_page.find_in_channel_registry')}
@@ -196,7 +196,7 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
                 .filter((issn) => issn)
                 .join(', ')}
             </Typography>
-            <NpiLevelTypography2 scientificValue={journal.scientificValue} />
+            <NpiLevelTypography scientificValue={journal.scientificValue} />
             {journal.sameAs && (
               <Typography component={Link} href={journal.sameAs} target="_blank">
                 {t('registration.public_page.find_in_channel_registry')}
