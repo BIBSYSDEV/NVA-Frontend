@@ -30,7 +30,7 @@
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.5",
     "@mui/icons-material": "^5.14.1",
-    "@mui/lab": "5.0.0-alpha.136",
+    "@mui/lab": "5.0.0-alpha.137",
     "@mui/material": "^5.14.2",
     "@mui/x-date-pickers": "^6.10.2",
     "@reduxjs/toolkit": "^1.9.5",
