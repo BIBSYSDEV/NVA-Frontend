@@ -57,6 +57,10 @@ export interface Journal2 {
   onlineIssn?: string;
 }
 
+export interface Series2 extends Omit<Journal2, 'type'> {
+  type: 'Series';
+}
+
 export interface Journal {
   id: string;
   identifier: string;

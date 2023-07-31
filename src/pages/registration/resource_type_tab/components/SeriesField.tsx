@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Chip, Typography, Autocomplete, Box } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { Journal, PublicationChannelType, Registration } from '../../../../types/registration.types';
+import { PublicationChannelType, Registration, Series2 } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -13,7 +13,8 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { NpiLevelTypography2 } from '../../../../components/NpiLevelTypography';
+import { SearchResponse } from '../../../../types/common.types';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
@@ -26,10 +27,10 @@ export const SeriesField = () => {
 
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
+  const [seriesOptions, isLoadingSeriesOptions] = useFetch<SearchResponse<Series2>>({
     url:
       debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
+        ? `${PublicationChannelApiPath.SeriesSearch2}?year=${getYearQuery(year)}&query=${encodeURIComponent(
             debouncedQuery
           )}`
         : '',
@@ -38,19 +39,19 @@ export const SeriesField = () => {
 
   useEffect(() => {
     if (
-      journalOptions?.length === 1 &&
+      seriesOptions?.hits.length === 1 &&
       series?.title &&
-      journalOptions[0].name.toLowerCase() === series.title.toLowerCase()
+      seriesOptions.hits[0].name.toLowerCase() === series.title.toLowerCase()
     ) {
       setFieldValue(ResourceFieldNames.Series, {
         type: PublicationChannelType.Series,
-        id: journalOptions[0].id,
+        id: seriesOptions.hits[0].id,
       });
       setQuery('');
     }
-  }, [setFieldValue, series?.title, journalOptions]);
+  }, [setFieldValue, series?.title, seriesOptions]);
 
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(series?.id ?? '', t('feedback.error.get_series'));
+  const [journal, isLoadingJournal] = useFetchResource<Series2>(series?.id ?? '', t('feedback.error.get_series'));
 
   return (
     <Field name={ResourceFieldNames.SeriesId}>
@@ -61,7 +62,9 @@ export const SeriesField = () => {
           data-testid={seriesFieldTestId}
           aria-labelledby={`${seriesFieldTestId}-label`}
           popupIcon={null}
-          options={debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []}
+          options={
+            debouncedQuery && query === debouncedQuery && !isLoadingSeriesOptions ? seriesOptions?.hits ?? [] : []
+          }
           filterOptions={(options) => options}
           inputValue={query}
           onInputChange={(_, newInputValue, reason) => {
@@ -86,7 +89,7 @@ export const SeriesField = () => {
             }
             setQuery('');
           }}
-          loading={isLoadingJournalOptions || isLoadingJournal}
+          loading={isLoadingSeriesOptions || isLoadingJournal}
           getOptionLabel={(option) => option.name}
           renderOption={(props, option, state) => (
             <li {...props}>
@@ -97,7 +100,7 @@ export const SeriesField = () => {
                     emphasized={state.inputValue}
                   />
                 </Typography>
-                <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
+                <NpiLevelTypography2 variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
               </Box>
             </li>
           )}
@@ -111,7 +114,11 @@ export const SeriesField = () => {
                     <Typography variant="subtitle1">
                       {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
                     </Typography>
-                    <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
+                    <NpiLevelTypography2
+                      variant="body2"
+                      color="textSecondary"
+                      scientificValue={option.scientificValue}
+                    />
                   </>
                 }
               />
@@ -121,7 +128,7 @@ export const SeriesField = () => {
             <AutocompleteTextField
               {...params}
               label={t('common.title')}
-              isLoading={isLoadingJournalOptions || isLoadingJournal}
+              isLoading={isLoadingSeriesOptions || isLoadingJournal}
               placeholder={!field.value ? t('registration.resource_type.search_for_series') : ''}
               showSearchIcon={!field.value}
               errorMessage={meta.touched && !!meta.error ? meta.error : ''}
