@@ -19,10 +19,10 @@ export const CentralImportPage = () => {
   const fromParam = params.get(SearchParam.From);
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
-
+  const query = '';
   const importCandidateQuery = useQuery({
-    queryKey: ['importCandidates'],
-    queryFn: fetchImportCandidates,
+    queryKey: ['importCandidates', rowsPerPage, page, query],
+    queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, ''),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
