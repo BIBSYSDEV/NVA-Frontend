@@ -5,7 +5,7 @@ import { Box, Chip, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { Journal2, PublicationChannelType } from '../../../../types/registration.types';
+import { Journal, PublicationChannelType } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -37,7 +37,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     !reference?.publicationContext.id ? reference?.publicationContext.title ?? '' : ''
   );
   const debouncedQuery = useDebounce(query);
-  const [journalOptions, isLoadingJournalOptions] = useFetch<SearchResponse<Journal2>>({
+  const [journalOptions, isLoadingJournalOptions] = useFetch<SearchResponse<Journal>>({
     url:
       debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.JournalSearch2}?year=${getYearQuery(year)}&query=${encodeURIComponent(
@@ -48,7 +48,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   });
 
   // Fetch Journals with matching ISSN
-  const [journalsByIssn] = useFetch<Journal2[]>({
+  const [journalsByIssn] = useFetch<Journal[]>({
     url:
       !reference?.publicationContext.id &&
       (reference?.publicationContext.printIssn || reference?.publicationContext.onlineIssn)
@@ -69,7 +69,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   }, [setFieldValue, journalsByIssn, confirmedContextType]);
 
   // Fetch selected journal
-  const [journal, isLoadingJournal] = useFetchResource<Journal2>(
+  const [journal, isLoadingJournal] = useFetchResource<Journal>(
     reference?.publicationContext.id ?? '',
     t('feedback.error.get_journal')
   );

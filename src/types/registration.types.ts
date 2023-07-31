@@ -56,40 +56,16 @@ interface PublicationChannel {
   onlineIssn?: string;
 }
 
-export interface Journal2 extends PublicationChannel {
+export interface Journal extends PublicationChannel {
   type: 'Journal';
 }
 
-export interface Series2 extends PublicationChannel {
+export interface Series extends PublicationChannel {
   type: 'Series';
 }
 
-export interface Publisher2 extends PublicationChannel {
+export interface Publisher extends PublicationChannel {
   type: 'Publisher';
-}
-
-export interface Journal {
-  id: string;
-  identifier: string;
-  name: string;
-  active: boolean;
-  website: string;
-  level?: string;
-  onlineIssn: string | null;
-  printIssn: string | null;
-  npiDomain: string;
-  openAccess: boolean | null;
-  language: string | null;
-  publisherId: string | null;
-}
-
-export interface Publisher {
-  id: string;
-  identifier: string;
-  name: string;
-  website: string;
-  active: boolean;
-  level?: string;
 }
 
 export interface MyRegistrationsResponse {
@@ -261,7 +237,7 @@ export const emptyRegistration: Registration = {
   fundings: [],
 };
 
-export interface Series {
+export interface ContextSeries {
   type: PublicationChannelType.Series | PublicationChannelType.UnconfirmedSeries;
   id?: string;
   title?: string;

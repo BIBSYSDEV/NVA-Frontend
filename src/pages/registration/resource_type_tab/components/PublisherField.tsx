@@ -5,7 +5,7 @@ import { Box, Chip, Typography } from '@mui/material';
 import { Autocomplete } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { PublicationChannelType, Publisher2, Registration } from '../../../../types/registration.types';
+import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -28,7 +28,7 @@ export const PublisherField = () => {
 
   const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [publisherOptions, isLoadingPublisherOptions] = useFetch<SearchResponse<Publisher2>>({
+  const [publisherOptions, isLoadingPublisherOptions] = useFetch<SearchResponse<Publisher>>({
     url:
       debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.PublisherSearch2}?year=${getYearQuery(year)}&query=${encodeURIComponent(
@@ -50,7 +50,7 @@ export const PublisherField = () => {
     }
   }, [setFieldValue, publisher?.name, publisherOptions]);
 
-  const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher2>(
+  const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher>(
     publisher?.id ?? '',
     t('feedback.error.get_publisher')
   );

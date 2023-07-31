@@ -7,7 +7,7 @@ import { BookType, ChapterType, JournalType } from '../../../../types/publicatio
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
-import { Journal, Publisher, Registration } from '../../../../types/registration.types';
+import { Journal, Publisher, Registration, ScientificValue, Series } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
@@ -46,7 +46,7 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
   const resourceState = useSelector((store: RootState) => store.resources);
   const journal = reference?.publicationContext.id ? (resourceState[reference.publicationContext.id] as Journal) : null;
 
-  return <NviStatus level={journal?.level} />;
+  return <NviStatus scientificValue={journal?.scientificValue} />;
 };
 
 const NviValidationBookMonograph = ({ registration }: { registration: BookRegistration }) => {
@@ -57,10 +57,18 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
     ? (resourceState[reference.publicationContext.publisher.id] as Publisher)
     : null;
   const series = reference?.publicationContext.series?.id
-    ? (resourceState[reference.publicationContext.series.id] as Journal)
+    ? (resourceState[reference.publicationContext.series.id] as Series)
     : null;
 
-  return <NviStatus level={series?.level ?? publisher?.level} />;
+  return (
+    <NviStatus
+      scientificValue={
+        series?.scientificValue && series.scientificValue !== 'Unassigned'
+          ? series.scientificValue
+          : publisher?.scientificValue
+      }
+    />
+  );
 };
 
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
@@ -78,22 +86,30 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     containerPublicationContext?.publisher?.id ?? '',
     t('feedback.error.get_publisher')
   );
-  const [series] = useFetchResource<Journal>(
+  const [series] = useFetchResource<Series>(
     containerPublicationContext?.series?.id ?? '',
     t('feedback.error.get_series')
   );
 
-  return <NviStatus level={series?.level ?? publisher?.level} />;
+  return (
+    <NviStatus
+      scientificValue={
+        series?.scientificValue && series.scientificValue !== 'Unassigned'
+          ? series.scientificValue
+          : publisher?.scientificValue
+      }
+    />
+  );
 };
 
 interface NviStatusProps {
-  level?: string;
+  scientificValue?: ScientificValue;
 }
 
-const NviStatus = ({ level = '' }: NviStatusProps) => {
+const NviStatus = ({ scientificValue }: NviStatusProps) => {
   const { t } = useTranslation();
 
-  const isRated = parseInt(level) > 0;
+  const isRated = scientificValue === 'LevelOne' || scientificValue === 'LevelTwo';
 
   return (
     <Paper elevation={5} sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', p: '1rem' }}>

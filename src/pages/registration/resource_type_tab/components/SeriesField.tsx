@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Chip, Typography, Autocomplete, Box } from '@mui/material';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { PublicationChannelType, Registration, Series2 } from '../../../../types/registration.types';
+import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
@@ -27,7 +27,7 @@ export const SeriesField = () => {
 
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [seriesOptions, isLoadingSeriesOptions] = useFetch<SearchResponse<Series2>>({
+  const [seriesOptions, isLoadingSeriesOptions] = useFetch<SearchResponse<Series>>({
     url:
       debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.SeriesSearch2}?year=${getYearQuery(year)}&query=${encodeURIComponent(
@@ -51,7 +51,7 @@ export const SeriesField = () => {
     }
   }, [setFieldValue, series?.title, seriesOptions]);
 
-  const [journal, isLoadingJournal] = useFetchResource<Series2>(series?.id ?? '', t('feedback.error.get_series'));
+  const [journal, isLoadingJournal] = useFetchResource<Series>(series?.id ?? '', t('feedback.error.get_series'));
 
   return (
     <Field name={ResourceFieldNames.SeriesId}>
