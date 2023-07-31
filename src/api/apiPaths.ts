@@ -26,6 +26,7 @@ export enum PublicationChannelApiPath {
   JournalSearch2 = '/publication-channels-v2/journal',
   SeriesSearch2 = '/publication-channels-v2/series',
   PublisherSearch = '/publication-channels/publisher',
+  PublisherSearch2 = '/publication-channels-v2/publisher',
 }
 
 export enum PublicationsApiPath {

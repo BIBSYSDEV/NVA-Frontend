@@ -47,8 +47,7 @@ export enum RegistrationTab {
 
 export type ScientificValue = 'Unassigned' | 'LevelZero' | 'LevelOne' | 'LevelTwo';
 
-export interface Journal2 {
-  type: 'Journal';
+interface PublicationChannel {
   id: string;
   name: string;
   scientificValue: ScientificValue;
@@ -57,8 +56,16 @@ export interface Journal2 {
   onlineIssn?: string;
 }
 
-export interface Series2 extends Omit<Journal2, 'type'> {
+export interface Journal2 extends PublicationChannel {
+  type: 'Journal';
+}
+
+export interface Series2 extends PublicationChannel {
   type: 'Series';
+}
+
+export interface Publisher2 extends PublicationChannel {
+  type: 'Publisher';
 }
 
 export interface Journal {
