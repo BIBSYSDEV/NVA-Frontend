@@ -17,9 +17,12 @@ export const fetchTickets = async (results: number, from: number, query = '', on
   return getTickets.data;
 };
 
-export const fetchImportCandidates = async () => {
+export const fetchImportCandidates = async (results: number, from: number, query: string) => {
+  const paginationQuery = `results=${results}&from=${from}`;
+  const searchQuery = query ? `query=${query}` : '';
+  const fullQuery = [paginationQuery, searchQuery].filter(Boolean).join('&');
   const getImportCandidates = await authenticatedApiRequest2<SearchResponse<ImportCandidateSummary>>({
-    url: SearchApiPath.ImportCandidates,
+    url: `${SearchApiPath.ImportCandidates}?${fullQuery}`,
   });
   return getImportCandidates.data;
 };
