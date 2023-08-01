@@ -42,7 +42,7 @@ export const MyProjectRegistrations = ({
         (status === 'ACTIVE' && selectedOngoing) ||
         (status === 'NOTSTARTED' && selectedNotStarted) ||
         (status === 'CONCLUDED' && selectedConcluded) ||
-        ((status === 'ACTIVE' || 'NOTSTARTED' || 'CONCLUDED') &&
+        ((status === 'ACTIVE' || status === 'NOTSTARTED' || status === 'CONCLUDED') &&
           !selectedOngoing &&
           !selectedNotStarted &&
           !selectedConcluded)

@@ -188,7 +188,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.fundingsAccordion}
             defaultExpanded
-            heading={`${t('project.financing')} (${fundings.length})`}>
+            heading={`${t('common.funding')} (${fundings.length})`}>
             <PublicFundingsContent fundings={fundings} />
           </LandingPageAccordion>
         )}

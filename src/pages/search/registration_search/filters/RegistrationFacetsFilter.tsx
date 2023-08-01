@@ -122,9 +122,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
       )}
 
       {fundingFacet.buckets.length > 0 && (
-        <FacetItem
-          title={t('registration.description.funding.financing')}
-          dataTestId={dataTestId.startPage.institutionFacets}>
+        <FacetItem title={t('common.funding')} dataTestId={dataTestId.startPage.institutionFacets}>
           {fundingFacet.buckets.map((bucket) => (
             <ListItem disablePadding key={bucket.key} data-testid={dataTestId.startPage.facetItem(bucket.key)}>
               <StyledListItemButton
