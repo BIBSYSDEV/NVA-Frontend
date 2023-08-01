@@ -32,7 +32,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography>{projectPeriodString ? `${projectPeriodString} (${projectStatusString})` : '-'}</Typography>
       </div>
       <div>
-        <Typography variant="overline">{t('project.financing')}</Typography>
+        <Typography variant="overline">{t('common.funding')}</Typography>
         {project.funding.length > 0 ? (
           project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.labels);
