@@ -30,9 +30,7 @@ export const SeriesField = () => {
   const [seriesOptions, isLoadingSeriesOptions] = useFetch<SearchResponse<Series>>({
     url:
       debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.SeriesSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
-            debouncedQuery
-          )}`
+        ? `${PublicationChannelApiPath.Series}?year=${getYearQuery(year)}&query=${encodeURIComponent(debouncedQuery)}`
         : '',
     errorMessage: t('feedback.error.get_series'),
   });
