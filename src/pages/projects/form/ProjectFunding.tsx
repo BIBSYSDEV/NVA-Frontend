@@ -24,7 +24,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
   return (
     <div>
       <Typography variant="h2" gutterBottom>
-        {t('registration.description.funding.financing')}
+        {t('common.funding')}
       </Typography>
 
       <FieldArray name={ProjectFieldName.Funding}>

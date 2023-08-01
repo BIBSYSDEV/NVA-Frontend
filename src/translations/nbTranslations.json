@@ -131,6 +131,7 @@
     "error_occurred": "En uventet feil har oppstått",
     "filter": "Filter",
     "first_name": "Fornavn",
+    "funding": "Finansiering",
     "help": "Hjelp",
     "id": "ID",
     "institution": "Institusjon",
@@ -872,7 +873,6 @@
     "coordinating_institution": "Koordinerende institusjon",
     "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
-    "financing": "Finansiering",
     "form": {
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
@@ -1016,7 +1016,6 @@
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskrivelse av innhold, hvis relevant",
       "funding": {
-        "financing": "Finansiering",
         "funder": "Finansiør",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
