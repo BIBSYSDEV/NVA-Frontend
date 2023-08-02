@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { SearchResponse } from '../../../../types/common.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
@@ -15,6 +14,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { getYearQuery } from '../../../../utils/registration-helpers';
+import { PublicationChannelOption } from './PublicationChannelOption';
 import { PublisherFormDialog } from './PublisherFormDialog';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
@@ -106,14 +106,7 @@ export const PublisherField = () => {
             loading={isLoadingPublisherOptions || isLoadingPublisher}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
-              <li {...props}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                  <Typography variant="subtitle1">
-                    <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
-                  </Typography>
-                  <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
-                </Box>
-              </li>
+              <PublicationChannelOption props={props} option={option} state={state} />
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (

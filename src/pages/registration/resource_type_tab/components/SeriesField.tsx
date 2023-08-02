@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { SearchResponse } from '../../../../types/common.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
@@ -16,6 +15,7 @@ import { useFetch } from '../../../../utils/hooks/useFetch';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 import { JournalFormDialog } from './JournalFormDialog';
+import { PublicationChannelOption } from './PublicationChannelOption';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
@@ -96,17 +96,7 @@ export const SeriesField = () => {
             loading={isLoadingSeriesOptions || isLoadingJournal}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
-              <li {...props}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                  <Typography variant="subtitle1">
-                    <EmphasizeSubstring
-                      text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                      emphasized={state.inputValue}
-                    />
-                  </Typography>
-                  <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
-                </Box>
-              </li>
+              <PublicationChannelOption props={props} option={option} state={state} />
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
@@ -115,9 +105,7 @@ export const SeriesField = () => {
                   data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
                   label={
                     <>
-                      <Typography variant="subtitle1">
-                        {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                      </Typography>
+                      <Typography variant="subtitle1">{getPublicationChannelString(option)}</Typography>
                       <NpiLevelTypography
                         variant="body2"
                         color="textSecondary"

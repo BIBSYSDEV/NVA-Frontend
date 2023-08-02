@@ -1,25 +1,24 @@
+import { Autocomplete, Box, Button, Chip, Typography } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, Chip, Typography } from '@mui/material';
-import { Autocomplete } from '@mui/material';
-import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { Journal, PublicationChannelType } from '../../../../types/registration.types';
-import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { contextTypeBaseFieldName, ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { SearchResponse } from '../../../../types/common.types';
+import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
   JournalEntityDescription,
   JournalRegistration,
 } from '../../../../types/publication_types/journalRegistration.types';
-import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
+import { Journal, PublicationChannelType } from '../../../../types/registration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { useFetch } from '../../../../utils/hooks/useFetch';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
-import { SearchResponse } from '../../../../types/common.types';
+import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 import { JournalFormDialog } from './JournalFormDialog';
+import { PublicationChannelOption } from './PublicationChannelOption';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
@@ -118,17 +117,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             loading={isLoadingJournalOptions || isLoadingJournal}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
-              <li {...props}>
-                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                  <Typography variant="subtitle1">
-                    <EmphasizeSubstring
-                      text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                      emphasized={state.inputValue}
-                    />
-                  </Typography>
-                  <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
-                </Box>
-              </li>
+              <PublicationChannelOption props={props} option={option} state={state} />
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
@@ -138,7 +127,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
                   label={
                     <>
                       <Typography variant="subtitle1" component="h2">
-                        {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                        {getPublicationChannelString(option)}
                       </Typography>
                       <NpiLevelTypography
                         variant="body2"
