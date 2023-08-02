@@ -359,6 +359,7 @@
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
       "create_journal": "Kunne ikke opprette tidsskrift",
       "create_project": "Kunne ikke opprette prosjekt",
+      "create_publisher": "Kunne ikke opprette utgiver",
       "create_publishing_request": "Kunne ikke opprette publiseringsforespørsel",
       "create_registration": "Kunne ikke opprette registrering",
       "create_series": "Kunne ikke opprette serie",
@@ -419,6 +420,7 @@
       "admin_added": "Bruker lagt til som administrator",
       "create_journal": "Tidsskriften ble opprettet",
       "create_project": "Prosjekt er opprettet",
+      "create_publisher": "Utigveren ble opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_registration": "Publikasjon er opprettet",
       "create_series": "Serien ble opprettet",
@@ -1395,6 +1397,7 @@
       },
       "click_to_change_resource_type": "Trykk på valgt kategori om du vil endre",
       "create_journal": "Opprett tidsskrift",
+      "create_publisher": "Opprett utgiver",
       "create_series": "Opprett serie",
       "date_from": "Dato fra",
       "date_to": "Dato til",
@@ -1508,7 +1511,8 @@
       "title_of_event": "Tittel på arrangement",
       "type_work": "Type verk",
       "type_work_specified": "Egendefinert type verk",
-      "volume": "Volum"
+      "volume": "Volum",
+      "isbn_prefix": "ISBN-prefiks"
     },
     "status": {
       "DRAFT": "Kladd",
