@@ -1,20 +1,21 @@
+import { Autocomplete, Box, Button, Chip, Typography } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, Typography, Autocomplete, Box } from '@mui/material';
+import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { PublicationChannelApiPath } from '../../../../api/apiPaths';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
-import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { SearchResponse } from '../../../../types/common.types';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
+import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { useFetch } from '../../../../utils/hooks/useFetch';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
+import { JournalFormDialog } from './JournalFormDialog';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
@@ -24,6 +25,9 @@ export const SeriesField = () => {
   const { reference, publicationDate } = values.entityDescription as BookEntityDescription;
   const series = reference?.publicationContext.series;
   const year = publicationDate?.year ?? '';
+
+  const [showSeriesForm, setShowSeriesForm] = useState(false);
+  const toggleSeriesForm = () => setShowSeriesForm(!showSeriesForm);
 
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
@@ -52,88 +56,102 @@ export const SeriesField = () => {
   const [journal, isLoadingJournal] = useFetchResource<Series>(series?.id ?? '', t('feedback.error.get_series'));
 
   return (
-    <Field name={ResourceFieldNames.SeriesId}>
-      {({ field, meta }: FieldProps<string>) => (
-        <Autocomplete
-          multiple
-          id={seriesFieldTestId}
-          data-testid={seriesFieldTestId}
-          aria-labelledby={`${seriesFieldTestId}-label`}
-          popupIcon={null}
-          options={
-            debouncedQuery && query === debouncedQuery && !isLoadingSeriesOptions ? seriesOptions?.hits ?? [] : []
-          }
-          filterOptions={(options) => options}
-          inputValue={query}
-          onInputChange={(_, newInputValue, reason) => {
-            if (reason !== 'reset') {
-              setQuery(newInputValue);
+    <Box sx={{ display: 'flex', gap: '1rem' }}>
+      <Field name={ResourceFieldNames.SeriesId}>
+        {({ field, meta }: FieldProps<string>) => (
+          <Autocomplete
+            fullWidth
+            multiple
+            id={seriesFieldTestId}
+            data-testid={seriesFieldTestId}
+            aria-labelledby={`${seriesFieldTestId}-label`}
+            popupIcon={null}
+            options={
+              debouncedQuery && query === debouncedQuery && !isLoadingSeriesOptions ? seriesOptions?.hits ?? [] : []
             }
-            if (reason === 'input' && !newInputValue && series?.title) {
-              setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
-            }
-          }}
-          blurOnSelect
-          disableClearable={!query}
-          value={field.value && journal ? [journal] : []}
-          onChange={(_, inputValue, reason) => {
-            if (reason === 'selectOption') {
-              setFieldValue(ResourceFieldNames.Series, {
-                type: PublicationChannelType.Series,
-                id: inputValue.pop()?.id,
-              });
-            } else if (reason === 'removeOption') {
-              setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
-            }
-            setQuery('');
-          }}
-          loading={isLoadingSeriesOptions || isLoadingJournal}
-          getOptionLabel={(option) => option.name}
-          renderOption={(props, option, state) => (
-            <li {...props}>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Typography variant="subtitle1">
-                  <EmphasizeSubstring
-                    text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                    emphasized={state.inputValue}
-                  />
-                </Typography>
-                <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
-              </Box>
-            </li>
-          )}
-          renderTags={(value, getTagProps) =>
-            value.map((option, index) => (
-              <Chip
-                {...getTagProps({ index })}
-                data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
-                label={
-                  <>
-                    <Typography variant="subtitle1">
-                      {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                    </Typography>
-                    <NpiLevelTypography
-                      variant="body2"
-                      color="textSecondary"
-                      scientificValue={option.scientificValue}
+            filterOptions={(options) => options}
+            inputValue={query}
+            onInputChange={(_, newInputValue, reason) => {
+              if (reason !== 'reset') {
+                setQuery(newInputValue);
+              }
+              if (reason === 'input' && !newInputValue && series?.title) {
+                setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
+              }
+            }}
+            blurOnSelect
+            disableClearable={!query}
+            value={field.value && journal ? [journal] : []}
+            onChange={(_, inputValue, reason) => {
+              if (reason === 'selectOption') {
+                setFieldValue(ResourceFieldNames.Series, {
+                  type: PublicationChannelType.Series,
+                  id: inputValue.pop()?.id,
+                });
+              } else if (reason === 'removeOption') {
+                setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
+              }
+              setQuery('');
+            }}
+            loading={isLoadingSeriesOptions || isLoadingJournal}
+            getOptionLabel={(option) => option.name}
+            renderOption={(props, option, state) => (
+              <li {...props}>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <Typography variant="subtitle1">
+                    <EmphasizeSubstring
+                      text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                      emphasized={state.inputValue}
                     />
-                  </>
-                }
+                  </Typography>
+                  <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
+                </Box>
+              </li>
+            )}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
+                  label={
+                    <>
+                      <Typography variant="subtitle1">
+                        {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
+                      </Typography>
+                      <NpiLevelTypography
+                        variant="body2"
+                        color="textSecondary"
+                        scientificValue={option.scientificValue}
+                      />
+                    </>
+                  }
+                />
+              ))
+            }
+            renderInput={(params) => (
+              <AutocompleteTextField
+                {...params}
+                label={t('common.title')}
+                isLoading={isLoadingSeriesOptions || isLoadingJournal}
+                placeholder={!field.value ? t('registration.resource_type.search_for_series') : ''}
+                showSearchIcon={!field.value}
+                errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
-            ))
-          }
-          renderInput={(params) => (
-            <AutocompleteTextField
-              {...params}
-              label={t('common.title')}
-              isLoading={isLoadingSeriesOptions || isLoadingJournal}
-              placeholder={!field.value ? t('registration.resource_type.search_for_series') : ''}
-              showSearchIcon={!field.value}
-              errorMessage={meta.touched && !!meta.error ? meta.error : ''}
-            />
-          )}
-        />
+            )}
+          />
+        )}
+      </Field>
+      {!series?.id && (
+        <>
+          <Button
+            variant="outlined"
+            sx={{ height: 'fit-content', whiteSpace: 'nowrap', mt: '0.5rem' }}
+            onClick={toggleSeriesForm}>
+            {t('registration.resource_type.create_series')}
+          </Button>
+          <JournalFormDialog open={showSeriesForm} closeDialog={toggleSeriesForm} isSeries />
+        </>
       )}
-    </Field>
+    </Box>
   );
 };

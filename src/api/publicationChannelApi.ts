@@ -17,3 +17,13 @@ export const createJournal = async (newJournal: CreateJournalPayload) => {
 
   return createJournalResponse.data;
 };
+
+export const createSeries = async (newSeries: CreateJournalPayload) => {
+  const createSeriesResponse = await authenticatedApiRequest2<null>({
+    url: PublicationChannelApiPath.Series,
+    method: 'POST',
+    data: newSeries,
+  });
+
+  return createSeriesResponse.data;
+};
