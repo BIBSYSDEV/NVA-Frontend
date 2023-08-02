@@ -5,7 +5,7 @@ import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
-import { CreateJournalPayload, createJournal } from '../../../../api/publicationChannelApi';
+import { CreateJournalPayload, createJournal, createSeries } from '../../../../api/publicationChannelApi';
 import { setNotification } from '../../../../redux/notificationSlice';
 import i18n from '../../../../translations/i18n';
 
@@ -27,25 +27,39 @@ const journalValidationSchema: Yup.ObjectSchema<CreateJournalPayload> = Yup.obje
 
 interface JournalFormDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
+  isSeries?: boolean;
 }
 
-export const JournalFormDialog = ({ open, closeDialog }: JournalFormDialogProps) => {
+/**
+ * Journals and Series are identical in terms of data, so this component is used for both.
+ */
+export const JournalFormDialog = ({ open, closeDialog, isSeries = false }: JournalFormDialogProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const journalMutation = useMutation({
-    mutationFn: (journalData: CreateJournalPayload) => createJournal(journalData),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.create_journal'), variant: 'error' })),
+    mutationFn: (journalData: CreateJournalPayload) =>
+      isSeries ? createSeries(journalData) : createJournal(journalData),
+    onError: () =>
+      isSeries
+        ? dispatch(setNotification({ message: t('feedback.error.create_series'), variant: 'error' }))
+        : dispatch(setNotification({ message: t('feedback.error.create_journal'), variant: 'error' })),
     onSuccess: () => {
-      // TODO: Add created Journal to current registration (NP-45067)
-      dispatch(setNotification({ message: t('feedback.success.create_journal'), variant: 'success' }));
+      // TODO: Add created Journal/Series to current registration (NP-45067)
+      if (isSeries) {
+        dispatch(setNotification({ message: t('feedback.success.create_series'), variant: 'success' }));
+      } else {
+        dispatch(setNotification({ message: t('feedback.success.create_journal'), variant: 'success' }));
+      }
       closeDialog();
     },
   });
 
   return (
     <Dialog open={open} onClose={closeDialog} fullWidth>
-      <DialogTitle>{t('registration.resource_type.create_journal')}</DialogTitle>
+      <DialogTitle>
+        {isSeries ? t('registration.resource_type.create_series') : t('registration.resource_type.create_journal')}
+      </DialogTitle>
       <Formik
         initialValues={emptyJournalData}
         validationSchema={journalValidationSchema}
