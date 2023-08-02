@@ -1,10 +1,9 @@
-import { Autocomplete, Box, Button, Chip, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Chip } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { SearchResponse } from '../../../../types/common.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
@@ -14,6 +13,7 @@ import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { getYearQuery } from '../../../../utils/registration-helpers';
+import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
 import { PublisherFormDialog } from './PublisherFormDialog';
 
@@ -106,23 +106,16 @@ export const PublisherField = () => {
             loading={isLoadingPublisherOptions || isLoadingPublisher}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
-              <PublicationChannelOption props={props} option={option} state={state} />
+              <li {...props}>
+                <PublicationChannelOption option={option} state={state} />
+              </li>
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
                   data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
-                  label={
-                    <>
-                      <Typography variant="subtitle1">{option.name}</Typography>
-                      <NpiLevelTypography
-                        variant="body2"
-                        color="textSecondary"
-                        scientificValue={option.scientificValue}
-                      />
-                    </>
-                  }
+                  label={<PublicationChannelChipLabel value={option} />}
                 />
               ))
             }

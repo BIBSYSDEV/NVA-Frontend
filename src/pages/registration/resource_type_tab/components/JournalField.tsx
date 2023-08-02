@@ -1,10 +1,9 @@
-import { Autocomplete, Box, Button, Chip, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Chip } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { SearchResponse } from '../../../../types/common.types';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
@@ -16,8 +15,9 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
+import { getYearQuery } from '../../../../utils/registration-helpers';
 import { JournalFormDialog } from './JournalFormDialog';
+import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
@@ -117,25 +117,16 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             loading={isLoadingJournalOptions || isLoadingJournal}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
-              <PublicationChannelOption props={props} option={option} state={state} />
+              <li {...props}>
+                <PublicationChannelOption option={option} state={state} />
+              </li>
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
                 <Chip
                   {...getTagProps({ index })}
                   data-testid={dataTestId.registrationWizard.resourceType.journalChip}
-                  label={
-                    <>
-                      <Typography variant="subtitle1" component="h2">
-                        {getPublicationChannelString(option)}
-                      </Typography>
-                      <NpiLevelTypography
-                        variant="body2"
-                        color="textSecondary"
-                        scientificValue={option.scientificValue}
-                      />
-                    </>
-                  }
+                  label={<PublicationChannelChipLabel value={option} />}
                 />
               ))
             }
