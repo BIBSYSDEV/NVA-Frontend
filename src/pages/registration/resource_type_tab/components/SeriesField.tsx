@@ -1,20 +1,20 @@
+import { Autocomplete, Box, Button, Chip, Typography } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, Typography, Autocomplete, Box, Button } from '@mui/material';
+import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { PublicationChannelApiPath } from '../../../../api/apiPaths';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
-import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { SearchResponse } from '../../../../types/common.types';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
+import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { useFetch } from '../../../../utils/hooks/useFetch';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 import { JournalFormDialog } from './JournalFormDialog';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
@@ -27,7 +27,7 @@ export const SeriesField = () => {
   const year = publicationDate?.year ?? '';
 
   const [showSeriesForm, setShowSeriesForm] = useState(false);
-  const toggleJournalForm = () => setShowSeriesForm(!showSeriesForm);
+  const toggleSeriesForm = () => setShowSeriesForm(!showSeriesForm);
 
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
@@ -146,10 +146,10 @@ export const SeriesField = () => {
           <Button
             variant="outlined"
             sx={{ height: 'fit-content', whiteSpace: 'nowrap', mt: '0.5rem' }}
-            onClick={toggleJournalForm}>
+            onClick={toggleSeriesForm}>
             {t('registration.resource_type.create_series')}
           </Button>
-          <JournalFormDialog open={showSeriesForm} closeDialog={toggleJournalForm} isSeries />
+          <JournalFormDialog open={showSeriesForm} closeDialog={toggleSeriesForm} isSeries />
         </>
       )}
     </Box>
