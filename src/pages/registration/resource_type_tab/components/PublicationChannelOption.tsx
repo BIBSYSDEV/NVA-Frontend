@@ -11,7 +11,7 @@ interface PublicationChannelOptionProps {
 
 export const PublicationChannelOption = ({ option, state }: PublicationChannelOptionProps) => (
   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-    <Typography variant="subtitle1">
+    <Typography>
       <EmphasizeSubstring text={getPublicationChannelString(option)} emphasized={state.inputValue} />
     </Typography>
     <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />

@@ -9,7 +9,7 @@ interface PublicationChannelChipProps {
 
 export const PublicationChannelChipLabel = ({ value }: PublicationChannelChipProps) => (
   <>
-    <Typography variant="subtitle1">{getPublicationChannelString(value)}</Typography>
+    <Typography sx={{ fontWeight: 700 }}>{getPublicationChannelString(value)}</Typography>
     <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={value.scientificValue} />
   </>
 );
