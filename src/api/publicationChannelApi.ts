@@ -8,6 +8,12 @@ export interface CreateJournalPayload {
   onlineIssn?: string;
 }
 
+export interface CreatePublisherPayload {
+  name: string;
+  homepage: string;
+  isbnPrefix?: string;
+}
+
 export const createJournal = async (newJournal: CreateJournalPayload) => {
   const createJournalResponse = await authenticatedApiRequest2<null>({
     url: PublicationChannelApiPath.Journal,
@@ -26,4 +32,14 @@ export const createSeries = async (newSeries: CreateJournalPayload) => {
   });
 
   return createSeriesResponse.data;
+};
+
+export const createPublisher = async (newPublisher: CreatePublisherPayload) => {
+  const createPublisherResponse = await authenticatedApiRequest2<null>({
+    url: PublicationChannelApiPath.Publisher,
+    method: 'POST',
+    data: newPublisher,
+  });
+
+  return createPublisherResponse.data;
 };

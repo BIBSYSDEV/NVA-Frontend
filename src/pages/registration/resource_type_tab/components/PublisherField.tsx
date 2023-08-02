@@ -1,21 +1,21 @@
+import { Autocomplete, Box, Button, Chip, Typography } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Chip, Typography } from '@mui/material';
-import { Autocomplete } from '@mui/material';
+import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { PublicationChannelApiPath } from '../../../../api/apiPaths';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
-import { getYearQuery } from '../../../../utils/registration-helpers';
-import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { SearchResponse } from '../../../../types/common.types';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
+import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { useFetch } from '../../../../utils/hooks/useFetch';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { getYearQuery } from '../../../../utils/registration-helpers';
+import { PublisherFormDialog } from './PublisherFormDialog';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
@@ -25,6 +25,9 @@ export const PublisherField = () => {
   const { reference, publicationDate } = values.entityDescription as BookEntityDescription;
   const publisher = reference?.publicationContext.publisher;
   const year = publicationDate?.year ?? '';
+
+  const [showPublisherForm, setShowPublisherForm] = useState(false);
+  const togglePublisherForm = () => setShowPublisherForm(!showPublisherForm);
 
   const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
   const debouncedQuery = useDebounce(query);
@@ -56,89 +59,105 @@ export const PublisherField = () => {
   );
 
   return (
-    <Field name={ResourceFieldNames.PublicationContextPublisherId}>
-      {({ field, meta }: FieldProps<string>) => (
-        <Autocomplete
-          multiple
-          id={publisherFieldTestId}
-          data-testid={publisherFieldTestId}
-          aria-labelledby={`${publisherFieldTestId}-label`}
-          popupIcon={null}
-          options={
-            debouncedQuery && query === debouncedQuery && !isLoadingPublisherOptions ? publisherOptions?.hits ?? [] : []
-          }
-          filterOptions={(options) => options}
-          inputValue={query}
-          onInputChange={(_, newInputValue, reason) => {
-            if (reason !== 'reset') {
-              setQuery(newInputValue);
+    <Box sx={{ display: 'flex', gap: '1rem' }}>
+      <Field name={ResourceFieldNames.PublicationContextPublisherId}>
+        {({ field, meta }: FieldProps<string>) => (
+          <Autocomplete
+            fullWidth
+            multiple
+            id={publisherFieldTestId}
+            data-testid={publisherFieldTestId}
+            aria-labelledby={`${publisherFieldTestId}-label`}
+            popupIcon={null}
+            options={
+              debouncedQuery && query === debouncedQuery && !isLoadingPublisherOptions
+                ? publisherOptions?.hits ?? []
+                : []
             }
-            if (reason === 'input' && !newInputValue && publisher?.name) {
-              setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
-                type: PublicationChannelType.UnconfirmedPublisher,
-              });
+            filterOptions={(options) => options}
+            inputValue={query}
+            onInputChange={(_, newInputValue, reason) => {
+              if (reason !== 'reset') {
+                setQuery(newInputValue);
+              }
+              if (reason === 'input' && !newInputValue && publisher?.name) {
+                setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
+                  type: PublicationChannelType.UnconfirmedPublisher,
+                });
+              }
+            }}
+            onBlur={() => setFieldTouched(field.name, true, false)}
+            blurOnSelect
+            disableClearable={!query}
+            value={publisher?.id && fetchedPublisher ? [fetchedPublisher] : []}
+            onChange={(_, inputValue, reason) => {
+              if (reason === 'selectOption') {
+                setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
+                  type: PublicationChannelType.Publisher,
+                  id: inputValue.pop()?.id,
+                });
+              } else if (reason === 'removeOption') {
+                setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
+                  type: PublicationChannelType.UnconfirmedPublisher,
+                });
+              }
+              setQuery('');
+            }}
+            loading={isLoadingPublisherOptions || isLoadingPublisher}
+            getOptionLabel={(option) => option.name}
+            renderOption={(props, option, state) => (
+              <li {...props}>
+                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                  <Typography variant="subtitle1">
+                    <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
+                  </Typography>
+                  <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
+                </Box>
+              </li>
+            )}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
+                  label={
+                    <>
+                      <Typography variant="subtitle1">{option.name}</Typography>
+                      <NpiLevelTypography
+                        variant="body2"
+                        color="textSecondary"
+                        scientificValue={option.scientificValue}
+                      />
+                    </>
+                  }
+                />
+              ))
             }
-          }}
-          onBlur={() => setFieldTouched(field.name, true, false)}
-          blurOnSelect
-          disableClearable={!query}
-          value={publisher?.id && fetchedPublisher ? [fetchedPublisher] : []}
-          onChange={(_, inputValue, reason) => {
-            if (reason === 'selectOption') {
-              setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
-                type: PublicationChannelType.Publisher,
-                id: inputValue.pop()?.id,
-              });
-            } else if (reason === 'removeOption') {
-              setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
-                type: PublicationChannelType.UnconfirmedPublisher,
-              });
-            }
-            setQuery('');
-          }}
-          loading={isLoadingPublisherOptions || isLoadingPublisher}
-          getOptionLabel={(option) => option.name}
-          renderOption={(props, option, state) => (
-            <li {...props}>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Typography variant="subtitle1">
-                  <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
-                </Typography>
-                <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
-              </Box>
-            </li>
-          )}
-          renderTags={(value, getTagProps) =>
-            value.map((option, index) => (
-              <Chip
-                {...getTagProps({ index })}
-                data-testid={dataTestId.registrationWizard.resourceType.publisherChip}
-                label={
-                  <>
-                    <Typography variant="subtitle1">{option.name}</Typography>
-                    <NpiLevelTypography
-                      variant="body2"
-                      color="textSecondary"
-                      scientificValue={option.scientificValue}
-                    />
-                  </>
-                }
+            renderInput={(params) => (
+              <AutocompleteTextField
+                {...params}
+                required
+                label={t('common.publisher')}
+                isLoading={isLoadingPublisherOptions || isLoadingPublisher}
+                placeholder={!publisher?.id ? t('registration.resource_type.search_for_publisher') : ''}
+                showSearchIcon={!publisher?.id}
+                errorMessage={meta.touched && !!meta.error ? meta.error : ''}
               />
-            ))
-          }
-          renderInput={(params) => (
-            <AutocompleteTextField
-              {...params}
-              required
-              label={t('common.publisher')}
-              isLoading={isLoadingPublisherOptions || isLoadingPublisher}
-              placeholder={!publisher?.id ? t('registration.resource_type.search_for_publisher') : ''}
-              showSearchIcon={!publisher?.id}
-              errorMessage={meta.touched && !!meta.error ? meta.error : ''}
-            />
-          )}
-        />
+            )}
+          />
+        )}
+      </Field>
+      {!publisher?.id && (
+        <>
+          <Button
+            variant="outlined"
+            sx={{ height: 'fit-content', whiteSpace: 'nowrap', mt: '0.5rem' }}
+            onClick={togglePublisherForm}>
+            {t('registration.resource_type.create_publisher')}
+          </Button>
+          <PublisherFormDialog open={showPublisherForm} closeDialog={togglePublisherForm} />
+        </>
       )}
-    </Field>
+    </Box>
   );
 };
