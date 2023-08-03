@@ -26,11 +26,11 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
   duplicateSearchFilters.yearPublished.length > 0 &&
     queryArray.push(`${DescriptionFieldNames.PublicationYear}:"${duplicateSearchFilters.yearPublished}"`);
 
-  const searchQuery = queryArray.length > 0 ? `query=(${queryArray.join(' AND ')}&results=${maxHits})` : '';
+  const searchQuery = queryArray.length > 0 ? `(${queryArray.join(' AND ')})` : '';
 
   const importCandidateQuery = useQuery({
-    queryKey: ['importCandidates', searchQuery],
-    queryFn: fetchImportCandidates,
+    queryKey: ['importCandidates', maxHits, 0, searchQuery],
+    queryFn: () => fetchImportCandidates(maxHits, 0, searchQuery),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 

@@ -46,7 +46,7 @@ export const registrationFilters: FilterItem[] = [
   { field: SearchFieldName.TopLevelOrganizationId, i18nKey: 'common.institution', manuallyAddable: false },
   {
     field: SearchFieldName.FundingSource,
-    i18nKey: 'registration.description.funding.financing',
+    i18nKey: 'common.funding',
     manuallyAddable: false,
   },
 ];
