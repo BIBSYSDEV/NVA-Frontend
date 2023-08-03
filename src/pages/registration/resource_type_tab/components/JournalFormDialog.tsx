@@ -16,13 +16,25 @@ const emptyJournalData: CreateJournalPayload = {
   onlineIssn: '',
 };
 
+const issnRegex = /^\d{4}-\d{3}[\dXx]$/;
+
 const journalValidationSchema: Yup.ObjectSchema<CreateJournalPayload> = Yup.object({
   name: Yup.string().required(i18n.t('feedback.validation.is_required', { field: i18n.t('common.name') })),
   homepage: Yup.string()
     .url(i18n.t('feedback.validation.has_invalid_format', { field: i18n.t('common.link') }))
     .required(i18n.t('feedback.validation.is_required', { field: i18n.t('common.link') })),
-  printIssn: Yup.string().optional(),
-  onlineIssn: Yup.string().optional(),
+  printIssn: Yup.string()
+    .optional()
+    .matches(
+      issnRegex,
+      i18n.t('feedback.validation.has_invalid_format', { field: i18n.t('registration.resource_type.print_issn') })
+    ),
+  onlineIssn: Yup.string()
+    .optional()
+    .matches(
+      issnRegex,
+      i18n.t('feedback.validation.has_invalid_format', { field: i18n.t('registration.resource_type.online_issn') })
+    ),
 });
 
 interface JournalFormDialogProps extends Pick<DialogProps, 'open'> {
@@ -100,6 +112,7 @@ export const JournalFormDialog = ({ open, closeDialog, isSeries = false }: Journ
                     {...field}
                     variant="filled"
                     label={t('registration.resource_type.print_issn')}
+                    inputProps={{ maxLength: 9 }}
                     disabled={journalMutation.isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
@@ -112,6 +125,7 @@ export const JournalFormDialog = ({ open, closeDialog, isSeries = false }: Journ
                     {...field}
                     variant="filled"
                     label={t('registration.resource_type.online_issn')}
+                    inputProps={{ maxLength: 9 }}
                     disabled={journalMutation.isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
