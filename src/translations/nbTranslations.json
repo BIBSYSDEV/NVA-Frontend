@@ -211,10 +211,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -300,7 +296,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "curators": {
@@ -357,9 +357,12 @@
       "an_error_occurred": "En feil oppstod",
       "create_customer": "Kunne ikke opprette institusjon",
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
+      "create_journal": "Kunne ikke opprette tidsskrift",
       "create_project": "Kunne ikke opprette prosjekt",
+      "create_publisher": "Kunne ikke opprette utgiver",
       "create_publishing_request": "Kunne ikke opprette publiseringsforespørsel",
       "create_registration": "Kunne ikke opprette registrering",
+      "create_series": "Kunne ikke opprette serie",
       "create_user": "Kunne ikke opprette person",
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
@@ -415,9 +418,12 @@
       "add_employment": "Ansettelse lagt til",
       "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
+      "create_journal": "Tidsskriften ble opprettet",
       "create_project": "Prosjekt er opprettet",
+      "create_publisher": "Utigveren ble opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_registration": "Publikasjon er opprettet",
+      "create_series": "Serien ble opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
       "delete_registration": "Registrering ble slettet",
@@ -1390,6 +1396,9 @@
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
       "click_to_change_resource_type": "Trykk på valgt kategori om du vil endre",
+      "create_journal": "Opprett tidsskrift",
+      "create_publisher": "Opprett utgiver",
+      "create_series": "Opprett serie",
       "date_from": "Dato fra",
       "date_to": "Dato til",
       "exhibition_production": {
@@ -1502,7 +1511,8 @@
       "title_of_event": "Tittel på arrangement",
       "type_work": "Type verk",
       "type_work_specified": "Egendefinert type verk",
-      "volume": "Volum"
+      "volume": "Volum",
+      "isbn_prefix": "ISBN-prefiks"
     },
     "status": {
       "DRAFT": "Kladd",

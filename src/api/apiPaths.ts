@@ -22,9 +22,9 @@ export enum CristinApiPath {
 }
 
 export enum PublicationChannelApiPath {
-  JournalSearch = '/publication-channels-v2/journal',
-  SeriesSearch = '/publication-channels-v2/series',
-  PublisherSearch = '/publication-channels-v2/publisher',
+  Journal = '/publication-channels-v2/journal',
+  Series = '/publication-channels-v2/series',
+  Publisher = '/publication-channels-v2/publisher',
 }
 
 export enum PublicationsApiPath {
