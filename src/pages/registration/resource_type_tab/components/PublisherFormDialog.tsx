@@ -91,6 +91,7 @@ export const PublisherFormDialog = ({ open, closeDialog }: PublisherFormDialogPr
                     {...field}
                     variant="filled"
                     label={t('registration.resource_type.isbn_prefix')}
+                    inputProps={{ maxLength: 13 }}
                     disabled={publisherMutation.isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
