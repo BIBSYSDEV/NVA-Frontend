@@ -41,7 +41,11 @@ export const MyProjectRegistrations = ({
       ({ status }) =>
         (status === 'ACTIVE' && selectedOngoing) ||
         (status === 'NOTSTARTED' && selectedNotStarted) ||
-        (status === 'CONCLUDED' && selectedConcluded)
+        (status === 'CONCLUDED' && selectedConcluded) ||
+        ((status === 'ACTIVE' || status === 'NOTSTARTED' || status === 'CONCLUDED') &&
+          !selectedOngoing &&
+          !selectedNotStarted &&
+          !selectedConcluded)
     )
     .sort((a, b) => {
       if (a.status === 'ACTIVE' && b.status !== 'ACTIVE') {
