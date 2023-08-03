@@ -15,12 +15,19 @@ const emptyPublisherData: CreatePublisherPayload = {
   isbnPrefix: '',
 };
 
+const isbnPrefixRegex = /^(?:97(8|9)-)?[0-9]{1,5}-[0-9]{1,7}$/;
+
 const publisherValidationSchema: Yup.ObjectSchema<CreatePublisherPayload> = Yup.object({
   name: Yup.string().required(i18n.t('feedback.validation.is_required', { field: i18n.t('common.name') })),
   homepage: Yup.string()
     .url(i18n.t('feedback.validation.has_invalid_format', { field: i18n.t('common.link') }))
     .required(i18n.t('feedback.validation.is_required', { field: i18n.t('common.link') })),
-  isbnPrefix: Yup.string().optional(), // TODO: Validate (NP-45069)
+  isbnPrefix: Yup.string()
+    .optional()
+    .matches(
+      isbnPrefixRegex,
+      i18n.t('feedback.validation.has_invalid_format', { field: i18n.t('registration.resource_type.isbn_prefix') })
+    ),
 });
 
 interface PublisherFormDialogProps extends Pick<DialogProps, 'open'> {
