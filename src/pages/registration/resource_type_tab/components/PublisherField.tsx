@@ -106,9 +106,7 @@ export const PublisherField = () => {
             loading={isLoadingPublisherOptions || isLoadingPublisher}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
-              <li {...props}>
-                <PublicationChannelOption option={option} state={state} />
-              </li>
+              <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
             )}
             renderTags={(value, getTagProps) =>
               value.map((option, index) => (
