@@ -1,18 +1,16 @@
 import { Autocomplete, Box, Button, Chip } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PublicationChannelApiPath } from '../../../../api/apiPaths';
+import { getById } from '../../../../api/commonApi';
+import { searchForPublishers } from '../../../../api/publicationChannelApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { SearchResponse } from '../../../../types/common.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { getYearQuery } from '../../../../utils/registration-helpers';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
 import { PublisherFormDialog } from './PublisherFormDialog';
@@ -31,32 +29,32 @@ export const PublisherField = () => {
 
   const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [publisherOptions, isLoadingPublisherOptions] = useFetch<SearchResponse<Publisher>>({
-    url:
-      debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.Publisher}?year=${getYearQuery(year)}&query=${encodeURIComponent(
-            debouncedQuery
-          )}`
-        : '',
-    errorMessage: t('feedback.error.get_publishers'),
+
+  const publisherOptionsQuery = useQuery({
+    queryKey: ['publisherSearch', debouncedQuery, year],
+    enabled: !!debouncedQuery && debouncedQuery === query,
+    queryFn: () => searchForPublishers(debouncedQuery, year),
+    meta: { errorMessage: t('feedback.error.get_publishers') },
   });
 
   useEffect(() => {
     if (
-      publisherOptions?.hits.length === 1 &&
+      publisherOptionsQuery.data?.hits.length === 1 &&
       publisher?.name &&
-      publisherOptions.hits[0].name.toLowerCase() === publisher.name.toLowerCase()
+      publisherOptionsQuery.data.hits[0].name.toLowerCase() === publisher.name.toLowerCase()
     ) {
       setFieldValue(ResourceFieldNames.PublicationContextPublisherType, PublicationChannelType.Publisher, false);
-      setFieldValue(ResourceFieldNames.PublicationContextPublisherId, publisherOptions.hits[0].id);
+      setFieldValue(ResourceFieldNames.PublicationContextPublisherId, publisherOptionsQuery.data.hits[0].id);
       setQuery('');
     }
-  }, [setFieldValue, publisher?.name, publisherOptions]);
+  }, [setFieldValue, publisher?.name, publisherOptionsQuery.data?.hits]);
 
-  const [fetchedPublisher, isLoadingPublisher] = useFetchResource<Publisher>(
-    publisher?.id ?? '',
-    t('feedback.error.get_publisher')
-  );
+  const publisherQuery = useQuery({
+    queryKey: [publisher?.id],
+    enabled: !!publisher?.id,
+    queryFn: () => getById<Publisher>(publisher?.id ?? ''),
+    meta: { errorMessage: t('feedback.error.get_publisher') },
+  });
 
   return (
     <Box sx={{ display: 'flex', gap: '1rem' }}>
@@ -70,8 +68,8 @@ export const PublisherField = () => {
             aria-labelledby={`${publisherFieldTestId}-label`}
             popupIcon={null}
             options={
-              debouncedQuery && query === debouncedQuery && !isLoadingPublisherOptions
-                ? publisherOptions?.hits ?? []
+              debouncedQuery && query === debouncedQuery && !publisherOptionsQuery.isLoading
+                ? publisherOptionsQuery.data?.hits ?? []
                 : []
             }
             filterOptions={(options) => options}
@@ -89,7 +87,7 @@ export const PublisherField = () => {
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
             disableClearable={!query}
-            value={publisher?.id && fetchedPublisher ? [fetchedPublisher] : []}
+            value={publisher?.id && publisherQuery.data ? [publisherQuery.data] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
                 setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
@@ -103,7 +101,7 @@ export const PublisherField = () => {
               }
               setQuery('');
             }}
-            loading={isLoadingPublisherOptions || isLoadingPublisher}
+            loading={publisherOptionsQuery.isFetching || publisherQuery.isFetching}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
@@ -122,7 +120,7 @@ export const PublisherField = () => {
                 {...params}
                 required
                 label={t('common.publisher')}
-                isLoading={isLoadingPublisherOptions || isLoadingPublisher}
+                isLoading={publisherOptionsQuery.isFetching || publisherQuery.isFetching}
                 placeholder={!publisher?.id ? t('registration.resource_type.search_for_publisher') : ''}
                 showSearchIcon={!publisher?.id}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}

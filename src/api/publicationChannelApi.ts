@@ -1,5 +1,5 @@
 import { SearchResponse } from '../types/common.types';
-import { Series } from '../types/registration.types';
+import { Publisher, Series } from '../types/registration.types';
 import { getYearQuery } from '../utils/registration-helpers';
 import { PublicationChannelApiPath } from './apiPaths';
 import { authenticatedApiRequest2 } from './apiRequest';
@@ -58,4 +58,17 @@ export const searchForSeries = async (query: string, year: string) => {
   });
 
   return searchForSeriesResponse.data;
+};
+
+export const searchForPublishers = async (query: string, year: string) => {
+  const searchForPublishersResponse = await authenticatedApiRequest2<SearchResponse<Publisher>>({
+    url: PublicationChannelApiPath.Publisher,
+    method: 'GET',
+    params: {
+      query,
+      year: getYearQuery(year),
+    },
+  });
+
+  return searchForPublishersResponse.data;
 };
