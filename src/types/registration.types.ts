@@ -45,28 +45,27 @@ export enum RegistrationTab {
   FilesAndLicenses = 3,
 }
 
-export interface Journal {
+export type ScientificValue = 'Unassigned' | 'LevelZero' | 'LevelOne' | 'LevelTwo';
+
+interface PublicationChannel {
   id: string;
-  identifier: string;
   name: string;
-  active: boolean;
-  website: string;
-  level?: string;
-  onlineIssn: string | null;
-  printIssn: string | null;
-  npiDomain: string;
-  openAccess: boolean | null;
-  language: string | null;
-  publisherId: string | null;
+  scientificValue: ScientificValue;
+  sameAs: string;
+  printIssn?: string;
+  onlineIssn?: string;
 }
 
-export interface Publisher {
-  id: string;
-  identifier: string;
-  name: string;
-  website: string;
-  active: boolean;
-  level?: string;
+export interface Journal extends PublicationChannel {
+  type: 'Journal';
+}
+
+export interface Series extends PublicationChannel {
+  type: 'Series';
+}
+
+export interface Publisher extends PublicationChannel {
+  type: 'Publisher';
 }
 
 export interface MyRegistrationsResponse {
@@ -238,7 +237,7 @@ export const emptyRegistration: Registration = {
   fundings: [],
 };
 
-export interface Series {
+export interface ContextSeries {
   type: PublicationChannelType.Series | PublicationChannelType.UnconfirmedSeries;
   id?: string;
   title?: string;

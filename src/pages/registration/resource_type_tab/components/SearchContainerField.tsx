@@ -208,12 +208,12 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
         value={series?.name}
         isLoading={isLoadingSeries}
       />
-      <NpiLevelTypography variant="body2" color="textSecondary" level={series?.level} />
+      <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={series?.scientificValue} />
     </>
   ) : publisherId ? (
     <>
       <ContainerDisplayName label={t('common.publisher')} value={publisher?.name} isLoading={isLoadingPublisher} />
-      <NpiLevelTypography variant="body2" color="textSecondary" level={publisher?.level} />
+      <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={publisher?.scientificValue} />
     </>
   ) : null;
 };

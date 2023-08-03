@@ -15,6 +15,7 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { getYearQuery } from '../../../../utils/registration-helpers';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { SearchResponse } from '../../../../types/common.types';
 
 const publisherFieldTestId = dataTestId.registrationWizard.resourceType.publisherField;
 
@@ -27,7 +28,7 @@ export const PublisherField = () => {
 
   const [query, setQuery] = useState(!publisher?.id ? publisher?.name ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [publisherOptions, isLoadingPublisherOptions] = useFetch<Publisher[]>({
+  const [publisherOptions, isLoadingPublisherOptions] = useFetch<SearchResponse<Publisher>>({
     url:
       debouncedQuery && debouncedQuery === query
         ? `${PublicationChannelApiPath.PublisherSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
@@ -39,12 +40,12 @@ export const PublisherField = () => {
 
   useEffect(() => {
     if (
-      publisherOptions?.length === 1 &&
+      publisherOptions?.hits.length === 1 &&
       publisher?.name &&
-      publisherOptions[0].name.toLowerCase() === publisher.name.toLowerCase()
+      publisherOptions.hits[0].name.toLowerCase() === publisher.name.toLowerCase()
     ) {
       setFieldValue(ResourceFieldNames.PublicationContextPublisherType, PublicationChannelType.Publisher, false);
-      setFieldValue(ResourceFieldNames.PublicationContextPublisherId, publisherOptions[0].id);
+      setFieldValue(ResourceFieldNames.PublicationContextPublisherId, publisherOptions.hits[0].id);
       setQuery('');
     }
   }, [setFieldValue, publisher?.name, publisherOptions]);
@@ -64,7 +65,7 @@ export const PublisherField = () => {
           aria-labelledby={`${publisherFieldTestId}-label`}
           popupIcon={null}
           options={
-            debouncedQuery && query === debouncedQuery && !isLoadingPublisherOptions ? publisherOptions ?? [] : []
+            debouncedQuery && query === debouncedQuery && !isLoadingPublisherOptions ? publisherOptions?.hits ?? [] : []
           }
           filterOptions={(options) => options}
           inputValue={query}
@@ -103,7 +104,7 @@ export const PublisherField = () => {
                 <Typography variant="subtitle1">
                   <EmphasizeSubstring text={option.name} emphasized={state.inputValue} />
                 </Typography>
-                <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
+                <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={option.scientificValue} />
               </Box>
             </li>
           )}
@@ -115,7 +116,11 @@ export const PublisherField = () => {
                 label={
                   <>
                     <Typography variant="subtitle1">{option.name}</Typography>
-                    <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
+                    <NpiLevelTypography
+                      variant="body2"
+                      color="textSecondary"
+                      scientificValue={option.scientificValue}
+                    />
                   </>
                 }
               />

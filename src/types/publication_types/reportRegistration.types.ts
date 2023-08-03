@@ -3,7 +3,7 @@ import {
   BaseReference,
   BaseRegistration,
   ContextPublisher,
-  Series,
+  ContextSeries,
 } from '../registration.types';
 import { PublicationType, ReportType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
@@ -27,7 +27,7 @@ export interface ReportPublicationContext {
   isbnList: string[];
   publisher: ContextPublisher;
   seriesNumber: string;
-  series?: Series;
+  series?: ContextSeries;
   onlineIssn: string;
   printIssn: string;
 }

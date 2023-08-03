@@ -3,7 +3,7 @@ import {
   BaseReference,
   BaseRegistration,
   ContextPublisher,
-  Series,
+  ContextSeries,
 } from '../registration.types';
 import { PublicationType, DegreeType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
@@ -27,7 +27,7 @@ export interface DegreePublicationContext {
   isbnList: string[];
   publisher?: ContextPublisher;
   seriesNumber: string;
-  series?: Series;
+  series?: ContextSeries;
 }
 
 interface DegreeReference extends BaseReference {
