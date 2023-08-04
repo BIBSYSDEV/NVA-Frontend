@@ -470,7 +470,6 @@ export const dataTestId = {
     searchMode: {
       allUserDialogsButton: 'all-user-dialogs-button',
       myUserDialogsButton: 'my-user-dialogs-button',
-      newUserDialogsButton: 'new-user-dialogs-button',
     },
     statusSearch: {
       closedCheckbox: 'new-status-checkbox',
