@@ -1,4 +1,4 @@
-import { Typography, List, ListItem, Link } from '@mui/material';
+import { Link, List, ListItem, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 interface PublicExternalRelationsProps {

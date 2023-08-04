@@ -4,8 +4,8 @@ import { CristinProject, FundingSource, FundingSources } from '../types/project.
 import {
   CreateCristinPerson,
   CristinPerson,
-  FlatCristinPerson,
   Employment,
+  FlatCristinPerson,
   PositionResponse,
 } from '../types/user.types';
 import { getIdentifierFromId } from '../utils/general-helpers';

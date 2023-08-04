@@ -1,6 +1,9 @@
-import { useTranslation } from 'react-i18next';
-import { Typography, Link } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
+import { useTranslation } from 'react-i18next';
+import { StyledGeneralInfo } from '../../components/styled/Wrappers';
+import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
+import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
 import {
   BookPublicationContext,
   BookPublicationInstance,
@@ -15,36 +18,44 @@ import {
   DegreePublicationInstance,
   DegreeRegistration,
 } from '../../types/publication_types/degreeRegistration.types';
+import { ExhibitionPublicationInstance } from '../../types/publication_types/exhibitionContent.types';
 import {
   JournalPublicationContext,
   JournalPublicationInstance,
 } from '../../types/publication_types/journalRegistration.types';
 import {
+  MediaContributionPeriodicalPublicationContext,
+  MediaContributionPublicationContext,
+} from '../../types/publication_types/mediaContributionRegistration.types';
+import { MapPublicationContext } from '../../types/publication_types/otherRegistration.types';
+import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
+import {
   ReportPublicationContext,
   ReportPublicationInstance,
   ReportRegistration,
 } from '../../types/publication_types/reportRegistration.types';
-import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
+import { dataTestId } from '../../utils/dataTestIds';
+import { displayDate } from '../../utils/date-helpers';
 import {
   isArtistic,
   isBook,
   isChapter,
   isDegree,
+  isExhibitionContent,
   isJournal,
   isMediaContribution,
-  isPeriodicalMediaContribution,
   isOtherRegistration,
+  isPeriodicalMediaContribution,
   isPresentation,
   isReport,
-  isExhibitionContent,
 } from '../../utils/registration-helpers';
 import { PublicDoi } from './PublicDoi';
 import {
-  PublicOutputs,
   PublicJournal,
-  PublicPublishedInContent,
+  PublicOutputs,
   PublicPresentation,
   PublicPublicationContextMediaContribution,
+  PublicPublishedInContent,
   PublicPublisher,
   PublicSeries,
 } from './PublicPublicationContext';
@@ -60,17 +71,6 @@ import {
 } from './PublicPublicationInstance';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { RegistrationSummary } from './RegistrationSummary';
-import { dataTestId } from '../../utils/dataTestIds';
-import { displayDate } from '../../utils/date-helpers';
-import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
-import { StyledGeneralInfo } from '../../components/styled/Wrappers';
-import {
-  MediaContributionPeriodicalPublicationContext,
-  MediaContributionPublicationContext,
-} from '../../types/publication_types/mediaContributionRegistration.types';
-import { MapPublicationContext } from '../../types/publication_types/otherRegistration.types';
-import { ExhibitionPublicationInstance } from '../../types/publication_types/exhibitionContent.types';
 
 export const PublicGeneralContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t, i18n } = useTranslation();

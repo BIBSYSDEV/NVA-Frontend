@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next';
-import { fetchRegistrationTickets } from '../../api/registrationApi';
-import { useDispatch } from 'react-redux';
-import { setNotification } from '../../redux/notificationSlice';
 import { useQuery } from '@tanstack/react-query';
-import { ActionPanelContent } from '../public_registration/ActionPanelContent';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { fetchRegistrationTickets } from '../../api/registrationApi';
+import { setNotification } from '../../redux/notificationSlice';
 import { Registration } from '../../types/registration.types';
+import { ActionPanelContent } from '../public_registration/ActionPanelContent';
 
 interface SupportModalContentProps {
   closeModal: () => void;

@@ -1,4 +1,4 @@
-import { CircularProgress, Typography, Link as MuiLink, Box } from '@mui/material';
+import { Box, CircularProgress, Link as MuiLink, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';

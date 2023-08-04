@@ -1,6 +1,6 @@
-import { BaseEntityDescription, BaseReference, BaseRegistration, PublicationChannelType } from '../registration.types';
 import { JournalType } from '../publicationFieldNames';
-import { emptyPagesRange, PagesRange } from './pages.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, PublicationChannelType } from '../registration.types';
+import { PagesRange, emptyPagesRange } from './pages.types';
 
 export interface JournalRegistration extends BaseRegistration {
   entityDescription: JournalEntityDescription;

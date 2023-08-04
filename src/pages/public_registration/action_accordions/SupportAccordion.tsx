@@ -1,19 +1,19 @@
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { LoadingButton } from '@mui/lab';
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
+import { MessageForm } from '../../../components/MessageForm';
+import { setNotification } from '../../../redux/notificationSlice';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { Registration } from '../../../types/registration.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { MessageList } from '../../messages/components/MessageList';
-import { MessageForm } from '../../../components/MessageForm';
-import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
-import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { TicketAssignee } from './TicketAssignee';
-import { LoadingButton } from '@mui/lab';
-import { useMutation } from '@tanstack/react-query';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { MessageList } from '../../messages/components/MessageList';
+import { TicketAssignee } from './TicketAssignee';
 
 interface SupportAccordionProps {
   registration: Registration;

@@ -20,10 +20,10 @@ import { RootState } from '../../../../redux/store';
 import { alternatingTableRowColor } from '../../../../themes/mainTheme';
 import { SearchResponse } from '../../../../types/common.types';
 import { CristinPerson } from '../../../../types/user.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PersonTableRow } from './PersonTableRow';
-import { dataTestId } from '../../../../utils/dataTestIds';
 
 const rowsPerPageOptions = [10, 25, 50];
 

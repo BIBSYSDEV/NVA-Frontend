@@ -1,14 +1,14 @@
-import { Box, Checkbox, IconButton, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { Box, Checkbox, IconButton, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
+import { Field, FieldProps, useFormikContext } from 'formik';
+import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import prettyBytes from 'pretty-bytes';
-import { Field, FieldProps, useFormikContext } from 'formik';
-import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { TruncatableTypography } from '../../../components/TruncatableTypography';
+import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { TruncatableTypography } from '../../../components/TruncatableTypography';
 
 interface UnpublishableFileRowProps {
   file: AssociatedFile;

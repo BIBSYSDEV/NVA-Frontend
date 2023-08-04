@@ -1,12 +1,12 @@
-import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
-import { AffiliationSkeleton } from './AffiliationSkeleton';
-import { getLanguageString } from '../../utils/translation-helpers';
 import { fetchOrganization } from '../../api/cristinApi';
 import { setNotification } from '../../redux/notificationSlice';
+import { getOrganizationHierarchy } from '../../utils/institutions-helpers';
+import { getLanguageString } from '../../utils/translation-helpers';
+import { AffiliationSkeleton } from './AffiliationSkeleton';
 
 interface AffiliationHierarchyProps {
   unitUri: string;

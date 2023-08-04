@@ -1,18 +1,18 @@
+import AddIcon from '@mui/icons-material/Add';
+import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@tanstack/react-query';
-import AddIcon from '@mui/icons-material/Add';
-import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
+import { searchForProjects } from '../../../../api/cristinApi';
+import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { CristinProject, ResearchProject } from '../../../../types/project.types';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { ProjectChip } from './ProjectChip';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
-import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
-import { searchForProjects } from '../../../../api/cristinApi';
+import { ProjectChip } from './ProjectChip';
 
 export const ProjectsField = () => {
   const { t } = useTranslation();

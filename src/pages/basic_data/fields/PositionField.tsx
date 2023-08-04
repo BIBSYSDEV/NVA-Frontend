@@ -1,13 +1,13 @@
 import { Autocomplete, TextField, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useQuery } from '@tanstack/react-query';
 import { useDispatch } from 'react-redux';
+import { fetchPositions } from '../../../api/cristinApi';
+import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { setNotification } from '../../../redux/notificationSlice';
-import { fetchPositions } from '../../../api/cristinApi';
 
 interface PositionFieldProps {
   fieldName: string;

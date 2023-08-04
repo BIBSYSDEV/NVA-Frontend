@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
+import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { IsbnField } from './IsbnField';
 import { TotalPagesField } from './TotalPagesField';
-import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 
 export const IsbnAndPages = () => (
   <Box

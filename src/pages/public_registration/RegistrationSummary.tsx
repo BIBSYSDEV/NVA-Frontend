@@ -1,12 +1,11 @@
-import { Link } from '@mui/material';
-import { Skeleton } from '@mui/material';
+import { Link, Skeleton } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
-import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
-import { getIdentifierFromId } from '../../utils/general-helpers';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
-import { ExpressionStatement } from '../../utils/searchHelpers';
+import { getIdentifierFromId } from '../../utils/general-helpers';
+import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { getTitleString } from '../../utils/registration-helpers';
+import { ExpressionStatement } from '../../utils/searchHelpers';
+import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 interface RegistrationSummaryProps {
   id: string;

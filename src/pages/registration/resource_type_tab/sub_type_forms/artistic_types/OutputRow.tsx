@@ -1,49 +1,34 @@
-import { TableRow, TableCell, Typography, Button, Tooltip, Box, Skeleton } from '@mui/material';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import EditIcon from '@mui/icons-material/Edit';
-import CancelIcon from '@mui/icons-material/Cancel';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import CancelIcon from '@mui/icons-material/Cancel';
+import EditIcon from '@mui/icons-material/Edit';
+import { Box, Button, Skeleton, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { fetchRegistration } from '../../../../../api/registrationApi';
+import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
+import { setNotification } from '../../../../../redux/notificationSlice';
 import {
+  ArtisticOutputItem,
+  AudioVisualPublication,
   Award,
   Broadcast,
-  Competition,
-  Exhibition,
-  MentionInPublication,
-  ArtisticOutputItem,
-  Venue,
   CinematicRelease,
-  OtherRelease,
-  MusicScore,
-  AudioVisualPublication,
+  Competition,
   Concert,
-  OtherMusicPerformance,
-  LiteraryArtsMonograph,
-  LiteraryArtsWeb,
-  LiteraryArtsPerformance,
+  Exhibition,
   LiteraryArtsAudioVisual,
+  LiteraryArtsMonograph,
+  LiteraryArtsPerformance,
+  LiteraryArtsWeb,
+  MentionInPublication,
+  MusicScore,
+  OtherMusicPerformance,
+  OtherRelease,
+  Venue,
 } from '../../../../../types/publication_types/artisticRegistration.types';
-import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
-import { CompetitionModal } from './architecture/CompetitionModal';
-import { VenueModal } from './design/VenueModal';
-import { PublicationMentionModal } from './architecture/PublicationMentionModal';
-import { AwardModal } from './architecture/AwardModal';
-import { ExhibitionModal } from './architecture/ExhibitionModal';
-import { getOutputName } from '../../../../../utils/registration-helpers';
-import { BroadcastModal } from './moving_picture/BroadcastModal';
-import { CinematicReleaseModal } from './moving_picture/CinematicReleaseModal';
-import { OtherReleaseModal } from './moving_picture/OtherReleaseModal';
-import { MusicScoreModal } from './music_performance/MusicScoreModal';
-import { AudioVisualPublicationModal } from './music_performance/AudioVisualPublicationModal';
-import { ConcertModal } from './music_performance/ConcertModal';
-import { OtherPerformanceModal } from './music_performance/OtherPerformanceModal';
-import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModal';
-import { LiteraryArtsWebPublicationModal } from './literary_art/LiteraryArtsWebPublicationModal';
-import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerformanceModal';
-import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVisualModal';
 import {
   ExhibitionBasic,
   ExhibitionCatalog,
@@ -51,13 +36,28 @@ import {
   ExhibitionMentionInPublication,
   ExhibitionOtherPresentation,
 } from '../../../../../types/publication_types/exhibitionContent.types';
-import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
-import { ExhibitionOtherPresentationModal } from '../exhibition_types/ExhibitionOtherPresentationModal';
-import { ExhibitionMentionInPublicationModal } from '../exhibition_types/ExhibitionMentionInPublication';
-import { ExhibitionCatalogModal } from '../exhibition_types/ExhibitionCatalogModal';
-import { fetchRegistration } from '../../../../../api/registrationApi';
 import { getIdentifierFromId } from '../../../../../utils/general-helpers';
-import { setNotification } from '../../../../../redux/notificationSlice';
+import { getOutputName } from '../../../../../utils/registration-helpers';
+import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
+import { ExhibitionCatalogModal } from '../exhibition_types/ExhibitionCatalogModal';
+import { ExhibitionMentionInPublicationModal } from '../exhibition_types/ExhibitionMentionInPublication';
+import { ExhibitionOtherPresentationModal } from '../exhibition_types/ExhibitionOtherPresentationModal';
+import { AwardModal } from './architecture/AwardModal';
+import { CompetitionModal } from './architecture/CompetitionModal';
+import { ExhibitionModal } from './architecture/ExhibitionModal';
+import { PublicationMentionModal } from './architecture/PublicationMentionModal';
+import { VenueModal } from './design/VenueModal';
+import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVisualModal';
+import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModal';
+import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerformanceModal';
+import { LiteraryArtsWebPublicationModal } from './literary_art/LiteraryArtsWebPublicationModal';
+import { BroadcastModal } from './moving_picture/BroadcastModal';
+import { CinematicReleaseModal } from './moving_picture/CinematicReleaseModal';
+import { OtherReleaseModal } from './moving_picture/OtherReleaseModal';
+import { AudioVisualPublicationModal } from './music_performance/AudioVisualPublicationModal';
+import { ConcertModal } from './music_performance/ConcertModal';
+import { MusicScoreModal } from './music_performance/MusicScoreModal';
+import { OtherPerformanceModal } from './music_performance/OtherPerformanceModal';
 
 export type OutputItem = ArtisticOutputItem | ExhibitionManifestation;
 

@@ -1,21 +1,21 @@
+import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import RemoveIcon from '@mui/icons-material/HighlightOff';
+import WarningIcon from '@mui/icons-material/Warning';
+import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
-import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import RemoveIcon from '@mui/icons-material/HighlightOff';
-import WarningIcon from '@mui/icons-material/Warning';
-import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { Modal } from '../../../../components/Modal';
+import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
+import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { Institution } from '../../../../types/contributor.types';
 import { SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { getLanguageString } from '../../../../utils/translation-helpers';
-import { SelectInstitutionForm } from '../../../../components/institution/SelectInstitutionForm';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getDistinctContributorUnits } from '../../../../utils/institutions-helpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 
 interface AffiliationsCellProps {
   affiliations?: Institution[];

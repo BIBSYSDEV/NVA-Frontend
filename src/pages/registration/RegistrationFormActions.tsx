@@ -1,22 +1,22 @@
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { LoadingButton } from '@mui/lab';
+import { Box, Button, IconButton, Tooltip } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Box, Button, IconButton, Tooltip } from '@mui/material';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { LoadingButton } from '@mui/lab';
-import { useQueryClient } from '@tanstack/react-query';
 import { updateRegistration } from '../../api/registrationApi';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { Registration, RegistrationTab } from '../../types/registration.types';
+import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
+import { getFormattedRegistration } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getFormattedRegistration } from '../../utils/registration-helpers';
-import { dataTestId } from '../../utils/dataTestIds';
 
 interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
