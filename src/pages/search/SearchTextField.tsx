@@ -1,7 +1,7 @@
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, OutlinedTextFieldProps, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import SearchIcon from '@mui/icons-material/Search';
-import ClearIcon from '@mui/icons-material/Clear';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface SearchTextFieldProps extends Omit<OutlinedTextFieldProps, 'variant'> {

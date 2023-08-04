@@ -1,19 +1,19 @@
-import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { Box, Button, Menu, MenuItem, Typography } from '@mui/material';
+import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import { TFuncKey } from 'i18next';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
+import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
+import { Registration } from '../../../../types/registration.types';
+import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/constants';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { HrcsActivityInput } from './HrcsActivityInput';
 import { HrcsCategoryInput } from './HrcsCategoryInput';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { Registration } from '../../../../types/registration.types';
-import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { VocabularyComponentProps } from './VocabularyAutocomplete';
-import { hrcsActivityBaseId, hrcsCategoryBaseId } from '../../../../utils/constants';
-import { InputContainerBox } from '../../../../components/styled/Wrappers';
-import { TFuncKey } from 'i18next';
 
 interface VocabularyConfig {
   [key: string]: {

@@ -1,8 +1,8 @@
-import { useDispatch } from 'react-redux';
 import { Auth } from '@aws-amplify/auth';
-import { USE_MOCK_DATA, LocalStorageKey } from '../constants';
-import { mockUser } from '../testfiles/mock_feide_user';
+import { useDispatch } from 'react-redux';
 import { logoutSuccess, setUser } from '../../redux/userSlice';
+import { LocalStorageKey, USE_MOCK_DATA } from '../constants';
+import { mockUser } from '../testfiles/mock_feide_user';
 import { UrlPathTemplate } from '../urlPaths';
 
 type LoginProvider = 'FeideIdentityProvider' | 'Dataporten';

@@ -1,9 +1,9 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { useTranslation } from 'react-i18next';
 import countries from 'i18n-iso-countries';
 import enCountries from 'i18n-iso-countries/langs/en.json';
 import nbCountries from 'i18n-iso-countries/langs/nb.json';
+import { useTranslation } from 'react-i18next';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PresentationRegistration } from '../../../../types/publication_types/presentationRegistration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';

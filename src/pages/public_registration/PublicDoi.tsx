@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { Box, Link, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';

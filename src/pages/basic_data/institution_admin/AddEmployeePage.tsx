@@ -1,26 +1,26 @@
-import { Typography, Box, Divider } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
-import { LoadingButton } from '@mui/lab';
-import { useDispatch, useSelector } from 'react-redux';
-import { Helmet } from 'react-helmet-async';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { LoadingButton } from '@mui/lab';
+import { Box, Divider, Typography } from '@mui/material';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { addEmployment, createCristinPerson } from '../../../api/cristinApi';
+import { createUser } from '../../../api/roleApi';
+import { setNotification } from '../../../redux/notificationSlice';
+import { RootState } from '../../../redux/store';
 import {
   CreateCristinPerson,
   Employment,
-  emptyEmployment,
   FlatCristinPerson,
   RoleName,
+  emptyEmployment,
 } from '../../../types/user.types';
-import { FindPersonPanel } from './FindPersonPanel';
-import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { setNotification } from '../../../redux/notificationSlice';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-import { addEmployment, createCristinPerson } from '../../../api/cristinApi';
-import { createUser } from '../../../api/roleApi';
-import { RootState } from '../../../redux/store';
+import { AddAffiliationPanel } from './AddAffiliationPanel';
+import { FindPersonPanel } from './FindPersonPanel';
 import { UserRolesSelector } from './UserRolesSelector';
 
 export interface AddEmployeeData {

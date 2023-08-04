@@ -1,6 +1,5 @@
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import {
   Box,
   Button,
@@ -11,31 +10,32 @@ import {
   Typography,
   styled,
 } from '@mui/material';
-import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
-import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
-import { useFetch } from '../../utils/hooks/useFetch';
+import { fetchTickets } from '../../api/searchApi';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import { LinkButton, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SelectableButton } from '../../components/SelectableButton';
+import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { Organization } from '../../types/organization.types';
-import { getLanguageString } from '../../utils/translation-helpers';
-import { TicketList, ticketsPerPageOptions } from './components/TicketList';
+import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { InstitutionUser } from '../../types/user.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { StyledPageWithSideMenu, SideNavHeader, LinkButton } from '../../components/PageWithSideMenu';
-import { setNotification } from '../../redux/notificationSlice';
-import { fetchTickets } from '../../api/searchApi';
-import { TicketStatus } from '../../types/publication_types/ticket.types';
-import { SelectableButton } from '../../components/SelectableButton';
-import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { UrlPathTemplate } from '../../utils/urlPaths';
-import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PrivateRoute } from '../../utils/routes/Routes';
+import { getLanguageString } from '../../utils/translation-helpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
-import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { TicketList, ticketsPerPageOptions } from './components/TicketList';
 
 type SelectedStatusState = {
   [key in Exclude<TicketStatus, 'New'>]: boolean;

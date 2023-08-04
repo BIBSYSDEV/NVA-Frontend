@@ -1,15 +1,15 @@
+import { Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import i18n from '../../../../../../translations/i18n';
+import { emptyInstant } from '../../../../../../types/common.types';
 import { Broadcast } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { PublicationChannelType } from '../../../../../../types/registration.types';
-import i18n from '../../../../../../translations/i18n';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
-import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { emptyInstant } from '../../../../../../types/common.types';
 
 interface BroadcastModalProps {
   broadcast?: Broadcast;

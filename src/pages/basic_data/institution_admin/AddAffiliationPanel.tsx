@@ -1,17 +1,17 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { DatePicker } from '@mui/x-date-pickers';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { getLanguageString } from '../../../utils/translation-helpers';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
-import { AddEmployeeData } from './AddEmployeePage';
-import { StartDateField } from '../fields/StartDateField';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { PositionField } from '../fields/PositionField';
-import { dataTestId } from '../../../utils/dataTestIds';
+import { StartDateField } from '../fields/StartDateField';
+import { AddEmployeeData } from './AddEmployeePage';
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation();

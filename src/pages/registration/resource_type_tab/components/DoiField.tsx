@@ -1,8 +1,8 @@
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField, Typography, Button, Box } from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';

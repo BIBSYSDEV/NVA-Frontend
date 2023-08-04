@@ -1,5 +1,5 @@
-import { CircularProgress, TextField, TextFieldProps, AutocompleteRenderInputParams } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { AutocompleteRenderInputParams, CircularProgress, TextField, TextFieldProps } from '@mui/material';
 
 interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,

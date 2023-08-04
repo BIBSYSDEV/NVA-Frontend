@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
 import { Box, BoxProps } from '@mui/material';
+import { ReactNode } from 'react';
 import { LocalStorageKey } from '../utils/constants';
 
 interface BetaFunctionalityProps extends BoxProps {

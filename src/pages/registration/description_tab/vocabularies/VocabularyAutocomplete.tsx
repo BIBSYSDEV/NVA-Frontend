@@ -1,5 +1,4 @@
-import { TextField, TextFieldProps } from '@mui/material';
-import { Autocomplete, AutocompleteProps } from '@mui/material';
+import { Autocomplete, AutocompleteProps, TextField, TextFieldProps } from '@mui/material';
 import { Category } from '../../../../types/vocabulary.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
