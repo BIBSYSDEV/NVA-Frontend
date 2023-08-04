@@ -121,7 +121,7 @@ export const userIsRegistrationCurator = (user: User | null, registration?: Regi
   !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
 export const getYearQuery = (yearValue: string) =>
-  yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();
+  yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear().toString();
 
 const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?: string | null) => {
   const issnString =

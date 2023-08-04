@@ -1,10 +1,11 @@
 import { Autocomplete, Box, Button, Chip } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PublicationChannelApiPath } from '../../../../api/apiPaths';
+import { getById } from '../../../../api/commonApi';
+import { searchForJournals } from '../../../../api/publicationChannelApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { SearchResponse } from '../../../../types/common.types';
 import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
   JournalEntityDescription,
@@ -13,9 +14,6 @@ import {
 import { Journal, PublicationChannelType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { getYearQuery } from '../../../../utils/registration-helpers';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -31,49 +29,54 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
   const { reference, publicationDate } = values.entityDescription as JournalEntityDescription;
+  const journalId = reference?.publicationContext.id ?? '';
   const year = publicationDate?.year ?? '';
 
   const [showJournalForm, setShowJournalForm] = useState(false);
   const toggleJournalForm = () => setShowJournalForm(!showJournalForm);
 
-  const [query, setQuery] = useState(
-    !reference?.publicationContext.id ? reference?.publicationContext.title ?? '' : ''
-  );
+  const [query, setQuery] = useState(!journalId ? reference?.publicationContext.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [journalOptions, isLoadingJournalOptions] = useFetch<SearchResponse<Journal>>({
-    url:
-      debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.Journal}?year=${getYearQuery(year)}&query=${encodeURIComponent(debouncedQuery)}`
-        : '',
-    errorMessage: t('feedback.error.get_journals'),
+
+  const journalOptionsQuery = useQuery({
+    queryKey: ['journalSearch', debouncedQuery, year],
+    enabled: !!debouncedQuery && debouncedQuery === query,
+    queryFn: () => searchForJournals(debouncedQuery, year),
+    meta: { errorMessage: t('feedback.error.get_journals') },
   });
 
   // Fetch Journals with matching ISSN
-  const [journalsByIssn] = useFetch<Journal[]>({
-    url:
-      !reference?.publicationContext.id &&
-      (reference?.publicationContext.printIssn || reference?.publicationContext.onlineIssn)
-        ? `${PublicationChannelApiPath.Journal}?year=${getYearQuery(year)}&query=${
-            reference.publicationContext.printIssn ?? reference.publicationContext.onlineIssn
-          }`
-        : '',
-    errorMessage: t('feedback.error.get_journals'),
+  const journalsByIssnQuery = useQuery({
+    queryKey: [
+      'journalsByIssn',
+      reference?.publicationContext.printIssn,
+      reference?.publicationContext.onlineIssn,
+      year,
+    ],
+    enabled: !journalId && !!(reference?.publicationContext.printIssn || reference?.publicationContext.onlineIssn),
+    queryFn: () =>
+      searchForJournals(
+        reference?.publicationContext.printIssn ?? reference?.publicationContext.onlineIssn ?? '',
+        year
+      ),
+    meta: { errorMessage: t('feedback.error.get_journals') },
   });
 
   useEffect(() => {
     // Set Journal with matching ISSN
-    if (journalsByIssn?.length === 1) {
+    if (journalsByIssnQuery.data?.hits.length === 1) {
       setFieldValue(ResourceFieldNames.PublicationContextType, confirmedContextType, false);
-      setFieldValue(ResourceFieldNames.PublicationContextId, journalsByIssn[0].id);
+      setFieldValue(ResourceFieldNames.PublicationContextId, journalsByIssnQuery.data.hits[0].id);
       setQuery('');
     }
-  }, [setFieldValue, journalsByIssn, confirmedContextType]);
+  }, [setFieldValue, journalsByIssnQuery.data, confirmedContextType]);
 
-  // Fetch selected journal
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(
-    reference?.publicationContext.id ?? '',
-    t('feedback.error.get_journal')
-  );
+  const journalQuery = useQuery({
+    queryKey: [journalId],
+    enabled: !!journalId,
+    queryFn: () => getById<Journal>(journalId),
+    meta: { errorMessage: t('feedback.error.get_journal') },
+  });
 
   return (
     <Box sx={{ display: 'flex', gap: '1rem' }}>
@@ -87,7 +90,9 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             aria-labelledby={`${journalFieldTestId}-label`}
             popupIcon={null}
             options={
-              debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions?.hits ?? [] : []
+              debouncedQuery && query === debouncedQuery && !journalOptionsQuery.isLoading
+                ? journalOptionsQuery.data?.hits ?? []
+                : []
             }
             filterOptions={(options) => options}
             inputValue={query}
@@ -102,7 +107,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             onBlur={() => setFieldTouched(field.name, true, false)}
             blurOnSelect
             disableClearable={!query}
-            value={reference?.publicationContext.id && journal ? [journal] : []}
+            value={reference?.publicationContext.id && journalQuery.data ? [journalQuery.data] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
                 setFieldValue(contextTypeBaseFieldName, {
@@ -114,7 +119,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
               }
               setQuery('');
             }}
-            loading={isLoadingJournalOptions || isLoadingJournal}
+            loading={journalOptionsQuery.isFetching || journalQuery.isFetching}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
@@ -133,7 +138,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
                 {...params}
                 required
                 label={t('registration.resource_type.journal')}
-                isLoading={isLoadingJournalOptions || isLoadingJournal}
+                isLoading={journalOptionsQuery.isFetching || journalQuery.isFetching}
                 placeholder={
                   !reference?.publicationContext.id ? t('registration.resource_type.search_for_journal') : ''
                 }
