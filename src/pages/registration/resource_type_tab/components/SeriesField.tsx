@@ -1,18 +1,16 @@
 import { Autocomplete, Box, Button, Chip } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PublicationChannelApiPath } from '../../../../api/apiPaths';
+import { getById } from '../../../../api/commonApi';
+import { searchForSeries } from '../../../../api/publicationChannelApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { SearchResponse } from '../../../../types/common.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { getYearQuery } from '../../../../utils/registration-helpers';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -31,29 +29,34 @@ export const SeriesField = () => {
 
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [seriesOptions, isLoadingSeriesOptions] = useFetch<SearchResponse<Series>>({
-    url:
-      debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.Series}?year=${getYearQuery(year)}&query=${encodeURIComponent(debouncedQuery)}`
-        : '',
-    errorMessage: t('feedback.error.get_series'),
+
+  const seriesOptionsQuery = useQuery({
+    queryKey: ['seriesSearch', debouncedQuery, year],
+    enabled: !!debouncedQuery && debouncedQuery === query,
+    queryFn: () => searchForSeries(debouncedQuery, year),
+    meta: { errorMessage: t('feedback.error.get_series') },
   });
 
   useEffect(() => {
     if (
-      seriesOptions?.hits.length === 1 &&
+      seriesOptionsQuery.data?.hits.length === 1 &&
       series?.title &&
-      seriesOptions.hits[0].name.toLowerCase() === series.title.toLowerCase()
+      seriesOptionsQuery.data.hits[0].name.toLowerCase() === series.title.toLowerCase()
     ) {
       setFieldValue(ResourceFieldNames.Series, {
         type: PublicationChannelType.Series,
-        id: seriesOptions.hits[0].id,
+        id: seriesOptionsQuery.data.hits[0].id,
       });
       setQuery('');
     }
-  }, [setFieldValue, series?.title, seriesOptions]);
+  }, [setFieldValue, series?.title, seriesOptionsQuery.data?.hits]);
 
-  const [journal, isLoadingJournal] = useFetchResource<Series>(series?.id ?? '', t('feedback.error.get_series'));
+  const seriesQuery = useQuery({
+    queryKey: [series?.id],
+    enabled: !!series?.id,
+    queryFn: () => getById<Series>(series?.id ?? ''),
+    meta: { errorMessage: t('feedback.error.get_series') },
+  });
 
   return (
     <Box sx={{ display: 'flex', gap: '1rem' }}>
@@ -67,7 +70,9 @@ export const SeriesField = () => {
             aria-labelledby={`${seriesFieldTestId}-label`}
             popupIcon={null}
             options={
-              debouncedQuery && query === debouncedQuery && !isLoadingSeriesOptions ? seriesOptions?.hits ?? [] : []
+              debouncedQuery && query === debouncedQuery && !seriesOptionsQuery.isLoading
+                ? seriesOptionsQuery.data?.hits ?? []
+                : []
             }
             filterOptions={(options) => options}
             inputValue={query}
@@ -81,7 +86,7 @@ export const SeriesField = () => {
             }}
             blurOnSelect
             disableClearable={!query}
-            value={field.value && journal ? [journal] : []}
+            value={field.value && seriesQuery.data ? [seriesQuery.data] : []}
             onChange={(_, inputValue, reason) => {
               if (reason === 'selectOption') {
                 setFieldValue(ResourceFieldNames.Series, {
@@ -93,7 +98,7 @@ export const SeriesField = () => {
               }
               setQuery('');
             }}
-            loading={isLoadingSeriesOptions || isLoadingJournal}
+            loading={seriesOptionsQuery.isFetching || seriesQuery.isFetching}
             getOptionLabel={(option) => option.name}
             renderOption={(props, option, state) => (
               <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
@@ -111,7 +116,7 @@ export const SeriesField = () => {
               <AutocompleteTextField
                 {...params}
                 label={t('common.title')}
-                isLoading={isLoadingSeriesOptions || isLoadingJournal}
+                isLoading={seriesOptionsQuery.isFetching || seriesQuery.isFetching}
                 placeholder={!field.value ? t('registration.resource_type.search_for_series') : ''}
                 showSearchIcon={!field.value}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
