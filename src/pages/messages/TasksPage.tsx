@@ -2,7 +2,7 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import { Box, Button, CircularProgress, Divider, FormControlLabel, Typography, styled } from '@mui/material';
+import { Box, Button, CircularProgress, Divider, FormControlLabel, FormLabel, Typography, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -228,6 +228,9 @@ const TasksPage = () => {
           </StyledTicketSearchFormGroup>
 
           <StyledTicketSearchFormGroup>
+            <FormLabel component="legend" sx={{ fontWeight: 700 }}>
+              {t('tasks.status')}
+            </FormLabel>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
               disabled={searchMode === 'current-user'}

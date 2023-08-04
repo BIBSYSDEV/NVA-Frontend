@@ -3,7 +3,7 @@ import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import PersonIcon from '@mui/icons-material/Person';
-import { Button, Divider, FormControlLabel } from '@mui/material';
+import { Button, Divider, FormControlLabel, FormLabel } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -199,6 +199,9 @@ const MyPagePage = () => {
             </StyledTicketSearchFormGroup>
 
             <StyledTicketSearchFormGroup>
+              <FormLabel component="legend" sx={{ fontWeight: 700 }}>
+                {t('tasks.status')}
+              </FormLabel>
               <FormControlLabel
                 data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
                 checked={selectedStatuses.New}
