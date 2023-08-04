@@ -1,20 +1,20 @@
-import { useState, ChangeEvent, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
-import LinkIcon from '@mui/icons-material/LinkOutlined';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LinkIcon from '@mui/icons-material/LinkOutlined';
+import { AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { getRegistrationByDoi } from '../../../api/registrationApi';
-import { LinkRegistrationForm } from './LinkRegistrationForm';
-import { RegistrationAccordion } from './RegistrationAccordion';
-import { Doi } from '../../../types/registration.types';
 import { setNotification } from '../../../redux/notificationSlice';
-import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { Doi } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { LinkRegistrationForm } from './LinkRegistrationForm';
+import { RegistrationAccordion } from './RegistrationAccordion';
 
 export interface StartRegistrationAccordionProps {
   expanded: boolean;

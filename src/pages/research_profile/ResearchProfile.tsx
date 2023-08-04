@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 import {
   Box,
   CircularProgress,
@@ -11,27 +8,30 @@ import {
   TablePagination,
   Typography,
 } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { fetchPerson, searchForProjects } from '../../api/cristinApi';
+import { PageSpinner } from '../../components/PageSpinner';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import orcidIcon from '../../resources/images/orcid_logo.svg';
-import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
-import { PageSpinner } from '../../components/PageSpinner';
-import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
-import { ExpressionStatement } from '../../utils/searchHelpers';
-import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
-import { UrlPathTemplate } from '../../utils/urlPaths';
-import { RootState } from '../../redux/store';
-import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { setNotification } from '../../redux/notificationSlice';
-import NotFound from '../errorpages/NotFound';
+import { RootState } from '../../redux/store';
+import orcidIcon from '../../resources/images/orcid_logo.svg';
+import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
-import { ProjectListItem } from '../search/project_search/ProjectListItem';
+import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
+import { ExpressionStatement } from '../../utils/searchHelpers';
 import { getLanguageString } from '../../utils/translation-helpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
+import NotFound from '../errorpages/NotFound';
+import { ProjectListItem } from '../search/project_search/ProjectListItem';
+import { RegistrationSearchResults } from '../search/registration_search/RegistrationSearchResults';
 
 const ResearchProfile = () => {
   const dispatch = useDispatch();

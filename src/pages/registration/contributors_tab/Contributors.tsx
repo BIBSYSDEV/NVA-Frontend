@@ -1,7 +1,6 @@
-import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   Button,
   InputAdornment,
@@ -16,31 +15,32 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { setNotification } from '../../../redux/notificationSlice';
+import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import {
   Contributor,
   ContributorRole,
-  emptyContributor,
   Identity,
   Institution,
+  emptyContributor,
 } from '../../../types/contributor.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
-import { AddContributorModal } from './AddContributorModal';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
-import { alternatingTableRowColor } from '../../../themes/mainTheme';
-import { ContributorRow } from './components/ContributorRow';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { CristinPerson } from '../../../types/user.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 import {
   filterActiveAffiliations,
   getFullCristinName,
   getOrcidUri,
   getVerificationStatus,
 } from '../../../utils/user-helpers';
+import { AddContributorModal } from './AddContributorModal';
+import { ContributorRow } from './components/ContributorRow';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];

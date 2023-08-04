@@ -1,5 +1,5 @@
-import { TypographyProps, Typography, styled, Tooltip } from '@mui/material';
-import { useEffect, useState, KeyboardEvent } from 'react';
+import { Tooltip, Typography, TypographyProps, styled } from '@mui/material';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { stringIncludesMathJax, typesetMathJax } from '../utils/mathJaxHelpers';
 

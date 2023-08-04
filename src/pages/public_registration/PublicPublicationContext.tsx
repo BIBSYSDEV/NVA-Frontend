@@ -1,75 +1,75 @@
-import { useTranslation } from 'react-i18next';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import {
-  Button,
   Box,
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   IconButton,
   Link,
-  Tooltip,
-  Typography,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
+  Tooltip,
+  Typography,
 } from '@mui/material';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { useState } from 'react';
 import { visuallyHidden } from '@mui/utils';
-import { hyphenate } from 'isbn-utils';
 import { useQuery } from '@tanstack/react-query';
+import { hyphenate } from 'isbn-utils';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
-import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
-import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
-import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
-import { ContextPublisher, Journal, Publisher, Series } from '../../types/registration.types';
-import { RegistrationSummary } from './RegistrationSummary';
+import { fetchRegistration } from '../../api/registrationApi';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListSkeleton } from '../../components/ListSkeleton';
-import { useFetchResource } from '../../utils/hooks/useFetchResource';
-import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
-import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
+import { NpiLevelTypography } from '../../components/NpiLevelTypography';
+import { setNotification } from '../../redux/notificationSlice';
 import {
+  AudioVisualPublication,
   Award,
   Broadcast,
-  Competition,
-  Exhibition,
-  MentionInPublication,
-  Venue,
   CinematicRelease,
-  OtherRelease,
-  MusicScore,
-  AudioVisualPublication,
+  Competition,
   Concert,
-  OtherMusicPerformance,
-  LiteraryArtsMonograph,
-  LiteraryArtsWeb,
-  LiteraryArtsPerformance,
+  Exhibition,
   LiteraryArtsAudioVisual,
   LiteraryArtsAudioVisualSubtype,
+  LiteraryArtsMonograph,
+  LiteraryArtsPerformance,
   LiteraryArtsPerformanceSubtype,
+  LiteraryArtsWeb,
+  MentionInPublication,
+  MusicScore,
+  OtherMusicPerformance,
+  OtherRelease,
+  Venue,
 } from '../../types/publication_types/artisticRegistration.types';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
-import {
-  MediaContributionPeriodicalPublicationContext,
-  MediaContributionPublicationContext,
-} from '../../types/publication_types/mediaContributionRegistration.types';
-import { NpiLevelTypography } from '../../components/NpiLevelTypography';
-import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
+import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
+import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import {
   ExhibitionBasic,
   ExhibitionMentionInPublication,
   ExhibitionOtherPresentation,
 } from '../../types/publication_types/exhibitionContent.types';
-import { fetchRegistration } from '../../api/registrationApi';
+import { JournalPublicationContext } from '../../types/publication_types/journalRegistration.types';
+import {
+  MediaContributionPeriodicalPublicationContext,
+  MediaContributionPublicationContext,
+} from '../../types/publication_types/mediaContributionRegistration.types';
+import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
+import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
+import { ContextPublisher, Journal, Publisher, Series } from '../../types/registration.types';
+import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
+import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
-import { setNotification } from '../../redux/notificationSlice';
 import { OutputItem } from '../registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
+import { RegistrationSummary } from './RegistrationSummary';
 
 interface PublicJournalProps {
   publicationContext: JournalPublicationContext | MediaContributionPeriodicalPublicationContext;

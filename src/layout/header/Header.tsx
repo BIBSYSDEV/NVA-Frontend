@@ -1,23 +1,23 @@
+import AddIcon from '@mui/icons-material/Add';
+import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import SearchIcon from '@mui/icons-material/Search';
+import { AppBar, Box, Button, Divider, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { AppBar, Box, Button, Divider, Theme, Typography, useMediaQuery } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import SearchIcon from '@mui/icons-material/Search';
-import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
-import { UrlPathTemplate } from '../../utils/urlPaths';
-import { LoginButton } from './LoginButton';
-import { Logo } from './Logo';
-import { LanguageSelector } from './LanguageSelector';
+import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { CustomerInstitution } from '../../types/customerInstitution.types';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { LanguageSelector } from './LanguageSelector';
+import { LoginButton } from './LoginButton';
+import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
-import { setCustomer } from '../../redux/customerReducer';
 
 export const Header = () => {
   const { t } = useTranslation();

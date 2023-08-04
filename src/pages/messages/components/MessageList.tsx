@@ -1,11 +1,11 @@
 import { Box, Divider, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Message, Ticket, TicketType } from '../../../types/publication_types/ticket.types';
-import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { fetchUser } from '../../../api/roleApi';
-import { getFullName } from '../../../utils/user-helpers';
+import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { Message, Ticket, TicketType } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getFullName } from '../../../utils/user-helpers';
 import { ticketColor } from './TicketListItem';
 
 interface MessageListProps {

@@ -1,6 +1,3 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import {
   Box,
   CircularProgress,
@@ -15,14 +12,17 @@ import {
   Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { alternatingTableRowColor } from '../../themes/mainTheme';
-import { ViewingScopeCell } from '../basic_data/institution_admin/ViewingScopeCell';
-import { RootState } from '../../redux/store';
-import { getSortedSubUnits } from '../../utils/institutions-helpers';
-import { RoleName } from '../../types/user.types';
-import { fetchUsers } from '../../api/roleApi';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { fetchOrganization } from '../../api/cristinApi';
+import { fetchUsers } from '../../api/roleApi';
+import { RootState } from '../../redux/store';
+import { alternatingTableRowColor } from '../../themes/mainTheme';
+import { RoleName } from '../../types/user.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { getSortedSubUnits } from '../../utils/institutions-helpers';
+import { ViewingScopeCell } from '../basic_data/institution_admin/ViewingScopeCell';
 import { EditorThesisCuratorTableCell } from './EditorThesisCuratorTableCell';
 
 export const EditorCurators = () => {

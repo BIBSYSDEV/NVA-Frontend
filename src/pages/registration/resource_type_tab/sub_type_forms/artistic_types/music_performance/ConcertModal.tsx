@@ -1,43 +1,43 @@
+import AddIcon from '@mui/icons-material/Add';
+import CancelIcon from '@mui/icons-material/Cancel';
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  Button,
-  Typography,
-  FormHelperText,
   Box,
+  Button,
   Checkbox,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   FormControlLabel,
+  FormHelperText,
+  TextField,
+  Typography,
 } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 import {
-  Formik,
-  Form,
-  Field,
-  FieldProps,
   ErrorMessage,
+  Field,
   FieldArray,
   FieldArrayRenderProps,
-  FormikProps,
+  FieldProps,
+  Form,
+  Formik,
   FormikErrors,
+  FormikProps,
   validateYupSchema,
   yupToFormErrors,
 } from 'formik';
-import { DatePicker } from '@mui/x-date-pickers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Cancel';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
-import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { YupShape } from '../../../../../../utils/validation/validationHelpers';
-import { OutputModalActions } from '../OutputModalActions';
-import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { emptyInstant, emptyPeriod, emptyPlace } from '../../../../../../types/common.types';
-import { PeriodFields } from '../../../components/PeriodFields';
+import { Concert, MusicalWorkPerformance } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { periodField } from '../../../../../../utils/validation/registration/referenceValidation';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { PeriodFields } from '../../../components/PeriodFields';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface ConcertModalProps {
   concert?: Concert;

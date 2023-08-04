@@ -1,18 +1,18 @@
-import { Box, Divider, IconButton, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { Helmet } from 'react-helmet-async';
 import PreviewIcon from '@mui/icons-material/Preview';
+import { Box, Divider, IconButton, Typography } from '@mui/material';
+import { Fragment } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import { PageSpinner } from '../../../components/PageSpinner';
+import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { CristinPerson } from '../../../types/user.types';
-import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
-import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
-import { useLocation } from 'react-router-dom';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
-import { PageSpinner } from '../../../components/PageSpinner';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
 import { getContributorInitials } from '../../../utils/registration-helpers';
-import { Fragment } from 'react';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
+import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
 
 interface ResearchProfilePanelProps {
   person?: CristinPerson;

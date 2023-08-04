@@ -1,10 +1,13 @@
+import { Autocomplete, Box, Chip, Skeleton, Typography } from '@mui/material';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
-import { Chip, Typography, Autocomplete, Box, Skeleton } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { Contributor } from '../../../../types/contributor.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import {
   Journal,
   PublicationInstanceType,
@@ -12,17 +15,14 @@ import {
   Registration,
   RegistrationDate,
 } from '../../../../types/registration.types';
+import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
-import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { Contributor } from '../../../../types/contributor.types';
-import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
-import { ExpressionStatement } from '../../../../utils/searchHelpers';
+import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
-import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { ExpressionStatement } from '../../../../utils/searchHelpers';
 
 interface SearchContainerFieldProps {
   fieldName: string;

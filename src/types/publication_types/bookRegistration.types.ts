@@ -1,3 +1,4 @@
+import { BookType, PublicationType } from '../publicationFieldNames';
 import {
   BaseEntityDescription,
   BaseReference,
@@ -5,7 +6,6 @@ import {
   ContextPublisher,
   ContextSeries,
 } from '../registration.types';
-import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 
 export interface BookRegistration extends BaseRegistration {

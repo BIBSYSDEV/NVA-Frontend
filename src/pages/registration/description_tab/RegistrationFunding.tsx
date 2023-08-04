@@ -1,18 +1,18 @@
-import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
-import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
-import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
-import { emptyFunding, Funding } from '../../../types/registration.types';
+import { FundingSourceField } from '../../../components/FundingSourceField';
+import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
+import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
+import { Funding, emptyFunding } from '../../../types/registration.types';
+import { API_URL } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { fundingSourceIsNfr, getNfrProjectUrl } from './projects_field/projectHelpers';
-import { DescriptionFieldNames, SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
-import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { API_URL } from '../../../utils/constants';
-import { FundingSourceField } from '../../../components/FundingSourceField';
 
 interface FundingsFieldProps {
   currentFundings: Funding[];

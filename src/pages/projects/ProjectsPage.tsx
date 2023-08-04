@@ -1,12 +1,12 @@
-import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
+import { fetchProject } from '../../api/cristinApi';
 import { PageSpinner } from '../../components/PageSpinner';
 import { StyledPageContent } from '../../components/styled/Wrappers';
-import { ProjectLandingPage } from './ProjectLandingPage';
-import { fetchProject } from '../../api/cristinApi';
 import { setNotification } from '../../redux/notificationSlice';
+import { ProjectLandingPage } from './ProjectLandingPage';
 
 const ProjectsPage = () => {
   const dispatch = useDispatch();

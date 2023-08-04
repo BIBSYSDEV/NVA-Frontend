@@ -1,3 +1,4 @@
+import CancelIcon from '@mui/icons-material/Cancel';
 import {
   Box,
   Checkbox,
@@ -16,20 +17,19 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
 import { DatePicker } from '@mui/x-date-pickers';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import prettyBytes from 'pretty-bytes';
-import { Field, FieldProps, ErrorMessage, useFormikContext } from 'formik';
-import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { TruncatableTypography } from '../../../components/TruncatableTypography';
+import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
+import { licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { TruncatableTypography } from '../../../components/TruncatableTypography';
-import { administrativeAgreementId } from '../FilesAndLicensePanel';
 import { equalUris } from '../../../utils/general-helpers';
-import { licenses } from '../../../types/license.types';
+import { administrativeAgreementId } from '../FilesAndLicensePanel';
 
 interface FilesTableRowProps {
   file: AssociatedFile;

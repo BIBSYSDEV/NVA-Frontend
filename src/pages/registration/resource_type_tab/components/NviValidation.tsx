@@ -1,5 +1,5 @@
-import { Paper, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
+import { Paper, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';

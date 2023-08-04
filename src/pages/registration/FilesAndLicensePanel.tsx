@@ -1,55 +1,55 @@
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import {
   Box,
   Button,
   FormHelperText,
+  IconButton,
   Link,
   Paper,
-  TextField,
-  Typography,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  IconButton,
+  TextField,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import { UppyFile } from '@uppy/core';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Modal } from '../../components/Modal';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RootState } from '../../redux/store';
+import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { AssociatedFile, AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
+import { licenses } from '../../types/license.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import { FileUploader } from './files_and_license_tab/FileUploader';
-import {
-  getChannelRegisterJournalUrl,
-  getChannelRegisterPublisherUrl,
-} from '../public_registration/PublicPublicationContext';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
-  isEmbargoed,
   isDegreeWithProtectedFiles,
+  isEmbargoed,
   isTypeWithFileVersionField,
   userIsRegistrationCurator,
   userIsRegistrationOwner,
 } from '../../utils/registration-helpers';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { DoiField } from './resource_type_tab/components/DoiField';
+import {
+  getChannelRegisterJournalUrl,
+  getChannelRegisterPublisherUrl,
+} from '../public_registration/PublicPublicationContext';
+import { FileUploader } from './files_and_license_tab/FileUploader';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
-import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
-import { licenses } from '../../types/license.types';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { DoiField } from './resource_type_tab/components/DoiField';
 
 export const administrativeAgreementId = 'administrative-agreement';
 

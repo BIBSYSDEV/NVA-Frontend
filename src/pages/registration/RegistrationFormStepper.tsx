@@ -1,13 +1,13 @@
+import { Step, StepButton, StepLabel, Stepper, Theme, useMediaQuery } from '@mui/material';
+import deepmerge from 'deepmerge';
 import { useFormikContext } from 'formik';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Step, StepButton, StepLabel, Stepper, Theme, useMediaQuery } from '@mui/material';
 import { useLocation } from 'react-router-dom';
-import deepmerge from 'deepmerge';
 import { Registration, RegistrationTab } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { getTabErrors, getTouchedTabFields } from '../../utils/formik-helpers';
 import { RegistrationLocationState } from './RegistrationForm';
-import { dataTestId } from '../../utils/dataTestIds';
 
 interface RegistrationFormStepperProps {
   setTabNumber: (newTab: RegistrationTab) => void;

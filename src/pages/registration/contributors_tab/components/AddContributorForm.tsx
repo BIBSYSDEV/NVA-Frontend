@@ -1,23 +1,23 @@
+import SearchIcon from '@mui/icons-material/Search';
+import { LoadingButton } from '@mui/lab';
+import { Box, Button, TablePagination, TextField, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, TablePagination, TextField, Typography } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { LoadingButton } from '@mui/lab';
-import { useQuery } from '@tanstack/react-query';
-import { ListSkeleton } from '../../../../components/ListSkeleton';
-import { RootState } from '../../../../redux/store';
-import { Registration } from '../../../../types/registration.types';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { ContributorRole } from '../../../../types/contributor.types';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { CristinPerson } from '../../../../types/user.types';
-import { CristinPersonList } from './CristinPersonList';
 import { apiRequest } from '../../../../api/apiRequest';
-import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
-import { setNotification } from '../../../../redux/notificationSlice';
 import { searchForPerson } from '../../../../api/cristinApi';
+import { ListSkeleton } from '../../../../components/ListSkeleton';
+import { setNotification } from '../../../../redux/notificationSlice';
+import { RootState } from '../../../../redux/store';
+import { ContributorRole } from '../../../../types/contributor.types';
+import { Registration } from '../../../../types/registration.types';
+import { CristinPerson } from '../../../../types/user.types';
+import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { CristinPersonList } from './CristinPersonList';
 
 const resultsPerPage = 10;
 

@@ -1,7 +1,3 @@
-import { dataTestId } from '../../src/utils/dataTestIds';
-import { DesignType } from '../../src/types/publication_types/artisticRegistration.types';
-import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
-import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
 import {
   ArtisticType,
   BookType,
@@ -10,6 +6,10 @@ import {
   PresentationType,
   ReportType,
 } from '../../src/types/publicationFieldNames';
+import { DesignType } from '../../src/types/publication_types/artisticRegistration.types';
+import { dataTestId } from '../../src/utils/dataTestIds';
+import { mockJournalsSearch } from '../../src/utils/testfiles/mockJournals';
+import { mockPublishersSearch } from '../../src/utils/testfiles/mockPublishers';
 
 describe('User opens registration form and can see validation errors', () => {
   beforeEach('Given that the user is logged in as Creator:', () => {
