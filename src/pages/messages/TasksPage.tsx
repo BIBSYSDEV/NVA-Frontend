@@ -1,15 +1,6 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  FormControl,
-  FormControlLabel,
-  Typography,
-  styled,
-} from '@mui/material';
+import { Box, Button, CircularProgress, Divider, FormControlLabel, Typography, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,11 +29,10 @@ import { RegistrationLandingPage } from '../public_registration/RegistrationLand
 import { TicketList, ticketsPerPageOptions } from './components/TicketList';
 
 type SelectedStatusState = {
-  [key in Exclude<TicketStatus, 'New'>]: boolean;
+  [key in TicketStatus]: boolean;
 };
-const newStatus: TicketStatus = 'New';
 
-type SearchMode = 'new' | 'current-user' | 'all';
+type SearchMode = 'current-user' | 'all';
 
 const StyledSearchModeButton = styled(LinkButton)({
   justifyContent: 'center',
@@ -61,7 +51,7 @@ const TasksPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
 
-  const [searchMode, setSearchMode] = useState<SearchMode>('new');
+  const [searchMode, setSearchMode] = useState<SearchMode>('all');
 
   const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
 
@@ -72,7 +62,8 @@ const TasksPage = () => {
   });
 
   const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
-    Pending: true,
+    New: true,
+    Pending: false,
     Completed: false,
     Closed: false,
   });
@@ -99,9 +90,7 @@ const TasksPage = () => {
     .map(([key]) => key);
 
   const statusQuery =
-    searchMode === 'new'
-      ? `(status:${newStatus})`
-      : selectedStatusesArray.length > 0
+    selectedStatusesArray.length > 0
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
@@ -123,6 +112,7 @@ const TasksPage = () => {
   const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
 
   const statusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
+  const newCount = statusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
   const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
@@ -176,15 +166,14 @@ const TasksPage = () => {
 
           <StyledTicketSearchFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
             <StyledSearchModeButton
-              data-testid={dataTestId.tasksPage.searchMode.newUserDialogsButton}
-              isSelected={searchMode === 'new'}
-              onClick={() => setSearchMode('new')}>
-              {t('tasks.new_user_dialogs')}
-            </StyledSearchModeButton>
-            <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
               isSelected={searchMode === 'current-user'}
-              onClick={() => setSearchMode('current-user')}>
+              onClick={() => {
+                if (selectedStatuses.New) {
+                  setSelectedStatuses({ ...selectedStatuses, New: false });
+                }
+                setSearchMode('current-user');
+              }}>
               {t('tasks.my_user_dialogs')}
             </StyledSearchModeButton>
             <StyledSearchModeButton
@@ -235,52 +224,63 @@ const TasksPage = () => {
           </StyledTicketSearchFormGroup>
 
           <StyledTicketSearchFormGroup>
-            <FormControl disabled={searchMode === 'new'}>
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
-                checked={selectedStatuses.Pending}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
-                  />
-                }
-                label={
-                  selectedStatuses.Pending && pendingCount
-                    ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
-                    : t('my_page.messages.ticket_types.Pending')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
-                checked={selectedStatuses.Completed}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() =>
-                      setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })
-                    }
-                  />
-                }
-                label={
-                  selectedStatuses.Completed && completedCount
-                    ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
-                    : t('my_page.messages.ticket_types.Completed')
-                }
-              />
-              <FormControlLabel
-                data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
-                checked={selectedStatuses.Closed}
-                control={
-                  <StyledStatusCheckbox
-                    onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
-                  />
-                }
-                label={
-                  selectedStatuses.Closed && closedCount
-                    ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
-                    : t('my_page.messages.ticket_types.Closed')
-                }
-              />
-            </FormControl>
+            <FormControlLabel
+              data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
+              disabled={searchMode === 'current-user'}
+              checked={selectedStatuses.New}
+              control={
+                <StyledStatusCheckbox
+                  onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
+                />
+              }
+              label={
+                selectedStatuses.New && newCount
+                  ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
+                  : t('my_page.messages.ticket_types.New')
+              }
+            />
+            <FormControlLabel
+              data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
+              checked={selectedStatuses.Pending}
+              control={
+                <StyledStatusCheckbox
+                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
+                />
+              }
+              label={
+                selectedStatuses.Pending && pendingCount
+                  ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
+                  : t('my_page.messages.ticket_types.Pending')
+              }
+            />
+            <FormControlLabel
+              data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
+              checked={selectedStatuses.Completed}
+              control={
+                <StyledStatusCheckbox
+                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })}
+                />
+              }
+              label={
+                selectedStatuses.Completed && completedCount
+                  ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
+                  : t('my_page.messages.ticket_types.Completed')
+              }
+            />
+            <FormControlLabel
+              data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
+              checked={selectedStatuses.Closed}
+              control={
+                <StyledStatusCheckbox
+                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
+                />
+              }
+              label={
+                selectedStatuses.Closed && closedCount
+                  ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
+                  : t('my_page.messages.ticket_types.Closed')
+              }
+            />
           </StyledTicketSearchFormGroup>
         </NavigationListAccordion>
       </SideMenu>

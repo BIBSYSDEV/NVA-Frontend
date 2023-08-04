@@ -1540,7 +1540,6 @@
     "all_user_dialogs": "Alle brukerdialoger",
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
-    "new_user_dialogs": "Nye brukerdialoger",
     "unread": "Uleste",
     "user_dialog": "Brukerdialog"
   }
