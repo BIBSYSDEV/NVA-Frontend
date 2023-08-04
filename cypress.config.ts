@@ -1,5 +1,5 @@
-import { defineConfig } from 'cypress';
 import codeCoverageTask from '@cypress/code-coverage/task';
+import { defineConfig } from 'cypress';
 
 export default defineConfig({
   projectId: 'kigtb6',

@@ -1,5 +1,4 @@
-import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Button,
   Paper,
@@ -11,12 +10,13 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 import { visuallyHidden } from '@mui/utils';
-import { SimpleCustomerInstitution } from '../../../types/customerInstitution.types';
-import { getAdminInstitutionPath } from '../../../utils/urlPaths';
-import { dataTestId } from '../../../utils/dataTestIds';
+import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
+import { SimpleCustomerInstitution } from '../../../types/customerInstitution.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { getAdminInstitutionPath } from '../../../utils/urlPaths';
 
 interface InstitutionListProps {
   institutions: SimpleCustomerInstitution[];

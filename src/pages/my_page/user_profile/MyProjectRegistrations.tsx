@@ -1,13 +1,13 @@
+import { List, TablePagination, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Typography, List, TablePagination } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { searchForProjects } from '../../../api/cristinApi';
-import { RootState } from '../../../redux/store';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { RootState } from '../../../redux/store';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { canEditProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 

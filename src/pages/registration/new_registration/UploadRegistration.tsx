@@ -1,25 +1,25 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloudUploadIcon from '@mui/icons-material/CloudUploadOutlined';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useUppy } from '@uppy/react';
 import { LoadingButton } from '@mui/lab';
-import { RegistrationAccordion } from './RegistrationAccordion';
-import { AssociatedFile } from '../../../types/associatedArtifact.types';
+import { AccordionActions, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import { useUppy } from '@uppy/react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
-import { FileUploader } from '../files_and_license_tab/FileUploader';
-import { getRegistrationWizardPath } from '../../../utils/urlPaths';
-import { createUppy } from '../../../utils/uppy/uppy-config';
-import { UploadedFileRow } from './UploadedFileRow';
+import { AssociatedFile } from '../../../types/associatedArtifact.types';
+import { BaseRegistration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { createUppy } from '../../../utils/uppy/uppy-config';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { FileUploader } from '../files_and_license_tab/FileUploader';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
-import { BaseRegistration } from '../../../types/registration.types';
+import { RegistrationAccordion } from './RegistrationAccordion';
+import { UploadedFileRow } from './UploadedFileRow';
 
 export const UploadRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t, i18n } = useTranslation();

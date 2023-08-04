@@ -1,15 +1,15 @@
 import { List, TablePagination, Typography } from '@mui/material';
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 import { UseQueryResult } from '@tanstack/react-query';
+import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
-import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
-import { TicketListItem } from './TicketListItem';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchResponse } from '../../../types/common.types';
+import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
+import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
   ticketsQuery: UseQueryResult<SearchResponse<ExpandedTicket>, unknown>;

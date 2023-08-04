@@ -1,31 +1,31 @@
-import { Formik, Form, FormikProps } from 'formik';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
 import { Box, Divider } from '@mui/material';
-import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
-import {
-  createSearchConfigFromSearchParams,
-  createRegistrationSearchQuery,
-  SearchConfig,
-  SearchParam,
-  emptySearchConfig,
-} from '../../utils/searchHelpers';
-import { RegistrationFacetsFilter } from './registration_search/filters/RegistrationFacetsFilter';
-import { RegistrationSearch } from './registration_search/RegistrationSearch';
-import { RegistrationSearchResponse } from '../../types/registration.types';
-import { useFetch } from '../../utils/hooks/useFetch';
+import { Form, Formik, FormikProps } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { PersonSearch } from './person_search/PersonSearch';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { ProjectSearch } from './project_search/ProjectSearch';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/SideMenu';
+import { RegistrationSearchResponse } from '../../types/registration.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useFetch } from '../../utils/hooks/useFetch';
+import {
+  SearchConfig,
+  SearchParam,
+  createRegistrationSearchQuery,
+  createSearchConfigFromSearchParams,
+  emptySearchConfig,
+} from '../../utils/searchHelpers';
+import { PersonSearch } from './person_search/PersonSearch';
+import { ProjectSearch } from './project_search/ProjectSearch';
+import { RegistrationSearch } from './registration_search/RegistrationSearch';
+import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
+import { RegistrationFacetsFilter } from './registration_search/filters/RegistrationFacetsFilter';
 
 /*
  * The Search Page allows for users to search for 3 things (types): Registrations/Results, Persons, and Projects

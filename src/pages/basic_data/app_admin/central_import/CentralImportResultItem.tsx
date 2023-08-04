@@ -1,11 +1,11 @@
-import { Grid, Link as MuiLink, ListItem, ListItemText, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Grid, ListItem, ListItemText, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
-import { getLanguageString } from '../../../../utils/translation-helpers';
+import { Link } from 'react-router-dom';
 import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
+import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
 
 interface CentralImportResultItemProps {
   importCandidate: ImportCandidateSummary;

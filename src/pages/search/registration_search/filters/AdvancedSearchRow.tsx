@@ -1,17 +1,17 @@
-import { Box, MenuItem, Button, TextField } from '@mui/material';
+import { Box, Button, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { TFuncKey } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import {
+  ContributorFieldNames,
   DescriptionFieldNames,
   ResourceFieldNames,
-  ContributorFieldNames,
-  SpecificContributorFieldNames,
   SearchFieldName,
+  SpecificContributorFieldNames,
 } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
-import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHelpers';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHelpers';
 
 interface FilterItem {
   field: string;

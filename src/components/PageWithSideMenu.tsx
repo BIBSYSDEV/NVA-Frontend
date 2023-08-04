@@ -1,6 +1,6 @@
 import { SvgIconComponent } from '@mui/icons-material';
-import { Box, BoxProps, Button, ButtonProps, styled, Typography } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Box, BoxProps, Button, ButtonProps, styled, Typography } from '@mui/material';
 import { Link, LinkProps } from 'react-router-dom';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({

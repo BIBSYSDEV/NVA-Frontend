@@ -1,11 +1,11 @@
-import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { fetchRegistrationsByOwner } from '../../api/registrationApi';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { RegistrationStatus } from '../../types/registration.types';
 import { MyRegistrationsList } from './MyRegistrationsList';
-import { fetchRegistrationsByOwner } from '../../api/registrationApi';
 
 interface MyRegistrationsProps {
   selectedPublished: boolean;

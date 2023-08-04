@@ -1,6 +1,6 @@
+import { Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
 import { RegistrationTab } from '../../types/registration.types';
 import { TabErrors } from '../../utils/formik-helpers';
 

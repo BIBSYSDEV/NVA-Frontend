@@ -1,13 +1,13 @@
-import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Funding } from '../../types/registration.types';
-import { getLanguageString } from '../../utils/translation-helpers';
-import { fundingSourceIsNfr, getNfrProjectUrl } from '../registration/description_tab/projects_field/projectHelpers';
 import { CristinApiPath } from '../../api/apiPaths';
 import { FundingSources } from '../../types/project.types';
-import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { Funding } from '../../types/registration.types';
 import { getPeriodString } from '../../utils/general-helpers';
+import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { getLanguageString } from '../../utils/translation-helpers';
+import { fundingSourceIsNfr, getNfrProjectUrl } from '../registration/description_tab/projects_field/projectHelpers';
 
 interface PublicFundingsContentProps {
   fundings: Funding[];

@@ -1,16 +1,16 @@
-import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
+import { setCustomer } from '../../redux/customerReducer';
+import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishStrategy } from '../../types/customerInstitution.types';
-import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { setNotification } from '../../redux/notificationSlice';
-import { setCustomer } from '../../redux/customerReducer';
 import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledItemContainer = styled('div')({

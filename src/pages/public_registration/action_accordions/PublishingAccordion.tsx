@@ -1,3 +1,10 @@
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import CloseIcon from '@mui/icons-material/Close';
+import EditIcon from '@mui/icons-material/Edit';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import WarningIcon from '@mui/icons-material/Warning';
+import { LoadingButton } from '@mui/lab';
 import {
   Accordion,
   AccordionDetails,
@@ -8,34 +15,27 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import { Link as RouterLink } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import WarningIcon from '@mui/icons-material/Warning';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CloseIcon from '@mui/icons-material/Close';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import { LoadingButton } from '@mui/lab';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { validateYupSchema, yupToFormErrors } from 'formik';
 import { useMutation } from '@tanstack/react-query';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
-import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
-import { ErrorList } from '../../registration/ErrorList';
+import { validateYupSchema, yupToFormErrors } from 'formik';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
+import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
+import { MessageForm } from '../../../components/MessageForm';
+import { setNotification } from '../../../redux/notificationSlice';
+import { RootState } from '../../../redux/store';
 import { PublishingTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
-import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
-import { setNotification } from '../../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
+import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { MessageList } from '../../messages/components/MessageList';
-import { MessageForm } from '../../../components/MessageForm';
-import { TicketAssignee } from './TicketAssignee';
 import { PublishingRequestMessagesColumn } from '../../messages/components/PublishingRequestMessagesColumn';
-import { RootState } from '../../../redux/store';
+import { ErrorList } from '../../registration/ErrorList';
+import { TicketAssignee } from './TicketAssignee';
 
 interface PublishingAccordionProps {
   registration: Registration;

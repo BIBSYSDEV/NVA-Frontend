@@ -1,16 +1,16 @@
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import EditIcon from '@mui/icons-material/Edit';
+import { Box, IconButton, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Box, Link as MuiLink, List, ListItemText, Typography, IconButton, Tooltip } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import { getRegistrationLandingPagePath, getRegistrationWizardPath, getResearchProfilePath } from '../utils/urlPaths';
 import { Registration, RegistrationStatus } from '../types/registration.types';
-import { ErrorBoundary } from './ErrorBoundary';
 import { dataTestId } from '../utils/dataTestIds';
-import { getTitleString } from '../utils/registration-helpers';
 import { displayDate } from '../utils/date-helpers';
-import { TruncatableTypography } from './TruncatableTypography';
+import { getTitleString } from '../utils/registration-helpers';
+import { getRegistrationLandingPagePath, getRegistrationWizardPath, getResearchProfilePath } from '../utils/urlPaths';
 import { ContributorIndicators } from './ContributorIndicators';
+import { ErrorBoundary } from './ErrorBoundary';
+import { TruncatableTypography } from './TruncatableTypography';
 import { SearchListItem } from './styled/Wrappers';
 
 interface RegistrationListProps {

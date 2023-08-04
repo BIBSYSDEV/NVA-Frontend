@@ -1,15 +1,15 @@
-import { TableCell, IconButton, Popover, Typography, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import LabelIcon from '@mui/icons-material/Label';
 import LabelOutlinedIcon from '@mui/icons-material/LabelOutlined';
-import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { LoadingButton } from '@mui/lab';
-import { useDispatch } from 'react-redux';
+import { Checkbox, FormControlLabel, FormGroup, IconButton, Popover, TableCell, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { InstitutionUser, RoleName, UserRole } from '../../types/user.types';
+import { useDispatch } from 'react-redux';
 import { updateUser } from '../../api/roleApi';
 import { setNotification } from '../../redux/notificationSlice';
+import { InstitutionUser, RoleName, UserRole } from '../../types/user.types';
 
 interface EditorThesisCuratorTableCellProps {
   curator: InstitutionUser;

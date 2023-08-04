@@ -1,12 +1,12 @@
-import { useTranslation } from 'react-i18next';
 import { TablePagination, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { RegistrationSearchResults } from './RegistrationSearchResults';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { RegistrationSearchResponse } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { SearchParam } from '../../../utils/searchHelpers';
-import { RegistrationSearchResponse } from '../../../types/registration.types';
+import { RegistrationSearchResults } from './RegistrationSearchResults';
 
 interface RegistrationSearchProps {
   searchResults?: RegistrationSearchResponse;

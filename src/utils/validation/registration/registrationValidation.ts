@@ -1,7 +1,12 @@
 import * as Yup from 'yup';
+import i18n from '../../../translations/i18n';
 import { PublicationType } from '../../../types/publicationFieldNames';
-import { contributorsValidationSchema } from './contributorValidation';
+import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
+import { getMainRegistrationType, isBook } from '../../registration-helpers';
+import { YupShape } from '../validationHelpers';
 import { associatedFileValidationSchema } from './associatedArtifactValidation';
+import { contributorsValidationSchema } from './contributorValidation';
+import { fundingValidationSchema } from './fundingValidation';
 import {
   artisticDesignReference,
   baseReference,
@@ -17,11 +22,6 @@ import {
   reportReference,
   researchDataReference,
 } from './referenceValidation';
-import i18n from '../../../translations/i18n';
-import { getMainRegistrationType, isBook } from '../../registration-helpers';
-import { Registration, EntityDescription, RegistrationDate } from '../../../types/registration.types';
-import { YupShape } from '../validationHelpers';
-import { fundingValidationSchema } from './fundingValidation';
 
 const registrationErrorMessage = {
   titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.title') }),

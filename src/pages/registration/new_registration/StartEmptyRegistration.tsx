@@ -1,16 +1,16 @@
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
+import { AccordionSummary, Box, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AccordionSummary, Box, CircularProgress, Typography } from '@mui/material';
-import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFileOutlined';
-import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { RegistrationAccordion } from './RegistrationAccordion';
+import { useHistory } from 'react-router-dom';
 import { createRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
-import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { StartRegistrationAccordionProps } from './LinkRegistration';
+import { RegistrationAccordion } from './RegistrationAccordion';
 
 const labelId = 'start-empty-label';
 

@@ -1,7 +1,7 @@
+import { LoadingButton } from '@mui/lab';
+import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
 import * as Yup from 'yup';
 import i18n from '../../../../translations/i18n';
 import { Contributor, emptyContributor } from '../../../../types/contributor.types';

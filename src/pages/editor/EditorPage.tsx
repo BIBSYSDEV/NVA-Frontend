@@ -1,23 +1,23 @@
-import { useTranslation } from 'react-i18next';
-import { Switch, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import StoreIcon from '@mui/icons-material/Store';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import GavelIcon from '@mui/icons-material/Gavel';
+import StoreIcon from '@mui/icons-material/Store';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Switch, useHistory } from 'react-router-dom';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
+import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SideMenu } from '../../components/SideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { VocabularySettings } from './VocabularySettings';
-import { PublishStrategySettings } from './PublishStrategySettings';
+import NotFound from '../../pages/errorpages/NotFound';
+import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { EditorInstitution } from './EditorInstitution';
-import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { RootState } from '../../redux/store';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
-import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import NotFound from '../../pages/errorpages/NotFound';
-import { SideMenu } from '../../components/SideMenu';
+import { EditorInstitution } from './EditorInstitution';
+import { PublishStrategySettings } from './PublishStrategySettings';
+import { VocabularySettings } from './VocabularySettings';
 
 const EditorPage = () => {
   const { t } = useTranslation();
