@@ -159,7 +159,7 @@ const MyPagePage = () => {
               </Button>
             </StyledTicketSearchFormGroup>
 
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 showCheckbox

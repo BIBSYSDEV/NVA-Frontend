@@ -1,5 +1,7 @@
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { Box, Button, CircularProgress, Divider, FormControlLabel, Typography, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -35,7 +37,7 @@ type SelectedStatusState = {
 type SearchMode = 'current-user' | 'all';
 
 const StyledSearchModeButton = styled(LinkButton)({
-  justifyContent: 'center',
+  // justifyContent: 'center',
   borderRadius: '1.5rem',
   textTransform: 'none',
 });
@@ -164,27 +166,7 @@ const TasksPage = () => {
             </Button>
           </StyledTicketSearchFormGroup>
 
-          <StyledTicketSearchFormGroup sx={{ mt: 0, gap: '0.5rem' }}>
-            <StyledSearchModeButton
-              data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
-              isSelected={searchMode === 'current-user'}
-              onClick={() => {
-                if (selectedStatuses.New) {
-                  setSelectedStatuses({ ...selectedStatuses, New: false });
-                }
-                setSearchMode('current-user');
-              }}>
-              {t('tasks.my_user_dialogs')}
-            </StyledSearchModeButton>
-            <StyledSearchModeButton
-              data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
-              isSelected={searchMode === 'all'}
-              onClick={() => setSearchMode('all')}>
-              {t('tasks.all_user_dialogs')}
-            </StyledSearchModeButton>
-          </StyledTicketSearchFormGroup>
-
-          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
+          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
             <SelectableButton
               data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
               showCheckbox
@@ -221,6 +203,28 @@ const TasksPage = () => {
                 ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                 : t('my_page.messages.types.GeneralSupportCase')}
             </SelectableButton>
+          </StyledTicketSearchFormGroup>
+
+          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
+            <StyledSearchModeButton
+              data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
+              isSelected={searchMode === 'current-user'}
+              startIcon={searchMode === 'current-user' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+              onClick={() => {
+                if (selectedStatuses.New) {
+                  setSelectedStatuses({ ...selectedStatuses, New: false });
+                }
+                setSearchMode('current-user');
+              }}>
+              {t('tasks.my_user_dialogs')}
+            </StyledSearchModeButton>
+            <StyledSearchModeButton
+              data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
+              isSelected={searchMode === 'all'}
+              startIcon={searchMode === 'all' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+              onClick={() => setSearchMode('all')}>
+              {t('tasks.all_user_dialogs')}
+            </StyledSearchModeButton>
           </StyledTicketSearchFormGroup>
 
           <StyledTicketSearchFormGroup>
