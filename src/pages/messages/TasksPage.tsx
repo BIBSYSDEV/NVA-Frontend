@@ -37,7 +37,6 @@ type SelectedStatusState = {
 type SearchMode = 'current-user' | 'all';
 
 const StyledSearchModeButton = styled(LinkButton)({
-  // justifyContent: 'center',
   borderRadius: '1.5rem',
   textTransform: 'none',
 });
