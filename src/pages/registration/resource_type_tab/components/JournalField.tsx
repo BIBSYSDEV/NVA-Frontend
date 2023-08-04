@@ -41,13 +41,18 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const journalOptionsQuery = useQuery({
     queryKey: ['journalSearch', debouncedQuery, year],
     enabled: !!debouncedQuery && debouncedQuery === query,
-    queryFn: () => searchForJournal(debouncedQuery, year),
+    queryFn: () => searchForJournals(debouncedQuery, year),
     meta: { errorMessage: t('feedback.error.get_journals') },
   });
 
   // Fetch Journals with matching ISSN
   const journalsByIssnQuery = useQuery({
-    queryKey: ['journalsByIssn', reference?.publicationContext.printIssn, reference?.publicationContext.onlineIssn],
+    queryKey: [
+      'journalsByIssn',
+      reference?.publicationContext.printIssn,
+      reference?.publicationContext.onlineIssn,
+      year,
+    ],
     enabled: !journalId && !!(reference?.publicationContext.printIssn || reference?.publicationContext.onlineIssn),
     queryFn: () =>
       searchForJournals(
@@ -59,7 +64,6 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
 
   useEffect(() => {
     // Set Journal with matching ISSN
-    // TODO: text and issn search can be merged?
     if (journalsByIssnQuery.data?.hits.length === 1) {
       setFieldValue(ResourceFieldNames.PublicationContextType, confirmedContextType, false);
       setFieldValue(ResourceFieldNames.PublicationContextId, journalsByIssnQuery.data.hits[0].id);
@@ -159,6 +163,3 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     </Box>
   );
 };
-function searchForJournal(debouncedQuery: string, year: string): any {
-  throw new Error('Function not implemented.');
-}
