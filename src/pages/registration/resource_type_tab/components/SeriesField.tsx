@@ -56,6 +56,7 @@ export const SeriesField = () => {
     enabled: !!series?.id,
     queryFn: () => getById<Series>(series?.id ?? ''),
     meta: { errorMessage: t('feedback.error.get_series') },
+    staleTime: Infinity,
   });
 
   return (

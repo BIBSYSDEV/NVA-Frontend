@@ -54,6 +54,7 @@ export const PublisherField = () => {
     enabled: !!publisher?.id,
     queryFn: () => getById<Publisher>(publisher?.id ?? ''),
     meta: { errorMessage: t('feedback.error.get_publisher') },
+    staleTime: Infinity,
   });
 
   return (
