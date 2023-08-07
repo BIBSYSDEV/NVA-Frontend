@@ -77,7 +77,6 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
     queryFn: () => getById<Journal>(journalId),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   return (

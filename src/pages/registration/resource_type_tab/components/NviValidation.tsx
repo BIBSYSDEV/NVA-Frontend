@@ -49,7 +49,6 @@ const NviValidationJournalArticle = ({ registration }: { registration: JournalRe
     queryFn: () => getById<Journal>(journalId),
     meta: { errorMessage: t('feedback.error.get_journal') },
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const journalScientificValue = journalQuery.data?.scientificValue;
@@ -68,7 +67,6 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
     queryFn: () => getById<Publisher>(publisherId),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const seriesQuery = useQuery({
@@ -77,7 +75,6 @@ const NviValidationBookMonograph = ({ registration }: { registration: BookRegist
     queryFn: () => getById<Series>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const publisherScientificValue = publisherQuery.data?.scientificValue;
@@ -114,7 +111,6 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     queryFn: () => getById<Publisher>(publisherId),
     meta: { errorMessage: t('feedback.error.get_publisher') },
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const seriesQuery = useQuery({
@@ -123,7 +119,6 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
     queryFn: () => getById<Series>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
     staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   const publisherScientificValue = publisherQuery.data?.scientificValue;

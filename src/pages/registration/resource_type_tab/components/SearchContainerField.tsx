@@ -202,6 +202,7 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
     enabled: !!publisherId,
     queryFn: () => getById<Publisher>(publisherId),
     meta: { errorMessage: t('feedback.error.get_publisher') },
+    staleTime: Infinity,
   });
 
   const seriesQuery = useQuery({
@@ -209,6 +210,7 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
     enabled: !!seriesId,
     queryFn: () => getById<Series>(seriesId),
     meta: { errorMessage: t('feedback.error.get_series') },
+    staleTime: Infinity,
   });
 
   const publisher = publisherQuery.data;
