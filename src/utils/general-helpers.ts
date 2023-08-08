@@ -21,32 +21,17 @@ export const equalUris = (uri1: string | null, uri2: string | null) =>
 
 const removeTrailingSlash = (value: string) => (value.endsWith('/') ? value.slice(0, -1) : value);
 
-export const getTimePeriodString = (date1: string, date2: string, t: TFunction) => {
-  const date1Obj = new Date(date1);
-  const date2Obj = new Date(date2);
+export const getTimePeriodString = (date1: Date, date2: Date, t: TFunction) => {
+  const dateDiff = Math.abs(date1.getTime() - date2.getTime());
+  const daysCount = Math.floor(dateDiff / 86_400_000);
 
-  // Convert minutes to milliseconds
-  const timezoneOffset1 = date1Obj.getTimezoneOffset() * 60 * 1000;
-  const timezoneOffset2 = date2Obj.getTimezoneOffset() * 60 * 1000;
-
-  const dateDiff = Math.abs(date1Obj.getTime() - timezoneOffset1 - (date2Obj.getTime() - timezoneOffset2));
-  const minutesDiff = Math.floor(dateDiff / (1000 * 60));
-  const hoursDiff = Math.floor(dateDiff / (1000 * 3600));
-  const daysDiff = Math.floor(dateDiff / (1000 * 3600 * 24));
-
-  if (minutesDiff < 1) {
-    return t('common.now');
-  } else if (minutesDiff < 60) {
-    return t('common.x_minutes', { count: minutesDiff });
-  } else if (hoursDiff < 24) {
-    return t('common.x_hours', { count: hoursDiff });
-  } else if (daysDiff < 30) {
-    return t('common.x_days', { count: daysDiff });
-  } else if (daysDiff < 365) {
-    const monthsCount = Math.floor(daysDiff / 30);
+  if (daysCount < 31) {
+    return t('common.x_days', { count: daysCount });
+  } else if (daysCount < 365) {
+    const monthsCount = Math.floor(daysCount / 31);
     return t('common.x_months', { count: monthsCount });
   } else {
-    const yearsCount = Math.floor(daysDiff / 365);
+    const yearsCount = Math.floor(daysCount / 365);
     return t('common.x_years', { count: yearsCount });
   }
 };
