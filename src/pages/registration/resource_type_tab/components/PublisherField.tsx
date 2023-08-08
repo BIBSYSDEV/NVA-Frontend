@@ -130,7 +130,7 @@ export const PublisherField = () => {
           />
         )}
       </Field>
-      {!publisher?.id && (
+      {!publisher?.id && publisherOptionsQuery.isFetched && (
         <>
           <Button
             variant="outlined"

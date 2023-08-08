@@ -126,7 +126,7 @@ export const SeriesField = () => {
           />
         )}
       </Field>
-      {!series?.id && (
+      {!series?.id && seriesOptionsQuery.isFetched && (
         <>
           <Button
             variant="outlined"

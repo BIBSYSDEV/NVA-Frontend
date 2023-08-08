@@ -150,7 +150,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
           />
         )}
       </Field>
-      {!reference?.publicationContext.id && (
+      {!reference?.publicationContext.id && journalOptionsQuery.isFetched && (
         <>
           <Button
             variant="outlined"
