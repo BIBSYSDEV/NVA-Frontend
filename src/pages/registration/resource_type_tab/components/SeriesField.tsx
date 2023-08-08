@@ -32,7 +32,7 @@ export const SeriesField = () => {
 
   const seriesOptionsQuery = useQuery({
     queryKey: ['seriesSearch', debouncedQuery, year],
-    enabled: !!debouncedQuery && debouncedQuery === query,
+    enabled: debouncedQuery.length > 3 && debouncedQuery === query,
     queryFn: () => searchForSeries(debouncedQuery, year),
     meta: { errorMessage: t('feedback.error.get_series') },
   });
