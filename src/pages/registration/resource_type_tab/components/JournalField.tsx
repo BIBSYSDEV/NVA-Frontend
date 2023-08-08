@@ -40,7 +40,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
 
   const journalOptionsQuery = useQuery({
     queryKey: ['journalSearch', debouncedQuery, year],
-    enabled: !!debouncedQuery && debouncedQuery === query,
+    enabled: debouncedQuery.length > 3 && debouncedQuery === query,
     queryFn: () => searchForJournals(debouncedQuery, year),
     meta: { errorMessage: t('feedback.error.get_journals') },
   });

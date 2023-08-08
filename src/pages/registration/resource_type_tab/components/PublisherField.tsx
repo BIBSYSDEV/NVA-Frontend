@@ -32,7 +32,7 @@ export const PublisherField = () => {
 
   const publisherOptionsQuery = useQuery({
     queryKey: ['publisherSearch', debouncedQuery, year],
-    enabled: !!debouncedQuery && debouncedQuery === query,
+    enabled: debouncedQuery.length > 3 && debouncedQuery === query,
     queryFn: () => searchForPublishers(debouncedQuery, year),
     meta: { errorMessage: t('feedback.error.get_publishers') },
   });
