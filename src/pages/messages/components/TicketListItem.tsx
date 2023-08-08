@@ -9,6 +9,7 @@ import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, emptyRegistration } from '../../../types/registration.types';
+import { getTimePeriodString } from '../../../utils/general-helpers';
 import { getContributorInitials } from '../../../utils/registration-helpers';
 import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
 import { getFullName } from '../../../utils/user-helpers';
@@ -43,8 +44,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
     },
   } as Registration;
-  const msAge = new Date().getTime() - new Date(ticket.modifiedDate).getTime();
-  const daysAge = Math.ceil(msAge / 86_400_000); // 1000 * 60 * 60 * 24 = 86_400_000 ms in one day
+
+  const ticketAge = getTimePeriodString(new Date(ticket.createdDate), new Date(), t);
 
   const assigneeFullName = ticket.assignee
     ? getFullName(
@@ -97,7 +98,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             <div />
           )}
           <Typography lineHeight="2rem">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
-          <Typography lineHeight="2rem">{t('common.x_days', { count: daysAge })}</Typography>
+          <Typography lineHeight="2rem">{ticketAge}</Typography>
           {assigneeFullName && (
             <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
               <StyledVerifiedContributor>{getContributorInitials(assigneeFullName)}</StyledVerifiedContributor>

@@ -192,7 +192,9 @@ export const ProjectContributorRow = ({
             }}
             fieldInputProps={{
               ...field,
-              onBlur: () => setFieldTouched(`${field.name}.id`),
+              onBlur: () => {
+                setFieldTouched(`${field.name}.id`);
+              },
             }}
             errorMessage={
               touched.contributors?.[contributorIndex]?.affiliation?.id && !!contributorErrors?.affiliation?.id

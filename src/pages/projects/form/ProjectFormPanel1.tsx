@@ -65,7 +65,9 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               }
               fieldInputProps={{
                 ...field,
-                onBlur: () => setFieldTouched(`${field.name}.id`),
+                onBlur: () => {
+                  setFieldTouched(`${field.name}.id`);
+                },
               }}
               selectedValue={field.value}
               customDataTestId={dataTestId.registrationWizard.description.projectForm.coordinatingInstitutionField}
