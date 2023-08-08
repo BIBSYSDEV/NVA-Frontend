@@ -1,22 +1,22 @@
-import { Box, Tooltip, Typography, Link as MuiLink } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { updateTicket } from '../../../api/registrationApi';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
+import { RootState } from '../../../redux/store';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, emptyRegistration } from '../../../types/registration.types';
-import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
-import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
-import { SupportMessagesColumn } from './SupportMessagesColumn';
-import { getFullName } from '../../../utils/user-helpers';
-import { getContributorInitials } from '../../../utils/registration-helpers';
-import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
-import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
-import { RootState } from '../../../redux/store';
-import { updateTicket } from '../../../api/registrationApi';
 import { getTimePeriodString } from '../../../utils/general-helpers';
+import { getContributorInitials } from '../../../utils/registration-helpers';
+import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
+import { getFullName } from '../../../utils/user-helpers';
+import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
+import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
+import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
+import { SupportMessagesColumn } from './SupportMessagesColumn';
 
 export const ticketColor = {
   PublishingRequest: 'publishingRequest.main',

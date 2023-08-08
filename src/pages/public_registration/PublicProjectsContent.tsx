@@ -1,19 +1,19 @@
-import { useTranslation } from 'react-i18next';
-import { Divider, Link, Typography, Skeleton } from '@mui/material';
+import { Divider, Link, Skeleton, Typography } from '@mui/material';
 import { styled } from '@mui/system';
-import { Link as RouterLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
-import { ResearchProject } from '../../types/project.types';
-import { getProjectPath } from '../../utils/urlPaths';
-import {
-  getProjectManagerName,
-  getProjectCoordinatingInstitutionName,
-  getProjectPeriod,
-} from '../registration/description_tab/projects_field/projectHelpers';
-import { dataTestId } from '../../utils/dataTestIds';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
 import { fetchProject } from '../../api/cristinApi';
 import { setNotification } from '../../redux/notificationSlice';
+import { ResearchProject } from '../../types/project.types';
+import { dataTestId } from '../../utils/dataTestIds';
+import { getProjectPath } from '../../utils/urlPaths';
+import {
+  getProjectCoordinatingInstitutionName,
+  getProjectManagerName,
+  getProjectPeriod,
+} from '../registration/description_tab/projects_field/projectHelpers';
 
 const StyledProjectGridRow = styled('div')(({ theme }) => ({
   display: 'grid',

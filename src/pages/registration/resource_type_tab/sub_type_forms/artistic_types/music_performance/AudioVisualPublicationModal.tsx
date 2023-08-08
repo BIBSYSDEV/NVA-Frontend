@@ -1,33 +1,33 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  Button,
-  MenuItem,
-  Typography,
-  FormHelperText,
-  Box,
-} from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
-import { forwardRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import * as Yup from 'yup';
 import AddIcon from '@mui/icons-material/Add';
 import CancelIcon from '@mui/icons-material/Cancel';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  FormHelperText,
+  MenuItem,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { forwardRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { IMaskInput } from 'react-imask';
+import * as Yup from 'yup';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
 import {
   AudioVisualPublication,
-  emptyUnconfirmedPublisher,
   MusicMediaType,
   MusicTrack,
+  emptyUnconfirmedPublisher,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { YupShape } from '../../../../../../utils/validation/validationHelpers';
-import { OutputModalActions } from '../OutputModalActions';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { IMaskInput } from 'react-imask';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { MaskInputProps } from '../../../components/isbn_and_pages/IsbnField';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface AudioVisualPublicationModalProps {
   audioVisualPublication?: AudioVisualPublication;

@@ -1,20 +1,20 @@
-import { Dialog, DialogTitle, DialogContent, TextField, MenuItem } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
+import { Dialog, DialogContent, DialogTitle, MenuItem, TextField } from '@mui/material';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
 import {
-  emptyUnconfirmedPublisher,
   LiteraryArtsAudioVisual,
   LiteraryArtsAudioVisualSubtype,
   UnconfirmedPublisher,
+  emptyUnconfirmedPublisher,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
+import { RegistrationDate, emptyRegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { YupShape } from '../../../../../../utils/validation/validationHelpers';
-import { OutputModalActions } from '../OutputModalActions';
 import { isbnListField } from '../../../../../../utils/validation/registration/referenceValidation';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { IsbnField } from '../../../components/isbn_and_pages/IsbnField';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface LiteraryArtsAudioVisualModalProps {
   audioVisual?: LiteraryArtsAudioVisual;

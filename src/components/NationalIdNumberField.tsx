@@ -1,10 +1,10 @@
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { IconButton, TextField, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconButton, TextField, Tooltip } from '@mui/material';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { getMaskedNationalIdentityNumber } from '../utils/user-helpers';
 import { dataTestId } from '../utils/dataTestIds';
+import { getMaskedNationalIdentityNumber } from '../utils/user-helpers';
 
 interface NationIdNumberFieldProps {
   nationalId: string;

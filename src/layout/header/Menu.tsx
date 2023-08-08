@@ -1,12 +1,12 @@
-import { useState, MouseEvent } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { Button, Menu as MuiMenu, MenuItem, Typography, Theme, useMediaQuery, IconButton, Box } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
+import { Box, Button, IconButton, MenuItem, Menu as MuiMenu, Theme, Typography, useMediaQuery } from '@mui/material';
+import { MouseEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { RootState } from '../../redux/store';
-import { UrlPathTemplate } from '../../utils/urlPaths';
 import { dataTestId } from '../../utils/dataTestIds';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface MenuProps {
   handleLogout: () => void;

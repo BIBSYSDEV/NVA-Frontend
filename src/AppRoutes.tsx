@@ -1,11 +1,11 @@
 import { lazy, Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+import { PageSpinner } from './components/PageSpinner';
+import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
-import { PageSpinner } from './components/PageSpinner';
-import { useSelector } from 'react-redux';
-import { RootState } from './redux/store';
 
 const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));

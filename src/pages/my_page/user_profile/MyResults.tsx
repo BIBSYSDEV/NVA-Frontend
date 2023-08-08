@@ -1,7 +1,7 @@
+import { Box, CircularProgress, TablePagination, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Box, CircularProgress, TablePagination, Typography } from '@mui/material';
 import { RootState } from '../../../redux/store';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';

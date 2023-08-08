@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import AddIcon from '@mui/icons-material/Add';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { LoadingButton } from '@mui/lab';
 import {
   Button,
   Paper,
@@ -13,16 +13,16 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Cancel';
 import { visuallyHidden } from '@mui/utils';
-import { LoadingButton } from '@mui/lab';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../api/roleApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { setNotification } from '../../../redux/notificationSlice';
-import { InstitutionUser, RoleName } from '../../../types/user.types';
-import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
+import { InstitutionUser, RoleName } from '../../../types/user.types';
+import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 
 interface UserListProps {
   userList: InstitutionUser[];

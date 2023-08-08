@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { cristinCategories } from '../../../resources/cristinCategories';
 import { cristinKeywords } from '../../../resources/cristinKeywords';
 import { TypedLabel } from '../../../types/project.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { ProjectFieldName } from './ProjectFormDialog';
 import { RelatedProjectsField } from './RelatedProjectsField';
-import { dataTestId } from '../../../utils/dataTestIds';
 
 export const ProjectFormPanel2 = () => {
   const { t } = useTranslation();

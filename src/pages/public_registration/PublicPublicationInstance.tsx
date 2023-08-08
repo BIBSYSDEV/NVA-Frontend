@@ -1,19 +1,19 @@
-import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
 import { hyphenate as hyphenateIsbn } from 'isbn-utils';
-import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
-import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
-import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../translations/i18n';
+import { ArtisticType } from '../../types/publicationFieldNames';
+import { ArtisticPublicationInstance, DesignType } from '../../types/publication_types/artisticRegistration.types';
 import { BookPublicationInstance } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationInstance } from '../../types/publication_types/chapterRegistration.types';
-import { PagesMonograph, PagesRange } from '../../types/publication_types/pages.types';
-import i18n from '../../translations/i18n';
-import { ArtisticPublicationInstance, DesignType } from '../../types/publication_types/artisticRegistration.types';
-import { ArtisticType } from '../../types/publicationFieldNames';
+import { DegreePublicationInstance } from '../../types/publication_types/degreeRegistration.types';
 import {
   ExhibitionProductionSubtype,
   ExhibitionPublicationInstance,
 } from '../../types/publication_types/exhibitionContent.types';
+import { JournalPublicationInstance } from '../../types/publication_types/journalRegistration.types';
+import { PagesMonograph, PagesRange } from '../../types/publication_types/pages.types';
+import { ReportPublicationInstance } from '../../types/publication_types/reportRegistration.types';
 
 const getPageInterval = (pages: PagesRange | null) => {
   return pages?.begin || pages?.end

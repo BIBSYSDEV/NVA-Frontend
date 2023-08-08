@@ -1,11 +1,11 @@
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Button, TextField, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useCallback, useState } from 'react';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { AddEmployeeData, emptyUser } from './AddEmployeePage';
-import { SearchForCristinPerson } from '../SearchForCristinPerson';
+import { useTranslation } from 'react-i18next';
 import { FlatCristinPerson } from '../../../types/user.types';
+import { SearchForCristinPerson } from '../SearchForCristinPerson';
+import { AddEmployeeData, emptyUser } from './AddEmployeePage';
 
 export const FindPersonPanel = () => {
   const { t } = useTranslation();

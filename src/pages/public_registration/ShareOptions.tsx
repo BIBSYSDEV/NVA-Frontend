@@ -1,13 +1,13 @@
 import { Box } from '@mui/material';
 import {
-  EmailShareButton,
   EmailIcon,
-  FacebookShareButton,
+  EmailShareButton,
   FacebookIcon,
-  LinkedinShareButton,
+  FacebookShareButton,
   LinkedinIcon,
-  TwitterShareButton,
+  LinkedinShareButton,
   TwitterIcon,
+  TwitterShareButton,
 } from 'react-share';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { dataTestId } from '../../utils/dataTestIds';

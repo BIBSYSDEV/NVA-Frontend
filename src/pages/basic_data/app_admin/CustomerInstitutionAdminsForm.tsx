@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Button, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
+import { Button, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
-import { UserList } from './UserList';
 import { AddAdminDialog } from './AddAdminDialog';
+import { UserList } from './UserList';
 
 interface CustomerInstitutionAdminsFormProps {
   admins: InstitutionUser[];

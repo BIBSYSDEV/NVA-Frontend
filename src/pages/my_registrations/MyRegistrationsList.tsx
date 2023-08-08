@@ -1,16 +1,16 @@
+import { TablePagination, Typography } from '@mui/material';
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { TablePagination, Typography } from '@mui/material';
-import { Registration, RegistrationPreview, emptyRegistration } from '../../types/registration.types';
-import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
-import { RegistrationList } from '../../components/RegistrationList';
-import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { getTitleString } from '../../utils/registration-helpers';
 import { deleteRegistration } from '../../api/registrationApi';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { RegistrationList } from '../../components/RegistrationList';
 import { setNotification } from '../../redux/notificationSlice';
+import { Registration, RegistrationPreview, emptyRegistration } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
+import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
+import { getTitleString } from '../../utils/registration-helpers';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];

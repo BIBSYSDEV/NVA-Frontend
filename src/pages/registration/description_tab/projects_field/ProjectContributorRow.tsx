@@ -1,11 +1,13 @@
-import { Box, Autocomplete, Typography, TextField, IconButton } from '@mui/material';
 import RemoveIcon from '@mui/icons-material/HighlightOff';
+import { Autocomplete, Box, IconButton, TextField, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, FormikErrors, useFormikContext } from 'formik';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../../../../api/apiRequest';
+import { searchForPerson } from '../../../../api/cristinApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
 import { Organization } from '../../../../types/organization.types';
 import {
@@ -22,8 +24,6 @@ import { getTopLevelOrganization, getUnitTopLevelCode } from '../../../../utils/
 import { getFullCristinName, getValueByKey } from '../../../../utils/user-helpers';
 import { OrganizationSearchField } from '../../../basic_data/app_admin/OrganizationSearchField';
 import { projectContributorToCristinPerson } from './projectHelpers';
-import { ConfirmDialog } from '../../../../components/ConfirmDialog';
-import { searchForPerson } from '../../../../api/cristinApi';
 
 enum ProjectContributorFieldName {
   Type = 'type',
@@ -192,7 +192,9 @@ export const ProjectContributorRow = ({
             }}
             fieldInputProps={{
               ...field,
-              onBlur: () => setFieldTouched(`${field.name}.id`),
+              onBlur: () => {
+                setFieldTouched(`${field.name}.id`);
+              },
             }}
             errorMessage={
               touched.contributors?.[contributorIndex]?.affiliation?.id && !!contributorErrors?.affiliation?.id

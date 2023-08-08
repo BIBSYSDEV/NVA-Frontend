@@ -1,29 +1,29 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LockIcon from '@mui/icons-material/Lock';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import {
-  Box,
-  Typography,
-  Button,
   Accordion,
-  AccordionSummary,
   AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
   CircularProgress,
   Link,
+  Typography,
 } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import LockIcon from '@mui/icons-material/Lock';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { downloadPrivateFile, downloadPublicFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { AssociatedFile } from '../../../types/associatedArtifact.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { PreviewFile } from './preview_file/PreviewFile';
-import { equalUris } from '../../../utils/general-helpers';
 import { licenses } from '../../../types/license.types';
+import { dataTestId } from '../../../utils/dataTestIds';
+import { equalUris } from '../../../utils/general-helpers';
 import { isEmbargoed } from '../../../utils/registration-helpers';
+import { PreviewFile } from './preview_file/PreviewFile';
 
 interface FileRowProps {
   file: AssociatedFile;

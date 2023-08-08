@@ -1,12 +1,12 @@
-import { Link as RouterLink, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { createRegistrationFromImportCandidate, fetchImportCandidate } from '../../../../api/registrationApi';
-import { getRegistrationLandingPagePath, RegistrationParams } from '../../../../utils/urlPaths';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { LoadingButton } from '@mui/lab';
+import { RegistrationParams, getRegistrationLandingPagePath } from '../../../../utils/urlPaths';
 
 export const CentralImportRegistration = () => {
   const { t } = useTranslation();

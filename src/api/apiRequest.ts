@@ -1,7 +1,7 @@
 import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { getAccessToken } from './authApi';
 import { setAxiosDefaults } from '../utils/axios-config';
+import { getAccessToken } from './authApi';
 
 // Set axios defaults only once through the app's lifetime
 setAxiosDefaults();

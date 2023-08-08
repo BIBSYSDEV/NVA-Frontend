@@ -1,23 +1,23 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { IconButton, Paper, Tooltip, Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
-import { useSelector } from 'react-redux';
 import EditIcon from '@mui/icons-material/Edit';
-import { CristinProject } from '../../types/project.types';
-import { dataTestId } from '../../utils/dataTestIds';
-import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
-import { ProjectContributors } from './ProjectContributors';
-import { ProjectGeneralInfo } from './ProjectGeneralInfo';
-import { ProjectSummary } from './ProjectSummary';
-import { ProjectResultsAccordion } from './ProjectResultsAccordion';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
+import { CristinProject } from '../../types/project.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { canEditProject } from '../registration/description_tab/projects_field/projectHelpers';
-import { ProjectFormDialog } from './form/ProjectFormDialog';
+import { ProjectContributors } from './ProjectContributors';
+import { ProjectGeneralInfo } from './ProjectGeneralInfo';
+import { ProjectResultsAccordion } from './ProjectResultsAccordion';
+import { ProjectSummary } from './ProjectSummary';
 import { RelatedProjects } from './RelatedProjects';
+import { ProjectFormDialog } from './form/ProjectFormDialog';
 
 interface ProjectLandingPageProps {
   project: CristinProject;
