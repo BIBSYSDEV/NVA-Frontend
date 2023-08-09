@@ -205,8 +205,12 @@
     "will_be_available": "Vert tilgjengeleg",
     "x_days_one": "{{count}} dag",
     "x_days_other": "{{count}} dagar",
+    "x_months_one": "{{count}} månad",
+    "x_months_other": "{{count}} månadar",
     "x_others_one": "+ {{count}} annan",
     "x_others_other": "+ {{count}} andre",
+    "x_years_one": "{{count}} år",
+    "x_years_other": "{{count}} år",
     "year": "År",
     "yes": "Ja"
   },
@@ -1540,7 +1544,7 @@
     "all_user_dialogs": "Alle brukardialoger",
     "limited_to": "Avgrensa til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukardialoger",
-    "new_user_dialogs": "Nye brukardialoger",
+    "status": "Status",
     "unread": "",
     "user_dialog": "Brukardialog"
   }
