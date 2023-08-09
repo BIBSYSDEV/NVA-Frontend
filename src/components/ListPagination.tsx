@@ -30,10 +30,10 @@ export const ListPagination = ({
   return (
     <Box
       sx={{
-        my: '0.5rem',
+        mx: { xs: '0.25rem', md: '0' },
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', sm: 'auto 1fr auto' },
-        gap: '0.5rem',
+        gap: '0.25rem 0.5rem',
         alignItems: 'center',
         justifyItems: 'center',
       }}

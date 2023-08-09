@@ -176,19 +176,16 @@ const SearchPage = () => {
               )}
             </SideMenu>
 
-            {resultIsSelected && (
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  rowGap: '1rem',
-                }}>
-                <RegistrationSearchBar aggregations={searchResults?.aggregations} />
-                <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
-              </Box>
-            )}
-            {personIsSeleced && <PersonSearch />}
-            {projectIsSelected && <ProjectSearch />}
+            <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
+              {resultIsSelected && (
+                <>
+                  <RegistrationSearchBar aggregations={searchResults?.aggregations} />
+                  <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
+                </>
+              )}
+              {personIsSeleced && <PersonSearch />}
+              {projectIsSelected && <ProjectSearch />}
+            </Box>
           </StyledPageWithSideMenu>
         </Form>
       )}
