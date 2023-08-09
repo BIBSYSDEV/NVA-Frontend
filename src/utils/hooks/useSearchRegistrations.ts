@@ -7,7 +7,7 @@ import { useFetch } from './useFetch';
 
 export const useSearchRegistrations = (
   searchConfig?: SearchConfig,
-  numberOfResults = ROWS_PER_PAGE_OPTIONS[1],
+  numberOfResults = ROWS_PER_PAGE_OPTIONS[0],
   searchAfter = 0
 ) => {
   const { t } = useTranslation();

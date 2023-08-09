@@ -14,7 +14,7 @@ export const CristinSearchPagination = ({ totalCount }: CristinSearchPaginationP
   const resultsParam = params.get(SearchParam.Results);
   const pageParam = params.get(SearchParam.Page);
 
-  const rowsPerPage = resultsParam ? +resultsParam : ROWS_PER_PAGE_OPTIONS[1];
+  const rowsPerPage = resultsParam ? +resultsParam : ROWS_PER_PAGE_OPTIONS[0];
 
   const updatePath = (page: string, results: string) => {
     params.set(SearchParam.Page, page);

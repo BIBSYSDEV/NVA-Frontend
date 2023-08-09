@@ -27,7 +27,7 @@ import { EditorThesisCuratorTableCell } from './EditorThesisCuratorTableCell';
 
 export const EditorCurators = () => {
   const { t } = useTranslation();
-  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[1]);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [page, setPage] = useState(0);
 
   const user = useSelector((store: RootState) => store.user);

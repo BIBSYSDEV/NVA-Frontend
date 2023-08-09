@@ -42,7 +42,7 @@ enum SearchTypeValue {
   Project = 'project',
 }
 
-const defaultResultSize = ROWS_PER_PAGE_OPTIONS[1].toString();
+const defaultResultSize = ROWS_PER_PAGE_OPTIONS[0].toString();
 
 const SearchPage = () => {
   const { t } = useTranslation();
