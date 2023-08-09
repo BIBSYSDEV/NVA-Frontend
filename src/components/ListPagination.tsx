@@ -31,11 +31,11 @@ export const ListPagination = ({
     <Box
       sx={{
         my: '0.5rem',
-        display: 'flex',
-        gap: '0.5rem 1rem',
-        justifyContent: 'space-between',
+        display: 'grid',
+        gridTemplateColumns: { xs: '1fr', sm: 'auto 1fr auto' },
+        gap: '0.5rem',
         alignItems: 'center',
-        flexWrap: 'wrap',
+        justifyItems: 'center',
       }}
       data-testid={dataTestId}>
       <Typography aria-live="polite">
@@ -43,6 +43,11 @@ export const ListPagination = ({
       </Typography>
 
       <Pagination
+        sx={{
+          '.MuiPagination-ul': {
+            justifyContent: 'center',
+          },
+        }}
         page={page}
         count={totalPages}
         onChange={(_, newPage) => onPageChange(newPage)}
@@ -54,6 +59,11 @@ export const ListPagination = ({
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
         <Typography>{t('common.pagination_rows_per_page')}</Typography>
         <Select
+          sx={{
+            '.MuiSelect-select': {
+              py: '0.3rem',
+            },
+          }}
           variant="outlined"
           size="small"
           value={rowsPerPage}
