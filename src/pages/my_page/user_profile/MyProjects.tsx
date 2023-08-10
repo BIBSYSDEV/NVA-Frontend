@@ -1,9 +1,10 @@
-import { List, TablePagination, Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { searchForProjects } from '../../../api/cristinApi';
+import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RootState } from '../../../redux/store';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
@@ -17,12 +18,12 @@ export const MyProjects = () => {
   const user = useSelector((store: RootState) => store.user);
   const userCristinId = getIdentifierFromId(user?.cristinId ?? '');
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const projectsQuery = useQuery({
     queryKey: ['projects', rowsPerPage, page, userCristinId],
-    queryFn: () => searchForProjects(rowsPerPage, page + 1, { participant: userCristinId }),
+    queryFn: () => searchForProjects(rowsPerPage, page, { participant: userCristinId }),
     meta: { errorMessage: t('feedback.error.project_search') },
   });
 
@@ -47,16 +48,14 @@ export const MyProjects = () => {
               />
             ))}
           </List>
-          <TablePagination
-            rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-            component="div"
+          <ListPagination
             count={projectsQuery.data?.size ?? 0}
             rowsPerPage={rowsPerPage}
             page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
-            onRowsPerPageChange={(event) => {
-              setRowsPerPage(+event.target.value);
-              setPage(0);
+            onPageChange={(newPage) => setPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRowsPerPage(newRowsPerPage);
+              setPage(1);
             }}
           />
         </>

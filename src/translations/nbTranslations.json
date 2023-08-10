@@ -111,7 +111,6 @@
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
-    "all": "Alle",
     "cancel": "Avbryt",
     "category": "Kategori",
     "clear": "Fjern",
