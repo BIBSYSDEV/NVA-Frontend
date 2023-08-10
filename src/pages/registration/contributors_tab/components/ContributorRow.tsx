@@ -51,7 +51,7 @@ export const ContributorRow = ({
   const [openVerifyContributor, setOpenVerifyContributor] = useState(false);
 
   const baseFieldName = `${ContributorFieldNames.Contributors}[${contributorIndex}]`;
-  const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence}`);
+  const [sequenceValue, setSequenceValue] = useState(`${contributor.sequence ?? contributorIndex + 1}`);
 
   const handleOnMoveContributor = () => {
     const sequenceNumber = +sequenceValue;
@@ -205,7 +205,7 @@ export const ContributorRow = ({
         open={!!openRemoveContributor}
         title={t('registration.contributors.remove_contributor')}
         onAccept={() => {
-          onRemoveContributor(contributor.sequence - 1);
+          onRemoveContributor(contributorIndex);
           setOpenRemoveContributor(false);
         }}
         onCancel={() => setOpenRemoveContributor(false)}
