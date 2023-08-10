@@ -1,8 +1,9 @@
-import { CircularProgress, List, TablePagination, Typography } from '@mui/material';
+import { CircularProgress, List, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { authenticatedApiRequest } from '../../api/apiRequest';
+import { ListPagination } from '../../components/ListPagination';
 import { setNotification } from '../../redux/notificationSlice';
 import { CristinProject } from '../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
@@ -12,17 +13,18 @@ interface RelatedProjectsProps {
   projectIds: string[];
 }
 
-const itemsPerRow = 5;
+const itemsPerRowOptions = [5, 10];
 
 export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [projects, setProjects] = useState<CristinProject[]>([]);
   const [isLoading, setIsLoading] = useState(projectIds.length > 0);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(itemsPerRowOptions[0]);
 
   useEffect(() => {
-    const projectsToFetch = projectIds.slice(page * itemsPerRow, (page + 1) * itemsPerRow);
+    const projectsToFetch = projectIds.slice((page - 1) * rowsPerPage, page * rowsPerPage);
     const fetchRelatedProjects = async () => {
       setIsLoading(true);
       const allowedCustomersPromises = projectsToFetch.map(async (id) => {
@@ -50,7 +52,7 @@ export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
     if (projectIds.length > 0) {
       fetchRelatedProjects();
     }
-  }, [dispatch, t, projectIds, page]);
+  }, [dispatch, t, projectIds, page, rowsPerPage]);
 
   return isLoading ? (
     <CircularProgress aria-label={t('project.form.related_projects')} />
@@ -61,13 +63,16 @@ export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
           <ProjectListItem key={project.id} project={project} />
         ))}
       </List>
-      <TablePagination
-        rowsPerPageOptions={[itemsPerRow]}
-        component="div"
+      <ListPagination
+        rowsPerPageOptions={itemsPerRowOptions}
         count={projectIds.length}
-        rowsPerPage={itemsPerRow}
+        rowsPerPage={rowsPerPage}
         page={page}
-        onPageChange={(_, muiPage) => setPage(muiPage)}
+        onPageChange={(newPage) => setPage(newPage)}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
+        }}
       />
     </>
   ) : (

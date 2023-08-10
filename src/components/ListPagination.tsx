@@ -1,8 +1,8 @@
-import { Box, MenuItem, Pagination, PaginationItem, Select, Typography } from '@mui/material';
+import { Box, BoxProps, MenuItem, Pagination, PaginationItem, Select, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ROWS_PER_PAGE_OPTIONS } from '../utils/constants';
 
-interface ListPaginationProps {
+interface ListPaginationProps extends Pick<BoxProps, 'sx'> {
   count: number;
   rowsPerPage: number;
   page: number;
@@ -20,6 +20,7 @@ export const ListPagination = ({
   onRowsPerPageChange,
   rowsPerPageOptions = ROWS_PER_PAGE_OPTIONS,
   dataTestId,
+  sx = {},
 }: ListPaginationProps) => {
   const { t } = useTranslation();
 
@@ -36,6 +37,7 @@ export const ListPagination = ({
         gap: '0.25rem 0.5rem',
         alignItems: 'center',
         justifyItems: 'center',
+        ...sx,
       }}
       data-testid={dataTestId}>
       <Typography aria-live="polite">
