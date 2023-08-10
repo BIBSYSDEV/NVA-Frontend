@@ -138,7 +138,17 @@ export const PublisherField = () => {
             onClick={togglePublisherForm}>
             {t('registration.resource_type.create_publisher')}
           </Button>
-          <PublisherFormDialog open={showPublisherForm} closeDialog={togglePublisherForm} />
+          <PublisherFormDialog
+            open={showPublisherForm}
+            closeDialog={togglePublisherForm}
+            onCreatedChannel={(newPublisher) => {
+              setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
+                type: PublicationChannelType.Publisher,
+                id: newPublisher.id,
+              });
+              setQuery('');
+            }}
+          />
         </>
       )}
     </Box>

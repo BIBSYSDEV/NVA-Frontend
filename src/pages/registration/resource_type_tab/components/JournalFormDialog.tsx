@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { CreateJournalPayload, createJournal, createSeries } from '../../../../api/publicationChannelApi';
 import { setNotification } from '../../../../redux/notificationSlice';
 import i18n from '../../../../translations/i18n';
+import { Journal, Series } from '../../../../types/registration.types';
 
 const emptyJournalData: CreateJournalPayload = {
   name: '',
@@ -39,33 +40,43 @@ const journalValidationSchema: Yup.ObjectSchema<CreateJournalPayload> = Yup.obje
 
 interface JournalFormDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
+  onCreatedChannel: (createdChannel: Journal | Series) => void;
   isSeries?: boolean;
 }
 
 /**
  * Journals and Series are identical in terms of data, so this component is used for both.
  */
-export const JournalFormDialog = ({ open, closeDialog, isSeries = false }: JournalFormDialogProps) => {
+export const JournalFormDialog = ({
+  open,
+  closeDialog,
+  onCreatedChannel,
+  isSeries = false,
+}: JournalFormDialogProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const journalMutation = useMutation({
-    mutationFn: (journalData: CreateJournalPayload) =>
-      isSeries ? createSeries(journalData) : createJournal(journalData),
-    onError: () =>
-      isSeries
-        ? dispatch(setNotification({ message: t('feedback.error.create_series'), variant: 'error' }))
-        : dispatch(setNotification({ message: t('feedback.error.create_journal'), variant: 'error' })),
-    onSuccess: () => {
-      // TODO: Add created Journal/Series to current registration (NP-45067)
-      if (isSeries) {
-        dispatch(setNotification({ message: t('feedback.success.create_series'), variant: 'success' }));
-      } else {
-        dispatch(setNotification({ message: t('feedback.success.create_journal'), variant: 'success' }));
-      }
+    mutationFn: (journalData: CreateJournalPayload) => createJournal(journalData),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.create_journal'), variant: 'error' })),
+    onSuccess: (data) => {
+      onCreatedChannel(data);
+      dispatch(setNotification({ message: t('feedback.success.create_journal'), variant: 'success' }));
       closeDialog();
     },
   });
+
+  const seriesMutation = useMutation({
+    mutationFn: (seriesData: CreateJournalPayload) => createSeries(seriesData),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.create_series'), variant: 'error' })),
+    onSuccess: (data) => {
+      onCreatedChannel(data);
+      dispatch(setNotification({ message: t('feedback.success.create_series'), variant: 'success' }));
+      closeDialog();
+    },
+  });
+
+  const isLoading = journalMutation.isLoading || seriesMutation.isLoading;
 
   return (
     <Dialog open={open} onClose={closeDialog} fullWidth>
@@ -75,7 +86,9 @@ export const JournalFormDialog = ({ open, closeDialog, isSeries = false }: Journ
       <Formik
         initialValues={emptyJournalData}
         validationSchema={journalValidationSchema}
-        onSubmit={async (values) => await journalMutation.mutateAsync(values)}>
+        onSubmit={async (values) =>
+          isSeries ? await seriesMutation.mutateAsync(values) : await journalMutation.mutateAsync(values)
+        }>
         <Form>
           <DialogContent>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -86,7 +99,7 @@ export const JournalFormDialog = ({ open, closeDialog, isSeries = false }: Journ
                     variant="filled"
                     required
                     label={t('common.name')}
-                    disabled={journalMutation.isLoading}
+                    disabled={isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -99,7 +112,7 @@ export const JournalFormDialog = ({ open, closeDialog, isSeries = false }: Journ
                     variant="filled"
                     required
                     label={t('common.link')}
-                    disabled={journalMutation.isLoading}
+                    disabled={isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -113,7 +126,7 @@ export const JournalFormDialog = ({ open, closeDialog, isSeries = false }: Journ
                     variant="filled"
                     label={t('registration.resource_type.print_issn')}
                     inputProps={{ maxLength: 9 }}
-                    disabled={journalMutation.isLoading}
+                    disabled={isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -126,7 +139,7 @@ export const JournalFormDialog = ({ open, closeDialog, isSeries = false }: Journ
                     variant="filled"
                     label={t('registration.resource_type.online_issn')}
                     inputProps={{ maxLength: 9 }}
-                    disabled={journalMutation.isLoading}
+                    disabled={isLoading}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />
@@ -135,10 +148,10 @@ export const JournalFormDialog = ({ open, closeDialog, isSeries = false }: Journ
             </Box>
           </DialogContent>
           <DialogActions>
-            <Button onClick={closeDialog} disabled={journalMutation.isLoading}>
+            <Button onClick={closeDialog} disabled={isLoading}>
               {t('common.cancel')}
             </Button>
-            <LoadingButton variant="contained" loading={journalMutation.isLoading} type="submit">
+            <LoadingButton variant="contained" loading={isLoading} type="submit">
               {t('common.save')}
             </LoadingButton>
           </DialogActions>

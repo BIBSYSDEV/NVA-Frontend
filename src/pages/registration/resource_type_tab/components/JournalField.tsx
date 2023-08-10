@@ -158,7 +158,17 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
             onClick={toggleJournalForm}>
             {t('registration.resource_type.create_journal')}
           </Button>
-          <JournalFormDialog open={showJournalForm} closeDialog={toggleJournalForm} />
+          <JournalFormDialog
+            open={showJournalForm}
+            closeDialog={toggleJournalForm}
+            onCreatedChannel={(newChannel) => {
+              setFieldValue(contextTypeBaseFieldName, {
+                type: confirmedContextType,
+                id: newChannel.id,
+              });
+              setQuery('');
+            }}
+          />
         </>
       )}
     </Box>
