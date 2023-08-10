@@ -18,7 +18,7 @@ export interface CreatePublisherPayload {
 }
 
 export const createJournal = async (newJournal: CreateJournalPayload) => {
-  const createJournalResponse = await authenticatedApiRequest2<null>({
+  const createJournalResponse = await authenticatedApiRequest2<Journal>({
     url: PublicationChannelApiPath.Journal,
     method: 'POST',
     data: newJournal,
@@ -28,7 +28,7 @@ export const createJournal = async (newJournal: CreateJournalPayload) => {
 };
 
 export const createSeries = async (newSeries: CreateJournalPayload) => {
-  const createSeriesResponse = await authenticatedApiRequest2<null>({
+  const createSeriesResponse = await authenticatedApiRequest2<Series>({
     url: PublicationChannelApiPath.Series,
     method: 'POST',
     data: newSeries,
@@ -38,7 +38,7 @@ export const createSeries = async (newSeries: CreateJournalPayload) => {
 };
 
 export const createPublisher = async (newPublisher: CreatePublisherPayload) => {
-  const createPublisherResponse = await authenticatedApiRequest2<null>({
+  const createPublisherResponse = await authenticatedApiRequest2<Publisher>({
     url: PublicationChannelApiPath.Publisher,
     method: 'POST',
     data: newPublisher,

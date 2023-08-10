@@ -134,7 +134,18 @@ export const SeriesField = () => {
             onClick={toggleSeriesForm}>
             {t('registration.resource_type.create_series')}
           </Button>
-          <JournalFormDialog open={showSeriesForm} closeDialog={toggleSeriesForm} isSeries />
+          <JournalFormDialog
+            open={showSeriesForm}
+            closeDialog={toggleSeriesForm}
+            isSeries
+            onCreatedChannel={(newChannel) => {
+              setFieldValue(ResourceFieldNames.Series, {
+                type: PublicationChannelType.Series,
+                id: newChannel.id,
+              });
+              setQuery('');
+            }}
+          />
         </>
       )}
     </Box>

@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { CreatePublisherPayload, createPublisher } from '../../../../api/publicationChannelApi';
 import { setNotification } from '../../../../redux/notificationSlice';
 import i18n from '../../../../translations/i18n';
+import { Publisher } from '../../../../types/registration.types';
 
 const emptyPublisherData: CreatePublisherPayload = {
   name: '',
@@ -32,17 +33,18 @@ const publisherValidationSchema: Yup.ObjectSchema<CreatePublisherPayload> = Yup.
 
 interface PublisherFormDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
+  onCreatedChannel: (createdChannel: Publisher) => void;
 }
 
-export const PublisherFormDialog = ({ open, closeDialog }: PublisherFormDialogProps) => {
+export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel }: PublisherFormDialogProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const publisherMutation = useMutation({
-    mutationFn: (journalData: CreatePublisherPayload) => createPublisher(journalData),
+    mutationFn: (publisherData: CreatePublisherPayload) => createPublisher(publisherData),
     onError: () => dispatch(setNotification({ message: t('feedback.error.create_publisher'), variant: 'error' })),
-    onSuccess: () => {
-      // TODO: Add created Publisher to current registration (NP-45067)
+    onSuccess: (data) => {
+      onCreatedChannel(data);
       dispatch(setNotification({ message: t('feedback.success.create_publisher'), variant: 'success' }));
       closeDialog();
     },
