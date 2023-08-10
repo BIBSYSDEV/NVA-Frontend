@@ -21,6 +21,7 @@ import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { InstitutionUser } from '../../types/user.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
@@ -28,7 +29,7 @@ import { PrivateRoute } from '../../utils/routes/Routes';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
-import { TicketList, ticketsPerPageOptions } from './components/TicketList';
+import { TicketList } from './components/TicketList';
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
@@ -49,8 +50,9 @@ const TasksPage = () => {
   const isCurator = !!user?.customerId && !!user?.isCurator;
   const nvaUsername = user?.nvaUsername ?? '';
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
+  const [page, setPage] = useState(1);
+  const apiPage = page - 1;
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const [searchMode, setSearchMode] = useState<SearchMode>('all');
 
@@ -102,8 +104,8 @@ const TasksPage = () => {
   const query = [typeQuery, statusQuery, assigneeQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
-    queryKey: ['tickets', rowsPerPage, page, query],
-    queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, query),
+    queryKey: ['tickets', rowsPerPage, apiPage, query],
+    queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, query),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 

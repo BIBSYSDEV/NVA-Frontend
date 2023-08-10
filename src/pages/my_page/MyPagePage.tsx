@@ -26,11 +26,12 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import NotFound from '../errorpages/NotFound';
-import { TicketList, ticketsPerPageOptions } from '../messages/components/TicketList';
+import { TicketList } from '../messages/components/TicketList';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
@@ -53,8 +54,9 @@ const MyPagePage = () => {
   const isCreator = !!user?.customerId && (user.isCreator || user.isCurator);
 
   const queryClient = useQueryClient();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
+  const [page, setPage] = useState(1);
+  const apiPage = page - 1;
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const [selectedRegistrationStatus, setSelectedRegistrationStatus] = useState({
     published: false,
@@ -103,8 +105,8 @@ const MyPagePage = () => {
   const query = [typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
-    queryKey: ['tickets', rowsPerPage, page, query],
-    queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, query, true),
+    queryKey: ['tickets', rowsPerPage, apiPage, query],
+    queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, query, true),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 

@@ -7,7 +7,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -17,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchOrganization } from '../../api/cristinApi';
 import { fetchUsers } from '../../api/roleApi';
+import { ListPagination } from '../../components/ListPagination';
 import { RootState } from '../../redux/store';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { RoleName } from '../../types/user.types';
@@ -28,7 +28,7 @@ import { EditorThesisCuratorTableCell } from './EditorThesisCuratorTableCell';
 export const EditorCurators = () => {
   const { t } = useTranslation();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
 
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
@@ -53,7 +53,8 @@ export const EditorCurators = () => {
   const curators = curatorsQuery.data ?? [];
 
   // Ensure selected page is not out of bounds due to manipulated userList
-  const validPage = curators.length <= page * rowsPerPage ? 0 : page;
+  const validPage = curators.length <= (page - 1) * rowsPerPage ? 1 : page;
+  const curatorsOnPage = curators.slice((validPage - 1) * rowsPerPage, validPage * rowsPerPage);
 
   return curatorsQuery.isLoading || organizationQuery.isLoading ? (
     <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: '2rem' }}>
@@ -65,7 +66,7 @@ export const EditorCurators = () => {
     </Typography>
   ) : (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
         <Table size="small" sx={alternatingTableRowColor}>
           <TableHead>
             <TableRow>
@@ -76,7 +77,7 @@ export const EditorCurators = () => {
           </TableHead>
 
           <TableBody>
-            {curators.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((curator) => (
+            {curatorsOnPage.map((curator) => (
               <TableRow key={curator.username}>
                 <TableCell>
                   {curator.givenName} {curator.familyName}
@@ -93,16 +94,14 @@ export const EditorCurators = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-        component="div"
+      <ListPagination
         count={curators.length}
         rowsPerPage={rowsPerPage}
         page={validPage}
-        onPageChange={(_, newPage) => setPage(newPage)}
-        onRowsPerPageChange={(event) => {
-          setRowsPerPage(parseInt(event.target.value));
-          setPage(0);
+        onPageChange={(newPage) => setPage(newPage)}
+        onRowsPerPageChange={(newRowsPerPage) => {
+          setRowsPerPage(newRowsPerPage);
+          setPage(1);
         }}
       />
     </>
