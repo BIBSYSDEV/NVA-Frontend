@@ -54,14 +54,14 @@ export const ProjectSearch = () => {
       {projectsQuery.isLoading ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : projectsSearchResults && projectsSearchResults.length > 0 ? (
-        <>
+        <div>
           <List>
             {projectsSearchResults.map((project) => (
               <ProjectListItem key={project.id} project={project} />
             ))}
           </List>
           <CristinSearchPagination totalCount={projectsQuery.data?.size ?? 0} />
-        </>
+        </div>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}

@@ -24,7 +24,7 @@ export const RegistrationList = ({
   canEditRegistration = false,
   onDeleteDraftRegistration,
 }: RegistrationListProps) => (
-  <List disablePadding>
+  <List>
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
