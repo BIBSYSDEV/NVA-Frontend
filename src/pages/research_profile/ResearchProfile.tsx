@@ -1,13 +1,4 @@
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  IconButton,
-  List,
-  Link as MuiLink,
-  TablePagination,
-  Typography,
-} from '@mui/material';
+import { Box, CircularProgress, Divider, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -15,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
+import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
@@ -37,8 +29,8 @@ const ResearchProfile = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
-  const [registrationsPage, setRegistrationsPage] = useState(0);
-  const [projectsPage, setProjectsPage] = useState(0);
+  const [registrationsPage, setRegistrationsPage] = useState(1);
+  const [projectsPage, setProjectsPage] = useState(1);
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
@@ -70,12 +62,12 @@ const ResearchProfile = () => {
       ],
     },
     registrationRowsPerPage,
-    registrationRowsPerPage * registrationsPage
+    registrationRowsPerPage * (registrationsPage - 1)
   );
 
   const projectsQuery = useQuery({
     queryKey: ['projects', projectRowsPerPage, projectsPage, personIdNumber],
-    queryFn: () => searchForProjects(projectRowsPerPage, projectsPage + 1, { participant: personIdNumber }),
+    queryFn: () => searchForProjects(projectRowsPerPage, projectsPage, { participant: personIdNumber }),
     meta: { errorMessage: t('feedback.error.project_search') },
     keepPreviousData: true,
   });
@@ -159,16 +151,14 @@ const ResearchProfile = () => {
             ) : registrations.size > 0 ? (
               <>
                 <RegistrationSearchResults searchResult={registrations} />
-                <TablePagination
-                  rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                  component="div"
+                <ListPagination
                   count={registrations.size}
                   rowsPerPage={registrationRowsPerPage}
                   page={registrationsPage}
-                  onPageChange={(_, newPage) => setRegistrationsPage(newPage)}
-                  onRowsPerPageChange={(event) => {
-                    setRegistrationRowsPerPage(+event.target.value);
-                    setRegistrationsPage(0);
+                  onPageChange={(newPage) => setRegistrationsPage(newPage)}
+                  onRowsPerPageChange={(newRowsPerPage) => {
+                    setRegistrationRowsPerPage(newRowsPerPage);
+                    setRegistrationsPage(1);
                   }}
                 />
               </>
@@ -178,7 +168,8 @@ const ResearchProfile = () => {
           </>
         )}
 
-        <Divider />
+        <Divider sx={{ my: '1rem' }} />
+
         <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
           {`${t('my_page.my_profile.projects')} (${projectsQuery.data?.size ?? 0})`}
         </Typography>
@@ -191,16 +182,14 @@ const ResearchProfile = () => {
                 <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
               ))}
             </List>
-            <TablePagination
-              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-              component="div"
+            <ListPagination
               count={projectsQuery.data?.size ?? 0}
               rowsPerPage={projectRowsPerPage}
               page={projectsPage}
-              onPageChange={(_, newPage) => setProjectsPage(newPage)}
-              onRowsPerPageChange={(event) => {
-                setProjectRowsPerPage(+event.target.value);
-                setProjectsPage(0);
+              onPageChange={(newPage) => setProjectsPage(newPage)}
+              onRowsPerPageChange={(newRowsPerPage) => {
+                setProjectRowsPerPage(newRowsPerPage);
+                setProjectsPage(1);
               }}
             />
           </>
