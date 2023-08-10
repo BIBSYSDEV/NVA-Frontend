@@ -39,14 +39,13 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
             <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
               <Typography>{t('registration.files_and_license.files_awaits_approval_unknown')}</Typography>
             </StyledStatusMessageBox>
-          ) : ticket.status === 'Completed' ? (
-            <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-              <Typography>{t('my_page.messages.files_published')}</Typography>
-              {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
-            </StyledStatusMessageBox>
           ) : (
-            <StyledStatusMessageBox sx={{ bgcolor: 'warning.light' }}>
-              <Typography>{t('my_page.messages.files_rejected')}</Typography>
+            <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+              {ticket.status === 'Completed' ? (
+                <Typography>{t('my_page.messages.files_published')}</Typography>
+              ) : ticket.status === 'Closed' ? (
+                <Typography>{t('my_page.messages.files_rejected')}</Typography>
+              ) : null}
               {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
             </StyledStatusMessageBox>
           )}
