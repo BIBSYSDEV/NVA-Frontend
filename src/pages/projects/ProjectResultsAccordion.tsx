@@ -1,15 +1,13 @@
 import { CircularProgress, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SearchApiPath } from '../../api/apiPaths';
+import { fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
-import { SearchResponse } from '../../types/common.types';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
-import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useFetch } from '../../utils/hooks/useFetch';
 
 interface ProjectResultsProps {
   projectId: string;
@@ -22,18 +20,19 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(itemsPerRowOptions[0]);
 
-  const [results, isLoadingResults] = useFetch<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}?query=${
-      DescriptionFieldNames.Projects
-    }.id="${projectId}"&results=${rowsPerPage}&from=${(page - 1) * rowsPerPage}`,
-    errorMessage: t('feedback.error.search'),
+  const resultsQuery = useQuery({
+    queryKey: ['projectResults', projectId, rowsPerPage, page],
+    queryFn: () =>
+      fetchResults(rowsPerPage, (page - 1) * rowsPerPage, `${DescriptionFieldNames.Projects}.id:"${projectId}"`),
+    meta: { errorMessage: t('feedback.error.search') },
   });
+  const results = resultsQuery.data;
 
   return (
     <LandingPageAccordion
       dataTestId={dataTestId.projectLandingPage.resultsAccordion}
       heading={results ? `${t('project.results')} (${results.size})` : t('project.results')}>
-      {isLoadingResults ? (
+      {resultsQuery.isLoading ? (
         <CircularProgress aria-label={t('project.results')} />
       ) : results && results.size > 0 ? (
         <>
