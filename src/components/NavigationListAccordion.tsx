@@ -1,7 +1,7 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionDetails, AccordionProps, AccordionSummary, Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Accordion, AccordionDetails, AccordionProps, AccordionSummary, Box, Typography } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface NavigationListAccordionProps extends AccordionProps {
   title: string;

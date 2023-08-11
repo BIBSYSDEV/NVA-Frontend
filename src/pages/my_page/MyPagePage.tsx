@@ -1,23 +1,17 @@
+import AddIcon from '@mui/icons-material/Add';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
+import PersonIcon from '@mui/icons-material/Person';
+import { Button, Divider, FormControlLabel, FormLabel } from '@mui/material';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { Button, Divider, FormControlLabel } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import PersonIcon from '@mui/icons-material/Person';
-import AddIcon from '@mui/icons-material/Add';
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import orcidIcon from '../../resources/images/orcid_logo.svg';
-import { RootState } from '../../redux/store';
-import { dataTestId } from '../../utils/dataTestIds';
-import { PrivateRoute } from '../../utils/routes/Routes';
-import { UrlPathTemplate } from '../../utils/urlPaths';
-import { MyProfile } from './user_profile/MyProfile';
-import { MyProjects } from './user_profile/MyProjects';
-import { MyResults } from './user_profile/MyResults';
-import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
+import { fetchTickets } from '../../api/searchApi';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkButton,
   LinkCreateButton,
@@ -25,20 +19,27 @@ import {
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
-import ResearchProfile from '../research_profile/ResearchProfile';
-import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
-import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import NotFound from '../errorpages/NotFound';
 import { SelectableButton } from '../../components/SelectableButton';
-import { fetchTickets } from '../../api/searchApi';
-import { setNotification } from '../../redux/notificationSlice';
-import { TicketStatus } from '../../types/publication_types/ticket.types';
-import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
-import { TicketList, ticketsPerPageOptions } from '../messages/components/TicketList';
-import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
+import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
+import { setNotification } from '../../redux/notificationSlice';
+import { RootState } from '../../redux/store';
+import orcidIcon from '../../resources/images/orcid_logo.svg';
+import { TicketStatus } from '../../types/publication_types/ticket.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
+import { PrivateRoute } from '../../utils/routes/Routes';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import NotFound from '../errorpages/NotFound';
+import { TicketList } from '../messages/components/TicketList';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
+import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
+import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import ResearchProfile from '../research_profile/ResearchProfile';
+import { MyProfile } from './user_profile/MyProfile';
+import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
+import { MyProjects } from './user_profile/MyProjects';
+import { MyResults } from './user_profile/MyResults';
 
 type SelectedStatusState = {
   [key in TicketStatus]: boolean;
@@ -53,8 +54,9 @@ const MyPagePage = () => {
   const isCreator = !!user?.customerId && (user.isCreator || user.isCurator);
 
   const queryClient = useQueryClient();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(ticketsPerPageOptions[0]);
+  const [page, setPage] = useState(1);
+  const apiPage = page - 1;
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const [selectedRegistrationStatus, setSelectedRegistrationStatus] = useState({
     published: false,
@@ -103,8 +105,8 @@ const MyPagePage = () => {
   const query = [typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
-    queryKey: ['tickets', rowsPerPage, page, query],
-    queryFn: () => fetchTickets(rowsPerPage, page * rowsPerPage, query, true),
+    queryKey: ['tickets', rowsPerPage, apiPage, query],
+    queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, query, true),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 
@@ -159,7 +161,7 @@ const MyPagePage = () => {
               </Button>
             </StyledTicketSearchFormGroup>
 
-            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem', width: 'fit-content', minWidth: '12rem' }}>
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               <SelectableButton
                 data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
                 showCheckbox
@@ -199,6 +201,9 @@ const MyPagePage = () => {
             </StyledTicketSearchFormGroup>
 
             <StyledTicketSearchFormGroup>
+              <FormLabel component="legend" sx={{ fontWeight: 700 }}>
+                {t('tasks.status')}
+              </FormLabel>
               <FormControlLabel
                 data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
                 checked={selectedStatuses.New}

@@ -1,17 +1,17 @@
-import { Dialog, DialogTitle, DialogContent, TextField, MenuItem } from '@mui/material';
+import { Dialog, DialogContent, DialogTitle, MenuItem, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
+import { emptyPlace } from '../../../../../../types/common.types';
 import {
   LiteraryArtsPerformance,
   LiteraryArtsPerformanceSubtype,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
+import { RegistrationDate, emptyRegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
-import { emptyPlace } from '../../../../../../types/common.types';
 import { OutputModalActions } from '../OutputModalActions';
 
 interface LiteraryArtsPerformanceModalProps {

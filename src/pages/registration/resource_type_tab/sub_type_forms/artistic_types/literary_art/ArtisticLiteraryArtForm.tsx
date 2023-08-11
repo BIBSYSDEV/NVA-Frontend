@@ -1,3 +1,4 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
   Box,
   Button,
@@ -11,8 +12,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Field, FieldProps, ErrorMessage, useFormikContext, FieldArray, FieldArrayRenderProps } from 'formik';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
@@ -24,10 +24,10 @@ import {
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
-import { LiteraryArtsMonographModal } from './LiteraryArtsMonographModal';
-import { LiteraryArtsWebPublicationModal } from './LiteraryArtsWebPublicationModal';
-import { LiteraryArtsPerformanceModal } from './LiteraryArtsPerformanceModal';
 import { LiteraryArtsAudioVisualModal } from './LiteraryArtsAudioVisualModal';
+import { LiteraryArtsMonographModal } from './LiteraryArtsMonographModal';
+import { LiteraryArtsPerformanceModal } from './LiteraryArtsPerformanceModal';
+import { LiteraryArtsWebPublicationModal } from './LiteraryArtsWebPublicationModal';
 
 const literaryArtTypes = Object.values(LiteraryArtsType);
 type ArtisticArchitectureModalType =

@@ -1,15 +1,15 @@
+import { Autocomplete, TextFieldProps } from '@mui/material';
+import { FieldInputProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FieldInputProps } from 'formik';
-import { Autocomplete, TextFieldProps } from '@mui/material';
 import { CristinApiPath } from '../../../api/apiPaths';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { SearchResponse } from '../../../types/common.types';
 import { Organization } from '../../../types/organization.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../utils/hooks/useFetch';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { SearchResponse } from '../../../types/common.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 
 interface OrganizationSearchFieldProps extends Pick<TextFieldProps, 'label'> {
   onChange?: (selectedInstitution: Organization | null) => void;

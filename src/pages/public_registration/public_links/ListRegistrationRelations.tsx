@@ -1,4 +1,4 @@
-import { List, ListItem, Link } from '@mui/material';
+import { Link, List, ListItem } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { Registration } from '../../../types/registration.types';
 import { getTitleString } from '../../../utils/registration-helpers';

@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
+import i18n from '../../../translations/i18n';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
 import { BookType, ReportType, ResearchDataType } from '../../../types/publicationFieldNames';
-import i18n from '../../../translations/i18n';
 import {
   isArtistic,
   isDegree,

@@ -1,6 +1,6 @@
-import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
-import { PublicationType, ExhibitionContentType } from '../publicationFieldNames';
 import { Instant, Period, Place, UnconfirmedOrganization } from '../common.types';
+import { ExhibitionContentType, PublicationType } from '../publicationFieldNames';
+import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 import { UnconfirmedPublisher } from './artisticRegistration.types';
 
 export interface ExhibitionRegistration extends BaseRegistration {

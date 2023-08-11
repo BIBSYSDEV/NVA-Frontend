@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
 import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { User } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 

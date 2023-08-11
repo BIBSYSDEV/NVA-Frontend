@@ -1,4 +1,4 @@
-import { DialogActions, Button } from '@mui/material';
+import { Button, DialogActions } from '@mui/material';
 import { FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../../../../../utils/dataTestIds';

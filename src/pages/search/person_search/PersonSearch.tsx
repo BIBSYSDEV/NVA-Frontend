@@ -1,14 +1,14 @@
 import { Box, List, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { searchForPerson } from '../../../api/cristinApi';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../CristinSearchPagination';
 import { SearchTextField } from '../SearchTextField';
 import { PersonListItem } from './PersonListItem';
-import { searchForPerson } from '../../../api/cristinApi';
 
 export const PersonSearch = () => {
   const { t } = useTranslation();
@@ -56,14 +56,14 @@ export const PersonSearch = () => {
       {personQuery.isLoading ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.length > 0 ? (
-        <>
+        <div>
           <List>
             {searchResults.map((person) => (
               <PersonListItem key={person.id} person={person} />
             ))}
           </List>
           <CristinSearchPagination totalCount={personQuery.data?.size ?? 0} />
-        </>
+        </div>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}

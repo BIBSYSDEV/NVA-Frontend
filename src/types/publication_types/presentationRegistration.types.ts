@@ -1,6 +1,6 @@
-import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
+import { Period, Place, UnconfirmedOrganization, emptyPeriod, emptyPlace } from '../common.types';
 import { PresentationType, PublicationType } from '../publicationFieldNames';
-import { Place, Period, emptyPeriod, UnconfirmedOrganization, emptyPlace } from '../common.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
 
 export interface PresentationRegistration extends BaseRegistration {
   entityDescription: PresentationEntityDescription;

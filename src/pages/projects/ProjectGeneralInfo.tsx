@@ -1,4 +1,4 @@
-import { Typography, Link, Chip, Box } from '@mui/material';
+import { Box, Chip, Link, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';

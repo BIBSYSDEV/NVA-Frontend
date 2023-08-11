@@ -6,7 +6,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   TextField,
   Typography,
@@ -16,14 +15,15 @@ import { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { ListPagination } from '../../../../components/ListPagination';
 import { RootState } from '../../../../redux/store';
 import { alternatingTableRowColor } from '../../../../themes/mainTheme';
 import { SearchResponse } from '../../../../types/common.types';
 import { CristinPerson } from '../../../../types/user.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../utils/hooks/useFetch';
 import { PersonTableRow } from './PersonTableRow';
-import { dataTestId } from '../../../../utils/dataTestIds';
 
 const rowsPerPageOptions = [10, 25, 50];
 
@@ -84,7 +84,7 @@ export const PersonRegisterPage = () => {
         <Typography>{t('basic_data.person_register.no_employees_found')}</Typography>
       ) : (
         <>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
             <Table size="small" sx={alternatingTableRowColor}>
               <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
               <TableHead>
@@ -129,15 +129,13 @@ export const PersonRegisterPage = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={rowsPerPageOptions}
-            component="div"
-            count={employeesSearchResponse?.size ?? -1}
+          <ListPagination
+            count={employeesSearchResponse?.size ?? 0}
             rowsPerPage={rowsPerPage}
-            page={page - 1}
-            onPageChange={(_, muiPage) => setPage(muiPage + 1)}
-            onRowsPerPageChange={(event) => {
-              setRowsPerPage(parseInt(event.target.value));
+            page={page}
+            onPageChange={(newPage) => setPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRowsPerPage(newRowsPerPage);
               setPage(1);
             }}
           />

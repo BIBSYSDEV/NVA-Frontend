@@ -1,9 +1,9 @@
 import { ContributorRole } from '../../types/contributor.types';
 import { JournalType } from '../../types/publicationFieldNames';
+import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
+import { TicketCollection } from '../../types/publication_types/ticket.types';
 import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
-import { TicketCollection } from '../../types/publication_types/ticket.types';
-import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { mockUser } from './mock_feide_user';
 
 export const mockRegistration: JournalRegistration = {
