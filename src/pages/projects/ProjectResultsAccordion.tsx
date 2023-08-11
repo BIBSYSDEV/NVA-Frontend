@@ -2,7 +2,6 @@ import { CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SearchApiPath } from '../../api/apiPaths';
 import { fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
@@ -22,7 +21,7 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   const [rowsPerPage, setRowsPerPage] = useState(itemsPerRowOptions[0]);
 
   const resultsQuery = useQuery({
-    queryKey: [SearchApiPath.Registrations, projectId, rowsPerPage, page],
+    queryKey: ['projectResults', projectId, rowsPerPage, page],
     queryFn: () =>
       fetchResults(rowsPerPage, (page - 1) * rowsPerPage, `${DescriptionFieldNames.Projects}.id:"${projectId}"`),
     meta: { errorMessage: t('feedback.error.search') },
