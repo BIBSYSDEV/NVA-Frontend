@@ -2,7 +2,7 @@ import { CircularProgress, List, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { authenticatedApiRequest } from '../../api/apiRequest';
+import { apiRequest } from '../../api/apiRequest';
 import { ListPagination } from '../../components/ListPagination';
 import { setNotification } from '../../redux/notificationSlice';
 import { CristinProject } from '../../types/project.types';
@@ -29,7 +29,7 @@ export const RelatedProjects = ({ projectIds }: RelatedProjectsProps) => {
       setIsLoading(true);
       const allowedCustomersPromises = projectsToFetch.map(async (id) => {
         try {
-          const projectResponse = await authenticatedApiRequest<CristinProject>({ url: id });
+          const projectResponse = await apiRequest<CristinProject>({ url: id });
           if (isSuccessStatus(projectResponse.status)) {
             return projectResponse.data;
           } else if (isErrorStatus(projectResponse.status)) {
