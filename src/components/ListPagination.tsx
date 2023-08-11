@@ -30,7 +30,7 @@ export const ListPagination = ({
   const totalPages = Math.ceil(count / rowsPerPage);
   const pages = Math.min(maxPages, totalPages);
 
-  const itemsStart = ((page - 1) * rowsPerPage + 1).toLocaleString();
+  const itemsStart = count > 0 ? ((page - 1) * rowsPerPage + 1).toLocaleString() : '0';
   const itemsEnd = Math.min(page * rowsPerPage, count).toLocaleString();
 
   return (
