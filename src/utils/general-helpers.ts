@@ -1,3 +1,4 @@
+import { TFunction } from 'i18next';
 import * as Yup from 'yup';
 
 export const isValidUrl = (value: string) => Yup.string().url().isValidSync(value);
@@ -19,3 +20,20 @@ export const equalUris = (uri1: string | null, uri2: string | null) =>
   uri1 && uri2 && removeTrailingSlash(uri1).toLocaleLowerCase() === removeTrailingSlash(uri2).toLocaleLowerCase();
 
 const removeTrailingSlash = (value: string) => (value.endsWith('/') ? value.slice(0, -1) : value);
+
+export const getTimePeriodString = (date1: Date, date2: Date, t: TFunction) => {
+  const dateDiff = Math.abs(date1.getTime() - date2.getTime());
+  const daysCount = Math.floor(dateDiff / 86_400_000);
+
+  if (daysCount === 0) {
+    return t('common.today');
+  } else if (daysCount < 31) {
+    return t('common.x_days', { count: daysCount });
+  } else if (daysCount < 365) {
+    const monthsCount = Math.floor(daysCount / 31);
+    return t('common.x_months', { count: monthsCount });
+  } else {
+    const yearsCount = Math.floor(daysCount / 365);
+    return t('common.x_years', { count: yearsCount });
+  }
+};

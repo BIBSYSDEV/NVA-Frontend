@@ -1,15 +1,15 @@
-import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { Divider, List, TablePagination, Typography } from '@mui/material';
-import { ListSkeleton } from '../../../../components/ListSkeleton';
-import { CentralImportResultItem } from './CentralImportResultItem';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
-import { SearchParam } from '../../../../utils/searchHelpers';
 import { useQuery } from '@tanstack/react-query';
-import { fetchImportCandidates } from '../../../../api/searchApi';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { fetchImportCandidates } from '../../../../api/searchApi';
+import { ListSkeleton } from '../../../../components/ListSkeleton';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
+import { SearchParam } from '../../../../utils/searchHelpers';
+import { CentralImportResultItem } from './CentralImportResultItem';
 
 export const CentralImportPage = () => {
   const { t } = useTranslation();
@@ -17,7 +17,7 @@ export const CentralImportPage = () => {
   const params = new URLSearchParams(history.location.search);
   const resultsParam = params.get(SearchParam.Results);
   const fromParam = params.get(SearchParam.From);
-  const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
+  const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates', rowsPerPage, page, ''],

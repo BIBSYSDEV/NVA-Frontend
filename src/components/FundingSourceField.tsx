@@ -1,13 +1,13 @@
 import { Autocomplete } from '@mui/material';
-import { Field, FieldProps } from 'formik';
 import { useQuery } from '@tanstack/react-query';
+import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { fetchFundingSources } from '../api/cristinApi';
+import { setNotification } from '../redux/notificationSlice';
 import { dataTestId } from '../utils/dataTestIds';
 import { getLanguageString } from '../utils/translation-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
-import { fetchFundingSources } from '../api/cristinApi';
-import { setNotification } from '../redux/notificationSlice';
 
 interface FundingSourceFieldProps {
   fieldName: string;

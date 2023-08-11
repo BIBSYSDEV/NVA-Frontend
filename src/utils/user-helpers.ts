@@ -1,16 +1,16 @@
+import { VerificationStatus } from '../types/contributor.types';
 import {
   CreateCristinPerson,
   CristinArrayValue,
+  CristinPerson,
   CristinPersonAffiliation,
   CristinPersonIdentifier,
   CristinPersonIdentifierType,
   CristinPersonNameType,
-  CristinPerson,
-  FlatCristinPerson,
   Employment,
+  FlatCristinPerson,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
-import { VerificationStatus } from '../types/contributor.types';
 
 export const getValueByKey = (
   key: CristinPersonIdentifierType | CristinPersonNameType,

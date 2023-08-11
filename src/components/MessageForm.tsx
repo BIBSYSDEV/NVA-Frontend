@@ -1,8 +1,8 @@
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { LoadingButton } from '@mui/lab';
+import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;

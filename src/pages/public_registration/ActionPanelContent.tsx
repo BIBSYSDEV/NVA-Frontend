@@ -7,11 +7,11 @@ import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { userIsRegistrationCurator } from '../../utils/registration-helpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { SupportAccordion } from './action_accordions/SupportAccordion';
-import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
   tickets: Ticket[];

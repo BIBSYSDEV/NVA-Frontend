@@ -1,11 +1,11 @@
 import Axios from 'axios';
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCancelToken } from './useCancelToken';
-import { setNotification } from '../../redux/notificationSlice';
+import { useDispatch } from 'react-redux';
 import { apiRequest, authenticatedApiRequest } from '../../api/apiRequest';
+import { setNotification } from '../../redux/notificationSlice';
 import { isErrorStatus, isSuccessStatus } from '../constants';
+import { useCancelToken } from './useCancelToken';
 
 interface UseFetchConfig {
   url: string;

@@ -1,33 +1,33 @@
-import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { useHistory } from 'react-router-dom';
-import { Box, Checkbox, Chip, FormControlLabel, FormLabel, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import {
-  CustomerInstitution,
-  emptyCustomerInstitution,
-  CustomerInstitutionFieldNames,
-  CustomerInstitutionFormData,
-  DoiAgent,
-  emptyProtectedDoiAgent,
-  Sector,
-} from '../../../types/customerInstitution.types';
-import { setNotification } from '../../../redux/notificationSlice';
+import { Box, Checkbox, Chip, FormControlLabel, FormLabel, TextField } from '@mui/material';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {
   createCustomerInstitution,
   updateCustomerInstitution,
   updateDoiAgent,
 } from '../../../api/customerInstitutionsApi';
 import { InputContainerBox, StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
-import { customerInstitutionValidationSchema } from '../../../utils/validation/customerInstitutionValidation';
-import { getAdminInstitutionPath } from '../../../utils/urlPaths';
+import { setNotification } from '../../../redux/notificationSlice';
+import {
+  CustomerInstitution,
+  CustomerInstitutionFieldNames,
+  CustomerInstitutionFormData,
+  DoiAgent,
+  Sector,
+  emptyCustomerInstitution,
+  emptyProtectedDoiAgent,
+} from '../../../types/customerInstitution.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { OrganizationSearchField } from './OrganizationSearchField';
-import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
+import { getAdminInstitutionPath } from '../../../utils/urlPaths';
+import { customerInstitutionValidationSchema } from '../../../utils/validation/customerInstitutionValidation';
 import { CustomerDoiPasswordField } from './CustomerDoiPasswordField';
+import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
+import { OrganizationSearchField } from './OrganizationSearchField';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution?: CustomerInstitution;

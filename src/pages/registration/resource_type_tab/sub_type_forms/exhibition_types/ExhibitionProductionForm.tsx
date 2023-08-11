@@ -1,19 +1,19 @@
-import { useState } from 'react';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
-  TextField,
-  MenuItem,
-  Typography,
+  Box,
   Button,
   FormHelperText,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Box,
+  TextField,
+  Typography,
 } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Field, FieldProps, ErrorMessage, useFormikContext, FieldArray, FieldArrayRenderProps } from 'formik';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
@@ -22,11 +22,11 @@ import {
   ExhibitionRegistration,
 } from '../../../../../types/publication_types/exhibitionContent.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
-import { ExhibitionBasicModal } from './ExhibitionBasicModal';
 import { OutputRow } from '../artistic_types/OutputRow';
-import { ExhibitionOtherPresentationModal } from './ExhibitionOtherPresentationModal';
-import { ExhibitionMentionInPublicationModal } from './ExhibitionMentionInPublication';
+import { ExhibitionBasicModal } from './ExhibitionBasicModal';
 import { ExhibitionCatalogModal } from './ExhibitionCatalogModal';
+import { ExhibitionMentionInPublicationModal } from './ExhibitionMentionInPublication';
+import { ExhibitionOtherPresentationModal } from './ExhibitionOtherPresentationModal';
 
 const exhibitionSubtypes = Object.values(ExhibitionProductionSubtype);
 type ExhibitionProductioModalType =

@@ -1,16 +1,16 @@
 import { Autocomplete } from '@mui/material';
-import { useState } from 'react';
-import { Field, FieldProps } from 'formik';
-import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
-import { ProjectChip } from '../../registration/description_tab/projects_field/ProjectChip';
+import { Field, FieldProps } from 'formik';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { searchForProjects } from '../../../api/cristinApi';
+import { AutocompleteProjectOption } from '../../../components/AutocompleteProjectOption';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { CristinProject } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
-import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { ProjectChip } from '../../registration/description_tab/projects_field/ProjectChip';
 import { ProjectFieldName } from './ProjectFormDialog';
-import { AutocompleteProjectOption } from '../../../components/AutocompleteProjectOption';
-import { searchForProjects } from '../../../api/cristinApi';
 
 export const RelatedProjectsField = () => {
   const { t } = useTranslation();

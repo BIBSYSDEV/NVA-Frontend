@@ -1,3 +1,4 @@
+import { OtherRegistrationType, PublicationType } from '../publicationFieldNames';
 import {
   BaseEntityDescription,
   BaseReference,
@@ -5,7 +6,6 @@ import {
   ContextPublisher,
   emptyContextPublisher,
 } from '../registration.types';
-import { OtherRegistrationType, PublicationType } from '../publicationFieldNames';
 
 export interface MapRegistration extends BaseRegistration {
   entityDescription: MapEntityDescription;

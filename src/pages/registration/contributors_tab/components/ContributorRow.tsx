@@ -1,31 +1,31 @@
-import { ErrorMessage, Field, FieldProps } from 'formik';
-import { useState } from 'react';
-import {
-  Box,
-  TableRow,
-  TableCell,
-  Tooltip,
-  Typography,
-  Checkbox,
-  TextField,
-  IconButton,
-  MenuItem,
-  Link,
-} from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import CancelIcon from '@mui/icons-material/Cancel';
 import WarningIcon from '@mui/icons-material/Warning';
+import {
+  Box,
+  Checkbox,
+  IconButton,
+  Link,
+  MenuItem,
+  TableCell,
+  TableRow,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import { ErrorMessage, Field, FieldProps } from 'formik';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
+import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
 import { Contributor, ContributorRole } from '../../../../types/contributor.types';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
-import { AffiliationsCell } from './AffiliationsCell';
-import { ConfirmDialog } from '../../../../components/ConfirmDialog';
-import { AddContributorModal } from '../AddContributorModal';
-import { dataTestId } from '../../../../utils/dataTestIds';
 import { CristinPerson } from '../../../../types/user.types';
-import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { AddContributorModal } from '../AddContributorModal';
 import { ContributorIndicator } from '../ContributorIndicator';
+import { AffiliationsCell } from './AffiliationsCell';
 
 interface ContributorRowProps {
   contributor: Contributor;

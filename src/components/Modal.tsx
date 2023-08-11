@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next';
-import { Box, styled as muiStyled } from '@mui/system';
-import { Avatar, AvatarProps, Backdrop, Dialog, DialogProps, DialogTitle } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { Avatar, AvatarProps, Backdrop, Dialog, DialogProps, DialogTitle } from '@mui/material';
+import { Box, styled as muiStyled } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 
 const StyledSpan = muiStyled('span')({
   gridArea: 'text',

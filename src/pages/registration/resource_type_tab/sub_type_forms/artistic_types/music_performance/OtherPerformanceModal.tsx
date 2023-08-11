@@ -1,20 +1,20 @@
-import { Dialog, DialogTitle, DialogContent, TextField, Button, Typography, FormHelperText, Box } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
+import AddIcon from '@mui/icons-material/Add';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Box, Button, Dialog, DialogContent, DialogTitle, FormHelperText, TextField, Typography } from '@mui/material';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Cancel';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
+import { emptyPlace } from '../../../../../../types/common.types';
 import {
   MusicalWork,
   OtherMusicPerformance,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
-import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { emptyPlace } from '../../../../../../types/common.types';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;

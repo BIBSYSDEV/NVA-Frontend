@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { VocabularyAutocomplete, VocabularyComponentProps } from './VocabularyAutocomplete';
 import { hrcsCategories } from '../../../../resources/vocabularies/hrcsCategories';
+import { VocabularyAutocomplete, VocabularyComponentProps } from './VocabularyAutocomplete';
 
 export const HrcsCategoryInput = (props: VocabularyComponentProps) => {
   const { t } = useTranslation();

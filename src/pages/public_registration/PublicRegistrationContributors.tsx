@@ -1,17 +1,17 @@
-import { useRef, useState } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, Link, Typography } from '@mui/material';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Box, Button, Link, Typography } from '@mui/material';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
+import { ContributorIndicators } from '../../components/ContributorIndicators';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { Contributor } from '../../types/contributor.types';
-import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
+import { PublicationInstanceType } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getDistinctContributorUnits } from '../../utils/institutions-helpers';
 import { contributorConfig, groupContributors } from '../../utils/registration-helpers';
 import { getResearchProfilePath } from '../../utils/urlPaths';
-import { PublicationInstanceType } from '../../types/registration.types';
-import { ContributorIndicators } from '../../components/ContributorIndicators';
 
 interface PublicRegistrationContributorsProps {
   contributors: Contributor[];
