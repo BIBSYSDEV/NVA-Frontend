@@ -10,6 +10,7 @@ interface ListPaginationProps extends Pick<BoxProps, 'sx'> {
   onRowsPerPageChange: (newRowsPerPage: number) => void;
   rowsPerPageOptions?: number[];
   dataTestId?: string;
+  maxHits?: number; // Default limit of 10_000 hits in ElasticSearch
 }
 
 export const ListPagination = ({
@@ -20,11 +21,15 @@ export const ListPagination = ({
   onRowsPerPageChange,
   rowsPerPageOptions = ROWS_PER_PAGE_OPTIONS,
   dataTestId,
+  maxHits,
   sx = {},
 }: ListPaginationProps) => {
   const { t } = useTranslation();
 
+  const maxPages = maxHits ? Math.ceil(maxHits / rowsPerPage) : Infinity;
   const totalPages = Math.ceil(count / rowsPerPage);
+  const pages = Math.min(maxPages, totalPages);
+
   const itemsStart = ((page - 1) * rowsPerPage + 1).toLocaleString();
   const itemsEnd = Math.min(page * rowsPerPage, count).toLocaleString();
 
@@ -51,7 +56,7 @@ export const ListPagination = ({
           },
         }}
         page={page}
-        count={totalPages}
+        count={pages}
         onChange={(_, newPage) => onPageChange(newPage)}
         renderItem={(item) => (
           <PaginationItem {...item} variant={item.selected ? 'outlined' : 'text'} page={item.page?.toLocaleString()} />

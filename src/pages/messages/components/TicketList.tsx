@@ -70,6 +70,7 @@ export const TicketList = ({
                   setRowsPerPage(newRowsPerPage);
                   setPage(1);
                 }}
+                maxHits={10_000}
               />
             </>
           )}
