@@ -41,7 +41,7 @@ export const Header = () => {
   const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   return (
-    <AppBar position="static" elevation={0} sx={{ color: 'white' }}>
+    <AppBar position="sticky" elevation={0} sx={{ color: 'white' }}>
       <Box
         component="nav"
         sx={{
