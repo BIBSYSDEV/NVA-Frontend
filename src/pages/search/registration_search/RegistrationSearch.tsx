@@ -45,6 +45,7 @@ export const RegistrationSearch = ({ searchResults, isLoadingSearch }: Registrat
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
             dataTestId={dataTestId.startPage.searchPagination}
+            maxHits={10_000}
           />
         </>
       ) : (
