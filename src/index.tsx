@@ -1,3 +1,5 @@
+import './init'; // Must be the first import
+
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -8,7 +10,6 @@ import { App } from './App';
 import { QueryProvider } from './QueryProvider';
 import { interceptRequestsOnMock } from './api/mock-interceptor';
 import { BasicErrorBoundary } from './components/ErrorBoundary';
-import './init';
 import { store } from './redux/store';
 import { mainTheme } from './themes/mainTheme';
 import i18n from './translations/i18n';
