@@ -5,7 +5,6 @@ import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { RegistrationSearchResponse } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { RegistrationSearchResults } from './RegistrationSearchResults';
 
@@ -44,7 +43,6 @@ export const RegistrationSearch = ({ searchResults, isLoadingSearch }: Registrat
             onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
-            dataTestId={dataTestId.startPage.searchPagination}
             maxHits={10_000}
           />
         </>
