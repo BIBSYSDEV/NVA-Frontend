@@ -30,7 +30,7 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
   duplicateSearchFilters.yearPublished.length > 0 &&
     queryArray.push(`${DescriptionFieldNames.PublicationYear}:"${duplicateSearchFilters.yearPublished}"`);
 
-  const searchQuery = queryArray.length > 0 ? queryArray.join(' AND ') : '';
+  const searchQuery = queryArray.length > 0 ? `(${queryArray.join(' AND ')})` : '';
 
   const duplicatesQuery = useQuery({
     queryKey: ['registrationsSearch', rowsPerPage, page, searchQuery],
@@ -38,37 +38,32 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
-  const searchResults = duplicatesQuery.data?.hits ?? [];
-  const totalCount = duplicatesQuery.data?.size ?? 0;
-
   return (
     <>
       {duplicatesQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        searchResults && (
-          <>
-            <Typography variant="subtitle1">
-              {t('basic_data.central_import.duplicate_search_hits_shown', {
-                ShownResultsCount: searchResults.length,
-                TotalResultsCount: duplicatesQuery.data?.size,
-              })}
-              :
-            </Typography>
-            <Divider />
-            <RegistrationList registrations={duplicatesQuery.data?.hits ?? []} />
-            <ListPagination
-              count={totalCount}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={(newPage) => setPage(newPage)}
-              onRowsPerPageChange={(newRowsPerPage) => {
-                setRowsPerPage(newRowsPerPage);
-                setPage(1);
-              }}
-            />
-          </>
-        )
+        <>
+          <Typography variant="subtitle1">
+            {t('basic_data.central_import.duplicate_search_hits_shown', {
+              ShownResultsCount: duplicatesQuery.data?.hits.length ?? 0,
+              TotalResultsCount: duplicatesQuery.data?.size ?? 0,
+            })}
+            :
+          </Typography>
+          <Divider />
+          <RegistrationList registrations={duplicatesQuery.data?.hits ?? []} />
+          <ListPagination
+            count={duplicatesQuery.data?.size ?? 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={(newPage) => setPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRowsPerPage(newRowsPerPage);
+              setPage(1);
+            }}
+          />
+        </>
       )}
     </>
   );
