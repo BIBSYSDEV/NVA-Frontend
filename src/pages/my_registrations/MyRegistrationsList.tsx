@@ -1,16 +1,17 @@
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import { Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { TablePagination, Typography } from '@mui/material';
-import { Registration, RegistrationPreview, emptyRegistration } from '../../types/registration.types';
-import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
-import { RegistrationList } from '../../components/RegistrationList';
-import { ConfirmDialog } from '../../components/ConfirmDialog';
-import { getTitleString } from '../../utils/registration-helpers';
 import { deleteRegistration } from '../../api/registrationApi';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { ListPagination } from '../../components/ListPagination';
+import { RegistrationList } from '../../components/RegistrationList';
 import { setNotification } from '../../redux/notificationSlice';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { Registration, RegistrationPreview, emptyRegistration } from '../../types/registration.types';
+import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
+import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
+import { getTitleString } from '../../utils/registration-helpers';
 
 interface MyRegistrationsListProps {
   registrations: RegistrationPreview[];
@@ -21,19 +22,10 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const handleChangePage = (_: MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  useEffect(() => setPage(0), [registrations]); // Reset page if user changes focus between Published and Unpublished
+  useEffect(() => setPage(1), [registrations]); // Reset page if user changes focus between Published and Unpublished
 
   useEffect(() => {
     if (registrations.some(({ mainTitle }) => stringIncludesMathJax(mainTitle))) {
@@ -41,7 +33,7 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
     }
   }, [registrations, page, rowsPerPage]);
 
-  const registrationsOnPage = registrations.slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+  const registrationsOnPage = registrations.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
   const registrationsCopy = registrationsOnPage.map((registrationPreview) => {
     const { identifier, id, contributors, mainTitle, publicationInstance, status } = registrationPreview;
@@ -94,14 +86,15 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
             registrations={registrationsCopy}
             canEditRegistration={true}
           />
-          <TablePagination
-            rowsPerPageOptions={[10, 25, { value: registrations.length, label: t('common.all') }]}
-            component="div"
+          <ListPagination
             count={registrations.length}
             rowsPerPage={rowsPerPage}
             page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
+            onPageChange={(newPage) => setPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRowsPerPage(newRowsPerPage);
+              setPage(1);
+            }}
           />
         </>
       ) : (

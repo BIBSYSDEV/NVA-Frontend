@@ -1,13 +1,13 @@
 import {
-  Typography,
-  TableContainer,
+  Paper,
+  Radio,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Radio,
-  Paper,
+  Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useTranslation } from 'react-i18next';
@@ -43,7 +43,7 @@ export const CristinPersonList = ({
         </Typography>
       )}
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ my: '0.5rem' }}>
         <Table size="medium">
           <caption style={visuallyHidden}>{t('registration.contributors.authors')}</caption>
           <TableHead>
@@ -53,7 +53,7 @@ export const CristinPersonList = ({
               </TableCell>
               <TableCell>{t('common.name')}</TableCell>
               <TableCell>{t('my_page.my_profile.heading.affiliations')}</TableCell>
-              <TableCell>{t('common.registrations')}</TableCell>
+              <TableCell>{t('common.result_registrations')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

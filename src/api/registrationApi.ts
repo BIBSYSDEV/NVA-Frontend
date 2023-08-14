@@ -1,8 +1,8 @@
-import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
-import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
-import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
-import { PublicationsApiPath } from './apiPaths';
 import { ImportCandidate } from '../types/importCandidate.types';
+import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
+import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
+import { PublicationsApiPath } from './apiPaths';
+import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({

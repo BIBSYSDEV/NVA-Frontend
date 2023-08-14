@@ -1,34 +1,34 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
+import { AggregationBucket, Aggregations, LanguageString, SearchResponse } from './common.types';
+import { Contributor } from './contributor.types';
 import { ResearchProject } from './project.types';
+import {
+  ArtisticType,
+  BookType,
+  ChapterType,
+  DegreeType,
+  ExhibitionContentType,
+  JournalType,
+  MediaType,
+  OtherRegistrationType,
+  PresentationType,
+  ReportType,
+  ResearchDataType,
+} from './publicationFieldNames';
+import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
+import { BookEntityDescription } from './publication_types/bookRegistration.types';
+import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
+import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
+import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
 import {
   JournalEntityDescription,
   emptyRegistrationEntityDescription,
 } from './publication_types/journalRegistration.types';
-import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
-import { BookEntityDescription } from './publication_types/bookRegistration.types';
-import { ReportEntityDescription } from './publication_types/reportRegistration.types';
-import { ChapterEntityDescription } from './publication_types/chapterRegistration.types';
-import { Contributor } from './contributor.types';
-import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
-import { ArtisticEntityDescription } from './publication_types/artisticRegistration.types';
 import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration.types';
-import {
-  JournalType,
-  BookType,
-  ReportType,
-  DegreeType,
-  ChapterType,
-  PresentationType,
-  ArtisticType,
-  MediaType,
-  ResearchDataType,
-  OtherRegistrationType,
-  ExhibitionContentType,
-} from './publicationFieldNames';
-import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 import { MapEntityDescription } from './publication_types/otherRegistration.types';
-import { AggregationBucket, Aggregations, LanguageString, SearchResponse } from './common.types';
-import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
+import { PresentationEntityDescription } from './publication_types/presentationRegistration.types';
+import { ReportEntityDescription } from './publication_types/reportRegistration.types';
+import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 
 export enum RegistrationStatus {
   Deleted = 'DRAFT_FOR_DELETION',
@@ -255,7 +255,7 @@ export const emptyContextPublisher: ContextPublisher = {
   id: '',
 };
 
-export interface InstitutionAggregationBucket extends AggregationBucket {
+export interface LabelAggregationBucket extends AggregationBucket {
   labels: Aggregations;
 }
 
@@ -266,9 +266,9 @@ interface ContributorAggregationBucket extends AggregationBucket {
 }
 
 export interface RegistrationSearchAggregations {
-  topLevelOrganization?: {
-    id?: {
-      buckets: InstitutionAggregationBucket[];
+  topLevelOrganization: {
+    id: {
+      buckets: LabelAggregationBucket[];
     };
   };
   entityDescription: {
@@ -285,6 +285,11 @@ export interface RegistrationSearchAggregations {
           buckets: ContributorAggregationBucket[];
         };
       };
+    };
+  };
+  fundings: {
+    identifier: {
+      buckets: LabelAggregationBucket[];
     };
   };
 }

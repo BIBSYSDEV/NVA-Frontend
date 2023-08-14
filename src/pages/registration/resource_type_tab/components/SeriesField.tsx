@@ -1,19 +1,19 @@
+import { Autocomplete, Box, Chip, Typography } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Chip, Typography, Autocomplete, Box } from '@mui/material';
+import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { Journal, PublicationChannelType, Registration } from '../../../../types/registration.types';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { PublicationChannelApiPath } from '../../../../api/apiPaths';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
-import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
+import { Journal, PublicationChannelType, Registration } from '../../../../types/registration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { useFetch } from '../../../../utils/hooks/useFetch';
+import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
+import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 

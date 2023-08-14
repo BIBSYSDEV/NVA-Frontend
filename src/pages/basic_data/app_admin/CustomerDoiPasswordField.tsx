@@ -1,17 +1,17 @@
-import { IconButton, TextField, Tooltip } from '@mui/material';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from 'react';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { LoadingButton } from '@mui/lab';
+import { IconButton, TextField, Tooltip } from '@mui/material';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   CustomerInstitutionFieldNames,
   CustomerInstitutionFormData,
   ProtectedDoiAgent,
 } from '../../../types/customerInstitution.types';
-import { useFetch } from '../../../utils/hooks/useFetch';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useFetch } from '../../../utils/hooks/useFetch';
 
 interface CustomerDoiPasswordFieldProps {
   doiAgentId: string;

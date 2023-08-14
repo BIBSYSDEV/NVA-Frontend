@@ -1,19 +1,19 @@
+import CloseIcon from '@mui/icons-material/Close';
+import FilterVintageIcon from '@mui/icons-material/FilterVintage';
+import SearchIcon from '@mui/icons-material/Search';
 import { Box, Chip, FormHelperText, FormLabel, IconButton, Paper, TextField, Typography } from '@mui/material';
 import { ErrorMessage, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import CloseIcon from '@mui/icons-material/Close';
-import SearchIcon from '@mui/icons-material/Search';
-import FilterVintageIcon from '@mui/icons-material/FilterVintage';
+import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { RootState } from '../../../redux/store';
 import {
   ArtisticType,
   BookType,
   ChapterType,
-  contextTypeBaseFieldName,
   DegreeType,
   ExhibitionContentType,
-  instanceTypeBaseFieldName,
   JournalType,
   MediaType,
   OtherRegistrationType,
@@ -22,11 +22,17 @@ import {
   ReportType,
   ResearchDataType,
   ResourceFieldNames,
+  contextTypeBaseFieldName,
+  instanceTypeBaseFieldName,
 } from '../../../types/publicationFieldNames';
 import { emptyArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
 import { emptyBookPublicationInstance } from '../../../types/publication_types/bookRegistration.types';
 import { emptyChapterPublicationInstance } from '../../../types/publication_types/chapterRegistration.types';
 import { emptyDegreePublicationInstance } from '../../../types/publication_types/degreeRegistration.types';
+import {
+  emptyExhibitionPublicationContext,
+  emptyExhibitionPublicationInstance,
+} from '../../../types/publication_types/exhibitionContent.types';
 import { emptyJournalPublicationInstance } from '../../../types/publication_types/journalRegistration.types';
 import {
   emptyMediaContributionPeriodicalPublicationContext,
@@ -48,20 +54,18 @@ import {
   emptyResearchDataPublicationInstance,
 } from '../../../types/publication_types/researchDataRegistration.types';
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import {
   getMainRegistrationType,
+  isDegreeWithProtectedFiles,
   isPeriodicalMediaContribution,
   nviApplicableTypes,
 } from '../../../utils/registration-helpers';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { RegistrationTypeElement, RegistrationTypesRow } from './components/RegistrationTypesRow';
-import {
-  emptyExhibitionPublicationContext,
-  emptyExhibitionPublicationInstance,
-} from '../../../types/publication_types/exhibitionContent.types';
 
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
 
@@ -317,6 +321,7 @@ export const SelectRegistrationTypeField = () => {
               Object.values(DegreeType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                disabled: isDegreeWithProtectedFiles(registrationType) && !user?.isThesisCurator,
               }))
             )}
             value={currentInstanceType}

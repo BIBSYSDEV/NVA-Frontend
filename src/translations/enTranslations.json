@@ -111,8 +111,8 @@
     "actions": "Actions",
     "add": "Add",
     "add_custom": "Add {{- name}}",
-    "all": "All",
     "cancel": "Cancel",
+    "category": "Category",
     "clear": "Clear",
     "click_to_show_all": "Click to show all",
     "close": "Close",
@@ -128,14 +128,15 @@
     "employments": "Employments",
     "end_date": "End date",
     "error_occurred": "An unexpected error has occurred",
+    "filter": "Filter",
     "first_name": "First name",
+    "funding": "Funding",
     "help": "Help",
     "id": "ID",
     "institution": "Institution",
     "institutions": "Institutions",
     "last_name": "Last name",
     "link": "Link",
-    "loading": "Loading",
     "menu": "Menu",
     "message": "Message",
     "move_down": "Move down",
@@ -155,6 +156,8 @@
     "other": "Other",
     "overview": "Overview",
     "page_title": "Nasjonalt Vitenarkiv",
+    "pagination_rows_per_page": "Number of rows per page:",
+    "pagination_showing_interval": "Showing {{start}}-{{end}} of {{total}}",
     "place": "Place",
     "previous": "Previous",
     "publisher": "Publisher",
@@ -163,12 +166,12 @@
     "read_less_about_nva": "Read less about NVA",
     "read_more": "Read more",
     "read_more_about_nva": "Read more about NVA",
-    "registration": "Registration",
-    "registrations": "Registrations",
     "reject_doi": "Reject DOI",
     "reload_page_info": "A new version of NVA is available and the page will need to be reloaded.",
     "remove": "Remove",
     "required_description": "Fields with an asterisk are mandatory",
+    "result": "Result",
+    "result_registrations": "Result registrations",
     "role": "Role",
     "save": "Save",
     "save_and_view": "Save and view",
@@ -179,6 +182,7 @@
     "search_summary_other": "{{count}} results for \"{{searchTerm}}\"",
     "select": "Select",
     "select_institution": "Select institution",
+    "select_language": "Select language",
     "selected": "Selected",
     "send": "Send",
     "settings": "Settings",
@@ -192,9 +196,9 @@
     "start": "Start",
     "start_date": "Start date",
     "start_page": "Start page",
-    "status": "Status",
     "tasks": "Tasks",
     "title": "Title",
+    "today": "Today",
     "type": "Type",
     "unknown": "Unknown",
     "update": "Update",
@@ -203,8 +207,12 @@
     "will_be_available": "Will be available",
     "x_days_one": "{{count}} day",
     "x_days_other": "{{count}} days",
+    "x_months_one": "{{count}} months",
+    "x_months_other": "{{count}} months",
     "x_others_one": "+ {{count}} other",
     "x_others_other": "+ {{count}} others",
+    "x_years_one": "{{count}} years",
+    "x_years_other": "{{count}} years",
     "year": "Year",
     "yes": "Yes"
   },
@@ -305,6 +313,9 @@
       "area_of_responsibility": "Area of responsibility",
       "area_of_responsibility_placeholder": "No limitations",
       "areas_of_responsibility": "Areas of responsibility",
+      "curator_has_extended_privileges": "Curator has the rights to edit:",
+      "edit_extended_responsibility": "Edit extended area of responsibility",
+      "extended_area_of_resposibility": "Extended area of responsibility",
       "no_users_found": "No users found"
     },
     "doi": {
@@ -379,6 +390,7 @@
       "get_publishers": "Publisher search failed",
       "get_registration": "Failed to load registration",
       "get_registrations": "Failed to load registrations",
+      "get_registrations_export": "Failed to retrieve result export",
       "get_roles": "Failed to retrieve roles",
       "get_series": "Failed to retrieve series",
       "get_tickets": "Could not get cases",
@@ -467,6 +479,7 @@
       "rights_reserved": "This work is posted here for your personal use and only in accordance with the publisher's terms and conditions for use of self-archived versions."
     },
     "labels": {
+      "cc0": "CC0 ({{version}})",
       "cc_by": "CC BY ({{version}})",
       "cc_by_nc": "CC BY-NC ({{version}})",
       "cc_by_nc_nd": "CC BY-NC-ND ({{version}})",
@@ -474,19 +487,18 @@
       "cc_by_nd": "CC BY-ND ({{version}})",
       "cc_by_nd_nc": "CC BY-ND-NC ({{version}})",
       "cc_by_sa": "CC BY-SA ({{version}})",
-      "cc0": "CC0 ({{version}})",
       "rights_reserved": "Publisher Terms"
     },
     "links": {
-      "cc0": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "cc0": "https://creativecommons.org/publicdomain/zero/1.0",
       "cc_by": "https://creativecommons.org/licenses/by/{{version}}",
       "cc_by_nc": "https://creativecommons.org/licenses/by-nc/{{version}}",
       "cc_by_nc_nd": "https://creativecommons.org/licenses/by-nc-nd/{{version}}",
       "cc_by_nc_sa": "https://creativecommons.org/licenses/by-nc-sa/{{version}}",
       "cc_by_nd": "https://creativecommons.org/licenses/by-nd/{{version}}",
       "cc_by_nd_nc": "https://creativecommons.org/licenses/by-nd-nc/{{version}}",
-      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}/",
-      "rights_reserved": "https://rightsstatements.org/page/InC/1.0/"
+      "cc_by_sa": "https://creativecommons.org/licenses/by-sa/{{version}}",
+      "rights_reserved": "http://rightsstatements.org/vocab/InC/1.0/"
     }
   },
   "my_page": {
@@ -554,12 +566,17 @@
       "user_profile_description": "Here you can fill in and mark what you wish to display on your public researcher profile."
     },
     "no_employments": "No employments",
+    "project_registration_status": {
+      "concluded": "Concluded",
+      "not_started": "Not started",
+      "ongoing": "Ongoing"
+    },
     "project_registrations": "Project registrations",
     "registrations": {
       "delete_registration": "Delete unpublished registration",
       "delete_registration_message": "Do you want to delete \"{{title}}\"?",
-      "published_registrations": "Published registrations",
-      "unpublished_registrations": "Unpublished registrations"
+      "published": "Published",
+      "unpublished": "Draft"
     },
     "research_profile": "Research profile",
     "roles": {
@@ -862,7 +879,6 @@
     "coordinating_institution": "Coordinating institution",
     "create_project": "Create project",
     "edit_project": "Edit project",
-    "financing": "Financing",
     "form": {
       "empty_registration": "Empty registration",
       "here_you_can_create_project": "Here you can create a project:",
@@ -1006,7 +1022,6 @@
       "date_published": "Date published",
       "description_of_content": "Description of content, if relevant",
       "funding": {
-        "financing": "Funding",
         "funder": "Funder",
         "funding_sum": "Sum",
         "nfr_project": "NFR project",
@@ -1095,6 +1110,7 @@
       "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
       "reserve_doi": "Reserve a DOI",
       "reserved_doi": "Reserved DOI",
+      "subject_and_classification": "Subject and classification",
       "tasks_panel": {
         "assign_curator": "Assign curator",
         "assign_doi": "Assign DOI",
@@ -1448,6 +1464,7 @@
       "pages_to": "to",
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
+      "protected_type": "You do not have access. Contact the institution that awarded you the degree to have it published. If it is foreign, ask for curatorial support with the publication.",
       "publisher_or_organizer": "Publisher/organizer etc.",
       "remove_doi": "Remove DOI",
       "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you want to remove the link to the original DOI?",
@@ -1507,6 +1524,7 @@
     "additional_participants_one": "+{{count}} participant",
     "additional_participants_other": "+{{count}} participants",
     "contains": "Contains",
+    "export": "Export",
     "field_label": "Field",
     "hits_one": "{{count}} hit",
     "hits_other": "{{count}} hits",
@@ -1517,7 +1535,6 @@
     "project_search_placeholder": "Search for title",
     "remove_filter": "Remove filter",
     "result": "Result",
-    "search_filter": "Search filter",
     "search_placeholder": "Search for title, contributor, abstract, etc.",
     "search_term_label": "Value",
     "sort_by": "Order by",
@@ -1529,7 +1546,7 @@
     "all_user_dialogs": "All user dialogs",
     "limited_to": "Limited to: \"{{name}}\"",
     "my_user_dialogs": "My user dialogs",
-    "new_user_dialogs": "New user dialogs",
+    "status": "Status",
     "unread": "Unread",
     "user_dialog": "User dialogue"
   }

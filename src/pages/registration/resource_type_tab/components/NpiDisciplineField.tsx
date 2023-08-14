@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next';
-import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { TextField } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import { ErrorMessage, Field, FieldProps } from 'formik';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { useTranslation } from 'react-i18next';
 import disciplines from '../../../../resources/disciplines.json';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 const disciplineOptions = disciplines

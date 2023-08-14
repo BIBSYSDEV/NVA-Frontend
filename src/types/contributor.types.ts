@@ -57,11 +57,18 @@ export enum ContributorRole {
   Writer = 'Writer',
 }
 
+export enum VerificationStatus {
+  Verified = 'Verified',
+  NotVerified = 'NotVerified',
+  CannotBeEstablished = 'CannotBeEstablished',
+}
+
 export interface Identity {
   type: 'Identity';
   id?: string;
   name: string;
   orcId?: string;
+  verificationStatus?: VerificationStatus;
 }
 
 export interface Contributor {
@@ -90,6 +97,7 @@ export const emptyContributor: Contributor = {
   identity: {
     type: 'Identity',
     name: '',
+    verificationStatus: VerificationStatus.NotVerified,
   },
   role: { type: ContributorRole.Creator },
   sequence: 0,

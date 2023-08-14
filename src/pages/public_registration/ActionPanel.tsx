@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { dataTestId } from '../../utils/dataTestIds';
-import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { ActionPanelContent } from './ActionPanelContent';
+import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 
 interface ActionPanelProps extends PublicRegistrationContentProps {
   tickets: Ticket[];

@@ -1,8 +1,8 @@
+import { removeNotification, setNotification } from '../../src/redux/notificationSlice';
 import { setPartialUser } from '../../src/redux/userSlice';
-import { setNotification, removeNotification } from '../../src/redux/notificationSlice';
 import { RoleName } from '../../src/types/user.types';
-import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';
 import { dataTestId } from '../../src/utils/dataTestIds';
+import { mockFileUploadUrl } from '../../src/utils/testfiles/mockFiles';
 
 Cypress.Commands.add('mocklogin', () => {
   cy.get(`[data-testid=${dataTestId.header.logInButton}]`).click();
@@ -37,6 +37,8 @@ Cypress.Commands.add('setUserRolesInRedux', (roles) => {
           isAppAdmin: roles.includes(RoleName.AppAdmin),
           isInstitutionAdmin: roles.includes(RoleName.InstitutionAdmin),
           isCurator: roles.includes(RoleName.Curator),
+          isThesisCurator: roles.includes(RoleName.CuratorThesis),
+          isEmbargoThesisCurator: roles.includes(RoleName.CuratorThesisEmbargo),
           isEditor: roles.includes(RoleName.Editor),
         })
       )

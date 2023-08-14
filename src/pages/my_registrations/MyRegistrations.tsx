@@ -1,11 +1,11 @@
-import { useTranslation } from 'react-i18next';
 import { Typography } from '@mui/material';
-import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { fetchRegistrationsByOwner } from '../../api/registrationApi';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { RegistrationStatus } from '../../types/registration.types';
 import { MyRegistrationsList } from './MyRegistrationsList';
-import { fetchRegistrationsByOwner } from '../../api/registrationApi';
 
 interface MyRegistrationsProps {
   selectedPublished: boolean;
@@ -28,7 +28,12 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       ({ status }) =>
         (status === RegistrationStatus.Draft && selectedUnpublished) ||
         ((status === RegistrationStatus.Published || status === RegistrationStatus.PublishedMetadata) &&
-          selectedPublished)
+          selectedPublished) ||
+        ((status === RegistrationStatus.Draft ||
+          status === RegistrationStatus.Published ||
+          status === RegistrationStatus.PublishedMetadata) &&
+          !selectedPublished &&
+          !selectedUnpublished)
     )
     .sort((a, b) => {
       if (a.status === RegistrationStatus.Draft && b.status !== RegistrationStatus.Draft) {
@@ -42,7 +47,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
   return (
     <>
       <Helmet>
-        <title>{t('common.registrations')}</title>
+        <title>{t('common.result_registrations')}</title>
       </Helmet>
       <div>
         {registrationsQuery.isLoading ? (
@@ -50,10 +55,10 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
         ) : (
           <>
             <Typography gutterBottom variant="h2">
-              {t('common.registrations')}
+              {t('common.result_registrations')}
             </Typography>
             <MyRegistrationsList
-              registrations={filteredRegistrations}
+              registrations={filteredRegistrations.length > 0 ? filteredRegistrations : registrations}
               refetchRegistrations={registrationsQuery.refetch}
             />
           </>

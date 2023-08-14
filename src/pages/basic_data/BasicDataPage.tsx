@@ -1,23 +1,14 @@
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { Switch, useHistory } from 'react-router-dom';
-import { Divider } from '@mui/material';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import PeopleIcon from '@mui/icons-material/People';
 import StoreIcon from '@mui/icons-material/Store';
+import { Divider } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Redirect, Switch, useLocation } from 'react-router-dom';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { RootState } from '../../redux/store';
-import { dataTestId } from '../../utils/dataTestIds';
-import { AppAdminRoute, InstitutionAdminRoute } from '../../utils/routes/Routes';
-import { getAdminInstitutionPath, UrlPathTemplate } from '../../utils/urlPaths';
-import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
-import { AddEmployeePage } from './institution_admin/AddEmployeePage';
-import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
-import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
-import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
   LinkButton,
   LinkCreateButton,
@@ -25,29 +16,28 @@ import {
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { CentralImportRegistration } from './app_admin/central_import/CentralImportRegistration';
 import { SideMenu } from '../../components/SideMenu';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RootState } from '../../redux/store';
+import { dataTestId } from '../../utils/dataTestIds';
+import { PrivateRoute } from '../../utils/routes/Routes';
+import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
+import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
+import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
+import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
+import { CentralImportRegistration } from './app_admin/central_import/CentralImportRegistration';
+import { AddEmployeePage } from './institution_admin/AddEmployeePage';
+import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const history = useHistory();
-  const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+  const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
+  const isAppAdmin = !!user?.customerId && user.isAppAdmin;
+  const location = useLocation();
+  const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
-  useEffect(() => {
-    if (currentPath === UrlPathTemplate.BasicData) {
-      if (user?.isInstitutionAdmin) {
-        history.replace(UrlPathTemplate.BasicDataPersonRegister);
-      } else if (user?.isAppAdmin) {
-        history.replace(UrlPathTemplate.BasicDataInstitutions);
-      }
-    }
-  }, [history, currentPath, user?.isInstitutionAdmin, user?.isAppAdmin]);
-
-  const newCustomerIsSelected =
-    currentPath === UrlPathTemplate.BasicDataInstitutions && history.location.search === '?id=new';
+  const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
 
   return (
     <StyledPageWithSideMenu>
@@ -152,27 +142,49 @@ const BasicDataPage = () => {
       <BackgroundDiv>
         <Switch>
           <ErrorBoundary>
-            <AppAdminRoute
+            <PrivateRoute exact path={UrlPathTemplate.BasicData} isAuthorized={isAppAdmin || isInstitutionAdmin}>
+              {isInstitutionAdmin ? (
+                <Redirect to={UrlPathTemplate.BasicDataPersonRegister} />
+              ) : isAppAdmin ? (
+                <Redirect to={UrlPathTemplate.BasicDataInstitutions} />
+              ) : null}
+            </PrivateRoute>
+
+            <PrivateRoute
               exact
               path={UrlPathTemplate.BasicDataInstitutions}
               component={AdminCustomerInstitutionsContainer}
+              isAuthorized={isAppAdmin}
             />
-            <AppAdminRoute exact path={UrlPathTemplate.BasicDataCentralImport} component={CentralImportPage} />
-            <AppAdminRoute
+            <PrivateRoute
+              exact
+              path={UrlPathTemplate.BasicDataCentralImport}
+              component={CentralImportPage}
+              isAuthorized={isAppAdmin}
+            />
+            <PrivateRoute
               exact
               path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
               component={CentralImportDuplicationCheckPage}
+              isAuthorized={isAppAdmin}
             />
-            <AppAdminRoute
+            <PrivateRoute
               exact
               path={UrlPathTemplate.BasicDataCentralImportRegistration}
               component={CentralImportRegistration}
+              isAuthorized={isAppAdmin}
             />
-            <InstitutionAdminRoute exact path={UrlPathTemplate.BasicDataAddEmployee} component={AddEmployeePage} />
-            <InstitutionAdminRoute
+            <PrivateRoute
+              exact
+              path={UrlPathTemplate.BasicDataAddEmployee}
+              component={AddEmployeePage}
+              isAuthorized={isInstitutionAdmin}
+            />
+            <PrivateRoute
               exact
               path={UrlPathTemplate.BasicDataPersonRegister}
               component={PersonRegisterPage}
+              isAuthorized={isInstitutionAdmin}
             />
           </ErrorBoundary>
         </Switch>

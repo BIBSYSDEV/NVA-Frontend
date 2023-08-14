@@ -1,13 +1,13 @@
-import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
-import { useTranslation } from 'react-i18next';
-import { Box, TextField, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { Box, TextField, Typography } from '@mui/material';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { BookType, ChapterType, ReportType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { NviValidation } from '../components/NviValidation';
-import { SearchContainerField } from '../components/SearchContainerField';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { NviValidation } from '../components/NviValidation';
+import { SearchContainerField } from '../components/SearchContainerField';
 
 const anthologyChapterTypes: string[] = [
   ChapterType.AcademicChapter,

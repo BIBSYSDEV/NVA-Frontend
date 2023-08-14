@@ -1,33 +1,33 @@
+import { Box } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
+import { useUppy } from '@uppy/react';
 import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { Box } from '@mui/material';
-import { useUppy } from '@uppy/react';
-import { useQuery } from '@tanstack/react-query';
+import { fetchRegistration } from '../../api/registrationApi';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageHeader } from '../../components/PageHeader';
 import { PageSpinner } from '../../components/PageSpinner';
+import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
+import { SkipLink } from '../../components/SkipLink';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationTab } from '../../types/registration.types';
-import { getTitleString, userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
+import { getTouchedTabFields } from '../../utils/formik-helpers';
+import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
 import { Forbidden } from '../errorpages/Forbidden';
-import { RegistrationFormActions } from './RegistrationFormActions';
-import { RegistrationFormStepper } from './RegistrationFormStepper';
-import { getTouchedTabFields } from '../../utils/formik-helpers';
-import { SkipLink } from '../../components/SkipLink';
 import { ContributorsPanel } from './ContributorsPanel';
 import { DescriptionPanel } from './DescriptionPanel';
 import { FilesAndLicensePanel } from './FilesAndLicensePanel';
+import { RegistrationFormActions } from './RegistrationFormActions';
+import { RegistrationFormStepper } from './RegistrationFormStepper';
 import { ResourceTypePanel } from './ResourceTypePanel';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { RequiredDescription } from '../../components/RequiredDescription';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { fetchRegistration } from '../../api/registrationApi';
-import { setNotification } from '../../redux/notificationSlice';
 
 export type HighestTouchedTab = RegistrationTab | -1;
 
@@ -57,8 +57,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
-  const isValidOwner = userIsRegistrationOwner(user, registration);
-  const isValidCurator = userIsRegistrationCurator(user, registration);
 
   const validateForm = (values: Registration): FormikErrors<Registration> => {
     const publicationInstance = values.entityDescription?.reference?.publicationInstance;
@@ -74,9 +72,11 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     return {};
   };
 
+  const canEditRegistration = registration && userCanEditRegistration(user, registration);
+
   return registrationQuery.isLoading ? (
-    <PageSpinner aria-label={t('common.registration')} />
-  ) : !isValidOwner && !isValidCurator && !user?.isEditor ? (
+    <PageSpinner aria-label={t('common.result')} />
+  ) : !canEditRegistration ? (
     <Forbidden />
   ) : registration ? (
     <>

@@ -1,27 +1,30 @@
-import { useTranslation } from 'react-i18next';
-import { Switch, useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import StoreIcon from '@mui/icons-material/Store';
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import GavelIcon from '@mui/icons-material/Gavel';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { VocabularySettings } from './VocabularySettings';
-import { PublishStrategySettings } from './PublishStrategySettings';
-import { dataTestId } from '../../utils/dataTestIds';
-import { EditorRoute } from '../../utils/routes/Routes';
-import { UrlPathTemplate } from '../../utils/urlPaths';
-import { EditorInstitution } from './EditorInstitution';
+import StoreIcon from '@mui/icons-material/Store';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Switch, useHistory } from 'react-router-dom';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SideMenu } from '../../components/SideMenu';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import NotFound from '../../pages/errorpages/NotFound';
 import { RootState } from '../../redux/store';
+import { dataTestId } from '../../utils/dataTestIds';
+import { PrivateRoute } from '../../utils/routes/Routes';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
-import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import NotFound from '../../pages/errorpages/NotFound';
-import { SideMenu } from '../../components/SideMenu';
+import { EditorInstitution } from './EditorInstitution';
+import { PublishStrategySettings } from './PublishStrategySettings';
+import { VocabularySettings } from './VocabularySettings';
 
 const EditorPage = () => {
   const { t } = useTranslation();
-  const { customer } = useSelector((store: RootState) => store);
+  const customer = useSelector((store: RootState) => store.customer);
+  const user = useSelector((store: RootState) => store.user);
+  const isEditor = !!user?.customerId && user.isEditor;
+
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -94,12 +97,32 @@ const EditorPage = () => {
       </SideMenu>
       <BackgroundDiv>
         <Switch>
-          <EditorRoute exact path={UrlPathTemplate.EditorVocabulary} component={VocabularySettings} />
-          <EditorRoute exact path={UrlPathTemplate.EditorPublishStrategy} component={PublishStrategySettings} />
-          <EditorRoute exact path={UrlPathTemplate.EditorInstitution} component={EditorInstitution} />
-          <EditorRoute exact path={UrlPathTemplate.EditorCurators} component={EditorCurators} />
-          <EditorRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} />
-          <EditorRoute path={UrlPathTemplate.Wildcard} component={NotFound} />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorVocabulary}
+            component={VocabularySettings}
+            isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorPublishStrategy}
+            component={PublishStrategySettings}
+            isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorInstitution}
+            component={EditorInstitution}
+            isAuthorized={isEditor}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorCurators}
+            component={EditorCurators}
+            isAuthorized={isEditor}
+          />
+          <PrivateRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} isAuthorized={isEditor} />
+          <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>
       </BackgroundDiv>
     </StyledPageWithSideMenu>

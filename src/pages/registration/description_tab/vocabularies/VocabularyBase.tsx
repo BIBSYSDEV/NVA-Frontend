@@ -4,7 +4,7 @@ import { VocabularyStatus } from '../../../../types/customerInstitution.types';
 import { VocabularyFields } from './VocabularyFields';
 
 export const VocabularyBase = () => {
-  const { customer } = useSelector((store: RootState) => store);
+  const customer = useSelector((store: RootState) => store.customer);
   const vocabularies = customer?.vocabularies ?? [];
 
   const defaultVocabularies = vocabularies

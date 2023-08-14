@@ -1,27 +1,27 @@
-import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { LoadingButton } from '@mui/lab';
 import {
   Autocomplete,
-  Button,
   Box,
-  TextField,
+  Button,
   FormControl,
   FormControlLabel,
   FormLabel,
+  Paper,
   Radio,
   RadioGroup,
-  Paper,
+  TextField,
 } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
-import { useDebounce } from '../../utils/hooks/useDebounce';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { getLanguageString } from '../../utils/translation-helpers';
-import { getSortedSubUnits } from '../../utils/institutions-helpers';
+import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CristinApiPath } from '../../api/apiPaths';
-import { dataTestId } from '../../utils/dataTestIds';
 import { SearchResponse } from '../../types/common.types';
 import { Organization } from '../../types/organization.types';
+import { dataTestId } from '../../utils/dataTestIds';
+import { useDebounce } from '../../utils/hooks/useDebounce';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { getSortedSubUnits } from '../../utils/institutions-helpers';
+import { getLanguageString } from '../../utils/translation-helpers';
 import { AffiliationHierarchy } from './AffiliationHierarchy';
 
 enum SelectOrganizationFormField {

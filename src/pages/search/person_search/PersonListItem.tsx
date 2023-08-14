@@ -1,12 +1,12 @@
-import { ListItemText, Typography, Link as MuiLink, Box, IconButton } from '@mui/material';
+import { Box, IconButton, ListItemText, Link as MuiLink, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import OrcidLogo from '../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
+import { SearchListItem } from '../../../components/styled/Wrappers';
+import OrcidLogo from '../../../resources/images/orcid_logo.svg';
 import { CristinPerson } from '../../../types/user.types';
+import { ORCID_BASE_URL } from '../../../utils/constants';
 import { getResearchProfilePath } from '../../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
-import { ORCID_BASE_URL } from '../../../utils/constants';
-import { SearchListItem } from '../../../components/styled/Wrappers';
 
 interface PersonListItemProps {
   person: CristinPerson;

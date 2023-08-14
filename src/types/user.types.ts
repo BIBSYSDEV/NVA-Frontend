@@ -4,6 +4,8 @@ export enum RoleName {
   InstitutionAdmin = 'Institution-admin',
   AppAdmin = 'App-admin',
   Curator = 'Curator',
+  CuratorThesis = 'Curator-thesis',
+  CuratorThesisEmbargo = 'Curator-thesis-embargo',
   Creator = 'Creator',
   Editor = 'Editor',
 }
@@ -19,6 +21,8 @@ export interface User {
   feideId: string;
   isAppAdmin: boolean;
   isCurator: boolean;
+  isThesisCurator: boolean;
+  isEmbargoThesisCurator: boolean;
   isInstitutionAdmin: boolean;
   isCreator: boolean;
   isEditor: boolean;
@@ -104,6 +108,7 @@ export interface CristinPerson extends CreateCristinPerson {
   affiliations: CristinPersonAffiliation[];
   employments: Employment[];
   contactDetails?: CristinPersonContactDetails;
+  verified?: boolean;
 }
 
 export interface FlatCristinPerson {

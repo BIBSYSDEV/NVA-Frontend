@@ -1,13 +1,14 @@
+import { VerificationStatus } from '../types/contributor.types';
 import {
   CreateCristinPerson,
   CristinArrayValue,
+  CristinPerson,
   CristinPersonAffiliation,
   CristinPersonIdentifier,
   CristinPersonIdentifierType,
   CristinPersonNameType,
-  CristinPerson,
-  FlatCristinPerson,
   Employment,
+  FlatCristinPerson,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
 
@@ -38,6 +39,15 @@ export const isActiveEmployment = (employment: Employment) => {
 export const getOrcidUri = (identifiers: CristinPersonIdentifier[] = []) => {
   const orcid = getValueByKey('ORCID', identifiers);
   return orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
+};
+
+export const getVerificationStatus = (verifiedStatus: boolean | undefined) => {
+  if (verifiedStatus) {
+    return VerificationStatus.Verified;
+  } else if (verifiedStatus === false) {
+    return VerificationStatus.NotVerified;
+  }
+  return VerificationStatus.CannotBeEstablished;
 };
 
 export const getMaskedNationalIdentityNumber = (nationalIdentityNumber: string) =>
