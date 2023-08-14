@@ -1,6 +1,7 @@
 import { Box, BoxProps, MenuItem, Pagination, PaginationItem, Select, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ROWS_PER_PAGE_OPTIONS } from '../utils/constants';
+import { dataTestId } from '../utils/dataTestIds';
 
 interface ListPaginationProps extends Pick<BoxProps, 'sx'> {
   count: number;
@@ -9,7 +10,6 @@ interface ListPaginationProps extends Pick<BoxProps, 'sx'> {
   onPageChange: (newPage: number) => void;
   onRowsPerPageChange: (newRowsPerPage: number) => void;
   rowsPerPageOptions?: number[];
-  dataTestId?: string;
   maxHits?: number; // Default limit of 10_000 hits in ElasticSearch
 }
 
@@ -20,7 +20,6 @@ export const ListPagination = ({
   onPageChange,
   onRowsPerPageChange,
   rowsPerPageOptions = ROWS_PER_PAGE_OPTIONS,
-  dataTestId,
   maxHits,
   sx = {},
 }: ListPaginationProps) => {
@@ -44,7 +43,7 @@ export const ListPagination = ({
         justifyItems: 'center',
         ...sx,
       }}
-      data-testid={dataTestId}>
+      data-testid={dataTestId.common.pagination}>
       <Typography aria-live="polite">
         {t('common.pagination_showing_interval', { start: itemsStart, end: itemsEnd, total: count.toLocaleString() })}
       </Typography>

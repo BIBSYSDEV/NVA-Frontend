@@ -1,7 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { ListPagination } from '../../components/ListPagination';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { dataTestId } from '../../utils/dataTestIds';
 import { SearchParam } from '../../utils/searchHelpers';
 
 interface CristinSearchPaginationProps {
@@ -29,7 +28,6 @@ export const CristinSearchPagination = ({ totalCount }: CristinSearchPaginationP
       onPageChange={(newPage) => updatePath(newPage.toString(), rowsPerPage.toString())}
       rowsPerPage={rowsPerPage}
       onRowsPerPageChange={(newRowsPerPage) => updatePath('1', newRowsPerPage.toString())}
-      dataTestId={dataTestId.startPage.searchPagination}
     />
   );
 };

@@ -10,7 +10,6 @@ export const dataTestId = {
       checkboxIssn: 'duplicate-search-issn-checkbox',
       checkboxTitle: 'duplicate-search-title-checkbox',
       checkboxYear: 'duplicate-search-year-checkbox',
-      searchPagination: 'search-pagination',
       resetButton: 'duplicate-search-reset-button',
       resultItem: 'central-import-result-item',
       searchButton: 'duplicate-search-retry-button',
@@ -63,6 +62,7 @@ export const dataTestId = {
     personRegisterLink: 'person-register-link',
     personRegisterSearchBar: 'person-register-search-bar',
   },
+  common: { pagination: 'pagination' },
   confirmDialog: {
     acceptButton: 'accept-button',
     cancelButton: 'cancel-button',
@@ -125,7 +125,6 @@ export const dataTestId = {
     readMoreButton: 'button-read-more',
     searchButton: 'search-button',
     searchField: 'search-field',
-    searchPagination: 'search-pagination',
     searchResultItem: 'result-list-item',
     typeFacets: 'type-facets',
     institutionFacets: 'institution-facets',
