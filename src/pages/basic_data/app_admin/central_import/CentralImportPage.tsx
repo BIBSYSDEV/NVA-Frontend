@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 import { fetchImportCandidates } from '../../../../api/searchApi';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
-import { dataTestId } from '../../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { SearchParam } from '../../../../utils/searchHelpers';
 import { CentralImportResultItem } from './CentralImportResultItem';
@@ -56,7 +55,6 @@ export const CentralImportPage = () => {
             </List>
             {searchResults.length > 0 && (
               <TablePagination
-                data-testid={dataTestId.basicData.centralImport.searchPagination}
                 rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
                 component="div"
                 count={importCandidateQuery.data?.size ?? -1}
