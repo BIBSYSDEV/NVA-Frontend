@@ -1,5 +1,6 @@
-import * as Yup from 'yup';
 import { parse as parseIsbn } from 'isbn-utils';
+import * as Yup from 'yup';
+import i18n from '../../../translations/i18n';
 import {
   ArtisticType,
   BookType,
@@ -13,33 +14,24 @@ import {
   ReportType,
   ResearchDataType,
 } from '../../../types/publicationFieldNames';
-import i18n from '../../../translations/i18n';
 import { ArtisticPublicationInstance } from '../../../types/publication_types/artisticRegistration.types';
-import { YupShape } from '../validationHelpers';
 import {
-  JournalPublicationInstance,
-  JournalPublicationContext,
-} from '../../../types/publication_types/journalRegistration.types';
-import {
-  BookPublicationInstance,
   BookPublicationContext,
+  BookPublicationInstance,
 } from '../../../types/publication_types/bookRegistration.types';
 import {
-  ReportPublicationContext,
-  ReportPublicationInstance,
-} from '../../../types/publication_types/reportRegistration.types';
-import {
-  DegreePublicationInstance,
-  DegreePublicationContext,
-} from '../../../types/publication_types/degreeRegistration.types';
-import {
-  ChapterPublicationInstance,
   ChapterPublicationContext,
+  ChapterPublicationInstance,
 } from '../../../types/publication_types/chapterRegistration.types';
 import {
-  PresentationPublicationContext,
-  PresentationPublicationInstance,
-} from '../../../types/publication_types/presentationRegistration.types';
+  DegreePublicationContext,
+  DegreePublicationInstance,
+} from '../../../types/publication_types/degreeRegistration.types';
+import { ExhibitionProductionSubtype } from '../../../types/publication_types/exhibitionContent.types';
+import {
+  JournalPublicationContext,
+  JournalPublicationInstance,
+} from '../../../types/publication_types/journalRegistration.types';
 import {
   MediaContributionPeriodicalPublicationContext,
   MediaContributionPeriodicalPublicationInstance,
@@ -47,16 +39,24 @@ import {
   MediaContributionPublicationInstance,
 } from '../../../types/publication_types/mediaContributionRegistration.types';
 import {
-  ResearchDataPublicationContext,
-  ResearchDataPublicationInstance,
-} from '../../../types/publication_types/researchDataRegistration.types';
-import { isPeriodicalMediaContribution } from '../../registration-helpers';
-import {
   MapPublicationContext,
   MapPublicationInstance,
 } from '../../../types/publication_types/otherRegistration.types';
+import {
+  PresentationPublicationContext,
+  PresentationPublicationInstance,
+} from '../../../types/publication_types/presentationRegistration.types';
+import {
+  ReportPublicationContext,
+  ReportPublicationInstance,
+} from '../../../types/publication_types/reportRegistration.types';
+import {
+  ResearchDataPublicationContext,
+  ResearchDataPublicationInstance,
+} from '../../../types/publication_types/researchDataRegistration.types';
 import { ContextPublisher, PublicationChannelType } from '../../../types/registration.types';
-import { ExhibitionProductionSubtype } from '../../../types/publication_types/exhibitionContent.types';
+import { isPeriodicalMediaContribution } from '../../registration-helpers';
+import { YupShape } from '../validationHelpers';
 
 const resourceErrorMessage = {
   announcementsRequired: i18n.t('feedback.validation.announcement_required'),

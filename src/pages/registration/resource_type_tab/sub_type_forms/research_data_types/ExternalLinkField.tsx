@@ -1,9 +1,9 @@
-import { Box, TextField, Button } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import { Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import AddIcon from '@mui/icons-material/Add';
-import { isValidUrl } from '../../../../../utils/general-helpers';
 import { dataTestId } from '../../../../../utils/dataTestIds';
+import { isValidUrl } from '../../../../../utils/general-helpers';
 
 interface ExternalLinkFieldProps {
   onAddClick: (url: string) => void;

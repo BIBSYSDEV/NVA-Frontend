@@ -1,15 +1,15 @@
-import { List, TablePagination, Typography } from '@mui/material';
-import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { List, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
+import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { ListPagination } from '../../../components/ListPagination';
+import { ListSkeleton } from '../../../components/ListSkeleton';
+import { SearchResponse } from '../../../types/common.types';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { TicketListItem } from './TicketListItem';
-import { ListSkeleton } from '../../../components/ListSkeleton';
-import { SearchResponse } from '../../../types/common.types';
-import { dataTestId } from '../../../utils/dataTestIds';
 
 interface TicketListProps {
   ticketsQuery: UseQueryResult<SearchResponse<ExpandedTicket>, unknown>;
@@ -19,8 +19,6 @@ interface TicketListProps {
   page: number;
   helmetTitle: string;
 }
-
-export const ticketsPerPageOptions = [10, 20, 50];
 
 export const TicketList = ({
   ticketsQuery,
@@ -54,23 +52,23 @@ export const TicketList = ({
             <Typography>{t('my_page.messages.no_messages')}</Typography>
           ) : (
             <>
-              <List disablePadding>
+              <List disablePadding sx={{ mb: '0.5rem' }}>
                 {tickets.map((ticket) => (
                   <ErrorBoundary key={ticket.id}>
                     <TicketListItem key={ticket.id} ticket={ticket} />
                   </ErrorBoundary>
                 ))}
               </List>
-              <TablePagination
-                aria-live="polite"
-                data-testid={dataTestId.startPage.searchPagination}
-                rowsPerPageOptions={ticketsPerPageOptions}
-                component="div"
+              <ListPagination
                 count={ticketsQuery.data?.size ?? 0}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                onPageChange={(_, newPage) => setPage(newPage)}
-                onRowsPerPageChange={(event) => setRowsPerPage(+event.target.value)}
+                onPageChange={(newPage) => setPage(newPage)}
+                onRowsPerPageChange={(newRowsPerPage) => {
+                  setRowsPerPage(newRowsPerPage);
+                  setPage(1);
+                }}
+                maxHits={10_000}
               />
             </>
           )}

@@ -1,4 +1,7 @@
-import { PublicationInstanceType, Registration, RegistrationStatus } from '../types/registration.types';
+import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
+import i18n from '../translations/i18n';
+import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
+import { Contributor, ContributorRole } from '../types/contributor.types';
 import {
   ArtisticType,
   BookType,
@@ -13,36 +16,40 @@ import {
   ReportType,
   ResearchDataType,
 } from '../types/publicationFieldNames';
-import { User } from '../types/user.types';
-import i18n from '../translations/i18n';
-import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import { Contributor, ContributorRole } from '../types/contributor.types';
 import {
+  AudioVisualPublication,
   Award,
   Broadcast,
-  Competition,
-  Exhibition,
-  MentionInPublication,
-  Venue,
   CinematicRelease,
-  OtherRelease,
-  MusicScore,
-  AudioVisualPublication,
+  Competition,
   Concert,
-  OtherMusicPerformance,
+  Exhibition,
+  LiteraryArtsAudioVisual,
   LiteraryArtsMonograph,
   LiteraryArtsPerformance,
-  LiteraryArtsAudioVisual,
   LiteraryArtsWeb,
+  MentionInPublication,
+  MusicScore,
+  OtherMusicPerformance,
+  OtherRelease,
+  Venue,
 } from '../types/publication_types/artisticRegistration.types';
-import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
-import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
-import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import {
   ExhibitionBasic,
   ExhibitionMentionInPublication,
   ExhibitionOtherPresentation,
 } from '../types/publication_types/exhibitionContent.types';
+import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
+import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import {
+  Journal,
+  PublicationInstanceType,
+  Publisher,
+  Registration,
+  RegistrationStatus,
+  Series,
+} from '../types/registration.types';
+import { User } from '../types/user.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -74,6 +81,12 @@ export const isJournal = (instanceType: any) => Object.values(JournalType).inclu
 export const isBook = (instanceType: any) => Object.values(BookType).includes(instanceType);
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
+
+export const isDegreeWithProtectedFiles = (instanceType: any) =>
+  instanceType === DegreeType.Bachelor ||
+  instanceType === DegreeType.Master ||
+  instanceType === DegreeType.Phd ||
+  instanceType === DegreeType.Other;
 
 export const isReport = (instanceType: any) => Object.values(ReportType).includes(instanceType);
 
@@ -108,7 +121,7 @@ export const userIsRegistrationCurator = (user: User | null, registration?: Regi
   !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
 export const getYearQuery = (yearValue: string) =>
-  yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();
+  yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear().toString();
 
 const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?: string | null) => {
   const issnString =
@@ -123,9 +136,13 @@ const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?:
   return issnString;
 };
 
-export const getPublicationChannelString = (title: string, onlineIssn?: string | null, printIssn?: string | null) => {
-  const issnString = getPublicationChannelIssnString(onlineIssn, printIssn);
-  return issnString ? `${title} (${issnString})` : title;
+export const getPublicationChannelString = (publicationChannel: Journal | Series | Publisher) => {
+  if (publicationChannel.type === 'Publisher') {
+    return publicationChannel.name;
+  } else {
+    const issnString = getPublicationChannelIssnString(publicationChannel.onlineIssn, publicationChannel.printIssn);
+    return issnString ? `${publicationChannel.name} (${issnString})` : publicationChannel.name;
+  }
 };
 
 // Ensure Registration has correct type values, etc
@@ -591,11 +608,23 @@ const userIsContributorOnPublishedRegistration = (user: User | null, registratio
     registration.status === RegistrationStatus.PublishedMetadata) &&
   !!registration.entityDescription?.contributors.some((contributor) => contributor.identity.id === user.cristinId);
 
-export const userCanEditRegistration = (user: User | null, registration: Registration) =>
-  userIsRegistrationOwner(user, registration) ||
-  userIsRegistrationCurator(user, registration) ||
-  userIsContributorOnPublishedRegistration(user, registration) ||
-  user?.isEditor;
+export const userCanEditRegistration = (user: User | null, registration: Registration) => {
+  if (!user) {
+    return false;
+  }
+
+  const isValidCurator = userIsRegistrationCurator(user, registration);
+  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance.type)) {
+    return isValidCurator && user.isThesisCurator;
+  }
+
+  return (
+    isValidCurator ||
+    userIsRegistrationOwner(user, registration) ||
+    userIsContributorOnPublishedRegistration(user, registration) ||
+    user.isEditor
+  );
+};
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
@@ -628,3 +657,10 @@ export const getContributorInitials = (name: string) => {
 export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
+
+export const isEmbargoed = (embargoDate: Date | null) => {
+  if (!embargoDate) {
+    return false;
+  }
+  return new Date(embargoDate) > new Date();
+};

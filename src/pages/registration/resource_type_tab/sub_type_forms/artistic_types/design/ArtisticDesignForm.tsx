@@ -1,26 +1,26 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
-  TextField,
-  MenuItem,
-  Typography,
+  Box,
   Button,
+  FormHelperText,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  FormHelperText,
-  Box,
+  TextField,
+  Typography,
 } from '@mui/material';
-import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { ArtisticRegistration, DesignType } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { VenueModal } from './VenueModal';
 import { OutputRow } from '../OutputRow';
+import { VenueModal } from './VenueModal';
 
 const designTypes = Object.values(DesignType);
 

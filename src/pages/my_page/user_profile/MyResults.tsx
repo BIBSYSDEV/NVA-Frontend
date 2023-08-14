@@ -1,7 +1,8 @@
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Box, CircularProgress, TablePagination, Typography } from '@mui/material';
+import { ListPagination } from '../../../components/ListPagination';
 import { RootState } from '../../../redux/store';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
@@ -14,7 +15,7 @@ export const MyResults = () => {
 
   const personId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const [registrations, isLoadingRegistrations] = useSearchRegistrations(
@@ -28,7 +29,7 @@ export const MyResults = () => {
       ],
     },
     rowsPerPage,
-    rowsPerPage * page
+    rowsPerPage * (page - 1)
   );
 
   return (
@@ -42,17 +43,15 @@ export const MyResults = () => {
         </Box>
       ) : registrations && registrations.size > 0 ? (
         <>
-          <RegistrationSearchResults searchResult={registrations} />
-          <TablePagination
-            rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-            component="div"
+          <RegistrationSearchResults canEditRegistration={true} searchResult={registrations} />
+          <ListPagination
             count={registrations.size}
             rowsPerPage={rowsPerPage}
             page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
-            onRowsPerPageChange={(event) => {
-              setRowsPerPage(+event.target.value);
-              setPage(0);
+            onPageChange={(newPage) => setPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRowsPerPage(newRowsPerPage);
+              setPage(1);
             }}
           />
         </>

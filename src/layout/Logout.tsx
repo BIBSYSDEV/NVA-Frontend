@@ -1,7 +1,7 @@
-import { Redirect } from 'react-router-dom';
 import { useEffect } from 'react';
-import { UrlPathTemplate } from '../utils/urlPaths';
+import { Redirect } from 'react-router-dom';
 import { LocalStorageKey } from '../utils/constants';
+import { UrlPathTemplate } from '../utils/urlPaths';
 
 const registrationLandingPageParts = UrlPathTemplate.RegistrationLandingPage.split('/');
 const isPublicPage = (path: string) => {

@@ -1,9 +1,9 @@
 import { SearchResponse } from '../../types/common.types';
+import { ImportCandidateSummary } from '../../types/importCandidate.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { RegistrationSearchResponse } from '../../types/registration.types';
-import { mockMathJaxRegistration, mockRegistration, mockTicketCollection } from './mockRegistration';
 import { mockImportCandidate } from './mockImportCandidate';
-import { ImportCandidateSummary } from '../../types/importCandidate.types';
+import { mockMathJaxRegistration, mockRegistration, mockTicketCollection } from './mockRegistration';
 
 export const mockSearchResults: RegistrationSearchResponse = {
   processingTime: 10,
@@ -55,6 +55,8 @@ export const mockSearchResults: RegistrationSearchResponse = {
         },
       },
     },
+    fundings: { identifier: { buckets: [] } },
+    topLevelOrganization: { id: { buckets: [] } },
   },
 };
 

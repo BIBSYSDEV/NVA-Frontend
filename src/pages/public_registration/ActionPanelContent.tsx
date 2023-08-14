@@ -7,11 +7,11 @@ import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { userIsRegistrationCurator } from '../../utils/registration-helpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { SupportAccordion } from './action_accordions/SupportAccordion';
-import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
@@ -27,7 +27,8 @@ export const ActionPanelContent = ({
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { user, customer } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const userIsCurator = userIsRegistrationCurator(user, registration);
 
   const doiRequestTicket = tickets.find((ticket) => ticket.type === 'DoiRequest') ?? null;

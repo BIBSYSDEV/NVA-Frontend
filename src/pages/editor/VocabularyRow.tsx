@@ -1,9 +1,9 @@
-import { ToggleButtonGroup, ToggleButton, Typography, Box, SxProps } from '@mui/material';
+import { Box, SxProps, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomerVocabulary, VocabularyStatus } from '../../types/customerInstitution.types';
-import { getTranslatedVocabularyName } from './VocabularySettings';
 import { dataTestId as dataTestIds } from '../../utils/dataTestIds';
+import { getTranslatedVocabularyName } from './VocabularySettings';
 
 const toggleButtonSx: SxProps = { width: 'fit-content', px: '1rem' };
 

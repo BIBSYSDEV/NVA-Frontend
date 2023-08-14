@@ -1,6 +1,6 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionProps, AccordionSummary, Typography } from '@mui/material';
 import { ReactNode } from 'react';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ErrorBoundary } from '../ErrorBoundary';
 
 interface LandingPageAccordionProps extends Pick<AccordionProps, 'defaultExpanded'> {

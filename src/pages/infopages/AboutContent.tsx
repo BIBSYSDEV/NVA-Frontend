@@ -1,5 +1,5 @@
-import { Trans, useTranslation } from 'react-i18next';
 import { Link as MuiLink, Typography } from '@mui/material';
+import { Trans, useTranslation } from 'react-i18next';
 
 export const AboutContent = () => {
   const { t } = useTranslation();

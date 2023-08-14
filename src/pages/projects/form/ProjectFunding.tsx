@@ -1,18 +1,18 @@
-import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
-import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
-import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
-import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
+import { FundingSourceField } from '../../../components/FundingSourceField';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
-import { dataTestId } from '../../../utils/dataTestIds';
+import { ProjectFunding, emptyProjectFunding } from '../../../types/project.types';
+import { SpecificFundingFieldNames } from '../../../types/publicationFieldNames';
 import { API_URL } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { fundingSourceIsNfr, getNfrProjectUrl } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectFieldName } from './ProjectFormDialog';
-import { FundingSourceField } from '../../../components/FundingSourceField';
-import { ProjectFunding, emptyProjectFunding } from '../../../types/project.types';
 
 interface FundingsFieldProps {
   currentFundings: ProjectFunding[];
@@ -24,7 +24,7 @@ export const ProjectFundingsField = ({ currentFundings }: FundingsFieldProps) =>
   return (
     <div>
       <Typography variant="h2" gutterBottom>
-        {t('registration.description.funding.financing')}
+        {t('common.funding')}
       </Typography>
 
       <FieldArray name={ProjectFieldName.Funding}>

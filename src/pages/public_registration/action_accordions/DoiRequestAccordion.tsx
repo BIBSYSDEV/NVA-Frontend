@@ -1,27 +1,23 @@
-import { useState } from 'react';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import { LoadingButton } from '@mui/lab';
 import {
   Accordion,
-  AccordionSummary,
   AccordionDetails,
-  Typography,
+  AccordionSummary,
+  Box,
   Button,
   DialogActions,
   TextField,
-  Box,
+  Typography,
 } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LocalOfferIcon from '@mui/icons-material/LocalOffer';
-import { LoadingButton } from '@mui/lab';
-import { useDispatch } from 'react-redux';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import { useMutation } from '@tanstack/react-query';
-import { Ticket } from '../../../types/publication_types/ticket.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { Modal } from '../../../components/Modal';
-import { setNotification } from '../../../redux/notificationSlice';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import {
   UpdateTicketData,
   addTicketMessage,
@@ -29,12 +25,16 @@ import {
   createTicket,
   updateTicket,
 } from '../../../api/registrationApi';
-import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { Registration, RegistrationStatus } from '../../../types/registration.types';
-import { MessageList } from '../../messages/components/MessageList';
 import { MessageForm } from '../../../components/MessageForm';
-import { TicketAssignee } from './TicketAssignee';
+import { Modal } from '../../../components/Modal';
+import { setNotification } from '../../../redux/notificationSlice';
+import { Ticket } from '../../../types/publication_types/ticket.types';
+import { Registration, RegistrationStatus } from '../../../types/registration.types';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
+import { MessageList } from '../../messages/components/MessageList';
+import { TicketAssignee } from './TicketAssignee';
 
 interface DoiRequestAccordionProps {
   registration: Registration;
@@ -113,7 +113,6 @@ export const DoiRequestAccordion = ({
     const createDoiRequestResponse = await createTicket(registration.id, 'DoiRequest', !!message);
     if (isErrorStatus(createDoiRequestResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_doi_request'), variant: 'error' }));
-      setIsLoading(LoadingState.None);
     } else if (isSuccessStatus(createDoiRequestResponse.status)) {
       const ticketId = createDoiRequestResponse.data?.id;
       // Add message
@@ -133,6 +132,7 @@ export const DoiRequestAccordion = ({
       );
       refetchData();
     }
+    setIsLoading(LoadingState.None);
   };
 
   const waitingForRemovalOfDoi = isClosedDoiRequest && !!registration.doi;

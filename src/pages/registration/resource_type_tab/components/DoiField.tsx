@@ -1,13 +1,17 @@
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TextField, Typography, Button, Box } from '@mui/material';
-import CancelIcon from '@mui/icons-material/Cancel';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 
-export const DoiField = () => {
+interface DoiFieldProps {
+  canEditDoi: boolean;
+}
+
+export const DoiField = ({ canEditDoi }: DoiFieldProps) => {
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const { setFieldValue, values } = useFormikContext<Registration>();
@@ -34,7 +38,12 @@ export const DoiField = () => {
 
       {referenceDoi && (
         <>
-          <Button color="error" variant="outlined" endIcon={<CancelIcon />} onClick={toggleConfirmDialog}>
+          <Button
+            color="error"
+            variant="outlined"
+            endIcon={<CancelIcon />}
+            onClick={toggleConfirmDialog}
+            disabled={!canEditDoi}>
             {t('registration.resource_type.remove_doi')}
           </Button>
           <ConfirmDialog

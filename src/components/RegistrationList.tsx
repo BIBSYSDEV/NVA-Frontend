@@ -1,16 +1,16 @@
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import EditIcon from '@mui/icons-material/Edit';
+import { Box, IconButton, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Box, Link as MuiLink, List, ListItemText, Typography, IconButton, Tooltip } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import { getRegistrationLandingPagePath, getRegistrationWizardPath, getResearchProfilePath } from '../utils/urlPaths';
 import { Registration, RegistrationStatus } from '../types/registration.types';
-import { ErrorBoundary } from './ErrorBoundary';
 import { dataTestId } from '../utils/dataTestIds';
-import { getTitleString } from '../utils/registration-helpers';
 import { displayDate } from '../utils/date-helpers';
-import { TruncatableTypography } from './TruncatableTypography';
+import { getTitleString } from '../utils/registration-helpers';
+import { getRegistrationLandingPagePath, getRegistrationWizardPath, getResearchProfilePath } from '../utils/urlPaths';
 import { ContributorIndicators } from './ContributorIndicators';
+import { ErrorBoundary } from './ErrorBoundary';
+import { TruncatableTypography } from './TruncatableTypography';
 import { SearchListItem } from './styled/Wrappers';
 
 interface RegistrationListProps {
@@ -24,7 +24,7 @@ export const RegistrationList = ({
   canEditRegistration = false,
   onDeleteDraftRegistration,
 }: RegistrationListProps) => (
-  <List disablePadding>
+  <List>
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
@@ -67,7 +67,7 @@ export const RegistrationListItemContent = ({
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
 
   return (
-    <Box sx={{ display: 'flex', width: '100%' }}>
+    <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: '1rem', sm: '2rem' } }}>
           {heading && (
@@ -104,9 +104,11 @@ export const RegistrationListItemContent = ({
             columnGap: '1rem',
             whiteSpace: 'nowrap',
           }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '1rem', flexWrap: 'wrap' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
             {focusedContributors.map((contributor, index) => (
-              <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box
+                key={index}
+                sx={{ display: 'flex', alignItems: 'center', '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
                 <Typography variant="body2">
                   {contributor.identity.id && !ticketView ? (
                     <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
@@ -138,8 +140,8 @@ export const RegistrationListItemContent = ({
               component={Link}
               to={getRegistrationWizardPath(identifier)}
               size="small"
-              sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
-              <EditIcon />
+              sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+              <EditIcon fontSize="inherit" />
             </IconButton>
           </Tooltip>
           {registration.status === 'DRAFT' && onDeleteDraftRegistration && (
@@ -148,8 +150,8 @@ export const RegistrationListItemContent = ({
                 data-testid={`delete-registration-${identifier}`}
                 onClick={() => onDeleteDraftRegistration(registration)}
                 size="small"
-                sx={{ borderRadius: '50%', bgcolor: 'registration.main' }}>
-                <CloseOutlinedIcon />
+                sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+                <CloseOutlinedIcon fontSize="inherit" />
               </IconButton>
             </Tooltip>
           )}

@@ -1,11 +1,11 @@
+import { BookType, PublicationType } from '../publicationFieldNames';
 import {
   BaseEntityDescription,
   BaseReference,
   BaseRegistration,
   ContextPublisher,
-  Series,
+  ContextSeries,
 } from '../registration.types';
-import { PublicationType, BookType } from '../publicationFieldNames';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 
 export interface BookRegistration extends BaseRegistration {
@@ -27,7 +27,7 @@ export interface BookPublicationContext {
   isbnList: string[];
   publisher?: ContextPublisher;
   seriesNumber: string;
-  series?: Series;
+  series?: ContextSeries;
 }
 
 interface BookReference extends BaseReference {

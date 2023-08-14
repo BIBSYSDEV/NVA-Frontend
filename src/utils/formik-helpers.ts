@@ -1,13 +1,13 @@
 import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn } from 'formik';
 import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
-import { Contributor } from '../types/contributor.types';
 import {
   AssociatedArtifact,
   AssociatedFile,
   AssociatedLink,
   NullAssociatedArtifact,
 } from '../types/associatedArtifact.types';
+import { Contributor } from '../types/contributor.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,
@@ -20,10 +20,10 @@ import {
   SpecificLinkFieldNames,
 } from '../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
+import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
 import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import { Funding, Registration, RegistrationTab } from '../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
-import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
 
 export interface TabErrors {
   [RegistrationTab.Description]: string[];

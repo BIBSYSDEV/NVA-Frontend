@@ -1,25 +1,23 @@
-import { useState, MouseEvent, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { AppBar, Box, Button, Divider, IconButton, Theme, Typography, useMediaQuery } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import SearchIcon from '@mui/icons-material/Search';
+import { AppBar, Box, Button, Divider, Theme, Typography, useMediaQuery } from '@mui/material';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
-import { UrlPathTemplate } from '../../utils/urlPaths';
-import { LoginButton } from './LoginButton';
-import { Logo } from './Logo';
-import { GeneralMenu } from './GeneralMenu';
-import { LanguageSelector } from './LanguageSelector';
+import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { CustomerInstitution } from '../../types/customerInstitution.types';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { LanguageSelector } from './LanguageSelector';
+import { LoginButton } from './LoginButton';
+import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
-import { setCustomer } from '../../redux/customerReducer';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -39,39 +37,25 @@ export const Header = () => {
     }
   }, [dispatch, customer]);
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
-  const handleClick = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   return (
-    <AppBar position="static" elevation={0} sx={{ color: 'white' }}>
+    <AppBar position="sticky" elevation={0} sx={{ color: 'white' }}>
       <Box
         component="nav"
         sx={{
           display: 'grid',
           justifyItems: 'center',
           gridTemplateAreas: {
-            xs: '"other-menu logo user-menu"',
-            lg: '"other-menu logo search new-result user-menu"',
+            xs: '"language logo user-menu"',
+            lg: '"language logo search new-result user-menu"',
           },
-          gridTemplateColumns: { xs: 'auto auto auto', lg: '1fr auto 1fr 10fr 5fr' },
+          gridTemplateColumns: { xs: 'auto auto auto', lg: '3fr auto 1fr 10fr 5fr' },
           gap: '1rem',
           px: '1rem',
         }}>
-        <IconButton
-          data-testid={dataTestId.header.generalMenuButton}
-          onClick={handleClick}
-          title={t('common.menu')}
-          size="large"
-          color="inherit"
-          sx={{ gridArea: 'other-menu' }}>
-          <MenuIcon fontSize="large" />
-        </IconButton>
-        <GeneralMenu anchorEl={anchorEl} onClose={() => setAnchorEl(null)} />
+        <LanguageSelector isMobile={isMobile} />
 
         <Logo />
 
@@ -103,7 +87,16 @@ export const Header = () => {
             data-testid={dataTestId.header.newRegistrationLink}
             to={UrlPathTemplate.RegistrationNew}
             startIcon={
-              <AddIcon sx={{ color: 'white', bgcolor: 'primary.light', borderRadius: '50%', padding: '0.1rem' }} />
+              <AddIcon
+                sx={{
+                  color: 'white',
+                  bgcolor: 'primary.light',
+                  borderRadius: '50%',
+                  padding: '0.2rem',
+                  width: '3.125rem',
+                  height: '3.125rem',
+                }}
+              />
             }>
             {t('registration.new_registration')}
           </Button>
@@ -112,7 +105,7 @@ export const Header = () => {
           sx={{
             gridArea: 'user-menu',
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'stretch',
             gap: '1rem',
             'a, button': {
               flexDirection: 'column',
@@ -138,7 +131,10 @@ export const Header = () => {
                     {customer.shortName}
                   </MenuButton>
                 ) : (
-                  <Typography variant="h1" component="span" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
+                  <Typography
+                    variant="h1"
+                    component="span"
+                    sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
                     {customer.shortName}
                   </Typography>
                 ))}
@@ -148,7 +144,6 @@ export const Header = () => {
                 orientation="vertical"
                 flexItem
               />
-              <LanguageSelector />
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
                 <MenuButton
                   color="inherit"

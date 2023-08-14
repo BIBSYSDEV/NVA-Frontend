@@ -1,17 +1,17 @@
-import { Box, MenuItem, Button, TextField } from '@mui/material';
+import { Box, Button, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { TFuncKey } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import {
+  ContributorFieldNames,
   DescriptionFieldNames,
   ResourceFieldNames,
-  ContributorFieldNames,
-  SpecificContributorFieldNames,
   SearchFieldName,
+  SpecificContributorFieldNames,
 } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
-import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHelpers';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHelpers';
 
 interface FilterItem {
   field: string;
@@ -34,11 +34,21 @@ export const registrationFilters: FilterItem[] = [
     manuallyAddable: true,
   },
   {
+    field: SearchFieldName.ContributorId,
+    i18nKey: 'registration.contributors.contributor',
+    manuallyAddable: false,
+  },
+  {
     field: `${DescriptionFieldNames.PublicationDate}.year`,
     i18nKey: 'registration.year_published',
     manuallyAddable: true,
   },
   { field: SearchFieldName.TopLevelOrganizationId, i18nKey: 'common.institution', manuallyAddable: false },
+  {
+    field: SearchFieldName.FundingSource,
+    i18nKey: 'common.funding',
+    manuallyAddable: false,
+  },
 ];
 
 interface AdvancedSearchRowProps {
