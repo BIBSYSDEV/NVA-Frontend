@@ -1,6 +1,6 @@
+import { Button, DialogActions, DialogContent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Button, DialogActions, DialogContent, Typography } from '@mui/material';
 
 import { ORCID_BASE_URL, USE_MOCK_DATA } from '../../../utils/constants';
 import { UrlPathTemplate } from '../../../utils/urlPaths';

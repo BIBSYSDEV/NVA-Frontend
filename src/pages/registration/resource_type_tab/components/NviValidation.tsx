@@ -1,5 +1,5 @@
-import { Paper, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
+import { Paper, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
@@ -69,8 +69,8 @@ const NviValidationChapterArticle = ({ registration }: { registration: ChapterRe
 
   const { reference } = registration.entityDescription;
 
-  const container = reference?.publicationContext.partOf
-    ? (resourceState[reference.publicationContext.partOf] as BookRegistration)
+  const container = reference?.publicationContext.id
+    ? (resourceState[reference.publicationContext.id] as BookRegistration)
     : null;
   const containerPublicationContext = container?.entityDescription.reference?.publicationContext;
 

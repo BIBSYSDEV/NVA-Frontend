@@ -1,23 +1,22 @@
+import { Autocomplete, Box, Chip, Typography } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Chip, Typography } from '@mui/material';
-import { Autocomplete } from '@mui/material';
+import { PublicationChannelApiPath } from '../../../../api/apiPaths';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { Journal, PublicationChannelType } from '../../../../types/registration.types';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { PublicationChannelApiPath } from '../../../../api/apiPaths';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { contextTypeBaseFieldName, ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { ResourceFieldNames, contextTypeBaseFieldName } from '../../../../types/publicationFieldNames';
 import {
   JournalEntityDescription,
   JournalRegistration,
 } from '../../../../types/publication_types/journalRegistration.types';
-import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
+import { Journal, PublicationChannelType } from '../../../../types/registration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { useFetch } from '../../../../utils/hooks/useFetch';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
+import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
 
 const journalFieldTestId = dataTestId.registrationWizard.resourceType.journalField;
 
@@ -29,8 +28,8 @@ interface JournalFieldProps {
 export const JournalField = ({ confirmedContextType, unconfirmedContextType }: JournalFieldProps) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
-  const { reference, date } = values.entityDescription as JournalEntityDescription;
-  const year = date?.year ?? '';
+  const { reference, publicationDate } = values.entityDescription as JournalEntityDescription;
+  const year = publicationDate?.year ?? '';
 
   const [query, setQuery] = useState(
     !reference?.publicationContext.id ? reference?.publicationContext.title ?? '' : ''

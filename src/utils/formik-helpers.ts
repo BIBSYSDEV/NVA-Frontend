@@ -1,13 +1,13 @@
 import deepmerge from 'deepmerge';
 import { FormikErrors, FormikTouched, getIn } from 'formik';
 import { HighestTouchedTab } from '../pages/registration/RegistrationForm';
-import { Contributor } from '../types/contributor.types';
 import {
   AssociatedArtifact,
   AssociatedFile,
   AssociatedLink,
   NullAssociatedArtifact,
 } from '../types/associatedArtifact.types';
+import { Contributor } from '../types/contributor.types';
 import {
   ContributorFieldNames,
   DescriptionFieldNames,
@@ -20,6 +20,7 @@ import {
   SpecificLinkFieldNames,
 } from '../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../types/publication_types/artisticRegistration.types';
+import { ExhibitionRegistration } from '../types/publication_types/exhibitionContent.types';
 import { MapRegistration } from '../types/publication_types/otherRegistration.types';
 import { Funding, Registration, RegistrationTab } from '../types/registration.types';
 import { associatedArtifactIsFile, associatedArtifactIsLink, getMainRegistrationType } from './registration-helpers';
@@ -140,7 +141,7 @@ const getAllContributorFields = (contributors: Contributor[]): string[] => {
 const touchedDescriptionTabFields = (fundings: Funding[]): FormikTouched<unknown> => ({
   entityDescription: {
     abstract: true,
-    date: {
+    publicationDate: {
       day: true,
       month: true,
       year: true,
@@ -239,13 +240,13 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
           },
         },
       };
-    case PublicationType.Chapter:
+    case PublicationType.Anthology:
       return {
         entityDescription: {
           reference: {
             publicationContext: {
               type: true,
-              partOf: true,
+              id: true,
             },
             publicationInstance: {
               type: true,
@@ -371,6 +372,23 @@ const touchedResourceTabFields = (registration: Registration): FormikTouched<unk
         },
       };
       return touchedMap;
+    }
+    case PublicationType.ExhibitionContent: {
+      const touchedExhibition: FormikTouched<ExhibitionRegistration> = {
+        entityDescription: {
+          reference: {
+            publicationContext: {
+              type: true,
+            },
+            publicationInstance: {
+              type: true,
+              subtype: { type: true, description: true },
+              manifestations: [],
+            },
+          },
+        },
+      };
+      return touchedExhibition;
     }
     default:
       return {

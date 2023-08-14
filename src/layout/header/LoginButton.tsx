@@ -1,16 +1,16 @@
+import PersonIcon from '@mui/icons-material/PersonOutlineRounded';
+import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Button } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
 import { Link as RouterLink } from 'react-router-dom';
 import { RootState } from '../../redux/store';
-import { Menu } from './Menu';
-import { getCurrentPath, useAuthentication } from '../../utils/hooks/useAuthentication';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getCurrentPath, useAuthentication } from '../../utils/hooks/useAuthentication';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PreviousPathState } from '../LoginPage';
+import { Menu } from './Menu';
 
 export const LoginButton = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -35,18 +35,17 @@ export const LoginButton = () => {
 
   return user ? (
     <Menu handleLogout={handleLogoutWrapper} />
-  ) : isLoading ? (
-    <LoadingButton variant="contained" color="secondary" loading>
-      {t('common.loading')}
-    </LoadingButton>
   ) : (
-    <Button
+    <LoadingButton
       variant="outlined"
-      color="secondary"
+      loading={isLoading}
+      endIcon={<PersonIcon />}
+      color="inherit"
+      sx={{ borderRadius: '1rem', flexDirection: 'row !important', height: 'fit-content', alignSelf: 'center' }}
       data-testid={dataTestId.header.logInButton}
       component={RouterLink}
       to={{ pathname: UrlPathTemplate.Login, state: previousPathState }}>
       {t('authorization.login')}
-    </Button>
+    </LoadingButton>
   );
 };

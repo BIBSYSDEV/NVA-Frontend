@@ -1,17 +1,17 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Autocomplete, Box, Button, Divider, MenuItem, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import { getLanguageByIso6393Code } from 'nva-language';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MenuItem, TextField, Autocomplete, Box, Divider, Button } from '@mui/material';
-import { getLanguageByIso6393Code } from 'nva-language';
+import { InputContainerBox } from '../../components/styled/Wrappers';
 import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { DatePickerField } from './description_tab/DatePickerField';
+import { RegistrationFunding } from './description_tab/RegistrationFunding';
 import { ProjectsField } from './description_tab/projects_field/ProjectsField';
 import { VocabularyBase } from './description_tab/vocabularies/VocabularyBase';
-import { InputContainerBox } from '../../components/styled/Wrappers';
-import { dataTestId } from '../../utils/dataTestIds';
-import { FundingsField } from './description_tab/FundingsField';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const languageOptions = [
   getLanguageByIso6393Code('eng'),
@@ -40,11 +40,10 @@ export const DescriptionPanel = () => {
     <InputContainerBox>
       <Box
         sx={{
-          display: 'grid',
-          rowGap: '1rem',
-          columnGap: '0.5rem',
-          gridTemplateColumns: '1fr auto',
-          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+          alignItems: 'start',
         }}>
         <Field name={DescriptionFieldNames.Title}>
           {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -64,13 +63,6 @@ export const DescriptionPanel = () => {
         <Field name={DescriptionFieldNames.AlternativeTitles}>
           {({ field }: FieldProps<string>) => (
             <>
-              <Button
-                sx={{ height: 'fit-content' }}
-                startIcon={<AddCircleOutlineIcon />}
-                disabled={field.value !== undefined || !values.entityDescription?.mainTitle}
-                onClick={() => setFieldValue(field.name, '')}>
-                {t('common.add')}
-              </Button>
               {field.value !== undefined ? (
                 <TextField
                   {...field}
@@ -81,16 +73,24 @@ export const DescriptionPanel = () => {
                   label={t('registration.description.alternative_title')}
                 />
               ) : null}
+              {field.value || field.value === '' ? null : (
+                <Button
+                  startIcon={<AddCircleOutlineIcon />}
+                  disabled={!values.entityDescription?.mainTitle}
+                  onClick={() => setFieldValue(field.name, '')}>
+                  {t('common.add')}
+                </Button>
+              )}
             </>
           )}
         </Field>
       </Box>
       <Box
         sx={{
-          display: 'grid',
-          rowGap: '1rem',
-          columnGap: '0.5rem',
-          gridTemplateColumns: '1fr auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+          alignItems: 'start',
         }}>
         <Field name={DescriptionFieldNames.Abstract}>
           {({ field }: FieldProps<string>) => (
@@ -109,13 +109,6 @@ export const DescriptionPanel = () => {
         <Field name={DescriptionFieldNames.AlternativeAbstracts}>
           {({ field }: FieldProps<string>) => (
             <>
-              <Button
-                sx={{ height: 'fit-content' }}
-                startIcon={<AddCircleOutlineIcon />}
-                disabled={field.value !== undefined || !values.entityDescription?.abstract}
-                onClick={() => setFieldValue(field.name, '')}>
-                {t('common.add')}
-              </Button>
               {field.value !== undefined ? (
                 <TextField
                   {...field}
@@ -128,6 +121,15 @@ export const DescriptionPanel = () => {
                   label={t('registration.description.alternative_abstract')}
                 />
               ) : null}
+
+              {field.value || field.value === '' ? null : (
+                <Button
+                  startIcon={<AddCircleOutlineIcon />}
+                  disabled={!values.entityDescription?.abstract}
+                  onClick={() => setFieldValue(field.name, '')}>
+                  {t('common.add')}
+                </Button>
+              )}
             </>
           )}
         </Field>
@@ -219,7 +221,7 @@ export const DescriptionPanel = () => {
 
       <ProjectsField />
       <Divider />
-      <FundingsField />
+      <RegistrationFunding currentFundings={values.fundings} />
     </InputContainerBox>
   );
 };

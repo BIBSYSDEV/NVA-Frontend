@@ -1,13 +1,13 @@
 import { LoadingButton } from '@mui/lab';
-import { Dialog, DialogTitle, DialogContent, Autocomplete, TextField, DialogActions } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { Autocomplete, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { RoleApiPath } from '../api/apiPaths';
 import { authenticatedApiRequest } from '../api/apiRequest';
-import { getCurrentUserAttributes } from '../api/userApi';
-import { setUser } from '../redux/userSlice';
+import { getCurrentUserAttributes } from '../api/authApi';
 import { setNotification } from '../redux/notificationSlice';
+import { setUser } from '../redux/userSlice';
 import { CustomerInstitution } from '../types/customerInstitution.types';
 import { isSuccessStatus } from '../utils/constants';
 import { sortCustomerInstitutions } from '../utils/institutions-helpers';

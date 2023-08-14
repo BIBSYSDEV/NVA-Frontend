@@ -1,16 +1,16 @@
-import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
+import { setCustomer } from '../../redux/customerReducer';
+import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishStrategy } from '../../types/customerInstitution.types';
-import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { setNotification } from '../../redux/notificationSlice';
-import { setCustomer } from '../../redux/customerReducer';
 import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledItemContainer = styled('div')({
@@ -49,7 +49,7 @@ const PublishStrategyButton = styled(ButtonBase, { shouldForwardProp: (prop) => 
 export const PublishStrategySettings = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { customer } = useSelector((store: RootState) => store);
+  const customer = useSelector((store: RootState) => store.customer);
   const [isUpdating, setIsUpdating] = useState<PublishStrategy>();
 
   const setPublicationWorkflow = async (publishStrategy: PublishStrategy) => {
@@ -135,37 +135,6 @@ export const PublishStrategySettings = () => {
             </Box>
           </PublishStrategyButton>
           {isUpdating === 'RegistratorPublishesMetadataOnly' && (
-            <CircularProgress aria-labelledby="publish-strategy-label" />
-          )}
-        </StyledItemContainer>
-
-        <StyledItemContainer>
-          <PublishStrategyButton
-            focusRipple
-            disabled={!!isUpdating || currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
-            isSelected={!isUpdating && currentPublishStrategy === 'RegistratorRequiresApprovalForMetadataAndFiles'}
-            data-testid={dataTestId.editor.workflowRegistratorRequiresApproval}
-            onClick={() => setPublicationWorkflow('RegistratorRequiresApprovalForMetadataAndFiles')}>
-            <Box>
-              <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_cannot_publish')}
-              </Typography>
-              <StyledAccessRightsContainer>
-                <StyledAccessRight>
-                  <RemoveCircleIcon color="error" />
-                  <Typography>{t('editor.publish_strategy.metadata')}</Typography>
-                </StyledAccessRight>
-                <StyledAccessRight>
-                  <RemoveCircleIcon color="error" />
-                  <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
-                </StyledAccessRight>
-              </StyledAccessRightsContainer>
-              <Typography sx={{ textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_cannot_publish_description')}
-              </Typography>
-            </Box>
-          </PublishStrategyButton>
-          {isUpdating === 'RegistratorRequiresApprovalForMetadataAndFiles' && (
             <CircularProgress aria-labelledby="publish-strategy-label" />
           )}
         </StyledItemContainer>

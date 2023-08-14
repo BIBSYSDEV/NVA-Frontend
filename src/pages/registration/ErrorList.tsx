@@ -1,6 +1,6 @@
+import { Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@mui/material';
 import { RegistrationTab } from '../../types/registration.types';
 import { TabErrors } from '../../utils/formik-helpers';
 
@@ -14,7 +14,7 @@ export const ErrorList = ({ tabErrors, description, actions }: ErrorSummaryProps
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ padding: { xs: '0.5rem', sm: '0.5rem 2rem' } }} data-testid="error-list-div">
+    <div data-testid="error-list-div">
       {description}
       <dl>
         <ErrorListGroup
@@ -35,7 +35,7 @@ export const ErrorList = ({ tabErrors, description, actions }: ErrorSummaryProps
         />
       </dl>
       {actions}
-    </Box>
+    </div>
   );
 };
 

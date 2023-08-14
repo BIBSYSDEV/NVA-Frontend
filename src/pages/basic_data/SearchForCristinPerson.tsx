@@ -1,22 +1,22 @@
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { Autocomplete, AutocompleteProps, Box, Button, CircularProgress, TextField, Typography } from '@mui/material';
+import { useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import { useFormikContext } from 'formik';
 import { CristinApiPath } from '../../api/apiPaths';
-import { searchByNationalIdNumber } from '../../api/userApi';
+import { searchByNationalIdNumber } from '../../api/cristinApi';
 import { AutocompleteTextField } from '../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../components/EmphasizeSubstring';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { SearchResponse } from '../../types/common.types';
 import { CristinPerson, FlatCristinPerson } from '../../types/user.types';
 import { isSuccessStatus } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
 import { useDebounce } from '../../utils/hooks/useDebounce';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { convertToFlatCristinPerson, getMaskedNationalIdentityNumber } from '../../utils/user-helpers';
 import { AddEmployeeData } from './institution_admin/AddEmployeePage';
-import { dataTestId } from '../../utils/dataTestIds';
 
 interface SearchForCristinPersonProps
   extends Pick<AutocompleteProps<FlatCristinPerson, false, false, false>, 'disabled'> {

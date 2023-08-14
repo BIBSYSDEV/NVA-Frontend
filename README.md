@@ -56,10 +56,6 @@ Alternatively:
 2. `npm start`
 3. `npx cypress run` or `npx cypress open`
 
-#### `npm run test:react`
-
-Runs React testing library tests
-
 ## External tools
 
 [![Cypress.io](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)](https://www.cypress.io/)

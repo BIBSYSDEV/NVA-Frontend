@@ -1,29 +1,29 @@
-import { useState } from 'react';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
-  Typography,
+  Box,
+  Button,
+  FormHelperText,
   Table,
+  TableBody,
+  TableCell,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Box,
-  FormHelperText,
-  Button,
+  Typography,
 } from '@mui/material';
-import { FieldArray, FieldArrayRenderProps, ErrorMessage, useFormikContext } from 'formik';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import {
   ArtisticRegistration,
   MusicOutput,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { OutputRow } from '../OutputRow';
-import { MusicScoreModal } from './MusicScoreModal';
 import { AudioVisualPublicationModal } from './AudioVisualPublicationModal';
 import { ConcertModal } from './ConcertModal';
+import { MusicScoreModal } from './MusicScoreModal';
 import { OtherPerformanceModal } from './OtherPerformanceModal';
-import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 type ArtisticMusicPerformanceModalType = '' | 'MusicScore' | 'AudioVisualPublication' | 'Concert' | 'OtherPerformance';
 
@@ -53,9 +53,7 @@ export const ArtisticMusicPerformanceForm = () => {
                   <TableHead>
                     <TableRow>
                       <TableCell>{t('common.type')}</TableCell>
-                      <TableCell>
-                        {t('common.publisher')}/{t('common.place')}
-                      </TableCell>
+                      <TableCell>{t('common.description')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>

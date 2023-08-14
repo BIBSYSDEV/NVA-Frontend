@@ -1,54 +1,55 @@
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import {
   Box,
   Button,
   FormHelperText,
+  IconButton,
   Link,
   Paper,
-  TextField,
-  Typography,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  IconButton,
+  TextField,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import { UppyFile } from '@uppy/core';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Modal } from '../../components/Modal';
-import {
-  AssociatedFile,
-  AssociatedLink,
-  licenses,
-  NullAssociatedArtifact,
-  Uppy,
-} from '../../types/associatedArtifact.types';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RootState } from '../../redux/store';
+import { alternatingTableRowColor } from '../../themes/mainTheme';
+import { AssociatedFile, AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
+import { licenses } from '../../types/license.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import { FileUploader } from './files_and_license_tab/FileUploader';
-import {
-  getChannelRegisterJournalUrl,
-  getChannelRegisterPublisherUrl,
-} from '../public_registration/PublicPublicationContext';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isDegreeWithProtectedFiles,
+  isEmbargoed,
   isTypeWithFileVersionField,
+  userIsRegistrationCurator,
+  userIsRegistrationOwner,
 } from '../../utils/registration-helpers';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { DoiField } from './resource_type_tab/components/DoiField';
+import {
+  getChannelRegisterJournalUrl,
+  getChannelRegisterPublisherUrl,
+} from '../public_registration/PublicPublicationContext';
+import { FileUploader } from './files_and_license_tab/FileUploader';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
-import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
+import { DoiField } from './resource_type_tab/components/DoiField';
 
 export const administrativeAgreementId = 'administrative-agreement';
 
@@ -58,6 +59,7 @@ interface FilesAndLicensePanelProps {
 
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
   const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
@@ -110,6 +112,12 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
   const originalDoi = entityDescription?.reference?.doi;
   const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance?.type);
+
+  const isRegistrationCurator = userIsRegistrationCurator(user, values);
+  const isProtectedDegree = isDegreeWithProtectedFiles(entityDescription?.reference?.publicationInstance?.type);
+  const canEditDegreeFiles = isRegistrationCurator && !!user?.isThesisCurator;
+  const canEditOtherFiles = isRegistrationCurator || userIsRegistrationOwner(user, values);
+  const canEditFiles = (!isProtectedDegree && canEditOtherFiles) || (isProtectedDegree && canEditDegreeFiles);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -229,10 +237,16 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   return false;
                                 });
 
+                                const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
+                                const canEditThisFile = isEmbargoedDegreeFile
+                                  ? canEditDegreeFiles && user.isEmbargoThesisCurator
+                                  : canEditFiles;
+
                                 return (
                                   <FilesTableRow
                                     key={file.identifier}
                                     file={file}
+                                    disabled={!canEditThisFile}
                                     removeFile={() => {
                                       const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                                       const remainingFiles = uppy
@@ -286,6 +300,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   <UnpublishableFileRow
                                     key={file.identifier}
                                     file={file}
+                                    disabled={!canEditFiles}
                                     removeFile={() => {
                                       const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                                       const remainingFiles = uppy
@@ -310,7 +325,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       </Box>
                     )}
 
-                    <FileUploader uppy={uppy} addFile={push} />
+                    <FileUploader uppy={uppy} addFile={push} disabled={!canEditFiles} />
                   </BackgroundDiv>
                 </Paper>
 
@@ -320,12 +335,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       {t('common.link')}
                     </Typography>
                     {originalDoi ? (
-                      <DoiField />
+                      <DoiField canEditDoi={canEditFiles} />
                     ) : (
                       <TextField
                         fullWidth
                         variant="filled"
                         label={t('registration.files_and_license.link_to_resource')}
+                        disabled={!canEditFiles}
                         value={
                           associatedLinkIndex >= 0
                             ? (associatedArtifacts[associatedLinkIndex] as AssociatedLink).id
@@ -375,6 +391,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                   <Button
                     sx={{ width: 'fit-content', m: 'auto' }}
                     variant="outlined"
+                    disabled={!canEditFiles}
                     data-testid={dataTestId.registrationWizard.files.noFilesOrLinksButton}
                     onClick={() => {
                       const nullAssociatedArtifact: NullAssociatedArtifact = { type: 'NullAssociatedArtifact' };
@@ -395,8 +412,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         maxWidth="sm"
         dataTestId={dataTestId.registrationWizard.files.licenseModal}>
         {licenses.map((license) => (
-          <Box key={license.identifier} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-            <Typography variant="h3">{t(`licenses.labels.${license.identifier}`)}</Typography>
+          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+            <Typography variant="h3" gutterBottom>
+              {license.name}
+            </Typography>
             <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
             <Typography paragraph>{license.description}</Typography>
             {license.link && (

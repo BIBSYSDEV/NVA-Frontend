@@ -1,7 +1,8 @@
-import { Doi, Registration } from '../types/registration.types';
-import { authenticatedApiRequest } from './apiRequest';
-import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/messages.types';
+import { ImportCandidate } from '../types/importCandidate.types';
+import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
+import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
+import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({
@@ -61,15 +62,59 @@ export const createTicket = async (registrationId: string, type: TicketType, ret
   }
 };
 
-export const updateTicketStatus = async (ticketId: string, type: TicketType, status: TicketStatus) =>
-  await authenticatedApiRequest({
-    url: ticketId,
-    method: 'PUT',
-    data: { type, status },
-  });
-
 export const createDraftDoi = async (registrationId: string) =>
   await authenticatedApiRequest<{ doi: string }>({
     url: `${registrationId}/doi`,
     method: 'POST',
   });
+
+export const fetchRegistration = async (registrationIdentifier: string) => {
+  const fetchRegistrationResponse = await apiRequest2<Registration>({
+    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
+  });
+  return fetchRegistrationResponse.data;
+};
+
+export const fetchRegistrationsByOwner = async () => {
+  const fetchRegistrationsByOwnerResponse = await authenticatedApiRequest2<MyRegistrationsResponse>({
+    url: PublicationsApiPath.RegistrationsByOwner,
+  });
+  return fetchRegistrationsByOwnerResponse.data;
+};
+export const fetchRegistrationTickets = async (registrationId: string) => {
+  const getTickets = await authenticatedApiRequest2<TicketCollection>({
+    url: `${registrationId}/tickets`,
+  });
+  return getTickets.data;
+};
+
+export interface UpdateTicketData {
+  assignee?: string;
+  status?: TicketStatus;
+  viewStatus?: 'Read' | 'Unread';
+}
+
+export const updateTicket = async (ticketId: string, ticketData: UpdateTicketData) => {
+  const updateTicket = await authenticatedApiRequest2<null>({
+    url: ticketId,
+    method: 'PUT',
+    data: ticketData,
+  });
+  return updateTicket.data;
+};
+
+export const fetchImportCandidate = async (importCandidateIdentifier: string) => {
+  const fetchImportCandidateResponse = await apiRequest2<ImportCandidate>({
+    url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}`,
+  });
+  return fetchImportCandidateResponse.data;
+};
+
+export const createRegistrationFromImportCandidate = async (importCandidate: ImportCandidate) => {
+  const creatRegistrationResponse = await authenticatedApiRequest2<Registration>({
+    url: `${PublicationsApiPath.ImportCandidate}/${importCandidate.identifier}`,
+    method: 'POST',
+    data: importCandidate,
+  });
+  return creatRegistrationResponse.data;
+};

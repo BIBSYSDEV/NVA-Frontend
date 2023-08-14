@@ -1,26 +1,26 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
-  TextField,
-  MenuItem,
-  Typography,
+  Box,
   Button,
+  FormHelperText,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  FormHelperText,
-  Box,
+  TextField,
+  Typography,
 } from '@mui/material';
-import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../../../types/publicationFieldNames';
 import { ArtisticRegistration, DesignType } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { VenueModal } from './VenueModal';
 import { OutputRow } from '../OutputRow';
+import { VenueModal } from './VenueModal';
 
 const designTypes = Object.values(DesignType);
 
@@ -63,7 +63,7 @@ export const ArtisticDesignForm = () => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               id={field.name}
-              data-testid={dataTestId.registrationWizard.resourceType.artisticOtherTypeField}
+              data-testid={dataTestId.registrationWizard.resourceType.subtypeDescriptionField}
               variant="filled"
               fullWidth
               {...field}
@@ -95,7 +95,7 @@ export const ArtisticDesignForm = () => {
 
       <div>
         <Typography variant="h3" component="h2" gutterBottom>
-          {t('registration.resource_type.artistic.exhibition_places')}
+          {t('registration.resource_type.artistic.announcements')}
         </Typography>
         <FieldArray name={ResourceFieldNames.PublicationInstanceVenues}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
@@ -104,7 +104,7 @@ export const ArtisticDesignForm = () => {
                 <Table sx={{ '& th,td': { borderBottom: 1 } }}>
                   <TableHead>
                     <TableRow sx={{ '& th,td': { borderBottom: 1 } }}>
-                      <TableCell>{t('registration.resource_type.artistic.exhibition_place')}</TableCell>
+                      <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
@@ -139,7 +139,7 @@ export const ArtisticDesignForm = () => {
                 variant="outlined"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('registration.resource_type.artistic.add_exhibition_place')}
+                {t('registration.resource_type.artistic.add_announcement')}
               </Button>
               <VenueModal
                 onSubmit={(newVenue) => push(newVenue)}

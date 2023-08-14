@@ -1,9 +1,13 @@
-import { PublicationInstanceType, Registration } from '../types/registration.types';
+import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
+import i18n from '../translations/i18n';
+import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
+import { Contributor, ContributorRole } from '../types/contributor.types';
 import {
   ArtisticType,
   BookType,
   ChapterType,
   DegreeType,
+  ExhibitionContentType,
   JournalType,
   MediaType,
   OtherRegistrationType,
@@ -12,31 +16,33 @@ import {
   ReportType,
   ResearchDataType,
 } from '../types/publicationFieldNames';
-import { User } from '../types/user.types';
-import i18n from '../translations/i18n';
-import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import { Contributor, ContributorRole } from '../types/contributor.types';
 import {
+  AudioVisualPublication,
   Award,
   Broadcast,
-  Competition,
-  Exhibition,
-  MentionInPublication,
-  ArtisticOutputItem,
-  Venue,
   CinematicRelease,
-  OtherRelease,
-  MusicScore,
-  AudioVisualPublication,
+  Competition,
   Concert,
-  OtherMusicPerformance,
+  Exhibition,
+  LiteraryArtsAudioVisual,
   LiteraryArtsMonograph,
   LiteraryArtsPerformance,
-  LiteraryArtsAudioVisual,
   LiteraryArtsWeb,
+  MentionInPublication,
+  MusicScore,
+  OtherMusicPerformance,
+  OtherRelease,
+  Venue,
 } from '../types/publication_types/artisticRegistration.types';
+import {
+  ExhibitionBasic,
+  ExhibitionMentionInPublication,
+  ExhibitionOtherPresentation,
+} from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
-import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
+import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import { PublicationInstanceType, Registration, RegistrationStatus } from '../types/registration.types';
+import { User } from '../types/user.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -48,7 +54,7 @@ export const getMainRegistrationType = (instanceType: string) =>
     : isReport(instanceType)
     ? PublicationType.Report
     : isChapter(instanceType)
-    ? PublicationType.Chapter
+    ? PublicationType.Anthology
     : isPresentation(instanceType)
     ? PublicationType.Presentation
     : isArtistic(instanceType)
@@ -57,6 +63,8 @@ export const getMainRegistrationType = (instanceType: string) =>
     ? PublicationType.MediaContribution
     : isResearchData(instanceType)
     ? PublicationType.ResearchData
+    : isExhibitionContent(instanceType)
+    ? PublicationType.ExhibitionContent
     : isOtherRegistration(instanceType)
     ? PublicationType.GeographicalContent
     : '';
@@ -66,6 +74,12 @@ export const isJournal = (instanceType: any) => Object.values(JournalType).inclu
 export const isBook = (instanceType: any) => Object.values(BookType).includes(instanceType);
 
 export const isDegree = (instanceType: any) => Object.values(DegreeType).includes(instanceType);
+
+export const isDegreeWithProtectedFiles = (instanceType: any) =>
+  instanceType === DegreeType.Bachelor ||
+  instanceType === DegreeType.Master ||
+  instanceType === DegreeType.Phd ||
+  instanceType === DegreeType.Other;
 
 export const isReport = (instanceType: any) => Object.values(ReportType).includes(instanceType);
 
@@ -84,6 +98,8 @@ export const isPeriodicalMediaContribution = (instanceType: string) =>
 
 export const isOtherRegistration = (instanceType: any) => Object.values(OtherRegistrationType).includes(instanceType);
 
+export const isExhibitionContent = (instanceType: any) => Object.values(ExhibitionContentType).includes(instanceType);
+
 export const nviApplicableTypes: string[] = [
   JournalType.AcademicArticle,
   JournalType.AcademicLiteratureReview,
@@ -95,7 +111,7 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
   !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCurator && user.customerId === registration.publisher.id;
+  !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
 export const getYearQuery = (yearValue: string) =>
   yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();
@@ -104,8 +120,8 @@ const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?:
   const issnString =
     printIssn || onlineIssn
       ? [
-          printIssn ? `${i18n.t('translation:registration.resource_type.print_issn')}: ${printIssn}` : '',
-          onlineIssn ? `${i18n.t('translation:registration.resource_type.online_issn')}: ${onlineIssn}` : '',
+          printIssn ? `${i18n.t('registration.resource_type.print_issn')}: ${printIssn}` : '',
+          onlineIssn ? `${i18n.t('registration.resource_type.online_issn')}: ${onlineIssn}` : '',
         ]
           .filter((issn) => issn)
           .join(', ')
@@ -117,8 +133,6 @@ export const getPublicationChannelString = (title: string, onlineIssn?: string |
   const issnString = getPublicationChannelIssnString(onlineIssn, printIssn);
   return issnString ? `${title} (${issnString})` : title;
 };
-
-export const getRegistrationIdentifier = (id: string) => id.split('/').pop() ?? '';
 
 // Ensure Registration has correct type values, etc
 export const getFormattedRegistration = (registration: Registration) => {
@@ -493,6 +507,22 @@ export const contributorConfig: ContributorConfig = {
     ],
     secondaryRoles: [],
   },
+  // Exhibition
+  [ExhibitionContentType.ExhibitionProduction]: {
+    primaryRoles: [
+      ContributorRole.ProjectLeader,
+      ContributorRole.Curator,
+      ContributorRole.LightDesigner,
+      ContributorRole.SoundDesigner,
+      ContributorRole.Designer,
+      ContributorRole.Architect,
+      ContributorRole.InteriorArchitect,
+      ContributorRole.Photographer,
+      ContributorRole.Sponsor,
+      ContributorRole.Other,
+    ],
+    secondaryRoles: [],
+  },
   // Other
   [OtherRegistrationType.Map]: {
     primaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
@@ -502,13 +532,13 @@ export const contributorConfig: ContributorConfig = {
 
 export const groupContributors = (contributors: Contributor[], registrationType: PublicationInstanceType) => {
   const { primaryRoles, secondaryRoles } = contributorConfig[registrationType];
-  const primaryContributors = contributors.filter((contributor) => primaryRoles.includes(contributor.role));
-  const secondaryContributors = contributors.filter((contributor) => secondaryRoles.includes(contributor.role));
+  const primaryContributors = contributors.filter((contributor) => primaryRoles.includes(contributor.role.type));
+  const secondaryContributors = contributors.filter((contributor) => secondaryRoles.includes(contributor.role.type));
 
   return { primaryContributors, secondaryContributors };
 };
 
-export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
+export const getOutputName = (item: OutputItem): string => {
   switch (item.type) {
     case 'Venue':
     case 'PerformingArtsVenue':
@@ -535,8 +565,12 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
       return (item as AudioVisualPublication).publisher.name;
     case 'Concert':
       return (item as Concert).place.label;
-    case 'OtherPerformance':
-      return (item as OtherMusicPerformance).place.label;
+    case 'OtherPerformance': {
+      const otherMusicPerformance = item as OtherMusicPerformance;
+      return otherMusicPerformance.place.label
+        ? otherMusicPerformance.place.label
+        : otherMusicPerformance.performanceType;
+    }
     case 'LiteraryArtsMonograph':
       return (item as LiteraryArtsMonograph).publisher.name;
     case 'LiteraryArtsPerformance':
@@ -545,25 +579,46 @@ export const getArtisticOutputName = (item: ArtisticOutputItem): string => {
       return (item as LiteraryArtsAudioVisual).publisher.name;
     case 'LiteraryArtsWeb':
       return (item as LiteraryArtsWeb).publisher.name;
+    case 'ExhibitionBasic':
+      return (item as ExhibitionBasic).organization.name;
+    case 'ExhibitionOtherPresentation':
+      return (item as ExhibitionOtherPresentation).typeDescription;
+    case 'ExhibitionMentionInPublication':
+      return (item as ExhibitionMentionInPublication).title;
     default:
       return '';
   }
 };
 
-const userIsOwnerOfRegistration = (user: User | null, registration: Registration) =>
-  !!user?.isCreator && !!user.nvaUsername && user.nvaUsername === registration.resourceOwner.owner;
+const userIsContributorOnPublishedRegistration = (user: User | null, registration: Registration) =>
+  !!user?.isCreator &&
+  !!user.cristinId &&
+  (registration.status === RegistrationStatus.Published ||
+    registration.status === RegistrationStatus.PublishedMetadata) &&
+  !!registration.entityDescription?.contributors.some((contributor) => contributor.identity.id === user.cristinId);
 
-export const userIsCuratorForRegistration = (user: User | null, registration: Registration) =>
-  !!user?.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
+export const userCanEditRegistration = (user: User | null, registration: Registration) => {
+  if (!user) {
+    return false;
+  }
 
-export const userCanEditRegistration = (user: User | null, registration: Registration) =>
-  userIsOwnerOfRegistration(user, registration) || userIsCuratorForRegistration(user, registration);
+  const isValidCurator = userIsRegistrationCurator(user, registration);
+  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance.type)) {
+    return isValidCurator && user.isThesisCurator;
+  }
+
+  return (
+    isValidCurator ||
+    userIsRegistrationOwner(user, registration) ||
+    userIsContributorOnPublishedRegistration(user, registration) ||
+    user.isEditor
+  );
+};
 
 export const hyphenateIsrc = (isrc: string) =>
   isrc ? `${isrc.substring(0, 2)}-${isrc.substring(2, 5)}-${isrc.substring(5, 7)}-${isrc.substring(7, 12)}` : '';
 
-export const getTitleString = (title: string | undefined) =>
-  title || `[${i18n.t('translation:registration.missing_title')}]`;
+export const getTitleString = (title: string | undefined) => title || `[${i18n.t('registration.missing_title')}]`;
 
 export const associatedArtifactIsFile = ({ type }: { type: string }) =>
   type === 'File' || type === 'UnpublishedFile' || type === 'PublishedFile' || type === 'UnpublishableFile';
@@ -579,13 +634,22 @@ export const getAssociatedLinks = (associatedArtifacts: AssociatedArtifact[]) =>
   associatedArtifacts.filter(associatedArtifactIsLink) as AssociatedLink[];
 
 export const getContributorInitials = (name: string) => {
+  if (!name) return '';
+
   const splittedNames = name.split(' ');
   const firstNameInitial = splittedNames[0][0];
   const lastNameInitial = splittedNames.length > 1 ? splittedNames.pop()?.[0] : '';
-  const initials = `${firstNameInitial}${lastNameInitial}`;
+  const initials = `${firstNameInitial}${lastNameInitial}`.toUpperCase();
   return initials;
 };
 
 export const isTypeWithFileVersionField = (publicationInstanceType?: string) =>
   publicationInstanceType === JournalType.AcademicArticle ||
   publicationInstanceType === JournalType.AcademicLiteratureReview;
+
+export const isEmbargoed = (embargoDate: Date | null) => {
+  if (!embargoDate) {
+    return false;
+  }
+  return new Date(embargoDate) > new Date();
+};

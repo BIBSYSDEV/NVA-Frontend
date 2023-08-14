@@ -1,4 +1,4 @@
-import { Typography, Link, Chip, Box } from '@mui/material';
+import { Box, Chip, Link, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { CristinProject } from '../../types/project.types';
@@ -32,9 +32,9 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
         <Typography>{projectPeriodString ? `${projectPeriodString} (${projectStatusString})` : '-'}</Typography>
       </div>
       <div>
-        <Typography variant="overline">{t('project.financing')}</Typography>
-        {project.newFunding.length > 0 ? (
-          project.newFunding.map((funding, index) => {
+        <Typography variant="overline">{t('common.funding')}</Typography>
+        {project.funding.length > 0 ? (
+          project.funding.map((funding, index) => {
             const sourceName = getLanguageString(funding.labels);
             const fundingText = funding.identifier
               ? `${sourceName} - ${t('project.grant_id')} ${funding.identifier}`
@@ -64,7 +64,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             ))}
           </Box>
         ) : (
-          '-'
+          <Typography>-</Typography>
         )}
         <Typography variant="overline">{t('project.keywords')}</Typography>
         {project.keywords.length > 0 ? (
@@ -74,7 +74,7 @@ export const ProjectGeneralInfo = ({ project }: ProjectGeneralInfoProps) => {
             ))}
           </Box>
         ) : (
-          '-'
+          <Typography>-</Typography>
         )}
       </div>
     </StyledGeneralInfo>

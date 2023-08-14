@@ -1,24 +1,23 @@
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Helmet } from 'react-helmet-async';
-import { Box, Divider, IconButton, TextField, Tooltip, Typography } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
+import { LoadingButton } from '@mui/lab';
+import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { UserOrcid } from './UserOrcid';
-import { ResearchProfilePanel } from './ResearchProfilePanel';
-import { RootState } from '../../../redux/store';
-import { setNotification } from '../../../redux/notificationSlice';
-import { BackgroundDiv } from '../../../components/styled/Wrappers';
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { CristinPerson, FlatCristinPerson } from '../../../types/user.types';
-import { updateCristinPerson } from '../../../api/userApi';
-import { useFetch } from '../../../utils/hooks/useFetch';
-import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-helpers';
+import { BackgroundDiv } from '../../../components/styled/Wrappers';
+import { setNotification } from '../../../redux/notificationSlice';
+import { RootState } from '../../../redux/store';
+import { FlatCristinPerson } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { UserIdentity } from './UserIdentity';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-helpers';
+import { ResearchProfilePanel } from './ResearchProfilePanel';
+import { UserIdentity } from './UserIdentity';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
@@ -31,10 +30,12 @@ export const MyProfile = () => {
 
   const personId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
 
-  const [person, isLoadingPerson, refetchPerson] = useFetch<CristinPerson>({
-    url: personId,
-    errorMessage: t('feedback.error.get_person'),
+  const personQuery = useQuery({
+    queryKey: [personId],
+    queryFn: () => fetchPerson(personId),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
   });
+  const person = personQuery.data;
 
   const hasActiveEmployment = filterActiveAffiliations(person?.affiliations).length > 0;
 
@@ -62,7 +63,7 @@ export const MyProfile = () => {
       } else if (isSuccessStatus(updatePersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' }));
         setEditPreferredNames(false);
-        refetchPerson();
+        personQuery.refetch();
       }
     }
   };
@@ -94,7 +95,7 @@ export const MyProfile = () => {
             <Typography variant="h2" id="personalia-id">
               {t('my_page.my_profile.heading.personalia')}
             </Typography>
-            {isLoadingPerson && !person ? (
+            {personQuery.isLoading && !person ? (
               <PageSpinner aria-labelledby="personalia-id" />
             ) : (
               <>
@@ -158,9 +159,6 @@ export const MyProfile = () => {
                           {t('common.save')}
                         </LoadingButton>
                       </Box>
-                      <Divider sx={{ my: '1rem' }} />
-                      <Typography fontWeight={600}>{t('common.orcid')}</Typography>
-                      <UserOrcid user={user} />
                     </Form>
                   )}
                 </Formik>
@@ -171,7 +169,7 @@ export const MyProfile = () => {
         <UserIdentity user={user} hasActiveEmployment={hasActiveEmployment} />
 
         <Box sx={{ gridArea: 'research-profile' }}>
-          <ResearchProfilePanel person={person} isLoadingPerson={isLoadingPerson} />
+          <ResearchProfilePanel person={person} isLoadingPerson={personQuery.isLoading} />
         </Box>
       </Box>
     </>

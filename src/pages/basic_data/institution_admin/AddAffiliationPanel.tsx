@@ -1,17 +1,17 @@
 import { Autocomplete, Box, TextField } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { DatePicker } from '@mui/x-date-pickers';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { getLanguageString } from '../../../utils/translation-helpers';
 import { RootState } from '../../../redux/store';
 import { Organization } from '../../../types/organization.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useFetchResource } from '../../../utils/hooks/useFetchResource';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
-import { AddEmployeeData } from './AddEmployeePage';
-import { StartDateField } from '../fields/StartDateField';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { PositionField } from '../fields/PositionField';
-import { dataTestId } from '../../../utils/dataTestIds';
+import { StartDateField } from '../fields/StartDateField';
+import { AddEmployeeData } from './AddEmployeePage';
 
 export const AddAffiliationPanel = () => {
   const { t } = useTranslation();
@@ -32,10 +32,10 @@ export const AddAffiliationPanel = () => {
             disabled={isDisabled}
             value={organizationOptions.find((option) => option.id === field.value) ?? null}
             options={organizationOptions}
-            getOptionLabel={(option) => getLanguageString(option.name)}
+            getOptionLabel={(option) => getLanguageString(option.labels)}
             renderOption={(props, option) => (
               <li {...props} key={option.id}>
-                {getLanguageString(option.name)}
+                {getLanguageString(option.labels)}
               </li>
             )}
             loading={isLoadingCurrentOrganization}
@@ -91,27 +91,22 @@ export const AddAffiliationPanel = () => {
             <DatePicker
               disabled={isDisabled}
               label={t('common.end_date')}
-              PopperProps={{
-                'aria-label': t('common.end_date'),
-              }}
-              value={field.value ? field.value : null}
+              value={field.value ? new Date(field.value) : null}
               onChange={(date) => {
                 !touched && setFieldTouched(field.name, true, false);
                 setFieldValue(field.name, date ?? '');
               }}
-              inputFormat="dd.MM.yyyy"
+              format="dd.MM.yyyy"
               views={['year', 'month', 'day']}
-              mask="__.__.____"
               minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="filled"
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                  data-testid={dataTestId.basicData.personAdmin.endDate}
-                />
-              )}
+              slotProps={{
+                textField: {
+                  inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
+                  variant: 'filled',
+                  error: touched && !!error,
+                  helperText: <ErrorMessage name={field.name} />,
+                },
+              }}
             />
           )}
         </Field>

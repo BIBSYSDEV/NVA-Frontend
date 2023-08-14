@@ -1,14 +1,14 @@
+import { Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { Award } from '../../../../../../types/publication_types/artisticRegistration.types';
 import i18n from '../../../../../../translations/i18n';
+import { emptyInstant } from '../../../../../../types/common.types';
+import { Award } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
-import { emptyInstant } from '../../../../../../types/common.types';
 
 interface AwardModalProps {
   award?: Award;
@@ -29,19 +29,19 @@ const emptyAward: Award = {
 
 const validationSchema = Yup.object<YupShape<Award>>({
   name: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.award_name'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.award_name'),
     })
   ),
   organizer: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.award_organizer'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.award_organizer'),
     })
   ),
   date: Yup.object().shape({
     value: Yup.date().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.year'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('common.year'),
       })
     ),
   }),
@@ -105,28 +105,25 @@ export const AwardModal = ({ award, onSubmit, open, closeModal }: AwardModalProp
                 }: FieldProps<string>) => (
                   <DatePicker
                     label={t('common.year')}
-                    PopperProps={{
-                      'aria-label': t('common.year'),
-                    }}
-                    value={field.value ?? null}
+                    value={field.value ? new Date(field.value) : null}
                     onChange={(date) => {
                       !touched && setFieldTouched(field.name, true, false);
                       setFieldValue(field.name, date ?? '');
                     }}
-                    inputFormat="yyyy"
+                    format="yyyy"
                     views={['year']}
-                    mask="____"
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="filled"
-                        required
-                        onBlur={() => !touched && setFieldTouched(field.name)}
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
-                        data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
-                      />
-                    )}
+                    slotProps={{
+                      textField: {
+                        inputProps: {
+                          'data-testid': dataTestId.registrationWizard.resourceType.outputInstantDateField,
+                        },
+                        onBlur: () => !touched && setFieldTouched(field.name),
+                        variant: 'filled',
+                        required: true,
+                        error: touched && !!error,
+                        helperText: <ErrorMessage name={field.name} />,
+                      },
+                    }}
                   />
                 )}
               </Field>

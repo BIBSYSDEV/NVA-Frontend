@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataTestId } from '../utils/dataTestIds';
 

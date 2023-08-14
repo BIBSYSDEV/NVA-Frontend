@@ -1,7 +1,6 @@
-import { TablePagination } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { ListPagination } from '../../components/ListPagination';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { dataTestId } from '../../utils/dataTestIds';
 import { SearchParam } from '../../utils/searchHelpers';
 
 interface CristinSearchPaginationProps {
@@ -14,7 +13,7 @@ export const CristinSearchPagination = ({ totalCount }: CristinSearchPaginationP
   const resultsParam = params.get(SearchParam.Results);
   const pageParam = params.get(SearchParam.Page);
 
-  const rowsPerPage = resultsParam ? +resultsParam : ROWS_PER_PAGE_OPTIONS[1];
+  const rowsPerPage = resultsParam ? +resultsParam : ROWS_PER_PAGE_OPTIONS[0];
 
   const updatePath = (page: string, results: string) => {
     params.set(SearchParam.Page, page);
@@ -23,16 +22,12 @@ export const CristinSearchPagination = ({ totalCount }: CristinSearchPaginationP
   };
 
   return (
-    <TablePagination
-      aria-live="polite"
-      data-testid={dataTestId.startPage.searchPagination}
-      rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-      component="div"
+    <ListPagination
       count={totalCount}
+      page={pageParam ? +pageParam : 1}
+      onPageChange={(newPage) => updatePath(newPage.toString(), rowsPerPage.toString())}
       rowsPerPage={rowsPerPage}
-      page={pageParam ? +pageParam - 1 : 0}
-      onPageChange={(_, newMuiPage) => updatePath((newMuiPage + 1).toString(), rowsPerPage.toString())}
-      onRowsPerPageChange={(event) => updatePath('1', event.target.value)}
+      onRowsPerPageChange={(newRowsPerPage) => updatePath('1', newRowsPerPage.toString())}
     />
   );
 };

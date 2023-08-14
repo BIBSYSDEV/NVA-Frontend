@@ -1,20 +1,20 @@
-import { TextField, Typography, Button } from '@mui/material';
-import { Box } from '@mui/system';
-import { DatePicker } from '@mui/x-date-pickers';
-import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import { useTranslation } from 'react-i18next';
 import AddCircleIcon from '@mui/icons-material/AddCircleOutline';
+import { Box, Button, TextField, Typography } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
 import {
   CristinProject,
-  emptyProjectContributor,
   ProjectOrganization,
   SaveCristinProject,
+  emptyProjectContributor,
 } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
-import { ProjectFieldName } from './ProjectFormDialog';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { ProjectFieldName } from './ProjectFormDialog';
+import { ProjectFundingsField } from './ProjectFunding';
 
 interface ProjectFormPanel1Props {
   currentProject?: CristinProject;
@@ -54,7 +54,7 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
                 const selectedCoordinatingInstitution: ProjectOrganization = {
                   type: 'Organization',
                   id: selectedInstitution?.id ?? '',
-                  name: selectedInstitution?.name ?? {},
+                  labels: selectedInstitution?.labels ?? {},
                 };
                 setFieldValue(field.name, selectedCoordinatingInstitution);
               }}
@@ -65,7 +65,9 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               }
               fieldInputProps={{
                 ...field,
-                onBlur: () => setFieldTouched(`${field.name}.id`),
+                onBlur: () => {
+                  setFieldTouched(`${field.name}.id`);
+                },
               }}
               selectedValue={field.value}
               customDataTestId={dataTestId.registrationWizard.description.projectForm.coordinatingInstitutionField}
@@ -79,27 +81,23 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               <DatePicker
                 label={t('common.start_date')}
                 disabled={thisIsRekProject}
-                PopperProps={{
-                  'aria-label': t('common.start_date'),
-                }}
                 onChange={(date) => {
                   !touched && setFieldTouched(field.name, true, false);
                   setFieldValue(field.name, date ?? '');
                 }}
                 value={field.value ? new Date(field.value) : null}
-                maxDate={values.endDate}
-                inputFormat="dd.MM.yyyy"
-                mask="__.__.____"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    data-testid={dataTestId.registrationWizard.description.projectForm.startDateField}
-                    variant="filled"
-                    required
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                  />
-                )}
+                maxDate={values.endDate ? new Date(values.endDate) : null}
+                format="dd.MM.yyyy"
+                slotProps={{
+                  textField: {
+                    inputProps: { 'data-testid': dataTestId.registrationWizard.description.projectForm.startDateField },
+                    variant: 'filled',
+                    onBlur: () => !touched && setFieldTouched(field.name),
+                    required: true,
+                    error: touched && !!error,
+                    helperText: <ErrorMessage name={field.name} />,
+                  },
+                }}
               />
             )}
           </Field>
@@ -109,27 +107,22 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               <DatePicker
                 label={t('common.end_date')}
                 disabled={thisIsRekProject}
-                PopperProps={{
-                  'aria-label': t('common.end_date'),
-                }}
                 onChange={(date) => {
                   !touched && setFieldTouched(field.name, true, false);
                   setFieldValue(field.name, date);
                 }}
                 value={field.value ? new Date(field.value) : null}
-                minDate={values.startDate}
-                inputFormat="dd.MM.yyyy"
-                mask="__.__.____"
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    data-testid={dataTestId.registrationWizard.description.projectForm.endDateField}
-                    variant="filled"
-                    required
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                  />
-                )}
+                minDate={values.startDate ? new Date(values.startDate) : null}
+                format="dd.MM.yyyy"
+                slotProps={{
+                  textField: {
+                    inputProps: { 'data-testid': dataTestId.registrationWizard.description.projectForm.endDateField },
+                    variant: 'filled',
+                    required: true,
+                    error: touched && !!error,
+                    helperText: <ErrorMessage name={field.name} />,
+                  },
+                }}
               />
             )}
           </Field>
@@ -172,12 +165,15 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               <Button
                 startIcon={<AddCircleIcon />}
                 onClick={() => push(emptyProjectContributor)}
-                sx={{ width: 'fit-content', alignSelf: 'center' }}>
+                sx={{ width: 'fit-content' }}
+                data-testid={dataTestId.registrationWizard.description.projectForm.addParticipantButton}>
                 {t('common.add')}
               </Button>
             </>
           )}
         </FieldArray>
+
+        <ProjectFundingsField currentFundings={values.funding} />
       </Box>
     </>
   );

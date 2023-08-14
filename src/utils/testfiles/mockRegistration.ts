@@ -1,9 +1,9 @@
 import { ContributorRole } from '../../types/contributor.types';
 import { JournalType } from '../../types/publicationFieldNames';
+import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
+import { TicketCollection } from '../../types/publication_types/ticket.types';
 import { PublicationChannelType, RegistrationStatus } from '../../types/registration.types';
 import { mockCustomerInstitution } from './mockCustomerInstitutions';
-import { TicketCollection } from '../../types/publication_types/messages.types';
-import { JournalRegistration } from '../../types/publication_types/journalRegistration.types';
 import { mockUser } from './mock_feide_user';
 
 export const mockRegistration: JournalRegistration = {
@@ -23,7 +23,7 @@ export const mockRegistration: JournalRegistration = {
   publisher: { id: mockCustomerInstitution.id },
   associatedArtifacts: [
     {
-      type: 'File',
+      type: 'UnpublishedFile',
       identifier: '3214324',
       name: 'filename.pdf',
       size: 10,
@@ -49,7 +49,7 @@ export const mockRegistration: JournalRegistration = {
     tags: ['Ost', 'Loff', 'Majones'],
     language: 'http://lexvo.org/id/iso639-3/eng',
     npiSubjectHeading: '0003',
-    date: {
+    publicationDate: {
       type: 'PublicationDate',
       year: '1980',
       month: '12',
@@ -65,7 +65,7 @@ export const mockRegistration: JournalRegistration = {
           id: '901790000000',
           name: 'Test User',
         },
-        role: ContributorRole.Creator,
+        role: { type: ContributorRole.Creator },
         sequence: 1,
       },
       {
@@ -83,7 +83,7 @@ export const mockRegistration: JournalRegistration = {
           type: 'Identity',
           name: 'Osteloff, Oddny',
         },
-        role: ContributorRole.Creator,
+        role: { type: ContributorRole.Creator },
         sequence: 2,
       },
     ],
@@ -125,45 +125,46 @@ export const mockTicketCollection: TicketCollection = {
   type: 'TicketCollection',
   tickets: [
     {
+      owner: 'creator@unit.no',
       type: 'GeneralSupportCase',
       status: 'Pending',
+      viewedBy: [],
       createdDate: new Date(2020, 1).toISOString(),
       modifiedDate: new Date(2020, 1).toISOString(),
       id: `${mockRegistration.id}/ticket/1`,
-      identifier: '1',
       publication: {
         id: mockRegistration.id,
         identifier: mockRegistration.identifier,
         mainTitle: mockRegistration.entityDescription.mainTitle,
+        contributors: [],
+        status: RegistrationStatus.Published,
+        createdDate: new Date(2020, 1).toISOString(),
+        modifiedDate: new Date(2020, 1).toISOString(),
+        publicationInstance: {
+          type: JournalType.AcademicArticle,
+        },
       },
-      viewedBy: [],
       messages: [
         {
           text: 'Hello Mr. Curator! A have a question about this publication, okay?',
           sender: 'creator@unit.no',
-          owner: 'creator@unit.no',
           createdDate: new Date(2020, 1).toISOString(),
           id: 'http://test.no/1',
           identifier: '1',
-          recipient: 'SupportService',
         },
         {
           text: 'Yes, how may I assist you my dear friend?',
           sender: 'curator@unit.no',
-          owner: 'creator@unit.no',
           createdDate: new Date(2020, 2).toISOString(),
           id: 'http://test.no/2',
           identifier: '2',
-          recipient: 'SupportService',
         },
         {
           text: "I don't know...",
           sender: 'creator@unit.no',
-          owner: 'creator@unit.no',
           createdDate: new Date(2020, 3).toISOString(),
           id: 'http://test.no/3',
           identifier: '3',
-          recipient: 'SupportService',
         },
       ],
     },

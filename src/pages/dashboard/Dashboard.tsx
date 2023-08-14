@@ -1,13 +1,13 @@
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, Collapse, IconButton, Typography } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import CloseIcon from '@mui/icons-material/Close';
-import { AboutContent } from '../infopages/AboutContent';
-import { dataTestId } from '../../utils/dataTestIds';
-import SearchPage from '../search/SearchPage';
 import { LocalStorageKey } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
+import { AboutContent } from '../infopages/AboutContent';
+import SearchPage from '../search/SearchPage';
 
 const Dashboard = () => {
   const { t } = useTranslation();

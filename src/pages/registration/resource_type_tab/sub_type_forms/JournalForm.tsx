@@ -1,15 +1,15 @@
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
 import { JournalType, ResourceFieldNames } from '../../../../types/publicationFieldNames';
+import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
+import { PublicationChannelType } from '../../../../types/registration.types';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { nviApplicableTypes } from '../../../../utils/registration-helpers';
+import { JournalDetailsFields } from '../components/JournalDetailsFields';
+import { JournalField } from '../components/JournalField';
 import { NviValidation } from '../components/NviValidation';
 import { SearchContainerField } from '../components/SearchContainerField';
-import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
-import { JournalField } from '../components/JournalField';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { InputContainerBox } from '../../../../components/styled/Wrappers';
-import { PublicationChannelType } from '../../../../types/registration.types';
-import { JournalDetailsFields } from '../components/JournalDetailsFields';
-import { nviApplicableTypes } from '../../../../utils/registration-helpers';
 
 const journalArticleTypes = [
   JournalType.AcademicArticle,

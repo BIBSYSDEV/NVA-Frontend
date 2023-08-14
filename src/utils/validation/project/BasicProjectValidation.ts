@@ -1,39 +1,40 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { SaveCristinProject } from '../../../types/project.types';
+import { projectFundingValidationSchema } from '../registration/fundingValidation';
 import { YupShape } from '../validationHelpers';
 
 const basicProjectErrorMessage = {
-  coordinatingInstitution: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:project.coordinating_institution'),
+  coordinatingInstitution: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('project.coordinating_institution'),
   }),
-  endDateCannotBeBeforeStart: i18n.t('translation:feedback.validation.cannot_be_before', {
-    field: i18n.t('translation:common.end_date'),
-    limitField: i18n.t('translation:common.start_date'),
+  endDateCannotBeBeforeStart: i18n.t('feedback.validation.cannot_be_before', {
+    field: i18n.t('common.end_date'),
+    limitField: i18n.t('common.start_date'),
   }),
-  endDateRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:common.end_date'),
+  endDateRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.end_date'),
   }),
-  endDateInvalidFormat: i18n.t('translation:feedback.validation.has_invalid_format', {
-    field: i18n.t('translation:common.end_date'),
+  endDateInvalidFormat: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('common.end_date'),
   }),
-  institutionRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:common.institution'),
+  institutionRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.institution'),
   }),
-  personRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:project.person'),
+  personRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('project.person'),
   }),
-  roleRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:common.role'),
+  roleRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.role'),
   }),
-  titleRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:common.title'),
+  titleRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.title'),
   }),
-  startDateRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:common.start_date'),
+  startDateRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('common.start_date'),
   }),
-  startDateInvalidFormat: i18n.t('translation:feedback.validation.has_invalid_format', {
-    field: i18n.t('translation:common.start_date'),
+  startDateInvalidFormat: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('common.start_date'),
   }),
 };
 
@@ -60,4 +61,5 @@ export const basicProjectValidationSchema = Yup.object<YupShape<SaveCristinProje
   coordinatingInstitution: Yup.object().shape({
     id: Yup.string().required(basicProjectErrorMessage.coordinatingInstitution),
   }),
+  funding: Yup.array().of(projectFundingValidationSchema),
 });

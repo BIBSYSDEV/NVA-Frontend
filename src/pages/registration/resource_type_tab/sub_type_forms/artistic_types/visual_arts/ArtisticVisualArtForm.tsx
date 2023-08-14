@@ -1,3 +1,4 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import {
   Box,
   Button,
@@ -11,8 +12,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Field, FieldProps, ErrorMessage, useFormikContext, FieldArray, FieldArrayRenderProps } from 'formik';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledSelectWrapper } from '../../../../../../components/styled/Wrappers';
@@ -22,8 +22,8 @@ import {
   VisualArtType,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { VenueModal } from '../design/VenueModal';
 import { OutputRow } from '../OutputRow';
+import { VenueModal } from '../design/VenueModal';
 
 const visualArtTypes = Object.values(VisualArtType);
 
@@ -65,7 +65,7 @@ export const ArtisticVisualArtForm = () => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               id={field.name}
-              data-testid={dataTestId.registrationWizard.resourceType.artisticOtherTypeField}
+              data-testid={dataTestId.registrationWizard.resourceType.subtypeDescriptionField}
               variant="filled"
               fullWidth
               {...field}
@@ -97,7 +97,7 @@ export const ArtisticVisualArtForm = () => {
 
       <div>
         <Typography variant="h3" component="h2" gutterBottom>
-          {t('registration.resource_type.artistic.exhibition_places')}
+          {t('registration.resource_type.artistic.announcements')}
         </Typography>
         <FieldArray name={ResourceFieldNames.PublicationInstanceVenues}>
           {({ push, replace, remove, move, name }: FieldArrayRenderProps) => (
@@ -106,7 +106,7 @@ export const ArtisticVisualArtForm = () => {
                 <Table sx={{ '& th,td': { borderBottom: 1 } }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell>{t('registration.resource_type.artistic.exhibition_place')}</TableCell>
+                      <TableCell>{t('common.place')}</TableCell>
                       <TableCell>{t('common.order')}</TableCell>
                       <TableCell>{t('common.actions')}</TableCell>
                     </TableRow>
@@ -141,7 +141,7 @@ export const ArtisticVisualArtForm = () => {
                 variant="outlined"
                 sx={{ mt: '1rem' }}
                 startIcon={<AddCircleOutlineIcon />}>
-                {t('registration.resource_type.artistic.add_exhibition_place')}
+                {t('registration.resource_type.artistic.add_announcement')}
               </Button>
               <VenueModal
                 onSubmit={(newVenue) => push({ ...newVenue, type: 'Venue' })}

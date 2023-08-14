@@ -2,33 +2,34 @@ import Axios, { AxiosRequestConfig } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
-import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
 import { mockOrcidResponse } from '../utils/testfiles/mockAuthorities';
-import { mockRoles, mockUser } from '../utils/testfiles/mock_feide_user';
+import { mockCristinPersonSearch } from '../utils/testfiles/mockCristinPersonSearch';
 import {
   mockCustomerInstitution,
-  mockCustomerInstitutions,
   mockCustomerInstitutionVocabularies,
+  mockCustomerInstitutions,
 } from '../utils/testfiles/mockCustomerInstitutions';
+import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
+import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
+import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
+import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
+import { mockPositionResponse } from '../utils/testfiles/mockPositions';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
-import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
-import { mockSearchResults, mockSearchTasks } from '../utils/testfiles/mockSearchResults';
-import { mockTicketCollection, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
+import { mockPublishedRegistration, mockRegistration, mockTicketCollection } from '../utils/testfiles/mockRegistration';
+import { mockSearchImportCandidates, mockSearchResults, mockSearchTasks } from '../utils/testfiles/mockSearchResults';
+import { mockRoles, mockUser } from '../utils/testfiles/mock_feide_user';
 import {
   CristinApiPath,
   CustomerInstitutionApiPath,
   FileApiPath,
+  OrcidApiPath,
   PublicationChannelApiPath,
   PublicationsApiPath,
   RoleApiPath,
   SearchApiPath,
 } from './apiPaths';
-import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
-import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
-import { mockCristinPersonSearch } from '../utils/testfiles/mockCristinPersonSearch';
-import { mockPositionResponse } from '../utils/testfiles/mockPositions';
 
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
@@ -36,7 +37,7 @@ export const interceptRequestsOnMock = () => {
 
   // SEARCH
   mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);
-
+  mock.onGet(new RegExp(SearchApiPath.ImportCandidates)).reply(200, mockSearchImportCandidates);
   // File
   mock.onGet(new RegExp(FileApiPath.Download)).reply(200, mockDownload);
   mock.onPost(new RegExp(FileApiPath.Create)).reply(200, mockCreateUpload);
@@ -48,7 +49,6 @@ export const interceptRequestsOnMock = () => {
 
   //MY MESSAGES
   mock.onGet(new RegExp(SearchApiPath.Tickets)).reply(200, mockSearchTasks);
-  mock.onGet(new RegExp(PublicationsApiPath.Tickets)).reply(200, mockTicketCollection);
   mock.onGet(new RegExp('/tickets')).reply(200, mockTicketCollection);
 
   // PUBLICATION CHANNEL
@@ -62,9 +62,11 @@ export const interceptRequestsOnMock = () => {
 
   //PUBLICATION
   mock.onPost(new RegExp(PublicationsApiPath.Registration)).reply(201, mockRegistration);
-  mock
-    .onGet(new RegExp(`${PublicationsApiPath.Registration}/4327439`))
-    .reply(200, { ...emptyRegistration, resourceOwner: { owner: mockUser['custom:nvaUsername'] } });
+  mock.onGet(new RegExp(`${PublicationsApiPath.Registration}/4327439`)).reply(200, {
+    ...emptyRegistration,
+    publisher: { id: mockCustomerInstitution.id },
+    resourceOwner: { owner: mockUser['custom:nvaUsername'] },
+  });
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/${mockPublishedRegistration.identifier}`))
     .reply(200, mockPublishedRegistration);
@@ -80,6 +82,7 @@ export const interceptRequestsOnMock = () => {
 
   // ORCID
   mock.onPost(ORCID_USER_INFO_URL).reply(200, mockOrcidResponse);
+  mock.onPost(new RegExp(OrcidApiPath.Orcid)).reply(201);
 
   // Person Registry
   mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinPersonSearch);

@@ -1,4 +1,4 @@
-import { nb as norwegianLocale, enUS as englishLocale } from 'date-fns/locale';
+import { enUS as englishLocale, nb as norwegianLocale } from 'date-fns/locale';
 import { RegistrationDate } from '../types/registration.types';
 
 export const displayDate = (date: RegistrationDate | undefined) => {

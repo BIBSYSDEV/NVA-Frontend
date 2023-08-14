@@ -1,19 +1,20 @@
-import { Dialog, DialogTitle, DialogContent, TextField, Button, Typography, FormHelperText, Box } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
+import AddIcon from '@mui/icons-material/Add';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Box, Button, Dialog, DialogContent, DialogTitle, FormHelperText, TextField, Typography } from '@mui/material';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import AddIcon from '@mui/icons-material/Add';
-import CancelIcon from '@mui/icons-material/Cancel';
 import { ConfirmDialog } from '../../../../../../components/ConfirmDialog';
 import i18n from '../../../../../../translations/i18n';
+import { emptyPlace } from '../../../../../../types/common.types';
 import {
   MusicalWork,
   OtherMusicPerformance,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
+import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
-import { dataTestId } from '../../../../../../utils/dataTestIds';
 
 interface OtherPerformanceModalProps {
   otherPerformance?: OtherMusicPerformance;
@@ -24,11 +25,7 @@ interface OtherPerformanceModalProps {
 
 const emptyOtherPerformance: OtherMusicPerformance = {
   type: 'OtherPerformance',
-  place: {
-    type: 'UnconfirmedPlace',
-    label: '',
-    country: '',
-  },
+  place: emptyPlace,
   performanceType: '',
   extent: '',
   musicalWorks: [],
@@ -41,43 +38,31 @@ const emptyMusicalWork: MusicalWork = {
 };
 
 const validationSchema = Yup.object<YupShape<OtherMusicPerformance>>({
-  place: Yup.object().shape({
-    label: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:common.place'),
-      })
-    ),
-  }),
   performanceType: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.performance_type'),
-    })
-  ),
-  extent: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.artistic.extent_in_minutes'),
+    i18n.t('feedback.validation.is_required', {
+      field: i18n.t('registration.resource_type.artistic.performance_type'),
     })
   ),
   musicalWorks: Yup.array()
     .of(
       Yup.object<YupShape<MusicalWork>>({
         title: Yup.string().required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:common.title'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('common.title'),
           })
         ),
         composer: Yup.string().required(
-          i18n.t('translation:feedback.validation.is_required', {
-            field: i18n.t('translation:registration.resource_type.artistic.composer'),
+          i18n.t('feedback.validation.is_required', {
+            field: i18n.t('registration.resource_type.artistic.composer'),
           })
         ),
       })
     )
     .min(
       1,
-      i18n.t('translation:feedback.validation.must_have_minimum', {
+      i18n.t('feedback.validation.must_have_minimum', {
         min: 1,
-        field: i18n.t('translation:registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
+        field: i18n.t('registration.resource_type.artistic.musical_work_item').toLocaleLowerCase(),
       })
     ),
 });
@@ -126,10 +111,9 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     variant="filled"
                     fullWidth
                     label={t('common.place')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.otherPerformancePlace}
+                    data-testid={dataTestId.registrationWizard.resourceType.placeField}
                   />
                 )}
               </Field>
@@ -142,7 +126,6 @@ export const OtherPerformanceModal = ({ otherPerformance, onSubmit, open, closeM
                     variant="filled"
                     fullWidth
                     label={t('registration.resource_type.artistic.extent_in_minutes')}
-                    required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                     data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDuration}

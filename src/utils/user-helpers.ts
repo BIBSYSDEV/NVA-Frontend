@@ -1,13 +1,14 @@
+import { VerificationStatus } from '../types/contributor.types';
 import {
   CreateCristinPerson,
   CristinArrayValue,
+  CristinPerson,
   CristinPersonAffiliation,
   CristinPersonIdentifier,
   CristinPersonIdentifierType,
   CristinPersonNameType,
-  CristinPerson,
-  FlatCristinPerson,
   Employment,
+  FlatCristinPerson,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
 
@@ -22,11 +23,7 @@ export const getFullCristinName = (names: CristinArrayValue[] = []) => {
   const preferredFirstName = getValueByKey('PreferredFirstName', names);
   const preferredLastName = getValueByKey('PreferredLastName', names);
 
-  if (preferredFirstName || preferredLastName) {
-    return `${preferredFirstName} ${preferredLastName}`.trim();
-  } else {
-    return `${firstName} ${lastName}`.trim();
-  }
+  return getFullName(preferredFirstName || firstName, preferredLastName || lastName);
 };
 
 export const filterActiveAffiliations = (affiliations: CristinPersonAffiliation[] = []) =>
@@ -42,6 +39,15 @@ export const isActiveEmployment = (employment: Employment) => {
 export const getOrcidUri = (identifiers: CristinPersonIdentifier[] = []) => {
   const orcid = getValueByKey('ORCID', identifiers);
   return orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
+};
+
+export const getVerificationStatus = (verifiedStatus: boolean | undefined) => {
+  if (verifiedStatus) {
+    return VerificationStatus.Verified;
+  } else if (verifiedStatus === false) {
+    return VerificationStatus.NotVerified;
+  }
+  return VerificationStatus.CannotBeEstablished;
 };
 
 export const getMaskedNationalIdentityNumber = (nationalIdentityNumber: string) =>
@@ -68,3 +74,5 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
   employments: user.employments,
   orcid: getValueByKey('ORCID', user.identifiers),
 });
+
+export const getFullName = (firstName?: string, lastName?: string) => [firstName, lastName].filter(Boolean).join(' ');

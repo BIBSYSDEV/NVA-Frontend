@@ -1,34 +1,35 @@
-import { useTranslation } from 'react-i18next';
-import { IconButton, Paper, Tooltip, Typography, Box } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import { Link as RouterLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link as RouterLink } from 'react-router-dom';
+import { SearchApiPath } from '../../api/apiPaths';
+import { StyledPaperHeader } from '../../components/PageWithSideMenu';
+import { StructuredSeoData } from '../../components/StructuredSeoData';
+import { TruncatableTypography } from '../../components/TruncatableTypography';
+import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RootState } from '../../redux/store';
+import { SearchResponse } from '../../types/common.types';
+import { RegistrationFieldName, ResearchDataType } from '../../types/publicationFieldNames';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
+import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { useFetch } from '../../utils/hooks/useFetch';
+import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
+import { getRegistrationWizardPath } from '../../utils/urlPaths';
+import { PublicFundingsContent } from './PublicFundingsContent';
 import { PublicGeneralContent } from './PublicGeneralContent';
 import { PublicProjectsContent } from './PublicProjectsContent';
 import { PublicRegistrationContributors } from './PublicRegistrationContributors';
+import { PublicSubjectAndClassificationContent } from './PublicSubjectAndClassificationContent';
 import { PublicSummaryContent } from './PublicSummaryContent';
-import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { ShareOptions } from './ShareOptions';
-import { SearchApiPath } from '../../api/apiPaths';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { RegistrationFieldName, ResearchDataType } from '../../types/publicationFieldNames';
-import { SearchResponse } from '../../types/common.types';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
-import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
-import { API_URL } from '../../utils/constants';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
 import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
-import { StyledPaperHeader } from '../../components/PageWithSideMenu';
-import { TruncatableTypography } from '../../components/TruncatableTypography';
-import { RootState } from '../../redux/store';
-import { getRegistrationWizardPath } from '../../utils/urlPaths';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { StructuredSeoData } from '../../components/StructuredSeoData';
-import { PublicFundingsContent } from './PublicFundingsContent';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -50,7 +51,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   });
 
   return (
-    <Paper elevation={0}>
+    <Paper elevation={0} sx={{ gridArea: 'registration' }}>
       {registration.status === RegistrationStatus.Published && <StructuredSeoData uri={registration.id} />}
       <Helmet>
         <title>{mainTitle}</title>
@@ -86,6 +87,20 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
         <PublicGeneralContent registration={registration} />
 
+        {(registration.status === RegistrationStatus.Draft || registration.status === RegistrationStatus.New) && (
+          <Box sx={{ display: 'flex', justifyContent: 'space-around', mb: '0.5rem' }}>
+            <Typography
+              sx={{
+                py: '0.3rem',
+                px: { xs: '2rem', sm: '3rem' },
+                bgcolor: 'primary.light',
+                color: 'primary.contrastText',
+              }}>
+              {t('registration.public_page.metadata_not_published')}
+            </Typography>
+          </Box>
+        )}
+
         {entityDescription?.alternativeTitles.und && (
           <Box sx={{ borderTop: '1px solid', py: '1rem' }}>
             <Typography variant="h3" component="h2">
@@ -105,6 +120,15 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             defaultExpanded
             heading={t('registration.description.abstract')}>
             <PublicSummaryContent registration={registration} />
+          </LandingPageAccordion>
+        )}
+
+        {entityDescription && (entityDescription.tags.length > 0 || subjects.length > 0) && (
+          <LandingPageAccordion
+            dataTestId={dataTestId.registrationLandingPage.subjectAndClassificationAccordion}
+            defaultExpanded
+            heading={t('registration.public_page.subject_and_classification')}>
+            <PublicSubjectAndClassificationContent registration={registration} />
           </LandingPageAccordion>
         )}
 
@@ -155,7 +179,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.projectsAccordion}
             defaultExpanded
-            heading={t('registration.description.project_association')}>
+            heading={`${t('registration.description.project_association')} (${projects.length})`}>
             <PublicProjectsContent projects={projects} />
           </LandingPageAccordion>
         )}
@@ -164,7 +188,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.fundingsAccordion}
             defaultExpanded
-            heading={t('project.financing')}>
+            heading={`${t('common.funding')} (${fundings.length})`}>
             <PublicFundingsContent fundings={fundings} />
           </LandingPageAccordion>
         )}
@@ -185,7 +209,9 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             <LandingPageAccordion
               dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
               defaultExpanded
-              heading={t('registration.resource_type.research_data.external_links')}>
+              heading={`${t('registration.resource_type.research_data.external_links')} (${
+                entityDescription.reference.publicationInstance.related?.length ?? 0
+              })`}>
               <ListExternalRelations links={entityDescription.reference.publicationInstance.related} />
             </LandingPageAccordion>
           </>
@@ -194,11 +220,11 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
             defaultExpanded
-            heading={t('registration.resource_type.research_data.external_links')}>
+            heading={`${t('registration.resource_type.research_data.external_links')} (${
+              filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related) ?? 0 // DMP can have both internal and external links in .related
+            })`}>
             <ListExternalRelations
-              links={entityDescription.reference.publicationInstance.related?.filter(
-                (uri) => !uri.includes(API_URL) // DMP can have both internal and external links in .related
-              )}
+              links={filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related)}
             />
           </LandingPageAccordion>
         )}
@@ -207,7 +233,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
-            heading={t('registration.public_page.other_related_registrations')}>
+            heading={`${t('registration.public_page.other_related_registrations')} (${relatedRegistrations.size})`}>
             <ListRegistrationRelations registrations={relatedRegistrations.hits} />
           </LandingPageAccordion>
         )}
@@ -217,3 +243,5 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     </Paper>
   );
 };
+
+const filterExternalRelatedLinks = (links: string[] = []) => links.filter((link) => !link.includes(API_URL));

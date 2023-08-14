@@ -1,13 +1,12 @@
-import { useState, MouseEvent } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { Button, Menu as MuiMenu, MenuItem, Typography, Theme, useMediaQuery, IconButton, Box } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
+import { Box, Button, IconButton, MenuItem, Menu as MuiMenu, Theme, Typography, useMediaQuery } from '@mui/material';
+import { MouseEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { RootState } from '../../redux/store';
-import { UrlPathTemplate } from '../../utils/urlPaths';
-import { LanguageSelector } from './LanguageSelector';
 import { dataTestId } from '../../utils/dataTestIds';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface MenuProps {
   handleLogout: () => void;
@@ -15,9 +14,11 @@ interface MenuProps {
 
 export const Menu = ({ handleLogout }: MenuProps) => {
   const { t } = useTranslation();
-  const { user, customer } = useSelector((store: RootState) => store);
+  const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
   const name = user?.givenName ?? '';
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
@@ -27,9 +28,9 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const closeMenu = () => setAnchorEl(null);
 
   return (
-    <Box sx={{ gridArea: 'user-items' }}>
+    <Box sx={{ gridArea: 'user-items', display: 'flex' }}>
       {isMobile ? (
-        <IconButton onClick={handleClickMenuAnchor} title={name} color="inherit">
+        <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit">
           <AccountCircle fontSize="large" />
         </IconButton>
       ) : (
@@ -53,17 +54,24 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
+        {user?.isCreator && !isMobile && !isLargeScreen && (
+          <MenuItem
+            key={dataTestId.header.newRegistrationLink}
+            data-testid={dataTestId.header.newRegistrationLink}
+            onClick={closeMenu}
+            component={Link}
+            to={UrlPathTemplate.RegistrationNew}>
+            <Typography>{t('registration.new_registration')}</Typography>
+          </MenuItem>
+        )}
         {isMobile && [
-          <MenuItem divider key={dataTestId.header.languageButton}>
-            <LanguageSelector isMobile={true} />
-          </MenuItem>,
           user?.isEditor && (
             <MenuItem
               key={dataTestId.header.editorLink}
               data-testid={dataTestId.header.editorLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.Editor}>
+              to={UrlPathTemplate.EditorCurators}>
               <Typography>{customer?.shortName}</Typography>
             </MenuItem>
           ),
@@ -74,7 +82,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.Tasks}>
-              <Typography>{t('tasks.tasks')}</Typography>
+              <Typography>{t('common.tasks')}</Typography>
             </MenuItem>
           ),
           user?.isCreator && [

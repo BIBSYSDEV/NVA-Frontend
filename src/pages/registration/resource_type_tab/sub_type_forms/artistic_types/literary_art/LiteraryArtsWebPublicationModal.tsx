@@ -1,14 +1,14 @@
-import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
+import { Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
 import {
-  emptyUnconfirmedPublisher,
   LiteraryArtsWeb,
   UnconfirmedPublisher,
+  emptyUnconfirmedPublisher,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
+import { RegistrationDate, emptyRegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
 import { OutputModalActions } from '../OutputModalActions';
@@ -30,19 +30,19 @@ const emptyLiteraryArtsWeb: LiteraryArtsWeb = {
 const validationSchema = Yup.object<YupShape<LiteraryArtsWeb>>({
   id: Yup.string()
     .url(
-      i18n.t('translation:feedback.validation.has_invalid_format', {
-        field: i18n.t('translation:registration.resource_type.artistic.web_link'),
+      i18n.t('feedback.validation.has_invalid_format', {
+        field: i18n.t('registration.resource_type.artistic.web_link'),
       })
     )
     .required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.artistic.web_link'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.artistic.web_link'),
       })
     ),
   publisher: Yup.object<YupShape<UnconfirmedPublisher>>({
     name: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.artistic.publisher'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.artistic.publisher'),
       })
     ),
   }),
@@ -50,26 +50,26 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsWeb>>({
     year: Yup.number()
       .min(
         1950,
-        i18n.t('translation:feedback.validation.must_be_bigger_than', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.must_be_bigger_than', {
+          field: i18n.t('common.year'),
           limit: 1950,
         })
       )
       .max(
         2100,
-        i18n.t('translation:feedback.validation.must_be_smaller_than', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.must_be_smaller_than', {
+          field: i18n.t('common.year'),
           limit: 2100,
         })
       )
       .typeError(
-        i18n.t('translation:feedback.validation.has_invalid_format', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.year'),
         })
       )
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.year'),
         })
       ),
   }),
@@ -138,7 +138,7 @@ export const LiteraryArtsWebPublicationModal = ({
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                   />
                 )}
               </Field>

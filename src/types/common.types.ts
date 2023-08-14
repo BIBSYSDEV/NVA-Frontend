@@ -8,6 +8,17 @@ export interface Place {
   country: string;
 }
 
+export const emptyPlace: Place = {
+  type: 'UnconfirmedPlace',
+  label: '',
+  country: '',
+};
+
+export interface UnconfirmedOrganization {
+  type: 'UnconfirmedOrganization';
+  name: string;
+}
+
 export interface Period {
   type: 'Period';
   from: string;
@@ -39,12 +50,11 @@ export interface SearchResponse<T> {
 
 export type Aggregations = {
   [fieldName: string]: {
-    buckets: AggregationBucket[];
+    buckets?: AggregationBucket[];
   };
 };
 
-interface AggregationBucket {
+export interface AggregationBucket {
   key: string;
-  doc_count?: number; // TODO: Remove when model is updated in all environments
-  docCount?: number;
+  docCount: number;
 }

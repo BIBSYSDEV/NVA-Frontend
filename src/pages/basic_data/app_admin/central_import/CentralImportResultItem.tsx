@@ -1,31 +1,30 @@
-import { Grid, Link as MuiLink, ListItem, ListItemText, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Grid, ListItem, ListItemText, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Registration } from '../../../../types/registration.types';
+import { Link } from 'react-router-dom';
+import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
 
 interface CentralImportResultItemProps {
-  publication: Registration;
+  importCandidate: ImportCandidateSummary;
 }
 
-export const CentralImportResultItem = ({ publication }: CentralImportResultItemProps) => {
+export const CentralImportResultItem = ({ importCandidate }: CentralImportResultItemProps) => {
   const { t } = useTranslation();
 
-  const contributors = publication.entityDescription?.contributors ?? [];
-  const verifiedContributorCount = contributors.filter((contributor) => !!contributor.identity.id).length;
-  const contributorsCount = contributors.length;
+  const verifiedContributorCount = importCandidate.totalVerifiedContributors;
+  const contributorsCount = importCandidate.totalContributors;
 
-  const allContributorInstitutions = contributors.map((contributor) =>
-    contributor.affiliations?.map((affiliation) => affiliation.labels && getLanguageString(affiliation.labels))
+  const allContributorInstitutions = importCandidate.organizations?.map(
+    (affiliation) => affiliation.labels && getLanguageString(affiliation.labels)
   );
   const institutions = allContributorInstitutions ? [...new Set(allContributorInstitutions.flat())] : [];
-
-  const publicationInstanceType = publication.entityDescription?.reference?.publicationInstance?.type ?? '';
+  const publicationInstanceType = importCandidate?.publicationInstance.type;
 
   return (
-    <ListItem divider data-testid={`${dataTestId.basicData.centralImport.resultItem}-${publication.identifier}`}>
+    <ListItem divider data-testid={`${dataTestId.basicData.centralImport.resultItem}-${importCandidate.id}`}>
       <ListItemText disableTypography>
         <Grid container spacing={2} justifyContent="space-between" alignItems="baseline">
           <Grid item md={2} xs={12}>
@@ -34,29 +33,25 @@ export const CentralImportResultItem = ({ publication }: CentralImportResultItem
             )}
           </Grid>
           <Grid item md={5} xs={12}>
-            {publication.entityDescription?.reference?.doi && (
-              <MuiLink
-                underline="hover"
-                href={publication.entityDescription.reference.doi}
-                target="_blank"
-                rel="noopener noreferrer">
+            {importCandidate.doi && (
+              <MuiLink underline="hover" href={importCandidate.doi} target="_blank" rel="noopener noreferrer">
                 <Typography gutterBottom variant="body2" sx={{ color: 'primary.main', wordBreak: 'break-word' }}>
-                  {publication.entityDescription.reference.doi}
+                  {importCandidate.doi}
                 </Typography>
               </MuiLink>
             )}
-            {publication.entityDescription?.mainTitle && (
+            {importCandidate.mainTitle && (
               <Typography
                 gutterBottom
-                sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic', wordBreak: 'break-word' }}>
-                <MuiLink component={Link} to={`${getDuplicateCheckPagePath(publication.identifier)}`}>
-                  {publication.entityDescription.mainTitle}
+                sx={{
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  fontStyle: 'italic',
+                  wordBreak: 'break-word',
+                }}>
+                <MuiLink component={Link} to={getDuplicateCheckPagePath(getIdentifierFromId(importCandidate.id))}>
+                  {importCandidate.mainTitle}
                 </MuiLink>
-              </Typography>
-            )}
-            {contributors && (
-              <Typography display="inline" variant="body2">
-                {contributors.map((contributor) => contributor.identity.name).join('; ')}
               </Typography>
             )}
           </Grid>

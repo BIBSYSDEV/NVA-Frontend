@@ -1,9 +1,10 @@
-import { defineConfig } from 'cypress';
 import codeCoverageTask from '@cypress/code-coverage/task';
+import { defineConfig } from 'cypress';
 
 export default defineConfig({
   projectId: 'kigtb6',
   video: false,
+  viewportWidth: 1600,
   e2e: {
     setupNodeEvents(on, config) {
       codeCoverageTask(on, config);
@@ -17,5 +18,8 @@ export default defineConfig({
     },
     baseUrl: 'http://localhost:3000',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
+  },
+  retries: {
+    runMode: 3,
   },
 });

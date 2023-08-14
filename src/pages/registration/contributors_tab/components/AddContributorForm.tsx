@@ -1,26 +1,24 @@
+import SearchIcon from '@mui/icons-material/Search';
+import { LoadingButton } from '@mui/lab';
+import { Box, Button, TextField, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, TablePagination, TextField, Typography } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { LoadingButton } from '@mui/lab';
-import { ListSkeleton } from '../../../../components/ListSkeleton';
-import { RootState } from '../../../../redux/store';
-import { Registration } from '../../../../types/registration.types';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { CristinApiPath } from '../../../../api/apiPaths';
-import { ContributorRole } from '../../../../types/contributor.types';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { SearchResponse } from '../../../../types/common.types';
-import { CristinPerson } from '../../../../types/user.types';
-import { CristinPersonList } from './CristinPersonList';
 import { apiRequest } from '../../../../api/apiRequest';
-import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { searchForPerson } from '../../../../api/cristinApi';
+import { ListPagination } from '../../../../components/ListPagination';
+import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { setNotification } from '../../../../redux/notificationSlice';
-
-const resultsPerPage = 10;
+import { RootState } from '../../../../redux/store';
+import { ContributorRole } from '../../../../types/contributor.types';
+import { Registration } from '../../../../types/registration.types';
+import { CristinPerson } from '../../../../types/user.types';
+import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { CristinPersonList } from './CristinPersonList';
 
 interface AddContributorFormProps {
   addContributor: (selectedUser: CristinPerson) => void;
@@ -46,14 +44,17 @@ export const AddContributorForm = ({
   const [selectedUser, setSelectedUser] = useState<CristinPerson>();
   const debouncedSearchTerm = useDebounce(searchTerm);
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const [userSearch, isLoadingUserSearch] = useFetch<SearchResponse<CristinPerson>>({
-    url: debouncedSearchTerm
-      ? `${CristinApiPath.Person}?name=${debouncedSearchTerm}&results=${resultsPerPage}&page=${page + 1}`
-      : '',
-    errorMessage: t('feedback.error.search'),
+  const personQuery = useQuery({
+    enabled: debouncedSearchTerm.length > 0,
+    queryKey: ['person', rowsPerPage, page, debouncedSearchTerm],
+    queryFn: () => searchForPerson(rowsPerPage, page, debouncedSearchTerm),
+    meta: { errorMessage: t('feedback.error.search') },
   });
+
+  const userSearch = personQuery.data?.hits ?? [];
 
   const { values } = useFormikContext<Registration>();
   const contributors = values.entityDescription?.contributors ?? [];
@@ -88,8 +89,8 @@ export const AddContributorForm = ({
         value={searchTerm}
         onChange={(event) => {
           setSearchTerm(event.target.value);
-          if (page !== 0) {
-            setPage(0);
+          if (page !== 1) {
+            setPage(1);
           }
         }}
         placeholder={t('common.search_placeholder')}
@@ -100,23 +101,25 @@ export const AddContributorForm = ({
         sx={{ my: '1rem' }}
       />
 
-      {isLoadingUserSearch ? (
+      {personQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={100} height={80} />
-      ) : userSearch && userSearch.size > 0 && debouncedSearchTerm ? (
+      ) : userSearch && personQuery.data && personQuery.data.size > 0 && debouncedSearchTerm ? (
         <>
           <CristinPersonList
-            personSearch={userSearch}
+            personSearch={personQuery.data}
             userId={selectedUser?.id}
             onSelectContributor={setSelectedUser}
             searchTerm={debouncedSearchTerm}
           />
-          <TablePagination
-            rowsPerPageOptions={[resultsPerPage]}
-            component="div"
-            count={userSearch.size}
-            rowsPerPage={resultsPerPage}
+          <ListPagination
+            count={personQuery.data?.size ?? 0}
+            rowsPerPage={rowsPerPage}
             page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
+            onPageChange={(newPage) => setPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRowsPerPage(newRowsPerPage);
+              setPage(1);
+            }}
           />
         </>
       ) : (

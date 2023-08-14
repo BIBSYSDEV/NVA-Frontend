@@ -1,19 +1,20 @@
-import { Dialog, DialogTitle, DialogContent, TextField, MenuItem } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
+import { Dialog, DialogContent, DialogTitle, MenuItem, TextField } from '@mui/material';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
 import {
-  emptyUnconfirmedPublisher,
   LiteraryArtsAudioVisual,
   LiteraryArtsAudioVisualSubtype,
   UnconfirmedPublisher,
+  emptyUnconfirmedPublisher,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
+import { RegistrationDate, emptyRegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
+import { isbnListField } from '../../../../../../utils/validation/registration/referenceValidation';
 import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { IsbnField } from '../../../components/isbn_and_pages/IsbnField';
 import { OutputModalActions } from '../OutputModalActions';
-import { isbnField } from '../../../../../../utils/validation/registration/referenceValidation';
 
 interface LiteraryArtsAudioVisualModalProps {
   audioVisual?: LiteraryArtsAudioVisual;
@@ -24,23 +25,37 @@ interface LiteraryArtsAudioVisualModalProps {
 
 const emptyLiteraryArtsAudioVisual: LiteraryArtsAudioVisual = {
   type: 'LiteraryArtsAudioVisual',
-  subtype: '',
+  subtype: {
+    type: '',
+    description: '',
+  },
   publisher: emptyUnconfirmedPublisher,
   publicationDate: emptyRegistrationDate,
-  isbn: '',
+  isbnList: [],
   extent: '',
 };
 
 const validationSchema = Yup.object<YupShape<LiteraryArtsAudioVisual>>({
-  subtype: Yup.string().required(
-    i18n.t('translation:feedback.validation.is_required', {
-      field: i18n.t('translation:registration.resource_type.type_work'),
-    })
-  ),
+  subtype: Yup.object().shape({
+    type: Yup.string().required(
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.type_work'),
+      })
+    ),
+    description: Yup.string().when('type', ([type], schema) =>
+      type === LiteraryArtsAudioVisualSubtype.Other
+        ? schema.required(
+            i18n.t('feedback.validation.is_required', {
+              field: i18n.t('common.description'),
+            })
+          )
+        : schema.optional()
+    ),
+  }),
   publisher: Yup.object<YupShape<UnconfirmedPublisher>>({
     name: Yup.string().required(
-      i18n.t('translation:feedback.validation.is_required', {
-        field: i18n.t('translation:registration.resource_type.artistic.publisher'),
+      i18n.t('feedback.validation.is_required', {
+        field: i18n.t('registration.resource_type.artistic.publisher'),
       })
     ),
   }),
@@ -48,30 +63,30 @@ const validationSchema = Yup.object<YupShape<LiteraryArtsAudioVisual>>({
     year: Yup.number()
       .min(
         1950,
-        i18n.t('translation:feedback.validation.must_be_bigger_than', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.must_be_bigger_than', {
+          field: i18n.t('common.year'),
           limit: 1950,
         })
       )
       .max(
         2100,
-        i18n.t('translation:feedback.validation.must_be_smaller_than', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.must_be_smaller_than', {
+          field: i18n.t('common.year'),
           limit: 2100,
         })
       )
       .typeError(
-        i18n.t('translation:feedback.validation.has_invalid_format', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.has_invalid_format', {
+          field: i18n.t('common.year'),
         })
       )
       .required(
-        i18n.t('translation:feedback.validation.is_required', {
-          field: i18n.t('translation:common.year'),
+        i18n.t('feedback.validation.is_required', {
+          field: i18n.t('common.year'),
         })
       ),
   }),
-  isbn: isbnField,
+  isbnList: isbnListField,
 });
 
 export const LiteraryArtsAudioVisualModal = ({
@@ -96,21 +111,21 @@ export const LiteraryArtsAudioVisualModal = ({
           onSubmit(values);
           closeModal();
         }}>
-        {({ isSubmitting }: FormikProps<LiteraryArtsAudioVisual>) => (
+        {({ isSubmitting, values }: FormikProps<LiteraryArtsAudioVisual>) => (
           <Form noValidate>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <Field name="subtype">
+              <Field name="subtype.type">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
                     variant="filled"
                     select
                     required
-                    label={t('registration.resource_type.type_work')}
+                    label={t('registration.resource_type.artistic.output_type.LiteraryArtsAudioVisual')}
                     fullWidth
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}>
+                    data-testid={dataTestId.registrationWizard.resourceType.subtypeField}>
                     {Object.values(LiteraryArtsAudioVisualSubtype).map((audioVideoType) => (
                       <MenuItem key={audioVideoType} value={audioVideoType}>
                         {t(`registration.resource_type.artistic.audio_video_type.${audioVideoType}`)}
@@ -119,6 +134,23 @@ export const LiteraryArtsAudioVisualModal = ({
                   </TextField>
                 )}
               </Field>
+
+              {values.subtype.type === LiteraryArtsAudioVisualSubtype.Other ? (
+                <Field name="subtype.description">
+                  {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      variant="filled"
+                      required
+                      label={t('common.description')}
+                      fullWidth
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                      data-testid={dataTestId.registrationWizard.resourceType.artisticSubtype}
+                    />
+                  )}
+                </Field>
+              ) : null}
 
               <Field name="publisher.name">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
@@ -144,24 +176,12 @@ export const LiteraryArtsAudioVisualModal = ({
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.artisticOutputDate}
+                    data-testid={dataTestId.registrationWizard.resourceType.outputInstantDateField}
                   />
                 )}
               </Field>
 
-              <Field name="isbn">
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    variant="filled"
-                    fullWidth
-                    label={t('registration.resource_type.isbn')}
-                    error={touched && !!error}
-                    helperText={<ErrorMessage name={field.name} />}
-                    data-testid={dataTestId.registrationWizard.resourceType.isbnField}
-                  />
-                )}
-              </Field>
+              <IsbnField fieldName="isbnList" />
 
               <Field name="extent">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (

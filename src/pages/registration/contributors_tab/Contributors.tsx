@@ -1,7 +1,6 @@
-import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   Button,
   InputAdornment,
@@ -11,31 +10,37 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   TextField,
   Tooltip,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import AddIcon from '@mui/icons-material/AddCircleOutlineSharp';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { ListPagination } from '../../../components/ListPagination';
 import { setNotification } from '../../../redux/notificationSlice';
+import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import {
   Contributor,
   ContributorRole,
-  emptyContributor,
   Identity,
   Institution,
+  emptyContributor,
 } from '../../../types/contributor.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
-import { AddContributorModal } from './AddContributorModal';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
-import { alternatingTableRowColor } from '../../../themes/mainTheme';
-import { ContributorRow } from './components/ContributorRow';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { CristinPerson } from '../../../types/user.types';
-import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
+import {
+  filterActiveAffiliations,
+  getFullCristinName,
+  getOrcidUri,
+  getVerificationStatus,
+} from '../../../utils/user-helpers';
+import { AddContributorModal } from './AddContributorModal';
+import { ContributorRow } from './components/ContributorRow';
 
 interface ContributorsProps extends Pick<FieldArrayRenderProps, 'push' | 'replace'> {
   contributorRoles: ContributorRole[];
@@ -47,7 +52,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [openAddContributor, setOpenAddContributor] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [filterInput, setFilterInput] = useState('');
 
   const contributors = values.entityDescription?.contributors ?? [];
@@ -57,14 +62,14 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     : contributors.filter((contributor) =>
         contributor.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
       );
-  const contributorsToShow = filteredContributors.slice(rowsPerPage * currentPage, rowsPerPage * (currentPage + 1));
+  const contributorsToShow = filteredContributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
 
   const handleOnRemove = (indexToRemove: number) => {
     const nextContributors = contributors
       .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     setFieldValue(ContributorFieldNames.Contributors, nextContributors);
-    const maxValidPage = Math.ceil(nextContributors.length / rowsPerPage) - 1;
+    const maxValidPage = Math.ceil(nextContributors.length / rowsPerPage);
 
     if (currentPage > maxValidPage) {
       setCurrentPage(maxValidPage);
@@ -100,7 +105,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   };
 
   const goToLastPage = () => {
-    const maxValidPage = Math.floor(contributors.length / rowsPerPage);
+    const maxValidPage = Math.floor(contributors.length / rowsPerPage) + 1;
     setCurrentPage(maxValidPage);
   };
 
@@ -110,7 +115,12 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     contributorIndex?: number
   ) => {
     if (contributors.some((contributor) => contributor.identity.id === selectedContributor.id)) {
-      dispatch(setNotification({ message: t('registration.contributors.contributor_already_added'), variant: 'info' }));
+      dispatch(
+        setNotification({
+          message: t('registration.contributors.contributor_already_added'),
+          variant: 'info',
+        })
+      );
       return;
     }
 
@@ -119,6 +129,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       id: selectedContributor.id,
       name: getFullCristinName(selectedContributor.names),
       orcId: getOrcidUri(selectedContributor.identifiers),
+      verificationStatus: getVerificationStatus(selectedContributor.verified),
     };
 
     const activeAffiliations = filterActiveAffiliations(selectedContributor.affiliations);
@@ -132,7 +143,9 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         ...emptyContributor,
         identity,
         affiliations: existingAffiliations,
-        role,
+        role: {
+          type: role,
+        },
         sequence: contributors.length + 1,
       };
       push(newContributor);
@@ -145,7 +158,9 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
 
       const verifiedContributor: Contributor = {
         ...relevantContributor,
-        role,
+        role: {
+          type: role,
+        },
         identity,
         affiliations: relevantAffiliations,
       };
@@ -231,16 +246,15 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         }}
       />
       {contributorsToShow.length > 0 && (
-        <TablePagination
-          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-          component="div"
+        <ListPagination
+          sx={{ my: '0.5rem' }}
           count={filteredContributors.length}
           rowsPerPage={rowsPerPage}
           page={currentPage}
-          onPageChange={(_, newPage) => setCurrentPage(newPage)}
-          onRowsPerPageChange={(event) => {
-            setRowsPerPage(parseInt(event.target.value));
-            setCurrentPage(0);
+          onPageChange={(newPage) => setCurrentPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setCurrentPage(1);
           }}
         />
       )}

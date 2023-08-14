@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import {
   Box,
@@ -13,25 +12,28 @@ import {
   Typography,
 } from '@mui/material';
 import { Form, Formik, FormikProps, FormikTouched } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { setNotification } from '../../../redux/notificationSlice';
 import { CristinProject, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { CreateProjectStartPage } from './CreateProjectStartPage';
-import { ProjectFormPanel2 } from './ProjectFormPanel2';
 import { ProjectFormPanel1 } from './ProjectFormPanel1';
-import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { dataTestId } from '../../../utils/dataTestIds';
+import { ProjectFormPanel2 } from './ProjectFormPanel2';
 
 export enum ProjectFieldName {
   Title = 'title',
   Categories = 'projectCategories',
   CoordinatingInstitution = 'coordinatingInstitution',
   Contributors = 'contributors',
+  Funding = 'funding',
   StartDate = 'startDate',
   EndDate = 'endDate',
   AcademicSummaryNo = 'academicSummary.no',
@@ -44,7 +46,7 @@ export enum ProjectFieldName {
 
 interface ProjectFormDialogProps extends Pick<DialogProps, 'open'> {
   onClose: () => void;
-  onCreateProject?: (project: CristinProject) => void;
+  onCreateProject?: (project: CristinProject) => void | Promise<unknown>;
   currentProject?: CristinProject;
   refetchData?: () => void;
 }
@@ -64,6 +66,8 @@ export const ProjectFormDialog = ({
 }: ProjectFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const [showConfirmCloseDialog, setShowConfirmCloseDialog] = useState(false);
+  const toggleShowConfirmCloseDialog = () => setShowConfirmCloseDialog(!showConfirmCloseDialog);
   const [initialValues, setInitialValues] = useState<InitialProjectFormData>({ project: currentProject });
   const [selectedPanel, setSelectedPanel] = useState<0 | 1>(0);
   const editMode = !!currentProject;
@@ -72,6 +76,7 @@ export const ProjectFormDialog = ({
     onClose();
     setInitialValues({ project: currentProject });
     setSelectedPanel(0);
+    setShowConfirmCloseDialog(false);
   };
 
   const submitProjectForm = async (values: SaveCristinProject) => {
@@ -98,7 +103,7 @@ export const ProjectFormDialog = ({
 
       if (isSuccessStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.create_project'), variant: 'success' }));
-        onCreateProject?.(createProjectResponse.data);
+        await onCreateProject?.(createProjectResponse.data);
         handleClose();
       } else if (isErrorStatus(createProjectResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_project'), variant: 'error' }));
@@ -110,14 +115,14 @@ export const ProjectFormDialog = ({
     <Dialog
       maxWidth="md"
       fullWidth
-      onClose={handleClose}
+      onClose={toggleShowConfirmCloseDialog}
       open={open}
       PaperProps={{ sx: { bgcolor: 'info.light' } }}
       transitionDuration={0}>
       <DialogTitle>{editMode ? t('project.edit_project') : t('project.create_project')}</DialogTitle>
       <ErrorBoundary>
         {!initialValues.project ? (
-          <CreateProjectStartPage onClose={handleClose} setInitialValues={setInitialValues} />
+          <CreateProjectStartPage onClose={toggleShowConfirmCloseDialog} setInitialValues={setInitialValues} />
         ) : (
           <Formik
             initialValues={initialValues.project}
@@ -125,11 +130,12 @@ export const ProjectFormDialog = ({
             onSubmit={submitProjectForm}>
             {({ isSubmitting, errors, setTouched, touched, values }: FormikProps<SaveCristinProject>) => {
               const errorOnTab1 =
-                errors.title ||
-                errors.contributors ||
-                errors.startDate ||
-                errors.endDate ||
-                errors.coordinatingInstitution;
+                (errors.title && touched.title) ||
+                (errors.contributors && touched.contributors) ||
+                (errors.startDate && touched.startDate) ||
+                (errors.endDate && touched.endDate) ||
+                (errors.coordinatingInstitution && touched.coordinatingInstitution) ||
+                (errors.funding && touched.funding);
               const errorOnTab2 = false;
 
               const touchFieldsOnPanel1: FormikTouched<SaveCristinProject> = {
@@ -144,6 +150,10 @@ export const ProjectFormDialog = ({
                   type: true,
                   identity: { id: true },
                   affiliation: { id: true },
+                })),
+                funding: values.funding.map(() => ({
+                  source: true,
+                  identifier: true,
                 })),
               };
 
@@ -193,7 +203,7 @@ export const ProjectFormDialog = ({
                     </Box>
 
                     <Box sx={{ gridArea: '1/3', display: 'flex', gap: '0.5rem', justifyContent: 'end' }}>
-                      <Button onClick={handleClose}>{t('common.cancel')}</Button>
+                      <Button onClick={toggleShowConfirmCloseDialog}>{t('common.cancel')}</Button>
                       {selectedPanel === 0 ? (
                         <Button variant="contained" onClick={goToNextTab}>
                           {t('common.next')}
@@ -215,6 +225,13 @@ export const ProjectFormDialog = ({
           </Formik>
         )}
       </ErrorBoundary>
+      <ConfirmDialog
+        open={showConfirmCloseDialog}
+        title={t('project.close_view')}
+        onAccept={handleClose}
+        onCancel={toggleShowConfirmCloseDialog}>
+        {t('project.close_view_description')}
+      </ConfirmDialog>
     </Dialog>
   );
 };

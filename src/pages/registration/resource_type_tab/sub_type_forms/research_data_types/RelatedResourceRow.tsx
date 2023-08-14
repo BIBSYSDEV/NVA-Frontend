@@ -1,15 +1,15 @@
-import { Box, Skeleton, Button, Typography, Link, ListItem } from '@mui/material';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { Box, Button, Link, ListItem, Skeleton, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
 import { Registration } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
+import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../../../../utils/urlPaths';
-import { dataTestId } from '../../../../../utils/dataTestIds';
 
 interface RelatedResourceRowRowProps {
   uri: string;

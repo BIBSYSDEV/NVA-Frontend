@@ -1,25 +1,28 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LockIcon from '@mui/icons-material/Lock';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import {
-  Box,
-  Typography,
-  Button,
   Accordion,
-  AccordionSummary,
   AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
   CircularProgress,
   Link,
+  Typography,
 } from '@mui/material';
 import prettyBytes from 'pretty-bytes';
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import LockIcon from '@mui/icons-material/Lock';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { downloadPrivateFile, downloadPublicFile } from '../../../api/fileApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { AssociatedFile, licenses } from '../../../types/associatedArtifact.types';
+import { AssociatedFile } from '../../../types/associatedArtifact.types';
+import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { equalUris } from '../../../utils/general-helpers';
+import { isEmbargoed } from '../../../utils/registration-helpers';
 import { PreviewFile } from './preview_file/PreviewFile';
 
 interface FileRowProps {
@@ -27,9 +30,16 @@ interface FileRowProps {
   registrationIdentifier: string;
   openPreviewByDefault: boolean;
   showFileVersionField: boolean;
+  registrationMetadataIsPublished: boolean;
 }
 
-export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, showFileVersionField }: FileRowProps) => {
+export const FileRow = ({
+  file,
+  registrationIdentifier,
+  openPreviewByDefault,
+  showFileVersionField,
+  registrationMetadataIsPublished,
+}: FileRowProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -57,8 +67,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, sh
     [t, dispatch, user, registrationIdentifier, file.identifier]
   );
 
-  const fileEmbargoDate = file.embargoDate ? new Date(file.embargoDate) : null;
-  const fileIsEmbargoed = fileEmbargoDate ? fileEmbargoDate > new Date() : false;
+  const fileIsEmbargoed = isEmbargoed(file.embargoDate);
 
   useEffect(() => {
     if (openPreviewAccordion && !previewFileUrl && !fileIsEmbargoed) {
@@ -66,8 +75,8 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, sh
     }
   }, [handleDownload, openPreviewAccordion, previewFileUrl, fileIsEmbargoed]);
 
-  const licenseData = licenses.find((license) => license.identifier === file.license?.identifier);
-  const licenseTitle = file.license?.identifier ? t(`licenses.labels.${file.license.identifier}`) : '';
+  const licenseData = licenses.find((license) => equalUris(license.id, file.license));
+  const licenseTitle = licenseData?.name ?? '';
 
   return (
     <Box
@@ -83,7 +92,7 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, sh
         columnGap: '1rem',
         alignItems: 'center',
         marginBottom: '2rem',
-        opacity: file.type === 'UnpublishedFile' ? 0.6 : 1,
+        opacity: registrationMetadataIsPublished && file.type === 'UnpublishedFile' ? 0.6 : 1,
       }}>
       <Typography
         data-testid={dataTestId.registrationLandingPage.fileName}
@@ -116,10 +125,10 @@ export const FileRow = ({ file, registrationIdentifier, openPreviewByDefault, sh
       </Link>
 
       <Box sx={{ gridArea: 'download' }}>
-        {fileIsEmbargoed ? (
+        {file.embargoDate && fileIsEmbargoed ? (
           <Typography data-testid={dataTestId.registrationLandingPage.fileEmbargoDate}>
             <LockIcon />
-            {t('common.will_be_available')} {fileEmbargoDate?.toLocaleDateString()}
+            {t('common.will_be_available')} {new Date(file.embargoDate).toLocaleDateString()}
           </Typography>
         ) : (
           <Button

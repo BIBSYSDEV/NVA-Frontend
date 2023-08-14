@@ -1,11 +1,12 @@
-import { ListItem, ListItemText, Typography, Link as MuiLink, Box, IconButton } from '@mui/material';
+import { Box, IconButton, ListItemText, Link as MuiLink, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import OrcidLogo from '../../../resources/images/orcid_logo.svg';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
+import { SearchListItem } from '../../../components/styled/Wrappers';
+import OrcidLogo from '../../../resources/images/orcid_logo.svg';
 import { CristinPerson } from '../../../types/user.types';
+import { ORCID_BASE_URL } from '../../../utils/constants';
 import { getResearchProfilePath } from '../../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getValueByKey } from '../../../utils/user-helpers';
-import { ORCID_BASE_URL } from '../../../utils/constants';
 
 interface PersonListItemProps {
   person: CristinPerson;
@@ -17,15 +18,7 @@ export const PersonListItem = ({ person }: PersonListItemProps) => {
   const activeAffiliations = filterActiveAffiliations(person.affiliations);
 
   return (
-    <ListItem
-      sx={{
-        border: '2px solid',
-        borderColor: 'secondary.dark',
-        borderLeft: '1.25rem solid',
-        borderLeftColor: 'person.main',
-        flexDirection: 'column',
-        alignItems: 'start',
-      }}>
+    <SearchListItem sx={{ borderLeftColor: 'person.main' }}>
       <Box sx={{ display: 'flex', gap: '0.5rem' }}>
         <ListItemText disableTypography>
           <Typography sx={{ fontSize: '1rem', fontWeight: '600' }}>
@@ -46,6 +39,6 @@ export const PersonListItem = ({ person }: PersonListItemProps) => {
           <AffiliationHierarchy key={affiliation.organization} unitUri={affiliation.organization} />
         ))}
       </Box>
-    </ListItem>
+    </SearchListItem>
   );
 };

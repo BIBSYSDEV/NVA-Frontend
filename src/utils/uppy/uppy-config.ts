@@ -1,12 +1,12 @@
-import Uppy from '@uppy/core';
 import AwsS3Multipart from '@uppy/aws-s3-multipart';
-import norwegianLocale from '@uppy/locales/lib/nb_NO';
+import Uppy from '@uppy/core';
 import englishLocale from '@uppy/locales/lib/en_US';
+import norwegianLocale from '@uppy/locales/lib/nb_NO';
 import {
-  createMultipartUpload,
-  listParts,
   abortMultipartUpload,
   completeMultipartUpload,
+  createMultipartUpload,
+  listParts,
   signPart,
 } from '../../api/fileApi';
 
@@ -21,5 +21,5 @@ export const createUppy = (language: string) => () =>
     completeMultipartUpload: async (file, opts) => await completeMultipartUpload(opts.uploadId, opts.key, opts.parts),
     createMultipartUpload: async (file) => await createMultipartUpload(file),
     listParts: async (file, opts) => await listParts(opts.uploadId, opts.key),
-    signPart: async (file, opts) => await signPart(opts.uploadId, opts.key, opts.partNumber),
+    signPart: async (file, opts) => await signPart(opts.uploadId, opts.key, opts.partNumber, opts.body),
   });

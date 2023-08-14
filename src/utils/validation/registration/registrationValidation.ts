@@ -1,7 +1,12 @@
 import * as Yup from 'yup';
+import i18n from '../../../translations/i18n';
 import { PublicationType } from '../../../types/publicationFieldNames';
-import { contributorsValidationSchema } from './contributorValidation';
+import { EntityDescription, Registration, RegistrationDate } from '../../../types/registration.types';
+import { getMainRegistrationType, isBook } from '../../registration-helpers';
+import { YupShape } from '../validationHelpers';
 import { associatedFileValidationSchema } from './associatedArtifactValidation';
+import { contributorsValidationSchema } from './contributorValidation';
+import { fundingValidationSchema } from './fundingValidation';
 import {
   artisticDesignReference,
   baseReference,
@@ -9,6 +14,7 @@ import {
   chapterReference,
   degreeReference,
   emptyStringToNull,
+  exhibitionProductionReference,
   journalReference,
   mapReference,
   mediaContributionReference,
@@ -16,24 +22,19 @@ import {
   reportReference,
   researchDataReference,
 } from './referenceValidation';
-import i18n from '../../../translations/i18n';
-import { getMainRegistrationType, isBook } from '../../registration-helpers';
-import { Registration, EntityDescription, RegistrationDate } from '../../../types/registration.types';
-import { YupShape } from '../validationHelpers';
-import { fundingValidationSchema } from './fundingValidation';
 
 const registrationErrorMessage = {
-  titleRequired: i18n.t('translation:feedback.validation.is_required', { field: i18n.t('translation:common.title') }),
-  npiSubjectRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.description.npi_disciplines'),
+  titleRequired: i18n.t('feedback.validation.is_required', { field: i18n.t('common.title') }),
+  npiSubjectRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.description.npi_disciplines'),
   }),
-  publishedDateRequired: i18n.t('translation:feedback.validation.is_required', {
-    field: i18n.t('translation:registration.description.date_published'),
+  publishedDateRequired: i18n.t('feedback.validation.is_required', {
+    field: i18n.t('registration.description.date_published'),
   }),
-  publishedDateInvalid: i18n.t('translation:feedback.validation.has_invalid_format', {
-    field: i18n.t('translation:registration.description.date_published'),
+  publishedDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
+    field: i18n.t('registration.description.date_published'),
   }),
-  associatedArtifactRequired: i18n.t('translation:feedback.validation.must_have_associated_artifact'),
+  associatedArtifactRequired: i18n.t('feedback.validation.must_have_associated_artifact'),
 };
 
 export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
@@ -47,7 +48,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
       .when('$publicationInstanceType', ([publicationInstanceType], schema) =>
         isBook(publicationInstanceType) ? schema.required(registrationErrorMessage.npiSubjectRequired) : schema
       ),
-    date: Yup.object<YupShape<RegistrationDate>>({
+    publicationDate: Yup.object<YupShape<RegistrationDate>>({
       year: Yup.number()
         .typeError(registrationErrorMessage.publishedDateInvalid)
         .required(registrationErrorMessage.publishedDateRequired),
@@ -67,7 +68,7 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
           return reportReference;
         case PublicationType.Degree:
           return degreeReference;
-        case PublicationType.Chapter:
+        case PublicationType.Anthology:
           return chapterReference;
         case PublicationType.Presentation:
           return presentationReference;
@@ -79,6 +80,8 @@ export const registrationValidationSchema = Yup.object<YupShape<Registration>>({
           return researchDataReference;
         case PublicationType.GeographicalContent:
           return mapReference;
+        case PublicationType.ExhibitionContent:
+          return exhibitionProductionReference;
         default:
           return baseReference;
       }

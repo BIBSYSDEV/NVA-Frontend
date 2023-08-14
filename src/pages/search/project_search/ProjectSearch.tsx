@@ -1,12 +1,10 @@
 import { Box, List, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { CristinApiPath } from '../../../api/apiPaths';
+import { searchForProjects } from '../../../api/cristinApi';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { SearchResponse } from '../../../types/common.types';
-import { CristinProject } from '../../../types/project.types';
-import { useFetch } from '../../../utils/hooks/useFetch';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../CristinSearchPagination';
 import { SearchTextField } from '../SearchTextField';
@@ -14,23 +12,29 @@ import { ProjectListItem } from './ProjectListItem';
 
 export const ProjectSearch = () => {
   const { t } = useTranslation();
+
   const location = useLocation();
   const projectSearchQueryParams = new URLSearchParams(location.search);
   projectSearchQueryParams.delete(SearchParam.Type);
 
-  if (!projectSearchQueryParams.get(SearchParam.Query)) {
-    projectSearchQueryParams.set(SearchParam.Query, '.');
-  }
   if (!projectSearchQueryParams.get(SearchParam.Results)) {
     projectSearchQueryParams.set(SearchParam.Results, '10');
   }
+  if (!projectSearchQueryParams.get(SearchParam.Page)) {
+    projectSearchQueryParams.set(SearchParam.Page, '1');
+  }
 
-  const queryParams = projectSearchQueryParams.toString();
+  const rowsPerPage = Number(projectSearchQueryParams.get(SearchParam.Results));
+  const page = Number(projectSearchQueryParams.get(SearchParam.Page));
+  const query = projectSearchQueryParams.get(SearchParam.Query);
 
-  const [projectsSearch, isLoadingProjectsSearch] = useFetch<SearchResponse<CristinProject>>({
-    url: queryParams ? `${CristinApiPath.Project}?${queryParams}` : '',
-    errorMessage: t('feedback.error.project_search'),
+  const projectsQuery = useQuery({
+    queryKey: ['projects', rowsPerPage, page, query],
+    queryFn: () => searchForProjects(rowsPerPage, page, { query: query ?? undefined }),
+    meta: { errorMessage: t('feedback.error.project_search') },
   });
+
+  const projectsSearchResults = projectsQuery.data?.hits ?? [];
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -47,17 +51,17 @@ export const ProjectSearch = () => {
         )}
       </Field>
 
-      {isLoadingProjectsSearch ? (
+      {projectsQuery.isLoading ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
-      ) : projectsSearch && projectsSearch.hits.length > 0 ? (
-        <>
+      ) : projectsSearchResults && projectsSearchResults.length > 0 ? (
+        <div>
           <List>
-            {projectsSearch.hits.map((project) => (
+            {projectsSearchResults.map((project) => (
               <ProjectListItem key={project.id} project={project} />
             ))}
           </List>
-          <CristinSearchPagination totalCount={projectsSearch.size} />
-        </>
+          <CristinSearchPagination totalCount={projectsQuery.data?.size ?? 0} />
+        </div>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}

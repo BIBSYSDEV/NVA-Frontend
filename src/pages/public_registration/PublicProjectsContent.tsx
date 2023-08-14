@@ -1,16 +1,19 @@
-import { useTranslation } from 'react-i18next';
-import { Divider, Link, Typography, Skeleton } from '@mui/material';
+import { Divider, Link, Skeleton, Typography } from '@mui/material';
 import { styled } from '@mui/system';
+import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { CristinProject, ResearchProject } from '../../types/project.types';
-import { useFetch } from '../../utils/hooks/useFetch';
+import { fetchProject } from '../../api/cristinApi';
+import { setNotification } from '../../redux/notificationSlice';
+import { ResearchProject } from '../../types/project.types';
+import { dataTestId } from '../../utils/dataTestIds';
 import { getProjectPath } from '../../utils/urlPaths';
 import {
-  getProjectManagerName,
   getProjectCoordinatingInstitutionName,
+  getProjectManagerName,
   getProjectPeriod,
 } from '../registration/description_tab/projects_field/projectHelpers';
-import { dataTestId } from '../../utils/dataTestIds';
 
 const StyledProjectGridRow = styled('div')(({ theme }) => ({
   display: 'grid',
@@ -56,16 +59,20 @@ interface ProjectRowProps {
 }
 
 const ProjectRow = ({ project }: ProjectRowProps) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [fetchedProject, isLoadingProject] = useFetch<CristinProject>({
-    url: project.id,
-    errorMessage: t('feedback.error.get_project'),
+
+  const projectQuery = useQuery({
+    queryKey: [project.id],
+    queryFn: () => fetchProject(project.id),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_project'), variant: 'error' })),
   });
+  const fetchedProject = projectQuery.data;
   const projectTitle = fetchedProject?.title ?? project.name;
 
   return (
     <StyledProjectGridRow sx={{ ':not(:last-of-type)': { mb: '1rem' } }}>
-      {isLoadingProject ? (
+      {projectQuery.isLoading ? (
         <Skeleton />
       ) : (
         <Typography
@@ -83,19 +90,19 @@ const ProjectRow = ({ project }: ProjectRowProps) => {
         </Typography>
       )}
       <Divider component="span" orientation="vertical" />
-      {isLoadingProject ? (
+      {projectQuery.isLoading ? (
         <Skeleton />
       ) : (
         <Typography variant="body1">{getProjectCoordinatingInstitutionName(fetchedProject)}</Typography>
       )}
       <Divider component="span" orientation="vertical" />
-      {isLoadingProject ? (
+      {projectQuery.isLoading ? (
         <Skeleton />
       ) : (
         <Typography variant="body1">{getProjectManagerName(fetchedProject)}</Typography>
       )}
       <Divider component="span" orientation="vertical" />
-      {isLoadingProject ? (
+      {projectQuery.isLoading ? (
         <Skeleton />
       ) : fetchedProject ? (
         <div>

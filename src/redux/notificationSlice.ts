@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Notification } from '../types/notification.types';
 import i18n from '../translations/i18n';
+import { Notification } from '../types/notification.types';
 
 const initialState = null as Notification | null;
 
@@ -11,7 +11,7 @@ const notificationSlice = createSlice({
     setNotification: (state, action: PayloadAction<Notification>) => {
       const { message, variant } = action.payload;
       if (typeof message !== 'string') {
-        state = { message: i18n.t('translation:feedback.error.an_error_occurred'), variant: 'error' };
+        state = { message: i18n.t('feedback.error.an_error_occurred'), variant: 'error' };
       } else {
         state = { message, variant };
       }

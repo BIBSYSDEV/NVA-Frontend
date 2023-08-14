@@ -1,51 +1,69 @@
-import { TableRow, TableCell, Typography, Button, Tooltip, Box } from '@mui/material';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import EditIcon from '@mui/icons-material/Edit';
-import CancelIcon from '@mui/icons-material/Cancel';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import CancelIcon from '@mui/icons-material/Cancel';
+import EditIcon from '@mui/icons-material/Edit';
+import { Box, Button, Skeleton, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { fetchRegistration } from '../../../../../api/registrationApi';
+import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
+import { setNotification } from '../../../../../redux/notificationSlice';
 import {
+  ArtisticOutputItem,
+  AudioVisualPublication,
   Award,
   Broadcast,
-  Competition,
-  Exhibition,
-  MentionInPublication,
-  ArtisticOutputItem,
-  Venue,
   CinematicRelease,
-  OtherRelease,
-  MusicScore,
-  AudioVisualPublication,
+  Competition,
   Concert,
-  OtherMusicPerformance,
-  LiteraryArtsMonograph,
-  LiteraryArtsWeb,
-  LiteraryArtsPerformance,
+  Exhibition,
   LiteraryArtsAudioVisual,
+  LiteraryArtsMonograph,
+  LiteraryArtsPerformance,
+  LiteraryArtsWeb,
+  MentionInPublication,
+  MusicScore,
+  OtherMusicPerformance,
+  OtherRelease,
+  Venue,
 } from '../../../../../types/publication_types/artisticRegistration.types';
-import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
-import { CompetitionModal } from './architecture/CompetitionModal';
-import { VenueModal } from './design/VenueModal';
-import { PublicationMentionModal } from './architecture/PublicationMentionModal';
+import {
+  ExhibitionBasic,
+  ExhibitionCatalog,
+  ExhibitionManifestation,
+  ExhibitionMentionInPublication,
+  ExhibitionOtherPresentation,
+} from '../../../../../types/publication_types/exhibitionContent.types';
+import { getIdentifierFromId } from '../../../../../utils/general-helpers';
+import { getOutputName } from '../../../../../utils/registration-helpers';
+import { ExhibitionBasicModal } from '../exhibition_types/ExhibitionBasicModal';
+import { ExhibitionCatalogModal } from '../exhibition_types/ExhibitionCatalogModal';
+import { ExhibitionMentionInPublicationModal } from '../exhibition_types/ExhibitionMentionInPublication';
+import { ExhibitionOtherPresentationModal } from '../exhibition_types/ExhibitionOtherPresentationModal';
 import { AwardModal } from './architecture/AwardModal';
+import { CompetitionModal } from './architecture/CompetitionModal';
 import { ExhibitionModal } from './architecture/ExhibitionModal';
-import { getArtisticOutputName } from '../../../../../utils/registration-helpers';
+import { PublicationMentionModal } from './architecture/PublicationMentionModal';
+import { VenueModal } from './design/VenueModal';
+import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVisualModal';
+import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModal';
+import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerformanceModal';
+import { LiteraryArtsWebPublicationModal } from './literary_art/LiteraryArtsWebPublicationModal';
 import { BroadcastModal } from './moving_picture/BroadcastModal';
 import { CinematicReleaseModal } from './moving_picture/CinematicReleaseModal';
 import { OtherReleaseModal } from './moving_picture/OtherReleaseModal';
-import { MusicScoreModal } from './music_performance/MusicScoreModal';
 import { AudioVisualPublicationModal } from './music_performance/AudioVisualPublicationModal';
 import { ConcertModal } from './music_performance/ConcertModal';
+import { MusicScoreModal } from './music_performance/MusicScoreModal';
 import { OtherPerformanceModal } from './music_performance/OtherPerformanceModal';
-import { LiteraryArtsMonographModal } from './literary_art/LiteraryArtsMonographModalModal';
-import { LiteraryArtsWebPublicationModal } from './literary_art/LiteraryArtsWebPublicationModal';
-import { LiteraryArtsPerformanceModal } from './literary_art/LiteraryArtsPerformanceModal';
-import { LiteraryArtsAudioVisualModal } from './literary_art/LiteraryArtsAudioVisualModal';
+
+export type OutputItem = ArtisticOutputItem | ExhibitionManifestation;
 
 interface OutputRowProps {
-  item: ArtisticOutputItem;
-  updateItem: (item: ArtisticOutputItem) => void;
+  item: OutputItem;
+  updateItem: (item: OutputItem) => void;
   removeItem: () => void;
   moveItem: (to: number) => void;
   index: number;
@@ -62,39 +80,22 @@ export const OutputRow = ({
   maxIndex,
   showTypeColumn = false,
 }: OutputRowProps) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [openEditItem, setOpenEditItem] = useState(false);
   const [openRemoveItem, setOpenRemoveItem] = useState(false);
 
-  const title = getArtisticOutputName(item);
-  let removeItemTitle = '';
-  let removeItemDescription = '';
+  const shouldFetchItem = item.type === 'ExhibitionCatalog';
+  const exhibitionCatalogIdentifier = shouldFetchItem && item.id ? getIdentifierFromId(item.id) : '';
 
-  switch (item.type) {
-    case 'Competition':
-    case 'MentionInPublication':
-    case 'Award':
-    case 'Exhibition':
-    case 'Broadcast':
-    case 'CinematicRelease':
-    case 'OtherRelease':
-    case 'MusicScore':
-    case 'AudioVisualPublication':
-    case 'Concert':
-    case 'OtherPerformance':
-    case 'LiteraryArtsMonograph':
-    case 'LiteraryArtsPerformance':
-    case 'LiteraryArtsAudioVisual':
-    case 'LiteraryArtsWeb':
-      removeItemTitle = t('registration.resource_type.artistic.remove_announcement');
-      removeItemDescription = t('registration.resource_type.artistic.remove_announcement_description', { name: title });
-      break;
-    case 'Venue':
-    case 'PerformingArtsVenue':
-      removeItemTitle = t('registration.resource_type.artistic.remove_venue_title');
-      removeItemDescription = t('registration.resource_type.artistic.remove_venue_text', { name: title });
-      break;
-  }
+  const exhibitionCatalogQuery = useQuery({
+    enabled: !!exhibitionCatalogIdentifier,
+    queryKey: ['registration', exhibitionCatalogIdentifier],
+    queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
+  });
+
+  const title = shouldFetchItem ? exhibitionCatalogQuery.data?.entityDescription?.mainTitle : getOutputName(item);
 
   return (
     <TableRow>
@@ -104,40 +105,49 @@ export const OutputRow = ({
         </TableCell>
       )}
       <TableCell>
-        <Typography>{title}</Typography>
+        {shouldFetchItem ? (
+          exhibitionCatalogQuery.isLoading ? (
+            <Skeleton />
+          ) : (
+            <Typography>{exhibitionCatalogQuery.data?.entityDescription?.mainTitle}</Typography>
+          )
+        ) : (
+          <Typography>{title}</Typography>
+        )}
       </TableCell>
       <TableCell>
-        <Box sx={{ display: 'grid', gridTemplateAreas: '"down up"', gridTemplateColumns: '1fr 1fr', maxWidth: '8rem' }}>
-          <Tooltip title={t('common.move_down')} sx={{ gridArea: 'down' }}>
-            <Button disabled={index === maxIndex} onClick={() => moveItem(index + 1)}>
-              <ArrowDownwardIcon />
-            </Button>
+        <Box sx={{ display: 'flex' }}>
+          <Tooltip title={t('common.move_down')}>
+            <span>
+              <Button disabled={index === maxIndex} onClick={() => moveItem(index + 1)}>
+                <ArrowDownwardIcon />
+              </Button>
+            </span>
           </Tooltip>
 
-          <Tooltip title={t('common.move_up')} sx={{ gridArea: 'up' }}>
-            <Button disabled={index === 0} onClick={() => moveItem(index - 1)}>
-              <ArrowUpwardIcon />
-            </Button>
+          <Tooltip title={t('common.move_up')}>
+            <span>
+              <Button disabled={index === 0} onClick={() => moveItem(index - 1)}>
+                <ArrowUpwardIcon />
+              </Button>
+            </span>
           </Tooltip>
         </Box>
       </TableCell>
       <TableCell>
-        <Button
-          onClick={() => setOpenEditItem(true)}
-          variant="outlined"
-          sx={{ mr: '1rem' }}
-          size="small"
-          startIcon={<EditIcon />}>
-          {t('common.show')}/{t('common.edit')}
-        </Button>
-        <Button
-          onClick={() => setOpenRemoveItem(true)}
-          variant="outlined"
-          color="error"
-          size="small"
-          startIcon={<CancelIcon />}>
-          {t('common.remove')}
-        </Button>
+        <Box sx={{ display: 'flex', gap: '0.5rem 1rem' }}>
+          <Button onClick={() => setOpenEditItem(true)} variant="outlined" size="small" startIcon={<EditIcon />}>
+            {t('common.show')}/{t('common.edit')}
+          </Button>
+          <Button
+            onClick={() => setOpenRemoveItem(true)}
+            variant="outlined"
+            color="error"
+            size="small"
+            startIcon={<CancelIcon />}>
+            {t('common.remove')}
+          </Button>
+        </Box>
       </TableCell>
       {item.type === 'Broadcast' ? (
         <BroadcastModal
@@ -251,16 +261,44 @@ export const OutputRow = ({
           open={openEditItem}
           closeModal={() => setOpenEditItem(false)}
         />
+      ) : item.type === 'ExhibitionBasic' ? (
+        <ExhibitionBasicModal
+          exhibitionBasic={item as ExhibitionBasic}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'ExhibitionOtherPresentation' ? (
+        <ExhibitionOtherPresentationModal
+          exhibitionOtherPresentation={item as ExhibitionOtherPresentation}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'ExhibitionMentionInPublication' ? (
+        <ExhibitionMentionInPublicationModal
+          exhibitionMentionInPublication={item as ExhibitionMentionInPublication}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
+      ) : item.type === 'ExhibitionCatalog' ? (
+        <ExhibitionCatalogModal
+          exhibitionCatalog={item as ExhibitionCatalog}
+          onSubmit={updateItem}
+          open={openEditItem}
+          closeModal={() => setOpenEditItem(false)}
+        />
       ) : null}
       <ConfirmDialog
         open={openRemoveItem}
-        title={removeItemTitle}
+        title={t('registration.resource_type.artistic.remove_announcement')}
         onCancel={() => setOpenRemoveItem(false)}
         onAccept={() => {
           removeItem();
           setOpenRemoveItem(false);
         }}>
-        {removeItemDescription}
+        {t('registration.resource_type.artistic.remove_announcement_description', { name: title })}
       </ConfirmDialog>
     </TableRow>
   );

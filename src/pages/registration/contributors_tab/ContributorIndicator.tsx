@@ -4,7 +4,7 @@ import { Contributor } from '../../../types/contributor.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getContributorInitials } from '../../../utils/registration-helpers';
 
-const StyledBaseContributorIndicator = styled('div')({
+export const StyledBaseContributorIndicator = styled('div')({
   width: '1.75rem',
   height: '1.75rem',
   borderRadius: '50%',
@@ -13,7 +13,7 @@ const StyledBaseContributorIndicator = styled('div')({
   justifyContent: 'space-around',
 });
 
-const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
+export const StyledVerifiedContributor = styled(StyledBaseContributorIndicator)(({ theme }) => ({
   background: theme.palette.primary.main,
   color: theme.palette.primary.contrastText,
 }));

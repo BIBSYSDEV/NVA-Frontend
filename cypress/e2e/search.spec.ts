@@ -9,11 +9,12 @@ describe('Search', () => {
   it('The user should see a working pagination', () => {
     cy.url().should('not.include', 'results');
     cy.url().should('not.include', 'from');
-    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(0).should('be.disabled');
-    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(1).should('be.disabled');
-    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(2).should('be.enabled');
-    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(3).should('be.enabled');
-    cy.get(`[data-testid=${dataTestId.startPage.searchPagination}] button`).eq(2).click();
+    cy.get(`[data-testid=${dataTestId.common.pagination}] button`).eq(0).should('be.disabled');
+    cy.get(`[data-testid=${dataTestId.common.pagination}] button`).eq(1).should('be.enabled');
+    cy.get(`[data-testid=${dataTestId.common.pagination}] button`).eq(2).should('be.enabled');
+    cy.get(`[data-testid=${dataTestId.common.pagination}] button`).eq(6).should('be.enabled');
+    cy.get(`[data-testid=${dataTestId.common.pagination}] button`).eq(2).click();
+    cy.get(`[data-testid=${dataTestId.common.pagination}] button`).eq(0).should('be.enabled');
     cy.url().should('include', 'results=10');
     cy.url().should('include', 'from=10');
     cy.injectAxe();

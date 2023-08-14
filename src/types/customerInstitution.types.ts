@@ -4,15 +4,13 @@ export interface SimpleCustomerInstitution {
   displayName: string;
 }
 
-export type PublishStrategy =
-  | 'RegistratorPublishesMetadataOnly'
-  | 'RegistratorPublishesMetadataAndFiles'
-  | 'RegistratorRequiresApprovalForMetadataAndFiles';
+export type PublishStrategy = 'RegistratorPublishesMetadataOnly' | 'RegistratorPublishesMetadataAndFiles';
 
 export enum Sector {
   Uhi = 'UHI',
   Health = 'HEALTH',
   Institute = 'INSTITUTE',
+  Abm = 'ABM',
 }
 
 export interface CustomerInstitution extends SimpleCustomerInstitution {

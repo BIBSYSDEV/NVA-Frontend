@@ -1,6 +1,6 @@
-import { BaseEntityDescription, BaseReference, BaseRegistration, PublicationChannelType } from '../registration.types';
 import { JournalType } from '../publicationFieldNames';
-import { emptyPagesRange, PagesRange } from './pages.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, PublicationChannelType } from '../registration.types';
+import { PagesRange, emptyPagesRange } from './pages.types';
 
 export interface JournalRegistration extends BaseRegistration {
   entityDescription: JournalEntityDescription;
@@ -45,7 +45,7 @@ const emptyPublicationContext: JournalPublicationContext = {
   type: '',
 };
 
-const emptyReference: JournalReference = {
+const emptyJournalReference: JournalReference = {
   type: 'Reference',
   doi: '',
   publicationContext: emptyPublicationContext,
@@ -58,7 +58,7 @@ export const emptyRegistrationEntityDescription: JournalEntityDescription = {
   alternativeAbstracts: {},
   alternativeTitles: {},
   contributors: [],
-  date: {
+  publicationDate: {
     type: 'PublicationDate',
     year: '',
     month: '',
@@ -68,6 +68,6 @@ export const emptyRegistrationEntityDescription: JournalEntityDescription = {
   language: '',
   mainTitle: '',
   npiSubjectHeading: '',
-  reference: emptyReference,
+  reference: emptyJournalReference,
   tags: [],
 };
