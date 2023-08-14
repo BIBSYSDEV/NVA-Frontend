@@ -1,19 +1,19 @@
-import { Autocomplete, Box, Chip, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Chip } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PublicationChannelApiPath } from '../../../../api/apiPaths';
+import { getById } from '../../../../api/commonApi';
+import { searchForSeries } from '../../../../api/publicationChannelApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
-import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
-import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
-import { Journal, PublicationChannelType, Registration } from '../../../../types/registration.types';
+import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { getPublicationChannelString, getYearQuery } from '../../../../utils/registration-helpers';
+import { JournalFormDialog } from './JournalFormDialog';
+import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
+import { PublicationChannelOption } from './PublicationChannelOption';
 
 const seriesFieldTestId = dataTestId.registrationWizard.resourceType.seriesField;
 
@@ -24,111 +24,130 @@ export const SeriesField = () => {
   const series = reference?.publicationContext.series;
   const year = publicationDate?.year ?? '';
 
+  const [showSeriesForm, setShowSeriesForm] = useState(false);
+  const toggleSeriesForm = () => setShowSeriesForm(!showSeriesForm);
+
   const [query, setQuery] = useState(!series?.id ? series?.title ?? '' : '');
   const debouncedQuery = useDebounce(query);
-  const [journalOptions, isLoadingJournalOptions] = useFetch<Journal[]>({
-    url:
-      debouncedQuery && debouncedQuery === query
-        ? `${PublicationChannelApiPath.JournalSearch}?year=${getYearQuery(year)}&query=${encodeURIComponent(
-            debouncedQuery
-          )}`
-        : '',
-    errorMessage: t('feedback.error.get_series'),
+
+  const seriesOptionsQuery = useQuery({
+    queryKey: ['seriesSearch', debouncedQuery, year],
+    enabled: debouncedQuery.length > 3 && debouncedQuery === query,
+    queryFn: () => searchForSeries(debouncedQuery, year),
+    meta: { errorMessage: t('feedback.error.get_series') },
   });
 
   useEffect(() => {
     if (
-      journalOptions?.length === 1 &&
+      seriesOptionsQuery.data?.hits.length === 1 &&
       series?.title &&
-      journalOptions[0].name.toLowerCase() === series.title.toLowerCase()
+      seriesOptionsQuery.data.hits[0].name.toLowerCase() === series.title.toLowerCase()
     ) {
       setFieldValue(ResourceFieldNames.Series, {
         type: PublicationChannelType.Series,
-        id: journalOptions[0].id,
+        id: seriesOptionsQuery.data.hits[0].id,
       });
       setQuery('');
     }
-  }, [setFieldValue, series?.title, journalOptions]);
+  }, [setFieldValue, series?.title, seriesOptionsQuery.data?.hits]);
 
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(series?.id ?? '', t('feedback.error.get_series'));
+  const seriesQuery = useQuery({
+    queryKey: [series?.id],
+    enabled: !!series?.id,
+    queryFn: () => getById<Series>(series?.id ?? ''),
+    meta: { errorMessage: t('feedback.error.get_series') },
+    staleTime: Infinity,
+  });
 
   return (
-    <Field name={ResourceFieldNames.SeriesId}>
-      {({ field, meta }: FieldProps<string>) => (
-        <Autocomplete
-          multiple
-          id={seriesFieldTestId}
-          data-testid={seriesFieldTestId}
-          aria-labelledby={`${seriesFieldTestId}-label`}
-          popupIcon={null}
-          options={debouncedQuery && query === debouncedQuery && !isLoadingJournalOptions ? journalOptions ?? [] : []}
-          filterOptions={(options) => options}
-          inputValue={query}
-          onInputChange={(_, newInputValue, reason) => {
-            if (reason !== 'reset') {
-              setQuery(newInputValue);
+    <Box sx={{ display: 'flex', gap: '1rem' }}>
+      <Field name={ResourceFieldNames.SeriesId}>
+        {({ field, meta }: FieldProps<string>) => (
+          <Autocomplete
+            fullWidth
+            multiple
+            id={seriesFieldTestId}
+            data-testid={seriesFieldTestId}
+            aria-labelledby={`${seriesFieldTestId}-label`}
+            popupIcon={null}
+            options={
+              debouncedQuery && query === debouncedQuery && !seriesOptionsQuery.isLoading
+                ? seriesOptionsQuery.data?.hits ?? []
+                : []
             }
-            if (reason === 'input' && !newInputValue && series?.title) {
-              setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
+            filterOptions={(options) => options}
+            inputValue={query}
+            onInputChange={(_, newInputValue, reason) => {
+              if (reason !== 'reset') {
+                setQuery(newInputValue);
+              }
+              if (reason === 'input' && !newInputValue && series?.title) {
+                setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
+              }
+            }}
+            blurOnSelect
+            disableClearable={!query}
+            value={field.value && seriesQuery.data ? [seriesQuery.data] : []}
+            onChange={(_, inputValue, reason) => {
+              if (reason === 'selectOption') {
+                setFieldValue(ResourceFieldNames.Series, {
+                  type: PublicationChannelType.Series,
+                  id: inputValue.pop()?.id,
+                });
+              } else if (reason === 'removeOption') {
+                setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
+              }
+              setQuery('');
+            }}
+            loading={seriesOptionsQuery.isFetching || seriesQuery.isFetching}
+            getOptionLabel={(option) => option.name}
+            renderOption={(props, option, state) => (
+              <PublicationChannelOption key={option.id} props={props} option={option} state={state} />
+            )}
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
+                  label={<PublicationChannelChipLabel value={option} />}
+                />
+              ))
             }
-          }}
-          blurOnSelect
-          disableClearable={!query}
-          value={field.value && journal ? [journal] : []}
-          onChange={(_, inputValue, reason) => {
-            if (reason === 'selectOption') {
+            renderInput={(params) => (
+              <AutocompleteTextField
+                {...params}
+                label={t('registration.resource_type.series_title')}
+                isLoading={seriesOptionsQuery.isFetching || seriesQuery.isFetching}
+                placeholder={!field.value ? t('registration.resource_type.search_for_series') : ''}
+                showSearchIcon={!field.value}
+                errorMessage={meta.touched && !!meta.error ? meta.error : ''}
+              />
+            )}
+          />
+        )}
+      </Field>
+      {!series?.id && seriesOptionsQuery.isFetched && (
+        <>
+          <Button
+            variant="outlined"
+            sx={{ height: 'fit-content', whiteSpace: 'nowrap', mt: '0.5rem' }}
+            onClick={toggleSeriesForm}>
+            {t('registration.resource_type.create_series')}
+          </Button>
+          <JournalFormDialog
+            open={showSeriesForm}
+            closeDialog={toggleSeriesForm}
+            isSeries
+            onCreatedChannel={(newChannel) => {
               setFieldValue(ResourceFieldNames.Series, {
                 type: PublicationChannelType.Series,
-                id: inputValue.pop()?.id,
+                id: newChannel.id,
               });
-            } else if (reason === 'removeOption') {
-              setFieldValue(ResourceFieldNames.Series, { type: PublicationChannelType.UnconfirmedSeries });
-            }
-            setQuery('');
-          }}
-          loading={isLoadingJournalOptions || isLoadingJournal}
-          getOptionLabel={(option) => option.name}
-          renderOption={(props, option, state) => (
-            <li {...props}>
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Typography variant="subtitle1">
-                  <EmphasizeSubstring
-                    text={getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                    emphasized={state.inputValue}
-                  />
-                </Typography>
-                <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
-              </Box>
-            </li>
-          )}
-          renderTags={(value, getTagProps) =>
-            value.map((option, index) => (
-              <Chip
-                {...getTagProps({ index })}
-                data-testid={dataTestId.registrationWizard.resourceType.seriesChip}
-                label={
-                  <>
-                    <Typography variant="subtitle1">
-                      {getPublicationChannelString(option.name, option.onlineIssn, option.printIssn)}
-                    </Typography>
-                    <NpiLevelTypography variant="body2" color="textSecondary" level={option.level} />
-                  </>
-                }
-              />
-            ))
-          }
-          renderInput={(params) => (
-            <AutocompleteTextField
-              {...params}
-              label={t('common.title')}
-              isLoading={isLoadingJournalOptions || isLoadingJournal}
-              placeholder={!field.value ? t('registration.resource_type.search_for_series') : ''}
-              showSearchIcon={!field.value}
-              errorMessage={meta.touched && !!meta.error ? meta.error : ''}
-            />
-          )}
-        />
+              setQuery('');
+            }}
+          />
+        </>
       )}
-    </Field>
+    </Box>
   );
 };
