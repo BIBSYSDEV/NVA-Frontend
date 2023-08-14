@@ -1,8 +1,8 @@
 import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { StyledMessagesContainer, StyledStatusMessageBox } from './PublishingRequestMessagesColumn';
-import { TruncatableTypography } from '../../../components/TruncatableTypography';
-import { useTranslation } from 'react-i18next';
 
 interface SupportMessagesColumnProps {
   ticket: ExpandedTicket;

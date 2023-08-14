@@ -1,12 +1,12 @@
 import { Divider, List, TablePagination, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { ListSkeleton } from '../../../../components/ListSkeleton';
-import { CentralImportResultItem } from './CentralImportResultItem';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
-import { DuplicateSearchFilters } from '../../../../types/duplicateSearchTypes';
 import { useQuery } from '@tanstack/react-query';
-import { fetchImportCandidates } from '../../../../api/searchApi';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { fetchImportCandidates } from '../../../../api/searchApi';
+import { ListSkeleton } from '../../../../components/ListSkeleton';
+import { DuplicateSearchFilters } from '../../../../types/duplicateSearchTypes';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
+import { CentralImportResultItem } from './CentralImportResultItem';
 
 interface CentralImportDuplicateSearchProps {
   duplicateSearchFilters: DuplicateSearchFilters;

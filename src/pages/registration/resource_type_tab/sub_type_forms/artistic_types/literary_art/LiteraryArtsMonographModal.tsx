@@ -1,20 +1,20 @@
-import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
-import { Formik, Form, Field, FieldProps, ErrorMessage, FormikProps } from 'formik';
+import { Dialog, DialogContent, DialogTitle, TextField } from '@mui/material';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import i18n from '../../../../../../translations/i18n';
 import {
-  emptyUnconfirmedPublisher,
   LiteraryArtsMonograph,
   UnconfirmedPublisher,
+  emptyUnconfirmedPublisher,
 } from '../../../../../../types/publication_types/artisticRegistration.types';
-import { emptyPagesMonograph, PagesMonograph } from '../../../../../../types/publication_types/pages.types';
-import { emptyRegistrationDate, RegistrationDate } from '../../../../../../types/registration.types';
+import { PagesMonograph, emptyPagesMonograph } from '../../../../../../types/publication_types/pages.types';
+import { RegistrationDate, emptyRegistrationDate } from '../../../../../../types/registration.types';
 import { dataTestId } from '../../../../../../utils/dataTestIds';
-import { YupShape } from '../../../../../../utils/validation/validationHelpers';
-import { OutputModalActions } from '../OutputModalActions';
-import { IsbnField } from '../../../components/isbn_and_pages/IsbnField';
 import { isbnListField } from '../../../../../../utils/validation/registration/referenceValidation';
+import { YupShape } from '../../../../../../utils/validation/validationHelpers';
+import { IsbnField } from '../../../components/isbn_and_pages/IsbnField';
+import { OutputModalActions } from '../OutputModalActions';
 
 interface LiteraryArtsMonographModalProps {
   literaryArtsMonograph?: LiteraryArtsMonograph;

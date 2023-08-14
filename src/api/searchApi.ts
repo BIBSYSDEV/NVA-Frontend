@@ -1,8 +1,9 @@
 import { SearchResponse } from '../types/common.types';
+import { ImportCandidateSummary } from '../types/importCandidate.types';
 import { ExpandedTicket } from '../types/publication_types/ticket.types';
+import { Registration } from '../types/registration.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
-import { ImportCandidateSummary } from '../types/importCandidate.types';
 
 export const fetchTickets = async (results: number, from: number, query = '', onlyCreator = false) => {
   const paginationQuery = `results=${results}&from=${from}`;
@@ -34,4 +35,16 @@ export const fetchRegistrationsExport = async (searchParams: string) => {
 
   const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });
   return fetchExport.data;
+};
+
+export const fetchResults = async (results: number, from: number, query = '') => {
+  const paginationQuery = `results=${results}&from=${from}`;
+  const searchQuery = query ? `query=${query}` : '';
+
+  const fullQuery = [paginationQuery, searchQuery].filter(Boolean).join('&');
+
+  const getResults = await apiRequest2<SearchResponse<Registration>>({
+    url: `${SearchApiPath.Registrations}?${fullQuery}`,
+  });
+  return getResults.data;
 };

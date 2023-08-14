@@ -1,11 +1,11 @@
 import { Box, Divider, TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { User } from '../../../types/user.types';
-import { UserRoles } from './UserRoles';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 import { UserOrcid } from './UserOrcid';
+import { UserRoles } from './UserRoles';
 
 interface UserIdentitiesProps {
   user: User;

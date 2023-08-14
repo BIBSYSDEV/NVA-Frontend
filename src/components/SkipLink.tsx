@@ -1,4 +1,4 @@
-import { LinkProps, Link, Typography } from '@mui/material';
+import { Link, LinkProps, Typography } from '@mui/material';
 
 export const SkipLink = ({ children, ...props }: LinkProps) => (
   <Link

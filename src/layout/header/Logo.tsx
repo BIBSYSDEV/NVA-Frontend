@@ -1,4 +1,4 @@
-import { Typography, Button, Box } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 

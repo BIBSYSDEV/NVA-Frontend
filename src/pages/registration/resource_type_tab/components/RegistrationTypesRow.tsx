@@ -1,6 +1,6 @@
-import { Typography, Box, Chip, Tooltip } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import FilterVintageIcon from '@mui/icons-material/FilterVintage';
+import { Box, Chip, Tooltip, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { PublicationType } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';

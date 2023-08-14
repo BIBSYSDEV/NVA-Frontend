@@ -1,8 +1,8 @@
+import PublicIcon from '@mui/icons-material/Public';
+import { Button, IconButton, Menu, MenuItem } from '@mui/material';
+import { getLanguageByIso6393Code } from 'nva-language';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, IconButton, Menu, MenuItem } from '@mui/material';
-import PublicIcon from '@mui/icons-material/Public';
-import { getLanguageByIso6393Code } from 'nva-language';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface LanguageSelectorProps {

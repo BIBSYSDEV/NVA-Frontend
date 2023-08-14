@@ -1,14 +1,14 @@
 import { Box, List, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
+import { searchForProjects } from '../../../api/cristinApi';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../CristinSearchPagination';
 import { SearchTextField } from '../SearchTextField';
 import { ProjectListItem } from './ProjectListItem';
-import { useQuery } from '@tanstack/react-query';
-import { searchForProjects } from '../../../api/cristinApi';
 
 export const ProjectSearch = () => {
   const { t } = useTranslation();
@@ -54,14 +54,14 @@ export const ProjectSearch = () => {
       {projectsQuery.isLoading ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : projectsSearchResults && projectsSearchResults.length > 0 ? (
-        <>
+        <div>
           <List>
             {projectsSearchResults.map((project) => (
               <ProjectListItem key={project.id} project={project} />
             ))}
           </List>
           <CristinSearchPagination totalCount={projectsQuery.data?.size ?? 0} />
-        </>
+        </div>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}

@@ -2,20 +2,24 @@ import Axios, { AxiosRequestConfig } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { emptyRegistration } from '../types/registration.types';
 import { ORCID_USER_INFO_URL } from '../utils/constants';
-import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
 import { mockOrcidResponse } from '../utils/testfiles/mockAuthorities';
-import { mockRoles, mockUser } from '../utils/testfiles/mock_feide_user';
+import { mockCristinPersonSearch } from '../utils/testfiles/mockCristinPersonSearch';
 import {
   mockCustomerInstitution,
-  mockCustomerInstitutions,
   mockCustomerInstitutionVocabularies,
+  mockCustomerInstitutions,
 } from '../utils/testfiles/mockCustomerInstitutions';
+import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
+import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
+import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
+import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
+import { mockPositionResponse } from '../utils/testfiles/mockPositions';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
-import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
+import { mockPublishedRegistration, mockRegistration, mockTicketCollection } from '../utils/testfiles/mockRegistration';
 import { mockSearchImportCandidates, mockSearchResults, mockSearchTasks } from '../utils/testfiles/mockSearchResults';
-import { mockTicketCollection, mockPublishedRegistration, mockRegistration } from '../utils/testfiles/mockRegistration';
+import { mockRoles, mockUser } from '../utils/testfiles/mock_feide_user';
 import {
   CristinApiPath,
   CustomerInstitutionApiPath,
@@ -26,10 +30,6 @@ import {
   RoleApiPath,
   SearchApiPath,
 } from './apiPaths';
-import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
-import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
-import { mockCristinPersonSearch } from '../utils/testfiles/mockCristinPersonSearch';
-import { mockPositionResponse } from '../utils/testfiles/mockPositions';
 
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {

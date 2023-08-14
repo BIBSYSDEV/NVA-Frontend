@@ -1,30 +1,30 @@
 import { Auth } from '@aws-amplify/auth';
+import { Box } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { Box } from '@mui/material';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { getDateFnsLocale } from './utils/date-helpers';
-import { getCurrentUserAttributes } from './api/authApi';
 import { AppRoutes } from './AppRoutes';
+import { getCurrentUserAttributes } from './api/authApi';
+import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import { PageSpinner } from './components/PageSpinner';
+import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
+import { SkipLink } from './components/SkipLink';
 import { Footer } from './layout/Footer';
-import { Header } from './layout/header/Header';
 import { Notifier } from './layout/Notifier';
+import { Header } from './layout/header/Header';
 import { setNotification } from './redux/notificationSlice';
-import { setUser } from './redux/userSlice';
 import { RootState } from './redux/store';
+import { setUser } from './redux/userSlice';
 import { authOptions } from './utils/aws-config';
 import { LocalStorageKey, USE_MOCK_DATA } from './utils/constants';
+import { getDateFnsLocale } from './utils/date-helpers';
 import { mockUser } from './utils/testfiles/mock_feide_user';
-import { PageSpinner } from './components/PageSpinner';
-import { SkipLink } from './components/SkipLink';
 import { UrlPathTemplate } from './utils/urlPaths';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
-import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
 
 const getLanguageTagValue = (language: string) => {
   if (language === 'eng') {

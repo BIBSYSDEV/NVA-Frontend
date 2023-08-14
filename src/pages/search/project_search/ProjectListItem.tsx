@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { Typography, Link as MuiLink, Box, IconButton, Tooltip } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
-import { getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { Box, IconButton, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
+import { getLanguageString } from '../../../utils/translation-helpers';
+import { getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
 import {
   getProjectManagers,
   getProjectParticipants,
 } from '../../registration/description_tab/projects_field/projectHelpers';
-import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
-import { SearchListItem } from '../../../components/styled/Wrappers';
-import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface ProjectListItemProps {
   project: CristinProject;

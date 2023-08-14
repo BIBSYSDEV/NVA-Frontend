@@ -1,4 +1,4 @@
-import { FormControl, FormGroup, FormControlLabel, Checkbox, Typography } from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel, FormGroup, Typography } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RoleName } from '../../../types/user.types';

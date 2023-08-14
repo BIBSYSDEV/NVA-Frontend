@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '../../../components/Modal';
 import { Contributor, ContributorRole } from '../../../types/contributor.types';
+import { CristinPerson } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { AddContributorForm } from './components/AddContributorForm';
 import { AddUnverifiedContributorForm } from './components/AddUnverifiedContributorForm';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { CristinPerson } from '../../../types/user.types';
 
 interface AddContributorModalProps {
   onContributorSelected: (newContributor: CristinPerson, role: ContributorRole) => void;

@@ -1,7 +1,7 @@
+import WarningIcon from '@mui/icons-material/Warning';
 import { Box, FormHelperText, Typography } from '@mui/material';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import WarningIcon from '@mui/icons-material/Warning';
 import { ContributorFieldNames } from '../../types/publicationFieldNames';
 import { EntityDescription, Registration } from '../../types/registration.types';
 import { contributorConfig } from '../../utils/registration-helpers';

@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import { SaveCristinProject } from '../../../types/project.types';
-import { YupShape } from '../validationHelpers';
 import { projectFundingValidationSchema } from '../registration/fundingValidation';
+import { YupShape } from '../validationHelpers';
 
 const basicProjectErrorMessage = {
   coordinatingInstitution: i18n.t('feedback.validation.is_required', {

@@ -1,6 +1,6 @@
 import { Instant, Period, Place } from '../common.types';
 import { ArtisticType, PublicationType } from '../publicationFieldNames';
-import { BaseRegistration, BaseReference, BaseEntityDescription, RegistrationDate } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, RegistrationDate } from '../registration.types';
 import { PagesMonograph } from './pages.types';
 
 export interface ArtisticRegistration extends BaseRegistration {

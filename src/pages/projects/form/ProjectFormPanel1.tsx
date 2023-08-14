@@ -1,19 +1,19 @@
-import { Box, TextField, Typography, Button } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import { Field, FieldProps, ErrorMessage, FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
-import { useTranslation } from 'react-i18next';
 import AddCircleIcon from '@mui/icons-material/AddCircleOutline';
+import { Box, Button, TextField, Typography } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
+import { ErrorMessage, Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
+import { useTranslation } from 'react-i18next';
 import {
   CristinProject,
-  emptyProjectContributor,
   ProjectOrganization,
   SaveCristinProject,
+  emptyProjectContributor,
 } from '../../../types/project.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { OrganizationSearchField } from '../../basic_data/app_admin/OrganizationSearchField';
 import { ProjectContributorRow } from '../../registration/description_tab/projects_field/ProjectContributorRow';
-import { ProjectFieldName } from './ProjectFormDialog';
 import { isRekProject } from '../../registration/description_tab/projects_field/projectHelpers';
+import { ProjectFieldName } from './ProjectFormDialog';
 import { ProjectFundingsField } from './ProjectFunding';
 
 interface ProjectFormPanel1Props {
@@ -65,7 +65,9 @@ export const ProjectFormPanel1 = ({ currentProject, suggestedProjectManager }: P
               }
               fieldInputProps={{
                 ...field,
-                onBlur: () => setFieldTouched(`${field.name}.id`),
+                onBlur: () => {
+                  setFieldTouched(`${field.name}.id`);
+                },
               }}
               selectedValue={field.value}
               customDataTestId={dataTestId.registrationWizard.description.projectForm.coordinatingInstitutionField}
