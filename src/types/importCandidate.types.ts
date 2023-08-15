@@ -1,3 +1,4 @@
+import { Contributor } from './contributor.types';
 import { Organization } from './organization.types';
 import { ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
 import { BookPublicationInstance } from './publication_types/bookRegistration.types';
@@ -37,6 +38,7 @@ export interface ImportCandidateSummary {
   publisher: Pick<Publisher, 'id' | 'name'>;
   journal: Pick<Journal, 'id'>;
   publicationInstance: PublicationInstance;
+  contributors: Contributor[];
 }
 
 type PublicationInstance =

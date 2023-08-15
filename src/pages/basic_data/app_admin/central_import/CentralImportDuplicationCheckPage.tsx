@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { PublicationsApiPath } from '../../../../api/apiPaths';
 import { PageSpinner } from '../../../../components/PageSpinner';
-import { StyledPageContent } from '../../../../components/styled/Wrappers';
+import { SearchListItem } from '../../../../components/styled/Wrappers';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { Registration } from '../../../../types/registration.types';
 import { useFetch } from '../../../../utils/hooks/useFetch';
@@ -42,32 +42,33 @@ export const CentralImportDuplicationCheckPage = () => {
 
   return (
     <>
-      <Typography id="duplicate-check-label" variant="h2">
+      <Typography id="duplicate-check-label" variant="h2" gutterBottom>
         {t('basic_data.central_import.duplicate_check')}
       </Typography>
-      <StyledPageContent>
+      <>
         {isLoadingRegistration ? (
           <PageSpinner aria-labelledby="duplicate-check-label" />
         ) : registration ? (
           <>
-            <Typography variant="h3">{t('basic_data.central_import.import_publication')}:</Typography>
-            <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
-              {getTitleString(registration.entityDescription?.mainTitle)}
-            </Typography>
-            <Typography display="inline" variant="body2">
-              {contributors.map((contributor) => contributor.identity.name).join('; ')}
-            </Typography>
-            {registration.entityDescription?.reference?.doi && (
-              <MuiLink
-                underline="hover"
-                href={registration.entityDescription.reference.doi}
-                target="_blank"
-                rel="noopener noreferrer">
-                <Typography gutterBottom variant="body2" sx={{ color: 'primary.main' }}>
-                  {registration.entityDescription.reference.doi}
-                </Typography>
-              </MuiLink>
-            )}
+            <SearchListItem sx={{ borderLeftColor: 'centralImport.main' }}>
+              <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
+                {getTitleString(registration.entityDescription?.mainTitle)}
+              </Typography>
+              <Typography display="inline" variant="body2">
+                {contributors.map((contributor) => contributor.identity.name).join('; ')}
+              </Typography>
+              {registration.entityDescription?.reference?.doi && (
+                <MuiLink
+                  underline="hover"
+                  href={registration.entityDescription.reference.doi}
+                  target="_blank"
+                  rel="noopener noreferrer">
+                  <Typography gutterBottom variant="body2" sx={{ color: 'primary.main' }}>
+                    {registration.entityDescription.reference.doi}
+                  </Typography>
+                </MuiLink>
+              )}
+            </SearchListItem>
             <Divider sx={{ marginBottom: '2rem' }} />
             <Typography variant="h3">{t('basic_data.central_import.search_for_duplicates')}:</Typography>
             <DuplicateSearchFilterForm
@@ -84,7 +85,7 @@ export const CentralImportDuplicationCheckPage = () => {
         ) : (
           <NotFound />
         )}
-      </StyledPageContent>
+      </>
     </>
   );
 };

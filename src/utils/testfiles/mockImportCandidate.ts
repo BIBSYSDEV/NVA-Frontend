@@ -4,6 +4,7 @@ import { JournalType } from '../../types/publicationFieldNames';
 export const mockImportCandidate: ImportCandidateSummary = {
   type: `ImportCandidate`,
   id: 'https://api.dev.nva.aws.unit.no/registration/12345679',
+  contributors: [],
   additionalIdentifiers: ['12345'],
   importStatus: ImportStatus.NotImported,
   doi: '',

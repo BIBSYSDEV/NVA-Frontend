@@ -50,7 +50,6 @@
       "duplicate_check": "Duplicate check",
       "duplicate_search_hits_shown": "Hits (Showing {{ShownResultsCount}} of {{TotalResultsCount}})",
       "import": "Import",
-      "import_publication": "Import publication",
       "or_search_with": "or search with",
       "publications": "Publications",
       "reset_search_values": "Reset values",
