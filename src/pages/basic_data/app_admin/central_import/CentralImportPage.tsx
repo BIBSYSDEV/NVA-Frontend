@@ -1,9 +1,10 @@
-import { Divider, List, TablePagination, Typography } from '@mui/material';
+import { Divider, List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchImportCandidates } from '../../../../api/searchApi';
+import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
@@ -54,14 +55,12 @@ export const CentralImportPage = () => {
               ))}
             </List>
             {searchResults.length > 0 && (
-              <TablePagination
-                rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                component="div"
+              <ListPagination
                 count={importCandidateQuery.data?.size ?? -1}
                 rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString(), rowsPerPage.toString())}
-                onRowsPerPageChange={(event) => updatePath('0', event.target.value)}
+                page={page + 1}
+                onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
+                onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
               />
             )}
           </>
