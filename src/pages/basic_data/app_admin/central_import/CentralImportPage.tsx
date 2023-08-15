@@ -19,6 +19,7 @@ export const CentralImportPage = () => {
   const fromParam = params.get(SearchParam.From);
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
+
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates', rowsPerPage, page, ''],
     queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, ''),

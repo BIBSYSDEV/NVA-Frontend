@@ -1,18 +1,18 @@
-import { Box, Button, Divider, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-import { PublicationsApiPath } from '../../../../api/apiPaths';
+import { fetchImportCandidates } from '../../../../api/searchApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
-import { SearchListItem } from '../../../../components/styled/Wrappers';
+import { SearchResponse } from '../../../../types/common.types';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
-import { Registration } from '../../../../types/registration.types';
-import { useFetch } from '../../../../utils/hooks/useFetch';
+import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
-import { getTitleString } from '../../../../utils/registration-helpers';
 import { RegistrationParams, getImportCandidatePagePath } from '../../../../utils/urlPaths';
 import NotFound from '../../../errorpages/NotFound';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
+import { CentralImportResultItem } from './CentralImportResultItem';
 import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
 
 export const CentralImportDuplicationCheckPage = () => {
@@ -20,25 +20,25 @@ export const CentralImportDuplicationCheckPage = () => {
   const { identifier } = useParams<RegistrationParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
 
-  const [registration, isLoadingRegistration] = useFetch<Registration>({
-    url: `${PublicationsApiPath.ImportCandidate}/${identifier}`,
-    errorMessage: t('feedback.error.get_registration'),
+  const importCandidateQuery = useQuery<SearchResponse<ImportCandidateSummary>>({
+    queryKey: ['importCandidate', identifier],
+    queryFn: () => fetchImportCandidates(1, 0, `id:${identifier}`),
+    meta: { errorMessage: t('feedback.error.get_registrations') },
   });
+  const importCandidate = importCandidateQuery.data?.hits[0];
 
   useEffect(() => {
-    if (stringIncludesMathJax(registration?.entityDescription?.mainTitle)) {
+    if (stringIncludesMathJax(importCandidate?.mainTitle)) {
       typesetMathJax();
     }
-  }, [registration]);
+  }, [importCandidate]);
 
   useEffect(() => {
     setDuplicateSearchFilters({
       ...emptyDuplicateSearchFilter,
-      doi: registration?.entityDescription?.reference?.doi ?? '',
+      doi: importCandidate?.doi ?? '',
     });
-  }, [registration]);
-
-  const contributors = registration?.entityDescription?.contributors ?? [];
+  }, [importCandidate]);
 
   return (
     <>
@@ -46,33 +46,15 @@ export const CentralImportDuplicationCheckPage = () => {
         {t('basic_data.central_import.duplicate_check')}
       </Typography>
       <>
-        {isLoadingRegistration ? (
+        {importCandidateQuery.isLoading ? (
           <PageSpinner aria-labelledby="duplicate-check-label" />
-        ) : registration ? (
+        ) : importCandidate ? (
           <>
-            <SearchListItem sx={{ borderLeftColor: 'centralImport.main' }}>
-              <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', fontStyle: 'italic' }}>
-                {getTitleString(registration.entityDescription?.mainTitle)}
-              </Typography>
-              <Typography display="inline" variant="body2">
-                {contributors.map((contributor) => contributor.identity.name).join('; ')}
-              </Typography>
-              {registration.entityDescription?.reference?.doi && (
-                <MuiLink
-                  underline="hover"
-                  href={registration.entityDescription.reference.doi}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  <Typography gutterBottom variant="body2" sx={{ color: 'primary.main' }}>
-                    {registration.entityDescription.reference.doi}
-                  </Typography>
-                </MuiLink>
-              )}
-            </SearchListItem>
+            {importCandidate && <CentralImportResultItem importCandidate={importCandidate} />}
             <Divider sx={{ marginBottom: '2rem' }} />
             <Typography variant="h3">{t('basic_data.central_import.search_for_duplicates')}:</Typography>
             <DuplicateSearchFilterForm
-              publication={registration}
+              importCandidate={importCandidate}
               setDuplicateSearchFilters={setDuplicateSearchFilters}
             />
             <Button variant="outlined" color="primary" component={Link} to={getImportCandidatePagePath(identifier)}>
