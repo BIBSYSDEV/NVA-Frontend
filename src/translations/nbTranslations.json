@@ -121,6 +121,7 @@
     "create": "Opprett",
     "date": "Dato",
     "delete": "Slett",
+    "delete_all": "Slett alle",
     "description": "Beskrivelse",
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
