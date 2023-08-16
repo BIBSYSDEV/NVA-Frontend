@@ -121,7 +121,6 @@
     "create": "Opprett",
     "date": "Dato",
     "delete": "Slett",
-    "delete_all": "Slett alle",
     "description": "Beskrivelse",
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
@@ -574,6 +573,8 @@
     },
     "project_registrations": "Prosjektregistreringer",
     "registrations": {
+      "delete_all_draft_registrations": "Slett alle kladder",
+      "delete_all_draft_registrations_message": "Slett alle upubliserte registreringer?",
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
       "published": "Publisert",

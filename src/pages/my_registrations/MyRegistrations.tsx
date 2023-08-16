@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { MyRegistrationsList } from './MyRegistrationsList';
-import { Registration, RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
+import { RegistrationPreview, RegistrationStatus } from '../../types/registration.types';
 import { deleteRegistration, fetchRegistrationsByOwner } from '../../api/registrationApi';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { setNotification } from '../../redux/notificationSlice';
@@ -24,7 +24,6 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
   const dispatch = useDispatch();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [registrationToDelete, setRegistrationToDelete] = useState<RegistrationPreview>();
   const [isDeleting, setIsDeleting] = useState(false);
 
   const registrationsQuery = useQuery({
@@ -56,25 +55,25 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       return 0;
     });
 
-  const draftRegistrations = registrations.filter(({ status }) => status === RegistrationStatus.Draft);
-
-  const deleteDraftRegistration = async (registration: RegistrationPreview) => {
-    const identifierToDelete = getIdentifierFromId(registration.id);
-
-    const deleteRegistrationResponse = await deleteRegistration(identifierToDelete);
-    if (isErrorStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
-      setIsDeleting(false);
-    } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
-      registrationsQuery.refetch();
-    }
-  };
-
   const deleteAllDraftRegistrations = () => {
+    const draftRegistrations = registrations.filter(({ status }) => status === RegistrationStatus.Draft);
+
     setIsDeleting(true);
 
-    draftRegistrations.map((registration) => {
+    draftRegistrations.forEach((registration) => {
+      const deleteDraftRegistration = async (registration: RegistrationPreview) => {
+        const identifierToDelete = getIdentifierFromId(registration.id);
+        const deleteRegistrationResponse = await deleteRegistration(identifierToDelete);
+
+        if (isErrorStatus(deleteRegistrationResponse.status)) {
+          dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
+          setIsDeleting(false);
+        } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
+          dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
+          registrationsQuery.refetch();
+        }
+      };
+
       deleteDraftRegistration(registration);
     });
 
@@ -101,7 +100,9 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
                 {t('common.result_registrations')}
               </Typography>
               <LoadingButton variant="outlined" color="error" onClick={deleteAllOnClick}>
-                <Typography color={'error.main'}>{t('common.delete_all')}</Typography>
+                <Typography color={'error.main'}>
+                  {t('my_page.registrations.delete_all_draft_registrations')}
+                </Typography>
               </LoadingButton>
             </Box>
             <MyRegistrationsList
@@ -119,7 +120,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
         onCancel={() => setShowDeleteModal(false)}
         isLoading={isDeleting}
         dialogDataTestId="confirm-delete-dialog">
-        <Typography>Slett alle upubliserte registreringer?</Typography>
+        <Typography>{t('my_page.registrations.delete_all_draft_registrations_message')}</Typography>
       </ConfirmDialog>
     </>
   );
