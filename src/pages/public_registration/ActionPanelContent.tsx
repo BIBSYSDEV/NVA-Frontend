@@ -1,17 +1,22 @@
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTicketMessage } from '../../api/registrationApi';
+import { addTicketMessage, deleteRegistration } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { userIsRegistrationCurator } from '../../utils/registration-helpers';
+import { getTitleString, userIsRegistrationCurator } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { SupportAccordion } from './action_accordions/SupportAccordion';
+import { Box, Button, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Registration } from '../../types/registration.types';
+import { getIdentifierFromId } from '../../utils/general-helpers';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
@@ -52,6 +57,32 @@ export const ActionPanelContent = ({
 
   const isInRegistrationWizard =
     window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [registrationToDelete, setRegistrationToDelete] = useState<Registration>();
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const deleteDraftRegistration = async () => {
+    if (!registrationToDelete) {
+      return;
+    }
+    const identifierToDelete = getIdentifierFromId(registrationToDelete.id);
+    setIsDeleting(true);
+    const deleteRegistrationResponse = await deleteRegistration(identifierToDelete);
+    if (isErrorStatus(deleteRegistrationResponse.status)) {
+      dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
+      setIsDeleting(false);
+    } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
+      dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
+      setIsDeleting(false);
+      setShowDeleteModal(false);
+    }
+  };
+
+  const onClickDeleteRegistration = (registration: Registration) => {
+    setRegistrationToDelete(registration);
+    setShowDeleteModal(true);
+  };
 
   return (
     <>
@@ -98,6 +129,28 @@ export const ActionPanelContent = ({
           />
         </ErrorBoundary>
       )}
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          sx={{ width: '95%', mt: '1rem' }}
+          variant="contained"
+          onClick={() => onClickDeleteRegistration(registration)}>
+          {t('common.delete')}
+        </Button>
+      </Box>
+
+      <ConfirmDialog
+        open={!!showDeleteModal}
+        title={t('my_page.registrations.delete_registration')}
+        onAccept={deleteDraftRegistration}
+        onCancel={() => setShowDeleteModal(false)}
+        isLoading={isDeleting}
+        dialogDataTestId="confirm-delete-dialog">
+        <Typography>
+          {t('my_page.registrations.delete_registration_message', {
+            title: getTitleString(registrationToDelete?.entityDescription?.mainTitle),
+          })}
+        </Typography>
+      </ConfirmDialog>
     </>
   );
 };
