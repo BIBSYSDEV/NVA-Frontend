@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { addEmployment, createCristinPerson } from '../../../api/cristinApi';
 import { createUser } from '../../../api/roleApi';
+import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import {
@@ -96,7 +97,7 @@ export const AddEmployeePage = () => {
   };
 
   return (
-    <>
+    <BackgroundDiv>
       <Helmet>
         <title>{t('basic_data.add_employee.add_employee')}</title>
       </Helmet>
@@ -141,6 +142,6 @@ export const AddEmployeePage = () => {
           </Form>
         )}
       </Formik>
-    </>
+    </BackgroundDiv>
   );
 };
