@@ -1,4 +1,4 @@
-import { Button, Divider, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -45,8 +45,9 @@ export const CentralImportDuplicationCheckPage = () => {
   ) : importCandidate ? (
     <>
       {importCandidate && <CentralImportResultItem importCandidate={importCandidate} />}
-      <Divider sx={{ marginBottom: '2rem' }} />
-      <Typography variant="h3">{t('basic_data.central_import.search_for_duplicates')}:</Typography>
+      <Typography variant="h3" sx={{ mt: '1rem' }}>
+        {t('basic_data.central_import.search_for_duplicates')}:
+      </Typography>
       <DuplicateSearchFilterForm
         importCandidate={importCandidate}
         setDuplicateSearchFilters={setDuplicateSearchFilters}
