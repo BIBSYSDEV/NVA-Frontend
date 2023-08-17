@@ -106,6 +106,15 @@ export const CentralImportDuplicationCheckPage = () => {
         </StyledPaperHeader>
 
         <Box sx={{ m: '0.5rem' }}>
+          {importCandidate?.importStatus.candidateStatus === 'IMPORTED' && (
+            <>
+              <Typography>{t('basic_data.central_import.import_completed')}</Typography>
+              <Typography>
+                {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
+              </Typography>
+            </>
+          )}
+
           {importCandidate?.importStatus.candidateStatus === 'NOT_IMPORTED' &&
             (!importCandidateMutation.isSuccess ? (
               <>
@@ -125,14 +134,16 @@ export const CentralImportDuplicationCheckPage = () => {
                 </LoadingButton>
               </>
             ) : (
-              <Button
-                sx={{ mt: '0.5rem' }}
-                variant="contained"
-                color="primary"
-                component={Link}
-                to={getRegistrationLandingPagePath(importCandidateMutation.data.identifier)}>
-                {t('basic_data.central_import.see_publication')}
-              </Button>
+              <>
+                <Typography gutterBottom>{t('basic_data.central_import.import_completed')}</Typography>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  component={Link}
+                  to={getRegistrationLandingPagePath(importCandidateMutation.data.identifier)}>
+                  {t('basic_data.central_import.see_publication')}
+                </Button>
+              </>
             ))}
         </Box>
       </Paper>

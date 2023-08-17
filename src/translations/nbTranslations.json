@@ -51,6 +51,7 @@
       "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importpublikasjonen.",
       "duplicate_search_hits": "Søket ga følgende treff:",
       "duplicate_search_no_hits": "Søket ga ingen treff",
+      "import_completed": "Publikasjonen er importert.",
       "or_search_with": "eller søk med",
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
