@@ -47,11 +47,10 @@
     "central_import": {
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Sentralimport",
-      "duplicate_check": "Duplikatsjekk",
-      "duplicate_search_hits_shown": "Søket ga følgende treff: (viser {{ShownResultsCount}} av {{TotalResultsCount}})",
+      "duplicate_search_hits": "Søket ga følgende treff:",
+      "duplicate_search_no_hits": "Søket ga ingen treff",
       "import": "Importer",
       "or_search_with": "eller søk med",
-      "publications": "Publikasjoner",
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",

@@ -1,4 +1,4 @@
-import { Divider, List, Typography } from '@mui/material';
+import { List } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -40,33 +40,26 @@ export const CentralImportPage = () => {
 
   const searchResults = importCandidateQuery.data?.hits ?? [];
 
-  return (
-    <>
-      <Typography variant="h3">{t('basic_data.central_import.publications')}</Typography>
-      {importCandidateQuery.isLoading ? (
-        <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-      ) : (
-        searchResults && (
-          <>
-            <Typography variant="subtitle1">{t('search.hits', { count: importCandidateQuery.data?.size })}:</Typography>
-            <Divider />
-            <List>
-              {searchResults.map((importCandidate) => (
-                <CentralImportResultItem importCandidate={importCandidate} key={importCandidate.id} />
-              ))}
-            </List>
-            {searchResults.length > 0 && (
-              <ListPagination
-                count={importCandidateQuery.data?.size ?? -1}
-                rowsPerPage={rowsPerPage}
-                page={page + 1}
-                onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
-                onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
-              />
-            )}
-          </>
-        )
-      )}
-    </>
+  return importCandidateQuery.isLoading ? (
+    <ListSkeleton minWidth={100} maxWidth={100} height={100} />
+  ) : (
+    searchResults && (
+      <>
+        <List>
+          {searchResults.map((importCandidate) => (
+            <CentralImportResultItem importCandidate={importCandidate} key={importCandidate.id} />
+          ))}
+        </List>
+        {searchResults.length > 0 && (
+          <ListPagination
+            count={importCandidateQuery.data?.size ?? -1}
+            rowsPerPage={rowsPerPage}
+            page={page + 1}
+            onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
+            onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
+          />
+        )}
+      </>
+    )
   );
 };

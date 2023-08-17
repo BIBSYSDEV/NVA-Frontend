@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -40,34 +40,23 @@ export const CentralImportDuplicationCheckPage = () => {
     });
   }, [importCandidate]);
 
-  return (
+  return importCandidateQuery.isLoading ? (
+    <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
+  ) : importCandidate ? (
     <>
-      <Typography id="duplicate-check-label" variant="h2" gutterBottom>
-        {t('basic_data.central_import.duplicate_check')}
-      </Typography>
-      <>
-        {importCandidateQuery.isLoading ? (
-          <PageSpinner aria-labelledby="duplicate-check-label" />
-        ) : importCandidate ? (
-          <>
-            {importCandidate && <CentralImportResultItem importCandidate={importCandidate} />}
-            <Divider sx={{ marginBottom: '2rem' }} />
-            <Typography variant="h3">{t('basic_data.central_import.search_for_duplicates')}:</Typography>
-            <DuplicateSearchFilterForm
-              importCandidate={importCandidate}
-              setDuplicateSearchFilters={setDuplicateSearchFilters}
-            />
-            <Button variant="outlined" color="primary" component={Link} to={getImportCandidatePagePath(identifier)}>
-              {t('basic_data.central_import.import')}
-            </Button>
-            <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 2rem' }, mt: '1rem' }}>
-              <CentralImportDuplicateSearch duplicateSearchFilters={duplicateSearchFilters} />
-            </Box>
-          </>
-        ) : (
-          <NotFound />
-        )}
-      </>
+      {importCandidate && <CentralImportResultItem importCandidate={importCandidate} />}
+      <Divider sx={{ marginBottom: '2rem' }} />
+      <Typography variant="h3">{t('basic_data.central_import.search_for_duplicates')}:</Typography>
+      <DuplicateSearchFilterForm
+        importCandidate={importCandidate}
+        setDuplicateSearchFilters={setDuplicateSearchFilters}
+      />
+      <Button variant="outlined" color="primary" component={Link} to={getImportCandidatePagePath(identifier)}>
+        {t('basic_data.central_import.import')}
+      </Button>
+      <CentralImportDuplicateSearch duplicateSearchFilters={duplicateSearchFilters} />
     </>
+  ) : (
+    <NotFound />
   );
 };
