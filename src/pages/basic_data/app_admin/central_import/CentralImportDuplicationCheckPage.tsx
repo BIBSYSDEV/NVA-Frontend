@@ -1,11 +1,15 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Paper, Typography } from '@mui/material';
+import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { createRegistrationFromImportCandidate, fetchImportCandidate } from '../../../../api/registrationApi';
+import {
+  createRegistrationFromImportCandidate,
+  fetchImportCandidate,
+  markImportCandidateStatusAsNotApplicable,
+} from '../../../../api/registrationApi';
 import { fetchImportCandidates } from '../../../../api/searchApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
@@ -51,6 +55,17 @@ export const CentralImportDuplicationCheckPage = () => {
       dispatch(
         setNotification({
           message: t('feedback.error.create_registration'),
+          variant: 'error',
+        })
+      ),
+  });
+
+  const importCandidateStatusMutation = useMutation({
+    mutationFn: () => markImportCandidateStatusAsNotApplicable(identifier),
+    onError: () =>
+      dispatch(
+        setNotification({
+          message: t('feedback.error.update_import_status'),
           variant: 'error',
         })
       ),
@@ -114,37 +129,64 @@ export const CentralImportDuplicationCheckPage = () => {
               </Typography>
             </>
           )}
+          {importCandidate?.importStatus.candidateStatus === 'NOT_APPLICABLE' && (
+            <>
+              <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
+              <Typography>
+                {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
+              </Typography>
+            </>
+          )}
 
-          {importCandidate?.importStatus.candidateStatus === 'NOT_IMPORTED' &&
-            (!importCandidateMutation.isSuccess ? (
-              <>
-                <Typography gutterBottom>
-                  {t('basic_data.central_import.create_publication_from_import_candidate')}
-                </Typography>
+          {importCandidate?.importStatus.candidateStatus === 'NOT_IMPORTED' && (
+            <>
+              {!importCandidateMutation.isSuccess && !importCandidateStatusMutation.isSuccess ? (
+                <>
+                  <Typography gutterBottom>
+                    {t('basic_data.central_import.create_publication_from_import_candidate')}
+                  </Typography>
 
-                <LoadingButton
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  color="primary"
-                  disabled={importCandidateMutation.isSuccess}
-                  loading={importCandidateMutation.isLoading}
-                  onClick={() => importCandidateMutation.mutate()}>
-                  {t('basic_data.central_import.create_new')}
-                </LoadingButton>
-              </>
-            ) : (
-              <>
-                <Typography gutterBottom>{t('basic_data.central_import.import_completed')}</Typography>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  component={Link}
-                  to={getRegistrationLandingPagePath(importCandidateMutation.data.identifier)}>
-                  {t('basic_data.central_import.see_publication')}
-                </Button>
-              </>
-            ))}
+                  <LoadingButton
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    color="primary"
+                    disabled={importCandidateStatusMutation.isLoading}
+                    loading={importCandidateMutation.isLoading}
+                    onClick={() => importCandidateMutation.mutate()}>
+                    {t('basic_data.central_import.create_new')}
+                  </LoadingButton>
+
+                  <Divider sx={{ my: '1rem' }} />
+
+                  <Typography gutterBottom>{t('basic_data.central_import.mark_as_not_applicable')}</Typography>
+                  <LoadingButton
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    color="primary"
+                    disabled={importCandidateMutation.isLoading}
+                    loading={importCandidateStatusMutation.isLoading}
+                    onClick={() => importCandidateStatusMutation.mutate()}>
+                    {t('basic_data.central_import.not_applicable')}
+                  </LoadingButton>
+                </>
+              ) : importCandidateMutation.isSuccess ? (
+                <>
+                  <Typography gutterBottom>{t('basic_data.central_import.import_completed')}</Typography>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    component={Link}
+                    to={getRegistrationLandingPagePath(importCandidateMutation.data.identifier)}>
+                    {t('basic_data.central_import.see_publication')}
+                  </Button>
+                </>
+              ) : importCandidateStatusMutation.isSuccess ? (
+                <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
+              ) : null}
+            </>
+          )}
         </Box>
       </Paper>
     </Box>

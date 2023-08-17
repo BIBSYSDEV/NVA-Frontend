@@ -111,10 +111,19 @@ export const fetchImportCandidate = async (importCandidateIdentifier: string) =>
 };
 
 export const createRegistrationFromImportCandidate = async (importCandidate: ImportCandidate) => {
-  const creatRegistrationResponse = await authenticatedApiRequest2<Registration>({
+  const createRegistrationResponse = await authenticatedApiRequest2<Registration>({
     url: `${PublicationsApiPath.ImportCandidate}/${importCandidate.identifier}`,
     method: 'POST',
     data: importCandidate,
   });
-  return creatRegistrationResponse.data;
+  return createRegistrationResponse.data;
+};
+
+export const markImportCandidateStatusAsNotApplicable = async (importCandidateIdentifier: string) => {
+  const updateImportCandidateStatusResponse = await authenticatedApiRequest2<ImportCandidate>({
+    url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}`,
+    method: 'PUT',
+    data: { candidateStatus: 'NOT_APPLICABLE' },
+  });
+  return updateImportCandidateStatusResponse.data;
 };
