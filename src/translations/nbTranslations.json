@@ -120,6 +120,7 @@
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskrivelse",
+    "dialogue": "Dialog",
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
@@ -501,7 +502,6 @@
   },
   "my_page": {
     "messages": {
-      "dialogue": "Dialog",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",

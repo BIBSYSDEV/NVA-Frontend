@@ -146,7 +146,7 @@ const MyPagePage = () => {
           <NavigationListAccordion
             key={dataTestId.myPage.messagesAccordion}
             dataTestId={dataTestId.myPage.messagesAccordion}
-            title={t('my_page.messages.dialogue')}
+            title={t('common.dialogue')}
             startIcon={<ChatBubbleIcon fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
@@ -442,7 +442,7 @@ const MyPagePage = () => {
               setRowsPerPage={setRowsPerPage}
               page={page}
               setPage={setPage}
-              helmetTitle={t('my_page.messages.dialogue')}
+              helmetTitle={t('common.dialogue')}
             />
           </PrivateRoute>
           <PrivateRoute
