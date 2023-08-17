@@ -184,6 +184,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
             ),
           }}
           onChange={(event) => {
+            setCurrentPage(1);
             setFilterInput(event.target.value);
           }}
         />
