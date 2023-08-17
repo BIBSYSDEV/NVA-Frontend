@@ -6,7 +6,7 @@ export const mockImportCandidate: ImportCandidateSummary = {
   id: 'https://api.dev.nva.aws.unit.no/registration/12345679',
   contributors: [],
   additionalIdentifiers: ['12345'],
-  importStatus: 'NOT_IMPORTED',
+  importStatus: { candidateStatus: 'NOT_IMPORTED', modifiedDate: '2023-08-02T15:15:58.910077Z' },
   doi: '',
   publicationYear: '2020',
   mainTitle:
