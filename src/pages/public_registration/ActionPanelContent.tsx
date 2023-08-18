@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { Registration } from '../../types/registration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { ConfirmDialog } from '../../components/ConfirmDialog';
+import { useHistory } from 'react-router-dom';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
@@ -32,6 +33,8 @@ export const ActionPanelContent = ({
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const currentPath = history.location.pathname;
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
   const userIsCurator = userIsRegistrationCurator(user, registration);
@@ -76,6 +79,12 @@ export const ActionPanelContent = ({
       dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
       setIsDeleting(false);
       setShowDeleteModal(false);
+
+      if (currentPath.startsWith('/my-page/messages')) {
+        history.push(UrlPathTemplate.MyPageMyMessages);
+      } else if (currentPath.startsWith('/registration')) {
+        history.push(UrlPathTemplate.MyPageMyRegistrations);
+      }
     }
   };
 
