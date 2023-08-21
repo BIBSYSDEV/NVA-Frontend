@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +9,6 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus } from '../../types/registration.types';
-import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { MyRegistrationsList } from './MyRegistrationsList';
 
@@ -54,21 +53,35 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       return 0;
     });
 
+  const draftRegistrationMutation = useMutation({
+    mutationFn: () => deleteAllDraftRegistrations(),
+    onSuccess: () => {
+      dispatch(
+        setNotification({
+          message: t('feedback.success.delete_registration'),
+          variant: 'success',
+        })
+      );
+      registrationsQuery.refetch();
+    },
+    onError: () =>
+      dispatch(
+        setNotification({
+          message: t('feedback.error.delete_registration'),
+          variant: 'error',
+        })
+      ),
+  });
+
   const deleteAllDraftRegistrations = async () => {
+    setShowDeleteModal(true);
     const draftRegistrations = registrations.filter(({ status }) => status === RegistrationStatus.Draft);
 
     setIsDeleting(true);
 
     const deletePromises = draftRegistrations.map(async (registration) => {
       const identifierToDelete = getIdentifierFromId(registration.id);
-      const deleteRegistrationResponse = await deleteRegistration(identifierToDelete);
-
-      if (isErrorStatus(deleteRegistrationResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
-      } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
-        registrationsQuery.refetch();
-      }
+      await deleteRegistration(identifierToDelete);
     });
 
     try {
@@ -81,8 +94,8 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
     }
   };
 
-  const deleteAllOnClick = () => {
-    setShowDeleteModal(true);
+  const handleDelete = () => {
+    draftRegistrationMutation.mutate();
   };
 
   return (
@@ -99,12 +112,14 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
               <Typography gutterBottom variant="h2">
                 {t('common.result_registrations')}
               </Typography>
-              <Button variant="contained" onClick={deleteAllOnClick}>
-                {t('my_page.registrations.delete_all_draft_registrations')}
-              </Button>
+              {(!selectedPublished || selectedUnpublished) && (
+                <Button variant="contained" onClick={() => setShowDeleteModal(true)}>
+                  {t('my_page.registrations.delete_all_draft_registrations')}
+                </Button>
+              )}
             </Box>
             <MyRegistrationsList
-              registrations={filteredRegistrations.length > 0 ? filteredRegistrations : []}
+              registrations={filteredRegistrations}
               refetchRegistrations={registrationsQuery.refetch}
             />
           </>
@@ -114,10 +129,9 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       <ConfirmDialog
         open={!!showDeleteModal}
         title={t('my_page.registrations.delete_registration')}
-        onAccept={deleteAllDraftRegistrations}
+        onAccept={handleDelete}
         onCancel={() => setShowDeleteModal(false)}
-        isLoading={isDeleting}
-        dialogDataTestId="confirm-delete-dialog">
+        isLoading={isDeleting}>
         <Typography>{t('my_page.registrations.delete_all_draft_registrations_message')}</Typography>
       </ConfirmDialog>
     </>
