@@ -17,7 +17,6 @@ import {
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -139,56 +138,55 @@ const BasicDataPage = () => {
           </>
         )}
       </SideMenu>
-      <BackgroundDiv>
-        <Switch>
-          <ErrorBoundary>
-            <PrivateRoute exact path={UrlPathTemplate.BasicData} isAuthorized={isAppAdmin || isInstitutionAdmin}>
-              {isInstitutionAdmin ? (
-                <Redirect to={UrlPathTemplate.BasicDataPersonRegister} />
-              ) : isAppAdmin ? (
-                <Redirect to={UrlPathTemplate.BasicDataInstitutions} />
-              ) : null}
-            </PrivateRoute>
 
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataInstitutions}
-              component={AdminCustomerInstitutionsContainer}
-              isAuthorized={isAppAdmin}
-            />
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataCentralImport}
-              component={CentralImportPage}
-              isAuthorized={isAppAdmin}
-            />
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
-              component={CentralImportDuplicationCheckPage}
-              isAuthorized={isAppAdmin}
-            />
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataCentralImportRegistration}
-              component={CentralImportRegistration}
-              isAuthorized={isAppAdmin}
-            />
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataAddEmployee}
-              component={AddEmployeePage}
-              isAuthorized={isInstitutionAdmin}
-            />
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataPersonRegister}
-              component={PersonRegisterPage}
-              isAuthorized={isInstitutionAdmin}
-            />
-          </ErrorBoundary>
-        </Switch>
-      </BackgroundDiv>
+      <Switch>
+        <ErrorBoundary>
+          <PrivateRoute exact path={UrlPathTemplate.BasicData} isAuthorized={isAppAdmin || isInstitutionAdmin}>
+            {isInstitutionAdmin ? (
+              <Redirect to={UrlPathTemplate.BasicDataPersonRegister} />
+            ) : isAppAdmin ? (
+              <Redirect to={UrlPathTemplate.BasicDataInstitutions} />
+            ) : null}
+          </PrivateRoute>
+
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataInstitutions}
+            component={AdminCustomerInstitutionsContainer}
+            isAuthorized={isAppAdmin}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataCentralImport}
+            component={CentralImportPage}
+            isAuthorized={isAppAdmin}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
+            component={CentralImportDuplicationCheckPage}
+            isAuthorized={isAppAdmin}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataCentralImportRegistration}
+            component={CentralImportRegistration}
+            isAuthorized={isAppAdmin}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataAddEmployee}
+            component={AddEmployeePage}
+            isAuthorized={isInstitutionAdmin}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataPersonRegister}
+            component={PersonRegisterPage}
+            isAuthorized={isInstitutionAdmin}
+          />
+        </ErrorBoundary>
+      </Switch>
     </StyledPageWithSideMenu>
   );
 };
