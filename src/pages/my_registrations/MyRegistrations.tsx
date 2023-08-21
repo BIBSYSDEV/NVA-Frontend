@@ -54,7 +54,14 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
     });
 
   const deleteDraftRegistrationMutation = useMutation({
-    mutationFn: () => deleteAllDraftRegistrations(),
+    mutationFn: async () => {
+      const deletePromises = draftRegistrations.map(async (registration) => {
+        const identifierToDelete = getIdentifierFromId(registration.id);
+        await deleteRegistration(identifierToDelete);
+      });
+
+      await Promise.all(deletePromises);
+    },
     onSuccess: () => {
       dispatch(
         setNotification({
@@ -75,15 +82,6 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       setShowDeleteModal(false);
     },
   });
-
-  const deleteAllDraftRegistrations = async () => {
-    const deletePromises = draftRegistrations.map(async (registration) => {
-      const identifierToDelete = getIdentifierFromId(registration.id);
-      await deleteRegistration(identifierToDelete);
-    });
-
-    await Promise.all(deletePromises);
-  };
 
   return (
     <>
