@@ -22,7 +22,6 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
   const dispatch = useDispatch();
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const registrationsQuery = useQuery({
     queryKey: ['by-owner'],
@@ -54,7 +53,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       return 0;
     });
 
-  const draftRegistrationMutation = useMutation({
+  const deleteDraftRegistrationMutation = useMutation({
     mutationFn: () => deleteAllDraftRegistrations(),
     onSuccess: () => {
       dispatch(
@@ -63,7 +62,6 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
           variant: 'success',
         })
       );
-      registrationsQuery.refetch();
     },
     onError: () =>
       dispatch(
@@ -72,30 +70,19 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
           variant: 'error',
         })
       ),
+    onSettled: () => {
+      registrationsQuery.refetch();
+      setShowDeleteModal(false);
+    },
   });
 
   const deleteAllDraftRegistrations = async () => {
-    setShowDeleteModal(true);
-
-    setIsDeleting(true);
-
     const deletePromises = draftRegistrations.map(async (registration) => {
       const identifierToDelete = getIdentifierFromId(registration.id);
       await deleteRegistration(identifierToDelete);
     });
 
-    try {
-      await Promise.all(deletePromises);
-    } catch (error) {
-      dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
-    } finally {
-      setIsDeleting(false);
-      setShowDeleteModal(false);
-    }
-  };
-
-  const handleDelete = () => {
-    draftRegistrationMutation.mutate();
+    await Promise.all(deletePromises);
   };
 
   return (
@@ -132,9 +119,9 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       <ConfirmDialog
         open={!!showDeleteModal}
         title={t('my_page.registrations.delete_registration')}
-        onAccept={handleDelete}
+        onAccept={() => deleteDraftRegistrationMutation.mutate()}
         onCancel={() => setShowDeleteModal(false)}
-        isLoading={isDeleting}>
+        isLoading={deleteDraftRegistrationMutation.isLoading}>
         <Typography>{t('my_page.registrations.delete_all_draft_registrations_message')}</Typography>
       </ConfirmDialog>
     </>
