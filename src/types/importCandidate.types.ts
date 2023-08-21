@@ -1,3 +1,4 @@
+import { Contributor } from './contributor.types';
 import { Organization } from './organization.types';
 import { ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
 import { BookPublicationInstance } from './publication_types/bookRegistration.types';
@@ -12,11 +13,7 @@ import { ReportPublicationInstance } from './publication_types/reportRegistratio
 import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
 import { Journal, Publisher, Registration } from './registration.types';
 
-export enum ImportStatus {
-  Imported = 'IMPORTED',
-  NotImported = 'NOT_IMPORTED',
-  NotApplicable = 'NOT_APPLICABLE',
-}
+type ImportStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
 
 export interface ImportCandidate extends Omit<Registration, 'type'> {
   type: 'ImportCandidate';
@@ -37,6 +34,7 @@ export interface ImportCandidateSummary {
   publisher: Pick<Publisher, 'id' | 'name'>;
   journal: Pick<Journal, 'id'>;
   publicationInstance: PublicationInstance;
+  contributors: Contributor[];
 }
 
 type PublicationInstance =

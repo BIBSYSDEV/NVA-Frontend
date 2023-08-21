@@ -1,4 +1,4 @@
-import { Divider, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -32,39 +32,41 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
 
   const searchQuery = queryArray.length > 0 ? `(${queryArray.join(' AND ')})` : '';
 
-  const duplicatesQuery = useQuery({
+  const duplicateCandidatesQuery = useQuery({
     queryKey: ['registrationsSearch', rowsPerPage, page, searchQuery],
     queryFn: () => fetchResults(rowsPerPage, (page - 1) * rowsPerPage, searchQuery),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
+  const duplicateCandidatesSize = duplicateCandidatesQuery.data?.size ?? 0;
 
   return (
-    <>
-      {duplicatesQuery.isLoading ? (
+    <Box sx={{ border: '1px solid black', padding: { xs: '0.5rem', sm: '0.5rem 1rem' }, mt: '1rem' }}>
+      {duplicateCandidatesQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>
           <Typography variant="subtitle1">
-            {t('basic_data.central_import.duplicate_search_hits_shown', {
-              ShownResultsCount: duplicatesQuery.data?.hits.length ?? 0,
-              TotalResultsCount: duplicatesQuery.data?.size ?? 0,
-            })}
-            :
+            {duplicateCandidatesSize === 0
+              ? t('basic_data.central_import.duplicate_search_no_hits')
+              : t('basic_data.central_import.duplicate_search_hits')}
           </Typography>
-          <Divider />
-          <RegistrationList registrations={duplicatesQuery.data?.hits ?? []} />
-          <ListPagination
-            count={duplicatesQuery.data?.size ?? 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}
-          />
+          {duplicateCandidatesSize > 0 && (
+            <>
+              <RegistrationList registrations={duplicateCandidatesQuery.data?.hits ?? []} />
+              <ListPagination
+                count={duplicateCandidatesSize}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={(newPage) => setPage(newPage)}
+                onRowsPerPageChange={(newRowsPerPage) => {
+                  setRowsPerPage(newRowsPerPage);
+                  setPage(1);
+                }}
+              />
+            </>
+          )}
         </>
       )}
-    </>
+    </Box>
   );
 };
