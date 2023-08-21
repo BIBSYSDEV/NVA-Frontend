@@ -150,7 +150,6 @@ export const CentralImportDuplicationCheckPage = () => {
                     variant="outlined"
                     fullWidth
                     size="small"
-                    color="primary"
                     disabled={importCandidateStatusMutation.isLoading}
                     loading={importCandidateMutation.isLoading}
                     onClick={() => importCandidateMutation.mutate()}>
@@ -164,7 +163,6 @@ export const CentralImportDuplicationCheckPage = () => {
                     variant="outlined"
                     fullWidth
                     size="small"
-                    color="primary"
                     disabled={importCandidateMutation.isLoading}
                     loading={importCandidateStatusMutation.isLoading}
                     onClick={() => importCandidateStatusMutation.mutate()}>
@@ -176,7 +174,6 @@ export const CentralImportDuplicationCheckPage = () => {
                   <Typography gutterBottom>{t('basic_data.central_import.import_completed')}</Typography>
                   <Button
                     variant="outlined"
-                    color="primary"
                     component={Link}
                     to={getRegistrationLandingPagePath(importCandidateMutation.data.identifier)}>
                     {t('basic_data.central_import.see_publication')}
