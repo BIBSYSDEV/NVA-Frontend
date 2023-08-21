@@ -1,4 +1,4 @@
-import { ImportCandidate } from '../types/importCandidate.types';
+import { CandidateStatus, ImportCandidate } from '../types/importCandidate.types';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
@@ -119,11 +119,13 @@ export const createRegistrationFromImportCandidate = async (importCandidate: Imp
   return createRegistrationResponse.data;
 };
 
+const notApplicableStatus: CandidateStatus = 'NOT_APPLICABLE';
 export const markImportCandidateStatusAsNotApplicable = async (importCandidateIdentifier: string) => {
   const updateImportCandidateStatusResponse = await authenticatedApiRequest2<ImportCandidate>({
     url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}`,
     method: 'PUT',
-    data: { candidateStatus: 'NOT_APPLICABLE' },
+    data: { candidateStatus: notApplicableStatus },
   });
+
   return updateImportCandidateStatusResponse.data;
 };
