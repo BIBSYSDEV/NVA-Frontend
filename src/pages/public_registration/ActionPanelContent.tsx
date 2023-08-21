@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -60,26 +61,32 @@ export const ActionPanelContent = ({
     window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  const deleteDraftRegistration = async () => {
-    setIsDeleting(true);
-    const deleteRegistrationResponse = await deleteRegistration(registration.identifier);
-    if (isErrorStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
-      setIsDeleting(false);
-    } else if (isSuccessStatus(deleteRegistrationResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.success.delete_registration'), variant: 'success' }));
-      setIsDeleting(false);
-      setShowDeleteModal(false);
+  const draftRegistrationMutation = useMutation({
+    mutationFn: () => deleteRegistration(registration.identifier),
+    onSuccess: () => {
+      dispatch(
+        setNotification({
+          message: t('feedback.success.delete_registration'),
+          variant: 'success',
+        })
+      );
 
       if (currentPath.startsWith(UrlPathTemplate.MyPageMessages)) {
         history.push(UrlPathTemplate.MyPageMyMessages);
       } else if (currentPath.startsWith(UrlPathTemplate.RegistrationNew)) {
         history.push(UrlPathTemplate.MyPageMyRegistrations);
       }
-    }
-  };
+    },
+    onError: () => {
+      dispatch(
+        setNotification({
+          message: t('feedback.error.delete_registration'),
+          variant: 'error',
+        })
+      );
+    },
+  });
 
   return (
     <>
@@ -135,9 +142,9 @@ export const ActionPanelContent = ({
       <ConfirmDialog
         open={!!showDeleteModal}
         title={t('my_page.registrations.delete_registration')}
-        onAccept={deleteDraftRegistration}
+        onAccept={draftRegistrationMutation.mutate}
         onCancel={() => setShowDeleteModal(false)}
-        isLoading={isDeleting}>
+        isLoading={draftRegistrationMutation.isLoading}>
         <Typography>
           {t('my_page.registrations.delete_registration_message', {
             title: getTitleString(registration?.entityDescription?.mainTitle),
