@@ -9,9 +9,7 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
-import { Registration } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getTitleString, userIsRegistrationCurator } from '../../utils/registration-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
@@ -65,9 +63,8 @@ export const ActionPanelContent = ({
   const [isDeleting, setIsDeleting] = useState(false);
 
   const deleteDraftRegistration = async () => {
-    const identifierToDelete = getIdentifierFromId(registration.id);
     setIsDeleting(true);
-    const deleteRegistrationResponse = await deleteRegistration(identifierToDelete);
+    const deleteRegistrationResponse = await deleteRegistration(registration.identifier);
     if (isErrorStatus(deleteRegistrationResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.delete_registration'), variant: 'error' }));
       setIsDeleting(false);
@@ -76,16 +73,12 @@ export const ActionPanelContent = ({
       setIsDeleting(false);
       setShowDeleteModal(false);
 
-      if (currentPath.startsWith('/my-page/messages')) {
+      if (currentPath.startsWith(UrlPathTemplate.MyPageMessages)) {
         history.push(UrlPathTemplate.MyPageMyMessages);
-      } else if (currentPath.startsWith('/registration')) {
+      } else if (currentPath.startsWith(UrlPathTemplate.RegistrationNew)) {
         history.push(UrlPathTemplate.MyPageMyRegistrations);
       }
     }
-  };
-
-  const onClickDeleteRegistration = (registration: Registration) => {
-    setShowDeleteModal(true);
   };
 
   return (
@@ -134,7 +127,7 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
       <Box sx={{ m: '0.5rem', mt: '1rem' }}>
-        <Button fullWidth variant="contained" onClick={() => onClickDeleteRegistration(registration)}>
+        <Button fullWidth variant="contained" onClick={() => setShowDeleteModal(true)}>
           {t('common.delete')}
         </Button>
       </Box>
