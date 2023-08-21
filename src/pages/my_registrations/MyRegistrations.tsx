@@ -58,7 +58,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
               {t('common.result_registrations')}
             </Typography>
             <MyRegistrationsList
-              registrations={filteredRegistrations.length > 0 ? filteredRegistrations : []}
+              registrations={filteredRegistrations}
               refetchRegistrations={registrationsQuery.refetch}
             />
           </>
