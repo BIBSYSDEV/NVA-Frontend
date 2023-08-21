@@ -6,7 +6,7 @@ import { Divider, FormControlLabel, FormGroup, Radio } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Redirect, Switch, useLocation } from 'react-router-dom';
+import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -16,7 +16,7 @@ import {
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
-import { SideMenu } from '../../components/SideMenu';
+import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
 import { ImportStatus } from '../../types/importCandidate.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -49,9 +49,22 @@ const BasicDataPage = () => {
     NOT_APPLICABLE: false,
   });
 
+  const expandedMenu = !location.pathname.startsWith(
+    UrlPathTemplate.BasicDataCentralImportDuplicateCheck.replace('/:identifier', '')
+  );
+
   return (
     <StyledPageWithSideMenu>
-      <SideMenu aria-labelledby="basic-data-title">
+      <SideMenu
+        aria-labelledby="basic-data-title"
+        expanded={expandedMenu}
+        minimizedMenu={
+          <Link to={UrlPathTemplate.BasicDataCentralImport}>
+            <StyledMinimizedMenuButton title={t('basic_data.basic_data')}>
+              <BusinessCenterIcon />
+            </StyledMinimizedMenuButton>
+          </Link>
+        }>
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
         {user?.isInstitutionAdmin && (
           <NavigationListAccordion
