@@ -9,7 +9,6 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus } from '../../types/registration.types';
-import { getIdentifierFromId } from '../../utils/general-helpers';
 import { MyRegistrationsList } from './MyRegistrationsList';
 
 interface MyRegistrationsProps {
@@ -55,31 +54,31 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
 
   const deleteDraftRegistrationMutation = useMutation({
     mutationFn: async () => {
-      const deletePromises = draftRegistrations.map(async (registration) => {
-        const identifierToDelete = getIdentifierFromId(registration.id);
-        await deleteRegistration(identifierToDelete);
-      });
+      const deletePromises = draftRegistrations.map(
+        async (registration) => await deleteRegistration(registration.identifier)
+      );
 
       await Promise.all(deletePromises);
     },
     onSuccess: () => {
       dispatch(
         setNotification({
-          message: t('feedback.success.delete_registration'),
+          message: t('feedback.success.delete_draft_registrations'),
           variant: 'success',
         })
       );
+      setShowDeleteModal(false);
     },
-    onError: () =>
+    onError: () => {
       dispatch(
         setNotification({
-          message: t('feedback.error.delete_registration'),
+          message: t('feedback.error.delete_draft_registrations'),
           variant: 'error',
         })
-      ),
+      );
+    },
     onSettled: () => {
       registrationsQuery.refetch();
-      setShowDeleteModal(false);
     },
   });
 
