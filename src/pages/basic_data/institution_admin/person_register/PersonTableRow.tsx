@@ -124,11 +124,15 @@ export const PersonTableRow = ({
     });
     if (isSuccessStatus(updateCristinPerson.status)) {
       // Update NVA User
+      const filteredRoles = !values.roles.includes(RoleName.Curator)
+        ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
+        : values.roles;
+
       let updateUserResponse;
       if (institutionUser) {
         const updatedInstitutionUser: InstitutionUser = {
           ...institutionUser,
-          roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+          roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
         };
 
         updateUserResponse = await authenticatedApiRequest<null>({
@@ -140,7 +144,7 @@ export const PersonTableRow = ({
         updateUserResponse = await createUser({
           nationalIdentityNumber: nationalId,
           customerId,
-          roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+          roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
         });
       }
       if (isSuccessStatus(updateUserResponse.status)) {
