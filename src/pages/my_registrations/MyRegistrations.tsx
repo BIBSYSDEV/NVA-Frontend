@@ -31,6 +31,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
   });
 
   const registrations = registrationsQuery.data?.publications ?? [];
+  const draftRegistrations = registrations.filter(({ status }) => status === RegistrationStatus.Draft);
 
   const filteredRegistrations = registrations
     .filter(
@@ -75,7 +76,6 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
 
   const deleteAllDraftRegistrations = async () => {
     setShowDeleteModal(true);
-    const draftRegistrations = registrations.filter(({ status }) => status === RegistrationStatus.Draft);
 
     setIsDeleting(true);
 
@@ -113,7 +113,10 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
                 {t('common.result_registrations')}
               </Typography>
               {(!selectedPublished || selectedUnpublished) && (
-                <Button variant="contained" onClick={() => setShowDeleteModal(true)}>
+                <Button
+                  variant="contained"
+                  onClick={() => setShowDeleteModal(true)}
+                  disabled={draftRegistrations.length === 0}>
                   {t('my_page.registrations.delete_all_draft_registrations')}
                 </Button>
               )}
