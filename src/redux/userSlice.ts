@@ -38,6 +38,7 @@ const userSlice = createSlice({
         allowedCustomers,
         isCreator: !!customerId && roles.includes(RoleName.Creator),
         isAppAdmin: !!customerId && roles.includes(RoleName.AppAdmin),
+        isAppAdminImporter: !!customerId && roles.includes(RoleName.AppAdminImportCandidates),
         isInstitutionAdmin: !!customerId && roles.includes(RoleName.InstitutionAdmin),
         isCurator: !!customerId && roles.includes(RoleName.Curator),
         isThesisCurator: !!customerId && roles.includes(RoleName.CuratorThesis),

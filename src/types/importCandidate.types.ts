@@ -26,7 +26,7 @@ export interface ImportCandidate extends Omit<Registration, 'type'> {
 }
 
 export interface ImportCandidateSummary {
-  type: 'ImportCandidate';
+  type: 'ImportCandidateSummary';
   id: string;
   additionalIdentifiers: string[];
   importStatus: ImportStatus;

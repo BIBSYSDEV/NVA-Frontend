@@ -101,103 +101,103 @@ const BasicDataPage = () => {
         )}
 
         {user?.isAppAdmin && (
-          <>
-            <NavigationListAccordion
-              title={t('common.institutions')}
-              startIcon={
-                <StoreIcon
-                  sx={{
-                    bgcolor: 'grey.500',
-                    padding: '0.1rem',
-                  }}
-                />
-              }
-              accordionPath={UrlPathTemplate.BasicDataInstitutions}
-              dataTestId={dataTestId.basicData.institutionsAccordion}>
-              <NavigationList>
-                <LinkButton
-                  data-testid={dataTestId.basicData.adminInstitutionsLink}
-                  isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
-                  to={UrlPathTemplate.BasicDataInstitutions}>
-                  {t('common.institutions')}
-                </LinkButton>
-              </NavigationList>
-              <Divider sx={{ mt: '0.5rem' }} />
-              <LinkCreateButton
-                data-testid={dataTestId.basicData.addCustomerLink}
-                isSelected={newCustomerIsSelected}
-                selectedColor="grey.500"
-                to={getAdminInstitutionPath('new')}
-                title={t('basic_data.institutions.add_institution')}
+          <NavigationListAccordion
+            title={t('common.institutions')}
+            startIcon={
+              <StoreIcon
+                sx={{
+                  bgcolor: 'grey.500',
+                  padding: '0.1rem',
+                }}
               />
-            </NavigationListAccordion>
+            }
+            accordionPath={UrlPathTemplate.BasicDataInstitutions}
+            dataTestId={dataTestId.basicData.institutionsAccordion}>
+            <NavigationList>
+              <LinkButton
+                data-testid={dataTestId.basicData.adminInstitutionsLink}
+                isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
+                to={UrlPathTemplate.BasicDataInstitutions}>
+                {t('common.institutions')}
+              </LinkButton>
+            </NavigationList>
+            <Divider sx={{ mt: '0.5rem' }} />
+            <LinkCreateButton
+              data-testid={dataTestId.basicData.addCustomerLink}
+              isSelected={newCustomerIsSelected}
+              selectedColor="grey.500"
+              to={getAdminInstitutionPath('new')}
+              title={t('basic_data.institutions.add_institution')}
+            />
+          </NavigationListAccordion>
+        )}
 
-            <NavigationListAccordion
-              title={t('basic_data.central_import.central_import')}
-              startIcon={
-                <FilterDramaIcon
-                  sx={{
-                    bgcolor: 'centralImport.main',
-                    padding: '0.1rem',
-                  }}
+        {user?.isAppAdminImporter && (
+          <NavigationListAccordion
+            title={t('basic_data.central_import.central_import')}
+            startIcon={
+              <FilterDramaIcon
+                sx={{
+                  bgcolor: 'centralImport.main',
+                  padding: '0.1rem',
+                }}
+              />
+            }
+            accordionPath={UrlPathTemplate.BasicDataCentralImport}
+            dataTestId={dataTestId.basicData.centralImportAccordion}>
+            <NavigationList>
+              <FormGroup sx={{ mx: '1rem' }}>
+                <FormControlLabel
+                  data-testid={dataTestId.basicData.centralImport.filter.notImportedRadio}
+                  checked={selectedImportCandidateStatus.NOT_IMPORTED}
+                  control={
+                    <Radio
+                      onChange={() =>
+                        setSelectedImportCandidateStatus({
+                          NOT_IMPORTED: !selectedImportCandidateStatus.NOT_IMPORTED,
+                          IMPORTED: false,
+                          NOT_APPLICABLE: false,
+                        })
+                      }
+                    />
+                  }
+                  label={t('basic_data.central_import.status.NOT_IMPORTED')}
                 />
-              }
-              accordionPath={UrlPathTemplate.BasicDataCentralImport}
-              dataTestId={dataTestId.basicData.centralImportAccordion}>
-              <NavigationList>
-                <FormGroup sx={{ mx: '1rem' }}>
-                  <FormControlLabel
-                    data-testid={dataTestId.basicData.centralImport.filter.notImportedRadio}
-                    checked={selectedImportCandidateStatus.NOT_IMPORTED}
-                    control={
-                      <Radio
-                        onChange={() =>
-                          setSelectedImportCandidateStatus({
-                            NOT_IMPORTED: !selectedImportCandidateStatus.NOT_IMPORTED,
-                            IMPORTED: false,
-                            NOT_APPLICABLE: false,
-                          })
-                        }
-                      />
-                    }
-                    label={t('basic_data.central_import.status.NOT_IMPORTED')}
-                  />
-                  <FormControlLabel
-                    data-testid={dataTestId.basicData.centralImport.filter.importedRadio}
-                    checked={selectedImportCandidateStatus.IMPORTED}
-                    control={
-                      <Radio
-                        onChange={() =>
-                          setSelectedImportCandidateStatus({
-                            NOT_IMPORTED: false,
-                            IMPORTED: !selectedImportCandidateStatus.IMPORTED,
-                            NOT_APPLICABLE: false,
-                          })
-                        }
-                      />
-                    }
-                    label={t('basic_data.central_import.status.IMPORTED')}
-                  />
-                  <FormControlLabel
-                    data-testid={dataTestId.basicData.centralImport.filter.notApplicableRadio}
-                    checked={selectedImportCandidateStatus.NOT_APPLICABLE}
-                    control={
-                      <Radio
-                        onChange={() =>
-                          setSelectedImportCandidateStatus({
-                            NOT_IMPORTED: false,
-                            IMPORTED: false,
-                            NOT_APPLICABLE: !selectedImportCandidateStatus.NOT_APPLICABLE,
-                          })
-                        }
-                      />
-                    }
-                    label={t('basic_data.central_import.status.NOT_APPLICABLE')}
-                  />
-                </FormGroup>
-              </NavigationList>
-            </NavigationListAccordion>
-          </>
+                <FormControlLabel
+                  data-testid={dataTestId.basicData.centralImport.filter.importedRadio}
+                  checked={selectedImportCandidateStatus.IMPORTED}
+                  control={
+                    <Radio
+                      onChange={() =>
+                        setSelectedImportCandidateStatus({
+                          NOT_IMPORTED: false,
+                          IMPORTED: !selectedImportCandidateStatus.IMPORTED,
+                          NOT_APPLICABLE: false,
+                        })
+                      }
+                    />
+                  }
+                  label={t('basic_data.central_import.status.IMPORTED')}
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.basicData.centralImport.filter.notApplicableRadio}
+                  checked={selectedImportCandidateStatus.NOT_APPLICABLE}
+                  control={
+                    <Radio
+                      onChange={() =>
+                        setSelectedImportCandidateStatus({
+                          NOT_IMPORTED: false,
+                          IMPORTED: false,
+                          NOT_APPLICABLE: !selectedImportCandidateStatus.NOT_APPLICABLE,
+                        })
+                      }
+                    />
+                  }
+                  label={t('basic_data.central_import.status.NOT_APPLICABLE')}
+                />
+              </FormGroup>
+            </NavigationList>
+          </NavigationListAccordion>
         )}
       </SideMenu>
 
