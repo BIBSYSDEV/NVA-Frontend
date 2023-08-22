@@ -48,9 +48,9 @@ const BasicDataPage = () => {
     NOT_APPLICABLE: false,
   });
 
-  const expandedMenu = !location.pathname.startsWith(
-    UrlPathTemplate.BasicDataCentralImportDuplicateCheck.replace('/:identifier', '')
-  );
+  const expandedMenu =
+    location.pathname === UrlPathTemplate.BasicDataCentralImport ||
+    !location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
 
   return (
     <StyledPageWithSideMenu>
