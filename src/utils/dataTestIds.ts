@@ -10,6 +10,11 @@ export const dataTestId = {
       checkboxIssn: 'duplicate-search-issn-checkbox',
       checkboxTitle: 'duplicate-search-title-checkbox',
       checkboxYear: 'duplicate-search-year-checkbox',
+      filter: {
+        importedRadio: 'imported-radio',
+        notImportedRadio: 'not-imported-radio',
+        notApplicableRadio: 'not-applicable-radio',
+      },
       resetButton: 'duplicate-search-reset-button',
       resultItem: 'central-import-result-item',
       searchButton: 'duplicate-search-retry-button',

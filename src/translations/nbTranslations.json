@@ -60,7 +60,12 @@
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
       "see_publication": "Se publikasjon",
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)",
+      "status": {
+        "NOT_IMPORTED": "Til import",
+        "NOT_APPLICABLE": "Mangelfull",
+        "IMPORTED": "Importert"
+      }
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -221,10 +226,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -310,7 +311,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "curators": {

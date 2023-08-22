@@ -6,12 +6,18 @@ import { useHistory } from 'react-router-dom';
 import { fetchImportCandidates } from '../../../../api/searchApi';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
+import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { SearchParam } from '../../../../utils/searchHelpers';
+import { CandidateStatusFilter } from '../../BasicDataPage';
 import { CentralImportResultItem } from './CentralImportResultItem';
 
-export const CentralImportPage = () => {
+interface CentralImportPageProps {
+  filter: CandidateStatusFilter;
+}
+
+export const CentralImportPage = ({ filter }: CentralImportPageProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -20,9 +26,16 @@ export const CentralImportPage = () => {
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
+  const queryValue: ImportCandidateStatus = filter.NOT_IMPORTED
+    ? 'NOT_IMPORTED'
+    : filter.IMPORTED
+    ? 'IMPORTED'
+    : 'NOT_APPLICABLE';
+  const query = `importStatus.candidateStatus=${queryValue}`;
+
   const importCandidateQuery = useQuery({
-    queryKey: ['importCandidates', rowsPerPage, page, ''],
-    queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, ''),
+    queryKey: ['importCandidates', rowsPerPage, page, query],
+    queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, query),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
