@@ -3,6 +3,7 @@ import { LanguageString } from './common.types';
 export enum RoleName {
   InstitutionAdmin = 'Institution-admin',
   AppAdmin = 'App-admin',
+  AppAdminImportCandidates = 'Curator-Import-candidate',
   Curator = 'Curator',
   CuratorThesis = 'Curator-thesis',
   CuratorThesisEmbargo = 'Curator-thesis-embargo',
@@ -20,6 +21,7 @@ export interface User {
   givenName: string;
   feideId: string;
   isAppAdmin: boolean;
+  isAppAdminImporter: boolean;
   isCurator: boolean;
   isThesisCurator: boolean;
   isEmbargoThesisCurator: boolean;
