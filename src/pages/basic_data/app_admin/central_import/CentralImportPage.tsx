@@ -14,10 +14,11 @@ import { CandidateStatusFilter } from '../../BasicDataPage';
 import { CentralImportResultItem } from './CentralImportResultItem';
 
 interface CentralImportPageProps {
-  filter: CandidateStatusFilter;
+  statusFilter: CandidateStatusFilter;
+  yearFilter: number;
 }
 
-export const CentralImportPage = ({ filter }: CentralImportPageProps) => {
+export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPageProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -26,12 +27,12 @@ export const CentralImportPage = ({ filter }: CentralImportPageProps) => {
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
-  const queryValue: ImportCandidateStatus = filter.NOT_IMPORTED
+  const queryValue: ImportCandidateStatus = statusFilter.NOT_IMPORTED
     ? 'NOT_IMPORTED'
-    : filter.IMPORTED
+    : statusFilter.IMPORTED
     ? 'IMPORTED'
     : 'NOT_APPLICABLE';
-  const query = `importStatus.candidateStatus=${queryValue}`;
+  const query = `importStatus.candidateStatus=${queryValue} AND publicationYear=${yearFilter}`;
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates', rowsPerPage, page, query],
