@@ -76,8 +76,7 @@ const BasicDataPage = () => {
                 }}
               />
             }
-            accordionPath={'/basic-data/person-register'}
-            defaultPath={'/basic-data/person-register'}
+            accordionPath={UrlPathTemplate.BasicDataPersonRegister}
             dataTestId={dataTestId.basicData.personRegisterAccordion}>
             <NavigationList>
               <LinkButton
@@ -113,8 +112,7 @@ const BasicDataPage = () => {
                   }}
                 />
               }
-              accordionPath={'/basic-data/institutions'}
-              defaultPath={'/basic-data/institutions'}
+              accordionPath={UrlPathTemplate.BasicDataInstitutions}
               dataTestId={dataTestId.basicData.institutionsAccordion}>
               <NavigationList>
                 <LinkButton
@@ -144,8 +142,7 @@ const BasicDataPage = () => {
                   }}
                 />
               }
-              accordionPath={'/basic-data/central-import'}
-              defaultPath={'/basic-data/central-import'}
+              accordionPath={UrlPathTemplate.BasicDataCentralImport}
               dataTestId={dataTestId.basicData.centralImportAccordion}>
               <NavigationList>
                 <FormGroup sx={{ mx: '1rem' }}>
