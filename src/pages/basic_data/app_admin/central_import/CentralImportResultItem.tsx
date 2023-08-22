@@ -6,6 +6,7 @@ import { SearchListItem } from '../../../../components/styled/Wrappers';
 import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
+import { getTitleString } from '../../../../utils/registration-helpers';
 import { getDuplicateCheckPagePath, getResearchProfilePath } from '../../../../utils/urlPaths';
 
 interface CentralImportResultItemProps {
@@ -36,7 +37,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
           </Box>
           <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
             <MuiLink component={Link} to={getDuplicateCheckPagePath(getIdentifierFromId(importCandidate.id))}>
-              {importCandidate.mainTitle}
+              {getTitleString(importCandidate.mainTitle)}
             </MuiLink>
           </Typography>
           <Box
