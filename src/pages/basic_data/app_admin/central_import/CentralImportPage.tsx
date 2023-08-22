@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { fetchImportCandidates } from '../../../../api/searchApi';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
-import { ImportStatus } from '../../../../types/importCandidate.types';
+import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { SearchParam } from '../../../../utils/searchHelpers';
@@ -26,7 +26,7 @@ export const CentralImportPage = ({ filter }: CentralImportPageProps) => {
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
-  const queryValue: ImportStatus = filter.NOT_IMPORTED
+  const queryValue: ImportCandidateStatus = filter.NOT_IMPORTED
     ? 'NOT_IMPORTED'
     : filter.IMPORTED
     ? 'IMPORTED'

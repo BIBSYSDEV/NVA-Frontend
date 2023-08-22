@@ -13,7 +13,12 @@ import { ReportPublicationInstance } from './publication_types/reportRegistratio
 import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
 import { Journal, Publisher, Registration } from './registration.types';
 
-export type ImportStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
+export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
+
+interface ImportStatus {
+  candidateStatus: ImportCandidateStatus;
+  modifiedDate: string;
+}
 
 export interface ImportCandidate extends Omit<Registration, 'type'> {
   type: 'ImportCandidate';

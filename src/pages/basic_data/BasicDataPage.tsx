@@ -18,19 +18,18 @@ import {
 } from '../../components/PageWithSideMenu';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
-import { ImportStatus } from '../../types/importCandidate.types';
+import { ImportCandidateStatus } from '../../types/importCandidate.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
-import { CentralImportRegistration } from './app_admin/central_import/CentralImportRegistration';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 
 export type CandidateStatusFilter = {
-  [key in ImportStatus]: boolean;
+  [key in ImportCandidateStatus]: boolean;
 };
 
 const BasicDataPage = () => {
@@ -228,12 +227,6 @@ const BasicDataPage = () => {
             exact
             path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
             component={CentralImportDuplicationCheckPage}
-            isAuthorized={isAppAdmin}
-          />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.BasicDataCentralImportRegistration}
-            component={CentralImportRegistration}
             isAuthorized={isAppAdmin}
           />
           <PrivateRoute
