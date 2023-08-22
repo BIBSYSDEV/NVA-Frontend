@@ -7,7 +7,7 @@ interface NavigationListAccordionProps extends AccordionProps {
   title: string;
   startIcon: ReactNode;
   accordionPath: string;
-  defaultPath: string;
+  defaultPath?: string;
   dataTestId: string;
 }
 
@@ -15,7 +15,7 @@ export const NavigationListAccordion = ({
   title,
   startIcon,
   accordionPath,
-  defaultPath,
+  defaultPath = accordionPath,
   dataTestId,
   children,
 }: NavigationListAccordionProps) => {

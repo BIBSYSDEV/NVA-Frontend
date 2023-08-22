@@ -1,11 +1,12 @@
-import { ImportCandidateSummary, ImportStatus } from '../../types/importCandidate.types';
+import { ImportCandidateSummary } from '../../types/importCandidate.types';
 import { JournalType } from '../../types/publicationFieldNames';
 
 export const mockImportCandidate: ImportCandidateSummary = {
   type: `ImportCandidate`,
   id: 'https://api.dev.nva.aws.unit.no/registration/12345679',
+  contributors: [],
   additionalIdentifiers: ['12345'],
-  importStatus: ImportStatus.NotImported,
+  importStatus: { candidateStatus: 'NOT_IMPORTED', modifiedDate: '2023-08-02T15:15:58.910077Z' },
   doi: '',
   publicationYear: '2020',
   mainTitle:

@@ -2,11 +2,11 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import PeopleIcon from '@mui/icons-material/People';
 import StoreIcon from '@mui/icons-material/Store';
-import { Divider } from '@mui/material';
+import { Divider, FormControlLabel, FormGroup, Radio } from '@mui/material';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Redirect, Switch, useLocation } from 'react-router-dom';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -16,18 +16,21 @@ import {
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
-import { SideMenu } from '../../components/SideMenu';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { RootState } from '../../redux/store';
+import { ImportCandidateStatus } from '../../types/importCandidate.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
-import { CentralImportRegistration } from './app_admin/central_import/CentralImportRegistration';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
+
+export type CandidateStatusFilter = {
+  [key in ImportCandidateStatus]: boolean;
+};
 
 const BasicDataPage = () => {
   const { t } = useTranslation();
@@ -39,9 +42,28 @@ const BasicDataPage = () => {
 
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
 
+  const [selectedImportCandidateStatus, setSelectedImportCandidateStatus] = useState<CandidateStatusFilter>({
+    NOT_IMPORTED: true,
+    IMPORTED: false,
+    NOT_APPLICABLE: false,
+  });
+
+  const expandedMenu =
+    location.pathname === UrlPathTemplate.BasicDataCentralImport ||
+    !location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
+
   return (
     <StyledPageWithSideMenu>
-      <SideMenu aria-labelledby="basic-data-title">
+      <SideMenu
+        aria-labelledby="basic-data-title"
+        expanded={expandedMenu}
+        minimizedMenu={
+          <Link to={UrlPathTemplate.BasicDataCentralImport}>
+            <StyledMinimizedMenuButton title={t('basic_data.basic_data')}>
+              <BusinessCenterIcon />
+            </StyledMinimizedMenuButton>
+          </Link>
+        }>
         <SideNavHeader icon={BusinessCenterIcon} text={t('basic_data.basic_data')} id="basic-data-title" />
         {user?.isInstitutionAdmin && (
           <NavigationListAccordion
@@ -54,8 +76,7 @@ const BasicDataPage = () => {
                 }}
               />
             }
-            accordionPath={'/basic-data/person-register'}
-            defaultPath={'/basic-data/person-register'}
+            accordionPath={UrlPathTemplate.BasicDataPersonRegister}
             dataTestId={dataTestId.basicData.personRegisterAccordion}>
             <NavigationList>
               <LinkButton
@@ -91,8 +112,7 @@ const BasicDataPage = () => {
                   }}
                 />
               }
-              accordionPath={'/basic-data/institutions'}
-              defaultPath={'/basic-data/institutions'}
+              accordionPath={UrlPathTemplate.BasicDataInstitutions}
               dataTestId={dataTestId.basicData.institutionsAccordion}>
               <NavigationList>
                 <LinkButton
@@ -112,83 +132,114 @@ const BasicDataPage = () => {
               />
             </NavigationListAccordion>
 
-            <BetaFunctionality>
-              <NavigationListAccordion
-                title={t('basic_data.central_import.central_import')}
-                startIcon={
-                  <FilterDramaIcon
-                    sx={{
-                      bgcolor: 'grey.400',
-                      padding: '0.1rem',
-                    }}
+            <NavigationListAccordion
+              title={t('basic_data.central_import.central_import')}
+              startIcon={
+                <FilterDramaIcon
+                  sx={{
+                    bgcolor: 'centralImport.main',
+                    padding: '0.1rem',
+                  }}
+                />
+              }
+              accordionPath={UrlPathTemplate.BasicDataCentralImport}
+              dataTestId={dataTestId.basicData.centralImportAccordion}>
+              <NavigationList>
+                <FormGroup sx={{ mx: '1rem' }}>
+                  <FormControlLabel
+                    data-testid={dataTestId.basicData.centralImport.filter.notImportedRadio}
+                    checked={selectedImportCandidateStatus.NOT_IMPORTED}
+                    control={
+                      <Radio
+                        onChange={() =>
+                          setSelectedImportCandidateStatus({
+                            NOT_IMPORTED: !selectedImportCandidateStatus.NOT_IMPORTED,
+                            IMPORTED: false,
+                            NOT_APPLICABLE: false,
+                          })
+                        }
+                      />
+                    }
+                    label={t('basic_data.central_import.status.NOT_IMPORTED')}
                   />
-                }
-                accordionPath={'/basic-data/central-import'}
-                defaultPath={'/basic-data/central-import'}
-                dataTestId={dataTestId.basicData.centralImportAccordion}>
-                <NavigationList>
-                  <LinkButton
-                    data-testid={dataTestId.basicData.centralImportLink}
-                    isSelected={currentPath === UrlPathTemplate.BasicDataCentralImport}
-                    to={UrlPathTemplate.BasicDataCentralImport}>
-                    {t('basic_data.central_import.central_import')}
-                  </LinkButton>
-                </NavigationList>
-              </NavigationListAccordion>
-            </BetaFunctionality>
+                  <FormControlLabel
+                    data-testid={dataTestId.basicData.centralImport.filter.importedRadio}
+                    checked={selectedImportCandidateStatus.IMPORTED}
+                    control={
+                      <Radio
+                        onChange={() =>
+                          setSelectedImportCandidateStatus({
+                            NOT_IMPORTED: false,
+                            IMPORTED: !selectedImportCandidateStatus.IMPORTED,
+                            NOT_APPLICABLE: false,
+                          })
+                        }
+                      />
+                    }
+                    label={t('basic_data.central_import.status.IMPORTED')}
+                  />
+                  <FormControlLabel
+                    data-testid={dataTestId.basicData.centralImport.filter.notApplicableRadio}
+                    checked={selectedImportCandidateStatus.NOT_APPLICABLE}
+                    control={
+                      <Radio
+                        onChange={() =>
+                          setSelectedImportCandidateStatus({
+                            NOT_IMPORTED: false,
+                            IMPORTED: false,
+                            NOT_APPLICABLE: !selectedImportCandidateStatus.NOT_APPLICABLE,
+                          })
+                        }
+                      />
+                    }
+                    label={t('basic_data.central_import.status.NOT_APPLICABLE')}
+                  />
+                </FormGroup>
+              </NavigationList>
+            </NavigationListAccordion>
           </>
         )}
       </SideMenu>
-      <BackgroundDiv>
-        <Switch>
-          <ErrorBoundary>
-            <PrivateRoute exact path={UrlPathTemplate.BasicData} isAuthorized={isAppAdmin || isInstitutionAdmin}>
-              {isInstitutionAdmin ? (
-                <Redirect to={UrlPathTemplate.BasicDataPersonRegister} />
-              ) : isAppAdmin ? (
-                <Redirect to={UrlPathTemplate.BasicDataInstitutions} />
-              ) : null}
-            </PrivateRoute>
 
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataInstitutions}
-              component={AdminCustomerInstitutionsContainer}
-              isAuthorized={isAppAdmin}
-            />
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataCentralImport}
-              component={CentralImportPage}
-              isAuthorized={isAppAdmin}
-            />
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
-              component={CentralImportDuplicationCheckPage}
-              isAuthorized={isAppAdmin}
-            />
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataCentralImportRegistration}
-              component={CentralImportRegistration}
-              isAuthorized={isAppAdmin}
-            />
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataAddEmployee}
-              component={AddEmployeePage}
-              isAuthorized={isInstitutionAdmin}
-            />
-            <PrivateRoute
-              exact
-              path={UrlPathTemplate.BasicDataPersonRegister}
-              component={PersonRegisterPage}
-              isAuthorized={isInstitutionAdmin}
-            />
-          </ErrorBoundary>
-        </Switch>
-      </BackgroundDiv>
+      <Switch>
+        <ErrorBoundary>
+          <PrivateRoute exact path={UrlPathTemplate.BasicData} isAuthorized={isAppAdmin || isInstitutionAdmin}>
+            {isInstitutionAdmin ? (
+              <Redirect to={UrlPathTemplate.BasicDataPersonRegister} />
+            ) : isAppAdmin ? (
+              <Redirect to={UrlPathTemplate.BasicDataInstitutions} />
+            ) : null}
+          </PrivateRoute>
+
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataInstitutions}
+            component={AdminCustomerInstitutionsContainer}
+            isAuthorized={isAppAdmin}
+          />
+          <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImport} isAuthorized={isAppAdmin}>
+            <CentralImportPage filter={selectedImportCandidateStatus} />
+          </PrivateRoute>
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
+            component={CentralImportDuplicationCheckPage}
+            isAuthorized={isAppAdmin}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataAddEmployee}
+            component={AddEmployeePage}
+            isAuthorized={isInstitutionAdmin}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataPersonRegister}
+            component={PersonRegisterPage}
+            isAuthorized={isInstitutionAdmin}
+          />
+        </ErrorBoundary>
+      </Switch>
     </StyledPageWithSideMenu>
   );
 };

@@ -162,7 +162,6 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
               setRowsPerPage(newRowsPerPage);
               setPage(1);
             }}
-            dataTestId={`user-pagination-${roleToRemove ?? roleToAdd}`}
           />
 
           {roleToRemove && (

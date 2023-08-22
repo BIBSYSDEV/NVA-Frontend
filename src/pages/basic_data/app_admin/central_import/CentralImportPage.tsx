@@ -1,17 +1,23 @@
-import { Divider, List, TablePagination, Typography } from '@mui/material';
+import { List } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchImportCandidates } from '../../../../api/searchApi';
+import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
+import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
-import { dataTestId } from '../../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { SearchParam } from '../../../../utils/searchHelpers';
+import { CandidateStatusFilter } from '../../BasicDataPage';
 import { CentralImportResultItem } from './CentralImportResultItem';
 
-export const CentralImportPage = () => {
+interface CentralImportPageProps {
+  filter: CandidateStatusFilter;
+}
+
+export const CentralImportPage = ({ filter }: CentralImportPageProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -19,9 +25,17 @@ export const CentralImportPage = () => {
   const fromParam = params.get(SearchParam.From);
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
+
+  const queryValue: ImportCandidateStatus = filter.NOT_IMPORTED
+    ? 'NOT_IMPORTED'
+    : filter.IMPORTED
+    ? 'IMPORTED'
+    : 'NOT_APPLICABLE';
+  const query = `importStatus.candidateStatus=${queryValue}`;
+
   const importCandidateQuery = useQuery({
-    queryKey: ['importCandidates', rowsPerPage, page, ''],
-    queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, ''),
+    queryKey: ['importCandidates', rowsPerPage, page, query],
+    queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, query),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
@@ -40,35 +54,27 @@ export const CentralImportPage = () => {
   const searchResults = importCandidateQuery.data?.hits ?? [];
 
   return (
-    <>
-      <Typography variant="h3">{t('basic_data.central_import.publications')}</Typography>
+    <section>
       {importCandidateQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
-        searchResults && (
-          <>
-            <Typography variant="subtitle1">{t('search.hits', { count: importCandidateQuery.data?.size })}:</Typography>
-            <Divider />
-            <List>
-              {searchResults.map((importCandidate) => (
-                <CentralImportResultItem importCandidate={importCandidate} key={importCandidate.id} />
-              ))}
-            </List>
-            {searchResults.length > 0 && (
-              <TablePagination
-                data-testid={dataTestId.basicData.centralImport.searchPagination}
-                rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                component="div"
-                count={importCandidateQuery.data?.size ?? -1}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString(), rowsPerPage.toString())}
-                onRowsPerPageChange={(event) => updatePath('0', event.target.value)}
-              />
-            )}
-          </>
-        )
+        <>
+          <List>
+            {searchResults.map((importCandidate) => (
+              <CentralImportResultItem importCandidate={importCandidate} key={importCandidate.id} />
+            ))}
+          </List>
+          {searchResults.length > 0 && (
+            <ListPagination
+              count={importCandidateQuery.data?.size ?? -1}
+              rowsPerPage={rowsPerPage}
+              page={page + 1}
+              onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
+              onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
+            />
+          )}
+        </>
       )}
-    </>
+    </section>
   );
 };

@@ -8,7 +8,6 @@ import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchResponse } from '../../../types/common.types';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { TicketListItem } from './TicketListItem';
 
@@ -61,7 +60,6 @@ export const TicketList = ({
                 ))}
               </List>
               <ListPagination
-                dataTestId={dataTestId.startPage.searchPagination}
                 count={ticketsQuery.data?.size ?? 0}
                 rowsPerPage={rowsPerPage}
                 page={page}

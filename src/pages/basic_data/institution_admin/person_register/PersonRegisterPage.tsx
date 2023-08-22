@@ -16,6 +16,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { ListPagination } from '../../../../components/ListPagination';
+import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { alternatingTableRowColor } from '../../../../themes/mainTheme';
 import { SearchResponse } from '../../../../types/common.types';
@@ -64,7 +65,7 @@ export const PersonRegisterPage = () => {
   const employees = employeesSearchResponse?.hits ?? [];
 
   return (
-    <>
+    <BackgroundDiv>
       <Helmet>
         <title>{t('basic_data.person_register.person_register')}</title>
       </Helmet>
@@ -141,6 +142,6 @@ export const PersonRegisterPage = () => {
           />
         </>
       )}
-    </>
+    </BackgroundDiv>
   );
 };
