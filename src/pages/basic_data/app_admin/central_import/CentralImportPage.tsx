@@ -69,7 +69,7 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
             ))}
           </List>
           <ListPagination
-            count={importCandidateQuery.data?.size ?? -1}
+            count={importCandidateQuery.data?.size ?? 0}
             rowsPerPage={rowsPerPage}
             page={page + 1}
             onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
