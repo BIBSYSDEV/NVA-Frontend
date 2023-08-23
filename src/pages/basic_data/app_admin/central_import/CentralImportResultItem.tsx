@@ -7,6 +7,7 @@ import { ImportCandidateSummary } from '../../../../types/importCandidate.types'
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getDuplicateCheckPagePath, getResearchProfilePath } from '../../../../utils/urlPaths';
 
 interface CentralImportResultItemProps {
@@ -66,6 +67,12 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
             })}
           </Typography>
         </Box>
+
+        {importCandidate.organizations.length > 0 && (
+          <Typography sx={{ mt: '0.5rem' }}>
+            {importCandidate.organizations.map((organization) => getLanguageString(organization.labels)).join(', ')}
+          </Typography>
+        )}
       </ListItemText>
     </SearchListItem>
   );

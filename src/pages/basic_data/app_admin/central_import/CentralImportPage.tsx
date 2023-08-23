@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchImportCandidates } from '../../../../api/searchApi';
+import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
@@ -62,7 +63,9 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
         <>
           <List>
             {searchResults.map((importCandidate) => (
-              <CentralImportResultItem importCandidate={importCandidate} key={importCandidate.id} />
+              <ErrorBoundary>
+                <CentralImportResultItem importCandidate={importCandidate} key={importCandidate.id} />
+              </ErrorBoundary>
             ))}
           </List>
           {searchResults.length > 0 && (
