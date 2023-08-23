@@ -426,7 +426,8 @@
       "update_registration": "Kunne ikke oppdatere registrering",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
-      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
+      "update_vocabulary": "Oppdatering av {{vocabulary}} feilet",
+      "get_import_candidates": "Kunne ikke hente importkandidater"
     },
     "success": {
       "add_employment": "Ansettelse lagt til",

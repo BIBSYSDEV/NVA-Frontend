@@ -1,3 +1,4 @@
+import { SearchResponse } from './common.types';
 import { Contributor } from './contributor.types';
 import { Organization } from './organization.types';
 import { ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
@@ -23,6 +24,16 @@ interface ImportStatus {
 export interface ImportCandidate extends Omit<Registration, 'type'> {
   type: 'ImportCandidate';
   importStatus: ImportStatus;
+}
+
+interface ImportCandidateStatusBucket {
+  key: ImportCandidateStatus;
+  docCount: number;
+}
+export interface ImportCandidateSearchResponse extends Omit<SearchResponse<ImportCandidateSummary>, 'aggregations'> {
+  aggregations?: {
+    'importStatus.candidateStatus': { buckets: ImportCandidateStatusBucket[] };
+  };
 }
 
 export interface ImportCandidateSummary {
