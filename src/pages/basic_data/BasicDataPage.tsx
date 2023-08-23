@@ -63,13 +63,13 @@ const BasicDataPage = () => {
 
   const statusBuckets = importCandidatesFacetsQuery.data?.aggregations?.['importStatus.candidateStatus'].buckets;
   const toImportCount = statusBuckets
-    ? (statusBuckets.find((bucket) => bucket.key === 'NOT_IMPORTED')?.docCount ?? 0).toString()
+    ? (statusBuckets.find((bucket) => bucket.key === 'NOT_IMPORTED')?.docCount ?? 0).toLocaleString()
     : '';
   const importedCount = statusBuckets
-    ? (statusBuckets.find((bucket) => bucket.key === 'IMPORTED')?.docCount ?? 0).toString()
+    ? (statusBuckets.find((bucket) => bucket.key === 'IMPORTED')?.docCount ?? 0).toLocaleString()
     : '';
   const notApplicableCount = statusBuckets
-    ? (statusBuckets.find((bucket) => bucket.key === 'NOT_APPLICABLE')?.docCount ?? 0).toString()
+    ? (statusBuckets.find((bucket) => bucket.key === 'NOT_APPLICABLE')?.docCount ?? 0).toLocaleString()
     : '';
 
   const expandedMenu =
