@@ -15,9 +15,7 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
 import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { SearchResponse } from '../../../../types/common.types';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
-import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { RegistrationParams, getRegistrationLandingPagePath } from '../../../../utils/urlPaths';
 import NotFound from '../../../errorpages/NotFound';
@@ -31,7 +29,7 @@ export const CentralImportDuplicationCheckPage = () => {
   const { identifier } = useParams<RegistrationParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
 
-  const importCandidateQuery = useQuery<SearchResponse<ImportCandidateSummary>>({
+  const importCandidateQuery = useQuery({
     queryKey: ['importCandidate', identifier],
     queryFn: () => fetchImportCandidates(1, 0, `id:${identifier}`),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
