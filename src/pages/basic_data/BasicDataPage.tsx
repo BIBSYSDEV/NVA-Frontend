@@ -2,7 +2,7 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import PeopleIcon from '@mui/icons-material/People';
 import StoreIcon from '@mui/icons-material/Store';
-import { Divider, FormControlLabel, FormGroup, Radio } from '@mui/material';
+import { Divider, FormControlLabel, FormGroup, MenuItem, Radio, Select } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -32,6 +32,9 @@ export type CandidateStatusFilter = {
   [key in ImportCandidateStatus]: boolean;
 };
 
+const thisYear = new Date().getFullYear();
+const yearOptions = [thisYear, thisYear - 1, thisYear - 2, thisYear - 3, thisYear - 4, thisYear - 5];
+
 const BasicDataPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -47,6 +50,7 @@ const BasicDataPage = () => {
     IMPORTED: false,
     NOT_APPLICABLE: false,
   });
+  const [candidateYearFilter, setCandidateYearFilter] = useState(yearOptions[0]);
 
   const expandedMenu =
     location.pathname === UrlPathTemplate.BasicDataCentralImport ||
@@ -145,7 +149,7 @@ const BasicDataPage = () => {
             }
             accordionPath={UrlPathTemplate.BasicDataCentralImport}
             dataTestId={dataTestId.basicData.centralImportAccordion}>
-            <NavigationList>
+            <NavigationList component="div">
               <FormGroup sx={{ mx: '1rem' }}>
                 <FormControlLabel
                   data-testid={dataTestId.basicData.centralImport.filter.notImportedRadio}
@@ -195,6 +199,18 @@ const BasicDataPage = () => {
                   }
                   label={t('basic_data.central_import.status.NOT_APPLICABLE')}
                 />
+
+                <Select
+                  size="small"
+                  sx={{ mt: '0.5rem' }}
+                  value={candidateYearFilter}
+                  onChange={(event) => setCandidateYearFilter(+event.target.value)}>
+                  {yearOptions.map((year) => (
+                    <MenuItem key={year} value={year}>
+                      {year}
+                    </MenuItem>
+                  ))}
+                </Select>
               </FormGroup>
             </NavigationList>
           </NavigationListAccordion>
@@ -218,7 +234,7 @@ const BasicDataPage = () => {
             isAuthorized={isAppAdmin}
           />
           <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImport} isAuthorized={isAppAdmin}>
-            <CentralImportPage filter={selectedImportCandidateStatus} />
+            <CentralImportPage statusFilter={selectedImportCandidateStatus} yearFilter={candidateYearFilter} />
           </PrivateRoute>
           <PrivateRoute
             exact
