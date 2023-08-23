@@ -156,7 +156,7 @@ const BasicDataPage = () => {
           </NavigationListAccordion>
         )}
 
-        {user?.isAppAdminImporter && (
+        {user?.isInternalImporter && (
           <NavigationListAccordion
             title={t('basic_data.central_import.central_import')}
             startIcon={
