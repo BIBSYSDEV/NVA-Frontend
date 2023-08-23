@@ -63,8 +63,8 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
         <>
           <List>
             {searchResults.map((importCandidate) => (
-              <ErrorBoundary>
-                <CentralImportResultItem importCandidate={importCandidate} key={importCandidate.id} />
+              <ErrorBoundary key={importCandidate.id}>
+                <CentralImportResultItem importCandidate={importCandidate} />
               </ErrorBoundary>
             ))}
           </List>
