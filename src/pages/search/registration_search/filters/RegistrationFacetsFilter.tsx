@@ -2,7 +2,7 @@ import { Box, ListItem, ListItemButton, styled } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
-import { PublicationInstanceType, RegistrationSearchAggregations } from '../../../../types/registration.types';
+import { PublicationInstanceType, RegistrationAggregations } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
@@ -10,7 +10,7 @@ import { getLabelFromBucket } from '../../../../utils/translation-helpers';
 import { FacetItem } from './FacetItem';
 
 interface RegistrationFacetsFilterProps {
-  aggregations: RegistrationSearchAggregations;
+  aggregations: RegistrationAggregations;
   isLoadingSearch: boolean;
 }
 

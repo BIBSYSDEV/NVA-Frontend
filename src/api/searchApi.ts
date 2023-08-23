@@ -1,5 +1,5 @@
 import { SearchResponse } from '../types/common.types';
-import { ImportCandidateSummary } from '../types/importCandidate.types';
+import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
 import { ExpandedTicket } from '../types/publication_types/ticket.types';
 import { Registration } from '../types/registration.types';
 import { SearchApiPath } from './apiPaths';
@@ -23,7 +23,9 @@ export const fetchImportCandidates = async (results: number, from: number, query
   const searchQuery = query ? `query=${query}` : '';
   const fullQuery = [searchQuery, paginationQuery].filter(Boolean).join('&');
 
-  const getImportCandidates = await authenticatedApiRequest2<SearchResponse<ImportCandidateSummary>>({
+  const getImportCandidates = await authenticatedApiRequest2<
+    SearchResponse<ImportCandidateSummary, ImportCandidateAggregations>
+  >({
     url: `${SearchApiPath.ImportCandidates}?${fullQuery}`,
   });
 

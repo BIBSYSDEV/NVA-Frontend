@@ -32,12 +32,12 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
     : statusFilter.IMPORTED
     ? 'IMPORTED'
     : 'NOT_APPLICABLE';
-  const query = `importStatus.candidateStatus=${queryValue} AND publicationYear=${yearFilter}`;
+  const query = `importStatus.candidateStatus:${queryValue} AND publicationYear:${yearFilter}`;
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates', rowsPerPage, page, query],
     queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, query),
-    meta: { errorMessage: t('feedback.error.get_registrations') },
+    meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
 
   const updatePath = (from: string, results: string) => {

@@ -3,10 +3,12 @@ import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import PeopleIcon from '@mui/icons-material/People';
 import StoreIcon from '@mui/icons-material/Store';
 import { Divider, FormControlLabel, FormGroup, MenuItem, Radio, Select } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
+import { fetchImportCandidates } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -51,6 +53,24 @@ const BasicDataPage = () => {
     NOT_APPLICABLE: false,
   });
   const [candidateYearFilter, setCandidateYearFilter] = useState(yearOptions[0]);
+
+  const importCandidatesFacetsQuery = useQuery({
+    enabled: location.pathname === UrlPathTemplate.BasicDataCentralImport,
+    queryKey: ['importCandidatesFacets', candidateYearFilter],
+    queryFn: () => fetchImportCandidates(0, 0, `publicationYear:${candidateYearFilter}`),
+    meta: { errorMessage: t('feedback.error.get_import_candidates') },
+  });
+
+  const statusBuckets = importCandidatesFacetsQuery.data?.aggregations?.['importStatus.candidateStatus'].buckets;
+  const toImportCount = statusBuckets
+    ? (statusBuckets.find((bucket) => bucket.key === 'NOT_IMPORTED')?.docCount ?? 0).toLocaleString()
+    : '';
+  const importedCount = statusBuckets
+    ? (statusBuckets.find((bucket) => bucket.key === 'IMPORTED')?.docCount ?? 0).toLocaleString()
+    : '';
+  const notApplicableCount = statusBuckets
+    ? (statusBuckets.find((bucket) => bucket.key === 'NOT_APPLICABLE')?.docCount ?? 0).toLocaleString()
+    : '';
 
   const expandedMenu =
     location.pathname === UrlPathTemplate.BasicDataCentralImport ||
@@ -165,7 +185,11 @@ const BasicDataPage = () => {
                       }
                     />
                   }
-                  label={t('basic_data.central_import.status.NOT_IMPORTED')}
+                  label={
+                    toImportCount
+                      ? `${t('basic_data.central_import.status.NOT_IMPORTED')} (${toImportCount})`
+                      : t('basic_data.central_import.status.NOT_IMPORTED')
+                  }
                 />
                 <FormControlLabel
                   data-testid={dataTestId.basicData.centralImport.filter.importedRadio}
@@ -181,7 +205,11 @@ const BasicDataPage = () => {
                       }
                     />
                   }
-                  label={t('basic_data.central_import.status.IMPORTED')}
+                  label={
+                    importedCount
+                      ? `${t('basic_data.central_import.status.IMPORTED')} (${importedCount})`
+                      : t('basic_data.central_import.status.IMPORTED')
+                  }
                 />
                 <FormControlLabel
                   data-testid={dataTestId.basicData.centralImport.filter.notApplicableRadio}
@@ -197,7 +225,11 @@ const BasicDataPage = () => {
                       }
                     />
                   }
-                  label={t('basic_data.central_import.status.NOT_APPLICABLE')}
+                  label={
+                    notApplicableCount
+                      ? `${t('basic_data.central_import.status.NOT_APPLICABLE')} (${notApplicableCount})`
+                      : t('basic_data.central_import.status.NOT_APPLICABLE')
+                  }
                 />
 
                 <Select
