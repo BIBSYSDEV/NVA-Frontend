@@ -52,14 +52,20 @@ export const fetchResults = async (results: number, from: number, query = '') =>
   return getResults.data;
 };
 
-export const fetchEmployees = async (organizationId: string, results: number, page: number, nameQuery = '') => {
+export const fetchEmployees = async (
+  organizationId: string,
+  results: number,
+  page: number,
+  nameQuery = '',
+  signal?: AbortSignal
+) => {
   if (!organizationId) {
     return;
   }
   const nameQueryParam = nameQuery ? `&name=${nameQuery}` : '';
   const url = `${organizationId}/persons?page=${page}&results=${results}${nameQueryParam}`;
 
-  const getEmployees = await authenticatedApiRequest2<SearchResponse<CristinPerson>>({ url });
+  const getEmployees = await authenticatedApiRequest2<SearchResponse<CristinPerson>>({ url, signal });
 
   return getEmployees.data;
 };

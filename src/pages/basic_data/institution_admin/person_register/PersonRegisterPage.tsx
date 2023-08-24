@@ -42,9 +42,11 @@ export const PersonRegisterPage = () => {
 
   const employeeSearchQuery = useQuery({
     enabled: !!user?.topOrgCristinId && debouncedSearchQuery === searchQuery,
-    queryKey: ['employees', user?.topOrgCristinId, rowsPerPage, page, debouncedSearchQuery],
-    queryFn: () =>
-      user?.topOrgCristinId ? fetchEmployees(user?.topOrgCristinId, rowsPerPage, page, debouncedSearchQuery) : null,
+    queryKey: ['employees', user?.topOrgCristinId, rowsPerPage, page, debouncedSearchQuery, searchQuery],
+    queryFn: ({ signal }) =>
+      user?.topOrgCristinId
+        ? fetchEmployees(user?.topOrgCristinId, rowsPerPage, page, debouncedSearchQuery, signal)
+        : null,
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
     keepPreviousData: true,
   });
