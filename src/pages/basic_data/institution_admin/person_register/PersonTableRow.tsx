@@ -374,6 +374,7 @@ export const PersonTableRow = ({
                             selectedRoles={values.roles}
                             updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
                             disabled={isSubmitting}
+                            canAddInternalRoles
                           />
                         </Box>
                       </div>
