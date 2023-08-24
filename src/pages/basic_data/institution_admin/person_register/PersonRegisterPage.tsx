@@ -87,7 +87,7 @@ export const PersonRegisterPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {employeeSearchQuery.isLoading && !employeeSearchQuery.data
+                {employeeSearchQuery.isLoading
                   ? [...Array(5)].map((_, index) => (
                       <TableRow key={index} sx={{ height: '4rem' }}>
                         <TableCell>

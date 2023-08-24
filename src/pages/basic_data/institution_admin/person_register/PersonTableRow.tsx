@@ -390,7 +390,7 @@ export const PersonTableRow = ({
                 <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
                 <LoadingButton
                   loading={isSubmitting}
-                  disabled={institutionUserQuery.isFetching || !hasFetchedPositions}
+                  disabled={institutionUserQuery.isLoading || !hasFetchedPositions}
                   variant="contained"
                   type="submit">
                   {t('common.save')}
