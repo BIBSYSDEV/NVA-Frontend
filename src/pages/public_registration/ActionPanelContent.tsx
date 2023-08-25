@@ -134,7 +134,7 @@ export const ActionPanelContent = ({
         </ErrorBoundary>
       )}
       <Box sx={{ m: '0.5rem', mt: '1rem' }}>
-        <Button fullWidth variant="contained" onClick={() => setShowDeleteModal(true)}>
+        <Button sx={{ bgcolor: 'white' }} fullWidth variant="outlined" onClick={() => setShowDeleteModal(true)}>
           {t('common.delete')}
         </Button>
       </Box>

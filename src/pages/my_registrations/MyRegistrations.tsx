@@ -98,7 +98,8 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
               </Typography>
               {(!selectedPublished || selectedUnpublished) && (
                 <Button
-                  variant="contained"
+                  sx={{ bgcolor: 'white' }}
+                  variant="outlined"
                   onClick={() => setShowDeleteModal(true)}
                   disabled={draftRegistrations.length === 0}>
                   {t('my_page.registrations.delete_all_draft_registrations')}
