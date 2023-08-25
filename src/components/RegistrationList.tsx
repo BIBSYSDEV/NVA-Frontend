@@ -1,18 +1,24 @@
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
+import StarIcon from '@mui/icons-material/Star';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { Box, IconButton, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
 import { getTitleString } from '../utils/registration-helpers';
-import { getRegistrationLandingPagePath, getRegistrationWizardPath, getResearchProfilePath } from '../utils/urlPaths';
+import {
+  UrlPathTemplate,
+  getRegistrationLandingPagePath,
+  getRegistrationWizardPath,
+  getResearchProfilePath,
+} from '../utils/urlPaths';
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
 import { TruncatableTypography } from './TruncatableTypography';
 import { SearchListItem } from './styled/Wrappers';
-
 interface RegistrationListProps {
   registrations: Registration[];
   canEditRegistration?: boolean;
@@ -54,6 +60,7 @@ export const RegistrationListItemContent = ({
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
+  const location = useLocation();
 
   const contributors = entityDescription?.contributors ?? [];
   const focusedContributors = contributors.slice(0, 5);
@@ -65,6 +72,11 @@ export const RegistrationListItemContent = ({
 
   const publicationDate = displayDate(entityDescription?.publicationDate);
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
+
+  const highlightedResults: string | string[] = [];
+  const isHighlightedResult = highlightedResults.includes(identifier);
+
+  const makeHighligtedResult = () => highlightedResults.push(identifier);
 
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
@@ -134,6 +146,27 @@ export const RegistrationListItemContent = ({
 
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
+          {location.pathname.includes(UrlPathTemplate.MyPageMyResults) &&
+            (isHighlightedResult ? (
+              <Tooltip title={t('common.edit')}>
+                <IconButton
+                  data-testid={`edit-registration-${identifier}`}
+                  size="small"
+                  sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+                  <StarIcon fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title={t('common.edit')}>
+                <IconButton
+                  data-testid={`edit-registration-${identifier}`}
+                  size="small"
+                  onClick={() => makeHighligtedResult}
+                  sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+                  <StarOutlineIcon fontSize="inherit" />
+                </IconButton>
+              </Tooltip>
+            ))}
           <Tooltip title={t('common.edit')}>
             <IconButton
               data-testid={`edit-registration-${identifier}`}
