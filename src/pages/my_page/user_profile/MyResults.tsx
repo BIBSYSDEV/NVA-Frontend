@@ -1,7 +1,9 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { fetchPromotedPublicationsById } from '../../../api/preferencesApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { RootState } from '../../../redux/store';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../types/publicationFieldNames';
@@ -32,6 +34,15 @@ export const MyResults = () => {
     rowsPerPage * (page - 1)
   );
 
+  const promotedPublicationsQuery = useQuery({
+    queryKey: ['person-preferences', personId],
+    queryFn: () => fetchPromotedPublicationsById(personId),
+    meta: { errorMessage: false },
+    retry: false,
+  });
+
+  const promotedPublications = promotedPublicationsQuery.data?.promotedPublications ?? [];
+
   return (
     <div>
       <Typography id="registration-label" variant="h2" gutterBottom>
@@ -43,7 +54,11 @@ export const MyResults = () => {
         </Box>
       ) : registrations && registrations.size > 0 ? (
         <>
-          <RegistrationSearchResults canEditRegistration={true} searchResult={registrations} />
+          <RegistrationSearchResults
+            canEditRegistration={true}
+            searchResult={registrations}
+            promotedPublications={promotedPublications}
+          />
           <ListPagination
             count={registrations.size}
             rowsPerPage={rowsPerPage}
