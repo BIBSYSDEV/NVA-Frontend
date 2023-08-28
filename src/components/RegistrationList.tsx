@@ -23,12 +23,14 @@ interface RegistrationListProps {
   registrations: Registration[];
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
+  promotedPublications?: string[];
 }
 
 export const RegistrationList = ({
   registrations,
   canEditRegistration = false,
   onDeleteDraftRegistration,
+  promotedPublications = [],
 }: RegistrationListProps) => (
   <List>
     {registrations.map((registration) => (
@@ -38,6 +40,7 @@ export const RegistrationList = ({
             onDeleteDraftRegistration={onDeleteDraftRegistration}
             registration={registration}
             canEditRegistration={canEditRegistration}
+            promotedPublications={promotedPublications}
           />
         </SearchListItem>
       </ErrorBoundary>
@@ -50,6 +53,7 @@ interface RegistrationListItemContentProps {
   ticketView?: boolean;
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
+  promotedPublications?: string[];
 }
 
 export const RegistrationListItemContent = ({
@@ -57,6 +61,7 @@ export const RegistrationListItemContent = ({
   ticketView = false,
   canEditRegistration,
   onDeleteDraftRegistration,
+  promotedPublications = [],
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
@@ -73,10 +78,9 @@ export const RegistrationListItemContent = ({
   const publicationDate = displayDate(entityDescription?.publicationDate);
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
 
-  const highlightedResults: string | string[] = [];
-  const isHighlightedResult = highlightedResults.includes(identifier);
+  const isPromotedPublication = promotedPublications.includes(identifier);
 
-  const makeHighligtedResult = () => highlightedResults.push(identifier);
+  const makeHighligtedResult = () => promotedPublications.push(identifier);
 
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
@@ -147,7 +151,7 @@ export const RegistrationListItemContent = ({
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
           {location.pathname.includes(UrlPathTemplate.MyPageMyResults) &&
-            (isHighlightedResult ? (
+            (isPromotedPublication ? (
               <Tooltip title={t('common.edit')}>
                 <IconButton
                   data-testid={`edit-registration-${identifier}`}
