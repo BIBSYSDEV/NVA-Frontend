@@ -80,8 +80,8 @@ export const UserRolesSelector = ({
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={selectedRoles.includes(RoleName.AppAdminImportCandidates)}
-                  value={RoleName.AppAdminImportCandidates}
+                  checked={selectedRoles.includes(RoleName.InternalImporter)}
+                  value={RoleName.InternalImporter}
                 />
               }
               label={
