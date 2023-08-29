@@ -50,7 +50,6 @@
       "duplicate_check": "Duplicate check",
       "duplicate_search_hits_shown": "Hits (Showing {{ShownResultsCount}} of {{TotalResultsCount}})",
       "import": "Import",
-      "import_publication": "Import publication",
       "or_search_with": "or search with",
       "publications": "Publications",
       "reset_search_values": "Reset values",
@@ -122,6 +121,7 @@
     "date": "Date",
     "delete": "Delete",
     "description": "Description",
+    "dialogue": "Dialogue",
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Edit",
@@ -503,7 +503,6 @@
   },
   "my_page": {
     "messages": {
-      "dialogue": "Dialogue",
       "doi_closed": "DOI rejected",
       "doi_completed": "DOI allocated",
       "doi_pending": "Pending DOI allocation",

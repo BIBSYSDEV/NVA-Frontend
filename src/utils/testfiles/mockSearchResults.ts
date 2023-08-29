@@ -1,11 +1,11 @@
 import { SearchResponse } from '../../types/common.types';
 import { ImportCandidateSummary } from '../../types/importCandidate.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
-import { RegistrationSearchResponse } from '../../types/registration.types';
+import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { mockImportCandidate } from './mockImportCandidate';
 import { mockMathJaxRegistration, mockRegistration, mockTicketCollection } from './mockRegistration';
 
-export const mockSearchResults: RegistrationSearchResponse = {
+export const mockSearchResults: SearchResponse<Registration, RegistrationAggregations> = {
   processingTime: 10,
   size: 50,
   hits: [

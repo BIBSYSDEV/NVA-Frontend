@@ -2,6 +2,7 @@ export interface SimpleCustomerInstitution {
   id: string;
   createdDate: string;
   displayName: string;
+  doiPrefix?: string;
 }
 
 export type PublishStrategy = 'RegistratorPublishesMetadataOnly' | 'RegistratorPublishesMetadataAndFiles';
@@ -13,7 +14,7 @@ export enum Sector {
   Abm = 'ABM',
 }
 
-export interface CustomerInstitution extends SimpleCustomerInstitution {
+export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id' | 'createdDate' | 'displayName'> {
   type?: 'Customer';
   archiveName: string;
   cristinId: string;

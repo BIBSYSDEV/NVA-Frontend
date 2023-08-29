@@ -13,7 +13,7 @@ import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api
 import { fetchRegistrationsExport } from '../../../api/searchApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { ResourceFieldNames, SearchFieldName } from '../../../types/publicationFieldNames';
-import { PublicationInstanceType, RegistrationSearchAggregations } from '../../../types/registration.types';
+import { PublicationInstanceType, RegistrationAggregations } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { getLabelFromBucket, getLanguageString } from '../../../utils/translation-helpers';
@@ -23,7 +23,7 @@ import { AdvancedSearchRow, registrationFilters } from '../registration_search/f
 import { RegistrationSortSelector } from './RegistrationSortSelector';
 
 interface RegistrationSearchBarProps {
-  aggregations?: RegistrationSearchAggregations;
+  aggregations?: RegistrationAggregations;
 }
 
 export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarProps) => {

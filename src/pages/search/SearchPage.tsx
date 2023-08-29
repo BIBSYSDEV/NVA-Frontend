@@ -10,7 +10,8 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/SideMenu';
-import { RegistrationSearchResponse } from '../../types/registration.types';
+import { SearchResponse } from '../../types/common.types';
+import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -56,7 +57,7 @@ const SearchPage = () => {
 
   const requestParams = new URLSearchParams(history.location.search);
   requestParams.delete(SearchParam.Type);
-  const [searchResults, isLoadingSearch] = useFetch<RegistrationSearchResponse>({
+  const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration, RegistrationAggregations>>({
     url: resultIsSelected ? `${SearchApiPath.Registrations}?${requestParams.toString()}` : '',
     errorMessage: t('feedback.error.search'),
   });

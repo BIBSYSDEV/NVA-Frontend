@@ -47,17 +47,25 @@
     "central_import": {
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Sentralimport",
-      "duplicate_check": "Duplikatsjekk",
-      "duplicate_search_hits_shown": "Søket ga følgende treff: (viser {{ShownResultsCount}} av {{TotalResultsCount}})",
-      "import": "Importer",
-      "import_publication": "Import publication",
+      "create_new": "Opprett ny",
+      "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importpublikasjonen.",
+      "duplicate_search_hits": "Søket ga følgende treff:",
+      "duplicate_search_no_hits": "Søket ga ingen treff",
+      "import_completed": "Publikasjonen er importert.",
+      "import_not_applicable": "Publikasjonen er markert som mangelfull.",
+      "mark_as_not_applicable": "Marker som mangelfull.",
+      "not_applicable": "Mangelfull",
       "or_search_with": "eller søk med",
-      "publications": "Publikasjoner",
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
       "see_publication": "Se publikasjon",
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})"
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)",
+      "status": {
+        "NOT_IMPORTED": "Til import",
+        "NOT_APPLICABLE": "Mangelfull",
+        "IMPORTED": "Importert"
+      }
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -122,6 +130,7 @@
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskrivelse",
+    "dialogue": "Dialog",
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
@@ -217,10 +226,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -306,7 +311,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "curators": {
@@ -367,6 +376,7 @@
       "create_publishing_request": "Kunne ikke opprette publiseringsforespørsel",
       "create_registration": "Kunne ikke opprette registrering",
       "create_user": "Kunne ikke opprette person",
+      "delete_draft_registrations": "Kunne ikke slette alle kladdene",
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
       "fetch": "Kunne ikke hente {{resource}}",
@@ -376,6 +386,8 @@
       "get_doi": "Kunne ikke hente lenkedata",
       "get_doi_agent": "Kunne ikke hente DOI-konfigurasjon",
       "get_funding_sources": "Kunne ikke hente finansieringskilder",
+      "get_import_candidate": "Kunne ikke hente importkandidat",
+      "get_import_candidates": "Kunne ikke hente importkandidater",
       "get_institution": "Kunne ikke laste inn institusjon",
       "get_institutions": "Kunne ikke laste inn institusjoner",
       "get_journal": "Kunne ikke hente tidsskrift",
@@ -406,6 +418,7 @@
       "update_customer": "Kunne ikke oppdatere institusjon",
       "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
       "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
+      "update_import_status": "Kunne ikke oppdatere importstatus",
       "update_institution_user": "Kunne ikke oppdatere bruker",
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
       "update_person": "Kunne ikke oppdatere person",
@@ -426,6 +439,7 @@
       "create_registration": "Publikasjon er opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
+      "delete_draft_registrations": "Alle kladdene ble slettet",
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
@@ -503,7 +517,6 @@
   },
   "my_page": {
     "messages": {
-      "dialogue": "Dialog",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -573,6 +586,8 @@
     },
     "project_registrations": "Prosjektregistreringer",
     "registrations": {
+      "delete_all_draft_registrations": "Slett alle kladder",
+      "delete_all_draft_registrations_message": "Slett alle upubliserte registreringer?",
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
       "published": "Publisert",
@@ -588,6 +603,8 @@
       "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
+      "internal_importer": "Intern importør",
+      "internal_importer_description": "Kan behandle importkandidater",
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "institution_admins": "Administratorer",

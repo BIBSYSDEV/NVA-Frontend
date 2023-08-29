@@ -6,6 +6,7 @@ import i18n from '../translations/i18n';
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
   Black = '#222',
+  CentralImportMain = '#D9D9D9',
   ErrorMain = '#AC0303',
   PrimaryMain = '#0F0035',
   SecondaryLight = '#F9F4E6',
@@ -39,6 +40,7 @@ declare module '@mui/material/styles' {
     publishingRequest: PaletteColorOptions;
     doiRequest: PaletteColorOptions;
     generalSupportCase: PaletteColorOptions;
+    centralImport: PaletteColorOptions;
   }
   interface PaletteOptions {
     registration?: PaletteColorOptions;
@@ -47,6 +49,7 @@ declare module '@mui/material/styles' {
     publishingRequest?: PaletteColorOptions;
     doiRequest?: PaletteColorOptions;
     generalSupportCase?: PaletteColorOptions;
+    centralImport?: PaletteColorOptions;
   }
 }
 declare module '@mui/material/Button' {
@@ -104,6 +107,9 @@ export const mainTheme = createTheme(
       },
       project: {
         main: Color.Project,
+      },
+      centralImport: {
+        main: Color.CentralImportMain,
       },
       publishingRequest: {
         main: Color.PublishingRequest,

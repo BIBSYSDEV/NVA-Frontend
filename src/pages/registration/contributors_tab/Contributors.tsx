@@ -172,6 +172,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     <>
       {contributors.length > 5 && (
         <TextField
+          data-testid={dataTestId.registrationWizard.contributors.contributorSearchField}
           type="search"
           sx={{ display: 'block', mb: '1rem' }}
           label={t('common.search_by_name')}
@@ -184,7 +185,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
             ),
           }}
           onChange={(event) => {
-            setCurrentPage(0);
+            setCurrentPage(1);
             setFilterInput(event.target.value);
           }}
         />

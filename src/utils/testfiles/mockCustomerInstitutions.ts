@@ -58,6 +58,7 @@ export const mockCustomerInstitutions: CustomerList = {
       id: 'https://api.dev.nva.aws.unit.no/customer/2',
       createdDate: '2020-11-01',
       displayName: 'Name 1',
+      doiPrefix: '10.12345',
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/customer/3',
@@ -68,6 +69,7 @@ export const mockCustomerInstitutions: CustomerList = {
       id: 'https://api.dev.nva.aws.unit.no/customer/4',
       createdDate: '2020-01-27',
       displayName: 'Name 3',
+      doiPrefix: '10.12347',
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/customer/5',
