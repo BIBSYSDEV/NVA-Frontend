@@ -69,7 +69,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       <MuiLink
         component={Link}
         to={
-          window.location.pathname === UrlPathTemplate.Tasks
+          window.location.pathname === UrlPathTemplate.TasksDialog
             ? getTasksRegistrationPath(identifier)
             : window.location.pathname === UrlPathTemplate.MyPageMyMessages
             ? getMyMessagesRegistrationPath(identifier)

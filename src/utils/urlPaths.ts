@@ -42,7 +42,9 @@ export enum UrlPathTemplate {
   RegistrationWizard = '/registration/:identifier/edit',
   ResearchProfile = '/research-profile',
   Tasks = '/tasks',
-  TasksRegistration = '/tasks/:identifier',
+  TasksDialog = '/tasks/dialog',
+  TasksDialogRegistration = '/tasks/dialog/:identifier',
+  TasksNvi = '/tasks/nvi',
   Wildcard = '*',
 }
 
@@ -64,7 +66,7 @@ export const getAdminInstitutionPath = (id: string) =>
 export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${encodeURIComponent(id)}`;
 
 export const getTasksRegistrationPath = (identifier: string) =>
-  UrlPathTemplate.TasksRegistration.replace(':identifier', encodeURIComponent(identifier));
+  UrlPathTemplate.TasksDialogRegistration.replace(':identifier', encodeURIComponent(identifier));
 
 export const getMyMessagesRegistrationPath = (identifier: string) =>
   UrlPathTemplate.MyPageMyMessagesRegistration.replace(':identifier', encodeURIComponent(identifier));

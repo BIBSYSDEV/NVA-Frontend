@@ -63,7 +63,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
   });
 
   const canSetAssignee =
-    window.location.pathname.startsWith(UrlPathTemplate.Tasks) &&
+    window.location.pathname.startsWith(UrlPathTemplate.TasksDialog) &&
     user?.isCurator &&
     (ticket.status === 'Pending' || ticket.status === 'New');
 

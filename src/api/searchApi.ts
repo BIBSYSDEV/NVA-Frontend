@@ -69,3 +69,15 @@ export const fetchEmployees = async (
 
   return getEmployees.data;
 };
+
+export const fetchNviCandidates = async (results: number, from: number, query = '') => {
+  const paginationQuery = `results=${results}&from=${from}`;
+  const searchQuery = query ? `query=${query}` : '';
+  const fullQuery = [searchQuery, paginationQuery].filter(Boolean).join('&');
+
+  const getNviCandidates = await authenticatedApiRequest2<SearchResponse<any, any>>({
+    url: `${SearchApiPath.NviCandidates}?${fullQuery}`,
+  });
+
+  return getNviCandidates.data;
+};

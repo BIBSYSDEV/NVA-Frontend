@@ -1,15 +1,17 @@
+import AdjustIcon from '@mui/icons-material/Adjust';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import { Box, Button, CircularProgress, Divider, FormControlLabel, FormLabel, Typography, styled } from '@mui/material';
+import { Box, Button, CircularProgress, FormControlLabel, FormLabel, Typography, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
-import { fetchTickets } from '../../api/searchApi';
+import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -29,6 +31,7 @@ import { PrivateRoute } from '../../utils/routes/Routes';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import { NviCandidatesList } from './NviCandidatesList';
 import { TicketList } from './components/TicketList';
 
 type SelectedStatusState = {
@@ -103,10 +106,20 @@ const TasksPage = () => {
 
   const query = [typeQuery, statusQuery, assigneeQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
+  const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialog;
+  const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
+
   const ticketsQuery = useQuery({
+    enabled: isOnTicketsPage,
     queryKey: ['tickets', rowsPerPage, apiPage, query],
     queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, query),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
+  });
+
+  const nviCandidatesQuery = useQuery({
+    enabled: isOnNviCandidatesPage,
+    queryKey: ['nviCandidates', rowsPerPage, apiPage],
+    queryFn: () => fetchNviCandidates(rowsPerPage, apiPage * rowsPerPage),
   });
 
   const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
@@ -120,14 +133,12 @@ const TasksPage = () => {
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
-  const expandMenu = history.location.pathname === UrlPathTemplate.Tasks;
-
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={expandMenu}
+        expanded={isOnTicketsPage || isOnNviCandidatesPage}
         minimizedMenu={
-          <Link to={UrlPathTemplate.Tasks} onClick={() => ticketsQuery.refetch()}>
+          <Link to={UrlPathTemplate.TasksDialog} onClick={() => ticketsQuery.refetch()}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
             </StyledMinimizedMenuButton>
@@ -149,12 +160,16 @@ const TasksPage = () => {
             )
           ) : null}
         </Box>
-        <Divider />
+
         <NavigationListAccordion
           title={t('tasks.user_dialog')}
-          startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} fontSize="small" />}
-          accordionPath={UrlPathTemplate.Tasks}
-          defaultPath={UrlPathTemplate.Tasks}
+          startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
+          accordionPath={UrlPathTemplate.TasksDialog}
+          onClick={() => {
+            if (!isOnTicketsPage) {
+              setPage(1);
+            }
+          }}
           dataTestId={dataTestId.tasksPage.userDialogAccordion}>
           <StyledTicketSearchFormGroup>
             <Button
@@ -291,11 +306,26 @@ const TasksPage = () => {
             />
           </StyledTicketSearchFormGroup>
         </NavigationListAccordion>
+
+        <BetaFunctionality>
+          <NavigationListAccordion
+            title={t('basic_data.institutions.nvi')}
+            startIcon={<AdjustIcon sx={{ bgcolor: '#ee95ea', padding: '0.1rem' }} />}
+            accordionPath={UrlPathTemplate.TasksNvi}
+            onClick={() => {
+              if (!isOnNviCandidatesPage) {
+                setPage(1);
+              }
+            }}
+            dataTestId={dataTestId.tasksPage.nviAccordion}>
+            <></>
+          </NavigationListAccordion>
+        </BetaFunctionality>
       </SideMenu>
 
       <ErrorBoundary>
         <Switch>
-          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isCurator}>
+          <PrivateRoute exact path={UrlPathTemplate.TasksDialog} isAuthorized={isCurator}>
             <TicketList
               ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
@@ -308,10 +338,22 @@ const TasksPage = () => {
 
           <PrivateRoute
             exact
-            path={UrlPathTemplate.TasksRegistration}
+            path={UrlPathTemplate.TasksDialogRegistration}
             component={RegistrationLandingPage}
             isAuthorized={isCurator}
           />
+          <BetaFunctionality>
+            <PrivateRoute exact path={UrlPathTemplate.TasksNvi} isAuthorized={isCurator}>
+              <NviCandidatesList
+                nviCandidatesQuery={nviCandidatesQuery}
+                rowsPerPage={rowsPerPage}
+                setRowsPerPage={setRowsPerPage}
+                page={page}
+                setPage={setPage}
+                helmetTitle={t('basic_data.institutions.nvi')}
+              />
+            </PrivateRoute>
+          </BetaFunctionality>
         </Switch>
       </ErrorBoundary>
     </StyledPageWithSideMenu>

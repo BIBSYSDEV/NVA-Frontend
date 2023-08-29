@@ -55,7 +55,7 @@ export const ActionPanelContent = ({
     }
   };
 
-  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.Tasks);
+  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialog);
 
   const isInRegistrationWizard =
     window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
