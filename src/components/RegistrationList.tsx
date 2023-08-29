@@ -3,8 +3,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { Box, IconButton, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+import { createPromotedPublications, updatePromotedPublications } from '../api/preferencesApi';
+import { setNotification } from '../redux/notificationSlice';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
@@ -23,14 +27,16 @@ interface RegistrationListProps {
   registrations: Registration[];
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
-  promotedPublications?: string[];
+  promotedPublications?: string[] | undefined;
+  personId?: string;
 }
 
 export const RegistrationList = ({
   registrations,
   canEditRegistration = false,
   onDeleteDraftRegistration,
-  promotedPublications = [],
+  promotedPublications,
+  personId,
 }: RegistrationListProps) => (
   <List>
     {registrations.map((registration) => (
@@ -41,6 +47,7 @@ export const RegistrationList = ({
             registration={registration}
             canEditRegistration={canEditRegistration}
             promotedPublications={promotedPublications}
+            personId={personId}
           />
         </SearchListItem>
       </ErrorBoundary>
@@ -53,7 +60,8 @@ interface RegistrationListItemContentProps {
   ticketView?: boolean;
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
-  promotedPublications?: string[];
+  promotedPublications?: string[] | undefined;
+  personId?: string;
 }
 
 export const RegistrationListItemContent = ({
@@ -61,11 +69,13 @@ export const RegistrationListItemContent = ({
   ticketView = false,
   canEditRegistration,
   onDeleteDraftRegistration,
-  promotedPublications = [],
+  promotedPublications,
+  personId = '',
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription } = registration;
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const contributors = entityDescription?.contributors ?? [];
   const focusedContributors = contributors.slice(0, 5);
@@ -78,9 +88,30 @@ export const RegistrationListItemContent = ({
   const publicationDate = displayDate(entityDescription?.publicationDate);
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
 
-  const isPromotedPublication = promotedPublications.includes(identifier);
+  const isPromotedPublication = promotedPublications && promotedPublications.includes(identifier);
 
-  const makeHighligtedResult = () => promotedPublications.push(identifier);
+  const mutatePromotedPublications = useMutation({
+    mutationFn: () =>
+      promotedPublications === undefined
+        ? createPromotedPublications(personId, identifier)
+        : updatePromotedPublications(personId, promotedPublications),
+    onSuccess: () =>
+      dispatch(setNotification({ message: t('feedback.success.add_promoted_publication'), variant: 'success' })),
+    onError: () =>
+      dispatch(setNotification({ message: t('feedback.error.add_promoted_publication'), variant: 'error' })),
+  });
+
+  const handleChange = () => {
+    if (!isPromotedPublication) {
+      promotedPublications?.push(identifier);
+    } else {
+      const index = promotedPublications.indexOf(identifier, 0);
+      if (index > -1) {
+        promotedPublications.splice(index, 1);
+      }
+    }
+    mutatePromotedPublications.mutate();
+  };
 
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
@@ -150,27 +181,17 @@ export const RegistrationListItemContent = ({
 
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
-          {location.pathname.includes(UrlPathTemplate.MyPageMyResults) &&
-            (isPromotedPublication ? (
-              <Tooltip title={t('common.edit')}>
-                <IconButton
-                  data-testid={`edit-registration-${identifier}`}
-                  size="small"
-                  sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
-                  <StarIcon fontSize="inherit" />
-                </IconButton>
-              </Tooltip>
-            ) : (
-              <Tooltip title={t('common.edit')}>
-                <IconButton
-                  data-testid={`edit-registration-${identifier}`}
-                  size="small"
-                  onClick={() => makeHighligtedResult}
-                  sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
-                  <StarOutlineIcon fontSize="inherit" />
-                </IconButton>
-              </Tooltip>
-            ))}
+          {location.pathname.includes(UrlPathTemplate.MyPageMyResults) && (
+            <IconButton
+              title={t('my_page.my_profile.add_promoted_publication')}
+              data-testid={dataTestId.myPage.addPromotedPublicationButton}
+              disabled={mutatePromotedPublications.isLoading}
+              onClick={() => handleChange()}
+              size="small"
+              sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+              {isPromotedPublication ? <StarIcon fontSize="inherit" /> : <StarOutlineIcon fontSize="inherit" />}
+            </IconButton>
+          )}
           <Tooltip title={t('common.edit')}>
             <IconButton
               data-testid={`edit-registration-${identifier}`}
