@@ -32,6 +32,7 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
         <TableHead>
           <TableRow>
             <TableCell>{t('common.name')}</TableCell>
+            <TableCell>{t('basic_data.institutions.doi_prefix')}</TableCell>
             <TableCell>{t('common.date')}</TableCell>
             <TableCell>{t('common.actions')}</TableCell>
           </TableRow>
@@ -41,6 +42,9 @@ export const InstitutionList = ({ institutions }: InstitutionListProps) => {
             <TableRow key={institution.id}>
               <TableCell>
                 <Typography>{institution.displayName}</Typography>
+              </TableCell>
+              <TableCell>
+                <Typography>{institution.doiPrefix}</Typography>
               </TableCell>
               <TableCell>
                 <Typography>{new Date(institution.createdDate).toLocaleDateString()}</Typography>
