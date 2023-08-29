@@ -42,6 +42,7 @@ const BasicDataPage = () => {
   const user = useSelector((store: RootState) => store.user);
   const isInstitutionAdmin = !!user?.customerId && user.isInstitutionAdmin;
   const isAppAdmin = !!user?.customerId && user.isAppAdmin;
+  const isInternalImporter = !!user?.customerId && user.isInternalImporter;
   const location = useLocation();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
 
@@ -156,7 +157,7 @@ const BasicDataPage = () => {
           </NavigationListAccordion>
         )}
 
-        {user?.isAppAdminImporter && (
+        {user?.isInternalImporter && (
           <NavigationListAccordion
             title={t('basic_data.central_import.central_import')}
             startIcon={
@@ -265,14 +266,14 @@ const BasicDataPage = () => {
             component={AdminCustomerInstitutionsContainer}
             isAuthorized={isAppAdmin}
           />
-          <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImport} isAuthorized={isAppAdmin}>
+          <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImport} isAuthorized={isInternalImporter}>
             <CentralImportPage statusFilter={selectedImportCandidateStatus} yearFilter={candidateYearFilter} />
           </PrivateRoute>
           <PrivateRoute
             exact
             path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
             component={CentralImportDuplicationCheckPage}
-            isAuthorized={isAppAdmin}
+            isAuthorized={isInternalImporter}
           />
           <PrivateRoute
             exact
