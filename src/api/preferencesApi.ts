@@ -10,9 +10,22 @@ export const fetchPromotedPublicationsById = async (identifier: string) => {
   return getPromotedPublications.data;
 };
 
-export const createPromotedPublications = async (promotedPublication: PromotedPublications) =>
+export const createPromotedPublications = async (identifier: string, promotedPublication: string) =>
   await authenticatedApiRequest2<PromotedPublications>({
     url: PromotedPublicationsApiPath.PromotedPublications,
     method: 'POST',
-    data: promotedPublication,
+    data: {
+      identifier: identifier,
+      promotedPublications: [promotedPublication],
+    },
+  });
+
+export const updatePromotedPublications = async (identifier: string, promotedPublications: string[]) =>
+  await authenticatedApiRequest2<PromotedPublications>({
+    url: PromotedPublicationsApiPath.PromotedPublications,
+    method: 'PUT',
+    data: {
+      identifier: identifier,
+      promotedPublications: promotedPublications,
+    },
   });
