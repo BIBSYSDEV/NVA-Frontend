@@ -60,12 +60,12 @@
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
       "see_publication": "Se publikasjon",
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)",
       "status": {
-        "NOT_IMPORTED": "Til import",
+        "IMPORTED": "Importert",
         "NOT_APPLICABLE": "Mangelfull",
-        "IMPORTED": "Importert"
-      }
+        "NOT_IMPORTED": "Til import"
+      },
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -226,6 +226,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -311,11 +315,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -603,11 +603,11 @@
       "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
-      "internal_importer": "Intern importør",
-      "internal_importer_description": "Kan behandle importkandidater",
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "institution_admins": "Administratorer",
+      "internal_importer": "Intern importør",
+      "internal_importer_description": "Kan behandle importkandidater",
       "no_active_employments": "Du har ingen roller fordi du har ingen aktive ansettelser og har ikke tilgang til å registrere.",
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
       "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen"
