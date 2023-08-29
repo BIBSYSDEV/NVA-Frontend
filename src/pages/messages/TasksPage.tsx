@@ -23,7 +23,7 @@ import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { InstitutionUser } from '../../types/user.types';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { LocalStorageKey, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
@@ -310,7 +310,7 @@ const TasksPage = () => {
         <BetaFunctionality>
           <NavigationListAccordion
             title={t('basic_data.institutions.nvi')}
-            startIcon={<AdjustIcon sx={{ bgcolor: '#ee95ea', padding: '0.1rem' }} />}
+            startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main', padding: '0.1rem' }} />}
             accordionPath={UrlPathTemplate.TasksNvi}
             onClick={() => {
               if (!isOnNviCandidatesPage) {
@@ -342,18 +342,19 @@ const TasksPage = () => {
             component={RegistrationLandingPage}
             isAuthorized={isCurator}
           />
-          <BetaFunctionality>
-            <PrivateRoute exact path={UrlPathTemplate.TasksNvi} isAuthorized={isCurator}>
-              <NviCandidatesList
-                nviCandidatesQuery={nviCandidatesQuery}
-                rowsPerPage={rowsPerPage}
-                setRowsPerPage={setRowsPerPage}
-                page={page}
-                setPage={setPage}
-                helmetTitle={t('basic_data.institutions.nvi')}
-              />
-            </PrivateRoute>
-          </BetaFunctionality>
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.TasksNvi}
+            isAuthorized={isCurator && localStorage.getItem(LocalStorageKey.Beta) === 'true'}>
+            <NviCandidatesList
+              nviCandidatesQuery={nviCandidatesQuery}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+              page={page}
+              setPage={setPage}
+              helmetTitle={t('basic_data.institutions.nvi')}
+            />
+          </PrivateRoute>
         </Switch>
       </ErrorBoundary>
     </StyledPageWithSideMenu>

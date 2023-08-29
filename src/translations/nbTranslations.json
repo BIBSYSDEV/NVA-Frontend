@@ -1563,6 +1563,9 @@
     "all_user_dialogs": "Alle brukerdialoger",
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
+    "nvi": {
+      "no_nvi_candidates": "Ingen NVI-kandidater"
+    },
     "status": "Status",
     "unread": "Uleste",
     "user_dialog": "Brukerdialog"

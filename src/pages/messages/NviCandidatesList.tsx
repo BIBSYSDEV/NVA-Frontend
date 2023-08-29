@@ -27,7 +27,6 @@ export const NviCandidatesList = ({
   helmetTitle,
 }: NviCandidatesListProps) => {
   const { t } = useTranslation();
-  const nviCandidates = nviCandidatesQuery.data?.hits ?? [];
 
   return (
     <section>
@@ -39,14 +38,14 @@ export const NviCandidatesList = ({
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : (
         <>
-          {nviCandidates.length === 0 ? (
-            <Typography>{t('my_page.messages.no_messages')}</Typography>
+          {nviCandidatesQuery.data?.hits.length === 0 ? (
+            <Typography>{t('tasks.nvi.no_nvi_candidates')}</Typography>
           ) : (
             <>
               <List disablePadding sx={{ mb: '0.5rem' }}>
-                {nviCandidates.map((nviCandidate) => (
-                  <ErrorBoundary key={nviCandidate.id}>
-                    <SearchListItem sx={{ borderLeftColor: '#ee95ea' }}>
+                {nviCandidatesQuery.data?.hits.map((nviCandidate) => (
+                  <ErrorBoundary key={nviCandidate.identifier}>
+                    <SearchListItem sx={{ borderLeftColor: 'nvi.main' }}>
                       <p>{nviCandidate.publicationDetails.title}</p>
                     </SearchListItem>
                   </ErrorBoundary>
