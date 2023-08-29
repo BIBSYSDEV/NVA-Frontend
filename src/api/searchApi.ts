@@ -1,7 +1,8 @@
 import { SearchResponse } from '../types/common.types';
-import { ImportCandidateSummary } from '../types/importCandidate.types';
+import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
 import { ExpandedTicket } from '../types/publication_types/ticket.types';
 import { Registration } from '../types/registration.types';
+import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
@@ -23,7 +24,9 @@ export const fetchImportCandidates = async (results: number, from: number, query
   const searchQuery = query ? `query=${query}` : '';
   const fullQuery = [searchQuery, paginationQuery].filter(Boolean).join('&');
 
-  const getImportCandidates = await authenticatedApiRequest2<SearchResponse<ImportCandidateSummary>>({
+  const getImportCandidates = await authenticatedApiRequest2<
+    SearchResponse<ImportCandidateSummary, ImportCandidateAggregations>
+  >({
     url: `${SearchApiPath.ImportCandidates}?${fullQuery}`,
   });
 
@@ -47,4 +50,22 @@ export const fetchResults = async (results: number, from: number, query = '') =>
     url: `${SearchApiPath.Registrations}?${fullQuery}`,
   });
   return getResults.data;
+};
+
+export const fetchEmployees = async (
+  organizationId: string,
+  results: number,
+  page: number,
+  nameQuery = '',
+  signal?: AbortSignal
+) => {
+  if (!organizationId) {
+    return;
+  }
+  const nameQueryParam = nameQuery ? `&name=${nameQuery}` : '';
+  const url = `${organizationId}/persons?page=${page}&results=${results}${nameQueryParam}`;
+
+  const getEmployees = await authenticatedApiRequest2<SearchResponse<CristinPerson>>({ url, signal });
+
+  return getEmployees.data;
 };

@@ -25,8 +25,17 @@ export interface ImportCandidate extends Omit<Registration, 'type'> {
   importStatus: ImportStatus;
 }
 
+interface ImportCandidateStatusBucket {
+  key: ImportCandidateStatus;
+  docCount: number;
+}
+
+export interface ImportCandidateAggregations {
+  'importStatus.candidateStatus': { buckets: ImportCandidateStatusBucket[] };
+}
+
 export interface ImportCandidateSummary {
-  type: 'ImportCandidate';
+  type: 'ImportCandidateSummary';
   id: string;
   additionalIdentifiers: string[];
   importStatus: ImportStatus;

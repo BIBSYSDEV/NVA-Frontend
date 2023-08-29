@@ -1,9 +1,10 @@
-import { List } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchImportCandidates } from '../../../../api/searchApi';
+import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
@@ -14,10 +15,11 @@ import { CandidateStatusFilter } from '../../BasicDataPage';
 import { CentralImportResultItem } from './CentralImportResultItem';
 
 interface CentralImportPageProps {
-  filter: CandidateStatusFilter;
+  statusFilter: CandidateStatusFilter;
+  yearFilter: number;
 }
 
-export const CentralImportPage = ({ filter }: CentralImportPageProps) => {
+export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPageProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -26,17 +28,17 @@ export const CentralImportPage = ({ filter }: CentralImportPageProps) => {
   const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
-  const queryValue: ImportCandidateStatus = filter.NOT_IMPORTED
+  const queryValue: ImportCandidateStatus = statusFilter.NOT_IMPORTED
     ? 'NOT_IMPORTED'
-    : filter.IMPORTED
+    : statusFilter.IMPORTED
     ? 'IMPORTED'
     : 'NOT_APPLICABLE';
-  const query = `importStatus.candidateStatus=${queryValue}`;
+  const query = `importStatus.candidateStatus:${queryValue} AND publicationYear:${yearFilter}`;
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates', rowsPerPage, page, query],
     queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, query),
-    meta: { errorMessage: t('feedback.error.get_registrations') },
+    meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
 
   const updatePath = (from: string, results: string) => {
@@ -57,23 +59,25 @@ export const CentralImportPage = ({ filter }: CentralImportPageProps) => {
     <section>
       {importCandidateQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
-      ) : (
+      ) : searchResults.length > 0 ? (
         <>
           <List>
             {searchResults.map((importCandidate) => (
-              <CentralImportResultItem importCandidate={importCandidate} key={importCandidate.id} />
+              <ErrorBoundary key={importCandidate.id}>
+                <CentralImportResultItem importCandidate={importCandidate} />
+              </ErrorBoundary>
             ))}
           </List>
-          {searchResults.length > 0 && (
-            <ListPagination
-              count={importCandidateQuery.data?.size ?? -1}
-              rowsPerPage={rowsPerPage}
-              page={page + 1}
-              onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
-              onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
-            />
-          )}
+          <ListPagination
+            count={importCandidateQuery.data?.size ?? 0}
+            rowsPerPage={rowsPerPage}
+            page={page + 1}
+            onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
+            onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
+          />
         </>
+      ) : (
+        <Typography>{t('common.no_hits')}</Typography>
       )}
     </section>
   );

@@ -3,13 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { RegistrationSearchResponse } from '../../../types/registration.types';
+import { SearchResponse } from '../../../types/common.types';
+import { Registration, RegistrationAggregations } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { RegistrationSearchResults } from './RegistrationSearchResults';
 
 interface RegistrationSearchProps {
-  searchResults?: RegistrationSearchResponse;
+  searchResults?: SearchResponse<Registration, RegistrationAggregations>;
   isLoadingSearch: boolean;
 }
 
