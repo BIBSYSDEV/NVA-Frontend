@@ -59,6 +59,7 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       );
 
       await Promise.all(deletePromises);
+      await registrationsQuery.refetch();
     },
     onSuccess: () => {
       dispatch(
@@ -76,9 +77,6 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
           variant: 'error',
         })
       );
-    },
-    onSettled: () => {
-      registrationsQuery.refetch();
     },
   });
 
