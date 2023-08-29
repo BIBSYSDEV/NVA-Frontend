@@ -1,4 +1,4 @@
-import { List, Typography } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -7,10 +7,10 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ListPagination } from '../../components/ListPagination';
 import { ListSkeleton } from '../../components/ListSkeleton';
 import { SearchListItem } from '../../components/styled/Wrappers';
-import { SearchResponse } from '../../types/common.types';
+import { NviCandidateSearchResponse } from '../../types/nvi.types';
 
 interface NviCandidatesListProps {
-  nviCandidatesQuery: UseQueryResult<SearchResponse<any>, unknown>;
+  nviCandidatesQuery: UseQueryResult<NviCandidateSearchResponse, unknown>;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
@@ -45,7 +45,8 @@ export const NviCandidatesList = ({
               <List disablePadding sx={{ mb: '0.5rem' }}>
                 {nviCandidatesQuery.data?.hits.map((nviCandidate) => (
                   <ErrorBoundary key={nviCandidate.identifier}>
-                    <SearchListItem sx={{ borderLeftColor: 'nvi.main' }}>
+                    <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+                      <Box></Box>
                       <p>{nviCandidate.publicationDetails.title}</p>
                     </SearchListItem>
                   </ErrorBoundary>

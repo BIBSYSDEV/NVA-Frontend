@@ -7,7 +7,7 @@ import { Box, Button, CircularProgress, FormControlLabel, FormLabel, Typography,
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
 import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
@@ -18,7 +18,6 @@ import { LinkButton, SideNavHeader, StyledPageWithSideMenu } from '../../compone
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
@@ -46,7 +45,6 @@ const StyledSearchModeButton = styled(LinkButton)({
 });
 
 const TasksPage = () => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
   const user = useSelector((store: RootState) => store.user);
@@ -113,7 +111,7 @@ const TasksPage = () => {
     enabled: isOnTicketsPage,
     queryKey: ['tickets', rowsPerPage, apiPage, query],
     queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, query),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
   const nviCandidatesQuery = useQuery({
