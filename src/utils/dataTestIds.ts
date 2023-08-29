@@ -440,6 +440,7 @@ export const dataTestId = {
     usersCreators: 'users-creators',
   },
   myPage: {
+    addPromotedPublicationButton: 'add-promoted-publivation-button',
     createProjectButton: 'create-project-button',
     messagesAccordion: 'messages-accordion',
     myProfileLink: 'my-profile-link',

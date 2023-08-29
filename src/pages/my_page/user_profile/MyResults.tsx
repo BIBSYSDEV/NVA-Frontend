@@ -58,6 +58,7 @@ export const MyResults = () => {
             canEditRegistration={true}
             searchResult={registrations}
             promotedPublications={promotedPublications}
+            personId={personId}
           />
           <ListPagination
             count={registrations.size}

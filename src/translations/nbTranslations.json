@@ -368,6 +368,7 @@
       "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
       "add_contributor": "Kunne ikke legge til medvirkende",
       "add_employment": "Kunne ikke legge til ansettelse",
+      "add_promoted_publication": "Kunne ikke markere som favoritt",
       "add_role": "Kunne ikke legge til rolle",
       "an_error_occurred": "En feil oppstod",
       "create_customer": "Kunne ikke opprette institusjon",
@@ -432,6 +433,7 @@
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
+      "add_promoted_publication": "Resultatet ble markert som favoritt",
       "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
       "create_project": "Prosjekt er opprettet",
@@ -540,6 +542,7 @@
     },
     "my_page": "Min side",
     "my_profile": {
+      "add_promoted_publication": "Legg til/fjern som favoritt",
       "heading": {
         "affiliations": "Tilknytninger",
         "personalia": "Personalia",
