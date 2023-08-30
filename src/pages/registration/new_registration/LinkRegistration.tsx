@@ -176,25 +176,15 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
             <Divider />
             <Typography
               sx={{
-                bgcolor: 'info.main',
+                bgcolor: 'primary.light',
                 color: 'primary.contrastText',
                 width: 'fit-content',
                 p: '0.5rem',
                 borderRadius: '4px',
               }}>
-              Denne publikasjonen er allerede registrert. Om den har feil eller mangler, må disse rettes.
+              {t('registration.registration.registration_doi_validation_message')}
             </Typography>
             <RegistrationList registrations={searchResults} />
-            <Typography
-              sx={{
-                bgcolor: 'info.main',
-                color: 'primary.contrastText',
-                width: 'fit-content',
-                p: '0.5rem',
-                borderRadius: '4px',
-              }}>
-              Du kan ikke registrere en duplikat, men du kan gjenbruke metadata til å registrere en lignende ressurs.
-            </Typography>
             <Divider />
           </Box>
         )}
