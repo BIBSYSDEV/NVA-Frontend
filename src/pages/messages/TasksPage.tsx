@@ -19,6 +19,7 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
+import { NviCandidateStatus } from '../../types/nvi.types';
 import { Organization } from '../../types/organization.types';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { InstitutionUser } from '../../types/user.types';
@@ -33,11 +34,15 @@ import { RegistrationLandingPage } from '../public_registration/RegistrationLand
 import { NviCandidatesList } from './components/NviCandidatesList';
 import { TicketList } from './components/TicketList';
 
-type SelectedStatusState = {
+type DialogueStatusFilter = {
   [key in TicketStatus]: boolean;
 };
 
-type SearchMode = 'current-user' | 'all';
+type DialogueSearchMode = 'current-user' | 'all';
+
+type NviStatusFilter = {
+  [key in NviCandidateStatus]: boolean;
+};
 
 const StyledSearchModeButton = styled(LinkButton)({
   borderRadius: '1.5rem',
@@ -55,7 +60,7 @@ const TasksPage = () => {
   const apiPage = page - 1;
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const [searchMode, setSearchMode] = useState<SearchMode>('all');
+  const [dialogueSearchMode, setDialogueSearchMode] = useState<DialogueSearchMode>('all');
 
   const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
 
@@ -65,7 +70,7 @@ const TasksPage = () => {
     publishingRequest: true,
   });
 
-  const [selectedStatuses, setSelectedStatuses] = useState<SelectedStatusState>({
+  const [dialogueStatusFilter, setDialogueStatusFilter] = useState<DialogueStatusFilter>({
     New: true,
     Pending: false,
     Completed: false,
@@ -89,7 +94,7 @@ const TasksPage = () => {
   const typeQuery =
     selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
 
-  const selectedStatusesArray = Object.entries(selectedStatuses)
+  const selectedStatusesArray = Object.entries(dialogueStatusFilter)
     .filter(([_, selected]) => selected)
     .map(([key]) => key);
 
@@ -98,7 +103,8 @@ const TasksPage = () => {
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const assigneeQuery = searchMode === 'current-user' && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
+  const assigneeQuery =
+    dialogueSearchMode === 'current-user' && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
 
   const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
@@ -114,13 +120,6 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
-  const nviCandidatesQuery = useQuery({
-    enabled: isOnNviCandidatesPage,
-    queryKey: ['nviCandidates', rowsPerPage, apiPage],
-    queryFn: () => fetchNviCandidates(rowsPerPage, apiPage * rowsPerPage),
-    meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
-  });
-
   const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
   const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
   const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
@@ -131,6 +130,29 @@ const TasksPage = () => {
   const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
+
+  // NVI related data
+  const [nviStatusFilter, setNviStatusFilter] = useState<NviStatusFilter>({
+    PENDING: true,
+    APPROVED: false,
+    REJECTED: false,
+  });
+
+  const selectedNviStatuses = Object.entries(nviStatusFilter)
+    .filter(([, selected]) => selected)
+    .map(([status]) => status);
+
+  const nviStatusQuery =
+    selectedNviStatuses.length > 0
+      ? `(${selectedNviStatuses.map((status) => `affiliations.approvalStatus:${status}`).join(' OR ')})`
+      : '';
+
+  const nviCandidatesQuery = useQuery({
+    enabled: isOnNviCandidatesPage,
+    queryKey: ['nviCandidates', rowsPerPage, apiPage, nviStatusQuery],
+    queryFn: () => fetchNviCandidates(rowsPerPage, apiPage * rowsPerPage, nviStatusQuery),
+    meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
+  });
 
   return (
     <StyledPageWithSideMenu>
@@ -223,21 +245,23 @@ const TasksPage = () => {
           <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
-              isSelected={searchMode === 'current-user'}
-              startIcon={searchMode === 'current-user' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+              isSelected={dialogueSearchMode === 'current-user'}
+              startIcon={
+                dialogueSearchMode === 'current-user' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />
+              }
               onClick={() => {
-                if (selectedStatuses.New) {
-                  setSelectedStatuses({ ...selectedStatuses, New: false });
+                if (dialogueStatusFilter.New) {
+                  setDialogueStatusFilter({ ...dialogueStatusFilter, New: false });
                 }
-                setSearchMode('current-user');
+                setDialogueSearchMode('current-user');
               }}>
               {t('tasks.my_user_dialogs')}
             </StyledSearchModeButton>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
-              isSelected={searchMode === 'all'}
-              startIcon={searchMode === 'all' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-              onClick={() => setSearchMode('all')}>
+              isSelected={dialogueSearchMode === 'all'}
+              startIcon={dialogueSearchMode === 'all' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+              onClick={() => setDialogueSearchMode('all')}>
               {t('tasks.all_user_dialogs')}
             </StyledSearchModeButton>
           </StyledTicketSearchFormGroup>
@@ -248,57 +272,63 @@ const TasksPage = () => {
             </FormLabel>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
-              disabled={searchMode === 'current-user'}
-              checked={selectedStatuses.New}
+              disabled={dialogueSearchMode === 'current-user'}
+              checked={dialogueStatusFilter.New}
               control={
                 <StyledStatusCheckbox
-                  onChange={() => setSelectedStatuses({ ...selectedStatuses, New: !selectedStatuses.New })}
+                  onChange={() => setDialogueStatusFilter({ ...dialogueStatusFilter, New: !dialogueStatusFilter.New })}
                 />
               }
               label={
-                selectedStatuses.New && newCount
+                dialogueStatusFilter.New && newCount
                   ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
                   : t('my_page.messages.ticket_types.New')
               }
             />
             <FormControlLabel
               data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
-              checked={selectedStatuses.Pending}
+              checked={dialogueStatusFilter.Pending}
               control={
                 <StyledStatusCheckbox
-                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Pending: !selectedStatuses.Pending })}
+                  onChange={() =>
+                    setDialogueStatusFilter({ ...dialogueStatusFilter, Pending: !dialogueStatusFilter.Pending })
+                  }
                 />
               }
               label={
-                selectedStatuses.Pending && pendingCount
+                dialogueStatusFilter.Pending && pendingCount
                   ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
                   : t('my_page.messages.ticket_types.Pending')
               }
             />
             <FormControlLabel
               data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
-              checked={selectedStatuses.Completed}
+              checked={dialogueStatusFilter.Completed}
               control={
                 <StyledStatusCheckbox
-                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Completed: !selectedStatuses.Completed })}
+                  onChange={() =>
+                    setDialogueStatusFilter({ ...dialogueStatusFilter, Completed: !dialogueStatusFilter.Completed })
+                  }
                 />
               }
               label={
-                selectedStatuses.Completed && completedCount
+                dialogueStatusFilter.Completed && completedCount
                   ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
                   : t('my_page.messages.ticket_types.Completed')
               }
             />
             <FormControlLabel
               data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
-              checked={selectedStatuses.Closed}
+              checked={dialogueStatusFilter.Closed}
               control={
                 <StyledStatusCheckbox
-                  onChange={() => setSelectedStatuses({ ...selectedStatuses, Closed: !selectedStatuses.Closed })}
+                  onChange={() =>
+                    setDialogueStatusFilter({ ...dialogueStatusFilter, Closed: !dialogueStatusFilter.Closed })
+                  }
                 />
               }
               label={
-                selectedStatuses.Closed && closedCount
+                dialogueStatusFilter.Closed && closedCount
                   ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
                   : t('my_page.messages.ticket_types.Closed')
               }
@@ -317,7 +347,53 @@ const TasksPage = () => {
               }
             }}
             dataTestId={dataTestId.tasksPage.nviAccordion}>
-            <></>
+            <StyledTicketSearchFormGroup>
+              <FormLabel component="legend" sx={{ fontWeight: 700 }}>
+                {t('tasks.status')}
+              </FormLabel>
+              <FormControlLabel
+                // data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
+                checked={nviStatusFilter.PENDING}
+                control={
+                  <StyledStatusCheckbox
+                    onChange={() => setNviStatusFilter({ ...nviStatusFilter, PENDING: !nviStatusFilter.PENDING })}
+                  />
+                }
+                label={
+                  nviStatusFilter.PENDING && newCount
+                    ? `${t('tasks.nvi.status.PENDING')} (${newCount})`
+                    : t('tasks.nvi.status.PENDING')
+                }
+              />
+              <FormControlLabel
+                // data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
+                checked={nviStatusFilter.APPROVED}
+                control={
+                  <StyledStatusCheckbox
+                    onChange={() => setNviStatusFilter({ ...nviStatusFilter, APPROVED: !nviStatusFilter.APPROVED })}
+                  />
+                }
+                label={
+                  nviStatusFilter.APPROVED && pendingCount
+                    ? `${t('tasks.nvi.status.APPROVED')} (${pendingCount})`
+                    : t('tasks.nvi.status.APPROVED')
+                }
+              />
+              <FormControlLabel
+                // data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
+                checked={nviStatusFilter.REJECTED}
+                control={
+                  <StyledStatusCheckbox
+                    onChange={() => setNviStatusFilter({ ...nviStatusFilter, REJECTED: !nviStatusFilter.REJECTED })}
+                  />
+                }
+                label={
+                  nviStatusFilter.REJECTED && completedCount
+                    ? `${t('tasks.nvi.status.REJECTED')} (${completedCount})`
+                    : t('tasks.nvi.status.REJECTED')
+                }
+              />
+            </StyledTicketSearchFormGroup>
           </NavigationListAccordion>
         </BetaFunctionality>
       </SideMenu>

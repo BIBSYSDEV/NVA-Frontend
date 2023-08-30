@@ -6,10 +6,12 @@ interface NviCandidateContributor {
   name: string;
 }
 
+export type NviCandidateStatus = 'PENDING' | 'REJECTED' | 'APPROVED';
+
 interface NviCandidateAffiliation {
   id: string;
   labels: LanguageString;
-  approvalStatus: 'PENDING' | 'REJECTED' | 'APPROVED';
+  approvalStatus: NviCandidateStatus;
 }
 
 export interface NviCandidate {
