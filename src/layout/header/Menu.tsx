@@ -81,7 +81,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               data-testid={dataTestId.header.tasksLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.TasksDialog}>
+              to={UrlPathTemplate.TasksDialogue}>
               <Typography>{t('common.tasks')}</Typography>
             </MenuItem>
           ),

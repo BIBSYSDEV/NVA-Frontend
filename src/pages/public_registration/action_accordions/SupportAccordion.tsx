@@ -74,7 +74,7 @@ export const SupportAccordion = ({
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {userIsCurator &&
-              window.location.pathname.startsWith(UrlPathTemplate.TasksDialog) &&
+              window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) &&
               supportTicket.status !== 'Completed' && (
                 <LoadingButton
                   sx={{

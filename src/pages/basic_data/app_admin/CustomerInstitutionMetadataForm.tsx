@@ -179,7 +179,7 @@ export const CustomerInstitutionMetadataForm = ({
             <Field name={CustomerInstitutionFieldNames.NviInstitution}>
               {({ field }: FieldProps<boolean>) => (
                 <div>
-                  <FormLabel component="legend">{t('basic_data.institutions.nvi')}</FormLabel>
+                  <FormLabel component="legend">{t('common.nvi')}</FormLabel>
                   <FormControlLabel
                     label={t('basic_data.institutions.institution_is_nvi_applicable')}
                     control={

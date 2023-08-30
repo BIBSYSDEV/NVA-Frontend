@@ -104,7 +104,7 @@ const TasksPage = () => {
 
   const query = [typeQuery, statusQuery, assigneeQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
-  const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialog;
+  const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
   const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
 
   const ticketsQuery = useQuery({
@@ -136,7 +136,7 @@ const TasksPage = () => {
       <SideMenu
         expanded={isOnTicketsPage || isOnNviCandidatesPage}
         minimizedMenu={
-          <Link to={UrlPathTemplate.TasksDialog} onClick={() => ticketsQuery.refetch()}>
+          <Link to={UrlPathTemplate.TasksDialogue} onClick={() => ticketsQuery.refetch()}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
             </StyledMinimizedMenuButton>
@@ -162,7 +162,7 @@ const TasksPage = () => {
         <NavigationListAccordion
           title={t('tasks.user_dialog')}
           startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
-          accordionPath={UrlPathTemplate.TasksDialog}
+          accordionPath={UrlPathTemplate.TasksDialogue}
           onClick={() => {
             if (!isOnTicketsPage) {
               setPage(1);
@@ -307,7 +307,7 @@ const TasksPage = () => {
 
         <BetaFunctionality>
           <NavigationListAccordion
-            title={t('basic_data.institutions.nvi')}
+            title={t('common.nvi')}
             startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main', padding: '0.1rem' }} />}
             accordionPath={UrlPathTemplate.TasksNvi}
             onClick={() => {
@@ -323,7 +323,7 @@ const TasksPage = () => {
 
       <ErrorBoundary>
         <Switch>
-          <PrivateRoute exact path={UrlPathTemplate.TasksDialog} isAuthorized={isCurator}>
+          <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isCurator}>
             <TicketList
               ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
@@ -336,7 +336,7 @@ const TasksPage = () => {
 
           <PrivateRoute
             exact
-            path={UrlPathTemplate.TasksDialogRegistration}
+            path={UrlPathTemplate.TasksDialogueRegistration}
             component={RegistrationLandingPage}
             isAuthorized={isCurator}
           />
@@ -350,7 +350,7 @@ const TasksPage = () => {
               setRowsPerPage={setRowsPerPage}
               page={page}
               setPage={setPage}
-              helmetTitle={t('basic_data.institutions.nvi')}
+              helmetTitle={t('common.nvi')}
             />
           </PrivateRoute>
         </Switch>
