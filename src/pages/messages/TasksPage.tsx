@@ -154,6 +154,10 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
   });
 
+  const nviPendingCount = nviCandidatesQuery.data?.aggregations?.['approvalStatus.pending'].docCount;
+  const nviApprovedCount = nviCandidatesQuery.data?.aggregations?.['approvalStatus.approved'].docCount;
+  const nviRejectedCount = nviCandidatesQuery.data?.aggregations?.['approvalStatus.rejected'].docCount;
+
   return (
     <StyledPageWithSideMenu>
       <SideMenu
@@ -352,7 +356,7 @@ const TasksPage = () => {
                 {t('tasks.status')}
               </FormLabel>
               <FormControlLabel
-                // data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
+                data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCheckbox}
                 checked={nviStatusFilter.PENDING}
                 control={
                   <StyledStatusCheckbox
@@ -360,13 +364,13 @@ const TasksPage = () => {
                   />
                 }
                 label={
-                  nviStatusFilter.PENDING && newCount
-                    ? `${t('tasks.nvi.status.PENDING')} (${newCount})`
+                  nviStatusFilter.PENDING && nviPendingCount
+                    ? `${t('tasks.nvi.status.PENDING')} (${nviPendingCount})`
                     : t('tasks.nvi.status.PENDING')
                 }
               />
               <FormControlLabel
-                // data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
+                data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedCheckbox}
                 checked={nviStatusFilter.APPROVED}
                 control={
                   <StyledStatusCheckbox
@@ -374,13 +378,13 @@ const TasksPage = () => {
                   />
                 }
                 label={
-                  nviStatusFilter.APPROVED && pendingCount
-                    ? `${t('tasks.nvi.status.APPROVED')} (${pendingCount})`
+                  nviStatusFilter.APPROVED && nviApprovedCount
+                    ? `${t('tasks.nvi.status.APPROVED')} (${nviApprovedCount})`
                     : t('tasks.nvi.status.APPROVED')
                 }
               />
               <FormControlLabel
-                // data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
+                data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedCheckbox}
                 checked={nviStatusFilter.REJECTED}
                 control={
                   <StyledStatusCheckbox
@@ -388,8 +392,8 @@ const TasksPage = () => {
                   />
                 }
                 label={
-                  nviStatusFilter.REJECTED && completedCount
-                    ? `${t('tasks.nvi.status.REJECTED')} (${completedCount})`
+                  nviStatusFilter.REJECTED && nviRejectedCount
+                    ? `${t('tasks.nvi.status.REJECTED')} (${nviRejectedCount})`
                     : t('tasks.nvi.status.REJECTED')
                 }
               />
