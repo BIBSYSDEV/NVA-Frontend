@@ -148,7 +148,7 @@ export const PublishingAccordion = ({
 
   const ticketMessages = publishingRequestTicket?.messages ?? [];
 
-  const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.Tasks);
+  const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   return (
     <Accordion
