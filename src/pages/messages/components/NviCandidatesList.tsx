@@ -1,13 +1,13 @@
-import { Box, List, Typography } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { ListPagination } from '../../components/ListPagination';
-import { ListSkeleton } from '../../components/ListSkeleton';
-import { SearchListItem } from '../../components/styled/Wrappers';
-import { NviCandidateSearchResponse } from '../../types/nvi.types';
+import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { ListPagination } from '../../../components/ListPagination';
+import { ListSkeleton } from '../../../components/ListSkeleton';
+import { NviCandidateSearchResponse } from '../../../types/nvi.types';
+import { NviCandidateListItem } from './NviCandidateListItem';
 
 interface NviCandidatesListProps {
   nviCandidatesQuery: UseQueryResult<NviCandidateSearchResponse, unknown>;
@@ -45,10 +45,7 @@ export const NviCandidatesList = ({
               <List disablePadding sx={{ mb: '0.5rem' }}>
                 {nviCandidatesQuery.data?.hits.map((nviCandidate) => (
                   <ErrorBoundary key={nviCandidate.identifier}>
-                    <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
-                      <Box></Box>
-                      <p>{nviCandidate.publicationDetails.title}</p>
-                    </SearchListItem>
+                    <NviCandidateListItem nviCandidate={nviCandidate} />
                   </ErrorBoundary>
                 ))}
               </List>

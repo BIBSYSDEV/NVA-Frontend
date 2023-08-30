@@ -30,7 +30,7 @@ import { PrivateRoute } from '../../utils/routes/Routes';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
-import { NviCandidatesList } from './NviCandidatesList';
+import { NviCandidatesList } from './components/NviCandidatesList';
 import { TicketList } from './components/TicketList';
 
 type SelectedStatusState = {

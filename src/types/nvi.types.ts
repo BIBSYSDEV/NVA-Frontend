@@ -2,7 +2,7 @@ import { LanguageString, SearchResponse } from './common.types';
 import { PublicationInstanceType } from './registration.types';
 
 interface NviCandidateContributor {
-  id: string;
+  id?: string;
   name: string;
 }
 
@@ -12,7 +12,7 @@ interface NviCandidateAffiliation {
   approvalStatus: 'PENDING' | 'REJECTED' | 'APPROVED';
 }
 
-interface NviCandidate {
+export interface NviCandidate {
   type: 'NviCandidate';
   identifier: string;
   year: string;
