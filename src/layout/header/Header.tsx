@@ -159,7 +159,7 @@ export const Header = () => {
                   color="inherit"
                   data-testid={dataTestId.header.tasksLink}
                   isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
-                  to={UrlPathTemplate.Tasks}
+                  to={UrlPathTemplate.TasksDialogue}
                   startIcon={<AssignmentIcon />}>
                   {t('common.tasks')}
                 </MenuButton>
