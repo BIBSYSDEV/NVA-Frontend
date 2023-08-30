@@ -49,10 +49,7 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
           {focusedContributors.map((contributor, index) => (
-            <Typography
-              key={index}
-              variant="body2"
-              sx={{ display: 'flex', alignItems: 'center', '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
+            <Typography key={index} variant="body2" sx={{ '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
               {contributor.id ? (
                 <MuiLink component={Link} to={getResearchProfilePath(contributor.id)}>
                   {contributor.name}
@@ -70,9 +67,7 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
         {nviCandidate.affiliations.length > 0 && (
           <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
             {focusedAffiliations.map((affiliation) => (
-              <Typography
-                key={affiliation.id}
-                sx={{ display: 'flex', alignItems: 'center', '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
+              <Typography key={affiliation.id} sx={{ '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
                 {getLanguageString(affiliation.labels)}
               </Typography>
             ))}

@@ -118,6 +118,7 @@ const TasksPage = () => {
     enabled: isOnNviCandidatesPage,
     queryKey: ['nviCandidates', rowsPerPage, apiPage],
     queryFn: () => fetchNviCandidates(rowsPerPage, apiPage * rowsPerPage),
+    meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
   });
 
   const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];

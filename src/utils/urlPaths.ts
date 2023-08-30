@@ -42,8 +42,8 @@ export enum UrlPathTemplate {
   RegistrationWizard = '/registration/:identifier/edit',
   ResearchProfile = '/research-profile',
   Tasks = '/tasks',
-  TasksDialogue = '/tasks/dialog',
-  TasksDialogueRegistration = '/tasks/dialog/:identifier',
+  TasksDialogue = '/tasks/dialogue',
+  TasksDialogueRegistration = '/tasks/dialogue/:identifier',
   TasksNvi = '/tasks/nvi',
   Wildcard = '*',
 }
