@@ -471,6 +471,7 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
+    nviAccordion: 'nvi-accordion',
     userDialogAccordion: 'user-dialog-accordion',
     searchMode: {
       allUserDialogsButton: 'all-user-dialogs-button',
