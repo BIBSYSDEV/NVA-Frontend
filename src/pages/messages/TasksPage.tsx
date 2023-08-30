@@ -1,27 +1,28 @@
+import AdjustIcon from '@mui/icons-material/Adjust';
 import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import { Box, Button, CircularProgress, Divider, FormControlLabel, FormLabel, Typography, styled } from '@mui/material';
+import { Box, Button, CircularProgress, FormControlLabel, FormLabel, Typography, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
-import { fetchTickets } from '../../api/searchApi';
+import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { Organization } from '../../types/organization.types';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { InstitutionUser } from '../../types/user.types';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { LocalStorageKey, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
@@ -29,6 +30,7 @@ import { PrivateRoute } from '../../utils/routes/Routes';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import { NviCandidatesList } from './components/NviCandidatesList';
 import { TicketList } from './components/TicketList';
 
 type SelectedStatusState = {
@@ -43,7 +45,6 @@ const StyledSearchModeButton = styled(LinkButton)({
 });
 
 const TasksPage = () => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
   const user = useSelector((store: RootState) => store.user);
@@ -103,10 +104,21 @@ const TasksPage = () => {
 
   const query = [typeQuery, statusQuery, assigneeQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
+  const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
+  const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
+
   const ticketsQuery = useQuery({
+    enabled: isOnTicketsPage,
     queryKey: ['tickets', rowsPerPage, apiPage, query],
     queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, query),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_messages') },
+  });
+
+  const nviCandidatesQuery = useQuery({
+    enabled: isOnNviCandidatesPage,
+    queryKey: ['nviCandidates', rowsPerPage, apiPage],
+    queryFn: () => fetchNviCandidates(rowsPerPage, apiPage * rowsPerPage),
+    meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
   });
 
   const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
@@ -120,14 +132,12 @@ const TasksPage = () => {
   const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
   const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
-  const expandMenu = history.location.pathname === UrlPathTemplate.Tasks;
-
   return (
     <StyledPageWithSideMenu>
       <SideMenu
-        expanded={expandMenu}
+        expanded={isOnTicketsPage || isOnNviCandidatesPage}
         minimizedMenu={
-          <Link to={UrlPathTemplate.Tasks} onClick={() => ticketsQuery.refetch()}>
+          <Link to={UrlPathTemplate.TasksDialogue} onClick={() => ticketsQuery.refetch()}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
             </StyledMinimizedMenuButton>
@@ -149,12 +159,16 @@ const TasksPage = () => {
             )
           ) : null}
         </Box>
-        <Divider />
+
         <NavigationListAccordion
           title={t('tasks.user_dialog')}
-          startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} fontSize="small" />}
-          accordionPath={UrlPathTemplate.Tasks}
-          defaultPath={UrlPathTemplate.Tasks}
+          startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
+          accordionPath={UrlPathTemplate.TasksDialogue}
+          onClick={() => {
+            if (!isOnTicketsPage) {
+              setPage(1);
+            }
+          }}
           dataTestId={dataTestId.tasksPage.userDialogAccordion}>
           <StyledTicketSearchFormGroup>
             <Button
@@ -291,11 +305,26 @@ const TasksPage = () => {
             />
           </StyledTicketSearchFormGroup>
         </NavigationListAccordion>
+
+        <BetaFunctionality>
+          <NavigationListAccordion
+            title={t('common.nvi')}
+            startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main', padding: '0.1rem' }} />}
+            accordionPath={UrlPathTemplate.TasksNvi}
+            onClick={() => {
+              if (!isOnNviCandidatesPage) {
+                setPage(1);
+              }
+            }}
+            dataTestId={dataTestId.tasksPage.nviAccordion}>
+            <></>
+          </NavigationListAccordion>
+        </BetaFunctionality>
       </SideMenu>
 
       <ErrorBoundary>
         <Switch>
-          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isCurator}>
+          <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isCurator}>
             <TicketList
               ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
@@ -308,10 +337,23 @@ const TasksPage = () => {
 
           <PrivateRoute
             exact
-            path={UrlPathTemplate.TasksRegistration}
+            path={UrlPathTemplate.TasksDialogueRegistration}
             component={RegistrationLandingPage}
             isAuthorized={isCurator}
           />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.TasksNvi}
+            isAuthorized={isCurator && localStorage.getItem(LocalStorageKey.Beta) === 'true'}>
+            <NviCandidatesList
+              nviCandidatesQuery={nviCandidatesQuery}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+              page={page}
+              setPage={setPage}
+              helmetTitle={t('common.nvi')}
+            />
+          </PrivateRoute>
         </Switch>
       </ErrorBoundary>
     </StyledPageWithSideMenu>
