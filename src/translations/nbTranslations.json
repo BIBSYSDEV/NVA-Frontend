@@ -1564,7 +1564,12 @@
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
-      "no_nvi_candidates": "Ingen NVI-kandidater"
+      "no_nvi_candidates": "Ingen NVI-kandidater",
+      "status": {
+        "APPROVED": "Godkjent",
+        "PENDING": "Til kontroll",
+        "REJECTED": "Avvist"
+      }
     },
     "status": "Status",
     "unread": "Uleste",

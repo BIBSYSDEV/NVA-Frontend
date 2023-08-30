@@ -65,12 +65,6 @@ export const SearchListItem = styled(ListItem)(({ theme }) => ({
   alignItems: 'start',
 }));
 
-export const ColorizedListItem = styled(ListItem)(({ theme }) => ({
-  border: '2px solid',
-  borderColor: theme.palette.secondary.dark,
-  borderLeft: '1.25rem solid',
-}));
-
 export const StyledStatusCheckbox = styled(Checkbox)({
   paddingTop: '0.2rem',
   paddingBottom: '0.2rem',
