@@ -23,7 +23,7 @@ import { NviCandidateStatus } from '../../types/nvi.types';
 import { Organization } from '../../types/organization.types';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { InstitutionUser } from '../../types/user.types';
-import { LocalStorageKey, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
@@ -189,228 +189,230 @@ const TasksPage = () => {
           ) : null}
         </Box>
 
-        <NavigationListAccordion
-          title={t('tasks.user_dialog')}
-          startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
-          accordionPath={UrlPathTemplate.TasksDialogue}
-          onClick={() => {
-            if (!isOnTicketsPage) {
-              setPage(1);
-            }
-          }}
-          dataTestId={dataTestId.tasksPage.userDialogAccordion}>
-          <StyledTicketSearchFormGroup>
-            <Button
-              data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
-              sx={{
-                width: 'fit-content',
-                background: ticketUnreadFilter ? undefined : 'white',
-                textTransform: 'none',
-              }}
-              variant={ticketUnreadFilter ? 'contained' : 'outlined'}
-              startIcon={<MarkEmailUnreadIcon />}
-              onClick={() => setTicketUnreadFilter(!ticketUnreadFilter)}>
-              {t('tasks.unread')}
-            </Button>
-          </StyledTicketSearchFormGroup>
-
-          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
-            <SelectableButton
-              data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
-              showCheckbox
-              isSelected={ticketTypes.publishingRequest}
-              color="publishingRequest"
-              onClick={() => setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest })}>
-              {ticketTypes.publishingRequest && publishingRequestCount
-                ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
-                : t('my_page.messages.types.PublishingRequest')}
-            </SelectableButton>
-
-            <SelectableButton
-              data-testid={dataTestId.tasksPage.typeSearch.doiButton}
-              showCheckbox
-              isSelected={ticketTypes.doiRequest}
-              color="doiRequest"
-              onClick={() => setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest })}>
-              {ticketTypes.doiRequest && doiRequestCount
-                ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
-                : t('my_page.messages.types.DoiRequest')}
-            </SelectableButton>
-
-            <SelectableButton
-              data-testid={dataTestId.tasksPage.typeSearch.supportButton}
-              showCheckbox
-              isSelected={ticketTypes.generalSupportCase}
-              color="generalSupportCase"
-              onClick={() => setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase })}>
-              {ticketTypes.generalSupportCase && generalSupportCaseCount
-                ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
-                : t('my_page.messages.types.GeneralSupportCase')}
-            </SelectableButton>
-          </StyledTicketSearchFormGroup>
-
-          <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
-            <StyledSearchModeButton
-              data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
-              isSelected={ticketSearchMode === 'current-user'}
-              startIcon={
-                ticketSearchMode === 'current-user' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />
-              }
-              onClick={() => {
-                if (ticketStatusFilter.New) {
-                  setTicketStatusFilter({ ...ticketStatusFilter, New: false });
-                }
-                setTicketSearchMode('current-user');
-              }}>
-              {t('tasks.my_user_dialogs')}
-            </StyledSearchModeButton>
-            <StyledSearchModeButton
-              data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
-              isSelected={ticketSearchMode === 'all'}
-              startIcon={ticketSearchMode === 'all' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-              onClick={() => setTicketSearchMode('all')}>
-              {t('tasks.all_user_dialogs')}
-            </StyledSearchModeButton>
-          </StyledTicketSearchFormGroup>
-
-          <StyledTicketSearchFormGroup>
-            <FormLabel component="legend" sx={{ fontWeight: 700 }}>
-              {t('tasks.status')}
-            </FormLabel>
-            <FormControlLabel
-              data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
-              disabled={ticketSearchMode === 'current-user'}
-              checked={ticketStatusFilter.New}
-              control={
-                <StyledStatusCheckbox
-                  onChange={() => setTicketStatusFilter({ ...ticketStatusFilter, New: !ticketStatusFilter.New })}
-                />
-              }
-              label={
-                ticketStatusFilter.New && ticketNewCount
-                  ? `${t('my_page.messages.ticket_types.New')} (${ticketNewCount})`
-                  : t('my_page.messages.ticket_types.New')
-              }
-            />
-            <FormControlLabel
-              data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
-              checked={ticketStatusFilter.Pending}
-              control={
-                <StyledStatusCheckbox
-                  onChange={() =>
-                    setTicketStatusFilter({ ...ticketStatusFilter, Pending: !ticketStatusFilter.Pending })
-                  }
-                />
-              }
-              label={
-                ticketStatusFilter.Pending && ticketPendingCount
-                  ? `${t('my_page.messages.ticket_types.Pending')} (${ticketPendingCount})`
-                  : t('my_page.messages.ticket_types.Pending')
-              }
-            />
-            <FormControlLabel
-              data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
-              checked={ticketStatusFilter.Completed}
-              control={
-                <StyledStatusCheckbox
-                  onChange={() =>
-                    setTicketStatusFilter({ ...ticketStatusFilter, Completed: !ticketStatusFilter.Completed })
-                  }
-                />
-              }
-              label={
-                ticketStatusFilter.Completed && ticketCompletedCount
-                  ? `${t('my_page.messages.ticket_types.Completed')} (${ticketCompletedCount})`
-                  : t('my_page.messages.ticket_types.Completed')
-              }
-            />
-            <FormControlLabel
-              data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
-              checked={ticketStatusFilter.Closed}
-              control={
-                <StyledStatusCheckbox
-                  onChange={() => setTicketStatusFilter({ ...ticketStatusFilter, Closed: !ticketStatusFilter.Closed })}
-                />
-              }
-              label={
-                ticketStatusFilter.Closed && ticketClosedCount
-                  ? `${t('my_page.messages.ticket_types.Closed')} (${ticketClosedCount})`
-                  : t('my_page.messages.ticket_types.Closed')
-              }
-            />
-          </StyledTicketSearchFormGroup>
-        </NavigationListAccordion>
-
-        <BetaFunctionality>
+        {isCurator && (
           <NavigationListAccordion
-            title={t('common.nvi')}
-            startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main', padding: '0.1rem' }} />}
-            accordionPath={UrlPathTemplate.TasksNvi}
+            title={t('tasks.user_dialog')}
+            startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
+            accordionPath={UrlPathTemplate.TasksDialogue}
             onClick={() => {
-              if (!isOnNviCandidatesPage) {
+              if (!isOnTicketsPage) {
                 setPage(1);
               }
             }}
-            dataTestId={dataTestId.tasksPage.nviAccordion}>
+            dataTestId={dataTestId.tasksPage.userDialogAccordion}>
+            <StyledTicketSearchFormGroup>
+              <Button
+                data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
+                sx={{
+                  width: 'fit-content',
+                  background: ticketUnreadFilter ? undefined : 'white',
+                  textTransform: 'none',
+                }}
+                variant={ticketUnreadFilter ? 'contained' : 'outlined'}
+                startIcon={<MarkEmailUnreadIcon />}
+                onClick={() => setTicketUnreadFilter(!ticketUnreadFilter)}>
+                {t('tasks.unread')}
+              </Button>
+            </StyledTicketSearchFormGroup>
+
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
+              <SelectableButton
+                data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
+                showCheckbox
+                isSelected={ticketTypes.publishingRequest}
+                color="publishingRequest"
+                onClick={() => setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest })}>
+                {ticketTypes.publishingRequest && publishingRequestCount
+                  ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
+                  : t('my_page.messages.types.PublishingRequest')}
+              </SelectableButton>
+
+              <SelectableButton
+                data-testid={dataTestId.tasksPage.typeSearch.doiButton}
+                showCheckbox
+                isSelected={ticketTypes.doiRequest}
+                color="doiRequest"
+                onClick={() => setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest })}>
+                {ticketTypes.doiRequest && doiRequestCount
+                  ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
+                  : t('my_page.messages.types.DoiRequest')}
+              </SelectableButton>
+
+              <SelectableButton
+                data-testid={dataTestId.tasksPage.typeSearch.supportButton}
+                showCheckbox
+                isSelected={ticketTypes.generalSupportCase}
+                color="generalSupportCase"
+                onClick={() => setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase })}>
+                {ticketTypes.generalSupportCase && generalSupportCaseCount
+                  ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
+                  : t('my_page.messages.types.GeneralSupportCase')}
+              </SelectableButton>
+            </StyledTicketSearchFormGroup>
+
+            <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
+              <StyledSearchModeButton
+                data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
+                isSelected={ticketSearchMode === 'current-user'}
+                startIcon={
+                  ticketSearchMode === 'current-user' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />
+                }
+                onClick={() => {
+                  if (ticketStatusFilter.New) {
+                    setTicketStatusFilter({ ...ticketStatusFilter, New: false });
+                  }
+                  setTicketSearchMode('current-user');
+                }}>
+                {t('tasks.my_user_dialogs')}
+              </StyledSearchModeButton>
+              <StyledSearchModeButton
+                data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
+                isSelected={ticketSearchMode === 'all'}
+                startIcon={ticketSearchMode === 'all' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+                onClick={() => setTicketSearchMode('all')}>
+                {t('tasks.all_user_dialogs')}
+              </StyledSearchModeButton>
+            </StyledTicketSearchFormGroup>
+
             <StyledTicketSearchFormGroup>
               <FormLabel component="legend" sx={{ fontWeight: 700 }}>
                 {t('tasks.status')}
               </FormLabel>
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCheckbox}
-                checked={nviStatusFilter.Pending}
+                data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
+                disabled={ticketSearchMode === 'current-user'}
+                checked={ticketStatusFilter.New}
                 control={
                   <StyledStatusCheckbox
-                    onChange={() => setNviStatusFilter({ ...nviStatusFilter, Pending: !nviStatusFilter.Pending })}
+                    onChange={() => setTicketStatusFilter({ ...ticketStatusFilter, New: !ticketStatusFilter.New })}
                   />
                 }
                 label={
-                  nviStatusFilter.Pending && nviPendingCount
-                    ? `${t('tasks.nvi.status.Pending')} (${nviPendingCount})`
-                    : t('tasks.nvi.status.Pending')
+                  ticketStatusFilter.New && ticketNewCount
+                    ? `${t('my_page.messages.ticket_types.New')} (${ticketNewCount})`
+                    : t('my_page.messages.ticket_types.New')
                 }
               />
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedCheckbox}
-                checked={nviStatusFilter.Approved}
+                data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
+                checked={ticketStatusFilter.Pending}
                 control={
                   <StyledStatusCheckbox
-                    onChange={() => setNviStatusFilter({ ...nviStatusFilter, Approved: !nviStatusFilter.Approved })}
+                    onChange={() =>
+                      setTicketStatusFilter({ ...ticketStatusFilter, Pending: !ticketStatusFilter.Pending })
+                    }
                   />
                 }
                 label={
-                  nviStatusFilter.Approved && nviApprovedCount
-                    ? `${t('tasks.nvi.status.Approved')} (${nviApprovedCount})`
-                    : t('tasks.nvi.status.Approved')
+                  ticketStatusFilter.Pending && ticketPendingCount
+                    ? `${t('my_page.messages.ticket_types.Pending')} (${ticketPendingCount})`
+                    : t('my_page.messages.ticket_types.Pending')
                 }
               />
               <FormControlLabel
-                data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedCheckbox}
-                checked={nviStatusFilter.Rejected}
+                data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
+                checked={ticketStatusFilter.Completed}
                 control={
                   <StyledStatusCheckbox
-                    onChange={() => setNviStatusFilter({ ...nviStatusFilter, Rejected: !nviStatusFilter.Rejected })}
+                    onChange={() =>
+                      setTicketStatusFilter({ ...ticketStatusFilter, Completed: !ticketStatusFilter.Completed })
+                    }
                   />
                 }
                 label={
-                  nviStatusFilter.Rejected && nviRejectedCount
-                    ? `${t('tasks.nvi.status.Rejected')} (${nviRejectedCount})`
-                    : t('tasks.nvi.status.Rejected')
+                  ticketStatusFilter.Completed && ticketCompletedCount
+                    ? `${t('my_page.messages.ticket_types.Completed')} (${ticketCompletedCount})`
+                    : t('my_page.messages.ticket_types.Completed')
+                }
+              />
+              <FormControlLabel
+                data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
+                checked={ticketStatusFilter.Closed}
+                control={
+                  <StyledStatusCheckbox
+                    onChange={() =>
+                      setTicketStatusFilter({ ...ticketStatusFilter, Closed: !ticketStatusFilter.Closed })
+                    }
+                  />
+                }
+                label={
+                  ticketStatusFilter.Closed && ticketClosedCount
+                    ? `${t('my_page.messages.ticket_types.Closed')} (${ticketClosedCount})`
+                    : t('my_page.messages.ticket_types.Closed')
                 }
               />
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>
-        </BetaFunctionality>
+        )}
+
+        {isNviCurator && (
+          <BetaFunctionality>
+            <NavigationListAccordion
+              title={t('common.nvi')}
+              startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main', padding: '0.1rem' }} />}
+              accordionPath={UrlPathTemplate.TasksNvi}
+              onClick={() => {
+                if (!isOnNviCandidatesPage) {
+                  setPage(1);
+                }
+              }}
+              dataTestId={dataTestId.tasksPage.nviAccordion}>
+              <StyledTicketSearchFormGroup>
+                <FormLabel component="legend" sx={{ fontWeight: 700 }}>
+                  {t('tasks.status')}
+                </FormLabel>
+                <FormControlLabel
+                  data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCheckbox}
+                  checked={nviStatusFilter.Pending}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() => setNviStatusFilter({ ...nviStatusFilter, Pending: !nviStatusFilter.Pending })}
+                    />
+                  }
+                  label={
+                    nviStatusFilter.Pending && nviPendingCount
+                      ? `${t('tasks.nvi.status.Pending')} (${nviPendingCount})`
+                      : t('tasks.nvi.status.Pending')
+                  }
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedCheckbox}
+                  checked={nviStatusFilter.Approved}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() => setNviStatusFilter({ ...nviStatusFilter, Approved: !nviStatusFilter.Approved })}
+                    />
+                  }
+                  label={
+                    nviStatusFilter.Approved && nviApprovedCount
+                      ? `${t('tasks.nvi.status.Approved')} (${nviApprovedCount})`
+                      : t('tasks.nvi.status.Approved')
+                  }
+                />
+                <FormControlLabel
+                  data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedCheckbox}
+                  checked={nviStatusFilter.Rejected}
+                  control={
+                    <StyledStatusCheckbox
+                      onChange={() => setNviStatusFilter({ ...nviStatusFilter, Rejected: !nviStatusFilter.Rejected })}
+                    />
+                  }
+                  label={
+                    nviStatusFilter.Rejected && nviRejectedCount
+                      ? `${t('tasks.nvi.status.Rejected')} (${nviRejectedCount})`
+                      : t('tasks.nvi.status.Rejected')
+                  }
+                />
+              </StyledTicketSearchFormGroup>
+            </NavigationListAccordion>
+          </BetaFunctionality>
+        )}
       </SideMenu>
 
       <ErrorBoundary>
         <Switch>
           <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isCurator || isNviCurator}>
-            {isCurator ? (
-              <Redirect to={UrlPathTemplate.TasksDialogue} />
-            ) : isNviCurator ? (
-              <Redirect to={UrlPathTemplate.TasksNvi} />
-            ) : null}
+            {isCurator ? <Redirect to={UrlPathTemplate.TasksDialogue} /> : <Redirect to={UrlPathTemplate.TasksNvi} />}
           </PrivateRoute>
 
           <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isCurator}>
@@ -423,17 +425,14 @@ const TasksPage = () => {
               helmetTitle={t('common.tasks')}
             />
           </PrivateRoute>
-
           <PrivateRoute
             exact
             path={UrlPathTemplate.TasksDialogueRegistration}
             component={RegistrationLandingPage}
             isAuthorized={isCurator}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.TasksNvi}
-            isAuthorized={isNviCurator && localStorage.getItem(LocalStorageKey.Beta) === 'true'}>
+
+          <PrivateRoute exact path={UrlPathTemplate.TasksNvi} isAuthorized={isNviCurator}>
             <NviCandidatesList
               nviCandidatesQuery={nviCandidatesQuery}
               rowsPerPage={rowsPerPage}
