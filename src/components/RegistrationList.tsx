@@ -27,8 +27,7 @@ interface RegistrationListProps {
   registrations: Registration[];
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
-  promotedPublications?: string[] | undefined;
-  personId?: string;
+  promotedPublications?: string[];
 }
 
 export const RegistrationList = ({
@@ -36,7 +35,6 @@ export const RegistrationList = ({
   canEditRegistration = false,
   onDeleteDraftRegistration,
   promotedPublications,
-  personId,
 }: RegistrationListProps) => (
   <List>
     {registrations.map((registration) => (
@@ -47,7 +45,6 @@ export const RegistrationList = ({
             registration={registration}
             canEditRegistration={canEditRegistration}
             promotedPublications={promotedPublications}
-            personId={personId}
           />
         </SearchListItem>
       </ErrorBoundary>
@@ -60,8 +57,7 @@ interface RegistrationListItemContentProps {
   ticketView?: boolean;
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
-  promotedPublications?: string[] | undefined;
-  personId?: string;
+  promotedPublications?: string[];
 }
 
 export const RegistrationListItemContent = ({
@@ -70,10 +66,9 @@ export const RegistrationListItemContent = ({
   canEditRegistration,
   onDeleteDraftRegistration,
   promotedPublications,
-  personId = '',
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
-  const { identifier, entityDescription } = registration;
+  const { identifier, entityDescription, id } = registration;
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -88,21 +83,21 @@ export const RegistrationListItemContent = ({
   const publicationDate = displayDate(entityDescription?.publicationDate);
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
 
-  const isPromotedPublication = promotedPublications && promotedPublications.includes(identifier);
+  const isPromotedPublication = promotedPublications && promotedPublications.includes(id);
 
   const mutatePromotedPublications = useMutation({
     mutationFn: () => updatePromotedPublications(promotedPublications ? promotedPublications : []),
     onSuccess: () =>
-      dispatch(setNotification({ message: t('feedback.success.add_promoted_publication'), variant: 'success' })),
+      dispatch(setNotification({ message: t('feedback.success.updated_promoted_publication'), variant: 'success' })),
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.add_promoted_publication'), variant: 'error' })),
   });
 
   const handleChange = () => {
     if (!isPromotedPublication) {
-      promotedPublications?.push(identifier);
+      promotedPublications?.push(id);
     } else {
-      const index = promotedPublications.indexOf(identifier, 0);
+      const index = promotedPublications.indexOf(id, 0);
       if (index > -1) {
         promotedPublications.splice(index, 1);
       }

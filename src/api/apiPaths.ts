@@ -55,5 +55,5 @@ export enum VerifiedFundingApiPath {
 }
 
 export enum PersonPreferencesApiPath {
-  PersonPreferences = '/person-preferences/',
+  PersonPreferences = '/person-preferences',
 }

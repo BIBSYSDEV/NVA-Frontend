@@ -434,7 +434,6 @@
     },
     "success": {
       "add_employment": "Ansettelse lagt til",
-      "add_promoted_publication": "Resultatet ble markert som favoritt",
       "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
       "create_project": "Prosjekt er opprettet",
@@ -456,6 +455,7 @@
       "update_orcid": "ORCID-kobling ble oppdatert",
       "update_person": "Person ble oppdatert",
       "update_project": "Prosjektet ble oppdatert",
+      "updated_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",

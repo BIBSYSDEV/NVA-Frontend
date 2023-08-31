@@ -35,6 +35,7 @@ export const MyResults = () => {
   );
 
   const promotedPublicationsQuery = useQuery({
+    enabled: !!personId,
     queryKey: ['person-preferences', personId],
     queryFn: () => fetchPromotedPublicationsById(personId),
     meta: { errorMessage: false },
@@ -58,7 +59,6 @@ export const MyResults = () => {
             canEditRegistration={true}
             searchResult={registrations}
             promotedPublications={promotedPublications}
-            personId={personId}
           />
           <ListPagination
             count={registrations.size}
