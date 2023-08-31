@@ -471,6 +471,13 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
+    nvi: {
+      statusFilter: {
+        approvedCheckbox: 'approved-checkbox',
+        pendingCheckbox: 'pending-checkbox',
+        rejectedCheckbox: 'rejected-checkbox',
+      },
+    },
     nviAccordion: 'nvi-accordion',
     userDialogAccordion: 'user-dialog-accordion',
     searchMode: {

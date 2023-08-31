@@ -6,16 +6,17 @@ interface NviCandidateContributor {
   name: string;
 }
 
-interface NviCandidateAffiliation {
+export type NviCandidateStatus = 'Pending' | 'Rejected' | 'Approved';
+
+interface NviCandidateApproval {
   id: string;
   labels: LanguageString;
-  approvalStatus: 'PENDING' | 'REJECTED' | 'APPROVED';
+  approvalStatus: NviCandidateStatus;
 }
 
 export interface NviCandidate {
   type: 'NviCandidate';
   identifier: string;
-  year: string;
   publicationDetails: {
     id: string;
     type: PublicationInstanceType;
@@ -23,7 +24,7 @@ export interface NviCandidate {
     publicationDate: string;
     contributors: NviCandidateContributor[];
   };
-  affiliations: NviCandidateAffiliation[];
+  approvals: NviCandidateApproval[];
 }
 
 interface NviCandidateAggregations {

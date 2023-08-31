@@ -1567,9 +1567,9 @@
     "nvi": {
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "status": {
-        "APPROVED": "Godkjent",
-        "PENDING": "Til kontroll",
-        "REJECTED": "Avvist"
+        "Approved": "Godkjent",
+        "Pending": "Til kontroll",
+        "Rejected": "Avvist"
       }
     },
     "status": "Status",
