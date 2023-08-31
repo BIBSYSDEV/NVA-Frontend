@@ -8,15 +8,13 @@ import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHel
 interface SearchResultsProps {
   searchResult: SearchResponse<Registration, RegistrationAggregations>;
   canEditRegistration?: boolean;
-  promotedPublications?: string[] | undefined;
-  personId?: string;
+  promotedPublications?: string[];
 }
 
 export const RegistrationSearchResults = ({
   searchResult,
   canEditRegistration = false,
   promotedPublications,
-  personId,
 }: SearchResultsProps) => {
   useEffect(() => {
     if (
