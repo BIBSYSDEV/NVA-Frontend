@@ -67,9 +67,9 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
 
         {nviCandidate.approvals.length > 0 && (
           <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
-            {focusedApprovals.map((affiliation) => (
-              <Typography key={affiliation.id} sx={{ '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
-                {getLanguageString(affiliation.labels)}
+            {focusedApprovals.map((approval) => (
+              <Typography key={approval.id} sx={{ '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
+                {getLanguageString(approval.labels)}
               </Typography>
             ))}
             {countRestApprovals > 0 && <Typography>({t('common.x_others', { count: countRestApprovals })})</Typography>}

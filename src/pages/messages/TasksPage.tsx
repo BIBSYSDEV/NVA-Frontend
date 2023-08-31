@@ -60,7 +60,6 @@ const TasksPage = () => {
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
 
   const [page, setPage] = useState(1);
-  const apiPage = page - 1;
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const [institutionUser] = useFetch<InstitutionUser>({
@@ -118,8 +117,8 @@ const TasksPage = () => {
 
   const ticketsQuery = useQuery({
     enabled: isOnTicketsPage,
-    queryKey: ['tickets', rowsPerPage, apiPage, ticketQueryString],
-    queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, ticketQueryString),
+    queryKey: ['tickets', rowsPerPage, page, ticketQueryString],
+    queryFn: () => fetchTickets(rowsPerPage, (page - 1) * rowsPerPage, ticketQueryString),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
@@ -152,8 +151,8 @@ const TasksPage = () => {
 
   const nviCandidatesQuery = useQuery({
     enabled: isOnNviCandidatesPage,
-    queryKey: ['nviCandidates', rowsPerPage, apiPage, nviStatusQuery],
-    queryFn: () => fetchNviCandidates(rowsPerPage, apiPage * rowsPerPage, nviStatusQuery),
+    queryKey: ['nviCandidates', rowsPerPage, page, nviStatusQuery],
+    queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviStatusQuery),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
   });
 
