@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { createPromotedPublications, updatePromotedPublications } from '../api/preferencesApi';
+import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
@@ -91,10 +91,7 @@ export const RegistrationListItemContent = ({
   const isPromotedPublication = promotedPublications && promotedPublications.includes(identifier);
 
   const mutatePromotedPublications = useMutation({
-    mutationFn: () =>
-      promotedPublications === undefined
-        ? createPromotedPublications(personId, identifier)
-        : updatePromotedPublications(personId, promotedPublications),
+    mutationFn: () => updatePromotedPublications(promotedPublications ? promotedPublications : []),
     onSuccess: () =>
       dispatch(setNotification({ message: t('feedback.success.add_promoted_publication'), variant: 'success' })),
     onError: () =>
