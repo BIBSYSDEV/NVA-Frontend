@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Switch, useHistory } from 'react-router-dom';
+import { Link, Redirect, Switch, useHistory } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
 import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
@@ -48,7 +48,8 @@ const TasksPage = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const user = useSelector((store: RootState) => store.user);
-  const isCurator = !!user?.customerId && !!user?.isCurator;
+  const isCurator = !!user?.isCurator;
+  const isNviCurator = !!user?.isNviCurator;
   const nvaUsername = user?.nvaUsername ?? '';
 
   const [page, setPage] = useState(1);
@@ -324,6 +325,14 @@ const TasksPage = () => {
 
       <ErrorBoundary>
         <Switch>
+          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isCurator || isNviCurator}>
+            {isCurator ? (
+              <Redirect to={UrlPathTemplate.TasksDialogue} />
+            ) : isNviCurator ? (
+              <Redirect to={UrlPathTemplate.TasksNvi} />
+            ) : null}
+          </PrivateRoute>
+
           <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isCurator}>
             <TicketList
               ticketsQuery={ticketsQuery}
@@ -344,7 +353,7 @@ const TasksPage = () => {
           <PrivateRoute
             exact
             path={UrlPathTemplate.TasksNvi}
-            isAuthorized={isCurator && localStorage.getItem(LocalStorageKey.Beta) === 'true'}>
+            isAuthorized={isNviCurator && localStorage.getItem(LocalStorageKey.Beta) === 'true'}>
             <NviCandidatesList
               nviCandidatesQuery={nviCandidatesQuery}
               rowsPerPage={rowsPerPage}

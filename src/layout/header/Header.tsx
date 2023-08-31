@@ -154,12 +154,12 @@ export const Header = () => {
                   {t('basic_data.basic_data')}
                 </MenuButton>
               )}
-              {user?.isCurator && (
+              {(user?.isCurator || user?.isNviCurator) && (
                 <MenuButton
                   color="inherit"
                   data-testid={dataTestId.header.tasksLink}
                   isSelected={currentPath.startsWith(UrlPathTemplate.Tasks)}
-                  to={UrlPathTemplate.TasksDialogue}
+                  to={UrlPathTemplate.Tasks}
                   startIcon={<AssignmentIcon />}>
                   {t('common.tasks')}
                 </MenuButton>
