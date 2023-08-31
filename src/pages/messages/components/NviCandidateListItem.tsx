@@ -20,15 +20,16 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
   const focusedContributors = nviCandidate.publicationDetails.contributors.slice(0, 5);
   const countRestContributors = nviCandidate.publicationDetails.contributors.length - focusedContributors.length;
 
-  const focusedAffiliations = nviCandidate.approvals.slice(0, 5);
-  const countRestAffiliations = nviCandidate.approvals.length - focusedAffiliations.length;
+  const focusedApprovals = nviCandidate.approvals.slice(0, 5);
+  const countRestApprovals = nviCandidate.approvals.length - focusedApprovals.length;
 
   const typeString = nviCandidate.publicationDetails.type
     ? t(`registration.publication_types.${nviCandidate.publicationDetails.type}`)
     : '';
-  const heading = [typeString, nviCandidate.year].filter(Boolean).join(' — ');
+  const dateString = new Date(nviCandidate.publicationDetails.publicationDate).toLocaleDateString();
+  const heading = [typeString, dateString].filter(Boolean).join(' — ');
 
-  const myAffiliation = nviCandidate.approvals.find((affiliation) => affiliation.id === user?.topOrgCristinId);
+  const myApproval = nviCandidate.approvals.find((approval) => approval.id === user?.topOrgCristinId);
 
   return (
     <SearchListItem
@@ -66,19 +67,17 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
 
         {nviCandidate.approvals.length > 0 && (
           <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
-            {focusedAffiliations.map((affiliation) => (
+            {focusedApprovals.map((affiliation) => (
               <Typography key={affiliation.id} sx={{ '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
                 {getLanguageString(affiliation.labels)}
               </Typography>
             ))}
-            {countRestAffiliations > 0 && (
-              <Typography>({t('common.x_others', { count: countRestAffiliations })})</Typography>
-            )}
+            {countRestApprovals > 0 && <Typography>({t('common.x_others', { count: countRestApprovals })})</Typography>}
           </Box>
         )}
       </Box>
 
-      {myAffiliation && <Typography>{t(`tasks.nvi.status.${myAffiliation.approvalStatus}`)}</Typography>}
+      {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
     </SearchListItem>
   );
 };

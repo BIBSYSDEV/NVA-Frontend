@@ -17,7 +17,6 @@ interface NviCandidateApproval {
 export interface NviCandidate {
   type: 'NviCandidate';
   identifier: string;
-  year: string;
   publicationDetails: {
     id: string;
     type: PublicationInstanceType;
