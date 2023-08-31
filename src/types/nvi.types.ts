@@ -6,9 +6,9 @@ interface NviCandidateContributor {
   name: string;
 }
 
-export type NviCandidateStatus = 'PENDING' | 'REJECTED' | 'APPROVED';
+export type NviCandidateStatus = 'Pending' | 'Rejected' | 'Approved';
 
-interface NviCandidateAffiliation {
+interface NviCandidateApproval {
   id: string;
   labels: LanguageString;
   approvalStatus: NviCandidateStatus;
@@ -25,7 +25,7 @@ export interface NviCandidate {
     publicationDate: string;
     contributors: NviCandidateContributor[];
   };
-  affiliations: NviCandidateAffiliation[];
+  approvals: NviCandidateApproval[];
 }
 
 interface NviCandidateAggregations {

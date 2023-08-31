@@ -20,15 +20,15 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
   const focusedContributors = nviCandidate.publicationDetails.contributors.slice(0, 5);
   const countRestContributors = nviCandidate.publicationDetails.contributors.length - focusedContributors.length;
 
-  const focusedAffiliations = nviCandidate.affiliations.slice(0, 5);
-  const countRestAffiliations = nviCandidate.affiliations.length - focusedAffiliations.length;
+  const focusedAffiliations = nviCandidate.approvals.slice(0, 5);
+  const countRestAffiliations = nviCandidate.approvals.length - focusedAffiliations.length;
 
   const typeString = nviCandidate.publicationDetails.type
     ? t(`registration.publication_types.${nviCandidate.publicationDetails.type}`)
     : '';
   const heading = [typeString, nviCandidate.year].filter(Boolean).join(' — ');
 
-  const myAffiliation = nviCandidate.affiliations.find((affiliation) => affiliation.id === user?.topOrgCristinId);
+  const myAffiliation = nviCandidate.approvals.find((affiliation) => affiliation.id === user?.topOrgCristinId);
 
   return (
     <SearchListItem
@@ -64,7 +64,7 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
           )}
         </Box>
 
-        {nviCandidate.affiliations.length > 0 && (
+        {nviCandidate.approvals.length > 0 && (
           <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
             {focusedAffiliations.map((affiliation) => (
               <Typography key={affiliation.id} sx={{ '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
