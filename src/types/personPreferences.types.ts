@@ -1,4 +1,4 @@
-export interface PromotedPublications {
+export interface PersonPreferences {
   identifier: string;
   promotedPublications: string[];
 }
