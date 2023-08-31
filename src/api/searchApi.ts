@@ -77,7 +77,7 @@ export const fetchNviCandidates = async (results: number, from: number, query = 
   const fullQuery = [searchQuery, paginationQuery].filter(Boolean).join('&');
 
   const getNviCandidates = await authenticatedApiRequest2<NviCandidateSearchResponse>({
-    url: `${SearchApiPath.NviCandidates}?${fullQuery}`,
+    url: `${SearchApiPath.NviCandidate}?${fullQuery}`,
   });
 
   return getNviCandidates.data;
