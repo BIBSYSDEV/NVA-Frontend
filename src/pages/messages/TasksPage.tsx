@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Link, Switch, useHistory } from 'react-router-dom';
+import { Link, Switch, useLocation } from 'react-router-dom';
 import { RoleApiPath } from '../../api/apiPaths';
 import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
@@ -34,11 +34,11 @@ import { RegistrationLandingPage } from '../public_registration/RegistrationLand
 import { NviCandidatesList } from './components/NviCandidatesList';
 import { TicketList } from './components/TicketList';
 
-type DialogueStatusFilter = {
+type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
 };
 
-type DialogueSearchMode = 'current-user' | 'all';
+type TicketSearchMode = 'current-user' | 'all';
 
 type NviStatusFilter = {
   [key in NviCandidateStatus]: boolean;
@@ -51,31 +51,17 @@ const StyledSearchModeButton = styled(LinkButton)({
 
 const TasksPage = () => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
   const isCurator = !!user?.customerId && !!user?.isCurator;
   const nvaUsername = user?.nvaUsername ?? '';
 
+  const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
+  const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
+
   const [page, setPage] = useState(1);
   const apiPage = page - 1;
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-
-  const [dialogueSearchMode, setDialogueSearchMode] = useState<DialogueSearchMode>('all');
-
-  const [filterUnreadOnly, setFilterUnreadOnly] = useState(false);
-
-  const [selectedTypes, setSelectedTypes] = useState({
-    doiRequest: true,
-    generalSupportCase: true,
-    publishingRequest: true,
-  });
-
-  const [dialogueStatusFilter, setDialogueStatusFilter] = useState<DialogueStatusFilter>({
-    New: true,
-    Pending: false,
-    Completed: false,
-    Closed: false,
-  });
 
   const [institutionUser] = useFetch<InstitutionUser>({
     url: nvaUsername ? `${RoleApiPath.Users}/${nvaUsername}` : '',
@@ -87,51 +73,68 @@ const TasksPage = () => {
   const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
   const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
 
-  const selectedTypesArray = Object.entries(selectedTypes)
+  // Tickets/dialogue data
+  const [ticketSearchMode, setTicketSearchMode] = useState<TicketSearchMode>('all');
+
+  const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
+
+  const [ticketTypes, setTicketTypes] = useState({
+    doiRequest: true,
+    generalSupportCase: true,
+    publishingRequest: true,
+  });
+
+  const [ticketStatusFilter, setTicketStatusFilter] = useState<TicketStatusFilter>({
+    New: true,
+    Pending: false,
+    Completed: false,
+    Closed: false,
+  });
+
+  const selectedTicketTypes = Object.entries(ticketTypes)
     .filter(([_, selected]) => selected)
     .map(([key]) => key);
 
-  const typeQuery =
-    selectedTypesArray.length > 0 ? `(${selectedTypesArray.map((type) => 'type:' + type).join(' OR ')})` : '';
+  const ticketTypeQuery =
+    selectedTicketTypes.length > 0 ? `(${selectedTicketTypes.map((type) => 'type:' + type).join(' OR ')})` : '';
 
-  const selectedStatusesArray = Object.entries(dialogueStatusFilter)
+  const selectedTicketStatuses = Object.entries(ticketStatusFilter)
     .filter(([_, selected]) => selected)
     .map(([key]) => key);
 
-  const statusQuery =
-    selectedStatusesArray.length > 0
-      ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
+  const ticketStatusQuery =
+    selectedTicketStatuses.length > 0
+      ? `(${selectedTicketStatuses.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const assigneeQuery =
-    dialogueSearchMode === 'current-user' && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
+  const ticketAssigneeQuery =
+    ticketSearchMode === 'current-user' && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
 
-  const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
+  const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
-  const query = [typeQuery, statusQuery, assigneeQuery, viewedByQuery].filter(Boolean).join(' AND ');
-
-  const isOnTicketsPage = history.location.pathname === UrlPathTemplate.TasksDialogue;
-  const isOnNviCandidatesPage = history.location.pathname === UrlPathTemplate.TasksNvi;
+  const ticketQueryString = [ticketTypeQuery, ticketStatusQuery, ticketAssigneeQuery, ticketViewedByQuery]
+    .filter(Boolean)
+    .join(' AND ');
 
   const ticketsQuery = useQuery({
     enabled: isOnTicketsPage,
-    queryKey: ['tickets', rowsPerPage, apiPage, query],
-    queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, query),
+    queryKey: ['tickets', rowsPerPage, apiPage, ticketQueryString],
+    queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, ticketQueryString),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
-  const typeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
-  const doiRequestCount = typeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
-  const publishingRequestCount = typeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
-  const generalSupportCaseCount = typeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
+  const ticketTypeBuckets = ticketsQuery.data?.aggregations?.type.buckets ?? [];
+  const doiRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'DoiRequest')?.docCount;
+  const publishingRequestCount = ticketTypeBuckets.find((bucket) => bucket.key === 'PublishingRequest')?.docCount;
+  const generalSupportCaseCount = ticketTypeBuckets.find((bucket) => bucket.key === 'GeneralSupportCase')?.docCount;
 
-  const statusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
-  const newCount = statusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
-  const pendingCount = statusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
-  const completedCount = statusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
-  const closedCount = statusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
+  const ticketStatusBuckets = ticketsQuery.data?.aggregations?.status.buckets ?? [];
+  const ticketNewCount = ticketStatusBuckets.find((bucket) => bucket.key === 'New')?.docCount;
+  const ticketPendingCount = ticketStatusBuckets.find((bucket) => bucket.key === 'Pending')?.docCount;
+  const ticketCompletedCount = ticketStatusBuckets.find((bucket) => bucket.key === 'Completed')?.docCount;
+  const ticketClosedCount = ticketStatusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
-  // NVI related data
+  // NVI data
   const [nviStatusFilter, setNviStatusFilter] = useState<NviStatusFilter>({
     Pending: true,
     Approved: false,
@@ -199,10 +202,14 @@ const TasksPage = () => {
           <StyledTicketSearchFormGroup>
             <Button
               data-testid={dataTestId.tasksPage.unreadSearchCheckbox}
-              sx={{ width: 'fit-content', background: filterUnreadOnly ? undefined : 'white', textTransform: 'none' }}
-              variant={filterUnreadOnly ? 'contained' : 'outlined'}
+              sx={{
+                width: 'fit-content',
+                background: ticketUnreadFilter ? undefined : 'white',
+                textTransform: 'none',
+              }}
+              variant={ticketUnreadFilter ? 'contained' : 'outlined'}
               startIcon={<MarkEmailUnreadIcon />}
-              onClick={() => setFilterUnreadOnly(!filterUnreadOnly)}>
+              onClick={() => setTicketUnreadFilter(!ticketUnreadFilter)}>
               {t('tasks.unread')}
             </Button>
           </StyledTicketSearchFormGroup>
@@ -211,12 +218,10 @@ const TasksPage = () => {
             <SelectableButton
               data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
               showCheckbox
-              isSelected={selectedTypes.publishingRequest}
+              isSelected={ticketTypes.publishingRequest}
               color="publishingRequest"
-              onClick={() =>
-                setSelectedTypes({ ...selectedTypes, publishingRequest: !selectedTypes.publishingRequest })
-              }>
-              {selectedTypes.publishingRequest && publishingRequestCount
+              onClick={() => setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest })}>
+              {ticketTypes.publishingRequest && publishingRequestCount
                 ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
                 : t('my_page.messages.types.PublishingRequest')}
             </SelectableButton>
@@ -224,10 +229,10 @@ const TasksPage = () => {
             <SelectableButton
               data-testid={dataTestId.tasksPage.typeSearch.doiButton}
               showCheckbox
-              isSelected={selectedTypes.doiRequest}
+              isSelected={ticketTypes.doiRequest}
               color="doiRequest"
-              onClick={() => setSelectedTypes({ ...selectedTypes, doiRequest: !selectedTypes.doiRequest })}>
-              {selectedTypes.doiRequest && doiRequestCount
+              onClick={() => setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest })}>
+              {ticketTypes.doiRequest && doiRequestCount
                 ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
                 : t('my_page.messages.types.DoiRequest')}
             </SelectableButton>
@@ -235,12 +240,10 @@ const TasksPage = () => {
             <SelectableButton
               data-testid={dataTestId.tasksPage.typeSearch.supportButton}
               showCheckbox
-              isSelected={selectedTypes.generalSupportCase}
+              isSelected={ticketTypes.generalSupportCase}
               color="generalSupportCase"
-              onClick={() =>
-                setSelectedTypes({ ...selectedTypes, generalSupportCase: !selectedTypes.generalSupportCase })
-              }>
-              {selectedTypes.generalSupportCase && generalSupportCaseCount
+              onClick={() => setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase })}>
+              {ticketTypes.generalSupportCase && generalSupportCaseCount
                 ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
                 : t('my_page.messages.types.GeneralSupportCase')}
             </SelectableButton>
@@ -249,23 +252,23 @@ const TasksPage = () => {
           <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
-              isSelected={dialogueSearchMode === 'current-user'}
+              isSelected={ticketSearchMode === 'current-user'}
               startIcon={
-                dialogueSearchMode === 'current-user' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />
+                ticketSearchMode === 'current-user' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />
               }
               onClick={() => {
-                if (dialogueStatusFilter.New) {
-                  setDialogueStatusFilter({ ...dialogueStatusFilter, New: false });
+                if (ticketStatusFilter.New) {
+                  setTicketStatusFilter({ ...ticketStatusFilter, New: false });
                 }
-                setDialogueSearchMode('current-user');
+                setTicketSearchMode('current-user');
               }}>
               {t('tasks.my_user_dialogs')}
             </StyledSearchModeButton>
             <StyledSearchModeButton
               data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
-              isSelected={dialogueSearchMode === 'all'}
-              startIcon={dialogueSearchMode === 'all' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-              onClick={() => setDialogueSearchMode('all')}>
+              isSelected={ticketSearchMode === 'all'}
+              startIcon={ticketSearchMode === 'all' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+              onClick={() => setTicketSearchMode('all')}>
               {t('tasks.all_user_dialogs')}
             </StyledSearchModeButton>
           </StyledTicketSearchFormGroup>
@@ -276,64 +279,62 @@ const TasksPage = () => {
             </FormLabel>
             <FormControlLabel
               data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
-              disabled={dialogueSearchMode === 'current-user'}
-              checked={dialogueStatusFilter.New}
+              disabled={ticketSearchMode === 'current-user'}
+              checked={ticketStatusFilter.New}
               control={
                 <StyledStatusCheckbox
-                  onChange={() => setDialogueStatusFilter({ ...dialogueStatusFilter, New: !dialogueStatusFilter.New })}
+                  onChange={() => setTicketStatusFilter({ ...ticketStatusFilter, New: !ticketStatusFilter.New })}
                 />
               }
               label={
-                dialogueStatusFilter.New && newCount
-                  ? `${t('my_page.messages.ticket_types.New')} (${newCount})`
+                ticketStatusFilter.New && ticketNewCount
+                  ? `${t('my_page.messages.ticket_types.New')} (${ticketNewCount})`
                   : t('my_page.messages.ticket_types.New')
               }
             />
             <FormControlLabel
               data-testid={dataTestId.tasksPage.statusSearch.pendingCheckbox}
-              checked={dialogueStatusFilter.Pending}
+              checked={ticketStatusFilter.Pending}
               control={
                 <StyledStatusCheckbox
                   onChange={() =>
-                    setDialogueStatusFilter({ ...dialogueStatusFilter, Pending: !dialogueStatusFilter.Pending })
+                    setTicketStatusFilter({ ...ticketStatusFilter, Pending: !ticketStatusFilter.Pending })
                   }
                 />
               }
               label={
-                dialogueStatusFilter.Pending && pendingCount
-                  ? `${t('my_page.messages.ticket_types.Pending')} (${pendingCount})`
+                ticketStatusFilter.Pending && ticketPendingCount
+                  ? `${t('my_page.messages.ticket_types.Pending')} (${ticketPendingCount})`
                   : t('my_page.messages.ticket_types.Pending')
               }
             />
             <FormControlLabel
               data-testid={dataTestId.tasksPage.statusSearch.completedCheckbox}
-              checked={dialogueStatusFilter.Completed}
+              checked={ticketStatusFilter.Completed}
               control={
                 <StyledStatusCheckbox
                   onChange={() =>
-                    setDialogueStatusFilter({ ...dialogueStatusFilter, Completed: !dialogueStatusFilter.Completed })
+                    setTicketStatusFilter({ ...ticketStatusFilter, Completed: !ticketStatusFilter.Completed })
                   }
                 />
               }
               label={
-                dialogueStatusFilter.Completed && completedCount
-                  ? `${t('my_page.messages.ticket_types.Completed')} (${completedCount})`
+                ticketStatusFilter.Completed && ticketCompletedCount
+                  ? `${t('my_page.messages.ticket_types.Completed')} (${ticketCompletedCount})`
                   : t('my_page.messages.ticket_types.Completed')
               }
             />
             <FormControlLabel
               data-testid={dataTestId.tasksPage.statusSearch.closedCheckbox}
-              checked={dialogueStatusFilter.Closed}
+              checked={ticketStatusFilter.Closed}
               control={
                 <StyledStatusCheckbox
-                  onChange={() =>
-                    setDialogueStatusFilter({ ...dialogueStatusFilter, Closed: !dialogueStatusFilter.Closed })
-                  }
+                  onChange={() => setTicketStatusFilter({ ...ticketStatusFilter, Closed: !ticketStatusFilter.Closed })}
                 />
               }
               label={
-                dialogueStatusFilter.Closed && closedCount
-                  ? `${t('my_page.messages.ticket_types.Closed')} (${closedCount})`
+                ticketStatusFilter.Closed && ticketClosedCount
+                  ? `${t('my_page.messages.ticket_types.Closed')} (${ticketClosedCount})`
                   : t('my_page.messages.ticket_types.Closed')
               }
             />
