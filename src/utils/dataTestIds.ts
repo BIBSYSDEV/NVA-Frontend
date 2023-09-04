@@ -486,8 +486,8 @@ export const dataTestId = {
       myUserDialogsButton: 'my-user-dialogs-button',
     },
     statusSearch: {
-      closedCheckbox: 'new-status-checkbox',
-      completedCheckbox: 'new-status-checkbox',
+      closedCheckbox: 'closed-status-checkbox',
+      completedCheckbox: 'completed-status-checkbox',
       newCheckbox: 'new-status-checkbox',
       pendingCheckbox: 'pending-status-checkbox',
     },
