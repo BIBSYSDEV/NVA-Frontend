@@ -10,11 +10,13 @@ export const fetchPromotedPublicationsById = async (id: string) => {
   return getPromotedPublications.data;
 };
 
-export const updatePromotedPublications = async (promotedPublications: string[]) =>
-  await authenticatedApiRequest2<PersonPreferences>({
-    url: PersonPreferencesApiPath.PersonPreferences,
+export const updatePromotedPublications = async (personIdentifier: string, promotedPublications: string[]) => {
+  const updatePromotedPublication = await authenticatedApiRequest2<PersonPreferences>({
+    url: `${PersonPreferencesApiPath.PersonPreferences}/${personIdentifier}`,
     method: 'PUT',
     data: {
       promotedPublications: promotedPublications,
     },
   });
+  return updatePromotedPublication.data;
+};
