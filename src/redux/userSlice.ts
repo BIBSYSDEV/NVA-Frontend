@@ -44,6 +44,7 @@ const userSlice = createSlice({
         isThesisCurator: !!customerId && roles.includes(RoleName.CuratorThesis),
         isEmbargoThesisCurator: !!customerId && roles.includes(RoleName.CuratorThesisEmbargo),
         isEditor: !!customerId && roles.includes(RoleName.Editor),
+        isNviCurator: !!customerId && roles.includes(RoleName.NviCurator),
       };
       state = user;
       return state;

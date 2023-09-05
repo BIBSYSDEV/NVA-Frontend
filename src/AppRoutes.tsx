@@ -32,6 +32,7 @@ export const AppRoutes = () => {
   const isCurator = hasCustomerId && user.isCurator;
   const isEditor = hasCustomerId && user.isEditor;
   const isAdmin = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin);
+  const isNviCurator = hasCustomerId && user.isNviCurator;
 
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
@@ -63,7 +64,7 @@ export const AppRoutes = () => {
         />
 
         {/* CuratorRoutes */}
-        <PrivateRoute path={UrlPathTemplate.Tasks} component={TasksPage} isAuthorized={isCurator} />
+        <PrivateRoute path={UrlPathTemplate.Tasks} component={TasksPage} isAuthorized={isCurator || isNviCurator} />
 
         {/* BasicDataRoutes */}
         <PrivateRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} isAuthorized={isAdmin} />
