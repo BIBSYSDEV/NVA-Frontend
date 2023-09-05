@@ -29,7 +29,7 @@ interface RegistrationListProps {
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
   promotedPublications?: string[];
-  refetchPromotedPublications?: () => void;
+  refetchPromotedPublications?: () => Promise<any>;
 }
 
 export const RegistrationList = ({
@@ -62,7 +62,7 @@ interface RegistrationListItemContentProps {
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
   promotedPublications?: string[];
-  refetchPromotedPublications?: () => void;
+  refetchPromotedPublications?: () => Promise<any>;
 }
 
 export const RegistrationListItemContent = ({
@@ -96,8 +96,8 @@ export const RegistrationListItemContent = ({
   const mutatePromotedPublications = useMutation({
     mutationFn: (newPromotedPublications: string[]) =>
       updatePromotedPublications(user?.cristinId ?? '', newPromotedPublications),
-    onSuccess: () => {
-      refetchPromotedPublications?.();
+    onSuccess: async () => {
+      await refetchPromotedPublications?.();
       dispatch(setNotification({ message: t('feedback.success.updated_promoted_publication'), variant: 'success' }));
     },
     onError: () =>
