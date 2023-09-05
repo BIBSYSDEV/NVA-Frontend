@@ -42,7 +42,7 @@ export const MyResults = () => {
     retry: false,
   });
 
-  const promotedPublications = promotedPublicationsQuery.data?.promotedPublications ?? [];
+  const promotedPublications = promotedPublicationsQuery.data?.promotedPublications;
 
   return (
     <div>

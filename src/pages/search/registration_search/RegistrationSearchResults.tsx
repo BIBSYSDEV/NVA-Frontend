@@ -14,7 +14,7 @@ interface SearchResultsProps {
 export const RegistrationSearchResults = ({
   searchResult,
   canEditRegistration = false,
-  promotedPublications,
+  promotedPublications = [],
 }: SearchResultsProps) => {
   useEffect(() => {
     if (
