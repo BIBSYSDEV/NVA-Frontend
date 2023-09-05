@@ -40,3 +40,11 @@ interface NviCandidateAggregations {
 }
 
 export type NviCandidateSearchResponse = SearchResponse<NviCandidate, NviCandidateAggregations>;
+
+export interface NviCandidate2 {
+  id: string;
+  publicationId: string;
+  approvalStatuses: any[];
+  points: any[];
+  notes: any[];
+}
