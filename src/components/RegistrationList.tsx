@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { Box, IconButton, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -72,9 +72,10 @@ export const RegistrationListItemContent = ({
   const { identifier, entityDescription, id } = registration;
   const location = useLocation();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const user = useSelector((store: RootState) => store.user);
-  const queryClient = useQueryClient();
+  const userCristinId = user?.cristinId ?? '';
 
   const contributors = entityDescription?.contributors ?? [];
   const focusedContributors = contributors.slice(0, 5);
@@ -89,11 +90,14 @@ export const RegistrationListItemContent = ({
 
   const isPromotedPublication = promotedPublications && promotedPublications.includes(id);
 
+  const isMutating = useIsMutating({ mutationKey: ['person-preferences', userCristinId] }) > 0;
+
   const mutatePromotedPublications = useMutation({
+    mutationKey: ['person-preferences', userCristinId],
     mutationFn: (newPromotedPublications: string[]) =>
-      updatePromotedPublications(user?.cristinId ?? '', newPromotedPublications),
+      updatePromotedPublications(userCristinId, newPromotedPublications),
     onSuccess: async (newData) => {
-      queryClient.setQueryData(['person-preferences', user?.cristinId ?? ''], newData);
+      queryClient.setQueryData(['person-preferences', userCristinId], newData);
 
       dispatch(setNotification({ message: t('feedback.success.updated_promoted_publication'), variant: 'success' }));
     },
@@ -173,7 +177,7 @@ export const RegistrationListItemContent = ({
             <IconButton
               title={t('my_page.my_profile.add_promoted_publication')}
               data-testid={dataTestId.myPage.addPromotedPublicationButton}
-              disabled={mutatePromotedPublications.isLoading}
+              disabled={isMutating}
               onClick={() => {
                 if (isPromotedPublication) {
                   mutatePromotedPublications.mutate(

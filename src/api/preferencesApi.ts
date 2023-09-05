@@ -18,5 +18,6 @@ export const updatePromotedPublications = async (personIdentifier: string, promo
       promotedPublications: promotedPublications,
     },
   });
+
   return updatePromotedPublication.data;
 };
