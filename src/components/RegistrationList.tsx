@@ -5,10 +5,11 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { Box, IconButton, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { updatePromotedPublications } from '../api/preferencesApi';
 import { setNotification } from '../redux/notificationSlice';
+import { RootState } from '../redux/store';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
@@ -28,6 +29,7 @@ interface RegistrationListProps {
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
   promotedPublications?: string[];
+  refetchPromotedPublications?: () => void;
 }
 
 export const RegistrationList = ({
@@ -35,6 +37,7 @@ export const RegistrationList = ({
   canEditRegistration = false,
   onDeleteDraftRegistration,
   promotedPublications,
+  refetchPromotedPublications,
 }: RegistrationListProps) => (
   <List>
     {registrations.map((registration) => (
@@ -45,6 +48,7 @@ export const RegistrationList = ({
             registration={registration}
             canEditRegistration={canEditRegistration}
             promotedPublications={promotedPublications}
+            refetchPromotedPublications={refetchPromotedPublications}
           />
         </SearchListItem>
       </ErrorBoundary>
@@ -58,6 +62,7 @@ interface RegistrationListItemContentProps {
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
   promotedPublications?: string[];
+  refetchPromotedPublications?: () => void;
 }
 
 export const RegistrationListItemContent = ({
@@ -66,11 +71,14 @@ export const RegistrationListItemContent = ({
   canEditRegistration,
   onDeleteDraftRegistration,
   promotedPublications,
+  refetchPromotedPublications,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription, id } = registration;
   const location = useLocation();
   const dispatch = useDispatch();
+
+  const user = useSelector((store: RootState) => store.user);
 
   const contributors = entityDescription?.contributors ?? [];
   const focusedContributors = contributors.slice(0, 5);
@@ -86,24 +94,15 @@ export const RegistrationListItemContent = ({
   const isPromotedPublication = promotedPublications && promotedPublications.includes(id);
 
   const mutatePromotedPublications = useMutation({
-    mutationFn: () => updatePromotedPublications(promotedPublications ? promotedPublications : []),
-    onSuccess: () =>
-      dispatch(setNotification({ message: t('feedback.success.updated_promoted_publication'), variant: 'success' })),
+    mutationFn: (newPromotedPublications: string[]) =>
+      updatePromotedPublications(user?.cristinId ?? '', newPromotedPublications),
+    onSuccess: () => {
+      refetchPromotedPublications?.();
+      dispatch(setNotification({ message: t('feedback.success.updated_promoted_publication'), variant: 'success' }));
+    },
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.add_promoted_publication'), variant: 'error' })),
   });
-
-  const handleChange = () => {
-    if (!isPromotedPublication) {
-      promotedPublications?.push(id);
-    } else {
-      const index = promotedPublications.indexOf(id, 0);
-      if (index > -1) {
-        promotedPublications.splice(index, 1);
-      }
-    }
-    mutatePromotedPublications.mutate();
-  };
 
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
@@ -178,7 +177,15 @@ export const RegistrationListItemContent = ({
               title={t('my_page.my_profile.add_promoted_publication')}
               data-testid={dataTestId.myPage.addPromotedPublicationButton}
               disabled={mutatePromotedPublications.isLoading}
-              onClick={() => handleChange()}
+              onClick={() => {
+                if (isPromotedPublication) {
+                  mutatePromotedPublications.mutate(
+                    promotedPublications.filter((promotedPublicationId) => promotedPublicationId !== id)
+                  );
+                } else {
+                  mutatePromotedPublications.mutate([...(promotedPublications ?? []), id]);
+                }
+              }}
               size="small"
               sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
               {isPromotedPublication ? <StarIcon fontSize="inherit" /> : <StarOutlineIcon fontSize="inherit" />}
