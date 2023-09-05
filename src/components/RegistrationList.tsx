@@ -3,7 +3,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { Box, IconButton, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
@@ -29,7 +29,6 @@ interface RegistrationListProps {
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
   promotedPublications?: string[];
-  refetchPromotedPublications?: () => Promise<any>;
 }
 
 export const RegistrationList = ({
@@ -37,7 +36,6 @@ export const RegistrationList = ({
   canEditRegistration = false,
   onDeleteDraftRegistration,
   promotedPublications,
-  refetchPromotedPublications,
 }: RegistrationListProps) => (
   <List>
     {registrations.map((registration) => (
@@ -48,7 +46,6 @@ export const RegistrationList = ({
             registration={registration}
             canEditRegistration={canEditRegistration}
             promotedPublications={promotedPublications}
-            refetchPromotedPublications={refetchPromotedPublications}
           />
         </SearchListItem>
       </ErrorBoundary>
@@ -62,7 +59,6 @@ interface RegistrationListItemContentProps {
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
   promotedPublications?: string[];
-  refetchPromotedPublications?: () => Promise<any>;
 }
 
 export const RegistrationListItemContent = ({
@@ -71,7 +67,6 @@ export const RegistrationListItemContent = ({
   canEditRegistration,
   onDeleteDraftRegistration,
   promotedPublications,
-  refetchPromotedPublications,
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription, id } = registration;
@@ -79,6 +74,7 @@ export const RegistrationListItemContent = ({
   const dispatch = useDispatch();
 
   const user = useSelector((store: RootState) => store.user);
+  const queryClient = useQueryClient();
 
   const contributors = entityDescription?.contributors ?? [];
   const focusedContributors = contributors.slice(0, 5);
@@ -96,8 +92,9 @@ export const RegistrationListItemContent = ({
   const mutatePromotedPublications = useMutation({
     mutationFn: (newPromotedPublications: string[]) =>
       updatePromotedPublications(user?.cristinId ?? '', newPromotedPublications),
-    onSuccess: async () => {
-      await refetchPromotedPublications?.();
+    onSuccess: async (newData) => {
+      queryClient.setQueryData(['person-preferences', user?.cristinId ?? ''], newData);
+
       dispatch(setNotification({ message: t('feedback.success.updated_promoted_publication'), variant: 'success' }));
     },
     onError: () =>
