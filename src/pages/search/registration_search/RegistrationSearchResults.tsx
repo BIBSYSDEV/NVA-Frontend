@@ -9,7 +9,7 @@ interface SearchResultsProps {
   searchResult: SearchResponse<Registration, RegistrationAggregations>;
   canEditRegistration?: boolean;
   promotedPublications?: string[];
-  refetchPromotedPublications?: () => void;
+  refetchPromotedPublications?: () => Promise<any>;
 }
 
 export const RegistrationSearchResults = ({
