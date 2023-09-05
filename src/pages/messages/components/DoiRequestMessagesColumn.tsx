@@ -20,17 +20,16 @@ export const DoiRequestMessagesColumn = ({ ticket }: DoiRequestMessagesColumnPro
         <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
           <Typography>{t('my_page.messages.doi_pending')}</Typography>
         </StyledStatusMessageBox>
-      ) : ticket.status === 'Completed' ? (
+      ) : (
         <StyledStatusMessageBox sx={{ bgcolor: 'doiRequest.main' }}>
-          <Typography>{t('my_page.messages.doi_completed')}</Typography>
+          {ticket.status === 'Completed' ? (
+            <Typography>{t('my_page.messages.doi_completed')}</Typography>
+          ) : ticket.status === 'Closed' ? (
+            <Typography>{t('my_page.messages.doi_closed')}</Typography>
+          ) : null}
           {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
         </StyledStatusMessageBox>
-      ) : ticket.status === 'Closed' ? (
-        <StyledStatusMessageBox sx={{ bgcolor: 'warning.light' }}>
-          <Typography>{t('my_page.messages.doi_closed')}</Typography>
-          {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
-        </StyledStatusMessageBox>
-      ) : null}
+      )}
     </StyledMessagesContainer>
   );
 };

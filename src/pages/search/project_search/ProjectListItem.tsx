@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { Typography, Link as MuiLink, Box, IconButton, Tooltip } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import EditIcon from '@mui/icons-material/Edit';
-import { getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { Box, IconButton, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { SearchListItem } from '../../../components/styled/Wrappers';
 import { CristinProject } from '../../../types/project.types';
+import { getLanguageString } from '../../../utils/translation-helpers';
+import { getProjectPath, getResearchProfilePath } from '../../../utils/urlPaths';
+import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
 import {
   getProjectManagers,
   getProjectParticipants,
 } from '../../registration/description_tab/projects_field/projectHelpers';
-import { ProjectFormDialog } from '../../projects/form/ProjectFormDialog';
-import { SearchListItem } from '../../../components/styled/Wrappers';
-import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface ProjectListItemProps {
   project: CristinProject;
@@ -57,13 +57,13 @@ export const ProjectListItem = ({ project, refetchProjects, showEdit = false }: 
         )}
       </Box>
       <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '0.5rem' }}>
-        {projectManagers.map((projectManager) => (
-          <MuiLink
-            key={projectManager.identity.id}
-            component={Link}
-            to={getResearchProfilePath(projectManager.identity.id)}>
-            {`${projectManager.identity.firstName} ${projectManager.identity.lastName}`}
-          </MuiLink>
+        {projectManagers.map((projectManager, index) => (
+          <span key={projectManager.identity.id}>
+            <MuiLink component={Link} to={getResearchProfilePath(projectManager.identity.id)}>
+              {`${projectManager.identity.firstName} ${projectManager.identity.lastName}`}
+            </MuiLink>
+            {index < projectManagers.length - 1 && <span>;</span>}
+          </span>
         ))}
         {projectParticipantsLength > 0 && (
           <Typography>({t('search.additional_participants', { count: projectParticipantsLength })})</Typography>

@@ -1,21 +1,22 @@
-import { Box, Tooltip, Typography, Link as MuiLink } from '@mui/material';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { updateTicket } from '../../../api/registrationApi';
 import { RegistrationListItemContent } from '../../../components/RegistrationList';
 import { SearchListItem } from '../../../components/styled/Wrappers';
+import { RootState } from '../../../redux/store';
 import { ExpandedPublishingTicket, ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { Registration, emptyRegistration } from '../../../types/registration.types';
-import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
-import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
-import { SupportMessagesColumn } from './SupportMessagesColumn';
-import { getFullName } from '../../../utils/user-helpers';
+import { getTimePeriodString } from '../../../utils/general-helpers';
 import { getContributorInitials } from '../../../utils/registration-helpers';
-import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
 import { UrlPathTemplate, getMyMessagesRegistrationPath, getTasksRegistrationPath } from '../../../utils/urlPaths';
-import { RootState } from '../../../redux/store';
-import { updateTicket } from '../../../api/registrationApi';
+import { getFullName } from '../../../utils/user-helpers';
+import { StyledVerifiedContributor } from '../../registration/contributors_tab/ContributorIndicator';
+import { DoiRequestMessagesColumn } from './DoiRequestMessagesColumn';
+import { PublishingRequestMessagesColumn } from './PublishingRequestMessagesColumn';
+import { SupportMessagesColumn } from './SupportMessagesColumn';
 
 export const ticketColor = {
   PublishingRequest: 'publishingRequest.main',
@@ -43,8 +44,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       reference: { publicationInstance: { type: publicationInstance?.type ?? '' } },
     },
   } as Registration;
-  const msAge = new Date().getTime() - new Date(ticket.modifiedDate).getTime();
-  const daysAge = Math.ceil(msAge / 86_400_000); // 1000 * 60 * 60 * 24 = 86_400_000 ms in one day
+
+  const ticketAge = getTimePeriodString(new Date(ticket.createdDate), new Date(), t);
 
   const assigneeFullName = ticket.assignee
     ? getFullName(
@@ -68,7 +69,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
       <MuiLink
         component={Link}
         to={
-          window.location.pathname === UrlPathTemplate.Tasks
+          window.location.pathname === UrlPathTemplate.TasksDialogue
             ? getTasksRegistrationPath(identifier)
             : window.location.pathname === UrlPathTemplate.MyPageMyMessages
             ? getMyMessagesRegistrationPath(identifier)
@@ -97,7 +98,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
             <div />
           )}
           <Typography lineHeight="2rem">{t(`my_page.messages.ticket_types.${ticket.status}`)}</Typography>
-          <Typography lineHeight="2rem">{t('common.x_days', { count: daysAge })}</Typography>
+          <Typography lineHeight="2rem">{ticketAge}</Typography>
           {assigneeFullName && (
             <Tooltip title={`${t('my_page.roles.curator')}: ${assigneeFullName}`}>
               <StyledVerifiedContributor>{getContributorInitials(assigneeFullName)}</StyledVerifiedContributor>

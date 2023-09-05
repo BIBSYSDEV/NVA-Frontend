@@ -47,6 +47,7 @@ export enum SearchApiPath {
   Registrations = '/search/resources',
   Tickets = '/search/tickets',
   ImportCandidates = '/search/import-candidates',
+  NviCandidate = '/scientific-index/candidate',
 }
 
 export enum VerifiedFundingApiPath {

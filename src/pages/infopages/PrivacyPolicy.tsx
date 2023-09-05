@@ -1,6 +1,6 @@
-import { Trans, useTranslation } from 'react-i18next';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import { Trans, useTranslation } from 'react-i18next';
 import { PageHeader } from '../../components/PageHeader';
 import { StyledPageContent } from '../../components/styled/Wrappers';
 

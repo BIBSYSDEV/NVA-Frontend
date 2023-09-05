@@ -1,5 +1,5 @@
-import { useRef } from 'react';
 import { Box, Skeleton } from '@mui/material';
+import { useRef } from 'react';
 import { getRandomWidthPercent } from '../../utils/skeleton-helpers';
 
 interface AffiliationSkeletonProps {

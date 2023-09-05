@@ -1,10 +1,10 @@
+import { TextField, Typography } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { TextField, Typography } from '@mui/material';
+import { InputContainerBox } from '../../../../components/styled/Wrappers';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { SeriesField } from './SeriesField';
-import { InputContainerBox } from '../../../../components/styled/Wrappers';
 
 export const SeriesFields = () => {
   const { t } = useTranslation();

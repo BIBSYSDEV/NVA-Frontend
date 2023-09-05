@@ -1,11 +1,11 @@
 import { lazy, Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+import { PageSpinner } from './components/PageSpinner';
+import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
-import { PageSpinner } from './components/PageSpinner';
-import { useSelector } from 'react-redux';
-import { RootState } from './redux/store';
 
 const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
@@ -32,6 +32,7 @@ export const AppRoutes = () => {
   const isCurator = hasCustomerId && user.isCurator;
   const isEditor = hasCustomerId && user.isEditor;
   const isAdmin = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin);
+  const isNviCurator = hasCustomerId && user.isNviCurator;
 
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
@@ -63,7 +64,7 @@ export const AppRoutes = () => {
         />
 
         {/* CuratorRoutes */}
-        <PrivateRoute path={UrlPathTemplate.Tasks} component={TasksPage} isAuthorized={isCurator} />
+        <PrivateRoute path={UrlPathTemplate.Tasks} component={TasksPage} isAuthorized={isCurator || isNviCurator} />
 
         {/* BasicDataRoutes */}
         <PrivateRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} isAuthorized={isAdmin} />

@@ -1,5 +1,5 @@
-import { ErrorMessage, Field, FieldInputProps, FieldProps } from 'formik';
 import { TextField, TextFieldProps } from '@mui/material';
+import { ErrorMessage, Field, FieldInputProps, FieldProps } from 'formik';
 
 interface CustomerInstitutionTextFieldProps
   extends Pick<FieldInputProps<string>, 'name'>,

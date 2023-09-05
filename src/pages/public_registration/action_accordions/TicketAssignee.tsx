@@ -1,22 +1,22 @@
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { Autocomplete, Box, IconButton, Tooltip } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Autocomplete, Box, IconButton, Tooltip } from '@mui/material';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { useState } from 'react';
-import { Ticket } from '../../../types/publication_types/ticket.types';
-import { fetchUser, fetchUsers } from '../../../api/roleApi';
-import { getFullName } from '../../../utils/user-helpers';
-import { RootState } from '../../../redux/store';
 import { updateTicket } from '../../../api/registrationApi';
-import { setNotification } from '../../../redux/notificationSlice';
-import { getContributorInitials } from '../../../utils/registration-helpers';
-import { ticketColor } from '../../messages/components/TicketListItem';
-import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { fetchUser, fetchUsers } from '../../../api/roleApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
+import { setNotification } from '../../../redux/notificationSlice';
+import { RootState } from '../../../redux/store';
+import { Ticket } from '../../../types/publication_types/ticket.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getContributorInitials } from '../../../utils/registration-helpers';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
+import { getFullName } from '../../../utils/user-helpers';
+import { ticketColor } from '../../messages/components/TicketListItem';
+import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
 
 interface TicketAssigneeProps {
   ticket: Ticket;
@@ -63,7 +63,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
   });
 
   const canSetAssignee =
-    window.location.pathname.startsWith(UrlPathTemplate.Tasks) &&
+    window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) &&
     user?.isCurator &&
     (ticket.status === 'Pending' || ticket.status === 'New');
 

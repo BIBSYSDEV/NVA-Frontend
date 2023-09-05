@@ -1,7 +1,7 @@
 import { CancelToken } from 'axios';
 import { CustomerInstitution, DoiAgent } from '../types/customerInstitution.types';
-import { authenticatedApiRequest } from './apiRequest';
 import { CustomerInstitutionApiPath } from './apiPaths';
+import { authenticatedApiRequest } from './apiRequest';
 
 export const createCustomerInstitution = async (
   customer: Omit<CustomerInstitution, 'doiAgent'>,

@@ -1,23 +1,23 @@
+import AddIcon from '@mui/icons-material/Add';
+import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import SearchIcon from '@mui/icons-material/Search';
+import { AppBar, Box, Button, Divider, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-import { AppBar, Box, Button, Divider, Theme, Typography, useMediaQuery } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import SearchIcon from '@mui/icons-material/Search';
-import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
-import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
-import { UrlPathTemplate } from '../../utils/urlPaths';
-import { LoginButton } from './LoginButton';
-import { Logo } from './Logo';
-import { LanguageSelector } from './LanguageSelector';
+import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
-import { CustomerInstitution } from '../../types/customerInstitution.types';
+import { UrlPathTemplate } from '../../utils/urlPaths';
+import { LanguageSelector } from './LanguageSelector';
+import { LoginButton } from './LoginButton';
+import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
-import { setCustomer } from '../../redux/customerReducer';
 
 export const Header = () => {
   const { t } = useTranslation();
@@ -41,7 +41,7 @@ export const Header = () => {
   const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   return (
-    <AppBar position="static" elevation={0} sx={{ color: 'white' }}>
+    <AppBar position="sticky" elevation={0} sx={{ color: 'white' }}>
       <Box
         component="nav"
         sx={{
@@ -87,7 +87,16 @@ export const Header = () => {
             data-testid={dataTestId.header.newRegistrationLink}
             to={UrlPathTemplate.RegistrationNew}
             startIcon={
-              <AddIcon sx={{ color: 'white', bgcolor: 'primary.light', borderRadius: '50%', padding: '0.1rem' }} />
+              <AddIcon
+                sx={{
+                  color: 'white',
+                  bgcolor: 'primary.light',
+                  borderRadius: '50%',
+                  padding: '0.2rem',
+                  width: '3.125rem',
+                  height: '3.125rem',
+                }}
+              />
             }>
             {t('registration.new_registration')}
           </Button>
@@ -122,7 +131,10 @@ export const Header = () => {
                     {customer.shortName}
                   </MenuButton>
                 ) : (
-                  <Typography variant="h1" component="span" sx={{ whiteSpace: 'nowrap', color: 'inherit' }}>
+                  <Typography
+                    variant="h1"
+                    component="span"
+                    sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
                     {customer.shortName}
                   </Typography>
                 ))}
@@ -142,7 +154,7 @@ export const Header = () => {
                   {t('basic_data.basic_data')}
                 </MenuButton>
               )}
-              {user?.isCurator && (
+              {(user?.isCurator || user?.isNviCurator) && (
                 <MenuButton
                   color="inherit"
                   data-testid={dataTestId.header.tasksLink}

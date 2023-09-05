@@ -1,17 +1,22 @@
+import { Box, Button, Typography } from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTicketMessage } from '../../api/registrationApi';
+import { useHistory } from 'react-router-dom';
+import { addTicketMessage, deleteRegistration } from '../../api/registrationApi';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishingTicket, Ticket } from '../../types/publication_types/ticket.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
-import { userIsRegistrationCurator } from '../../utils/registration-helpers';
+import { getTitleString, userIsRegistrationCurator } from '../../utils/registration-helpers';
+import { UrlPathTemplate } from '../../utils/urlPaths';
 import { PublicRegistrationContentProps } from './PublicRegistrationContent';
 import { DoiRequestAccordion } from './action_accordions/DoiRequestAccordion';
 import { PublishingAccordion } from './action_accordions/PublishingAccordion';
 import { SupportAccordion } from './action_accordions/SupportAccordion';
-import { UrlPathTemplate } from '../../utils/urlPaths';
 
 interface ActionPanelContentProps extends PublicRegistrationContentProps {
   tickets: Ticket[];
@@ -27,6 +32,8 @@ export const ActionPanelContent = ({
 }: ActionPanelContentProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const currentPath = history.location.pathname;
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
   const userIsCurator = userIsRegistrationCurator(user, registration);
@@ -48,10 +55,38 @@ export const ActionPanelContent = ({
     }
   };
 
-  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.Tasks);
+  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   const isInRegistrationWizard =
     window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const draftRegistrationMutation = useMutation({
+    mutationFn: () => deleteRegistration(registration.identifier),
+    onSuccess: () => {
+      dispatch(
+        setNotification({
+          message: t('feedback.success.delete_registration'),
+          variant: 'success',
+        })
+      );
+
+      if (currentPath.startsWith(UrlPathTemplate.MyPageMessages)) {
+        history.push(UrlPathTemplate.MyPageMyMessages);
+      } else if (currentPath.startsWith(UrlPathTemplate.RegistrationNew)) {
+        history.push(UrlPathTemplate.MyPageMyRegistrations);
+      }
+    },
+    onError: () => {
+      dispatch(
+        setNotification({
+          message: t('feedback.error.delete_registration'),
+          variant: 'error',
+        })
+      );
+    },
+  });
 
   return (
     <>
@@ -98,6 +133,26 @@ export const ActionPanelContent = ({
           />
         </ErrorBoundary>
       )}
+      {(registration.status === 'DRAFT' || registration.status === 'NEW') && (
+        <Box sx={{ m: '0.5rem', mt: '1rem' }}>
+          <Button sx={{ bgcolor: 'white' }} fullWidth variant="outlined" onClick={() => setShowDeleteModal(true)}>
+            {t('common.delete')}
+          </Button>
+        </Box>
+      )}
+
+      <ConfirmDialog
+        open={!!showDeleteModal}
+        title={t('my_page.registrations.delete_registration')}
+        onAccept={draftRegistrationMutation.mutate}
+        onCancel={() => setShowDeleteModal(false)}
+        isLoading={draftRegistrationMutation.isLoading}>
+        <Typography>
+          {t('my_page.registrations.delete_registration_message', {
+            title: getTitleString(registration?.entityDescription?.mainTitle),
+          })}
+        </Typography>
+      </ConfirmDialog>
     </>
   );
 };

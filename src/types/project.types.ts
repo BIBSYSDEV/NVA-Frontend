@@ -95,7 +95,7 @@ export interface CristinProject extends SaveCristinProject {
   creator?: ProjectCreator;
 }
 
-interface FundingSource {
+export interface FundingSource {
   id: string;
   identifier: string;
   name: LanguageString;

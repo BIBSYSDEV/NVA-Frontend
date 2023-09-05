@@ -1,6 +1,6 @@
+import { Alert, Fade, Snackbar, SnackbarCloseReason } from '@mui/material';
 import { SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert, Fade, Snackbar, SnackbarCloseReason } from '@mui/material';
 import { removeNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 

@@ -1,6 +1,6 @@
+import { TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { TextField } from '@mui/material';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 

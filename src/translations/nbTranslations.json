@@ -22,7 +22,7 @@
     "back_to_home": "Tilbake til startsiden",
     "cancel_create_user_text": "Du må opprette bruker for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
     "cancel_create_user_title": "Ønsker du å avbryte?",
-    "create_user_info": "Som bruker blir du tilgjengelig for alle som skal legge til forfatter eller annen bidragsyter på resultater.",
+    "create_user_info": "Som bruker blir du tilgjengelig for alle som skal legge til forfatter eller medvirkende på resultater.",
     "expired_token_info": "Sesjonen din har utløpt. Vennligst logg inn på nytt.",
     "forbidden": "Forbudt",
     "forbidden_description": "Du er ikke autorisert til å se innholdet på denne siden. Kontakt administrator om dette ikke stemmer.",
@@ -47,17 +47,25 @@
     "central_import": {
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Sentralimport",
-      "duplicate_check": "Duplikatsjekk",
-      "duplicate_search_hits_shown": "Søket ga følgende treff: (viser {{ShownResultsCount}} av {{TotalResultsCount}})",
-      "import": "Importer",
-      "import_publication": "Import publication",
+      "create_new": "Opprett ny",
+      "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importpublikasjonen.",
+      "duplicate_search_hits": "Søket ga følgende treff:",
+      "duplicate_search_no_hits": "Søket ga ingen treff",
+      "import_completed": "Publikasjonen er importert.",
+      "import_not_applicable": "Publikasjonen er markert som mangelfull.",
+      "mark_as_not_applicable": "Marker som mangelfull.",
+      "not_applicable": "Mangelfull",
       "or_search_with": "eller søk med",
-      "publications": "Publikasjoner",
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
       "see_publication": "Se publikasjon",
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})"
+      "status": {
+        "IMPORTED": "Importert",
+        "NOT_APPLICABLE": "Mangelfull",
+        "NOT_IMPORTED": "Til import"
+      },
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -74,7 +82,6 @@
       "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
-      "nvi": "Norsk vitenskapsindeks (NVI)",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
@@ -111,7 +118,6 @@
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
-    "all": "Alle",
     "cancel": "Avbryt",
     "category": "Kategori",
     "clear": "Fjern",
@@ -123,6 +129,7 @@
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskrivelse",
+    "dialogue": "Dialog",
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
@@ -131,6 +138,7 @@
     "error_occurred": "En uventet feil har oppstått",
     "filter": "Filter",
     "first_name": "Fornavn",
+    "funding": "Finansiering",
     "help": "Hjelp",
     "id": "ID",
     "institution": "Institusjon",
@@ -149,6 +157,7 @@
     "not_decided": "Ikke bestemt",
     "number_short": "Nr.",
     "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
+    "nvi": "Norsk vitenskapsindeks (NVI)",
     "open": "Åpne",
     "orcid": "ORCID",
     "orcid_profile": "ORCID-profil",
@@ -156,6 +165,8 @@
     "other": "Annet",
     "overview": "Oversikt",
     "page_title": "Nasjonalt Vitenarkiv",
+    "pagination_rows_per_page": "Antall rader per side:",
+    "pagination_showing_interval": "Viser {{start}}-{{end}} av {{total}}",
     "place": "Sted",
     "previous": "Forrige",
     "publisher": "Utgiver",
@@ -164,12 +175,12 @@
     "read_less_about_nva": "Les mindre om NVA",
     "read_more": "Les mer",
     "read_more_about_nva": "Les mer om NVA",
-    "registration": "Registrering",
-    "registrations": "Registreringer",
     "reject_doi": "Avvis DOI",
     "reload_page_info": "En ny versjon av NVA er tilgjengelig og siden må lastes på nytt.",
     "remove": "Fjern",
     "required_description": "Felt med stjerne er obligatorisk",
+    "result": "Resultat",
+    "result_registrations": "Resultatregistreringer",
     "role": "Rolle",
     "save": "Lagre",
     "save_and_view": "Lagre og se",
@@ -196,6 +207,7 @@
     "start_page": "Startside",
     "tasks": "Oppgaver",
     "title": "Tittel",
+    "today": "I dag",
     "type": "Type",
     "unknown": "Ukjent",
     "update": "Oppdater",
@@ -204,8 +216,12 @@
     "will_be_available": "Blir tilgjengelig",
     "x_days_one": "{{count}} dag",
     "x_days_other": "{{count}} dager",
+    "x_months_one": "{{count}} måned",
+    "x_months_other": "{{count}} måneder",
     "x_others_one": "+ {{count}} annen",
     "x_others_other": "+ {{count}} andre",
+    "x_years_one": "{{count}} år",
+    "x_years_other": "{{count}} år",
     "year": "År",
     "yes": "Ja"
   },
@@ -306,6 +322,9 @@
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensninger",
       "areas_of_responsibility": "Ansvarsområder",
+      "curator_has_extended_privileges": "Kurator har rettigheter til å redigere:",
+      "edit_extended_responsibility": "Endre utvidet ansvarsområde",
+      "extended_area_of_resposibility": "Utvidet ansvarsområde",
       "no_users_found": "Ingen brukere funnet"
     },
     "doi": {
@@ -347,7 +366,7 @@
   "feedback": {
     "error": {
       "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
-      "add_contributor": "Kunne ikke legge til bidragsyter",
+      "add_contributor": "Kunne ikke legge til medvirkende",
       "add_employment": "Kunne ikke legge til ansettelse",
       "add_role": "Kunne ikke legge til rolle",
       "an_error_occurred": "En feil oppstod",
@@ -357,6 +376,7 @@
       "create_publishing_request": "Kunne ikke opprette publiseringsforespørsel",
       "create_registration": "Kunne ikke opprette registrering",
       "create_user": "Kunne ikke opprette person",
+      "delete_draft_registrations": "Kunne ikke slette alle kladdene",
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
       "fetch": "Kunne ikke hente {{resource}}",
@@ -366,12 +386,15 @@
       "get_doi": "Kunne ikke hente lenkedata",
       "get_doi_agent": "Kunne ikke hente DOI-konfigurasjon",
       "get_funding_sources": "Kunne ikke hente finansieringskilder",
+      "get_import_candidate": "Kunne ikke hente importkandidat",
+      "get_import_candidates": "Kunne ikke hente importkandidater",
       "get_institution": "Kunne ikke laste inn institusjon",
       "get_institutions": "Kunne ikke laste inn institusjoner",
       "get_journal": "Kunne ikke hente tidsskrift",
       "get_journal_article": "Kunne ikke hente artikkel i tidsskrift",
       "get_journals": "Kunne ikke hente tidsskrifter",
       "get_messages": "Kunne ikke hente meldinger",
+      "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
       "get_orcid": "Kunne ikke hente data fra ORCID",
       "get_person": "Kunne ikke hente person",
       "get_positions": "Kunne ikke hente stillinger",
@@ -381,6 +404,7 @@
       "get_publishers": "Søk på utgivere feilet",
       "get_registration": "Kunne ikke laste inn registrering",
       "get_registrations": "Kunne ikke laste inn registreringer",
+      "get_registrations_export": "Kunne ikke hente resultateksport",
       "get_roles": "Kunne ikke hente roller",
       "get_series": "Kunne ikke hente serie",
       "get_tickets": "Kunne ikke hente saker",
@@ -396,6 +420,7 @@
       "update_customer": "Kunne ikke oppdatere institusjon",
       "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
       "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
+      "update_import_status": "Kunne ikke oppdatere importstatus",
       "update_institution_user": "Kunne ikke oppdatere bruker",
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
       "update_person": "Kunne ikke oppdatere person",
@@ -417,6 +442,7 @@
       "create_registration": "Publikasjon er opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
+      "delete_draft_registrations": "Alle kladdene ble slettet",
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
@@ -441,7 +467,7 @@
       "author_required": "Du må ha minst en forfatter på denne registreringen",
       "cannot_be_after": "{{field}} kan ikke være etter {{limitField}}",
       "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
-      "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
+      "contributor_required": "Du må ha minst en medvirkende på denne registreringen",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
       "employments_missing_data": "Alle ansettelser må ha stilling, stillingsprosent og startdato",
       "has_invalid_format": "{{field}} har ugyldig format",
@@ -495,7 +521,6 @@
   },
   "my_page": {
     "messages": {
-      "dialogue": "Dialog",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -567,6 +592,8 @@
     },
     "project_registrations": "Prosjektregistreringer",
     "registrations": {
+      "delete_all_draft_registrations": "Slett alle kladder",
+      "delete_all_draft_registrations_message": "Slett alle upubliserte registreringer?",
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
       "published": "Publisert",
@@ -585,9 +612,13 @@
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "institution_admins": "Administratorer",
+      "internal_importer": "Intern importør",
+      "internal_importer_description": "Kan behandle importkandidater.",
       "no_active_employments": "Du har ingen roller fordi du har ingen aktive ansettelser og har ikke tilgang til å registrere.",
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
-      "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen"
+      "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen",
+      "nvi_curator": "NVI-kurator",
+      "nvi_curator_description": "Kan se og behandle NVI-kandidater."
     }
   },
   "privacy": {
@@ -676,12 +707,12 @@
           },
           "row4": {
             "col0": "Felles autoritetsregister",
-            "col1": "Etablere kobling til autoritetsregister for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
+            "col1": "Etablere kobling til autoritetsregister for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller medvirkende som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
             "col2": "Sikt"
           },
           "row5": {
             "col0": "$t(common.orcid)",
-            "col1": "Etablere kobling til ORCID for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
+            "col1": "Etablere kobling til ORCID for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller medvirkende som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
             "col2": "$t(common.orcid)"
           }
         }
@@ -714,7 +745,7 @@
         },
         "row3": {
           "col0": "Bibliografiske data - personer knyttet til registrert ressurs",
-          "col1": "Forfatter, redaktør, veileder eller annen opphavsperson eller bidragsyter til ressurs registrert i tjenesten.",
+          "col1": "Forfatter, redaktør, veileder eller annen opphavsperson eller medvirkende til ressurs registrert i tjenesten.",
           "col2": "Katalogisering, kreditering og ansvarliggjøring av personene bak ressursen."
         },
         "row4": {
@@ -750,7 +781,7 @@
           "heading": "Andre persondata",
           "row0": {
             "col0": "Metadata for ressurs",
-            "col1": "Fullt navn og rolle for forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter",
+            "col1": "Fullt navn og rolle for forfatter, redaktør, veileder og annen opphavsperson eller medvirkende",
             "col2": "Opprettet i NVA ved registrering eller overført fra ekstern datakilde"
           },
           "row1": {
@@ -871,9 +902,8 @@
     "close_view": "Lukk visning",
     "close_view_description": "Ulagret data du har skrevet inn vil gå tapt om du lukker denne visningen. Ønsker du likevel å lukke visningen?",
     "coordinating_institution": "Koordinerende institusjon",
-    "create_project": "Opprett prosjekt",
+    "create_project": "Nytt prosjekt",
     "edit_project": "Endre prosjekt",
-    "financing": "Finansiering",
     "form": {
       "empty_registration": "Tom registrering",
       "here_you_can_create_project": "Her kan du enkelt opprette prosjekt:",
@@ -917,16 +947,16 @@
   "registration": {
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
-      "add_contributor": "Legg til bidragsyter",
+      "add_contributor": "Legg til medvirkende",
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
-      "add_self_as_contributor": "Legg meg til som bidragsyter",
-      "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
+      "add_self_as_contributor": "Legg meg til som medvirkende",
+      "add_unverified_contributor": "Legg til en ikke-verifisert medvirkende.",
       "authors": "Forfattere",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "confirmed": "Bekreftet",
-      "contributor": "Bidragsyter",
-      "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
-      "contributor_not_found": "Finner ikke bidragsyter",
+      "contributor": "Medvirkende",
+      "contributor_already_added": "Valgt medvirkende er allerede lagt til",
+      "contributor_not_found": "Finner ikke person",
       "corresponding": "Korresponderende",
       "department": "Enhet",
       "identity_status": {
@@ -934,8 +964,8 @@
         "confirmed_identity_without_affiliation": "Bekreftet identitet uten tilhørighet",
         "unknown_identity": "Ukjent identitet"
       },
-      "invalid_role": "Bidragsyteren må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
-      "must_select_type_first": "Du må velge ressurstype før du kan legge til bidragsytere.",
+      "invalid_role": "Medvirkende må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
+      "must_select_type_first": "Du må velge kategori før du kan legge til medvirkende.",
       "no_affiliations_found": "Ingen tilknytninger funnet",
       "no_registrations_found": "Ingen registreringer funnet",
       "other_registrations_one": "+ {{count}} annen registrering",
@@ -943,9 +973,9 @@
       "prefilled_affiliation": "Forhåndsutfylt tilknytning",
       "prefilled_name": "Forhåndsutfylt navn",
       "remove_affiliation": "Fjern tilknytning",
-      "remove_contributor": "Fjern bidragsyter",
+      "remove_contributor": "Fjern medvirkende",
       "search_for_institution": "Søk etter institusjon",
-      "select_contributor_type": "Velg type bidragsyter",
+      "select_contributor_type": "Velg type medvirkende",
       "suggested_affiliations": "Foreslåtte tilknytninger",
       "type": "Bidragstype",
       "types": {
@@ -1017,7 +1047,6 @@
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskrivelse av innhold, hvis relevant",
       "funding": {
-        "financing": "Finansiering",
         "funder": "Finansiør",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
@@ -1072,17 +1101,17 @@
       "size": "Størrelse"
     },
     "heading": {
-      "contributors": "Bidragsytere",
+      "contributors": "Medvirkende",
       "description": "$t(common.description)",
-      "files_and_license": "Filer og lisens",
-      "resource_type": "Ressurstype"
+      "files_and_license": "Fil, lisens og lenke",
+      "resource_type": "Kategori"
     },
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
-    "new_registration": "Ny registrering",
+    "new_registration": "Nytt resultat",
     "public_page": {
-      "about_registration": "Om registreringen",
+      "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
@@ -1391,7 +1420,7 @@
         "search_for_book_of_abstracts": "Søk etter abstraktsamlingen hvor abstraktet er publisert",
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
-      "click_to_change_resource_type": "Trykk på valgt ressurstype om du vil endre",
+      "click_to_change_resource_type": "Trykk på valgt kategori om du vil endre",
       "date_from": "Dato fra",
       "date_to": "Dato til",
       "exhibition_production": {
@@ -1460,6 +1489,7 @@
       "pages_to": "til",
       "place_for_event": "Sted for arrangement",
       "print_issn": "Print ISSN",
+      "protected_type": "Du mangler tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
       "publisher_or_organizer": "Utgiver/arrangør eller lignende",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
@@ -1491,12 +1521,12 @@
         "search_for_related_registrations": "Søk etter relaterte registreringer",
         "search_for_related_registrations_helper": "Velg blant registreringer som er publisert i NVA"
       },
-      "resource_type": "Ressurstype",
+      "resource_type": "Kategori",
       "search_for_journal": "Søk etter tidsskrift",
       "search_for_original_article": "Søk etter original artikkel",
       "search_for_publisher": "Søk etter utgiver",
       "search_for_series": "Søk etter serie",
-      "select_resource_type": "Velg ressurstype",
+      "select_resource_type": "Velg kategori",
       "series": "Serie",
       "series_info": "Hvis publikasjonen inngår i en serie",
       "series_number": "Serienummer",
@@ -1519,6 +1549,7 @@
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
     "contains": "Inneholder",
+    "export": "Eksporter",
     "field_label": "Felt",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
@@ -1529,7 +1560,7 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "result": "Resultat",
-    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
+    "search_placeholder": "Søk etter tittel, medvirkende, sammendrag, etc.",
     "search_term_label": "Verdi",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",
@@ -1540,7 +1571,15 @@
     "all_user_dialogs": "Alle brukerdialoger",
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
-    "new_user_dialogs": "Nye brukerdialoger",
+    "nvi": {
+      "no_nvi_candidates": "Ingen NVI-kandidater",
+      "status": {
+        "Approved": "Godkjent",
+        "Pending": "Til kontroll",
+        "Rejected": "Avvist"
+      }
+    },
+    "status": "Status",
     "unread": "Uleste",
     "user_dialog": "Brukerdialog"
   }

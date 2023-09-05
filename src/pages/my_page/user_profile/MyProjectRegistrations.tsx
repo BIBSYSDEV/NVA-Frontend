@@ -1,13 +1,14 @@
+import { List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Typography, List, TablePagination } from '@mui/material';
-import { useState } from 'react';
 import { searchForProjects } from '../../../api/cristinApi';
-import { RootState } from '../../../redux/store';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { RootState } from '../../../redux/store';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { canEditProject } from '../../registration/description_tab/projects_field/projectHelpers';
 import { ProjectListItem } from '../../search/project_search/ProjectListItem';
 
@@ -26,13 +27,13 @@ export const MyProjectRegistrations = ({
   const user = useSelector((store: RootState) => store.user);
   const cristinIdentifier = getIdentifierFromId(user?.cristinId ?? '');
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const projectsQuery = useQuery({
     enabled: !!cristinIdentifier,
-    queryKey: ['projects', rowsPerPage, page, cristinIdentifier],
-    queryFn: () => searchForProjects(rowsPerPage, page + 1, { creator: cristinIdentifier }),
+    queryKey: ['projects', 50, 1, cristinIdentifier],
+    queryFn: () => searchForProjects(50, 1, { creator: cristinIdentifier }),
   });
 
   const projects = projectsQuery.data?.hits ?? [];
@@ -41,7 +42,11 @@ export const MyProjectRegistrations = ({
       ({ status }) =>
         (status === 'ACTIVE' && selectedOngoing) ||
         (status === 'NOTSTARTED' && selectedNotStarted) ||
-        (status === 'CONCLUDED' && selectedConcluded)
+        (status === 'CONCLUDED' && selectedConcluded) ||
+        ((status === 'ACTIVE' || status === 'NOTSTARTED' || status === 'CONCLUDED') &&
+          !selectedOngoing &&
+          !selectedNotStarted &&
+          !selectedConcluded)
     )
     .sort((a, b) => {
       if (a.status === 'ACTIVE' && b.status !== 'ACTIVE') {
@@ -56,17 +61,24 @@ export const MyProjectRegistrations = ({
       return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
     });
 
+  const projectsToShow = filteredProjects.slice(rowsPerPage * (page - 1), rowsPerPage * page);
+  const validPage = page - 1 < Math.ceil(filteredProjects.length / rowsPerPage) ? page : 1;
+
+  useEffect(() => {
+    setPage(1);
+  }, [selectedOngoing, selectedNotStarted, selectedConcluded]);
+
   return (
     <div>
       <Typography variant="h2" gutterBottom>
         {t('my_page.project_registrations')}
       </Typography>
-      {projectsQuery.isLoading ? (
+      {projectsQuery.isLoading || projectsQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : projectsQuery.data && projectsQuery.data.size > 0 ? (
         <>
           <List>
-            {filteredProjects.map((project) => (
+            {projectsToShow.map((project) => (
               <ProjectListItem
                 key={project.id}
                 project={project}
@@ -75,16 +87,14 @@ export const MyProjectRegistrations = ({
               />
             ))}
           </List>
-          <TablePagination
-            rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-            component="div"
-            count={projectsQuery.data.size}
+          <ListPagination
+            count={filteredProjects.length}
             rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
-            onRowsPerPageChange={(event) => {
-              setRowsPerPage(+event.target.value);
-              setPage(0);
+            page={validPage}
+            onPageChange={(newPage) => setPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRowsPerPage(newRowsPerPage);
+              setPage(1);
             }}
           />
         </>

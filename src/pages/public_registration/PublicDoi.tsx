@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { Box, Link, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -46,7 +46,7 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
       {(originalDoi || associatedLink) && (
         <>
           <Typography variant="overline">{t('registration.registration.link_to_resource')}</Typography>
-          <Typography>
+          <Typography sx={{ wordBreak: 'break-all' }}>
             <Link
               data-testid={dataTestId.registrationLandingPage.doiOriginalLink}
               href={originalDoi || associatedLink}

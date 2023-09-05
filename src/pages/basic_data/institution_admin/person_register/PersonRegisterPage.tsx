@@ -6,65 +6,55 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   TextField,
   Typography,
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
-import { useEffect, useRef, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { fetchEmployees } from '../../../../api/searchApi';
+import { ErrorBoundary } from '../../../../components/ErrorBoundary';
+import { ListPagination } from '../../../../components/ListPagination';
+import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { RootState } from '../../../../redux/store';
 import { alternatingTableRowColor } from '../../../../themes/mainTheme';
-import { SearchResponse } from '../../../../types/common.types';
-import { CristinPerson } from '../../../../types/user.types';
-import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { PersonTableRow } from './PersonTableRow';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
-
-const rowsPerPageOptions = [10, 25, 50];
-
-const getSearchUrl = (topOrgCristinId: string | undefined, nameQuery: string, page: number, rowsPerPage: number) => {
-  const nameQueryParam = nameQuery ? `&name=${nameQuery}` : '';
-  return topOrgCristinId ? `${topOrgCristinId}/persons?page=${page}&results=${rowsPerPage}${nameQueryParam}` : '';
-};
+import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { PersonTableRow } from './PersonTableRow';
 
 export const PersonRegisterPage = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
-  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
 
-  const prevSearchQueryRef = useRef(debouncedSearchQuery);
-
   useEffect(() => {
-    // Reset page every time the search query changes
-    if (prevSearchQueryRef.current !== debouncedSearchQuery) {
-      setPage(1);
-      prevSearchQueryRef.current = debouncedSearchQuery;
-    }
+    setPage(1);
   }, [debouncedSearchQuery]);
 
-  const [employeesSearchResponse, isLoadingEmployees, refetchEmployees] = useFetch<SearchResponse<CristinPerson>>({
-    url: getSearchUrl(
-      user?.topOrgCristinId,
-      debouncedSearchQuery,
-      prevSearchQueryRef.current !== debouncedSearchQuery ? 1 : page,
-      rowsPerPage
-    ),
-    withAuthentication: true,
-    errorMessage: t('feedback.error.get_users_for_institution'),
+  const employeeSearchQuery = useQuery({
+    enabled: !!user?.topOrgCristinId && debouncedSearchQuery === searchQuery,
+    queryKey: ['employees', user?.topOrgCristinId, rowsPerPage, page, debouncedSearchQuery, searchQuery],
+    queryFn: ({ signal }) =>
+      user?.topOrgCristinId
+        ? fetchEmployees(user?.topOrgCristinId, rowsPerPage, page, debouncedSearchQuery, signal)
+        : null,
+    meta: { errorMessage: t('feedback.error.get_users_for_institution') },
+    keepPreviousData: true,
   });
-  const employees = employeesSearchResponse?.hits ?? [];
+
+  const employees = employeeSearchQuery.data?.hits ?? [];
 
   return (
-    <>
+    <BackgroundDiv>
       <Helmet>
         <title>{t('basic_data.person_register.person_register')}</title>
       </Helmet>
@@ -80,11 +70,11 @@ export const PersonRegisterPage = () => {
         sx={{ mb: '1rem', maxWidth: '25rem' }}
       />
 
-      {employees.length === 0 && !isLoadingEmployees ? (
+      {employees.length === 0 && !employeeSearchQuery.isLoading ? (
         <Typography>{t('basic_data.person_register.no_employees_found')}</Typography>
       ) : (
         <>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
             <Table size="small" sx={alternatingTableRowColor}>
               <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
               <TableHead>
@@ -97,7 +87,7 @@ export const PersonRegisterPage = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {isLoadingEmployees
+                {employeeSearchQuery.isLoading
                   ? [...Array(5)].map((_, index) => (
                       <TableRow key={index} sx={{ height: '4rem' }}>
                         <TableCell>
@@ -116,33 +106,32 @@ export const PersonRegisterPage = () => {
                       </TableRow>
                     ))
                   : employees.map((person) => (
-                      <PersonTableRow
-                        key={person.id}
-                        cristinPerson={person}
-                        topOrgCristinIdentifier={
-                          user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''
-                        }
-                        customerId={user?.customerId ?? ''}
-                        refetchEmployees={refetchEmployees}
-                      />
+                      <ErrorBoundary key={person.id}>
+                        <PersonTableRow
+                          cristinPerson={person}
+                          topOrgCristinIdentifier={
+                            user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''
+                          }
+                          customerId={user?.customerId ?? ''}
+                          refetchEmployees={employeeSearchQuery.refetch}
+                        />
+                      </ErrorBoundary>
                     ))}
               </TableBody>
             </Table>
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={rowsPerPageOptions}
-            component="div"
-            count={employeesSearchResponse?.size ?? -1}
+          <ListPagination
+            count={employeeSearchQuery.data?.size ?? 0}
             rowsPerPage={rowsPerPage}
-            page={page - 1}
-            onPageChange={(_, muiPage) => setPage(muiPage + 1)}
-            onRowsPerPageChange={(event) => {
-              setRowsPerPage(parseInt(event.target.value));
+            page={page}
+            onPageChange={(newPage) => setPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRowsPerPage(newRowsPerPage);
               setPage(1);
             }}
           />
         </>
       )}
-    </>
+    </BackgroundDiv>
   );
 };

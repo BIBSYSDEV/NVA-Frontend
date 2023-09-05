@@ -1,13 +1,14 @@
 import { SearchResponse } from '../types/common.types';
 import { Organization } from '../types/organization.types';
-import { CristinProject, FundingSources } from '../types/project.types';
+import { CristinProject, FundingSource, FundingSources } from '../types/project.types';
 import {
   CreateCristinPerson,
   CristinPerson,
-  FlatCristinPerson,
   Employment,
+  FlatCristinPerson,
   PositionResponse,
 } from '../types/user.types';
+import { getIdentifierFromId } from '../utils/general-helpers';
 import { CristinApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
@@ -53,10 +54,22 @@ export const searchByNationalIdNumber = async (nationalIdNumber: string) => {
 };
 
 export const fetchFundingSources = async () => {
-  const getTickets = await apiRequest2<FundingSources>({
+  const getFundingSources = await apiRequest2<FundingSources>({
     url: CristinApiPath.FundingSources,
   });
-  return getTickets.data;
+  return getFundingSources.data;
+};
+
+export const fetchFundingSource = async (fundingId: string) => {
+  if (!fundingId) {
+    return null;
+  }
+
+  const fundingIdentifier = getIdentifierFromId(fundingId);
+  const url = `${CristinApiPath.FundingSources}/${fundingIdentifier}`;
+  const getFundingSource = await apiRequest2<FundingSource>({ url });
+
+  return getFundingSource.data;
 };
 
 export const fetchOrganization = async (id: string) => {

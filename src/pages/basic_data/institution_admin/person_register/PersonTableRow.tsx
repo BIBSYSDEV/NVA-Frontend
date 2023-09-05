@@ -1,53 +1,52 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  TableRow,
-  TableCell,
-  Tooltip,
-  IconButton,
-  Box,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogActions,
-  Button,
-  TextField,
-  Divider,
-  Typography,
-  CircularProgress,
-} from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
+import EditIcon from '@mui/icons-material/Edit';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import EditIcon from '@mui/icons-material/Edit';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  IconButton,
+  TableCell,
+  TableRow,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
-import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { RoleApiPath } from '../../../../api/apiPaths';
+import { authenticatedApiRequest } from '../../../../api/apiRequest';
+import { fetchPositions } from '../../../../api/cristinApi';
+import { createUser, fetchUser } from '../../../../api/roleApi';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
+import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
-import { isErrorStatus, isSuccessStatus, ORCID_BASE_URL } from '../../../../utils/constants';
+import { setNotification } from '../../../../redux/notificationSlice';
+import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
+import { CristinPerson, Employment, InstitutionUser, RoleName, emptyEmployment } from '../../../../types/user.types';
+import { ORCID_BASE_URL, isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { dataTestId } from '../../../../utils/dataTestIds';
 import {
   convertToFlatCristinPerson,
   getFullCristinName,
   getMaskedNationalIdentityNumber,
   isActiveEmployment,
 } from '../../../../utils/user-helpers';
-import { CristinPerson, Employment, emptyEmployment, InstitutionUser, RoleName } from '../../../../types/user.types';
-import { useFetch } from '../../../../utils/hooks/useFetch';
-import { RoleApiPath } from '../../../../api/apiPaths';
-import { UserRolesSelector } from '../UserRolesSelector';
-import { authenticatedApiRequest } from '../../../../api/apiRequest';
-import { setNotification } from '../../../../redux/notificationSlice';
-import { createUser } from '../../../../api/roleApi';
+import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
-import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
-import { ConfirmDialog } from '../../../../components/ConfirmDialog';
-import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
-import { dataTestId } from '../../../../utils/dataTestIds';
-import { fetchPositions } from '../../../../api/cristinApi';
+import { UserRolesSelector } from '../UserRolesSelector';
 
 export interface PersonData {
   employments: Employment[];
@@ -91,11 +90,16 @@ export const PersonTableRow = ({
 
   const fullName = getFullCristinName(cristinPerson.names);
   const username = `${cristinIdentifier}@${topOrgCristinIdentifier}`;
-  const [institutionUser, isLoadingInstitutionUser] = useFetch<InstitutionUser>({
-    url: openDialog ? `${RoleApiPath.Users}/${username}` : '',
-    withAuthentication: true,
-    errorMessage: false,
+
+  const institutionUserQuery = useQuery({
+    enabled: openDialog,
+    queryKey: ['institutionUser', username],
+    queryFn: () => fetchUser(username),
+    meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
+    retry: false,
   });
+
+  const institutionUser = institutionUserQuery.data;
 
   const activeEmployments = employments.filter(isActiveEmployment);
   const employmentsInThisInstitution: Employment[] = [];
@@ -124,11 +128,15 @@ export const PersonTableRow = ({
     });
     if (isSuccessStatus(updateCristinPerson.status)) {
       // Update NVA User
+      const filteredRoles = !values.roles.includes(RoleName.Curator)
+        ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
+        : values.roles;
+
       let updateUserResponse;
       if (institutionUser) {
         const updatedInstitutionUser: InstitutionUser = {
           ...institutionUser,
-          roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+          roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
         };
 
         updateUserResponse = await authenticatedApiRequest<null>({
@@ -140,7 +148,7 @@ export const PersonTableRow = ({
         updateUserResponse = await createUser({
           nationalIdentityNumber: nationalId,
           customerId,
-          roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+          roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
         });
       }
       if (isSuccessStatus(updateUserResponse.status)) {
@@ -246,7 +254,7 @@ export const PersonTableRow = ({
                     )}
                   </Box>
                   <Divider flexItem orientation="vertical" />
-                  {isLoadingInstitutionUser || !hasFetchedPositions ? (
+                  {institutionUserQuery.isLoading || !hasFetchedPositions ? (
                     <CircularProgress sx={{ margin: 'auto' }} aria-labelledby="edit-person-label" />
                   ) : (
                     values.employments.length > 0 && (
@@ -370,6 +378,7 @@ export const PersonTableRow = ({
                             selectedRoles={values.roles}
                             updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
                             disabled={isSubmitting}
+                            canAddInternalRoles
                           />
                         </Box>
                       </div>
@@ -381,7 +390,7 @@ export const PersonTableRow = ({
                 <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
                 <LoadingButton
                   loading={isSubmitting}
-                  disabled={isLoadingInstitutionUser || !hasFetchedPositions}
+                  disabled={institutionUserQuery.isLoading || !hasFetchedPositions}
                   variant="contained"
                   type="submit">
                   {t('common.save')}

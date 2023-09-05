@@ -1,8 +1,8 @@
-import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
-import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+import { ImportCandidate, ImportCandidateStatus } from '../types/importCandidate.types';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
+import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
-import { ImportCandidate } from '../types/importCandidate.types';
+import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({
@@ -111,10 +111,21 @@ export const fetchImportCandidate = async (importCandidateIdentifier: string) =>
 };
 
 export const createRegistrationFromImportCandidate = async (importCandidate: ImportCandidate) => {
-  const creatRegistrationResponse = await authenticatedApiRequest2<Registration>({
+  const createRegistrationResponse = await authenticatedApiRequest2<Registration>({
     url: `${PublicationsApiPath.ImportCandidate}/${importCandidate.identifier}`,
     method: 'POST',
     data: importCandidate,
   });
-  return creatRegistrationResponse.data;
+  return createRegistrationResponse.data;
+};
+
+const notApplicableStatus: ImportCandidateStatus = 'NOT_APPLICABLE';
+export const markImportCandidateStatusAsNotApplicable = async (importCandidateIdentifier: string) => {
+  const updateImportCandidateStatusResponse = await authenticatedApiRequest2<ImportCandidate>({
+    url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}`,
+    method: 'PUT',
+    data: { candidateStatus: notApplicableStatus },
+  });
+
+  return updateImportCandidateStatusResponse.data;
 };

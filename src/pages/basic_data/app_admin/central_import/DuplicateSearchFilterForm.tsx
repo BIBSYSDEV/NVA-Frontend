@@ -1,10 +1,10 @@
-import { useTranslation } from 'react-i18next';
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
+import { styled as muiStyled } from '@mui/system';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { styled as muiStyled } from '@mui/system';
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, TextField, Typography } from '@mui/material';
-import { Registration } from '../../../../types/registration.types';
+import { useTranslation } from 'react-i18next';
 import { DuplicateSearchFilters, DuplicateSearchForm } from '../../../../types/duplicateSearchTypes';
+import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledFormElementWrapper = muiStyled('div')({
@@ -17,20 +17,20 @@ const StyledFormControlLabel = muiStyled(FormControlLabel)({
 });
 
 interface DuplicateSearchFilterFormProps {
-  publication: Registration;
+  importCandidate: ImportCandidateSummary;
   setDuplicateSearchFilters: Dispatch<SetStateAction<DuplicateSearchFilters>>;
 }
 
 export const DuplicateSearchFilterForm = ({
-  publication,
+  importCandidate,
   setDuplicateSearchFilters,
 }: DuplicateSearchFilterFormProps) => {
   const { t } = useTranslation();
 
   const initialSearchParams: DuplicateSearchForm = {
-    doi: publication.entityDescription?.reference?.doi ?? '',
-    title: publication.entityDescription?.mainTitle ?? '',
-    author: publication.entityDescription?.contributors[0]?.identity.name ?? '',
+    doi: importCandidate.doi ?? '',
+    title: importCandidate.mainTitle ?? '',
+    author: importCandidate.contributors[0]?.identity.name ?? '',
     issn: '',
     yearPublished: '',
     isDoiChecked: true,

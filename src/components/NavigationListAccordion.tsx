@@ -1,13 +1,13 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionDetails, AccordionProps, AccordionSummary, Box, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Accordion, AccordionDetails, AccordionProps, AccordionSummary, Box, Typography } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 interface NavigationListAccordionProps extends AccordionProps {
   title: string;
   startIcon: ReactNode;
   accordionPath: string;
-  defaultPath: string;
+  defaultPath?: string;
   dataTestId: string;
 }
 
@@ -15,9 +15,10 @@ export const NavigationListAccordion = ({
   title,
   startIcon,
   accordionPath,
-  defaultPath,
+  defaultPath = accordionPath,
   dataTestId,
   children,
+  ...props
 }: NavigationListAccordionProps) => {
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
@@ -25,6 +26,7 @@ export const NavigationListAccordion = ({
 
   return (
     <Accordion
+      {...props}
       data-testid={dataTestId}
       disableGutters
       expanded={isExpanded}

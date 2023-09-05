@@ -1,6 +1,8 @@
-import { FormControl, FormGroup, FormControlLabel, Checkbox, Typography } from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel, FormGroup, Typography } from '@mui/material';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 
@@ -8,10 +10,17 @@ interface UserRolesSelectorProps {
   selectedRoles: RoleName[];
   updateRoles: (roles: RoleName[]) => void;
   disabled?: boolean;
+  canAddInternalRoles?: boolean;
 }
 
-export const UserRolesSelector = ({ selectedRoles, updateRoles, disabled = false }: UserRolesSelectorProps) => {
+export const UserRolesSelector = ({
+  selectedRoles,
+  updateRoles,
+  disabled = false,
+  canAddInternalRoles = false,
+}: UserRolesSelectorProps) => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
 
   return (
     <FormControl
@@ -57,6 +66,42 @@ export const UserRolesSelector = ({ selectedRoles, updateRoles, disabled = false
             />
           }
         />
+        {user?.isAppAdmin && canAddInternalRoles && (
+          <FormGroup sx={{ border: '2px solid', p: '0.5rem', gap: '0.5rem' }}>
+            <FormControlLabel
+              control={<Checkbox checked={selectedRoles.includes(RoleName.AppAdmin)} value={RoleName.AppAdmin} />}
+              label={
+                <RoleLabel
+                  title={t('my_page.roles.app_admin')}
+                  description={t('my_page.roles.app_admin_description')}
+                />
+              }
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={selectedRoles.includes(RoleName.InternalImporter)}
+                  value={RoleName.InternalImporter}
+                />
+              }
+              label={
+                <RoleLabel
+                  title={t('my_page.roles.internal_importer')}
+                  description={t('my_page.roles.internal_importer_description')}
+                />
+              }
+            />
+            <FormControlLabel
+              control={<Checkbox checked={selectedRoles.includes(RoleName.NviCurator)} value={RoleName.NviCurator} />}
+              label={
+                <RoleLabel
+                  title={t('my_page.roles.nvi_curator')}
+                  description={t('my_page.roles.nvi_curator_description')}
+                />
+              }
+            />
+          </FormGroup>
+        )}
       </FormGroup>
     </FormControl>
   );

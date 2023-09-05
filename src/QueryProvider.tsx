@@ -1,8 +1,8 @@
-import { ReactNode, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { setNotification } from './redux/notificationSlice';
 
 interface QueryProviderProps {
@@ -23,7 +23,13 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
       },
       queryCache: new QueryCache({
         onError: (error: any, query) => {
-          let errorMessage = typeof query.meta?.errorMessage === 'string' ? query.meta.errorMessage : '';
+          const queryErrorMessage = query.meta?.errorMessage;
+
+          if (queryErrorMessage === false) {
+            return;
+          }
+
+          let errorMessage = typeof queryErrorMessage === 'string' ? queryErrorMessage : '';
           if (!errorMessage) {
             if (typeof error?.response?.data?.detail === 'string') {
               errorMessage = error.response.data.detail;

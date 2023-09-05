@@ -1,11 +1,15 @@
-import { useTranslation } from 'react-i18next';
-import { Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { deleteRegistration, fetchRegistrationsByOwner } from '../../api/registrationApi';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListSkeleton } from '../../components/ListSkeleton';
+import { setNotification } from '../../redux/notificationSlice';
 import { RegistrationStatus } from '../../types/registration.types';
 import { MyRegistrationsList } from './MyRegistrationsList';
-import { fetchRegistrationsByOwner } from '../../api/registrationApi';
 
 interface MyRegistrationsProps {
   selectedPublished: boolean;
@@ -14,6 +18,9 @@ interface MyRegistrationsProps {
 
 export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRegistrationsProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const registrationsQuery = useQuery({
     queryKey: ['by-owner'],
@@ -22,13 +29,19 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
   });
 
   const registrations = registrationsQuery.data?.publications ?? [];
+  const draftRegistrations = registrations.filter(({ status }) => status === RegistrationStatus.Draft);
 
   const filteredRegistrations = registrations
     .filter(
       ({ status }) =>
         (status === RegistrationStatus.Draft && selectedUnpublished) ||
         ((status === RegistrationStatus.Published || status === RegistrationStatus.PublishedMetadata) &&
-          selectedPublished)
+          selectedPublished) ||
+        ((status === RegistrationStatus.Draft ||
+          status === RegistrationStatus.Published ||
+          status === RegistrationStatus.PublishedMetadata) &&
+          !selectedPublished &&
+          !selectedUnpublished)
     )
     .sort((a, b) => {
       if (a.status === RegistrationStatus.Draft && b.status !== RegistrationStatus.Draft) {
@@ -39,19 +52,58 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
       return 0;
     });
 
+  const deleteDraftRegistrationMutation = useMutation({
+    mutationFn: async () => {
+      const deletePromises = draftRegistrations.map(
+        async (registration) => await deleteRegistration(registration.identifier)
+      );
+
+      await Promise.all(deletePromises);
+      await registrationsQuery.refetch();
+    },
+    onSuccess: () => {
+      dispatch(
+        setNotification({
+          message: t('feedback.success.delete_draft_registrations'),
+          variant: 'success',
+        })
+      );
+      setShowDeleteModal(false);
+    },
+    onError: () => {
+      dispatch(
+        setNotification({
+          message: t('feedback.error.delete_draft_registrations'),
+          variant: 'error',
+        })
+      );
+    },
+  });
+
   return (
     <>
       <Helmet>
-        <title>{t('common.registrations')}</title>
+        <title>{t('common.result_registrations')}</title>
       </Helmet>
       <div>
         {registrationsQuery.isLoading ? (
           <ListSkeleton minWidth={100} maxWidth={100} height={100} />
         ) : (
           <>
-            <Typography gutterBottom variant="h2">
-              {t('common.registrations')}
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Typography gutterBottom variant="h2">
+                {t('common.result_registrations')}
+              </Typography>
+              {(!selectedPublished || selectedUnpublished) && (
+                <Button
+                  sx={{ bgcolor: 'white' }}
+                  variant="outlined"
+                  onClick={() => setShowDeleteModal(true)}
+                  disabled={draftRegistrations.length === 0}>
+                  {t('my_page.registrations.delete_all_draft_registrations')}
+                </Button>
+              )}
+            </Box>
             <MyRegistrationsList
               registrations={filteredRegistrations}
               refetchRegistrations={registrationsQuery.refetch}
@@ -59,6 +111,15 @@ export const MyRegistrations = ({ selectedUnpublished, selectedPublished }: MyRe
           </>
         )}
       </div>
+
+      <ConfirmDialog
+        open={!!showDeleteModal}
+        title={t('my_page.registrations.delete_registration')}
+        onAccept={() => deleteDraftRegistrationMutation.mutate()}
+        onCancel={() => setShowDeleteModal(false)}
+        isLoading={deleteDraftRegistrationMutation.isLoading}>
+        <Typography>{t('my_page.registrations.delete_all_draft_registrations_message')}</Typography>
+      </ConfirmDialog>
     </>
   );
 };

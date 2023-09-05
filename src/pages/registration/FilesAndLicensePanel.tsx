@@ -1,59 +1,65 @@
-import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import {
   Box,
   Button,
   FormHelperText,
+  IconButton,
   Link,
   Paper,
-  TextField,
-  Typography,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  IconButton,
+  TextField,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import { UppyFile } from '@uppy/core';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Modal } from '../../components/Modal';
+import { BackgroundDiv } from '../../components/styled/Wrappers';
+import { RootState } from '../../redux/store';
+import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { AssociatedFile, AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
+import { licenses } from '../../types/license.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
-import { FileUploader } from './files_and_license_tab/FileUploader';
-import {
-  getChannelRegisterJournalUrl,
-  getChannelRegisterPublisherUrl,
-} from '../public_registration/PublicPublicationContext';
 import { dataTestId } from '../../utils/dataTestIds';
 import {
   associatedArtifactIsFile,
   associatedArtifactIsLink,
   associatedArtifactIsNullArtifact,
   getAssociatedFiles,
+  isDegreeWithProtectedFiles,
+  isEmbargoed,
   isTypeWithFileVersionField,
+  userIsRegistrationCurator,
+  userIsRegistrationOwner,
 } from '../../utils/registration-helpers';
-import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { DoiField } from './resource_type_tab/components/DoiField';
+import {
+  getChannelRegisterJournalUrl,
+  getChannelRegisterPublisherUrl,
+} from '../public_registration/PublicPublicationContext';
+import { FileUploader } from './files_and_license_tab/FileUploader';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
-import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
-import { licenses } from '../../types/license.types';
+import { DoiField } from './resource_type_tab/components/DoiField';
 
 export const administrativeAgreementId = 'administrative-agreement';
 
 interface FilesAndLicensePanelProps {
   uppy: Uppy;
-  canEditFiles: boolean;
 }
 
-export const FilesAndLicensePanel = ({ uppy, canEditFiles }: FilesAndLicensePanelProps) => {
+export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
+  const user = useSelector((store: RootState) => store.user);
   const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
@@ -106,6 +112,12 @@ export const FilesAndLicensePanel = ({ uppy, canEditFiles }: FilesAndLicensePane
 
   const originalDoi = entityDescription?.reference?.doi;
   const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance?.type);
+
+  const isRegistrationCurator = userIsRegistrationCurator(user, values);
+  const isProtectedDegree = isDegreeWithProtectedFiles(entityDescription?.reference?.publicationInstance?.type);
+  const canEditDegreeFiles = isRegistrationCurator && !!user?.isThesisCurator;
+  const canEditOtherFiles = isRegistrationCurator || userIsRegistrationOwner(user, values);
+  const canEditFiles = (!isProtectedDegree && canEditOtherFiles) || (isProtectedDegree && canEditDegreeFiles);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -225,11 +237,16 @@ export const FilesAndLicensePanel = ({ uppy, canEditFiles }: FilesAndLicensePane
                                   return false;
                                 });
 
+                                const isEmbargoedDegreeFile = isProtectedDegree && isEmbargoed(file.embargoDate);
+                                const canEditThisFile = isEmbargoedDegreeFile
+                                  ? canEditDegreeFiles && user.isEmbargoThesisCurator
+                                  : canEditFiles;
+
                                 return (
                                   <FilesTableRow
                                     key={file.identifier}
                                     file={file}
-                                    disabled={!canEditFiles}
+                                    disabled={!canEditThisFile}
                                     removeFile={() => {
                                       const associatedArtifactsBeforeRemoval = associatedArtifacts.length;
                                       const remainingFiles = uppy

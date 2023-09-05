@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { LoadingButton } from '@mui/lab';
 import {
   Box,
@@ -13,20 +12,21 @@ import {
   Typography,
 } from '@mui/material';
 import { Form, Formik, FormikProps, FormikTouched } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { CristinApiPath } from '../../../api/apiPaths';
 import { authenticatedApiRequest } from '../../../api/apiRequest';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { setNotification } from '../../../redux/notificationSlice';
 import { CristinProject, SaveCristinProject } from '../../../types/project.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { basicProjectValidationSchema } from '../../../utils/validation/project/BasicProjectValidation';
 import { CreateProjectStartPage } from './CreateProjectStartPage';
-import { ProjectFormPanel2 } from './ProjectFormPanel2';
 import { ProjectFormPanel1 } from './ProjectFormPanel1';
-import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { ProjectFormPanel2 } from './ProjectFormPanel2';
 
 export enum ProjectFieldName {
   Title = 'title',

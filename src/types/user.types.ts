@@ -1,11 +1,15 @@
 import { LanguageString } from './common.types';
 
 export enum RoleName {
-  InstitutionAdmin = 'Institution-admin',
   AppAdmin = 'App-admin',
   Curator = 'Curator',
+  CuratorThesis = 'Curator-thesis',
+  CuratorThesisEmbargo = 'Curator-thesis-embargo',
   Creator = 'Creator',
   Editor = 'Editor',
+  InstitutionAdmin = 'Institution-admin',
+  InternalImporter = 'Internal-importer',
+  NviCurator = 'Nvi-curator',
 }
 
 export interface User {
@@ -18,10 +22,14 @@ export interface User {
   givenName: string;
   feideId: string;
   isAppAdmin: boolean;
+  isInternalImporter: boolean;
   isCurator: boolean;
+  isThesisCurator: boolean;
+  isEmbargoThesisCurator: boolean;
   isInstitutionAdmin: boolean;
   isCreator: boolean;
   isEditor: boolean;
+  isNviCurator: boolean;
   roles: RoleName[];
   nvaUsername: string;
   orcid?: string;
