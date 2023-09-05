@@ -4,13 +4,13 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { NviCandidate } from '../../../types/nvi.types';
+import { NviCandidateSearchHit } from '../../../types/nvi.types';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
 
 interface NviCandidateListItemProps {
-  nviCandidate: NviCandidate;
+  nviCandidate: NviCandidateSearchHit;
 }
 
 export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps) => {

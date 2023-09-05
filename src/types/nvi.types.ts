@@ -14,8 +14,7 @@ interface NviCandidateApproval {
   approvalStatus: NviCandidateStatus;
 }
 
-export interface NviCandidate {
-  type: 'NviCandidate';
+export interface NviCandidateSearchHit {
   identifier: string;
   publicationDetails: {
     id: string;
@@ -45,9 +44,9 @@ export interface NviCandidateAggregations {
   // totalCount: AggregationCount;
 }
 
-export type NviCandidateSearchResponse = SearchResponse<NviCandidate, NviCandidateAggregations>;
+export type NviCandidateSearchResponse = SearchResponse<NviCandidateSearchHit, NviCandidateAggregations>;
 
-export interface NviCandidate2 {
+export interface NviCandidate {
   id: string;
   publicationId: string;
   approvalStatuses: any[];

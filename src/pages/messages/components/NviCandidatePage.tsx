@@ -7,11 +7,11 @@ import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { RegistrationParams } from '../../../utils/urlPaths';
+import { IdentifierParams } from '../../../utils/urlPaths';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 
-export const NviCandidate = () => {
-  const { identifier } = useParams<RegistrationParams>();
+export const NviCandidatePage = () => {
+  const { identifier } = useParams<IdentifierParams>();
 
   const nviCandidateQuery = useQuery({
     queryKey: ['nviCandidate', identifier],

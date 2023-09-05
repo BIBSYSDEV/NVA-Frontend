@@ -1,4 +1,4 @@
-export interface RegistrationParams {
+export interface IdentifierParams {
   identifier: string;
 }
 

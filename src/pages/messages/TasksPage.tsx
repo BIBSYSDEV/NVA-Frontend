@@ -31,7 +31,7 @@ import { PrivateRoute } from '../../utils/routes/Routes';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
-import { NviCandidate } from './components/NviCandidate';
+import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
 import { TicketList } from './components/TicketList';
 
@@ -435,7 +435,7 @@ const TasksPage = () => {
           <PrivateRoute
             exact
             path={UrlPathTemplate.TasksNviCandidate}
-            component={NviCandidate}
+            component={NviCandidatePage}
             isAuthorized={isNviCurator}
           />
         </Switch>

@@ -1,6 +1,6 @@
 import { SearchResponse } from '../types/common.types';
 import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
-import { NviCandidate2, NviCandidateSearchResponse } from '../types/nvi.types';
+import { NviCandidate, NviCandidateSearchResponse } from '../types/nvi.types';
 import { ExpandedTicket } from '../types/publication_types/ticket.types';
 import { Registration } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
@@ -88,7 +88,7 @@ export const fetchNviCandidate = async (identifier: string) => {
     return;
   }
 
-  const getNviCandidates = await authenticatedApiRequest2<NviCandidate2>({
+  const getNviCandidates = await authenticatedApiRequest2<NviCandidate>({
     url: `${SearchApiPath.NviCandidate}/${identifier}`,
   });
 
