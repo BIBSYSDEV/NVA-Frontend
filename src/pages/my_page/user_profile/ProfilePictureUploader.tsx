@@ -1,13 +1,12 @@
-import { Box, Button, IconButton, Skeleton, Typography } from '@mui/material';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
-import { fetchProfilePicture, uploadProfilePicture } from '../../../api/cristinApi';
+import { Box, Button, IconButton, Skeleton, Typography } from '@mui/material';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { setNotification } from '../../../redux/notificationSlice';
-import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
-import { useState } from 'react';
+import { fetchProfilePicture, uploadProfilePicture } from '../../../api/cristinApi';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { useQuery } from '@tanstack/react-query';
+import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
 
 interface ProfilePictureUploaderProps {
@@ -22,37 +21,41 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
   const profilePictureQuery = useQuery({
     queryKey: ['picture', id],
     queryFn: () => fetchProfilePicture(id),
-    meta: { errorMessage: t('feedback.error.get_profile_picture') },
+    retry: false,
   });
 
-  const profilePictureString = `data:image/jpeg;base64,${profilePictureQuery.data?.base64Data}`;
+  const mutateProfilePicture = useMutation({
+    mutationFn: (base64String: string) => uploadProfilePicture(id, base64String),
+    onSuccess: () => {
+      dispatch(setNotification({ message: t('feedback.success.upload_profile_photo'), variant: 'success' }));
+      profilePictureQuery.refetch();
+    },
+    onError: () => {
+      dispatch(setNotification({ message: t('feedback.error.upload_profile_photo'), variant: 'error' }));
+    },
+  });
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const profilePictureString = profilePictureQuery.isSuccess
+    ? `data:image/jpeg;base64,${profilePictureQuery.data?.base64Data}`
+    : '';
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     setIsLoading(true);
 
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = async () => {
-        const rawBase64String = reader.result as string;
-        const base64String = rawBase64String.replace(/^data:image\/\w+;base64,/, '');
-        const uploadProfilePictureResponse = await uploadProfilePicture(id, base64String);
-
-        if (isErrorStatus(uploadProfilePictureResponse.status)) {
-          dispatch(setNotification({ message: t('feedback.error.upload_profile_photo'), variant: 'error' }));
-          setIsLoading(false);
-        } else if (isSuccessStatus(uploadProfilePictureResponse.status)) {
-          dispatch(setNotification({ message: t('feedback.success.upload_profile_photo'), variant: 'success' }));
-          setIsLoading(false);
-          profilePictureQuery.refetch();
-        }
+      reader.onloadend = () => {
+        const base64String = (reader.result as string).replace(/^data:image\/\w+;base64,/, '');
+        mutateProfilePicture.mutate(base64String);
+        setIsLoading(false);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  return profilePictureQuery.isLoading ? (
-    <Skeleton variant="circular" width={'10rem'} height={'10rem'} />
+  return profilePictureQuery.isFetching ? (
+    <Skeleton variant="circular" width={'12rem'} height={'12rem'} />
   ) : profilePictureQuery.data?.base64Data ? (
     <Box sx={{ display: 'flex', width: '12rem', justifyContent: 'center' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', width: 'fit-content' }}>
