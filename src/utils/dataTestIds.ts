@@ -441,6 +441,7 @@ export const dataTestId = {
   },
   myPage: {
     createProjectButton: 'create-project-button',
+    addPromotedPublicationButton: 'edit-promoted-publication-button',
     messagesAccordion: 'messages-accordion',
     myProfileLink: 'my-profile-link',
     myProfile: {
