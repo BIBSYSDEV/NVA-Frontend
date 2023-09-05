@@ -453,6 +453,8 @@ export const dataTestId = {
       saveProfileChangesButton: 'save-profile-changes-button',
       showFullNinButton: 'show-full-nin-button',
       telephoneField: 'telephone-field',
+      updateProfilePictureButton: 'update-profile-picture-button',
+      uploadProfilePictureButton: 'update-profile-picture-button',
     },
     myProfileAccordion: 'my-profile-accordion',
     myProjectRegistrationsLink: 'my-project-registrations-link',
