@@ -24,6 +24,7 @@ import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
 import { TruncatableTypography } from './TruncatableTypography';
 import { SearchListItem } from './styled/Wrappers';
+
 interface RegistrationListProps {
   registrations: Registration[];
   canEditRegistration?: boolean;
@@ -31,34 +32,21 @@ interface RegistrationListProps {
   promotedPublications?: string[];
 }
 
-export const RegistrationList = ({
-  registrations,
-  canEditRegistration = false,
-  onDeleteDraftRegistration,
-  promotedPublications,
-}: RegistrationListProps) => (
+export const RegistrationList = ({ registrations, ...rest }: RegistrationListProps) => (
   <List>
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
-          <RegistrationListItemContent
-            onDeleteDraftRegistration={onDeleteDraftRegistration}
-            registration={registration}
-            canEditRegistration={canEditRegistration}
-            promotedPublications={promotedPublications}
-          />
+          <RegistrationListItemContent registration={registration} {...rest} />
         </SearchListItem>
       </ErrorBoundary>
     ))}
   </List>
 );
 
-interface RegistrationListItemContentProps {
+interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
   registration: Registration;
   ticketView?: boolean;
-  canEditRegistration?: boolean;
-  onDeleteDraftRegistration?: (registration: Registration) => void;
-  promotedPublications?: string[];
 }
 
 export const RegistrationListItemContent = ({
