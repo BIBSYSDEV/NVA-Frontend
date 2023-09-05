@@ -54,7 +54,7 @@ export const RegistrationListItemContent = ({
   ticketView = false,
   canEditRegistration,
   onDeleteDraftRegistration,
-  promotedPublications,
+  promotedPublications = [],
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
   const { identifier, entityDescription, id } = registration;
@@ -64,6 +64,7 @@ export const RegistrationListItemContent = ({
 
   const user = useSelector((store: RootState) => store.user);
   const userCristinId = user?.cristinId ?? '';
+  const mutationKey = ['person-preferences', userCristinId];
 
   const contributors = entityDescription?.contributors ?? [];
   const focusedContributors = contributors.slice(0, 5);
@@ -78,19 +79,18 @@ export const RegistrationListItemContent = ({
 
   const isPromotedPublication = promotedPublications && promotedPublications.includes(id);
 
-  const isMutating = useIsMutating({ mutationKey: ['person-preferences', userCristinId] }) > 0;
+  const isMutating = useIsMutating({ mutationKey: mutationKey }) > 0;
 
   const mutatePromotedPublications = useMutation({
-    mutationKey: ['person-preferences', userCristinId],
+    mutationKey: mutationKey,
     mutationFn: (newPromotedPublications: string[]) =>
       updatePromotedPublications(userCristinId, newPromotedPublications),
     onSuccess: async (newData) => {
-      queryClient.setQueryData(['person-preferences', userCristinId], newData);
-
+      queryClient.setQueryData(mutationKey, newData);
       dispatch(setNotification({ message: t('feedback.success.updated_promoted_publication'), variant: 'success' }));
     },
     onError: () =>
-      dispatch(setNotification({ message: t('feedback.error.add_promoted_publication'), variant: 'error' })),
+      dispatch(setNotification({ message: t('feedback.error.updated_promoted_publication'), variant: 'error' })),
   });
 
   return (
@@ -161,7 +161,7 @@ export const RegistrationListItemContent = ({
 
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
-          {location.pathname.includes(UrlPathTemplate.MyPageMyResults) && (
+          {location.pathname === UrlPathTemplate.MyPageMyResults && (
             <IconButton
               title={t('my_page.my_profile.add_promoted_publication')}
               data-testid={dataTestId.myPage.addPromotedPublicationButton}
@@ -172,7 +172,7 @@ export const RegistrationListItemContent = ({
                     promotedPublications.filter((promotedPublicationId) => promotedPublicationId !== id)
                   );
                 } else {
-                  mutatePromotedPublications.mutate([...(promotedPublications ?? []), id]);
+                  mutatePromotedPublications.mutate([...promotedPublications, id]);
                 }
               }}
               size="small"
