@@ -3,7 +3,7 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import { Box, Button, CircularProgress, FormControlLabel, FormLabel, Typography, styled } from '@mui/material';
+import { Box, Button, CircularProgress, FormControlLabel, FormLabel, Radio, Typography, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +19,7 @@ import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { NviCandidateStatus } from '../../types/nvi.types';
+import { NviCandidateAggregations, NviCandidateStatus } from '../../types/nvi.types';
 import { Organization } from '../../types/organization.types';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { InstitutionUser } from '../../types/user.types';
@@ -40,14 +40,25 @@ type TicketStatusFilter = {
 
 type TicketSearchMode = 'current-user' | 'all';
 
-type NviStatusFilter = {
-  [key in NviCandidateStatus]: boolean;
-};
-
 const StyledSearchModeButton = styled(LinkButton)({
   borderRadius: '1.5rem',
   textTransform: 'none',
 });
+
+const StyledStatusRadio = styled(Radio)({
+  paddingTop: '0.2rem',
+  paddingBottom: '0.2rem',
+});
+
+type StatusFilterMapping = {
+  [key in keyof NviCandidateAggregations]: NviCandidateStatus;
+};
+
+const aggregationsStatusFilterMappings: StatusFilterMapping = {
+  pending: 'Pending',
+  approved: 'Approved',
+  rejected: 'Rejected',
+};
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -135,20 +146,9 @@ const TasksPage = () => {
   const ticketClosedCount = ticketStatusBuckets.find((bucket) => bucket.key === 'Closed')?.docCount;
 
   // NVI data
-  const [nviStatusFilter, setNviStatusFilter] = useState<NviStatusFilter>({
-    Pending: true,
-    Approved: false,
-    Rejected: false,
-  });
+  const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
 
-  const selectedNviStatuses = Object.entries(nviStatusFilter)
-    .filter(([, selected]) => selected)
-    .map(([status]) => status);
-
-  const nviStatusQuery =
-    selectedNviStatuses.length > 0
-      ? `(${selectedNviStatuses.map((status) => `approvals.approvalStatus:${status}`).join(' OR ')})`
-      : '';
+  const nviStatusQuery = `approvals.approvalStatus:${aggregationsStatusFilterMappings[nviStatusFilter]}`;
 
   const nviCandidatesQuery = useQuery({
     enabled: isOnNviCandidatesPage,
@@ -157,9 +157,9 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
   });
 
-  const nviPendingCount = '';
-  const nviApprovedCount = '';
-  const nviRejectedCount = '';
+  const nviPendingCount = nviCandidatesQuery.data?.aggregations?.pending.docCount.toLocaleString();
+  const nviApprovedCount = nviCandidatesQuery.data?.aggregations?.approved.docCount.toLocaleString();
+  const nviRejectedCount = nviCandidatesQuery.data?.aggregations?.rejected.docCount.toLocaleString();
 
   return (
     <StyledPageWithSideMenu>
@@ -363,42 +363,30 @@ const TasksPage = () => {
                 </FormLabel>
                 <FormControlLabel
                   data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCheckbox}
-                  checked={nviStatusFilter.Pending}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() => setNviStatusFilter({ ...nviStatusFilter, Pending: !nviStatusFilter.Pending })}
-                    />
-                  }
+                  checked={nviStatusFilter === 'pending'}
+                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('pending')} />}
                   label={
-                    nviStatusFilter.Pending && nviPendingCount
+                    nviPendingCount
                       ? `${t('tasks.nvi.status.Pending')} (${nviPendingCount})`
                       : t('tasks.nvi.status.Pending')
                   }
                 />
                 <FormControlLabel
                   data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedCheckbox}
-                  checked={nviStatusFilter.Approved}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() => setNviStatusFilter({ ...nviStatusFilter, Approved: !nviStatusFilter.Approved })}
-                    />
-                  }
+                  checked={nviStatusFilter === 'approved'}
+                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('approved')} />}
                   label={
-                    nviStatusFilter.Approved && nviApprovedCount
+                    nviApprovedCount
                       ? `${t('tasks.nvi.status.Approved')} (${nviApprovedCount})`
                       : t('tasks.nvi.status.Approved')
                   }
                 />
                 <FormControlLabel
                   data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedCheckbox}
-                  checked={nviStatusFilter.Rejected}
-                  control={
-                    <StyledStatusCheckbox
-                      onChange={() => setNviStatusFilter({ ...nviStatusFilter, Rejected: !nviStatusFilter.Rejected })}
-                    />
-                  }
+                  checked={nviStatusFilter === 'rejected'}
+                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('rejected')} />}
                   label={
-                    nviStatusFilter.Rejected && nviRejectedCount
+                    nviRejectedCount
                       ? `${t('tasks.nvi.status.Rejected')} (${nviRejectedCount})`
                       : t('tasks.nvi.status.Rejected')
                   }
