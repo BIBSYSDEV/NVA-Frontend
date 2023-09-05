@@ -77,20 +77,20 @@ export const RegistrationListItemContent = ({
   const publicationDate = displayDate(entityDescription?.publicationDate);
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
 
-  const isPromotedPublication = promotedPublications && promotedPublications.includes(id);
+  const isPromotedPublication = promotedPublications.includes(id);
 
-  const isMutating = useIsMutating({ mutationKey: mutationKey }) > 0;
+  const isMutating = useIsMutating({ mutationKey }) > 0;
 
   const mutatePromotedPublications = useMutation({
-    mutationKey: mutationKey,
+    mutationKey,
     mutationFn: (newPromotedPublications: string[]) =>
       updatePromotedPublications(userCristinId, newPromotedPublications),
     onSuccess: async (newData) => {
       queryClient.setQueryData(mutationKey, newData);
-      dispatch(setNotification({ message: t('feedback.success.updated_promoted_publication'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.update_promoted_publication'), variant: 'success' }));
     },
     onError: () =>
-      dispatch(setNotification({ message: t('feedback.error.updated_promoted_publication'), variant: 'error' })),
+      dispatch(setNotification({ message: t('feedback.error.update_promoted_publication'), variant: 'error' })),
   });
 
   return (
@@ -163,7 +163,7 @@ export const RegistrationListItemContent = ({
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
           {location.pathname === UrlPathTemplate.MyPageMyResults && (
             <IconButton
-              title={t('my_page.my_profile.add_promoted_publication')}
+              title={t('my_page.my_profile.edit_promoted_publication')}
               data-testid={dataTestId.myPage.addPromotedPublicationButton}
               disabled={isMutating}
               onClick={() => {
