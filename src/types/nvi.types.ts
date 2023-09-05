@@ -27,16 +27,22 @@ export interface NviCandidate {
   approvals: NviCandidateApproval[];
 }
 
-interface NviCandidateAggregations {
-  'approvalStatus.rejected': {
-    docCount: number;
-  };
-  'approvalStatus.approved': {
-    docCount: number;
-  };
-  'approvalStatus.pending': {
-    docCount: number;
-  };
+interface AggregationCount {
+  docCount: number;
+}
+
+export interface NviCandidateAggregations {
+  approved: AggregationCount;
+  // approvedCollaboration: AggregationCount;
+  // assigned: AggregationCount;
+  // assignedCollaboration: AggregationCount;
+  pending: AggregationCount;
+  // pendingCollaboration: AggregationCount;
+  rejected: AggregationCount;
+  // rejectedCollaboration: AggregationCount;
+  // assignments: AggregationCount;
+  // completed: AggregationCount;
+  // totalCount: AggregationCount;
 }
 
 export type NviCandidateSearchResponse = SearchResponse<NviCandidate, NviCandidateAggregations>;
