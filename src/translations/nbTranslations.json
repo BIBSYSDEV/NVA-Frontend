@@ -424,6 +424,7 @@
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
       "update_person": "Kunne ikke oppdatere person",
       "update_project": "Kunne ikke oppdatere prosjekt",
+      "update_promoted_publication": "Kunne ikke oppdatere favorittmarkering",
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
@@ -454,6 +455,7 @@
       "update_orcid": "ORCID-kobling ble oppdatert",
       "update_person": "Person ble oppdatert",
       "update_project": "Prosjektet ble oppdatert",
+      "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
@@ -541,6 +543,7 @@
     },
     "my_page": "Min side",
     "my_profile": {
+      "edit_promoted_publication": "Legg til/fjern som favoritt",
       "heading": {
         "affiliations": "Tilknytninger",
         "personalia": "Personalia",

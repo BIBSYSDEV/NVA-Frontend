@@ -53,3 +53,7 @@ export enum SearchApiPath {
 export enum VerifiedFundingApiPath {
   Nfr = '/verified-funding/nfr',
 }
+
+export enum PersonPreferencesApiPath {
+  PersonPreferences = '/person-preferences',
+}

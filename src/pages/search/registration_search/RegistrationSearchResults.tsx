@@ -8,9 +8,14 @@ import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHel
 interface SearchResultsProps {
   searchResult: SearchResponse<Registration, RegistrationAggregations>;
   canEditRegistration?: boolean;
+  promotedPublications?: string[];
 }
 
-export const RegistrationSearchResults = ({ searchResult, canEditRegistration = false }: SearchResultsProps) => {
+export const RegistrationSearchResults = ({
+  searchResult,
+  canEditRegistration = false,
+  promotedPublications = [],
+}: SearchResultsProps) => {
   useEffect(() => {
     if (
       searchResult.hits.some(
@@ -24,7 +29,11 @@ export const RegistrationSearchResults = ({ searchResult, canEditRegistration = 
 
   return (
     <Box data-testid="search-results">
-      <RegistrationList canEditRegistration={canEditRegistration} registrations={searchResult.hits} />
+      <RegistrationList
+        canEditRegistration={canEditRegistration}
+        registrations={searchResult.hits}
+        promotedPublications={promotedPublications}
+      />
     </Box>
   );
 };
