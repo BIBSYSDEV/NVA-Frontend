@@ -59,7 +59,7 @@ export const MyResults = () => {
             canEditRegistration={true}
             searchResult={registrations}
             promotedPublications={promotedPublications}
-            refetchPromotedPublications={promotedPublicationsQuery.refetch}
+            refetchPromotedPublications={async () => await promotedPublicationsQuery.refetch()}
           />
           <ListPagination
             count={registrations.size}
