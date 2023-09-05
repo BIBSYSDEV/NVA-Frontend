@@ -85,7 +85,7 @@ export const RegistrationListItemContent = ({
     mutationKey,
     mutationFn: (newPromotedPublications: string[]) =>
       updatePromotedPublications(userCristinId, newPromotedPublications),
-    onSuccess: async (newData) => {
+    onSuccess: (newData) => {
       queryClient.setQueryData(mutationKey, newData);
       dispatch(setNotification({ message: t('feedback.success.update_promoted_publication'), variant: 'success' }));
     },
