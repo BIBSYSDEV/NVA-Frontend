@@ -9,14 +9,12 @@ interface SearchResultsProps {
   searchResult: SearchResponse<Registration, RegistrationAggregations>;
   canEditRegistration?: boolean;
   promotedPublications?: string[];
-  refetchPromotedPublications?: () => Promise<any>;
 }
 
 export const RegistrationSearchResults = ({
   searchResult,
   canEditRegistration = false,
   promotedPublications,
-  refetchPromotedPublications,
 }: SearchResultsProps) => {
   useEffect(() => {
     if (
@@ -35,7 +33,6 @@ export const RegistrationSearchResults = ({
         canEditRegistration={canEditRegistration}
         registrations={searchResult.hits}
         promotedPublications={promotedPublications}
-        refetchPromotedPublications={refetchPromotedPublications}
       />
     </Box>
   );
