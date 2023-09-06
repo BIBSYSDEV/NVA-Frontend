@@ -73,8 +73,7 @@ export const fetchEmployees = async (
 
 export const fetchNviCandidates = async (results: number, from: number, query = '') => {
   const paginationQuery = `results=${results}&from=${from}`;
-  const searchQuery = query ? `query=${query}` : '';
-  const fullQuery = [searchQuery, paginationQuery].filter(Boolean).join('&');
+  const fullQuery = [query, paginationQuery].filter(Boolean).join('&');
 
   const getNviCandidates = await authenticatedApiRequest2<NviCandidateSearchResponse>({
     url: `${SearchApiPath.NviCandidate}?${fullQuery}`,
