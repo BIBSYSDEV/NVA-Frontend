@@ -1,6 +1,5 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, CircularProgress, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -70,9 +69,8 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
           type="file"
         />
 
-        <LoadingButton
+        <Button
           data-testid={dataTestId.myPage.myProfile.deleteProfilePictureButton}
-          loading={mutateProfilePicture.isLoading}
           onClick={() => mutateProfilePicture.mutate('')}
           sx={{
             alignSelf: 'end',
@@ -89,11 +87,11 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
             },
           }}>
           {mutateProfilePicture.isLoading ? (
-            <CircularProgress />
+            <CircularProgress size="small" />
           ) : (
             <CancelIcon fontSize="large" sx={{ color: 'primary.main' }} />
           )}
-        </LoadingButton>
+        </Button>
 
         <img
           src={profilePictureString}
@@ -111,7 +109,8 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
         aspectRatio: '1/1',
         alignItems: 'center',
         px: '2rem',
-        border: 'dashed 2px',
+        border: 'solid 2px',
+        borderRadius: '4px',
         justifyContent: 'center',
       }}>
       <input
