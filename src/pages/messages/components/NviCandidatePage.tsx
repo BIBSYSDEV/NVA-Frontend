@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
 import { fetchNviCandidate } from '../../../api/searchApi';
@@ -11,9 +11,11 @@ import { IdentifierParams } from '../../../utils/urlPaths';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 
 export const NviCandidatePage = () => {
+  const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
 
   const nviCandidateQuery = useQuery({
+    enabled: !!identifier,
     queryKey: ['nviCandidate', identifier],
     queryFn: () => fetchNviCandidate(identifier),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
