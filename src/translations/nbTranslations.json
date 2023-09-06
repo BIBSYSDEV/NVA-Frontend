@@ -1570,12 +1570,15 @@
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
+      "assigned": "Kontrolleres",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "status": {
         "Approved": "Godkjent",
         "Pending": "Til kontroll",
         "Rejected": "Avvist"
-      }
+      },
+      "waiting_for_other_institutions": "Venter på andre institusjoner",
+      "waiting_for_your_institution": "Venter på din institusjon"
     },
     "status": "Status",
     "unread": "Uleste",
