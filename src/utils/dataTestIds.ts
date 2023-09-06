@@ -474,9 +474,14 @@ export const dataTestId = {
   tasksPage: {
     nvi: {
       statusFilter: {
-        approvedCheckbox: 'approved-checkbox',
-        pendingCheckbox: 'pending-checkbox',
-        rejectedCheckbox: 'rejected-checkbox',
+        approvedRadio: 'approved-radio',
+        approvedCollaborationRadio: 'approved-collaboration-radio',
+        assignedRadio: 'assigned-radio',
+        assignedCollaborationRadio: 'assigned-collaboration-radio',
+        pendingRadio: 'pending-radio',
+        pendingCollaborationRadio: 'pending-collaboration-radio',
+        rejectedRadio: 'rejected-radio',
+        rejectedCollaborationRadio: 'rejected-collaboration-radio',
       },
     },
     nviAccordion: 'nvi-accordion',
