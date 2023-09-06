@@ -40,9 +40,8 @@ export interface NviCandidateAggregations {
   pendingCollaboration: AggregationCount;
   rejected: AggregationCount;
   rejectedCollaboration: AggregationCount;
-  // assignments: AggregationCount;
-  // completed: AggregationCount;
-  // totalCount: AggregationCount;
+  completed: AggregationCount;
+  totalCount: AggregationCount;
 }
 
 export type NviCandidateSearchResponse = SearchResponse<NviCandidate, NviCandidateAggregations>;

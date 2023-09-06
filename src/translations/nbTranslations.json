@@ -1571,6 +1571,7 @@
     "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
       "assigned": "Kontrolleres",
+      "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "status": {
         "Approved": "Godkjent",

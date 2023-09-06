@@ -10,6 +10,7 @@ import {
   Divider,
   FormControlLabel,
   FormLabel,
+  LinearProgress,
   Radio,
   Typography,
   styled,
@@ -176,6 +177,11 @@ const TasksPage = () => {
   const nviRejectedCount = nviCandidatesQuery.data?.aggregations?.rejected.docCount.toLocaleString();
   const nviRejectedCollaborationCount =
     nviCandidatesQuery.data?.aggregations?.rejectedCollaboration.docCount.toLocaleString();
+
+  const nviCandidatesTotal = nviCandidatesQuery.data?.aggregations?.totalCount.docCount ?? 0;
+  const nviCandidatesCompeted = nviCandidatesQuery.data?.aggregations?.completed.docCount ?? 0;
+  const nviCompletedPercentage =
+    nviCandidatesTotal > 0 ? Math.round((nviCandidatesCompeted / nviCandidatesTotal) * 100) : 100;
 
   return (
     <StyledPageWithSideMenu>
@@ -468,6 +474,22 @@ const TasksPage = () => {
                   }
                 />
                 <StyledDivider />
+
+                <Box sx={{ mt: '1rem' }}>
+                  <Typography>
+                    {t('tasks.nvi.completed_count', { completed: nviCandidatesCompeted, total: nviCandidatesTotal })}
+                  </Typography>
+                  <LinearProgress
+                    variant="determinate"
+                    value={nviCompletedPercentage}
+                    sx={{
+                      my: '0.175rem',
+                      height: '0.75rem',
+                      bgcolor: 'white',
+                    }}
+                  />
+                  <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
+                </Box>
               </StyledTicketSearchFormGroup>
             </NavigationListAccordion>
           </BetaFunctionality>
