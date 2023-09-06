@@ -27,7 +27,9 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  return (
+  return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
+    <PageSpinner aria-label={t('common.result')} />
+  ) : (
     <Box
       component="section"
       sx={{
@@ -36,14 +38,10 @@ export const NviCandidatePage = () => {
         gridTemplateAreas: { xs: '"nvi" "registration"', sm: '"registration nvi"' },
         gap: '1rem',
       }}>
-      {registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
-        <PageSpinner aria-label={t('common.result')} />
-      ) : (
-        registrationQuery.data && (
-          <ErrorBoundary>
-            <PublicRegistrationContent registration={registrationQuery.data} />
-          </ErrorBoundary>
-        )
+      {registrationQuery.data && (
+        <ErrorBoundary>
+          <PublicRegistrationContent registration={registrationQuery.data} />
+        </ErrorBoundary>
       )}
     </Box>
   );
