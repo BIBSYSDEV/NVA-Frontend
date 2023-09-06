@@ -165,21 +165,19 @@ const TasksPage = () => {
     keepPreviousData: true,
   });
 
-  const nviPendingCount = nviCandidatesQuery.data?.aggregations?.pending.docCount.toLocaleString();
-  const nviPendingCollaborationCount =
-    nviCandidatesQuery.data?.aggregations?.pendingCollaboration.docCount.toLocaleString();
-  const nviAssignedCount = nviCandidatesQuery.data?.aggregations?.assigned.docCount.toLocaleString();
-  const nviAssignedCollaborationCount =
-    nviCandidatesQuery.data?.aggregations?.pendingCollaboration.docCount.toLocaleString();
-  const nviApprovedCount = nviCandidatesQuery.data?.aggregations?.assignedCollaboration.docCount.toLocaleString();
-  const nviApprovedCollaborationCount =
-    nviCandidatesQuery.data?.aggregations?.approvedCollaboration.docCount.toLocaleString();
-  const nviRejectedCount = nviCandidatesQuery.data?.aggregations?.rejected.docCount.toLocaleString();
-  const nviRejectedCollaborationCount =
-    nviCandidatesQuery.data?.aggregations?.rejectedCollaboration.docCount.toLocaleString();
+  const nviAggregations = nviCandidatesQuery.data?.aggregations;
 
-  const nviCandidatesTotal = nviCandidatesQuery.data?.aggregations?.totalCount.docCount ?? 0;
-  const nviCandidatesCompeted = nviCandidatesQuery.data?.aggregations?.completed.docCount ?? 0;
+  const nviPendingCount = nviAggregations?.pending.docCount.toLocaleString();
+  const nviPendingCollaborationCount = nviAggregations?.pendingCollaboration.docCount.toLocaleString();
+  const nviAssignedCount = nviAggregations?.assigned.docCount.toLocaleString();
+  const nviAssignedCollaborationCount = nviAggregations?.pendingCollaboration.docCount.toLocaleString();
+  const nviApprovedCount = nviAggregations?.assignedCollaboration.docCount.toLocaleString();
+  const nviApprovedCollaborationCount = nviAggregations?.approvedCollaboration.docCount.toLocaleString();
+  const nviRejectedCount = nviAggregations?.rejected.docCount.toLocaleString();
+  const nviRejectedCollaborationCount = nviAggregations?.rejectedCollaboration.docCount.toLocaleString();
+
+  const nviCandidatesTotal = nviAggregations?.totalCount.docCount ?? 0;
+  const nviCandidatesCompeted = nviAggregations?.completed.docCount ?? 0;
   const nviCompletedPercentage =
     nviCandidatesTotal > 0 ? Math.round((nviCandidatesCompeted / nviCandidatesTotal) * 100) : 100;
 
