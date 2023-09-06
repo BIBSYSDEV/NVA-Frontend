@@ -51,7 +51,6 @@ const ResearchProfile = () => {
   });
 
   const person = personQuery.data;
-  const personCristinId = personQuery.data?.id ?? '';
 
   const [registrations, isLoadingRegistrations] = useSearchRegistrations(
     {
@@ -77,9 +76,11 @@ const ResearchProfile = () => {
   const projects = projectsQuery.data?.hits ?? [];
 
   const promotedPublicationsQuery = useQuery({
-    queryKey: ['person-preferences', personCristinId],
-    queryFn: () => fetchPromotedPublicationsById(personCristinId),
+    enabled: !!personId,
+    queryKey: ['person-preferences', personId],
+    queryFn: () => fetchPromotedPublicationsById(personId),
     meta: { errorMessage: false },
+    retry: false,
   });
 
   const promotedPublications = promotedPublicationsQuery.data?.promotedPublications;
