@@ -1,6 +1,7 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, Skeleton, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -68,39 +69,37 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
           id="raised-button-file"
           type="file"
         />
-        <label htmlFor="raised-button-file" style={{ alignSelf: 'end', marginRight: '3.3rem' }}>
-          <IconButton
-            data-testid={dataTestId.myPage.myProfile.updateProfilePictureButton}
-            sx={{
-              border: 'hidden',
-              borderRadius: '50%',
-              scale: '0.8',
-              aspectRatio: '1/1',
-              boxShadow: '0px 10px 10px -8px rgba(0,0,0,0.75)',
+
+        <LoadingButton
+          data-testid={dataTestId.myPage.myProfile.deleteProfilePictureButton}
+          loading={mutateProfilePicture.isLoading}
+          onClick={() => mutateProfilePicture.mutate('')}
+          sx={{
+            alignSelf: 'end',
+            border: 'hidden',
+            borderRadius: '50%',
+            scale: '0.7',
+            aspectRatio: '1/1',
+            boxShadow: '0px 10px 10px -8px rgba(0,0,0,0.75)',
+            bgcolor: 'white',
+            position: 'absolute',
+            marginRight: '-1rem',
+            '&:hover': {
               bgcolor: 'white',
-              position: 'absolute',
-              '&:hover': {
-                bgcolor: 'white',
-              },
-            }}
-            component="span">
-            <AddAPhotoIcon fontSize="large" sx={{ color: 'primary.main' }} />
-          </IconButton>
-        </label>
+            },
+          }}>
+          {mutateProfilePicture.isLoading ? (
+            <CircularProgress />
+          ) : (
+            <CancelIcon fontSize="large" sx={{ color: 'primary.main' }} />
+          )}
+        </LoadingButton>
+
         <img
           src={profilePictureString}
           alt="user-avatar"
           style={{ objectFit: 'cover', width: '10rem', height: '10rem', borderRadius: '50%' }}
         />
-        <LoadingButton
-          data-testid={dataTestId.myPage.myProfile.deleteProfilePictureButton}
-          sx={{ mt: '0.5rem', bgcolor: 'white', width: 'fit-content', alignSelf: 'center' }}
-          loading={mutateProfilePicture.isLoading}
-          variant="outlined"
-          size="small"
-          onClick={() => mutateProfilePicture.mutate('')}>
-          {t('common.delete')}
-        </LoadingButton>
       </Box>
     </Box>
   ) : (
