@@ -33,13 +33,13 @@ interface AggregationCount {
 
 export interface NviCandidateAggregations {
   approved: AggregationCount;
-  // approvedCollaboration: AggregationCount;
-  // assigned: AggregationCount;
-  // assignedCollaboration: AggregationCount;
+  approvedCollaboration: AggregationCount;
+  assigned: AggregationCount;
+  assignedCollaboration: AggregationCount;
   pending: AggregationCount;
-  // pendingCollaboration: AggregationCount;
+  pendingCollaboration: AggregationCount;
   rejected: AggregationCount;
-  // rejectedCollaboration: AggregationCount;
+  rejectedCollaboration: AggregationCount;
   // assignments: AggregationCount;
   // completed: AggregationCount;
   // totalCount: AggregationCount;
