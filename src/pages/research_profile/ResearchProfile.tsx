@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
+import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
@@ -50,6 +51,7 @@ const ResearchProfile = () => {
   });
 
   const person = personQuery.data;
+  const personCristinId = personQuery.data?.id ?? '';
 
   const [registrations, isLoadingRegistrations] = useSearchRegistrations(
     {
@@ -73,6 +75,14 @@ const ResearchProfile = () => {
   });
 
   const projects = projectsQuery.data?.hits ?? [];
+
+  const promotedPublicationsQuery = useQuery({
+    queryKey: ['person-preferences', personCristinId],
+    queryFn: () => fetchPromotedPublicationsById(personCristinId),
+    meta: { errorMessage: false },
+  });
+
+  const promotedPublications = promotedPublicationsQuery.data?.promotedPublications;
 
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
@@ -150,7 +160,7 @@ const ResearchProfile = () => {
               <CircularProgress aria-labelledby="registration-label" />
             ) : registrations.size > 0 ? (
               <>
-                <RegistrationSearchResults searchResult={registrations} />
+                <RegistrationSearchResults searchResult={registrations} promotedPublications={promotedPublications} />
                 <ListPagination
                   count={registrations.size}
                   rowsPerPage={registrationRowsPerPage}
