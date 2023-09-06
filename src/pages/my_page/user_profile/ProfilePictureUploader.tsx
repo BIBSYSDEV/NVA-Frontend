@@ -1,4 +1,5 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -21,6 +22,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
   const profilePictureQuery = useQuery({
     queryKey: ['picture', id],
     queryFn: () => fetchProfilePicture(id),
+    meta: { errorMessage: false },
     retry: false,
   });
 
@@ -28,6 +30,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
     mutationFn: (base64String: string) => uploadProfilePicture(id, base64String),
     onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.upload_profile_photo'), variant: 'success' }));
+      setIsLoading(false);
       profilePictureQuery.refetch();
     },
     onError: () => {
@@ -39,7 +42,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
     ? `data:image/jpeg;base64,${profilePictureQuery.data?.base64Data}`
     : '';
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     setIsLoading(true);
 
@@ -48,7 +51,6 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
       reader.onloadend = () => {
         const base64String = (reader.result as string).replace(/^data:image\/\w+;base64,/, '');
         mutateProfilePicture.mutate(base64String);
-        setIsLoading(false);
       };
       reader.readAsDataURL(file);
     }
@@ -56,7 +58,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
 
   return profilePictureQuery.isFetching ? (
     <Skeleton variant="circular" width={'12rem'} height={'12rem'} />
-  ) : profilePictureQuery.data?.base64Data ? (
+  ) : profilePictureQuery.isSuccess ? (
     <Box sx={{ display: 'flex', width: '12rem', justifyContent: 'center' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', width: 'fit-content' }}>
         <input
@@ -90,6 +92,15 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
           alt="user-avatar"
           style={{ objectFit: 'cover', width: '10rem', height: '10rem', borderRadius: '50%' }}
         />
+        <LoadingButton
+          data-testid={dataTestId.myPage.myProfile.deleteProfilePictureButton}
+          sx={{ mt: '0.5rem', bgcolor: 'white', width: 'fit-content', alignSelf: 'center' }}
+          loading={mutateProfilePicture.isLoading}
+          variant="outlined"
+          size="small"
+          onClick={() => mutateProfilePicture.mutate('')}>
+          {t('common.delete')}
+        </LoadingButton>
       </Box>
     </Box>
   ) : (

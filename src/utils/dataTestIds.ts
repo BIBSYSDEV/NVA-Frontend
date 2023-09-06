@@ -445,6 +445,7 @@ export const dataTestId = {
     myProfileLink: 'my-profile-link',
     myProfile: {
       cristinIdField: 'cristin-id-field',
+      deleteProfilePictureButton: 'delete-profile-picture-button',
       editPreferredNameButton: 'edit-preferred-name-button',
       fullNameField: 'full-name-field',
       noActiveEmploymentsText: 'no-active-employments-text',
