@@ -159,6 +159,10 @@ export const RegistrationListItemContent = ({
         </TruncatableTypography>
       </ListItemText>
 
+      {location.pathname.includes(UrlPathTemplate.ResearchProfile) && isPromotedPublication && (
+        <StarIcon fontSize="small" />
+      )}
+
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
           {location.pathname === UrlPathTemplate.MyPageMyResults && (
