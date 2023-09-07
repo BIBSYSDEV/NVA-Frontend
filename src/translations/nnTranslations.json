@@ -47,16 +47,24 @@
     "central_import": {
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Sentralimport",
-      "duplicate_check": "Duplikatsjekk",
-      "duplicate_search_hits_shown": "Søkjet gav følgjande treff: (viser {{ShownResultsCount}} av {{TotalResultsCount}})",
-      "import": "Importer",
-      "import_publication": "Import publication",
+      "create_new": "Opprett ny",
+      "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importpublikasjonen.",
+      "duplicate_search_hits": "Søkjet ga følgjande treff:",
+      "duplicate_search_no_hits": "Søkjet ga inga treff",
+      "import_completed": "Publikasjonen er importert.",
+      "import_not_applicable": "Publikasjonen er markert som mangelfull.",
+      "mark_as_not_applicable": "Marker som mangelfull.",
+      "not_applicable": "Mangelfull",
       "or_search_with": "eller søk med",
-      "publications": "Publikasjonar",
       "reset_search_values": "Tilbakestill verdiar",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikat",
       "see_publication": "Sjå publikasjon",
+      "status": {
+        "IMPORTED": "Importert",
+        "NOT_APPLICABLE": "Mangelfull",
+        "NOT_IMPORTED": "Til import"
+      },
       "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})"
     },
     "institutions": {
@@ -122,6 +130,7 @@
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskriving",
+    "dialogue": "Dialog",
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
@@ -367,6 +376,7 @@
       "create_publishing_request": "Kunne ikkje opprette publiseringsførespurnad",
       "create_registration": "Kunne ikkje opprette registrering",
       "create_user": "Kunne ikkje opprette person",
+      "delete_draft_registrations": "Kunne ikkje slette alle kladdane",
       "delete_registration": "Kunne ikkje slette registrering",
       "download_file": "Kunne ikkje laste ned fil",
       "fetch": "Kunne ikkje hente {{resource}}",
@@ -376,6 +386,8 @@
       "get_doi": "Kunne ikkje hente lenkjedata",
       "get_doi_agent": "Kunne ikkje hente DOI-konfigurering",
       "get_funding_sources": "",
+      "get_import_candidate": "Kunne ikkje hente importkandidat",
+      "get_import_candidates": "Kunne ikkje hente importkandidatar",
       "get_institution": "Kunne ikkje laste inn institusjon",
       "get_institutions": "Kunne ikkje laste inn institusjonar",
       "get_journal": "Kunne ikkje hente tidsskrift",
@@ -406,6 +418,7 @@
       "update_customer": "Kunne ikkje oppdatere institusjon",
       "update_doi_agent": "Kunne ikkje oppdatere DOI-konfigurering",
       "update_doi_request": "Kunne ikkje oppdatere DOI-førespurnad",
+      "update_import_status": "Kunne ikkje oppdatere importstatus",
       "update_institution_user": "Kunne ikkje oppdatere brukar",
       "update_orcid": "Oppdatering av ORCID-kopling feila",
       "update_person": "Kunne ikkje oppdatere peson",
@@ -426,6 +439,7 @@
       "create_registration": "Publikasjon er oppretta",
       "create_user": "Din brukar vart oppretta",
       "created_customer": "Institusjon er oppretta",
+      "delete_draft_registrations": "Alle kladdane vart sletta",
       "delete_registration": "Registrering vart sletta",
       "doi_request_sent": "DOI-førespurnad sendt",
       "doi_request_updated": "DOI-førespurnaden vart oppdatert",
@@ -503,7 +517,6 @@
   },
   "my_page": {
     "messages": {
-      "dialogue": "Dialog",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Ventar på DOI-tildeling",
@@ -515,7 +528,7 @@
       "no_messages": "Du har inga meldingar",
       "ticket_types": {
         "Closed": "Lukka",
-        "Completed": "Ferdeg",
+        "Completed": "Ferdig",
         "New": "Ny",
         "Pending": "Under handsaming"
       },
@@ -573,6 +586,8 @@
     },
     "project_registrations": "Prosjektregistreringar",
     "registrations": {
+      "delete_all_draft_registrations": "Slett alle kladdar",
+      "delete_all_draft_registrations_message": "Slett alle upubliserte registreringar?",
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønskjer du å slette \"{{title}}\"?",
       "published": "Publisert",
@@ -591,6 +606,8 @@
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikehaldar institusjonen sine opplysingar i personregisteret og tildeler roller i tenesta.",
       "institution_admins": "Administratorar",
+      "internal_importer": "Intern importør",
+      "internal_importer_description": "Kan handsame importkandidatar",
       "no_active_employments": "Du har inga roller av di du ikkje har nokre aktive tilsettingar, og har ikkje tilgang til å registrere.",
       "no_roles": "Du har inga roller av di du ikkje har fått tildelt roller av din adiminstrator",
       "not_customer": "Du har inga roller av di din institusjon er ukjend for applikasjonen"
@@ -886,7 +903,7 @@
       "remove_participant": "Fjern prosjektdeltakar",
       "remove_participant_text": "Er du sikker på at du ønskjer å fjerne {{name}}?",
       "search_for_person": "Søk etter person",
-      "start_with_empty_form": "Start utan nokre ferdeg utfylte opplysingar.",
+      "start_with_empty_form": "Start utan nokre ferdig utfylte opplysingar.",
       "start_with_nfr_project": "Viss du har finansiering frå Norges Forskningsråd (NFR), kan du starte med den og få nokre felt ferdeg utfylt."
     },
     "grant_id": "GrantID",

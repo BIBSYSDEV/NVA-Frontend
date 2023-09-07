@@ -154,7 +154,7 @@ export const Header = () => {
                   {t('basic_data.basic_data')}
                 </MenuButton>
               )}
-              {user?.isCurator && (
+              {(user?.isCurator || user?.isNviCurator) && (
                 <MenuButton
                   color="inherit"
                   data-testid={dataTestId.header.tasksLink}

@@ -47,17 +47,25 @@
     "central_import": {
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Sentralimport",
-      "duplicate_check": "Duplikatsjekk",
-      "duplicate_search_hits_shown": "Søket ga følgende treff: (viser {{ShownResultsCount}} av {{TotalResultsCount}})",
-      "import": "Importer",
-      "import_publication": "Import publication",
+      "create_new": "Opprett ny",
+      "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importpublikasjonen.",
+      "duplicate_search_hits": "Søket ga følgende treff:",
+      "duplicate_search_no_hits": "Søket ga ingen treff",
+      "import_completed": "Publikasjonen er importert.",
+      "import_not_applicable": "Publikasjonen er markert som mangelfull.",
+      "mark_as_not_applicable": "Marker som mangelfull.",
+      "not_applicable": "Mangelfull",
       "or_search_with": "eller søk med",
-      "publications": "Publikasjoner",
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
       "see_publication": "Se publikasjon",
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})"
+      "status": {
+        "IMPORTED": "Importert",
+        "NOT_APPLICABLE": "Mangelfull",
+        "NOT_IMPORTED": "Til import"
+      },
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -74,7 +82,6 @@
       "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
-      "nvi": "Norsk vitenskapsindeks (NVI)",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
@@ -122,6 +129,7 @@
     "date": "Dato",
     "delete": "Slett",
     "description": "Beskrivelse",
+    "dialogue": "Dialog",
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
@@ -149,6 +157,7 @@
     "not_decided": "Ikke bestemt",
     "number_short": "Nr.",
     "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
+    "nvi": "Norsk vitenskapsindeks (NVI)",
     "open": "Åpne",
     "orcid": "ORCID",
     "orcid_profile": "ORCID-profil",
@@ -370,6 +379,7 @@
       "create_registration": "Kunne ikke opprette registrering",
       "create_series": "Kunne ikke opprette serie",
       "create_user": "Kunne ikke opprette person",
+      "delete_draft_registrations": "Kunne ikke slette alle kladdene",
       "delete_registration": "Kunne ikke slette registrering",
       "download_file": "Kunne ikke laste ned fil",
       "fetch": "Kunne ikke hente {{resource}}",
@@ -379,12 +389,15 @@
       "get_doi": "Kunne ikke hente lenkedata",
       "get_doi_agent": "Kunne ikke hente DOI-konfigurasjon",
       "get_funding_sources": "Kunne ikke hente finansieringskilder",
+      "get_import_candidate": "Kunne ikke hente importkandidat",
+      "get_import_candidates": "Kunne ikke hente importkandidater",
       "get_institution": "Kunne ikke laste inn institusjon",
       "get_institutions": "Kunne ikke laste inn institusjoner",
       "get_journal": "Kunne ikke hente tidsskrift",
       "get_journal_article": "Kunne ikke hente artikkel i tidsskrift",
       "get_journals": "Kunne ikke hente tidsskrifter",
       "get_messages": "Kunne ikke hente meldinger",
+      "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
       "get_orcid": "Kunne ikke hente data fra ORCID",
       "get_person": "Kunne ikke hente person",
       "get_positions": "Kunne ikke hente stillinger",
@@ -409,10 +422,12 @@
       "update_customer": "Kunne ikke oppdatere institusjon",
       "update_doi_agent": "Kunne ikke oppdatere DOI-konfigurasjon",
       "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
+      "update_import_status": "Kunne ikke oppdatere importstatus",
       "update_institution_user": "Kunne ikke oppdatere bruker",
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
       "update_person": "Kunne ikke oppdatere person",
       "update_project": "Kunne ikke oppdatere prosjekt",
+      "update_promoted_publication": "Kunne ikke oppdatere favorittmarkering",
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
@@ -432,6 +447,7 @@
       "create_series": "Serien ble opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
+      "delete_draft_registrations": "Alle kladdene ble slettet",
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
@@ -445,6 +461,7 @@
       "update_orcid": "ORCID-kobling ble oppdatert",
       "update_person": "Person ble oppdatert",
       "update_project": "Prosjektet ble oppdatert",
+      "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
@@ -509,7 +526,6 @@
   },
   "my_page": {
     "messages": {
-      "dialogue": "Dialog",
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
@@ -533,6 +549,7 @@
     },
     "my_page": "Min side",
     "my_profile": {
+      "edit_promoted_publication": "Legg til/fjern som favoritt",
       "heading": {
         "affiliations": "Tilknytninger",
         "personalia": "Personalia",
@@ -579,6 +596,8 @@
     },
     "project_registrations": "Prosjektregistreringer",
     "registrations": {
+      "delete_all_draft_registrations": "Slett alle kladder",
+      "delete_all_draft_registrations_message": "Slett alle upubliserte registreringer?",
       "delete_registration": "Slett upublisert registrering",
       "delete_registration_message": "Ønsker du å slette \"{{title}}\"?",
       "published": "Publisert",
@@ -597,9 +616,13 @@
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "institution_admins": "Administratorer",
+      "internal_importer": "Intern importør",
+      "internal_importer_description": "Kan behandle importkandidater.",
       "no_active_employments": "Du har ingen roller fordi du har ingen aktive ansettelser og har ikke tilgang til å registrere.",
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
-      "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen"
+      "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen",
+      "nvi_curator": "NVI-kurator",
+      "nvi_curator_description": "Kan se og behandle NVI-kandidater."
     }
   },
   "privacy": {
@@ -1557,6 +1580,17 @@
     "all_user_dialogs": "Alle brukerdialoger",
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
+    "nvi": {
+      "assigned": "Kontrolleres",
+      "no_nvi_candidates": "Ingen NVI-kandidater",
+      "status": {
+        "Approved": "Godkjent",
+        "Pending": "Til kontroll",
+        "Rejected": "Avvist"
+      },
+      "waiting_for_other_institutions": "Venter på andre institusjoner",
+      "waiting_for_your_institution": "Venter på din institusjon"
+    },
     "status": "Status",
     "unread": "Uleste",
     "user_dialog": "Brukerdialog"

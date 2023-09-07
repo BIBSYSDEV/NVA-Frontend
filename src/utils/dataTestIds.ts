@@ -10,6 +10,11 @@ export const dataTestId = {
       checkboxIssn: 'duplicate-search-issn-checkbox',
       checkboxTitle: 'duplicate-search-title-checkbox',
       checkboxYear: 'duplicate-search-year-checkbox',
+      filter: {
+        importedRadio: 'imported-radio',
+        notImportedRadio: 'not-imported-radio',
+        notApplicableRadio: 'not-applicable-radio',
+      },
       resetButton: 'duplicate-search-reset-button',
       resultItem: 'central-import-result-item',
       searchButton: 'duplicate-search-retry-button',
@@ -210,6 +215,7 @@ export const dataTestId = {
       addSelfButton: 'add-self-button',
       addUnverifiedContributorButton: 'add-unverified-contributor-button',
       authorRadioButton: 'author-radio-button',
+      contributorSearchField: 'contributor-search-field',
       correspondingCheckbox: 'author-corresponding-checkbox',
       verifyAffiliationButton: 'button-set-unverified-affiliation',
       verifyContributorButton: (name: string) => `button-set-unverified-contributor-${name}`,
@@ -435,6 +441,7 @@ export const dataTestId = {
   },
   myPage: {
     createProjectButton: 'create-project-button',
+    addPromotedPublicationButton: 'edit-promoted-publication-button',
     messagesAccordion: 'messages-accordion',
     myProfileLink: 'my-profile-link',
     myProfile: {
@@ -465,14 +472,27 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
+    nvi: {
+      statusFilter: {
+        approvedRadio: 'approved-radio',
+        approvedCollaborationRadio: 'approved-collaboration-radio',
+        assignedRadio: 'assigned-radio',
+        assignedCollaborationRadio: 'assigned-collaboration-radio',
+        pendingRadio: 'pending-radio',
+        pendingCollaborationRadio: 'pending-collaboration-radio',
+        rejectedRadio: 'rejected-radio',
+        rejectedCollaborationRadio: 'rejected-collaboration-radio',
+      },
+    },
+    nviAccordion: 'nvi-accordion',
     userDialogAccordion: 'user-dialog-accordion',
     searchMode: {
       allUserDialogsButton: 'all-user-dialogs-button',
       myUserDialogsButton: 'my-user-dialogs-button',
     },
     statusSearch: {
-      closedCheckbox: 'new-status-checkbox',
-      completedCheckbox: 'new-status-checkbox',
+      closedCheckbox: 'closed-status-checkbox',
+      completedCheckbox: 'completed-status-checkbox',
       newCheckbox: 'new-status-checkbox',
       pendingCheckbox: 'pending-status-checkbox',
     },

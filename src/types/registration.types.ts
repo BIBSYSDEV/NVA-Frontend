@@ -1,5 +1,5 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
-import { AggregationBucket, Aggregations, LanguageString, SearchResponse } from './common.types';
+import { AggregationBucket, Aggregations, LanguageString } from './common.types';
 import { Contributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import {
@@ -264,7 +264,7 @@ interface ContributorAggregationBucket extends AggregationBucket {
   };
 }
 
-export interface RegistrationSearchAggregations {
+export interface RegistrationAggregations {
   topLevelOrganization: {
     id: {
       buckets: LabelAggregationBucket[];
@@ -291,8 +291,4 @@ export interface RegistrationSearchAggregations {
       buckets: LabelAggregationBucket[];
     };
   };
-}
-
-export interface RegistrationSearchResponse extends Omit<SearchResponse<Registration>, 'aggregations'> {
-  aggregations?: RegistrationSearchAggregations;
 }

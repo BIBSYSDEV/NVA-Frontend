@@ -1,3 +1,4 @@
+import { Contributor } from './contributor.types';
 import { Organization } from './organization.types';
 import { ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
 import { BookPublicationInstance } from './publication_types/bookRegistration.types';
@@ -12,10 +13,11 @@ import { ReportPublicationInstance } from './publication_types/reportRegistratio
 import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
 import { Journal, Publisher, Registration } from './registration.types';
 
-export enum ImportStatus {
-  Imported = 'IMPORTED',
-  NotImported = 'NOT_IMPORTED',
-  NotApplicable = 'NOT_APPLICABLE',
+export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
+
+interface ImportStatus {
+  candidateStatus: ImportCandidateStatus;
+  modifiedDate: string;
 }
 
 export interface ImportCandidate extends Omit<Registration, 'type'> {
@@ -23,8 +25,17 @@ export interface ImportCandidate extends Omit<Registration, 'type'> {
   importStatus: ImportStatus;
 }
 
+interface ImportCandidateStatusBucket {
+  key: ImportCandidateStatus;
+  docCount: number;
+}
+
+export interface ImportCandidateAggregations {
+  'importStatus.candidateStatus': { buckets: ImportCandidateStatusBucket[] };
+}
+
 export interface ImportCandidateSummary {
-  type: 'ImportCandidate';
+  type: 'ImportCandidateSummary';
   id: string;
   additionalIdentifiers: string[];
   importStatus: ImportStatus;
@@ -37,6 +48,7 @@ export interface ImportCandidateSummary {
   publisher: Pick<Publisher, 'id' | 'name'>;
   journal: Pick<Journal, 'id'>;
   publicationInstance: PublicationInstance;
+  contributors: Contributor[];
 }
 
 type PublicationInstance =

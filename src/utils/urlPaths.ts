@@ -7,8 +7,7 @@ export enum UrlPathTemplate {
   BasicData = '/basic-data',
   BasicDataAddEmployee = '/basic-data/person-register/new',
   BasicDataCentralImport = '/basic-data/central-import',
-  BasicDataCentralImportDuplicateCheck = '/basic-data/central-import-duplicate-check/:identifier',
-  BasicDataCentralImportRegistration = '/basic-data/central-import/:identifier',
+  BasicDataCentralImportDuplicateCheck = '/basic-data/central-import/:identifier',
   BasicDataInstitutions = '/basic-data/institutions',
   BasicDataPersonRegister = '/basic-data/person-register',
   Editor = '/editor',
@@ -43,7 +42,9 @@ export enum UrlPathTemplate {
   RegistrationWizard = '/registration/:identifier/edit',
   ResearchProfile = '/research-profile',
   Tasks = '/tasks',
-  TasksRegistration = '/tasks/:identifier',
+  TasksDialogue = '/tasks/dialogue',
+  TasksDialogueRegistration = '/tasks/dialogue/:identifier',
+  TasksNvi = '/tasks/nvi',
   Wildcard = '*',
 }
 
@@ -52,9 +53,6 @@ export const getRegistrationLandingPagePath = (identifier: string) =>
 
 export const getDuplicateCheckPagePath = (identifier: string) =>
   UrlPathTemplate.BasicDataCentralImportDuplicateCheck.replace(':identifier', encodeURIComponent(identifier));
-
-export const getImportCandidatePagePath = (identifier: string) =>
-  UrlPathTemplate.BasicDataCentralImportRegistration.replace(':identifier', encodeURIComponent(identifier));
 
 export const getRegistrationWizardPath = (identifier: string) =>
   UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
@@ -68,7 +66,7 @@ export const getAdminInstitutionPath = (id: string) =>
 export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${encodeURIComponent(id)}`;
 
 export const getTasksRegistrationPath = (identifier: string) =>
-  UrlPathTemplate.TasksRegistration.replace(':identifier', encodeURIComponent(identifier));
+  UrlPathTemplate.TasksDialogueRegistration.replace(':identifier', encodeURIComponent(identifier));
 
 export const getMyMessagesRegistrationPath = (identifier: string) =>
   UrlPathTemplate.MyPageMyMessagesRegistration.replace(':identifier', encodeURIComponent(identifier));

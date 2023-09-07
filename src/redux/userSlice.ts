@@ -38,11 +38,13 @@ const userSlice = createSlice({
         allowedCustomers,
         isCreator: !!customerId && roles.includes(RoleName.Creator),
         isAppAdmin: !!customerId && roles.includes(RoleName.AppAdmin),
+        isInternalImporter: !!customerId && roles.includes(RoleName.InternalImporter),
         isInstitutionAdmin: !!customerId && roles.includes(RoleName.InstitutionAdmin),
         isCurator: !!customerId && roles.includes(RoleName.Curator),
         isThesisCurator: !!customerId && roles.includes(RoleName.CuratorThesis),
         isEmbargoThesisCurator: !!customerId && roles.includes(RoleName.CuratorThesisEmbargo),
         isEditor: !!customerId && roles.includes(RoleName.Editor),
+        isNviCurator: !!customerId && roles.includes(RoleName.NviCurator),
       };
       state = user;
       return state;
