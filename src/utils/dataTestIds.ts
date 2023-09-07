@@ -455,6 +455,7 @@ export const dataTestId = {
       showFullNinButton: 'show-full-nin-button',
       telephoneField: 'telephone-field',
     },
+    myFieldAndBackgroundLink: 'my-dield-and-background-link',
     myProfileAccordion: 'my-profile-accordion',
     myProjectRegistrationsLink: 'my-project-registrations-link',
     myProjectRegistrationsConcludedCheckbox: 'my-project-registrations-concluded-checkbox',

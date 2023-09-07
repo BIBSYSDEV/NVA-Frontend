@@ -36,6 +36,7 @@ import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import ResearchProfile from '../research_profile/ResearchProfile';
+import { MyPageMyFieldAndBackground } from './user_profile/MyFieldAndBackground';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import { MyProjects } from './user_profile/MyProjects';
@@ -410,6 +411,12 @@ const MyPagePage = () => {
               {t('my_page.my_profile.heading.personalia')}
             </LinkButton>
             <LinkButton
+              data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMyFieldAndBackground}
+              to={UrlPathTemplate.MyPageMyFieldAndBackground}>
+              {t('my_page.my_profile.field_and_background')}
+            </LinkButton>
+            <LinkButton
               data-testid={dataTestId.myPage.myResultsLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
               to={UrlPathTemplate.MyPageMyResults}>
@@ -461,6 +468,12 @@ const MyPagePage = () => {
             exact
             path={UrlPathTemplate.MyPageMyPersonalia}
             component={MyProfile}
+            isAuthorized={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyFieldAndBackground}
+            component={MyPageMyFieldAndBackground}
             isAuthorized={isAuthenticated}
           />
           <PrivateRoute
