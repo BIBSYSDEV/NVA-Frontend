@@ -543,7 +543,9 @@
     },
     "my_page": "Min side",
     "my_profile": {
+      "background": "Bakgrunn",
       "edit_promoted_publication": "Legg til/fjern som favoritt",
+      "english": "Engelsk",
       "field_and_background": "Fagfelt og bakgrunn",
       "heading": {
         "affiliations": "Tilknytninger",
@@ -556,6 +558,7 @@
         "identity": "Identitet",
         "not_shown_publicly": "Vises ikke offentlig"
       },
+      "norwegian": "Norsk",
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskningsresultat",
       "orcid": {
