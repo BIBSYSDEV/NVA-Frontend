@@ -29,12 +29,12 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
   const mutateProfilePicture = useMutation({
     mutationFn: (base64String: string) => uploadProfilePicture(id, base64String),
     onSuccess: () => {
-      dispatch(setNotification({ message: t('feedback.success.upload_profile_photo'), variant: 'success' }));
+      dispatch(setNotification({ message: t('feedback.success.update_profile_photo'), variant: 'success' }));
       setIsLoading(false);
       profilePictureQuery.refetch();
     },
     onError: () => {
-      dispatch(setNotification({ message: t('feedback.error.upload_profile_photo'), variant: 'error' }));
+      dispatch(setNotification({ message: t('feedback.error.update_profile_photo'), variant: 'error' }));
     },
   });
 

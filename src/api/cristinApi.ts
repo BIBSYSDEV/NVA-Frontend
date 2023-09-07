@@ -150,9 +150,9 @@ export const fetchProject = async (projectId: string) => {
   return fetchProjectRespone.data;
 };
 
-export const uploadProfilePicture = async (userId: string, base64String: string) =>
+export const uploadProfilePicture = async (cristinId: string, base64String: string) =>
   await authenticatedApiRequest2<{ base64Data: string }>({
-    url: `${userId}/picture`,
+    url: `${cristinId}/picture`,
     method: 'PUT',
     data: { base64Data: base64String },
   });
