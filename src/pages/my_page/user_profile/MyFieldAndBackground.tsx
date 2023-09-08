@@ -18,8 +18,9 @@ export const MyPageMyFieldAndBackground = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootState) => store.user)!;
-  const personId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
+  const personId = user?.cristinId ?? '';
 
   const personQuery = useQuery({
     queryKey: [personId],
@@ -38,7 +39,7 @@ export const MyPageMyFieldAndBackground = () => {
   };
 
   const updatePerson = useMutation({
-    mutationKey: ['update-background', user.cristinId],
+    mutationKey: ['update-person', user.cristinId],
     mutationFn: async (values: CristinPersonFormData) => {
       if (user.cristinId) {
         const payload: CristinPersonFormData = {
