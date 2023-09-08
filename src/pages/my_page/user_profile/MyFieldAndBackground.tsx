@@ -9,10 +9,10 @@ import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
 import { BackgroundDiv, StyledStatusCheckbox } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { CristinPerson } from '../../../types/user.types';
+import { FlatCristinPerson } from '../../../types/user.types';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 
-type CristinPersonFormData = Pick<CristinPerson, 'background'>;
+type CristinPersonFormData = Pick<FlatCristinPerson, 'background'>;
 
 export const MyPageMyFieldAndBackground = () => {
   const { t } = useTranslation();
@@ -53,6 +53,7 @@ export const MyPageMyFieldAndBackground = () => {
     },
     onSuccess: () => {
       dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' }));
+      personQuery.refetch();
     },
     onError: () => {
       dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
@@ -94,18 +95,21 @@ export const MyPageMyFieldAndBackground = () => {
                 </Box>
                 <Field name={'background.no'}>
                   {({ field }: FieldProps<string>) => (
-                    <TextField
-                      {...field}
-                      label={'Bakgrunn'}
-                      id={field.name}
-                      variant="filled"
-                      multiline
-                      rows="3"
-                      placeholder="Skriv inn"
-                    />
+                    <>
+                      <TextField
+                        {...field}
+                        inputProps={{ maxLength: 200 }}
+                        label={'Bakgrunn'}
+                        id={field.name}
+                        variant="filled"
+                        multiline
+                        rows="3"
+                        placeholder="Skriv inn"
+                      />
+                      <Typography sx={{ alignSelf: 'end' }}>{field.value.length}/200</Typography>
+                    </>
                   )}
                 </Field>
-                <Typography sx={{ alignSelf: 'end' }}>0/200</Typography>
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
@@ -120,18 +124,21 @@ export const MyPageMyFieldAndBackground = () => {
                 </Box>
                 <Field name={'background.en'}>
                   {({ field }: FieldProps<string>) => (
-                    <TextField
-                      {...field}
-                      label={'Background'}
-                      id={field.name}
-                      variant="filled"
-                      multiline
-                      rows="3"
-                      placeholder="Skriv inn"
-                    />
+                    <>
+                      <TextField
+                        {...field}
+                        inputProps={{ maxLength: 200 }}
+                        label={'Background'}
+                        id={field.name}
+                        variant="filled"
+                        multiline
+                        rows="3"
+                        placeholder="Skriv inn"
+                      />
+                      <Typography sx={{ alignSelf: 'end' }}>{field.value.length}/200</Typography>
+                    </>
                   )}
                 </Field>
-                <Typography sx={{ alignSelf: 'end' }}>0/200</Typography>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
                 <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
