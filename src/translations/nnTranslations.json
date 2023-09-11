@@ -82,7 +82,6 @@
       "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "invalid_doi_prefix": "Ugyldeg DOI prefiks. Eksempel med gyldeg format: 10.1234",
       "invalid_ror_format": "Ugyldeg ROR. Eksempel med gyldeg format: https://ror.org/abcd0123ef",
-      "nvi": "Norsk vitskapsindeks (NVI)",
       "password_hide": "Gøym passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
@@ -158,6 +157,7 @@
     "not_decided": "Ikkje bestemd",
     "number_short": "Nr.",
     "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
+    "nvi": "Norsk vitskapsindeks (NVI)",
     "open": "Opne",
     "orcid": "ORCID",
     "orcid_profile": "ORCID-profil",
@@ -394,6 +394,8 @@
       "get_journal_article": "Kunne ikkje hente artikkel i tidsskrift",
       "get_journals": "Kunne ikkje hente tidsskrift",
       "get_messages": "Kunne ikkje hente meldingar",
+      "get_nvi_candidate": "",
+      "get_nvi_candidates": "Kunne ikkje hente NVI-kandidatar",
       "get_orcid": "Kunne ikkje hente data frå ORCID",
       "get_person": "Kunne ikkje hente person",
       "get_positions": "Kunne ikkje hente stillingar",
@@ -423,6 +425,7 @@
       "update_orcid": "Oppdatering av ORCID-kopling feila",
       "update_person": "Kunne ikkje oppdatere peson",
       "update_project": "Kunne ikkje oppdatere prosjekt",
+      "update_promoted_publication": "",
       "update_publish_strategy": "Kunne ikkje oppdatere publiseringsstrategi",
       "update_publishing_request": "Kunne ikkje oppdatere publiseringsførespurnad",
       "update_registration": "Kunne ikkje oppdatere registrering",
@@ -453,6 +456,7 @@
       "update_orcid": "ORCID-kopling vart oppdatert",
       "update_person": "Person vart oppdatert",
       "update_project": "Prosjektet vart oppdatert",
+      "update_promoted_publication": "",
       "update_publish_strategy": "Publiseringsstrategi vart oppdatert",
       "update_registration": "Registreringa er oppdatert",
       "update_ticket_assignee": "Kurator vart oppdatert",
@@ -540,6 +544,7 @@
     },
     "my_page": "Mi side",
     "my_profile": {
+      "edit_promoted_publication": "",
       "heading": {
         "affiliations": "Tilknytingar",
         "personalia": "Personalia",
@@ -610,7 +615,9 @@
       "internal_importer_description": "Kan handsame importkandidatar",
       "no_active_employments": "Du har inga roller av di du ikkje har nokre aktive tilsettingar, og har ikkje tilgang til å registrere.",
       "no_roles": "Du har inga roller av di du ikkje har fått tildelt roller av din adiminstrator",
-      "not_customer": "Du har inga roller av di din institusjon er ukjend for applikasjonen"
+      "not_customer": "Du har inga roller av di din institusjon er ukjend for applikasjonen",
+      "nvi_curator": "",
+      "nvi_curator_description": ""
     }
   },
   "privacy": {
@@ -1563,6 +1570,17 @@
     "all_user_dialogs": "Alle brukardialoger",
     "limited_to": "Avgrensa til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukardialoger",
+    "nvi": {
+      "assigned": "",
+      "no_nvi_candidates": "",
+      "status": {
+        "Approved": "",
+        "Pending": "",
+        "Rejected": ""
+      },
+      "waiting_for_other_institutions": "",
+      "waiting_for_your_institution": ""
+    },
     "status": "Status",
     "unread": "",
     "user_dialog": "Brukardialog"
