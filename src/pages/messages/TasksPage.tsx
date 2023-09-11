@@ -471,21 +471,23 @@ const TasksPage = () => {
               />
               <StyledDivider />
 
-              <Box sx={{ mt: '1rem' }}>
-                <Typography>
-                  {t('tasks.nvi.completed_count', { completed: nviCandidatesCompeted, total: nviCandidatesTotal })}
-                </Typography>
-                <LinearProgress
-                  variant="determinate"
-                  value={nviCompletedPercentage}
-                  sx={{
-                    my: '0.175rem',
-                    height: '0.75rem',
-                    bgcolor: 'white',
-                  }}
-                />
-                <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
-              </Box>
+              {nviCandidatesQuery.isFetched && (
+                <Box sx={{ mt: '1rem' }}>
+                  <Typography>
+                    {t('tasks.nvi.completed_count', { completed: nviCandidatesCompeted, total: nviCandidatesTotal })}
+                  </Typography>
+                  <LinearProgress
+                    variant="determinate"
+                    value={nviCompletedPercentage}
+                    sx={{
+                      my: '0.175rem',
+                      height: '0.75rem',
+                      bgcolor: 'white',
+                    }}
+                  />
+                  <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
+                </Box>
+              )}
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>
         )}
