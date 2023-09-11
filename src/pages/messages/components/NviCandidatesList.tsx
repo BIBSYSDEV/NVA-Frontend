@@ -50,7 +50,7 @@ export const NviCandidatesList = ({
                 ))}
               </List>
               <ListPagination
-                count={nviCandidatesQuery.data?.size ?? 0}
+                count={nviCandidatesQuery.data?.totalHits ?? 0}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={(newPage) => setPage(newPage)}

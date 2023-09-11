@@ -471,7 +471,7 @@ const TasksPage = () => {
               />
               <StyledDivider />
 
-              {nviCandidatesQuery.isFetched && (
+              {nviCandidatesQuery.isSuccess && (
                 <Box sx={{ mt: '1rem' }}>
                   <Typography>
                     {t('tasks.nvi.completed_count', { completed: nviCandidatesCompeted, total: nviCandidatesTotal })}

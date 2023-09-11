@@ -44,7 +44,12 @@ export interface NviCandidateAggregations {
   totalCount: AggregationCount;
 }
 
-export type NviCandidateSearchResponse = SearchResponse<NviCandidateSearchHit, NviCandidateAggregations>;
+export type NviCandidateSearchResponse = Omit<
+  SearchResponse<NviCandidateSearchHit, NviCandidateAggregations>,
+  'size' | 'processingTime'
+> & {
+  totalHits: number;
+};
 
 interface NviCandidateApproval {
   institutionId: string;
