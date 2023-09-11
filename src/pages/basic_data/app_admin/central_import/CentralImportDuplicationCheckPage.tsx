@@ -17,7 +17,7 @@ import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
-import { RegistrationParams, getRegistrationLandingPagePath } from '../../../../utils/urlPaths';
+import { IdentifierParams, getRegistrationLandingPagePath } from '../../../../utils/urlPaths';
 import NotFound from '../../../errorpages/NotFound';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import { CentralImportResultItem } from './CentralImportResultItem';
@@ -26,7 +26,7 @@ import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { identifier } = useParams<RegistrationParams>();
+  const { identifier } = useParams<IdentifierParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
 
   const importCandidateQuery = useQuery({
