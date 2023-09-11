@@ -40,12 +40,16 @@ export interface NviCandidateAggregations {
   pendingCollaboration: AggregationCount;
   rejected: AggregationCount;
   rejectedCollaboration: AggregationCount;
-  // assignments: AggregationCount;
-  // completed: AggregationCount;
-  // totalCount: AggregationCount;
+  completed: AggregationCount;
+  totalCount: AggregationCount;
 }
 
-export type NviCandidateSearchResponse = SearchResponse<NviCandidateSearchHit, NviCandidateAggregations>;
+export type NviCandidateSearchResponse = Omit<
+  SearchResponse<NviCandidateSearchHit, NviCandidateAggregations>,
+  'size' | 'processingTime'
+> & {
+  totalHits: number;
+};
 
 interface NviCandidateApproval {
   institutionId: string;
