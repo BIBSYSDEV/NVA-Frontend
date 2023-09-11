@@ -41,6 +41,7 @@ import { PrivateRoute } from '../../utils/routes/Routes';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
+import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
 import { TicketList } from './components/TicketList';
 
@@ -75,6 +76,7 @@ const TasksPage = () => {
   const nvaUsername = user?.nvaUsername ?? '';
 
   const isOnTicketsPage = location.pathname === UrlPathTemplate.TasksDialogue;
+  const isOnTicketPage = location.pathname.startsWith(UrlPathTemplate.TasksDialogue) && !isOnTicketsPage;
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
 
   const [page, setPage] = useState(1);
@@ -182,7 +184,7 @@ const TasksPage = () => {
       <SideMenu
         expanded={isOnTicketsPage || isOnNviCandidatesPage}
         minimizedMenu={
-          <Link to={UrlPathTemplate.TasksDialogue} onClick={() => ticketsQuery.refetch()}>
+          <Link to={isOnTicketPage ? UrlPathTemplate.TasksDialogue : UrlPathTemplate.TasksNvi}>
             <StyledMinimizedMenuButton title={t('common.tasks')}>
               <AssignmentIcon />
             </StyledMinimizedMenuButton>
@@ -507,6 +509,12 @@ const TasksPage = () => {
               helmetTitle={t('common.nvi')}
             />
           </PrivateRoute>
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.TasksNviCandidate}
+            component={NviCandidatePage}
+            isAuthorized={isNviCurator}
+          />
         </Switch>
       </ErrorBoundary>
     </StyledPageWithSideMenu>
