@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { PageHeader } from '../../../components/PageHeader';
 import { StyledPageContent } from '../../../components/styled/Wrappers';
-import { RegistrationParams } from '../../../utils/urlPaths';
+import { IdentifierParams } from '../../../utils/urlPaths';
 import { RegistrationForm } from '../RegistrationForm';
 import { LinkRegistration } from './LinkRegistration';
 import { StartEmptyRegistration } from './StartEmptyRegistration';
@@ -18,7 +18,7 @@ enum PanelName {
 
 const EditRegistration = () => {
   const { t } = useTranslation();
-  const { identifier } = useParams<RegistrationParams>();
+  const { identifier } = useParams<IdentifierParams>();
   const [expanded, setExpanded] = useState<PanelName | false>(false);
   const [showForm, setShowForm] = useState(!!identifier);
 
