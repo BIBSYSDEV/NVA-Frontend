@@ -25,6 +25,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
+import { CentralImportCandidateForm } from './app_admin/central_import/CentralImportCandidateForm';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
 import { AddEmployeePage } from './institution_admin/AddEmployeePage';
@@ -78,7 +79,7 @@ const BasicDataPage = () => {
     !location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
 
   return (
-    <StyledPageWithSideMenu>
+    <StyledPageWithSideMenu sx={{ maxWidth: '100vw' }}>
       <SideMenu
         aria-labelledby="basic-data-title"
         expanded={expandedMenu}
@@ -273,6 +274,12 @@ const BasicDataPage = () => {
             exact
             path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
             component={CentralImportDuplicationCheckPage}
+            isAuthorized={isInternalImporter}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.BasicDataCentralImportCandidateWizard}
+            component={CentralImportCandidateForm}
             isAuthorized={isInternalImporter}
           />
           <PrivateRoute
