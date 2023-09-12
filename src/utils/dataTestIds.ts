@@ -15,6 +15,7 @@ export const dataTestId = {
         notImportedRadio: 'not-imported-radio',
         notApplicableRadio: 'not-applicable-radio',
       },
+      importCandidateButton: 'import-candidate-button',
       resetButton: 'duplicate-search-reset-button',
       resultItem: 'central-import-result-item',
       searchButton: 'duplicate-search-retry-button',

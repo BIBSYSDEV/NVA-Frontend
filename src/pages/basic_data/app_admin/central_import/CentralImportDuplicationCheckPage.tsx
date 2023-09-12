@@ -32,28 +32,6 @@ export const CentralImportDuplicationCheckPage = () => {
   });
   const importCandidate = importCandidateQuery.data?.hits[0];
 
-  // const importCandidateMutation = useMutation({
-  //   mutationFn: async () => {
-  //     const initialDataRegistration = await fetchImportCandidate(identifier);
-  //     return await createRegistrationFromImportCandidate(initialDataRegistration);
-  //   },
-  //   onSuccess: () => {
-  //     dispatch(
-  //       setNotification({
-  //         message: t('feedback.success.create_registration'),
-  //         variant: 'success',
-  //       })
-  //     );
-  //   },
-  //   onError: () =>
-  //     dispatch(
-  //       setNotification({
-  //         message: t('feedback.error.create_registration'),
-  //         variant: 'error',
-  //       })
-  //     ),
-  // });
-
   const importCandidateStatusMutation = useMutation({
     mutationFn: () => markImportCandidateStatusAsNotApplicable(identifier),
     onError: () =>

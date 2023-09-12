@@ -18,7 +18,7 @@ import { Registration, RegistrationTab } from '../../../../types/registration.ty
 import { getTouchedTabFields } from '../../../../utils/formik-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { createUppy } from '../../../../utils/uppy/uppy-config';
-import { IdentifierParams, UrlPathTemplate } from '../../../../utils/urlPaths';
+import { IdentifierParams } from '../../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../../utils/validation/registration/registrationValidation';
 import { ContributorsPanel } from '../../../registration/ContributorsPanel';
 import { DescriptionPanel } from '../../../registration/DescriptionPanel';
@@ -66,8 +66,6 @@ export const CentralImportCandidateForm = () => {
 
   // TODO: redirect if already imported
 
-  const isImportCandidateWizard = location.pathname.includes(UrlPathTemplate.BasicDataCentralImport);
-
   return (
     <StyledPageContent sx={{ justifySelf: 'center', p: 0 }}>
       {registrationQuery.isLoading ? (
@@ -111,11 +109,7 @@ export const CentralImportCandidateForm = () => {
                       </ErrorBoundary>
                     )}
                   </Box>
-                  <CentralImportCandidateFormActions
-                    tabNumber={tabNumber}
-                    setTabNumber={setTabNumber}
-                    validateForm={validateForm}
-                  />
+                  <CentralImportCandidateFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} />
                 </BackgroundDiv>
               </Form>
             )}

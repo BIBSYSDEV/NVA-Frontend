@@ -20,7 +20,7 @@ interface ImportStatus {
   modifiedDate: string;
 }
 
-export interface ImportCandidate extends Registration /*Omit<Registration, 'type'>*/ {
+export interface ImportCandidate extends Registration {
   // type: 'ImportCandidate';
   importStatus: ImportStatus;
 }
