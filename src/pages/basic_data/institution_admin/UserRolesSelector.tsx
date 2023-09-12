@@ -91,6 +91,15 @@ export const UserRolesSelector = ({
                 />
               }
             />
+            <FormControlLabel
+              control={<Checkbox checked={selectedRoles.includes(RoleName.NviCurator)} value={RoleName.NviCurator} />}
+              label={
+                <RoleLabel
+                  title={t('my_page.roles.nvi_curator')}
+                  description={t('my_page.roles.nvi_curator_description')}
+                />
+              }
+            />
           </FormGroup>
         )}
       </FormGroup>

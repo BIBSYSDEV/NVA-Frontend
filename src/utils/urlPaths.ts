@@ -1,4 +1,4 @@
-export interface RegistrationParams {
+export interface IdentifierParams {
   identifier: string;
 }
 
@@ -42,7 +42,10 @@ export enum UrlPathTemplate {
   RegistrationWizard = '/registration/:identifier/edit',
   ResearchProfile = '/research-profile',
   Tasks = '/tasks',
-  TasksRegistration = '/tasks/:identifier',
+  TasksDialogue = '/tasks/dialogue',
+  TasksDialogueRegistration = '/tasks/dialogue/:identifier',
+  TasksNvi = '/tasks/nvi',
+  TasksNviCandidate = '/tasks/nvi/:identifier',
   Wildcard = '*',
 }
 
@@ -64,7 +67,10 @@ export const getAdminInstitutionPath = (id: string) =>
 export const getProjectPath = (id: string) => `${UrlPathTemplate.Projects}?id=${encodeURIComponent(id)}`;
 
 export const getTasksRegistrationPath = (identifier: string) =>
-  UrlPathTemplate.TasksRegistration.replace(':identifier', encodeURIComponent(identifier));
+  UrlPathTemplate.TasksDialogueRegistration.replace(':identifier', encodeURIComponent(identifier));
 
 export const getMyMessagesRegistrationPath = (identifier: string) =>
   UrlPathTemplate.MyPageMyMessagesRegistration.replace(':identifier', encodeURIComponent(identifier));
+
+export const getNviCandidatePath = (identifier: string) =>
+  UrlPathTemplate.TasksNviCandidate.replace(':identifier', encodeURIComponent(identifier));

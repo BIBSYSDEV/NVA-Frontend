@@ -441,6 +441,7 @@ export const dataTestId = {
   },
   myPage: {
     createProjectButton: 'create-project-button',
+    addPromotedPublicationButton: 'edit-promoted-publication-button',
     messagesAccordion: 'messages-accordion',
     myProfileLink: 'my-profile-link',
     myProfile: {
@@ -463,7 +464,7 @@ export const dataTestId = {
     myRegistrationsLink: 'my-registrations-link',
     myRegistrationsPublishedCheckbox: 'my-registrations-published-checkbox',
     myRegistrationsUnpublishedCheckbox: 'my-registrations-unpublished-checkbox',
-    myResultsLink: "my-publications'link",
+    myResultsLink: 'my-publications-link',
     newRegistrationLink: 'new-registration-link',
     projectRegistrationsAccordion: 'project-registrations-accordion',
     registrationsAccordion: 'registrations-accordion',
@@ -471,14 +472,27 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
+    nvi: {
+      statusFilter: {
+        approvedRadio: 'approved-radio',
+        approvedCollaborationRadio: 'approved-collaboration-radio',
+        assignedRadio: 'assigned-radio',
+        assignedCollaborationRadio: 'assigned-collaboration-radio',
+        pendingRadio: 'pending-radio',
+        pendingCollaborationRadio: 'pending-collaboration-radio',
+        rejectedRadio: 'rejected-radio',
+        rejectedCollaborationRadio: 'rejected-collaboration-radio',
+      },
+    },
+    nviAccordion: 'nvi-accordion',
     userDialogAccordion: 'user-dialog-accordion',
     searchMode: {
       allUserDialogsButton: 'all-user-dialogs-button',
       myUserDialogsButton: 'my-user-dialogs-button',
     },
     statusSearch: {
-      closedCheckbox: 'new-status-checkbox',
-      completedCheckbox: 'new-status-checkbox',
+      closedCheckbox: 'closed-status-checkbox',
+      completedCheckbox: 'completed-status-checkbox',
       newCheckbox: 'new-status-checkbox',
       pendingCheckbox: 'pending-status-checkbox',
     },

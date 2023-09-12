@@ -18,6 +18,7 @@ export const NavigationListAccordion = ({
   defaultPath = accordionPath,
   dataTestId,
   children,
+  ...props
 }: NavigationListAccordionProps) => {
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
@@ -25,6 +26,7 @@ export const NavigationListAccordion = ({
 
   return (
     <Accordion
+      {...props}
       data-testid={dataTestId}
       disableGutters
       expanded={isExpanded}

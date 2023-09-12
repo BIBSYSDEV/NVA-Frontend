@@ -9,6 +9,7 @@ export enum RoleName {
   Editor = 'Editor',
   InstitutionAdmin = 'Institution-admin',
   InternalImporter = 'Internal-importer',
+  NviCurator = 'Nvi-curator',
 }
 
 export interface User {
@@ -28,6 +29,7 @@ export interface User {
   isInstitutionAdmin: boolean;
   isCreator: boolean;
   isEditor: boolean;
+  isNviCurator: boolean;
   roles: RoleName[];
   nvaUsername: string;
   orcid?: string;
