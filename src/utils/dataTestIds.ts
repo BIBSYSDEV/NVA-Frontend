@@ -464,7 +464,7 @@ export const dataTestId = {
     myRegistrationsLink: 'my-registrations-link',
     myRegistrationsPublishedCheckbox: 'my-registrations-published-checkbox',
     myRegistrationsUnpublishedCheckbox: 'my-registrations-unpublished-checkbox',
-    myResultsLink: "my-publications'link",
+    myResultsLink: 'my-publications-link',
     newRegistrationLink: 'new-registration-link',
     projectRegistrationsAccordion: 'project-registrations-accordion',
     registrationsAccordion: 'registrations-accordion',
