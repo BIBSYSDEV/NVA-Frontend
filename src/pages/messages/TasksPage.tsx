@@ -158,6 +158,13 @@ const TasksPage = () => {
 
   const nviStatusQuery = `filter=${nviStatusFilter}`;
 
+  const nviAggregationsQuery = useQuery({
+    enabled: isOnNviCandidatesPage,
+    queryKey: ['nviCandidates', 1, 0],
+    queryFn: () => fetchNviCandidates(1, 0),
+    meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
+  });
+
   const nviCandidatesQuery = useQuery({
     enabled: isOnNviCandidatesPage,
     queryKey: ['nviCandidates', rowsPerPage, page, nviStatusQuery],
@@ -166,7 +173,7 @@ const TasksPage = () => {
     keepPreviousData: true,
   });
 
-  const nviAggregations = nviCandidatesQuery.data?.aggregations;
+  const nviAggregations = nviAggregationsQuery.data?.aggregations;
 
   const nviPendingCount = nviAggregations?.pending.docCount.toLocaleString();
   const nviPendingCollaborationCount = nviAggregations?.pendingCollaboration.docCount.toLocaleString();
@@ -471,7 +478,7 @@ const TasksPage = () => {
               />
               <StyledDivider />
 
-              {nviCandidatesQuery.isSuccess && (
+              {nviAggregationsQuery.isSuccess && (
                 <Box sx={{ mt: '1rem' }}>
                   <Typography>
                     {t('tasks.nvi.completed_count', { completed: nviCandidatesCompeted, total: nviCandidatesTotal })}
