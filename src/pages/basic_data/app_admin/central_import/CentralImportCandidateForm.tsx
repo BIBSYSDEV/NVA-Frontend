@@ -12,20 +12,20 @@ import { PageHeader } from '../../../../components/PageHeader';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { RequiredDescription } from '../../../../components/RequiredDescription';
 import { SkipLink } from '../../../../components/SkipLink';
-import { BackgroundDiv } from '../../../../components/styled/Wrappers';
+import { BackgroundDiv, StyledPageContent } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { Registration, RegistrationTab } from '../../../../types/registration.types';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { createUppy } from '../../../../utils/uppy/uppy-config';
-import { IdentifierParams } from '../../../../utils/urlPaths';
+import { IdentifierParams, UrlPathTemplate } from '../../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../../utils/validation/registration/registrationValidation';
 import { ContributorsPanel } from '../../../registration/ContributorsPanel';
 import { DescriptionPanel } from '../../../registration/DescriptionPanel';
 import { FilesAndLicensePanel } from '../../../registration/FilesAndLicensePanel';
-import { RegistrationFormActions } from '../../../registration/RegistrationFormActions';
 import { RegistrationFormStepper } from '../../../registration/RegistrationFormStepper';
 import { ResourceTypePanel } from '../../../registration/ResourceTypePanel';
+import { CentralImportCandidateFormActions } from './CentralImportCandidateFormActions';
 
 export type HighestTouchedTab = RegistrationTab | -1;
 
@@ -66,52 +66,62 @@ export const CentralImportCandidateForm = () => {
 
   // TODO: redirect if already imported
 
-  return registrationQuery.isLoading ? (
-    <PageSpinner aria-label={t('common.result')} />
-  ) : registration ? (
-    <>
-      <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
-      <Formik
-        initialValues={registration}
-        validate={validateForm}
-        initialErrors={validateForm(registration)}
-        initialTouched={getTouchedTabFields(RegistrationTab.FilesAndLicenses, registration)}
-        onSubmit={() => {
-          /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
-        }}>
-        {({ values }: FormikProps<Registration>) => (
-          <Form noValidate>
-            <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
-            <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
-            <RequiredDescription />
-            <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
-              <Box id="form" mb="2rem">
-                {tabNumber === RegistrationTab.Description && (
-                  <ErrorBoundary>
-                    <DescriptionPanel />
-                  </ErrorBoundary>
-                )}
-                {tabNumber === RegistrationTab.ResourceType && (
-                  <ErrorBoundary>
-                    <ResourceTypePanel />
-                  </ErrorBoundary>
-                )}
-                {tabNumber === RegistrationTab.Contributors && (
-                  <ErrorBoundary>
-                    <ContributorsPanel />
-                  </ErrorBoundary>
-                )}
-                {tabNumber === RegistrationTab.FilesAndLicenses && (
-                  <ErrorBoundary>
-                    <FilesAndLicensePanel uppy={uppy} />
-                  </ErrorBoundary>
-                )}
-              </Box>
-              <RegistrationFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} validateForm={validateForm} />
-            </BackgroundDiv>
-          </Form>
-        )}
-      </Formik>
-    </>
-  ) : null;
+  const isImportCandidateWizard = location.pathname.includes(UrlPathTemplate.BasicDataCentralImport);
+
+  return (
+    <StyledPageContent sx={{ justifySelf: 'center', p: 0 }}>
+      {registrationQuery.isLoading ? (
+        <PageSpinner aria-label={t('common.result')} />
+      ) : registration ? (
+        <>
+          <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
+          <Formik
+            initialValues={registration}
+            validate={validateForm}
+            initialErrors={validateForm(registration)}
+            initialTouched={getTouchedTabFields(RegistrationTab.FilesAndLicenses, registration)}
+            onSubmit={() => {
+              /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
+            }}>
+            {({ values }: FormikProps<Registration>) => (
+              <Form noValidate>
+                <PageHeader variant="h1">{getTitleString(values.entityDescription?.mainTitle)}</PageHeader>
+                <RegistrationFormStepper tabNumber={tabNumber} setTabNumber={setTabNumber} />
+                <RequiredDescription />
+                <BackgroundDiv sx={{ bgcolor: 'secondary.main' }}>
+                  <Box id="form" mb="2rem">
+                    {tabNumber === RegistrationTab.Description && (
+                      <ErrorBoundary>
+                        <DescriptionPanel />
+                      </ErrorBoundary>
+                    )}
+                    {tabNumber === RegistrationTab.ResourceType && (
+                      <ErrorBoundary>
+                        <ResourceTypePanel />
+                      </ErrorBoundary>
+                    )}
+                    {tabNumber === RegistrationTab.Contributors && (
+                      <ErrorBoundary>
+                        <ContributorsPanel />
+                      </ErrorBoundary>
+                    )}
+                    {tabNumber === RegistrationTab.FilesAndLicenses && (
+                      <ErrorBoundary>
+                        <FilesAndLicensePanel uppy={uppy} />
+                      </ErrorBoundary>
+                    )}
+                  </Box>
+                  <CentralImportCandidateFormActions
+                    tabNumber={tabNumber}
+                    setTabNumber={setTabNumber}
+                    validateForm={validateForm}
+                  />
+                </BackgroundDiv>
+              </Form>
+            )}
+          </Formik>
+        </>
+      ) : null}
+    </StyledPageContent>
+  );
 };
