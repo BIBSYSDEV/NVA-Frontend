@@ -79,7 +79,7 @@ const BasicDataPage = () => {
     !location.pathname.startsWith(UrlPathTemplate.BasicDataCentralImport);
 
   return (
-    <StyledPageWithSideMenu sx={{ maxWidth: '100vw' }}>
+    <StyledPageWithSideMenu>
       <SideMenu
         aria-labelledby="basic-data-title"
         expanded={expandedMenu}

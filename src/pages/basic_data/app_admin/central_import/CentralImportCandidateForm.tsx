@@ -12,7 +12,7 @@ import { PageHeader } from '../../../../components/PageHeader';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { RequiredDescription } from '../../../../components/RequiredDescription';
 import { SkipLink } from '../../../../components/SkipLink';
-import { BackgroundDiv, StyledPageContent } from '../../../../components/styled/Wrappers';
+import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { Registration, RegistrationTab } from '../../../../types/registration.types';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers';
@@ -27,12 +27,6 @@ import { FilesAndLicensePanel } from '../../../registration/FilesAndLicensePanel
 import { RegistrationFormStepper } from '../../../registration/RegistrationFormStepper';
 import { ResourceTypePanel } from '../../../registration/ResourceTypePanel';
 import { CentralImportCandidateFormActions } from './CentralImportCandidateFormActions';
-
-export type HighestTouchedTab = RegistrationTab | -1;
-
-export interface RegistrationLocationState {
-  highestValidatedTab?: HighestTouchedTab;
-}
 
 export const CentralImportCandidateForm = () => {
   const dispatch = useDispatch();
@@ -74,7 +68,7 @@ export const CentralImportCandidateForm = () => {
   };
 
   return (
-    <StyledPageContent sx={{ justifySelf: 'center', p: 0 }}>
+    <Box sx={{ justifySelf: 'center', width: '100%', maxWidth: (theme) => theme.breakpoints.values.lg }}>
       {importCandidateQuery.isLoading ? (
         <PageSpinner aria-label={t('common.result')} />
       ) : importCandidate ? (
@@ -123,6 +117,6 @@ export const CentralImportCandidateForm = () => {
           </Formik>
         </>
       ) : null}
-    </StyledPageContent>
+    </Box>
   );
 };
