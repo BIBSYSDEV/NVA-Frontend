@@ -18,10 +18,12 @@ export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABL
 interface ImportStatus {
   candidateStatus: ImportCandidateStatus;
   modifiedDate: string;
+  setBy?: string;
+  nvaPublicationId?: string;
 }
 
 export interface ImportCandidate extends Registration {
-  // type: 'ImportCandidate';
+  type: 'ImportCandidate';
   importStatus: ImportStatus;
 }
 

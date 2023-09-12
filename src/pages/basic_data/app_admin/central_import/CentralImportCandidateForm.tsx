@@ -5,7 +5,7 @@ import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormEr
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
+import { Redirect, useLocation, useParams } from 'react-router-dom';
 import { fetchImportCandidate } from '../../../../api/registrationApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { PageHeader } from '../../../../components/PageHeader';
@@ -16,9 +16,10 @@ import { BackgroundDiv, StyledPageContent } from '../../../../components/styled/
 import { setNotification } from '../../../../redux/notificationSlice';
 import { Registration, RegistrationTab } from '../../../../types/registration.types';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { createUppy } from '../../../../utils/uppy/uppy-config';
-import { IdentifierParams } from '../../../../utils/urlPaths';
+import { IdentifierParams, getRegistrationLandingPagePath } from '../../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../../utils/validation/registration/registrationValidation';
 import { ContributorsPanel } from '../../../registration/ContributorsPanel';
 import { DescriptionPanel } from '../../../registration/DescriptionPanel';
@@ -40,15 +41,23 @@ export const CentralImportCandidateForm = () => {
   const location = useLocation();
   const uppy = useUppy(createUppy(i18n.language));
 
-  const registrationQuery = useQuery({
+  const importCandidateQuery = useQuery({
     queryKey: ['importCandidate', identifier],
     queryFn: () => fetchImportCandidate(identifier),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_import_candidate'), variant: 'error' })),
   });
-  const registration = registrationQuery.data;
+  const importCandidate = importCandidateQuery.data;
 
   const initialTabNumber = new URLSearchParams(location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
+
+  if (importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importCandidate.importStatus.nvaPublicationId) {
+    return (
+      <Redirect
+        to={getRegistrationLandingPagePath(getIdentifierFromId(importCandidate.importStatus.nvaPublicationId))}
+      />
+    );
+  }
 
   const validateForm = (values: Registration): FormikErrors<Registration> => {
     const publicationInstance = values.entityDescription?.reference?.publicationInstance;
@@ -56,7 +65,7 @@ export const CentralImportCandidateForm = () => {
     try {
       validateYupSchema<Registration>(values, registrationValidationSchema, true, {
         publicationInstanceType: publicationInstance?.type ?? '',
-        publicationStatus: registration?.status,
+        publicationStatus: importCandidate?.status,
       });
     } catch (err) {
       return yupToFormErrors(err);
@@ -64,20 +73,18 @@ export const CentralImportCandidateForm = () => {
     return {};
   };
 
-  // TODO: redirect if already imported
-
   return (
     <StyledPageContent sx={{ justifySelf: 'center', p: 0 }}>
-      {registrationQuery.isLoading ? (
+      {importCandidateQuery.isLoading ? (
         <PageSpinner aria-label={t('common.result')} />
-      ) : registration ? (
+      ) : importCandidate ? (
         <>
           <SkipLink href="#form">{t('common.skip_to_schema')}</SkipLink>
           <Formik
-            initialValues={registration}
+            initialValues={importCandidate}
             validate={validateForm}
-            initialErrors={validateForm(registration)}
-            initialTouched={getTouchedTabFields(RegistrationTab.FilesAndLicenses, registration)}
+            initialErrors={validateForm(importCandidate)}
+            initialTouched={getTouchedTabFields(RegistrationTab.FilesAndLicenses, importCandidate)}
             onSubmit={() => {
               /* Use custom save handler instead, since onSubmit will prevent saving if there are any errors */
             }}>
