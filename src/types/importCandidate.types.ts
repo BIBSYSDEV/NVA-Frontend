@@ -17,7 +17,7 @@ export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABL
 
 interface ImportStatus {
   candidateStatus: ImportCandidateStatus;
-  modifiedDate: string;
+  modifiedDate?: string;
   setBy?: string;
   nvaPublicationId?: string;
 }

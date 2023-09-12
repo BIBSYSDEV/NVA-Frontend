@@ -26,7 +26,7 @@ export const CentralImportCandidateFormActions = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { values } = useFormikContext<ImportCandidate>();
+  const { values, isValid } = useFormikContext<ImportCandidate>();
 
   const importCandidateMutation = useMutation({
     mutationFn: async () => await createRegistrationFromImportCandidate(values),
@@ -87,7 +87,8 @@ export const CentralImportCandidateFormActions = ({
             variant="contained"
             loading={importCandidateMutation.isLoading}
             data-testid={dataTestId.basicData.centralImport.importCandidateButton}
-            onClick={() => importCandidateMutation.mutate()}>
+            onClick={() => importCandidateMutation.mutate()}
+            disabled={!isValid}>
             {t('basic_data.central_import.import')}
           </LoadingButton>
         ) : (

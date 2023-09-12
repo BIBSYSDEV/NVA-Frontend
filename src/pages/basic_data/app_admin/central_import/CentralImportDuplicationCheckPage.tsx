@@ -96,17 +96,21 @@ export const CentralImportDuplicationCheckPage = () => {
           {importCandidate?.importStatus.candidateStatus === 'IMPORTED' && (
             <>
               <Typography>{t('basic_data.central_import.import_completed')}</Typography>
-              <Typography>
-                {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
-              </Typography>
+              {importCandidate.importStatus.modifiedDate && (
+                <Typography>
+                  {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
+                </Typography>
+              )}
             </>
           )}
           {importCandidate?.importStatus.candidateStatus === 'NOT_APPLICABLE' && (
             <>
               <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
-              <Typography>
-                {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
-              </Typography>
+              {importCandidate.importStatus.modifiedDate && (
+                <Typography>
+                  {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
+                </Typography>
+              )}
             </>
           )}
 
