@@ -31,6 +31,7 @@ module.exports = {
     'registration.resource_type.media_contribution.format_types.',
     'registration.resource_type.media_contribution.medium_types.',
     'registration.status.',
+    'tasks.nvi.status.',
   ],
   translationContextSeparator: null,
 };

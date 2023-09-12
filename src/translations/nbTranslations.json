@@ -60,12 +60,12 @@
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
       "see_publication": "Se publikasjon",
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)",
       "status": {
-        "NOT_IMPORTED": "Til import",
+        "IMPORTED": "Importert",
         "NOT_APPLICABLE": "Mangelfull",
-        "IMPORTED": "Importert"
-      }
+        "NOT_IMPORTED": "Til import"
+      },
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -82,7 +82,6 @@
       "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
-      "nvi": "Norsk vitenskapsindeks (NVI)",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
@@ -158,6 +157,7 @@
     "not_decided": "Ikke bestemt",
     "number_short": "Nr.",
     "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
+    "nvi": "Norsk vitenskapsindeks (NVI)",
     "open": "Åpne",
     "orcid": "ORCID",
     "orcid_profile": "ORCID-profil",
@@ -226,6 +226,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -311,11 +315,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -394,6 +394,8 @@
       "get_journal_article": "Kunne ikke hente artikkel i tidsskrift",
       "get_journals": "Kunne ikke hente tidsskrifter",
       "get_messages": "Kunne ikke hente meldinger",
+      "get_nvi_candidate": "Kunne ikke hente NVI-kandidat",
+      "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
       "get_orcid": "Kunne ikke hente data fra ORCID",
       "get_person": "Kunne ikke hente person",
       "get_positions": "Kunne ikke hente stillinger",
@@ -423,6 +425,7 @@
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
       "update_person": "Kunne ikke oppdatere person",
       "update_project": "Kunne ikke oppdatere prosjekt",
+      "update_promoted_publication": "Kunne ikke oppdatere favorittmarkering",
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
@@ -453,6 +456,7 @@
       "update_orcid": "ORCID-kobling ble oppdatert",
       "update_person": "Person ble oppdatert",
       "update_project": "Prosjektet ble oppdatert",
+      "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
@@ -540,6 +544,7 @@
     },
     "my_page": "Min side",
     "my_profile": {
+      "edit_promoted_publication": "Legg til/fjern som favoritt",
       "heading": {
         "affiliations": "Tilknytninger",
         "personalia": "Personalia",
@@ -603,14 +608,16 @@
       "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
-      "internal_importer": "Intern importør",
-      "internal_importer_description": "Kan behandle importkandidater",
       "institution_admin": "Administrator",
       "institution_admin_description": "Vedlikeholder institusjonens opplysninger i personregisteret og tildeler roller i tjenesten.",
       "institution_admins": "Administratorer",
+      "internal_importer": "Intern importør",
+      "internal_importer_description": "Kan behandle importkandidater.",
       "no_active_employments": "Du har ingen roller fordi du har ingen aktive ansettelser og har ikke tilgang til å registrere.",
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
-      "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen"
+      "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen",
+      "nvi_curator": "NVI-kurator",
+      "nvi_curator_description": "Kan se og behandle NVI-kandidater."
     }
   },
   "privacy": {
@@ -1563,6 +1570,18 @@
     "all_user_dialogs": "Alle brukerdialoger",
     "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
+    "nvi": {
+      "assigned": "Kontrolleres",
+      "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
+      "no_nvi_candidates": "Ingen NVI-kandidater",
+      "status": {
+        "Approved": "Godkjent",
+        "Pending": "Til kontroll",
+        "Rejected": "Avvist"
+      },
+      "waiting_for_other_institutions": "Venter på andre institusjoner",
+      "waiting_for_your_institution": "Venter på din institusjon"
+    },
     "status": "Status",
     "unread": "Uleste",
     "user_dialog": "Brukerdialog"
