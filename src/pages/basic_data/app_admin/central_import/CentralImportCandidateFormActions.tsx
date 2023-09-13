@@ -2,13 +2,9 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { createRegistrationFromImportCandidate } from '../../../../api/registrationApi';
-import { setNotification } from '../../../../redux/notificationSlice';
+import { Link } from 'react-router-dom';
 import { ImportCandidate } from '../../../../types/importCandidate.types';
 import { RegistrationTab } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -24,29 +20,7 @@ export const CentralImportCandidateFormActions = ({
   setTabNumber,
 }: CentralImportCandidateFormActionsProps) => {
   const { t } = useTranslation();
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const { values, isValid } = useFormikContext<ImportCandidate>();
-
-  const importCandidateMutation = useMutation({
-    mutationFn: async () => await createRegistrationFromImportCandidate(values),
-    onSuccess: () => {
-      dispatch(
-        setNotification({
-          message: t('feedback.success.create_registration'),
-          variant: 'success',
-        })
-      );
-      history.push(UrlPathTemplate.BasicDataCentralImport);
-    },
-    onError: () =>
-      dispatch(
-        setNotification({
-          message: t('feedback.error.create_registration'),
-          variant: 'error',
-        })
-      ),
-  });
+  const { isValid, isSubmitting } = useFormikContext<ImportCandidate>();
 
   const isFirstTab = tabNumber === RegistrationTab.Description;
   const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
@@ -84,10 +58,10 @@ export const CentralImportCandidateFormActions = ({
 
         {isLastTab ? (
           <LoadingButton
+            type="submit"
             variant="contained"
-            loading={importCandidateMutation.isLoading}
+            loading={isSubmitting}
             data-testid={dataTestId.basicData.centralImport.importCandidateButton}
-            onClick={() => importCandidateMutation.mutate()}
             disabled={!isValid}>
             {t('basic_data.central_import.import')}
           </LoadingButton>
