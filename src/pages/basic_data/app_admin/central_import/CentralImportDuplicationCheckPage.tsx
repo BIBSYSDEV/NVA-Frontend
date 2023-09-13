@@ -13,7 +13,7 @@ import { BackgroundDiv } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
-import { IdentifierParams, getImportCandidateWizardPath } from '../../../../utils/urlPaths';
+import { IdentifierParams, UrlPathTemplate, getImportCandidateWizardPath } from '../../../../utils/urlPaths';
 import NotFound from '../../../errorpages/NotFound';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import { CentralImportResultItem } from './CentralImportResultItem';
@@ -145,6 +145,13 @@ export const CentralImportDuplicationCheckPage = () => {
               ) : null}
             </>
           )}
+
+          <Divider sx={{ my: '1rem' }} />
+          <Link to={UrlPathTemplate.BasicDataCentralImport}>
+            <Button size="small" fullWidth variant="outlined">
+              {t('common.cancel')}
+            </Button>
+          </Link>
         </Box>
       </Paper>
     </Box>
