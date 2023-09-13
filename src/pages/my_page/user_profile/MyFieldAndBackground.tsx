@@ -38,7 +38,6 @@ export const MyFieldAndBackground = () => {
   };
 
   const updatePerson = useMutation({
-    mutationKey: ['update-person', user.cristinId],
     mutationFn: async (values: CristinPersonFormData) => {
       if (user.cristinId) {
         const payload: CristinPersonFormData = {
@@ -68,6 +67,7 @@ export const MyFieldAndBackground = () => {
           md: '3fr 1fr',
         },
         columnGap: '1rem',
+        rowGap: '1rem',
         gridTemplateAreas: {
           xs: '"field-and-background" "research-profile"',
           md: '"user-profile research-profile" ',
@@ -121,7 +121,7 @@ export const MyFieldAndBackground = () => {
                   )}
                 </Field>
               </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'end', mt: '1rem' }}>
                 <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
                   {t('common.save')}
                 </LoadingButton>
