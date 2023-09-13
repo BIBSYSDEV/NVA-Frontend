@@ -51,6 +51,7 @@
       "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importpublikasjonen.",
       "duplicate_search_hits": "Søket ga følgende treff:",
       "duplicate_search_no_hits": "Søket ga ingen treff",
+      "import": "Importer",
       "import_completed": "Publikasjonen er importert.",
       "import_not_applicable": "Publikasjonen er markert som mangelfull.",
       "mark_as_not_applicable": "Marker som mangelfull.",
@@ -64,8 +65,7 @@
         "NOT_APPLICABLE": "Mangelfull",
         "NOT_IMPORTED": "Til import"
       },
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)",
-      "import": "Importer"
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
