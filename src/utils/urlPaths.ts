@@ -8,6 +8,7 @@ export enum UrlPathTemplate {
   BasicDataAddEmployee = '/basic-data/person-register/new',
   BasicDataCentralImport = '/basic-data/central-import',
   BasicDataCentralImportDuplicateCheck = '/basic-data/central-import/:identifier',
+  BasicDataCentralImportCandidateWizard = '/basic-data/central-import/:identifier/edit',
   BasicDataInstitutions = '/basic-data/institutions',
   BasicDataPersonRegister = '/basic-data/person-register',
   Editor = '/editor',
@@ -57,6 +58,9 @@ export const getDuplicateCheckPagePath = (identifier: string) =>
 
 export const getRegistrationWizardPath = (identifier: string) =>
   UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
+
+export const getImportCandidateWizardPath = (identifier: string) =>
+  UrlPathTemplate.BasicDataCentralImportCandidateWizard.replace(':identifier', encodeURIComponent(identifier));
 
 export const getResearchProfilePath = (userId: string) =>
   `${UrlPathTemplate.ResearchProfile}?id=${encodeURIComponent(userId)}`;

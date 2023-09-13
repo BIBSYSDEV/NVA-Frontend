@@ -51,6 +51,7 @@
       "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importpublikasjonen.",
       "duplicate_search_hits": "Søket ga følgende treff:",
       "duplicate_search_no_hits": "Søket ga ingen treff",
+      "import": "Importer",
       "import_completed": "Publikasjonen er importert.",
       "import_not_applicable": "Publikasjonen er markert som mangelfull.",
       "mark_as_not_applicable": "Marker som mangelfull.",
@@ -59,7 +60,6 @@
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
-      "see_publication": "Se publikasjon",
       "status": {
         "IMPORTED": "Importert",
         "NOT_APPLICABLE": "Mangelfull",
@@ -226,10 +226,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -315,7 +311,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "curators": {
