@@ -10,7 +10,7 @@ import {
 } from '../types/user.types';
 import { getIdentifierFromId } from '../utils/general-helpers';
 import { CristinApiPath } from './apiPaths';
-import { apiRequest2, authenticatedApiRequest } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
 export const createCristinPerson = async (cristinPerson: CreateCristinPerson) =>
   await authenticatedApiRequest<CristinPerson>({
@@ -148,4 +148,18 @@ export const fetchProject = async (projectId: string) => {
     url: projectId,
   });
   return fetchProjectRespone.data;
+};
+
+export const uploadProfilePicture = async (cristinId: string, base64String: string) =>
+  await authenticatedApiRequest2<{ base64Data: string }>({
+    url: `${cristinId}/picture`,
+    method: 'PUT',
+    data: { base64Data: base64String },
+  });
+
+export const fetchProfilePicture = async (cristinId: string) => {
+  const fetchProfilePictureResponse = await apiRequest2<{ base64Data: string }>({
+    url: `${cristinId}/picture`,
+  });
+  return fetchProfilePictureResponse.data;
 };

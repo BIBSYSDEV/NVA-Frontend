@@ -8,14 +8,13 @@ interface NviCandidateContributor {
 
 export type NviCandidateStatus = 'Pending' | 'Rejected' | 'Approved';
 
-interface NviCandidateApproval {
+interface NviCandidateSearchHitApproval {
   id: string;
   labels: LanguageString;
   approvalStatus: NviCandidateStatus;
 }
 
-export interface NviCandidate {
-  type: 'NviCandidate';
+export interface NviCandidateSearchHit {
   identifier: string;
   publicationDetails: {
     id: string;
@@ -24,7 +23,8 @@ export interface NviCandidate {
     publicationDate: string;
     contributors: NviCandidateContributor[];
   };
-  approvals: NviCandidateApproval[];
+  approvals: NviCandidateSearchHitApproval[];
+  numberOfApprovals: number;
 }
 
 interface AggregationCount {
@@ -40,9 +40,31 @@ export interface NviCandidateAggregations {
   pendingCollaboration: AggregationCount;
   rejected: AggregationCount;
   rejectedCollaboration: AggregationCount;
-  // assignments: AggregationCount;
-  // completed: AggregationCount;
-  // totalCount: AggregationCount;
+  completed: AggregationCount;
+  totalCount: AggregationCount;
 }
 
-export type NviCandidateSearchResponse = SearchResponse<NviCandidate, NviCandidateAggregations>;
+export type NviCandidateSearchResponse = Omit<
+  SearchResponse<NviCandidateSearchHit, NviCandidateAggregations>,
+  'size' | 'processingTime'
+> & {
+  totalHits: number;
+};
+
+interface NviCandidateApproval {
+  institutionId: string;
+  status: NviCandidateStatus;
+}
+
+interface NviCandidatePoint {
+  institutionId: string;
+  points: number;
+}
+
+export interface NviCandidate {
+  id: string;
+  publicationId: string;
+  approvalStatuses: NviCandidateApproval[];
+  points: NviCandidatePoint[];
+  notes: any[];
+}
