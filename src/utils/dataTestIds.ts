@@ -447,6 +447,7 @@ export const dataTestId = {
     myProfileLink: 'my-profile-link',
     myProfile: {
       cristinIdField: 'cristin-id-field',
+      deleteProfilePictureButton: 'delete-profile-picture-button',
       editPreferredNameButton: 'edit-preferred-name-button',
       fullNameField: 'full-name-field',
       noActiveEmploymentsText: 'no-active-employments-text',
@@ -455,6 +456,8 @@ export const dataTestId = {
       saveProfileChangesButton: 'save-profile-changes-button',
       showFullNinButton: 'show-full-nin-button',
       telephoneField: 'telephone-field',
+      updateProfilePictureButton: 'update-profile-picture-button',
+      uploadProfilePictureButton: 'update-profile-picture-button',
     },
     myProfileAccordion: 'my-profile-accordion',
     myProjectRegistrationsLink: 'my-project-registrations-link',

@@ -424,6 +424,7 @@
       "update_institution_user": "Kunne ikke oppdatere bruker",
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
       "update_person": "Kunne ikke oppdatere person",
+      "update_profile_photo": "Kunne ikke oppdatere profilfoto",
       "update_project": "Kunne ikke oppdatere prosjekt",
       "update_promoted_publication": "Kunne ikke oppdatere favorittmarkering",
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
@@ -455,6 +456,7 @@
       "update_institution_user": "Bruker er oppdatert",
       "update_orcid": "ORCID-kobling ble oppdatert",
       "update_person": "Person ble oppdatert",
+      "update_profile_photo": "Profilfoto ble oppdatert",
       "update_project": "Prosjektet ble oppdatert",
       "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
@@ -554,7 +556,8 @@
         "cristin_id": "Cristin ID",
         "full_name": "Fullt navn",
         "identity": "Identitet",
-        "not_shown_publicly": "Vises ikke offentlig"
+        "not_shown_publicly": "Vises ikke offentlig",
+        "upload_profile_photo": "Last opp profilfoto"
       },
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskningsresultat",
@@ -572,6 +575,7 @@
       },
       "preferred_first_name": "Foretrukket fornavn",
       "preferred_last_name": "Foretrukket etternavn",
+      "profile_picture": "Profilfoto",
       "projects": "Prosjekt",
       "research_profile_summary": {
         "affiliations": "Tilknytninger",
