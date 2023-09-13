@@ -39,7 +39,7 @@ export const CentralImportCandidateForm = () => {
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidate', identifier],
     queryFn: () => fetchImportCandidate(identifier),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_import_candidate'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
   const importCandidate = importCandidateQuery.data;
 
