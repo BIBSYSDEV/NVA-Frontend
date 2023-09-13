@@ -13,7 +13,7 @@ import { ResearchProfilePanel } from './ResearchProfilePanel';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'background'>;
 
-export const MyPageMyFieldAndBackground = () => {
+export const MyFieldAndBackground = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 

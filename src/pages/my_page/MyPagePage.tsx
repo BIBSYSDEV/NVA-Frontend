@@ -37,7 +37,7 @@ import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import ResearchProfile from '../research_profile/ResearchProfile';
-import { MyPageMyFieldAndBackground } from './user_profile/MyFieldAndBackground';
+import { MyFieldAndBackground } from './user_profile/MyFieldAndBackground';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import { MyProjects } from './user_profile/MyProjects';
@@ -476,7 +476,7 @@ const MyPagePage = () => {
           <PrivateRoute
             exact
             path={UrlPathTemplate.MyPageMyFieldAndBackground}
-            component={MyPageMyFieldAndBackground}
+            component={MyFieldAndBackground}
             isAuthorized={isAuthenticated}
           />
           <PrivateRoute
