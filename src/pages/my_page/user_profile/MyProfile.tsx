@@ -8,7 +8,6 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -165,21 +164,18 @@ export const MyProfile = () => {
                             variant="filled"
                           />
                         </Box>
-                        <BetaFunctionality>
+
+                        <>
                           <Box
                             sx={{
-                              display: 'flex',
-                              flexDirection: 'column',
-                              gap: '2rem',
-                              alignItems: { xs: 'start', md: 'center' },
                               gridArea: 'profile-picture',
                             }}>
-                            <Typography variant="h3" sx={{ alignSelf: 'start' }}>
+                            <Typography variant="h3" sx={{ alignSelf: 'start', my: '1rem' }}>
                               {t('my_page.my_profile.profile_picture')}
                             </Typography>
                             <ProfilePictureUploader id={personId} />
                           </Box>
-                        </BetaFunctionality>
+                        </>
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
                         <LoadingButton

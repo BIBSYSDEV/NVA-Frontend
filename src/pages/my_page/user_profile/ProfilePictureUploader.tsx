@@ -1,12 +1,11 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, Button, CircularProgress, Skeleton, Typography } from '@mui/material';
+import { Box, IconButton, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { fetchProfilePicture, uploadProfilePicture } from '../../../api/cristinApi';
-import { PageSpinner } from '../../../components/PageSpinner';
 import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
 
@@ -17,7 +16,6 @@ interface ProfilePictureUploaderProps {
 export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
 
   const profilePictureQuery = useQuery({
     queryKey: ['picture', id],
@@ -28,10 +26,9 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
 
   const mutateProfilePicture = useMutation({
     mutationFn: (base64String: string) => uploadProfilePicture(id, base64String),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await profilePictureQuery.refetch();
       dispatch(setNotification({ message: t('feedback.success.update_profile_photo'), variant: 'success' }));
-      setIsLoading(false);
-      profilePictureQuery.refetch();
     },
     onError: () => {
       dispatch(setNotification({ message: t('feedback.error.update_profile_photo'), variant: 'error' }));
@@ -42,9 +39,8 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
     ? `data:image/jpeg;base64,${profilePictureQuery.data?.base64Data}`
     : '';
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    setIsLoading(true);
 
     if (file) {
       const reader = new FileReader();
@@ -56,89 +52,56 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
     }
   };
 
-  return profilePictureQuery.isFetching ? (
-    <Skeleton variant="circular" width={'12rem'} height={'12rem'} />
-  ) : profilePictureQuery.isSuccess ? (
-    <Box sx={{ display: 'flex', width: '12rem', justifyContent: 'center' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', width: 'fit-content' }}>
-        <input
-          accept=".jpg, .jpeg"
-          onChange={handleFileChange}
-          style={{ display: 'none' }}
-          id="raised-button-file"
-          type="file"
-        />
-
-        <Button
-          data-testid={dataTestId.myPage.myProfile.deleteProfilePictureButton}
-          onClick={() => mutateProfilePicture.mutate('')}
-          sx={{
-            alignSelf: 'end',
-            border: 'hidden',
-            borderRadius: '50%',
-            scale: '0.7',
-            aspectRatio: '1/1',
-            boxShadow: '0px 10px 10px -8px rgba(0,0,0,0.75)',
-            bgcolor: 'white',
-            position: 'absolute',
-            marginRight: '-1rem',
-            '&:hover': {
+  return (
+    <Box sx={{ display: 'flex', width: '12rem', height: '12rem', justifyContent: 'center' }}>
+      {profilePictureQuery.isFetching || mutateProfilePicture.isLoading ? (
+        <Skeleton variant="circular" sx={{ height: '100%', aspectRatio: '1/1' }} />
+      ) : profilePictureQuery.isSuccess ? (
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <IconButton
+            data-testid={dataTestId.myPage.myProfile.deleteProfilePictureButton}
+            onClick={() => mutateProfilePicture.mutate('')}
+            sx={{
+              alignSelf: 'end',
+              boxShadow: '0px 10px 10px -8px rgba(0,0,0,0.75)',
               bgcolor: 'white',
-            },
-          }}>
-          {mutateProfilePicture.isLoading ? (
-            <CircularProgress size="small" />
-          ) : (
-            <CancelIcon fontSize="large" sx={{ color: 'primary.main' }} />
-          )}
-        </Button>
+              position: 'absolute',
+              '&:hover': {
+                bgcolor: 'white',
+              },
+            }}>
+            <CancelIcon color="primary" />
+          </IconButton>
 
-        <img
-          src={profilePictureString}
-          alt="user-avatar"
-          style={{ objectFit: 'cover', width: '10rem', height: '10rem', borderRadius: '50%' }}
-        />
-      </Box>
-    </Box>
-  ) : (
-    <Box
-      sx={{
-        display: 'flex',
-        bgcolor: 'white',
-        width: '12.5rem',
-        aspectRatio: '1/1',
-        alignItems: 'center',
-        px: '2rem',
-        border: 'solid 2px',
-        borderRadius: '4px',
-        justifyContent: 'center',
-      }}>
-      <input
-        accept=".jpg, .jpeg"
-        onChange={handleFileChange}
-        style={{ display: 'none' }}
-        id="raised-button-file"
-        type="file"
-      />
-      {isLoading ? (
-        <PageSpinner />
+          <img
+            src={profilePictureString}
+            alt="user-avatar"
+            style={{ aspectRatio: '1/1', width: '100%', borderRadius: '50%', objectFit: 'cover' }}
+          />
+        </Box>
       ) : (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-          <label htmlFor="raised-button-file">
-            <Button
-              data-testid={dataTestId.myPage.myProfile.uploadProfilePictureButton}
-              sx={{
-                border: 'hidden',
-                borderRadius: '50%',
-                width: 'fit-content',
-                aspectRatio: '1/1',
-                boxShadow: '0px 10px 10px -8px rgba(0,0,0,0.75)',
-              }}
-              variant="outlined"
-              component="span">
-              <AddAPhotoIcon />
-            </Button>
-          </label>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem',
+            bgcolor: 'white',
+            width: '100%',
+            alignItems: 'center',
+            border: 'solid 2px',
+            borderRadius: '4px',
+            justifyContent: 'center',
+          }}>
+          <IconButton
+            data-testid={dataTestId.myPage.myProfile.uploadProfilePictureButton}
+            sx={{
+              boxShadow: '0px 10px 10px -8px rgba(0,0,0,0.75)',
+              p: '1rem',
+            }}
+            component="label">
+            <AddAPhotoIcon color="primary" />
+            <input accept=".jpg, .jpeg" onChange={handleFileChange} hidden type="file" />
+          </IconButton>
           <Typography>{t('my_page.my_profile.identity.upload_profile_photo')}</Typography>
         </Box>
       )}
