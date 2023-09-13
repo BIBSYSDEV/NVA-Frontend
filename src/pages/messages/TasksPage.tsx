@@ -10,6 +10,7 @@ import {
   Divider,
   FormControlLabel,
   FormLabel,
+  LinearProgress,
   Radio,
   Typography,
   styled,
@@ -157,6 +158,13 @@ const TasksPage = () => {
 
   const nviStatusQuery = `filter=${nviStatusFilter}`;
 
+  const nviAggregationsQuery = useQuery({
+    enabled: isOnNviCandidatesPage,
+    queryKey: ['nviCandidates', 1, 0],
+    queryFn: () => fetchNviCandidates(1, 0),
+    meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
+  });
+
   const nviCandidatesQuery = useQuery({
     enabled: isOnNviCandidatesPage,
     queryKey: ['nviCandidates', rowsPerPage, page, nviStatusQuery],
@@ -165,18 +173,21 @@ const TasksPage = () => {
     keepPreviousData: true,
   });
 
-  const nviPendingCount = nviCandidatesQuery.data?.aggregations?.pending.docCount.toLocaleString();
-  const nviPendingCollaborationCount =
-    nviCandidatesQuery.data?.aggregations?.pendingCollaboration.docCount.toLocaleString();
-  const nviAssignedCount = nviCandidatesQuery.data?.aggregations?.assigned.docCount.toLocaleString();
-  const nviAssignedCollaborationCount =
-    nviCandidatesQuery.data?.aggregations?.pendingCollaboration.docCount.toLocaleString();
-  const nviApprovedCount = nviCandidatesQuery.data?.aggregations?.assignedCollaboration.docCount.toLocaleString();
-  const nviApprovedCollaborationCount =
-    nviCandidatesQuery.data?.aggregations?.approvedCollaboration.docCount.toLocaleString();
-  const nviRejectedCount = nviCandidatesQuery.data?.aggregations?.rejected.docCount.toLocaleString();
-  const nviRejectedCollaborationCount =
-    nviCandidatesQuery.data?.aggregations?.rejectedCollaboration.docCount.toLocaleString();
+  const nviAggregations = nviAggregationsQuery.data?.aggregations;
+
+  const nviPendingCount = nviAggregations?.pending.docCount.toLocaleString();
+  const nviPendingCollaborationCount = nviAggregations?.pendingCollaboration.docCount.toLocaleString();
+  const nviAssignedCount = nviAggregations?.assigned.docCount.toLocaleString();
+  const nviAssignedCollaborationCount = nviAggregations?.pendingCollaboration.docCount.toLocaleString();
+  const nviApprovedCount = nviAggregations?.assignedCollaboration.docCount.toLocaleString();
+  const nviApprovedCollaborationCount = nviAggregations?.approvedCollaboration.docCount.toLocaleString();
+  const nviRejectedCount = nviAggregations?.rejected.docCount.toLocaleString();
+  const nviRejectedCollaborationCount = nviAggregations?.rejectedCollaboration.docCount.toLocaleString();
+
+  const nviCandidatesTotal = nviAggregations?.totalCount.docCount ?? 0;
+  const nviCandidatesCompeted = nviAggregations?.completed.docCount ?? 0;
+  const nviCompletedPercentage =
+    nviCandidatesTotal > 0 ? Math.round((nviCandidatesCompeted / nviCandidatesTotal) * 100) : 100;
 
   return (
     <StyledPageWithSideMenu>
@@ -466,6 +477,24 @@ const TasksPage = () => {
                 }
               />
               <StyledDivider />
+
+              {nviAggregationsQuery.isSuccess && (
+                <Box sx={{ mt: '1rem' }}>
+                  <Typography>
+                    {t('tasks.nvi.completed_count', { completed: nviCandidatesCompeted, total: nviCandidatesTotal })}
+                  </Typography>
+                  <LinearProgress
+                    variant="determinate"
+                    value={nviCompletedPercentage}
+                    sx={{
+                      my: '0.175rem',
+                      height: '0.75rem',
+                      bgcolor: 'white',
+                    }}
+                  />
+                  <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
+                </Box>
+              )}
             </StyledTicketSearchFormGroup>
           </NavigationListAccordion>
         )}
