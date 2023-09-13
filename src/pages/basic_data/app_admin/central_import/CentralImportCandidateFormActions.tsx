@@ -4,11 +4,11 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, Tooltip } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ImportCandidate } from '../../../../types/importCandidate.types';
 import { RegistrationTab } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { UrlPathTemplate } from '../../../../utils/urlPaths';
+import { IdentifierParams, getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
 
 interface CentralImportCandidateFormActionsProps {
   tabNumber: RegistrationTab;
@@ -20,6 +20,7 @@ export const CentralImportCandidateFormActions = ({
   setTabNumber,
 }: CentralImportCandidateFormActionsProps) => {
   const { t } = useTranslation();
+  const { identifier } = useParams<IdentifierParams>();
   const { isValid, isSubmitting } = useFormikContext<ImportCandidate>();
 
   const isFirstTab = tabNumber === RegistrationTab.Description;
@@ -52,7 +53,7 @@ export const CentralImportCandidateFormActions = ({
       )}
 
       <Box sx={{ gridArea: 'next', display: 'flex', alignItems: 'center', justifyContent: 'end', gap: '2rem' }}>
-        <Link to={UrlPathTemplate.BasicDataCentralImport}>
+        <Link to={getDuplicateCheckPagePath(identifier)}>
           <Button size="small">{t('common.cancel')}</Button>
         </Link>
 
