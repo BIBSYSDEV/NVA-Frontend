@@ -165,17 +165,15 @@ export const MyProfile = () => {
                           />
                         </Box>
 
-                        <>
-                          <Box
-                            sx={{
-                              gridArea: 'profile-picture',
-                            }}>
-                            <Typography variant="h3" sx={{ alignSelf: 'start', my: '1rem' }}>
-                              {t('my_page.my_profile.profile_picture')}
-                            </Typography>
-                            <ProfilePictureUploader id={personId} />
-                          </Box>
-                        </>
+                        <Box
+                          sx={{
+                            gridArea: 'profile-picture',
+                          }}>
+                          <Typography variant="h3" sx={{ alignSelf: 'start', my: '1rem' }}>
+                            {t('my_page.my_profile.profile_picture')}
+                          </Typography>
+                          <ProfilePictureUploader id={personId} />
+                        </Box>
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
                         <LoadingButton

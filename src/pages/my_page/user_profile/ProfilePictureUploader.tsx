@@ -36,7 +36,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
   });
 
   const profilePictureString = profilePictureQuery.isSuccess
-    ? `data:image/jpeg;base64,${profilePictureQuery.data?.base64Data}`
+    ? `data:image/jpeg;base64,${profilePictureQuery.data.base64Data}`
     : '';
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
