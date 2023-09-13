@@ -1,12 +1,11 @@
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { LoadingButton } from '@mui/lab';
-import { Box, FormControlLabel, TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
-import { BackgroundDiv, StyledStatusCheckbox } from '../../../components/styled/Wrappers';
+import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FlatCristinPerson } from '../../../types/user.types';
@@ -83,16 +82,7 @@ export const MyPageMyFieldAndBackground = () => {
           {({ isSubmitting, dirty }: FormikProps<CristinPersonFormData>) => (
             <Form>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <StarOutlineIcon />
-                  <Typography variant="h3">{t('my_page.my_profile.norwegian')}</Typography>
-                  <FormControlLabel
-                    disabled
-                    sx={{ ml: '1rem' }}
-                    control={<StyledStatusCheckbox />}
-                    label={'Vises offemtlig'}
-                  />
-                </Box>
+                <Typography variant="h3">{t('my_page.my_profile.norwegian')}</Typography>
                 <Field name={'background.no'}>
                   {({ field }: FieldProps<string>) => (
                     <>
@@ -112,16 +102,7 @@ export const MyPageMyFieldAndBackground = () => {
                 </Field>
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <StarOutlineIcon />
-                  <Typography variant="h3">{t('my_page.my_profile.english')}</Typography>
-                  <FormControlLabel
-                    disabled
-                    sx={{ ml: '1rem' }}
-                    control={<StyledStatusCheckbox />}
-                    label={'Vises offemtlig'}
-                  />
-                </Box>
+                <Typography variant="h3">{t('my_page.my_profile.english')}</Typography>
                 <Field name={'background.en'}>
                   {({ field }: FieldProps<string>) => (
                     <>
