@@ -114,6 +114,10 @@ export interface CristinPerson extends CreateCristinPerson {
   contactDetails?: CristinPersonContactDetails;
   verified?: boolean;
   image?: string;
+  background: {
+    no?: string;
+    en?: string;
+  };
 }
 
 export interface FlatCristinPerson {
@@ -127,6 +131,10 @@ export interface FlatCristinPerson {
   affiliations: CristinPersonAffiliation[];
   employments: Employment[];
   orcid?: string;
+  background: {
+    no?: string | null;
+    en?: string | null;
+  };
 }
 
 interface Position {

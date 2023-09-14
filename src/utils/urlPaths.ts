@@ -24,6 +24,7 @@ export enum UrlPathTemplate {
   Logout = '/logout',
   MyPage = '/my-page',
   MyPageMessages = '/my-page/messages',
+  MyPageMyFieldAndBackground = '/my-page/my-profile/background',
   MyPageMyMessages = '/my-page/messages/my-messages',
   MyPageMyMessagesRegistration = '/my-page/messages/my-messages/:identifier',
   MyPageMyProfile = '/my-page/my-profile',

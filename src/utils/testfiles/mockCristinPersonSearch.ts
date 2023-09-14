@@ -26,6 +26,7 @@ export const mockCristinPersonSearch: SearchResponse<CristinPerson> = {
       ],
       affiliations: [],
       employments: [],
+      background: {},
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/cristin/person/2',
@@ -53,6 +54,10 @@ export const mockCristinPersonSearch: SearchResponse<CristinPerson> = {
         },
       ],
       employments: [],
+      background: {
+        no: 'Bakgrunn',
+        en: 'Background',
+      },
     },
   ],
 };
