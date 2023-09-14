@@ -145,11 +145,17 @@ export const CentralImportDuplicationCheckPage = () => {
                     <Divider sx={{ my: '1rem' }} />
 
                     <Typography gutterBottom>{t('basic_data.central_import.merge_description')}</Typography>
-                    <Link to={getImportCandidateMergePath(identifier, registrationIdentifier)}>
-                      <Button variant="outlined" fullWidth size="small">
+                    {registrationIdentifier ? (
+                      <Link to={getImportCandidateMergePath(identifier, registrationIdentifier)}>
+                        <Button variant="outlined" fullWidth size="small">
+                          {t('basic_data.central_import.merge')}
+                        </Button>
+                      </Link>
+                    ) : (
+                      <Button variant="outlined" fullWidth size="small" disabled>
                         {t('basic_data.central_import.merge')}
                       </Button>
-                    </Link>
+                    )}
 
                     <Divider sx={{ my: '1rem' }} />
 
