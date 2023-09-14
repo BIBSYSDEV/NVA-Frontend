@@ -75,6 +75,7 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
                 </RadioGroup>
               </FormControl>
               <ListPagination
+                sx={{ mt: '0.5rem' }}
                 count={duplicateCandidatesSize}
                 rowsPerPage={rowsPerPage}
                 page={page}
