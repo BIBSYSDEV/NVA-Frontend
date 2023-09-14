@@ -69,7 +69,7 @@ export const MyFieldAndBackground = () => {
         rowGap: '1rem',
         gridTemplateAreas: {
           xs: '"field-and-background" "research-profile"',
-          md: '"user-profile research-profile" ',
+          md: '"field-and-background research-profile"',
         },
       }}>
       <BackgroundDiv
@@ -88,8 +88,7 @@ export const MyFieldAndBackground = () => {
                       <TextField
                         {...field}
                         inputProps={{ maxLength: 200 }}
-                        label={'Bakgrunn'}
-                        id={field.name}
+                        label={t('my_page.my_profile.background')}
                         variant="filled"
                         multiline
                         rows="3"
@@ -108,8 +107,7 @@ export const MyFieldAndBackground = () => {
                       <TextField
                         {...field}
                         inputProps={{ maxLength: 200 }}
-                        label={'Background'}
-                        id={field.name}
+                        label={t('my_page.my_profile.background')}
                         variant="filled"
                         multiline
                         rows="3"
