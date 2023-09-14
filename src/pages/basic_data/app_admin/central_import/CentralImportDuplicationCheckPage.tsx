@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
@@ -23,13 +23,6 @@ import NotFound from '../../../errorpages/NotFound';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import { CentralImportResultItem } from './CentralImportResultItem';
 import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
-
-export const RegistrationIdentifierContext = createContext({
-  registrationIdentifier: '',
-  setRegistrationIdentifier: (value: string) => {
-    return;
-  },
-});
 
 export const CentralImportDuplicationCheckPage = () => {
   const { t } = useTranslation();
@@ -78,112 +71,114 @@ export const CentralImportDuplicationCheckPage = () => {
         gridTemplateAreas: { xs: '"actions" "main"', sm: '"main actions"' },
         gap: '1rem',
       }}>
-      <RegistrationIdentifierContext.Provider value={{ registrationIdentifier, setRegistrationIdentifier }}>
-        <BackgroundDiv>
-          {importCandidateQuery.isLoading ? (
-            <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
-          ) : importCandidate ? (
-            <>
-              {importCandidate && <CentralImportResultItem importCandidate={importCandidate} />}
-              <Typography variant="h3" sx={{ mt: '1rem' }}>
-                {t('basic_data.central_import.search_for_duplicates')}:
-              </Typography>
-              <DuplicateSearchFilterForm
-                importCandidate={importCandidate}
-                setDuplicateSearchFilters={setDuplicateSearchFilters}
-              />
-              <CentralImportDuplicateSearch duplicateSearchFilters={duplicateSearchFilters} />
-            </>
-          ) : (
-            <NotFound />
-          )}
-        </BackgroundDiv>
-
-        <Paper elevation={0} sx={{ gridArea: 'actions' }}>
-          <StyledPaperHeader>
-            <Typography color="inherit" variant="h1">
-              {t('common.dialogue')}
+      <BackgroundDiv>
+        {importCandidateQuery.isLoading ? (
+          <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
+        ) : importCandidate ? (
+          <>
+            {importCandidate && <CentralImportResultItem importCandidate={importCandidate} />}
+            <Typography variant="h3" sx={{ mt: '1rem' }}>
+              {t('basic_data.central_import.search_for_duplicates')}:
             </Typography>
-          </StyledPaperHeader>
+            <DuplicateSearchFilterForm
+              importCandidate={importCandidate}
+              setDuplicateSearchFilters={setDuplicateSearchFilters}
+            />
+            <CentralImportDuplicateSearch
+              duplicateSearchFilters={duplicateSearchFilters}
+              registrationIdentifier={registrationIdentifier}
+              setRegistrationIdentifier={setRegistrationIdentifier}
+            />
+          </>
+        ) : (
+          <NotFound />
+        )}
+      </BackgroundDiv>
 
-          <Box sx={{ m: '0.5rem' }}>
-            {importCandidate?.importStatus.candidateStatus === 'IMPORTED' && (
-              <>
-                <Typography>{t('basic_data.central_import.import_completed')}</Typography>
-                {importCandidate.importStatus.modifiedDate && (
-                  <Typography>
-                    {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
+      <Paper elevation={0} sx={{ gridArea: 'actions' }}>
+        <StyledPaperHeader>
+          <Typography color="inherit" variant="h1">
+            {t('common.dialogue')}
+          </Typography>
+        </StyledPaperHeader>
+
+        <Box sx={{ m: '0.5rem' }}>
+          {importCandidate?.importStatus.candidateStatus === 'IMPORTED' && (
+            <>
+              <Typography>{t('basic_data.central_import.import_completed')}</Typography>
+              {importCandidate.importStatus.modifiedDate && (
+                <Typography>
+                  {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
+                </Typography>
+              )}
+            </>
+          )}
+          {importCandidate?.importStatus.candidateStatus === 'NOT_APPLICABLE' && (
+            <>
+              <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
+              {importCandidate.importStatus.modifiedDate && (
+                <Typography>
+                  {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
+                </Typography>
+              )}
+            </>
+          )}
+
+          {importCandidate?.importStatus.candidateStatus === 'NOT_IMPORTED' && (
+            <>
+              {!importCandidateStatusMutation.isSuccess ? (
+                <>
+                  <Typography gutterBottom>
+                    {t('basic_data.central_import.create_publication_from_import_candidate')}
                   </Typography>
-                )}
-              </>
-            )}
-            {importCandidate?.importStatus.candidateStatus === 'NOT_APPLICABLE' && (
-              <>
-                <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
-                {importCandidate.importStatus.modifiedDate && (
-                  <Typography>
-                    {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
-                  </Typography>
-                )}
-              </>
-            )}
 
-            {importCandidate?.importStatus.candidateStatus === 'NOT_IMPORTED' && (
-              <>
-                {!importCandidateStatusMutation.isSuccess ? (
-                  <>
-                    <Typography gutterBottom>
-                      {t('basic_data.central_import.create_publication_from_import_candidate')}
-                    </Typography>
+                  <Link to={getImportCandidateWizardPath(identifier)}>
+                    <Button variant="outlined" fullWidth size="small">
+                      {t('basic_data.central_import.create_new')}
+                    </Button>
+                  </Link>
 
-                    <Link to={getImportCandidateWizardPath(identifier)}>
+                  <Divider sx={{ my: '1rem' }} />
+
+                  <Typography gutterBottom>{t('basic_data.central_import.merge_description')}</Typography>
+                  {registrationIdentifier ? (
+                    <Link to={getImportCandidateMergePath(identifier, registrationIdentifier)}>
                       <Button variant="outlined" fullWidth size="small">
-                        {t('basic_data.central_import.create_new')}
-                      </Button>
-                    </Link>
-
-                    <Divider sx={{ my: '1rem' }} />
-
-                    <Typography gutterBottom>{t('basic_data.central_import.merge_description')}</Typography>
-                    {registrationIdentifier ? (
-                      <Link to={getImportCandidateMergePath(identifier, registrationIdentifier)}>
-                        <Button variant="outlined" fullWidth size="small">
-                          {t('basic_data.central_import.merge')}
-                        </Button>
-                      </Link>
-                    ) : (
-                      <Button variant="outlined" fullWidth size="small" disabled>
                         {t('basic_data.central_import.merge')}
                       </Button>
-                    )}
+                    </Link>
+                  ) : (
+                    <Button variant="outlined" fullWidth size="small" disabled>
+                      {t('basic_data.central_import.merge')}
+                    </Button>
+                  )}
 
-                    <Divider sx={{ my: '1rem' }} />
+                  <Divider sx={{ my: '1rem' }} />
 
-                    <Typography gutterBottom>{t('basic_data.central_import.mark_as_not_applicable')}</Typography>
-                    <LoadingButton
-                      variant="outlined"
-                      fullWidth
-                      size="small"
-                      loading={importCandidateStatusMutation.isLoading}
-                      onClick={() => importCandidateStatusMutation.mutate()}>
-                      {t('basic_data.central_import.not_applicable')}
-                    </LoadingButton>
-                  </>
-                ) : importCandidateStatusMutation.isSuccess ? (
-                  <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
-                ) : null}
-              </>
-            )}
+                  <Typography gutterBottom>{t('basic_data.central_import.mark_as_not_applicable')}</Typography>
+                  <LoadingButton
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    loading={importCandidateStatusMutation.isLoading}
+                    onClick={() => importCandidateStatusMutation.mutate()}>
+                    {t('basic_data.central_import.not_applicable')}
+                  </LoadingButton>
+                </>
+              ) : importCandidateStatusMutation.isSuccess ? (
+                <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
+              ) : null}
+            </>
+          )}
 
-            <Divider sx={{ my: '1rem' }} />
-            <Link to={UrlPathTemplate.BasicDataCentralImport}>
-              <Button size="small" fullWidth variant="outlined">
-                {t('common.cancel')}
-              </Button>
-            </Link>
-          </Box>
-        </Paper>
-      </RegistrationIdentifierContext.Provider>
+          <Divider sx={{ my: '1rem' }} />
+          <Link to={UrlPathTemplate.BasicDataCentralImport}>
+            <Button size="small" fullWidth variant="outlined">
+              {t('common.cancel')}
+            </Button>
+          </Link>
+        </Box>
+      </Paper>
     </Box>
   );
 };
