@@ -115,8 +115,8 @@ export interface CristinPerson extends CreateCristinPerson {
   verified?: boolean;
   image?: string;
   background: {
-    no?: string | null;
-    en?: string | null;
+    no?: string;
+    en?: string;
   };
 }
 

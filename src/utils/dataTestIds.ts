@@ -458,7 +458,7 @@ export const dataTestId = {
       updateProfilePictureButton: 'update-profile-picture-button',
       uploadProfilePictureButton: 'update-profile-picture-button',
     },
-    myFieldAndBackgroundLink: 'my-dield-and-background-link',
+    myFieldAndBackgroundLink: 'my-field-and-background-link',
     myProfileAccordion: 'my-profile-accordion',
     myProjectRegistrationsLink: 'my-project-registrations-link',
     myProjectRegistrationsConcludedCheckbox: 'my-project-registrations-concluded-checkbox',

@@ -11,14 +11,13 @@ import { RootState } from '../../../redux/store';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 
-type CristinPersonFormData = Pick<FlatCristinPerson, 'background'>;
+type PersonBackgroundFormData = Pick<FlatCristinPerson, 'background'>;
 
 export const MyFieldAndBackground = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const user = useSelector((store: RootState) => store.user)!;
+  const user = useSelector((store: RootState) => store.user);
   const personId = user?.cristinId ?? '';
 
   const personQuery = useQuery({
@@ -30,7 +29,7 @@ export const MyFieldAndBackground = () => {
   const person = personQuery.data;
   const personBackground = person?.background ?? {};
 
-  const initialValues: CristinPersonFormData = {
+  const initialValues: PersonBackgroundFormData = {
     background: {
       no: personBackground.no ? personBackground.no : '',
       en: personBackground.en ? personBackground.en : '',
@@ -38,15 +37,15 @@ export const MyFieldAndBackground = () => {
   };
 
   const updatePerson = useMutation({
-    mutationFn: async (values: CristinPersonFormData) => {
-      if (user.cristinId) {
-        const payload: CristinPersonFormData = {
+    mutationFn: async (values: PersonBackgroundFormData) => {
+      if (personId) {
+        const payload: PersonBackgroundFormData = {
           background: {
             no: values.background.no === '' ? null : values.background.no,
             en: values.background.en === '' ? null : values.background.en,
           },
         };
-        await updateCristinPerson(user.cristinId, payload);
+        await updateCristinPerson(personId, payload);
       }
     },
     onSuccess: () => {
@@ -79,7 +78,7 @@ export const MyFieldAndBackground = () => {
         }}>
         <Typography variant="h2">{t('my_page.my_profile.background')}</Typography>
         <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
-          {({ isSubmitting, dirty }: FormikProps<CristinPersonFormData>) => (
+          {({ isSubmitting, dirty }: FormikProps<PersonBackgroundFormData>) => (
             <Form>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
                 <Typography variant="h3">{t('my_page.my_profile.norwegian')}</Typography>
