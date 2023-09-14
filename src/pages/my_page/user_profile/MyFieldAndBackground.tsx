@@ -81,7 +81,7 @@ export const MyFieldAndBackground = () => {
           {({ isSubmitting, dirty }: FormikProps<PersonBackgroundFormData>) => (
             <Form>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
-                <Typography variant="h3">{t('my_page.my_profile.norwegian')}</Typography>
+                <Typography variant="h3">{t('my_page.my_profile.field_and_background.norwegian')}</Typography>
                 <Field name={'background.no'}>
                   {({ field }: FieldProps<string>) => (
                     <>
@@ -93,7 +93,7 @@ export const MyFieldAndBackground = () => {
                         variant="filled"
                         multiline
                         rows="3"
-                        placeholder="Skriv inn"
+                        placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
                       />
                       <Typography sx={{ alignSelf: 'end' }}>{field.value.length}/200</Typography>
                     </>
@@ -101,7 +101,7 @@ export const MyFieldAndBackground = () => {
                 </Field>
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
-                <Typography variant="h3">{t('my_page.my_profile.english')}</Typography>
+                <Typography variant="h3">{t('my_page.my_profile.field_and_background.english')}</Typography>
                 <Field name={'background.en'}>
                   {({ field }: FieldProps<string>) => (
                     <>
@@ -113,7 +113,7 @@ export const MyFieldAndBackground = () => {
                         variant="filled"
                         multiline
                         rows="3"
-                        placeholder="Skriv inn"
+                        placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
                       />
                       <Typography sx={{ alignSelf: 'end' }}>{field.value.length}/200</Typography>
                     </>

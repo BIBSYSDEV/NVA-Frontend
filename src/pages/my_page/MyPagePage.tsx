@@ -416,7 +416,7 @@ const MyPagePage = () => {
                 data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
                 isSelected={currentPath === UrlPathTemplate.MyPageMyFieldAndBackground}
                 to={UrlPathTemplate.MyPageMyFieldAndBackground}>
-                {t('my_page.my_profile.field_and_background')}
+                {t('my_page.my_profile.field_and_background.field_and_background')}
               </LinkButton>
             </BetaFunctionality>
             <LinkButton

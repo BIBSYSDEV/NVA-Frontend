@@ -548,8 +548,12 @@
     "my_profile": {
       "background": "Bakgrunn",
       "edit_promoted_publication": "Legg til/fjern som favoritt",
-      "english": "Engelsk",
-      "field_and_background": "Fagfelt og bakgrunn",
+      "field_and_background": {
+        "background_placeholder": "Skriv inn",
+        "english": "Engelsk",
+        "field_and_background": "Fagfelt og bakgrunn",
+        "norwegian": "Norsk"
+      },
       "heading": {
         "affiliations": "Tilknytninger",
         "personalia": "Personalia",
@@ -562,7 +566,6 @@
         "not_shown_publicly": "Vises ikke offentlig",
         "upload_profile_photo": "Last opp profilfoto"
       },
-      "norwegian": "Norsk",
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskningsresultat",
       "orcid": {
