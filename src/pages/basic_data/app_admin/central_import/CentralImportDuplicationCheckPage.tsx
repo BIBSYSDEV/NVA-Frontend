@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { updateImportCandidateStatus } from '../../../../api/registrationApi';
+import { fetchRegistration, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { fetchImportCandidates } from '../../../../api/searchApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
-import { BackgroundDiv } from '../../../../components/styled/Wrappers';
+import { RegistrationListItemContent } from '../../../../components/RegistrationList';
+import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import {
   IdentifierParams,
@@ -49,6 +51,13 @@ export const CentralImportDuplicationCheckPage = () => {
       ),
   });
 
+  const importedRegistrationQuery = useQuery({
+    enabled:
+      importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importCandidate.importStatus.nvaPublicationId,
+    queryFn: () => fetchRegistration(getIdentifierFromId(importCandidate?.importStatus.nvaPublicationId ?? '')),
+    meta: { errorMessage: t('feedback.error.get_registration') },
+  });
+
   useEffect(() => {
     if (stringIncludesMathJax(importCandidate?.mainTitle)) {
       typesetMathJax();
@@ -76,19 +85,38 @@ export const CentralImportDuplicationCheckPage = () => {
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
         ) : importCandidate ? (
           <>
-            {importCandidate && <CentralImportResultItem importCandidate={importCandidate} />}
-            <Typography variant="h3" sx={{ mt: '1rem' }}>
-              {t('basic_data.central_import.search_for_duplicates')}:
+            <Typography variant="h1" sx={{ mt: '1rem' }} gutterBottom>
+              {t('basic_data.central_import.import_candidate')}:
             </Typography>
-            <DuplicateSearchFilterForm
-              importCandidate={importCandidate}
-              setDuplicateSearchFilters={setDuplicateSearchFilters}
-            />
-            <CentralImportDuplicateSearch
-              duplicateSearchFilters={duplicateSearchFilters}
-              registrationIdentifier={registrationIdentifier}
-              setRegistrationIdentifier={setRegistrationIdentifier}
-            />
+            <CentralImportResultItem importCandidate={importCandidate} />
+
+            {importCandidate.importStatus.candidateStatus !== 'IMPORTED' ? (
+              <>
+                <Typography variant="h3" sx={{ mt: '1rem' }}>
+                  {t('basic_data.central_import.search_for_duplicates')}:
+                </Typography>
+                <DuplicateSearchFilterForm
+                  importCandidate={importCandidate}
+                  setDuplicateSearchFilters={setDuplicateSearchFilters}
+                />
+                <CentralImportDuplicateSearch
+                  duplicateSearchFilters={duplicateSearchFilters}
+                  registrationIdentifier={registrationIdentifier}
+                  setRegistrationIdentifier={setRegistrationIdentifier}
+                />
+              </>
+            ) : (
+              <>
+                <Typography variant="h1" sx={{ mt: '1rem' }} gutterBottom>
+                  {t('basic_data.central_import.result_in_nva')}:
+                </Typography>
+                {importedRegistrationQuery.data && (
+                  <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+                    <RegistrationListItemContent registration={importedRegistrationQuery.data} />
+                  </SearchListItem>
+                )}
+              </>
+            )}
           </>
         ) : (
           <NotFound />
