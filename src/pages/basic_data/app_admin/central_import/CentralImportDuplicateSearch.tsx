@@ -59,7 +59,7 @@ export const CentralImportDuplicateSearch = ({
           </Typography>
           {duplicateCandidatesSize > 0 && (
             <>
-              <FormControl>
+              <FormControl sx={{ width: '100%' }}>
                 <RadioGroup
                   value={registrationIdentifier}
                   onChange={(event) => setRegistrationIdentifier(event.target.value)}>
