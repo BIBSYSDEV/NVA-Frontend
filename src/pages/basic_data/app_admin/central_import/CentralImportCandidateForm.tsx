@@ -17,10 +17,9 @@ import { setNotification } from '../../../../redux/notificationSlice';
 import { ImportCandidate } from '../../../../types/importCandidate.types';
 import { RegistrationTab } from '../../../../types/registration.types';
 import { getTouchedTabFields } from '../../../../utils/formik-helpers';
-import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { createUppy } from '../../../../utils/uppy/uppy-config';
-import { IdentifierParams, UrlPathTemplate, getRegistrationLandingPagePath } from '../../../../utils/urlPaths';
+import { IdentifierParams, UrlPathTemplate, getImportCandidatePath } from '../../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../../utils/validation/registration/registrationValidation';
 import { ContributorsPanel } from '../../../registration/ContributorsPanel';
 import { DescriptionPanel } from '../../../registration/DescriptionPanel';
@@ -66,12 +65,8 @@ export const CentralImportCandidateForm = () => {
       ),
   });
 
-  if (importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importCandidate.importStatus.nvaPublicationId) {
-    return (
-      <Redirect
-        to={getRegistrationLandingPagePath(getIdentifierFromId(importCandidate.importStatus.nvaPublicationId))}
-      />
-    );
+  if (importCandidate?.importStatus.candidateStatus === 'IMPORTED') {
+    return <Redirect to={getImportCandidatePath(identifier)} />;
   }
 
   const validateForm = (values: ImportCandidate): FormikErrors<ImportCandidate> => {

@@ -16,7 +16,7 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { getDuplicateCheckPagePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
+import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
 
 interface MergeImportCandidateParams {
   candidateIdentifier: string;
@@ -71,7 +71,7 @@ export const CentralImportCandidateMerge = () => {
   const importCandidate = importCandidateQuery.data;
 
   if (importCandidate?.importStatus.candidateStatus === 'IMPORTED') {
-    return <Redirect to={getDuplicateCheckPagePath(candidateIdentifier)} />;
+    return <Redirect to={getImportCandidatePath(candidateIdentifier)} />;
   }
 
   return registrationQuery.isLoading || importCandidateQuery.isLoading ? (
@@ -116,7 +116,7 @@ export const CentralImportCandidateMerge = () => {
           />
 
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
-            <Link to={getDuplicateCheckPagePath(candidateIdentifier)}>
+            <Link to={getImportCandidatePath(candidateIdentifier)}>
               <Button>{t('common.cancel')}</Button>
             </Link>
             <LoadingButton

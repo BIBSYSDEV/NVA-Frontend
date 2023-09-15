@@ -273,7 +273,7 @@ const BasicDataPage = () => {
           </PrivateRoute>
           <PrivateRoute
             exact
-            path={UrlPathTemplate.BasicDataCentralImportDuplicateCheck}
+            path={UrlPathTemplate.BasicDataCentralImportCandidate}
             component={CentralImportDuplicationCheckPage}
             isAuthorized={isInternalImporter}
           />

@@ -8,7 +8,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ImportCandidate } from '../../../../types/importCandidate.types';
 import { RegistrationTab } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { IdentifierParams, getDuplicateCheckPagePath } from '../../../../utils/urlPaths';
+import { IdentifierParams, getImportCandidatePath } from '../../../../utils/urlPaths';
 
 interface CentralImportCandidateFormActionsProps {
   tabNumber: RegistrationTab;
@@ -53,7 +53,7 @@ export const CentralImportCandidateFormActions = ({
       )}
 
       <Box sx={{ gridArea: 'next', display: 'flex', alignItems: 'center', justifyContent: 'end', gap: '2rem' }}>
-        <Link to={getDuplicateCheckPagePath(identifier)}>
+        <Link to={getImportCandidatePath(identifier)}>
           <Button size="small">{t('common.cancel')}</Button>
         </Link>
 
