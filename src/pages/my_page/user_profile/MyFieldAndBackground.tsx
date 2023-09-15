@@ -2,9 +2,10 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
+import { fetchPerson, searchForKeywords, updateCristinPerson } from '../../../api/cristinApi';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -21,6 +22,8 @@ export const MyFieldAndBackground = () => {
   const user = useSelector((store: RootState) => store.user);
   const personId = user?.cristinId ?? '';
 
+  const [keywordQuery, setKeywordQuery] = useState('');
+
   const personQuery = useQuery({
     queryKey: [personId],
     queryFn: () => fetchPerson(personId),
@@ -29,6 +32,13 @@ export const MyFieldAndBackground = () => {
 
   const person = personQuery.data;
   const personBackground = person?.background ?? {};
+
+  const fieldQuery = useQuery({
+    enabled: !!keywordQuery,
+    queryKey: ['field', keywordQuery],
+    queryFn: () => searchForKeywords(10, 1, keywordQuery),
+    meta: { message: 'error', variant: 'error' },
+  });
 
   const initialValues: PersonBackgroundFormData = {
     background: {
@@ -85,7 +95,7 @@ export const MyFieldAndBackground = () => {
                 <Typography variant="h3" sx={{ mb: '1rem', mt: '1.5rem' }}>
                   {t('my_page.my_profile.field_and_background.field_text')}
                 </Typography>
-                <SearchTextField sx={{ bgcolor: 'white' }} />
+                <SearchTextField sx={{ bgcolor: 'white' }} onChange={(event) => setKeywordQuery(event.target.value)} />
                 <Typography variant="body1" fontStyle={'italic'} sx={{ mb: '2rem' }}>
                   {t('my_page.my_profile.field_and_background.keywords_search_text')}
                 </Typography>

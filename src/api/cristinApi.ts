@@ -1,4 +1,5 @@
 import { SearchResponse } from '../types/common.types';
+import { Keywords } from '../types/keywords.types';
 import { Organization } from '../types/organization.types';
 import { CristinProject, FundingSource, FundingSources } from '../types/project.types';
 import {
@@ -162,4 +163,21 @@ export const fetchProfilePicture = async (cristinId: string) => {
     url: `${cristinId}/picture`,
   });
   return fetchProfilePictureResponse.data;
+};
+
+export const searchForKeywords = async (results: number, page: number, query?: string) => {
+  const searchParams = new URLSearchParams();
+  searchParams.set('results', results.toString());
+  searchParams.set('page', page.toString());
+  if (query) {
+    searchParams.set('query', query);
+  }
+
+  const queryContent = searchParams.toString();
+  const queryParams = queryContent ? `?${queryContent}` : '';
+
+  const fetchKeywordsResponse = await authenticatedApiRequest2<SearchResponse<Keywords>>({
+    url: `${CristinApiPath.Keyword}${queryParams}`,
+  });
+  return fetchKeywordsResponse.data;
 };
