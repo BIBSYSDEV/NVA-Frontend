@@ -1,11 +1,12 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, TextField, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, searchForKeywords, updateCristinPerson } from '../../../api/cristinApi';
+import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -13,7 +14,7 @@ import { FlatCristinPerson } from '../../../types/user.types';
 import { SearchTextField } from '../../search/SearchTextField';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 
-type PersonBackgroundFormData = Pick<FlatCristinPerson, 'background'>;
+type PersonBackgroundFormData = Pick<FlatCristinPerson, 'background' | 'keywords'>;
 
 export const MyFieldAndBackground = () => {
   const { t } = useTranslation();
@@ -40,11 +41,14 @@ export const MyFieldAndBackground = () => {
     meta: { message: 'error', variant: 'error' },
   });
 
+  const keywordsResult = fieldQuery.data?.hits ?? [];
+
   const initialValues: PersonBackgroundFormData = {
     background: {
       no: personBackground.no ? personBackground.no : '',
       en: personBackground.en ? personBackground.en : '',
     },
+    keywords: [],
   };
 
   const updatePerson = useMutation({
@@ -55,6 +59,7 @@ export const MyFieldAndBackground = () => {
             no: values.background.no === '' ? null : values.background.no,
             en: values.background.en === '' ? null : values.background.en,
           },
+          keywords: [],
         };
         await updateCristinPerson(personId, payload);
       }
@@ -95,7 +100,15 @@ export const MyFieldAndBackground = () => {
                 <Typography variant="h3" sx={{ mb: '1rem', mt: '1.5rem' }}>
                   {t('my_page.my_profile.field_and_background.field_text')}
                 </Typography>
-                <SearchTextField sx={{ bgcolor: 'white' }} onChange={(event) => setKeywordQuery(event.target.value)} />
+                <Field name={'keywords'}>
+                  {({ field }: FieldProps<string>) => (
+                    <Autocomplete
+                      options={keywordsResult}
+                      onInputChange={() => setKeywordQuery(field.value)}
+                      renderInput={(params) => <AutocompleteTextField {...params} isLoading={fieldQuery.isFetching} />}
+                    />
+                  )}
+                </Field>
                 <Typography variant="body1" fontStyle={'italic'} sx={{ mb: '2rem' }}>
                   {t('my_page.my_profile.field_and_background.keywords_search_text')}
                 </Typography>

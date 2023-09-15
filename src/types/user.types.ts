@@ -118,6 +118,7 @@ export interface CristinPerson extends CreateCristinPerson {
     no?: string;
     en?: string;
   };
+  keywords: string[];
 }
 
 export interface FlatCristinPerson {
@@ -135,6 +136,7 @@ export interface FlatCristinPerson {
     no?: string | null;
     en?: string | null;
   };
+  keywords: string[];
 }
 
 interface Position {
