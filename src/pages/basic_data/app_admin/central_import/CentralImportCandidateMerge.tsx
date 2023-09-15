@@ -138,7 +138,15 @@ const MergeSimpleField = ({ label, fieldName, candidateValue, registrationValue 
 
   return (
     <>
-      <TextField size="small" variant="filled" disabled multiline label={label} value={candidateValue} />
+      <TextField
+        size="small"
+        variant="filled"
+        disabled
+        multiline
+        label={label}
+        value={candidateValue}
+        InputLabelProps={{ shrink: true }}
+      />
       <IconButton
         size="small"
         color="primary"
@@ -148,7 +156,15 @@ const MergeSimpleField = ({ label, fieldName, candidateValue, registrationValue 
         onClick={() => setFieldValue(fieldName, candidateValue)}>
         <ArrowForwardIcon fontSize="small" />
       </IconButton>
-      <TextField size="small" variant="filled" disabled multiline label={label} value={registrationValue} />
+      <TextField
+        size="small"
+        variant="filled"
+        disabled
+        multiline
+        label={label}
+        value={registrationValue}
+        InputLabelProps={{ shrink: true }}
+      />
     </>
   );
 };

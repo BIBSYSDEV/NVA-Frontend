@@ -11,13 +11,12 @@ export const createRegistration = async (partialRegistration?: Partial<Registrat
     data: partialRegistration,
   });
 
-export const updateRegistration = async (registration: Registration) => {
-  return await authenticatedApiRequest<Registration>({
+export const updateRegistration = async (registration: Registration) =>
+  await authenticatedApiRequest<Registration>({
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     data: registration,
   });
-};
 
 export const getRegistrationByDoi = async (doiUrl: string) =>
   await authenticatedApiRequest<Doi>({
