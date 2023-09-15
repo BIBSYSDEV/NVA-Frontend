@@ -18,7 +18,7 @@ import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { getDuplicateCheckPagePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
 
-interface MergeImportCandidatesParams {
+interface MergeImportCandidateParams {
   candidateIdentifier: string;
   registrationIdentifier: string;
 }
@@ -27,7 +27,7 @@ export const CentralImportCandidateMerge = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidatesParams>();
+  const { candidateIdentifier, registrationIdentifier } = useParams<MergeImportCandidateParams>();
 
   const registrationQuery = useQuery({
     queryKey: ['registration', registrationIdentifier],
@@ -86,7 +86,6 @@ export const CentralImportCandidateMerge = () => {
             p: '2rem',
             display: 'grid',
             gap: '1rem',
-            gridTemplateAreas: '"candidate action result"',
             gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
           }}>
