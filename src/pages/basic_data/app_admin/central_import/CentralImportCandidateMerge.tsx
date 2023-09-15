@@ -5,7 +5,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
 import {
   fetchImportCandidate,
   fetchRegistration,
@@ -69,6 +69,10 @@ export const CentralImportCandidateMerge = () => {
 
   const registration = registrationQuery.data;
   const importCandidate = importCandidateQuery.data;
+
+  if (importCandidate?.importStatus.candidateStatus === 'IMPORTED') {
+    return <Redirect to={getDuplicateCheckPagePath(candidateIdentifier)} />;
+  }
 
   return registrationQuery.isLoading || importCandidateQuery.isLoading ? (
     <PageSpinner />
@@ -155,7 +159,7 @@ const MergeSimpleField = ({ label, fieldName, candidateValue, registrationValue 
         color="primary"
         sx={{ bgcolor: 'white' }}
         title={t('basic_data.central_import.merge_candidate.update_value')}
-        disabled={candidateValue === registrationValue}
+        disabled={!candidateValue || candidateValue === registrationValue}
         onClick={() => setFieldValue(fieldName, candidateValue)}>
         <ArrowForwardIcon fontSize="small" />
       </IconButton>
