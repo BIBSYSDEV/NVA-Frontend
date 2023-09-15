@@ -52,8 +52,12 @@ export const CentralImportCandidateMerge = () => {
       ),
   });
 
-  const importCandidateStatusMutation = useMutation({
-    mutationFn: () => updateImportCandidateStatus(candidateIdentifier, 'IMPORTED'),
+  const importCandidateMutation = useMutation({
+    mutationFn: () =>
+      updateImportCandidateStatus(candidateIdentifier, {
+        candidateStatus: 'IMPORTED',
+        nvaPublicationId: registration?.id,
+      }),
     onError: () =>
       dispatch(
         setNotification({
@@ -73,7 +77,7 @@ export const CentralImportCandidateMerge = () => {
       initialValues={registration}
       onSubmit={async (values) => {
         await registrationMutation.mutateAsync(values);
-        await importCandidateStatusMutation.mutateAsync();
+        await importCandidateMutation.mutateAsync();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
         registrationQuery.remove(); // Remove cached data, to ensure correct data is shown in wizard after redirect
         history.push(getRegistrationWizardPath(registrationIdentifier));
@@ -114,7 +118,7 @@ export const CentralImportCandidateMerge = () => {
             <LoadingButton
               type="submit"
               variant="contained"
-              loading={isSubmitting || registrationMutation.isLoading || importCandidateStatusMutation.isLoading}>
+              loading={isSubmitting || registrationMutation.isLoading || importCandidateMutation.isLoading}>
               {t('basic_data.central_import.merge_candidate.merge')}
             </LoadingButton>
           </Box>

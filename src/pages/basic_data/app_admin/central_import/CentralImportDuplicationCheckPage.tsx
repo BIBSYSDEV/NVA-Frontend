@@ -39,7 +39,7 @@ export const CentralImportDuplicationCheckPage = () => {
   const importCandidate = importCandidateQuery.data?.hits[0];
 
   const importCandidateStatusMutation = useMutation({
-    mutationFn: () => updateImportCandidateStatus(identifier, 'NOT_APPLICABLE'),
+    mutationFn: () => updateImportCandidateStatus(identifier, { candidateStatus: 'NOT_APPLICABLE' }),
     onError: () =>
       dispatch(
         setNotification({
