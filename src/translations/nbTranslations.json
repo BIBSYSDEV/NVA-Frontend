@@ -66,8 +66,13 @@
         "NOT_IMPORTED": "Til import"
       },
       "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)",
-      "merge": "Slå sammen",
-      "merge_description": "Slå sammen importdata med allerede registrert data."
+      "merge_candidate": {
+        "merge": "Slå sammen",
+        "merge_description": "Slå sammen importdata med allerede registrert data.",
+        "metadata_to_import": "Metadata til import",
+        "result_in_nva": "Resultat i NVA",
+        "update_value": "Oppdater verdi"
+      }
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -449,6 +454,7 @@
       "delete_registration": "Registrering ble slettet",
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
+      "merge_import_candidate": "Importdata ble slått sammen med resultatdata",
       "publishing_request_approved": "Registreringen ble publisert",
       "publishing_request_rejected": "Publiseringsforespørselen ble avvist",
       "removed_role": "Rollen ble fjernet",

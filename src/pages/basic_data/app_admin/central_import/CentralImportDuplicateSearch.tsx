@@ -67,6 +67,7 @@ export const CentralImportDuplicateSearch = ({
                     <FormControlLabel
                       key={registration.identifier}
                       value={registration.identifier}
+                      sx={{ '.MuiFormControlLabel-label': { width: '100%' } }}
                       control={<Radio />}
                       label={
                         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { markImportCandidateStatusAsNotApplicable } from '../../../../api/registrationApi';
+import { updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { fetchImportCandidates } from '../../../../api/searchApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
@@ -39,7 +39,7 @@ export const CentralImportDuplicationCheckPage = () => {
   const importCandidate = importCandidateQuery.data?.hits[0];
 
   const importCandidateStatusMutation = useMutation({
-    mutationFn: () => markImportCandidateStatusAsNotApplicable(identifier),
+    mutationFn: () => updateImportCandidateStatus(identifier, 'NOT_APPLICABLE'),
     onError: () =>
       dispatch(
         setNotification({
@@ -140,16 +140,18 @@ export const CentralImportDuplicationCheckPage = () => {
 
                   <Divider sx={{ my: '1rem' }} />
 
-                  <Typography gutterBottom>{t('basic_data.central_import.merge_description')}</Typography>
+                  <Typography gutterBottom>
+                    {t('basic_data.central_import.merge_candidate.merge_description')}
+                  </Typography>
                   {registrationIdentifier ? (
                     <Link to={getImportCandidateMergePath(identifier, registrationIdentifier)}>
                       <Button variant="outlined" fullWidth size="small">
-                        {t('basic_data.central_import.merge')}
+                        {t('basic_data.central_import.merge_candidate.merge')}
                       </Button>
                     </Link>
                   ) : (
                     <Button variant="outlined" fullWidth size="small" disabled>
-                      {t('basic_data.central_import.merge')}
+                      {t('basic_data.central_import.merge_candidate.merge')}
                     </Button>
                   )}
 

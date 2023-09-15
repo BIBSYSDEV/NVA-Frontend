@@ -11,12 +11,13 @@ export const createRegistration = async (partialRegistration?: Partial<Registrat
     data: partialRegistration,
   });
 
-export const updateRegistration = async (registration: Registration) =>
-  await authenticatedApiRequest<Registration>({
+export const updateRegistration = async (registration: Registration) => {
+  return await authenticatedApiRequest<Registration>({
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     data: registration,
   });
+};
 
 export const getRegistrationByDoi = async (doiUrl: string) =>
   await authenticatedApiRequest<Doi>({
@@ -119,12 +120,14 @@ export const createRegistrationFromImportCandidate = async (importCandidate: Imp
   return createRegistrationResponse.data;
 };
 
-const notApplicableStatus: ImportCandidateStatus = 'NOT_APPLICABLE';
-export const markImportCandidateStatusAsNotApplicable = async (importCandidateIdentifier: string) => {
+export const updateImportCandidateStatus = async (
+  importCandidateIdentifier: string,
+  candidateStatus: ImportCandidateStatus
+) => {
   const updateImportCandidateStatusResponse = await authenticatedApiRequest2<ImportCandidate>({
     url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}`,
     method: 'PUT',
-    data: { candidateStatus: notApplicableStatus },
+    data: { candidateStatus },
   });
 
   return updateImportCandidateStatusResponse.data;
