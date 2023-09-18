@@ -1,6 +1,6 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, TextField, TextFieldProps, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -110,12 +110,14 @@ export const CentralImportCandidateMerge = () => {
 
           <CompareFields
             label={t('basic_data.central_import.merge_candidate.result_id')}
+            variant="standard"
             candidateValue=""
             registrationValue={values.identifier}
           />
 
           <CompareFields
             label={t('registration.description.date_published')}
+            variant="standard"
             candidateValue={displayDate(importCandidate.entityDescription?.publicationDate)}
             registrationValue={displayDate(values.entityDescription?.publicationDate)}
           />
@@ -158,14 +160,20 @@ export const CentralImportCandidateMerge = () => {
   );
 };
 
-interface CompareFieldsProps {
+interface CompareFieldsProps extends Pick<TextFieldProps, 'variant'> {
   label: string;
   fieldName?: string;
   candidateValue: string | undefined;
   registrationValue: string | undefined;
 }
 
-const CompareFields = ({ label, fieldName, candidateValue, registrationValue }: CompareFieldsProps) => {
+const CompareFields = ({
+  label,
+  fieldName,
+  candidateValue,
+  registrationValue,
+  variant = 'filled',
+}: CompareFieldsProps) => {
   const { t } = useTranslation();
   const { setFieldValue } = useFormikContext<Registration>();
 
@@ -173,7 +181,7 @@ const CompareFields = ({ label, fieldName, candidateValue, registrationValue }: 
     <>
       <TextField
         size="small"
-        variant="filled"
+        variant={variant}
         disabled
         multiline
         label={label}
@@ -195,7 +203,7 @@ const CompareFields = ({ label, fieldName, candidateValue, registrationValue }: 
       )}
       <TextField
         size="small"
-        variant="filled"
+        variant={variant}
         disabled
         multiline
         label={label}
