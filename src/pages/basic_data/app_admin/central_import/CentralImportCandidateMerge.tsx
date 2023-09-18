@@ -116,6 +116,13 @@ export const CentralImportCandidateMerge = () => {
           />
 
           <CompareFields
+            label={t('common.doi')}
+            variant="standard"
+            candidateValue={importCandidate.doi || importCandidate.entityDescription?.reference?.doi}
+            registrationValue={values.doi || values.entityDescription?.reference?.doi}
+          />
+
+          <CompareFields
             label={t('registration.description.date_published')}
             variant="standard"
             candidateValue={displayDate(importCandidate.entityDescription?.publicationDate)}
