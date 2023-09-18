@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Box, Button, Chip, TextField, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Field, FieldProps, Form, Formik, FormikHelpers, FormikProps } from 'formik';
+import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,7 +41,7 @@ export const MyFieldAndBackground = () => {
   const fieldQuery = useQuery({
     enabled: !!debouncedSearchTerm,
     queryKey: ['field', debouncedSearchTerm],
-    queryFn: () => searchForKeywords(50, 1, debouncedSearchTerm),
+    queryFn: () => searchForKeywords(25, 1, debouncedSearchTerm),
     meta: { message: 'error', variant: 'error' },
   });
 
@@ -77,8 +77,6 @@ export const MyFieldAndBackground = () => {
     },
   });
 
-  const onCancel = ({ resetForm }: FormikHelpers<PersonBackgroundFormData>) => resetForm();
-
   return (
     <Box
       sx={{
@@ -99,7 +97,7 @@ export const MyFieldAndBackground = () => {
           bgcolor: 'info.light',
         }}>
         <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
-          {({ isSubmitting, dirty, setFieldValue }: FormikProps<PersonBackgroundFormData>) => (
+          {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (
             <>
               <Form>
                 <Box>
@@ -115,6 +113,7 @@ export const MyFieldAndBackground = () => {
                         value={field.value ?? []}
                         multiple
                         options={keywordsResult}
+                        getOptionDisabled={(option) => field.value.some((keyword) => keyword.type === option.type)}
                         renderOption={(props, option) => (
                           <li {...props} key={option.type}>
                             <Typography>{getLanguageString(option.label)}</Typography>
@@ -136,6 +135,7 @@ export const MyFieldAndBackground = () => {
                             {...params}
                             isLoading={fieldQuery.isFetching}
                             label={t('registration.description.keywords')}
+                            placeholder={t('common.search')}
                             showSearchIcon={field.value.length === 0}
                           />
                         )}
@@ -189,7 +189,12 @@ export const MyFieldAndBackground = () => {
                   </Field>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem' }}>
-                  <Button onClick={() => onCancel}>{t('common.cancel')}</Button>
+                  <Button
+                    onClick={() => {
+                      resetForm();
+                    }}>
+                    {t('common.cancel')}
+                  </Button>
                   <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
                     {t('common.save')}
                   </LoadingButton>
