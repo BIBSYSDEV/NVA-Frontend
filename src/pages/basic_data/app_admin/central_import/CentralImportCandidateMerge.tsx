@@ -5,7 +5,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
 import {
   fetchImportCandidate,
   fetchRegistration,
@@ -16,7 +16,7 @@ import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
-import { getDuplicateCheckPagePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
+import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
 
 interface MergeImportCandidateParams {
   candidateIdentifier: string;
@@ -52,8 +52,12 @@ export const CentralImportCandidateMerge = () => {
       ),
   });
 
-  const importCandidateStatusMutation = useMutation({
-    mutationFn: () => updateImportCandidateStatus(candidateIdentifier, 'IMPORTED'),
+  const importCandidateMutation = useMutation({
+    mutationFn: () =>
+      updateImportCandidateStatus(candidateIdentifier, {
+        candidateStatus: 'IMPORTED',
+        nvaPublicationId: registration?.id,
+      }),
     onError: () =>
       dispatch(
         setNotification({
@@ -66,6 +70,10 @@ export const CentralImportCandidateMerge = () => {
   const registration = registrationQuery.data;
   const importCandidate = importCandidateQuery.data;
 
+  if (importCandidate?.importStatus.candidateStatus === 'IMPORTED') {
+    return <Redirect to={getImportCandidatePath(candidateIdentifier)} />;
+  }
+
   return registrationQuery.isLoading || importCandidateQuery.isLoading ? (
     <PageSpinner />
   ) : !registration || !importCandidate ? null : (
@@ -73,7 +81,7 @@ export const CentralImportCandidateMerge = () => {
       initialValues={registration}
       onSubmit={async (values) => {
         await registrationMutation.mutateAsync(values);
-        await importCandidateStatusMutation.mutateAsync();
+        await importCandidateMutation.mutateAsync();
         dispatch(setNotification({ message: t('feedback.success.merge_import_candidate'), variant: 'success' }));
         registrationQuery.remove(); // Remove cached data, to ensure correct data is shown in wizard after redirect
         history.push(getRegistrationWizardPath(registrationIdentifier));
@@ -108,13 +116,13 @@ export const CentralImportCandidateMerge = () => {
           />
 
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
-            <Link to={getDuplicateCheckPagePath(candidateIdentifier)}>
+            <Link to={getImportCandidatePath(candidateIdentifier)}>
               <Button>{t('common.cancel')}</Button>
             </Link>
             <LoadingButton
               type="submit"
               variant="contained"
-              loading={isSubmitting || registrationMutation.isLoading || importCandidateStatusMutation.isLoading}>
+              loading={isSubmitting || registrationMutation.isLoading || importCandidateMutation.isLoading}>
               {t('basic_data.central_import.merge_candidate.merge')}
             </LoadingButton>
           </Box>
@@ -151,7 +159,7 @@ const MergeSimpleField = ({ label, fieldName, candidateValue, registrationValue 
         color="primary"
         sx={{ bgcolor: 'white' }}
         title={t('basic_data.central_import.merge_candidate.update_value')}
-        disabled={candidateValue === registrationValue}
+        disabled={!candidateValue || candidateValue === registrationValue}
         onClick={() => setFieldValue(fieldName, candidateValue)}>
         <ArrowForwardIcon fontSize="small" />
       </IconButton>

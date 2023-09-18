@@ -1,4 +1,4 @@
-import { ImportCandidate, ImportCandidateStatus } from '../types/importCandidate.types';
+import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
@@ -121,12 +121,12 @@ export const createRegistrationFromImportCandidate = async (importCandidate: Imp
 
 export const updateImportCandidateStatus = async (
   importCandidateIdentifier: string,
-  candidateStatus: ImportCandidateStatus
+  importStatus: Partial<ImportStatus>
 ) => {
   const updateImportCandidateStatusResponse = await authenticatedApiRequest2<ImportCandidate>({
     url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}`,
     method: 'PUT',
-    data: { candidateStatus },
+    data: importStatus,
   });
 
   return updateImportCandidateStatusResponse.data;
