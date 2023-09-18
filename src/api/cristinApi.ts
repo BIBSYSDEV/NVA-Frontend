@@ -167,11 +167,11 @@ export const fetchProfilePicture = async (cristinId: string) => {
 
 export const searchForKeywords = async (results: number, page: number, query?: string) => {
   const searchParams = new URLSearchParams();
-  searchParams.set('results', results.toString());
-  searchParams.set('page', page.toString());
   if (query) {
     searchParams.set('query', query);
   }
+  searchParams.set('results', results.toString());
+  searchParams.set('page', page.toString());
 
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';

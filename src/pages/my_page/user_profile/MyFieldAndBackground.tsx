@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Autocomplete, Box, Button, TextField, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { Field, FieldProps, Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,8 @@ import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FlatCristinPerson } from '../../../types/user.types';
-import { SearchTextField } from '../../search/SearchTextField';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 
 type PersonBackgroundFormData = Pick<FlatCristinPerson, 'background' | 'keywords'>;
@@ -23,7 +24,8 @@ export const MyFieldAndBackground = () => {
   const user = useSelector((store: RootState) => store.user);
   const personId = user?.cristinId ?? '';
 
-  const [keywordQuery, setKeywordQuery] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm);
 
   const personQuery = useQuery({
     queryKey: [personId],
@@ -35,13 +37,14 @@ export const MyFieldAndBackground = () => {
   const personBackground = person?.background ?? {};
 
   const fieldQuery = useQuery({
-    enabled: !!keywordQuery,
-    queryKey: ['field', keywordQuery],
-    queryFn: () => searchForKeywords(10, 1, keywordQuery),
+    enabled: !!debouncedSearchTerm,
+    queryKey: ['field', debouncedSearchTerm],
+    queryFn: () => searchForKeywords(50, 1, debouncedSearchTerm),
     meta: { message: 'error', variant: 'error' },
   });
 
   const keywordsResult = fieldQuery.data?.hits ?? [];
+  const keywordOptions = keywordsResult.map((keyword) => getLanguageString(keyword.label));
 
   const initialValues: PersonBackgroundFormData = {
     background: {
@@ -73,6 +76,8 @@ export const MyFieldAndBackground = () => {
     },
   });
 
+  const onCancel = ({ resetForm }: FormikHelpers<PersonBackgroundFormData>) => resetForm();
+
   return (
     <Box
       sx={{
@@ -95,32 +100,28 @@ export const MyFieldAndBackground = () => {
         <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
           {({ isSubmitting, dirty }: FormikProps<PersonBackgroundFormData>) => (
             <>
-              <Box>
-                <Typography variant="h2">{t('my_page.my_profile.field_and_background.field')}</Typography>
-                <Typography variant="h3" sx={{ mb: '1rem', mt: '1.5rem' }}>
-                  {t('my_page.my_profile.field_and_background.field_text')}
-                </Typography>
-                <Field name={'keywords'}>
-                  {({ field }: FieldProps<string>) => (
-                    <Autocomplete
-                      options={keywordsResult}
-                      onInputChange={() => setKeywordQuery(field.value)}
-                      renderInput={(params) => <AutocompleteTextField {...params} isLoading={fieldQuery.isFetching} />}
-                    />
-                  )}
-                </Field>
-                <Typography variant="body1" fontStyle={'italic'} sx={{ mb: '2rem' }}>
-                  {t('my_page.my_profile.field_and_background.keywords_search_text')}
-                </Typography>
-                <Typography variant="h3" sx={{ mb: '1rem', mt: '1.5rem' }}>
-                  {t('my_page.my_profile.field_and_background.geographical_area')}
-                </Typography>
-                <SearchTextField sx={{ bgcolor: 'white' }} />
-                <Typography variant="body1" fontStyle={'italic'}>
-                  {t('my_page.my_profile.field_and_background.keywords_search_text')}
-                </Typography>
-              </Box>
               <Form>
+                <Box>
+                  <Typography variant="h2">{t('my_page.my_profile.field_and_background.field')}</Typography>
+                  <Typography variant="h3" sx={{ mb: '1rem', mt: '1.5rem' }}>
+                    {t('my_page.my_profile.field_and_background.field_text')}
+                  </Typography>
+                  <Field name={'keywords'}>
+                    {({ field }: FieldProps<string>) => (
+                      <Autocomplete
+                        options={keywordOptions}
+                        onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
+                        renderInput={(params) => (
+                          <AutocompleteTextField {...params} isLoading={fieldQuery.isFetching} />
+                        )}
+                      />
+                    )}
+                  </Field>
+                  <Typography variant="body1" fontStyle={'italic'} sx={{ mb: '2rem' }}>
+                    {t('my_page.my_profile.field_and_background.keywords_search_text')}
+                  </Typography>
+                </Box>
+
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '4rem' }}>
                   <Typography variant="h2" sx={{ mb: '1rem' }}>
                     {t('my_page.my_profile.background')}
@@ -163,7 +164,7 @@ export const MyFieldAndBackground = () => {
                   </Field>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem' }}>
-                  <Button>{t('common.cancel')}</Button>
+                  <Button onClick={() => onCancel}>{t('common.cancel')}</Button>
                   <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
                     {t('common.save')}
                   </LoadingButton>

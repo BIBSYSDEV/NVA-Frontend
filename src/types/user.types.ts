@@ -1,4 +1,5 @@
 import { LanguageString } from './common.types';
+import { Keywords } from './keywords.types';
 
 export enum RoleName {
   AppAdmin = 'App-admin',
@@ -118,7 +119,7 @@ export interface CristinPerson extends CreateCristinPerson {
     no?: string;
     en?: string;
   };
-  keywords: string[];
+  keywords: Keywords[];
 }
 
 export interface FlatCristinPerson {
@@ -136,7 +137,7 @@ export interface FlatCristinPerson {
     no?: string | null;
     en?: string | null;
   };
-  keywords: string[];
+  keywords: Keywords[];
 }
 
 interface Position {

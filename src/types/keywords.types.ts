@@ -1,4 +1,7 @@
 export interface Keywords {
-  label: object;
+  label: {
+    no?: string;
+    em?: string;
+  };
   type: string;
 }
