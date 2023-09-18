@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Autocomplete, Box, Button, TextField, Typography } from '@mui/material';
+import { Autocomplete, Box, Button, Chip, TextField, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { useState } from 'react';
@@ -10,6 +10,7 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
+import { Keywords } from '../../../types/keywords.types';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -35,6 +36,7 @@ export const MyFieldAndBackground = () => {
 
   const person = personQuery.data;
   const personBackground = person?.background ?? {};
+  const personKeywords = person?.keywords ?? [];
 
   const fieldQuery = useQuery({
     enabled: !!debouncedSearchTerm,
@@ -44,14 +46,13 @@ export const MyFieldAndBackground = () => {
   });
 
   const keywordsResult = fieldQuery.data?.hits ?? [];
-  const keywordOptions = keywordsResult.map((keyword) => getLanguageString(keyword.label));
 
   const initialValues: PersonBackgroundFormData = {
     background: {
       no: personBackground.no ? personBackground.no : '',
       en: personBackground.en ? personBackground.en : '',
     },
-    keywords: [],
+    keywords: personKeywords ? personKeywords : [],
   };
 
   const updatePerson = useMutation({
@@ -62,7 +63,7 @@ export const MyFieldAndBackground = () => {
             no: values.background.no === '' ? null : values.background.no,
             en: values.background.en === '' ? null : values.background.en,
           },
-          keywords: [],
+          keywords: values.keywords,
         };
         await updateCristinPerson(personId, payload);
       }
@@ -98,7 +99,7 @@ export const MyFieldAndBackground = () => {
           bgcolor: 'info.light',
         }}>
         <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
-          {({ isSubmitting, dirty }: FormikProps<PersonBackgroundFormData>) => (
+          {({ isSubmitting, dirty, setFieldValue }: FormikProps<PersonBackgroundFormData>) => (
             <>
               <Form>
                 <Box>
@@ -107,12 +108,36 @@ export const MyFieldAndBackground = () => {
                     {t('my_page.my_profile.field_and_background.field_text')}
                   </Typography>
                   <Field name={'keywords'}>
-                    {({ field }: FieldProps<string>) => (
+                    {({ field }: FieldProps<Keywords[]>) => (
                       <Autocomplete
-                        options={keywordOptions}
+                        {...field}
+                        loading={fieldQuery.isFetching}
+                        value={field.value ?? []}
+                        multiple
+                        options={keywordsResult}
+                        renderOption={(props, option) => (
+                          <li {...props} key={option.type}>
+                            <Typography>{getLanguageString(option.label)}</Typography>
+                          </li>
+                        )}
+                        renderTags={(value, getTagProps) =>
+                          value.map((option, index) => (
+                            <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.label)} />
+                          ))
+                        }
+                        filterOptions={(options) => options}
+                        autoComplete
                         onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
+                        onChange={(_, value) => {
+                          setFieldValue(field.name, value);
+                        }}
                         renderInput={(params) => (
-                          <AutocompleteTextField {...params} isLoading={fieldQuery.isFetching} />
+                          <AutocompleteTextField
+                            {...params}
+                            isLoading={fieldQuery.isFetching}
+                            label={t('registration.description.keywords')}
+                            showSearchIcon={field.value.length === 0}
+                          />
                         )}
                       />
                     )}

@@ -1,6 +1,6 @@
 export interface Keywords {
   label: {
-    no?: string;
+    nb?: string;
     em?: string;
   };
   type: string;
