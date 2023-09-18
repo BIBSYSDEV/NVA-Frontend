@@ -8,7 +8,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { getDuplicateCheckPagePath, getResearchProfilePath } from '../../../../utils/urlPaths';
+import { getImportCandidatePath, getResearchProfilePath } from '../../../../utils/urlPaths';
 
 interface CentralImportResultItemProps {
   importCandidate: ImportCandidateSummary;
@@ -34,7 +34,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
           </Typography>
         )}
         <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-          <MuiLink component={Link} to={getDuplicateCheckPagePath(getIdentifierFromId(importCandidate.id))}>
+          <MuiLink component={Link} to={getImportCandidatePath(getIdentifierFromId(importCandidate.id))}>
             {getTitleString(importCandidate.mainTitle)}
           </MuiLink>
         </Typography>

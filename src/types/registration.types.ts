@@ -78,7 +78,7 @@ interface RegistrationPublisher {
 }
 
 export interface BaseRegistration {
-  readonly type: 'Publication';
+  readonly type: 'Publication' | 'ImportCandidate';
   readonly id: string;
   readonly identifier: string;
   readonly createdDate: string;

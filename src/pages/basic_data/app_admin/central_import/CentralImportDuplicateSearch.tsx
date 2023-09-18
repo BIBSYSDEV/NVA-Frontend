@@ -1,20 +1,27 @@
-import { Box, Typography } from '@mui/material';
+import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchResults } from '../../../../api/searchApi';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
-import { RegistrationList } from '../../../../components/RegistrationList';
+import { RegistrationListItemContent } from '../../../../components/RegistrationList';
+import { SearchListItem } from '../../../../components/styled/Wrappers';
 import { DuplicateSearchFilters } from '../../../../types/duplicateSearchTypes';
 import { DescriptionFieldNames, ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 
 interface CentralImportDuplicateSearchProps {
   duplicateSearchFilters: DuplicateSearchFilters;
+  registrationIdentifier: string;
+  setRegistrationIdentifier: (identifier: string) => void;
 }
 
-export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: CentralImportDuplicateSearchProps) => {
+export const CentralImportDuplicateSearch = ({
+  duplicateSearchFilters,
+  registrationIdentifier,
+  setRegistrationIdentifier,
+}: CentralImportDuplicateSearchProps) => {
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
@@ -52,8 +59,27 @@ export const CentralImportDuplicateSearch = ({ duplicateSearchFilters }: Central
           </Typography>
           {duplicateCandidatesSize > 0 && (
             <>
-              <RegistrationList registrations={duplicateCandidatesQuery.data?.hits ?? []} />
+              <FormControl sx={{ width: '100%' }}>
+                <RadioGroup
+                  value={registrationIdentifier}
+                  onChange={(event) => setRegistrationIdentifier(event.target.value)}>
+                  {duplicateCandidatesQuery.data?.hits.map((registration) => (
+                    <FormControlLabel
+                      key={registration.identifier}
+                      value={registration.identifier}
+                      sx={{ '.MuiFormControlLabel-label': { width: '100%' } }}
+                      control={<Radio />}
+                      label={
+                        <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+                          <RegistrationListItemContent registration={registration} />
+                        </SearchListItem>
+                      }
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
               <ListPagination
+                sx={{ mt: '0.5rem' }}
                 count={duplicateCandidatesSize}
                 rowsPerPage={rowsPerPage}
                 page={page}

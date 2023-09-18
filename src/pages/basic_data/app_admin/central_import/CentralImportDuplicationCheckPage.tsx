@@ -5,19 +5,22 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import {
-  createRegistrationFromImportCandidate,
-  fetchImportCandidate,
-  markImportCandidateStatusAsNotApplicable,
-} from '../../../../api/registrationApi';
+import { fetchRegistration, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { fetchImportCandidates } from '../../../../api/searchApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
-import { BackgroundDiv } from '../../../../components/styled/Wrappers';
+import { RegistrationListItemContent } from '../../../../components/RegistrationList';
+import { BackgroundDiv, SearchListItem } from '../../../../components/styled/Wrappers';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { emptyDuplicateSearchFilter } from '../../../../types/duplicateSearchTypes';
+import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
-import { IdentifierParams, getRegistrationLandingPagePath } from '../../../../utils/urlPaths';
+import {
+  IdentifierParams,
+  UrlPathTemplate,
+  getImportCandidateMergePath,
+  getImportCandidateWizardPath,
+} from '../../../../utils/urlPaths';
 import NotFound from '../../../errorpages/NotFound';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import { CentralImportResultItem } from './CentralImportResultItem';
@@ -28,38 +31,17 @@ export const CentralImportDuplicationCheckPage = () => {
   const dispatch = useDispatch();
   const { identifier } = useParams<IdentifierParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
+  const [registrationIdentifier, setRegistrationIdentifier] = useState('');
 
   const importCandidateQuery = useQuery({
-    queryKey: ['importCandidate', identifier],
+    queryKey: ['importCandidateSearch', identifier],
     queryFn: () => fetchImportCandidates(1, 0, `id:${identifier}`),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
   const importCandidate = importCandidateQuery.data?.hits[0];
 
-  const importCandidateMutation = useMutation({
-    mutationFn: async () => {
-      const initialDataRegistration = await fetchImportCandidate(identifier);
-      return await createRegistrationFromImportCandidate(initialDataRegistration);
-    },
-    onSuccess: () => {
-      dispatch(
-        setNotification({
-          message: t('feedback.success.create_registration'),
-          variant: 'success',
-        })
-      );
-    },
-    onError: () =>
-      dispatch(
-        setNotification({
-          message: t('feedback.error.create_registration'),
-          variant: 'error',
-        })
-      ),
-  });
-
   const importCandidateStatusMutation = useMutation({
-    mutationFn: () => markImportCandidateStatusAsNotApplicable(identifier),
+    mutationFn: () => updateImportCandidateStatus(identifier, { candidateStatus: 'NOT_APPLICABLE' }),
     onError: () =>
       dispatch(
         setNotification({
@@ -67,6 +49,13 @@ export const CentralImportDuplicationCheckPage = () => {
           variant: 'error',
         })
       ),
+  });
+
+  const importedRegistrationQuery = useQuery({
+    enabled:
+      importCandidate?.importStatus.candidateStatus === 'IMPORTED' && !!importCandidate.importStatus.nvaPublicationId,
+    queryFn: () => fetchRegistration(getIdentifierFromId(importCandidate?.importStatus.nvaPublicationId ?? '')),
+    meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
   useEffect(() => {
@@ -96,15 +85,38 @@ export const CentralImportDuplicationCheckPage = () => {
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
         ) : importCandidate ? (
           <>
-            {importCandidate && <CentralImportResultItem importCandidate={importCandidate} />}
-            <Typography variant="h3" sx={{ mt: '1rem' }}>
-              {t('basic_data.central_import.search_for_duplicates')}:
+            <Typography variant="h1" sx={{ mt: '1rem' }} gutterBottom>
+              {t('basic_data.central_import.import_candidate')}:
             </Typography>
-            <DuplicateSearchFilterForm
-              importCandidate={importCandidate}
-              setDuplicateSearchFilters={setDuplicateSearchFilters}
-            />
-            <CentralImportDuplicateSearch duplicateSearchFilters={duplicateSearchFilters} />
+            <CentralImportResultItem importCandidate={importCandidate} />
+
+            {importCandidate.importStatus.candidateStatus !== 'IMPORTED' ? (
+              <>
+                <Typography variant="h3" sx={{ mt: '1rem' }}>
+                  {t('basic_data.central_import.search_for_duplicates')}:
+                </Typography>
+                <DuplicateSearchFilterForm
+                  importCandidate={importCandidate}
+                  setDuplicateSearchFilters={setDuplicateSearchFilters}
+                />
+                <CentralImportDuplicateSearch
+                  duplicateSearchFilters={duplicateSearchFilters}
+                  registrationIdentifier={registrationIdentifier}
+                  setRegistrationIdentifier={setRegistrationIdentifier}
+                />
+              </>
+            ) : (
+              <>
+                <Typography variant="h1" sx={{ mt: '1rem' }} gutterBottom>
+                  {t('basic_data.central_import.result_in_nva')}:
+                </Typography>
+                {importedRegistrationQuery.data && (
+                  <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+                    <RegistrationListItemContent registration={importedRegistrationQuery.data} />
+                  </SearchListItem>
+                )}
+              </>
+            )}
           </>
         ) : (
           <NotFound />
@@ -122,37 +134,54 @@ export const CentralImportDuplicationCheckPage = () => {
           {importCandidate?.importStatus.candidateStatus === 'IMPORTED' && (
             <>
               <Typography>{t('basic_data.central_import.import_completed')}</Typography>
-              <Typography>
-                {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
-              </Typography>
+              {importCandidate.importStatus.modifiedDate && (
+                <Typography>
+                  {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
+                </Typography>
+              )}
             </>
           )}
           {importCandidate?.importStatus.candidateStatus === 'NOT_APPLICABLE' && (
             <>
               <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
-              <Typography>
-                {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
-              </Typography>
+              {importCandidate.importStatus.modifiedDate && (
+                <Typography>
+                  {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
+                </Typography>
+              )}
             </>
           )}
 
           {importCandidate?.importStatus.candidateStatus === 'NOT_IMPORTED' && (
             <>
-              {!importCandidateMutation.isSuccess && !importCandidateStatusMutation.isSuccess ? (
+              {!importCandidateStatusMutation.isSuccess ? (
                 <>
                   <Typography gutterBottom>
                     {t('basic_data.central_import.create_publication_from_import_candidate')}
                   </Typography>
 
-                  <LoadingButton
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    disabled={importCandidateStatusMutation.isLoading}
-                    loading={importCandidateMutation.isLoading}
-                    onClick={() => importCandidateMutation.mutate()}>
-                    {t('basic_data.central_import.create_new')}
-                  </LoadingButton>
+                  <Link to={getImportCandidateWizardPath(identifier)}>
+                    <Button variant="outlined" fullWidth size="small">
+                      {t('basic_data.central_import.create_new')}
+                    </Button>
+                  </Link>
+
+                  <Divider sx={{ my: '1rem' }} />
+
+                  <Typography gutterBottom>
+                    {t('basic_data.central_import.merge_candidate.merge_description')}
+                  </Typography>
+                  {registrationIdentifier ? (
+                    <Link to={getImportCandidateMergePath(identifier, registrationIdentifier)}>
+                      <Button variant="outlined" fullWidth size="small">
+                        {t('basic_data.central_import.merge_candidate.merge')}
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Button variant="outlined" fullWidth size="small" disabled>
+                      {t('basic_data.central_import.merge_candidate.merge')}
+                    </Button>
+                  )}
 
                   <Divider sx={{ my: '1rem' }} />
 
@@ -161,27 +190,23 @@ export const CentralImportDuplicationCheckPage = () => {
                     variant="outlined"
                     fullWidth
                     size="small"
-                    disabled={importCandidateMutation.isLoading}
                     loading={importCandidateStatusMutation.isLoading}
                     onClick={() => importCandidateStatusMutation.mutate()}>
                     {t('basic_data.central_import.not_applicable')}
                   </LoadingButton>
-                </>
-              ) : importCandidateMutation.isSuccess ? (
-                <>
-                  <Typography gutterBottom>{t('basic_data.central_import.import_completed')}</Typography>
-                  <Button
-                    variant="outlined"
-                    component={Link}
-                    to={getRegistrationLandingPagePath(importCandidateMutation.data.identifier)}>
-                    {t('basic_data.central_import.see_publication')}
-                  </Button>
                 </>
               ) : importCandidateStatusMutation.isSuccess ? (
                 <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
               ) : null}
             </>
           )}
+
+          <Divider sx={{ my: '1rem' }} />
+          <Link to={UrlPathTemplate.BasicDataCentralImport}>
+            <Button size="small" fullWidth variant="outlined">
+              {t('common.cancel')}
+            </Button>
+          </Link>
         </Box>
       </Paper>
     </Box>

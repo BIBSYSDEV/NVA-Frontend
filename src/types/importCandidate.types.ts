@@ -15,12 +15,14 @@ import { Journal, Publisher, Registration } from './registration.types';
 
 export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
 
-interface ImportStatus {
+export interface ImportStatus {
   candidateStatus: ImportCandidateStatus;
-  modifiedDate: string;
+  modifiedDate?: string;
+  setBy?: string;
+  nvaPublicationId?: string;
 }
 
-export interface ImportCandidate extends Omit<Registration, 'type'> {
+export interface ImportCandidate extends Registration {
   type: 'ImportCandidate';
   importStatus: ImportStatus;
 }

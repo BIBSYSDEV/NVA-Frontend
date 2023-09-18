@@ -38,6 +38,7 @@ export const emptyUser: FlatCristinPerson = {
   cristinIdentifier: '',
   affiliations: [],
   employments: [],
+  background: {},
 };
 
 const initialValues: AddEmployeeData = {
