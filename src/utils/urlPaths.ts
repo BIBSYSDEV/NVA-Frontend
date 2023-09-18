@@ -7,7 +7,9 @@ export enum UrlPathTemplate {
   BasicData = '/basic-data',
   BasicDataAddEmployee = '/basic-data/person-register/new',
   BasicDataCentralImport = '/basic-data/central-import',
-  BasicDataCentralImportDuplicateCheck = '/basic-data/central-import/:identifier',
+  BasicDataCentralImportCandidate = '/basic-data/central-import/:identifier',
+  BasicDataCentralImportCandidateWizard = '/basic-data/central-import/:identifier/edit',
+  BasicDataCentralImportCandidateMerge = '/basic-data/central-import/:candidateIdentifier/merge/:registrationIdentifier',
   BasicDataInstitutions = '/basic-data/institutions',
   BasicDataPersonRegister = '/basic-data/person-register',
   Editor = '/editor',
@@ -23,6 +25,7 @@ export enum UrlPathTemplate {
   Logout = '/logout',
   MyPage = '/my-page',
   MyPageMessages = '/my-page/messages',
+  MyPageMyFieldAndBackground = '/my-page/my-profile/background',
   MyPageMyMessages = '/my-page/messages/my-messages',
   MyPageMyMessagesRegistration = '/my-page/messages/my-messages/:identifier',
   MyPageMyProfile = '/my-page/my-profile',
@@ -52,11 +55,20 @@ export enum UrlPathTemplate {
 export const getRegistrationLandingPagePath = (identifier: string) =>
   UrlPathTemplate.RegistrationLandingPage.replace(':identifier', encodeURIComponent(identifier));
 
-export const getDuplicateCheckPagePath = (identifier: string) =>
-  UrlPathTemplate.BasicDataCentralImportDuplicateCheck.replace(':identifier', encodeURIComponent(identifier));
+export const getImportCandidatePath = (identifier: string) =>
+  UrlPathTemplate.BasicDataCentralImportCandidate.replace(':identifier', encodeURIComponent(identifier));
 
 export const getRegistrationWizardPath = (identifier: string) =>
   UrlPathTemplate.RegistrationWizard.replace(':identifier', encodeURIComponent(identifier));
+
+export const getImportCandidateWizardPath = (identifier: string) =>
+  UrlPathTemplate.BasicDataCentralImportCandidateWizard.replace(':identifier', encodeURIComponent(identifier));
+
+export const getImportCandidateMergePath = (candidateIdentifier: string, registrationIdentifier: string) =>
+  UrlPathTemplate.BasicDataCentralImportCandidateMerge.replace(
+    ':candidateIdentifier',
+    encodeURIComponent(candidateIdentifier)
+  ).replace(':registrationIdentifier', encodeURIComponent(registrationIdentifier));
 
 export const getResearchProfilePath = (userId: string) =>
   `${UrlPathTemplate.ResearchProfile}?id=${encodeURIComponent(userId)}`;

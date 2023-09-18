@@ -65,6 +65,7 @@ export const projectContributorToCristinPerson = (
         ],
         affiliations: [],
         employments: [],
+        background: {},
       }
     : null;
 
