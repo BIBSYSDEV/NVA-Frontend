@@ -555,7 +555,7 @@
         "field": "Fagfelt",
         "field_text": "Nøkkelord som kan beskrive fagfelt",
         "field_and_background": "Fagfelt og bakgrunn",
-        "keywords_search_text": "Skill nøkkelord med komma eller retur",
+        "keywords_search_text": "Du kan legge til flere nøkkelord av gangen",
         "norwegian": "Norsk"
       },
       "heading": {

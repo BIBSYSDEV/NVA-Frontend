@@ -26,12 +26,12 @@ export const MyFieldAndBackground = () => {
   const personId = user?.cristinId ?? '';
 
   const [keywordSearchTerm, setKeywordSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(keywordSearchTerm);
+  const debouncedKeywordsSearchTerm = useDebounce(keywordSearchTerm);
 
   const personQuery = useQuery({
     queryKey: [personId],
     queryFn: () => fetchPerson(personId),
-    meta: { message: t('feedback.error.get_person'), variant: 'error' },
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
 
   const person = personQuery.data;
@@ -39,10 +39,10 @@ export const MyFieldAndBackground = () => {
   const personKeywords = person?.keywords ?? [];
 
   const keywordsQuery = useQuery({
-    enabled: !!debouncedSearchTerm,
-    queryKey: ['keywords', debouncedSearchTerm],
-    queryFn: () => searchForKeywords(25, 1, debouncedSearchTerm),
-    meta: { message: t('feedback.error.get_keywords'), variant: 'error' },
+    enabled: !!debouncedKeywordsSearchTerm,
+    queryKey: ['keywords', debouncedKeywordsSearchTerm],
+    queryFn: () => searchForKeywords(25, 1, debouncedKeywordsSearchTerm),
+    meta: { errorMessage: t('feedback.error.get_keywords') },
   });
 
   const keywordsResult = keywordsQuery.data?.hits ?? [];
