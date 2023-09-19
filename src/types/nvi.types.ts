@@ -66,5 +66,13 @@ export interface NviCandidate {
   publicationId: string;
   approvalStatuses: NviCandidateApproval[];
   points: NviCandidatePoint[];
-  notes: any[];
+  notes: Note[];
+}
+
+export interface Note {
+  createdDate: string;
+  text: string;
+  user: {
+    value: string;
+  };
 }

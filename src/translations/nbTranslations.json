@@ -384,6 +384,7 @@
       "an_error_occurred": "En feil oppstod",
       "create_customer": "Kunne ikke opprette institusjon",
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
+      "create_note": "Kunne ikke sende merknad",
       "create_project": "Kunne ikke opprette prosjekt",
       "create_publishing_request": "Kunne ikke opprette publiseringsforespørsel",
       "create_registration": "Kunne ikke opprette registrering",
@@ -1597,6 +1598,7 @@
     "nvi": {
       "assigned": "Kontrolleres",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
+      "note": "Merknad",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "status": {
         "Approved": "Godkjent",

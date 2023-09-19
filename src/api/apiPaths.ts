@@ -57,3 +57,7 @@ export enum VerifiedFundingApiPath {
 export enum PersonPreferencesApiPath {
   PersonPreferences = '/person-preferences',
 }
+
+export enum ScientificIndexApiPath {
+  Candidate = '/scientific-index/candidate',
+}
