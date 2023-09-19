@@ -113,9 +113,7 @@ export const MyFieldAndBackground = () => {
                         value={field.value ?? []}
                         multiple
                         options={keywordsResult}
-                        isOptionEqualToValue={(option, value) =>
-                          getLanguageString(option.label) === getLanguageString(value.label)
-                        }
+                        isOptionEqualToValue={(option, value) => option.type === value.type}
                         getOptionLabel={(option) => getLanguageString(option.label)}
                         getOptionDisabled={(option) => field.value.some((keyword) => keyword.type === option.type)}
                         renderOption={(props, option) => (
