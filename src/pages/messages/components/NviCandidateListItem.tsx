@@ -1,4 +1,4 @@
-import { Box, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -79,7 +79,12 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
         )}
       </Box>
 
-      {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
+        <Tooltip title={t('tasks.nvi.nvi_points')}>
+          <Typography fontWeight={700}>{nviCandidate.points}</Typography>
+        </Tooltip>
+      </Box>
     </SearchListItem>
   );
 };
