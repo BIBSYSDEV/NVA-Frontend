@@ -179,6 +179,6 @@ export const searchForKeywords = async (results: number, page: number, query?: s
   const fetchKeywordsResponse = await apiRequest2<SearchResponse<Keywords>>({
     url: `${CristinApiPath.Keyword}${queryParams}`,
   });
-  throw Error();
+
   return fetchKeywordsResponse.data;
 };
