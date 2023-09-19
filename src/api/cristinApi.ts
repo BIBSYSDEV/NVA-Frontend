@@ -176,7 +176,7 @@ export const searchForKeywords = async (results: number, page: number, query?: s
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';
 
-  const fetchKeywordsResponse = await authenticatedApiRequest2<SearchResponse<Keywords>>({
+  const fetchKeywordsResponse = await apiRequest2<SearchResponse<Keywords>>({
     url: `${CristinApiPath.Keyword}${queryParams}`,
   });
   return fetchKeywordsResponse.data;

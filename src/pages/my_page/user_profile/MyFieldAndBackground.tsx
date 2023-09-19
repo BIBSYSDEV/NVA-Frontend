@@ -25,8 +25,8 @@ export const MyFieldAndBackground = () => {
   const user = useSelector((store: RootState) => store.user);
   const personId = user?.cristinId ?? '';
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm);
+  const [keywordSearchTerm, setKeywordSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(keywordSearchTerm);
 
   const personQuery = useQuery({
     queryKey: [personId],
@@ -38,21 +38,21 @@ export const MyFieldAndBackground = () => {
   const personBackground = person?.background ?? {};
   const personKeywords = person?.keywords ?? [];
 
-  const fieldQuery = useQuery({
+  const keywordsQuery = useQuery({
     enabled: !!debouncedSearchTerm,
-    queryKey: ['field', debouncedSearchTerm],
+    queryKey: ['keywords', debouncedSearchTerm],
     queryFn: () => searchForKeywords(25, 1, debouncedSearchTerm),
-    meta: { message: 'error', variant: 'error' },
+    meta: { message: t('feedback.error.get_keywords'), variant: 'error' },
   });
 
-  const keywordsResult = fieldQuery.data?.hits ?? [];
+  const keywordsResult = keywordsQuery.data?.hits ?? [];
 
   const initialValues: PersonBackgroundFormData = {
     background: {
-      no: personBackground.no ? personBackground.no : '',
-      en: personBackground.en ? personBackground.en : '',
+      no: personBackground.no ?? '',
+      en: personBackground.en ?? '',
     },
-    keywords: personKeywords ? personKeywords : [],
+    keywords: personKeywords ?? [],
   };
 
   const updatePerson = useMutation({
@@ -98,111 +98,109 @@ export const MyFieldAndBackground = () => {
         }}>
         <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
           {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (
-            <>
-              <Form>
-                <Box>
-                  <Typography variant="h2">{t('my_page.my_profile.field_and_background.field')}</Typography>
-                  <Typography variant="h3" sx={{ mb: '1rem', mt: '1.5rem' }}>
-                    {t('my_page.my_profile.field_and_background.field_text')}
-                  </Typography>
-                  <Field name={'keywords'}>
-                    {({ field }: FieldProps<Keywords[]>) => (
-                      <Autocomplete
-                        {...field}
-                        loading={fieldQuery.isFetching}
-                        value={field.value ?? []}
-                        multiple
-                        options={keywordsResult}
-                        isOptionEqualToValue={(option, value) => option.type === value.type}
-                        getOptionLabel={(option) => getLanguageString(option.label)}
-                        getOptionDisabled={(option) => field.value.some((keyword) => keyword.type === option.type)}
-                        renderOption={(props, option) => (
-                          <li {...props} key={option.type}>
-                            <Typography>{getLanguageString(option.label)}</Typography>
-                          </li>
-                        )}
-                        renderTags={(value, getTagProps) =>
-                          value.map((option, index) => (
-                            <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.label)} />
-                          ))
-                        }
-                        filterOptions={(options) => options}
-                        autoComplete
-                        onInputChange={(_, newInputValue) => setSearchTerm(newInputValue)}
-                        onChange={(_, value) => {
-                          setFieldValue(field.name, value);
-                        }}
-                        renderInput={(params) => (
-                          <AutocompleteTextField
-                            {...params}
-                            isLoading={fieldQuery.isFetching}
-                            label={t('registration.description.keywords')}
-                            placeholder={t('common.search')}
-                            showSearchIcon={field.value.length === 0}
-                          />
-                        )}
-                      />
-                    )}
-                  </Field>
-                  <Typography variant="body1" fontStyle={'italic'} sx={{ mb: '2rem' }}>
-                    {t('my_page.my_profile.field_and_background.keywords_search_text')}
-                  </Typography>
-                </Box>
+            <Form>
+              <Box>
+                <Typography variant="h2">{t('my_page.my_profile.field_and_background.field')}</Typography>
+                <Typography variant="h3" sx={{ mb: '1rem', mt: '1.5rem' }}>
+                  {t('my_page.my_profile.field_and_background.field_text')}
+                </Typography>
+                <Field name={'keywords'}>
+                  {({ field }: FieldProps<Keywords[]>) => (
+                    <Autocomplete
+                      {...field}
+                      loading={keywordsQuery.isFetching}
+                      value={field.value ?? []}
+                      multiple
+                      options={keywordsResult}
+                      isOptionEqualToValue={(option, value) => option.type === value.type}
+                      getOptionLabel={(option) => getLanguageString(option.label)}
+                      getOptionDisabled={(option) => field.value.some((keyword) => keyword.type === option.type)}
+                      renderOption={(props, option) => (
+                        <li {...props} key={option.type}>
+                          <Typography>{getLanguageString(option.label)}</Typography>
+                        </li>
+                      )}
+                      renderTags={(value, getTagProps) =>
+                        value.map((option, index) => (
+                          <Chip {...getTagProps({ index })} key={index} label={getLanguageString(option.label)} />
+                        ))
+                      }
+                      filterOptions={(options) => options}
+                      autoComplete
+                      onInputChange={(_, newInputValue) => setKeywordSearchTerm(newInputValue)}
+                      onChange={(_, value) => {
+                        setFieldValue(field.name, value);
+                      }}
+                      renderInput={(params) => (
+                        <AutocompleteTextField
+                          {...params}
+                          isLoading={keywordsQuery.isFetching}
+                          label={t('registration.description.keywords')}
+                          placeholder={t('common.search')}
+                          showSearchIcon={field.value.length === 0}
+                        />
+                      )}
+                    />
+                  )}
+                </Field>
+                <Typography variant="body1" fontStyle={'italic'} sx={{ mb: '2rem' }}>
+                  {t('my_page.my_profile.field_and_background.keywords_search_text')}
+                </Typography>
+              </Box>
 
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '4rem' }}>
-                  <Typography variant="h2" sx={{ mb: '1rem' }}>
-                    {t('my_page.my_profile.background')}
-                  </Typography>
-                  <Typography variant="h3">{t('my_page.my_profile.field_and_background.norwegian')}</Typography>
-                  <Field name={'background.no'}>
-                    {({ field }: FieldProps<string>) => (
-                      <>
-                        <TextField
-                          {...field}
-                          inputProps={{ maxLength: 200 }}
-                          label={t('my_page.my_profile.background')}
-                          variant="filled"
-                          multiline
-                          rows="3"
-                          placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
-                        />
-                        <Typography sx={{ alignSelf: 'end' }}>{field.value.length}/200</Typography>
-                      </>
-                    )}
-                  </Field>
-                </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
-                  <Typography variant="h3">{t('my_page.my_profile.field_and_background.english')}</Typography>
-                  <Field name={'background.en'}>
-                    {({ field }: FieldProps<string>) => (
-                      <>
-                        <TextField
-                          {...field}
-                          inputProps={{ maxLength: 200 }}
-                          label={t('my_page.my_profile.background')}
-                          variant="filled"
-                          multiline
-                          rows="3"
-                          placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
-                        />
-                        <Typography sx={{ alignSelf: 'end' }}>{field.value.length}/200</Typography>
-                      </>
-                    )}
-                  </Field>
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem' }}>
-                  <Button
-                    onClick={() => {
-                      resetForm();
-                    }}>
-                    {t('common.cancel')}
-                  </Button>
-                  <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
-                    {t('common.save')}
-                  </LoadingButton>
-                </Box>
-              </Form>
-            </>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '4rem' }}>
+                <Typography variant="h2" sx={{ mb: '1rem' }}>
+                  {t('my_page.my_profile.background')}
+                </Typography>
+                <Typography variant="h3">{t('my_page.my_profile.field_and_background.norwegian')}</Typography>
+                <Field name={'background.no'}>
+                  {({ field }: FieldProps<string>) => (
+                    <>
+                      <TextField
+                        {...field}
+                        inputProps={{ maxLength: 200 }}
+                        label={t('my_page.my_profile.background')}
+                        variant="filled"
+                        multiline
+                        rows="3"
+                        placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
+                      />
+                      <Typography sx={{ alignSelf: 'end' }}>{field.value.length}/200</Typography>
+                    </>
+                  )}
+                </Field>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
+                <Typography variant="h3">{t('my_page.my_profile.field_and_background.english')}</Typography>
+                <Field name={'background.en'}>
+                  {({ field }: FieldProps<string>) => (
+                    <>
+                      <TextField
+                        {...field}
+                        inputProps={{ maxLength: 200 }}
+                        label={t('my_page.my_profile.background')}
+                        variant="filled"
+                        multiline
+                        rows="3"
+                        placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
+                      />
+                      <Typography sx={{ alignSelf: 'end' }}>{field.value.length}/200</Typography>
+                    </>
+                  )}
+                </Field>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem', gap: '1rem' }}>
+                <Button
+                  onClick={() => {
+                    resetForm();
+                  }}>
+                  {t('common.cancel')}
+                </Button>
+                <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
+                  {t('common.save')}
+                </LoadingButton>
+              </Box>
+            </Form>
           )}
         </Formik>
       </BackgroundDiv>

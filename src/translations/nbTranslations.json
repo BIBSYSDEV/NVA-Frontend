@@ -393,6 +393,7 @@
       "get_journal": "Kunne ikke hente tidsskrift",
       "get_journal_article": "Kunne ikke hente artikkel i tidsskrift",
       "get_journals": "Kunne ikke hente tidsskrifter",
+      "get_keywords": "Kunne ikke hente nøkkelord",
       "get_messages": "Kunne ikke hente meldinger",
       "get_nvi_candidate": "Kunne ikke hente NVI-kandidat",
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
