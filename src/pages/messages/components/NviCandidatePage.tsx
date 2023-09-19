@@ -14,6 +14,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
+import { MessageItem } from './MessageList';
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
@@ -40,6 +41,7 @@ export const NviCandidatePage = () => {
       await createNote(identifier, { text });
       await nviCandidateQuery.refetch();
     },
+    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.create_note'), variant: 'success' })),
     onError: () => dispatch(setNotification({ message: t('feedback.error.create_note'), variant: 'error' })),
   });
 
@@ -68,9 +70,28 @@ export const NviCandidatePage = () => {
               </StyledPaperHeader>
 
               <Box sx={{ m: '1rem' }}>
-                {nviCandidateQuery.data?.notes.map((note) => {
-                  return <Typography>{note.text}</Typography>;
-                })}
+                {nviCandidateQuery.data && nviCandidateQuery.data.notes.length > 0 && (
+                  <Box
+                    component="ul"
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      listStyleType: 'none',
+                      p: 0,
+                      m: '0 0 1rem 0',
+                      gap: '0.25rem',
+                    }}>
+                    {nviCandidateQuery.data.notes.map((note) => (
+                      <MessageItem
+                        key={note.createdDate}
+                        text={note.text}
+                        date={note.createdDate}
+                        senderId={note.user.value}
+                        backgroundColor="nvi.main"
+                      />
+                    ))}
+                  </Box>
+                )}
 
                 <form
                   onSubmit={(event) => {
