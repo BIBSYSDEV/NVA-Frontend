@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { fetchRegistration } from '../../../api/registrationApi';
 import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
+import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
@@ -41,9 +42,20 @@ export const NviCandidatePage = () => {
         gap: '1rem',
       }}>
       {registrationQuery.data && (
-        <ErrorBoundary>
-          <PublicRegistrationContent registration={registrationQuery.data} />
-        </ErrorBoundary>
+        <>
+          <ErrorBoundary>
+            <PublicRegistrationContent registration={registrationQuery.data} />
+          </ErrorBoundary>
+          <ErrorBoundary>
+            <Paper elevation={0} sx={{ gridArea: 'nvi' }}>
+              <StyledPaperHeader>
+                <Typography color="inherit" variant="h1">
+                  {t('common.dialogue')}
+                </Typography>
+              </StyledPaperHeader>
+            </Paper>
+          </ErrorBoundary>
+        </>
       )}
     </Box>
   );
