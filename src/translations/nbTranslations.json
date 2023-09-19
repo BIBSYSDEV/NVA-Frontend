@@ -1588,7 +1588,6 @@
       "assigned": "Kontrolleres",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "no_nvi_candidates": "Ingen NVI-kandidater",
-      "nvi_points": "NVI-poeng",
       "status": {
         "Approved": "Godkjent",
         "Pending": "Til kontroll",

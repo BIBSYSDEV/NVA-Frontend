@@ -25,7 +25,6 @@ export interface NviCandidateSearchHit {
   };
   approvals: NviCandidateSearchHitApproval[];
   numberOfApprovals: number;
-  points: number;
 }
 
 interface AggregationCount {
