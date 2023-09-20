@@ -156,7 +156,9 @@ const ResearchProfile = () => {
         )}
         {(!!personBackground || personKeywords.length > 0) && (
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '70%' }}>
-            <Typography variant="h3">{t('my_page.my_profile.field_and_background.field_and_background')}</Typography>
+            <Typography variant="h3" gutterBottom>
+              {t('my_page.my_profile.field_and_background.field_and_background')}
+            </Typography>
             <Box sx={{ display: 'flex', gap: '0.5rem', mb: '0.5rem' }}>
               {personKeywords.length > 0 &&
                 personKeywords.map((keyword) => (
