@@ -83,7 +83,6 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
                     <Chip
                       sx={{
                         width: 'fit-content',
-                        borderRadius: '4px',
                         border: '1px solid',
                         borderColor: 'primary.main',
                       }}

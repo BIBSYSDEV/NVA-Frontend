@@ -163,7 +163,6 @@ const ResearchProfile = () => {
                   <Chip
                     sx={{
                       width: 'fit-content',
-                      borderRadius: '4px',
                       border: '1px solid',
                       borderColor: 'primary.main',
                     }}
