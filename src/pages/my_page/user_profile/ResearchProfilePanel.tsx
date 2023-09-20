@@ -74,15 +74,16 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
               ))}
             </Box>
             {personKeywords.length > 0 && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
-                <Typography variant="h3">{t('my_page.my_profile.field_and_background.field')}</Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+              <>
+                <Typography variant="h3" sx={{ mt: '1rem' }}>
+                  {t('my_page.my_profile.field_and_background.field')}
+                </Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', mt: '1rem' }}>
                   {personKeywords.map((keyword) => (
                     <Chip
                       sx={{
                         width: 'fit-content',
                         borderRadius: '4px',
-                        bgcolor: 'white',
                         border: '1px solid',
                         borderColor: 'primary.main',
                       }}
@@ -91,7 +92,7 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
                     />
                   ))}
                 </Box>
-              </Box>
+              </>
             )}
             {!!personBackground && (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>

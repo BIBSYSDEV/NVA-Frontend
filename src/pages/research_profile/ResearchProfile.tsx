@@ -164,7 +164,6 @@ const ResearchProfile = () => {
                     sx={{
                       width: 'fit-content',
                       borderRadius: '4px',
-                      bgcolor: 'white',
                       border: '1px solid',
                       borderColor: 'primary.main',
                     }}
