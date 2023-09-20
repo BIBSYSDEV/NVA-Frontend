@@ -26,7 +26,7 @@ export const MessageForm = ({ confirmAction, fieldLabel, buttonTitle }: MessageF
     <Formik
       initialValues={initValues}
       onSubmit={async (values, { resetForm }) => {
-        await confirmAction(values.message);
+        await confirmAction(values.message.trim());
         resetForm();
       }}>
       {({ isSubmitting }) => (

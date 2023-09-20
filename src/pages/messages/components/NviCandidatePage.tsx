@@ -45,6 +45,12 @@ export const NviCandidatePage = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.create_note'), variant: 'error' })),
   });
 
+  const sortedNotes = (nviCandidateQuery.data?.notes ?? []).sort((a, b) => {
+    const dateA = new Date(a.createdDate);
+    const dateB = new Date(b.createdDate);
+    return dateB.getTime() - dateA.getTime();
+  });
+
   return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : (
@@ -70,7 +76,7 @@ export const NviCandidatePage = () => {
             </StyledPaperHeader>
 
             <Box sx={{ m: '1rem' }}>
-              {nviCandidateQuery.data && nviCandidateQuery.data.notes.length > 0 && (
+              {sortedNotes.length > 0 && (
                 <Box
                   component="ul"
                   sx={{
@@ -81,7 +87,7 @@ export const NviCandidatePage = () => {
                     m: '0 0 1rem 0',
                     gap: '0.25rem',
                   }}>
-                  {nviCandidateQuery.data.notes.map((note) => (
+                  {sortedNotes.map((note) => (
                     <ErrorBoundary key={note.createdDate}>
                       <MessageItem
                         text={note.text}
