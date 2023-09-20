@@ -406,6 +406,7 @@
       "get_journal": "Kunne ikke hente tidsskrift",
       "get_journal_article": "Kunne ikke hente artikkel i tidsskrift",
       "get_journals": "Kunne ikke hente tidsskrifter",
+      "get_keywords": "Kunne ikke hente nøkkelord",
       "get_messages": "Kunne ikke hente meldinger",
       "get_nvi_candidate": "Kunne ikke hente NVI-kandidat",
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
@@ -566,7 +567,10 @@
       "field_and_background": {
         "background_placeholder": "Skriv inn",
         "english": "Engelsk",
+        "field": "Fagfelt",
+        "field_text": "Nøkkelord som kan beskrive fagfelt",
         "field_and_background": "Fagfelt og bakgrunn",
+        "keywords_search_text": "Du kan legge til flere nøkkelord av gangen",
         "norwegian": "Norsk"
       },
       "heading": {
@@ -1601,6 +1605,7 @@
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "note": "Merknad",
       "no_nvi_candidates": "Ingen NVI-kandidater",
+      "nvi_points": "NVI-poeng",
       "status": {
         "Approved": "Godkjent",
         "Pending": "Til kontroll",
