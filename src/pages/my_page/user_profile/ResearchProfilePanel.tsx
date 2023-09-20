@@ -1,5 +1,5 @@
 import PreviewIcon from '@mui/icons-material/Preview';
-import { Box, Divider, IconButton, Typography } from '@mui/material';
+import { Box, Chip, Divider, IconButton, Typography } from '@mui/material';
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { CristinPerson } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getContributorInitials } from '../../../utils/registration-helpers';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
 import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
@@ -26,6 +27,8 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
+  const personBackground = getLanguageString(person?.background) ?? '';
+  const personKeywords = person?.keywords ?? [];
 
   const currentPath = location.pathname.replace(/\/$/, '').toLowerCase();
   const isPreview = currentPath === UrlPathTemplate.MyPageMyPersonalia;
@@ -78,6 +81,34 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
                 </Fragment>
               ))}
             </Box>
+            {personKeywords.length > 0 && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
+                <Typography variant="h3">{t('my_page.my_profile.field_and_background.field')}</Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+                  {personKeywords.map((keyword) => (
+                    <Chip
+                      sx={{
+                        maxWidth: 'fit-content',
+                        borderRadius: '4px',
+                        bgcolor: 'white',
+                        border: '1px solid',
+                        borderColor: 'primary.main',
+                        width: 'max-content',
+                      }}
+                      key={keyword.type}
+                      label={getLanguageString(keyword.label)}
+                      variant="filled"
+                    />
+                  ))}
+                </Box>
+              </Box>
+            )}
+            {!!personBackground && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
+                <Typography variant="h3">{t('my_page.my_profile.background')}</Typography>
+                <Typography>{personBackground}</Typography>
+              </Box>
+            )}
           </>
         )}
       </Box>
