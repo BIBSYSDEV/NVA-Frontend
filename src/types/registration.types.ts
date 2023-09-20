@@ -266,29 +266,29 @@ interface ContributorAggregationBucket extends AggregationBucket {
 }
 
 export interface RegistrationAggregations {
-  topLevelOrganizations: {
-    id: {
+  topLevelOrganizations?: {
+    id?: {
       buckets: LabelAggregationBucket[];
     };
   };
-  entityDescription: {
-    reference: {
-      publicationInstance: {
-        type: {
+  entityDescription?: {
+    reference?: {
+      publicationInstance?: {
+        type?: {
           buckets: AggregationBucket[];
         };
       };
     };
-    contributors: {
-      identity: {
-        id: {
+    contributors?: {
+      identity?: {
+        id?: {
           buckets: ContributorAggregationBucket[];
         };
       };
     };
   };
-  fundings: {
-    identifier: {
+  fundings?: {
+    identifier?: {
       buckets: LabelAggregationBucket[];
     };
   };

@@ -161,7 +161,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       fieldValueText = t(`registration.publication_types.${property.value as PublicationInstanceType}`);
                       break;
                     case SearchFieldName.ContributorId: {
-                      const personName = aggregations.entityDescription.contributors.identity.id.buckets.find(
+                      const personName = aggregations.entityDescription?.contributors?.identity?.id?.buckets.find(
                         (bucket) => bucket.key === property.value
                       )?.name.buckets[0].key;
                       if (personName) {
@@ -176,7 +176,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       break;
                     }
                     case SearchFieldName.TopLevelOrganizationId: {
-                      const institutionLabels = aggregations.topLevelOrganizations.id.buckets.find(
+                      const institutionLabels = aggregations.topLevelOrganizations?.id?.buckets.find(
                         (bucket) => bucket.key === property.value
                       );
                       const institutionName = institutionLabels ? getLabelFromBucket(institutionLabels) : '';
@@ -192,7 +192,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       break;
                     }
                     case SearchFieldName.FundingSource: {
-                      const fundingLabels = aggregations.fundings.identifier.buckets.find(
+                      const fundingLabels = aggregations.fundings?.identifier?.buckets.find(
                         (bucket) => bucket.key === property.value
                       );
                       const fundingName = fundingLabels ? getLabelFromBucket(fundingLabels) : '';
