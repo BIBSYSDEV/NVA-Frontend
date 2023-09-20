@@ -27,7 +27,7 @@ enum Color {
   Project = '#E48F8F',
   PublishingRequest = '#FFD27B',
   PublishingRequestLight = '#FFF0D3',
-  NviMain = '#ee95ea',
+  NviMain = '#EE95EA',
   NviLight = '#F8D3F6',
 }
 

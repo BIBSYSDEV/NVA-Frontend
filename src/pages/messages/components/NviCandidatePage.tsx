@@ -63,7 +63,7 @@ export const NviCandidatePage = () => {
         gap: '1rem',
       }}>
       {registrationQuery.data && (
-        <>
+        <ErrorBoundary>
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
           </ErrorBoundary>
@@ -109,7 +109,7 @@ export const NviCandidatePage = () => {
               />
             </Box>
           </Paper>
-        </>
+        </ErrorBoundary>
       )}
     </Box>
   );
