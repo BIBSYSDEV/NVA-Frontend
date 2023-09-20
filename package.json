@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "react-scripts build",
-    "pre-commit": "npx pretty-quick --staged && npm run unused-i18n-keys",
+    "pre-commit": "npx lint-staged && npm run unused-i18n-keys",
     "prepare": "husky install",
     "start": "react-scripts -r @cypress/instrument-cra start",
     "start:mock": "set REACT_APP_USE_MOCK=true&& npm start",
@@ -76,11 +76,11 @@
     "cypress-axe": "^1.5.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-cypress": "^2.15.1",
-    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-prettier": "^5.0.0",
     "husky": "^8.0.3",
     "i18n-unused": "^0.14.0",
-    "prettier": "^2.8.8",
-    "pretty-quick": "^3.1.3",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
     "react-scripts": "^5.0.1",
     "start-server-and-test": "^2.0.0",
     "typescript": "^4.9.5"
