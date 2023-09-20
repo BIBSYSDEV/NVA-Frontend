@@ -94,10 +94,12 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
               </>
             )}
             {!!personBackground && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
-                <Typography variant="h3">{t('my_page.my_profile.background')}</Typography>
+              <>
+                <Typography variant="h3" gutterBottom sx={{ mt: '1rem' }}>
+                  {t('my_page.my_profile.background')}
+                </Typography>
                 <Typography>{personBackground}</Typography>
-              </Box>
+              </>
             )}
           </>
         )}
