@@ -24,7 +24,7 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
-  const personBackground = getLanguageString(person?.background) ?? '';
+  const personBackground = getLanguageString(person?.background);
   const personKeywords = person?.keywords ?? [];
 
   return (
