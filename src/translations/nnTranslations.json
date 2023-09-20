@@ -48,18 +48,30 @@
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Sentralimport",
       "create_new": "Opprett ny",
-      "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importpublikasjonen.",
+      "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importdata.",
       "duplicate_search_hits": "Søkjet ga følgjande treff:",
       "duplicate_search_no_hits": "Søkjet ga inga treff",
+      "import": "Importer",
+      "import_candidate": "",
       "import_completed": "Publikasjonen er importert.",
       "import_not_applicable": "Publikasjonen er markert som mangelfull.",
       "mark_as_not_applicable": "Marker som mangelfull.",
+      "merge_candidate": {
+        "merge": "Slå saman",
+        "merge_description": "Slå saman importdata med allereie registrert data.",
+        "merge_details_1": "",
+        "merge_details_2": "",
+        "metadata_to_import": "Metadata til import",
+        "result_id": "",
+        "result_in_nva": "Resultat i NVA",
+        "update_value": "Oppdater verdi"
+      },
       "not_applicable": "Mangelfull",
       "or_search_with": "eller søk med",
       "reset_search_values": "Tilbakestill verdiar",
+      "result_in_nva": "",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikat",
-      "see_publication": "Sjå publikasjon",
       "status": {
         "IMPORTED": "Importert",
         "NOT_APPLICABLE": "Mangelfull",
@@ -393,8 +405,9 @@
       "get_journal": "Kunne ikkje hente tidsskrift",
       "get_journal_article": "Kunne ikkje hente artikkel i tidsskrift",
       "get_journals": "Kunne ikkje hente tidsskrift",
+      "get_keywords": "",
       "get_messages": "Kunne ikkje hente meldingar",
-      "get_nvi_candidate": "",
+      "get_nvi_candidate": "Kunne ikkje hente NVI-kandidat",
       "get_nvi_candidates": "Kunne ikkje hente NVI-kandidatar",
       "get_orcid": "Kunne ikkje hente data frå ORCID",
       "get_person": "Kunne ikkje hente person",
@@ -424,8 +437,9 @@
       "update_institution_user": "Kunne ikkje oppdatere brukar",
       "update_orcid": "Oppdatering av ORCID-kopling feila",
       "update_person": "Kunne ikkje oppdatere peson",
+      "update_profile_photo": "Kunne ikkje oppdatere profilbilete",
       "update_project": "Kunne ikkje oppdatere prosjekt",
-      "update_promoted_publication": "",
+      "update_promoted_publication": "Kunne ikkje oppdatere favorittmarkering",
       "update_publish_strategy": "Kunne ikkje oppdatere publiseringsstrategi",
       "update_publishing_request": "Kunne ikkje oppdatere publiseringsførespurnad",
       "update_registration": "Kunne ikkje oppdatere registrering",
@@ -446,6 +460,7 @@
       "delete_registration": "Registrering vart sletta",
       "doi_request_sent": "DOI-førespurnad sendt",
       "doi_request_updated": "DOI-førespurnaden vart oppdatert",
+      "merge_import_candidate": "Importdata vart slått saman med resultatdata",
       "publishing_request_approved": "Registreringa vart publisert",
       "publishing_request_rejected": "Publiseringsførespurnaden vart avvist",
       "removed_role": "Rollen vart fjerna",
@@ -455,8 +470,9 @@
       "update_institution_user": "Brukar er oppdatert",
       "update_orcid": "ORCID-kopling vart oppdatert",
       "update_person": "Person vart oppdatert",
+      "update_profile_photo": "Profilbilete vart oppdatert",
       "update_project": "Prosjektet vart oppdatert",
-      "update_promoted_publication": "",
+      "update_promoted_publication": "Favorittmarkering vart oppdatert",
       "update_publish_strategy": "Publiseringsstrategi vart oppdatert",
       "update_registration": "Registreringa er oppdatert",
       "update_ticket_assignee": "Kurator vart oppdatert",
@@ -544,7 +560,17 @@
     },
     "my_page": "Mi side",
     "my_profile": {
-      "edit_promoted_publication": "",
+      "background": "Bakgrunn",
+      "edit_promoted_publication": "Legg til/fjern som favoritt",
+      "field_and_background": {
+        "background_placeholder": "Skriv inn",
+        "english": "Engelsk",
+        "field": "",
+        "field_and_background": "Fagfelt og bakgrunn",
+        "field_text": "",
+        "keywords_search_text": "",
+        "norwegian": "Norsk"
+      },
       "heading": {
         "affiliations": "Tilknytingar",
         "personalia": "Personalia",
@@ -554,7 +580,8 @@
         "cristin_id": "Cristin ID",
         "full_name": "Fullt namn",
         "identity": "Identitet",
-        "not_shown_publicly": "Vert ikkje vist offentleg"
+        "not_shown_publicly": "Vert ikkje vist offentleg",
+        "upload_profile_photo": "Last opp profilbilete"
       },
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskingsresultat",
@@ -572,6 +599,7 @@
       },
       "preferred_first_name": "Føretrekt fornamn",
       "preferred_last_name": "Føretrekt etternamn",
+      "profile_picture": "Profilbilete",
       "projects": "Prosjekt",
       "research_profile_summary": {
         "affiliations": "Tilknytingar",
@@ -616,8 +644,8 @@
       "no_active_employments": "Du har inga roller av di du ikkje har nokre aktive tilsettingar, og har ikkje tilgang til å registrere.",
       "no_roles": "Du har inga roller av di du ikkje har fått tildelt roller av din adiminstrator",
       "not_customer": "Du har inga roller av di din institusjon er ukjend for applikasjonen",
-      "nvi_curator": "",
-      "nvi_curator_description": ""
+      "nvi_curator": "NVI-kurator",
+      "nvi_curator_description": "Kan sjå og handsame NVI-kandidatar."
     }
   },
   "privacy": {
@@ -1489,7 +1517,7 @@
       "place_for_event": "Stad for arrangement",
       "print_issn": "Print ISSN",
       "protected_type": "Du manglar tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Viss den er utanlandsk, be om kuratorstøtte for hjelp til publiseringa.",
-      "publisher_or_organizer": "Tidsskrift/Boktittel/medium",
+      "publisher_or_organizer": "Utgjevar/arrangør eller liknande",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som vart nytta ved registeringsstart. Ønskjer du å fjerne kobling til original DOI?",
       "research_data": {
@@ -1571,15 +1599,17 @@
     "limited_to": "Avgrensa til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukardialoger",
     "nvi": {
-      "assigned": "",
-      "no_nvi_candidates": "",
+      "assigned": "Kontrolleres",
+      "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
+      "no_nvi_candidates": "Ingen NVI-kandidatar",
+      "nvi_points": "",
       "status": {
-        "Approved": "",
-        "Pending": "",
-        "Rejected": ""
+        "Approved": "Godkjend",
+        "Pending": "Til kontroll",
+        "Rejected": "Avvist"
       },
-      "waiting_for_other_institutions": "",
-      "waiting_for_your_institution": ""
+      "waiting_for_other_institutions": "Venter på andre institusjonar",
+      "waiting_for_your_institution": "Venter på din institusjon"
     },
     "status": "Status",
     "unread": "",

@@ -48,18 +48,30 @@
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Central import",
       "create_new": "Create new",
-      "create_publication_from_import_candidate": "Create new publication from import publication.",
+      "create_publication_from_import_candidate": "Create new publication from import data.",
       "duplicate_search_hits": "",
       "duplicate_search_no_hits": "The search returned no hits",
+      "import": "Import",
+      "import_candidate": "",
       "import_completed": "The publication has been imported.",
       "import_not_applicable": "The publication is marked as incomplete.",
       "mark_as_not_applicable": "Mark as incomplete.",
+      "merge_candidate": {
+        "merge": "Merge",
+        "merge_description": "Merge import data with already registered data.",
+        "merge_details_1": "",
+        "merge_details_2": "",
+        "metadata_to_import": "Metadata for import",
+        "result_id": "",
+        "result_in_nva": "Result in NVA",
+        "update_value": "Update value"
+      },
       "not_applicable": "Incomplete",
       "or_search_with": "or search with",
       "reset_search_values": "Reset values",
+      "result_in_nva": "",
       "search_again": "Search again",
       "search_for_duplicates": "Search for duplicates",
-      "see_publication": "View publication",
       "status": {
         "IMPORTED": "Imported",
         "NOT_APPLICABLE": "Incomplete",
@@ -393,9 +405,10 @@
       "get_journal": "Failed to retrieve journal",
       "get_journal_article": "Failed to retrieve journal article",
       "get_journals": "Failed to retrieve journals",
+      "get_keywords": "",
       "get_messages": "Failed to retrieve messages",
-      "get_nvi_candidate": "",
-      "get_nvi_candidates": "",
+      "get_nvi_candidate": "Failed to retrieve NVI candidate",
+      "get_nvi_candidates": "Failed to retrieve NVI candidates",
       "get_orcid": "Failed to retrieve data from ORCID",
       "get_person": "Failed to retrieve person",
       "get_positions": "Failed to retrieve positions",
@@ -424,6 +437,7 @@
       "update_institution_user": "User could not be updated",
       "update_orcid": "Updating ORCID link failed",
       "update_person": "Could not update person",
+      "update_profile_photo": "Failed to update profile picture",
       "update_project": "Could not update project",
       "update_promoted_publication": "",
       "update_publish_strategy": "Failed to update publishing strategy",
@@ -446,6 +460,7 @@
       "delete_registration": "Deleted registration",
       "doi_request_sent": "DOI request sent",
       "doi_request_updated": "DOI request is updated",
+      "merge_import_candidate": "Import data was merged with existing result data",
       "publishing_request_approved": "The registration was published",
       "publishing_request_rejected": "The publishing request was rejected",
       "removed_role": "Role removed",
@@ -455,6 +470,7 @@
       "update_institution_user": "Updated user",
       "update_orcid": "ORCID link updated successfully",
       "update_person": "Successfully updated person",
+      "update_profile_photo": "Profile picture updated successfully",
       "update_project": "Successfully updated project",
       "update_promoted_publication": "",
       "update_publish_strategy": "Updated publishing strategy",
@@ -544,7 +560,17 @@
     },
     "my_page": "My page",
     "my_profile": {
-      "edit_promoted_publication": "",
+      "background": "Background",
+      "edit_promoted_publication": "Add/remove favorite",
+      "field_and_background": {
+        "background_placeholder": "Fill in",
+        "english": "English",
+        "field": "",
+        "field_and_background": "Field of study and background",
+        "field_text": "",
+        "keywords_search_text": "",
+        "norwegian": "Norwegian"
+      },
       "heading": {
         "affiliations": "Affiliations",
         "personalia": "Personal details",
@@ -554,7 +580,8 @@
         "cristin_id": "Cristin ID",
         "full_name": "Full name",
         "identity": "Identity",
-        "not_shown_publicly": "Not displayed publicly"
+        "not_shown_publicly": "Not displayed publicly",
+        "upload_profile_photo": "Upload profile picture"
       },
       "my_projects": "My projects",
       "my_research_results": "My research results",
@@ -572,6 +599,7 @@
       },
       "preferred_first_name": "Preferred first name",
       "preferred_last_name": "Preferred last name",
+      "profile_picture": "Profile picture",
       "projects": "Projects",
       "research_profile_summary": {
         "affiliations": "Affiliations",
@@ -616,8 +644,8 @@
       "no_active_employments": "You do not have any roles because you have no active employments and do not have access to register.",
       "no_roles": "You do not have any roles because your administrator has not assigned any roles to you",
       "not_customer": "You do not have any roles because your institution is unknown to the application",
-      "nvi_curator": "",
-      "nvi_curator_description": ""
+      "nvi_curator": "NVI curator",
+      "nvi_curator_description": "View and process NVI candidates."
     }
   },
   "privacy": {
@@ -1571,15 +1599,17 @@
     "limited_to": "Limited to: \"{{name}}\"",
     "my_user_dialogs": "My user dialogs",
     "nvi": {
-      "assigned": "",
+      "assigned": "Pending",
+      "completed_count": "Completed ({{completed}} of {{total}})",
       "no_nvi_candidates": "No NVI candidates",
+      "nvi_points": "",
       "status": {
-        "Approved": "",
-        "Pending": "",
-        "Rejected": ""
+        "Approved": "Approved",
+        "Pending": "Pending",
+        "Rejected": "Rejected"
       },
-      "waiting_for_other_institutions": "",
-      "waiting_for_your_institution": ""
+      "waiting_for_other_institutions": "Waiting for other institutions",
+      "waiting_for_your_institution": "Waiting for your institution"
     },
     "status": "Status",
     "unread": "Unread",
