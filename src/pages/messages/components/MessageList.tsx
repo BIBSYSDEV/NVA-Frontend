@@ -12,7 +12,7 @@ interface MessageListProps {
   ticket: Ticket;
 }
 
-export const MessageList = ({ ticket }: MessageListProps) => {
+export const TicketMessageList = ({ ticket }: MessageListProps) => {
   const messages = ticket.messages ?? [];
 
   return (

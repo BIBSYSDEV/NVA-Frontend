@@ -1,16 +1,18 @@
 import SendIcon from '@mui/icons-material/Send';
-import { Box, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
-import { createNote } from '../../../api/scientificIndexApi';
+import { CreateNoteData, createNote } from '../../../api/scientificIndexApi';
 import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { setNotification } from '../../../redux/notificationSlice';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
@@ -37,8 +39,8 @@ export const NviCandidatePage = () => {
   });
 
   const noteMutation = useMutation({
-    mutationFn: async (text: string) => {
-      await createNote(identifier, { text });
+    mutationFn: async (note: CreateNoteData) => {
+      await createNote(identifier, note);
       await nviCandidateQuery.refetch();
     },
     onSuccess: () => dispatch(setNotification({ message: t('feedback.success.create_note'), variant: 'success' })),
@@ -61,65 +63,83 @@ export const NviCandidatePage = () => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
           </ErrorBoundary>
-          <ErrorBoundary>
-            <Paper elevation={0} sx={{ gridArea: 'nvi' }}>
-              <StyledPaperHeader>
-                <Typography color="inherit" variant="h1">
-                  {t('common.dialogue')}
-                </Typography>
-              </StyledPaperHeader>
 
-              <Box sx={{ m: '1rem' }}>
-                {nviCandidateQuery.data && nviCandidateQuery.data.notes.length > 0 && (
-                  <Box
-                    component="ul"
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      listStyleType: 'none',
-                      p: 0,
-                      m: '0 0 1rem 0',
-                      gap: '0.25rem',
-                    }}>
-                    {nviCandidateQuery.data.notes.map((note) => (
+          <Paper elevation={0} sx={{ gridArea: 'nvi', bgcolor: 'nvi.light' }}>
+            <StyledPaperHeader>
+              <Typography color="inherit" variant="h1">
+                {t('common.dialogue')}
+              </Typography>
+            </StyledPaperHeader>
+
+            <Box sx={{ m: '1rem' }}>
+              {nviCandidateQuery.data && nviCandidateQuery.data.notes.length > 0 && (
+                <Box
+                  component="ul"
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    listStyleType: 'none',
+                    p: 0,
+                    m: '0 0 1rem 0',
+                    gap: '0.25rem',
+                  }}>
+                  {nviCandidateQuery.data.notes.map((note) => (
+                    <ErrorBoundary key={note.createdDate}>
                       <MessageItem
-                        key={note.createdDate}
                         text={note.text}
                         date={note.createdDate}
                         senderId={note.user.value}
                         backgroundColor="nvi.main"
                       />
-                    ))}
-                  </Box>
-                )}
+                    </ErrorBoundary>
+                  ))}
+                </Box>
+              )}
 
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    const textInput = (event.target as any).elements[0].value;
-                    noteMutation.mutate(textInput);
-                    // (event.target as any).reset();
-                  }}>
-                  <TextField
-                    variant="filled"
-                    label={t('tasks.nvi.note')}
-                    fullWidth
-                    multiline
-                    required
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton type="submit" color="primary" title={t('common.send')}>
-                            <SendIcon />
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </form>
-              </Box>
-            </Paper>
-          </ErrorBoundary>
+              <Formik
+                initialValues={{ text: '' }}
+                onSubmit={async (values, { resetForm }) => {
+                  await noteMutation.mutateAsync(values);
+                  resetForm();
+                }}>
+                {({ isSubmitting }) => (
+                  <Form>
+                    <Field name="text">
+                      {({ field }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          variant="filled"
+                          label={t('tasks.nvi.note')}
+                          data-testid={dataTestId.tasksPage.nvi.dialoguePanel.noteField}
+                          fullWidth
+                          multiline
+                          required
+                          disabled={isSubmitting}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                {isSubmitting ? (
+                                  <CircularProgress aria-label={t('tasks.nvi.save_note')} size="1.5rem" />
+                                ) : (
+                                  <IconButton
+                                    type="submit"
+                                    color="primary"
+                                    title={t('tasks.nvi.save_note')}
+                                    data-testid={dataTestId.tasksPage.nvi.dialoguePanel.sendNoteButton}>
+                                    <SendIcon />
+                                  </IconButton>
+                                )}
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      )}
+                    </Field>
+                  </Form>
+                )}
+              </Formik>
+            </Box>
+          </Paper>
         </>
       )}
     </Box>

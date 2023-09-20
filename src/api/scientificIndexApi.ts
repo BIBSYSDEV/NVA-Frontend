@@ -2,7 +2,9 @@ import { Note, NviCandidate } from '../types/nvi.types';
 import { ScientificIndexApiPath } from './apiPaths';
 import { authenticatedApiRequest2 } from './apiRequest';
 
-export const createNote = async (candidateIdentifier: string, note: Pick<Note, 'text'>) => {
+export type CreateNoteData = Pick<Note, 'text'>;
+
+export const createNote = async (candidateIdentifier: string, note: CreateNoteData) => {
   const createNoteResponse = await authenticatedApiRequest2<NviCandidate>({
     url: `${ScientificIndexApiPath.Candidate}/${candidateIdentifier}/note`,
     method: 'POST',
