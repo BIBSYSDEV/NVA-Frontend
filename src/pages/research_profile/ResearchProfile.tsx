@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Divider, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Chip, CircularProgress, Divider, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -88,6 +88,8 @@ const ResearchProfile = () => {
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
+  const personBackground = getLanguageString(person?.background) ?? '';
+  const personKeywords = person?.keywords ?? [];
 
   return personQuery.isLoading ? (
     <PageSpinner aria-label={t('my_page.research_profile')} />
@@ -150,6 +152,29 @@ const ResearchProfile = () => {
             <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
               {orcidUri}
             </Typography>
+          </Box>
+        )}
+        {(!!personBackground || personKeywords.length > 0) && (
+          <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '70%' }}>
+            <Typography variant="h3">{t('my_page.my_profile.field_and_background.field_and_background')}</Typography>
+            <Box sx={{ display: 'flex', gap: '0.5rem', mb: '0.5rem' }}>
+              {personKeywords.length > 0 &&
+                personKeywords.map((keyword) => (
+                  <Chip
+                    sx={{
+                      maxWidth: 'fit-content',
+                      borderRadius: '4px',
+                      bgcolor: 'white',
+                      border: '1px solid',
+                      borderColor: 'primary.main',
+                    }}
+                    key={keyword.type}
+                    label={getLanguageString(keyword.label)}
+                    variant="filled"
+                  />
+                ))}
+            </Box>
+            <Typography>{personBackground}</Typography>
           </Box>
         )}
         <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
