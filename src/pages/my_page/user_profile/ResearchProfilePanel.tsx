@@ -3,7 +3,6 @@ import { Box, Chip, Divider, IconButton, Typography } from '@mui/material';
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
@@ -11,7 +10,6 @@ import { CristinPerson } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getContributorInitials } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
 import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
 
@@ -22,16 +20,12 @@ interface ResearchProfilePanelProps {
 
 export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfilePanelProps) => {
   const { t } = useTranslation();
-  const location = useLocation();
 
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
   const personBackground = getLanguageString(person?.background) ?? '';
   const personKeywords = person?.keywords ?? [];
-
-  const currentPath = location.pathname.replace(/\/$/, '').toLowerCase();
-  const isPreview = currentPath === UrlPathTemplate.MyPageMyPersonalia;
 
   return (
     <>
@@ -43,14 +37,12 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
           <PageSpinner aria-label={t('my_page.research_profile')} />
         ) : (
           <>
-            {isPreview && (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <PreviewIcon />
-                <Typography variant="h3" component="span" sx={{ textTransform: 'none' }}>
-                  {t('my_page.my_profile.research_profile_summary.preview')}
-                </Typography>
-              </Box>
-            )}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <PreviewIcon />
+              <Typography variant="h3" component="span" sx={{ textTransform: 'none' }}>
+                {t('my_page.my_profile.research_profile_summary.preview')}
+              </Typography>
+            </Box>
 
             <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center', mt: '1rem' }}>
               <Typography variant="h2">{t('my_page.my_profile.research_profile_summary.research_profile')}</Typography>
