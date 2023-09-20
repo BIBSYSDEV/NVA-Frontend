@@ -176,7 +176,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       break;
                     }
                     case SearchFieldName.TopLevelOrganizationId: {
-                      const institutionLabels = aggregations.topLevelOrganization.id.buckets.find(
+                      const institutionLabels = aggregations.topLevelOrganizations.id.buckets.find(
                         (bucket) => bucket.key === property.value
                       );
                       const institutionName = institutionLabels ? getLabelFromBucket(institutionLabels) : '';
