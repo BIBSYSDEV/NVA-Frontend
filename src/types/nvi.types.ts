@@ -73,7 +73,5 @@ export interface NviCandidate {
 export interface Note {
   createdDate: string;
   text: string;
-  user: {
-    value: string;
-  };
+  user: string;
 }

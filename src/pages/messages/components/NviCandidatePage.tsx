@@ -1,7 +1,5 @@
-import SendIcon from '@mui/icons-material/Send';
-import { Box, CircularProgress, IconButton, InputAdornment, Paper, TextField, Typography } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -9,10 +7,10 @@ import { fetchRegistration } from '../../../api/registrationApi';
 import { CreateNoteData, createNote } from '../../../api/scientificIndexApi';
 import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { MessageForm } from '../../../components/MessageForm';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { setNotification } from '../../../redux/notificationSlice';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
@@ -88,7 +86,7 @@ export const NviCandidatePage = () => {
                       <MessageItem
                         text={note.text}
                         date={note.createdDate}
-                        senderId={note.user.value}
+                        senderId={note.user}
                         backgroundColor="nvi.main"
                       />
                     </ErrorBoundary>
@@ -96,48 +94,13 @@ export const NviCandidatePage = () => {
                 </Box>
               )}
 
-              <Formik
-                initialValues={{ text: '' }}
-                onSubmit={async (values, { resetForm }) => {
-                  await noteMutation.mutateAsync(values);
-                  resetForm();
-                }}>
-                {({ isSubmitting }) => (
-                  <Form>
-                    <Field name="text">
-                      {({ field }: FieldProps<string>) => (
-                        <TextField
-                          {...field}
-                          variant="filled"
-                          label={t('tasks.nvi.note')}
-                          data-testid={dataTestId.tasksPage.nvi.dialoguePanel.noteField}
-                          fullWidth
-                          multiline
-                          required
-                          disabled={isSubmitting}
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                {isSubmitting ? (
-                                  <CircularProgress aria-label={t('tasks.nvi.save_note')} size="1.5rem" />
-                                ) : (
-                                  <IconButton
-                                    type="submit"
-                                    color="primary"
-                                    title={t('tasks.nvi.save_note')}
-                                    data-testid={dataTestId.tasksPage.nvi.dialoguePanel.sendNoteButton}>
-                                    <SendIcon />
-                                  </IconButton>
-                                )}
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                      )}
-                    </Field>
-                  </Form>
-                )}
-              </Formik>
+              <MessageForm
+                confirmAction={async (text) => {
+                  await noteMutation.mutateAsync({ text });
+                }}
+                fieldLabel={t('tasks.nvi.note')}
+                buttonTitle={t('tasks.nvi.save_note')}
+              />
             </Box>
           </Paper>
         </>
