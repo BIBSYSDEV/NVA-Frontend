@@ -1,6 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Divider, Paper, Skeleton, Typography } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -28,9 +28,12 @@ export const NviCandidatePage = () => {
   const { identifier } = useParams<IdentifierParams>();
   const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
 
+  const queryClient = useQueryClient();
+
+  const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
     enabled: !!identifier,
-    queryKey: ['nviCandidate', identifier],
+    queryKey: nviCandidateQueryKey,
     queryFn: () => fetchNviCandidate(identifier),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
   });
@@ -47,8 +50,8 @@ export const NviCandidatePage = () => {
 
   const noteMutation = useMutation({
     mutationFn: async (note: CreateNoteData) => {
-      await createNote(identifier, note);
-      await nviCandidateQuery.refetch();
+      const updatedCandidate = await createNote(identifier, note);
+      queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
     },
     onSuccess: () => dispatch(setNotification({ message: t('feedback.success.create_note'), variant: 'success' })),
     onError: () => dispatch(setNotification({ message: t('feedback.error.create_note'), variant: 'error' })),
@@ -57,8 +60,11 @@ export const NviCandidatePage = () => {
   const statusMutation = useMutation({
     mutationFn: async (status: NviCandidateStatus) => {
       if (myApprovalStatus) {
-        await setCandidateStatus(identifier, { institutionId: myApprovalStatus.institutionId, status });
-        await nviCandidateQuery.refetch();
+        const updatedCandidate = await setCandidateStatus(identifier, {
+          institutionId: myApprovalStatus.institutionId,
+          status,
+        });
+        queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
       }
     },
     onSuccess: () =>
