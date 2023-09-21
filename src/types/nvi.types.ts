@@ -52,7 +52,7 @@ export type NviCandidateSearchResponse = Omit<
   totalHits: number;
 };
 
-interface ApprovalStatus {
+export interface ApprovalStatus {
   institutionId: string;
   status: NviCandidateStatus;
   points: number;
