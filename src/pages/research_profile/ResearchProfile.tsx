@@ -167,15 +167,7 @@ const ResearchProfile = () => {
             <Box sx={{ display: 'flex', gap: '0.5rem', mb: '0.5rem' }}>
               {personKeywords.length > 0 &&
                 personKeywords.map((keyword) => (
-                  <Chip
-                    sx={{
-                      width: 'fit-content',
-                      border: '1px solid',
-                      borderColor: 'primary.main',
-                    }}
-                    key={keyword.type}
-                    label={getLanguageString(keyword.label)}
-                  />
+                  <Chip color="primary" key={keyword.type} label={getLanguageString(keyword.label)} />
                 ))}
             </Box>
             <Typography>{personBackground}</Typography>

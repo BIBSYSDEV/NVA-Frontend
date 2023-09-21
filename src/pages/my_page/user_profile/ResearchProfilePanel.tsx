@@ -80,15 +80,7 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
                 </Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', mt: '1rem' }}>
                   {personKeywords.map((keyword) => (
-                    <Chip
-                      sx={{
-                        width: 'fit-content',
-                        border: '1px solid',
-                        borderColor: 'primary.main',
-                      }}
-                      key={keyword.type}
-                      label={getLanguageString(keyword.label)}
-                    />
+                    <Chip color="primary" key={keyword.type} label={getLanguageString(keyword.label)} />
                   ))}
                 </Box>
               </>
