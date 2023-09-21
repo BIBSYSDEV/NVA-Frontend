@@ -81,7 +81,7 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
-        <Tooltip title={t('tasks.nvi.nvi_points')}>
+        <Tooltip title={t('tasks.nvi.publication_points')}>
           <Typography fontWeight={700}>{nviCandidate.points}</Typography>
         </Tooltip>
       </Box>

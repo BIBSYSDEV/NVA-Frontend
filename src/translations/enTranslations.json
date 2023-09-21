@@ -1601,7 +1601,7 @@
       "assigned": "Pending",
       "completed_count": "Completed ({{completed}} of {{total}})",
       "no_nvi_candidates": "No NVI candidates",
-      "nvi_points": "",
+      "publication_points": "",
       "status": {
         "Approved": "Approved",
         "Pending": "Pending",

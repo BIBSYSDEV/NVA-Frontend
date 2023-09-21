@@ -1604,7 +1604,7 @@
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "note": "Merknad",
       "no_nvi_candidates": "Ingen NVI-kandidater",
-      "nvi_points": "NVI-poeng",
+      "publication_points": "Publiseringspoeng",
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
