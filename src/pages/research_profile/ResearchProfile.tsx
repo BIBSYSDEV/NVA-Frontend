@@ -160,16 +160,17 @@ const ResearchProfile = () => {
           </Box>
         )}
         {(!!personBackground || personKeywords.length > 0) && (
-          <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', width: '70%' }}>
+          <Box sx={{ width: '80%', mt: '1rem' }}>
             <Typography variant="h3" gutterBottom>
               {t('my_page.my_profile.field_and_background.field_and_background')}
             </Typography>
-            <Box sx={{ display: 'flex', gap: '0.5rem', mb: '0.5rem' }}>
-              {personKeywords.length > 0 &&
-                personKeywords.map((keyword) => (
+            {personKeywords.length > 0 && (
+              <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem' }}>
+                {personKeywords.map((keyword) => (
                   <Chip color="primary" key={keyword.type} label={getLanguageString(keyword.label)} />
                 ))}
-            </Box>
+              </Box>
+            )}
             <Typography>{personBackground}</Typography>
           </Box>
         )}
