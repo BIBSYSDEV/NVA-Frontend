@@ -171,7 +171,7 @@ const ResearchProfile = () => {
                 ))}
               </Box>
             )}
-            <Typography>{personBackground}</Typography>
+            {!!personBackground && <Typography>{personBackground}</Typography>}
           </Box>
         )}
         <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
