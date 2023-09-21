@@ -178,8 +178,8 @@ const TasksPage = () => {
   const nviPendingCount = nviAggregations?.pending.docCount.toLocaleString();
   const nviPendingCollaborationCount = nviAggregations?.pendingCollaboration.docCount.toLocaleString();
   const nviAssignedCount = nviAggregations?.assigned.docCount.toLocaleString();
-  const nviAssignedCollaborationCount = nviAggregations?.pendingCollaboration.docCount.toLocaleString();
-  const nviApprovedCount = nviAggregations?.assignedCollaboration.docCount.toLocaleString();
+  const nviAssignedCollaborationCount = nviAggregations?.assignedCollaboration.docCount.toLocaleString();
+  const nviApprovedCount = nviAggregations?.approved.docCount.toLocaleString();
   const nviApprovedCollaborationCount = nviAggregations?.approvedCollaboration.docCount.toLocaleString();
   const nviRejectedCount = nviAggregations?.rejected.docCount.toLocaleString();
   const nviRejectedCollaborationCount = nviAggregations?.rejectedCollaboration.docCount.toLocaleString();
