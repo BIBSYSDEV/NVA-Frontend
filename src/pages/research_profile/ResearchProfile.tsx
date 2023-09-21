@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchPerson, searchForProjects } from '../../api/cristinApi';
+import { fetchPerson, fetchProfilePicture, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
@@ -82,6 +82,17 @@ const ResearchProfile = () => {
 
   const promotedPublications = promotedPublicationsQuery.data?.promotedPublications;
 
+  const profilePictureQuery = useQuery({
+    queryKey: ['picture', personId],
+    queryFn: () => fetchProfilePicture(personId),
+    meta: { errorMessage: false },
+    retry: false,
+  });
+
+  const profilePictureString = profilePictureQuery.isSuccess
+    ? `data:image/jpeg;base64,${profilePictureQuery.data.base64Data}`
+    : '';
+
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
@@ -112,7 +123,23 @@ const ResearchProfile = () => {
           borderLeft: 'solid 1rem',
           borderLeftColor: 'person.main',
         }}>
-        <Typography variant="h1" sx={{ ml: '2rem', color: 'primary.contrastText' }}>
+        {profilePictureString && (
+          <img
+            src={profilePictureString}
+            alt="user-avatar"
+            style={{
+              border: '2px solid black',
+              position: 'absolute',
+              marginTop: '3rem',
+              marginLeft: '1rem',
+              height: '5rem',
+              width: '5rem',
+              borderRadius: '50%',
+              objectFit: 'cover',
+            }}
+          />
+        )}
+        <Typography variant="h1" sx={{ ml: profilePictureString ? '7rem' : '2rem', color: 'primary.contrastText' }}>
           {fullName}
         </Typography>
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
@@ -127,7 +154,7 @@ const ResearchProfile = () => {
             sx={{
               display: 'flex',
               gap: '0.5rem',
-              mt: '1rem',
+              mt: '1.5rem',
               flexDirection: { xs: 'column', sm: 'row' },
               flexWrap: 'wrap',
             }}>
