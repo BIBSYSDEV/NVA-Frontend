@@ -48,7 +48,7 @@
       "author": "$t(registration.contributors.types.Creator)",
       "central_import": "Sentralimport",
       "create_new": "Opprett ny",
-      "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importpublikasjonen.",
+      "create_publication_from_import_candidate": "Opprett ny publikasjon basert på importdata.",
       "duplicate_search_hits": "Søket ga følgende treff:",
       "duplicate_search_no_hits": "Søket ga ingen treff",
       "import": "Importer",
@@ -56,18 +56,6 @@
       "import_completed": "Publikasjonen er importert.",
       "import_not_applicable": "Publikasjonen er markert som mangelfull.",
       "mark_as_not_applicable": "Marker som mangelfull.",
-      "not_applicable": "Mangelfull",
-      "or_search_with": "eller søk med",
-      "reset_search_values": "Tilbakestill verdier",
-      "result_in_nva": "Resultat i NVA",
-      "search_again": "Søk igjen",
-      "search_for_duplicates": "Søk etter duplikater",
-      "status": {
-        "IMPORTED": "Importert",
-        "NOT_APPLICABLE": "Mangelfull",
-        "NOT_IMPORTED": "Til import"
-      },
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)",
       "merge_candidate": {
         "merge": "Slå sammen",
         "merge_description": "Slå sammen importdata med allerede registrert data.",
@@ -77,7 +65,18 @@
         "result_id": "Resultat-ID",
         "result_in_nva": "Resultat i NVA",
         "update_value": "Oppdater verdi"
-      }
+      },
+      "not_applicable": "Mangelfull",
+      "or_search_with": "eller søk med",
+      "reset_search_values": "Tilbakestill verdier",
+      "search_again": "Søk igjen",
+      "search_for_duplicates": "Søk etter duplikater",
+      "status": {
+        "IMPORTED": "Importert",
+        "NOT_APPLICABLE": "Mangelfull",
+        "NOT_IMPORTED": "Til import"
+      },
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -238,6 +237,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -323,11 +326,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -405,6 +404,7 @@
       "get_journal": "Kunne ikke hente tidsskrift",
       "get_journal_article": "Kunne ikke hente artikkel i tidsskrift",
       "get_journals": "Kunne ikke hente tidsskrifter",
+      "get_keywords": "Kunne ikke hente nøkkelord",
       "get_messages": "Kunne ikke hente meldinger",
       "get_nvi_candidate": "Kunne ikke hente NVI-kandidat",
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
@@ -564,7 +564,10 @@
       "field_and_background": {
         "background_placeholder": "Skriv inn",
         "english": "Engelsk",
+        "field": "Fagfelt",
         "field_and_background": "Fagfelt og bakgrunn",
+        "field_text": "Nøkkelord som kan beskrive fagfelt",
+        "keywords_search_text": "Du kan legge til flere nøkkelord av gangen",
         "norwegian": "Norsk"
       },
       "heading": {
@@ -595,7 +598,7 @@
       },
       "preferred_first_name": "Foretrukket fornavn",
       "preferred_last_name": "Foretrukket etternavn",
-      "profile_picture": "Profilfoto",
+      "profile_picture": "Profilbilde",
       "projects": "Prosjekt",
       "research_profile_summary": {
         "affiliations": "Tilknytninger",
@@ -1598,6 +1601,7 @@
       "assigned": "Kontrolleres",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "no_nvi_candidates": "Ingen NVI-kandidater",
+      "nvi_points": "NVI-poeng",
       "status": {
         "Approved": "Godkjent",
         "Pending": "Til kontroll",

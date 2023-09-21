@@ -159,6 +159,7 @@ export const PersonTableRow = ({
       if (isSuccessStatus(updateUserResponse.status)) {
         await institutionUserQuery.refetch();
         await positionsQuery.refetch();
+        toggleDialog();
         dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
       } else if (isErrorStatus(updateUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));

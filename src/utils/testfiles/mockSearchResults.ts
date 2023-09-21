@@ -56,7 +56,7 @@ export const mockSearchResults: SearchResponse<Registration, RegistrationAggrega
       },
     },
     fundings: { identifier: { buckets: [] } },
-    topLevelOrganization: { id: { buckets: [] } },
+    topLevelOrganizations: { id: { buckets: [] } },
   },
 };
 
