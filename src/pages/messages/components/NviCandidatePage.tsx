@@ -1,8 +1,9 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Divider, Paper, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { fetchOrganization } from '../../../api/cristinApi';
 import { fetchRegistration } from '../../../api/registrationApi';
 import { CreateNoteData, createNote } from '../../../api/scientificIndexApi';
 import { fetchNviCandidate } from '../../../api/searchApi';
@@ -10,8 +11,11 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
+import { PublicactionPointsTypography } from '../../../components/PublicationPointsTypography';
 import { setNotification } from '../../../redux/notificationSlice';
+import { ApprovalStatus } from '../../../types/nvi.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { MessageItem } from './MessageList';
@@ -27,7 +31,8 @@ export const NviCandidatePage = () => {
     queryFn: () => fetchNviCandidate(identifier),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
   });
-  const registrationIdentifier = getIdentifierFromId(nviCandidateQuery.data?.publicationId ?? '');
+  const nviCandidate = nviCandidateQuery.data;
+  const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
   const registrationQuery = useQuery({
     enabled: !!registrationIdentifier,
@@ -45,11 +50,13 @@ export const NviCandidatePage = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.create_note'), variant: 'error' })),
   });
 
-  const sortedNotes = (nviCandidateQuery.data?.notes ?? []).sort((a, b) => {
+  const sortedNotes = (nviCandidate?.notes ?? []).sort((a, b) => {
     const dateA = new Date(a.createdDate);
     const dateB = new Date(b.createdDate);
     return dateB.getTime() - dateA.getTime();
   });
+
+  const publicationPointsSum = nviCandidate?.approvalStatuses.reduce((acc, status) => acc + status.points, 0);
 
   return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
     <PageSpinner aria-label={t('common.result')} />
@@ -68,7 +75,16 @@ export const NviCandidatePage = () => {
             <PublicRegistrationContent registration={registrationQuery.data} />
           </ErrorBoundary>
 
-          <Paper elevation={0} sx={{ gridArea: 'nvi', bgcolor: 'nvi.light' }}>
+          <Paper
+            elevation={0}
+            sx={{
+              gridArea: 'nvi',
+              bgcolor: 'nvi.light',
+              height: 'fit-content',
+              minHeight: '85vh',
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
             <StyledPaperHeader>
               <Typography color="inherit" variant="h1">
                 {t('common.dialogue')}
@@ -108,9 +124,62 @@ export const NviCandidatePage = () => {
                 buttonTitle={t('tasks.nvi.save_note')}
               />
             </Box>
+
+            <Divider sx={{ mt: 'auto' }} />
+            <Box sx={{ m: '1rem' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-evenly',
+                  mb: '0.5rem',
+                }}>
+                <Typography>{t('tasks.nvi.publication_points')}</Typography>
+                {publicationPointsSum && <PublicactionPointsTypography points={publicationPointsSum} />}
+              </Box>
+
+              <Paper
+                sx={{
+                  bgcolor: 'nvi.light',
+                  p: '0.5rem',
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(3, auto)',
+                  gap: '0.5rem 0.75rem',
+                  alignItems: 'center',
+                }}>
+                {nviCandidate?.approvalStatuses.map((approvalStatus) => (
+                  <InstitutionApprovalStatus key={approvalStatus.institutionId} approvalStatus={approvalStatus} />
+                ))}
+              </Paper>
+            </Box>
           </Paper>
         </ErrorBoundary>
       )}
     </Box>
+  );
+};
+
+interface InstitutionApprovalStatusProps {
+  approvalStatus: ApprovalStatus;
+}
+
+const InstitutionApprovalStatus = ({ approvalStatus }: InstitutionApprovalStatusProps) => {
+  const { t } = useTranslation();
+
+  const institutionQuery = useQuery({
+    queryKey: [approvalStatus.institutionId],
+    queryFn: () => fetchOrganization(approvalStatus.institutionId),
+    meta: { errorMessage: t('feedback.error.get_institution') },
+  });
+
+  return (
+    <>
+      {institutionQuery.isLoading ? (
+        <Skeleton sx={{ width: '8rem' }} />
+      ) : (
+        <Typography>{getLanguageString(institutionQuery.data?.labels)}</Typography>
+      )}
+      <Typography sx={{ whiteSpace: 'nowrap' }}>{t(`tasks.nvi.status.${approvalStatus.status}`)}</Typography>
+      <PublicactionPointsTypography points={approvalStatus.points} />
+    </>
   );
 };
