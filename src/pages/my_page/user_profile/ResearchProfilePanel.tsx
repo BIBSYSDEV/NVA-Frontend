@@ -1,8 +1,10 @@
 import PreviewIcon from '@mui/icons-material/Preview';
 import { Box, Chip, Divider, IconButton, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { fetchProfilePicture } from '../../../api/cristinApi';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
@@ -26,6 +28,18 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
   const personBackground = getLanguageString(person?.background);
   const personKeywords = person?.keywords ?? [];
+  const personId = person?.id ?? '';
+
+  const profilePictureQuery = useQuery({
+    queryKey: ['picture', personId],
+    queryFn: () => fetchProfilePicture(personId),
+    meta: { errorMessage: false },
+    retry: false,
+  });
+
+  const profilePictureString = profilePictureQuery.isSuccess
+    ? `data:image/jpeg;base64,${profilePictureQuery.data.base64Data}`
+    : '';
 
   return (
     <>
@@ -46,11 +60,30 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
 
             <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center', mt: '1rem' }}>
               <Typography variant="h2">{t('my_page.my_profile.research_profile_summary.research_profile')}</Typography>
-              <StyledBaseContributorIndicator
-                sx={{ bgcolor: 'primary.main', color: 'white', height: '2.5rem', width: '2.5rem', fontSize: '1.5rem' }}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
-                {getContributorInitials(fullName)}
-              </StyledBaseContributorIndicator>
+              {profilePictureString.length > 0 ? (
+                <img
+                  src={profilePictureString}
+                  alt="user-avatar"
+                  style={{
+                    height: '2.5rem',
+                    width: '2.5rem',
+                    borderRadius: '50%',
+                    objectFit: 'cover',
+                  }}
+                />
+              ) : (
+                <StyledBaseContributorIndicator
+                  sx={{
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    height: '2.5rem',
+                    width: '2.5rem',
+                    fontSize: '1.5rem',
+                  }}
+                  data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
+                  {getContributorInitials(fullName)}
+                </StyledBaseContributorIndicator>
+              )}
             </Box>
 
             <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mt: '0.5rem' }}>
