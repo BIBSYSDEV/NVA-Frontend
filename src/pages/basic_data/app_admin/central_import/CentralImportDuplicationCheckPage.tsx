@@ -108,7 +108,7 @@ export const CentralImportDuplicationCheckPage = () => {
             ) : (
               <>
                 <Typography variant="h1" sx={{ mt: '1rem' }} gutterBottom>
-                  {t('basic_data.central_import.result_in_nva')}:
+                  {t('basic_data.central_import.merge_candidate.result_in_nva')}:
                 </Typography>
                 {importedRegistrationQuery.data && (
                   <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
