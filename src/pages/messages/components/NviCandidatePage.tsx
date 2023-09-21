@@ -11,7 +11,7 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
-import { PublicactionPointsTypography } from '../../../components/PublicationPointsTypography';
+import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { setNotification } from '../../../redux/notificationSlice';
 import { ApprovalStatus } from '../../../types/nvi.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
@@ -134,22 +134,24 @@ export const NviCandidatePage = () => {
                   mb: '0.5rem',
                 }}>
                 <Typography>{t('tasks.nvi.publication_points')}</Typography>
-                {publicationPointsSum && <PublicactionPointsTypography points={publicationPointsSum} />}
+                {publicationPointsSum && <PublicationPointsTypography points={publicationPointsSum} />}
               </Box>
 
-              <Paper
-                sx={{
-                  bgcolor: 'nvi.light',
-                  p: '0.5rem',
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, auto)',
-                  gap: '0.5rem 0.75rem',
-                  alignItems: 'center',
-                }}>
-                {nviCandidate?.approvalStatuses.map((approvalStatus) => (
-                  <InstitutionApprovalStatus key={approvalStatus.institutionId} approvalStatus={approvalStatus} />
-                ))}
-              </Paper>
+              {nviCandidate && nviCandidate.approvalStatuses.length > 0 && (
+                <Paper
+                  sx={{
+                    bgcolor: 'nvi.light',
+                    p: '0.5rem',
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, auto)',
+                    gap: '0.5rem 0.75rem',
+                    alignItems: 'center',
+                  }}>
+                  {nviCandidate.approvalStatuses.map((approvalStatus) => (
+                    <InstitutionApprovalStatusRow key={approvalStatus.institutionId} approvalStatus={approvalStatus} />
+                  ))}
+                </Paper>
+              )}
             </Box>
           </Paper>
         </ErrorBoundary>
@@ -158,11 +160,11 @@ export const NviCandidatePage = () => {
   );
 };
 
-interface InstitutionApprovalStatusProps {
+interface InstitutionApprovalStatusRowProps {
   approvalStatus: ApprovalStatus;
 }
 
-const InstitutionApprovalStatus = ({ approvalStatus }: InstitutionApprovalStatusProps) => {
+const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalStatusRowProps) => {
   const { t } = useTranslation();
 
   const institutionQuery = useQuery({
@@ -179,7 +181,7 @@ const InstitutionApprovalStatus = ({ approvalStatus }: InstitutionApprovalStatus
         <Typography>{getLanguageString(institutionQuery.data?.labels)}</Typography>
       )}
       <Typography sx={{ whiteSpace: 'nowrap' }}>{t(`tasks.nvi.status.${approvalStatus.status}`)}</Typography>
-      <PublicactionPointsTypography points={approvalStatus.points} />
+      <PublicationPointsTypography sx={{ whiteSpace: 'nowrap' }} points={approvalStatus.points} />
     </>
   );
 };
