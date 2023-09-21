@@ -52,20 +52,21 @@ export type NviCandidateSearchResponse = Omit<
   totalHits: number;
 };
 
-interface NviCandidateApproval {
+interface ApprovalStatus {
   institutionId: string;
   status: NviCandidateStatus;
-}
-
-interface NviCandidatePoint {
-  institutionId: string;
   points: number;
 }
 
 export interface NviCandidate {
   id: string;
   publicationId: string;
-  approvalStatuses: NviCandidateApproval[];
-  points: NviCandidatePoint[];
-  notes: any[];
+  approvalStatuses: ApprovalStatus[];
+  notes: Note[];
+}
+
+export interface Note {
+  createdDate: string;
+  text: string;
+  user: string;
 }

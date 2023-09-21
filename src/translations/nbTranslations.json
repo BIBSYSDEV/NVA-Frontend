@@ -383,6 +383,7 @@
       "an_error_occurred": "En feil oppstod",
       "create_customer": "Kunne ikke opprette institusjon",
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
+      "create_note": "Kunne ikke lagre til merknad",
       "create_project": "Kunne ikke opprette prosjekt",
       "create_publishing_request": "Kunne ikke opprette publiseringsforespørsel",
       "create_registration": "Kunne ikke opprette registrering",
@@ -450,6 +451,7 @@
       "add_employment": "Ansettelse lagt til",
       "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
+      "create_note": "Merknaden ble lagret",
       "create_project": "Prosjekt er opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_registration": "Publikasjon er opprettet",
@@ -1600,8 +1602,10 @@
     "nvi": {
       "assigned": "Kontrolleres",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
+      "note": "Merknad",
       "no_nvi_candidates": "Ingen NVI-kandidater",
-      "nvi_points": "NVI-poeng",
+      "publication_points": "Publiseringspoeng",
+      "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
         "Pending": "Til kontroll",

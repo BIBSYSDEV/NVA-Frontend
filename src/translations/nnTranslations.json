@@ -1601,7 +1601,7 @@
       "assigned": "Kontrolleres",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "no_nvi_candidates": "Ingen NVI-kandidatar",
-      "nvi_points": "",
+      "publication_points": "",
       "status": {
         "Approved": "Godkjend",
         "Pending": "Til kontroll",
