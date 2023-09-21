@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Divider, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Chip, CircularProgress, Divider, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -85,6 +85,8 @@ const ResearchProfile = () => {
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
+  const personBackground = getLanguageString(person?.background);
+  const personKeywords = person?.keywords ?? [];
 
   const registrationsHeading = registrationsQuery.data
     ? `${t('my_page.my_profile.results')} (${registrationsQuery.data.size})`
@@ -155,6 +157,21 @@ const ResearchProfile = () => {
             <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
               {orcidUri}
             </Typography>
+          </Box>
+        )}
+        {(!!personBackground || personKeywords.length > 0) && (
+          <Box sx={{ width: '80%', mt: '1rem' }}>
+            <Typography variant="h3" gutterBottom>
+              {t('my_page.my_profile.field_and_background.field_and_background')}
+            </Typography>
+            {personKeywords.length > 0 && (
+              <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem' }}>
+                {personKeywords.map((keyword) => (
+                  <Chip color="primary" key={keyword.type} label={getLanguageString(keyword.label)} />
+                ))}
+              </Box>
+            )}
+            {!!personBackground && <Typography>{personBackground}</Typography>}
           </Box>
         )}
         <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
