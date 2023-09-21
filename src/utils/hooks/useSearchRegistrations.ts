@@ -6,6 +6,9 @@ import { ROWS_PER_PAGE_OPTIONS } from '../constants';
 import { SearchConfig, createRegistrationSearchQuery } from '../searchHelpers';
 import { useFetch } from './useFetch';
 
+/**
+ * @deprecated Use react-query instead
+ */
 export const useSearchRegistrations = (
   searchConfig?: SearchConfig,
   numberOfResults = ROWS_PER_PAGE_OPTIONS[0],
