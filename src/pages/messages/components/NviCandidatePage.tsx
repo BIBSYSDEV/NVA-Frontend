@@ -1,11 +1,12 @@
+import { LoadingButton } from '@mui/lab';
 import { Box, Divider, Paper, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { fetchRegistration } from '../../../api/registrationApi';
-import { CreateNoteData, createNote } from '../../../api/scientificIndexApi';
+import { CreateNoteData, createNote, setCandidateStatus } from '../../../api/scientificIndexApi';
 import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
@@ -13,7 +14,8 @@ import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { setNotification } from '../../../redux/notificationSlice';
-import { ApprovalStatus } from '../../../types/nvi.types';
+import { RootState } from '../../../redux/store';
+import { ApprovalStatus, NviCandidateStatus } from '../../../types/nvi.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
@@ -24,6 +26,7 @@ export const NviCandidatePage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { identifier } = useParams<IdentifierParams>();
+  const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
 
   const nviCandidateQuery = useQuery({
     enabled: !!identifier,
@@ -32,6 +35,7 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
   });
   const nviCandidate = nviCandidateQuery.data;
+  const myApprovalStatus = nviCandidate?.approvalStatuses.find((status) => status.institutionId === topOrgCristinId);
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
   const registrationQuery = useQuery({
@@ -48,6 +52,18 @@ export const NviCandidatePage = () => {
     },
     onSuccess: () => dispatch(setNotification({ message: t('feedback.success.create_note'), variant: 'success' })),
     onError: () => dispatch(setNotification({ message: t('feedback.error.create_note'), variant: 'error' })),
+  });
+
+  const statusMutation = useMutation({
+    mutationFn: async (status: NviCandidateStatus) => {
+      if (myApprovalStatus) {
+        await setCandidateStatus(identifier, { institutionId: myApprovalStatus.institutionId, status });
+        await nviCandidateQuery.refetch();
+      }
+    },
+    onSuccess: () =>
+      dispatch(setNotification({ message: t('feedback.success.update_nvi_status'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.update_nvi_status'), variant: 'error' })),
   });
 
   const sortedNotes = (nviCandidate?.notes ?? []).sort((a, b) => {
@@ -114,6 +130,21 @@ export const NviCandidatePage = () => {
                     </ErrorBoundary>
                   ))}
                 </Box>
+              )}
+
+              {myApprovalStatus?.status !== 'Approved' && (
+                <>
+                  <Typography gutterBottom>{t('tasks.nvi.approve_nvi_candidate_description')}</Typography>
+                  <LoadingButton
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    sx={{ mb: '1rem' }}
+                    loading={statusMutation.isLoading}
+                    onClick={() => statusMutation.mutate('Approved')}>
+                    {t('tasks.nvi.approve_nvi_candidate')}
+                  </LoadingButton>
+                </>
               )}
 
               <MessageForm
