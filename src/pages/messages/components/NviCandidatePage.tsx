@@ -146,9 +146,26 @@ export const NviCandidatePage = () => {
                     fullWidth
                     size="small"
                     sx={{ mb: '1rem' }}
-                    loading={statusMutation.isLoading}
+                    loading={statusMutation.isLoading && statusMutation.variables === 'Approved'}
+                    disabled={statusMutation.isLoading}
                     onClick={() => statusMutation.mutate('Approved')}>
                     {t('tasks.nvi.approve_nvi_candidate')}
+                  </LoadingButton>
+                </>
+              )}
+
+              {myApprovalStatus?.status !== 'Rejected' && (
+                <>
+                  <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
+                  <LoadingButton
+                    variant="outlined"
+                    fullWidth
+                    size="small"
+                    sx={{ mb: '1rem' }}
+                    loading={statusMutation.isLoading && statusMutation.variables === 'Rejected'}
+                    disabled={statusMutation.isLoading}
+                    onClick={() => statusMutation.mutate('Rejected')}>
+                    {t('tasks.nvi.reject_nvi_candidate')}
                   </LoadingButton>
                 </>
               )}
