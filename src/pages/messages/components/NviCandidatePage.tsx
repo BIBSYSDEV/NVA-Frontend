@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { fetchRegistration } from '../../../api/registrationApi';
-import { CreateNoteData, createNote, setCandidateStatus } from '../../../api/scientificIndexApi';
+import { CreateNoteData, createNote, setCandidateAssignee, setCandidateStatus } from '../../../api/scientificIndexApi';
 import { fetchNviCandidate } from '../../../api/searchApi';
+import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
 import { PageSpinner } from '../../../components/PageSpinner';
@@ -72,6 +73,21 @@ export const NviCandidatePage = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_nvi_status'), variant: 'error' })),
   });
 
+  const assigneeMutation = useMutation({
+    mutationFn: async (assignee: string) => {
+      if (myApprovalStatus) {
+        const updatedCandidate = await setCandidateAssignee(identifier, {
+          institutionId: myApprovalStatus.institutionId,
+          assignee,
+        });
+        queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
+      }
+    },
+    onSuccess: () =>
+      dispatch(setNotification({ message: t('feedback.success.update_ticket_assignee'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
+  });
+
   const sortedNotes = (nviCandidate?.notes ?? []).sort((a, b) => {
     const dateA = new Date(a.createdDate);
     const dateB = new Date(b.createdDate);
@@ -112,6 +128,16 @@ export const NviCandidatePage = () => {
                 {t('common.dialogue')}
               </Typography>
             </StyledPaperHeader>
+
+            <Box sx={{ m: '1rem' }}>
+              <AssigneeSelector
+                assignee={myApprovalStatus?.assignee}
+                canSetAssignee
+                onSelectAssignee={(assigee) => assigneeMutation.mutate(assigee)}
+              />
+            </Box>
+
+            <Divider />
 
             <Box sx={{ m: '1rem' }}>
               {sortedNotes.length > 0 && (
