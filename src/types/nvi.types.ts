@@ -6,7 +6,7 @@ interface NviCandidateContributor {
   name: string;
 }
 
-type NviCandidateStatus = 'Pending' | 'Rejected' | 'Approved';
+export type NviCandidateStatus = 'Pending' | 'Rejected' | 'Approved';
 
 interface NviCandidateSearchHitApproval {
   id: string;
