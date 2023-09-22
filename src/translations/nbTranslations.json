@@ -1609,6 +1609,8 @@
       "note": "Merknad",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "publication_points": "Publiseringspoeng",
+      "reject_nvi_candidate": "Avvis",
+      "reject_nvi_candidate_description": "Avvisning av resultatet.",
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
