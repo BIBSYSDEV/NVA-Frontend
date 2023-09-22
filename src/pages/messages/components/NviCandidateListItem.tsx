@@ -2,15 +2,16 @@ import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { NviCandidate } from '../../../types/nvi.types';
+import { NviCandidateSearchHit } from '../../../types/nvi.types';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { getResearchProfilePath } from '../../../utils/urlPaths';
+import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
 
 interface NviCandidateListItemProps {
-  nviCandidate: NviCandidate;
+  nviCandidate: NviCandidateSearchHit;
 }
 
 export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps) => {
@@ -46,7 +47,9 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
           </Typography>
         )}
         <Typography sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-          {getTitleString(nviCandidate.publicationDetails.title)}
+          <MuiLink component={Link} to={getNviCandidatePath(nviCandidate.identifier)}>
+            {getTitleString(nviCandidate.publicationDetails.title)}
+          </MuiLink>
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
           {focusedContributors.map((contributor, index) => (
@@ -77,7 +80,10 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
         )}
       </Box>
 
-      {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
+        <PublicationPointsTypography fontWeight={700} points={nviCandidate.points} />
+      </Box>
     </SearchListItem>
   );
 };

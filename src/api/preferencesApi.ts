@@ -1,9 +1,9 @@
 import { PersonPreferences } from '../types/personPreferences.types';
 import { PersonPreferencesApiPath } from './apiPaths';
-import { authenticatedApiRequest2 } from './apiRequest';
+import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
 export const fetchPromotedPublicationsById = async (id: string) => {
-  const getPromotedPublications = await authenticatedApiRequest2<PersonPreferences>({
+  const getPromotedPublications = await apiRequest2<PersonPreferences>({
     url: `${PersonPreferencesApiPath.PersonPreferences}/${id}`,
   });
 

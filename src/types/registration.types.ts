@@ -77,7 +77,7 @@ interface RegistrationPublisher {
 }
 
 export interface BaseRegistration {
-  readonly type: 'Publication';
+  readonly type: 'Publication' | 'ImportCandidate';
   readonly id: string;
   readonly identifier: string;
   readonly createdDate: string;
@@ -265,29 +265,29 @@ interface ContributorAggregationBucket extends AggregationBucket {
 }
 
 export interface RegistrationAggregations {
-  topLevelOrganization: {
-    id: {
+  topLevelOrganizations?: {
+    id?: {
       buckets: LabelAggregationBucket[];
     };
   };
-  entityDescription: {
-    reference: {
-      publicationInstance: {
-        type: {
+  entityDescription?: {
+    reference?: {
+      publicationInstance?: {
+        type?: {
           buckets: AggregationBucket[];
         };
       };
     };
-    contributors: {
-      identity: {
-        id: {
+    contributors?: {
+      identity?: {
+        id?: {
           buckets: ContributorAggregationBucket[];
         };
       };
     };
   };
-  fundings: {
-    identifier: {
+  fundings?: {
+    identifier?: {
       buckets: LabelAggregationBucket[];
     };
   };

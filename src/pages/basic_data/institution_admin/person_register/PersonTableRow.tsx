@@ -79,7 +79,12 @@ export const PersonTableRow = ({
   const hasFetchedPositions = positionsQuery.isFetched;
 
   const [openDialog, setOpenDialog] = useState(false);
-  const toggleDialog = () => setOpenDialog(!openDialog);
+  const toggleDialog = () => {
+    if (openDialog) {
+      refetchEmployees();
+    }
+    setOpenDialog(!openDialog);
+  };
   const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(false);
   const toggleConfirmDeleteDialog = () => setOpenConfirmDeleteDialog(!openConfirmDeleteDialog);
   const [employmentIndex, setEmploymentIndex] = useState(0);
@@ -152,7 +157,9 @@ export const PersonTableRow = ({
         });
       }
       if (isSuccessStatus(updateUserResponse.status)) {
-        refetchEmployees();
+        await institutionUserQuery.refetch();
+        await positionsQuery.refetch();
+        toggleDialog();
         dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
       } else if (isErrorStatus(updateUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));

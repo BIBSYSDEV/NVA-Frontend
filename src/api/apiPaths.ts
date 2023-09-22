@@ -14,6 +14,7 @@ export enum FileApiPath {
 
 export enum CristinApiPath {
   FundingSources = '/cristin/funding-sources',
+  Keyword = '/cristin/keyword',
   Organization = '/cristin/organization',
   Person = '/cristin/person',
   PersonIdentityNumber = '/cristin/person/identityNumber',
@@ -57,4 +58,8 @@ export enum VerifiedFundingApiPath {
 
 export enum PersonPreferencesApiPath {
   PersonPreferences = '/person-preferences',
+}
+
+export enum ScientificIndexApiPath {
+  Candidate = '/scientific-index/candidate',
 }

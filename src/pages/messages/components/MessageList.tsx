@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchUser } from '../../../api/roleApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { Message, Ticket, TicketType } from '../../../types/publication_types/ticket.types';
+import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getFullName } from '../../../utils/user-helpers';
 import { ticketColor } from './TicketListItem';
@@ -12,7 +12,7 @@ interface MessageListProps {
   ticket: Ticket;
 }
 
-export const MessageList = ({ ticket }: MessageListProps) => {
+export const TicketMessageList = ({ ticket }: MessageListProps) => {
   const messages = ticket.messages ?? [];
 
   return (
@@ -28,7 +28,13 @@ export const MessageList = ({ ticket }: MessageListProps) => {
           gap: '0.25rem',
         }}>
         {messages.map((message) => (
-          <MessageItem key={message.identifier} message={message} ticketType={ticket.type} />
+          <MessageItem
+            key={message.identifier}
+            text={message.text}
+            date={message.createdDate}
+            senderId={message.sender}
+            backgroundColor={ticketColor[ticket.type]}
+          />
         ))}
       </Box>
     </ErrorBoundary>
@@ -36,23 +42,25 @@ export const MessageList = ({ ticket }: MessageListProps) => {
 };
 
 interface MessageItemProps {
-  message: Message;
-  ticketType: TicketType;
+  text: string;
+  date: string;
+  senderId: string;
+  backgroundColor: string;
 }
 
-const MessageItem = ({ message, ticketType }: MessageItemProps) => {
+export const MessageItem = ({ text, date, senderId, backgroundColor }: MessageItemProps) => {
   const { t } = useTranslation();
 
   const senderQuery = useQuery({
-    queryKey: [message.sender],
-    queryFn: () => fetchUser(message.sender),
+    queryKey: [senderId],
+    queryFn: () => fetchUser(senderId),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
   return (
-    <Box component={'li'} sx={{ bgcolor: ticketColor[ticketType], p: '0.5rem', borderRadius: '4px' }}>
+    <Box component="li" sx={{ bgcolor: backgroundColor, p: '0.5rem', borderRadius: '4px' }}>
       <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
         <span>
           {senderQuery.isLoading ? (
@@ -64,13 +72,13 @@ const MessageItem = ({ message, ticketType }: MessageItemProps) => {
           )}
         </span>
         <span data-testid={dataTestId.registrationLandingPage.tasksPanel.messageTimestamp}>
-          {new Date(message.createdDate).toLocaleDateString()}
+          {new Date(date).toLocaleDateString()}
         </span>
       </Typography>
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
-      <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{message.text}</Typography>
+      <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{text}</Typography>
     </Box>
   );
 };

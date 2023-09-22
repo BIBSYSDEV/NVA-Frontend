@@ -15,6 +15,7 @@ export const dataTestId = {
         notImportedRadio: 'not-imported-radio',
         notApplicableRadio: 'not-applicable-radio',
       },
+      importCandidateButton: 'import-candidate-button',
       resetButton: 'duplicate-search-reset-button',
       resultItem: 'central-import-result-item',
       searchButton: 'duplicate-search-retry-button',
@@ -446,6 +447,7 @@ export const dataTestId = {
     myProfileLink: 'my-profile-link',
     myProfile: {
       cristinIdField: 'cristin-id-field',
+      deleteProfilePictureButton: 'delete-profile-picture-button',
       editPreferredNameButton: 'edit-preferred-name-button',
       fullNameField: 'full-name-field',
       noActiveEmploymentsText: 'no-active-employments-text',
@@ -454,7 +456,10 @@ export const dataTestId = {
       saveProfileChangesButton: 'save-profile-changes-button',
       showFullNinButton: 'show-full-nin-button',
       telephoneField: 'telephone-field',
+      updateProfilePictureButton: 'update-profile-picture-button',
+      uploadProfilePictureButton: 'update-profile-picture-button',
     },
+    myFieldAndBackgroundLink: 'my-field-and-background-link',
     myProfileAccordion: 'my-profile-accordion',
     myProjectRegistrationsLink: 'my-project-registrations-link',
     myProjectRegistrationsConcludedCheckbox: 'my-project-registrations-concluded-checkbox',
@@ -464,7 +469,7 @@ export const dataTestId = {
     myRegistrationsLink: 'my-registrations-link',
     myRegistrationsPublishedCheckbox: 'my-registrations-published-checkbox',
     myRegistrationsUnpublishedCheckbox: 'my-registrations-unpublished-checkbox',
-    myResultsLink: "my-publications'link",
+    myResultsLink: 'my-publications-link',
     newRegistrationLink: 'new-registration-link',
     projectRegistrationsAccordion: 'project-registrations-accordion',
     registrationsAccordion: 'registrations-accordion',
@@ -473,6 +478,10 @@ export const dataTestId = {
   },
   tasksPage: {
     nvi: {
+      dialoguePanel: {
+        noteField: 'note-field',
+        sendNoteButton: 'send-note-button',
+      },
       statusFilter: {
         approvedRadio: 'approved-radio',
         approvedCollaborationRadio: 'approved-collaboration-radio',

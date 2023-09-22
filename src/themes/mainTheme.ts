@@ -27,7 +27,8 @@ enum Color {
   Project = '#E48F8F',
   PublishingRequest = '#FFD27B',
   PublishingRequestLight = '#FFF0D3',
-  Nvi = '#ee95ea',
+  NviMain = '#EE95EA',
+  NviLight = '#F8D3F6',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
@@ -127,7 +128,8 @@ export const mainTheme = createTheme(
         light: Color.GeneralSupportCaseLight,
       },
       nvi: {
-        main: Color.Nvi,
+        main: Color.NviMain,
+        light: Color.NviLight,
       },
       background: {
         default: Color.White,
