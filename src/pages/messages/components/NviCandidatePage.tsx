@@ -1,12 +1,18 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Divider, Paper, Skeleton, Typography } from '@mui/material';
+import { Box, Button, Divider, Paper, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { fetchRegistration } from '../../../api/registrationApi';
-import { CreateNoteData, createNote, setCandidateStatus } from '../../../api/scientificIndexApi';
+import {
+  CreateNoteData,
+  SetNviCandidateStatusData,
+  createNote,
+  setCandidateStatus,
+} from '../../../api/scientificIndexApi';
 import { fetchNviCandidate } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
@@ -15,7 +21,7 @@ import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { ApprovalStatus, NviCandidateStatus } from '../../../types/nvi.types';
+import { ApprovalStatus } from '../../../types/nvi.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
@@ -27,6 +33,7 @@ export const NviCandidatePage = () => {
   const dispatch = useDispatch();
   const { identifier } = useParams<IdentifierParams>();
   const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
+  const [hasSelectedRejectCandidate, setHasSelectedRejectCandidate] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -58,11 +65,11 @@ export const NviCandidatePage = () => {
   });
 
   const statusMutation = useMutation({
-    mutationFn: async (status: NviCandidateStatus) => {
+    mutationFn: async (data: Omit<SetNviCandidateStatusData, 'institutionId'>) => {
       if (myApprovalStatus) {
         const updatedCandidate = await setCandidateStatus(identifier, {
+          ...data,
           institutionId: myApprovalStatus.institutionId,
-          status,
         });
         queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
       }
@@ -71,6 +78,8 @@ export const NviCandidatePage = () => {
       dispatch(setNotification({ message: t('feedback.success.update_nvi_status'), variant: 'success' })),
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_nvi_status'), variant: 'error' })),
   });
+
+  const isMutating = noteMutation.isLoading || statusMutation.isLoading;
 
   const sortedNotes = (nviCandidate?.notes ?? []).sort((a, b) => {
     const dateA = new Date(a.createdDate);
@@ -146,9 +155,9 @@ export const NviCandidatePage = () => {
                     fullWidth
                     size="small"
                     sx={{ mb: '1rem' }}
-                    loading={statusMutation.isLoading && statusMutation.variables === 'Approved'}
-                    disabled={statusMutation.isLoading}
-                    onClick={() => statusMutation.mutate('Approved')}>
+                    loading={statusMutation.isLoading && statusMutation.variables?.status === 'Approved'}
+                    disabled={isMutating}
+                    onClick={() => statusMutation.mutate({ status: 'Approved' })}>
                     {t('tasks.nvi.approve_nvi_candidate')}
                   </LoadingButton>
                 </>
@@ -157,26 +166,38 @@ export const NviCandidatePage = () => {
               {myApprovalStatus?.status !== 'Rejected' && (
                 <>
                   <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
-                  <LoadingButton
+                  <Button
                     variant="outlined"
                     fullWidth
                     size="small"
                     sx={{ mb: '1rem' }}
-                    loading={statusMutation.isLoading && statusMutation.variables === 'Rejected'}
-                    disabled={statusMutation.isLoading}
-                    onClick={() => statusMutation.mutate('Rejected')}>
+                    disabled={isMutating || hasSelectedRejectCandidate}
+                    onClick={() => setHasSelectedRejectCandidate(true)}>
                     {t('tasks.nvi.reject_nvi_candidate')}
-                  </LoadingButton>
+                  </Button>
+
+                  {hasSelectedRejectCandidate && (
+                    <MessageForm
+                      confirmAction={async (text) => {
+                        await statusMutation.mutateAsync({ status: 'Rejected', text });
+                        setHasSelectedRejectCandidate(false);
+                      }}
+                      fieldLabel={t('tasks.nvi.reject_nvi_candidate_form_label')}
+                      buttonTitle={t('tasks.nvi.reject_nvi_candidate')}
+                    />
+                  )}
                 </>
               )}
 
-              <MessageForm
-                confirmAction={async (text) => {
-                  await noteMutation.mutateAsync({ text });
-                }}
-                fieldLabel={t('tasks.nvi.note')}
-                buttonTitle={t('tasks.nvi.save_note')}
-              />
+              {!hasSelectedRejectCandidate && (
+                <MessageForm
+                  confirmAction={async (text) => {
+                    await noteMutation.mutateAsync({ text });
+                  }}
+                  fieldLabel={t('tasks.nvi.note')}
+                  buttonTitle={t('tasks.nvi.save_note')}
+                />
+              )}
             </Box>
 
             <Divider sx={{ mt: 'auto' }} />

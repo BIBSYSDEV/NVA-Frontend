@@ -14,9 +14,9 @@ export const createNote = async (candidateIdentifier: string, note: CreateNoteDa
   return createNoteResponse.data;
 };
 
-type SetStatusData = Pick<ApprovalStatus, 'institutionId' | 'status'>;
+export type SetNviCandidateStatusData = Pick<ApprovalStatus, 'institutionId' | 'status'> & Partial<Pick<Note, 'text'>>;
 
-export const setCandidateStatus = async (candidateIdentifier: string, data: SetStatusData) => {
+export const setCandidateStatus = async (candidateIdentifier: string, data: SetNviCandidateStatusData) => {
   const setCandidateStatusResponse = await authenticatedApiRequest2<NviCandidate>({
     url: `${ScientificIndexApiPath.Candidate}/${candidateIdentifier}/status`,
     method: 'PUT',
