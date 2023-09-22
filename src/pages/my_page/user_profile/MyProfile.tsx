@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { ProfilePicture } from '../../../components/ProfilePicture';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -174,7 +173,6 @@ export const MyProfile = () => {
                             {t('my_page.my_profile.profile_picture')}
                           </Typography>
                           <ProfilePictureUploader id={personId} />
-                          <ProfilePicture id={personId} height="5rem" hasBorder />
                         </Box>
                       </Box>
                       <Box sx={{ display: 'flex', justifyContent: 'right', mt: '1rem' }}>
