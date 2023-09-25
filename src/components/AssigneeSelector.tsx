@@ -1,6 +1,5 @@
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { Autocomplete, IconButton, Tooltip } from '@mui/material';
-import { Box } from '@mui/system';
+import { Autocomplete, Box, IconButton, Tooltip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +17,7 @@ interface AssigneeSelectorProps {
   assignee: string | undefined;
   iconBackgroundColor: string;
   roleFilter: RoleName;
-  onSelectAssignee: (assignee: string) => Promise<unknown> | unknown;
+  onSelectAssignee: (assignee: string) => Promise<void>;
   canSetAssignee?: boolean;
   isUpdating?: boolean;
 }
@@ -40,7 +39,7 @@ export const AssigneeSelector = ({
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId, roleFilter],
     enabled: showCuratorSearch && !!customerId,
-    queryFn: () => (customerId ? fetchUsers(customerId, roleFilter) : undefined),
+    queryFn: () => fetchUsers(customerId, roleFilter),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
@@ -89,7 +88,6 @@ export const AssigneeSelector = ({
       isOptionEqualToValue={(option, value) => option.username === value.username}
       value={assigneeQuery.data}
       loading={isUpdating || curatorsQuery.isLoading}
-      sx={{ mb: '0.5rem' }}
       renderInput={(params) => (
         <AutocompleteTextField
           data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeSearchField}

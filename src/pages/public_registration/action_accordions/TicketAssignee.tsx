@@ -38,7 +38,9 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
     <AssigneeSelector
       assignee={ticket.assignee}
       canSetAssignee={canSetAssignee}
-      onSelectAssignee={async (assigee) => await ticketMutation.mutateAsync(assigee)}
+      onSelectAssignee={async (assignee) => {
+        await ticketMutation.mutateAsync(assignee);
+      }}
       isUpdating={ticketMutation.isLoading}
       roleFilter={RoleName.Curator}
       iconBackgroundColor={ticketColor[ticket.type]}
