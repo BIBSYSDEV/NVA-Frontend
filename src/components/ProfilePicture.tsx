@@ -1,12 +1,12 @@
-import { Box, BoxProps, Skeleton } from '@mui/material';
+import { Box, BoxProps, Skeleton, SxProps } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProfilePicture } from '../api/cristinApi';
 
-interface ProfilePictureProps {
+interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
   id: string;
   height: string;
   hasBorder?: boolean;
-  sx?: BoxProps;
+  sx?: SxProps;
 }
 
 export const ProfilePicture = ({ id, height, hasBorder, sx }: ProfilePictureProps) => {
@@ -21,21 +21,24 @@ export const ProfilePicture = ({ id, height, hasBorder, sx }: ProfilePictureProp
     ? `data:image/jpeg;base64,${profilePictureQuery.data.base64Data}`
     : '';
 
-  return profilePictureQuery.isFetching ? (
-    <Skeleton variant="circular" sx={{ height: height, aspectRatio: '1/1' }} />
-  ) : (
-    <Box
-      component="img"
-      src={profilePictureString}
-      alt="profile-picture"
-      sx={{
-        aspectRatio: '1/1',
-        height: height,
-        borderRadius: '50%',
-        border: hasBorder ? '0.125rem solid black' : 'none',
-        objectFit: 'cover',
-        ...sx,
-      }}
-    />
+  return (
+    <Box sx={{ height, aspectRatio: '1/1' }}>
+      {profilePictureQuery.isFetching ? (
+        <Skeleton variant="circular" sx={{ height: '100%' }} />
+      ) : (
+        <Box
+          component="img"
+          src={profilePictureString}
+          alt="profile-picture"
+          sx={{
+            height: '100%',
+            borderRadius: '50%',
+            border: hasBorder ? '0.125rem solid black' : 'none',
+            objectFit: 'cover',
+            ...sx,
+          }}
+        />
+      )}
+    </Box>
   );
 };
