@@ -17,6 +17,7 @@ import { PublicationPointsTypography } from '../../../components/PublicationPoin
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { ApprovalStatus, NviCandidateStatus } from '../../../types/nvi.types';
+import { RoleName } from '../../../types/user.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
@@ -133,7 +134,10 @@ export const NviCandidatePage = () => {
               <AssigneeSelector
                 assignee={myApprovalStatus?.assignee}
                 canSetAssignee
-                onSelectAssignee={(assigee) => assigneeMutation.mutate(assigee)}
+                onSelectAssignee={async (assigee) => await assigneeMutation.mutateAsync(assigee)}
+                isUpdating={assigneeMutation.isLoading}
+                roleFilter={RoleName.NviCurator}
+                iconBackgroundColor="nvi.main"
               />
             </Box>
 

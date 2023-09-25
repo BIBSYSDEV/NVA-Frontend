@@ -18,9 +18,19 @@ interface AssigneeSelectorProps {
   assignee?: string;
   canSetAssignee: boolean; // merge with onSelect prop?
   onSelectAssignee: (assignee: string) => Promise<unknown> | unknown;
+  isUpdating?: boolean;
+  roleFilter: RoleName;
+  iconBackgroundColor: string; // TODO: better type?
 }
 
-export const AssigneeSelector = ({ assignee, canSetAssignee, onSelectAssignee }: AssigneeSelectorProps) => {
+export const AssigneeSelector = ({
+  assignee,
+  canSetAssignee,
+  onSelectAssignee,
+  isUpdating = false,
+  roleFilter,
+  iconBackgroundColor,
+}: AssigneeSelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const customerId = user?.customerId ?? '';
@@ -28,9 +38,9 @@ export const AssigneeSelector = ({ assignee, canSetAssignee, onSelectAssignee }:
   const [showCuratorSearch, setShowCuratorSearch] = useState(false);
 
   const curatorsQuery = useQuery({
-    queryKey: ['curators', customerId],
+    queryKey: ['curators', customerId, roleFilter],
     enabled: showCuratorSearch && !!customerId,
-    queryFn: () => (customerId ? fetchUsers(customerId, RoleName.Curator) : undefined),
+    queryFn: () => (customerId ? fetchUsers(customerId, roleFilter) : undefined),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
 
@@ -45,6 +55,9 @@ export const AssigneeSelector = ({ assignee, canSetAssignee, onSelectAssignee }:
     queryFn: () => (assignee ? fetchUser(assignee) : undefined),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
+
+  const isLoading = isUpdating || curatorsQuery.isLoading || assigneeQuery.isFetching;
+
   const assigneeName = getFullName(assigneeQuery.data?.givenName, assigneeQuery.data?.familyName);
   const assigneeInitials = getContributorInitials(assigneeName);
 
@@ -56,7 +69,7 @@ export const AssigneeSelector = ({ assignee, canSetAssignee, onSelectAssignee }:
           {getFullName(option.givenName, option.familyName)}
         </li>
       )}
-      disabled={/*ticketMutation.isLoading ||*/ curatorsQuery.isLoading}
+      disabled={isLoading}
       filterOptions={(options, state) => {
         const filter = state.inputValue.toLocaleLowerCase();
         return options.filter((option) => {
@@ -64,19 +77,25 @@ export const AssigneeSelector = ({ assignee, canSetAssignee, onSelectAssignee }:
           return name.includes(filter);
         });
       }}
-      onChange={async (_, value) => await onSelectAssignee(value?.username ?? '')}
+      onChange={async (_, value) => {
+        try {
+          await onSelectAssignee(value?.username ?? '');
+        } finally {
+          setShowCuratorSearch(false);
+        }
+      }}
       onBlur={() => setShowCuratorSearch(false)}
       getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
       isOptionEqualToValue={(option, value) => option.username === value.username}
       value={assigneeQuery.data}
-      loading={assigneeQuery.isLoading}
+      loading={isUpdating || curatorsQuery.isLoading}
       sx={{ mb: '0.5rem' }}
       renderInput={(params) => (
         <AutocompleteTextField
           data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeSearchField}
           {...params}
-          label={t('my_page.roles.curator')} // todo fix key
-          isLoading={curatorsQuery.isLoading}
+          label={t('my_page.roles.curator')}
+          isLoading={isLoading}
           placeholder={t('common.search')}
           showSearchIcon
         />
@@ -86,7 +105,7 @@ export const AssigneeSelector = ({ assignee, canSetAssignee, onSelectAssignee }:
     <Box sx={{ height: '1.75rem', display: 'flex', gap: '0.5rem', mb: '0.5rem' }}>
       <Tooltip title={`${t('my_page.roles.curator')}: ${assignee ? assigneeName : t('common.none')}`}>
         <StyledBaseContributorIndicator
-          sx={{ bgcolor: 'nvi.main' /*ticketColor[ticket.type]*/ }}
+          sx={{ bgcolor: iconBackgroundColor }}
           data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
           {assignee ? assigneeInitials : ''}
         </StyledBaseContributorIndicator>
