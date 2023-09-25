@@ -15,21 +15,21 @@ import { getFullName } from '../utils/user-helpers';
 import { AutocompleteTextField } from './AutocompleteTextField';
 
 interface AssigneeSelectorProps {
-  assignee?: string;
-  canSetAssignee: boolean; // merge with onSelect prop?
-  onSelectAssignee: (assignee: string) => Promise<unknown> | unknown;
-  isUpdating?: boolean;
+  assignee: string | undefined;
+  iconBackgroundColor: string;
   roleFilter: RoleName;
-  iconBackgroundColor: string; // TODO: better type?
+  onSelectAssignee: (assignee: string) => Promise<unknown> | unknown;
+  canSetAssignee?: boolean;
+  isUpdating?: boolean;
 }
 
 export const AssigneeSelector = ({
   assignee,
-  canSetAssignee,
-  onSelectAssignee,
-  isUpdating = false,
-  roleFilter,
   iconBackgroundColor,
+  roleFilter,
+  onSelectAssignee,
+  canSetAssignee = true,
+  isUpdating = false,
 }: AssigneeSelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
