@@ -1,15 +1,19 @@
 import { Box, BoxProps, Skeleton, SxProps } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProfilePicture } from '../api/cristinApi';
+import { StyledBaseContributorIndicator } from '../pages/registration/contributors_tab/ContributorIndicator';
+import { dataTestId } from '../utils/dataTestIds';
+import { getContributorInitials } from '../utils/registration-helpers';
 
 interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
   id: string;
+  fullName: string;
   height: string;
   hasBorder?: boolean;
   sx?: SxProps;
 }
 
-export const ProfilePicture = ({ id, height, hasBorder, sx }: ProfilePictureProps) => {
+export const ProfilePicture = ({ id, fullName, height, hasBorder, sx }: ProfilePictureProps) => {
   const profilePictureQuery = useQuery({
     queryKey: ['picture', id],
     queryFn: () => fetchProfilePicture(id),
@@ -25,7 +29,7 @@ export const ProfilePicture = ({ id, height, hasBorder, sx }: ProfilePictureProp
     <Box sx={{ height, aspectRatio: '1/1' }}>
       {profilePictureQuery.isFetching ? (
         <Skeleton variant="circular" sx={{ height: '100%' }} />
-      ) : (
+      ) : profilePictureQuery.isSuccess ? (
         <Box
           component="img"
           src={profilePictureString}
@@ -38,6 +42,12 @@ export const ProfilePicture = ({ id, height, hasBorder, sx }: ProfilePictureProp
             ...sx,
           }}
         />
+      ) : (
+        <StyledBaseContributorIndicator
+          sx={{ bgcolor: 'primary.main', color: 'white', height: '2.5rem', width: '2.5rem', fontSize: '1.5rem' }}
+          data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
+          {getContributorInitials(fullName)}
+        </StyledBaseContributorIndicator>
       )}
     </Box>
   );

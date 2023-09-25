@@ -4,14 +4,12 @@ import { Fragment } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { PageSpinner } from '../../../components/PageSpinner';
+import { ProfilePicture } from '../../../components/ProfilePicture';
 import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
 import orcidIcon from '../../../resources/images/orcid_logo.svg';
 import { CristinPerson } from '../../../types/user.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getContributorInitials } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../../utils/user-helpers';
-import { StyledBaseContributorIndicator } from '../../registration/contributors_tab/ContributorIndicator';
 
 interface ResearchProfilePanelProps {
   person?: CristinPerson;
@@ -26,6 +24,7 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
   const personBackground = getLanguageString(person?.background);
   const personKeywords = person?.keywords ?? [];
+  const personId = person?.id ?? '';
 
   return (
     <>
@@ -46,11 +45,7 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
 
             <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center', mt: '1rem' }}>
               <Typography variant="h2">{t('my_page.my_profile.research_profile_summary.research_profile')}</Typography>
-              <StyledBaseContributorIndicator
-                sx={{ bgcolor: 'primary.main', color: 'white', height: '2.5rem', width: '2.5rem', fontSize: '1.5rem' }}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
-                {getContributorInitials(fullName)}
-              </StyledBaseContributorIndicator>
+              <ProfilePicture id={personId} fullName={fullName} height={'2.5rem'} />
             </Box>
 
             <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mt: '0.5rem' }}>
