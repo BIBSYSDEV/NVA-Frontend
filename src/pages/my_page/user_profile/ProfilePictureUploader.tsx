@@ -1,13 +1,14 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, IconButton, Skeleton, Typography } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { fetchProfilePicture, uploadProfilePicture } from '../../../api/cristinApi';
+import { uploadProfilePicture } from '../../../api/cristinApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useProfilePicture } from '../../../utils/hooks/useProfilePicture';
 
 interface ProfilePictureUploaderProps {
   id: string;
@@ -17,12 +18,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const profilePictureQuery = useQuery({
-    queryKey: ['picture', id],
-    queryFn: () => fetchProfilePicture(id),
-    meta: { errorMessage: false },
-    retry: false,
-  });
+  const { profilePictureQuery, profilePictureString } = useProfilePicture(id);
 
   const mutateProfilePicture = useMutation({
     mutationFn: (base64String: string) => uploadProfilePicture(id, base64String),
@@ -34,10 +30,6 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
       dispatch(setNotification({ message: t('feedback.error.update_profile_photo'), variant: 'error' }));
     },
   });
-
-  const profilePictureString = profilePictureQuery.isSuccess
-    ? `data:image/jpeg;base64,${profilePictureQuery.data.base64Data}`
-    : '';
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

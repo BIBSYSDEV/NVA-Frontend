@@ -1,8 +1,7 @@
 import { Box, BoxProps, Skeleton, SxProps } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { fetchProfilePicture } from '../api/cristinApi';
 import { StyledBaseContributorIndicator } from '../pages/registration/contributors_tab/ContributorIndicator';
 import { dataTestId } from '../utils/dataTestIds';
+import { useProfilePicture } from '../utils/hooks/useProfilePicture';
 import { getContributorInitials } from '../utils/registration-helpers';
 
 interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
@@ -14,16 +13,7 @@ interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
 }
 
 export const ProfilePicture = ({ id, fullName, height, hasBorder, sx }: ProfilePictureProps) => {
-  const profilePictureQuery = useQuery({
-    queryKey: ['picture', id],
-    queryFn: () => fetchProfilePicture(id),
-    meta: { errorMessage: false },
-    retry: false,
-  });
-
-  const profilePictureString = profilePictureQuery.isSuccess
-    ? `data:image/jpeg;base64,${profilePictureQuery.data.base64Data}`
-    : '';
+  const { profilePictureQuery, profilePictureString } = useProfilePicture(id);
 
   return (
     <Box sx={{ height, aspectRatio: '1/1', ...sx }}>
