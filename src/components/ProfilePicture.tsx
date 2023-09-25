@@ -26,7 +26,7 @@ export const ProfilePicture = ({ id, fullName, height, hasBorder, sx }: ProfileP
     : '';
 
   return (
-    <Box sx={{ height, aspectRatio: '1/1' }}>
+    <Box sx={{ height, aspectRatio: '1/1', ...sx }}>
       {profilePictureQuery.isFetching ? (
         <Skeleton variant="circular" sx={{ height: '100%' }} />
       ) : profilePictureQuery.isSuccess ? (
@@ -36,15 +36,21 @@ export const ProfilePicture = ({ id, fullName, height, hasBorder, sx }: ProfileP
           alt="profile-picture"
           sx={{
             height: '100%',
+            width: '100%',
             borderRadius: '50%',
             border: hasBorder ? '0.125rem solid black' : 'none',
             objectFit: 'cover',
-            ...sx,
           }}
         />
       ) : (
         <StyledBaseContributorIndicator
-          sx={{ bgcolor: 'primary.main', color: 'white', height: '2.5rem', width: '2.5rem', fontSize: '1.5rem' }}
+          sx={{
+            bgcolor: 'white',
+            color: 'primary.main',
+            border: '2px solid black',
+            height: '100%',
+            width: '100%',
+          }}
           data-testid={dataTestId.registrationLandingPage.tasksPanel.assigneeIndicator}>
           {getContributorInitials(fullName)}
         </StyledBaseContributorIndicator>

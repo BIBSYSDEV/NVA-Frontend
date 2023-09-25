@@ -10,6 +10,7 @@ import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
+import { ProfilePicture } from '../../components/ProfilePicture';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
@@ -112,7 +113,14 @@ const ResearchProfile = () => {
           borderLeft: 'solid 1rem',
           borderLeftColor: 'person.main',
         }}>
-        <Typography variant="h1" sx={{ ml: '2rem', color: 'primary.contrastText' }}>
+        <ProfilePicture
+          id={personId}
+          fullName={fullName}
+          height={'5rem'}
+          hasBorder
+          sx={{ position: 'absolute', mt: '3rem', ml: '1rem', fontSize: '2rem', fontWeight: 'bold' }}
+        />
+        <Typography variant="h1" sx={{ ml: '7rem', color: 'primary.contrastText' }}>
           {fullName}
         </Typography>
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
@@ -127,7 +135,7 @@ const ResearchProfile = () => {
             sx={{
               display: 'flex',
               gap: '0.5rem',
-              mt: '1rem',
+              mt: '1.5rem',
               flexDirection: { xs: 'column', sm: 'row' },
               flexWrap: 'wrap',
             }}>
