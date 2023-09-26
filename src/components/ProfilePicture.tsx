@@ -1,4 +1,5 @@
 import { Box, BoxProps, Skeleton, SxProps } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 import { StyledBaseContributorIndicator } from '../pages/registration/contributors_tab/ContributorIndicator';
 import { dataTestId } from '../utils/dataTestIds';
 import { useProfilePicture } from '../utils/hooks/useProfilePicture';
@@ -14,6 +15,7 @@ interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
 
 export const ProfilePicture = ({ id, fullName, height, hasBorder, sx }: ProfilePictureProps) => {
   const { profilePictureQuery, profilePictureString } = useProfilePicture(id);
+  const isPublicPage = useLocation().pathname.includes('research-profile');
 
   return (
     <Box sx={{ height, aspectRatio: '1/1', ...sx }}>
@@ -35,9 +37,9 @@ export const ProfilePicture = ({ id, fullName, height, hasBorder, sx }: ProfileP
       ) : (
         <StyledBaseContributorIndicator
           sx={{
-            bgcolor: 'white',
-            color: 'primary.main',
-            border: '2px solid black',
+            bgcolor: isPublicPage ? 'white' : 'primary.main',
+            color: isPublicPage ? 'primary.main' : 'primary.contrastText',
+            border: isPublicPage ? '2px solid black' : 'none',
             height: '100%',
             width: '100%',
           }}
