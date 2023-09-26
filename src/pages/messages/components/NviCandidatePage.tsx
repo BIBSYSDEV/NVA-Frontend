@@ -133,6 +133,7 @@ export const NviCandidatePage = () => {
             <Box sx={{ m: '1rem' }}>
               <AssigneeSelector
                 assignee={myApprovalStatus?.assignee}
+                canSetAssignee={myApprovalStatus?.status === 'Pending'}
                 onSelectAssignee={async (assigee) => await assigneeMutation.mutateAsync(assigee)}
                 isUpdating={assigneeMutation.isLoading}
                 roleFilter={RoleName.NviCurator}
