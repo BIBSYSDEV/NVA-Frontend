@@ -18,7 +18,7 @@ interface AssigneeSelectorProps {
   iconBackgroundColor: string;
   roleFilter: RoleName;
   onSelectAssignee: (assignee: string) => Promise<void>;
-  canSetAssignee?: boolean;
+  canSetAssignee: boolean;
   isUpdating?: boolean;
 }
 
