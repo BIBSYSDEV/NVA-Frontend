@@ -6,15 +6,15 @@ import { useProfilePicture } from '../utils/hooks/useProfilePicture';
 import { getContributorInitials } from '../utils/registration-helpers';
 
 interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
-  id: string;
+  personId: string;
   fullName: string;
   height: string;
   hasBorder?: boolean;
   sx?: SxProps;
 }
 
-export const ProfilePicture = ({ id, fullName, height, hasBorder, sx }: ProfilePictureProps) => {
-  const { profilePictureQuery, profilePictureString } = useProfilePicture(id);
+export const ProfilePicture = ({ personId, fullName, height, hasBorder, sx }: ProfilePictureProps) => {
+  const { profilePictureQuery, profilePictureString } = useProfilePicture(personId);
   const isPublicPage = useLocation().pathname.includes('research-profile');
 
   return (
@@ -28,7 +28,7 @@ export const ProfilePicture = ({ id, fullName, height, hasBorder, sx }: ProfileP
           alt="profile-picture"
           sx={{
             height: '100%',
-            width: '100%',
+            aspectRatio: '1/1',
             borderRadius: '50%',
             border: hasBorder ? '0.125rem solid black' : 'none',
             objectFit: 'cover',
@@ -39,7 +39,7 @@ export const ProfilePicture = ({ id, fullName, height, hasBorder, sx }: ProfileP
           sx={{
             bgcolor: isPublicPage ? 'white' : 'primary.main',
             color: isPublicPage ? 'primary.main' : 'primary.contrastText',
-            border: isPublicPage ? '2px solid black' : 'none',
+            border: isPublicPage ? '0.125rem solid black' : 'none',
             height: '100%',
             width: '100%',
           }}

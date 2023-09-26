@@ -11,17 +11,17 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useProfilePicture } from '../../../utils/hooks/useProfilePicture';
 
 interface ProfilePictureUploaderProps {
-  id: string;
+  personId: string;
 }
 
-export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
+export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { profilePictureQuery, profilePictureString } = useProfilePicture(id);
+  const { profilePictureQuery, profilePictureString } = useProfilePicture(personId);
 
   const mutateProfilePicture = useMutation({
-    mutationFn: (base64String: string) => uploadProfilePicture(id, base64String),
+    mutationFn: (base64String: string) => uploadProfilePicture(personId, base64String),
     onSuccess: async () => {
       await profilePictureQuery.refetch();
       dispatch(setNotification({ message: t('feedback.success.update_profile_photo'), variant: 'success' }));
@@ -68,7 +68,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
           <Box
             component="img"
             src={profilePictureString}
-            alt="user-avatar"
+            alt="profile-picture"
             sx={{ aspectRatio: '1/1', width: '100%', borderRadius: '50%', objectFit: 'cover' }}
           />
         </Box>

@@ -45,7 +45,7 @@ export const ResearchProfilePanel = ({ person, isLoadingPerson }: ResearchProfil
 
             <Box sx={{ display: 'grid', gridTemplateColumns: '3fr 1fr', alignItems: 'center', mt: '1rem' }}>
               <Typography variant="h2">{t('my_page.my_profile.research_profile_summary.research_profile')}</Typography>
-              <ProfilePicture id={personId} fullName={fullName} height={'2.5rem'} sx={{ fontSize: '1.5rem' }} />
+              <ProfilePicture personId={personId} fullName={fullName} height={'2.5rem'} sx={{ fontSize: '1.5rem' }} />
             </Box>
 
             <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', mt: '0.5rem' }}>

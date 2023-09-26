@@ -114,7 +114,7 @@ const ResearchProfile = () => {
           borderLeftColor: 'person.main',
         }}>
         <ProfilePicture
-          id={personId}
+          personId={personId}
           fullName={fullName}
           height={'5rem'}
           hasBorder
