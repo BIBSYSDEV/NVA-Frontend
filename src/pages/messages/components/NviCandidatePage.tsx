@@ -21,7 +21,7 @@ import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { ApprovalStatus, RejectedApprovalStatus } from '../../../types/nvi.types';
+import { ApprovalStatus, Note, RejectedApprovalStatus } from '../../../types/nvi.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
@@ -81,14 +81,21 @@ export const NviCandidatePage = () => {
 
   const isMutating = noteMutation.isLoading || statusMutation.isLoading;
 
-  const sortedNotes = (nviCandidate?.notes ?? []).sort((a, b) => {
+  const rejectionNotes: Note[] = (
+    (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Rejected') ?? []) as RejectedApprovalStatus[]
+  ).map((rejectionStatus) => ({
+    createdDate: rejectionStatus.finalizedDate,
+    text: `[${t('tasks.nvi.status.Rejected')}] ${rejectionStatus.reason}`,
+    user: rejectionStatus.finalizedBy,
+  }));
+
+  const allNotes = [...(nviCandidate?.notes ?? []), ...rejectionNotes];
+
+  const sortedNotes = allNotes.sort((a, b) => {
     const dateA = new Date(a.createdDate);
     const dateB = new Date(b.createdDate);
     return dateB.getTime() - dateA.getTime();
   });
-
-  const rejectionNotes = (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Rejected') ??
-    []) as RejectedApprovalStatus[];
 
   const publicationPointsSum = nviCandidate?.approvalStatuses.reduce((acc, status) => acc + status.points, 0);
 
@@ -137,17 +144,6 @@ export const NviCandidatePage = () => {
                     m: '0 0 1rem 0',
                     gap: '0.25rem',
                   }}>
-                  {rejectionNotes.map((rejectionNote, index) => (
-                    <ErrorBoundary key={index}>
-                      <MessageItem
-                        text={`[${t('tasks.nvi.status.Rejected').toLocaleUpperCase()}] ${rejectionNote.reason}`}
-                        date={rejectionNote.finalizedDate}
-                        senderId={rejectionNote.finalizedBy}
-                        backgroundColor="nvi.main"
-                      />
-                    </ErrorBoundary>
-                  ))}
-
                   {sortedNotes.map((note) => (
                     <ErrorBoundary key={note.createdDate}>
                       <MessageItem
