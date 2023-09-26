@@ -14,8 +14,8 @@ export const createNote = async (candidateIdentifier: string, note: CreateNoteDa
   return createNoteResponse.data;
 };
 
-type ApproveNviCandidateData = Pick<ApprovalStatus, 'institutionId' | 'status'>;
-export type SetNviCandidateStatusData = ApproveNviCandidateData & Partial<Pick<RejectedApprovalStatus, 'reason'>>;
+export type SetNviCandidateStatusData = Pick<ApprovalStatus, 'institutionId' | 'status'> &
+  Partial<Pick<RejectedApprovalStatus, 'reason'>>;
 
 export const setCandidateStatus = async (candidateIdentifier: string, data: SetNviCandidateStatusData) => {
   const setCandidateStatusResponse = await authenticatedApiRequest2<NviCandidate>({

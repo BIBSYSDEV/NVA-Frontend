@@ -133,7 +133,7 @@ export const NviCandidatePage = () => {
             </StyledPaperHeader>
 
             <Box sx={{ m: '1rem' }}>
-              {sortedNotes.length + rejectionNotes.length > 0 && (
+              {sortedNotes.length > 0 && (
                 <Box
                   component="ul"
                   sx={{
