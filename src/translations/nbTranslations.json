@@ -1611,6 +1611,7 @@
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvisning av resultatet.",
+      "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",

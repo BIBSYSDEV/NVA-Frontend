@@ -6,7 +6,7 @@ interface NviCandidateContributor {
   name: string;
 }
 
-export type NviCandidateStatus = 'Pending' | 'Rejected' | 'Approved';
+type NviCandidateStatus = 'Pending' | 'Rejected' | 'Approved';
 
 interface NviCandidateSearchHitApproval {
   id: string;
@@ -59,10 +59,21 @@ export interface ApprovalStatus {
   assignee?: string;
 }
 
+interface FinalizedApprovalStatus extends ApprovalStatus {
+  status: 'Rejected' | 'Approved';
+  finalizedBy: string;
+  finalizedDate: string;
+}
+
+export interface RejectedApprovalStatus extends FinalizedApprovalStatus {
+  status: 'Rejected';
+  reason: string;
+}
+
 export interface NviCandidate {
   id: string;
   publicationId: string;
-  approvalStatuses: ApprovalStatus[];
+  approvalStatuses: (ApprovalStatus | FinalizedApprovalStatus | RejectedApprovalStatus)[];
   notes: Note[];
 }
 
