@@ -1,10 +1,12 @@
+import CancelIcon from '@mui/icons-material/Cancel';
 import SendIcon from '@mui/icons-material/Send';
-import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;
+  cancelAction?: () => void;
   fieldLabel?: string;
   buttonTitle?: string;
 }
@@ -19,7 +21,7 @@ const initValues: MessageFormData = {
 
 const maxMessageLength = 160;
 
-export const MessageForm = ({ confirmAction, fieldLabel, buttonTitle }: MessageFormProps) => {
+export const MessageForm = ({ confirmAction, cancelAction, fieldLabel, buttonTitle }: MessageFormProps) => {
   const { t } = useTranslation();
 
   return (
@@ -30,7 +32,7 @@ export const MessageForm = ({ confirmAction, fieldLabel, buttonTitle }: MessageF
         resetForm();
       }}>
       {({ isSubmitting }) => (
-        <Form>
+        <Box component={Form} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Field name="message">
             {({ field }: FieldProps<string>) => (
               <TextField
@@ -66,7 +68,20 @@ export const MessageForm = ({ confirmAction, fieldLabel, buttonTitle }: MessageF
               />
             )}
           </Field>
-        </Form>
+          {cancelAction && (
+            <IconButton
+              color="primary"
+              size="small"
+              sx={{
+                bgcolor: 'white',
+                mt: '-2.25rem',
+              }}
+              onClick={cancelAction}
+              title={t('common.cancel')}>
+              <CancelIcon />
+            </IconButton>
+          )}
+        </Box>
       )}
     </Formik>
   );
