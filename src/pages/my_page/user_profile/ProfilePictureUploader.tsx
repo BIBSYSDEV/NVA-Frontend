@@ -65,10 +65,11 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
             <CancelIcon color="primary" />
           </IconButton>
 
-          <img
+          <Box
+            component="img"
             src={profilePictureString}
             alt="user-avatar"
-            style={{ aspectRatio: '1/1', width: '100%', borderRadius: '50%', objectFit: 'cover' }}
+            sx={{ aspectRatio: '1/1', width: '100%', borderRadius: '50%', objectFit: 'cover' }}
           />
         </Box>
       ) : (
