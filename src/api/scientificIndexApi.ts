@@ -1,4 +1,4 @@
-import { ApprovalStatus, Note, NviCandidate } from '../types/nvi.types';
+import { ApprovalStatus, Note, NviCandidate, RejectedApprovalStatus } from '../types/nvi.types';
 import { ScientificIndexApiPath } from './apiPaths';
 import { authenticatedApiRequest2 } from './apiRequest';
 
@@ -14,7 +14,8 @@ export const createNote = async (candidateIdentifier: string, note: CreateNoteDa
   return createNoteResponse.data;
 };
 
-export type SetNviCandidateStatusData = Pick<ApprovalStatus, 'institutionId' | 'status'> & Partial<Pick<Note, 'text'>>;
+type ApproveNviCandidateData = Pick<ApprovalStatus, 'institutionId' | 'status'>;
+export type SetNviCandidateStatusData = ApproveNviCandidateData & Partial<Pick<RejectedApprovalStatus, 'reason'>>;
 
 export const setCandidateStatus = async (candidateIdentifier: string, data: SetNviCandidateStatusData) => {
   const setCandidateStatusResponse = await authenticatedApiRequest2<NviCandidate>({

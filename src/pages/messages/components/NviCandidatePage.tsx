@@ -21,7 +21,7 @@ import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { ApprovalStatus } from '../../../types/nvi.types';
+import { ApprovalStatus, RejectedApprovalStatus } from '../../../types/nvi.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
@@ -87,6 +87,9 @@ export const NviCandidatePage = () => {
     return dateB.getTime() - dateA.getTime();
   });
 
+  const rejectionNotes = (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Rejected') ??
+    []) as RejectedApprovalStatus[];
+
   const publicationPointsSum = nviCandidate?.approvalStatuses.reduce((acc, status) => acc + status.points, 0);
 
   return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
@@ -123,7 +126,7 @@ export const NviCandidatePage = () => {
             </StyledPaperHeader>
 
             <Box sx={{ m: '1rem' }}>
-              {sortedNotes.length > 0 && (
+              {sortedNotes.length + rejectionNotes.length > 0 && (
                 <Box
                   component="ul"
                   sx={{
@@ -134,6 +137,17 @@ export const NviCandidatePage = () => {
                     m: '0 0 1rem 0',
                     gap: '0.25rem',
                   }}>
+                  {rejectionNotes.map((rejectionNote, index) => (
+                    <ErrorBoundary key={index}>
+                      <MessageItem
+                        text={`[${t('tasks.nvi.status.Rejected').toLocaleUpperCase()}] ${rejectionNote.reason}`}
+                        date={rejectionNote.finalizedDate}
+                        senderId={rejectionNote.finalizedBy}
+                        backgroundColor="nvi.main"
+                      />
+                    </ErrorBoundary>
+                  ))}
+
                   {sortedNotes.map((note) => (
                     <ErrorBoundary key={note.createdDate}>
                       <MessageItem
@@ -178,8 +192,8 @@ export const NviCandidatePage = () => {
 
                   {hasSelectedRejectCandidate && (
                     <MessageForm
-                      confirmAction={async (text) => {
-                        await statusMutation.mutateAsync({ status: 'Rejected', text });
+                      confirmAction={async (reason) => {
+                        await statusMutation.mutateAsync({ status: 'Rejected', reason });
                         setHasSelectedRejectCandidate(false);
                       }}
                       fieldLabel={t('tasks.nvi.reject_nvi_candidate_form_label')}
