@@ -85,8 +85,8 @@ export const AssigneeSelector = ({
       }}
       onBlur={() => setShowCuratorSearch(false)}
       getOptionLabel={(option) => getFullName(option.givenName, option.familyName)}
-      isOptionEqualToValue={(option, value) => option.username === value.username}
-      value={assigneeQuery.data}
+      isOptionEqualToValue={(option, value) => option.username === value?.username}
+      value={assigneeQuery.data ?? null}
       loading={isUpdating || curatorsQuery.isLoading}
       renderInput={(params) => (
         <AutocompleteTextField
