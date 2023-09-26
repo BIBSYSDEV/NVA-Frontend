@@ -19,7 +19,7 @@ interface AssigneeSelectorProps {
   roleFilter: RoleName;
   onSelectAssignee: (assignee: string) => Promise<void>;
   canSetAssignee: boolean;
-  isUpdating?: boolean;
+  isUpdating: boolean;
 }
 
 export const AssigneeSelector = ({
@@ -27,8 +27,8 @@ export const AssigneeSelector = ({
   iconBackgroundColor,
   roleFilter,
   onSelectAssignee,
-  canSetAssignee = true,
-  isUpdating = false,
+  canSetAssignee,
+  isUpdating,
 }: AssigneeSelectorProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
