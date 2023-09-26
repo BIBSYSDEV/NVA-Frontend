@@ -26,3 +26,15 @@ export const setCandidateStatus = async (candidateIdentifier: string, data: SetN
 
   return setCandidateStatusResponse.data;
 };
+
+type SetAssigneeData = Pick<ApprovalStatus, 'institutionId' | 'assignee'>;
+
+export const setCandidateAssignee = async (candidateIdentifier: string, data: SetAssigneeData) => {
+  const setCandidateAssigneeResponse = await authenticatedApiRequest2<NviCandidate>({
+    url: `${ScientificIndexApiPath.Candidate}/${candidateIdentifier}/assignee`,
+    method: 'PUT',
+    data: data,
+  });
+
+  return setCandidateAssigneeResponse.data;
+};

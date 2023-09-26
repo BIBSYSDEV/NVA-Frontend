@@ -56,6 +56,7 @@ export interface ApprovalStatus {
   institutionId: string;
   status: NviCandidateStatus;
   points: number;
+  assignee?: string;
 }
 
 interface FinalizedApprovalStatus extends ApprovalStatus {

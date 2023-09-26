@@ -11,9 +11,11 @@ import {
   CreateNoteData,
   SetNviCandidateStatusData,
   createNote,
+  setCandidateAssignee,
   setCandidateStatus,
 } from '../../../api/scientificIndexApi';
 import { fetchNviCandidate } from '../../../api/searchApi';
+import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
 import { PageSpinner } from '../../../components/PageSpinner';
@@ -22,6 +24,7 @@ import { PublicationPointsTypography } from '../../../components/PublicationPoin
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { ApprovalStatus, Note, RejectedApprovalStatus } from '../../../types/nvi.types';
+import { RoleName } from '../../../types/user.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
@@ -79,6 +82,21 @@ export const NviCandidatePage = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_nvi_status'), variant: 'error' })),
   });
 
+  const assigneeMutation = useMutation({
+    mutationFn: async (assignee: string) => {
+      if (myApprovalStatus) {
+        const updatedCandidate = await setCandidateAssignee(identifier, {
+          institutionId: myApprovalStatus.institutionId,
+          assignee,
+        });
+        queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
+      }
+    },
+    onSuccess: () =>
+      dispatch(setNotification({ message: t('feedback.success.update_ticket_assignee'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
+  });
+
   const isMutating = noteMutation.isLoading || statusMutation.isLoading;
 
   const rejectionNotes: Note[] = (
@@ -131,6 +149,19 @@ export const NviCandidatePage = () => {
                 {t('common.dialogue')}
               </Typography>
             </StyledPaperHeader>
+
+            <Box sx={{ m: '1rem' }}>
+              <AssigneeSelector
+                assignee={myApprovalStatus?.assignee}
+                canSetAssignee={myApprovalStatus?.status === 'Pending'}
+                onSelectAssignee={async (assigee) => await assigneeMutation.mutateAsync(assigee)}
+                isUpdating={assigneeMutation.isLoading}
+                roleFilter={RoleName.NviCurator}
+                iconBackgroundColor="nvi.main"
+              />
+            </Box>
+
+            <Divider />
 
             <Box sx={{ m: '1rem' }}>
               {sortedNotes.length > 0 && (
