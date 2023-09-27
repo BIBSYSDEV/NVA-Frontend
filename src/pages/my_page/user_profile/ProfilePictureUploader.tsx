@@ -2,10 +2,11 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, IconButton, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { fetchProfilePicture, uploadProfilePicture } from '../../../api/cristinApi';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
 
@@ -16,6 +17,9 @@ interface ProfilePictureUploaderProps {
 export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const toggleConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
 
   const profilePictureQuery = useQuery({
     queryKey: ['picture', id],
@@ -60,7 +64,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <IconButton
             data-testid={dataTestId.myPage.myProfile.deleteProfilePictureButton}
-            onClick={() => mutateProfilePicture.mutate('')}
+            onClick={() => toggleConfirmDialog()}
             sx={{
               alignSelf: 'end',
               boxShadow: '0px 10px 10px -8px rgba(0,0,0,0.75)',
@@ -105,6 +109,18 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
           <Typography>{t('my_page.my_profile.identity.upload_profile_photo')}</Typography>
         </Box>
       )}
+      <ConfirmDialog
+        open={openConfirmDialog}
+        title={t('my_page.my_profile.remove_profile_picture')}
+        onAccept={async () => {
+          await mutateProfilePicture.mutateAsync('');
+          toggleConfirmDialog();
+        }}
+        onCancel={toggleConfirmDialog}
+        isLoading={mutateProfilePicture.isLoading}
+        dialogDataTestId="confirm-remove-orcid-connection-dialog">
+        <Typography sx={{ whiteSpace: 'pre-wrap' }}>{t('my_page.my_profile.remove_profile_picture_info')}</Typography>
+      </ConfirmDialog>
     </Box>
   );
 };

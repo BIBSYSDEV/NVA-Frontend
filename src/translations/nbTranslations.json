@@ -604,6 +604,8 @@
       "preferred_last_name": "Foretrukket etternavn",
       "profile_picture": "Profilbilde",
       "projects": "Prosjekt",
+      "remove_profile_picture": "Fjern profilbilde?",
+      "remove_profile_picture_info": "Er du sikker på at du vil fjerne profilbildet?",
       "research_profile_summary": {
         "affiliations": "Tilknytninger",
         "preview": "Forhåndsvisning",
