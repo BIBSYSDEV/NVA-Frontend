@@ -180,7 +180,7 @@ export const MyProfile = () => {
                           </Box>
                         </Box>
 
-                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem', gap: '1rem' }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
                           <Button
                             onClick={() => {
                               resetForm();
