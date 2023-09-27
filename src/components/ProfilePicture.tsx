@@ -8,24 +8,16 @@ import { getContributorInitials } from '../utils/registration-helpers';
 interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
   personId: string;
   fullName: string;
-  height: string;
   hasBorder?: boolean;
   isPublicPage?: boolean;
 }
 
-export const ProfilePicture = ({
-  personId,
-  fullName,
-  height,
-  hasBorder,
-  isPublicPage = false,
-  sx,
-}: ProfilePictureProps) => {
+export const ProfilePicture = ({ personId, fullName, hasBorder, isPublicPage = false, sx }: ProfilePictureProps) => {
   const { t } = useTranslation();
   const { profilePictureQuery, profilePictureString } = useProfilePicture(personId);
 
   return (
-    <Box sx={{ height, aspectRatio: '1/1', ...sx }}>
+    <Box sx={{ height: '2.5rem ', aspectRatio: '1/1', borderRadius: '50%', ...sx }}>
       {profilePictureQuery.isFetching ? (
         <Skeleton variant="circular" sx={{ height: '100%' }} />
       ) : profilePictureQuery.isSuccess ? (
