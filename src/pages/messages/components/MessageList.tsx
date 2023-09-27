@@ -1,4 +1,5 @@
-import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Box, Divider, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -99,14 +100,14 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
       )}
 
       {expanded && onDelete && (
-        <Button
+        <LoadingButton
           size="small"
           variant="outlined"
-          disabled={isDeleting}
+          loading={isDeleting}
           sx={{ mt: '0.25rem', alignSelf: 'center' }}
           onClick={onDelete}>
           {t('common.undo')}
-        </Button>
+        </LoadingButton>
       )}
     </Box>
   );
