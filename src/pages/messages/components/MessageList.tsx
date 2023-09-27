@@ -1,5 +1,6 @@
 import { Box, Divider, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchUser } from '../../../api/roleApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -32,7 +33,7 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
             key={message.identifier}
             text={message.text}
             date={message.createdDate}
-            senderId={message.sender}
+            username={message.sender}
             backgroundColor={ticketColor[ticket.type]}
           />
         ))}
@@ -42,18 +43,18 @@ export const TicketMessageList = ({ ticket }: MessageListProps) => {
 };
 
 interface MessageItemProps {
-  text: string;
+  text: ReactNode;
   date: string;
-  senderId: string;
+  username: string;
   backgroundColor: string;
 }
 
-export const MessageItem = ({ text, date, senderId, backgroundColor }: MessageItemProps) => {
+export const MessageItem = ({ text, date, username, backgroundColor }: MessageItemProps) => {
   const { t } = useTranslation();
 
   const senderQuery = useQuery({
-    queryKey: [senderId],
-    queryFn: () => fetchUser(senderId),
+    queryKey: [username],
+    queryFn: () => fetchUser(username),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
@@ -78,7 +79,11 @@ export const MessageItem = ({ text, date, senderId, backgroundColor }: MessageIt
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
-      <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{text}</Typography>
+      {typeof text === 'string' ? (
+        <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{text}</Typography>
+      ) : (
+        <div data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{text}</div>
+      )}
     </Box>
   );
 };

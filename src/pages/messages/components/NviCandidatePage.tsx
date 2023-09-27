@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Divider, Paper, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -23,13 +23,20 @@ import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { ApprovalStatus, FinalizedApprovalStatus, Note, RejectedApprovalStatus } from '../../../types/nvi.types';
+import { ApprovalStatus, FinalizedApprovalStatus, RejectedApprovalStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { MessageItem } from './MessageList';
+
+interface NviNote {
+  type: 'Approved' | 'Rejected' | 'Note';
+  date: string;
+  username: string;
+  content: ReactNode;
+}
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
@@ -99,27 +106,43 @@ export const NviCandidatePage = () => {
 
   const isMutating = noteMutation.isLoading || statusMutation.isLoading;
 
-  const rejectionNotes: Note[] = (
+  const rejectionNotes: NviNote[] = (
     (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Rejected') ?? []) as RejectedApprovalStatus[]
   ).map((rejectionStatus) => ({
-    createdDate: rejectionStatus.finalizedDate,
-    text: `[${t('tasks.nvi.status.Rejected')}] ${rejectionStatus.reason}`,
-    user: rejectionStatus.finalizedBy,
+    type: 'Rejected',
+    date: rejectionStatus.finalizedDate,
+    content: (
+      <Typography>
+        <Box component="span" fontWeight={700}>
+          {t('tasks.nvi.status.Rejected')}:
+        </Box>{' '}
+        {rejectionStatus.reason}
+      </Typography>
+    ),
+    username: rejectionStatus.finalizedBy,
   }));
 
-  const approvalNotes: Note[] = (
+  const approvalNotes: NviNote[] = (
     (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Approved') ?? []) as FinalizedApprovalStatus[]
   ).map((approvalStatus) => ({
-    createdDate: approvalStatus.finalizedDate,
-    text: `[${t('tasks.nvi.status.Approved')}]`,
-    user: approvalStatus.finalizedBy,
+    type: 'Approved',
+    date: approvalStatus.finalizedDate,
+    content: <Typography fontWeight={700}>{t('tasks.nvi.status.Approved')}</Typography>,
+    username: approvalStatus.finalizedBy,
   }));
 
-  const allNotes = [...(nviCandidate?.notes ?? []), ...rejectionNotes, ...approvalNotes];
+  const generalNotes: NviNote[] = (nviCandidate?.notes ?? []).map((note) => ({
+    type: 'Note',
+    date: note.createdDate,
+    content: note.text,
+    username: note.user,
+  }));
+
+  const allNotes = [...generalNotes, ...rejectionNotes, ...approvalNotes];
 
   const sortedNotes = allNotes.sort((a, b) => {
-    const dateA = new Date(a.createdDate);
-    const dateB = new Date(b.createdDate);
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
     return dateB.getTime() - dateA.getTime();
   });
 
@@ -184,11 +207,11 @@ export const NviCandidatePage = () => {
                     gap: '0.25rem',
                   }}>
                   {sortedNotes.map((note) => (
-                    <ErrorBoundary key={note.createdDate}>
+                    <ErrorBoundary key={note.date}>
                       <MessageItem
-                        text={note.text}
-                        date={note.createdDate}
-                        senderId={note.user}
+                        text={note.content}
+                        date={note.date}
+                        username={note.username}
                         backgroundColor="nvi.main"
                       />
                     </ErrorBoundary>
