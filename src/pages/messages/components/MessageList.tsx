@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchUser } from '../../../api/roleApi';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { Ticket } from '../../../types/publication_types/ticket.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -55,6 +56,7 @@ interface MessageItemProps {
 export const MessageItem = ({ text, date, username, backgroundColor, onDelete, isDeleting }: MessageItemProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const senderQuery = useQuery({
     queryKey: [username],
@@ -100,14 +102,25 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
       )}
 
       {expanded && onDelete && (
-        <LoadingButton
-          size="small"
-          variant="outlined"
-          loading={isDeleting}
-          sx={{ mt: '0.25rem', alignSelf: 'center' }}
-          onClick={onDelete}>
-          {t('common.undo')}
-        </LoadingButton>
+        <>
+          <LoadingButton
+            size="small"
+            variant="outlined"
+            loading={isDeleting}
+            sx={{ mt: '0.25rem', alignSelf: 'center' }}
+            onClick={() => setShowConfirmDialog(true)}>
+            {t('common.undo')}
+          </LoadingButton>
+
+          <ConfirmDialog
+            open={showConfirmDialog}
+            title={t('tasks.nvi.undo_note')}
+            onAccept={onDelete}
+            isLoading={isDeleting}
+            onCancel={() => setShowConfirmDialog(false)}>
+            <Typography>{t('tasks.nvi.undo_note_description')}</Typography>
+          </ConfirmDialog>
+        </>
       )}
     </Box>
   );
