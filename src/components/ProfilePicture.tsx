@@ -1,5 +1,5 @@
-import { Box, BoxProps, Skeleton, SxProps } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { Box, BoxProps, Skeleton } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { StyledBaseContributorIndicator } from '../pages/registration/contributors_tab/ContributorIndicator';
 import { dataTestId } from '../utils/dataTestIds';
 import { useProfilePicture } from '../utils/hooks/useProfilePicture';
@@ -10,12 +10,19 @@ interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
   fullName: string;
   height: string;
   hasBorder?: boolean;
-  sx?: SxProps;
+  isPublicPage?: boolean;
 }
 
-export const ProfilePicture = ({ personId, fullName, height, hasBorder, sx }: ProfilePictureProps) => {
+export const ProfilePicture = ({
+  personId,
+  fullName,
+  height,
+  hasBorder,
+  isPublicPage = false,
+  sx,
+}: ProfilePictureProps) => {
+  const { t } = useTranslation();
   const { profilePictureQuery, profilePictureString } = useProfilePicture(personId);
-  const isPublicPage = useLocation().pathname.includes('research-profile');
 
   return (
     <Box sx={{ height, aspectRatio: '1/1', ...sx }}>
@@ -25,7 +32,7 @@ export const ProfilePicture = ({ personId, fullName, height, hasBorder, sx }: Pr
         <Box
           component="img"
           src={profilePictureString}
-          alt="profile-picture"
+          alt={t('my_page.my_profile.profile_picture')}
           sx={{
             height: '100%',
             aspectRatio: '1/1',

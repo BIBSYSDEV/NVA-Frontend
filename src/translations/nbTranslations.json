@@ -570,7 +570,8 @@
         "field_and_background": "Fagfelt og bakgrunn",
         "field_text": "Nøkkelord som kan beskrive fagfelt",
         "keywords_search_text": "Du kan legge til flere nøkkelord av gangen",
-        "norwegian": "Norsk"
+        "norwegian": "Norsk",
+        "profile_picture": "Profilbilde"
       },
       "heading": {
         "affiliations": "Tilknytninger",
