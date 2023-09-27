@@ -38,3 +38,12 @@ export const setCandidateAssignee = async (candidateIdentifier: string, data: Se
 
   return setCandidateAssigneeResponse.data;
 };
+
+export const deleteCandidateNote = async (candidateId: string, noteIdentifier: string) => {
+  const deleteNoteResponse = await authenticatedApiRequest2<NviCandidate>({
+    url: `${candidateId}/note/${noteIdentifier}`,
+    method: 'DELETE',
+  });
+
+  return deleteNoteResponse.data;
+};

@@ -1,5 +1,4 @@
-import { LoadingButton } from '@mui/lab';
-import { Box, Divider, Skeleton, Typography } from '@mui/material';
+import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -103,22 +102,22 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
 
       {expanded && onDelete && (
         <>
-          <LoadingButton
+          <Button
             size="small"
+            disabled={showConfirmDialog}
             variant="outlined"
-            loading={isDeleting}
             sx={{ mt: '0.25rem', alignSelf: 'center' }}
             onClick={() => setShowConfirmDialog(true)}>
-            {t('common.undo')}
-          </LoadingButton>
+            {t('common.delete')}
+          </Button>
 
           <ConfirmDialog
             open={showConfirmDialog}
-            title={t('tasks.nvi.undo_note')}
+            title={t('tasks.nvi.delete_note')}
             onAccept={onDelete}
             isLoading={isDeleting}
             onCancel={() => setShowConfirmDialog(false)}>
-            <Typography>{t('tasks.nvi.undo_note_description')}</Typography>
+            <Typography>{t('tasks.nvi.delete_note_description')}</Typography>
           </ConfirmDialog>
         </>
       )}

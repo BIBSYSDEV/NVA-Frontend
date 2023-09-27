@@ -11,6 +11,7 @@ import {
   CreateNoteData,
   SetNviCandidateStatusData,
   createNote,
+  deleteCandidateNote,
   setCandidateAssignee,
   setCandidateStatus,
 } from '../../../api/scientificIndexApi';
@@ -33,6 +34,7 @@ import { MessageItem } from './MessageList';
 
 interface NviNote {
   type: 'FinalizedNote' | 'GeneralNote';
+  identifier?: string;
   date: string;
   username: string;
   content: ReactNode;
@@ -67,13 +69,24 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const noteMutation = useMutation({
+  const createNoteMutation = useMutation({
     mutationFn: async (note: CreateNoteData) => {
       const updatedCandidate = await createNote(identifier, note);
       queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
     },
     onSuccess: () => dispatch(setNotification({ message: t('feedback.success.create_note'), variant: 'success' })),
     onError: () => dispatch(setNotification({ message: t('feedback.error.create_note'), variant: 'error' })),
+  });
+
+  const deleteNoteMutation = useMutation({
+    mutationFn: async (noteIdentifier: string) => {
+      if (nviCandidate && noteIdentifier) {
+        const deleteNoteResponse = await deleteCandidateNote(nviCandidate.id, noteIdentifier);
+        queryClient.setQueryData(nviCandidateQueryKey, deleteNoteResponse);
+      }
+    },
+    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.delete_note'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_note'), variant: 'error' })),
   });
 
   const statusMutation = useMutation({
@@ -106,7 +119,7 @@ export const NviCandidatePage = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
   });
 
-  const isMutating = noteMutation.isLoading || statusMutation.isLoading;
+  const isMutating = createNoteMutation.isLoading || statusMutation.isLoading;
 
   const rejectionNotes: NviNote[] = (
     (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Rejected') ?? []) as RejectedApprovalStatus[]
@@ -135,6 +148,7 @@ export const NviCandidatePage = () => {
 
   const generalNotes: NviNote[] = (nviCandidate?.notes ?? []).map((note) => ({
     type: 'GeneralNote',
+    identifier: note.identifier,
     date: note.createdDate,
     content: note.text,
     username: note.user,
@@ -209,22 +223,29 @@ export const NviCandidatePage = () => {
                     gap: '0.25rem',
                   }}>
                   {sortedNotes.map((note) => {
-                    const undoFunction =
-                      user?.nvaUsername && note.username === user.nvaUsername
-                        ? note.type === 'FinalizedNote'
-                          ? () => statusMutation.mutate({ status: 'Pending' })
-                          : undefined
-                        : undefined; // TODO: Delete note
+                    let deleteFunction: (() => void) | undefined = undefined;
+
+                    if (user?.nvaUsername && note.username === user.nvaUsername) {
+                      if (note.type === 'FinalizedNote') {
+                        deleteFunction = () => statusMutation.mutate({ status: 'Pending' });
+                      } else if (note.type === 'GeneralNote' && note.identifier) {
+                        deleteFunction = () => deleteNoteMutation.mutate(note.identifier ?? '');
+                      }
+                    }
+
+                    const isDeleting =
+                      (statusMutation.isLoading && statusMutation.variables?.status === 'Pending') ||
+                      (deleteNoteMutation.isLoading && deleteNoteMutation.variables === note.identifier);
 
                     return (
-                      <ErrorBoundary key={note.date}>
+                      <ErrorBoundary key={note.identifier ?? note.date}>
                         <MessageItem
                           text={note.content}
                           date={note.date}
                           username={note.username}
                           backgroundColor="nvi.main"
-                          onDelete={undoFunction}
-                          isDeleting={statusMutation.isLoading && statusMutation.variables?.status === 'Pending'}
+                          onDelete={deleteFunction}
+                          isDeleting={isDeleting}
                         />
                       </ErrorBoundary>
                     );
@@ -278,7 +299,7 @@ export const NviCandidatePage = () => {
               {!hasSelectedRejectCandidate && (
                 <MessageForm
                   confirmAction={async (text) => {
-                    await noteMutation.mutateAsync({ text });
+                    await createNoteMutation.mutateAsync({ text });
                   }}
                   fieldLabel={t('tasks.nvi.note')}
                   buttonTitle={t('tasks.nvi.save_note')}
