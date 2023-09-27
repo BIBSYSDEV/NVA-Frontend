@@ -118,6 +118,7 @@ const ResearchProfile = () => {
           fullName={fullName}
           height={'5rem'}
           hasBorder
+          isPublicPage
           sx={{ position: 'absolute', mt: '3rem', ml: '1rem', fontSize: '2rem', fontWeight: 'bold' }}
         />
         <Typography variant="h1" sx={{ ml: '7rem', color: 'primary.contrastText' }}>
