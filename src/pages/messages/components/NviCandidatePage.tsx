@@ -154,9 +154,7 @@ export const NviCandidatePage = () => {
     username: note.user,
   }));
 
-  const allNotes = [...generalNotes, ...rejectionNotes, ...approvalNotes];
-
-  const sortedNotes = allNotes.sort((a, b) => {
+  const sortedNotes = [...generalNotes, ...rejectionNotes, ...approvalNotes].sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
     return dateB.getTime() - dateA.getTime();
@@ -224,21 +222,22 @@ export const NviCandidatePage = () => {
                   }}>
                   {sortedNotes.map((note) => {
                     let deleteFunction: (() => void) | undefined = undefined;
+                    const noteIdentifier = note.identifier;
 
                     if (user?.nvaUsername && note.username === user.nvaUsername) {
                       if (note.type === 'FinalizedNote') {
                         deleteFunction = () => statusMutation.mutate({ status: 'Pending' });
-                      } else if (note.type === 'GeneralNote' && note.identifier) {
-                        deleteFunction = () => deleteNoteMutation.mutate(note.identifier ?? '');
+                      } else if (note.type === 'GeneralNote' && noteIdentifier) {
+                        deleteFunction = () => deleteNoteMutation.mutate(noteIdentifier);
                       }
                     }
 
                     const isDeleting =
                       (statusMutation.isLoading && statusMutation.variables?.status === 'Pending') ||
-                      (deleteNoteMutation.isLoading && deleteNoteMutation.variables === note.identifier);
+                      (deleteNoteMutation.isLoading && deleteNoteMutation.variables === noteIdentifier);
 
                     return (
-                      <ErrorBoundary key={note.identifier ?? note.date}>
+                      <ErrorBoundary key={noteIdentifier ?? note.date}>
                         <MessageItem
                           text={note.content}
                           date={note.date}

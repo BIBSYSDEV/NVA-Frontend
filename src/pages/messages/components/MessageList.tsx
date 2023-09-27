@@ -94,11 +94,11 @@ export const MessageItem = ({ text, date, username, backgroundColor, onDelete, i
 
       <Divider sx={{ mb: '0.5rem', bgcolor: 'primary.main' }} />
 
-      {typeof text === 'string' ? (
-        <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{text}</Typography>
-      ) : (
-        <div data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{text}</div>
-      )}
+      <Box
+        data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}
+        component={typeof text === 'string' ? Typography : 'div'}>
+        {text}
+      </Box>
 
       {expanded && onDelete && (
         <>
