@@ -223,6 +223,7 @@ export const NviCandidatePage = () => {
                         await statusMutation.mutateAsync({ status: 'Rejected', reason });
                         setHasSelectedRejectCandidate(false);
                       }}
+                      cancelAction={() => setHasSelectedRejectCandidate(false)}
                       fieldLabel={t('tasks.nvi.reject_nvi_candidate_form_label')}
                       buttonTitle={t('tasks.nvi.reject_nvi_candidate')}
                     />
