@@ -23,7 +23,7 @@ import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { ApprovalStatus, Note, RejectedApprovalStatus } from '../../../types/nvi.types';
+import { ApprovalStatus, FinalizedApprovalStatus, Note, RejectedApprovalStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -107,7 +107,15 @@ export const NviCandidatePage = () => {
     user: rejectionStatus.finalizedBy,
   }));
 
-  const allNotes = [...(nviCandidate?.notes ?? []), ...rejectionNotes];
+  const approvalNotes: Note[] = (
+    (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Approved') ?? []) as FinalizedApprovalStatus[]
+  ).map((approvalStatus) => ({
+    createdDate: approvalStatus.finalizedDate,
+    text: `[${t('tasks.nvi.status.Approved')}]`,
+    user: approvalStatus.finalizedBy,
+  }));
+
+  const allNotes = [...(nviCandidate?.notes ?? []), ...rejectionNotes, ...approvalNotes];
 
   const sortedNotes = allNotes.sort((a, b) => {
     const dateA = new Date(a.createdDate);

@@ -59,7 +59,7 @@ export interface ApprovalStatus {
   assignee?: string;
 }
 
-interface FinalizedApprovalStatus extends ApprovalStatus {
+export interface FinalizedApprovalStatus extends ApprovalStatus {
   status: 'Rejected' | 'Approved';
   finalizedBy: string;
   finalizedDate: string;
