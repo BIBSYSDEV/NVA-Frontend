@@ -69,7 +69,13 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
             component="img"
             src={profilePictureString}
             alt={t('my_page.my_profile.profile_picture')}
-            sx={{ aspectRatio: '1/1', width: '100%', borderRadius: '50%', objectFit: 'cover' }}
+            sx={{
+              aspectRatio: '1/1',
+              width: '100%',
+              borderRadius: '50%',
+              border: '0.125rem solid black',
+              objectFit: 'cover',
+            }}
           />
         </Box>
       ) : (

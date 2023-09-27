@@ -8,11 +8,10 @@ import { getContributorInitials } from '../utils/registration-helpers';
 interface ProfilePictureProps extends Pick<BoxProps, 'sx'> {
   personId: string;
   fullName: string;
-  hasBorder?: boolean;
   isPublicPage?: boolean;
 }
 
-export const ProfilePicture = ({ personId, fullName, hasBorder, isPublicPage = false, sx }: ProfilePictureProps) => {
+export const ProfilePicture = ({ personId, fullName, isPublicPage = false, sx }: ProfilePictureProps) => {
   const { t } = useTranslation();
   const { profilePictureQuery, profilePictureString } = useProfilePicture(personId);
 
@@ -29,7 +28,7 @@ export const ProfilePicture = ({ personId, fullName, hasBorder, isPublicPage = f
             height: '100%',
             aspectRatio: '1/1',
             borderRadius: '50%',
-            border: hasBorder ? '0.125rem solid black' : 'none',
+            border: '0.125rem solid black',
             objectFit: 'cover',
           }}
         />

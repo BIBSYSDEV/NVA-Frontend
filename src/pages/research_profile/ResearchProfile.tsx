@@ -116,7 +116,6 @@ const ResearchProfile = () => {
         <ProfilePicture
           personId={personId}
           fullName={fullName}
-          hasBorder
           isPublicPage
           sx={{
             height: '5rem',
