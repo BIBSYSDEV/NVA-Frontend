@@ -1,6 +1,6 @@
-import { Box, Divider, Skeleton, Typography } from '@mui/material';
+import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchUser } from '../../../api/roleApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -47,10 +47,13 @@ interface MessageItemProps {
   date: string;
   username: string;
   backgroundColor: string;
+  onDelete?: () => void;
+  isDeleting?: boolean;
 }
 
-export const MessageItem = ({ text, date, username, backgroundColor }: MessageItemProps) => {
+export const MessageItem = ({ text, date, username, backgroundColor, onDelete, isDeleting }: MessageItemProps) => {
   const { t } = useTranslation();
+  const [expanded, setExpanded] = useState(false);
 
   const senderQuery = useQuery({
     queryKey: [username],
@@ -61,7 +64,17 @@ export const MessageItem = ({ text, date, username, backgroundColor }: MessageIt
   const senderName = getFullName(senderQuery.data?.givenName, senderQuery.data?.familyName);
 
   return (
-    <Box component="li" sx={{ bgcolor: backgroundColor, p: '0.5rem', borderRadius: '4px' }}>
+    <Box
+      component="li"
+      sx={{
+        bgcolor: backgroundColor,
+        p: '0.5rem',
+        borderRadius: '4px',
+        cursor: onDelete && !expanded ? 'pointer' : 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+      onClick={() => setExpanded(true)}>
       <Typography sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
         <span>
           {senderQuery.isLoading ? (
@@ -83,6 +96,17 @@ export const MessageItem = ({ text, date, username, backgroundColor }: MessageIt
         <Typography data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{text}</Typography>
       ) : (
         <div data-testid={dataTestId.registrationLandingPage.tasksPanel.messageText}>{text}</div>
+      )}
+
+      {expanded && onDelete && (
+        <Button
+          size="small"
+          variant="outlined"
+          disabled={isDeleting}
+          sx={{ mt: '0.25rem', alignSelf: 'center' }}
+          onClick={onDelete}>
+          {t('common.undo')}
+        </Button>
       )}
     </Box>
   );

@@ -32,7 +32,7 @@ import { PublicRegistrationContent } from '../../public_registration/PublicRegis
 import { MessageItem } from './MessageList';
 
 interface NviNote {
-  type: 'Approved' | 'Rejected' | 'Note';
+  type: 'FinalizedNote' | 'GeneralNote';
   date: string;
   username: string;
   content: ReactNode;
@@ -42,7 +42,7 @@ export const NviCandidatePage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { identifier } = useParams<IdentifierParams>();
-  const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
+  const user = useSelector((store: RootState) => store.user);
   const [hasSelectedRejectCandidate, setHasSelectedRejectCandidate] = useState(false);
 
   const queryClient = useQueryClient();
@@ -55,7 +55,9 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
   });
   const nviCandidate = nviCandidateQuery.data;
-  const myApprovalStatus = nviCandidate?.approvalStatuses.find((status) => status.institutionId === topOrgCristinId);
+  const myApprovalStatus = nviCandidate?.approvalStatuses.find(
+    (status) => status.institutionId === user?.topOrgCristinId
+  );
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
   const registrationQuery = useQuery({
@@ -109,7 +111,7 @@ export const NviCandidatePage = () => {
   const rejectionNotes: NviNote[] = (
     (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Rejected') ?? []) as RejectedApprovalStatus[]
   ).map((rejectionStatus) => ({
-    type: 'Rejected',
+    type: 'FinalizedNote',
     date: rejectionStatus.finalizedDate,
     content: (
       <Typography>
@@ -125,14 +127,14 @@ export const NviCandidatePage = () => {
   const approvalNotes: NviNote[] = (
     (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Approved') ?? []) as FinalizedApprovalStatus[]
   ).map((approvalStatus) => ({
-    type: 'Approved',
+    type: 'FinalizedNote',
     date: approvalStatus.finalizedDate,
     content: <Typography fontWeight={700}>{t('tasks.nvi.status.Approved')}</Typography>,
     username: approvalStatus.finalizedBy,
   }));
 
   const generalNotes: NviNote[] = (nviCandidate?.notes ?? []).map((note) => ({
-    type: 'Note',
+    type: 'GeneralNote',
     date: note.createdDate,
     content: note.text,
     username: note.user,
@@ -206,16 +208,23 @@ export const NviCandidatePage = () => {
                     m: '0 0 1rem 0',
                     gap: '0.25rem',
                   }}>
-                  {sortedNotes.map((note) => (
-                    <ErrorBoundary key={note.date}>
-                      <MessageItem
-                        text={note.content}
-                        date={note.date}
-                        username={note.username}
-                        backgroundColor="nvi.main"
-                      />
-                    </ErrorBoundary>
-                  ))}
+                  {sortedNotes.map((note) => {
+                    const undoFunction = // TODO: Add owner check when backend updates model -> note.username === user?.nvaUsername
+                      note.type === 'FinalizedNote' ? () => statusMutation.mutate({ status: 'Pending' }) : undefined; // TODO: Delete note
+
+                    return (
+                      <ErrorBoundary key={note.date}>
+                        <MessageItem
+                          text={note.content}
+                          date={note.date}
+                          username={note.username}
+                          backgroundColor="nvi.main"
+                          onDelete={undoFunction}
+                          isDeleting={statusMutation.isLoading && statusMutation.variables?.status === 'Pending'}
+                        />
+                      </ErrorBoundary>
+                    );
+                  })}
                 </Box>
               )}
 
