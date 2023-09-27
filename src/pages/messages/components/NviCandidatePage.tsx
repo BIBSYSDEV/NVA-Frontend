@@ -209,8 +209,12 @@ export const NviCandidatePage = () => {
                     gap: '0.25rem',
                   }}>
                   {sortedNotes.map((note) => {
-                    const undoFunction = // TODO: Add owner check when backend updates model -> note.username === user?.nvaUsername
-                      note.type === 'FinalizedNote' ? () => statusMutation.mutate({ status: 'Pending' }) : undefined; // TODO: Delete note
+                    const undoFunction =
+                      user?.nvaUsername && note.username === user.nvaUsername
+                        ? note.type === 'FinalizedNote'
+                          ? () => statusMutation.mutate({ status: 'Pending' })
+                          : undefined
+                        : undefined; // TODO: Delete note
 
                     return (
                       <ErrorBoundary key={note.date}>
