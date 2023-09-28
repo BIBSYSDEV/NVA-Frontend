@@ -1,6 +1,5 @@
 import { Box, Paper, Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
@@ -12,6 +11,7 @@ interface NviApprovalStatusesProps {
 }
 
 export const NviApprovalStatuses = ({ approvalStatuses }: NviApprovalStatusesProps) => {
+  const { t } = useTranslation();
   const publicationPointsSum = approvalStatuses.reduce((acc, status) => acc + status.points, 0);
 
   return (
@@ -28,6 +28,7 @@ export const NviApprovalStatuses = ({ approvalStatuses }: NviApprovalStatusesPro
 
       {approvalStatuses.length > 0 && (
         <Paper
+          elevation={4}
           sx={{
             bgcolor: 'nvi.light',
             p: '0.5rem',

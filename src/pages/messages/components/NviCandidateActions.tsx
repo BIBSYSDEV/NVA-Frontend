@@ -243,9 +243,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
         {!hasSelectedRejectCandidate && (
           <MessageForm
-            confirmAction={async (text) => {
-              await createNoteMutation.mutateAsync({ text });
-            }}
+            confirmAction={async (text) => await createNoteMutation.mutateAsync({ text })}
             fieldLabel={t('tasks.nvi.note')}
             buttonTitle={t('tasks.nvi.save_note')}
           />

@@ -24,8 +24,8 @@ export const NviCandidatePage = () => {
     queryFn: () => fetchNviCandidate(identifier),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
   });
-  const nviCandidate = nviCandidateQuery.data;
 
+  const nviCandidate = nviCandidateQuery.data;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
   const registrationQuery = useQuery({
@@ -36,7 +36,6 @@ export const NviCandidatePage = () => {
   });
 
   const periodStatus = nviCandidate?.periodStatus.status;
-  // const periodStatus: any = 'NoPeriod';
 
   return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
     <PageSpinner aria-label={t('common.result')} />
@@ -71,17 +70,13 @@ export const NviCandidatePage = () => {
               </Typography>
             </StyledPaperHeader>
 
-            {periodStatus === 'ClosedPeriod' && (
-              <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_closed')}</Typography>
-            )}
-
-            {periodStatus === 'NoPeriod' && (
-              <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_missing')}</Typography>
-            )}
-
-            {periodStatus === 'OpenPeriod' && nviCandidate && (
+            {periodStatus === 'OpenPeriod' && nviCandidate ? (
               <NviCandidateActions nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
-            )}
+            ) : periodStatus === 'ClosedPeriod' ? (
+              <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_closed')}</Typography>
+            ) : periodStatus === 'NoPeriod' ? (
+              <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_missing')}</Typography>
+            ) : null}
 
             <Divider sx={{ mt: 'auto' }} />
             <NviApprovalStatuses approvalStatuses={nviCandidate?.approvalStatuses ?? []} />
