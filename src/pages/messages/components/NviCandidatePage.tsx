@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Divider, Paper, Skeleton, Typography } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ import {
   CreateNoteData,
   SetNviCandidateStatusData,
   createNote,
+  deleteCandidateNote,
   setCandidateAssignee,
   setCandidateStatus,
 } from '../../../api/scientificIndexApi';
@@ -23,7 +24,7 @@ import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { ApprovalStatus, Note, RejectedApprovalStatus } from '../../../types/nvi.types';
+import { ApprovalStatus, FinalizedApprovalStatus, RejectedApprovalStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -31,11 +32,19 @@ import { IdentifierParams } from '../../../utils/urlPaths';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { MessageItem } from './MessageList';
 
+interface NviNote {
+  type: 'FinalizedNote' | 'GeneralNote';
+  identifier?: string;
+  date: string;
+  username: string;
+  content: ReactNode;
+}
+
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { identifier } = useParams<IdentifierParams>();
-  const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
+  const user = useSelector((store: RootState) => store.user);
   const [hasSelectedRejectCandidate, setHasSelectedRejectCandidate] = useState(false);
 
   const queryClient = useQueryClient();
@@ -48,7 +57,9 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
   });
   const nviCandidate = nviCandidateQuery.data;
-  const myApprovalStatus = nviCandidate?.approvalStatuses.find((status) => status.institutionId === topOrgCristinId);
+  const myApprovalStatus = nviCandidate?.approvalStatuses.find(
+    (status) => status.institutionId === user?.topOrgCristinId
+  );
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
   const registrationQuery = useQuery({
@@ -58,13 +69,24 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const noteMutation = useMutation({
+  const createNoteMutation = useMutation({
     mutationFn: async (note: CreateNoteData) => {
       const updatedCandidate = await createNote(identifier, note);
       queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
     },
     onSuccess: () => dispatch(setNotification({ message: t('feedback.success.create_note'), variant: 'success' })),
     onError: () => dispatch(setNotification({ message: t('feedback.error.create_note'), variant: 'error' })),
+  });
+
+  const deleteNoteMutation = useMutation({
+    mutationFn: async (noteIdentifier: string) => {
+      if (nviCandidate && noteIdentifier) {
+        const deleteNoteResponse = await deleteCandidateNote(nviCandidate.id, noteIdentifier);
+        queryClient.setQueryData(nviCandidateQueryKey, deleteNoteResponse);
+      }
+    },
+    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.delete_note'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.delete_note'), variant: 'error' })),
   });
 
   const statusMutation = useMutation({
@@ -97,21 +119,44 @@ export const NviCandidatePage = () => {
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
   });
 
-  const isMutating = noteMutation.isLoading || statusMutation.isLoading;
+  const isMutating = createNoteMutation.isLoading || statusMutation.isLoading;
 
-  const rejectionNotes: Note[] = (
+  const rejectionNotes: NviNote[] = (
     (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Rejected') ?? []) as RejectedApprovalStatus[]
   ).map((rejectionStatus) => ({
-    createdDate: rejectionStatus.finalizedDate,
-    text: `[${t('tasks.nvi.status.Rejected')}] ${rejectionStatus.reason}`,
-    user: rejectionStatus.finalizedBy,
+    type: 'FinalizedNote',
+    date: rejectionStatus.finalizedDate,
+    content: (
+      <Typography>
+        <Box component="span" fontWeight={700}>
+          {t('tasks.nvi.status.Rejected')}:
+        </Box>{' '}
+        {rejectionStatus.reason}
+      </Typography>
+    ),
+    username: rejectionStatus.finalizedBy,
   }));
 
-  const allNotes = [...(nviCandidate?.notes ?? []), ...rejectionNotes];
+  const approvalNotes: NviNote[] = (
+    (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Approved') ?? []) as FinalizedApprovalStatus[]
+  ).map((approvalStatus) => ({
+    type: 'FinalizedNote',
+    date: approvalStatus.finalizedDate,
+    content: <Typography fontWeight={700}>{t('tasks.nvi.status.Approved')}</Typography>,
+    username: approvalStatus.finalizedBy,
+  }));
 
-  const sortedNotes = allNotes.sort((a, b) => {
-    const dateA = new Date(a.createdDate);
-    const dateB = new Date(b.createdDate);
+  const generalNotes: NviNote[] = (nviCandidate?.notes ?? []).map((note) => ({
+    type: 'GeneralNote',
+    identifier: note.identifier,
+    date: note.createdDate,
+    content: note.text,
+    username: note.user,
+  }));
+
+  const sortedNotes = [...generalNotes, ...rejectionNotes, ...approvalNotes].sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
     return dateB.getTime() - dateA.getTime();
   });
 
@@ -175,16 +220,35 @@ export const NviCandidatePage = () => {
                     m: '0 0 1rem 0',
                     gap: '0.25rem',
                   }}>
-                  {sortedNotes.map((note) => (
-                    <ErrorBoundary key={note.createdDate}>
-                      <MessageItem
-                        text={note.text}
-                        date={note.createdDate}
-                        senderId={note.user}
-                        backgroundColor="nvi.main"
-                      />
-                    </ErrorBoundary>
-                  ))}
+                  {sortedNotes.map((note) => {
+                    let deleteFunction: (() => void) | undefined = undefined;
+                    const noteIdentifier = note.identifier;
+
+                    if (user?.nvaUsername && note.username === user.nvaUsername) {
+                      if (note.type === 'FinalizedNote') {
+                        deleteFunction = () => statusMutation.mutate({ status: 'Pending' });
+                      } else if (note.type === 'GeneralNote' && noteIdentifier) {
+                        deleteFunction = () => deleteNoteMutation.mutate(noteIdentifier);
+                      }
+                    }
+
+                    const isDeleting =
+                      (statusMutation.isLoading && statusMutation.variables?.status === 'Pending') ||
+                      (deleteNoteMutation.isLoading && deleteNoteMutation.variables === noteIdentifier);
+
+                    return (
+                      <ErrorBoundary key={noteIdentifier ?? note.date}>
+                        <MessageItem
+                          text={note.content}
+                          date={note.date}
+                          username={note.username}
+                          backgroundColor="nvi.main"
+                          onDelete={deleteFunction}
+                          isDeleting={isDeleting}
+                        />
+                      </ErrorBoundary>
+                    );
+                  })}
                 </Box>
               )}
 
@@ -234,7 +298,7 @@ export const NviCandidatePage = () => {
               {!hasSelectedRejectCandidate && (
                 <MessageForm
                   confirmAction={async (text) => {
-                    await noteMutation.mutateAsync({ text });
+                    await createNoteMutation.mutateAsync({ text });
                   }}
                   fieldLabel={t('tasks.nvi.note')}
                   buttonTitle={t('tasks.nvi.save_note')}
