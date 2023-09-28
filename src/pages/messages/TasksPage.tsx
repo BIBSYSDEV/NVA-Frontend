@@ -11,7 +11,9 @@ import {
   FormControlLabel,
   FormLabel,
   LinearProgress,
+  MenuItem,
   Radio,
+  Select,
   Typography,
   styled,
 } from '@mui/material';
@@ -35,6 +37,7 @@ import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { InstitutionUser } from '../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { getNviYearFilterValues } from '../../utils/general-helpers';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { PrivateRoute } from '../../utils/routes/Routes';
@@ -66,6 +69,8 @@ const StyledDivider = styled(Divider)(({ theme }) => ({
   marginBottom: '0.175rem',
   backgroundColor: theme.palette.primary.main,
 }));
+
+const nviYearFilterValues = getNviYearFilterValues();
 
 const TasksPage = () => {
   const { t } = useTranslation();
@@ -155,13 +160,15 @@ const TasksPage = () => {
 
   // NVI data
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
+  const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
-  const nviStatusQuery = `filter=${nviStatusFilter}`;
+  const nviYearQuery = `year=${nviYearFilter}`;
+  const nviStatusQuery = `${nviYearQuery}&filter=${nviStatusFilter}`;
 
   const nviAggregationsQuery = useQuery({
     enabled: isOnNviCandidatesPage,
-    queryKey: ['nviCandidates', 1, 0],
-    queryFn: () => fetchNviCandidates(1, 0),
+    queryKey: ['nviCandidates', 1, 0, nviYearQuery],
+    queryFn: () => fetchNviCandidates(1, 0, nviYearQuery),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
   });
 
@@ -385,6 +392,18 @@ const TasksPage = () => {
             }}
             dataTestId={dataTestId.tasksPage.nviAccordion}>
             <StyledTicketSearchFormGroup>
+              <Select
+                size="small"
+                value={nviYearFilter}
+                onChange={(event) => setNviYearFilter(+event.target.value)}
+                sx={{ width: 'fit-content', alignSelf: 'center', mb: '0.5rem' }}>
+                {nviYearFilterValues.map((year) => (
+                  <MenuItem key={year} value={year}>
+                    {year}
+                  </MenuItem>
+                ))}
+              </Select>
+
               <FormLabel component="legend" sx={{ fontWeight: 700 }}>
                 {t('tasks.status')}
               </FormLabel>
