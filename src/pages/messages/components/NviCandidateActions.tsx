@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Divider, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,13 +9,16 @@ import {
   SetNviCandidateStatusData,
   createNote,
   deleteCandidateNote,
+  setCandidateAssignee,
   setCandidateStatus,
 } from '../../../api/scientificIndexApi';
+import { AssigneeSelector } from '../../../components/AssigneeSelector';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FinalizedApprovalStatus, NviCandidate, RejectedApprovalStatus } from '../../../types/nvi.types';
+import { RoleName } from '../../../types/user.types';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { MessageItem } from './MessageList';
 
@@ -41,6 +44,21 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   const [hasSelectedRejectCandidate, setHasSelectedRejectCandidate] = useState(false);
 
   const queryClient = useQueryClient();
+
+  const assigneeMutation = useMutation({
+    mutationFn: async (assignee: string) => {
+      if (myApprovalStatus) {
+        const updatedCandidate = await setCandidateAssignee(candidateIdentifier, {
+          institutionId: myApprovalStatus.institutionId,
+          assignee,
+        });
+        queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
+      }
+    },
+    onSuccess: () =>
+      dispatch(setNotification({ message: t('feedback.success.update_ticket_assignee'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
+  });
 
   const createNoteMutation = useMutation({
     mutationFn: async (note: CreateNoteData) => {
@@ -123,102 +141,116 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   });
 
   return (
-    <Box sx={{ m: '1rem' }}>
-      {sortedNotes.length > 0 && (
-        <Box
-          component="ul"
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            listStyleType: 'none',
-            p: 0,
-            m: '0 0 1rem 0',
-            gap: '0.25rem',
-          }}>
-          {sortedNotes.map((note) => {
-            let deleteFunction: (() => void) | undefined = undefined;
-            const noteIdentifier = note.identifier;
-
-            if (user?.nvaUsername && note.username === user.nvaUsername) {
-              if (note.type === 'FinalizedNote') {
-                deleteFunction = () => statusMutation.mutate({ status: 'Pending' });
-              } else if (note.type === 'GeneralNote' && noteIdentifier) {
-                deleteFunction = () => deleteNoteMutation.mutate(noteIdentifier);
-              }
-            }
-
-            const isDeleting =
-              (statusMutation.isLoading && statusMutation.variables?.status === 'Pending') ||
-              (deleteNoteMutation.isLoading && deleteNoteMutation.variables === noteIdentifier);
-
-            return (
-              <ErrorBoundary key={noteIdentifier ?? note.date}>
-                <MessageItem
-                  text={note.content}
-                  date={note.date}
-                  username={note.username}
-                  backgroundColor="nvi.main"
-                  onDelete={deleteFunction}
-                  isDeleting={isDeleting}
-                />
-              </ErrorBoundary>
-            );
-          })}
-        </Box>
-      )}
-
-      {myApprovalStatus?.status !== 'Approved' && (
-        <>
-          <Typography gutterBottom>{t('tasks.nvi.approve_nvi_candidate_description')}</Typography>
-          <LoadingButton
-            variant="outlined"
-            fullWidth
-            size="small"
-            sx={{ mb: '1rem' }}
-            loading={statusMutation.isLoading && statusMutation.variables?.status === 'Approved'}
-            disabled={isMutating}
-            onClick={() => statusMutation.mutate({ status: 'Approved' })}>
-            {t('tasks.nvi.approve_nvi_candidate')}
-          </LoadingButton>
-        </>
-      )}
-
-      {myApprovalStatus?.status !== 'Rejected' && (
-        <>
-          <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
-          <Button
-            variant="outlined"
-            fullWidth
-            size="small"
-            sx={{ mb: '1rem' }}
-            disabled={isMutating || hasSelectedRejectCandidate}
-            onClick={() => setHasSelectedRejectCandidate(true)}>
-            {t('tasks.nvi.reject_nvi_candidate')}
-          </Button>
-
-          {hasSelectedRejectCandidate && (
-            <MessageForm
-              confirmAction={async (reason) => {
-                await statusMutation.mutateAsync({ status: 'Rejected', reason });
-                setHasSelectedRejectCandidate(false);
-              }}
-              cancelAction={() => setHasSelectedRejectCandidate(false)}
-              fieldLabel={t('tasks.nvi.reject_nvi_candidate_form_label')}
-              buttonTitle={t('tasks.nvi.reject_nvi_candidate')}
-            />
-          )}
-        </>
-      )}
-
-      {!hasSelectedRejectCandidate && (
-        <MessageForm
-          confirmAction={async (text) => {
-            await createNoteMutation.mutateAsync({ text });
-          }}
-          fieldLabel={t('tasks.nvi.note')}
-          buttonTitle={t('tasks.nvi.save_note')}
+    <>
+      <Box sx={{ m: '1rem' }}>
+        <AssigneeSelector
+          assignee={myApprovalStatus?.assignee}
+          canSetAssignee={myApprovalStatus?.status === 'Pending'}
+          onSelectAssignee={async (assigee) => await assigneeMutation.mutateAsync(assigee)}
+          isUpdating={assigneeMutation.isLoading}
+          roleFilter={RoleName.NviCurator}
+          iconBackgroundColor="nvi.main"
         />
-      )}
-    </Box>
+      </Box>
+      <Divider />
+
+      <Box sx={{ m: '1rem' }}>
+        {sortedNotes.length > 0 && (
+          <Box
+            component="ul"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              listStyleType: 'none',
+              p: 0,
+              m: '0 0 1rem 0',
+              gap: '0.25rem',
+            }}>
+            {sortedNotes.map((note) => {
+              let deleteFunction: (() => void) | undefined = undefined;
+              const noteIdentifier = note.identifier;
+
+              if (user?.nvaUsername && note.username === user.nvaUsername) {
+                if (note.type === 'FinalizedNote') {
+                  deleteFunction = () => statusMutation.mutate({ status: 'Pending' });
+                } else if (note.type === 'GeneralNote' && noteIdentifier) {
+                  deleteFunction = () => deleteNoteMutation.mutate(noteIdentifier);
+                }
+              }
+
+              const isDeleting =
+                (statusMutation.isLoading && statusMutation.variables?.status === 'Pending') ||
+                (deleteNoteMutation.isLoading && deleteNoteMutation.variables === noteIdentifier);
+
+              return (
+                <ErrorBoundary key={noteIdentifier ?? note.date}>
+                  <MessageItem
+                    text={note.content}
+                    date={note.date}
+                    username={note.username}
+                    backgroundColor="nvi.main"
+                    onDelete={deleteFunction}
+                    isDeleting={isDeleting}
+                  />
+                </ErrorBoundary>
+              );
+            })}
+          </Box>
+        )}
+
+        {myApprovalStatus?.status !== 'Approved' && (
+          <>
+            <Typography gutterBottom>{t('tasks.nvi.approve_nvi_candidate_description')}</Typography>
+            <LoadingButton
+              variant="outlined"
+              fullWidth
+              size="small"
+              sx={{ mb: '1rem' }}
+              loading={statusMutation.isLoading && statusMutation.variables?.status === 'Approved'}
+              disabled={isMutating}
+              onClick={() => statusMutation.mutate({ status: 'Approved' })}>
+              {t('tasks.nvi.approve_nvi_candidate')}
+            </LoadingButton>
+          </>
+        )}
+
+        {myApprovalStatus?.status !== 'Rejected' && (
+          <>
+            <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
+            <Button
+              variant="outlined"
+              fullWidth
+              size="small"
+              sx={{ mb: '1rem' }}
+              disabled={isMutating || hasSelectedRejectCandidate}
+              onClick={() => setHasSelectedRejectCandidate(true)}>
+              {t('tasks.nvi.reject_nvi_candidate')}
+            </Button>
+
+            {hasSelectedRejectCandidate && (
+              <MessageForm
+                confirmAction={async (reason) => {
+                  await statusMutation.mutateAsync({ status: 'Rejected', reason });
+                  setHasSelectedRejectCandidate(false);
+                }}
+                cancelAction={() => setHasSelectedRejectCandidate(false)}
+                fieldLabel={t('tasks.nvi.reject_nvi_candidate_form_label')}
+                buttonTitle={t('tasks.nvi.reject_nvi_candidate')}
+              />
+            )}
+          </>
+        )}
+
+        {!hasSelectedRejectCandidate && (
+          <MessageForm
+            confirmAction={async (text) => {
+              await createNoteMutation.mutateAsync({ text });
+            }}
+            fieldLabel={t('tasks.nvi.note')}
+            buttonTitle={t('tasks.nvi.save_note')}
+          />
+        )}
+      </Box>
+    </>
   );
 };
