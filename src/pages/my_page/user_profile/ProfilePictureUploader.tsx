@@ -105,7 +105,9 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
             <AddAPhotoIcon color="primary" />
             <input accept=".jpg, .jpeg" onChange={handleFileChange} hidden type="file" />
           </IconButton>
+
           <Typography>{t('my_page.my_profile.identity.upload_profile_photo')}</Typography>
+          <Typography align="center">{t('my_page.my_profile.identity.upload_profile_photo_info')}</Typography>
         </Box>
       )}
       <ConfirmDialog

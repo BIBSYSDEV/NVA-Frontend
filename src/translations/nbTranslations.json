@@ -584,7 +584,8 @@
         "full_name": "Fullt navn",
         "identity": "Identitet",
         "not_shown_publicly": "Vises ikke offentlig",
-        "upload_profile_photo": "Last opp profilfoto"
+        "upload_profile_photo": "Last opp profilfoto",
+        "upload_profile_photo_info": "Maksimum størrelse: 1 MB jpg eller jpeg"
       },
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskningsresultat",
