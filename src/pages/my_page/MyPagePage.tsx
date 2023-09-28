@@ -2,7 +2,6 @@ import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import PersonIcon from '@mui/icons-material/Person';
 import { Button, Divider, FormControlLabel, FormLabel } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -19,6 +18,7 @@ import {
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
+import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
@@ -30,6 +30,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getFullName } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { TicketList } from '../messages/components/TicketList';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
@@ -53,6 +54,8 @@ const MyPagePage = () => {
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
   const isCreator = !!user?.customerId && (user.isCreator || user.isCurator);
+  const personId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
+  const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
 
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
@@ -399,7 +402,7 @@ const MyPagePage = () => {
 
         <NavigationListAccordion
           title={t('my_page.my_profile.user_profile')}
-          startIcon={<PersonIcon fontSize="small" />}
+          startIcon={<ProfilePicture personId={personId} fullName={fullName} sx={{ height: '1.25rem' }} />}
           accordionPath={UrlPathTemplate.MyPageMyProfile}
           defaultPath={UrlPathTemplate.MyPageMyPersonalia}
           dataTestId={dataTestId.myPage.myProfileAccordion}>
