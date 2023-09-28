@@ -1,7 +1,8 @@
-import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
+import NotesIcon from '@mui/icons-material/Notes';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Button, Divider, FormControlLabel, FormLabel } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -151,7 +152,7 @@ const MyPagePage = () => {
             key={dataTestId.myPage.messagesAccordion}
             dataTestId={dataTestId.myPage.messagesAccordion}
             title={t('common.dialogue')}
-            startIcon={<ChatBubbleIcon fontSize="small" />}
+            startIcon={<ChatBubbleIcon fontSize="small" sx={{ color: 'white', bgcolor: 'primary.main' }} />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
             <StyledTicketSearchFormGroup>
@@ -272,7 +273,7 @@ const MyPagePage = () => {
           <NavigationListAccordion
             key={dataTestId.myPage.registrationsAccordion}
             title={t('common.result_registrations')}
-            startIcon={<AddIcon fontSize="small" />}
+            startIcon={<NotesIcon fontSize="small" sx={{ bgcolor: 'registration.main' }} />}
             accordionPath={UrlPathTemplate.MyPageRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
@@ -321,7 +322,7 @@ const MyPagePage = () => {
           <NavigationListAccordion
             key={dataTestId.myPage.projectRegistrationsAccordion}
             title={t('my_page.project_registrations')}
-            startIcon={<AddIcon sx={{ bgcolor: 'project.main' }} fontSize="small" />}
+            startIcon={<ShowChartIcon sx={{ bgcolor: 'project.main' }} fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageProjectRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyProjectRegistrations}
             dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
@@ -386,7 +387,7 @@ const MyPagePage = () => {
         ]}
         <NavigationListAccordion
           title={t('my_page.research_profile')}
-          startIcon={<img src={orcidIcon} height="20" alt={t('common.orcid')} />}
+          startIcon={<img src={orcidIcon} height="25" alt={t('common.orcid')} />}
           accordionPath={UrlPathTemplate.MyPageResearchProfile}
           defaultPath={UrlPathTemplate.MyPageMyResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
@@ -402,7 +403,7 @@ const MyPagePage = () => {
 
         <NavigationListAccordion
           title={t('my_page.my_profile.user_profile')}
-          startIcon={<ProfilePicture personId={personId} fullName={fullName} sx={{ height: '1.25rem' }} />}
+          startIcon={<ProfilePicture personId={personId} fullName={fullName} sx={{ height: '1.5625rem' }} />}
           accordionPath={UrlPathTemplate.MyPageMyProfile}
           defaultPath={UrlPathTemplate.MyPageMyPersonalia}
           dataTestId={dataTestId.myPage.myProfileAccordion}>

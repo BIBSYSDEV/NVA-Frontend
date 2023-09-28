@@ -39,7 +39,13 @@ export const NavigationListAccordion = ({
         sx={{ paddingX: '0.75rem' }}
         expandIcon={!isExpanded ? <ExpandMoreIcon /> : null}
         onClick={() => !isExpanded && history.push(defaultPath)}>
-        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center', svg: { borderRadius: '50%' } }}>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '1rem',
+            alignItems: 'center',
+            svg: { borderRadius: '50%', padding: '0.125rem', scale: '1.2' },
+          }}>
           {startIcon}
           <Typography variant="h2" fontWeight={500}>
             {title}
