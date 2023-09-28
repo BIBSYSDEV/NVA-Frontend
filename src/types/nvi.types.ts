@@ -1,5 +1,5 @@
 import { LanguageString, SearchResponse } from './common.types';
-import { PublicationInstanceType } from './registration.types';
+import { PublicationInstanceType, RegistrationDate } from './registration.types';
 
 interface NviCandidateContributor {
   id?: string;
@@ -20,7 +20,7 @@ export interface NviCandidateSearchHit {
     id: string;
     type: PublicationInstanceType;
     title: string;
-    publicationDate: string;
+    publicationDate: Omit<RegistrationDate, 'type'>;
     contributors: NviCandidateContributor[];
   };
   approvals: NviCandidateSearchHitApproval[];
