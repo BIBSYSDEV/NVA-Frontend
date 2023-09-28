@@ -37,3 +37,12 @@ export const getTimePeriodString = (date1: Date, date2: Date, t: TFunction) => {
     return t('common.x_years', { count: yearsCount });
   }
 };
+
+export const getNviYearFilterValues = () => {
+  const thisYear = new Date().getFullYear();
+  const nviYearFilterValues = [];
+  for (let year = thisYear + 1; year >= 2011; year--) {
+    nviYearFilterValues.push(year);
+  }
+  return nviYearFilterValues;
+};
