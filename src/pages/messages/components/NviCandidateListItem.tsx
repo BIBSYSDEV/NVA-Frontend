@@ -6,6 +6,7 @@ import { PublicationPointsTypography } from '../../../components/PublicationPoin
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { NviCandidateSearchHit } from '../../../types/nvi.types';
+import { displayDate } from '../../../utils/date-helpers';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
@@ -27,7 +28,7 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
   const typeString = nviCandidate.publicationDetails.type
     ? t(`registration.publication_types.${nviCandidate.publicationDetails.type}`)
     : '';
-  const dateString = new Date(nviCandidate.publicationDetails.publicationDate).toLocaleDateString();
+  const dateString = displayDate(nviCandidate.publicationDetails.publicationDate);
   const heading = [typeString, dateString].filter(Boolean).join(' — ');
 
   const myApproval = nviCandidate.approvals.find((approval) => approval.id === user?.topOrgCristinId);
