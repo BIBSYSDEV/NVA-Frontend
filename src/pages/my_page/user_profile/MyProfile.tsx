@@ -102,103 +102,101 @@ export const MyProfile = () => {
               <>
                 <Typography>{t('my_page.my_profile.user_profile_description')}</Typography>
                 <Formik initialValues={initialValues} onSubmit={updatePerson} enableReinitialize>
-                  {({ isSubmitting, dirty, resetForm }: FormikProps<CristinPersonFormData>) => {
-                    return (
-                      <Form>
+                  {({ isSubmitting, dirty, resetForm }: FormikProps<CristinPersonFormData>) => (
+                    <Form>
+                      <Box
+                        sx={{
+                          display: 'grid',
+                          gridTemplateAreas: {
+                            xs: '"user-info" "profile-picture"',
+                            md: '"user-info profile-picture"',
+                          },
+                          gridTemplateColumns: { xs: '1fr', md: '2fr auto' },
+                          columnGap: '2rem',
+                        }}>
                         <Box
                           sx={{
-                            display: 'grid',
-                            gridTemplateAreas: {
-                              xs: '"user-info" "profile-picture"',
-                              md: '"user-info profile-picture"',
-                            },
-                            gridTemplateColumns: { xs: '1fr', md: '2fr auto' },
-                            columnGap: '2rem',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '1rem',
+
+                            gridArea: 'user-info',
                           }}>
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              flexDirection: 'column',
-                              gap: '1rem',
-
-                              gridArea: 'user-info',
-                            }}>
-                            <Box sx={{ display: 'flex', gap: '1rem' }}>
-                              <Field name={'preferredFirstName'}>
-                                {({ field }: FieldProps<string>) => (
-                                  <TextField
-                                    {...field}
-                                    data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
-                                    id={field.name}
-                                    disabled={!editPreferredNames || isSubmitting}
-                                    label={t('my_page.my_profile.preferred_first_name')}
-                                    size="small"
-                                    variant="filled"
-                                  />
-                                )}
-                              </Field>
-                              <Field name={'preferredLastName'}>
-                                {({ field }: FieldProps<string>) => (
-                                  <TextField
-                                    {...field}
-                                    data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
-                                    id={field.name}
-                                    disabled={!editPreferredNames || isSubmitting}
-                                    label={t('my_page.my_profile.preferred_last_name')}
-                                    size="small"
-                                    variant="filled"
-                                  />
-                                )}
-                              </Field>
-                              <Tooltip title={t('common.edit')}>
-                                <IconButton
-                                  data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
-                                  onClick={() => setEditPreferredNames(!editPreferredNames)}>
-                                  <EditIcon sx={{ width: '1.2rem' }} />
-                                </IconButton>
-                              </Tooltip>
-                            </Box>
-                            <TextField
-                              sx={{ width: 'fit-content' }}
-                              value={personTelephone}
-                              data-testid={dataTestId.myPage.myProfile.telephoneField}
-                              disabled
-                              label={t('my_page.my_profile.telephone')}
-                              size="small"
-                              variant="filled"
-                            />
+                          <Box sx={{ display: 'flex', gap: '1rem' }}>
+                            <Field name={'preferredFirstName'}>
+                              {({ field }: FieldProps<string>) => (
+                                <TextField
+                                  {...field}
+                                  data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
+                                  id={field.name}
+                                  disabled={!editPreferredNames || isSubmitting}
+                                  label={t('my_page.my_profile.preferred_first_name')}
+                                  size="small"
+                                  variant="filled"
+                                />
+                              )}
+                            </Field>
+                            <Field name={'preferredLastName'}>
+                              {({ field }: FieldProps<string>) => (
+                                <TextField
+                                  {...field}
+                                  data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
+                                  id={field.name}
+                                  disabled={!editPreferredNames || isSubmitting}
+                                  label={t('my_page.my_profile.preferred_last_name')}
+                                  size="small"
+                                  variant="filled"
+                                />
+                              )}
+                            </Field>
+                            <Tooltip title={t('common.edit')}>
+                              <IconButton
+                                data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
+                                onClick={() => setEditPreferredNames(!editPreferredNames)}>
+                                <EditIcon sx={{ width: '1.2rem' }} />
+                              </IconButton>
+                            </Tooltip>
                           </Box>
-
-                          <Box
-                            sx={{
-                              gridArea: 'profile-picture',
-                            }}>
-                            <Typography variant="h3" sx={{ alignSelf: 'start', my: '1rem' }}>
-                              {t('my_page.my_profile.profile_picture')}
-                            </Typography>
-                            <ProfilePictureUploader personId={personId} />
-                          </Box>
+                          <TextField
+                            sx={{ width: 'fit-content' }}
+                            value={personTelephone}
+                            data-testid={dataTestId.myPage.myProfile.telephoneField}
+                            disabled
+                            label={t('my_page.my_profile.telephone')}
+                            size="small"
+                            variant="filled"
+                          />
                         </Box>
 
-                        <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-                          <Button
-                            onClick={() => {
-                              resetForm();
-                            }}>
-                            {t('common.cancel')}
-                          </Button>
-                          <LoadingButton
-                            data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
-                            loading={isSubmitting}
-                            disabled={!dirty}
-                            variant="contained"
-                            type="submit">
-                            {t('common.save')}
-                          </LoadingButton>
+                        <Box
+                          sx={{
+                            gridArea: 'profile-picture',
+                          }}>
+                          <Typography variant="h3" sx={{ alignSelf: 'start', my: '1rem' }}>
+                            {t('my_page.my_profile.profile_picture')}
+                          </Typography>
+                          <ProfilePictureUploader personId={personId} />
                         </Box>
-                      </Form>
-                    );
-                  }}
+                      </Box>
+
+                      <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+                        <Button
+                          onClick={() => {
+                            resetForm();
+                          }}>
+                          {t('common.cancel')}
+                        </Button>
+                        <LoadingButton
+                          data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
+                          loading={isSubmitting}
+                          disabled={!dirty}
+                          variant="contained"
+                          type="submit">
+                          {t('common.save')}
+                        </LoadingButton>
+                      </Box>
+                    </Form>
+                  )}
                 </Formik>
               </>
             )}

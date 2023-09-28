@@ -56,7 +56,7 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <IconButton
             data-testid={dataTestId.myPage.myProfile.deleteProfilePictureButton}
-            onClick={() => toggleConfirmDialog()}
+            onClick={toggleConfirmDialog}
             sx={{
               alignSelf: 'end',
               boxShadow: '0px 10px 10px -8px rgba(0,0,0,0.75)',
@@ -119,7 +119,7 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
         }}
         onCancel={toggleConfirmDialog}
         isLoading={mutateProfilePicture.isLoading}
-        dialogDataTestId="confirm-remove-orcid-connection-dialog">
+        dialogDataTestId="confirm-remove-profile-picture-dialog">
         <Typography sx={{ whiteSpace: 'pre-wrap' }}>{t('my_page.my_profile.remove_profile_picture_info')}</Typography>
       </ConfirmDialog>
     </Box>
