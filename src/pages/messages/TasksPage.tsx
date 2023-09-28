@@ -499,10 +499,11 @@ const TasksPage = () => {
 
               {nviAggregationsQuery.isSuccess && (
                 <Box sx={{ mt: '1rem' }}>
-                  <Typography>
+                  <Typography id="progress-label">
                     {t('tasks.nvi.completed_count', { completed: nviCandidatesCompeted, total: nviCandidatesTotal })}
                   </Typography>
                   <LinearProgress
+                    aria-labelledby="progress-label"
                     variant="determinate"
                     value={nviCompletedPercentage}
                     sx={{
