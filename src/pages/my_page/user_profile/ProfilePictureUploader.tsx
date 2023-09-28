@@ -119,7 +119,7 @@ export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps
         }}
         onCancel={toggleConfirmDialog}
         isLoading={mutateProfilePicture.isLoading}
-        dialogDataTestId="confirm-remove-profile-picture-dialog">
+        dialogDataTestId={dataTestId.myPage.myProfile.removeProfilePictureDialog}>
         <Typography sx={{ whiteSpace: 'pre-wrap' }}>{t('my_page.my_profile.remove_profile_picture_info')}</Typography>
       </ConfirmDialog>
     </Box>

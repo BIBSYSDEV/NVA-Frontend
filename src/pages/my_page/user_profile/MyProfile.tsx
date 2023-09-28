@@ -119,7 +119,6 @@ export const MyProfile = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '1rem',
-
                             gridArea: 'user-info',
                           }}>
                           <Box sx={{ display: 'flex', gap: '1rem' }}>
