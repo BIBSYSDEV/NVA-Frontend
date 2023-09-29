@@ -107,6 +107,9 @@
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
+    "nvi": {
+      "reporting_end": "Rapporteringsslutt: {{date}}"
+    },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
       "edit_person": "Rediger person",
@@ -237,10 +240,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -326,7 +325,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "curators": {
@@ -410,6 +413,7 @@
       "get_messages": "Kunne ikke hente meldinger",
       "get_nvi_candidate": "Kunne ikke hente NVI-kandidat",
       "get_nvi_candidates": "Kunne ikke hente NVI-kandidater",
+      "get_nvi_periods": "Kunne ikke hente NVI-perioder",
       "get_orcid": "Kunne ikke hente data fra ORCID",
       "get_person": "Kunne ikke hente person",
       "get_positions": "Kunne ikke hente stillinger",
