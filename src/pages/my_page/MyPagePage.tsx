@@ -387,7 +387,7 @@ const MyPagePage = () => {
         ]}
         <NavigationListAccordion
           title={t('my_page.research_profile')}
-          startIcon={<img src={orcidIcon} height="25" alt={t('common.orcid')} />}
+          startIcon={<img src={orcidIcon} alt={t('common.orcid')} />}
           accordionPath={UrlPathTemplate.MyPageResearchProfile}
           defaultPath={UrlPathTemplate.MyPageMyResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
