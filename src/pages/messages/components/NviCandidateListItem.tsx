@@ -1,10 +1,12 @@
-import { Box, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { NviCandidateSearchHit } from '../../../types/nvi.types';
+import { displayDate } from '../../../utils/date-helpers';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
@@ -26,7 +28,7 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
   const typeString = nviCandidate.publicationDetails.type
     ? t(`registration.publication_types.${nviCandidate.publicationDetails.type}`)
     : '';
-  const dateString = new Date(nviCandidate.publicationDetails.publicationDate).toLocaleDateString();
+  const dateString = displayDate(nviCandidate.publicationDetails.publicationDate);
   const heading = [typeString, dateString].filter(Boolean).join(' — ');
 
   const myApproval = nviCandidate.approvals.find((approval) => approval.id === user?.topOrgCristinId);
@@ -81,9 +83,7 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
-        <Tooltip title={t('tasks.nvi.nvi_points')}>
-          <Typography fontWeight={700}>{nviCandidate.points}</Typography>
-        </Tooltip>
+        <PublicationPointsTypography fontWeight={700} points={nviCandidate.points} />
       </Box>
     </SearchListItem>
   );

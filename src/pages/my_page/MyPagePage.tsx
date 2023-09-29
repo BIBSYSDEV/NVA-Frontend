@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchTickets } from '../../api/searchApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -411,14 +410,12 @@ const MyPagePage = () => {
               to={UrlPathTemplate.MyPageMyPersonalia}>
               {t('my_page.my_profile.heading.personalia')}
             </LinkButton>
-            <BetaFunctionality>
-              <LinkButton
-                data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
-                isSelected={currentPath === UrlPathTemplate.MyPageMyFieldAndBackground}
-                to={UrlPathTemplate.MyPageMyFieldAndBackground}>
-                {t('my_page.my_profile.field_and_background.field_and_background')}
-              </LinkButton>
-            </BetaFunctionality>
+            <LinkButton
+              data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMyFieldAndBackground}
+              to={UrlPathTemplate.MyPageMyFieldAndBackground}>
+              {t('my_page.my_profile.field_and_background.field_and_background')}
+            </LinkButton>
             <LinkButton
               data-testid={dataTestId.myPage.myResultsLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMyResults}

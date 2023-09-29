@@ -458,6 +458,7 @@ export const dataTestId = {
       telephoneField: 'telephone-field',
       updateProfilePictureButton: 'update-profile-picture-button',
       uploadProfilePictureButton: 'update-profile-picture-button',
+      removeProfilePictureDialog: 'confirm-remove-profile-picture-dialog',
     },
     myFieldAndBackgroundLink: 'my-field-and-background-link',
     myProfileAccordion: 'my-profile-accordion',
@@ -478,6 +479,10 @@ export const dataTestId = {
   },
   tasksPage: {
     nvi: {
+      dialoguePanel: {
+        noteField: 'note-field',
+        sendNoteButton: 'send-note-button',
+      },
       statusFilter: {
         approvedRadio: 'approved-radio',
         approvedCollaborationRadio: 'approved-collaboration-radio',

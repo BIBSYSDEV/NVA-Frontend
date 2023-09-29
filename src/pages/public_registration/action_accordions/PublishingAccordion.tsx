@@ -32,7 +32,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
 import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
-import { MessageList } from '../../messages/components/MessageList';
+import { TicketMessageList } from '../../messages/components/MessageList';
 import { PublishingRequestMessagesColumn } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { TicketAssignee } from './TicketAssignee';
@@ -287,7 +287,7 @@ export const PublishingAccordion = ({
         {hasPendingTicket && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {ticketMessages.length > 0 ? (
-              <MessageList ticket={publishingRequestTicket} />
+              <TicketMessageList ticket={publishingRequestTicket} />
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}

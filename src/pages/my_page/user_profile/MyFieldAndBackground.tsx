@@ -77,6 +77,8 @@ export const MyFieldAndBackground = () => {
     },
   });
 
+  const maxMessageLength = 500;
+
   return (
     <Box
       sx={{
@@ -155,18 +157,17 @@ export const MyFieldAndBackground = () => {
                 <Typography variant="h3">{t('my_page.my_profile.field_and_background.norwegian')}</Typography>
                 <Field name={'background.no'}>
                   {({ field }: FieldProps<string>) => (
-                    <>
-                      <TextField
-                        {...field}
-                        inputProps={{ maxLength: 200 }}
-                        label={t('my_page.my_profile.background')}
-                        variant="filled"
-                        multiline
-                        rows="3"
-                        placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
-                      />
-                      <Typography sx={{ alignSelf: 'end' }}>{field.value.length}/200</Typography>
-                    </>
+                    <TextField
+                      {...field}
+                      inputProps={{ maxLength: maxMessageLength }}
+                      label={t('my_page.my_profile.background')}
+                      variant="filled"
+                      multiline
+                      rows="3"
+                      placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
+                      helperText={`${field.value.length}/${maxMessageLength}`}
+                      FormHelperTextProps={{ sx: { textAlign: 'end' } }}
+                    />
                   )}
                 </Field>
               </Box>
@@ -174,18 +175,17 @@ export const MyFieldAndBackground = () => {
                 <Typography variant="h3">{t('my_page.my_profile.field_and_background.english')}</Typography>
                 <Field name={'background.en'}>
                   {({ field }: FieldProps<string>) => (
-                    <>
-                      <TextField
-                        {...field}
-                        inputProps={{ maxLength: 200 }}
-                        label={t('my_page.my_profile.background')}
-                        variant="filled"
-                        multiline
-                        rows="3"
-                        placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
-                      />
-                      <Typography sx={{ alignSelf: 'end' }}>{field.value.length}/200</Typography>
-                    </>
+                    <TextField
+                      {...field}
+                      inputProps={{ maxLength: maxMessageLength }}
+                      label={t('my_page.my_profile.background')}
+                      variant="filled"
+                      multiline
+                      rows="3"
+                      placeholder={t('my_page.my_profile.field_and_background.background_placeholder')}
+                      helperText={`${field.value.length}/${maxMessageLength}`}
+                      FormHelperTextProps={{ sx: { textAlign: 'end' } }}
+                    />
                   )}
                 </Field>
               </Box>
