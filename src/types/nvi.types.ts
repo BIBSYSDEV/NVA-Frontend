@@ -86,3 +86,12 @@ export interface Note {
   text: string;
   user: string;
 }
+
+interface NviPeriod {
+  publishingYear: string;
+  reportingDate: string;
+}
+
+export interface NviPeriodResponse {
+  periods: NviPeriod[];
+}
