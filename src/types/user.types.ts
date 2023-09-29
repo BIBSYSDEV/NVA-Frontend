@@ -1,13 +1,16 @@
 import { LanguageString } from './common.types';
+import { Keywords } from './keywords.types';
 
 export enum RoleName {
-  InstitutionAdmin = 'Institution-admin',
   AppAdmin = 'App-admin',
   Curator = 'Curator',
   CuratorThesis = 'Curator-thesis',
   CuratorThesisEmbargo = 'Curator-thesis-embargo',
   Creator = 'Creator',
   Editor = 'Editor',
+  InstitutionAdmin = 'Institution-admin',
+  InternalImporter = 'Internal-importer',
+  NviCurator = 'Nvi-curator',
 }
 
 export interface User {
@@ -20,12 +23,14 @@ export interface User {
   givenName: string;
   feideId: string;
   isAppAdmin: boolean;
+  isInternalImporter: boolean;
   isCurator: boolean;
   isThesisCurator: boolean;
   isEmbargoThesisCurator: boolean;
   isInstitutionAdmin: boolean;
   isCreator: boolean;
   isEditor: boolean;
+  isNviCurator: boolean;
   roles: RoleName[];
   nvaUsername: string;
   orcid?: string;
@@ -109,6 +114,12 @@ export interface CristinPerson extends CreateCristinPerson {
   employments: Employment[];
   contactDetails?: CristinPersonContactDetails;
   verified?: boolean;
+  image?: string;
+  background: {
+    no?: string;
+    en?: string;
+  };
+  keywords: Keywords[];
 }
 
 export interface FlatCristinPerson {
@@ -122,6 +133,11 @@ export interface FlatCristinPerson {
   affiliations: CristinPersonAffiliation[];
   employments: Employment[];
   orcid?: string;
+  background: {
+    no?: string | null;
+    en?: string | null;
+  };
+  keywords: Keywords[];
 }
 
 interface Position {

@@ -10,7 +10,7 @@ interface UserRolesProps {
 
 export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
   const { t } = useTranslation();
-  const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator } = user;
+  const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator, isInternalImporter, isNviCurator } = user;
   const hasAnyRole = isAppAdmin || isInstitutionAdmin || isCurator || isEditor || isCreator;
 
   return (
@@ -64,6 +64,20 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
           dataTestId="user-role-app-admin"
           label={t('my_page.roles.app_admin')}
           text={t('my_page.roles.app_admin_description')}
+        />
+      )}
+      {isInternalImporter && (
+        <RoleItem
+          dataTestId="user-role-internal-importer"
+          label={t('my_page.roles.internal_importer')}
+          text={t('my_page.roles.internal_importer_description')}
+        />
+      )}
+      {isNviCurator && (
+        <RoleItem
+          dataTestId="user-role-nvi-curator"
+          label={t('my_page.roles.nvi_curator')}
+          text={t('my_page.roles.nvi_curator_description')}
         />
       )}
     </Box>

@@ -1,12 +1,12 @@
 import { Divider } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { RoleApiPath } from '../../../api/apiPaths';
+import { fetchUsers } from '../../../api/roleApi';
 import { PageHeader } from '../../../components/PageHeader';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { CustomerInstitution } from '../../../types/customerInstitution.types';
-import { RoleName, UserList } from '../../../types/user.types';
+import { RoleName } from '../../../types/user.types';
 import { useFetch } from '../../../utils/hooks/useFetch';
-import { filterUsersByRole } from '../../../utils/role-helpers';
 import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
 import { CustomerInstitutionMetadataForm } from './CustomerInstitutionMetadataForm';
 
@@ -23,12 +23,12 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
     withAuthentication: true,
   });
 
-  const [userList, isLoadingUsers, refetchInstitutionUsers] = useFetch<UserList>({
-    url: customerId ? `${RoleApiPath.InstitutionUsers}?institution=${encodeURIComponent(customerId)}` : '',
-    errorMessage: t('feedback.error.get_users_for_institution'),
-    withAuthentication: true,
+  const adminsQuery = useQuery({
+    queryKey: ['institutionAdmins', customerId],
+    enabled: !!customerId,
+    queryFn: () => (customerId ? fetchUsers(customerId, RoleName.InstitutionAdmin) : undefined),
+    meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
-  const admins = filterUsersByRole(userList?.users ?? [], RoleName.InstitutionAdmin);
 
   return (
     <>
@@ -38,7 +38,7 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
         {editMode ? t('basic_data.institutions.edit_institution') : t('basic_data.institutions.add_institution')}
       </PageHeader>
 
-      {isLoadingCustomerInstitution || isLoadingUsers ? (
+      {isLoadingCustomerInstitution || adminsQuery.isLoading ? (
         <PageSpinner aria-labelledby="admin-institution-label" />
       ) : (
         <>
@@ -52,8 +52,8 @@ export const AdminCustomerInstitution = ({ customerId }: AdminCustomerInstitutio
             <>
               <Divider sx={{ my: '1rem' }} />
               <CustomerInstitutionAdminsForm
-                admins={admins}
-                refetchInstitutionUsers={refetchInstitutionUsers}
+                admins={adminsQuery.data ?? []}
+                refetchInstitutionUsers={adminsQuery.refetch}
                 cristinInstitutionId={customerInstitution.cristinId}
               />
             </>

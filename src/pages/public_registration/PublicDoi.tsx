@@ -46,7 +46,7 @@ export const PublicDoi = ({ registration }: PublicRegistrationContentProps) => {
       {(originalDoi || associatedLink) && (
         <>
           <Typography variant="overline">{t('registration.registration.link_to_resource')}</Typography>
-          <Typography>
+          <Typography sx={{ wordBreak: 'break-all' }}>
             <Link
               data-testid={dataTestId.registrationLandingPage.doiOriginalLink}
               href={originalDoi || associatedLink}

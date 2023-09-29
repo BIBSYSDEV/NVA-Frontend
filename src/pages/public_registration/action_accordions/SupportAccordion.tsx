@@ -12,7 +12,7 @@ import { Registration } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
-import { MessageList } from '../../messages/components/MessageList';
+import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
 
 interface SupportAccordionProps {
@@ -74,7 +74,7 @@ export const SupportAccordion = ({
           <>
             <TicketAssignee ticket={supportTicket} refetchTickets={refetchData} />
             {userIsCurator &&
-              window.location.pathname.startsWith(UrlPathTemplate.Tasks) &&
+              window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) &&
               supportTicket.status !== 'Completed' && (
                 <LoadingButton
                   sx={{
@@ -88,7 +88,7 @@ export const SupportAccordion = ({
                   {t('my_page.messages.mark_as_completed')}
                 </LoadingButton>
               )}
-            {supportTicket.messages.length > 0 && <MessageList ticket={supportTicket} />}
+            {supportTicket.messages.length > 0 && <TicketMessageList ticket={supportTicket} />}
           </>
         )}
         <MessageForm

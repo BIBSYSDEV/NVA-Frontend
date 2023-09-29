@@ -27,6 +27,8 @@ enum Color {
   Project = '#E48F8F',
   PublishingRequest = '#FFD27B',
   PublishingRequestLight = '#FFF0D3',
+  NviMain = '#EE95EA',
+  NviLight = '#F8D3F6',
 }
 
 const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
@@ -41,6 +43,7 @@ declare module '@mui/material/styles' {
     doiRequest: PaletteColorOptions;
     generalSupportCase: PaletteColorOptions;
     centralImport: PaletteColorOptions;
+    nvi: PaletteColorOptions;
   }
   interface PaletteOptions {
     registration?: PaletteColorOptions;
@@ -50,6 +53,7 @@ declare module '@mui/material/styles' {
     doiRequest?: PaletteColorOptions;
     generalSupportCase?: PaletteColorOptions;
     centralImport?: PaletteColorOptions;
+    nvi?: PaletteColorOptions;
   }
 }
 declare module '@mui/material/Button' {
@@ -122,6 +126,10 @@ export const mainTheme = createTheme(
       generalSupportCase: {
         main: Color.GeneralSupportCase,
         light: Color.GeneralSupportCaseLight,
+      },
+      nvi: {
+        main: Color.NviMain,
+        light: Color.NviLight,
       },
       background: {
         default: Color.White,

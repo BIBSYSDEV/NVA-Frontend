@@ -55,7 +55,7 @@ export const ActionPanelContent = ({
     }
   };
 
-  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.Tasks);
+  const canCreateTickets = !window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   const isInRegistrationWizard =
     window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
@@ -133,11 +133,13 @@ export const ActionPanelContent = ({
           />
         </ErrorBoundary>
       )}
-      <Box sx={{ m: '0.5rem', mt: '1rem' }}>
-        <Button fullWidth variant="contained" onClick={() => setShowDeleteModal(true)}>
-          {t('common.delete')}
-        </Button>
-      </Box>
+      {(registration.status === 'DRAFT' || registration.status === 'NEW') && (
+        <Box sx={{ m: '0.5rem', mt: '1rem' }}>
+          <Button sx={{ bgcolor: 'white' }} fullWidth variant="outlined" onClick={() => setShowDeleteModal(true)}>
+            {t('common.delete')}
+          </Button>
+        </Box>
+      )}
 
       <ConfirmDialog
         open={!!showDeleteModal}

@@ -14,6 +14,7 @@ export enum FileApiPath {
 
 export enum CristinApiPath {
   FundingSources = '/cristin/funding-sources',
+  Keyword = '/cristin/keyword',
   Organization = '/cristin/organization',
   Person = '/cristin/person',
   PersonIdentityNumber = '/cristin/person/identityNumber',
@@ -47,8 +48,17 @@ export enum SearchApiPath {
   Registrations = '/search/resources',
   Tickets = '/search/tickets',
   ImportCandidates = '/search/import-candidates',
+  NviCandidate = '/scientific-index/candidate',
 }
 
 export enum VerifiedFundingApiPath {
   Nfr = '/verified-funding/nfr',
+}
+
+export enum PersonPreferencesApiPath {
+  PersonPreferences = '/person-preferences',
+}
+
+export enum ScientificIndexApiPath {
+  Candidate = '/scientific-index/candidate',
 }

@@ -4,7 +4,7 @@ import { useUppy } from '@uppy/react';
 import { Form, Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { fetchRegistration } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -14,7 +14,6 @@ import { RequiredDescription } from '../../components/RequiredDescription';
 import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
-import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
@@ -40,7 +39,6 @@ interface RegistrationFormProps {
 }
 
 export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
-  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const { t, i18n } = useTranslation();
   const history = useHistory();
@@ -51,7 +49,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const registrationQuery = useQuery({
     queryKey: ['registration', identifier],
     queryFn: () => fetchRegistration(identifier),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_registration') },
   });
   const registration = registrationQuery.data;
 

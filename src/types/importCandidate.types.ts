@@ -13,20 +13,31 @@ import { ReportPublicationInstance } from './publication_types/reportRegistratio
 import { ResearchDataPublicationInstance } from './publication_types/researchDataRegistration.types';
 import { Journal, Publisher, Registration } from './registration.types';
 
-export type CandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
+export type ImportCandidateStatus = 'IMPORTED' | 'NOT_IMPORTED' | 'NOT_APPLICABLE';
 
-interface ImportStatus {
-  candidateStatus: CandidateStatus;
-  modifiedDate: string;
+export interface ImportStatus {
+  candidateStatus: ImportCandidateStatus;
+  modifiedDate?: string;
+  setBy?: string;
+  nvaPublicationId?: string;
 }
 
-export interface ImportCandidate extends Omit<Registration, 'type'> {
+export interface ImportCandidate extends Registration {
   type: 'ImportCandidate';
   importStatus: ImportStatus;
 }
 
+interface ImportCandidateStatusBucket {
+  key: ImportCandidateStatus;
+  docCount: number;
+}
+
+export interface ImportCandidateAggregations {
+  'importStatus.candidateStatus': { buckets: ImportCandidateStatusBucket[] };
+}
+
 export interface ImportCandidateSummary {
-  type: 'ImportCandidate';
+  type: 'ImportCandidateSummary';
   id: string;
   additionalIdentifiers: string[];
   importStatus: ImportStatus;
