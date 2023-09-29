@@ -458,6 +458,7 @@ export const dataTestId = {
       telephoneField: 'telephone-field',
       updateProfilePictureButton: 'update-profile-picture-button',
       uploadProfilePictureButton: 'update-profile-picture-button',
+      removeProfilePictureDialog: 'confirm-remove-profile-picture-dialog',
     },
     myFieldAndBackgroundLink: 'my-field-and-background-link',
     myProfileAccordion: 'my-profile-accordion',

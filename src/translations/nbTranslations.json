@@ -586,7 +586,8 @@
         "full_name": "Fullt navn",
         "identity": "Identitet",
         "not_shown_publicly": "Vises ikke offentlig",
-        "upload_profile_photo": "Last opp profilfoto"
+        "upload_profile_photo": "Last opp profilfoto",
+        "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
       },
       "my_projects": "Mine prosjekt",
       "my_research_results": "Mine forskningsresultat",
@@ -606,6 +607,8 @@
       "preferred_last_name": "Foretrukket etternavn",
       "profile_picture": "Profilbilde",
       "projects": "Prosjekt",
+      "remove_profile_picture": "Fjern profilbilde?",
+      "remove_profile_picture_info": "Er du sikker på at du vil fjerne profilbildet?",
       "research_profile_summary": {
         "affiliations": "Tilknytninger",
         "preview": "Forhåndsvisning",
