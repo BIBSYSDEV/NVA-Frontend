@@ -48,6 +48,7 @@ export const dataTestId = {
       shortNameField: 'short-name-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
+    nviPeriodsLink: 'nvi-periods-link',
     personAdmin: {
       cristinId: (id: string) => `cristin-id-${id}`,
       employments: (id?: string) => (id ? `employments-${id}` : 'employments'),
