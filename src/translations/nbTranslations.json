@@ -1619,6 +1619,8 @@
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvisning av resultatet.",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
+      "reporting_period_closed": "Rapporteringsperioden for dette resultatet er lukket.",
+      "reporting_period_missing": "Rapporteringsperioden for dette resultatet er ikke åpen.",
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
