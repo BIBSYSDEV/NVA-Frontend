@@ -403,7 +403,7 @@ const MyPagePage = () => {
 
         <NavigationListAccordion
           title={t('my_page.my_profile.user_profile')}
-          startIcon={<ProfilePicture personId={personId} fullName={fullName} sx={{ height: '1.5625rem' }} />}
+          startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
           accordionPath={UrlPathTemplate.MyPageMyProfile}
           defaultPath={UrlPathTemplate.MyPageMyPersonalia}
           dataTestId={dataTestId.myPage.myProfileAccordion}>

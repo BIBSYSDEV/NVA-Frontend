@@ -44,7 +44,8 @@ export const NavigationListAccordion = ({
             display: 'flex',
             gap: '1rem',
             alignItems: 'center',
-            svg: { borderRadius: '50%', padding: '0.125rem', scale: '1.2' },
+            'svg, img, div': { borderRadius: '50%', height: '25px', width: '25px' },
+            svg: { padding: '0.2rem' },
           }}>
           {startIcon}
           <Typography variant="h2" fontWeight={500}>
