@@ -1,5 +1,5 @@
 import { LanguageString, SearchResponse } from './common.types';
-import { PublicationInstanceType } from './registration.types';
+import { PublicationInstanceType, RegistrationDate } from './registration.types';
 
 interface NviCandidateContributor {
   id?: string;
@@ -20,7 +20,7 @@ export interface NviCandidateSearchHit {
     id: string;
     type: PublicationInstanceType;
     title: string;
-    publicationDate: string;
+    publicationDate: Omit<RegistrationDate, 'type'>;
     contributors: NviCandidateContributor[];
   };
   approvals: NviCandidateSearchHitApproval[];
@@ -52,20 +52,37 @@ export type NviCandidateSearchResponse = Omit<
   totalHits: number;
 };
 
-interface NviCandidateApproval {
+export interface ApprovalStatus {
   institutionId: string;
   status: NviCandidateStatus;
+  points: number;
+  assignee?: string;
 }
 
-interface NviCandidatePoint {
-  institutionId: string;
-  points: number;
+export interface FinalizedApprovalStatus extends ApprovalStatus {
+  status: 'Rejected' | 'Approved';
+  finalizedBy: string;
+  finalizedDate: string;
+}
+
+export interface RejectedApprovalStatus extends FinalizedApprovalStatus {
+  status: 'Rejected';
+  reason: string;
 }
 
 export interface NviCandidate {
   id: string;
   publicationId: string;
-  approvalStatuses: NviCandidateApproval[];
-  points: NviCandidatePoint[];
-  notes: any[];
+  approvalStatuses: (ApprovalStatus | FinalizedApprovalStatus | RejectedApprovalStatus)[];
+  notes: Note[];
+  periodStatus: {
+    status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';
+  };
+}
+
+export interface Note {
+  identifier: string;
+  createdDate: string;
+  text: string;
+  user: string;
 }

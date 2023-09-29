@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Divider, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Chip, CircularProgress, Divider, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -10,6 +10,7 @@ import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
 import { fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
+import { ProfilePicture } from '../../components/ProfilePicture';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
@@ -85,6 +86,8 @@ const ResearchProfile = () => {
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
+  const personBackground = getLanguageString(person?.background);
+  const personKeywords = person?.keywords ?? [];
 
   const registrationsHeading = registrationsQuery.data
     ? `${t('my_page.my_profile.results')} (${registrationsQuery.data.size})`
@@ -110,7 +113,20 @@ const ResearchProfile = () => {
           borderLeft: 'solid 1rem',
           borderLeftColor: 'person.main',
         }}>
-        <Typography variant="h1" sx={{ ml: '2rem', color: 'primary.contrastText' }}>
+        <ProfilePicture
+          personId={personId}
+          fullName={fullName}
+          isPublicPage
+          sx={{
+            height: '5rem',
+            position: 'absolute',
+            mt: '3rem',
+            ml: '1rem',
+            fontSize: '2rem',
+            fontWeight: 'bold',
+          }}
+        />
+        <Typography variant="h1" sx={{ ml: '7rem', color: 'primary.contrastText' }}>
           {fullName}
         </Typography>
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
@@ -125,7 +141,7 @@ const ResearchProfile = () => {
             sx={{
               display: 'flex',
               gap: '0.5rem',
-              mt: '1rem',
+              mt: '1.5rem',
               flexDirection: { xs: 'column', sm: 'row' },
               flexWrap: 'wrap',
             }}>
@@ -155,6 +171,21 @@ const ResearchProfile = () => {
             <Typography component={MuiLink} href={orcidUri} target="_blank" rel="noopener noreferrer">
               {orcidUri}
             </Typography>
+          </Box>
+        )}
+        {(!!personBackground || personKeywords.length > 0) && (
+          <Box sx={{ width: '80%', mt: '1rem' }}>
+            <Typography variant="h3" gutterBottom>
+              {t('my_page.my_profile.field_and_background.field_and_background')}
+            </Typography>
+            {personKeywords.length > 0 && (
+              <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem' }}>
+                {personKeywords.map((keyword) => (
+                  <Chip color="primary" key={keyword.type} label={getLanguageString(keyword.label)} />
+                ))}
+              </Box>
+            )}
+            {!!personBackground && <Typography>{personBackground}</Typography>}
           </Box>
         )}
         <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
