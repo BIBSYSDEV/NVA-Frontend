@@ -119,52 +119,71 @@ export const MyProfile = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '1rem',
+                            justifyContent: 'space-between',
                             gridArea: 'user-info',
                           }}>
-                          <Box sx={{ display: 'flex', gap: '1rem' }}>
-                            <Field name={'preferredFirstName'}>
-                              {({ field }: FieldProps<string>) => (
-                                <TextField
-                                  {...field}
-                                  data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
-                                  id={field.name}
-                                  disabled={!editPreferredNames || isSubmitting}
-                                  label={t('my_page.my_profile.preferred_first_name')}
-                                  size="small"
-                                  variant="filled"
-                                />
-                              )}
-                            </Field>
-                            <Field name={'preferredLastName'}>
-                              {({ field }: FieldProps<string>) => (
-                                <TextField
-                                  {...field}
-                                  data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
-                                  id={field.name}
-                                  disabled={!editPreferredNames || isSubmitting}
-                                  label={t('my_page.my_profile.preferred_last_name')}
-                                  size="small"
-                                  variant="filled"
-                                />
-                              )}
-                            </Field>
-                            <Tooltip title={t('common.edit')}>
-                              <IconButton
-                                data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
-                                onClick={() => setEditPreferredNames(!editPreferredNames)}>
-                                <EditIcon sx={{ width: '1.2rem' }} />
-                              </IconButton>
-                            </Tooltip>
+                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <Box sx={{ display: 'flex', gap: '1rem' }}>
+                              <Field name={'preferredFirstName'}>
+                                {({ field }: FieldProps<string>) => (
+                                  <TextField
+                                    {...field}
+                                    data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
+                                    id={field.name}
+                                    disabled={!editPreferredNames || isSubmitting}
+                                    label={t('my_page.my_profile.preferred_first_name')}
+                                    size="small"
+                                    variant="filled"
+                                  />
+                                )}
+                              </Field>
+                              <Field name={'preferredLastName'}>
+                                {({ field }: FieldProps<string>) => (
+                                  <TextField
+                                    {...field}
+                                    data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
+                                    id={field.name}
+                                    disabled={!editPreferredNames || isSubmitting}
+                                    label={t('my_page.my_profile.preferred_last_name')}
+                                    size="small"
+                                    variant="filled"
+                                  />
+                                )}
+                              </Field>
+                              <Tooltip title={t('common.edit')}>
+                                <IconButton
+                                  data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
+                                  onClick={() => setEditPreferredNames(!editPreferredNames)}>
+                                  <EditIcon sx={{ width: '1.2rem' }} />
+                                </IconButton>
+                              </Tooltip>
+                            </Box>
+                            <TextField
+                              sx={{ width: 'fit-content' }}
+                              value={personTelephone}
+                              data-testid={dataTestId.myPage.myProfile.telephoneField}
+                              disabled
+                              label={t('my_page.my_profile.telephone')}
+                              size="small"
+                              variant="filled"
+                            />
                           </Box>
-                          <TextField
-                            sx={{ width: 'fit-content' }}
-                            value={personTelephone}
-                            data-testid={dataTestId.myPage.myProfile.telephoneField}
-                            disabled
-                            label={t('my_page.my_profile.telephone')}
-                            size="small"
-                            variant="filled"
-                          />
+                          <Box sx={{ display: 'flex', gap: '1rem' }}>
+                            <Button
+                              onClick={() => {
+                                resetForm();
+                              }}>
+                              {t('common.cancel')}
+                            </Button>
+                            <LoadingButton
+                              data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
+                              loading={isSubmitting}
+                              disabled={!dirty}
+                              variant="contained"
+                              type="submit">
+                              {t('common.save')}
+                            </LoadingButton>
+                          </Box>
                         </Box>
 
                         <Box
@@ -176,23 +195,6 @@ export const MyProfile = () => {
                           </Typography>
                           <ProfilePictureUploader personId={personId} />
                         </Box>
-                      </Box>
-
-                      <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-                        <Button
-                          onClick={() => {
-                            resetForm();
-                          }}>
-                          {t('common.cancel')}
-                        </Button>
-                        <LoadingButton
-                          data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
-                          loading={isSubmitting}
-                          disabled={!dirty}
-                          variant="contained"
-                          type="submit">
-                          {t('common.save')}
-                        </LoadingButton>
                       </Box>
                     </Form>
                   )}
