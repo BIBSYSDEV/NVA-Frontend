@@ -101,7 +101,6 @@ const BasicDataPage = () => {
               <PeopleIcon
                 sx={{
                   bgcolor: 'person.main',
-                  padding: '0.1rem',
                 }}
               />
             }
@@ -133,14 +132,7 @@ const BasicDataPage = () => {
           <>
             <NavigationListAccordion
               title={t('common.institutions')}
-              startIcon={
-                <StoreIcon
-                  sx={{
-                    bgcolor: 'grey.500',
-                    padding: '0.1rem',
-                  }}
-                />
-              }
+              startIcon={<StoreIcon sx={{ bgcolor: 'grey.500' }} />}
               accordionPath={UrlPathTemplate.BasicDataInstitutions}
               dataTestId={dataTestId.basicData.institutionsAccordion}>
               <NavigationList>
@@ -182,7 +174,6 @@ const BasicDataPage = () => {
               <FilterDramaIcon
                 sx={{
                   bgcolor: 'centralImport.main',
-                  padding: '0.1rem',
                 }}
               />
             }
