@@ -227,7 +227,7 @@ const TasksPage = () => {
         {isCurator && (
           <NavigationListAccordion
             title={t('tasks.user_dialog')}
-            startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
+            startIcon={<AssignmentIcon sx={{ bgcolor: 'white' }} />}
             accordionPath={UrlPathTemplate.TasksDialogue}
             onClick={() => {
               if (!isOnTicketsPage) {
@@ -383,7 +383,7 @@ const TasksPage = () => {
         {isNviCurator && (
           <NavigationListAccordion
             title={t('common.nvi')}
-            startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main', padding: '0.1rem' }} />}
+            startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
             accordionPath={UrlPathTemplate.TasksNvi}
             onClick={() => {
               if (!isOnNviCandidatesPage) {

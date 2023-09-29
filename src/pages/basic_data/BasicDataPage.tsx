@@ -99,7 +99,6 @@ const BasicDataPage = () => {
               <PeopleIcon
                 sx={{
                   bgcolor: 'person.main',
-                  padding: '0.1rem',
                 }}
               />
             }
@@ -134,7 +133,6 @@ const BasicDataPage = () => {
               <StoreIcon
                 sx={{
                   bgcolor: 'grey.500',
-                  padding: '0.1rem',
                 }}
               />
             }
@@ -166,7 +164,6 @@ const BasicDataPage = () => {
               <FilterDramaIcon
                 sx={{
                   bgcolor: 'centralImport.main',
-                  padding: '0.1rem',
                 }}
               />
             }
