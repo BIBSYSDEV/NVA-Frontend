@@ -89,7 +89,10 @@ export const UpsertNviPeriodDialog = ({
                         setFieldValue('reportingDate', new Date(+year + 1, 3, 1).toISOString());
                       }
                     }}
-                    shouldDisableYear={(date) => yearsWithPeriod.includes(date.getFullYear())}
+                    shouldDisableYear={(date) => {
+                      const thisYear = date.getFullYear();
+                      return nviPeriod?.publishingYear !== thisYear.toString() && yearsWithPeriod.includes(thisYear);
+                    }}
                     minDate={minNviDate}
                     maxDate={maxNviDate}
                   />
