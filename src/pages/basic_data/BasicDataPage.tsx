@@ -163,6 +163,7 @@ const BasicDataPage = () => {
                   {t('common.nvi')}
                 </LinkButton>
               </NavigationList>
+
               <Divider sx={{ mt: '0.5rem' }} />
               <LinkCreateButton
                 data-testid={dataTestId.basicData.addNviPeriodLink}

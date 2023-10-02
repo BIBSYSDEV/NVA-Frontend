@@ -22,7 +22,7 @@
     "back_to_home": "Tilbake til startsiden",
     "cancel_create_user_text": "Du må opprette bruker for å gå videre. Hvis du avbryter, blir du logget ut. Ønsker du å avbryte?",
     "cancel_create_user_title": "Ønsker du å avbryte?",
-    "create_user_info": "Som bruker blir du tilgjengelig for alle som skal legge til forfatter eller medvirkende på resultater.",
+    "create_user_info": "Som bruker blir du tilgjengelig for alle som skal legge til forfatter eller bidragsyter på resultater.",
     "expired_token_info": "Sesjonen din har utløpt. Vennligst logg inn på nytt.",
     "forbidden": "Forbudt",
     "forbidden_description": "Du er ikke autorisert til å se innholdet på denne siden. Kontakt administrator om dette ikke stemmer.",
@@ -382,7 +382,7 @@
   "feedback": {
     "error": {
       "404_page": "Beklager, men vi kan ikke finne siden du ser etter",
-      "add_contributor": "Kunne ikke legge til medvirkende",
+      "add_contributor": "Kunne ikke legge til bidragsyter",
       "add_employment": "Kunne ikke legge til ansettelse",
       "add_role": "Kunne ikke legge til rolle",
       "an_error_occurred": "En feil oppstod",
@@ -496,7 +496,7 @@
       "author_required": "Du må ha minst en forfatter på denne registreringen",
       "cannot_be_after": "{{field}} kan ikke være etter {{limitField}}",
       "cannot_be_before": "{{field}} kan ikke være før {{limitField}}",
-      "contributor_required": "Du må ha minst en medvirkende på denne registreringen",
+      "contributor_required": "Du må ha minst en bidragsyter på denne registreringen",
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
       "employments_missing_data": "Alle ansettelser må ha stilling, stillingsprosent og startdato",
       "has_invalid_format": "{{field}} har ugyldig format",
@@ -750,12 +750,12 @@
           },
           "row4": {
             "col0": "Felles autoritetsregister",
-            "col1": "Etablere kobling til autoritetsregister for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller medvirkende som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
+            "col1": "Etablere kobling til autoritetsregister for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
             "col2": "Sikt"
           },
           "row5": {
             "col0": "$t(common.orcid)",
-            "col1": "Etablere kobling til ORCID for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller medvirkende som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
+            "col1": "Etablere kobling til ORCID for autorisering av forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter som registreres i tjenesten. For å tilrettelegge for entydig registrering og gjenfinning.",
             "col2": "$t(common.orcid)"
           }
         }
@@ -788,7 +788,7 @@
         },
         "row3": {
           "col0": "Bibliografiske data - personer knyttet til registrert ressurs",
-          "col1": "Forfatter, redaktør, veileder eller annen opphavsperson eller medvirkende til ressurs registrert i tjenesten.",
+          "col1": "Forfatter, redaktør, veileder eller annen opphavsperson eller bidragsyter til ressurs registrert i tjenesten.",
           "col2": "Katalogisering, kreditering og ansvarliggjøring av personene bak ressursen."
         },
         "row4": {
@@ -824,7 +824,7 @@
           "heading": "Andre persondata",
           "row0": {
             "col0": "Metadata for ressurs",
-            "col1": "Fullt navn og rolle for forfatter, redaktør, veileder og annen opphavsperson eller medvirkende",
+            "col1": "Fullt navn og rolle for forfatter, redaktør, veileder og annen opphavsperson eller bidragsyter",
             "col2": "Opprettet i NVA ved registrering eller overført fra ekstern datakilde"
           },
           "row1": {
@@ -990,15 +990,15 @@
   "registration": {
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
-      "add_contributor": "Legg til medvirkende",
+      "add_contributor": "Legg til bidragsyter",
       "add_duplicate_affiliation": "Tilknytningen er allerede lagt til",
-      "add_self_as_contributor": "Legg meg til som medvirkende",
-      "add_unverified_contributor": "Legg til en ikke-verifisert medvirkende.",
+      "add_self_as_contributor": "Legg meg til som bidragsyter",
+      "add_unverified_contributor": "Legg til en ikke-verifisert bidragsyter.",
       "authors": "Forfattere",
       "confirm_remove_author_text": "Er du sikker på at du ønsker å fjerne {{contributorName}}?",
       "confirmed": "Bekreftet",
-      "contributor": "Medvirkende",
-      "contributor_already_added": "Valgt medvirkende er allerede lagt til",
+      "contributor": "Bidragsyter",
+      "contributor_already_added": "Valgt bidragsyter er allerede lagt til",
       "contributor_not_found": "Finner ikke person",
       "corresponding": "Korresponderende",
       "department": "Enhet",
@@ -1007,8 +1007,8 @@
         "confirmed_identity_without_affiliation": "Bekreftet identitet uten tilhørighet",
         "unknown_identity": "Ukjent identitet"
       },
-      "invalid_role": "Medvirkende må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
-      "must_select_type_first": "Du må velge kategori før du kan legge til medvirkende.",
+      "invalid_role": "Bidragsyter må ha en rolle som er gyldig for denne ressurstypen for å vises for andre brukere",
+      "must_select_type_first": "Du må velge kategori før du kan legge til bidragsyter.",
       "no_affiliations_found": "Ingen tilknytninger funnet",
       "no_registrations_found": "Ingen registreringer funnet",
       "other_registrations_one": "+ {{count}} annen registrering",
@@ -1016,9 +1016,9 @@
       "prefilled_affiliation": "Forhåndsutfylt tilknytning",
       "prefilled_name": "Forhåndsutfylt navn",
       "remove_affiliation": "Fjern tilknytning",
-      "remove_contributor": "Fjern medvirkende",
+      "remove_contributor": "Fjern bidragsyter",
       "search_for_institution": "Søk etter institusjon",
-      "select_contributor_type": "Velg type medvirkende",
+      "select_contributor_type": "Velg type bidragsyter",
       "suggested_affiliations": "Foreslåtte tilknytninger",
       "type": "Bidragstype",
       "types": {
@@ -1144,7 +1144,7 @@
       "size": "Størrelse"
     },
     "heading": {
-      "contributors": "Medvirkende",
+      "contributors": "Bidragsytere",
       "description": "$t(common.description)",
       "files_and_license": "Fil, lisens og lenke",
       "resource_type": "Kategori"
@@ -1603,7 +1603,7 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "result": "Resultat",
-    "search_placeholder": "Søk etter tittel, medvirkende, sammendrag, etc.",
+    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",
@@ -1617,12 +1617,12 @@
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
       "approve_nvi_candidate_description": "Godkjenning av resultatet.",
-      "assigned": "Kontrolleres",
+      "assigned": "Under behandling",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "delete_note": "Slett merknad",
       "delete_note_description": "Er du sikker på at du vil slette denne merknaden?",
-      "note": "Merknad",
       "no_nvi_candidates": "Ingen NVI-kandidater",
+      "note": "Merknad",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvisning av resultatet.",
