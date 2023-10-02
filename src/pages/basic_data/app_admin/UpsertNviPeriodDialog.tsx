@@ -84,9 +84,11 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
                     value={field.value ? new Date(field.value) : null}
                     minDate={values.publishingYear ? new Date(+values.publishingYear, 0, 1) : minNviDate}
                     maxDate={values.publishingYear ? new Date(+values.publishingYear, 4, 31) : null}
-                    onChange={(newDate) => {
-                      const dateString = newDate ? newDate.toISOString() : '';
-                      setFieldValue(field.name, dateString);
+                    onChange={(newDate, context) => {
+                      if (context.validationError !== 'invalidDate') {
+                        const dateString = newDate ? newDate.toISOString() : '';
+                        setFieldValue(field.name, dateString);
+                      }
                     }}
                   />
                 )}
@@ -101,9 +103,11 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
                     value={field.value ? new Date(field.value) : null}
                     minDate={values.publishingYear ? new Date(+values.publishingYear + 1, 0, 1) : minNviDate}
                     maxDate={values.publishingYear ? new Date(+values.publishingYear + 1, 4, 31) : null}
-                    onChange={(newDate) => {
-                      const dateString = newDate ? newDate.toISOString() : '';
-                      setFieldValue(field.name, dateString);
+                    onChange={(newDate, context) => {
+                      if (context.validationError !== 'invalidDate') {
+                        const dateString = newDate ? newDate.toISOString() : '';
+                        setFieldValue(field.name, dateString);
+                      }
                     }}
                   />
                 )}
