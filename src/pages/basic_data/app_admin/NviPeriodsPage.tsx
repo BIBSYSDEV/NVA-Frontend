@@ -2,6 +2,7 @@ import { Box, List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchNviPeriods } from '../../../api/scientificIndexApi';
+import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { UpsertNviPeriodDialog } from './UpsertNviPeriodDialog';
@@ -54,10 +55,12 @@ export const NviPeriodsPage = () => {
         </List>
       )}
 
-      <UpsertNviPeriodDialog
-        refetchNviPeriods={nviPeriodsQuery.refetch}
-        yearsWithPeriod={sortedPeriods.map(({ publishingYear }) => +publishingYear)}
-      />
+      <ErrorBoundary>
+        <UpsertNviPeriodDialog
+          refetchNviPeriods={nviPeriodsQuery.refetch}
+          yearsWithPeriod={sortedPeriods.map(({ publishingYear }) => +publishingYear)}
+        />
+      </ErrorBoundary>
     </Box>
   );
 };
