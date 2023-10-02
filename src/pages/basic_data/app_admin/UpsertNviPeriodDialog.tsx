@@ -50,7 +50,7 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
               <Field name="publishingYear">
                 {({ field }: FieldProps<string>) => (
                   <DatePicker
-                    label={t('tasks.nvi.period_year')}
+                    label={t('basic_data.nvi.period_year')}
                     views={['year']}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(newDate) => {
@@ -71,7 +71,7 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
               <Field name="startDate">
                 {({ field }: FieldProps<string>) => (
                   <DateTimePicker
-                    label={t('tasks.nvi.period_start')}
+                    label={t('common.start_date')}
                     disabled={!values.publishingYear}
                     value={field.value ? new Date(field.value) : null}
                     minDate={values.publishingYear ? new Date(+values.publishingYear, 0, 1) : minNviDate}
@@ -87,7 +87,7 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
               <Field name="reportingDate">
                 {({ field }: FieldProps<string>) => (
                   <DateTimePicker
-                    label={t('tasks.nvi.period_end')}
+                    label={t('common.end_date')}
                     disabled={!values.publishingYear}
                     value={field.value ? new Date(field.value) : null}
                     minDate={values.publishingYear ? new Date(+values.publishingYear + 1, 0, 1) : minNviDate}

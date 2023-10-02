@@ -109,7 +109,8 @@
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
-      "reporting_end": "Rapporteringsslutt: {{date}}"
+      "period_year": "Publiseringsår",
+      "reporting_period": "Rapporteringsperiode: {{period}}"
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
@@ -1622,9 +1623,6 @@
       "delete_note_description": "Er du sikker på at du vil slette denne merknaden?",
       "note": "Merknad",
       "no_nvi_candidates": "Ingen NVI-kandidater",
-      "period_end": "Rapporteringsstopp",
-      "period_start": "Rapporteringsstart",
-      "period_year": "Publiseringsår",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvisning av resultatet.",
