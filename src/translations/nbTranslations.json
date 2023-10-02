@@ -108,6 +108,7 @@
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
     "nvi": {
+      "add_reporting_period": "Legg til rapporteringsperiode",
       "reporting_end": "Rapporteringsslutt: {{date}}"
     },
     "person_register": {
@@ -387,6 +388,7 @@
       "create_customer": "Kunne ikke opprette institusjon",
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
       "create_note": "Kunne ikke lagre til merknad",
+      "create_nvi_period": "Kunne ikke opprette NVI-periode",
       "create_project": "Kunne ikke opprette prosjekt",
       "create_publishing_request": "Kunne ikke opprette publiseringsforespørsel",
       "create_registration": "Kunne ikke opprette registrering",
@@ -458,6 +460,7 @@
       "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
       "create_note": "Merknaden ble lagret",
+      "create_nvi_period": "NVI-periode ble opprettet",
       "create_project": "Prosjekt er opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_registration": "Publikasjon er opprettet",
@@ -1619,6 +1622,8 @@
       "delete_note_description": "Er du sikker på at du vil slette denne merknaden?",
       "note": "Merknad",
       "no_nvi_candidates": "Ingen NVI-kandidater",
+      "period_end": "Rapporteringsstopp",
+      "period_year": "Publiseringsår",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvisning av resultatet.",

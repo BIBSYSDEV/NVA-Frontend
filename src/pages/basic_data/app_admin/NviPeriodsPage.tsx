@@ -1,8 +1,9 @@
-import { List, Typography } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchNviPeriods } from '../../../api/scientificIndexApi';
 import { SearchListItem } from '../../../components/styled/Wrappers';
+import { CreateNviPeriodDialog } from './UpsertNviPeriodDialog';
 
 export const NviPeriodsPage = () => {
   const { t } = useTranslation();
@@ -16,17 +17,21 @@ export const NviPeriodsPage = () => {
   const sortedPeriods = nviPeriodsQuery.data?.periods.sort((a, b) => +b.publishingYear - +a.publishingYear) ?? [];
 
   return (
-    <List>
-      {sortedPeriods.map((nviPeriod) => (
-        <SearchListItem key={nviPeriod.publishingYear} sx={{ borderLeftColor: 'nvi.main' }}>
-          <Typography fontWeight={700} gutterBottom>
-            {nviPeriod.publishingYear}
-          </Typography>
-          <Typography>
-            {t('basic_data.nvi.reporting_end', { date: new Date(nviPeriod.reportingDate).toLocaleDateString() })}
-          </Typography>
-        </SearchListItem>
-      ))}
-    </List>
+    <Box component="section">
+      <List>
+        {sortedPeriods.map((nviPeriod) => (
+          <SearchListItem key={nviPeriod.publishingYear} sx={{ borderLeftColor: 'nvi.main' }}>
+            <Typography fontWeight={700} gutterBottom>
+              {nviPeriod.publishingYear}
+            </Typography>
+            <Typography>
+              {t('basic_data.nvi.reporting_end', { date: new Date(nviPeriod.reportingDate).toLocaleDateString() })}
+            </Typography>
+          </SearchListItem>
+        ))}
+      </List>
+
+      <CreateNviPeriodDialog refetchNviPeriods={nviPeriodsQuery.refetch} />
+    </Box>
   );
 };

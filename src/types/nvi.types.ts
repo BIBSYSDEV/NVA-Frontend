@@ -87,9 +87,10 @@ export interface Note {
   user: string;
 }
 
-interface NviPeriod {
+export interface NviPeriod {
   publishingYear: string;
   reportingDate: string;
+  // startDate: string;
 }
 
 export interface NviPeriodResponse {

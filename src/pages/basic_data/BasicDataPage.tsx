@@ -163,6 +163,14 @@ const BasicDataPage = () => {
                   {t('common.nvi')}
                 </LinkButton>
               </NavigationList>
+              <Divider sx={{ mt: '0.5rem' }} />
+              <LinkCreateButton
+                data-testid={dataTestId.basicData.addNviPeriodLink}
+                isSelected={currentPath === UrlPathTemplate.BasicDataNviNew}
+                selectedColor="nvi.main"
+                to={UrlPathTemplate.BasicDataNviNew}
+                title={t('common.add')}
+              />
             </NavigationListAccordion>
           </>
         )}
@@ -308,12 +316,7 @@ const BasicDataPage = () => {
             component={PersonRegisterPage}
             isAuthorized={isInstitutionAdmin}
           />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.BasicDataNvi}
-            component={NviPeriodsPage}
-            isAuthorized={isAppAdmin}
-          />
+          <PrivateRoute path={UrlPathTemplate.BasicDataNvi} component={NviPeriodsPage} isAuthorized={isAppAdmin} />
         </ErrorBoundary>
       </Switch>
     </StyledPageWithSideMenu>
