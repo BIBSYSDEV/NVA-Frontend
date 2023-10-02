@@ -108,7 +108,8 @@
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
     "nvi": {
-      "reporting_end": "Rapporteringsslutt: {{date}}"
+      "add_reporting_period": "Legg til rapporteringsperiode",
+      "period_year": "Publiseringsår"
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
@@ -240,10 +241,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -329,7 +326,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "curators": {
@@ -387,6 +388,7 @@
       "create_customer": "Kunne ikke opprette institusjon",
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
       "create_note": "Kunne ikke lagre til merknad",
+      "create_nvi_period": "Kunne ikke opprette NVI-periode",
       "create_project": "Kunne ikke opprette prosjekt",
       "create_publishing_request": "Kunne ikke opprette publiseringsforespørsel",
       "create_registration": "Kunne ikke opprette registrering",
@@ -458,6 +460,7 @@
       "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
       "create_note": "Merknaden ble lagret",
+      "create_nvi_period": "NVI-periode ble opprettet",
       "create_project": "Prosjekt er opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_registration": "Publikasjon er opprettet",
