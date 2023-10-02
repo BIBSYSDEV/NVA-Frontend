@@ -109,7 +109,8 @@
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
-      "period_year": "Publiseringsår"
+      "period_year": "Publiseringsår",
+      "update_reporting_period": "Oppdater rapporteringsperiode"
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
@@ -442,6 +443,7 @@
       "update_doi_request": "Kunne ikke oppdatere DOI-forespørsel",
       "update_import_status": "Kunne ikke oppdatere importstatus",
       "update_institution_user": "Kunne ikke oppdatere bruker",
+      "update_nvi_period": "Kunne ikke oppdatere NVI-perioden",
       "update_nvi_status": "Kunne ikke oppdatere NVI-status",
       "update_orcid": "Oppdatering av ORCID-kobling feilet",
       "update_person": "Kunne ikke oppdatere person",
@@ -479,6 +481,7 @@
       "send_message": "Melding sendt",
       "update_customer": "Institusjon er oppdatert",
       "update_institution_user": "Bruker er oppdatert",
+      "update_nvi_period": "NVI-perioden ble oppdatert",
       "update_nvi_status": "NVI-status ble oppdatert",
       "update_orcid": "ORCID-kobling ble oppdatert",
       "update_person": "Person ble oppdatert",

@@ -5,19 +5,21 @@ import { useMutation } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
-import { createNviPeriod } from '../../../api/scientificIndexApi';
+import { useHistory } from 'react-router-dom';
+import { createNviPeriod, updateNviPeriod } from '../../../api/scientificIndexApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { NviPeriod } from '../../../types/nvi.types';
-import { minNviYear } from '../../../utils/nviHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 
-const minNviDate = new Date(minNviYear, 0, 1);
-const maxNviDate = new Date(new Date().getFullYear() + 1, 0, 1);
+const minNewNviPeriodYear = new Date().getFullYear();
+const minNviDate = new Date(minNewNviPeriodYear, 0, 1);
+const maxNviDate = new Date(minNewNviPeriodYear + 1, 0, 1);
 
 interface UpsertNviPeriodDialogProps {
   refetchNviPeriods: () => Promise<unknown>;
   yearsWithPeriod: number[];
+  nviPeriod: NviPeriod | null; // NviPeriod to edit
+  closeEditDialog: () => void;
 }
 
 const emptyNviPeriod: NviPeriod = {
@@ -26,25 +28,43 @@ const emptyNviPeriod: NviPeriod = {
   reportingDate: '',
 };
 
-export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: UpsertNviPeriodDialogProps) => {
+export const UpsertNviPeriodDialog = ({
+  refetchNviPeriods,
+  yearsWithPeriod,
+  nviPeriod,
+  closeEditDialog,
+}: UpsertNviPeriodDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
 
   const nviPeriodMutation = useMutation({
-    mutationFn: (data: NviPeriod) => createNviPeriod(data),
+    mutationFn: (data: NviPeriod) => (nviPeriod ? updateNviPeriod(data) : createNviPeriod(data)),
     onSuccess: () =>
-      dispatch(setNotification({ message: t('feedback.success.create_nvi_period'), variant: 'success' })),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.create_nvi_period'), variant: 'error' })),
+      nviPeriod
+        ? dispatch(setNotification({ message: t('feedback.success.update_nvi_period'), variant: 'success' }))
+        : dispatch(setNotification({ message: t('feedback.success.create_nvi_period'), variant: 'success' })),
+    onError: () =>
+      nviPeriod
+        ? dispatch(setNotification({ message: t('feedback.error.update_nvi_period'), variant: 'error' }))
+        : dispatch(setNotification({ message: t('feedback.error.create_nvi_period'), variant: 'error' })),
   });
 
+  const closeDialog = () => {
+    if (nviPeriod) {
+      closeEditDialog();
+    } else {
+      history.push(UrlPathTemplate.BasicDataNvi);
+    }
+  };
+
   return (
-    <Dialog
-      open={history.location.pathname === UrlPathTemplate.BasicDataNviNew}
-      onClose={() => history.push(UrlPathTemplate.BasicDataNvi)}>
-      <DialogTitle>{t('basic_data.nvi.add_reporting_period')}</DialogTitle>
+    <Dialog open={history.location.pathname === UrlPathTemplate.BasicDataNviNew || !!nviPeriod} onClose={closeDialog}>
+      <DialogTitle>
+        {nviPeriod ? t('basic_data.nvi.update_reporting_period') : t('basic_data.nvi.add_reporting_period')}
+      </DialogTitle>
       <Formik
-        initialValues={emptyNviPeriod}
+        initialValues={nviPeriod ?? emptyNviPeriod}
         onSubmit={async (values) => {
           await nviPeriodMutation.mutateAsync(values);
           await refetchNviPeriods();
@@ -58,6 +78,7 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
                   <DatePicker
                     label={t('basic_data.nvi.period_year')}
                     slotProps={{ textField: { required: true } }}
+                    disabled={!!nviPeriod}
                     views={['year']}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(newDate) => {
@@ -114,9 +135,7 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
               </Field>
             </DialogContent>
             <DialogActions sx={{ gap: '0.5rem' }}>
-              <Link to={UrlPathTemplate.BasicDataNvi}>
-                <Button>{t('common.cancel')}</Button>
-              </Link>
+              <Button onClick={closeDialog}>{t('common.cancel')}</Button>
               <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
                 {t('common.save')}
               </LoadingButton>
