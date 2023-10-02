@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { createNviPeriod } from '../../../api/scientificIndexApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { NviPeriod } from '../../../types/nvi.types';
@@ -16,7 +16,7 @@ const minNviDate = new Date(minNviYear, 0, 1);
 const maxNviDate = new Date(new Date().getFullYear() + 1, 0, 1);
 
 interface UpsertNviPeriodDialogProps {
-  refetchNviPeriods: () => Promise<any>;
+  refetchNviPeriods: () => Promise<unknown>;
   yearsWithPeriod: number[];
 }
 
@@ -101,7 +101,9 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
               </Field>
             </DialogContent>
             <DialogActions sx={{ gap: '0.5rem' }}>
-              <Button href={UrlPathTemplate.BasicDataNvi}>{t('common.cancel')}</Button>
+              <Link to={UrlPathTemplate.BasicDataNvi}>
+                <Button>{t('common.cancel')}</Button>
+              </Link>
               <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
                 {t('common.save')}
               </LoadingButton>
