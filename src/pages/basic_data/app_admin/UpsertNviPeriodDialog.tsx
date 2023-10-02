@@ -20,6 +20,12 @@ interface UpsertNviPeriodDialogProps {
   yearsWithPeriod: number[];
 }
 
+const emptyNviPeriod: NviPeriod = {
+  publishingYear: '',
+  startDate: '',
+  reportingDate: '',
+};
+
 export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: UpsertNviPeriodDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -38,7 +44,7 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
       onClose={() => history.push(UrlPathTemplate.BasicDataNvi)}>
       <DialogTitle>{t('basic_data.nvi.add_reporting_period')}</DialogTitle>
       <Formik
-        initialValues={{ publishingYear: '', reportingDate: '', startDate: '' }}
+        initialValues={emptyNviPeriod}
         onSubmit={async (values) => {
           await nviPeriodMutation.mutateAsync(values);
           await refetchNviPeriods();
@@ -51,6 +57,7 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
                 {({ field }: FieldProps<string>) => (
                   <DatePicker
                     label={t('basic_data.nvi.period_year')}
+                    slotProps={{ textField: { required: true } }}
                     views={['year']}
                     value={field.value ? new Date(field.value) : null}
                     onChange={(newDate) => {
@@ -72,6 +79,7 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
                 {({ field }: FieldProps<string>) => (
                   <DateTimePicker
                     label={t('common.start_date')}
+                    slotProps={{ textField: { required: true } }}
                     disabled={!values.publishingYear}
                     value={field.value ? new Date(field.value) : null}
                     minDate={values.publishingYear ? new Date(+values.publishingYear, 0, 1) : minNviDate}
@@ -88,6 +96,7 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
                 {({ field }: FieldProps<string>) => (
                   <DateTimePicker
                     label={t('common.end_date')}
+                    slotProps={{ textField: { required: true } }}
                     disabled={!values.publishingYear}
                     value={field.value ? new Date(field.value) : null}
                     minDate={values.publishingYear ? new Date(+values.publishingYear + 1, 0, 1) : minNviDate}

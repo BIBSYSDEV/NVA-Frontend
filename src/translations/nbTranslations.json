@@ -109,8 +109,7 @@
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
-      "period_year": "Publiseringsår",
-      "reporting_period": "Rapporteringsperiode: {{period}}"
+      "period_year": "Publiseringsår"
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",

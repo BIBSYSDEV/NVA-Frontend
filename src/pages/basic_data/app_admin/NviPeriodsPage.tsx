@@ -21,22 +21,36 @@ export const NviPeriodsPage = () => {
     <Box component="section">
       {nviPeriodsQuery.isLoading ? (
         <ListSkeleton height={100} minWidth={100} />
+      ) : sortedPeriods.length === 0 ? (
+        <Typography>{t('common.no_hits')}</Typography>
       ) : (
         <List disablePadding>
-          {sortedPeriods.map((nviPeriod) => (
-            <SearchListItem key={nviPeriod.publishingYear} sx={{ borderLeftColor: 'nvi.main' }}>
-              <Typography fontWeight={700} gutterBottom>
-                {nviPeriod.publishingYear}
-              </Typography>
-              <Typography>
-                {t('basic_data.nvi.reporting_period', {
-                  period: `${nviPeriod.startDate ? new Date(nviPeriod.startDate).toLocaleDateString() : '?'} - ${
-                    nviPeriod.reportingDate ? new Date(nviPeriod.reportingDate).toLocaleDateString() : '?'
-                  }`,
-                })}
-              </Typography>
-            </SearchListItem>
-          ))}
+          {sortedPeriods.map((nviPeriod) => {
+            const startDateString = nviPeriod.startDate
+              ? `${new Date(nviPeriod.startDate).toLocaleDateString()} (${new Date(
+                  nviPeriod.startDate
+                ).toLocaleTimeString()})`
+              : '?';
+            const endDateString = nviPeriod.reportingDate
+              ? `${new Date(nviPeriod.reportingDate).toLocaleDateString()} (${new Date(
+                  nviPeriod.reportingDate
+                ).toLocaleTimeString()})`
+              : '?';
+
+            return (
+              <SearchListItem key={nviPeriod.publishingYear} sx={{ borderLeftColor: 'nvi.main' }}>
+                <Typography fontWeight={700} gutterBottom>
+                  {nviPeriod.publishingYear}
+                </Typography>
+                <Typography>
+                  {t('common.start_date')}: {startDateString}
+                </Typography>
+                <Typography>
+                  {t('common.end_date')}: {endDateString}
+                </Typography>
+              </SearchListItem>
+            );
+          })}
         </List>
       )}
 
