@@ -9,16 +9,18 @@ import { useHistory } from 'react-router-dom';
 import { createNviPeriod } from '../../../api/scientificIndexApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { NviPeriod } from '../../../types/nvi.types';
+import { minNviYear } from '../../../utils/nviHelpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 
-const minNviDate = new Date(2011, 0, 1);
+const minNviDate = new Date(minNviYear, 0, 1);
 const maxNviDate = new Date(new Date().getFullYear() + 1, 0, 1);
 
-interface CreateNviPeriodDialogProps {
+interface UpsertNviPeriodDialogProps {
   refetchNviPeriods: () => Promise<any>;
+  yearsWithPeriod: number[];
 }
 
-export const CreateNviPeriodDialog = ({ refetchNviPeriods }: CreateNviPeriodDialogProps) => {
+export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: UpsertNviPeriodDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -58,6 +60,7 @@ export const CreateNviPeriodDialog = ({ refetchNviPeriods }: CreateNviPeriodDial
                         setFieldValue('reportingDate', new Date(+year + 1, 3, 1).toISOString());
                       }
                     }}
+                    shouldDisableYear={(date) => yearsWithPeriod.includes(date.getFullYear())}
                     minDate={minNviDate}
                     maxDate={maxNviDate}
                   />

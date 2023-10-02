@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchNviPeriods } from '../../../api/scientificIndexApi';
 import { SearchListItem } from '../../../components/styled/Wrappers';
-import { CreateNviPeriodDialog } from './UpsertNviPeriodDialog';
+import { UpsertNviPeriodDialog } from './UpsertNviPeriodDialog';
 
 export const NviPeriodsPage = () => {
   const { t } = useTranslation();
@@ -31,7 +31,10 @@ export const NviPeriodsPage = () => {
         ))}
       </List>
 
-      <CreateNviPeriodDialog refetchNviPeriods={nviPeriodsQuery.refetch} />
+      <UpsertNviPeriodDialog
+        refetchNviPeriods={nviPeriodsQuery.refetch}
+        yearsWithPeriod={sortedPeriods.map(({ publishingYear }) => +publishingYear)}
+      />
     </Box>
   );
 };
