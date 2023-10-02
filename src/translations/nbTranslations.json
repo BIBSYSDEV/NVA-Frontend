@@ -1623,6 +1623,7 @@
       "note": "Merknad",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "period_end": "Rapporteringsstopp",
+      "period_start": "Rapporteringsstart",
       "period_year": "Publiseringsår",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis",

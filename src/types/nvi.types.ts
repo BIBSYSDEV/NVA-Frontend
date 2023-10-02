@@ -90,7 +90,7 @@ export interface Note {
 export interface NviPeriod {
   publishingYear: string;
   reportingDate: string;
-  // startDate: string;
+  startDate: string;
 }
 
 export interface NviPeriodResponse {

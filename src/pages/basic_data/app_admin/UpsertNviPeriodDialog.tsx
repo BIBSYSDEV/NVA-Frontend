@@ -38,7 +38,7 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
       onClose={() => history.push(UrlPathTemplate.BasicDataNvi)}>
       <DialogTitle>{t('basic_data.nvi.add_reporting_period')}</DialogTitle>
       <Formik
-        initialValues={{ publishingYear: '', reportingDate: '' }}
+        initialValues={{ publishingYear: '', reportingDate: '', startDate: '' }}
         onSubmit={async (values) => {
           await nviPeriodMutation.mutateAsync(values);
           await refetchNviPeriods();
@@ -57,12 +57,29 @@ export const UpsertNviPeriodDialog = ({ refetchNviPeriods, yearsWithPeriod }: Up
                       const year = newDate ? newDate.getFullYear().toString() : '';
                       setFieldValue(field.name, year);
                       if (year) {
+                        setFieldValue('startDate', new Date(+year, 3, 1).toISOString());
                         setFieldValue('reportingDate', new Date(+year + 1, 3, 1).toISOString());
                       }
                     }}
                     shouldDisableYear={(date) => yearsWithPeriod.includes(date.getFullYear())}
                     minDate={minNviDate}
                     maxDate={maxNviDate}
+                  />
+                )}
+              </Field>
+
+              <Field name="startDate">
+                {({ field }: FieldProps<string>) => (
+                  <DateTimePicker
+                    label={t('tasks.nvi.period_start')}
+                    disabled={!values.publishingYear}
+                    value={field.value ? new Date(field.value) : null}
+                    minDate={values.publishingYear ? new Date(+values.publishingYear, 0, 1) : minNviDate}
+                    maxDate={values.publishingYear ? new Date(+values.publishingYear, 4, 31) : null}
+                    onChange={(newDate) => {
+                      const dateString = newDate ? newDate.toISOString() : '';
+                      setFieldValue(field.name, dateString);
+                    }}
                   />
                 )}
               </Field>
