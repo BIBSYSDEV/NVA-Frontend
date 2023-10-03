@@ -1,4 +1,6 @@
 import {
+  CircularProgress,
+  InputAdornment,
   Paper,
   Skeleton,
   Table,
@@ -68,6 +70,13 @@ export const PersonRegisterPage = () => {
         label={t('common.search_by_name')}
         fullWidth
         sx={{ mb: '1rem', maxWidth: '25rem' }}
+        InputProps={{
+          endAdornment: employeeSearchQuery.isFetching && (
+            <InputAdornment position="end">
+              <CircularProgress size={20} aria-labelledby={'params.InputLabelProps.id'} />
+            </InputAdornment>
+          ),
+        }}
       />
 
       {employees.length === 0 && !employeeSearchQuery.isLoading ? (
