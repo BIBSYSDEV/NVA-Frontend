@@ -68,12 +68,13 @@ export const PersonRegisterPage = () => {
         value={searchQuery}
         onChange={(event) => setSearchQuery(event.target.value)}
         label={t('common.search_by_name')}
+        InputLabelProps={{ id: 'search-by-name-label' }}
         fullWidth
         sx={{ mb: '1rem', maxWidth: '25rem' }}
         InputProps={{
           endAdornment: employeeSearchQuery.isFetching && (
             <InputAdornment position="end">
-              <CircularProgress size={20} aria-labelledby={'params.InputLabelProps.id'} />
+              <CircularProgress size={20} aria-labelledby="search-by-name-label" />
             </InputAdornment>
           ),
         }}
