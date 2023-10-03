@@ -103,7 +103,8 @@
         "ABM": "Arkiv, Bibliotek og Museum",
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)"
+        "UHI": "Universitet og høyskoler (UH)",
+        "OTHER": "Øvrige"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
