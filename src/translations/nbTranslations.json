@@ -14,7 +14,7 @@
       "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
       "paragraph5": "Selv om NVA er etablert og i bruk av flere institusjoner, vil tjenesten være i kontinuerlig utvikling i hele sin levetid. Institusjoner som ikke har et vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
     },
-    "footer_text": "Tjenesten er levert av Sikt - kunnskapssektorens tjenesteleverandør",
+    "footer_text": "Tjenesten leveres av Sikt - kunnskapssektorens tjenesteleverandør",
     "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig."
   },
   "authorization": {
@@ -504,6 +504,16 @@
       "not_selected": "{{field}} er ikke valgt"
     }
   },
+  "footer": {
+    "about_nva_text": "NVA er en nasjonal fellestjeneste som gjør resultater fra norsk forskning tilgjengelig. Tjenesten gjør forskningsresultatene lettere tilgjengelig i et søk som går på tvers av det som i dag er flere lokale vitenarkiver.",
+    "about_sikt": "Om Sikt",
+    "about_sikt_text": "Sikt er leverandør til norsk kunnskapssektor, og kundene våre er forskningsinstitutter og universiteter.",
+    "become_customer": "Hvordan bli kunde?",
+    "news_link": "Aktuelt",
+    "system_status_link": "Driftsmeldinger",
+    "technical_support_link": "Ved teknisk støtte <0>kontakt</0>",
+    "training_link": "Opplæring"
+  },
   "licenses": {
     "description": {
       "cc0": "Den person som har knyttet et verk til dette aktstykke (deed) har, i den utstrekning loven tillater, erklært dette verket er i det fri ved å si fra seg alle de opphavsrettigheter og nærstående rettigheter som vedkommende hadde til verket.",
@@ -748,7 +758,7 @@
         }
       }
     },
-    "privacy_statement": "Personvernerklæring",
+    "privacy_statement": "Personvern og informasjonskapsler",
     "purpose": {
       "heading": "Formålet med behandling av personopplysninger i tjenesten",
       "paragraph": "Tjenesten behandler ulike persontyper med følgende formål:",

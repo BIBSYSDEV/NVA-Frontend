@@ -96,8 +96,14 @@ export const dataTestId = {
   },
   footer: {
     aboutLink: 'about-link',
+    aboutSikt: 'about-sikt',
     availabilityStatement: 'availability-statement',
+    becomeCustomer: 'become-customer',
+    newsLink: 'news-link',
     privacyLink: 'privacy-link',
+    systemStatusLink: 'system-staus-link',
+    technicalSupportLink: 'technical-support-link',
+    trainingLink: 'training-link',
   },
   header: {
     basicDataLink: 'basic-data-link',
