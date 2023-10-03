@@ -93,3 +93,15 @@ export const fetchNviCandidate = async (identifier: string) => {
 
   return getNviCandidates.data;
 };
+
+export const searchForDoiInNva = async (results: number, from: number, doi = '') => {
+  const paginationQuery = `results=${results}&from=${from}`;
+  const searchQuery = doi ? `doi=${doi}` : '';
+
+  const fullQuery = [paginationQuery, searchQuery].filter(Boolean).join('&');
+
+  const getResults = await apiRequest2<SearchResponse<Registration>>({
+    url: `${SearchApiPath.Registrations}2?${fullQuery}`,
+  });
+  return getResults.data;
+};
