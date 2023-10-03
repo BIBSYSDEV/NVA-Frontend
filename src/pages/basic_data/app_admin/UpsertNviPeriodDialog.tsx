@@ -68,7 +68,7 @@ export const UpsertNviPeriodDialog = ({
         onSubmit={async (values) => {
           await nviPeriodMutation.mutateAsync(values);
           await refetchNviPeriods();
-          history.push(UrlPathTemplate.BasicDataNvi);
+          closeDialog();
         }}>
         {({ values, setFieldValue, isSubmitting }) => (
           <Form>
