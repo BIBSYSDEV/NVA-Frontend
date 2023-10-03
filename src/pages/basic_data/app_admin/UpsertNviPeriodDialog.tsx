@@ -107,7 +107,7 @@ export const UpsertNviPeriodDialog = ({
                     disabled={!values.publishingYear}
                     value={field.value ? new Date(field.value) : null}
                     minDate={values.publishingYear ? new Date(+values.publishingYear, 0, 1) : undefined}
-                    maxDate={values.publishingYear ? new Date(+values.publishingYear, 4, 31) : undefined}
+                    maxDate={values.publishingYear ? new Date(+values.publishingYear + 1, 0, 1) : undefined}
                     onChange={(newDate, context) => {
                       if (context.validationError !== 'invalidDate') {
                         const dateString = newDate ? newDate.toISOString() : '';
@@ -126,7 +126,7 @@ export const UpsertNviPeriodDialog = ({
                     disabled={!values.publishingYear}
                     value={field.value ? new Date(field.value) : null}
                     minDate={values.publishingYear ? new Date(+values.publishingYear + 1, 0, 1) : undefined}
-                    maxDate={values.publishingYear ? new Date(+values.publishingYear + 1, 4, 31) : undefined}
+                    maxDate={values.publishingYear ? new Date(+values.publishingYear + 1, 6, 31) : undefined}
                     onChange={(newDate, context) => {
                       if (context.validationError !== 'invalidDate') {
                         const dateString = newDate ? newDate.toISOString() : '';
