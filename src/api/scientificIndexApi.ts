@@ -73,3 +73,13 @@ export const createNviPeriod = async (data: NviPeriod) => {
 
   return createNviPeriodResponse.data;
 };
+
+export const updateNviPeriod = async (data: NviPeriod) => {
+  const updateNviPeriodResponse = await authenticatedApiRequest2<NviPeriod>({
+    url: ScientificIndexApiPath.Period,
+    method: 'PUT',
+    data: data,
+  });
+
+  return updateNviPeriodResponse.data;
+};

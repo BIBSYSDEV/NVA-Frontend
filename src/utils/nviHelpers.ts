@@ -1,4 +1,4 @@
-export const minNviYear = 2011;
+const minNviYear = 2011;
 
 export const getNviYearFilterValues = () => {
   const thisYear = new Date().getFullYear();
