@@ -1614,7 +1614,6 @@
   },
   "tasks": {
     "all_user_dialogs": "Alle brukerdialoger",
-    "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
