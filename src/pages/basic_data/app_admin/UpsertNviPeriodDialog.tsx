@@ -12,8 +12,8 @@ import { NviPeriod } from '../../../types/nvi.types';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 const minNewNviPeriodYear = new Date().getFullYear();
-const minNviDate = new Date(minNewNviPeriodYear, 0, 1);
-const maxNviDate = new Date(minNewNviPeriodYear + 1, 0, 1);
+const minNewNviDate = new Date(minNewNviPeriodYear, 0, 1);
+const maxNewNviDate = new Date(minNewNviPeriodYear + 1, 0, 1);
 
 interface UpsertNviPeriodDialogProps {
   refetchNviPeriods: () => Promise<unknown>;
@@ -93,8 +93,8 @@ export const UpsertNviPeriodDialog = ({
                       const thisYear = date.getFullYear();
                       return nviPeriod?.publishingYear !== thisYear.toString() && yearsWithPeriod.includes(thisYear);
                     }}
-                    minDate={minNviDate}
-                    maxDate={maxNviDate}
+                    minDate={nviPeriod ? undefined : minNewNviDate}
+                    maxDate={nviPeriod ? undefined : maxNewNviDate}
                   />
                 )}
               </Field>
@@ -106,8 +106,8 @@ export const UpsertNviPeriodDialog = ({
                     slotProps={{ textField: { required: true } }}
                     disabled={!values.publishingYear}
                     value={field.value ? new Date(field.value) : null}
-                    minDate={values.publishingYear ? new Date(+values.publishingYear, 0, 1) : minNviDate}
-                    maxDate={values.publishingYear ? new Date(+values.publishingYear, 4, 31) : null}
+                    minDate={values.publishingYear ? new Date(+values.publishingYear, 0, 1) : undefined}
+                    maxDate={values.publishingYear ? new Date(+values.publishingYear, 4, 31) : undefined}
                     onChange={(newDate, context) => {
                       if (context.validationError !== 'invalidDate') {
                         const dateString = newDate ? newDate.toISOString() : '';
@@ -125,8 +125,8 @@ export const UpsertNviPeriodDialog = ({
                     slotProps={{ textField: { required: true } }}
                     disabled={!values.publishingYear}
                     value={field.value ? new Date(field.value) : null}
-                    minDate={values.publishingYear ? new Date(+values.publishingYear + 1, 0, 1) : minNviDate}
-                    maxDate={values.publishingYear ? new Date(+values.publishingYear + 1, 4, 31) : null}
+                    minDate={values.publishingYear ? new Date(+values.publishingYear + 1, 0, 1) : undefined}
+                    maxDate={values.publishingYear ? new Date(+values.publishingYear + 1, 4, 31) : undefined}
                     onChange={(newDate, context) => {
                       if (context.validationError !== 'invalidDate') {
                         const dateString = newDate ? newDate.toISOString() : '';
