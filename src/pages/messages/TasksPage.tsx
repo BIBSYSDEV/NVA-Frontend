@@ -201,7 +201,7 @@ const TasksPage = () => {
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
-        <ViewingScopeFilter viwewingScopeIds={institutionUserQuery.data?.viewingScope?.includedUnits ?? []} />
+        <ViewingScopeFilter viewingScopeIds={institutionUserQuery.data?.viewingScope?.includedUnits ?? []} />
 
         {isCurator && (
           <NavigationListAccordion
