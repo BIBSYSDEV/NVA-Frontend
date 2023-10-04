@@ -22,7 +22,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { RoleApiPath } from '../../api/apiPaths';
+import { fetchOrganization } from '../../api/cristinApi';
+import { fetchUser } from '../../api/roleApi';
 import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
@@ -32,13 +33,9 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
-import { Organization } from '../../types/organization.types';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
-import { InstitutionUser } from '../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getLanguageString } from '../../utils/translation-helpers';
@@ -87,15 +84,24 @@ const TasksPage = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const [institutionUser] = useFetch<InstitutionUser>({
-    url: nvaUsername ? `${RoleApiPath.Users}/${nvaUsername}` : '',
-    errorMessage: t('feedback.error.get_roles'),
-    withAuthentication: true,
+  const institutionUserQuery = useQuery({
+    enabled: !!nvaUsername,
+    queryKey: [nvaUsername],
+    queryFn: () => fetchUser(nvaUsername),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
 
-  const viewingScopes = institutionUser?.viewingScope?.includedUnits ?? [];
+  const viewingScopes = institutionUserQuery.data?.viewingScope?.includedUnits ?? [];
   const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
-  const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
+
+  const institutionQuery = useQuery({
+    enabled: !!viewingScopeId,
+    queryKey: [viewingScopeId],
+    queryFn: () => fetchOrganization(viewingScopeId),
+    meta: { errorMessage: t('feedback.error.get_institution') },
+    staleTime: Infinity,
+    cacheTime: 1_800_000,
+  });
 
   // Tickets/dialogue data
   const [ticketSearchMode, setTicketSearchMode] = useState<TicketSearchMode>('all');
@@ -210,13 +216,13 @@ const TasksPage = () => {
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
         <Box component="article" sx={{ m: '1rem' }}>
           {viewingScopeId ? (
-            isLoadingViewingScopeOrganization ? (
+            institutionQuery.isLoading ? (
               <CircularProgress aria-label={t('common.tasks')} />
             ) : (
-              viewingScopeOrganization && (
+              institutionQuery.data && (
                 <Typography sx={{ fontWeight: 700 }}>
                   {t('tasks.limited_to', {
-                    name: getLanguageString(viewingScopeOrganization.labels),
+                    name: getLanguageString(institutionQuery.data.labels),
                   })}
                 </Typography>
               )
