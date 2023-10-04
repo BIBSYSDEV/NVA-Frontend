@@ -203,7 +203,7 @@ export const CustomerInstitutionMetadataForm = ({
                     label={t('basic_data.institutions.institution_receives_funding_via_rbo')}
                     control={
                       <Checkbox
-                        data-testid={dataTestId.basicData.institutionAdmin.nviInstitutionCheckbox}
+                        data-testid={dataTestId.basicData.institutionAdmin.rboInstitutionCheckbox}
                         {...field}
                         checked={field.value}
                       />
@@ -212,7 +212,7 @@ export const CustomerInstitutionMetadataForm = ({
                 </div>
               )}
             </Field>
-            {/* ****************************** */}
+            {/* ******************************* */}
 
             {editMode && (
               <div>
