@@ -480,11 +480,12 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
+    messageField: 'message-field',
+    messageSendButton: 'send-note-button',
     nvi: {
-      dialoguePanel: {
-        noteField: 'note-field',
-        sendNoteButton: 'send-note-button',
-      },
+      approveButton: 'approve-button',
+      candidatesList: 'nvi-candidates-list',
+      rejectButton: 'reject-button',
       statusFilter: {
         approvedRadio: 'approved-radio',
         approvedCollaborationRadio: 'approved-collaboration-radio',
