@@ -1,18 +1,4 @@
-import CancelIcon from '@mui/icons-material/Cancel';
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  Paper,
-  Skeleton,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Autocomplete, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,8 +8,9 @@ import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { ViewingScopeItem } from './ViewingScopeItem';
 
-interface ViewingScopeFilterProps {
+export interface ViewingScopeFilterProps {
   viewingScopeIds: string[];
   setOrganizationFilter: Dispatch<SetStateAction<string[]>>;
 }
@@ -81,7 +68,7 @@ export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: V
             )}
             onChange={(_, value) => {
               if (value?.id) {
-                setOrganizationFilter([...viewingScopeIds, value.id]);
+                setOrganizationFilter((state) => [...state, value.id]);
                 toggleDialog();
               }
             }}
@@ -95,56 +82,5 @@ export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: V
         </DialogActions>
       </Dialog>
     </Box>
-  );
-};
-
-interface ViewingScopeItemProps extends Pick<ViewingScopeFilterProps, 'setOrganizationFilter'> {
-  viewingScopeId: string;
-  hideRemoveButton?: boolean;
-}
-
-const ViewingScopeItem = ({
-  viewingScopeId,
-  setOrganizationFilter,
-  hideRemoveButton = false,
-}: ViewingScopeItemProps) => {
-  const { t } = useTranslation();
-
-  const organizationQuery = useQuery({
-    enabled: !!viewingScopeId,
-    queryKey: [viewingScopeId],
-    queryFn: () => fetchOrganization(viewingScopeId),
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    cacheTime: 1_800_000,
-  });
-
-  return (
-    <Paper
-      sx={{
-        p: '0.75rem',
-        bgcolor: 'white',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: '0.25rem',
-      }}
-      elevation={0}>
-      {organizationQuery.isLoading ? (
-        <Skeleton sx={{ width: '100%' }} />
-      ) : (
-        <Typography sx={{ fontWeight: 700 }}>{getLanguageString(organizationQuery.data?.labels)}</Typography>
-      )}
-      {!hideRemoveButton && (
-        <IconButton
-          size="small"
-          color="primary"
-          disabled={hideRemoveButton}
-          data-testid={dataTestId.tasksPage.scope.removeOrganizationScopeButton}
-          onClick={() => setOrganizationFilter((state) => state.filter((id) => id !== viewingScopeId))}>
-          <CancelIcon />
-        </IconButton>
-      )}
-    </Paper>
   );
 };
