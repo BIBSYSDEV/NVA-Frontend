@@ -21,7 +21,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { getRegistrationByDoi } from '../../../api/registrationApi';
-import { searchForDoiInNva } from '../../../api/searchApi';
+import { fetchResults2 } from '../../../api/searchApi';
 import { RegistrationList } from '../../../components/RegistrationList';
 import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -71,7 +71,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const resultsQuery = useQuery({
     enabled: !!doiQuery,
     queryKey: ['doi-results', doiQuery],
-    queryFn: () => searchForDoiInNva(10, 0, `"${doiQuery}"`),
+    queryFn: () => fetchResults2(10, 0, `"${doiQuery}"`),
     onSuccess: (response) => {
       if (response.hits.length === 0) {
         mutateDoi.mutate(doiQuery);

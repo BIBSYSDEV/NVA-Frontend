@@ -94,14 +94,14 @@ export const fetchNviCandidate = async (identifier: string) => {
   return getNviCandidates.data;
 };
 
-export const searchForDoiInNva = async (results: number, from: number, doi = '') => {
+export const fetchResults2 = async (results: number, from: number, doi = '') => {
   const paginationQuery = `results=${results}&from=${from}`;
-  const searchQuery = doi ? `doi=${doi}` : '';
+  const doiQuery = doi ? `doi=${doi}` : '';
 
-  const fullQuery = [paginationQuery, searchQuery].filter(Boolean).join('&');
+  const fullQuery = [paginationQuery, doiQuery].filter(Boolean).join('&');
 
   const getResults = await apiRequest2<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}2?${fullQuery}`,
+    url: `${SearchApiPath.Registrations2}?${fullQuery}`,
   });
   return getResults.data;
 };
