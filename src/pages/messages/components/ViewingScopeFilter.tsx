@@ -57,6 +57,7 @@ export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: V
           key={viewingScopeId}
           viewingScopeId={viewingScopeId}
           setOrganizationFilter={setOrganizationFilter}
+          hideRemoveButton={viewingScopeIds.length === 1}
         />
       ))}
       <BetaFunctionality>
@@ -102,9 +103,14 @@ export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: V
 
 interface ViewingScopeItemProps extends Pick<ViewingScopeFilterProps, 'setOrganizationFilter'> {
   viewingScopeId: string;
+  hideRemoveButton?: boolean;
 }
 
-const ViewingScopeItem = ({ viewingScopeId, setOrganizationFilter }: ViewingScopeItemProps) => {
+const ViewingScopeItem = ({
+  viewingScopeId,
+  setOrganizationFilter,
+  hideRemoveButton = false,
+}: ViewingScopeItemProps) => {
   const { t } = useTranslation();
 
   const organizationQuery = useQuery({
@@ -132,13 +138,16 @@ const ViewingScopeItem = ({ viewingScopeId, setOrganizationFilter }: ViewingScop
       ) : (
         <Typography sx={{ fontWeight: 700 }}>{getLanguageString(organizationQuery.data?.labels)}</Typography>
       )}
-      <IconButton
-        size="small"
-        color="primary"
-        data-testid={dataTestId.tasksPage.scope.removeOrganizationScopeButton}
-        onClick={() => setOrganizationFilter((state) => state.filter((id) => id !== viewingScopeId))}>
-        <CancelIcon />
-      </IconButton>
+      {!hideRemoveButton && (
+        <IconButton
+          size="small"
+          color="primary"
+          disabled={hideRemoveButton}
+          data-testid={dataTestId.tasksPage.scope.removeOrganizationScopeButton}
+          onClick={() => setOrganizationFilter((state) => state.filter((id) => id !== viewingScopeId))}>
+          <CancelIcon />
+        </IconButton>
+      )}
     </Paper>
   );
 };
