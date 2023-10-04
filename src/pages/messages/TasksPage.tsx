@@ -17,7 +17,7 @@ import {
   styled,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
@@ -88,6 +88,16 @@ const TasksPage = () => {
     queryFn: () => fetchUser(nvaUsername),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
+
+  const [organizationFilter, setOrganizationFilter] = useState(
+    institutionUserQuery.data?.viewingScope?.includedUnits ?? []
+  );
+
+  useEffect(() => {
+    if (institutionUserQuery.data?.viewingScope?.includedUnits) {
+      setOrganizationFilter(institutionUserQuery.data.viewingScope.includedUnits);
+    }
+  }, [institutionUserQuery.data?.viewingScope?.includedUnits]);
 
   // Tickets/dialogue data
   const [ticketSearchMode, setTicketSearchMode] = useState<TicketSearchMode>('all');
@@ -201,7 +211,7 @@ const TasksPage = () => {
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
-        <ViewingScopeFilter viewingScopeIds={institutionUserQuery.data?.viewingScope?.includedUnits ?? []} />
+        <ViewingScopeFilter viewingScopeIds={organizationFilter} setOrganizationFilter={setOrganizationFilter} />
 
         {isCurator && (
           <NavigationListAccordion

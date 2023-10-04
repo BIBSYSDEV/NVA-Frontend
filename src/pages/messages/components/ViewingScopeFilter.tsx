@@ -23,9 +23,10 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface ViewingScopeFilterProps {
   viewingScopeIds: string[];
+  setOrganizationFilter: (ids: string[]) => void;
 }
 
-export const ViewingScopeFilter = ({ viewingScopeIds }: ViewingScopeFilterProps) => {
+export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: ViewingScopeFilterProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
@@ -43,9 +44,7 @@ export const ViewingScopeFilter = ({ viewingScopeIds }: ViewingScopeFilterProps)
   });
 
   const organizationOptions = organizationQuery.data
-    ? getSortedSubUnits([organizationQuery.data]).filter(
-        (organization) => !viewingScopeIds.includes(organization.id) && organization.id !== topOrgCristinId
-      )
+    ? getSortedSubUnits([organizationQuery.data]).filter((organization) => !viewingScopeIds.includes(organization.id))
     : [];
 
   return (
@@ -71,7 +70,14 @@ export const ViewingScopeFilter = ({ viewingScopeIds }: ViewingScopeFilterProps)
                 {getLanguageString(option.labels)}
               </li>
             )}
+            onChange={(_, value) => {
+              if (value?.id) {
+                setOrganizationFilter([...viewingScopeIds, value.id]);
+                toggleDialog();
+              }
+            }}
             disabled={organizationQuery.isLoading}
+            sx={{ mt: '1rem' }}
             renderInput={(params) => <TextField {...params} label={t('common.search')} />}
           />
         </DialogContent>
