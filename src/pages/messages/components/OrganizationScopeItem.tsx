@@ -5,24 +5,24 @@ import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { ViewingScopeFilterProps } from './ViewingScopeFilter';
+import { OrganizationScopeProps } from './OrganizationScope';
 
-interface ViewingScopeItemProps extends Pick<ViewingScopeFilterProps, 'setOrganizationFilter'> {
-  viewingScopeId: string;
+interface OrganizationScopeItemProps extends Pick<OrganizationScopeProps, 'setOrganizationScope'> {
+  organizationScopeId: string;
   hideRemoveButton: boolean;
 }
 
-export const ViewingScopeItem = ({
-  viewingScopeId,
-  setOrganizationFilter,
+export const OrganizationScopeItem = ({
+  organizationScopeId,
+  setOrganizationScope,
   hideRemoveButton,
-}: ViewingScopeItemProps) => {
+}: OrganizationScopeItemProps) => {
   const { t } = useTranslation();
 
   const organizationQuery = useQuery({
-    enabled: !!viewingScopeId,
-    queryKey: [viewingScopeId],
-    queryFn: () => fetchOrganization(viewingScopeId),
+    enabled: !!organizationScopeId,
+    queryKey: [organizationScopeId],
+    queryFn: () => fetchOrganization(organizationScopeId),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
     cacheTime: 1_800_000,
@@ -50,7 +50,7 @@ export const ViewingScopeItem = ({
           color="primary"
           disabled={hideRemoveButton}
           data-testid={dataTestId.tasksPage.scope.removeOrganizationScopeButton}
-          onClick={() => setOrganizationFilter((state) => state.filter((id) => id !== viewingScopeId))}>
+          onClick={() => setOrganizationScope((state) => state.filter((id) => id !== organizationScopeId))}>
           <CancelIcon />
         </IconButton>
       )}

@@ -40,8 +40,8 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
+import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
-import { ViewingScopeFilter } from './components/ViewingScopeFilter';
 
 type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
@@ -89,13 +89,14 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
-  const [organizationFilter, setOrganizationFilter] = useState(
+  const [organizationScope, setOrganizationScope] = useState(
     institutionUserQuery.data?.viewingScope?.includedUnits ?? []
   );
 
   useEffect(() => {
+    // Must populate the state after the request is done
     if (institutionUserQuery.data?.viewingScope?.includedUnits) {
-      setOrganizationFilter(institutionUserQuery.data.viewingScope.includedUnits);
+      setOrganizationScope(institutionUserQuery.data.viewingScope.includedUnits);
     }
   }, [institutionUserQuery.data?.viewingScope?.includedUnits]);
 
@@ -142,7 +143,7 @@ const TasksPage = () => {
     .filter(Boolean)
     .join(' AND ');
 
-  const ticketQuery = `${ticketQueryString}&viewingScope=${organizationFilter.join(',')}`;
+  const ticketQuery = `${ticketQueryString}&viewingScope=${organizationScope.join(',')}`;
 
   const ticketsQuery = useQuery({
     enabled: isOnTicketsPage,
@@ -167,7 +168,7 @@ const TasksPage = () => {
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
   const nviYearQuery = `year=${nviYearFilter}`;
-  const nviQuery = `${nviYearQuery}&filter=${nviStatusFilter}&affiliations=${organizationFilter.join(',')}`;
+  const nviQuery = `${nviYearQuery}&filter=${nviStatusFilter}&affiliations=${organizationScope.join(',')}`;
 
   const nviAggregationsQuery = useQuery({
     enabled: isOnNviCandidatesPage,
@@ -213,7 +214,7 @@ const TasksPage = () => {
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
-        <ViewingScopeFilter viewingScopeIds={organizationFilter} setOrganizationFilter={setOrganizationFilter} />
+        <OrganizationScope organizationScopeIds={organizationScope} setOrganizationScope={setOrganizationScope} />
 
         {isCurator && (
           <NavigationListAccordion

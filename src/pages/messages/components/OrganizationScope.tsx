@@ -8,14 +8,14 @@ import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { ViewingScopeItem } from './ViewingScopeItem';
+import { OrganizationScopeItem } from './OrganizationScopeItem';
 
-export interface ViewingScopeFilterProps {
-  viewingScopeIds: string[];
-  setOrganizationFilter: Dispatch<SetStateAction<string[]>>;
+export interface OrganizationScopeProps {
+  organizationScopeIds: string[];
+  setOrganizationScope: Dispatch<SetStateAction<string[]>>;
 }
 
-export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: ViewingScopeFilterProps) => {
+export const OrganizationScope = ({ organizationScopeIds, setOrganizationScope }: OrganizationScopeProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
@@ -33,17 +33,19 @@ export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: V
   });
 
   const organizationOptions = organizationQuery.data
-    ? getSortedSubUnits([organizationQuery.data]).filter((organization) => !viewingScopeIds.includes(organization.id))
+    ? getSortedSubUnits([organizationQuery.data]).filter(
+        (organization) => !organizationScopeIds.includes(organization.id)
+      )
     : [];
 
   return (
     <Box component="article" sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      {viewingScopeIds.map((viewingScopeId) => (
-        <ViewingScopeItem
-          key={viewingScopeId}
-          viewingScopeId={viewingScopeId}
-          setOrganizationFilter={setOrganizationFilter}
-          hideRemoveButton={viewingScopeIds.length === 1}
+      {organizationScopeIds.map((organizationScopeId) => (
+        <OrganizationScopeItem
+          key={organizationScopeId}
+          organizationScopeId={organizationScopeId}
+          setOrganizationScope={setOrganizationScope}
+          hideRemoveButton={organizationScopeIds.length === 1}
         />
       ))}
       <Button
@@ -68,7 +70,7 @@ export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: V
             )}
             onChange={(_, value) => {
               if (value?.id) {
-                setOrganizationFilter((state) => [...state, value.id]);
+                setOrganizationScope((state) => [...state, value.id]);
                 toggleDialog();
               }
             }}
