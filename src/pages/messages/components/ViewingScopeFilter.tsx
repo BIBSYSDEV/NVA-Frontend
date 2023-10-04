@@ -21,7 +21,7 @@ export const ViewingScopeFilter = ({ viwewingScopeIds }: ViewingScopeFilterProps
 const ViewingScopeItem = ({ viwewingScopeId }: { viwewingScopeId: string }) => {
   const { t } = useTranslation();
 
-  const institutionQuery = useQuery({
+  const organzationQuery = useQuery({
     enabled: !!viwewingScopeId,
     queryKey: [viwewingScopeId],
     queryFn: () => fetchOrganization(viwewingScopeId),
@@ -32,10 +32,10 @@ const ViewingScopeItem = ({ viwewingScopeId }: { viwewingScopeId: string }) => {
 
   return (
     <Paper sx={{ p: '0.75rem', bgcolor: 'white' }} elevation={0}>
-      {institutionQuery.isLoading ? (
+      {organzationQuery.isLoading ? (
         <Skeleton />
       ) : (
-        <Typography sx={{ fontWeight: 700 }}>{getLanguageString(institutionQuery.data?.labels)}</Typography>
+        <Typography sx={{ fontWeight: 700 }}>{getLanguageString(organzationQuery.data?.labels)}</Typography>
       )}
     </Paper>
   );
