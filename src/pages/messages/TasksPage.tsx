@@ -165,7 +165,7 @@ const TasksPage = () => {
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
   const nviYearQuery = `year=${nviYearFilter}`;
-  const nviStatusQuery = `${nviYearQuery}&filter=${nviStatusFilter}`;
+  const nviQuery = `${nviYearQuery}&filter=${nviStatusFilter}&affiliations=${organizationFilter.join(',')}`;
 
   const nviAggregationsQuery = useQuery({
     enabled: isOnNviCandidatesPage,
@@ -176,8 +176,8 @@ const TasksPage = () => {
 
   const nviCandidatesQuery = useQuery({
     enabled: isOnNviCandidatesPage,
-    queryKey: ['nviCandidates', rowsPerPage, page, nviStatusQuery],
-    queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviStatusQuery),
+    queryKey: ['nviCandidates', rowsPerPage, page, nviQuery],
+    queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviQuery),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
     keepPreviousData: true,
   });

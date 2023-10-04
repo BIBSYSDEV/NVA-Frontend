@@ -18,7 +18,6 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchOrganization } from '../../../api/cristinApi';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
@@ -60,15 +59,13 @@ export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: V
           hideRemoveButton={viewingScopeIds.length === 1}
         />
       ))}
-      <BetaFunctionality>
-        <Button
-          data-testid={dataTestId.tasksPage.scope.addOrganizationScopeButton}
-          sx={{ width: 'fit-content', alignSelf: 'center' }}
-          onClick={toggleDialog}
-          size="small">
-          {t('tasks.select_other_unit_filter')}
-        </Button>
-      </BetaFunctionality>
+      <Button
+        data-testid={dataTestId.tasksPage.scope.addOrganizationScopeButton}
+        sx={{ width: 'fit-content', alignSelf: 'center' }}
+        onClick={toggleDialog}
+        size="small">
+        {t('tasks.select_other_unit_filter')}
+      </Button>
 
       <Dialog open={showOrganizationsDialog} onClose={toggleDialog} fullWidth>
         <DialogTitle>{getLanguageString(organizationQuery.data?.labels)}</DialogTitle>
