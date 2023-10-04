@@ -21,7 +21,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { RoleApiPath } from '../../api/apiPaths';
+import { fetchUser } from '../../api/roleApi';
 import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
@@ -32,10 +32,8 @@ import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../compone
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
-import { InstitutionUser } from '../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useFetch } from '../../utils/hooks/useFetch';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -84,10 +82,11 @@ const TasksPage = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const [institutionUser] = useFetch<InstitutionUser>({
-    url: nvaUsername ? `${RoleApiPath.Users}/${nvaUsername}` : '',
-    errorMessage: t('feedback.error.get_roles'),
-    withAuthentication: true,
+  const institutionUserQuery = useQuery({
+    enabled: !!nvaUsername,
+    queryKey: [nvaUsername],
+    queryFn: () => fetchUser(nvaUsername),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
 
   // Tickets/dialogue data
@@ -202,7 +201,7 @@ const TasksPage = () => {
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
-        <ViewingScopeFilter viwewingScopeIds={institutionUser?.viewingScope?.includedUnits ?? []} />
+        <ViewingScopeFilter viwewingScopeIds={institutionUserQuery.data?.viewingScope?.includedUnits ?? []} />
 
         {isCurator && (
           <NavigationListAccordion

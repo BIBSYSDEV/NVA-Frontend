@@ -19,6 +19,7 @@ import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FinalizedApprovalStatus, NviCandidate, RejectedApprovalStatus } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { MessageItem } from './MessageList';
 
@@ -202,6 +203,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           <>
             <Typography gutterBottom>{t('tasks.nvi.approve_nvi_candidate_description')}</Typography>
             <LoadingButton
+              data-testid={dataTestId.tasksPage.nvi.approveButton}
               variant="outlined"
               fullWidth
               size="small"
@@ -218,6 +220,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           <>
             <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
             <Button
+              data-testid={dataTestId.tasksPage.nvi.rejectButton}
               variant="outlined"
               fullWidth
               size="small"
