@@ -12,7 +12,7 @@ export const displayDate = (date: Omit<RegistrationDate, 'type'> | undefined) =>
 };
 
 export const getDateFnsLocale = (language: string) => {
-  if (language === 'nob') {
+  if (language === 'nob' || language === 'nno') {
     return norwegianLocale;
   }
   return englishLocale;

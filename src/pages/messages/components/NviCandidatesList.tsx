@@ -7,6 +7,7 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { NviCandidateSearchResponse } from '../../../types/nvi.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { NviCandidateListItem } from './NviCandidateListItem';
 
 interface NviCandidatesListProps {
@@ -42,7 +43,7 @@ export const NviCandidatesList = ({
             <Typography>{t('tasks.nvi.no_nvi_candidates')}</Typography>
           ) : (
             <>
-              <List disablePadding sx={{ mb: '0.5rem' }}>
+              <List data-testid={dataTestId.tasksPage.nvi.candidatesList} disablePadding sx={{ mb: '0.5rem' }}>
                 {nviCandidatesQuery.data?.hits.map((nviCandidate) => (
                   <ErrorBoundary key={nviCandidate.identifier}>
                     <NviCandidateListItem nviCandidate={nviCandidate} />

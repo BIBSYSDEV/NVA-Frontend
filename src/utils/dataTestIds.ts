@@ -2,6 +2,7 @@ export const dataTestId = {
   basicData: {
     addCustomerLink: 'add-customer-link',
     addEmployeeLink: 'add-employee-link',
+    addNviPeriodLink: 'add-nvi-period-link',
     adminInstitutionsLink: 'admin-institutions-link',
     centralImportLink: 'central-import-link',
     centralImport: {
@@ -48,6 +49,7 @@ export const dataTestId = {
       shortNameField: 'short-name-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
+    nviPeriodsLink: 'nvi-periods-link',
     personAdmin: {
       cristinId: (id: string) => `cristin-id-${id}`,
       employments: (id?: string) => (id ? `employments-${id}` : 'employments'),
@@ -478,11 +480,12 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
+    messageField: 'message-field',
+    messageSendButton: 'send-note-button',
     nvi: {
-      dialoguePanel: {
-        noteField: 'note-field',
-        sendNoteButton: 'send-note-button',
-      },
+      approveButton: 'approve-button',
+      candidatesList: 'nvi-candidates-list',
+      rejectButton: 'reject-button',
       statusFilter: {
         approvedRadio: 'approved-radio',
         approvedCollaborationRadio: 'approved-collaboration-radio',
