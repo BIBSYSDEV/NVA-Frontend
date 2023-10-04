@@ -10,7 +10,7 @@ interface ViewingScopeFilterProps {
 
 export const ViewingScopeFilter = ({ viwewingScopeIds }: ViewingScopeFilterProps) => {
   return (
-    <Box component="article" sx={{ m: '1rem' }}>
+    <Box component="article" sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {viwewingScopeIds.map((viwewingScopeId) => (
         <ViewingScopeItem key={viwewingScopeId} viwewingScopeId={viwewingScopeId} />
       ))}
