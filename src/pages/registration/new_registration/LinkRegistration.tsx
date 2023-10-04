@@ -89,14 +89,15 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
         if (stringIncludesMathJax(doi.title)) {
           typesetMathJax();
         }
-        console.log(response);
-        dispatch(setNotification({ message: t('feedback.error.get_doi'), variant: 'success' }));
       }
     },
     onError: () => {
       dispatch(setNotification({ message: t('feedback.error.get_doi'), variant: 'error' }));
     },
   });
+
+  const isLookingUpDoi = resultsQuery.isFetching || mutateDoi.isLoading;
+
   const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
     let doiUrl = values.link.trim().toLowerCase();
     setDoiQuery(doiUrl);
@@ -109,8 +110,6 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     }
     setValues({ link: doiUrl });
   };
-
-  console.log(mutateDoi.data?.data);
 
   return (
     <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange}>
@@ -150,7 +149,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                 <LoadingButton
                   data-testid="doi-search-button"
                   variant="contained"
-                  loading={resultsQuery.isFetching || mutateDoi.isLoading}
+                  loading={isLookingUpDoi}
                   type="submit"
                   endIcon={<SearchIcon />}
                   loadingPosition="end">
@@ -160,7 +159,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
             </Form>
           )}
         </Formik>
-        {(resultsQuery.isSuccess || resultsQuery.isError) && !!searchResults && (
+        {(resultsQuery.isSuccess || resultsQuery.isError) && searchResults.length === 0 && mutateDoi.isError && (
           <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>
         )}
         {searchResults.length > 0 && (
@@ -180,7 +179,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
             <Divider />
           </Box>
         )}
-        {mutateDoi.data?.data && (
+        {searchResults.length === 0 && mutateDoi.isSuccess && (
           <div data-testid={dataTestId.registrationWizard.new.linkMetadata}>
             <Typography sx={{ mt: '1rem' }} variant="h3" gutterBottom>
               {t('common.result')}:
@@ -195,7 +194,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
           variant="contained"
-          disabled={!mutateDoi.data?.data}
+          disabled={isLookingUpDoi || searchResults.length > 0}
           onClick={openRegistration}>
           {t('registration.registration.start_registration')}
         </Button>
