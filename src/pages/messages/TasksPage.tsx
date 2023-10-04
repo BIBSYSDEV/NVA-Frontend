@@ -6,7 +6,6 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import {
   Box,
   Button,
-  CircularProgress,
   Divider,
   FormControlLabel,
   FormLabel,
@@ -22,7 +21,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { fetchOrganization } from '../../api/cristinApi';
 import { fetchUser } from '../../api/roleApi';
 import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -38,12 +36,12 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
 import { TicketList } from './components/TicketList';
+import { ViewingScopeFilter } from './components/ViewingScopeFilter';
 
 type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
@@ -89,18 +87,6 @@ const TasksPage = () => {
     queryKey: [nvaUsername],
     queryFn: () => fetchUser(nvaUsername),
     meta: { errorMessage: t('feedback.error.get_person') },
-  });
-
-  const viewingScopes = institutionUserQuery.data?.viewingScope?.includedUnits ?? [];
-  const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
-
-  const institutionQuery = useQuery({
-    enabled: !!viewingScopeId,
-    queryKey: [viewingScopeId],
-    queryFn: () => fetchOrganization(viewingScopeId),
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    cacheTime: 1_800_000,
   });
 
   // Tickets/dialogue data
@@ -214,21 +200,8 @@ const TasksPage = () => {
           </Link>
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
-        <Box component="article" sx={{ m: '1rem' }}>
-          {viewingScopeId ? (
-            institutionQuery.isLoading ? (
-              <CircularProgress aria-label={t('common.tasks')} />
-            ) : (
-              institutionQuery.data && (
-                <Typography sx={{ fontWeight: 700 }}>
-                  {t('tasks.limited_to', {
-                    name: getLanguageString(institutionQuery.data.labels),
-                  })}
-                </Typography>
-              )
-            )
-          ) : null}
-        </Box>
+
+        <ViewingScopeFilter viwewingScopeIds={institutionUserQuery.data?.viewingScope?.includedUnits ?? []} />
 
         {isCurator && (
           <NavigationListAccordion
