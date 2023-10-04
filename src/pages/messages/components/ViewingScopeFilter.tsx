@@ -20,6 +20,7 @@ import { useSelector } from 'react-redux';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { RootState } from '../../../redux/store';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
@@ -59,7 +60,11 @@ export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: V
         />
       ))}
       <BetaFunctionality>
-        <Button sx={{ width: 'fit-content', alignSelf: 'center' }} onClick={toggleDialog} size="small">
+        <Button
+          data-testid={dataTestId.tasksPage.scope.addOrganizationScopeButton}
+          sx={{ width: 'fit-content', alignSelf: 'center' }}
+          onClick={toggleDialog}
+          size="small">
           {t('tasks.select_other_unit_filter')}
         </Button>
       </BetaFunctionality>
@@ -68,7 +73,7 @@ export const ViewingScopeFilter = ({ viewingScopeIds, setOrganizationFilter }: V
         <DialogTitle>{getLanguageString(organizationQuery.data?.labels)}</DialogTitle>
         <DialogContent>
           <Autocomplete
-            // data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
+            data-testid={dataTestId.tasksPage.scope.organizationSearchField}
             options={organizationOptions}
             getOptionLabel={(option) => getLanguageString(option.labels)}
             renderOption={(props, option) => (
@@ -130,6 +135,7 @@ const ViewingScopeItem = ({ viewingScopeId, setOrganizationFilter }: ViewingScop
       <IconButton
         size="small"
         color="primary"
+        data-testid={dataTestId.tasksPage.scope.removeOrganizationScopeButton}
         onClick={() => setOrganizationFilter((state) => state.filter((id) => id !== viewingScopeId))}>
         <CancelIcon />
       </IconButton>

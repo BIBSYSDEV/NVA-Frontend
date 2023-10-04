@@ -499,6 +499,11 @@ export const dataTestId = {
     },
     nviAccordion: 'nvi-accordion',
     userDialogAccordion: 'user-dialog-accordion',
+    scope: {
+      addOrganizationScopeButton: 'add-organization-scope-button',
+      organizationSearchField: 'organization-search-field',
+      removeOrganizationScopeButton: 'remove-organization-scope-button',
+    },
     searchMode: {
       allUserDialogsButton: 'all-user-dialogs-button',
       myUserDialogsButton: 'my-user-dialogs-button',
