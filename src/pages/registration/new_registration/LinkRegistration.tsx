@@ -13,9 +13,9 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -24,8 +24,6 @@ import { getRegistrationByDoi } from '../../../api/registrationApi';
 import { searchForDoiInNva } from '../../../api/searchApi';
 import { RegistrationList } from '../../../components/RegistrationList';
 import { setNotification } from '../../../redux/notificationSlice';
-import { Doi } from '../../../types/registration.types';
-import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { isValidUrl } from '../../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
@@ -59,58 +57,49 @@ const doiRegExp = new RegExp('\\b(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?!["&\'<>])\\
 
 export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccordionProps) => {
   const { t } = useTranslation();
-  const [doi, setDoi] = useState<Doi | null>(null);
-  const [noHit, setNoHit] = useState(false);
   const [doiQuery, setDoiQuery] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
 
   const openRegistration = async () => {
-    if (!doi) {
+    if (!mutateDoi.data) {
       return;
     }
-    history.push(getRegistrationWizardPath(doi.identifier), { highestValidatedTab: -1 });
+    history.push(getRegistrationWizardPath(mutateDoi.data.data.identifier), { highestValidatedTab: -1 });
   };
 
   const resultsQuery = useQuery({
     enabled: !!doiQuery,
     queryKey: ['doi-results', doiQuery],
-    queryFn: () => searchForDoiInNva(10, 0, doiQuery),
+    queryFn: () => searchForDoiInNva(10, 0, `"${doiQuery}"`),
+    onSuccess: (response) => {
+      if (response.hits.length === 0) {
+        mutateDoi.mutate(doiQuery);
+      }
+    },
   });
 
   const searchResults = resultsQuery.data?.hits ?? [];
 
-  const handleSearch = async (doiUrl: string) => {
-    setNoHit(false);
-    setDoi(null);
-
-    try {
-      const doiRegistrationResponse = await getRegistrationByDoi(doiUrl);
-      if (isErrorStatus(doiRegistrationResponse.status)) {
-        setNoHit(true);
-        dispatch(setNotification({ message: t('feedback.error.get_doi'), variant: 'error' }));
-      } else if (isSuccessStatus(doiRegistrationResponse.status)) {
-        if (doiRegistrationResponse.data) {
-          setDoi(doiRegistrationResponse.data);
-        } else {
-          setNoHit(true);
+  const mutateDoi = useMutation({
+    mutationFn: (doi: string) => getRegistrationByDoi(doi),
+    onSuccess: (response) => {
+      const doi = response.data;
+      if (doi) {
+        if (stringIncludesMathJax(doi.title)) {
+          typesetMathJax();
         }
+        console.log(response);
+        dispatch(setNotification({ message: t('feedback.error.get_doi'), variant: 'success' }));
       }
-    } catch {
-      setNoHit(true);
+    },
+    onError: () => {
       dispatch(setNotification({ message: t('feedback.error.get_doi'), variant: 'error' }));
-    }
-  };
-
-  useEffect(() => {
-    if (stringIncludesMathJax(doi?.title)) {
-      typesetMathJax();
-    }
-  }, [doi?.title]);
-
+    },
+  });
   const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
     let doiUrl = values.link.trim().toLowerCase();
-    setDoiQuery(`"${doiUrl}"`);
+    setDoiQuery(doiUrl);
 
     if (!isValidUrl(doiUrl)) {
       const regexMatch = doiRegExp.exec(doiUrl);
@@ -119,8 +108,9 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
       }
     }
     setValues({ link: doiUrl });
-    await handleSearch(doiUrl);
   };
+
+  console.log(mutateDoi.data?.data);
 
   return (
     <RegistrationAccordion elevation={5} expanded={expanded} onChange={onChange}>
@@ -160,7 +150,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
                 <LoadingButton
                   data-testid="doi-search-button"
                   variant="contained"
-                  loading={isSubmitting}
+                  loading={resultsQuery.isFetching || mutateDoi.isLoading}
                   type="submit"
                   endIcon={<SearchIcon />}
                   loadingPosition="end">
@@ -170,7 +160,9 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
             </Form>
           )}
         </Formik>
-        {noHit && <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>}
+        {(resultsQuery.isSuccess || resultsQuery.isError) && !!searchResults && (
+          <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>
+        )}
         {searchResults.length > 0 && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '1rem' }}>
             <Divider />
@@ -188,12 +180,12 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
             <Divider />
           </Box>
         )}
-        {doi && (
+        {mutateDoi.data?.data && (
           <div data-testid={dataTestId.registrationWizard.new.linkMetadata}>
             <Typography sx={{ mt: '1rem' }} variant="h3" gutterBottom>
               {t('common.result')}:
             </Typography>
-            <Typography>{doi.title}</Typography>
+            <Typography>{mutateDoi.data.data.title}</Typography>
           </div>
         )}
       </AccordionDetails>
@@ -203,7 +195,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
           variant="contained"
-          disabled={!doi}
+          disabled={!mutateDoi.data?.data}
           onClick={openRegistration}>
           {t('registration.registration.start_registration')}
         </Button>

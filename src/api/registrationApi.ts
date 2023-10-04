@@ -19,7 +19,7 @@ export const updateRegistration = async (registration: Registration) =>
   });
 
 export const getRegistrationByDoi = async (doiUrl: string) =>
-  await authenticatedApiRequest<Doi>({
+  await authenticatedApiRequest2<Doi>({
     url: `${PublicationsApiPath.DoiLookup}/`,
     data: { doiUrl },
     method: 'POST',
