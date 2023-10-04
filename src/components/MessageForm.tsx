@@ -3,6 +3,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { dataTestId } from '../utils/dataTestIds';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;
@@ -37,9 +38,9 @@ export const MessageForm = ({ confirmAction, cancelAction, fieldLabel, buttonTit
             {({ field }: FieldProps<string>) => (
               <TextField
                 {...field}
+                data-testid={dataTestId.tasksPage.messageField}
                 inputProps={{ maxLength: maxMessageLength }}
                 disabled={isSubmitting}
-                data-testid="message-field"
                 variant="filled"
                 multiline
                 maxRows={Infinity}
@@ -57,8 +58,8 @@ export const MessageForm = ({ confirmAction, cancelAction, fieldLabel, buttonTit
                         <IconButton
                           type="submit"
                           color="primary"
-                          title={buttonTitle ?? t('common.send')}
-                          data-testid="send-button">
+                          data-testid={dataTestId.tasksPage.messageSendButton}
+                          title={buttonTitle ?? t('common.send')}>
                           <SendIcon />
                         </IconButton>
                       )}

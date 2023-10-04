@@ -37,9 +37,9 @@ import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { InstitutionUser } from '../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getNviYearFilterValues } from '../../utils/general-helpers';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
+import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -227,7 +227,7 @@ const TasksPage = () => {
         {isCurator && (
           <NavigationListAccordion
             title={t('tasks.user_dialog')}
-            startIcon={<AssignmentIcon sx={{ bgcolor: 'white', padding: '0.1rem' }} />}
+            startIcon={<AssignmentIcon sx={{ bgcolor: 'white' }} />}
             accordionPath={UrlPathTemplate.TasksDialogue}
             onClick={() => {
               if (!isOnTicketsPage) {
@@ -383,7 +383,7 @@ const TasksPage = () => {
         {isNviCurator && (
           <NavigationListAccordion
             title={t('common.nvi')}
-            startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main', padding: '0.1rem' }} />}
+            startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
             accordionPath={UrlPathTemplate.TasksNvi}
             onClick={() => {
               if (!isOnNviCandidatesPage) {

@@ -7,6 +7,7 @@ export const useProfilePicture = (id: string) => {
     queryFn: () => fetchProfilePicture(id),
     meta: { errorMessage: false },
     retry: false,
+    staleTime: Infinity,
   });
 
   const profilePictureString = profilePictureQuery.isSuccess
