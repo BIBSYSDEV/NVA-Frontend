@@ -1,4 +1,11 @@
-import { ApprovalStatus, Note, NviCandidate, RejectedApprovalStatus } from '../types/nvi.types';
+import {
+  ApprovalStatus,
+  Note,
+  NviCandidate,
+  NviPeriod,
+  NviPeriodResponse,
+  RejectedApprovalStatus,
+} from '../types/nvi.types';
 import { ScientificIndexApiPath } from './apiPaths';
 import { authenticatedApiRequest2 } from './apiRequest';
 
@@ -46,4 +53,33 @@ export const deleteCandidateNote = async (candidateId: string, noteIdentifier: s
   });
 
   return deleteNoteResponse.data;
+};
+
+export const fetchNviPeriods = async () => {
+  const fetchNviPeriodsResponse = await authenticatedApiRequest2<NviPeriodResponse>({
+    url: ScientificIndexApiPath.Period,
+    method: 'GET',
+  });
+
+  return fetchNviPeriodsResponse.data;
+};
+
+export const createNviPeriod = async (data: NviPeriod) => {
+  const createNviPeriodResponse = await authenticatedApiRequest2<NviPeriod>({
+    url: ScientificIndexApiPath.Period,
+    method: 'POST',
+    data: data,
+  });
+
+  return createNviPeriodResponse.data;
+};
+
+export const updateNviPeriod = async (data: NviPeriod) => {
+  const updateNviPeriodResponse = await authenticatedApiRequest2<NviPeriod>({
+    url: ScientificIndexApiPath.Period,
+    method: 'PUT',
+    data: data,
+  });
+
+  return updateNviPeriodResponse.data;
 };

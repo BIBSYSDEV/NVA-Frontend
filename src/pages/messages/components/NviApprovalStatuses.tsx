@@ -57,6 +57,8 @@ const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalSta
     queryKey: [approvalStatus.institutionId],
     queryFn: () => fetchOrganization(approvalStatus.institutionId),
     meta: { errorMessage: t('feedback.error.get_institution') },
+    staleTime: Infinity,
+    cacheTime: 1_800_000,
   });
 
   return (
