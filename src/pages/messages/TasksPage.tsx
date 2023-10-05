@@ -396,6 +396,7 @@ const TasksPage = () => {
             <StyledTicketSearchFormGroup>
               <Select
                 size="small"
+                inputProps={{ 'aria-label': t('common.year') }}
                 value={nviYearFilter}
                 onChange={(event) => setNviYearFilter(+event.target.value)}
                 sx={{ width: 'fit-content', alignSelf: 'center', mb: '0.5rem' }}>
