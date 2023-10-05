@@ -1276,6 +1276,7 @@
     },
     "registration": {
       "link_to_resource": "Lenke til original versjon",
+      "registration_doi_validation_message": "Dette resultatet er alt publisert i NVA. Om det har feil eller mangler, så må det resultatet endres.",
       "start_registration": "Start registrering",
       "start_with_empty_registration_description": "Legg inn informasjon etterpå",
       "start_with_empty_registration_title": "Start i tomt registreringsskjema",
