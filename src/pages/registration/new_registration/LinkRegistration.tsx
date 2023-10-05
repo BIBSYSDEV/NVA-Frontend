@@ -65,7 +65,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     if (!mutateDoi.data) {
       return;
     }
-    history.push(getRegistrationWizardPath(mutateDoi.data.data.identifier), { highestValidatedTab: -1 });
+    history.push(getRegistrationWizardPath(mutateDoi.data.identifier), { highestValidatedTab: -1 });
   };
 
   const resultsQuery = useQuery({
@@ -79,8 +79,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const mutateDoi = useMutation({
     mutationFn: (doi: string) => getRegistrationByDoi(doi),
     onSuccess: (response) => {
-      const doi = response.data;
-      if (stringIncludesMathJax(doi.title)) {
+      if (stringIncludesMathJax(response.title)) {
         typesetMathJax();
       }
     },
@@ -184,7 +183,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
             <Typography sx={{ mt: '1rem' }} variant="h3" gutterBottom>
               {t('common.result')}:
             </Typography>
-            <Typography>{mutateDoi.data.data.title}</Typography>
+            <Typography>{mutateDoi.data.title}</Typography>
           </div>
         )}
       </AccordionDetails>
