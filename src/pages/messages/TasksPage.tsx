@@ -89,6 +89,9 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
+  const [excludeSubunits, setExcludeSubunits] = useState(false);
+  const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : ''; // TODO: Use this for ticket search as well
+
   const [organizationScope, setOrganizationScope] = useState(
     institutionUserQuery.data?.viewingScope?.includedUnits ?? []
   );
@@ -167,20 +170,22 @@ const TasksPage = () => {
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
-  const nviYearQuery = `year=${nviYearFilter}`;
-  const nviQuery = `${nviYearQuery}&filter=${nviStatusFilter}&affiliations=${organizationScope.join(',')}`;
+  const nviAggregationQuery = `year=${nviYearFilter}&affiliations=${organizationScope.join(
+    ','
+  )}${excludeSubunitsQuery}`;
+  const nviListQuery = `${nviAggregationQuery}&filter=${nviStatusFilter}`;
 
   const nviAggregationsQuery = useQuery({
     enabled: isOnNviCandidatesPage,
-    queryKey: ['nviCandidates', 1, 0, nviYearQuery],
-    queryFn: () => fetchNviCandidates(1, 0, nviYearQuery),
+    queryKey: ['nviCandidates', 1, 0, nviAggregationQuery],
+    queryFn: () => fetchNviCandidates(1, 0, nviAggregationQuery),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
   });
 
   const nviCandidatesQuery = useQuery({
     enabled: isOnNviCandidatesPage,
-    queryKey: ['nviCandidates', rowsPerPage, page, nviQuery],
-    queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviQuery),
+    queryKey: ['nviCandidates', rowsPerPage, page, nviListQuery],
+    queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviListQuery),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
     keepPreviousData: true,
   });
@@ -214,7 +219,12 @@ const TasksPage = () => {
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
-        <OrganizationScope organizationScopeIds={organizationScope} setOrganizationScope={setOrganizationScope} />
+        <OrganizationScope
+          organizationScope={organizationScope}
+          setOrganizationScope={setOrganizationScope}
+          excludeSubunits={excludeSubunits}
+          setExcludeSubunits={setExcludeSubunits}
+        />
 
         {isCurator && (
           <NavigationListAccordion
@@ -386,6 +396,7 @@ const TasksPage = () => {
             <StyledTicketSearchFormGroup>
               <Select
                 size="small"
+                inputProps={{ 'aria-label': t('common.year') }}
                 value={nviYearFilter}
                 onChange={(event) => setNviYearFilter(+event.target.value)}
                 sx={{ width: 'fit-content', alignSelf: 'center', mb: '0.5rem' }}>
