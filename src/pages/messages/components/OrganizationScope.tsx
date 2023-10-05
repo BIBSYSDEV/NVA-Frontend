@@ -1,4 +1,15 @@
-import { Autocomplete, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControlLabel,
+  TextField,
+} from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -13,9 +24,16 @@ import { OrganizationScopeItem } from './OrganizationScopeItem';
 export interface OrganizationScopeProps {
   organizationScopeIds: string[];
   setOrganizationScope: Dispatch<SetStateAction<string[]>>;
+  excludeSubunits: boolean;
+  setExcludeSubunits: Dispatch<SetStateAction<boolean>>;
 }
 
-export const OrganizationScope = ({ organizationScopeIds, setOrganizationScope }: OrganizationScopeProps) => {
+export const OrganizationScope = ({
+  organizationScopeIds,
+  setOrganizationScope,
+  excludeSubunits,
+  setExcludeSubunits,
+}: OrganizationScopeProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId ?? '';
@@ -48,6 +66,11 @@ export const OrganizationScope = ({ organizationScopeIds, setOrganizationScope }
           hideRemoveButton={organizationScopeIds.length === 1}
         />
       ))}
+      <FormControlLabel
+        onChange={() => setExcludeSubunits((state) => !state)}
+        control={<Checkbox checked={excludeSubunits} />}
+        label={t('tasks.nvi.exclude_subunits')}
+      />
       <Button
         data-testid={dataTestId.tasksPage.scope.addOrganizationScopeButton}
         sx={{ width: 'fit-content', alignSelf: 'center' }}
