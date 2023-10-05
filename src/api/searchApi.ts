@@ -96,7 +96,7 @@ export const fetchNviCandidate = async (identifier: string) => {
 
 export const fetchResults2 = async (results: number, from: number, { doi = '' }) => {
   const paginationQuery = `results=${results}&from=${from}`;
-  const doiQuery = doi ? `doi=${doi}` : '';
+  const doiQuery = doi ? `doi="${doi}"` : '';
 
   const fullQuery = [paginationQuery, doiQuery].filter(Boolean).join('&');
 
