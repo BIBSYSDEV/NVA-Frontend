@@ -22,14 +22,14 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { OrganizationScopeItem } from './OrganizationScopeItem';
 
 export interface OrganizationScopeProps {
-  organizationScopeIds: string[];
+  organizationScope: string[];
   setOrganizationScope: Dispatch<SetStateAction<string[]>>;
   excludeSubunits: boolean;
   setExcludeSubunits: Dispatch<SetStateAction<boolean>>;
 }
 
 export const OrganizationScope = ({
-  organizationScopeIds,
+  organizationScope,
   setOrganizationScope,
   excludeSubunits,
   setExcludeSubunits,
@@ -51,19 +51,17 @@ export const OrganizationScope = ({
   });
 
   const organizationOptions = organizationQuery.data
-    ? getSortedSubUnits([organizationQuery.data]).filter(
-        (organization) => !organizationScopeIds.includes(organization.id)
-      )
+    ? getSortedSubUnits([organizationQuery.data]).filter((organization) => !organizationScope.includes(organization.id))
     : [];
 
   return (
     <Box component="article" sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      {organizationScopeIds.map((organizationScopeId) => (
+      {organizationScope.map((organizationScopeId) => (
         <OrganizationScopeItem
           key={organizationScopeId}
           organizationScopeId={organizationScopeId}
           setOrganizationScope={setOrganizationScope}
-          hideRemoveButton={organizationScopeIds.length === 1}
+          hideRemoveButton={organizationScope.length === 1}
         />
       ))}
       <FormControlLabel

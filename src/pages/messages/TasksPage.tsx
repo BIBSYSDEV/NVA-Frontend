@@ -220,7 +220,7 @@ const TasksPage = () => {
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
 
         <OrganizationScope
-          organizationScopeIds={organizationScope}
+          organizationScope={organizationScope}
           setOrganizationScope={setOrganizationScope}
           excludeSubunits={excludeSubunits}
           setExcludeSubunits={setExcludeSubunits}
