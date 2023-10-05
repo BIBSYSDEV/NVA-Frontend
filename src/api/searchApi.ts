@@ -94,7 +94,7 @@ export const fetchNviCandidate = async (identifier: string) => {
   return getNviCandidates.data;
 };
 
-export const fetchResults2 = async (results: number, from: number, doi = '') => {
+export const fetchResults2 = async (results: number, from: number, { doi = '' }) => {
   const paginationQuery = `results=${results}&from=${from}`;
   const doiQuery = doi ? `doi=${doi}` : '';
 

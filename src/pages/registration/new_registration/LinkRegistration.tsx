@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikHelpers } from 'formik';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -71,12 +71,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const resultsQuery = useQuery({
     enabled: !!doiQuery,
     queryKey: ['doi-results', doiQuery],
-    queryFn: () => fetchResults2(10, 0, `"${doiQuery}"`),
-    onSuccess: (response) => {
-      if (response.hits.length === 0) {
-        mutateDoi.mutate(doiQuery);
-      }
-    },
+    queryFn: () => fetchResults2(10, 0, { doi: `"${doiQuery}"` }),
   });
 
   const searchResults = resultsQuery.data?.hits ?? [];
@@ -85,16 +80,21 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
     mutationFn: (doi: string) => getRegistrationByDoi(doi),
     onSuccess: (response) => {
       const doi = response.data;
-      if (doi) {
-        if (stringIncludesMathJax(doi.title)) {
-          typesetMathJax();
-        }
+      if (stringIncludesMathJax(doi.title)) {
+        typesetMathJax();
       }
     },
     onError: () => {
       dispatch(setNotification({ message: t('feedback.error.get_doi'), variant: 'error' }));
     },
   });
+
+  const mutateDoiRef = useRef(mutateDoi);
+  useEffect(() => {
+    if (resultsQuery.isSuccess && resultsQuery.data.hits.length === 0) {
+      mutateDoiRef.current.mutate(doiQuery);
+    }
+  }, [resultsQuery.isSuccess, resultsQuery.data, doiQuery]);
 
   const isLookingUpDoi = resultsQuery.isFetching || mutateDoi.isLoading;
 
@@ -159,7 +159,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
             </Form>
           )}
         </Formik>
-        {(resultsQuery.isSuccess || resultsQuery.isError) && searchResults.length === 0 && mutateDoi.isError && (
+        {resultsQuery.isFetched && searchResults.length === 0 && mutateDoi.isError && (
           <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>
         )}
         {searchResults.length > 0 && (
@@ -194,7 +194,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
           data-testid={dataTestId.registrationWizard.new.startRegistrationButton}
           endIcon={<ArrowForwardIcon fontSize="large" />}
           variant="contained"
-          disabled={isLookingUpDoi || searchResults.length > 0}
+          disabled={isLookingUpDoi || searchResults.length > 0 || mutateDoi.isError || !doiQuery}
           onClick={openRegistration}>
           {t('registration.registration.start_registration')}
         </Button>
