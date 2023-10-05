@@ -49,6 +49,12 @@ export const dataTestId = {
       shortNameField: 'short-name-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
+    nviPeriod: {
+      nviPeriodDialog: 'nvi-period-dialog',
+      nviPeriodYear: 'nvi-period-year-field',
+      nviPeriodStartDate: 'nvi-period-start-date',
+      nviPeriodEndDate: 'nvi-period-end-date',
+    },
     nviPeriodsLink: 'nvi-periods-link',
     personAdmin: {
       cristinId: (id: string) => `cristin-id-${id}`,
