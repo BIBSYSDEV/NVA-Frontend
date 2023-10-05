@@ -51,7 +51,7 @@ export const dataTestId = {
     nationalIdentityNumberField: 'national-identity-number-field',
     nviPeriod: {
       nviPeriodDialog: 'nvi-period-dialog',
-      nviPeriodYear: 'nvi-period-year-field',
+      nviPeriodYear: 'nvi-period-year',
       nviPeriodStartDate: 'nvi-period-start-date',
       nviPeriodEndDate: 'nvi-period-end-date',
     },
