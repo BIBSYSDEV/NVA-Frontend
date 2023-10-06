@@ -2,18 +2,17 @@ import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, MenuItem, TextField } from '@mui/material';
 import { Form, Formik, FormikProps } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/SideMenu';
 import { SearchResponse } from '../../types/common.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import {
   SearchConfig,
@@ -50,6 +49,7 @@ const SearchPage = () => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
+  const [selectedSearhType, setSelectedSearhType] = useState(SearchTypeValue.Result);
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
@@ -103,59 +103,64 @@ const SearchPage = () => {
               <SideNavHeader icon={FilterAltOutlined} text={t('common.filter')} />
               <Box
                 sx={{
-                  display: 'flex',
-                  flexDirection: { xs: 'row', md: 'column' },
-                  flexWrap: 'wrap',
-                  gap: '0.5rem',
-                  button: { textTransform: 'none' },
                   m: '1rem',
                 }}>
-                <SelectableButton
-                  data-testid={dataTestId.startPage.resultSearchButton}
-                  startIcon={<NotesIcon />}
-                  color="registration"
-                  isSelected={resultIsSelected}
-                  onClick={() => {
-                    if (!resultIsSelected) {
-                      const resultParams = new URLSearchParams();
-                      history.push({ search: resultParams.toString() });
-                      setValues(emptySearchConfig);
-                    }
+                <TextField
+                  select
+                  fullWidth
+                  size="small"
+                  value={selectedSearhType}
+                  onChange={(event) => setSelectedSearhType(event.target.value as SearchTypeValue)}
+                  sx={{
+                    '.MuiSelect-select': {
+                      display: 'flex',
+                      gap: '0.5rem',
+                      alignItems: 'center',
+                      bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
+                    },
                   }}>
-                  {t('search.result')}
-                </SelectableButton>
-
-                <SelectableButton
-                  data-testid={dataTestId.startPage.personSearchButton}
-                  startIcon={<PersonIcon />}
-                  color="person"
-                  isSelected={personIsSeleced}
-                  onClick={() => {
-                    if (!personIsSeleced) {
-                      const personParams = new URLSearchParams();
-                      personParams.set(SearchParam.Type, SearchTypeValue.Person);
-                      history.push({ search: personParams.toString() });
-                      setValues(emptySearchConfig);
-                    }
-                  }}>
-                  {t('search.persons')}
-                </SelectableButton>
-
-                <SelectableButton
-                  data-testid={dataTestId.startPage.projectSearchButton}
-                  startIcon={<ShowChartIcon />}
-                  color="project"
-                  isSelected={projectIsSelected}
-                  onClick={() => {
-                    if (!projectIsSelected) {
-                      const projectParams = new URLSearchParams();
-                      projectParams.set(SearchParam.Type, SearchTypeValue.Project);
-                      history.push({ search: projectParams.toString() });
-                      setValues(emptySearchConfig);
-                    }
-                  }}>
-                  {t('project.project')}
-                </SelectableButton>
+                  <MenuItem
+                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', bgcolor: 'registration.main' }}
+                    value={SearchTypeValue.Result}
+                    onClick={() => {
+                      if (!resultIsSelected) {
+                        const resultParams = new URLSearchParams();
+                        history.push({ search: resultParams.toString() });
+                        setValues(emptySearchConfig);
+                      }
+                    }}>
+                    <NotesIcon fontSize="small" />
+                    {t('search.result')}
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', bgcolor: 'person.main' }}
+                    value={SearchTypeValue.Person}
+                    onClick={() => {
+                      if (!personIsSeleced) {
+                        const personParams = new URLSearchParams();
+                        personParams.set(SearchParam.Type, SearchTypeValue.Person);
+                        history.push({ search: personParams.toString() });
+                        setValues(emptySearchConfig);
+                      }
+                    }}>
+                    <PersonIcon />
+                    {t('search.persons')}
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', bgcolor: 'project.main' }}
+                    value={SearchTypeValue.Project}
+                    onClick={() => {
+                      if (!projectIsSelected) {
+                        const projectParams = new URLSearchParams();
+                        projectParams.set(SearchParam.Type, SearchTypeValue.Project);
+                        history.push({ search: projectParams.toString() });
+                        setValues(emptySearchConfig);
+                      }
+                    }}>
+                    <ShowChartIcon />
+                    {t('project.project')}
+                  </MenuItem>
+                </TextField>
               </Box>
 
               {resultIsSelected && searchResults?.aggregations && (
