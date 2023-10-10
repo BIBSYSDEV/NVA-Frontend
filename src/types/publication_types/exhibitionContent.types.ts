@@ -17,7 +17,7 @@ export interface ExhibitionBasic {
   type: 'ExhibitionBasic';
   organization: UnconfirmedOrganization;
   place: Place;
-  date: Period;
+  date: Period | Instant;
 }
 
 export interface ExhibitionOtherPresentation {
