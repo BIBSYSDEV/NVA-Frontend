@@ -1477,8 +1477,9 @@
         "edit_exhibition_catalog": "Endre utstillingskatalog",
         "edit_exhibition_other_presentation": "Endre formidling",
         "edit_mention_in_publication": "Endre til publisering/omtale",
-        "institution_name": "Institusjonens navn",
+        "institution_name": "Arrangørens navn",
         "more_info_about_elementet": "Mer om elementet",
+        "place": "Visningsted",
         "presentation_type": "Type formidlingsform",
         "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
         "subtype": {
@@ -1488,7 +1489,7 @@
           "ExhibitionProductionOther": "Annet",
           "HistoricalInterior": "Historisk interiør",
           "PopupExhibition": "Popup-utstilling",
-          "TemporaryExhibition": "Midlertidig utstilling"
+          "TemporaryExhibition": "Temporær utstilling"
         }
       },
       "isbn": "ISBN",

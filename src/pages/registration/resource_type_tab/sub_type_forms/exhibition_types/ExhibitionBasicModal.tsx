@@ -30,7 +30,7 @@ const validationSchema = Yup.object({
       .nullable()
       .required(
         i18n.t('feedback.validation.is_required', {
-          field: i18n.t('common.place'),
+          field: i18n.t('registration.resource_type.exhibition_production.place'),
         })
       ),
   }),
@@ -89,7 +89,7 @@ export const ExhibitionBasicModal = ({ exhibitionBasic, onSubmit, open, closeMod
                     data-testid={dataTestId.registrationWizard.resourceType.placeField}
                     variant="filled"
                     fullWidth
-                    label={t('common.place')}
+                    label={t('registration.resource_type.exhibition_production.place')}
                     required
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
