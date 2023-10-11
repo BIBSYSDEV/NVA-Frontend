@@ -121,7 +121,7 @@ const SearchPage = () => {
                   }}
                   inputProps={{ 'aria-label': t('common.filter') }}>
                   <MenuItem
-                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', bgcolor: 'registration.main' }}
+                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
                     value={SearchTypeValue.Result}
                     onClick={() => {
                       if (!resultIsSelected) {
@@ -134,7 +134,7 @@ const SearchPage = () => {
                     {t('search.result')}
                   </MenuItem>
                   <MenuItem
-                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', bgcolor: 'person.main' }}
+                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
                     value={SearchTypeValue.Person}
                     onClick={() => {
                       if (!personIsSeleced) {
@@ -148,7 +148,7 @@ const SearchPage = () => {
                     {t('search.persons')}
                   </MenuItem>
                   <MenuItem
-                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', bgcolor: 'project.main' }}
+                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
                     value={SearchTypeValue.Project}
                     onClick={() => {
                       if (!projectIsSelected) {
