@@ -49,7 +49,7 @@ const SearchPage = () => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
-  const [selectedSearhType, setSelectedSearhType] = useState(SearchTypeValue.Result);
+  const [selectedSearchType, setSelectedSearchType] = useState(SearchTypeValue.Result);
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
@@ -109,8 +109,8 @@ const SearchPage = () => {
                   select
                   fullWidth
                   size="small"
-                  value={selectedSearhType}
-                  onChange={(event) => setSelectedSearhType(event.target.value as SearchTypeValue)}
+                  value={selectedSearchType}
+                  onChange={(event) => setSelectedSearchType(event.target.value as SearchTypeValue)}
                   sx={{
                     '.MuiSelect-select': {
                       display: 'flex',
@@ -118,7 +118,8 @@ const SearchPage = () => {
                       alignItems: 'center',
                       bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
                     },
-                  }}>
+                  }}
+                  inputProps={{ 'aria-label': t('common.filter') }}>
                   <MenuItem
                     sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', bgcolor: 'registration.main' }}
                     value={SearchTypeValue.Result}
