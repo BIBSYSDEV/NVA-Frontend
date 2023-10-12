@@ -1,10 +1,13 @@
+import CancelIcon from '@mui/icons-material/Cancel';
 import SendIcon from '@mui/icons-material/Send';
-import { CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { dataTestId } from '../utils/dataTestIds';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;
+  cancelAction?: () => void;
   fieldLabel?: string;
   buttonTitle?: string;
 }
@@ -19,7 +22,7 @@ const initValues: MessageFormData = {
 
 const maxMessageLength = 160;
 
-export const MessageForm = ({ confirmAction, fieldLabel, buttonTitle }: MessageFormProps) => {
+export const MessageForm = ({ confirmAction, cancelAction, fieldLabel, buttonTitle }: MessageFormProps) => {
   const { t } = useTranslation();
 
   return (
@@ -30,14 +33,14 @@ export const MessageForm = ({ confirmAction, fieldLabel, buttonTitle }: MessageF
         resetForm();
       }}>
       {({ isSubmitting }) => (
-        <Form>
+        <Box component={Form} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Field name="message">
             {({ field }: FieldProps<string>) => (
               <TextField
                 {...field}
+                data-testid={dataTestId.tasksPage.messageField}
                 inputProps={{ maxLength: maxMessageLength }}
                 disabled={isSubmitting}
-                data-testid="message-field"
                 variant="filled"
                 multiline
                 maxRows={Infinity}
@@ -55,8 +58,8 @@ export const MessageForm = ({ confirmAction, fieldLabel, buttonTitle }: MessageF
                         <IconButton
                           type="submit"
                           color="primary"
-                          title={buttonTitle ?? t('common.send')}
-                          data-testid="send-button">
+                          data-testid={dataTestId.tasksPage.messageSendButton}
+                          title={buttonTitle ?? t('common.send')}>
                           <SendIcon />
                         </IconButton>
                       )}
@@ -66,7 +69,20 @@ export const MessageForm = ({ confirmAction, fieldLabel, buttonTitle }: MessageF
               />
             )}
           </Field>
-        </Form>
+          {cancelAction && (
+            <IconButton
+              color="primary"
+              size="small"
+              sx={{
+                bgcolor: 'white',
+                mt: '-2.25rem',
+              }}
+              onClick={cancelAction}
+              title={t('common.cancel')}>
+              <CancelIcon />
+            </IconButton>
+          )}
+        </Box>
       )}
     </Formik>
   );

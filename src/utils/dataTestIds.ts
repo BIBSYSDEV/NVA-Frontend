@@ -2,6 +2,7 @@ export const dataTestId = {
   basicData: {
     addCustomerLink: 'add-customer-link',
     addEmployeeLink: 'add-employee-link',
+    addNviPeriodLink: 'add-nvi-period-link',
     adminInstitutionsLink: 'admin-institutions-link',
     centralImportLink: 'central-import-link',
     centralImport: {
@@ -48,6 +49,13 @@ export const dataTestId = {
       shortNameField: 'short-name-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
+    nviPeriod: {
+      nviPeriodDialog: 'nvi-period-dialog',
+      nviPeriodYear: 'nvi-period-year',
+      nviPeriodStartDate: 'nvi-period-start-date',
+      nviPeriodEndDate: 'nvi-period-end-date',
+    },
+    nviPeriodsLink: 'nvi-periods-link',
     personAdmin: {
       cristinId: (id: string) => `cristin-id-${id}`,
       employments: (id?: string) => (id ? `employments-${id}` : 'employments'),
@@ -458,6 +466,7 @@ export const dataTestId = {
       telephoneField: 'telephone-field',
       updateProfilePictureButton: 'update-profile-picture-button',
       uploadProfilePictureButton: 'update-profile-picture-button',
+      removeProfilePictureDialog: 'confirm-remove-profile-picture-dialog',
     },
     myFieldAndBackgroundLink: 'my-field-and-background-link',
     myProfileAccordion: 'my-profile-accordion',
@@ -477,11 +486,12 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
+    messageField: 'message-field',
+    messageSendButton: 'send-note-button',
     nvi: {
-      dialoguePanel: {
-        noteField: 'note-field',
-        sendNoteButton: 'send-note-button',
-      },
+      approveButton: 'approve-button',
+      candidatesList: 'nvi-candidates-list',
+      rejectButton: 'reject-button',
       statusFilter: {
         approvedRadio: 'approved-radio',
         approvedCollaborationRadio: 'approved-collaboration-radio',
@@ -495,6 +505,11 @@ export const dataTestId = {
     },
     nviAccordion: 'nvi-accordion',
     userDialogAccordion: 'user-dialog-accordion',
+    scope: {
+      addOrganizationScopeButton: 'add-organization-scope-button',
+      organizationSearchField: 'organization-search-field',
+      removeOrganizationScopeButton: 'remove-organization-scope-button',
+    },
     searchMode: {
       allUserDialogsButton: 'all-user-dialogs-button',
       myUserDialogsButton: 'my-user-dialogs-button',

@@ -46,6 +46,7 @@ export enum RoleApiPath {
 
 export enum SearchApiPath {
   Registrations = '/search/resources',
+  Registrations2 = '/search/resources2',
   Tickets = '/search/tickets',
   ImportCandidates = '/search/import-candidates',
   NviCandidate = '/scientific-index/candidate',
@@ -61,4 +62,5 @@ export enum PersonPreferencesApiPath {
 
 export enum ScientificIndexApiPath {
   Candidate = '/scientific-index/candidate',
+  Period = '/scientific-index/period',
 }

@@ -1,3 +1,4 @@
+import AdjustIcon from '@mui/icons-material/Adjust';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FilterDramaIcon from '@mui/icons-material/FilterDrama';
 import PeopleIcon from '@mui/icons-material/People';
@@ -25,6 +26,7 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate, getAdminInstitutionPath } from '../../utils/urlPaths';
 import { AdminCustomerInstitutionsContainer } from './app_admin/AdminCustomerInstitutionsContainer';
+import { NviPeriodsPage } from './app_admin/NviPeriodsPage';
 import { CentralImportCandidateForm } from './app_admin/central_import/CentralImportCandidateForm';
 import { CentralImportCandidateMerge } from './app_admin/central_import/CentralImportCandidateMerge';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
@@ -99,7 +101,6 @@ const BasicDataPage = () => {
               <PeopleIcon
                 sx={{
                   bgcolor: 'person.main',
-                  padding: '0.1rem',
                 }}
               />
             }
@@ -128,35 +129,51 @@ const BasicDataPage = () => {
         )}
 
         {user?.isAppAdmin && (
-          <NavigationListAccordion
-            title={t('common.institutions')}
-            startIcon={
-              <StoreIcon
-                sx={{
-                  bgcolor: 'grey.500',
-                  padding: '0.1rem',
-                }}
+          <>
+            <NavigationListAccordion
+              title={t('common.institutions')}
+              startIcon={<StoreIcon sx={{ bgcolor: 'grey.500' }} />}
+              accordionPath={UrlPathTemplate.BasicDataInstitutions}
+              dataTestId={dataTestId.basicData.institutionsAccordion}>
+              <NavigationList>
+                <LinkButton
+                  data-testid={dataTestId.basicData.adminInstitutionsLink}
+                  isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
+                  to={UrlPathTemplate.BasicDataInstitutions}>
+                  {t('common.institutions')}
+                </LinkButton>
+              </NavigationList>
+              <Divider sx={{ mt: '0.5rem' }} />
+              <LinkCreateButton
+                data-testid={dataTestId.basicData.addCustomerLink}
+                isSelected={newCustomerIsSelected}
+                selectedColor="grey.500"
+                to={getAdminInstitutionPath('new')}
+                title={t('basic_data.institutions.add_institution')}
               />
-            }
-            accordionPath={UrlPathTemplate.BasicDataInstitutions}
-            dataTestId={dataTestId.basicData.institutionsAccordion}>
-            <NavigationList>
-              <LinkButton
-                data-testid={dataTestId.basicData.adminInstitutionsLink}
-                isSelected={currentPath === UrlPathTemplate.BasicDataInstitutions && !newCustomerIsSelected}
-                to={UrlPathTemplate.BasicDataInstitutions}>
-                {t('common.institutions')}
-              </LinkButton>
-            </NavigationList>
-            <Divider sx={{ mt: '0.5rem' }} />
-            <LinkCreateButton
-              data-testid={dataTestId.basicData.addCustomerLink}
-              isSelected={newCustomerIsSelected}
-              selectedColor="grey.500"
-              to={getAdminInstitutionPath('new')}
-              title={t('basic_data.institutions.add_institution')}
-            />
-          </NavigationListAccordion>
+            </NavigationListAccordion>
+
+            <NavigationListAccordion
+              title={t('common.nvi')}
+              startIcon={<AdjustIcon sx={{ bgcolor: 'nvi.main' }} />}
+              accordionPath={UrlPathTemplate.BasicDataNvi}
+              dataTestId={dataTestId.basicData.nviPeriodsLink}>
+              <NavigationList>
+                <LinkButton isSelected={currentPath === UrlPathTemplate.BasicDataNvi} to={UrlPathTemplate.BasicDataNvi}>
+                  {t('common.nvi')}
+                </LinkButton>
+              </NavigationList>
+
+              <Divider sx={{ mt: '0.5rem' }} />
+              <LinkCreateButton
+                data-testid={dataTestId.basicData.addNviPeriodLink}
+                isSelected={currentPath === UrlPathTemplate.BasicDataNviNew}
+                selectedColor="nvi.main"
+                to={UrlPathTemplate.BasicDataNviNew}
+                title={t('common.add')}
+              />
+            </NavigationListAccordion>
+          </>
         )}
 
         {user?.isInternalImporter && (
@@ -166,7 +183,6 @@ const BasicDataPage = () => {
               <FilterDramaIcon
                 sx={{
                   bgcolor: 'centralImport.main',
-                  padding: '0.1rem',
                 }}
               />
             }
@@ -301,6 +317,7 @@ const BasicDataPage = () => {
             component={PersonRegisterPage}
             isAuthorized={isInstitutionAdmin}
           />
+          <PrivateRoute path={UrlPathTemplate.BasicDataNvi} component={NviPeriodsPage} isAuthorized={isAppAdmin} />
         </ErrorBoundary>
       </Switch>
     </StyledPageWithSideMenu>
