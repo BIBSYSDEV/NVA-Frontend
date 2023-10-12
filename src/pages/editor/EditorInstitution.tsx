@@ -63,6 +63,10 @@ export const EditorInstitution = () => {
             )}
           </Typography>
 
+          {/* Norsk vitenskapsindeks (NVI) */}
+
+          {/* Resultatbasert omfordeling (RBO) */}
+
           <Typography sx={{ pt: '1rem' }}>
             <Trans t={t} i18nKey="editor.institution.institution_helper_text">
               <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />

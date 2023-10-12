@@ -194,15 +194,24 @@ export const CustomerInstitutionMetadataForm = ({
               )}
             </Field>
 
-            {/* ****************************** */}
             <Field name={CustomerInstitutionFieldNames.RboInstitution}>
               {({ field }: FieldProps<boolean>) => (
                 <div>
-                  <FormLabel component="legend">{t('common.rbo')}</FormLabel>
+                  <FormLabel
+                    component="legend"
+                    sx={{
+                      marginTop: '-1rem',
+                      marginLeft: '2rem',
+                    }}>
+                    {t('common.rbo')}
+                  </FormLabel>
                   <FormControlLabel
                     label={t('basic_data.institutions.institution_receives_funding_via_rbo')}
                     control={
                       <Checkbox
+                        sx={{
+                          marginLeft: '2rem',
+                        }}
                         data-testid={dataTestId.basicData.institutionAdmin.rboInstitutionCheckbox}
                         {...field}
                         checked={field.value}
@@ -212,7 +221,6 @@ export const CustomerInstitutionMetadataForm = ({
                 </div>
               )}
             </Field>
-            {/* ******************************* */}
 
             {editMode && (
               <div>
