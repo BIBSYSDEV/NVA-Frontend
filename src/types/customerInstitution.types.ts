@@ -12,6 +12,7 @@ export enum Sector {
   Health = 'HEALTH',
   Institute = 'INSTITUTE',
   Abm = 'ABM',
+  Other = 'OTHER',
 }
 
 export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id' | 'createdDate' | 'displayName'> {

@@ -104,7 +104,8 @@
         "ABM": "Arkiv, Bibliotek og Museum",
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)"
+        "UHI": "Universitet og høyskoler (UH)",
+        "OTHER": "Øvrige"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -428,7 +429,6 @@
       "get_registration": "Kunne ikke laste inn registrering",
       "get_registrations": "Kunne ikke laste inn registreringer",
       "get_registrations_export": "Kunne ikke hente resultateksport",
-      "get_roles": "Kunne ikke hente roller",
       "get_series": "Kunne ikke hente serie",
       "get_tickets": "Kunne ikke hente saker",
       "get_users_for_institution": "Kunne ikke hente brukere",
@@ -1279,6 +1279,7 @@
     },
     "registration": {
       "link_to_resource": "Lenke til original versjon",
+      "registration_doi_validation_message": "Dette resultatet er alt publisert i NVA. Om det har feil eller mangler, så må det resultatet endres.",
       "start_registration": "Start registrering",
       "start_with_empty_registration_description": "Legg inn informasjon etterpå",
       "start_with_empty_registration_title": "Start i tomt registreringsskjema",
@@ -1479,8 +1480,9 @@
         "edit_exhibition_catalog": "Endre utstillingskatalog",
         "edit_exhibition_other_presentation": "Endre formidling",
         "edit_mention_in_publication": "Endre til publisering/omtale",
-        "institution_name": "Institusjonens navn",
+        "institution_name": "Arrangørens navn",
         "more_info_about_elementet": "Mer om elementet",
+        "place": "Visningsted",
         "presentation_type": "Type formidlingsform",
         "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
         "subtype": {
@@ -1490,7 +1492,7 @@
           "ExhibitionProductionOther": "Annet",
           "HistoricalInterior": "Historisk interiør",
           "PopupExhibition": "Popup-utstilling",
-          "TemporaryExhibition": "Midlertidig utstilling"
+          "TemporaryExhibition": "Temporær utstilling"
         }
       },
       "isbn": "ISBN",
@@ -1616,7 +1618,6 @@
   },
   "tasks": {
     "all_user_dialogs": "Alle brukerdialoger",
-    "limited_to": "Avgrenset til: \"{{name}}\"",
     "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
@@ -1625,6 +1626,7 @@
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "delete_note": "Slett merknad",
       "delete_note_description": "Er du sikker på at du vil slette denne merknaden?",
+      "exclude_subunits": "Ekskluder underenheter",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Merknad",
       "publication_points": "Publiseringspoeng",
@@ -1642,6 +1644,7 @@
       "waiting_for_other_institutions": "Venter på andre institusjoner",
       "waiting_for_your_institution": "Venter på din institusjon"
     },
+    "select_other_unit_filter": "Velg andre",
     "status": "Status",
     "unread": "Uleste",
     "user_dialog": "Brukerdialog"

@@ -6,7 +6,6 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import {
   Box,
   Button,
-  CircularProgress,
   Divider,
   FormControlLabel,
   FormLabel,
@@ -18,11 +17,11 @@ import {
   styled,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { RoleApiPath } from '../../api/apiPaths';
+import { fetchUser } from '../../api/roleApi';
 import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
@@ -32,20 +31,16 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { NviCandidateAggregations } from '../../types/nvi.types';
-import { Organization } from '../../types/organization.types';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
-import { InstitutionUser } from '../../types/user.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useFetch } from '../../utils/hooks/useFetch';
-import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
-import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
+import { OrganizationScope } from './components/OrganizationScope';
 import { TicketList } from './components/TicketList';
 
 type TicketStatusFilter = {
@@ -87,15 +82,26 @@ const TasksPage = () => {
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const [institutionUser] = useFetch<InstitutionUser>({
-    url: nvaUsername ? `${RoleApiPath.Users}/${nvaUsername}` : '',
-    errorMessage: t('feedback.error.get_roles'),
-    withAuthentication: true,
+  const institutionUserQuery = useQuery({
+    enabled: !!nvaUsername,
+    queryKey: [nvaUsername],
+    queryFn: () => fetchUser(nvaUsername),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
 
-  const viewingScopes = institutionUser?.viewingScope?.includedUnits ?? [];
-  const viewingScopeId = viewingScopes.length > 0 ? viewingScopes[0] : '';
-  const [viewingScopeOrganization, isLoadingViewingScopeOrganization] = useFetchResource<Organization>(viewingScopeId);
+  const [excludeSubunits, setExcludeSubunits] = useState(false);
+  const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : ''; // TODO: Use this for ticket search as well
+
+  const [organizationScope, setOrganizationScope] = useState(
+    institutionUserQuery.data?.viewingScope?.includedUnits ?? []
+  );
+
+  useEffect(() => {
+    // Must populate the state after the request is done
+    if (institutionUserQuery.data?.viewingScope?.includedUnits) {
+      setOrganizationScope(institutionUserQuery.data.viewingScope.includedUnits);
+    }
+  }, [institutionUserQuery.data?.viewingScope?.includedUnits]);
 
   // Tickets/dialogue data
   const [ticketSearchMode, setTicketSearchMode] = useState<TicketSearchMode>('all');
@@ -140,10 +146,12 @@ const TasksPage = () => {
     .filter(Boolean)
     .join(' AND ');
 
+  const ticketQuery = `${ticketQueryString}&viewingScope=${organizationScope.join(',')}`;
+
   const ticketsQuery = useQuery({
     enabled: isOnTicketsPage,
-    queryKey: ['tickets', rowsPerPage, page, ticketQueryString],
-    queryFn: () => fetchTickets(rowsPerPage, (page - 1) * rowsPerPage, ticketQueryString),
+    queryKey: ['tickets', rowsPerPage, page, ticketQuery],
+    queryFn: () => fetchTickets(rowsPerPage, (page - 1) * rowsPerPage, ticketQuery),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
@@ -162,20 +170,22 @@ const TasksPage = () => {
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
-  const nviYearQuery = `year=${nviYearFilter}`;
-  const nviStatusQuery = `${nviYearQuery}&filter=${nviStatusFilter}`;
+  const nviAggregationQuery = `year=${nviYearFilter}&affiliations=${organizationScope.join(
+    ','
+  )}${excludeSubunitsQuery}`;
+  const nviListQuery = `${nviAggregationQuery}&filter=${nviStatusFilter}`;
 
   const nviAggregationsQuery = useQuery({
     enabled: isOnNviCandidatesPage,
-    queryKey: ['nviCandidates', 1, 0, nviYearQuery],
-    queryFn: () => fetchNviCandidates(1, 0, nviYearQuery),
+    queryKey: ['nviCandidates', 1, 0, nviAggregationQuery],
+    queryFn: () => fetchNviCandidates(1, 0, nviAggregationQuery),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
   });
 
   const nviCandidatesQuery = useQuery({
     enabled: isOnNviCandidatesPage,
-    queryKey: ['nviCandidates', rowsPerPage, page, nviStatusQuery],
-    queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviStatusQuery),
+    queryKey: ['nviCandidates', rowsPerPage, page, nviListQuery],
+    queryFn: () => fetchNviCandidates(rowsPerPage, (page - 1) * rowsPerPage, nviListQuery),
     meta: { errorMessage: t('feedback.error.get_nvi_candidates') },
     keepPreviousData: true,
   });
@@ -208,21 +218,13 @@ const TasksPage = () => {
           </Link>
         }>
         <SideNavHeader icon={AssignmentIcon} text={t('common.tasks')} />
-        <Box component="article" sx={{ m: '1rem' }}>
-          {viewingScopeId ? (
-            isLoadingViewingScopeOrganization ? (
-              <CircularProgress aria-label={t('common.tasks')} />
-            ) : (
-              viewingScopeOrganization && (
-                <Typography sx={{ fontWeight: 700 }}>
-                  {t('tasks.limited_to', {
-                    name: getLanguageString(viewingScopeOrganization.labels),
-                  })}
-                </Typography>
-              )
-            )
-          ) : null}
-        </Box>
+
+        <OrganizationScope
+          organizationScope={organizationScope}
+          setOrganizationScope={setOrganizationScope}
+          excludeSubunits={excludeSubunits}
+          setExcludeSubunits={setExcludeSubunits}
+        />
 
         {isCurator && (
           <NavigationListAccordion
@@ -394,6 +396,7 @@ const TasksPage = () => {
             <StyledTicketSearchFormGroup>
               <Select
                 size="small"
+                inputProps={{ 'aria-label': t('common.year') }}
                 value={nviYearFilter}
                 onChange={(event) => setNviYearFilter(+event.target.value)}
                 sx={{ width: 'fit-content', alignSelf: 'center', mb: '0.5rem' }}>

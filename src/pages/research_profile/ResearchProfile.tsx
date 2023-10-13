@@ -161,7 +161,7 @@ const ResearchProfile = () => {
             ))}
           </Box>
         ) : (
-          <Typography>{t('my_page.no_employments')}</Typography>
+          <Typography sx={{ mt: '1.5rem' }}>{t('my_page.no_employments')}</Typography>
         )}
         {orcidUri && (
           <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem', alignItems: 'center' }}>
