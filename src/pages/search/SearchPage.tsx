@@ -4,7 +4,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Box, Divider, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
@@ -50,7 +49,6 @@ const SearchPage = () => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
-  const [selectedSearchType, setSelectedSearchType] = useState(SearchTypeValue.Result);
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
@@ -131,8 +129,7 @@ const SearchPage = () => {
                 }}>
                 <TextField
                   select
-                  value={selectedSearchType}
-                  onChange={(event) => setSelectedSearchType(event.target.value as SearchTypeValue)}
+                  value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
                   sx={{
                     mb: !resultIsSelected ? '1rem' : 0,
                     ml: { xs: '1rem', md: 0 },
