@@ -532,7 +532,7 @@ const TasksPage = () => {
                 title={t('tasks.correction_list')}
                 startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
                 accordionPath={UrlPathTemplate.TasksNviCorrectionList}
-                dataTestId={''}>
+                dataTestId={dataTestId.tasksPage.correctionListAccordion}>
                 <Box sx={{ mx: '1rem' }}>
                   <FormControlLabel control={<StyledStatusCheckbox />} label={t('common.nvi')} />
                   <FormControlLabel
