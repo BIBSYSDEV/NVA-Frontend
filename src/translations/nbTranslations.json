@@ -1621,6 +1621,7 @@
   },
   "tasks": {
     "all_user_dialogs": "Alle brukerdialoger",
+    "correction_list": "Retteliste",
     "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
