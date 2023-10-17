@@ -135,11 +135,13 @@ const SearchPage = () => {
                     mb: !resultIsSelected ? '1rem' : 0,
                     ml: { xs: '1rem', md: 0 },
                     minWidth: '10.33rem',
+
                     '.MuiSelect-select': {
                       display: 'flex',
                       gap: '0.5rem',
                       alignItems: 'center',
                       bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
+                      maxHeight: '1rem',
                     },
                   }}
                   inputProps={{ 'aria-label': t('common.type') }}>
