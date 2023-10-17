@@ -101,7 +101,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
           <>
             <Box
               gridArea="advanced"
-              sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', ml: { xs: '-11.8rem', md: '-10.8rem' } }}>
+              sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', ml: { sm: 0, md: '-10.8rem' } }}>
               {properties.map((property, index) => {
                 const thisFilter = registrationFilters.find((filter) => filter.field === property.fieldName);
                 if (property.fieldName && !thisFilter?.manuallyAddable) {
