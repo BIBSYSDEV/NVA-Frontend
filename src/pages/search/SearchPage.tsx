@@ -140,6 +140,7 @@ const SearchPage = () => {
                       gap: '0.5rem',
                       alignItems: 'center',
                       bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
+                      maxHeight: '1rem',
                     },
                   }}
                   inputProps={{ 'aria-label': t('common.type') }}>
