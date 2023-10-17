@@ -533,13 +533,7 @@ const TasksPage = () => {
                 startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
                 accordionPath={UrlPathTemplate.TasksNviCorrectionList}
                 dataTestId={dataTestId.tasksPage.correctionListAccordion}>
-                <Box sx={{ mx: '1rem' }}>
-                  <FormControlLabel control={<StyledStatusCheckbox />} label={t('common.nvi')} />
-                  <FormControlLabel
-                    control={<StyledStatusCheckbox />}
-                    label={t('registration.contributors.contributor')}
-                  />
-                </Box>
+                <></>
               </NavigationListAccordion>
             </BetaFunctionality>
           </>
