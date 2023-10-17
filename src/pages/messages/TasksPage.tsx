@@ -24,7 +24,6 @@ import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
 import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -527,15 +526,14 @@ const TasksPage = () => {
                 )}
               </StyledTicketSearchFormGroup>
             </NavigationListAccordion>
-            <BetaFunctionality>
-              <NavigationListAccordion
-                title={t('tasks.correction_list')}
-                startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
-                accordionPath={UrlPathTemplate.TasksNviCorrectionList}
-                dataTestId={dataTestId.tasksPage.correctionListAccordion}>
-                <></>
-              </NavigationListAccordion>
-            </BetaFunctionality>
+
+            <NavigationListAccordion
+              title={t('tasks.correction_list')}
+              startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
+              accordionPath={UrlPathTemplate.TasksNviCorrectionList}
+              dataTestId={dataTestId.tasksPage.correctionListAccordion}>
+              <></>
+            </NavigationListAccordion>
           </>
         )}
       </SideMenu>
