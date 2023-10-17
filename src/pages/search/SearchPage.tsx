@@ -1,4 +1,5 @@
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
+import InsightsIcon from '@mui/icons-material/Insights';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
@@ -7,11 +8,14 @@ import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { SearchResponse } from '../../types/common.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import {
   SearchConfig,
@@ -116,6 +120,15 @@ const SearchPage = () => {
                       isLoadingSearch={isLoadingSearch}
                     />
                   </Box>
+                  <BetaFunctionality>
+                    <NavigationListAccordion
+                      title={t('search.reports')}
+                      startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
+                      accordionPath={''}
+                      dataTestId={dataTestId.startPage.reportsAccordion}>
+                      <></>
+                    </NavigationListAccordion>
+                  </BetaFunctionality>
                 </>
               )}
             </SideMenu>
