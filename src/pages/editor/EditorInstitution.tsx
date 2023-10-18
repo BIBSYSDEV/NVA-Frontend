@@ -1,4 +1,4 @@
-import { CircularProgress, Link, Typography } from '@mui/material';
+import { Checkbox, CircularProgress, FormControlLabel, Link, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -63,9 +63,33 @@ export const EditorInstitution = () => {
             )}
           </Typography>
 
-          {/* Norsk vitenskapsindeks (NVI) */}
+          <div>
+            <Typography variant="h3" component="h2">
+              {t('common.nvi')}
+            </Typography>
+            <FormControlLabel
+              label={t('basic_data.institutions.institution_is_nvi_applicable')}
+              control={<Checkbox disabled={true} checked={customer?.nviInstitution} />}
+            />
+          </div>
 
-          {/* Resultatbasert omfordeling (RBO) */}
+          <div>
+            <Typography
+              variant="h3"
+              component="h2"
+              sx={{
+                marginLeft: '2rem',
+              }}>
+              {t('common.rbo')}
+            </Typography>
+            <FormControlLabel
+              sx={{
+                marginLeft: '1.3rem',
+              }}
+              label={t('basic_data.institutions.institution_receives_funding_via_rbo')}
+              control={<Checkbox disabled={true} checked={customer?.rboInstitution} />}
+            />
+          </div>
 
           <Typography sx={{ pt: '1rem' }}>
             <Trans t={t} i18nKey="editor.institution.institution_helper_text">
