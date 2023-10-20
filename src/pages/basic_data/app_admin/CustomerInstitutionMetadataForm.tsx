@@ -159,7 +159,9 @@ export const CustomerInstitutionMetadataForm = ({
             <Field name={CustomerInstitutionFieldNames.Sector}>
               {({ field }: FieldProps) => (
                 <div>
-                  <FormLabel component="legend">{t('basic_data.institutions.sector')}</FormLabel>
+                  <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                    {t('basic_data.institutions.sector')}
+                  </FormLabel>
                   <Box sx={{ display: 'flex', gap: '0.5rem', mt: '0.5rem' }}>
                     {Object.values(Sector).map((sector) => (
                       <Chip
@@ -179,7 +181,9 @@ export const CustomerInstitutionMetadataForm = ({
             <Field name={CustomerInstitutionFieldNames.NviInstitution}>
               {({ field }: FieldProps<boolean>) => (
                 <div>
-                  <FormLabel component="legend">{t('common.nvi')}</FormLabel>
+                  <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                    {t('common.nvi')}
+                  </FormLabel>
                   <FormControlLabel
                     label={t('basic_data.institutions.institution_is_nvi_applicable')}
                     control={
@@ -200,6 +204,7 @@ export const CustomerInstitutionMetadataForm = ({
                   <FormLabel
                     component="legend"
                     sx={{
+                      fontWeight: 'bold',
                       marginTop: '-1rem',
                       marginLeft: '2rem',
                     }}>
@@ -224,7 +229,9 @@ export const CustomerInstitutionMetadataForm = ({
 
             {editMode && (
               <div>
-                <FormLabel component="legend">{t('common.doi_long')}</FormLabel>
+                <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                  {t('common.doi_long')}
+                </FormLabel>
                 <Field name={CustomerInstitutionFieldNames.CanAssignDoi}>
                   {({ field }: FieldProps<boolean>) => (
                     <FormControlLabel
