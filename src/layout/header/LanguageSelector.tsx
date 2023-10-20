@@ -20,7 +20,7 @@ export const LanguageSelector = () => {
         gap: '0.25rem',
       }}>
       <Button
-        startIcon={<img src={norFlag} alt="norFlag" style={{ width: '1.5rem' }} />}
+        startIcon={<img src={norFlag} alt="" style={{ width: '1.5rem' }} />}
         sx={{ borderBottom: i18n.language === 'nob' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('nob')}
@@ -38,7 +38,7 @@ export const LanguageSelector = () => {
       <Divider orientation="vertical" flexItem sx={{ bgcolor: 'primary.main', height: '1rem', alignSelf: 'center' }} />
 
       <Button
-        startIcon={<img src={gbFlag} alt="gbFlag" style={{ width: '1.5rem' }} />}
+        startIcon={<img src={gbFlag} alt="" style={{ width: '1.5rem' }} />}
         sx={{ borderBottom: i18n.language === 'eng' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('eng')}
