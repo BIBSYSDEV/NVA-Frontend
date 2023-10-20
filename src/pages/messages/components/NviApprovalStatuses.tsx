@@ -8,11 +8,16 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface NviApprovalStatusesProps {
   approvalStatuses: ApprovalStatus[];
+  totalPoints: number;
+  undistributedPoints: number;
 }
 
-export const NviApprovalStatuses = ({ approvalStatuses }: NviApprovalStatusesProps) => {
+export const NviApprovalStatuses = ({
+  approvalStatuses,
+  totalPoints,
+  undistributedPoints,
+}: NviApprovalStatusesProps) => {
   const { t } = useTranslation();
-  const publicationPointsSum = approvalStatuses.reduce((acc, status) => acc + status.points, 0);
 
   return (
     <Box sx={{ m: '1rem' }}>
@@ -23,7 +28,7 @@ export const NviApprovalStatuses = ({ approvalStatuses }: NviApprovalStatusesPro
           mb: '0.5rem',
         }}>
         <Typography>{t('tasks.nvi.publication_points')}</Typography>
-        {publicationPointsSum && <PublicationPointsTypography points={publicationPointsSum} />}
+        {totalPoints && <PublicationPointsTypography points={totalPoints} />}
       </Box>
 
       {approvalStatuses.length > 0 && (
@@ -40,6 +45,16 @@ export const NviApprovalStatuses = ({ approvalStatuses }: NviApprovalStatusesPro
           {approvalStatuses.map((approvalStatus) => (
             <InstitutionApprovalStatusRow key={approvalStatus.institutionId} approvalStatus={approvalStatus} />
           ))}
+          {undistributedPoints && (
+            <>
+              <Typography sx={{ whiteSpace: 'nowrap' }}>--</Typography>
+              <Typography sx={{ whiteSpace: 'nowrap' }}>Ikke fordelt</Typography>
+              <PublicationPointsTypography
+                sx={{ whiteSpace: 'nowrap', justifySelf: 'end' }}
+                points={undistributedPoints}
+              />
+            </>
+          )}
         </Paper>
       )}
     </Box>
