@@ -7,7 +7,6 @@ import RuleIcon from '@mui/icons-material/Rule';
 import {
   Box,
   Button,
-  Divider,
   FormControlLabel,
   FormLabel,
   LinearProgress,
@@ -60,12 +59,6 @@ const StyledStatusRadio = styled(Radio)({
   paddingTop: '0.05rem',
   paddingBottom: '0.05rem',
 });
-
-const StyledDivider = styled(Divider)(({ theme }) => ({
-  marginTop: '0.175rem',
-  marginBottom: '0.175rem',
-  backgroundColor: theme.palette.primary.main,
-}));
 
 const nviYearFilterValues = getNviYearFilterValues();
 
@@ -414,116 +407,122 @@ const TasksPage = () => {
                 <FormLabel component="legend" sx={{ fontWeight: 700 }}>
                   {t('tasks.status')}
                 </FormLabel>
-                <StyledDivider />
 
-                <FormControlLabel
-                  data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
-                  checked={nviStatusFilter === 'pending'}
-                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('pending')} />}
-                  slotProps={{ typography: { fontWeight: 700 } }}
-                  label={
-                    nviPendingCount
-                      ? `${t('tasks.nvi.status.Pending')} (${nviPendingCount})`
-                      : t('tasks.nvi.status.Pending')
-                  }
-                />
-                <FormControlLabel
-                  data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCollaborationRadio}
-                  checked={nviStatusFilter === 'pendingCollaboration'}
-                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('pendingCollaboration')} />}
-                  label={
-                    nviPendingCount
-                      ? `${t('tasks.nvi.waiting_for_your_institution')} (${nviPendingCollaborationCount})`
-                      : t('tasks.nvi.waiting_for_your_institution')
-                  }
-                />
-                <StyledDivider />
-
-                <FormControlLabel
-                  data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedRadio}
-                  checked={nviStatusFilter === 'assigned'}
-                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('assigned')} />}
-                  slotProps={{ typography: { fontWeight: 700 } }}
-                  label={
-                    nviAssignedCount ? `${t('tasks.nvi.assigned')} (${nviAssignedCount})` : t('tasks.nvi.assigned')
-                  }
-                />
-                <FormControlLabel
-                  data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedCollaborationRadio}
-                  checked={nviStatusFilter === 'assignedCollaboration'}
-                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('assignedCollaboration')} />}
-                  label={
-                    nviAssignedCollaborationCount
-                      ? `${t('tasks.nvi.waiting_for_your_institution')} (${nviAssignedCollaborationCount})`
-                      : t('tasks.nvi.waiting_for_your_institution')
-                  }
-                />
-                <StyledDivider />
-
-                <FormControlLabel
-                  data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedRadio}
-                  checked={nviStatusFilter === 'approved'}
-                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('approved')} />}
-                  slotProps={{ typography: { fontWeight: 700 } }}
-                  label={
-                    nviApprovedCount
-                      ? `${t('tasks.nvi.status.Approved')} (${nviApprovedCount})`
-                      : t('tasks.nvi.status.Approved')
-                  }
-                />
-                <FormControlLabel
-                  data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedCollaborationRadio}
-                  checked={nviStatusFilter === 'approvedCollaboration'}
-                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('approvedCollaboration')} />}
-                  label={
-                    nviApprovedCollaborationCount
-                      ? `${t('tasks.nvi.waiting_for_other_institutions')} (${nviApprovedCollaborationCount})`
-                      : t('tasks.nvi.waiting_for_other_institutions')
-                  }
-                />
-                <StyledDivider />
-
-                <FormControlLabel
-                  data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedRadio}
-                  checked={nviStatusFilter === 'rejected'}
-                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('rejected')} />}
-                  slotProps={{ typography: { fontWeight: 700 } }}
-                  label={
-                    nviRejectedCount
-                      ? `${t('tasks.nvi.status.Rejected')} (${nviRejectedCount})`
-                      : t('tasks.nvi.status.Rejected')
-                  }
-                />
-                <FormControlLabel
-                  data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedCollaborationRadio}
-                  checked={nviStatusFilter === 'rejectedCollaboration'}
-                  control={<StyledStatusRadio onChange={() => setNviStatusFilter('rejectedCollaboration')} />}
-                  label={
-                    nviRejectedCollaborationCount
-                      ? `${t('tasks.nvi.waiting_for_other_institutions')} (${nviRejectedCollaborationCount})`
-                      : t('tasks.nvi.waiting_for_other_institutions')
-                  }
-                />
-                <StyledDivider />
-
-                {nviAggregationsQuery.isSuccess && (
-                  <Box sx={{ mt: '1rem' }}>
-                    <Typography id="progress-label">
-                      {t('tasks.nvi.completed_count', { completed: nviCandidatesCompeted, total: nviCandidatesTotal })}
-                    </Typography>
-                    <LinearProgress
-                      aria-labelledby="progress-label"
-                      variant="determinate"
-                      value={nviCompletedPercentage}
-                      sx={{
-                        my: '0.175rem',
-                        height: '0.75rem',
-                        bgcolor: 'white',
-                      }}
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+                  <Box sx={{ bgcolor: 'nvi.light', p: '0.5rem' }}>
+                    <FormControlLabel
+                      data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingRadio}
+                      checked={nviStatusFilter === 'pending'}
+                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('pending')} />}
+                      slotProps={{ typography: { fontWeight: 700 } }}
+                      label={
+                        nviPendingCount ? `${t('tasks.nvi.candidate')} (${nviPendingCount})` : t('tasks.nvi.candidate')
+                      }
                     />
-                    <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
+                    <FormControlLabel
+                      data-testid={dataTestId.tasksPage.nvi.statusFilter.pendingCollaborationRadio}
+                      checked={nviStatusFilter === 'pendingCollaboration'}
+                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('pendingCollaboration')} />}
+                      label={
+                        nviPendingCount
+                          ? `${t('tasks.nvi.waiting_for_your_institution')} (${nviPendingCollaborationCount})`
+                          : t('tasks.nvi.waiting_for_your_institution')
+                      }
+                    />
                   </Box>
-                )}
+
+                  <Box sx={{ bgcolor: 'nvi.light', p: '0.5rem' }}>
+                    <FormControlLabel
+                      data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedRadio}
+                      checked={nviStatusFilter === 'assigned'}
+                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('assigned')} />}
+                      slotProps={{ typography: { fontWeight: 700 } }}
+                      label={
+                        nviAssignedCount ? `${t('tasks.nvi.assigned')} (${nviAssignedCount})` : t('tasks.nvi.assigned')
+                      }
+                    />
+                    <FormControlLabel
+                      data-testid={dataTestId.tasksPage.nvi.statusFilter.assignedCollaborationRadio}
+                      checked={nviStatusFilter === 'assignedCollaboration'}
+                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('assignedCollaboration')} />}
+                      label={
+                        nviAssignedCollaborationCount
+                          ? `${t('tasks.nvi.waiting_for_your_institution')} (${nviAssignedCollaborationCount})`
+                          : t('tasks.nvi.waiting_for_your_institution')
+                      }
+                    />
+                  </Box>
+
+                  {nviAggregationsQuery.isSuccess && (
+                    <Box sx={{ bgcolor: 'secondary.main', p: '0.5rem' }}>
+                      <Typography id="progress-label">
+                        {t('tasks.nvi.completed_count', {
+                          completed: nviCandidatesCompeted,
+                          total: nviCandidatesTotal,
+                        })}
+                      </Typography>
+                      <LinearProgress
+                        aria-labelledby="progress-label"
+                        variant="determinate"
+                        value={nviCompletedPercentage}
+                        sx={{
+                          my: '0.175rem',
+                          height: '0.75rem',
+                          bgcolor: 'white',
+                        }}
+                      />
+                      <Typography sx={{ textAlign: 'center' }}>{nviCompletedPercentage} %</Typography>
+                    </Box>
+                  )}
+
+                  <Box sx={{ bgcolor: 'secondary.main', p: '0.5rem' }}>
+                    <FormControlLabel
+                      data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedRadio}
+                      checked={nviStatusFilter === 'approved'}
+                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('approved')} />}
+                      slotProps={{ typography: { fontWeight: 700 } }}
+                      label={
+                        nviApprovedCount
+                          ? `${t('tasks.nvi.status.Approved')} (${nviApprovedCount})`
+                          : t('tasks.nvi.status.Approved')
+                      }
+                    />
+                    <FormControlLabel
+                      data-testid={dataTestId.tasksPage.nvi.statusFilter.approvedCollaborationRadio}
+                      checked={nviStatusFilter === 'approvedCollaboration'}
+                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('approvedCollaboration')} />}
+                      label={
+                        nviApprovedCollaborationCount
+                          ? `${t('tasks.nvi.waiting_for_other_institutions')} (${nviApprovedCollaborationCount})`
+                          : t('tasks.nvi.waiting_for_other_institutions')
+                      }
+                    />
+                  </Box>
+
+                  <Box sx={{ bgcolor: 'secondary.main', p: '0.5rem' }}>
+                    <FormControlLabel
+                      data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedRadio}
+                      checked={nviStatusFilter === 'rejected'}
+                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('rejected')} />}
+                      slotProps={{ typography: { fontWeight: 700 } }}
+                      label={
+                        nviRejectedCount
+                          ? `${t('tasks.nvi.status.Rejected')} (${nviRejectedCount})`
+                          : t('tasks.nvi.status.Rejected')
+                      }
+                    />
+                    <FormControlLabel
+                      data-testid={dataTestId.tasksPage.nvi.statusFilter.rejectedCollaborationRadio}
+                      checked={nviStatusFilter === 'rejectedCollaboration'}
+                      control={<StyledStatusRadio onChange={() => setNviStatusFilter('rejectedCollaboration')} />}
+                      label={
+                        nviRejectedCollaborationCount
+                          ? `${t('tasks.nvi.waiting_for_other_institutions')} (${nviRejectedCollaborationCount})`
+                          : t('tasks.nvi.waiting_for_other_institutions')
+                      }
+                    />
+                  </Box>
+                </Box>
               </StyledTicketSearchFormGroup>
             </NavigationListAccordion>
 

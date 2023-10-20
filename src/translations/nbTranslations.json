@@ -1627,7 +1627,8 @@
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
       "approve_nvi_candidate_description": "Godkjenning av resultatet.",
-      "assigned": "Under behandling",
+      "assigned": "Sjekkes",
+      "candidate": "Kandidat",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "delete_note": "Slett merknad",
       "delete_note_description": "Er du sikker på at du vil slette denne merknaden?",
