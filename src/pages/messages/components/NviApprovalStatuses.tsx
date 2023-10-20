@@ -45,7 +45,7 @@ export const NviApprovalStatuses = ({
           {approvalStatuses.map((approvalStatus) => (
             <InstitutionApprovalStatusRow key={approvalStatus.institutionId} approvalStatus={approvalStatus} />
           ))}
-          {undistributedPoints && (
+          {undistributedPoints > 0 && (
             <>
               <Typography sx={{ whiteSpace: 'nowrap' }}>--</Typography>
               <Typography sx={{ whiteSpace: 'nowrap' }}>Ikke fordelt</Typography>
