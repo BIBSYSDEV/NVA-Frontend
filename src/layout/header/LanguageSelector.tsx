@@ -27,7 +27,7 @@ export const LanguageSelector = () => {
         lang="nb">
         Bokmål
       </Button>
-      <Divider orientation="vertical" flexItem />
+      <Divider orientation="vertical" flexItem sx={{ bgcolor: 'primary.main', height: '1rem', alignSelf: 'center' }} />
       <Button
         sx={{ borderBottom: i18n.language === 'nno' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
@@ -35,7 +35,7 @@ export const LanguageSelector = () => {
         lang="nn">
         Nynorsk
       </Button>
-      <Divider orientation="vertical" flexItem />
+      <Divider orientation="vertical" flexItem sx={{ bgcolor: 'primary.main', height: '1rem', alignSelf: 'center' }} />
 
       <Button
         startIcon={<img src={gbFlag} alt="gbFlag" style={{ width: '1.5rem' }} />}
