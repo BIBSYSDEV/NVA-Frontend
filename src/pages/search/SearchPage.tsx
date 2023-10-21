@@ -3,13 +3,13 @@ import InsightsIcon from '@mui/icons-material/Insights';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Box, Divider, MenuItem, TextField } from '@mui/material';
+import { Box, Button, Divider, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
 import { BetaFunctionality } from '../../components/BetaFunctionality';
-import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { SearchResponse } from '../../types/common.types';
@@ -57,6 +57,7 @@ const SearchPage = () => {
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
   const projectIsSelected = paramsSearchType === SearchTypeValue.Project;
+  const [reportsIsSelected, setReportsIsSelected] = useState(false);
 
   const requestParams = new URLSearchParams(history.location.search);
   requestParams.delete(SearchParam.Type);
@@ -121,13 +122,18 @@ const SearchPage = () => {
                     />
                   </Box>
                   <BetaFunctionality>
-                    <NavigationListAccordion
-                      title={t('search.reports')}
-                      startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
-                      accordionPath={''}
-                      dataTestId={dataTestId.startPage.reportsAccordion}>
-                      <></>
-                    </NavigationListAccordion>
+                    <Button
+                      data-testid={dataTestId.startPage.reportsButton}
+                      sx={{
+                        width: '100%',
+                        background: reportsIsSelected ? undefined : 'white',
+                        textTransform: 'none',
+                      }}
+                      variant={reportsIsSelected ? 'contained' : 'outlined'}
+                      startIcon={<InsightsIcon />}
+                      onClick={() => setReportsIsSelected(!reportsIsSelected)}>
+                      {t('search.reports')}
+                    </Button>
                   </BetaFunctionality>
                 </>
               )}
