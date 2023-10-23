@@ -2,6 +2,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import reportThumbnail from '../../../resources/images/report-thumbnail.png';
 
 export const ReportsPage = () => {
   const { t } = useTranslation();
@@ -18,28 +19,37 @@ export const ReportsPage = () => {
         id="inlineFrameExample"
         title="NVI"
         width="100%"
-        src="https://rapport-dv.uhad.no/t/DUCT/views/NVI-rapporteringtilCristinnettsidenny/NVI-resultatertilcristin_no?%3Aembed_code_version=3&%3Aembed=y&%3AloadOrderID=0&%3Adisplay_spinner=yes&%3AshowAppBanner=false&%3Atoolbar=yes&%3Atabs=no"
+        src="https://rapport-dv.uhad.no/t/DUCT/views/nettsider_2022_14_04_v2/NVI2011-2022?%3Aembed=y&%3AloadOrderID=0&%3Adisplay_spinner=yes&%3AshowAppBanner=false&%3Atoolbar=yes&%3Atabs=no"
       />
     </Box>
   ) : (
     <Button
       onClick={() => setSelectdReport('NVI')}
       sx={{
-        width: '20rem',
-        height: '25rem',
+        width: '17rem',
+        height: 'fit-content',
         border: '2px solid',
         borderRadius: '8px',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-around',
         gap: '2rem',
+        alignItems: 'center',
         textTransform: 'none',
       }}>
-      <Box sx={{ height: '40%', width: '100%', bgcolor: 'nvi.light' }}></Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <Typography variant="h3">NVI: resultat, publiseringsindeks og bidragsyter andel per institusjon</Typography>
-        <Typography>Nasjonalt, internasjonalt og uten samarbeid</Typography>
+      <Box
+        sx={{
+          height: '40%',
+          width: '100%',
+          bgcolor: 'nvi.light',
+          alignItems: 'center',
+          justifyContent: 'center',
+          display: 'flex',
+        }}>
+        <img src={reportThumbnail} alt="" style={{ height: '70%', width: '70%', padding: '0.5rem' }} />
+      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'start', px: '0.5rem' }}>
+        <Typography variant="h3">{t('search.reports.nvi_all_institutions_title')}</Typography>
+        <Typography>{t('search.reports.nvi_all_institutions_description')}</Typography>
       </Box>
     </Button>
   );

@@ -1612,7 +1612,11 @@
     "persons": "Personer",
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
-    "reports": "Rapporter",
+    "reports": {
+      "reports": "Rapporter",
+      "nvi_all_institutions_title": "NVI: resultat, publiseringsindeks og bidragsyter andel per institusjon",
+      "nvi_all_institutions_description": "Nasjonalt, internasjonalt og uten samarbeid"
+    },
     "result": "Resultat",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",

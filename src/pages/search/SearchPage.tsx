@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { SearchResponse } from '../../types/common.types';
@@ -122,20 +121,21 @@ const SearchPage = () => {
                       isLoadingSearch={isLoadingSearch}
                     />
                   </Box>
-                  <BetaFunctionality>
+
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button
                       data-testid={dataTestId.startPage.reportsButton}
                       sx={{
-                        width: '100%',
+                        width: '90%',
                         background: reportsIsSelected ? undefined : 'white',
                         textTransform: 'none',
                       }}
                       variant={reportsIsSelected ? 'contained' : 'outlined'}
                       startIcon={<InsightsIcon />}
                       onClick={() => setReportsIsSelected(!reportsIsSelected)}>
-                      {t('search.reports')}
+                      {t('search.reports.reports')}
                     </Button>
-                  </BetaFunctionality>
+                  </Box>
                 </>
               )}
             </SideMenu>
