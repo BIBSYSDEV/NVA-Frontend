@@ -1628,7 +1628,7 @@
       "save_note": "Save note",
       "status": {
         "Approved": "Approved",
-        "Pending": "Pending",
+        "Pending": "Candidate",
         "Rejected": "Rejected"
       },
       "waiting_for_other_institutions": "Waiting for other institutions",
