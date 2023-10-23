@@ -18,12 +18,15 @@ export const updateRegistration = async (registration: Registration) =>
     data: registration,
   });
 
-export const getRegistrationByDoi = async (doiUrl: string) =>
-  await authenticatedApiRequest<Doi>({
+export const getRegistrationByDoi = async (doiUrl: string) => {
+  const getRegistrationByDoiResponse = await authenticatedApiRequest2<Doi>({
     url: `${PublicationsApiPath.DoiLookup}/`,
     data: { doiUrl },
     method: 'POST',
   });
+
+  return getRegistrationByDoiResponse.data;
+};
 
 export const deleteRegistration = async (identifier: string) =>
   await authenticatedApiRequest({

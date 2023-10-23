@@ -49,6 +49,12 @@ export const dataTestId = {
       shortNameField: 'short-name-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
+    nviPeriod: {
+      nviPeriodDialog: 'nvi-period-dialog',
+      nviPeriodYear: 'nvi-period-year',
+      nviPeriodStartDate: 'nvi-period-start-date',
+      nviPeriodEndDate: 'nvi-period-end-date',
+    },
     nviPeriodsLink: 'nvi-periods-link',
     personAdmin: {
       cristinId: (id: string) => `cristin-id-${id}`,
@@ -129,6 +135,7 @@ export const dataTestId = {
     orderBySelect: 'order-by-select',
     personSearchButton: 'person-search-button',
     projectSearchButton: 'project-search-button',
+    reportsAccordion: 'reports-accordion',
     resultSearchButton: 'result-search-button',
     readMoreButton: 'button-read-more',
     searchButton: 'search-button',
@@ -480,6 +487,7 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
+    correctionListAccordion: 'correction-list-accordion',
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {
@@ -499,6 +507,11 @@ export const dataTestId = {
     },
     nviAccordion: 'nvi-accordion',
     userDialogAccordion: 'user-dialog-accordion',
+    scope: {
+      addOrganizationScopeButton: 'add-organization-scope-button',
+      organizationSearchField: 'organization-search-field',
+      removeOrganizationScopeButton: 'remove-organization-scope-button',
+    },
     searchMode: {
       allUserDialogsButton: 'all-user-dialogs-button',
       myUserDialogsButton: 'my-user-dialogs-button',
