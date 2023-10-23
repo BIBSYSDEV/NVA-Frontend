@@ -142,13 +142,12 @@ const TasksPage = () => {
     .filter(Boolean)
     .join(' AND ');
 
-  // Wait for viewingScope fpr tickets is implemented in BE
-  // const ticketQuery = `${ticketQueryString}&viewingScope=${organizationScope.join(',')}`;
+  const ticketQuery = `${ticketQueryString}&viewingScope=${user?.topOrgCristinId}`;
 
   const ticketsQuery = useQuery({
     enabled: isOnTicketsPage,
-    queryKey: ['tickets', rowsPerPage, page, ticketQueryString],
-    queryFn: () => fetchTickets(rowsPerPage, (page - 1) * rowsPerPage, ticketQueryString),
+    queryKey: ['tickets', rowsPerPage, page, ticketQuery],
+    queryFn: () => fetchTickets(rowsPerPage, (page - 1) * rowsPerPage, ticketQuery),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
