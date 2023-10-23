@@ -1645,7 +1645,7 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
-        "Pending": "Til kontroll",
+        "Pending": "Kandidat",
         "Rejected": "Avvist"
       },
       "waiting_for_other_institutions": "Venter på andre institusjoner",
