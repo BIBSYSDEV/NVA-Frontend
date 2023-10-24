@@ -139,7 +139,6 @@ const SearchPage = () => {
                   display: 'grid',
                   gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
                   gap: '0.5rem',
-                  mx: '1rem',
                 }}>
                 <TextField
                   select
