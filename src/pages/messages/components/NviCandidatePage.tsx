@@ -1,9 +1,9 @@
-import { Box, Divider, Paper, Typography } from '@mui/material';
+import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
-import { fetchNviCandidate } from '../../../api/searchApi';
+import { fetchNviCandidate, fetchNviCandidates } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
@@ -13,7 +13,11 @@ import { PublicRegistrationContent } from '../../public_registration/PublicRegis
 import { NviApprovalStatuses } from './NviApprovalStatuses';
 import { NviCandidateActions } from './NviCandidateActions';
 
-export const NviCandidatePage = () => {
+interface NviCandidatePageProps {
+  nviListQuery: string;
+}
+
+export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const { t } = useTranslation();
   const { identifier } = useParams<IdentifierParams>();
 
@@ -37,6 +41,19 @@ export const NviCandidatePage = () => {
 
   const periodStatus = nviCandidate?.periodStatus.status;
 
+  const nviCandidatesQuery = useQuery({
+    enabled: !!nviListQuery,
+    queryKey: ['candidates', nviListQuery],
+    queryFn: () => fetchNviCandidates(1, 1, nviListQuery),
+  });
+
+  const nviCandidateList = nviCandidatesQuery.data?.nextResults;
+  const nextCandidateIdentifier = getIdentifierFromId(nviCandidateList ?? '');
+
+  const handleNext = () => {
+    console.log('Next candidate');
+  };
+
   return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : (
@@ -52,6 +69,7 @@ export const NviCandidatePage = () => {
         <ErrorBoundary>
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
+            <Button onClick={handleNext}>NEXT</Button>
           </ErrorBoundary>
 
           <Paper
