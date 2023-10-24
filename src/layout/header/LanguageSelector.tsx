@@ -1,7 +1,5 @@
 import { Box, Button, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import gbFlag from '../../resources/images/GB.svg';
-import norFlag from '../../resources/images/Norsk.svg';
 
 export const LanguageSelector = () => {
   const { i18n } = useTranslation();
@@ -15,12 +13,11 @@ export const LanguageSelector = () => {
       sx={{
         gridColumn: { xs: 1, lg: 2 },
         gridRow: { xs: 2, lg: 1 },
-        justifySelf: 'center',
         display: 'flex',
         gap: '0.25rem',
       }}>
       <Button
-        startIcon={<img src={norFlag} alt="" style={{ width: '1.5rem' }} />}
+        startIcon={<img src="https://flagcdn.com/h20/no.jpg" height="18" width="24" alt="" />}
         sx={{ borderBottom: i18n.language === 'nob' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('nob')}
@@ -38,7 +35,7 @@ export const LanguageSelector = () => {
       <Divider orientation="vertical" flexItem sx={{ bgcolor: 'primary.main', height: '1rem', alignSelf: 'center' }} />
 
       <Button
-        startIcon={<img src={gbFlag} alt="" style={{ width: '1.5rem' }} />}
+        startIcon={<img src="https://flagcdn.com/h20/gb.jpg" height="18" width="24" alt="" />}
         sx={{ borderBottom: i18n.language === 'eng' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('eng')}
