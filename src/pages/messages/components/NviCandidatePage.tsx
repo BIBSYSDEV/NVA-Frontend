@@ -48,8 +48,8 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const periodStatus = nviCandidate?.periodStatus.status;
 
   const nextCandidateQuery = useQuery({
-    queryKey: ['nextCandidate', 3, offsetNextCandidate, nviListQuery],
-    queryFn: offsetNextCandidate ? () => fetchNviCandidates(3, offsetNextCandidate, `${nviListQuery}`) : undefined,
+    queryKey: ['nextCandidate', 1, offsetNextCandidate, nviListQuery],
+    queryFn: offsetNextCandidate ? () => fetchNviCandidates(1, offsetNextCandidate, `${nviListQuery}`) : undefined,
     meta: { errorMessage: false },
     retry: false,
   });

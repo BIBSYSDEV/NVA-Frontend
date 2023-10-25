@@ -53,7 +53,7 @@ export const NviCandidateListItem = ({ nviCandidate, offsetNextCandidate }: NviC
             component={Link}
             to={{
               pathname: getNviCandidatePath(nviCandidate.identifier),
-              state: { offsetNextCandidate: offsetNextCandidate } ?? {},
+              state: { offsetNextCandidate: offsetNextCandidate },
             }}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>
