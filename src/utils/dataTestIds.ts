@@ -493,6 +493,7 @@ export const dataTestId = {
     nvi: {
       approveButton: 'approve-button',
       candidatesList: 'nvi-candidates-list',
+      nextCandidateButton: 'next-candidate-button',
       rejectButton: 'reject-button',
       statusFilter: {
         approvedRadio: 'approved-radio',

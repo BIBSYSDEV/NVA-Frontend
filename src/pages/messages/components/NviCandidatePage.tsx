@@ -1,14 +1,17 @@
-import { Box, Button, Divider, Paper, Typography } from '@mui/material';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Box, Divider, IconButton, Link as MuiLink, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
 import { fetchNviCandidate, fetchNviCandidates } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
+import { CandidateOffsetState } from '../../../types/nvi.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { IdentifierParams } from '../../../utils/urlPaths';
+import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NviApprovalStatuses } from './NviApprovalStatuses';
 import { NviCandidateActions } from './NviCandidateActions';
@@ -19,7 +22,10 @@ interface NviCandidatePageProps {
 
 export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const { t } = useTranslation();
+  const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
+
+  const offsetNextCandidate = location.state?.offsetNextCandidate;
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -41,18 +47,14 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
 
   const periodStatus = nviCandidate?.periodStatus.status;
 
-  const nviCandidatesQuery = useQuery({
-    enabled: !!nviListQuery,
-    queryKey: ['candidates', nviListQuery],
-    queryFn: () => fetchNviCandidates(1, 1, nviListQuery),
+  const nextCandidateQuery = useQuery({
+    queryKey: ['nextCandidate', 3, offsetNextCandidate, nviListQuery],
+    queryFn: offsetNextCandidate ? () => fetchNviCandidates(3, offsetNextCandidate, `${nviListQuery}`) : undefined,
+    meta: { errorMessage: false },
+    retry: false,
   });
 
-  const nviCandidateList = nviCandidatesQuery.data?.nextResults;
-  const nextCandidateIdentifier = getIdentifierFromId(nviCandidateList ?? '');
-
-  const handleNext = () => {
-    console.log('Next candidate');
-  };
+  const nextCandidateIdentifier = nextCandidateQuery.data?.hits?.[0]?.identifier;
 
   return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
     <PageSpinner aria-label={t('common.result')} />
@@ -69,7 +71,24 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
         <ErrorBoundary>
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
-            <Button onClick={handleNext}>NEXT</Button>
+
+            {nextCandidateIdentifier && offsetNextCandidate && (
+              <MuiLink
+                sx={{ justifySelf: 'end' }}
+                component={Link}
+                to={{
+                  pathname: getNviCandidatePath(nextCandidateIdentifier),
+                  state: { offsetNextCandidate: offsetNextCandidate + 1 },
+                }}>
+                <IconButton
+                  data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
+                  title={t('tasks.nvi.next_candidate')}
+                  size="small"
+                  sx={{ bgcolor: 'info.main', color: 'white' }}>
+                  <ArrowForwardIosIcon />
+                </IconButton>
+              </MuiLink>
+            )}
           </ErrorBoundary>
 
           <Paper

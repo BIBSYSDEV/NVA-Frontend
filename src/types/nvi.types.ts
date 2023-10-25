@@ -99,3 +99,7 @@ export interface NviPeriod {
 export interface NviPeriodResponse {
   periods: NviPeriod[];
 }
+
+export interface CandidateOffsetState {
+  offsetNextCandidate?: number;
+}
