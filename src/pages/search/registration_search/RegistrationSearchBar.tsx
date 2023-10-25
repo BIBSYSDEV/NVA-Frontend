@@ -13,7 +13,7 @@ import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api
 import { fetchRegistrationsExport } from '../../../api/searchApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { ResourceFieldNames, SearchFieldName } from '../../../types/publicationFieldNames';
-import { PublicationInstanceType, RegistrationSearchAggregations } from '../../../types/registration.types';
+import { PublicationInstanceType, RegistrationAggregations } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
 import { getLabelFromBucket, getLanguageString } from '../../../utils/translation-helpers';
@@ -23,7 +23,7 @@ import { AdvancedSearchRow, registrationFilters } from '../registration_search/f
 import { RegistrationSortSelector } from './RegistrationSortSelector';
 
 interface RegistrationSearchBarProps {
-  aggregations?: RegistrationSearchAggregations;
+  aggregations?: RegistrationAggregations;
 }
 
 export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarProps) => {
@@ -43,10 +43,6 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
   return (
     <Box
       sx={{
-        mx: {
-          xs: '1rem',
-          md: 0,
-        },
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', md: '5fr auto auto' },
         gridTemplateAreas: {
@@ -161,7 +157,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       fieldValueText = t(`registration.publication_types.${property.value as PublicationInstanceType}`);
                       break;
                     case SearchFieldName.ContributorId: {
-                      const personName = aggregations.entityDescription.contributors.identity.id.buckets.find(
+                      const personName = aggregations.entityDescription?.contributors?.identity?.id?.buckets.find(
                         (bucket) => bucket.key === property.value
                       )?.name.buckets[0].key;
                       if (personName) {
@@ -176,7 +172,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       break;
                     }
                     case SearchFieldName.TopLevelOrganizationId: {
-                      const institutionLabels = aggregations.topLevelOrganization.id.buckets.find(
+                      const institutionLabels = aggregations.topLevelOrganizations?.id?.buckets.find(
                         (bucket) => bucket.key === property.value
                       );
                       const institutionName = institutionLabels ? getLabelFromBucket(institutionLabels) : '';
@@ -192,7 +188,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       break;
                     }
                     case SearchFieldName.FundingSource: {
-                      const fundingLabels = aggregations.fundings.identifier.buckets.find(
+                      const fundingLabels = aggregations.fundings?.identifier?.buckets.find(
                         (bucket) => bucket.key === property.value
                       );
                       const fundingName = fundingLabels ? getLabelFromBucket(fundingLabels) : '';

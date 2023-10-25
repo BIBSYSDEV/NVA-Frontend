@@ -8,7 +8,7 @@ interface BaseMessage {
   createdDate: string;
 }
 
-export interface Message extends BaseMessage {
+interface Message extends BaseMessage {
   sender: string;
 }
 

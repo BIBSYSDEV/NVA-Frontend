@@ -43,7 +43,7 @@ export const CristinPersonList = ({
         </Typography>
       )}
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ my: '0.5rem' }}>
         <Table size="medium">
           <caption style={visuallyHidden}>{t('registration.contributors.authors')}</caption>
           <TableHead>

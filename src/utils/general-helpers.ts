@@ -25,7 +25,9 @@ export const getTimePeriodString = (date1: Date, date2: Date, t: TFunction) => {
   const dateDiff = Math.abs(date1.getTime() - date2.getTime());
   const daysCount = Math.floor(dateDiff / 86_400_000);
 
-  if (daysCount < 31) {
+  if (daysCount === 0) {
+    return t('common.today');
+  } else if (daysCount < 31) {
     return t('common.x_days', { count: daysCount });
   } else if (daysCount < 365) {
     const monthsCount = Math.floor(daysCount / 31);

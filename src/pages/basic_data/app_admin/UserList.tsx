@@ -9,7 +9,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -19,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../api/roleApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
+import { ListPagination } from '../../../components/ListPagination';
 import { setNotification } from '../../../redux/notificationSlice';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import { InstitutionUser, RoleName } from '../../../types/user.types';
@@ -37,7 +37,7 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [updatedRoleForUsers, setUpdatedRoleForUsers] = useState<string[]>([]);
   const [removeRoleForUser, setRemoveRoleForUser] = useState('');
 
@@ -84,12 +84,13 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
   };
 
   // Ensure selected page is not out of bounds due to manipulated userList
-  const validPage = userList.length <= page * rowsPerPage ? 0 : page;
+  const validPage = userList.length <= (page - 1) * rowsPerPage ? 1 : page;
   const isLastInstitutionAdmin = roleToRemove === RoleName.InstitutionAdmin && userList.length === 1;
 
   const sortedList = userList.sort((a, b) =>
     `${a.givenName} ${a.familyName}`.toLocaleLowerCase() < `${b.givenName} ${b.familyName}`.toLocaleLowerCase() ? -1 : 1
   );
+  const adminsOnPage = sortedList.slice((validPage - 1) * rowsPerPage, validPage * rowsPerPage);
 
   return (
     <>
@@ -99,7 +100,7 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
         </Typography>
       ) : (
         <>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
             <Table size="small" sx={alternatingTableRowColor}>
               <caption style={visuallyHidden}>{tableCaption}</caption>
               <TableHead>
@@ -110,7 +111,7 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedList.slice(validPage * rowsPerPage, validPage * rowsPerPage + rowsPerPage).map((user, index) => {
+                {adminsOnPage.map((user) => {
                   const isLoading = updatedRoleForUsers.includes(user.username);
                   const disableAddButton = user.roles.some((role) => role.rolename === roleToAdd);
                   return (
@@ -152,21 +153,17 @@ export const UserList = ({ userList, tableCaption, roleToRemove, roleToAdd, refe
             </Table>
           </TableContainer>
 
-          {sortedList.length > ROWS_PER_PAGE_OPTIONS[0] && (
-            <TablePagination
-              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-              component="div"
-              count={sortedList.length}
-              rowsPerPage={rowsPerPage}
-              page={validPage}
-              onPageChange={(_, newPage) => setPage(newPage)}
-              onRowsPerPageChange={(event) => {
-                setRowsPerPage(parseInt(event.target.value));
-                setPage(0);
-              }}
-              data-testid={`user-pagination-${roleToRemove ?? roleToAdd}`}
-            />
-          )}
+          <ListPagination
+            count={sortedList.length}
+            rowsPerPage={rowsPerPage}
+            page={validPage}
+            onPageChange={(newPage) => setPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRowsPerPage(newRowsPerPage);
+              setPage(1);
+            }}
+          />
+
           {roleToRemove && (
             <ConfirmDialog
               open={!!removeRoleForUser}

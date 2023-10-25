@@ -1,15 +1,21 @@
 import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { RegistrationList } from '../../../components/RegistrationList';
-import { RegistrationSearchResponse } from '../../../types/registration.types';
+import { SearchResponse } from '../../../types/common.types';
+import { Registration, RegistrationAggregations } from '../../../types/registration.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 
 interface SearchResultsProps {
-  searchResult: RegistrationSearchResponse;
+  searchResult: SearchResponse<Registration, RegistrationAggregations>;
   canEditRegistration?: boolean;
+  promotedPublications?: string[];
 }
 
-export const RegistrationSearchResults = ({ searchResult, canEditRegistration = false }: SearchResultsProps) => {
+export const RegistrationSearchResults = ({
+  searchResult,
+  canEditRegistration = false,
+  promotedPublications = [],
+}: SearchResultsProps) => {
   useEffect(() => {
     if (
       searchResult.hits.some(
@@ -23,7 +29,11 @@ export const RegistrationSearchResults = ({ searchResult, canEditRegistration = 
 
   return (
     <Box data-testid="search-results">
-      <RegistrationList canEditRegistration={canEditRegistration} registrations={searchResult.hits} />
+      <RegistrationList
+        canEditRegistration={canEditRegistration}
+        registrations={searchResult.hits}
+        promotedPublications={promotedPublications}
+      />
     </Box>
   );
 };

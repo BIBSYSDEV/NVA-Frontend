@@ -1,12 +1,15 @@
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import { LoadingButton } from '@mui/lab';
-import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
-import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import CancelIcon from '@mui/icons-material/Cancel';
+import SendIcon from '@mui/icons-material/Send';
+import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Field, FieldProps, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { dataTestId } from '../utils/dataTestIds';
 
 interface MessageFormProps {
   confirmAction: (message: string) => Promise<unknown> | void;
   cancelAction?: () => void;
+  fieldLabel?: string;
+  buttonTitle?: string;
 }
 
 interface MessageFormData {
@@ -17,57 +20,69 @@ const initValues: MessageFormData = {
   message: '',
 };
 
-export const MessageForm = ({ confirmAction, cancelAction }: MessageFormProps) => {
+const maxMessageLength = 160;
+
+export const MessageForm = ({ confirmAction, cancelAction, fieldLabel, buttonTitle }: MessageFormProps) => {
   const { t } = useTranslation();
 
   return (
     <Formik
       initialValues={initValues}
       onSubmit={async (values, { resetForm }) => {
-        await confirmAction(values.message);
+        await confirmAction(values.message.trim());
         resetForm();
       }}>
-      {({ values, isSubmitting }) => (
-        <Form noValidate>
+      {({ isSubmitting }) => (
+        <Box component={Form} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Field name="message">
-            {({ field, meta: { touched, error } }: FieldProps<string>) => (
-              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <TextField
-                  {...field}
-                  inputProps={{ maxLength: 160 }}
-                  disabled={isSubmitting}
-                  data-testid="message-field"
-                  variant="filled"
-                  multiline
-                  maxRows={Infinity}
-                  fullWidth
-                  label={t('common.message')}
-                  error={touched && !!error}
-                  helperText={<ErrorMessage name={field.name} />}
-                />
-                <Typography sx={{ alignSelf: 'end', color: 'gray' }}>{field.value.length}/160</Typography>
-              </Box>
+            {({ field }: FieldProps<string>) => (
+              <TextField
+                {...field}
+                data-testid={dataTestId.tasksPage.messageField}
+                inputProps={{ maxLength: maxMessageLength }}
+                disabled={isSubmitting}
+                variant="filled"
+                multiline
+                maxRows={Infinity}
+                fullWidth
+                required
+                label={fieldLabel ?? t('common.message')}
+                helperText={`${field.value.length}/${maxMessageLength}`}
+                FormHelperTextProps={{ sx: { textAlign: 'end' } }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {isSubmitting ? (
+                        <CircularProgress aria-label={buttonTitle ?? t('common.send')} size="1.5rem" />
+                      ) : (
+                        <IconButton
+                          type="submit"
+                          color="primary"
+                          data-testid={dataTestId.tasksPage.messageSendButton}
+                          title={buttonTitle ?? t('common.send')}>
+                          <SendIcon />
+                        </IconButton>
+                      )}
+                    </InputAdornment>
+                  ),
+                }}
+              />
             )}
           </Field>
-
-          <DialogActions>
-            {cancelAction && (
-              <Button data-testid="cancel-button" variant="outlined" onClick={cancelAction}>
-                {t('common.cancel')}
-              </Button>
-            )}
-            <LoadingButton
-              data-testid="send-button"
-              type="submit"
-              variant="contained"
-              endIcon={<MailOutlineIcon />}
-              loadingPosition="end"
-              disabled={!values.message}
-              loading={isSubmitting}>
-              {t('common.send')}
-            </LoadingButton>
-          </DialogActions>
-        </Form>
+          {cancelAction && (
+            <IconButton
+              color="primary"
+              size="small"
+              sx={{
+                bgcolor: 'white',
+                mt: '-2.25rem',
+              }}
+              onClick={cancelAction}
+              title={t('common.cancel')}>
+              <CancelIcon />
+            </IconButton>
+          )}
+        </Box>
       )}
     </Formik>
   );

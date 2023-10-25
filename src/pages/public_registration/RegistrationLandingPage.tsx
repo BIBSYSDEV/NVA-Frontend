@@ -10,7 +10,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { RegistrationStatus } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
-import { RegistrationParams } from '../../utils/urlPaths';
+import { IdentifierParams } from '../../utils/urlPaths';
 import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { ActionPanel } from './ActionPanel';
@@ -19,7 +19,7 @@ import { PublicRegistrationContent } from './PublicRegistrationContent';
 export const RegistrationLandingPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { identifier } = useParams<RegistrationParams>();
+  const { identifier } = useParams<IdentifierParams>();
   const user = useSelector((store: RootState) => store.user);
 
   const registrationQuery = useQuery({

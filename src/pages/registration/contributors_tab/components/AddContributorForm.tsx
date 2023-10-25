@@ -1,6 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, TablePagination, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -8,18 +8,17 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequest } from '../../../../api/apiRequest';
 import { searchForPerson } from '../../../../api/cristinApi';
+import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
 import { CristinPerson } from '../../../../types/user.types';
-import { isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { CristinPersonList } from './CristinPersonList';
-
-const resultsPerPage = 10;
 
 interface AddContributorFormProps {
   addContributor: (selectedUser: CristinPerson) => void;
@@ -45,12 +44,13 @@ export const AddContributorForm = ({
   const [selectedUser, setSelectedUser] = useState<CristinPerson>();
   const debouncedSearchTerm = useDebounce(searchTerm);
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const personQuery = useQuery({
     enabled: debouncedSearchTerm.length > 0,
-    queryKey: ['person', resultsPerPage, page, debouncedSearchTerm],
-    queryFn: () => searchForPerson(resultsPerPage, page + 1, debouncedSearchTerm),
+    queryKey: ['person', rowsPerPage, page, debouncedSearchTerm],
+    queryFn: () => searchForPerson(rowsPerPage, page, debouncedSearchTerm),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
@@ -89,8 +89,8 @@ export const AddContributorForm = ({
         value={searchTerm}
         onChange={(event) => {
           setSearchTerm(event.target.value);
-          if (page !== 0) {
-            setPage(0);
+          if (page !== 1) {
+            setPage(1);
           }
         }}
         placeholder={t('common.search_placeholder')}
@@ -111,13 +111,15 @@ export const AddContributorForm = ({
             onSelectContributor={setSelectedUser}
             searchTerm={debouncedSearchTerm}
           />
-          <TablePagination
-            rowsPerPageOptions={[resultsPerPage]}
-            component="div"
+          <ListPagination
             count={personQuery.data?.size ?? 0}
-            rowsPerPage={resultsPerPage}
+            rowsPerPage={rowsPerPage}
             page={page}
-            onPageChange={(_, newPage) => setPage(newPage)}
+            onPageChange={(newPage) => setPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRowsPerPage(newRowsPerPage);
+              setPage(1);
+            }}
           />
         </>
       ) : (

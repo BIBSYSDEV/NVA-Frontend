@@ -2,7 +2,7 @@ import { Box, ListItem, ListItemButton, styled } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
-import { PublicationInstanceType, RegistrationSearchAggregations } from '../../../../types/registration.types';
+import { PublicationInstanceType, RegistrationAggregations } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
@@ -10,7 +10,7 @@ import { getLabelFromBucket } from '../../../../utils/translation-helpers';
 import { FacetItem } from './FacetItem';
 
 interface RegistrationFacetsFilterProps {
-  aggregations: RegistrationSearchAggregations;
+  aggregations: RegistrationAggregations;
   isLoadingSearch: boolean;
 }
 
@@ -47,14 +47,14 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
     submitForm();
   };
 
-  const topLevelOrganizationFacet = aggregations.topLevelOrganization.id;
-  const typeFacet = aggregations.entityDescription.reference.publicationInstance.type;
-  const contributorFacet = aggregations.entityDescription.contributors.identity.id;
-  const fundingFacet = aggregations.fundings.identifier;
+  const topLevelOrganizationFacet = aggregations.topLevelOrganizations?.id;
+  const typeFacet = aggregations.entityDescription?.reference?.publicationInstance?.type;
+  const contributorFacet = aggregations.entityDescription?.contributors?.identity?.id;
+  const fundingFacet = aggregations.fundings?.identifier;
 
   return (
     <>
-      {typeFacet.buckets.length > 0 && (
+      {typeFacet && typeFacet.buckets.length > 0 && (
         <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
           {typeFacet.buckets.map((bucket) => {
             const registrationType = bucket.key as PublicationInstanceType;
@@ -75,7 +75,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {topLevelOrganizationFacet.buckets.length > 0 && (
+      {topLevelOrganizationFacet && topLevelOrganizationFacet.buckets.length > 0 && (
         <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
           {topLevelOrganizationFacet.buckets.map((bucket) => (
             <ListItem
@@ -96,7 +96,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {contributorFacet.buckets.length > 0 && (
+      {contributorFacet && contributorFacet.buckets.length > 0 && (
         <FacetItem
           title={t('registration.contributors.contributor')}
           dataTestId={dataTestId.startPage.contributorFacets}>
@@ -121,7 +121,7 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
         </FacetItem>
       )}
 
-      {fundingFacet.buckets.length > 0 && (
+      {fundingFacet && fundingFacet.buckets.length > 0 && (
         <FacetItem title={t('common.funding')} dataTestId={dataTestId.startPage.institutionFacets}>
           {fundingFacet.buckets.map((bucket) => (
             <ListItem disablePadding key={bucket.key} data-testid={dataTestId.startPage.facetItem(bucket.key)}>

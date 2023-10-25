@@ -1,15 +1,16 @@
-import { TablePagination, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { RegistrationSearchResponse } from '../../../types/registration.types';
+import { SearchResponse } from '../../../types/common.types';
+import { Registration, RegistrationAggregations } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
-import { dataTestId } from '../../../utils/dataTestIds';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { RegistrationSearchResults } from './RegistrationSearchResults';
 
 interface RegistrationSearchProps {
-  searchResults?: RegistrationSearchResponse;
+  searchResults?: SearchResponse<Registration, RegistrationAggregations>;
   isLoadingSearch: boolean;
 }
 
@@ -21,7 +22,7 @@ export const RegistrationSearch = ({ searchResults, isLoadingSearch }: Registrat
   const resultsParam = params.get(SearchParam.Results);
   const fromParam = params.get(SearchParam.From);
 
-  const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[1];
+  const rowsPerPage = (resultsParam && +resultsParam) || ROWS_PER_PAGE_OPTIONS[0];
   const page = (fromParam && resultsParam && Math.floor(+fromParam / rowsPerPage)) || 0;
 
   const updatePath = (from: string, results: string) => {
@@ -37,16 +38,13 @@ export const RegistrationSearch = ({ searchResults, isLoadingSearch }: Registrat
       ) : searchResults && searchResults.hits.length > 0 ? (
         <>
           <RegistrationSearchResults searchResult={searchResults} />
-          <TablePagination
-            aria-live="polite"
-            data-testid={dataTestId.startPage.searchPagination}
-            rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-            component="div"
+          <ListPagination
             count={searchResults.size}
+            page={page + 1}
+            onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
             rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(_, newPage) => updatePath((newPage * rowsPerPage).toString(), rowsPerPage.toString())}
-            onRowsPerPageChange={(event) => updatePath('0', event.target.value)}
+            onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
+            maxHits={10_000}
           />
         </>
       ) : (

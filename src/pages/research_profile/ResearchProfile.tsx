@@ -1,13 +1,4 @@
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  IconButton,
-  List,
-  Link as MuiLink,
-  TablePagination,
-  Typography,
-} from '@mui/material';
+import { Box, Chip, CircularProgress, Divider, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -15,7 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
+import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
+import { fetchResults } from '../../api/searchApi';
+import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
+import { ProfilePicture } from '../../components/ProfilePicture';
 import { AffiliationHierarchy } from '../../components/institution/AffiliationHierarchy';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
@@ -24,8 +19,6 @@ import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
-import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
-import { ExpressionStatement } from '../../utils/searchHelpers';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { filterActiveAffiliations, getFullCristinName, getOrcidUri } from '../../utils/user-helpers';
@@ -37,8 +30,8 @@ const ResearchProfile = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const history = useHistory();
-  const [registrationsPage, setRegistrationsPage] = useState(0);
-  const [projectsPage, setProjectsPage] = useState(0);
+  const [registrationsPage, setRegistrationsPage] = useState(1);
+  const [projectsPage, setProjectsPage] = useState(1);
   const [projectRowsPerPage, setProjectRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
   const [registrationRowsPerPage, setRegistrationRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
@@ -59,32 +52,50 @@ const ResearchProfile = () => {
 
   const person = personQuery.data;
 
-  const [registrations, isLoadingRegistrations] = useSearchRegistrations(
-    {
-      properties: [
-        {
-          fieldName: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}`,
-          value: personId,
-          operator: ExpressionStatement.Contains,
-        },
-      ],
-    },
-    registrationRowsPerPage,
-    registrationRowsPerPage * registrationsPage
-  );
+  const registrationsPersonQuery = `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}:"${personId}"`;
+  const registrationsQuery = useQuery({
+    queryKey: ['registrationsSearch', registrationRowsPerPage, registrationsPage, registrationsPersonQuery],
+    queryFn: () =>
+      fetchResults(
+        registrationRowsPerPage,
+        (registrationsPage - 1) * registrationRowsPerPage,
+        registrationsPersonQuery
+      ),
+    meta: { errorMessage: t('feedback.error.get_registrations') },
+  });
 
   const projectsQuery = useQuery({
     queryKey: ['projects', projectRowsPerPage, projectsPage, personIdNumber],
-    queryFn: () => searchForProjects(projectRowsPerPage, projectsPage + 1, { participant: personIdNumber }),
+    queryFn: () => searchForProjects(projectRowsPerPage, projectsPage, { participant: personIdNumber }),
     meta: { errorMessage: t('feedback.error.project_search') },
     keepPreviousData: true,
   });
 
   const projects = projectsQuery.data?.hits ?? [];
 
+  const promotedPublicationsQuery = useQuery({
+    enabled: !!personId,
+    queryKey: ['person-preferences', personId],
+    queryFn: () => fetchPromotedPublicationsById(personId),
+    meta: { errorMessage: false },
+    retry: false,
+  });
+
+  const promotedPublications = promotedPublicationsQuery.data?.promotedPublications;
+
   const fullName = person?.names ? getFullCristinName(person.names) : '';
   const orcidUri = getOrcidUri(person?.identifiers);
   const activeAffiliations = person?.affiliations ? filterActiveAffiliations(person.affiliations) : [];
+  const personBackground = getLanguageString(person?.background);
+  const personKeywords = person?.keywords ?? [];
+
+  const registrationsHeading = registrationsQuery.data
+    ? `${t('my_page.my_profile.results')} (${registrationsQuery.data.size})`
+    : t('my_page.my_profile.results');
+
+  const projectHeading = projectsQuery.data
+    ? `${t('my_page.my_profile.projects')} (${projectsQuery.data.size})`
+    : t('my_page.my_profile.projects');
 
   return personQuery.isLoading ? (
     <PageSpinner aria-label={t('my_page.research_profile')} />
@@ -102,7 +113,20 @@ const ResearchProfile = () => {
           borderLeft: 'solid 1rem',
           borderLeftColor: 'person.main',
         }}>
-        <Typography variant="h1" sx={{ ml: '2rem', color: 'primary.contrastText' }}>
+        <ProfilePicture
+          personId={personId}
+          fullName={fullName}
+          isPublicPage
+          sx={{
+            height: '5rem',
+            position: 'absolute',
+            mt: '3rem',
+            ml: '1rem',
+            fontSize: '2rem',
+            fontWeight: 'bold',
+          }}
+        />
+        <Typography variant="h1" sx={{ ml: '7rem', color: 'primary.contrastText' }}>
           {fullName}
         </Typography>
         {orcidUri && <img src={orcidIcon} height="20" alt="orcid" />}
@@ -117,7 +141,7 @@ const ResearchProfile = () => {
             sx={{
               display: 'flex',
               gap: '0.5rem',
-              mt: '1rem',
+              mt: '1.5rem',
               flexDirection: { xs: 'column', sm: 'row' },
               flexWrap: 'wrap',
             }}>
@@ -137,7 +161,7 @@ const ResearchProfile = () => {
             ))}
           </Box>
         ) : (
-          <Typography>{t('my_page.no_employments')}</Typography>
+          <Typography sx={{ mt: '1.5rem' }}>{t('my_page.no_employments')}</Typography>
         )}
         {orcidUri && (
           <Box sx={{ display: 'flex', gap: '0.5rem', mt: '1rem', alignItems: 'center' }}>
@@ -149,38 +173,51 @@ const ResearchProfile = () => {
             </Typography>
           </Box>
         )}
-        <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
-          {`${t('my_page.my_profile.results')} ${registrations && `(${registrations.size}`})`}
-        </Typography>
-        {registrations && (
-          <>
-            {isLoadingRegistrations && !registrations ? (
-              <CircularProgress aria-labelledby="registration-label" />
-            ) : registrations.size > 0 ? (
-              <>
-                <RegistrationSearchResults searchResult={registrations} />
-                <TablePagination
-                  rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                  component="div"
-                  count={registrations.size}
-                  rowsPerPage={registrationRowsPerPage}
-                  page={registrationsPage}
-                  onPageChange={(_, newPage) => setRegistrationsPage(newPage)}
-                  onRowsPerPageChange={(event) => {
-                    setRegistrationRowsPerPage(+event.target.value);
-                    setRegistrationsPage(0);
-                  }}
-                />
-              </>
-            ) : (
-              <Typography>{t('common.no_hits')}</Typography>
+        {(!!personBackground || personKeywords.length > 0) && (
+          <Box sx={{ width: '80%', mt: '1rem' }}>
+            <Typography variant="h3" gutterBottom>
+              {t('my_page.my_profile.field_and_background.field_and_background')}
+            </Typography>
+            {personKeywords.length > 0 && (
+              <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem', flexWrap: 'wrap' }}>
+                {personKeywords.map((keyword) => (
+                  <Chip color="primary" key={keyword.type} label={getLanguageString(keyword.label)} />
+                ))}
+              </Box>
             )}
+            {!!personBackground && <Typography>{personBackground}</Typography>}
+          </Box>
+        )}
+        <Typography id="registration-label" variant="h2" gutterBottom sx={{ mt: '2rem' }}>
+          {registrationsHeading}
+        </Typography>
+        {registrationsQuery.isLoading || promotedPublicationsQuery.isLoading ? (
+          <CircularProgress aria-labelledby="registration-label" />
+        ) : registrationsQuery.data && registrationsQuery.data.size > 0 ? (
+          <>
+            <RegistrationSearchResults
+              searchResult={registrationsQuery.data}
+              promotedPublications={promotedPublications}
+            />
+            <ListPagination
+              count={registrationsQuery.data.size}
+              rowsPerPage={registrationRowsPerPage}
+              page={registrationsPage}
+              onPageChange={(newPage) => setRegistrationsPage(newPage)}
+              onRowsPerPageChange={(newRowsPerPage) => {
+                setRegistrationRowsPerPage(newRowsPerPage);
+                setRegistrationsPage(1);
+              }}
+            />
           </>
+        ) : (
+          <Typography>{t('common.no_hits')}</Typography>
         )}
 
-        <Divider />
+        <Divider sx={{ my: '1rem' }} />
+
         <Typography id="project-label" variant="h2" sx={{ mt: '1rem' }}>
-          {`${t('my_page.my_profile.projects')} (${projectsQuery.data?.size ?? 0})`}
+          {projectHeading}
         </Typography>
         {projectsQuery.isLoading ? (
           <CircularProgress aria-labelledby="project-label" />
@@ -191,16 +228,14 @@ const ResearchProfile = () => {
                 <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
               ))}
             </List>
-            <TablePagination
-              rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-              component="div"
+            <ListPagination
               count={projectsQuery.data?.size ?? 0}
               rowsPerPage={projectRowsPerPage}
               page={projectsPage}
-              onPageChange={(_, newPage) => setProjectsPage(newPage)}
-              onRowsPerPageChange={(event) => {
-                setProjectRowsPerPage(+event.target.value);
-                setProjectsPage(0);
+              onPageChange={(newPage) => setProjectsPage(newPage)}
+              onRowsPerPageChange={(newRowsPerPage) => {
+                setProjectRowsPerPage(newRowsPerPage);
+                setProjectsPage(1);
               }}
             />
           </>

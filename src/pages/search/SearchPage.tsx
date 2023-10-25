@@ -1,16 +1,19 @@
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
+import InsightsIcon from '@mui/icons-material/Insights';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Box, Divider } from '@mui/material';
-import { Form, Formik, FormikProps } from 'formik';
+import { Box, Divider, MenuItem, TextField } from '@mui/material';
+import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu } from '../../components/SideMenu';
-import { RegistrationSearchResponse } from '../../types/registration.types';
+import { SearchResponse } from '../../types/common.types';
+import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
@@ -21,6 +24,7 @@ import {
   createSearchConfigFromSearchParams,
   emptySearchConfig,
 } from '../../utils/searchHelpers';
+import { SearchTextField } from './SearchTextField';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
@@ -42,7 +46,7 @@ enum SearchTypeValue {
   Project = 'project',
 }
 
-const defaultResultSize = ROWS_PER_PAGE_OPTIONS[1].toString();
+const defaultResultSize = ROWS_PER_PAGE_OPTIONS[0].toString();
 
 const SearchPage = () => {
   const { t } = useTranslation();
@@ -56,7 +60,7 @@ const SearchPage = () => {
 
   const requestParams = new URLSearchParams(history.location.search);
   requestParams.delete(SearchParam.Type);
-  const [searchResults, isLoadingSearch] = useFetch<RegistrationSearchResponse>({
+  const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration, RegistrationAggregations>>({
     url: resultIsSelected ? `${SearchApiPath.Registrations}?${requestParams.toString()}` : '',
     errorMessage: t('feedback.error.search'),
   });
@@ -100,62 +104,6 @@ const SearchPage = () => {
           <StyledPageWithSideMenu>
             <SideMenu>
               <SideNavHeader icon={FilterAltOutlined} text={t('common.filter')} />
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: { xs: 'row', md: 'column' },
-                  flexWrap: 'wrap',
-                  gap: '0.5rem',
-                  button: { textTransform: 'none' },
-                  m: '1rem',
-                }}>
-                <SelectableButton
-                  data-testid={dataTestId.startPage.resultSearchButton}
-                  startIcon={<NotesIcon />}
-                  color="registration"
-                  isSelected={resultIsSelected}
-                  onClick={() => {
-                    if (!resultIsSelected) {
-                      const resultParams = new URLSearchParams();
-                      history.push({ search: resultParams.toString() });
-                      setValues(emptySearchConfig);
-                    }
-                  }}>
-                  {t('search.result')}
-                </SelectableButton>
-
-                <SelectableButton
-                  data-testid={dataTestId.startPage.personSearchButton}
-                  startIcon={<PersonIcon />}
-                  color="person"
-                  isSelected={personIsSeleced}
-                  onClick={() => {
-                    if (!personIsSeleced) {
-                      const personParams = new URLSearchParams();
-                      personParams.set(SearchParam.Type, SearchTypeValue.Person);
-                      history.push({ search: personParams.toString() });
-                      setValues(emptySearchConfig);
-                    }
-                  }}>
-                  {t('search.persons')}
-                </SelectableButton>
-
-                <SelectableButton
-                  data-testid={dataTestId.startPage.projectSearchButton}
-                  startIcon={<ShowChartIcon />}
-                  color="project"
-                  isSelected={projectIsSelected}
-                  onClick={() => {
-                    if (!projectIsSelected) {
-                      const projectParams = new URLSearchParams();
-                      projectParams.set(SearchParam.Type, SearchTypeValue.Project);
-                      history.push({ search: projectParams.toString() });
-                      setValues(emptySearchConfig);
-                    }
-                  }}>
-                  {t('project.project')}
-                </SelectableButton>
-              </Box>
 
               {resultIsSelected && searchResults?.aggregations && (
                 <>
@@ -172,23 +120,111 @@ const SearchPage = () => {
                       isLoadingSearch={isLoadingSearch}
                     />
                   </Box>
+                  <BetaFunctionality>
+                    <NavigationListAccordion
+                      title={t('search.reports')}
+                      startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
+                      accordionPath={''}
+                      dataTestId={dataTestId.startPage.reportsAccordion}>
+                      <></>
+                    </NavigationListAccordion>
+                  </BetaFunctionality>
                 </>
               )}
             </SideMenu>
 
-            {resultIsSelected && (
+            <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
               <Box
                 sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  rowGap: '1rem',
+                  display: 'grid',
+                  gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
+                  gap: '1rem 0.5rem',
+                  mx: { xs: '1rem', md: 0 },
                 }}>
-                <RegistrationSearchBar aggregations={searchResults?.aggregations} />
-                <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
+                <TextField
+                  select
+                  value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
+                  sx={{
+                    mb: !resultIsSelected ? '1rem' : 0,
+                    minWidth: '10rem',
+                    '.MuiSelect-select': {
+                      display: 'flex',
+                      gap: '0.5rem',
+                      alignItems: 'center',
+                      bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
+                    },
+                  }}
+                  inputProps={{ 'aria-label': t('common.type') }}>
+                  <MenuItem
+                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+                    value={SearchTypeValue.Result}
+                    onClick={() => {
+                      if (!resultIsSelected) {
+                        const resultParams = new URLSearchParams();
+                        history.push({ search: resultParams.toString() });
+                        setValues(emptySearchConfig);
+                      }
+                    }}>
+                    <NotesIcon fontSize="small" />
+                    {t('search.result')}
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+                    value={SearchTypeValue.Person}
+                    onClick={() => {
+                      if (!personIsSeleced) {
+                        const personParams = new URLSearchParams();
+                        personParams.set(SearchParam.Type, SearchTypeValue.Person);
+                        history.push({ search: personParams.toString() });
+                        setValues(emptySearchConfig);
+                      }
+                    }}>
+                    <PersonIcon fontSize="small" />
+                    {t('search.persons')}
+                  </MenuItem>
+                  <MenuItem
+                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+                    value={SearchTypeValue.Project}
+                    onClick={() => {
+                      if (!projectIsSelected) {
+                        const projectParams = new URLSearchParams();
+                        projectParams.set(SearchParam.Type, SearchTypeValue.Project);
+                        history.push({ search: projectParams.toString() });
+                        setValues(emptySearchConfig);
+                      }
+                    }}>
+                    <ShowChartIcon fontSize="small" />
+                    {t('project.project')}
+                  </MenuItem>
+                </TextField>
+                {resultIsSelected && <RegistrationSearchBar aggregations={searchResults?.aggregations} />}
+                {(personIsSeleced || projectIsSelected) && (
+                  <Field name="searchTerm">
+                    {({ field, form: { submitForm } }: FieldProps<string>) => (
+                      <SearchTextField
+                        {...field}
+                        placeholder={
+                          personIsSeleced
+                            ? t('search.person_search_placeholder')
+                            : t('search.project_search_placeholder')
+                        }
+                        clearValue={() => {
+                          field.onChange({ target: { value: '', id: field.name } });
+                          submitForm();
+                        }}
+                      />
+                    )}
+                  </Field>
+                )}
               </Box>
-            )}
-            {personIsSeleced && <PersonSearch />}
-            {projectIsSelected && <ProjectSearch />}
+
+              {resultIsSelected && (
+                <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
+              )}
+
+              {personIsSeleced && <PersonSearch />}
+              {projectIsSelected && <ProjectSearch />}
+            </Box>
           </StyledPageWithSideMenu>
         </Form>
       )}

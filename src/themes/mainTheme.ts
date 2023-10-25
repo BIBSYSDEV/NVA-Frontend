@@ -1,11 +1,12 @@
 import { PaletteColorOptions, SxProps, createTheme } from '@mui/material';
-import { enUS as coreEnUs, nbNO as coreNbNo } from '@mui/material/locale';
+import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
 import { enUS as pickersEnUs, nbNO as pickersNbNo } from '@mui/x-date-pickers';
 import i18n from '../translations/i18n';
 
 // Colors: https://www.figma.com/file/3hggk6SX2ca81U8kwaZKFs/Farger-NVA
 enum Color {
   Black = '#222',
+  CentralImportMain = '#D9D9D9',
   ErrorMain = '#AC0303',
   PrimaryMain = '#0F0035',
   SecondaryLight = '#F9F4E6',
@@ -26,9 +27,11 @@ enum Color {
   Project = '#E48F8F',
   PublishingRequest = '#FFD27B',
   PublishingRequestLight = '#FFF0D3',
+  NviMain = '#EE95EA',
+  NviLight = '#F8D3F6',
 }
 
-const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
+const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
 const pickersLocale = i18n.language === 'eng' ? pickersEnUs : pickersNbNo;
 
 declare module '@mui/material/styles' {
@@ -39,6 +42,8 @@ declare module '@mui/material/styles' {
     publishingRequest: PaletteColorOptions;
     doiRequest: PaletteColorOptions;
     generalSupportCase: PaletteColorOptions;
+    centralImport: PaletteColorOptions;
+    nvi: PaletteColorOptions;
   }
   interface PaletteOptions {
     registration?: PaletteColorOptions;
@@ -47,6 +52,8 @@ declare module '@mui/material/styles' {
     publishingRequest?: PaletteColorOptions;
     doiRequest?: PaletteColorOptions;
     generalSupportCase?: PaletteColorOptions;
+    centralImport?: PaletteColorOptions;
+    nvi?: PaletteColorOptions;
   }
 }
 declare module '@mui/material/Button' {
@@ -105,6 +112,9 @@ export const mainTheme = createTheme(
       project: {
         main: Color.Project,
       },
+      centralImport: {
+        main: Color.CentralImportMain,
+      },
       publishingRequest: {
         main: Color.PublishingRequest,
         light: Color.PublishingRequestLight,
@@ -116,6 +126,10 @@ export const mainTheme = createTheme(
       generalSupportCase: {
         main: Color.GeneralSupportCase,
         light: Color.GeneralSupportCaseLight,
+      },
+      nvi: {
+        main: Color.NviMain,
+        light: Color.NviLight,
       },
       background: {
         default: Color.White,

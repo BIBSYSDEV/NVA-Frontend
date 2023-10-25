@@ -1,5 +1,5 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
-import { AggregationBucket, Aggregations, LanguageString, SearchResponse } from './common.types';
+import { AggregationBucket, Aggregations, LanguageString } from './common.types';
 import { Contributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import {
@@ -77,7 +77,7 @@ interface RegistrationPublisher {
 }
 
 export interface BaseRegistration {
-  readonly type: 'Publication';
+  readonly type: 'Publication' | 'ImportCandidate';
   readonly id: string;
   readonly identifier: string;
   readonly createdDate: string;
@@ -264,35 +264,31 @@ interface ContributorAggregationBucket extends AggregationBucket {
   };
 }
 
-export interface RegistrationSearchAggregations {
-  topLevelOrganization: {
-    id: {
+export interface RegistrationAggregations {
+  topLevelOrganizations?: {
+    id?: {
       buckets: LabelAggregationBucket[];
     };
   };
-  entityDescription: {
-    reference: {
-      publicationInstance: {
-        type: {
+  entityDescription?: {
+    reference?: {
+      publicationInstance?: {
+        type?: {
           buckets: AggregationBucket[];
         };
       };
     };
-    contributors: {
-      identity: {
-        id: {
+    contributors?: {
+      identity?: {
+        id?: {
           buckets: ContributorAggregationBucket[];
         };
       };
     };
   };
-  fundings: {
-    identifier: {
+  fundings?: {
+    identifier?: {
       buckets: LabelAggregationBucket[];
     };
   };
-}
-
-export interface RegistrationSearchResponse extends Omit<SearchResponse<Registration>, 'aggregations'> {
-  aggregations?: RegistrationSearchAggregations;
 }

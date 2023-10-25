@@ -10,7 +10,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   TextField,
   Tooltip,
@@ -19,6 +18,7 @@ import { FieldArrayRenderProps, move, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { ListPagination } from '../../../components/ListPagination';
 import { setNotification } from '../../../redux/notificationSlice';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import {
@@ -52,7 +52,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [openAddContributor, setOpenAddContributor] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [filterInput, setFilterInput] = useState('');
 
   const contributors = values.entityDescription?.contributors ?? [];
@@ -62,14 +62,14 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     : contributors.filter((contributor) =>
         contributor.identity.name.toLocaleLowerCase().includes(filterInput.toLocaleLowerCase())
       );
-  const contributorsToShow = filteredContributors.slice(rowsPerPage * currentPage, rowsPerPage * (currentPage + 1));
+  const contributorsToShow = filteredContributors.slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage);
 
   const handleOnRemove = (indexToRemove: number) => {
     const nextContributors = contributors
       .filter((_, index) => index !== indexToRemove)
       .map((contributor, index) => ({ ...contributor, sequence: index + 1 }));
     setFieldValue(ContributorFieldNames.Contributors, nextContributors);
-    const maxValidPage = Math.ceil(nextContributors.length / rowsPerPage) - 1;
+    const maxValidPage = Math.ceil(nextContributors.length / rowsPerPage);
 
     if (currentPage > maxValidPage) {
       setCurrentPage(maxValidPage);
@@ -105,7 +105,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
   };
 
   const goToLastPage = () => {
-    const maxValidPage = Math.floor(contributors.length / rowsPerPage);
+    const maxValidPage = Math.floor(contributors.length / rowsPerPage) + 1;
     setCurrentPage(maxValidPage);
   };
 
@@ -172,6 +172,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     <>
       {contributors.length > 5 && (
         <TextField
+          data-testid={dataTestId.registrationWizard.contributors.contributorSearchField}
           type="search"
           sx={{ display: 'block', mb: '1rem' }}
           label={t('common.search_by_name')}
@@ -184,7 +185,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
             ),
           }}
           onChange={(event) => {
-            setCurrentPage(0);
+            setCurrentPage(1);
             setFilterInput(event.target.value);
           }}
         />
@@ -246,16 +247,15 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         }}
       />
       {contributorsToShow.length > 0 && (
-        <TablePagination
-          rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-          component="div"
+        <ListPagination
+          sx={{ my: '0.5rem' }}
           count={filteredContributors.length}
           rowsPerPage={rowsPerPage}
           page={currentPage}
-          onPageChange={(_, newPage) => setCurrentPage(newPage)}
-          onRowsPerPageChange={(event) => {
-            setRowsPerPage(parseInt(event.target.value));
-            setCurrentPage(0);
+          onPageChange={(newPage) => setCurrentPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setCurrentPage(1);
           }}
         />
       )}
