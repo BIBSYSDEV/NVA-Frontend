@@ -220,6 +220,7 @@ const TasksPage = () => {
           setOrganizationScope={setOrganizationScope}
           excludeSubunits={excludeSubunits}
           setExcludeSubunits={setExcludeSubunits}
+          hide={isOnCorrectionListPage}
         />
 
         {isCurator && (
