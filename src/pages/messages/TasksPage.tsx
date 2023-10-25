@@ -25,7 +25,7 @@ import { fetchUser } from '../../api/roleApi';
 import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { LinkButton, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
@@ -531,7 +531,11 @@ const TasksPage = () => {
               startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
               accordionPath={UrlPathTemplate.TasksNviCorrectionList}
               dataTestId={dataTestId.tasksPage.correctionListAccordion}>
-              <></>
+              <NavigationList>
+                <LinkButton isSelected={isOnCorrectionListPage} to={UrlPathTemplate.TasksNviCorrectionList}>
+                  {t('tasks.correction_list')}
+                </LinkButton>
+              </NavigationList>
             </NavigationListAccordion>
           </>
         )}
