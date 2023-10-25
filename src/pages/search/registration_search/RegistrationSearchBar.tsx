@@ -99,9 +99,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
       <FieldArray name="properties">
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
-            <Box
-              gridArea="advanced"
-              sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', ml: { sm: 0, md: '-10.8rem' } }}>
+            <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {properties.map((property, index) => {
                 const thisFilter = registrationFilters.find((filter) => filter.field === property.fieldName);
                 if (property.fieldName && !thisFilter?.manuallyAddable) {
