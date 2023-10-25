@@ -17,7 +17,6 @@ export const LanguageSelector = () => {
         gap: '0.25rem',
       }}>
       <Button
-        startIcon={<img src="https://flagcdn.com/h20/no.jpg" height="18" width="24" alt="" />}
         sx={{ borderBottom: i18n.language === 'nob' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('nob')}
@@ -35,7 +34,6 @@ export const LanguageSelector = () => {
       <Divider orientation="vertical" flexItem sx={{ bgcolor: 'primary.main', height: '1rem', alignSelf: 'center' }} />
 
       <Button
-        startIcon={<img src="https://flagcdn.com/h20/gb.jpg" height="18" width="24" alt="" />}
         sx={{ borderBottom: i18n.language === 'eng' ? '4px solid' : 'none', borderRadius: '0' }}
         size="small"
         onClick={() => setLanguage('eng')}
