@@ -26,6 +26,7 @@ export interface OrganizationScopeProps {
   setOrganizationScope: Dispatch<SetStateAction<string[]>>;
   excludeSubunits: boolean;
   setExcludeSubunits: Dispatch<SetStateAction<boolean>>;
+  hide?: boolean;
 }
 
 export const OrganizationScope = ({
@@ -33,6 +34,7 @@ export const OrganizationScope = ({
   setOrganizationScope,
   excludeSubunits,
   setExcludeSubunits,
+  hide = false,
 }: OrganizationScopeProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -55,7 +57,9 @@ export const OrganizationScope = ({
     : [];
 
   return (
-    <Box component="article" sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+    <Box
+      component="article"
+      sx={{ m: '1rem', display: hide ? 'none' : 'flex', flexDirection: 'column', gap: '0.5rem' }}>
       {organizationScope.map((organizationScopeId) => (
         <OrganizationScopeItem
           key={organizationScopeId}

@@ -103,8 +103,8 @@
         "ABM": "Arkiv, Bibliotek og Museum",
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)",
-        "OTHER": "Øvrige"
+        "OTHER": "Øvrige",
+        "UHI": "Universitet og høyskoler (UH)"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -208,7 +208,6 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
     "select_institution": "Velg institusjon",
-    "select_language": "Velg språk",
     "selected": "Valgt",
     "send": "Send",
     "settings": "Innstillinger",
@@ -243,6 +242,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -328,11 +331,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -355,6 +354,8 @@
     "institution": {
       "institution_code": "Institusjonens kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
+      "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil benytte Norsk vitenskapsindeks",
+      "institution_is_nvi_institution": "Institusjonen rapporterer til Norsk vitenskapsindeks",
       "institution_name": "Institusjonsnavn",
       "institution_name_english": "Institusjonens engelske navn",
       "institution_name_norwegian": "Institusjonens norske navn",
@@ -1645,9 +1646,10 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
-        "Pending": "Til kontroll",
+        "Pending": "Kandidat",
         "Rejected": "Avvist"
       },
+      "undistributed_points": "Ikke fordelt",
       "waiting_for_other_institutions": "Venter på andre institusjoner",
       "waiting_for_your_institution": "Venter på din institusjon"
     },

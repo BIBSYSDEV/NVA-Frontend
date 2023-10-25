@@ -63,6 +63,15 @@ export const EditorInstitution = () => {
             )}
           </Typography>
 
+          <Typography variant="h3" component="h2">
+            {t('common.nvi')}
+          </Typography>
+          <Typography paragraph>
+            {customer?.nviInstitution
+              ? t('editor.institution.institution_is_nvi_institution')
+              : t('editor.institution.institution_is_not_nvi_institution')}
+          </Typography>
+
           <Typography sx={{ pt: '1rem' }}>
             <Trans t={t} i18nKey="editor.institution.institution_helper_text">
               <Link href="mailto:kontakt@sikt.no" target="_blank" rel="noopener noreferrer" />
