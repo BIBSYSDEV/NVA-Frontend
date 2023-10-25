@@ -1,4 +1,4 @@
-import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
+import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
@@ -108,7 +108,7 @@ const SearchPage = () => {
 
               <NavigationListAccordion
                 title={t('common.filter')}
-                startIcon={<FilterAltOutlined sx={{ bgcolor: 'white' }} />}
+                startIcon={<FilterIcon sx={{ bgcolor: 'white' }} />}
                 accordionPath=""
                 dataTestId={dataTestId.startPage.filterAccordion}>
                 <>
@@ -133,7 +133,7 @@ const SearchPage = () => {
                 <NavigationListAccordion
                   title={t('search.reports')}
                   startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
-                  accordionPath={'/reports'}
+                  accordionPath={''}
                   dataTestId={dataTestId.startPage.reportsAccordion}>
                   <></>
                 </NavigationListAccordion>
