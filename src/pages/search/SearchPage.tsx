@@ -138,21 +138,20 @@ const SearchPage = () => {
                 sx={{
                   display: 'grid',
                   gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
-                  gap: '0.5rem',
+                  gap: '1rem 0.5rem',
+                  mx: { xs: '1rem', md: 0 },
                 }}>
                 <TextField
                   select
                   value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
                   sx={{
                     mb: !resultIsSelected ? '1rem' : 0,
-                    ml: { xs: '1rem', md: 0 },
-                    minWidth: '10.33rem',
+                    minWidth: '10rem',
                     '.MuiSelect-select': {
                       display: 'flex',
                       gap: '0.5rem',
                       alignItems: 'center',
                       bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
-                      maxHeight: '1rem',
                     },
                   }}
                   inputProps={{ 'aria-label': t('common.type') }}>
@@ -180,7 +179,7 @@ const SearchPage = () => {
                         setValues(emptySearchConfig);
                       }
                     }}>
-                    <PersonIcon />
+                    <PersonIcon fontSize="small" />
                     {t('search.persons')}
                   </MenuItem>
                   <MenuItem
@@ -194,7 +193,7 @@ const SearchPage = () => {
                         setValues(emptySearchConfig);
                       }
                     }}>
-                    <ShowChartIcon />
+                    <ShowChartIcon fontSize="small" />
                     {t('project.project')}
                   </MenuItem>
                 </TextField>
