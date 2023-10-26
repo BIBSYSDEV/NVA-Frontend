@@ -178,54 +178,62 @@ export const CustomerInstitutionMetadataForm = ({
               )}
             </Field>
 
-            <Field name={CustomerInstitutionFieldNames.NviInstitution}>
-              {({ field }: FieldProps<boolean>) => (
-                <div>
-                  <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                    {t('common.nvi')}
-                  </FormLabel>
-                  <FormControlLabel
-                    label={t('basic_data.institutions.institution_is_nvi_applicable')}
-                    control={
-                      <Checkbox
-                        data-testid={dataTestId.basicData.institutionAdmin.nviInstitutionCheckbox}
-                        {...field}
-                        checked={field.value}
-                      />
-                    }
-                  />
-                </div>
-              )}
-            </Field>
+            <div>
+              <Field name={CustomerInstitutionFieldNames.NviInstitution}>
+                {({ field }: FieldProps<boolean>) => (
+                  <>
+                    <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                      {t('common.nvi')}
+                    </FormLabel>
+                    <FormControlLabel
+                      label={t('basic_data.institutions.institution_is_nvi_applicable')}
+                      control={
+                        <Checkbox
+                          data-testid={dataTestId.basicData.institutionAdmin.nviInstitutionCheckbox}
+                          {...field}
+                          checked={field.value}
+                          onChange={(event, checked) => {
+                            if (!checked) {
+                              setFieldValue(CustomerInstitutionFieldNames.RboInstitution, false);
+                            }
+                            field.onChange(event);
+                          }}
+                        />
+                      }
+                    />
+                  </>
+                )}
+              </Field>
 
-            <Field name={CustomerInstitutionFieldNames.RboInstitution}>
-              {({ field }: FieldProps<boolean>) => (
-                <div>
-                  <FormLabel
-                    component="legend"
-                    sx={{
-                      fontWeight: 'bold',
-                      marginTop: '-1rem',
-                      marginLeft: '2rem',
-                    }}>
-                    {t('common.rbo')}
-                  </FormLabel>
-                  <FormControlLabel
-                    label={t('basic_data.institutions.institution_receives_funding_via_rbo')}
-                    control={
-                      <Checkbox
-                        sx={{
-                          marginLeft: '2rem',
-                        }}
-                        data-testid={dataTestId.basicData.institutionAdmin.rboInstitutionCheckbox}
-                        {...field}
-                        checked={field.value}
-                      />
-                    }
-                  />
-                </div>
-              )}
-            </Field>
+              <Field name={CustomerInstitutionFieldNames.RboInstitution}>
+                {({ field }: FieldProps<boolean>) => (
+                  <>
+                    <FormLabel
+                      component="legend"
+                      sx={{
+                        fontWeight: 'bold',
+                        marginLeft: '2rem',
+                      }}>
+                      {t('common.rbo')}
+                    </FormLabel>
+                    <FormControlLabel
+                      label={t('basic_data.institutions.institution_receives_funding_via_rbo')}
+                      disabled={!values.customer.nviInstitution}
+                      control={
+                        <Checkbox
+                          sx={{
+                            marginLeft: '2rem',
+                          }}
+                          data-testid={dataTestId.basicData.institutionAdmin.rboInstitutionCheckbox}
+                          {...field}
+                          checked={field.value}
+                        />
+                      }
+                    />
+                  </>
+                )}
+              </Field>
+            </div>
 
             {editMode && (
               <div>
