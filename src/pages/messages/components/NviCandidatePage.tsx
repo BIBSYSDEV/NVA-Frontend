@@ -25,7 +25,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
 
-  const offsetNextCandidate = location.state?.offsetNextCandidate;
+  const offsetNextCandidate = location.state?.offsetNextCandidate ?? 0;
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -49,12 +49,16 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
 
   const nextCandidateQuery = useQuery({
     queryKey: ['nextCandidate', 1, offsetNextCandidate, nviListQuery],
-    queryFn: offsetNextCandidate ? () => fetchNviCandidates(1, offsetNextCandidate, `${nviListQuery}`) : undefined,
+    queryFn: offsetNextCandidate ? () => fetchNviCandidates(1, offsetNextCandidate, nviListQuery) : undefined,
     meta: { errorMessage: false },
     retry: false,
   });
 
-  const nextCandidateIdentifier = nextCandidateQuery.data?.hits?.[0]?.identifier;
+  const nextCandidateIdentifier = nextCandidateQuery.data?.hits[0]?.identifier;
+
+  const offsetNextCandidateState: CandidateOffsetState = {
+    offsetNextCandidate: offsetNextCandidate + 1,
+  };
 
   return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
     <PageSpinner aria-label={t('common.result')} />
@@ -78,7 +82,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
                 component={Link}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
-                  state: { offsetNextCandidate: offsetNextCandidate + 1 },
+                  state: offsetNextCandidateState,
                 }}>
                 <IconButton
                   data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}

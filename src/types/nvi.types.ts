@@ -50,7 +50,6 @@ export type NviCandidateSearchResponse = Omit<
   'size' | 'processingTime'
 > & {
   totalHits: number;
-  nextResults: string;
 };
 
 export interface ApprovalStatus {
@@ -101,5 +100,5 @@ export interface NviPeriodResponse {
 }
 
 export interface CandidateOffsetState {
-  offsetNextCandidate?: number;
+  offsetNextCandidate: number;
 }
