@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Chip } from '@mui/material';
+import { Autocomplete, Chip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -60,7 +61,7 @@ export const SeriesField = () => {
   });
 
   return (
-    <Box sx={{ display: 'flex', gap: '1rem' }}>
+    <StyledChannelContainerBox>
       <Field name={ResourceFieldNames.SeriesId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
@@ -128,12 +129,9 @@ export const SeriesField = () => {
       </Field>
       {!series?.id && seriesOptionsQuery.isFetched && (
         <>
-          <Button
-            variant="outlined"
-            sx={{ height: 'fit-content', whiteSpace: 'nowrap', mt: '0.5rem' }}
-            onClick={toggleSeriesForm}>
+          <StyledCreateChannelButton variant="outlined" onClick={toggleSeriesForm}>
             {t('registration.resource_type.create_series')}
-          </Button>
+          </StyledCreateChannelButton>
           <JournalFormDialog
             open={showSeriesForm}
             closeDialog={toggleSeriesForm}
@@ -148,6 +146,6 @@ export const SeriesField = () => {
           />
         </>
       )}
-    </Box>
+    </StyledChannelContainerBox>
   );
 };

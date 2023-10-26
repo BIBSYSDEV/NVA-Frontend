@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Chip } from '@mui/material';
+import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
@@ -24,6 +24,28 @@ interface JournalFieldProps {
   confirmedContextType: PublicationChannelType;
   unconfirmedContextType: PublicationChannelType;
 }
+
+export const StyledChannelContainerBox = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  columnGap: '1rem',
+
+  gridTemplateColumns: '4fr 1fr',
+  [theme.breakpoints.down('md')]: {
+    gridTemplateColumns: '1fr',
+  },
+}));
+
+export const StyledCreateChannelButton = styled(Button)(({ theme }) => ({
+  height: 'fit-content',
+  width: 'fit-content',
+  whiteSpace: 'nowrap',
+  marginTop: '0.5rem',
+
+  justifySelf: 'end',
+  [theme.breakpoints.down('md')]: {
+    justifySelf: 'start',
+  },
+}));
 
 export const JournalField = ({ confirmedContextType, unconfirmedContextType }: JournalFieldProps) => {
   const { t } = useTranslation();
@@ -80,7 +102,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   });
 
   return (
-    <Box sx={{ display: 'flex', gap: '1rem' }}>
+    <StyledChannelContainerBox>
       <Field name={ResourceFieldNames.PublicationContextId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
@@ -152,12 +174,9 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
       </Field>
       {!reference?.publicationContext.id && journalOptionsQuery.isFetched && (
         <>
-          <Button
-            variant="outlined"
-            sx={{ height: 'fit-content', whiteSpace: 'nowrap', mt: '0.5rem' }}
-            onClick={toggleJournalForm}>
+          <StyledCreateChannelButton variant="outlined" onClick={toggleJournalForm}>
             {t('registration.resource_type.create_journal')}
-          </Button>
+          </StyledCreateChannelButton>
           <JournalFormDialog
             open={showJournalForm}
             closeDialog={toggleJournalForm}
@@ -171,6 +190,6 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
           />
         </>
       )}
-    </Box>
+    </StyledChannelContainerBox>
   );
 };

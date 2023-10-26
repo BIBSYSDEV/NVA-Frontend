@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, Chip } from '@mui/material';
+import { Autocomplete, Chip } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import { BookEntityDescription } from '../../../../types/publication_types/bookR
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
+import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
 import { PublisherFormDialog } from './PublisherFormDialog';
@@ -58,7 +59,7 @@ export const PublisherField = () => {
   });
 
   return (
-    <Box sx={{ display: 'flex', gap: '1rem' }}>
+    <StyledChannelContainerBox>
       <Field name={ResourceFieldNames.PublicationContextPublisherId}>
         {({ field, meta }: FieldProps<string>) => (
           <Autocomplete
@@ -132,12 +133,9 @@ export const PublisherField = () => {
       </Field>
       {!publisher?.id && publisherOptionsQuery.isFetched && (
         <>
-          <Button
-            variant="outlined"
-            sx={{ height: 'fit-content', whiteSpace: 'nowrap', mt: '0.5rem' }}
-            onClick={togglePublisherForm}>
+          <StyledCreateChannelButton variant="outlined" onClick={togglePublisherForm}>
             {t('registration.resource_type.create_publisher')}
-          </Button>
+          </StyledCreateChannelButton>
           <PublisherFormDialog
             open={showPublisherForm}
             closeDialog={togglePublisherForm}
@@ -151,6 +149,6 @@ export const PublisherField = () => {
           />
         </>
       )}
-    </Box>
+    </StyledChannelContainerBox>
   );
 };
