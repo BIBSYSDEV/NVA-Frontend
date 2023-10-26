@@ -136,6 +136,7 @@ export const dataTestId = {
     orderBySelect: 'order-by-select',
     personSearchButton: 'person-search-button',
     projectSearchButton: 'project-search-button',
+    reportsAccordion: 'reports-accordion',
     resultSearchButton: 'result-search-button',
     readMoreButton: 'button-read-more',
     searchButton: 'search-button',
@@ -487,6 +488,7 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
+    correctionListAccordion: 'correction-list-accordion',
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {

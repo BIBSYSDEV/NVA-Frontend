@@ -51,6 +51,7 @@ export enum UrlPathTemplate {
   TasksDialogueRegistration = '/tasks/dialogue/:identifier',
   TasksNvi = '/tasks/nvi',
   TasksNviCandidate = '/tasks/nvi/:identifier',
+  TasksNviCorrectionList = '/tasks/correction-list',
   Wildcard = '*',
 }
 

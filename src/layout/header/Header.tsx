@@ -14,7 +14,6 @@ import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { LanguageSelector } from './LanguageSelector';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
@@ -48,15 +47,13 @@ export const Header = () => {
           display: 'grid',
           justifyItems: 'center',
           gridTemplateAreas: {
-            xs: '"language logo user-menu"',
-            lg: '"language logo search new-result user-menu"',
+            xs: '"logo user-menu"',
+            lg: '"logo search new-result user-menu"',
           },
-          gridTemplateColumns: { xs: 'auto auto auto', lg: '3fr auto 1fr 10fr 5fr' },
+          gridTemplateColumns: { xs: 'auto auto auto', lg: '3fr 1fr 10fr 5fr' },
           gap: '1rem',
           px: '1rem',
         }}>
-        <LanguageSelector isMobile={isMobile} />
-
         <Logo />
 
         {isLargeScreen && (

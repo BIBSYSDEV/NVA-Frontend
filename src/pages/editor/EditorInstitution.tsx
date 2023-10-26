@@ -63,15 +63,14 @@ export const EditorInstitution = () => {
             )}
           </Typography>
 
-          <div>
-            <Typography variant="h3" component="h2">
-              {t('common.nvi')}
-            </Typography>
-            <FormControlLabel
-              label={t('basic_data.institutions.institution_is_nvi_applicable')}
-              control={<Checkbox disabled={true} checked={customer?.nviInstitution} />}
-            />
-          </div>
+          <Typography variant="h3" component="h2">
+            {t('common.nvi')}
+          </Typography>
+          <Typography paragraph>
+            {customer?.nviInstitution
+              ? t('editor.institution.institution_is_nvi_institution')
+              : t('editor.institution.institution_is_not_nvi_institution')}
+          </Typography>
 
           <div>
             <Typography

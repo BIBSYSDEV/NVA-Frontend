@@ -52,6 +52,15 @@ export const UserRolesSelector = ({
           label={<RoleLabel title={t('my_page.roles.curator')} description={t('my_page.roles.curator_description')} />}
         />
         <FormControlLabel
+          control={<Checkbox checked={selectedRoles.includes(RoleName.NviCurator)} value={RoleName.NviCurator} />}
+          label={
+            <RoleLabel
+              title={t('my_page.roles.nvi_curator')}
+              description={t('my_page.roles.nvi_curator_description')}
+            />
+          }
+        />
+        <FormControlLabel
           control={<Checkbox checked={selectedRoles.includes(RoleName.Editor)} value={RoleName.Editor} />}
           label={<RoleLabel title={t('my_page.roles.editor')} description={t('my_page.roles.editor_description')} />}
         />
@@ -88,15 +97,6 @@ export const UserRolesSelector = ({
                 <RoleLabel
                   title={t('my_page.roles.internal_importer')}
                   description={t('my_page.roles.internal_importer_description')}
-                />
-              }
-            />
-            <FormControlLabel
-              control={<Checkbox checked={selectedRoles.includes(RoleName.NviCurator)} value={RoleName.NviCurator} />}
-              label={
-                <RoleLabel
-                  title={t('my_page.roles.nvi_curator')}
-                  description={t('my_page.roles.nvi_curator_description')}
                 />
               }
             />

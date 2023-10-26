@@ -1,18 +1,21 @@
 import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
+import InsightsIcon from '@mui/icons-material/Insights';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Box, Divider, MenuItem, TextField } from '@mui/material';
-import { Form, Formik, FormikProps } from 'formik';
-import { useState } from 'react';
+import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { SearchResponse } from '../../types/common.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
+import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import {
   SearchConfig,
@@ -21,6 +24,7 @@ import {
   createSearchConfigFromSearchParams,
   emptySearchConfig,
 } from '../../utils/searchHelpers';
+import { SearchTextField } from './SearchTextField';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
@@ -49,7 +53,6 @@ const SearchPage = () => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
-  const [selectedSearchType, setSelectedSearchType] = useState(SearchTypeValue.Result);
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
@@ -101,17 +104,49 @@ const SearchPage = () => {
           <StyledPageWithSideMenu>
             <SideMenu>
               <SideNavHeader icon={FilterAltOutlined} text={t('common.filter')} />
+
+              {resultIsSelected && searchResults?.aggregations && (
+                <>
+                  <Divider />
+                  <Box
+                    sx={{
+                      m: '1rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '1rem',
+                    }}>
+                    <RegistrationFacetsFilter
+                      aggregations={searchResults.aggregations}
+                      isLoadingSearch={isLoadingSearch}
+                    />
+                  </Box>
+                  <BetaFunctionality>
+                    <NavigationListAccordion
+                      title={t('search.reports')}
+                      startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
+                      accordionPath={''}
+                      dataTestId={dataTestId.startPage.reportsAccordion}>
+                      <></>
+                    </NavigationListAccordion>
+                  </BetaFunctionality>
+                </>
+              )}
+            </SideMenu>
+
+            <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
               <Box
                 sx={{
-                  m: '1rem',
+                  display: 'grid',
+                  gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
+                  gap: '1rem 0.5rem',
+                  mx: { xs: '1rem', md: 0 },
                 }}>
                 <TextField
                   select
-                  fullWidth
-                  size="small"
-                  value={selectedSearchType}
-                  onChange={(event) => setSelectedSearchType(event.target.value as SearchTypeValue)}
+                  value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
                   sx={{
+                    mb: !resultIsSelected ? '1rem' : 0,
+                    minWidth: '10rem',
                     '.MuiSelect-select': {
                       display: 'flex',
                       gap: '0.5rem',
@@ -119,7 +154,7 @@ const SearchPage = () => {
                       bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
                     },
                   }}
-                  inputProps={{ 'aria-label': t('common.filter') }}>
+                  inputProps={{ 'aria-label': t('common.type') }}>
                   <MenuItem
                     sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
                     value={SearchTypeValue.Result}
@@ -144,7 +179,7 @@ const SearchPage = () => {
                         setValues(emptySearchConfig);
                       }
                     }}>
-                    <PersonIcon />
+                    <PersonIcon fontSize="small" />
                     {t('search.persons')}
                   </MenuItem>
                   <MenuItem
@@ -158,38 +193,35 @@ const SearchPage = () => {
                         setValues(emptySearchConfig);
                       }
                     }}>
-                    <ShowChartIcon />
+                    <ShowChartIcon fontSize="small" />
                     {t('project.project')}
                   </MenuItem>
                 </TextField>
+                {resultIsSelected && <RegistrationSearchBar aggregations={searchResults?.aggregations} />}
+                {(personIsSeleced || projectIsSelected) && (
+                  <Field name="searchTerm">
+                    {({ field, form: { submitForm } }: FieldProps<string>) => (
+                      <SearchTextField
+                        {...field}
+                        placeholder={
+                          personIsSeleced
+                            ? t('search.person_search_placeholder')
+                            : t('search.project_search_placeholder')
+                        }
+                        clearValue={() => {
+                          field.onChange({ target: { value: '', id: field.name } });
+                          submitForm();
+                        }}
+                      />
+                    )}
+                  </Field>
+                )}
               </Box>
 
-              {resultIsSelected && searchResults?.aggregations && (
-                <>
-                  <Divider />
-                  <Box
-                    sx={{
-                      m: '1rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '1rem',
-                    }}>
-                    <RegistrationFacetsFilter
-                      aggregations={searchResults.aggregations}
-                      isLoadingSearch={isLoadingSearch}
-                    />
-                  </Box>
-                </>
-              )}
-            </SideMenu>
-
-            <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
               {resultIsSelected && (
-                <>
-                  <RegistrationSearchBar aggregations={searchResults?.aggregations} />
-                  <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
-                </>
+                <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
               )}
+
               {personIsSeleced && <PersonSearch />}
               {projectIsSelected && <ProjectSearch />}
             </Box>
