@@ -76,6 +76,11 @@ export const PublishStrategySettings = () => {
       <Helmet>
         <title id="publish-strategy-label">{t('editor.publish_strategy.publish_strategy')}</title>
       </Helmet>
+
+      <Typography variant="h1" sx={{ marginBottom: '2rem' }}>
+        {t('editor.publish_strategy.publish_strategy')}
+      </Typography>
+
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <StyledItemContainer>
           <PublishStrategyButton
@@ -139,6 +144,22 @@ export const PublishStrategySettings = () => {
           )}
         </StyledItemContainer>
       </Box>
+
+      <Typography sx={{ fontWeight: 'bold', marginTop: '2rem', marginBottom: '2rem' }}>
+        {t('editor.retentions_strategy.retentions_strategy')}
+      </Typography>
+
+      {/* TO DO: legg inn avkrysningsboks og tekst "Rights Retentions Strategy (RRS) */}
+
+      <Typography sx={{ fontWeight: 'bold', marginTop: '2rem', marginBottom: '2rem' }}>
+        {t('editor.retentions_strategy.institution_rrs_info_page')}
+      </Typography>
+
+      {/* TO DO: legg inn felt for lenke */}
+
+      {/* TO DO: tekst om obligatorisk felt */}
+
+      {/* TO DO: legg inn avkrysningsboks og tekst "Registrator kan fraskrive seg RRS */}
     </>
   );
 };
