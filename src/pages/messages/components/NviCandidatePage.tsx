@@ -1,5 +1,6 @@
 import { Box, Divider, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
@@ -9,6 +10,7 @@ import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams } from '../../../utils/urlPaths';
+import { Forbidden } from '../../errorpages/Forbidden';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NviApprovalStatuses } from './NviApprovalStatuses';
 import { NviCandidateActions } from './NviCandidateActions';
@@ -23,6 +25,12 @@ export const NviCandidatePage = () => {
     queryKey: nviCandidateQueryKey,
     queryFn: () => fetchNviCandidate(identifier),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
+    retry(failureCount, error: Pick<AxiosError, 'response'>) {
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        return false;
+      }
+      return failureCount < 3;
+    },
   });
 
   const nviCandidate = nviCandidateQuery.data;
@@ -37,7 +45,9 @@ export const NviCandidatePage = () => {
 
   const periodStatus = nviCandidate?.periodStatus.status;
 
-  return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
+  return nviCandidateQuery.error?.response?.status === 401 ? (
+    <Forbidden />
+  ) : registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : (
     <Box
