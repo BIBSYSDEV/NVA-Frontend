@@ -605,7 +605,7 @@ export const userCanEditRegistration = (user: User | null, registration: Registr
   }
 
   const isValidCurator = userIsRegistrationCurator(user, registration);
-  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance.type)) {
+  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance?.type)) {
     return isValidCurator && user.isThesisCurator;
   }
 
