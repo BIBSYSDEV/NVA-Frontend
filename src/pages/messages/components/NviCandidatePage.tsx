@@ -26,7 +26,7 @@ export const NviCandidatePage = () => {
     queryFn: () => fetchNviCandidate(identifier),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
     retry(failureCount, error: Pick<AxiosError, 'response'>) {
-      if (error.response?.status === 401 || error.response?.status === 403) {
+      if (error.response?.status === 401) {
         return false;
       }
       return failureCount < 3;
