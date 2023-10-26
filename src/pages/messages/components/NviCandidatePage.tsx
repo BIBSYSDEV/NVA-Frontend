@@ -1,5 +1,5 @@
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Divider, IconButton, Link as MuiLink, Paper, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
@@ -77,21 +77,26 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
             <PublicRegistrationContent registration={registrationQuery.data} />
 
             {nextCandidateIdentifier && offsetNextCandidate && (
-              <MuiLink
-                sx={{ justifySelf: 'end' }}
+              <IconButton
                 component={Link}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
                   state: offsetNextCandidateState,
+                }}
+                data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
+                title={t('tasks.nvi.next_candidate')}
+                size="small"
+                sx={{
+                  bgcolor: 'info.main',
+                  width: '2.5rem',
+                  aspectRatio: '1 / 1',
+                  justifySelf: 'end',
+                  '&:hover': {
+                    bgcolor: 'info.main',
+                  },
                 }}>
-                <IconButton
-                  data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
-                  title={t('tasks.nvi.next_candidate')}
-                  size="small"
-                  sx={{ bgcolor: 'info.main', color: 'white' }}>
-                  <ArrowForwardIosIcon />
-                </IconButton>
-              </MuiLink>
+                <ArrowForwardIosIcon sx={{ color: 'white' }} />
+              </IconButton>
             )}
           </ErrorBoundary>
 
