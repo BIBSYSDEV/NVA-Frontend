@@ -1,14 +1,17 @@
-import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
+import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
+import SearchIcon from '@mui/icons-material/Search';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Box, Button, Divider, MenuItem, TextField } from '@mui/material';
+import { Box, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
+import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { SearchResponse } from '../../types/common.types';
@@ -104,67 +107,64 @@ const SearchPage = () => {
         <Form style={{ width: '100%' }}>
           <StyledPageWithSideMenu>
             <SideMenu>
-              <SideNavHeader icon={FilterAltOutlined} text={t('common.filter')} />
+              <SideNavHeader icon={SearchIcon} text={t('common.search')} />
 
-              {resultIsSelected && searchResults?.aggregations && (
+              <NavigationListAccordion
+                title={t('common.filter')}
+                startIcon={<FilterIcon sx={{ bgcolor: 'white' }} />}
+                accordionPath=""
+                dataTestId={dataTestId.startPage.filterAccordion}>
                 <>
-                  <Divider />
-                  <Box
-                    sx={{
-                      m: '1rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '1rem',
-                    }}>
-                    <RegistrationFacetsFilter
-                      aggregations={searchResults.aggregations}
-                      isLoadingSearch={isLoadingSearch}
-                    />
-                  </Box>
-
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button
-                      data-testid={dataTestId.startPage.reportsButton}
+                  {resultIsSelected && !reportsIsSelected && searchResults?.aggregations && (
+                    <Box
                       sx={{
-                        width: '90%',
-                        background: reportsIsSelected ? undefined : 'white',
-                        textTransform: 'none',
-                      }}
-                      variant={reportsIsSelected ? 'contained' : 'outlined'}
-                      startIcon={<InsightsIcon />}
-                      onClick={() => setReportsIsSelected(!reportsIsSelected)}>
-                      {t('search.reports.reports')}
-                    </Button>
-                  </Box>
+                        m: '1rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1rem',
+                      }}>
+                      <RegistrationFacetsFilter
+                        aggregations={searchResults.aggregations}
+                        isLoadingSearch={isLoadingSearch}
+                      />
+                    </Box>
+                  )}
                 </>
-              )}
+              </NavigationListAccordion>
+
+              <BetaFunctionality>
+                <NavigationListAccordion
+                  onClick={() => setReportsIsSelected(true)}
+                  title={t('search.reports.reports')}
+                  startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
+                  accordionPath={''}
+                  dataTestId={dataTestId.startPage.reportsButton}>
+                  <></>
+                </NavigationListAccordion>
+              </BetaFunctionality>
             </SideMenu>
 
-            {reportsIsSelected ? (
-              <ReportsPage />
-            ) : (
-              <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
-                    gap: '0.5rem',
-                    mx: '1rem',
-                  }}>
+            <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
+                  gap: '1rem 0.5rem',
+                  mx: { xs: '1rem', md: 0 },
+                }}>
+                {!reportsIsSelected && (
                   <TextField
                     select
                     value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
                     sx={{
                       mb: !resultIsSelected ? '1rem' : 0,
-                      ml: { xs: '1rem', md: 0 },
-                      minWidth: '10.33rem',
+                      minWidth: '10rem',
                       '.MuiSelect-select': {
                         display: 'flex',
                         gap: '0.5rem',
                         alignItems: 'center',
                         bgcolor:
                           personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
-                        maxHeight: '1rem',
                       },
                     }}
                     inputProps={{ 'aria-label': t('common.type') }}>
@@ -192,7 +192,7 @@ const SearchPage = () => {
                           setValues(emptySearchConfig);
                         }
                       }}>
-                      <PersonIcon />
+                      <PersonIcon fontSize="small" />
                       {t('search.persons')}
                     </MenuItem>
                     <MenuItem
@@ -206,38 +206,42 @@ const SearchPage = () => {
                           setValues(emptySearchConfig);
                         }
                       }}>
-                      <ShowChartIcon />
+                      <ShowChartIcon fontSize="small" />
                       {t('project.project')}
                     </MenuItem>
                   </TextField>
-                  {resultIsSelected && <RegistrationSearchBar aggregations={searchResults?.aggregations} />}
-                  {(personIsSeleced || projectIsSelected) && (
-                    <Field name="searchTerm">
-                      {({ field, form: { submitForm } }: FieldProps<string>) => (
-                        <SearchTextField
-                          {...field}
-                          placeholder={
-                            personIsSeleced
-                              ? t('search.person_search_placeholder')
-                              : t('search.project_search_placeholder')
-                          }
-                          clearValue={() => {
-                            field.onChange({ target: { value: '', id: field.name } });
-                            submitForm();
-                          }}
-                        />
-                      )}
-                    </Field>
-                  )}
-                </Box>
-                {resultIsSelected && (
-                  <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
                 )}
-
-                {personIsSeleced && <PersonSearch />}
-                {projectIsSelected && <ProjectSearch />}
+                {resultIsSelected && !reportsIsSelected && (
+                  <RegistrationSearchBar aggregations={searchResults?.aggregations} />
+                )}
+                {(personIsSeleced || projectIsSelected) && (
+                  <Field name="searchTerm">
+                    {({ field, form: { submitForm } }: FieldProps<string>) => (
+                      <SearchTextField
+                        {...field}
+                        placeholder={
+                          personIsSeleced
+                            ? t('search.person_search_placeholder')
+                            : t('search.project_search_placeholder')
+                        }
+                        clearValue={() => {
+                          field.onChange({ target: { value: '', id: field.name } });
+                          submitForm();
+                        }}
+                      />
+                    )}
+                  </Field>
+                )}
               </Box>
-            )}
+
+              {resultIsSelected && !reportsIsSelected && (
+                <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
+              )}
+
+              {personIsSeleced && <PersonSearch />}
+              {projectIsSelected && <ProjectSearch />}
+              {reportsIsSelected && <ReportsPage />}
+            </Box>
           </StyledPageWithSideMenu>
         </Form>
       )}

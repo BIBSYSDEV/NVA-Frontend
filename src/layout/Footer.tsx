@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { dataTestId } from '../utils/dataTestIds';
 import { UrlPathTemplate } from '../utils/urlPaths';
+import { LanguageSelector } from './header/LanguageSelector';
 
 export const Footer = () => {
   const { t } = useTranslation();
@@ -14,8 +15,9 @@ export const Footer = () => {
         padding: '1rem',
         bgcolor: 'info.light',
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', lg: '1fr 2fr 1fr' },
+        gridTemplateColumns: { xs: '1fr', lg: 'auto auto auto auto' },
         gap: '0.5rem 1rem',
+        alignItems: 'center',
       }}>
       <MuiLink
         data-testid={dataTestId.footer.aboutLink}
@@ -24,15 +26,16 @@ export const Footer = () => {
         sx={{ justifySelf: { xs: 'center', lg: 'start' }, gridRow: { xs: 3, lg: 1 } }}>
         {t('about.about_nva')}
       </MuiLink>
-      <Typography sx={{ color: 'primary.main', gridColumn: { xs: 1, lg: 2 }, justifySelf: 'center' }}>
+      <Typography sx={{ color: 'primary.main', gridColumn: { xs: 1, lg: 3 }, justifySelf: 'center' }}>
         {t('about.footer_text')}
       </Typography>
+      <LanguageSelector />
       <Box
         sx={{
           display: 'flex',
           justifySelf: { xs: 'center', lg: 'end' },
           gap: '0.5rem',
-          gridColumn: { xs: 1, lg: 3 },
+          gridColumn: { xs: 1, lg: 4 },
         }}>
         <MuiLink
           data-testid={dataTestId.footer.availabilityStatement}
