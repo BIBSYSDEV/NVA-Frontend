@@ -72,6 +72,20 @@ export const EditorInstitution = () => {
               : t('editor.institution.institution_is_not_nvi_institution')}
           </Typography>
 
+          {/*--------------------------- */}
+
+          <Typography variant="h3" component="h2">
+            {t('common.rbo')}
+          </Typography>
+
+          <Typography paragraph>
+            {customer?.nviInstitution
+              ? t('editor.institution.institution_is_nvi_institution')
+              : t('editor.institution.institution_is_not_nvi_institution')}
+          </Typography>
+
+          {/*--------------------------- */}
+
           <div>
             <Typography
               variant="h3"
