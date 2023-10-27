@@ -31,6 +31,17 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   doiAgent: DoiAgent;
   sector: Sector;
   nviInstitution: boolean;
+  rightRetentionStrategy?: RightRetentionStrategy;
+}
+
+interface RightRetentionStrategy {
+  retentionStrategy: RightsRetentionStrategyTypes;
+}
+
+enum RightsRetentionStrategyTypes {
+  NullRightRetentionStrategy = 'NullRightRetentionStrategy',
+  RightRetentionStrategy = 'RightRetentionStrategy',
+  OverridableRightRetentionStrategy = 'OverridableRightRetentionStrategy',
 }
 
 export interface DoiAgent {
