@@ -361,6 +361,8 @@
       "institution_name": "Institusjonsnavn",
       "institution_name_english": "Institusjonens engelske navn",
       "institution_name_norwegian": "Institusjonens norske navn",
+      "institution_receives_funding_via_rbo": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)",
+      "institution_receives_not_funding_via_rbo": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
       "institution_short_name": "Institusjonens kortnavn"
     },
     "publish_strategy": {
