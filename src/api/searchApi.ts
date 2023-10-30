@@ -107,19 +107,27 @@ export const fetchResults2 = async (
   from: number,
   { doi, identifier, contributor, query, category }: FetchResultsQuery
 ) => {
-  const paginationQuery = `results=${results}&from=${from}`;
-  const doiQuery = doi ? `doi="${doi}"` : '';
-  const idQuery = identifier ? `id="${identifier}"` : '';
-  const contributorQuery = contributor ? `contributor="${contributor}"` : '';
-  const freetextQuery = query ? `query="${query}"` : '';
-  const categoryQuery = category ? `category="${category.join(',')}"` : '';
+  let fullQuery = `results=${results}&from=${from}`;
 
-  const fullQuery = [paginationQuery, doiQuery, idQuery, contributorQuery, freetextQuery, categoryQuery]
-    .filter(Boolean)
-    .join('&');
+  if (doi) {
+    fullQuery += `&doi="${doi}"`;
+  }
+  if (identifier) {
+    fullQuery += `&id="${identifier}"`;
+  }
+  if (contributor) {
+    fullQuery += `&contributor="${contributor}"`;
+  }
+  if (query) {
+    fullQuery += `&query="${query}"`;
+  }
+  if (category) {
+    fullQuery += `&category="${category.join(',')}"`;
+  }
 
   const getResults = await apiRequest2<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations2}?${fullQuery}`,
   });
+
   return getResults.data;
 };
