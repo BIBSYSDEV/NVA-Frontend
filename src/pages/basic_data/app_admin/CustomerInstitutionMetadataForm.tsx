@@ -159,7 +159,9 @@ export const CustomerInstitutionMetadataForm = ({
             <Field name={CustomerInstitutionFieldNames.Sector}>
               {({ field }: FieldProps) => (
                 <div>
-                  <FormLabel component="legend">{t('basic_data.institutions.sector')}</FormLabel>
+                  <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                    {t('basic_data.institutions.sector')}
+                  </FormLabel>
                   <Box sx={{ display: 'flex', gap: '0.5rem', mt: '0.5rem' }}>
                     {Object.values(Sector).map((sector) => (
                       <Chip
@@ -176,27 +178,60 @@ export const CustomerInstitutionMetadataForm = ({
               )}
             </Field>
 
-            <Field name={CustomerInstitutionFieldNames.NviInstitution}>
-              {({ field }: FieldProps<boolean>) => (
-                <div>
-                  <FormLabel component="legend">{t('common.nvi')}</FormLabel>
-                  <FormControlLabel
-                    label={t('basic_data.institutions.institution_is_nvi_applicable')}
-                    control={
-                      <Checkbox
-                        data-testid={dataTestId.basicData.institutionAdmin.nviInstitutionCheckbox}
-                        {...field}
-                        checked={field.value}
-                      />
-                    }
-                  />
-                </div>
-              )}
-            </Field>
+            <div>
+              <Field name={CustomerInstitutionFieldNames.NviInstitution}>
+                {({ field }: FieldProps<boolean>) => (
+                  <>
+                    <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                      {t('common.nvi')}
+                    </FormLabel>
+                    <FormControlLabel
+                      label={t('basic_data.institutions.institution_is_nvi_applicable')}
+                      control={
+                        <Checkbox
+                          data-testid={dataTestId.basicData.institutionAdmin.nviInstitutionCheckbox}
+                          {...field}
+                          checked={field.value}
+                          onChange={(event, checked) => {
+                            if (!checked) {
+                              setFieldValue(CustomerInstitutionFieldNames.RboInstitution, false);
+                            }
+                            field.onChange(event);
+                          }}
+                        />
+                      }
+                    />
+                  </>
+                )}
+              </Field>
+
+              <Field name={CustomerInstitutionFieldNames.RboInstitution}>
+                {({ field }: FieldProps<boolean>) => (
+                  <Box sx={{ ml: '2rem' }}>
+                    <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                      {t('common.rbo')}
+                    </FormLabel>
+                    <FormControlLabel
+                      label={t('basic_data.institutions.institution_receives_funding_via_rbo')}
+                      disabled={!values.customer.nviInstitution}
+                      control={
+                        <Checkbox
+                          data-testid={dataTestId.basicData.institutionAdmin.rboInstitutionCheckbox}
+                          {...field}
+                          checked={field.value}
+                        />
+                      }
+                    />
+                  </Box>
+                )}
+              </Field>
+            </div>
 
             {editMode && (
               <div>
-                <FormLabel component="legend">{t('common.doi_long')}</FormLabel>
+                <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
+                  {t('common.doi_long')}
+                </FormLabel>
                 <Field name={CustomerInstitutionFieldNames.CanAssignDoi}>
                   {({ field }: FieldProps<boolean>) => (
                     <FormControlLabel

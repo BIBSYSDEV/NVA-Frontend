@@ -95,6 +95,7 @@
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
+      "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
@@ -187,6 +188,7 @@
     "place": "Sted",
     "previous": "Forrige",
     "publisher": "Utgiver",
+    "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
     "read_less": "Les mindre",
     "read_less_about_nva": "Les mindre om NVA",
@@ -359,7 +361,9 @@
       "institution_name": "Institusjonsnavn",
       "institution_name_english": "Institusjonens engelske navn",
       "institution_name_norwegian": "Institusjonens norske navn",
-      "institution_short_name": "Institusjonens kortnavn"
+      "institution_short_name": "Institusjonens kortnavn",
+      "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
+      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
     },
     "publish_strategy": {
       "files_and_licenses": "Filer og lisenser",
