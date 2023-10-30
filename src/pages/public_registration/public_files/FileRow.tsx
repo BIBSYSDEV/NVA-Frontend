@@ -59,7 +59,10 @@ export const FileRow = ({
         if (previewFile) {
           setPreviewFileUrl(downloadFileResponse.id);
         } else {
-          window.open(downloadFileResponse.id, '_blank');
+          // Use timeout to ensure that file is opened on Safari/iOS: NP-30205, https://stackoverflow.com/a/70463940
+          setTimeout(() => {
+            window.open(downloadFileResponse.id, '_blank');
+          });
         }
       }
       previewFile && setIsLoadingPreviewFile(false);

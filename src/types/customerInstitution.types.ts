@@ -31,6 +31,7 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   doiAgent: DoiAgent;
   sector: Sector;
   nviInstitution: boolean;
+  rboInstitution: boolean;
   rightRetentionStrategy?: RightRetentionStrategy;
 }
 
@@ -90,6 +91,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   rorId: '',
   sector: Sector.Uhi,
   nviInstitution: false,
+  rboInstitution: false,
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
@@ -115,6 +117,7 @@ export enum CustomerInstitutionFieldNames {
   Sector = 'customer.sector',
   NviInstitution = 'customer.nviInstitution',
   CanAssignDoi = 'canAssignDoi',
+  RboInstitution = 'customer.rboInstitution',
 }
 
 export interface CustomerList {

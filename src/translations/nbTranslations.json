@@ -95,6 +95,7 @@
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
+      "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
@@ -103,8 +104,8 @@
         "ABM": "Arkiv, Bibliotek og Museum",
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)",
-        "OTHER": "Øvrige"
+        "OTHER": "Øvrige",
+        "UHI": "Universitet og høyskoler (UH)"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -187,6 +188,7 @@
     "place": "Sted",
     "previous": "Forrige",
     "publisher": "Utgiver",
+    "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
     "read_less": "Les mindre",
     "read_less_about_nva": "Les mindre om NVA",
@@ -208,7 +210,6 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
     "select_institution": "Velg institusjon",
-    "select_language": "Velg språk",
     "selected": "Valgt",
     "send": "Send",
     "settings": "Innstillinger",
@@ -243,6 +244,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -328,11 +333,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -355,10 +356,14 @@
     "institution": {
       "institution_code": "Institusjonens kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
+      "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil benytte Norsk vitenskapsindeks",
+      "institution_is_nvi_institution": "Institusjonen rapporterer til Norsk vitenskapsindeks",
       "institution_name": "Institusjonsnavn",
       "institution_name_english": "Institusjonens engelske navn",
       "institution_name_norwegian": "Institusjonens norske navn",
-      "institution_short_name": "Institusjonens kortnavn"
+      "institution_short_name": "Institusjonens kortnavn",
+      "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
+      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
     },
     "publish_strategy": {
       "files_and_licenses": "Filer og lisenser",
@@ -1631,7 +1636,8 @@
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
       "approve_nvi_candidate_description": "Godkjenning av resultatet.",
-      "assigned": "Under behandling",
+      "assigned": "Sjekkes",
+      "candidate": "Kandidat",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "delete_note": "Slett merknad",
       "delete_note_description": "Er du sikker på at du vil slette denne merknaden?",
@@ -1647,9 +1653,10 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
-        "Pending": "Til kontroll",
+        "Pending": "Kandidat",
         "Rejected": "Avvist"
       },
+      "undistributed_points": "Ikke fordelt",
       "waiting_for_other_institutions": "Venter på andre institusjoner",
       "waiting_for_your_institution": "Venter på din institusjon"
     },

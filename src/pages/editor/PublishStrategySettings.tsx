@@ -145,11 +145,15 @@ export const PublishStrategySettings = () => {
         </StyledItemContainer>
       </Box>
 
-      <Typography sx={{ fontWeight: 'bold', marginTop: '2rem', marginBottom: '2rem' }}>
-        {t('editor.retentions_strategy.retentions_strategy')}
-      </Typography>
+      {/* Rights Retentions Strategy (RRS) */}
 
-      {/* TO DO: legg inn avkrysningsboks og tekst "Rights Retentions Strategy (RRS) */}
+      <div>
+        <Typography sx={{ fontWeight: 'bold', marginTop: '2rem', marginBottom: '2rem' }}>
+          {t('editor.retentions_strategy.retentions_strategy')}
+        </Typography>
+
+        {/* TO DO: legg inn avkrysningsboks og tekst Rights Retentions Strategy (RRS) */}
+      </div>
 
       <Typography sx={{ fontWeight: 'bold', marginTop: '2rem', marginBottom: '2rem' }}>
         {t('editor.retentions_strategy.institution_rrs_info_page')}
@@ -159,7 +163,9 @@ export const PublishStrategySettings = () => {
 
       {/* TO DO: tekst om obligatorisk felt */}
 
-      {/* TO DO: legg inn avkrysningsboks og tekst "Registrator kan fraskrive seg RRS */}
+      {/* TO DO: legg inn avkrysningsboks og tekst Registrator kan fraskrive seg RRS */}
+
+      {/* TO DO: lagre-knapp */}
     </>
   );
 };
