@@ -2,7 +2,7 @@ import { SearchResponse } from '../types/common.types';
 import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
 import { NviCandidate, NviCandidateSearchResponse } from '../types/nvi.types';
 import { ExpandedTicket } from '../types/publication_types/ticket.types';
-import { Registration } from '../types/registration.types';
+import { PublicationInstanceType, Registration } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
@@ -98,19 +98,25 @@ interface FetchResultsQuery {
   doi?: string;
   identifier?: string;
   contributor?: string;
+  query?: string;
+  category?: PublicationInstanceType[];
 }
 
 export const fetchResults2 = async (
   results: number,
   from: number,
-  { doi, identifier, contributor }: FetchResultsQuery
+  { doi, identifier, contributor, query, category }: FetchResultsQuery
 ) => {
   const paginationQuery = `results=${results}&from=${from}`;
   const doiQuery = doi ? `doi="${doi}"` : '';
   const idQuery = identifier ? `id="${identifier}"` : '';
   const contributorQuery = contributor ? `contributor="${contributor}"` : '';
+  const freetextQuery = query ? `query="${query}"` : '';
+  const categoryQuery = category ? `category="${category.join(',')}"` : '';
 
-  const fullQuery = [paginationQuery, doiQuery, idQuery, contributorQuery].filter(Boolean).join('&');
+  const fullQuery = [paginationQuery, doiQuery, idQuery, contributorQuery, freetextQuery, categoryQuery]
+    .filter(Boolean)
+    .join('&');
 
   const getResults = await apiRequest2<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations2}?${fullQuery}`,
