@@ -41,7 +41,14 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import { PublicationInstanceType, Registration, RegistrationStatus } from '../types/registration.types';
+import {
+  Journal,
+  PublicationInstanceType,
+  Publisher,
+  Registration,
+  RegistrationStatus,
+  Series,
+} from '../types/registration.types';
 import { User } from '../types/user.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
@@ -114,7 +121,7 @@ export const userIsRegistrationCurator = (user: User | null, registration?: Regi
   !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
 export const getYearQuery = (yearValue: string) =>
-  yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();
+  yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear().toString();
 
 const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?: string | null) => {
   const issnString =
@@ -129,9 +136,13 @@ const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?:
   return issnString;
 };
 
-export const getPublicationChannelString = (title: string, onlineIssn?: string | null, printIssn?: string | null) => {
-  const issnString = getPublicationChannelIssnString(onlineIssn, printIssn);
-  return issnString ? `${title} (${issnString})` : title;
+export const getPublicationChannelString = (publicationChannel: Journal | Series | Publisher) => {
+  if (publicationChannel.type === 'Publisher') {
+    return publicationChannel.name;
+  } else {
+    const issnString = getPublicationChannelIssnString(publicationChannel.onlineIssn, publicationChannel.printIssn);
+    return issnString ? `${publicationChannel.name} (${issnString})` : publicationChannel.name;
+  }
 };
 
 // Ensure Registration has correct type values, etc
