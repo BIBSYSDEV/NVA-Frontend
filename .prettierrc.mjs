@@ -4,10 +4,4 @@ export default {
   printWidth: 120,
   bracketSameLine: true,
   endOfLine: 'auto',
-  overrides: [
-    {
-      files: '**/*.svg',
-      options: { parser: 'html' },
-    },
-  ],
 };
