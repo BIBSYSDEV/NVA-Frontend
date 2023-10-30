@@ -43,6 +43,7 @@ export const dataTestId = {
       feideField: 'feide-field',
       nameField: 'institution-name-field',
       nviInstitutionCheckbox: 'nvi-institution-checkbox',
+      rboInstitutionCheckbox: 'rbo-institution-checkbox',
       rorField: 'ror-field',
       saveButton: 'save-button',
       sectorChip: (sector: string) => `sector-chip-${sector}`,
