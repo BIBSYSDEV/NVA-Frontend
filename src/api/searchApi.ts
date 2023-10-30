@@ -94,11 +94,12 @@ export const fetchNviCandidate = async (identifier: string) => {
   return getNviCandidates.data;
 };
 
-export const fetchResults2 = async (results: number, from: number, { doi = '' }) => {
+export const fetchResults2 = async (results: number, from: number, { doi = '', identifier = '' }) => {
   const paginationQuery = `results=${results}&from=${from}`;
   const doiQuery = doi ? `doi="${doi}"` : '';
+  const idQuery = identifier ? `id="${identifier}"` : '';
 
-  const fullQuery = [paginationQuery, doiQuery].filter(Boolean).join('&');
+  const fullQuery = [paginationQuery, doiQuery, idQuery].filter(Boolean).join('&');
 
   const getResults = await apiRequest2<SearchResponse<Registration>>({
     url: `${SearchApiPath.Registrations2}?${fullQuery}`,
