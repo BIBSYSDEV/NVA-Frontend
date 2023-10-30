@@ -47,12 +47,10 @@ export const NviApprovalStatuses = ({
           ))}
           {undistributedPoints > 0 && (
             <>
-              <Typography sx={{ whiteSpace: 'nowrap' }}>--</Typography>
-              <Typography sx={{ whiteSpace: 'nowrap' }}>Ikke fordelt</Typography>
-              <PublicationPointsTypography
-                sx={{ whiteSpace: 'nowrap', justifySelf: 'end' }}
-                points={undistributedPoints}
-              />
+              <Typography sx={{ gridColumn: '2/3', whiteSpace: 'nowrap' }}>
+                {t('tasks.nvi.undistributed_points')}
+              </Typography>
+              <PublicationPointsTypography sx={{ gridColumn: '3/4' }} points={undistributedPoints} />
             </>
           )}
         </Paper>

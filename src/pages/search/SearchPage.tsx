@@ -1,9 +1,10 @@
-import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
+import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
+import SearchIcon from '@mui/icons-material/Search';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Box, Divider, MenuItem, TextField } from '@mui/material';
+import { Box, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -103,34 +104,40 @@ const SearchPage = () => {
         <Form style={{ width: '100%' }}>
           <StyledPageWithSideMenu>
             <SideMenu>
-              <SideNavHeader icon={FilterAltOutlined} text={t('common.filter')} />
+              <SideNavHeader icon={SearchIcon} text={t('common.search')} />
 
-              {resultIsSelected && searchResults?.aggregations && (
+              <NavigationListAccordion
+                title={t('common.filter')}
+                startIcon={<FilterIcon sx={{ bgcolor: 'white' }} />}
+                accordionPath=""
+                dataTestId={dataTestId.startPage.filterAccordion}>
                 <>
-                  <Divider />
-                  <Box
-                    sx={{
-                      m: '1rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '1rem',
-                    }}>
-                    <RegistrationFacetsFilter
-                      aggregations={searchResults.aggregations}
-                      isLoadingSearch={isLoadingSearch}
-                    />
-                  </Box>
-                  <BetaFunctionality>
-                    <NavigationListAccordion
-                      title={t('search.reports')}
-                      startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
-                      accordionPath={''}
-                      dataTestId={dataTestId.startPage.reportsAccordion}>
-                      <></>
-                    </NavigationListAccordion>
-                  </BetaFunctionality>
+                  {resultIsSelected && searchResults?.aggregations && (
+                    <Box
+                      sx={{
+                        m: '1rem',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '1rem',
+                      }}>
+                      <RegistrationFacetsFilter
+                        aggregations={searchResults.aggregations}
+                        isLoadingSearch={isLoadingSearch}
+                      />
+                    </Box>
+                  )}
                 </>
-              )}
+              </NavigationListAccordion>
+
+              <BetaFunctionality>
+                <NavigationListAccordion
+                  title={t('search.reports')}
+                  startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
+                  accordionPath={''}
+                  dataTestId={dataTestId.startPage.reportsAccordion}>
+                  <></>
+                </NavigationListAccordion>
+              </BetaFunctionality>
             </SideMenu>
 
             <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
@@ -138,22 +145,20 @@ const SearchPage = () => {
                 sx={{
                   display: 'grid',
                   gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
-                  gap: '0.5rem',
-                  mx: '1rem',
+                  gap: '1rem 0.5rem',
+                  mx: { xs: '1rem', md: 0 },
                 }}>
                 <TextField
                   select
                   value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
                   sx={{
                     mb: !resultIsSelected ? '1rem' : 0,
-                    ml: { xs: '1rem', md: 0 },
-                    minWidth: '10.33rem',
+                    minWidth: '10rem',
                     '.MuiSelect-select': {
                       display: 'flex',
                       gap: '0.5rem',
                       alignItems: 'center',
                       bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
-                      maxHeight: '1rem',
                     },
                   }}
                   inputProps={{ 'aria-label': t('common.type') }}>
@@ -181,7 +186,7 @@ const SearchPage = () => {
                         setValues(emptySearchConfig);
                       }
                     }}>
-                    <PersonIcon />
+                    <PersonIcon fontSize="small" />
                     {t('search.persons')}
                   </MenuItem>
                   <MenuItem
@@ -195,7 +200,7 @@ const SearchPage = () => {
                         setValues(emptySearchConfig);
                       }
                     }}>
-                    <ShowChartIcon />
+                    <ShowChartIcon fontSize="small" />
                     {t('project.project')}
                   </MenuItem>
                 </TextField>

@@ -131,6 +131,7 @@ export const dataTestId = {
     },
     contributorFacets: 'contributor-facets',
     facetItem: (value: string) => `facet-item-${value}`,
+    filterAccordion: 'filter-accordion',
     fundingFacets: 'funding-facets',
     orderBySelect: 'order-by-select',
     personSearchButton: 'person-search-button',
