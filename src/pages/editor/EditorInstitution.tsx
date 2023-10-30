@@ -76,9 +76,7 @@ export const EditorInstitution = () => {
             {t('common.rbo')}
           </Typography>
           <Typography paragraph>
-            {customer?.rboInstitution
-              ? t('editor.institution.institution_receives_funding_via_rbo')
-              : t('editor.institution.institution_receives_not_funding_via_rbo')}
+            {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
           </Typography>
 
           <Typography sx={{ pt: '1rem' }}>
