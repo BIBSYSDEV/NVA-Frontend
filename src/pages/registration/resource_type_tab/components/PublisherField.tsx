@@ -139,6 +139,7 @@ export const PublisherField = () => {
           <PublisherFormDialog
             open={showPublisherForm}
             closeDialog={togglePublisherForm}
+            initialName={query}
             onCreatedChannel={(newPublisher) => {
               setFieldValue(ResourceFieldNames.PublicationContextPublisher, {
                 type: PublicationChannelType.Publisher,

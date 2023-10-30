@@ -135,6 +135,7 @@ export const SeriesField = () => {
           <JournalFormDialog
             open={showSeriesForm}
             closeDialog={toggleSeriesForm}
+            initialName={query}
             isSeries
             onCreatedChannel={(newChannel) => {
               setFieldValue(ResourceFieldNames.Series, {
