@@ -97,7 +97,7 @@ export const SearchContainerField = ({
               }
               setQuery('');
             }}
-            loading={containerOptionsQuery.isLoading || isLoadingSelectedContainer}
+            loading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
             getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
             renderOption={(props, option, state) => (
               <li {...props}>
@@ -145,7 +145,7 @@ export const SearchContainerField = ({
                 {...params}
                 required
                 label={label}
-                isLoading={containerOptionsQuery.isLoading || isLoadingSelectedContainer}
+                isLoading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
                 placeholder={!field.value ? placeholder : ''}
                 showSearchIcon={!field.value}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
