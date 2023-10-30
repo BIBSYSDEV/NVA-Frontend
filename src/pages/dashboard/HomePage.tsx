@@ -6,7 +6,6 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -92,11 +91,10 @@ const HomePage = () => {
           history.push({ search: newSearchParams.toString() });
         }}>
         {({ setValues }: FormikProps<SearchConfig>) => (
-          <Form style={{ width: '100%' }}>
-            <StyledPageWithSideMenu>
-              <SideMenu>
-                <SideNavHeader icon={SearchIcon} text={t('common.search')} />
-
+          <StyledPageWithSideMenu>
+            <SideMenu>
+              <SideNavHeader icon={SearchIcon} text={t('common.search')} />
+              <Form style={{ width: '100%' }}>
                 <NavigationListAccordion
                   title={t('common.filter')}
                   startIcon={<FilterIcon sx={{ bgcolor: 'white' }} />}
@@ -120,32 +118,30 @@ const HomePage = () => {
                     )}
                   </>
                 </NavigationListAccordion>
+              </Form>
 
-                <BetaFunctionality>
-                  <NavigationListAccordion
-                    title={t('search.reports.reports')}
-                    startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
-                    accordionPath={UrlPathTemplate.Reports}
-                    dataTestId={dataTestId.startPage.reportsAccordion}>
-                    <LinkButton
-                      size="small"
-                      data-testid={dataTestId.myPage.myProjectsLink}
-                      isSelected={currentPath === UrlPathTemplate.Reports}
-                      to={UrlPathTemplate.Reports}>
-                      {t('search.reports.reports')}
-                    </LinkButton>
-                  </NavigationListAccordion>
-                </BetaFunctionality>
-              </SideMenu>
+              <NavigationListAccordion
+                title={t('search.reports.reports')}
+                startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
+                accordionPath={UrlPathTemplate.Reports}
+                dataTestId={dataTestId.startPage.reportsAccordion}>
+                <LinkButton
+                  size="small"
+                  data-testid={dataTestId.myPage.myProjectsLink}
+                  isSelected={currentPath === UrlPathTemplate.Reports}
+                  to={UrlPathTemplate.Reports}>
+                  {t('search.reports.reports')}
+                </LinkButton>
+              </NavigationListAccordion>
+            </SideMenu>
 
-              <Switch>
-                <ErrorBoundary>
-                  <Route exact path={UrlPathTemplate.Home} component={SearchPage} />
-                  <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
-                </ErrorBoundary>
-              </Switch>
-            </StyledPageWithSideMenu>
-          </Form>
+            <Switch>
+              <ErrorBoundary>
+                <Route exact path={UrlPathTemplate.Home} component={SearchPage} />
+                <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
+              </ErrorBoundary>
+            </Switch>
+          </StyledPageWithSideMenu>
         )}
       </Formik>
     </>
