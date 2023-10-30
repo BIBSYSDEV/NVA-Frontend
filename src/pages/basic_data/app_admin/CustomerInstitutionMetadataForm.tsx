@@ -207,13 +207,8 @@ export const CustomerInstitutionMetadataForm = ({
 
               <Field name={CustomerInstitutionFieldNames.RboInstitution}>
                 {({ field }: FieldProps<boolean>) => (
-                  <>
-                    <FormLabel
-                      component="legend"
-                      sx={{
-                        fontWeight: 'bold',
-                        marginLeft: '2rem',
-                      }}>
+                  <Box sx={{ ml: '2rem' }}>
+                    <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                       {t('common.rbo')}
                     </FormLabel>
                     <FormControlLabel
@@ -221,16 +216,13 @@ export const CustomerInstitutionMetadataForm = ({
                       disabled={!values.customer.nviInstitution}
                       control={
                         <Checkbox
-                          sx={{
-                            marginLeft: '2rem',
-                          }}
                           data-testid={dataTestId.basicData.institutionAdmin.rboInstitutionCheckbox}
                           {...field}
                           checked={field.value}
                         />
                       }
                     />
-                  </>
+                  </Box>
                 )}
               </Field>
             </div>
