@@ -138,7 +138,7 @@ const SearchPage = () => {
                   title={t('search.reports.reports')}
                   startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
                   accordionPath={''}
-                  dataTestId={dataTestId.startPage.reportsButton}>
+                  dataTestId={dataTestId.startPage.reportsAccordion}>
                   <></>
                 </NavigationListAccordion>
               </BetaFunctionality>
