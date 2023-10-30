@@ -9,6 +9,7 @@ interface NavigationListAccordionProps extends AccordionProps {
   accordionPath: string;
   defaultPath?: string;
   dataTestId: string;
+  expanded?: boolean;
 }
 
 export const NavigationListAccordion = ({
@@ -16,13 +17,14 @@ export const NavigationListAccordion = ({
   startIcon,
   accordionPath,
   defaultPath = accordionPath,
+  expanded,
   dataTestId,
   children,
   ...props
 }: NavigationListAccordionProps) => {
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
-  const isExpanded = currentPath.startsWith(accordionPath);
+  const isExpanded = expanded !== undefined ? expanded : currentPath.startsWith(accordionPath);
 
   return (
     <Accordion

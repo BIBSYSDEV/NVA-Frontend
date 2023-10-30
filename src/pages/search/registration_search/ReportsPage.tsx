@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import reportThumbnail from '../../../resources/images/report-thumbnail.png';
 
-export const ReportsPage = () => {
+const ReportsPage = () => {
   const { t } = useTranslation();
 
   const [selectedReport, setSelectdReport] = useState('');
@@ -54,3 +54,5 @@ export const ReportsPage = () => {
     </Button>
   );
 };
+
+export default ReportsPage;
