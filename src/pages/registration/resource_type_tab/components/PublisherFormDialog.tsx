@@ -34,9 +34,10 @@ const publisherValidationSchema: Yup.ObjectSchema<CreatePublisherPayload> = Yup.
 interface PublisherFormDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
   onCreatedChannel: (createdChannel: Publisher) => void;
+  initialName: string;
 }
 
-export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel }: PublisherFormDialogProps) => {
+export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel, initialName }: PublisherFormDialogProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -54,7 +55,7 @@ export const PublisherFormDialog = ({ open, closeDialog, onCreatedChannel }: Pub
     <Dialog open={open} onClose={closeDialog} fullWidth>
       <DialogTitle>{t('registration.resource_type.create_publisher')}</DialogTitle>
       <Formik
-        initialValues={emptyPublisherData}
+        initialValues={{ ...emptyPublisherData, name: initialName }}
         validationSchema={publisherValidationSchema}
         onSubmit={async (values) => await publisherMutation.mutateAsync(values)}>
         <Form>

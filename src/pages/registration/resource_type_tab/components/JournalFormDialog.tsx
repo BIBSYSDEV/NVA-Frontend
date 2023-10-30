@@ -42,6 +42,7 @@ interface JournalFormDialogProps extends Pick<DialogProps, 'open'> {
   closeDialog: () => void;
   onCreatedChannel: (createdChannel: Journal | Series) => void;
   isSeries?: boolean;
+  intitialName: string;
 }
 
 /**
@@ -52,6 +53,7 @@ export const JournalFormDialog = ({
   closeDialog,
   onCreatedChannel,
   isSeries = false,
+  intitialName,
 }: JournalFormDialogProps) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -84,7 +86,7 @@ export const JournalFormDialog = ({
         {isSeries ? t('registration.resource_type.create_series') : t('registration.resource_type.create_journal')}
       </DialogTitle>
       <Formik
-        initialValues={emptyJournalData}
+        initialValues={{ ...emptyJournalData, name: intitialName }}
         validationSchema={journalValidationSchema}
         onSubmit={async (values) =>
           isSeries ? await seriesMutation.mutateAsync(values) : await journalMutation.mutateAsync(values)
