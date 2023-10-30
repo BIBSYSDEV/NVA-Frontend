@@ -180,7 +180,7 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
           <JournalFormDialog
             open={showJournalForm}
             closeDialog={toggleJournalForm}
-            intitialName={query}
+            initialName={query}
             onCreatedChannel={(newChannel) => {
               setFieldValue(contextTypeBaseFieldName, {
                 type: confirmedContextType,
