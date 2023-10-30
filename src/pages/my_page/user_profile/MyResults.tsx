@@ -4,12 +4,10 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchPromotedPublicationsById } from '../../../api/preferencesApi';
+import { fetchResults2 } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { RootState } from '../../../redux/store';
-import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
-import { useSearchRegistrations } from '../../../utils/hooks/useSearchRegistrations';
-import { ExpressionStatement } from '../../../utils/searchHelpers';
 import { RegistrationSearchResults } from '../../search/registration_search/RegistrationSearchResults';
 
 export const MyResults = () => {
@@ -19,20 +17,14 @@ export const MyResults = () => {
 
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+  const offset = rowsPerPage * (page - 1);
 
-  const [registrations, isLoadingRegistrations] = useSearchRegistrations(
-    {
-      properties: [
-        {
-          fieldName: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}`,
-          value: personId,
-          operator: ExpressionStatement.Contains,
-        },
-      ],
-    },
-    rowsPerPage,
-    rowsPerPage * (page - 1)
-  );
+  const registrationsQuery = useQuery({
+    enabled: !!personId,
+    queryKey: ['registrations', personId, rowsPerPage, offset],
+    queryFn: () => fetchResults2(rowsPerPage, offset, { contributor: personId }),
+    meta: { errorMessage: t('feedback.error.search') },
+  });
 
   const promotedPublicationsQuery = useQuery({
     enabled: !!personId,
@@ -49,19 +41,19 @@ export const MyResults = () => {
       <Typography id="registration-label" variant="h2" gutterBottom>
         {t('my_page.my_profile.my_research_results')}
       </Typography>
-      {isLoadingRegistrations ? (
+      {registrationsQuery.isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <CircularProgress aria-labelledby="registration-label" />
         </Box>
-      ) : registrations && registrations.size > 0 ? (
+      ) : registrationsQuery.data && registrationsQuery.data.size > 0 ? (
         <>
           <RegistrationSearchResults
             canEditRegistration={true}
-            searchResult={registrations}
+            searchResult={registrationsQuery.data}
             promotedPublications={promotedPublications}
           />
           <ListPagination
-            count={registrations.size}
+            count={registrationsQuery.data.size}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(newPage) => setPage(newPage)}
