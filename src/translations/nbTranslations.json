@@ -103,6 +103,7 @@
         "ABM": "Arkiv, Bibliotek og Museum",
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
+        "OTHER": "Øvrige",
         "UHI": "Universitet og høyskoler (UH)"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
@@ -207,7 +208,6 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
     "select_institution": "Velg institusjon",
-    "select_language": "Velg språk",
     "selected": "Valgt",
     "send": "Send",
     "settings": "Innstillinger",
@@ -242,6 +242,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -327,11 +331,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -354,6 +354,8 @@
     "institution": {
       "institution_code": "Institusjonens kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
+      "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil benytte Norsk vitenskapsindeks",
+      "institution_is_nvi_institution": "Institusjonen rapporterer til Norsk vitenskapsindeks",
       "institution_name": "Institusjonsnavn",
       "institution_name_english": "Institusjonens engelske navn",
       "institution_name_norwegian": "Institusjonens norske navn",
@@ -1029,9 +1031,12 @@
         "ArchitecturalPlanner": "Planlegger",
         "Artist": "Kunstner",
         "ArtisticDirector": "Kunstnerisk leder",
+        "AudioVisualContributor": "Audio Visuell bidragsyter",
         "Choreographer": "Koreograf",
+        "CollaborationPartner": "Samarbeidspartner",
         "Composer": "Komponist",
         "Conductor": "Dirigent/ensambleleder",
+        "Conservator": "Konservator",
         "Consultant": "Konsulent",
         "ContactPerson": "Kontaktperson",
         "CostumeDesigner": "Kostymedesigner",
@@ -1048,12 +1053,14 @@
         "Dramatist": "Dramatiker",
         "Dramaturge": "Dramaturg",
         "Editor": "Redaktør",
+        "ExhibitionDesigner": "Utstillingsdesigner",
         "InteriorArchitect": "Interiørarkitekt",
         "InterviewSubject": "Intervjuobjekt",
         "Journalist": "Journalist",
         "LandscapeArchitect": "Landskapsarkitekt",
         "Librettist": "Liberettist",
         "LightDesigner": "Lysdesigner",
+        "MuseumEducator": "Formidler",
         "Musician": "Ensemblemusiker",
         "Organizer": "Arrangør",
         "Photographer": "Fotograf",
@@ -1062,6 +1069,7 @@
         "ProgrammeLeader": "Programleder",
         "ProgrammeParticipant": "Programdeltager",
         "ProjectLeader": "Prosjektleder",
+        "Registrar": "Registrar/samlingsforvalter",
         "RelatedPerson": "Relatert person",
         "Researcher": "Forsker",
         "RightsHolder": "Rettighetsholder",
@@ -1070,7 +1078,6 @@
         "Screenwriter": "Manusforfatter",
         "Soloist": "Solist",
         "SoundDesigner": "Lyddesigner",
-        "Sponsor": "Sponsor",
         "Supervisor": "Veileder",
         "TranslatorAdapter": "Oversetter/gjendikter",
         "VfxSupervisor": "VFX supervisor",
@@ -1276,6 +1283,7 @@
     },
     "registration": {
       "link_to_resource": "Lenke til original versjon",
+      "registration_doi_validation_message": "Dette resultatet er alt publisert i NVA. Om det har feil eller mangler, så må det resultatet endres.",
       "start_registration": "Start registrering",
       "start_with_empty_registration_description": "Legg inn informasjon etterpå",
       "start_with_empty_registration_title": "Start i tomt registreringsskjema",
@@ -1476,8 +1484,9 @@
         "edit_exhibition_catalog": "Endre utstillingskatalog",
         "edit_exhibition_other_presentation": "Endre formidling",
         "edit_mention_in_publication": "Endre til publisering/omtale",
-        "institution_name": "Institusjonens navn",
+        "institution_name": "Arrangørens navn",
         "more_info_about_elementet": "Mer om elementet",
+        "place": "Visningsted",
         "presentation_type": "Type formidlingsform",
         "search_for_exhibition_catalog": "Søk etter utstillingskatalog",
         "subtype": {
@@ -1487,7 +1496,7 @@
           "ExhibitionProductionOther": "Annet",
           "HistoricalInterior": "Historisk interiør",
           "PopupExhibition": "Popup-utstilling",
-          "TemporaryExhibition": "Midlertidig utstilling"
+          "TemporaryExhibition": "Temporær utstilling"
         }
       },
       "isbn": "ISBN",
@@ -1603,6 +1612,7 @@
     "persons": "Personer",
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
+    "reports": "Rapporter",
     "result": "Resultat",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",
@@ -1613,14 +1623,17 @@
   },
   "tasks": {
     "all_user_dialogs": "Alle brukerdialoger",
+    "correction_list": "Retteliste",
     "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
       "approve_nvi_candidate_description": "Godkjenning av resultatet.",
-      "assigned": "Under behandling",
+      "assigned": "Sjekkes",
+      "candidate": "Kandidat",
       "completed_count": "Ferdig kontrollert ({{completed}} av {{total}})",
       "delete_note": "Slett merknad",
       "delete_note_description": "Er du sikker på at du vil slette denne merknaden?",
+      "exclude_subunits": "Ekskluder underenheter",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Merknad",
       "publication_points": "Publiseringspoeng",
@@ -1632,12 +1645,14 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
-        "Pending": "Til kontroll",
+        "Pending": "Kandidat",
         "Rejected": "Avvist"
       },
+      "undistributed_points": "Ikke fordelt",
       "waiting_for_other_institutions": "Venter på andre institusjoner",
       "waiting_for_your_institution": "Venter på din institusjon"
     },
+    "select_other_unit_filter": "Velg andre",
     "status": "Status",
     "unread": "Uleste",
     "user_dialog": "Brukerdialog"

@@ -1,5 +1,5 @@
 import { PaletteColorOptions, SxProps, createTheme } from '@mui/material';
-import { enUS as coreEnUs, nbNO as coreNbNo } from '@mui/material/locale';
+import { enUS as coreEnUs, nbNO as coreNbNo, nnNO as coreNnNo } from '@mui/material/locale';
 import { enUS as pickersEnUs, nbNO as pickersNbNo } from '@mui/x-date-pickers';
 import i18n from '../translations/i18n';
 
@@ -31,7 +31,7 @@ enum Color {
   NviLight = '#F8D3F6',
 }
 
-const coreLocale = i18n.language === 'eng' ? coreEnUs : coreNbNo;
+const coreLocale = i18n.language === 'eng' ? coreEnUs : i18n.language === 'nno' ? coreNnNo : coreNbNo;
 const pickersLocale = i18n.language === 'eng' ? pickersEnUs : pickersNbNo;
 
 declare module '@mui/material/styles' {

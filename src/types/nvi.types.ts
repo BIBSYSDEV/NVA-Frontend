@@ -78,6 +78,8 @@ export interface NviCandidate {
   periodStatus: {
     status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';
   };
+  totalPoints: number;
+  undistributedPoints: number;
 }
 
 export interface Note {

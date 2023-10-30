@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { createNviPeriod, updateNviPeriod } from '../../../api/scientificIndexApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { NviPeriod } from '../../../types/nvi.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 
 const minNewNviPeriodYear = new Date().getFullYear();
@@ -59,7 +60,10 @@ export const UpsertNviPeriodDialog = ({
   };
 
   return (
-    <Dialog open={history.location.pathname === UrlPathTemplate.BasicDataNviNew || !!nviPeriod} onClose={closeDialog}>
+    <Dialog
+      open={history.location.pathname === UrlPathTemplate.BasicDataNviNew || !!nviPeriod}
+      onClose={closeDialog}
+      data-testid={dataTestId.basicData.nviPeriod.nviPeriodDialog}>
       <DialogTitle>
         {nviPeriod ? t('basic_data.nvi.update_reporting_period') : t('basic_data.nvi.add_reporting_period')}
       </DialogTitle>
@@ -77,7 +81,12 @@ export const UpsertNviPeriodDialog = ({
                 {({ field }: FieldProps<string>) => (
                   <DatePicker
                     label={t('basic_data.nvi.period_year')}
-                    slotProps={{ textField: { required: true } }}
+                    slotProps={{
+                      textField: {
+                        required: true,
+                        inputProps: { 'data-testid': dataTestId.basicData.nviPeriod.nviPeriodYear },
+                      },
+                    }}
                     disabled={!!nviPeriod}
                     views={['year']}
                     value={field.value ? new Date(field.value) : null}
@@ -103,7 +112,12 @@ export const UpsertNviPeriodDialog = ({
                 {({ field }: FieldProps<string>) => (
                   <DateTimePicker
                     label={t('common.start_date')}
-                    slotProps={{ textField: { required: true } }}
+                    slotProps={{
+                      textField: {
+                        required: true,
+                        inputProps: { 'data-testid': dataTestId.basicData.nviPeriod.nviPeriodStartDate },
+                      },
+                    }}
                     disabled={!values.publishingYear}
                     value={field.value ? new Date(field.value) : null}
                     minDate={values.publishingYear ? new Date(+values.publishingYear, 0, 1) : undefined}
@@ -122,7 +136,12 @@ export const UpsertNviPeriodDialog = ({
                 {({ field }: FieldProps<string>) => (
                   <DateTimePicker
                     label={t('common.end_date')}
-                    slotProps={{ textField: { required: true } }}
+                    slotProps={{
+                      textField: {
+                        required: true,
+                        inputProps: { 'data-testid': dataTestId.basicData.nviPeriod.nviPeriodEndDate },
+                      },
+                    }}
                     disabled={!values.publishingYear}
                     value={field.value ? new Date(field.value) : null}
                     minDate={values.publishingYear ? new Date(+values.publishingYear + 1, 0, 1) : undefined}

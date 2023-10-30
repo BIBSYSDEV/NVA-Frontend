@@ -512,13 +512,15 @@ export const contributorConfig: ContributorConfig = {
     primaryRoles: [
       ContributorRole.ProjectLeader,
       ContributorRole.Curator,
-      ContributorRole.LightDesigner,
-      ContributorRole.SoundDesigner,
+      ContributorRole.Conservator,
+      ContributorRole.Registrar,
+      ContributorRole.MuseumEducator,
+      ContributorRole.CollaborationPartner,
+      ContributorRole.ExhibitionDesigner,
       ContributorRole.Designer,
-      ContributorRole.Architect,
-      ContributorRole.InteriorArchitect,
+      ContributorRole.Writer,
       ContributorRole.Photographer,
-      ContributorRole.Sponsor,
+      ContributorRole.AudioVisualContributor,
       ContributorRole.Other,
     ],
     secondaryRoles: [],
@@ -603,7 +605,7 @@ export const userCanEditRegistration = (user: User | null, registration: Registr
   }
 
   const isValidCurator = userIsRegistrationCurator(user, registration);
-  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance.type)) {
+  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance?.type)) {
     return isValidCurator && user.isThesisCurator;
   }
 
