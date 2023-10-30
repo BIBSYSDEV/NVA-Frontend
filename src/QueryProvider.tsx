@@ -19,6 +19,7 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
       defaultOptions: {
         queries: {
           refetchOnWindowFocus: false,
+          retry: 2,
         },
       },
       queryCache: new QueryCache({
