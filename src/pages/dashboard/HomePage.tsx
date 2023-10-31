@@ -129,7 +129,7 @@ const HomePage = () => {
                   onClick={() => resetForm()}>
                   <StyledSearchModeButton
                     sx={{ mx: '1rem', mb: '1rem' }}
-                    data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
+                    data-testid={dataTestId.startPage.nviReportRadioButton}
                     isSelected={currentPath === UrlPathTemplate.Reports}
                     startIcon={<RadioButtonCheckedIcon />}>
                     {t('common.nvi')}
