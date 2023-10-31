@@ -1,6 +1,7 @@
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Box, Divider, IconButton, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
@@ -12,6 +13,7 @@ import { CandidateOffsetState } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
+import { Forbidden } from '../../errorpages/Forbidden';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NviApprovalStatuses } from './NviApprovalStatuses';
 import { NviCandidateActions } from './NviCandidateActions';
@@ -33,6 +35,12 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
     queryKey: nviCandidateQueryKey,
     queryFn: () => fetchNviCandidate(identifier),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
+    retry(failureCount, error: Pick<AxiosError, 'response'>) {
+      if (error.response?.status === 401) {
+        return false;
+      }
+      return failureCount < 3;
+    },
   });
 
   const nviCandidate = nviCandidateQuery.data;
@@ -62,7 +70,9 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
       }
     : undefined;
 
-  return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
+  return nviCandidateQuery.error?.response?.status === 401 ? (
+    <Forbidden />
+  ) : registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : (
     <Box

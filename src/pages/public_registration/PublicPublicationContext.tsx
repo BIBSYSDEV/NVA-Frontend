@@ -63,7 +63,7 @@ import {
 } from '../../types/publication_types/mediaContributionRegistration.types';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
-import { ContextPublisher, Journal, Publisher } from '../../types/registration.types';
+import { ContextPublisher, Journal, Publisher, Series } from '../../types/registration.types';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
@@ -117,13 +117,12 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
       ) : fetchedPublisher ? (
         <>
           <Typography>{fetchedPublisher.name}</Typography>
-          <NpiLevelTypography level={fetchedPublisher.level} />
-          <Typography
-            component={Link}
-            href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
-            target="_blank">
-            {t('registration.public_page.find_in_channel_registry')}
-          </Typography>
+          <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} />
+          {fetchedPublisher.sameAs && (
+            <Typography component={Link} href={fetchedPublisher.sameAs} target="_blank">
+              {t('registration.public_page.find_in_channel_registry')}
+            </Typography>
+          )}
         </>
       ) : (
         <Typography>{publisher.name}</Typography>
@@ -179,7 +178,7 @@ interface PublicJournalContentProps {
 
 const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) => {
   const { t } = useTranslation();
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', errorMessage);
+  const [journal, isLoadingJournal] = useFetchResource<Journal | Series>(id ?? '', errorMessage);
 
   return id ? (
     <>
@@ -197,10 +196,12 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
                 .filter((issn) => issn)
                 .join(', ')}
             </Typography>
-            <NpiLevelTypography level={journal.level} />
-            <Typography component={Link} href={getChannelRegisterJournalUrl(journal.identifier)} target="_blank">
-              {t('registration.public_page.find_in_channel_registry')}
-            </Typography>
+            <NpiLevelTypography scientificValue={journal.scientificValue} />
+            {journal.sameAs && (
+              <Typography component={Link} href={journal.sameAs} target="_blank">
+                {t('registration.public_page.find_in_channel_registry')}
+              </Typography>
+            )}
           </>
         )
       )}

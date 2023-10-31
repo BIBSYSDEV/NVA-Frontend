@@ -95,6 +95,7 @@
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
+      "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
@@ -103,8 +104,8 @@
         "ABM": "Arkiv, Bibliotek og Museum",
         "HEALTH": "Helsesektoren",
         "INSTITUTE": "Instituttsektoren",
-        "UHI": "Universitet og høyskoler (UH)",
-        "OTHER": "Øvrige"
+        "OTHER": "Øvrige",
+        "UHI": "Universitet og høyskoler (UH)"
       },
       "short_name": "Forkortet visningsnavn på institusjonen"
     },
@@ -187,6 +188,7 @@
     "place": "Sted",
     "previous": "Forrige",
     "publisher": "Utgiver",
+    "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
     "read_less": "Les mindre",
     "read_less_about_nva": "Les mindre om NVA",
@@ -208,7 +210,6 @@
     "search_summary_other": "{{count}} treff for \"{{searchTerm}}\"",
     "select": "Velg",
     "select_institution": "Velg institusjon",
-    "select_language": "Velg språk",
     "selected": "Valgt",
     "send": "Send",
     "settings": "Innstillinger",
@@ -355,10 +356,14 @@
     "institution": {
       "institution_code": "Institusjonens kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringer.",
+      "institution_is_not_nvi_institution": "Kontakt Sikt om din institusjon vil benytte Norsk vitenskapsindeks",
+      "institution_is_nvi_institution": "Institusjonen rapporterer til Norsk vitenskapsindeks",
       "institution_name": "Institusjonsnavn",
       "institution_name_english": "Institusjonens engelske navn",
       "institution_name_norwegian": "Institusjonens norske navn",
-      "institution_short_name": "Institusjonens kortnavn"
+      "institution_short_name": "Institusjonens kortnavn",
+      "not_rbo_funded": "Institusjonen får ikke finansiering via Resultatbasert omfordeling (RBO)",
+      "rbo_funded": "Institusjonen får finansiering via Resultatbasert omfordeling (RBO)"
     },
     "publish_strategy": {
       "files_and_licenses": "Filer og lisenser",
@@ -389,11 +394,14 @@
       "an_error_occurred": "En feil oppstod",
       "create_customer": "Kunne ikke opprette institusjon",
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
+      "create_journal": "Kunne ikke opprette tidsskrift",
       "create_note": "Kunne ikke lagre til merknad",
       "create_nvi_period": "Kunne ikke opprette NVI-periode",
       "create_project": "Kunne ikke opprette prosjekt",
+      "create_publisher": "Kunne ikke opprette utgiver",
       "create_publishing_request": "Kunne ikke opprette publiseringsforespørsel",
       "create_registration": "Kunne ikke opprette registrering",
+      "create_series": "Kunne ikke opprette serie",
       "create_user": "Kunne ikke opprette person",
       "delete_draft_registrations": "Kunne ikke slette alle kladdene",
       "delete_note": "Kunne ikke slette merknad",
@@ -461,11 +469,14 @@
       "add_employment": "Ansettelse lagt til",
       "added_role": "Rolle ble lagt til",
       "admin_added": "Bruker lagt til som administrator",
+      "create_journal": "Tidsskriften ble opprettet",
       "create_note": "Merknaden ble lagret",
       "create_nvi_period": "NVI-periode ble opprettet",
       "create_project": "Prosjekt er opprettet",
+      "create_publisher": "Utigveren ble opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
       "create_registration": "Publikasjon er opprettet",
+      "create_series": "Serien ble opprettet",
       "create_user": "Din bruker ble opprettet",
       "created_customer": "Institusjon er opprettet",
       "delete_draft_registrations": "Alle kladdene ble slettet",
@@ -1472,6 +1483,9 @@
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
       "click_to_change_resource_type": "Trykk på valgt kategori om du vil endre",
+      "create_journal": "Opprett tidsskrift",
+      "create_publisher": "Opprett utgiver",
+      "create_series": "Opprett serie",
       "date_from": "Dato fra",
       "date_to": "Dato til",
       "exhibition_production": {
@@ -1582,10 +1596,12 @@
       "series": "Serie",
       "series_info": "Hvis publikasjonen inngår i en serie",
       "series_number": "Serienummer",
+      "series_title": "Serietittel",
       "title_of_event": "Tittel på arrangement",
       "type_work": "Type verk",
       "type_work_specified": "Egendefinert type verk",
-      "volume": "Volum"
+      "volume": "Volum",
+      "isbn_prefix": "ISBN-prefiks"
     },
     "status": {
       "DRAFT": "Kladd",
@@ -1645,9 +1661,10 @@
       "save_note": "Lagre merknad",
       "status": {
         "Approved": "Godkjent",
-        "Pending": "Til kontroll",
+        "Pending": "Kandidat",
         "Rejected": "Avvist"
       },
+      "undistributed_points": "Ikke fordelt",
       "waiting_for_other_institutions": "Venter på andre institusjoner",
       "waiting_for_your_institution": "Venter på din institusjon"
     },
