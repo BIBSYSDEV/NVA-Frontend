@@ -488,6 +488,7 @@ export const dataTestId = {
   },
   tasksPage: {
     correctionListAccordion: 'correction-list-accordion',
+    nextCandidateButton: 'next-candidate-button',
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {
