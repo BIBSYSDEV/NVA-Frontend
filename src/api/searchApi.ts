@@ -99,7 +99,7 @@ interface FetchResultsQuery {
   identifier?: string;
   contributor?: string;
   query?: string;
-  category?: PublicationInstanceType[];
+  category?: PublicationInstanceType | PublicationInstanceType[];
 }
 
 export const fetchResults2 = async (
@@ -122,7 +122,11 @@ export const fetchResults2 = async (
     fullQuery += `&query=${query}`;
   }
   if (category) {
-    fullQuery += `&category=${category.join(',')}`;
+    if (category instanceof Array) {
+      category.forEach((categoryValue) => (fullQuery += `&category=${categoryValue}`));
+    } else {
+      fullQuery += `&category=${category}`;
+    }
   }
 
   const getResults = await apiRequest2<SearchResponse<Registration>>({
