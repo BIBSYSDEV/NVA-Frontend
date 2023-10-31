@@ -110,19 +110,19 @@ export const fetchResults2 = async (
   let fullQuery = `results=${results}&from=${from}`;
 
   if (doi) {
-    fullQuery += `&doi="${doi}"`;
+    fullQuery += `&doi=${doi}`;
   }
   if (identifier) {
-    fullQuery += `&id="${identifier}"`;
+    fullQuery += `&id=${identifier}`;
   }
   if (contributor) {
-    fullQuery += `&contributor="${contributor}"`;
+    fullQuery += `&contributor=${contributor}`;
   }
   if (query) {
-    fullQuery += `&query="${query}"`;
+    fullQuery += `&query=${query}`;
   }
   if (category) {
-    fullQuery += `&category="${category.join(',')}"`;
+    fullQuery += `&category=${category.join(',')}`;
   }
 
   const getResults = await apiRequest2<SearchResponse<Registration>>({
