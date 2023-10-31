@@ -118,9 +118,11 @@ const HomePage = () => {
                         />
                       </Box>
                     ) : (
-                      <Typography fontStyle="italic" sx={{ mx: '1rem', mb: '1rem' }}>
-                        {t('search.no_available_filters')}
-                      </Typography>
+                      !isLoadingSearch && (
+                        <Typography fontStyle="italic" sx={{ mx: '1rem', mb: '1rem' }}>
+                          {t('search.no_available_filters')}
+                        </Typography>
+                      )
                     )}
                   </>
                 </NavigationListAccordion>
