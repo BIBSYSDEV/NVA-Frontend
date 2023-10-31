@@ -50,7 +50,7 @@ type TicketStatusFilter = {
 
 type TicketSearchMode = 'current-user' | 'all';
 
-const StyledSearchModeButton = styled(LinkButton)({
+export const StyledSearchModeButton = styled(LinkButton)({
   borderRadius: '1.5rem',
   textTransform: 'none',
 });

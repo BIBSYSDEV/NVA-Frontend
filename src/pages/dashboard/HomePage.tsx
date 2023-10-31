@@ -1,5 +1,6 @@
 import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box } from '@mui/material';
 import { Form, Formik, FormikProps } from 'formik';
@@ -8,7 +9,7 @@ import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { LinkButton, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { SearchResponse } from '../../types/common.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
@@ -22,6 +23,7 @@ import {
   createSearchConfigFromSearchParams,
 } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { StyledSearchModeButton } from '../messages/TasksPage';
 import SearchPage from '../search/SearchPage';
 import ReportsPage from '../search/registration_search/ReportsPage';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
@@ -124,13 +126,13 @@ const HomePage = () => {
                   startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
                   accordionPath={UrlPathTemplate.Reports}
                   dataTestId={dataTestId.startPage.reportsAccordion}>
-                  <LinkButton
-                    size="small"
-                    data-testid={dataTestId.myPage.myProjectsLink}
+                  <StyledSearchModeButton
+                    sx={{ mx: '1rem', mb: '1rem' }}
+                    data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
                     isSelected={currentPath === UrlPathTemplate.Reports}
-                    to={UrlPathTemplate.Reports}>
-                    {t('search.reports.reports')}
-                  </LinkButton>
+                    startIcon={<RadioButtonCheckedIcon />}>
+                    {t('common.nvi')}
+                  </StyledSearchModeButton>
                 </NavigationListAccordion>
               </SideMenu>
 
