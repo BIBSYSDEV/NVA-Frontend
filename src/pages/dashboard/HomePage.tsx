@@ -2,7 +2,7 @@ import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
@@ -104,7 +104,7 @@ const HomePage = () => {
                   expanded={isOnSearchPage}
                   dataTestId={dataTestId.startPage.filterAccordion}>
                   <>
-                    {resultIsSelected && searchResults?.aggregations && (
+                    {resultIsSelected && searchResults?.aggregations ? (
                       <Box
                         sx={{
                           m: '1rem',
@@ -117,6 +117,10 @@ const HomePage = () => {
                           isLoadingSearch={isLoadingSearch}
                         />
                       </Box>
+                    ) : (
+                      <Typography fontStyle="italic" sx={{ mx: '1rem', mb: '1rem' }}>
+                        {t('search.no_available_filters')}
+                      </Typography>
                     )}
                   </>
                 </NavigationListAccordion>

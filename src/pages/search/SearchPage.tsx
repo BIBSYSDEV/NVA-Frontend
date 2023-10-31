@@ -44,97 +44,92 @@ const SearchPage = ({ searchResults, isLoadingSearch }: SearchPageProps) => {
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
   const projectIsSelected = paramsSearchType === SearchTypeValue.Project;
 
-  const requestParams = new URLSearchParams(history.location.search);
-  requestParams.delete(SearchParam.Type);
-
   return (
-    <>
-      <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
-        <Box
+    <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
+          gap: '1rem 0.5rem',
+          mx: { xs: '1rem', md: 0 },
+        }}>
+        <TextField
+          select
+          value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
           sx={{
-            display: 'grid',
-            gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
-            gap: '1rem 0.5rem',
-            mx: { xs: '1rem', md: 0 },
-          }}>
-          <TextField
-            select
-            value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
-            sx={{
-              mb: !resultIsSelected ? '1rem' : 0,
-              minWidth: '10rem',
-              '.MuiSelect-select': {
-                display: 'flex',
-                gap: '0.5rem',
-                alignItems: 'center',
-                bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
-              },
-            }}
-            inputProps={{ 'aria-label': t('common.type') }}>
-            <MenuItem
-              sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-              value={SearchTypeValue.Result}
-              onClick={() => {
-                if (!resultIsSelected) {
-                  const resultParams = new URLSearchParams();
-                  history.push({ search: resultParams.toString() });
-                }
-              }}>
-              <NotesIcon fontSize="small" />
-              {t('search.result')}
-            </MenuItem>
-            <MenuItem
-              sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-              value={SearchTypeValue.Person}
-              onClick={() => {
-                if (!personIsSeleced) {
-                  const personParams = new URLSearchParams();
-                  personParams.set(SearchParam.Type, SearchTypeValue.Person);
-                  history.push({ search: personParams.toString() });
-                }
-              }}>
-              <PersonIcon fontSize="small" />
-              {t('search.persons')}
-            </MenuItem>
-            <MenuItem
-              sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-              value={SearchTypeValue.Project}
-              onClick={() => {
-                if (!projectIsSelected) {
-                  const projectParams = new URLSearchParams();
-                  projectParams.set(SearchParam.Type, SearchTypeValue.Project);
-                  history.push({ search: projectParams.toString() });
-                }
-              }}>
-              <ShowChartIcon fontSize="small" />
-              {t('project.project')}
-            </MenuItem>
-          </TextField>
+            mb: !resultIsSelected ? '1rem' : 0,
+            minWidth: '10rem',
+            '.MuiSelect-select': {
+              display: 'flex',
+              gap: '0.5rem',
+              alignItems: 'center',
+              bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
+            },
+          }}
+          inputProps={{ 'aria-label': t('common.type') }}>
+          <MenuItem
+            sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+            value={SearchTypeValue.Result}
+            onClick={() => {
+              if (!resultIsSelected) {
+                const resultParams = new URLSearchParams();
+                history.push({ search: resultParams.toString() });
+              }
+            }}>
+            <NotesIcon fontSize="small" />
+            {t('search.result')}
+          </MenuItem>
+          <MenuItem
+            sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+            value={SearchTypeValue.Person}
+            onClick={() => {
+              if (!personIsSeleced) {
+                const personParams = new URLSearchParams();
+                personParams.set(SearchParam.Type, SearchTypeValue.Person);
+                history.push({ search: personParams.toString() });
+              }
+            }}>
+            <PersonIcon fontSize="small" />
+            {t('search.persons')}
+          </MenuItem>
+          <MenuItem
+            sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+            value={SearchTypeValue.Project}
+            onClick={() => {
+              if (!projectIsSelected) {
+                const projectParams = new URLSearchParams();
+                projectParams.set(SearchParam.Type, SearchTypeValue.Project);
+                history.push({ search: projectParams.toString() });
+              }
+            }}>
+            <ShowChartIcon fontSize="small" />
+            {t('project.project')}
+          </MenuItem>
+        </TextField>
 
-          {resultIsSelected && <RegistrationSearchBar aggregations={searchResults?.aggregations} />}
-          {(personIsSeleced || projectIsSelected) && (
-            <Field name="searchTerm">
-              {({ field, form: { submitForm } }: FieldProps<string>) => (
-                <SearchTextField
-                  {...field}
-                  placeholder={
-                    personIsSeleced ? t('search.person_search_placeholder') : t('search.project_search_placeholder')
-                  }
-                  clearValue={() => {
-                    field.onChange({ target: { value: '', id: field.name } });
-                    submitForm();
-                  }}
-                />
-              )}
-            </Field>
-          )}
-        </Box>
-
-        {resultIsSelected && <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />}
-        {personIsSeleced && <PersonSearch />}
-        {projectIsSelected && <ProjectSearch />}
+        {resultIsSelected && <RegistrationSearchBar aggregations={searchResults?.aggregations} />}
+        {(personIsSeleced || projectIsSelected) && (
+          <Field name="searchTerm">
+            {({ field, form: { submitForm } }: FieldProps<string>) => (
+              <SearchTextField
+                {...field}
+                placeholder={
+                  personIsSeleced ? t('search.person_search_placeholder') : t('search.project_search_placeholder')
+                }
+                clearValue={() => {
+                  field.onChange({ target: { value: '', id: field.name } });
+                  submitForm();
+                }}
+              />
+            )}
+          </Field>
+        )}
       </Box>
-    </>
+
+      {resultIsSelected && <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />}
+      {personIsSeleced && <PersonSearch />}
+      {projectIsSelected && <ProjectSearch />}
+    </Box>
   );
 };
 

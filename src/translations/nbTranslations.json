@@ -1622,6 +1622,7 @@
     "field_label": "Felt",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
+    "no_available_filters": "Ingen tilgjengelige filter",
     "not_containing": "Inneholder ikke",
     "operator": "Operator",
     "person_search_placeholder": "Søk etter navn",
