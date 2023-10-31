@@ -142,7 +142,7 @@ const TasksPage = () => {
     .filter(Boolean)
     .join(' AND ');
 
-  const ticketQuery = `${ticketQueryString}&viewingScope=${user?.topOrgCristinId}`;
+  const ticketQuery = `${ticketQueryString}&viewingScope=${organizationScope.join(',')}${excludeSubunitsQuery}`;
 
   const ticketsQuery = useQuery({
     enabled: isOnTicketsPage,
