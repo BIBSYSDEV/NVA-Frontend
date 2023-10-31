@@ -52,13 +52,13 @@ export const interceptRequestsOnMock = () => {
   mock.onGet(new RegExp('/tickets')).reply(200, mockTicketCollection);
 
   // PUBLICATION CHANNEL
-  mock.onGet(mockJournalsSearch[0].id).reply(200, mockJournalsSearch[0]);
-  mock.onGet(mockJournalsSearch[1].id).reply(200, mockJournalsSearch[1]);
-  mock.onGet(mockJournalsSearch[2].id).reply(200, mockJournalsSearch[2]);
-  mock.onGet(new RegExp(PublicationChannelApiPath.JournalSearch)).reply(200, mockJournalsSearch);
-  mock.onGet(mockPublishersSearch[0].id).reply(200, mockPublishersSearch[0]);
-  mock.onGet(mockPublishersSearch[1].id).reply(200, mockPublishersSearch[1]);
-  mock.onGet(new RegExp(PublicationChannelApiPath.PublisherSearch)).reply(200, mockPublishersSearch);
+  mock.onGet(mockJournalsSearch.hits[0].id).reply(200, mockJournalsSearch.hits[0]);
+  mock.onGet(mockJournalsSearch.hits[1].id).reply(200, mockJournalsSearch.hits[1]);
+  mock.onGet(mockJournalsSearch.hits[2].id).reply(200, mockJournalsSearch.hits[2]);
+  mock.onGet(new RegExp(PublicationChannelApiPath.Journal)).reply(200, mockJournalsSearch);
+  mock.onGet(mockPublishersSearch.hits[0].id).reply(200, mockPublishersSearch.hits[0]);
+  mock.onGet(mockPublishersSearch.hits[1].id).reply(200, mockPublishersSearch.hits[1]);
+  mock.onGet(new RegExp(PublicationChannelApiPath.Publisher)).reply(200, mockPublishersSearch);
 
   //PUBLICATION
   mock.onPost(new RegExp(PublicationsApiPath.Registration)).reply(201, mockRegistration);

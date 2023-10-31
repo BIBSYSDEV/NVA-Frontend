@@ -45,6 +45,7 @@ export const mockCustomerInstitution: CustomerInstitution = {
   },
   sector: Sector.Uhi,
   nviInstitution: false,
+  rboInstitution: false,
 };
 
 export const mockCustomerInstitutions: CustomerList = {
