@@ -3,7 +3,7 @@ import InsightsIcon from '@mui/icons-material/Insights';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box } from '@mui/material';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
@@ -17,6 +17,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import {
+  SearchConfig,
   SearchParam,
   createRegistrationSearchQuery,
   createSearchConfigFromSearchParams,
@@ -91,59 +92,62 @@ const HomePage = () => {
           }
           history.push({ search: newSearchParams.toString() });
         }}>
-        <Form style={{ width: '100%' }}>
-          <StyledPageWithSideMenu>
-            <SideMenu>
-              <SideNavHeader icon={SearchIcon} text={t('common.search')} />
-              <NavigationListAccordion
-                title={t('common.filter')}
-                startIcon={<FilterIcon sx={{ bgcolor: 'white' }} />}
-                accordionPath=""
-                expanded={isOnSearchPage}
-                dataTestId={dataTestId.startPage.filterAccordion}>
-                <>
-                  {resultIsSelected && searchResults?.aggregations && (
-                    <Box
-                      sx={{
-                        m: '1rem',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: '1rem',
-                      }}>
-                      <RegistrationFacetsFilter
-                        aggregations={searchResults.aggregations}
-                        isLoadingSearch={isLoadingSearch}
-                      />
-                    </Box>
-                  )}
-                </>
-              </NavigationListAccordion>
+        {({ resetForm }: FormikHelpers<SearchConfig>) => (
+          <Form style={{ width: '100%' }}>
+            <StyledPageWithSideMenu>
+              <SideMenu>
+                <SideNavHeader icon={SearchIcon} text={t('common.search')} />
+                <NavigationListAccordion
+                  title={t('common.filter')}
+                  startIcon={<FilterIcon sx={{ bgcolor: 'white' }} />}
+                  accordionPath=""
+                  expanded={isOnSearchPage}
+                  dataTestId={dataTestId.startPage.filterAccordion}>
+                  <>
+                    {resultIsSelected && searchResults?.aggregations && (
+                      <Box
+                        sx={{
+                          m: '1rem',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '1rem',
+                        }}>
+                        <RegistrationFacetsFilter
+                          aggregations={searchResults.aggregations}
+                          isLoadingSearch={isLoadingSearch}
+                        />
+                      </Box>
+                    )}
+                  </>
+                </NavigationListAccordion>
 
-              <NavigationListAccordion
-                title={t('search.reports.reports')}
-                startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
-                accordionPath={UrlPathTemplate.Reports}
-                dataTestId={dataTestId.startPage.reportsAccordion}>
-                <StyledSearchModeButton
-                  sx={{ mx: '1rem', mb: '1rem' }}
-                  data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
-                  isSelected={currentPath === UrlPathTemplate.Reports}
-                  startIcon={<RadioButtonCheckedIcon />}>
-                  {t('common.nvi')}
-                </StyledSearchModeButton>
-              </NavigationListAccordion>
-            </SideMenu>
+                <NavigationListAccordion
+                  title={t('search.reports.reports')}
+                  startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
+                  accordionPath={UrlPathTemplate.Reports}
+                  dataTestId={dataTestId.startPage.reportsAccordion}
+                  onClick={() => resetForm()}>
+                  <StyledSearchModeButton
+                    sx={{ mx: '1rem', mb: '1rem' }}
+                    data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
+                    isSelected={currentPath === UrlPathTemplate.Reports}
+                    startIcon={<RadioButtonCheckedIcon />}>
+                    {t('common.nvi')}
+                  </StyledSearchModeButton>
+                </NavigationListAccordion>
+              </SideMenu>
 
-            <Switch>
-              <ErrorBoundary>
-                <Route exact path={UrlPathTemplate.Home}>
-                  <SearchPage searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
-                </Route>
-                <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
-              </ErrorBoundary>
-            </Switch>
-          </StyledPageWithSideMenu>
-        </Form>
+              <Switch>
+                <ErrorBoundary>
+                  <Route exact path={UrlPathTemplate.Home}>
+                    <SearchPage searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
+                  </Route>
+                  <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
+                </ErrorBoundary>
+              </Switch>
+            </StyledPageWithSideMenu>
+          </Form>
+        )}
       </Formik>
     </>
   );
