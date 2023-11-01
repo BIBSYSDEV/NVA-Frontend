@@ -21,7 +21,7 @@ export const MyResults = () => {
 
   const registrationsQuery = useQuery({
     enabled: !!personId,
-    queryKey: ['registrations', personId, rowsPerPage, offset],
+    queryKey: ['registrations', rowsPerPage, offset, personId],
     queryFn: () => fetchResults2(rowsPerPage, offset, { contributor: personId }),
     meta: { errorMessage: t('feedback.error.search') },
   });
