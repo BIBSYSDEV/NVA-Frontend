@@ -103,12 +103,13 @@ export interface FetchResultsQuery {
   issn?: string;
   publicationYear?: string;
   title?: string;
+  project?: string;
 }
 
 export const fetchResults2 = async (
   results: number,
   from: number,
-  { doi, identifier, contributor, query, category, issn, publicationYear, title }: FetchResultsQuery
+  { doi, identifier, contributor, query, category, issn, publicationYear, title, project }: FetchResultsQuery
 ) => {
   let fullQuery = `results=${results}&from=${from}`;
 
@@ -139,6 +140,9 @@ export const fetchResults2 = async (
   }
   if (publicationYear) {
     fullQuery += `&year_reported=${publicationYear}`;
+  }
+  if (project) {
+    fullQuery += `&project=${project}`;
   }
 
   const getResults = await apiRequest2<SearchResponse<Registration>>({

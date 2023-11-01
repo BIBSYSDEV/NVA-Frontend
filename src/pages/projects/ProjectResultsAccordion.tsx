@@ -2,11 +2,10 @@ import { CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchResults } from '../../api/searchApi';
+import { fetchResults2 } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
-import { DescriptionFieldNames } from '../../types/publicationFieldNames';
 import { dataTestId } from '../../utils/dataTestIds';
 
 interface ProjectResultsProps {
@@ -19,11 +18,11 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(itemsPerRowOptions[0]);
+  const offset = rowsPerPage * (page - 1);
 
   const resultsQuery = useQuery({
-    queryKey: ['projectResults', projectId, rowsPerPage, page],
-    queryFn: () =>
-      fetchResults(rowsPerPage, (page - 1) * rowsPerPage, `${DescriptionFieldNames.Projects}.id:"${projectId}"`),
+    queryKey: ['registrations', rowsPerPage, offset, projectId],
+    queryFn: () => fetchResults2(rowsPerPage, offset, { project: projectId }),
     meta: { errorMessage: t('feedback.error.search') },
   });
   const results = resultsQuery.data;
