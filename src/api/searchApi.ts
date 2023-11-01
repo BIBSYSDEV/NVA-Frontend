@@ -94,21 +94,27 @@ export const fetchNviCandidate = async (identifier: string) => {
   return getNviCandidates.data;
 };
 
-interface FetchResultsQuery {
+export interface FetchResultsQuery {
   doi?: string;
   identifier?: string;
   contributor?: string;
   query?: string;
   category?: PublicationInstanceType | PublicationInstanceType[];
+  issn?: string;
+  publicationYear?: string;
+  title?: string;
 }
 
 export const fetchResults2 = async (
   results: number,
   from: number,
-  { doi, identifier, contributor, query, category }: FetchResultsQuery
+  { doi, identifier, contributor, query, category, issn, publicationYear, title }: FetchResultsQuery
 ) => {
   let fullQuery = `results=${results}&from=${from}`;
 
+  if (title) {
+    fullQuery += `&title=${title}`;
+  }
   if (doi) {
     fullQuery += `&doi=${doi}`;
   }
@@ -127,6 +133,12 @@ export const fetchResults2 = async (
     } else {
       fullQuery += `&category=${category}`;
     }
+  }
+  if (issn) {
+    fullQuery += `&issn=${issn}`;
+  }
+  if (publicationYear) {
+    fullQuery += `&year_reported=${publicationYear}`;
   }
 
   const getResults = await apiRequest2<SearchResponse<Registration>>({
