@@ -4,7 +4,7 @@ import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getById } from '../../../../api/commonApi';
-import { fetchResults2 } from '../../../../api/searchApi';
+import { fetchResults } from '../../../../api/searchApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
@@ -51,7 +51,7 @@ export const SearchContainerField = ({
   const containerOptionsQuery = useQuery({
     enabled: !!debouncedQuery && debouncedQuery === query,
     queryKey: ['container', debouncedQuery, searchSubtypes],
-    queryFn: () => fetchResults2(25, 0, { query: debouncedQuery, category: searchSubtypes }),
+    queryFn: () => fetchResults(25, 0, { query: debouncedQuery, category: searchSubtypes }),
     meta: { errorMessage: t('feedback.error.search') },
   });
 

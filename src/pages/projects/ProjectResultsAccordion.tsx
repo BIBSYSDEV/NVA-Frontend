@@ -2,7 +2,7 @@ import { CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchResults2 } from '../../api/searchApi';
+import { fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
@@ -22,7 +22,7 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
 
   const resultsQuery = useQuery({
     queryKey: ['registrations', rowsPerPage, offset, projectId],
-    queryFn: () => fetchResults2(rowsPerPage, offset, { project: projectId }),
+    queryFn: () => fetchResults(rowsPerPage, offset, { project: projectId }),
     meta: { errorMessage: t('feedback.error.search') },
   });
   const results = resultsQuery.data;

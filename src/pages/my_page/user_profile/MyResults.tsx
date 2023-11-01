@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchPromotedPublicationsById } from '../../../api/preferencesApi';
-import { fetchResults2 } from '../../../api/searchApi';
+import { fetchResults } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { RootState } from '../../../redux/store';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
@@ -22,7 +22,7 @@ export const MyResults = () => {
   const registrationsQuery = useQuery({
     enabled: !!personId,
     queryKey: ['registrations', rowsPerPage, offset, personId],
-    queryFn: () => fetchResults2(rowsPerPage, offset, { contributor: personId }),
+    queryFn: () => fetchResults(rowsPerPage, offset, { contributor: personId }),
     meta: { errorMessage: t('feedback.error.search') },
   });
 

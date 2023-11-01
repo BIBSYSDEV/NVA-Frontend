@@ -2,7 +2,7 @@ import { Box, FormControl, FormControlLabel, Radio, RadioGroup, Typography } fro
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsQuery, fetchResults2 } from '../../../../api/searchApi';
+import { FetchResultsQuery, fetchResults } from '../../../../api/searchApi';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
@@ -35,7 +35,7 @@ export const CentralImportDuplicateSearch = ({
   };
   const duplicateCandidatesQuery = useQuery({
     queryKey: ['registrations', rowsPerPage, offset, searchConfig],
-    queryFn: () => fetchResults2(rowsPerPage, offset, searchConfig),
+    queryFn: () => fetchResults(rowsPerPage, offset, searchConfig),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
   const duplicateCandidatesSize = duplicateCandidatesQuery.data?.totalHits ?? 0;

@@ -41,18 +41,6 @@ export const fetchRegistrationsExport = async (searchParams: string) => {
   return fetchExport.data;
 };
 
-export const fetchResults = async (results: number, from: number, query = '') => {
-  const paginationQuery = `results=${results}&from=${from}`;
-  const searchQuery = query ? `query=${query}` : '';
-
-  const fullQuery = [paginationQuery, searchQuery].filter(Boolean).join('&');
-
-  const getResults = await apiRequest2<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}?${fullQuery}`,
-  });
-  return getResults.data;
-};
-
 export const fetchEmployees = async (
   organizationId: string,
   results: number,
@@ -106,7 +94,7 @@ export interface FetchResultsQuery {
   project?: string;
 }
 
-export const fetchResults2 = async (
+export const fetchResults = async (
   results: number,
   from: number,
   { doi, identifier, contributor, query, category, issn, publicationYear, title, project }: FetchResultsQuery
