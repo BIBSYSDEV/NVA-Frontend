@@ -57,6 +57,11 @@ const HomePage = () => {
     errorMessage: t('feedback.error.search'),
   });
 
+  const emptySearchParams: SearchConfig = {
+    searchTerm: '',
+    properties: [],
+  };
+
   const initialSearchParams = createSearchConfigFromSearchParams(params);
 
   return (
@@ -92,7 +97,7 @@ const HomePage = () => {
           }
           history.push({ search: newSearchParams.toString() });
         }}>
-        {({ resetForm }: FormikHelpers<SearchConfig>) => (
+        {({ setValues }: FormikHelpers<SearchConfig>) => (
           <Form style={{ width: '100%' }}>
             <StyledPageWithSideMenu>
               <SideMenu>
@@ -132,7 +137,9 @@ const HomePage = () => {
                   startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
                   accordionPath={UrlPathTemplate.Reports}
                   dataTestId={dataTestId.startPage.reportsAccordion}
-                  onClick={() => resetForm()}>
+                  onClick={() => {
+                    setValues(emptySearchParams);
+                  }}>
                   <StyledSearchModeButton
                     sx={{ mx: '1rem', mb: '1rem' }}
                     data-testid={dataTestId.startPage.nviReportRadioButton}
