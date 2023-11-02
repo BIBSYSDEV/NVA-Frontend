@@ -1,5 +1,5 @@
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Divider, IconButton, Paper, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, Divider, IconButton, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +26,6 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const { t } = useTranslation();
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const offsetNextCandidate = location.state?.offsetNextCandidate;
 
@@ -90,7 +89,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
             <Box sx={{ position: 'relative' }}>
               <PublicRegistrationContent registration={registrationQuery.data} />
 
-              {nextCandidateIdentifier && offsetNextCandidate && !isMobile && (
+              {nextCandidateIdentifier && offsetNextCandidate && (
                 <IconButton
                   component={Link}
                   to={{
@@ -101,11 +100,12 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
                   title={t('tasks.nvi.next_candidate')}
                   size="small"
                   sx={{
+                    display: { xs: 'none', sm: 'block' },
                     bgcolor: 'white',
                     border: '1px solid',
                     borderColor: 'info.main',
                     width: '2rem',
-                    aspectRatio: '1 / 1',
+                    height: '2rem',
                     position: 'absolute',
                     right: '-1rem',
                     top: '50vh',
