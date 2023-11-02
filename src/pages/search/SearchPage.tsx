@@ -2,12 +2,12 @@ import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Box, MenuItem, TextField } from '@mui/material';
-import { Field, FieldProps } from 'formik';
+import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchResponse } from '../../types/common.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
-import { SearchParam } from '../../utils/searchHelpers';
+import { SearchConfig, SearchParam, emptySearchConfig } from '../../utils/searchHelpers';
 import { SearchTextField } from './SearchTextField';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
@@ -39,6 +39,7 @@ const SearchPage = ({ searchResults, isLoadingSearch }: SearchPageProps) => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
+  const { setValues } = useFormikContext<SearchConfig>();
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
@@ -74,6 +75,7 @@ const SearchPage = ({ searchResults, isLoadingSearch }: SearchPageProps) => {
               if (!resultIsSelected) {
                 const resultParams = new URLSearchParams();
                 history.push({ search: resultParams.toString() });
+                setValues(emptySearchConfig);
               }
             }}>
             <NotesIcon fontSize="small" />
@@ -87,6 +89,7 @@ const SearchPage = ({ searchResults, isLoadingSearch }: SearchPageProps) => {
                 const personParams = new URLSearchParams();
                 personParams.set(SearchParam.Type, SearchTypeValue.Person);
                 history.push({ search: personParams.toString() });
+                setValues(emptySearchConfig);
               }
             }}>
             <PersonIcon fontSize="small" />
@@ -100,6 +103,7 @@ const SearchPage = ({ searchResults, isLoadingSearch }: SearchPageProps) => {
                 const projectParams = new URLSearchParams();
                 projectParams.set(SearchParam.Type, SearchTypeValue.Project);
                 history.push({ search: projectParams.toString() });
+                setValues(emptySearchConfig);
               }
             }}>
             <ShowChartIcon fontSize="small" />
