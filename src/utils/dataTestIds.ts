@@ -134,6 +134,7 @@ export const dataTestId = {
     facetItem: (value: string) => `facet-item-${value}`,
     filterAccordion: 'filter-accordion',
     fundingFacets: 'funding-facets',
+    nviReportRadioButton: 'nvi-report-radio-button',
     orderBySelect: 'order-by-select',
     personSearchButton: 'person-search-button',
     projectSearchButton: 'project-search-button',
