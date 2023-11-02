@@ -86,30 +86,36 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
       {registrationQuery.data && (
         <ErrorBoundary>
           <ErrorBoundary>
-            <PublicRegistrationContent registration={registrationQuery.data} />
+            <Box sx={{ position: 'relative' }}>
+              <PublicRegistrationContent registration={registrationQuery.data} />
 
-            {nextCandidateIdentifier && offsetNextCandidate && (
-              <IconButton
-                component={Link}
-                to={{
-                  pathname: getNviCandidatePath(nextCandidateIdentifier),
-                  state: offsetNextCandidateState,
-                }}
-                data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
-                title={t('tasks.nvi.next_candidate')}
-                size="small"
-                sx={{
-                  bgcolor: 'info.main',
-                  width: '2.5rem',
-                  aspectRatio: '1 / 1',
-                  justifySelf: 'end',
-                  '&:hover': {
-                    bgcolor: 'info.main',
-                  },
-                }}>
-                <ArrowForwardIosIcon sx={{ color: 'white' }} />
-              </IconButton>
-            )}
+              {nextCandidateIdentifier && offsetNextCandidate && (
+                <IconButton
+                  component={Link}
+                  to={{
+                    pathname: getNviCandidatePath(nextCandidateIdentifier),
+                    state: offsetNextCandidateState,
+                  }}
+                  data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
+                  title={t('tasks.nvi.next_candidate')}
+                  size="small"
+                  sx={{
+                    bgcolor: 'white',
+                    border: '1px solid',
+                    borderColor: 'info.main',
+                    width: '2rem',
+                    aspectRatio: '1 / 1',
+                    position: 'absolute',
+                    right: '-1rem',
+                    top: '50vh',
+                    '&:hover': {
+                      bgcolor: 'white',
+                    },
+                  }}>
+                  <ArrowForwardIosIcon fontSize="small" sx={{ color: 'info.main' }} />
+                </IconButton>
+              )}
+            </Box>
           </ErrorBoundary>
 
           <Paper
