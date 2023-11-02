@@ -43,6 +43,7 @@ export const dataTestId = {
       feideField: 'feide-field',
       nameField: 'institution-name-field',
       nviInstitutionCheckbox: 'nvi-institution-checkbox',
+      rboInstitutionCheckbox: 'rbo-institution-checkbox',
       rorField: 'ror-field',
       saveButton: 'save-button',
       sectorChip: (sector: string) => `sector-chip-${sector}`,
@@ -131,6 +132,7 @@ export const dataTestId = {
     },
     contributorFacets: 'contributor-facets',
     facetItem: (value: string) => `facet-item-${value}`,
+    filterAccordion: 'filter-accordion',
     fundingFacets: 'funding-facets',
     orderBySelect: 'order-by-select',
     personSearchButton: 'person-search-button',
@@ -488,6 +490,7 @@ export const dataTestId = {
   },
   tasksPage: {
     correctionListAccordion: 'correction-list-accordion',
+    nextCandidateButton: 'next-candidate-button',
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {

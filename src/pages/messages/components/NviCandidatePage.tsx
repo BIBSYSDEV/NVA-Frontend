@@ -1,6 +1,7 @@
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Divider, IconButton, Link as MuiLink, Paper, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Paper, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
@@ -12,6 +13,7 @@ import { CandidateOffsetState } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
+import { Forbidden } from '../../errorpages/Forbidden';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NviApprovalStatuses } from './NviApprovalStatuses';
 import { NviCandidateActions } from './NviCandidateActions';
@@ -24,6 +26,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const { t } = useTranslation();
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
 
   const offsetNextCandidate = location.state?.offsetNextCandidate;
 
@@ -33,6 +36,12 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
     queryKey: nviCandidateQueryKey,
     queryFn: () => fetchNviCandidate(identifier),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
+    retry(failureCount, error: Pick<AxiosError, 'response'>) {
+      if (error.response?.status === 401) {
+        return false;
+      }
+      return failureCount < 3;
+    },
   });
 
   const nviCandidate = nviCandidateQuery.data;
@@ -49,14 +58,22 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
 
   const nextCandidateQuery = useQuery({
     queryKey: ['nextCandidate', 1, offsetNextCandidate, nviListQuery],
-    queryFn: offsetNextCandidate ? () => fetchNviCandidates(1, offsetNextCandidate, `${nviListQuery}`) : undefined,
+    queryFn: offsetNextCandidate ? () => fetchNviCandidates(1, offsetNextCandidate, nviListQuery) : undefined,
     meta: { errorMessage: false },
     retry: false,
   });
 
-  const nextCandidateIdentifier = nextCandidateQuery.data?.hits?.[0]?.identifier;
+  const nextCandidateIdentifier = nextCandidateQuery.data?.hits[0]?.identifier;
 
-  return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
+  const offsetNextCandidateState: CandidateOffsetState | undefined = offsetNextCandidate
+    ? {
+        offsetNextCandidate: offsetNextCandidate + 1,
+      }
+    : undefined;
+
+  return nviCandidateQuery.error?.response?.status === 401 ? (
+    <Forbidden />
+  ) : registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : (
     <Box
@@ -70,25 +87,36 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
       {registrationQuery.data && (
         <ErrorBoundary>
           <ErrorBoundary>
-            <PublicRegistrationContent registration={registrationQuery.data} />
+            <Box sx={{ position: 'relative' }}>
+              <PublicRegistrationContent registration={registrationQuery.data} />
 
-            {nextCandidateIdentifier && offsetNextCandidate && (
-              <MuiLink
-                sx={{ justifySelf: 'end' }}
-                component={Link}
-                to={{
-                  pathname: getNviCandidatePath(nextCandidateIdentifier),
-                  state: { offsetNextCandidate: offsetNextCandidate + 1 },
-                }}>
+              {nextCandidateIdentifier && offsetNextCandidate && !isMobile && (
                 <IconButton
+                  component={Link}
+                  to={{
+                    pathname: getNviCandidatePath(nextCandidateIdentifier),
+                    state: offsetNextCandidateState,
+                  }}
                   data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                   title={t('tasks.nvi.next_candidate')}
                   size="small"
-                  sx={{ bgcolor: 'info.main', color: 'white' }}>
-                  <ArrowForwardIosIcon />
+                  sx={{
+                    bgcolor: 'white',
+                    border: '1px solid',
+                    borderColor: 'info.main',
+                    width: '2rem',
+                    aspectRatio: '1 / 1',
+                    position: 'absolute',
+                    right: '-1rem',
+                    top: '50vh',
+                    '&:hover': {
+                      bgcolor: 'white',
+                    },
+                  }}>
+                  <ArrowForwardIosIcon fontSize="small" sx={{ color: 'info.main' }} />
                 </IconButton>
-              </MuiLink>
-            )}
+              )}
+            </Box>
           </ErrorBoundary>
 
           <Paper

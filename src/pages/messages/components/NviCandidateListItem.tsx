@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { NviCandidateSearchHit } from '../../../types/nvi.types';
+import { CandidateOffsetState, NviCandidateSearchHit } from '../../../types/nvi.types';
 import { displayDate } from '../../../utils/date-helpers';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -34,6 +34,10 @@ export const NviCandidateListItem = ({ nviCandidate, offsetNextCandidate }: NviC
 
   const myApproval = nviCandidate.approvals.find((approval) => approval.id === user?.topOrgCristinId);
 
+  const offsetNextCandidateState: CandidateOffsetState = {
+    offsetNextCandidate: offsetNextCandidate,
+  };
+
   return (
     <SearchListItem
       sx={{
@@ -53,7 +57,7 @@ export const NviCandidateListItem = ({ nviCandidate, offsetNextCandidate }: NviC
             component={Link}
             to={{
               pathname: getNviCandidatePath(nviCandidate.identifier),
-              state: { offsetNextCandidate: offsetNextCandidate },
+              state: offsetNextCandidateState,
             }}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>
