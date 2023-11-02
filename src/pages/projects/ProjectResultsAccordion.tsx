@@ -30,7 +30,7 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
   return (
     <LandingPageAccordion
       dataTestId={dataTestId.projectLandingPage.resultsAccordion}
-      heading={results ? `${t('project.results')} (${results.size})` : t('project.results')}>
+      heading={results ? `${t('project.results')} (${results.totalHits})` : t('project.results')}>
       {resultsQuery.isLoading ? (
         <CircularProgress aria-label={t('project.results')} />
       ) : results && results.size > 0 ? (
