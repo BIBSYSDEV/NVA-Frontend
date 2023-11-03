@@ -88,6 +88,7 @@ export interface FetchResultsQuery {
   contributor?: string;
   doi?: string;
   identifier?: string;
+  identifierNot?: string;
   issn?: string;
   project?: string;
   publicationYear?: string;
@@ -104,6 +105,7 @@ export const fetchResults = async (
     contributor,
     doi,
     identifier,
+    identifierNot,
     issn,
     project,
     publicationYear,
@@ -127,6 +129,9 @@ export const fetchResults = async (
   }
   if (identifier) {
     fullQuery += `&id=${identifier}`;
+  }
+  if (identifierNot) {
+    fullQuery += `&id_not=${identifierNot}`;
   }
   if (issn) {
     fullQuery += `&issn=${issn}`;
