@@ -33,12 +33,12 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
       heading={results ? `${t('project.results')} (${results.totalHits})` : t('project.results')}>
       {resultsQuery.isLoading ? (
         <CircularProgress aria-label={t('project.results')} />
-      ) : results && results.size > 0 ? (
+      ) : results && results.totalHits > 0 ? (
         <>
           <RegistrationList registrations={results.hits} />
           <ListPagination
             rowsPerPageOptions={itemsPerRowOptions}
-            count={results.size}
+            count={results.totalHits}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(newPage) => setPage(newPage)}

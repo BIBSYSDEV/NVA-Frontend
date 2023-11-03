@@ -188,14 +188,14 @@ const ResearchProfile = () => {
         </Typography>
         {registrationsQuery.isLoading || promotedPublicationsQuery.isLoading ? (
           <CircularProgress aria-labelledby="registration-label" />
-        ) : registrationsQuery.data && registrationsQuery.data.size > 0 ? (
+        ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <>
             <RegistrationSearchResults
               searchResult={registrationsQuery.data}
               promotedPublications={promotedPublications}
             />
             <ListPagination
-              count={registrationsQuery.data.size}
+              count={registrationsQuery.data.totalHits}
               rowsPerPage={registrationRowsPerPage}
               page={registrationsPage}
               onPageChange={(newPage) => setRegistrationsPage(newPage)}

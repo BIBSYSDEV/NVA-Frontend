@@ -45,7 +45,7 @@ export const MyResults = () => {
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <CircularProgress aria-labelledby="registration-label" />
         </Box>
-      ) : registrationsQuery.data && registrationsQuery.data.size > 0 ? (
+      ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
         <>
           <RegistrationSearchResults
             canEditRegistration={true}
@@ -53,7 +53,7 @@ export const MyResults = () => {
             promotedPublications={promotedPublications}
           />
           <ListPagination
-            count={registrationsQuery.data.size}
+            count={registrationsQuery.data.totalHits}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={(newPage) => setPage(newPage)}

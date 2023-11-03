@@ -1,4 +1,4 @@
-import { SearchResponse } from '../types/common.types';
+import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
 import { NviCandidate, NviCandidateSearchResponse } from '../types/nvi.types';
 import { ExpandedTicket } from '../types/publication_types/ticket.types';
@@ -133,7 +133,7 @@ export const fetchResults = async (
     fullQuery += `&project=${project}`;
   }
 
-  const getResults = await apiRequest2<SearchResponse<Registration>>({
+  const getResults = await apiRequest2<SearchResponse2<Registration>>({
     url: `${SearchApiPath.Registrations2}?${fullQuery}`,
   });
 

@@ -1,12 +1,14 @@
 import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { RegistrationList } from '../../../components/RegistrationList';
-import { SearchResponse } from '../../../types/common.types';
+import { SearchResponse, SearchResponse2 } from '../../../types/common.types';
 import { Registration, RegistrationAggregations } from '../../../types/registration.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 
 interface SearchResultsProps {
-  searchResult: SearchResponse<Registration, RegistrationAggregations>;
+  searchResult:
+    | SearchResponse<Registration, RegistrationAggregations>
+    | SearchResponse2<Registration, RegistrationAggregations>;
   canEditRegistration?: boolean;
   promotedPublications?: string[];
 }
