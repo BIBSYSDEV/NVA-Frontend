@@ -1,5 +1,5 @@
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,7 @@ export const FindPersonPanel = () => {
   const { t } = useTranslation();
   const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const [showCreatePerson, setShowCreatePerson] = useState(false);
+  const [confirmedIdentity, setConfirmedIdentity] = useState(false);
 
   const setSelectedPerson = useCallback(
     (person?: FlatCristinPerson) => setFieldValue('user', person ? person : emptyUser),
@@ -70,8 +71,8 @@ export const FindPersonPanel = () => {
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
-                    disabled={isSubmitting}
-                    required
+                    disabled={isSubmitting || confirmedIdentity}
+                    required={!confirmedIdentity}
                     fullWidth
                     variant="filled"
                     label={t('basic_data.person_register.national_identity_number')}
@@ -81,6 +82,13 @@ export const FindPersonPanel = () => {
                   />
                 )}
               </Field>
+
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Checkbox onClick={() => setConfirmedIdentity(!confirmedIdentity)} />
+                <Typography sx={{ whiteSpace: 'pre-line' }}>
+                  {t('basic_data.add_employee.confirmed_identity')}
+                </Typography>
+              </Box>
             </>
           )}
         </>
