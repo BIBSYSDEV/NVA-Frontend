@@ -111,7 +111,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
                     bgcolor: 'white',
                   },
                 }}>
-                <ArrowForwardIosIcon fontSize="small" sx={{ color: 'info.main' }} />
+                <ArrowForwardIosIcon fontSize="small" color="info" />
               </IconButton>
             )}
           </ErrorBoundary>
