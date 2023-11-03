@@ -531,11 +531,15 @@ const TasksPage = () => {
               title={t('tasks.correction_list')}
               startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
               accordionPath={UrlPathTemplate.TasksNviCorrectionList}
-              dataTestId={dataTestId.tasksPage.correctionListAccordion}>
+              dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
               <NavigationList>
-                <LinkButton isSelected={isOnCorrectionListPage} to={UrlPathTemplate.TasksNviCorrectionList}>
+                <StyledSearchModeButton
+                  sx={{ mx: '1rem', mb: '1rem' }}
+                  data-testid={dataTestId.tasksPage.correctionList.correctionListRadioButton}
+                  isSelected={isOnCorrectionListPage}
+                  startIcon={<RadioButtonCheckedIcon />}>
                   {t('tasks.correction_list')}
-                </LinkButton>
+                </StyledSearchModeButton>
               </NavigationList>
             </NavigationListAccordion>
           </>
