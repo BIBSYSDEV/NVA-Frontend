@@ -1,8 +1,10 @@
 import { Autocomplete, Box, List, TextField, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SearchApiPath } from '../../../../../api/apiPaths';
+import { FetchResultsQuery, fetchResults } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
 import { SearchResponse } from '../../../../../types/common.types';
 import {
@@ -35,10 +37,15 @@ export const DatasetForm = () => {
 
   const [relatedDmpQuery, setRelatedDmpQuery] = useState('');
   const debouncedRelatedDmpQuery = useDebounce(relatedDmpQuery);
-  const [relatedDmpOptions, isLoadingRelatedDmpOptions] = useFetch<SearchResponse<Registration>>({
-    url: debouncedRelatedDmpQuery
-      ? `${SearchApiPath.Registrations}?query=${debouncedRelatedDmpQuery} AND (${ResourceFieldNames.RegistrationType}:"${ResearchDataType.DataManagementPlan}")`
-      : `${SearchApiPath.Registrations}?query=${ResourceFieldNames.RegistrationType}:"${ResearchDataType.DataManagementPlan}"`,
+
+  const relatedDmpOptionsQueryConfig: FetchResultsQuery = {
+    title: debouncedRelatedDmpQuery,
+    category: ResearchDataType.DataManagementPlan,
+  };
+  const relatedDmpOptionsQuery = useQuery({
+    queryKey: ['registrations', 20, 0, relatedDmpOptionsQueryConfig],
+    queryFn: () => fetchResults(20, 0, relatedDmpOptionsQueryConfig),
+    meta: { errorMessage: t('feedback.error.search') },
   });
 
   return (
@@ -120,7 +127,7 @@ export const DatasetForm = () => {
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
             <Autocomplete
-              options={relatedDmpOptions?.hits ?? []}
+              options={relatedDmpOptionsQuery.data?.hits ?? []}
               value={null}
               onChange={(_, value) => {
                 if (value?.id && !compliesWith?.includes(value.id)) {
@@ -129,7 +136,7 @@ export const DatasetForm = () => {
                 setRelatedDmpQuery('');
               }}
               blurOnSelect
-              loading={isLoadingRelatedDmpOptions}
+              loading={relatedDmpOptionsQuery.isLoading}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
               renderOption={(props, option, state) => (
