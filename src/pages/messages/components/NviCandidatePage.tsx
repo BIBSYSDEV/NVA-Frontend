@@ -1,23 +1,33 @@
-import { Box, Divider, Paper, Typography } from '@mui/material';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Box, Divider, IconButton, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
-import { fetchNviCandidate } from '../../../api/searchApi';
+import { fetchNviCandidate, fetchNviCandidates } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
+import { CandidateOffsetState } from '../../../types/nvi.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { IdentifierParams } from '../../../utils/urlPaths';
+import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
 import { Forbidden } from '../../errorpages/Forbidden';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NviApprovalStatuses } from './NviApprovalStatuses';
 import { NviCandidateActions } from './NviCandidateActions';
 
-export const NviCandidatePage = () => {
+interface NviCandidatePageProps {
+  nviListQuery: string;
+}
+
+export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const { t } = useTranslation();
+  const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
+
+  const offsetNextCandidate = location.state?.offsetNextCandidate;
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -45,6 +55,21 @@ export const NviCandidatePage = () => {
 
   const periodStatus = nviCandidate?.periodStatus.status;
 
+  const nextCandidateQuery = useQuery({
+    queryKey: ['nextCandidate', 1, offsetNextCandidate, nviListQuery],
+    queryFn: offsetNextCandidate ? () => fetchNviCandidates(1, offsetNextCandidate, nviListQuery) : undefined,
+    meta: { errorMessage: false },
+    retry: false,
+  });
+
+  const nextCandidateIdentifier = nextCandidateQuery.data?.hits[0]?.identifier;
+
+  const offsetNextCandidateState: CandidateOffsetState | undefined = offsetNextCandidate
+    ? {
+        offsetNextCandidate: offsetNextCandidate + 1,
+      }
+    : undefined;
+
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
   ) : registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
@@ -62,6 +87,33 @@ export const NviCandidatePage = () => {
         <ErrorBoundary>
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
+
+            {nextCandidateIdentifier && offsetNextCandidate && (
+              <IconButton
+                component={Link}
+                to={{
+                  pathname: getNviCandidatePath(nextCandidateIdentifier),
+                  state: offsetNextCandidateState,
+                }}
+                data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
+                title={t('tasks.nvi.next_candidate')}
+                size="small"
+                sx={{
+                  display: { xs: 'none', sm: 'flex' },
+                  gridArea: 'registration',
+                  alignSelf: 'center',
+                  justifySelf: 'end',
+                  right: '-1rem',
+                  border: '1px solid',
+                  borderColor: 'info.main',
+                  bgcolor: 'white',
+                  '&:hover': {
+                    bgcolor: 'white',
+                  },
+                }}>
+                <ArrowForwardIosIcon fontSize="small" color="info" />
+              </IconButton>
+            )}
           </ErrorBoundary>
 
           <Paper

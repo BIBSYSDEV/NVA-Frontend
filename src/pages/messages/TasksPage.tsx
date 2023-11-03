@@ -575,12 +575,9 @@ const TasksPage = () => {
               helmetTitle={t('common.nvi')}
             />
           </PrivateRoute>
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.TasksNviCandidate}
-            component={NviCandidatePage}
-            isAuthorized={isNviCurator}
-          />
+          <PrivateRoute exact path={UrlPathTemplate.TasksNviCandidate} isAuthorized={isNviCurator}>
+            <NviCandidatePage nviListQuery={nviListQuery} />
+          </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksNviCorrectionList} isAuthorized={isNviCurator}>
             <NviCorrectionList />
           </PrivateRoute>
