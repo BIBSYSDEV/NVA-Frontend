@@ -490,7 +490,10 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
-    correctionListAccordion: 'correction-list-accordion',
+    correctionList: {
+      correctionListAccordion: 'correction-list-accordion',
+      correctionListRadioButton: 'correction-list-radio-button',
+    },
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {
