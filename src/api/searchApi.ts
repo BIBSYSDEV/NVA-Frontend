@@ -83,26 +83,44 @@ export const fetchNviCandidate = async (identifier: string) => {
 };
 
 export interface FetchResultsQuery {
+  category?: PublicationInstanceType;
+  categorySome?: PublicationInstanceType[];
+  contributor?: string;
   doi?: string;
   identifier?: string;
-  contributor?: string;
-  query?: string;
-  category?: PublicationInstanceType | PublicationInstanceType[];
   issn?: string;
-  publicationYear?: string;
-  title?: string;
   project?: string;
+  publicationYear?: string;
+  query?: string;
+  title?: string;
 }
 
 export const fetchResults = async (
   results: number,
   from: number,
-  { doi, identifier, contributor, query, category, issn, publicationYear, title, project }: FetchResultsQuery
+  {
+    category,
+    categorySome,
+    contributor,
+    doi,
+    identifier,
+    issn,
+    project,
+    publicationYear,
+    query,
+    title,
+  }: FetchResultsQuery
 ) => {
   let fullQuery = `results=${results}&from=${from}`;
 
-  if (title) {
-    fullQuery += `&title=${title}`;
+  if (category) {
+    fullQuery += `&category=${category}`;
+  }
+  if (categorySome) {
+    fullQuery += `&category_should=${categorySome.join(' ')}`;
+  }
+  if (contributor) {
+    fullQuery += `&contributor=${contributor}`;
   }
   if (doi) {
     fullQuery += `&doi=${doi}`;
@@ -110,27 +128,20 @@ export const fetchResults = async (
   if (identifier) {
     fullQuery += `&id=${identifier}`;
   }
-  if (contributor) {
-    fullQuery += `&contributor=${contributor}`;
+  if (issn) {
+    fullQuery += `&issn=${issn}`;
+  }
+  if (project) {
+    fullQuery += `&project=${project}`;
+  }
+  if (publicationYear) {
+    fullQuery += `&publication_year=${publicationYear}`;
   }
   if (query) {
     fullQuery += `&query=${query}`;
   }
-  if (category) {
-    if (category instanceof Array) {
-      category.forEach((categoryValue) => (fullQuery += `&category=${categoryValue}`));
-    } else {
-      fullQuery += `&category=${category}`;
-    }
-  }
-  if (issn) {
-    fullQuery += `&issn=${issn}`;
-  }
-  if (publicationYear) {
-    fullQuery += `&year_reported=${publicationYear}`;
-  }
-  if (project) {
-    fullQuery += `&project=${project}`;
+  if (title) {
+    fullQuery += `&title=${title}`;
   }
 
   const getResults = await apiRequest2<SearchResponse2<Registration>>({
