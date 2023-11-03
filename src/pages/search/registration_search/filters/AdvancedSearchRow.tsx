@@ -61,7 +61,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '3fr 3fr 5fr 2fr' }, gap: '1rem' }}>
+    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '3fr 3fr 5fr auto' }, gap: '1rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
           <TextField
@@ -108,7 +108,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
           />
         )}
       </Field>
-      <Button onClick={removeFilter} color="error" data-testid={dataTestId.startPage.advancedSearch.removeFilterButton}>
+      <Button onClick={removeFilter} size="small" data-testid={dataTestId.startPage.advancedSearch.removeFilterButton}>
         {t('search.remove_filter')}
       </Button>
     </Box>
