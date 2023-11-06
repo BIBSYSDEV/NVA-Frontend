@@ -40,6 +40,7 @@ export const emptyUser: FlatCristinPerson = {
   employments: [],
   background: {},
   keywords: [],
+  nvi: { verifiedBy: { id: '' }, verifiedAt: { id: '' } },
 };
 
 const initialValues: AddEmployeeData = {

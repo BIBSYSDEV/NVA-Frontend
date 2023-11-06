@@ -139,6 +139,7 @@ export interface FlatCristinPerson {
     en?: string | null;
   };
   keywords: Keywords[];
+  nvi?: NviVerification;
 }
 
 interface Position {
@@ -167,7 +168,7 @@ export const emptyEmployment: Employment = {
   fullTimeEquivalentPercentage: '',
 };
 
-interface NviVerification {
+export interface NviVerification {
   verifiedBy: {
     id: string;
   };

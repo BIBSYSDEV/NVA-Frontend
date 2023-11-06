@@ -3,7 +3,9 @@ import { Box, Button, Checkbox, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatCristinPerson } from '../../../types/user.types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
+import { FlatCristinPerson, NviVerification } from '../../../types/user.types';
 import { SearchForCristinPerson } from '../SearchForCristinPerson';
 import { AddEmployeeData, emptyUser } from './AddEmployeePage';
 
@@ -13,10 +15,16 @@ export const FindPersonPanel = () => {
   const [showCreatePerson, setShowCreatePerson] = useState(false);
   const [confirmedIdentity, setConfirmedIdentity] = useState(false);
 
+  const user = useSelector((store: RootState) => store.user);
+  const userCristinId = user?.cristinId ?? '';
+  const userTopLevelOrg = user?.topOrgCristinId ?? '';
+
   const setSelectedPerson = useCallback(
     (person?: FlatCristinPerson) => setFieldValue('user', person ? person : emptyUser),
     [setFieldValue]
   );
+
+  console.log(values.user.nvi);
 
   return (
     <>
@@ -83,16 +91,18 @@ export const FindPersonPanel = () => {
                 )}
               </Field>
 
-              <Field name="user.confirmedIdentity">
-                {({ field }: FieldProps<boolean>) => (
+              <Field name="user.nvi">
+                {({ field }: FieldProps<NviVerification>) => (
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Checkbox
                       {...field}
-                      value={confirmedIdentity}
-                      onClick={() => {
-                        console.log(field.value);
+                      value={values.user.nvi}
+                      onChange={() => {
                         setConfirmedIdentity(!confirmedIdentity);
-                        setFieldValue(field.name, confirmedIdentity);
+                        setFieldValue(field.name, {
+                          verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
+                          verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
+                        });
                         setFieldValue('user.nationalId', '');
                       }}
                     />
