@@ -84,6 +84,7 @@ export const fetchNviCandidate = async (identifier: string) => {
 
 export interface FetchResultsQuery {
   category?: PublicationInstanceType;
+  categoryNot?: PublicationInstanceType;
   categorySome?: PublicationInstanceType[];
   contributor?: string;
   doi?: string;
@@ -101,6 +102,7 @@ export const fetchResults = async (
   from: number,
   {
     category,
+    categoryNot,
     categorySome,
     contributor,
     doi,
@@ -117,6 +119,9 @@ export const fetchResults = async (
 
   if (category) {
     fullQuery += `&category=${category}`;
+  }
+  if (categoryNot) {
+    fullQuery += `&category_not=${categoryNot}`;
   }
   if (categorySome) {
     fullQuery += `&category_should=${categorySome.join(' ')}`;
