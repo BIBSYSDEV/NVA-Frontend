@@ -225,7 +225,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
             defaultExpanded
             heading={`${t('registration.resource_type.research_data.external_links')} (${
-              filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related) ?? 0 // DMP can have both internal and external links in .related
+              filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related).length ?? 0 // DMP can have both internal and external links in .related
             })`}>
             <ListExternalRelations
               links={filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related)}
@@ -233,7 +233,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </LandingPageAccordion>
         )}
 
-        {relatedRegistrationsQuery.data && relatedRegistrationsQuery.data.hits.length > 0 && (
+        {relatedRegistrationsQuery.data && relatedRegistrationsQuery.data.totalHits > 0 && (
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded

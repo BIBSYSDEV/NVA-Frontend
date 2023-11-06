@@ -18,7 +18,7 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
   const [isOpen, setIsOpen] = useState(!isMobile);
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  const [showAll, setShowAll] = useState(children.length <= itemsToShowByDefault);
+  const [showAll, setShowAll] = useState(false);
   const itemsToShow = !showAll ? children.slice(0, itemsToShowByDefault) : children;
 
   return (

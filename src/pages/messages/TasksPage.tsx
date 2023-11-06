@@ -50,7 +50,7 @@ type TicketStatusFilter = {
 
 type TicketSearchMode = 'current-user' | 'all';
 
-const StyledSearchModeButton = styled(LinkButton)({
+export const StyledSearchModeButton = styled(LinkButton)({
   borderRadius: '1.5rem',
   textTransform: 'none',
 });
@@ -531,11 +531,15 @@ const TasksPage = () => {
               title={t('tasks.correction_list')}
               startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
               accordionPath={UrlPathTemplate.TasksNviCorrectionList}
-              dataTestId={dataTestId.tasksPage.correctionListAccordion}>
+              dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
               <NavigationList>
-                <LinkButton isSelected={isOnCorrectionListPage} to={UrlPathTemplate.TasksNviCorrectionList}>
+                <StyledSearchModeButton
+                  sx={{ mx: '1rem', mb: '1rem' }}
+                  data-testid={dataTestId.tasksPage.correctionList.correctionListRadioButton}
+                  isSelected={isOnCorrectionListPage}
+                  startIcon={<RadioButtonCheckedIcon />}>
                   {t('tasks.correction_list')}
-                </LinkButton>
+                </StyledSearchModeButton>
               </NavigationList>
             </NavigationListAccordion>
           </>
@@ -575,12 +579,9 @@ const TasksPage = () => {
               helmetTitle={t('common.nvi')}
             />
           </PrivateRoute>
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.TasksNviCandidate}
-            component={NviCandidatePage}
-            isAuthorized={isNviCurator}
-          />
+          <PrivateRoute exact path={UrlPathTemplate.TasksNviCandidate} isAuthorized={isNviCurator}>
+            <NviCandidatePage nviListQuery={nviListQuery} />
+          </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.TasksNviCorrectionList} isAuthorized={isNviCurator}>
             <NviCorrectionList />
           </PrivateRoute>
