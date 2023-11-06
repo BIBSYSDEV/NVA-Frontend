@@ -42,7 +42,7 @@ export const emptyInstant: Instant = {
 };
 
 export interface SearchResponse<HitType, AggregationType = Aggregations> {
-  processingTime?: number;
+  processingTime: number;
   size: number;
   hits: HitType[];
   aggregations?: AggregationType;
