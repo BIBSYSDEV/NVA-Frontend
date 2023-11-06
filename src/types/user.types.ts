@@ -106,6 +106,7 @@ export interface CreateCristinPerson {
   identifiers: CristinPersonIdentifier[];
   names: CristinPersonName[];
   employments?: Employment[];
+  nvi?: NviVerification;
 }
 
 export interface CristinPerson extends CreateCristinPerson {
@@ -165,3 +166,12 @@ export const emptyEmployment: Employment = {
   endDate: '',
   fullTimeEquivalentPercentage: '',
 };
+
+interface NviVerification {
+  verifiedBy: {
+    id: string;
+  };
+  verifiedAt: {
+    id: string;
+  };
+}

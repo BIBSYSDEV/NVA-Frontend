@@ -83,12 +83,25 @@ export const FindPersonPanel = () => {
                 )}
               </Field>
 
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Checkbox onClick={() => setConfirmedIdentity(!confirmedIdentity)} />
-                <Typography sx={{ whiteSpace: 'pre-line' }}>
-                  {t('basic_data.add_employee.confirmed_identity')}
-                </Typography>
-              </Box>
+              <Field name="user.confirmedIdentity">
+                {({ field }: FieldProps<boolean>) => (
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Checkbox
+                      {...field}
+                      value={confirmedIdentity}
+                      onClick={() => {
+                        console.log(field.value);
+                        setConfirmedIdentity(!confirmedIdentity);
+                        setFieldValue(field.name, confirmedIdentity);
+                        setFieldValue('user.nationalId', '');
+                      }}
+                    />
+                    <Typography sx={{ whiteSpace: 'pre-line' }}>
+                      {t('basic_data.add_employee.confirmed_identity')}
+                    </Typography>
+                  </Box>
+                )}
+              </Field>
             </>
           )}
         </>
