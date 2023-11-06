@@ -24,8 +24,6 @@ export const FindPersonPanel = () => {
     [setFieldValue]
   );
 
-  console.log(values.user.nvi);
-
   return (
     <>
       <SearchForCristinPerson
