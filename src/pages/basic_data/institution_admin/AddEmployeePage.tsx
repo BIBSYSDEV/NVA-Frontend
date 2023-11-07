@@ -62,13 +62,16 @@ export const AddEmployeePage = () => {
 
     let personId = values.user.id;
     const nationalId = values.user.nationalId;
+    const { nvi, ...personWithNin } = values.user;
 
     if (!personId) {
+      const person = nationalId ? personWithNin : values.user;
       // Create Person if it does not yet exist in Cristin
       const cristinPerson: CreateCristinPerson = convertToCristinPerson({
-        ...values.user,
+        ...person,
         employments: [values.affiliation],
       });
+
       const createPersonResponse = await createCristinPerson(cristinPerson);
       if (isErrorStatus(createPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
