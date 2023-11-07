@@ -86,7 +86,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
   const cristinIdentifier =
     registration.additionalIdentifiers &&
-    registration.additionalIdentifiers.find((identifier) => identifier.sourceName === 'Cristin');
+    registration.additionalIdentifiers.find((identifier) => identifier.sourceName === 'Cristin')?.value;
 
   return (
     <StyledGeneralInfo>
@@ -168,16 +168,16 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         )}
 
-        {cristinIdentifier?.value && (
+        {cristinIdentifier && (
           <>
             <Typography variant="overline">{t('registration.public_page.cristin_id')}</Typography>
             <Typography>
               <Link
                 data-testid={dataTestId.registrationLandingPage.cristinLink}
-                href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier.value}`}
+                href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
                 target="_blank"
                 rel="noopener noreferrer">
-                {cristinIdentifier.value}
+                {cristinIdentifier}
               </Link>
             </Typography>
           </>

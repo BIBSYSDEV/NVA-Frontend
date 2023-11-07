@@ -76,7 +76,7 @@ interface RegistrationPublisher {
   id: string;
 }
 
-interface additionalIdentifier {
+interface AdditionalIdentifier {
   sourceName: 'Cristin' | 'Scopus';
   value: string;
 }
@@ -96,7 +96,7 @@ export interface BaseRegistration {
   readonly doi?: string;
   readonly publisher: RegistrationPublisher;
   readonly handle?: string;
-  readonly additionalIdentifiers?: additionalIdentifier[];
+  readonly additionalIdentifiers?: AdditionalIdentifier[];
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
