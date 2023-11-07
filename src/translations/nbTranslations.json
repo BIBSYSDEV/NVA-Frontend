@@ -1674,6 +1674,7 @@
       "waiting_for_other_institutions": "Venter på andre institusjoner",
       "waiting_for_your_institution": "Venter på din institusjon"
     },
+    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag eller lignende",
     "select_other_unit_filter": "Velg andre",
     "status": "Status",
     "unread": "Uleste",
