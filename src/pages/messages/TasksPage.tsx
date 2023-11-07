@@ -75,6 +75,9 @@ const TasksPage = () => {
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnCorrectionListPage = location.pathname === UrlPathTemplate.TasksNviCorrectionList;
 
+  const urlSearchQuery = new URLSearchParams(location.search).get('query');
+  const searchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
+
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
@@ -138,7 +141,7 @@ const TasksPage = () => {
 
   const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
-  const ticketQueryString = [ticketTypeQuery, ticketStatusQuery, ticketAssigneeQuery, ticketViewedByQuery]
+  const ticketQueryString = [searchQuery, ticketTypeQuery, ticketStatusQuery, ticketAssigneeQuery, ticketViewedByQuery]
     .filter(Boolean)
     .join(' AND ');
 
@@ -168,7 +171,7 @@ const TasksPage = () => {
 
   const nviAggregationQuery = `year=${nviYearFilter}&affiliations=${organizationScope.join(
     ','
-  )}${excludeSubunitsQuery}`;
+  )}${excludeSubunitsQuery}${searchQuery}`;
   const nviListQuery = `${nviAggregationQuery}&filter=${nviStatusFilter}`;
 
   const nviAggregationsQuery = useQuery({
