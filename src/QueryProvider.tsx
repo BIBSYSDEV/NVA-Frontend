@@ -25,8 +25,10 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
         },
       },
       queryCache: new QueryCache({
-        onError: (error: any, query) => {
-          if (isNotFoundErrorFromChannelRegister(error, query)) {
+        onError: (error, query) => {
+          const typedError = error as AxiosError<any>;
+
+          if (isNotFoundErrorFromChannelRegister(typedError, query)) {
             return; // Ignore erronous Not Found response from Channel Register API when no search hits
           }
 
@@ -38,8 +40,8 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
 
           let errorMessage = typeof queryErrorMessage === 'string' ? queryErrorMessage : '';
           if (!errorMessage) {
-            if (typeof error?.response?.data?.detail === 'string') {
-              errorMessage = error.response.data.detail;
+            if (typeof typedError?.response?.data?.detail === 'string') {
+              errorMessage = typedError.response.data.detail;
             }
             if (!errorMessage) {
               errorMessage = t('feedback.error.an_error_occurred');
