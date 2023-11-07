@@ -61,6 +61,7 @@ export const AddEmployeePage = () => {
     }
 
     let personId = values.user.id;
+    const nationalId = values.user.nationalId;
 
     if (!personId) {
       // Create Person if it does not yet exist in Cristin
@@ -83,7 +84,7 @@ export const AddEmployeePage = () => {
       }
     }
 
-    if (personId) {
+    if (personId && nationalId) {
       // Create NVA User with roles
       const createUserResponse = await createUser({
         nationalIdentityNumber: values.user.nationalId,
