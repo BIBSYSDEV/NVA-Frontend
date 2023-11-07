@@ -1,5 +1,5 @@
 import { SearchResponse } from '../../types/common.types';
-import { CristinPerson } from '../../types/user.types';
+import { CristinPerson, emptyNviVerification } from '../../types/user.types';
 import { mockOrganizationSearch } from './mockOrganizationSearch';
 
 export const mockCristinPersonSearch: SearchResponse<CristinPerson> = {
@@ -60,7 +60,7 @@ export const mockCristinPersonSearch: SearchResponse<CristinPerson> = {
         en: 'Background',
       },
       keywords: [],
-      nvi: { verifiedAt: { id: '' }, verifiedBy: { id: '' } },
+      nvi: emptyNviVerification,
     },
   ],
 };

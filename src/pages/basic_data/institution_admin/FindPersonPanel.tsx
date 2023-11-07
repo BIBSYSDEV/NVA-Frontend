@@ -1,5 +1,5 @@
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { Box, Button, Checkbox, TextField, Typography } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -91,23 +91,24 @@ export const FindPersonPanel = () => {
 
               <Field name="user.nvi">
                 {({ field }: FieldProps<NviVerification>) => (
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Checkbox
-                      {...field}
-                      value={values.user.nvi}
-                      onChange={() => {
-                        setConfirmedIdentity(!confirmedIdentity);
-                        setFieldValue(field.name, {
-                          verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
-                          verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
-                        });
-                        setFieldValue('user.nationalId', '');
-                      }}
-                    />
-                    <Typography sx={{ whiteSpace: 'pre-line' }}>
-                      {t('basic_data.add_employee.confirmed_identity')}
-                    </Typography>
-                  </Box>
+                  <FormControlLabel
+                    sx={{ whiteSpace: 'pre-line' }}
+                    control={
+                      <Checkbox
+                        {...field}
+                        value={values.user.nvi}
+                        onChange={() => {
+                          setConfirmedIdentity(!confirmedIdentity);
+                          setFieldValue(field.name, {
+                            verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
+                            verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
+                          });
+                          setFieldValue('user.nationalId', '');
+                        }}
+                      />
+                    }
+                    label={t('basic_data.add_employee.confirmed_identity')}
+                  />
                 )}
               </Field>
             </>
