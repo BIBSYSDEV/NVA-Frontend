@@ -21,7 +21,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=edit-registration-4327439]').click({ force: true });
   });
 
-  it('The User should be see validation errors for every tab', () => {
+  it('The User should see validation errors for every tab', () => {
     cy.get('[data-testid=error-tab]').should('have.length', 4);
 
     /* The User should be able to see validation errors on description tab */

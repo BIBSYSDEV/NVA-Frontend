@@ -1,5 +1,6 @@
 import { Query, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { AxiosError } from 'axios';
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -25,8 +26,8 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
       },
       queryCache: new QueryCache({
         onError: (error: any, query) => {
-          if (isNotFoundFromChannelRegister(error, query)) {
-            return; // Ignore erronous Not Found response when no search hits for channel register
+          if (isNotFoundErrorFromChannelRegister(error, query)) {
+            return; // Ignore erronous Not Found response from Channel Register API when no search hits
           }
 
           const queryErrorMessage = query.meta?.errorMessage;
@@ -59,8 +60,11 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
 };
 
 const channelRegisterSearchKeys = [QueryKey.JournalSearch, QueryKey.SeriesSearch, QueryKey.PublisherSearch] as string[];
-const isNotFoundFromChannelRegister = (error: any, query: Query<unknown, unknown, unknown>) =>
-  error.response.status === 404 &&
+const isNotFoundErrorFromChannelRegister = (
+  error: Pick<AxiosError, 'response'>,
+  query: Query<unknown, unknown, unknown>
+) =>
+  error.response?.status === 404 &&
   query.queryKey.length > 0 &&
   typeof query.queryKey[0] === 'string' &&
   channelRegisterSearchKeys.includes(query.queryKey[0]);
