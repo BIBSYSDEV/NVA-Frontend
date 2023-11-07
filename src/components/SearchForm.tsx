@@ -1,8 +1,8 @@
-import { Box, BoxProps, OutlinedTextFieldProps } from '@mui/material';
+import { Box, BoxProps, TextFieldProps } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import { SearchTextField } from '../pages/search/SearchTextField';
 
-type SearchFormProps = Pick<BoxProps, 'sx'> & Pick<OutlinedTextFieldProps, 'label' | 'placeholder'>;
+type SearchFormProps = Pick<BoxProps, 'sx'> & Pick<TextFieldProps, 'label' | 'placeholder'>;
 
 export const SearchForm = ({ sx, label, placeholder }: SearchFormProps) => {
   const history = useHistory();
