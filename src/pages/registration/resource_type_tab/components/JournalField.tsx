@@ -1,5 +1,6 @@
 import { Autocomplete, Box, Button, Chip, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +13,7 @@ import {
   JournalRegistration,
 } from '../../../../types/publication_types/journalRegistration.types';
 import { Journal, PublicationChannelType } from '../../../../types/registration.types';
+import { QueryKey } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { JournalFormDialog } from './JournalFormDialog';
@@ -47,6 +49,14 @@ export const StyledCreateChannelButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+export const skipRetryFor404NotFound = (failureCount: number, error: Pick<AxiosError, 'response'>) => {
+  if (error.response?.status === 404) {
+    // Ignore erronous Not Found response when no search hits
+    return false;
+  }
+  return failureCount < 3;
+};
+
 export const JournalField = ({ confirmedContextType, unconfirmedContextType }: JournalFieldProps) => {
   const { t } = useTranslation();
   const { setFieldValue, setFieldTouched, values } = useFormikContext<JournalRegistration>();
@@ -61,9 +71,10 @@ export const JournalField = ({ confirmedContextType, unconfirmedContextType }: J
   const debouncedQuery = useDebounce(query);
 
   const journalOptionsQuery = useQuery({
-    queryKey: ['journalSearch', debouncedQuery, year],
+    queryKey: [QueryKey.JournalSearch, debouncedQuery, year],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
     queryFn: () => searchForJournals(debouncedQuery, year),
+    retry: skipRetryFor404NotFound,
     meta: { errorMessage: t('feedback.error.get_journals') },
   });
 

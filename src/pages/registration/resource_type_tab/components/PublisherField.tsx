@@ -9,9 +9,10 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { PublicationChannelType, Publisher, Registration } from '../../../../types/registration.types';
+import { QueryKey } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
+import { StyledChannelContainerBox, StyledCreateChannelButton, skipRetryFor404NotFound } from './JournalField';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
 import { PublisherFormDialog } from './PublisherFormDialog';
@@ -32,9 +33,10 @@ export const PublisherField = () => {
   const debouncedQuery = useDebounce(query);
 
   const publisherOptionsQuery = useQuery({
-    queryKey: ['publisherSearch', debouncedQuery, year],
+    queryKey: [QueryKey.PublisherSearch, debouncedQuery, year],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
     queryFn: () => searchForPublishers(debouncedQuery, year),
+    retry: skipRetryFor404NotFound,
     meta: { errorMessage: t('feedback.error.get_publishers') },
   });
 

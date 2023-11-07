@@ -27,3 +27,9 @@ export enum LocalStorageKey {
   ShowTagline = 'showTagline',
   RedirectPath = 'redirect-path',
 }
+
+export enum QueryKey {
+  JournalSearch = 'journalSearch',
+  SeriesSearch = 'seriesSearch',
+  PublisherSearch = 'publisherSearch',
+}

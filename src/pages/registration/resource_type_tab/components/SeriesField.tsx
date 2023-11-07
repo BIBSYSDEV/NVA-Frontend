@@ -9,9 +9,10 @@ import { AutocompleteTextField } from '../../../../components/AutocompleteTextFi
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookEntityDescription } from '../../../../types/publication_types/bookRegistration.types';
 import { PublicationChannelType, Registration, Series } from '../../../../types/registration.types';
+import { QueryKey } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
-import { StyledChannelContainerBox, StyledCreateChannelButton } from './JournalField';
+import { StyledChannelContainerBox, StyledCreateChannelButton, skipRetryFor404NotFound } from './JournalField';
 import { JournalFormDialog } from './JournalFormDialog';
 import { PublicationChannelChipLabel } from './PublicationChannelChipLabel';
 import { PublicationChannelOption } from './PublicationChannelOption';
@@ -32,9 +33,10 @@ export const SeriesField = () => {
   const debouncedQuery = useDebounce(query);
 
   const seriesOptionsQuery = useQuery({
-    queryKey: ['seriesSearch', debouncedQuery, year],
+    queryKey: [QueryKey.SeriesSearch, debouncedQuery, year],
     enabled: debouncedQuery.length > 3 && debouncedQuery === query,
     queryFn: () => searchForSeries(debouncedQuery, year),
+    retry: skipRetryFor404NotFound,
     meta: { errorMessage: t('feedback.error.get_series') },
   });
 
