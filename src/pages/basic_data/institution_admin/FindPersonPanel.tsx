@@ -97,11 +97,11 @@ export const FindPersonPanel = () => {
                       value={values.user.nvi}
                       onChange={() => {
                         setConfirmedIdentity(!confirmedIdentity);
-                        setFieldValue('user.nationalId', '');
                         setFieldValue(field.name, {
                           verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
                           verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
                         });
+                        setFieldValue('user.nationalId', '');
                       }}
                     />
                     <Typography sx={{ whiteSpace: 'pre-line' }}>
