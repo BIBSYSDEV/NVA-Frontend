@@ -70,10 +70,11 @@ export const userValidationSchema = Yup.object<YupShape<FlatCristinPerson>>({
     .matches(nameRegexp, employeeErrorMessage.lastNameInvalidFormat)
     .min(2, employeeErrorMessage.lastNameRequired)
     .required(employeeErrorMessage.lastNameRequired),
+  nvi: Yup.object(),
   nationalId: Yup.string()
     .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat)
     .when('nvi', ([nvi], schema) =>
-      nvi === '' ? schema.required(employeeErrorMessage.nationalIdInvalid) : schema.optional()
+      nvi.verifiedBy.id === '' ? schema.required(employeeErrorMessage.nationalIdInvalid) : schema.optional()
     ),
 });
 
