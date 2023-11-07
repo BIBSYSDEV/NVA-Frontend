@@ -1175,6 +1175,7 @@
     "public_page": {
       "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
+      "cristin_id": "Cristin ID",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
@@ -1674,6 +1675,7 @@
       "waiting_for_other_institutions": "Venter på andre institusjoner",
       "waiting_for_your_institution": "Venter på din institusjon"
     },
+    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag eller lignende",
     "select_other_unit_filter": "Velg andre",
     "status": "Status",
     "unread": "Uleste",
