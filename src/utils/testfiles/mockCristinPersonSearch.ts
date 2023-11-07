@@ -1,5 +1,5 @@
 import { SearchResponse } from '../../types/common.types';
-import { CristinPerson, emptyNviVerification } from '../../types/user.types';
+import { CristinPerson } from '../../types/user.types';
 import { mockOrganizationSearch } from './mockOrganizationSearch';
 
 export const mockCristinPersonSearch: SearchResponse<CristinPerson> = {
@@ -28,7 +28,6 @@ export const mockCristinPersonSearch: SearchResponse<CristinPerson> = {
       employments: [],
       background: {},
       keywords: [],
-      nvi: emptyNviVerification,
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/cristin/person/2',

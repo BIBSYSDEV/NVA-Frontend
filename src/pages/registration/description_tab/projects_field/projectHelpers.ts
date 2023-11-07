@@ -1,5 +1,5 @@
 import { CristinProject, ProjectContributor, ProjectContributorIdentity } from '../../../../types/project.types';
-import { CristinPerson, User, emptyNviVerification } from '../../../../types/user.types';
+import { CristinPerson, User } from '../../../../types/user.types';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 
 export const getProjectCoordinatingInstitutionName = (project?: CristinProject) =>
@@ -67,7 +67,6 @@ export const projectContributorToCristinPerson = (
         employments: [],
         background: {},
         keywords: [],
-        nvi: emptyNviVerification,
       }
     : null;
 
