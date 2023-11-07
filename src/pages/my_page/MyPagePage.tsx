@@ -105,9 +105,12 @@ const MyPagePage = () => {
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
+  const urlSearchQuery = new URLSearchParams(location.search).get('query');
+  const searchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
+
   const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
-  const query = [typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
+  const query = [searchQuery, typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
     queryKey: ['tickets', rowsPerPage, apiPage, query],

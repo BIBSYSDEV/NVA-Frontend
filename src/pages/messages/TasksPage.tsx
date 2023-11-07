@@ -75,9 +75,6 @@ const TasksPage = () => {
   const isOnNviCandidatesPage = location.pathname === UrlPathTemplate.TasksNvi;
   const isOnCorrectionListPage = location.pathname === UrlPathTemplate.TasksNviCorrectionList;
 
-  const urlSearchQuery = new URLSearchParams(location.search).get('query');
-  const searchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
-
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
@@ -87,6 +84,9 @@ const TasksPage = () => {
     queryFn: () => fetchUser(nvaUsername),
     meta: { errorMessage: t('feedback.error.get_person') },
   });
+
+  const urlSearchQuery = new URLSearchParams(location.search).get('query');
+  const searchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
 
   const [excludeSubunits, setExcludeSubunits] = useState(false);
   const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : ''; // TODO: Use this for ticket search as well
