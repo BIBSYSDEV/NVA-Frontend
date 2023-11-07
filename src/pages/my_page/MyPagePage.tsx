@@ -106,7 +106,7 @@ const MyPagePage = () => {
       : '';
 
   const urlSearchQuery = new URLSearchParams(location.search).get('query');
-  const searchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
+  const searchQuery = urlSearchQuery ?? '';
 
   const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 

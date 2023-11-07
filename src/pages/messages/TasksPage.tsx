@@ -86,7 +86,6 @@ const TasksPage = () => {
   });
 
   const urlSearchQuery = new URLSearchParams(location.search).get('query');
-  const searchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
 
   const [excludeSubunits, setExcludeSubunits] = useState(false);
   const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : ''; // TODO: Use this for ticket search as well
@@ -141,7 +140,15 @@ const TasksPage = () => {
 
   const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
-  const ticketQueryString = [searchQuery, ticketTypeQuery, ticketStatusQuery, ticketAssigneeQuery, ticketViewedByQuery]
+  const ticketsSearchQuery = urlSearchQuery ?? '';
+
+  const ticketQueryString = [
+    ticketsSearchQuery,
+    ticketTypeQuery,
+    ticketStatusQuery,
+    ticketAssigneeQuery,
+    ticketViewedByQuery,
+  ]
     .filter(Boolean)
     .join(' AND ');
 
@@ -169,9 +176,11 @@ const TasksPage = () => {
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
+  const nviSearchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
+
   const nviAggregationQuery = `year=${nviYearFilter}&affiliations=${organizationScope.join(
     ','
-  )}${excludeSubunitsQuery}${searchQuery}`;
+  )}${excludeSubunitsQuery}${nviSearchQuery}`;
   const nviListQuery = `${nviAggregationQuery}&filter=${nviStatusFilter}`;
 
   const nviAggregationsQuery = useQuery({
