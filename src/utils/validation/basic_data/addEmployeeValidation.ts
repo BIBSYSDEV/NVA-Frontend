@@ -72,10 +72,10 @@ export const userValidationSchema = Yup.object<YupShape<FlatCristinPerson>>({
     .required(employeeErrorMessage.lastNameRequired),
   nvi: Yup.object(),
   nationalId: Yup.string()
-    .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat)
     .when('nvi', ([nvi], schema) =>
       nvi.verifiedBy.id === '' ? schema.required(employeeErrorMessage.nationalIdInvalid) : schema.optional()
-    ),
+    )
+    .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat),
 });
 
 const employmentValidation = Yup.object<YupShape<Employment>>({
