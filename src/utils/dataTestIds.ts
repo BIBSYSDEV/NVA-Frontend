@@ -159,6 +159,7 @@ export const dataTestId = {
     abstractAccordion: 'abstract-accordion',
     authorLink: (id: string) => `presentation-author-link-${id}`,
     contributors: 'public-registration-contributors',
+    cristinLink: 'cristin-link',
     dmpAccordion: 'dmp-accordion',
     doiLink: 'doi-link',
     doiMessageField: 'request-doi-message',
