@@ -121,6 +121,7 @@ export interface CristinPerson extends CreateCristinPerson {
     en?: string;
   };
   keywords: Keywords[];
+  nvi: NviVerification;
 }
 
 export interface FlatCristinPerson {
@@ -139,7 +140,7 @@ export interface FlatCristinPerson {
     en?: string | null;
   };
   keywords: Keywords[];
-  nvi?: NviVerification;
+  nvi: NviVerification;
 }
 
 interface Position {
@@ -169,10 +170,19 @@ export const emptyEmployment: Employment = {
 };
 
 export interface NviVerification {
-  verifiedBy: {
-    id: string;
-  };
   verifiedAt: {
     id: string;
   };
+  verifiedBy: {
+    id: string;
+  };
 }
+
+export const emptyNviVerification: NviVerification = {
+  verifiedAt: {
+    id: '',
+  },
+  verifiedBy: {
+    id: '',
+  },
+};

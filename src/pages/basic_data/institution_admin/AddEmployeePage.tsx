@@ -16,6 +16,7 @@ import {
   FlatCristinPerson,
   RoleName,
   emptyEmployment,
+  emptyNviVerification,
 } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
@@ -40,7 +41,7 @@ export const emptyUser: FlatCristinPerson = {
   employments: [],
   background: {},
   keywords: [],
-  nvi: { verifiedBy: { id: '' }, verifiedAt: { id: '' } },
+  nvi: emptyNviVerification,
 };
 
 const initialValues: AddEmployeeData = {
@@ -128,7 +129,7 @@ export const AddEmployeePage = () => {
                 <UserRolesSelector
                   selectedRoles={values.roles}
                   updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                  disabled={isSubmitting || !!errors.user || !!errors.affiliation}
+                  disabled={isSubmitting || !!errors.user || !!errors.affiliation || !values.user.nationalId}
                 />
               </Box>
             </Box>
