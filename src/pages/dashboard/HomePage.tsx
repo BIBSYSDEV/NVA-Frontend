@@ -3,10 +3,12 @@ import InsightsIcon from '@mui/icons-material/Insights';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
+import { searchForPerson } from '../../api/cristinApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -55,6 +57,17 @@ const HomePage = () => {
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration, RegistrationAggregations>>({
     url: resultIsSelected ? `${SearchApiPath.Registrations}?${requestParams.toString()}` : '',
     errorMessage: t('feedback.error.search'),
+  });
+
+  const rowsPerPage = Number(requestParams.get(SearchParam.Results) ?? 10);
+  const page = Number(requestParams.get(SearchParam.Page) ?? 1);
+  const name = requestParams.get(SearchParam.Name) ?? '.';
+
+  const personQuery = useQuery({
+    enabled: personIsSeleced,
+    queryKey: ['person', rowsPerPage, page, name],
+    queryFn: () => searchForPerson(rowsPerPage, page, name),
+    meta: { errorMessage: t('feedback.error.search') },
   });
 
   const emptySearchParams: SearchConfig = {
@@ -150,7 +163,11 @@ const HomePage = () => {
             <Switch>
               <ErrorBoundary>
                 <Route exact path={UrlPathTemplate.Home}>
-                  <SearchPage searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
+                  <SearchPage
+                    searchResults={searchResults}
+                    personQuery={personQuery}
+                    isLoadingSearch={isLoadingSearch}
+                  />
                 </Route>
                 <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
               </ErrorBoundary>

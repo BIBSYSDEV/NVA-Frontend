@@ -7,6 +7,7 @@ import {
   CristinPerson,
   Employment,
   FlatCristinPerson,
+  PersonAggregations,
   PositionResponse,
 } from '../types/user.types';
 import { getIdentifierFromId } from '../utils/general-helpers';
@@ -109,7 +110,8 @@ export const searchForPerson = async (results: number, page: number, name: strin
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';
 
-  const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson>>({
+  const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson, undefined, PersonAggregations>>({
+    headers: { Accept: 'application/json; version=2023-11-03' },
     url: `${CristinApiPath.Person}${queryParams}`,
   });
   return fetchPersonResponse.data;

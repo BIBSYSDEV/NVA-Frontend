@@ -41,11 +41,12 @@ export const emptyInstant: Instant = {
   value: '',
 };
 
-export interface SearchResponse<HitType, AggregationType = Aggregations> {
+export interface SearchResponse<HitType, AggregationType = Aggregations, FacetType = undefined> {
   processingTime: number;
   size: number;
   hits: HitType[];
   aggregations?: AggregationType;
+  facets?: FacetType;
 }
 
 export type Aggregations = {

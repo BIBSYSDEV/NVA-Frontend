@@ -21,7 +21,7 @@ import { LastRegistrationTableCellContent } from './LastRegistrationTableCellCon
 const radioHeadingId = 'selected-heading';
 
 interface CristinPersonListProps {
-  personSearch: SearchResponse<CristinPerson>;
+  personSearch: SearchResponse<CristinPerson, unknown, unknown>;
   searchTerm?: string;
   onSelectContributor?: (selectedContributor: CristinPerson) => void;
   userId?: string;

@@ -1,38 +1,18 @@
 import { Box, List, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
-import { searchForPerson } from '../../../api/cristinApi';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { SearchParam } from '../../../utils/searchHelpers';
+import { SearchResponse } from '../../../types/common.types';
+import { CristinPerson } from '../../../types/user.types';
 import { CristinSearchPagination } from '../CristinSearchPagination';
 import { PersonListItem } from './PersonListItem';
 
-export const PersonSearch = () => {
+interface PersonSearchProps {
+  personQuery: UseQueryResult<SearchResponse<CristinPerson, unknown, unknown>>;
+}
+
+export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const personSearchQueryParams = new URLSearchParams(location.search);
-  personSearchQueryParams.delete(SearchParam.Type);
-
-  if (!personSearchQueryParams.get(SearchParam.Name)) {
-    personSearchQueryParams.set(SearchParam.Name, '.');
-  }
-  if (!personSearchQueryParams.get(SearchParam.Results)) {
-    personSearchQueryParams.set(SearchParam.Results, '10');
-  }
-  if (!personSearchQueryParams.get(SearchParam.Page)) {
-    personSearchQueryParams.set(SearchParam.Page, '1');
-  }
-
-  const rowsPerPage = Number(personSearchQueryParams.get(SearchParam.Results));
-  const page = Number(personSearchQueryParams.get(SearchParam.Page));
-  const name = personSearchQueryParams.get(SearchParam.Name) ?? '';
-
-  const personQuery = useQuery({
-    queryKey: ['person', rowsPerPage, page, name],
-    queryFn: () => searchForPerson(rowsPerPage, page, name),
-    meta: { errorMessage: t('feedback.error.search') },
-  });
 
   const searchResults = personQuery.data?.hits ?? [];
 
