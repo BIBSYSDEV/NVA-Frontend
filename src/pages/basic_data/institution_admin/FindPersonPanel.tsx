@@ -13,7 +13,7 @@ export const FindPersonPanel = () => {
   const { t } = useTranslation();
   const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const [showCreatePerson, setShowCreatePerson] = useState(false);
-  const [confirmedIdentity, setConfirmedIdentity] = useState(false);
+  const confirmedIdentity = !!values.user.nvi?.verifiedAt.id && !!values.user.nvi?.verifiedBy.id;
 
   const user = useSelector((store: RootState) => store.user);
   const userCristinId = user?.cristinId ?? '';
@@ -98,10 +98,9 @@ export const FindPersonPanel = () => {
                         {...field}
                         value={values.user.nvi}
                         onChange={() => {
-                          setConfirmedIdentity(!confirmedIdentity);
                           setFieldValue(field.name, {
-                            verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
                             verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
+                            verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
                           });
                           setFieldValue('user.nationalId', '');
                         }}
