@@ -5,7 +5,7 @@ import { Field, FieldProps, FormikErrors, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../../../../api/apiRequest';
-import { searchForPerson } from '../../../../api/cristinApi';
+import { PersonSearchParams, searchForPerson } from '../../../../api/cristinApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
@@ -54,10 +54,13 @@ export const ProjectContributorRow = ({
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm);
 
+  const personQueryParams: PersonSearchParams = {
+    name: debouncedSearchTerm,
+  };
   const personQuery = useQuery({
     enabled: debouncedSearchTerm.length > 0,
-    queryKey: ['person', 20, 1, debouncedSearchTerm],
-    queryFn: () => searchForPerson(20, 1, debouncedSearchTerm),
+    queryKey: ['person', 20, 1, personQueryParams],
+    queryFn: () => searchForPerson(20, 1, personQueryParams),
   });
 
   const personSearchResult = personQuery.data?.hits ?? [];

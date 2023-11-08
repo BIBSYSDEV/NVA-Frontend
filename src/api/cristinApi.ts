@@ -95,16 +95,24 @@ export const fetchPerson = async (personId: string) => {
   return fetchPersonResponse.data;
 };
 
-export const searchForPerson = async (results: number, page: number, name: string) => {
+export interface PersonSearchParams {
+  name?: string;
+  organization?: string;
+}
+
+export const searchForPerson = async (results: number, page: number, { name, organization }: PersonSearchParams) => {
   const searchParams = new URLSearchParams();
-  if (name) {
-    searchParams.set('name', name);
-  }
   if (results) {
     searchParams.set('results', results.toString());
   }
   if (page) {
     searchParams.set('page', page.toString());
+  }
+  if (name) {
+    searchParams.set('name', name);
+  }
+  if (organization) {
+    searchParams.set('organizationFacet', organization);
   }
 
   const queryContent = searchParams.toString();

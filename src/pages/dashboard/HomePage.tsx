@@ -8,7 +8,7 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
-import { searchForPerson } from '../../api/cristinApi';
+import { PersonSearchParams, searchForPerson } from '../../api/cristinApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -27,6 +27,7 @@ import {
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { StyledSearchModeButton } from '../messages/TasksPage';
 import SearchPage from '../search/SearchPage';
+import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import ReportsPage from '../search/registration_search/ReportsPage';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
 
@@ -54,19 +55,23 @@ const HomePage = () => {
 
   const requestParams = new URLSearchParams(history.location.search);
   requestParams.delete(SearchParam.Type);
+  const requestParamsString = requestParams.toString();
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration, RegistrationAggregations>>({
-    url: resultIsSelected ? `${SearchApiPath.Registrations}?${requestParams.toString()}` : '',
+    url: resultIsSelected ? `${SearchApiPath.Registrations}?${requestParamsString}` : '',
     errorMessage: t('feedback.error.search'),
   });
 
   const rowsPerPage = Number(requestParams.get(SearchParam.Results) ?? 10);
   const page = Number(requestParams.get(SearchParam.Page) ?? 1);
-  const name = requestParams.get(SearchParam.Name) ?? '.';
 
+  const personQueryParams: PersonSearchParams = {
+    name: requestParams.get('name') ?? '.',
+    organization: requestParams.get('organizationFacet') ?? undefined,
+  };
   const personQuery = useQuery({
     enabled: personIsSeleced,
-    queryKey: ['person', rowsPerPage, page, name],
-    queryFn: () => searchForPerson(rowsPerPage, page, name),
+    queryKey: ['person', rowsPerPage, page, personQueryParams],
+    queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
@@ -132,6 +137,16 @@ const HomePage = () => {
                       aggregations={searchResults.aggregations}
                       isLoadingSearch={isLoadingSearch}
                     />
+                  </Box>
+                ) : personIsSeleced && personQuery.data?.facets ? (
+                  <Box
+                    sx={{
+                      m: '1rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '1rem',
+                    }}>
+                    <PersonFacetsFilter personQuery={personQuery} />
                   </Box>
                 ) : (
                   !isLoadingSearch && (
