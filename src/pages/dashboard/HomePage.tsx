@@ -126,36 +126,22 @@ const HomePage = () => {
                 accordionPath=""
                 expanded={isOnSearchPage}
                 dataTestId={dataTestId.startPage.filterAccordion}>
-                {resultIsSelected && searchResults?.aggregations ? (
-                  <Box
-                    sx={{
-                      m: '1rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '1rem',
-                    }}>
-                    <RegistrationFacetsFilter
-                      aggregations={searchResults.aggregations}
-                      isLoadingSearch={isLoadingSearch}
-                    />
-                  </Box>
-                ) : personIsSeleced && personQuery.data?.facets ? (
-                  <Box
-                    sx={{
-                      m: '1rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '1rem',
-                    }}>
-                    <PersonFacetsFilter personQuery={personQuery} />
-                  </Box>
-                ) : (
-                  !isLoadingSearch && (
-                    <Typography fontStyle="italic" sx={{ mx: '1rem', mb: '1rem' }}>
-                      {t('search.no_available_filters')}
-                    </Typography>
-                  )
-                )}
+                <Box sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {resultIsSelected ? (
+                    searchResults?.aggregations ? (
+                      <RegistrationFacetsFilter
+                        aggregations={searchResults.aggregations}
+                        isLoadingSearch={isLoadingSearch}
+                      />
+                    ) : null
+                  ) : personIsSeleced ? (
+                    personQuery.data?.facets ? (
+                      <PersonFacetsFilter personQuery={personQuery} />
+                    ) : null
+                  ) : projectIsSelected ? (
+                    <Typography fontStyle="italic">{t('search.no_available_filters')}</Typography>
+                  ) : null}
+                </Box>
               </NavigationListAccordion>
 
               <NavigationListAccordion
