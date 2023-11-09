@@ -89,8 +89,8 @@ export const FindPersonPanel = () => {
                 )}
               </Field>
 
-              <Field name="user.nvi">
-                {({ field }: FieldProps<NviVerification>) => (
+              <Field name="user.nvi.verifiedAt.id">
+                {({ field, form }: FieldProps<NviVerification>) => (
                   <FormControlLabel
                     sx={{ whiteSpace: 'pre-line' }}
                     control={
@@ -98,11 +98,9 @@ export const FindPersonPanel = () => {
                         {...field}
                         value={values.user.nvi}
                         onChange={() => {
-                          setFieldValue(field.name, {
-                            verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
-                            verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
-                          });
-                          setFieldValue('user.nationalId', '');
+                          setFieldValue('user.nvi.verifiedBy.id', !confirmedIdentity ? userCristinId : '', false);
+                          setFieldValue('user.nationalId', '', false);
+                          setFieldValue(field.name, !confirmedIdentity ? userTopLevelOrg : '');
                         }}
                       />
                     }
