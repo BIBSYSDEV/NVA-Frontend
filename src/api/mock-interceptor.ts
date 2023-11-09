@@ -85,7 +85,7 @@ export const interceptRequestsOnMock = () => {
   mock.onPost(new RegExp(OrcidApiPath.Orcid)).reply(201);
 
   // Person Registry
-  mock.onGet(new RegExp(`${CristinApiPath.Person}\\?name=*`)).reply(200, mockCristinPersonSearch);
+  mock.onGet(new RegExp(`${CristinApiPath.Person}\\?*`)).reply(200, mockCristinPersonSearch);
   mock.onPost(new RegExp(CristinApiPath.PersonIdentityNumber)).reply(201, mockCristinPersonSearch.hits[0]);
   mock.onGet(mockCristinPersonSearch.hits[0].id).reply(200, mockCristinPersonSearch.hits[0]);
 
