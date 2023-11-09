@@ -62,10 +62,10 @@ export const AddEmployeePage = () => {
 
     let personId = values.user.id;
     const nationalId = values.user.nationalId;
-    const { nvi, ...personWithNin } = values.user;
+    const { nvi, ...personWithoutNvi } = values.user;
 
     if (!personId) {
-      const person = nationalId ? personWithNin : values.user;
+      const person = nationalId ? personWithoutNvi : values.user;
       // Create Person if it does not yet exist in Cristin
       const cristinPerson: CreateCristinPerson = convertToCristinPerson({
         ...person,
