@@ -73,6 +73,7 @@ const HomePage = () => {
     queryKey: ['person', rowsPerPage, page, personQueryParams],
     queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
     meta: { errorMessage: t('feedback.error.search') },
+    keepPreviousData: true,
   });
 
   const emptySearchParams: SearchConfig = {
