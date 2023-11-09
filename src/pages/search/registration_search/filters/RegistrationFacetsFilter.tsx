@@ -7,7 +7,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
 import { getLabelFromBucket } from '../../../../utils/translation-helpers';
-import { FacetItem } from './FacetItem';
+import { FacetItem } from '../../FacetItem';
 
 interface RegistrationFacetsFilterProps {
   aggregations: RegistrationAggregations;

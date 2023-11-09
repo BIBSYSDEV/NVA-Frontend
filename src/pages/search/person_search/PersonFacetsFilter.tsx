@@ -1,4 +1,3 @@
-import { ListItem, ListItemButton, Typography, styled } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -7,7 +6,8 @@ import { CristinPerson, PersonAggregations } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { FacetItem } from '../registration_search/filters/FacetItem';
+import { FacetItem } from '../FacetItem';
+import { FacetListItem } from '../FacetListItem';
 
 interface PersonFacetsFilterProps {
   personQuery: UseQueryResult<SearchResponse<CristinPerson, unknown, PersonAggregations>>;
@@ -62,41 +62,3 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
     </>
   );
 };
-
-const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
-  display: 'flex',
-  gap: '1rem',
-  justifyContent: 'space-between',
-  '&.Mui-selected': {
-    background: theme.palette.info.light,
-  },
-}));
-
-interface FacetListItemProps {
-  identifier: string;
-  dataTestId: string;
-  isLoading: boolean;
-  isSelected: boolean;
-  onClickFacet: () => void;
-  label: string;
-  count: number;
-}
-
-const FacetListItem = ({
-  identifier,
-  dataTestId,
-  isLoading,
-  isSelected,
-  label,
-  count,
-  onClickFacet,
-}: FacetListItemProps) => (
-  <ListItem disablePadding key={identifier} data-testid={dataTestId}>
-    <StyledListItemButton disabled={isLoading} selected={isSelected} onClick={onClickFacet}>
-      <Typography component="span" sx={{ wordBreak: 'break-word' }}>
-        {label}
-      </Typography>
-      {count && <Typography component="span">({count.toLocaleString()})</Typography>}
-    </StyledListItemButton>
-  </ListItem>
-);
