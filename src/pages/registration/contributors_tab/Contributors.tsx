@@ -151,18 +151,22 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       push(newContributor);
       goToLastPage();
     } else {
-      const relevantContributor = contributors[contributorIndex];
-      const relevantAffiliations = relevantContributor.affiliations ?? [];
+      const thisContributor = contributors[contributorIndex];
+      const verifiedAffiliations = thisContributor.affiliations ?? [];
+      const verifiedOrcid = thisContributor.identity.orcId;
 
-      relevantAffiliations.push(...existingAffiliations);
+      verifiedAffiliations.push(...existingAffiliations);
 
       const verifiedContributor: Contributor = {
-        ...relevantContributor,
+        ...thisContributor,
         role: {
           type: role,
         },
-        identity,
-        affiliations: relevantAffiliations,
+        identity: {
+          ...identity,
+          orcId: verifiedOrcid || identity.orcId || '',
+        },
+        affiliations: verifiedAffiliations,
       };
       replace(contributorIndex, verifiedContributor);
     }

@@ -159,6 +159,7 @@ export const dataTestId = {
     abstractAccordion: 'abstract-accordion',
     authorLink: (id: string) => `presentation-author-link-${id}`,
     contributors: 'public-registration-contributors',
+    cristinLink: 'cristin-link',
     dmpAccordion: 'dmp-accordion',
     doiLink: 'doi-link',
     doiMessageField: 'request-doi-message',
@@ -490,7 +491,10 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
-    correctionListAccordion: 'correction-list-accordion',
+    correctionList: {
+      correctionListAccordion: 'correction-list-accordion',
+      correctionListRadioButton: 'correction-list-radio-button',
+    },
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {

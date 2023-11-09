@@ -122,7 +122,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
               gridArea: 'nvi',
               bgcolor: 'nvi.light',
               height: 'fit-content',
-              minHeight: '85vh',
+              minHeight: { sm: '85vh' },
               display: 'flex',
               flexDirection: 'column',
             }}>

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { SearchForm } from '../../../components/SearchForm';
 import { SearchResponse } from '../../../types/common.types';
 import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
@@ -43,6 +44,8 @@ export const TicketList = ({
       <Helmet>
         <title>{helmetTitle}</title>
       </Helmet>
+
+      <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
 
       {ticketsQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
