@@ -125,7 +125,7 @@ export const searchForPerson = async (results: number, page: number, { name, org
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';
 
-  const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson, undefined, PersonAggregations>>({
+  const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson, PersonAggregations>>({
     headers: { Accept: 'application/json; version=2023-11-03' },
     url: `${CristinApiPath.Person}${queryParams}`,
   });

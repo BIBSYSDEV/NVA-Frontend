@@ -33,7 +33,7 @@ enum SearchTypeValue {
 
 interface SearchPageProps {
   searchResults: SearchResponse<Registration, RegistrationAggregations> | undefined;
-  personQuery: UseQueryResult<SearchResponse<CristinPerson, unknown, PersonAggregations>>;
+  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
   isLoadingSearch: boolean;
 }
 

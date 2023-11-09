@@ -11,13 +11,13 @@ import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
 
 interface PersonFacetsFilterProps {
-  personQuery: UseQueryResult<SearchResponse<CristinPerson, unknown, PersonAggregations>>;
+  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
 }
 
 export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const organizationFacet = personQuery.data?.facets?.organizationFacet;
+  const organizationFacet = personQuery.data?.aggregations?.organizationFacet;
 
   const searchParams = new URLSearchParams(history.location.search);
   const currentSearchType = searchParams.get(SearchParam.Type);

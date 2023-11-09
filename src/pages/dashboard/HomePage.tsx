@@ -135,7 +135,7 @@ const HomePage = () => {
                       />
                     ) : null
                   ) : personIsSeleced ? (
-                    personQuery.data?.facets ? (
+                    personQuery.data?.aggregations ? (
                       <PersonFacetsFilter personQuery={personQuery} />
                     ) : null
                   ) : projectIsSelected ? (

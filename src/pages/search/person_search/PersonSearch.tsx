@@ -8,7 +8,7 @@ import { CristinSearchPagination } from '../CristinSearchPagination';
 import { PersonListItem } from './PersonListItem';
 
 interface PersonSearchProps {
-  personQuery: UseQueryResult<SearchResponse<CristinPerson, unknown, unknown>>;
+  personQuery: UseQueryResult<SearchResponse<CristinPerson, unknown>>;
 }
 
 export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
