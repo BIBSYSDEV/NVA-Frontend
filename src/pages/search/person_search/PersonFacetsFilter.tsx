@@ -34,20 +34,18 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
     <>
       {organizationFacet && organizationFacet?.length > 0 && (
         <FacetItem title="Institusjon" dataTestId="TODO">
-          {organizationFacet.map((facet) => {
-            return (
-              <FacetListItem
-                key={facet.key}
-                identifier={facet.key}
-                dataTestId="sdf"
-                isLoading={personQuery.isLoading}
-                isSelected={selectedOrganizations.includes(facet.key)}
-                label={getLanguageString(facet.labels)}
-                count={facet.count}
-                onClickFacet={() => onClickFacet(facet.id)}
-              />
-            );
-          })}
+          {organizationFacet.map((facet) => (
+            <FacetListItem
+              key={facet.key}
+              identifier={facet.key}
+              dataTestId="sdf"
+              isLoading={personQuery.isLoading}
+              isSelected={selectedOrganizations.includes(facet.key)}
+              label={getLanguageString(facet.labels)}
+              count={facet.count}
+              onClickFacet={() => onClickFacet(facet.id)} // TODO: Handle remove
+            />
+          ))}
         </FacetItem>
       )}
     </>
@@ -81,15 +79,13 @@ const FacetListItem = ({
   label,
   count,
   onClickFacet,
-}: FacetListItemProps) => {
-  return (
-    <ListItem disablePadding key={identifier} data-testid={dataTestId}>
-      <StyledListItemButton disabled={isLoading} selected={isSelected} onClick={onClickFacet}>
-        <Typography component="span" sx={{ wordBreak: 'break-word' }}>
-          {label}
-        </Typography>
-        {count && <Typography component="span">({count.toLocaleString()})</Typography>}
-      </StyledListItemButton>
-    </ListItem>
-  );
-};
+}: FacetListItemProps) => (
+  <ListItem disablePadding key={identifier} data-testid={dataTestId}>
+    <StyledListItemButton disabled={isLoading} selected={isSelected} onClick={onClickFacet}>
+      <Typography component="span" sx={{ wordBreak: 'break-word' }}>
+        {label}
+      </Typography>
+      {count && <Typography component="span">({count.toLocaleString()})</Typography>}
+    </StyledListItemButton>
+  </ListItem>
+);
