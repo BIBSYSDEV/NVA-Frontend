@@ -8,7 +8,7 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
-import { PersonSearchParams, searchForPerson } from '../../api/cristinApi';
+import { PersonSearchParameter, PersonSearchParams, searchForPerson } from '../../api/cristinApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -65,8 +65,8 @@ const HomePage = () => {
   const page = Number(requestParams.get(SearchParam.Page) ?? 1);
 
   const personQueryParams: PersonSearchParams = {
-    name: requestParams.get('name') ?? '.',
-    organization: requestParams.get('organizationFacet') ?? undefined,
+    name: requestParams.get(PersonSearchParameter.Name) ?? '.',
+    organization: requestParams.get(PersonSearchParameter.Organization) ?? undefined,
   };
   const personQuery = useQuery({
     enabled: personIsSeleced,

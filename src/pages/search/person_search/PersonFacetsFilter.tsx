@@ -1,6 +1,7 @@
 import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { PersonSearchParameter } from '../../../api/cristinApi';
 import { SearchResponse } from '../../../types/common.types';
 import { CristinPerson, PersonAggregations } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -20,7 +21,7 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
 
   const searchParams = new URLSearchParams(history.location.search);
   const currentSearchType = searchParams.get(SearchParam.Type);
-  const selectedOrganizations = searchParams.get('organizationFacet')?.split(',') ?? [];
+  const selectedOrganizations = searchParams.get(PersonSearchParameter.Organization)?.split(',') ?? [];
 
   const addFacetFilter = (id: string) => {
     const searchParameters = new URL(id).searchParams;
@@ -34,7 +35,7 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
 
   const removeOrganizationFacetFilter = (keyToRemove: string) => {
     const newOrganizationsFilter = selectedOrganizations.filter((organization) => organization !== keyToRemove);
-    searchParams.set('organizationFacet', newOrganizationsFilter.join(','));
+    searchParams.set(PersonSearchParameter.Organization, newOrganizationsFilter.join(','));
     history.push({ search: searchParams.toString() });
   };
 

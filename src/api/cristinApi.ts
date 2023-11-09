@@ -100,19 +100,26 @@ export interface PersonSearchParams {
   organization?: string;
 }
 
+export enum PersonSearchParameter {
+  Name = 'name',
+  Organization = 'organizationFacet',
+  Page = 'page',
+  Results = 'results',
+}
+
 export const searchForPerson = async (results: number, page: number, { name, organization }: PersonSearchParams) => {
   const searchParams = new URLSearchParams();
   if (results) {
-    searchParams.set('results', results.toString());
+    searchParams.set(PersonSearchParameter.Results, results.toString());
   }
   if (page) {
-    searchParams.set('page', page.toString());
+    searchParams.set(PersonSearchParameter.Page, page.toString());
   }
   if (name) {
-    searchParams.set('name', name);
+    searchParams.set(PersonSearchParameter.Name, name);
   }
   if (organization) {
-    searchParams.set('organizationFacet', organization);
+    searchParams.set(PersonSearchParameter.Organization, organization);
   }
 
   const queryContent = searchParams.toString();
