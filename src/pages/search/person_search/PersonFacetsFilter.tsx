@@ -18,10 +18,13 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
   const { t } = useTranslation();
   const history = useHistory();
   const organizationFacet = personQuery.data?.aggregations?.organizationFacet;
+  const sectorFacet = personQuery.data?.aggregations?.sectorFacet;
 
   const searchParams = new URLSearchParams(history.location.search);
   const currentSearchType = searchParams.get(SearchParam.Type);
+
   const selectedOrganizations = searchParams.get(PersonSearchParameter.Organization)?.split(',') ?? [];
+  const selectedSectors = searchParams.get(PersonSearchParameter.Sector)?.split(',') ?? [];
 
   const addFacetFilter = (id: string) => {
     const searchParameters = new URL(id).searchParams;
@@ -36,6 +39,12 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
   const removeOrganizationFacetFilter = (keyToRemove: string) => {
     const newOrganizationsFilter = selectedOrganizations.filter((organization) => organization !== keyToRemove);
     searchParams.set(PersonSearchParameter.Organization, newOrganizationsFilter.join(','));
+    history.push({ search: searchParams.toString() });
+  };
+
+  const removeSectorFacetFilter = (keyToRemove: string) => {
+    const newSectorFilter = selectedSectors.filter((sector) => sector !== keyToRemove);
+    searchParams.set(PersonSearchParameter.Sector, newSectorFilter.join(','));
     history.push({ search: searchParams.toString() });
   };
 
@@ -55,6 +64,26 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
                 onClickFacet={() => (isSelected ? removeOrganizationFacetFilter(facet.key) : addFacetFilter(facet.id))}
+              />
+            );
+          })}
+        </FacetItem>
+      )}
+
+      {sectorFacet && sectorFacet?.length > 0 && (
+        <FacetItem title={t('search.sector')} dataTestId={dataTestId.startPage.sectorFacets}>
+          {sectorFacet.map((facet) => {
+            const isSelected = selectedSectors.includes(facet.key);
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={personQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() => (isSelected ? removeSectorFacetFilter(facet.key) : addFacetFilter(facet.id))}
               />
             );
           })}

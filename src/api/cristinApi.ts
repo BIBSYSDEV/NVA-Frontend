@@ -98,6 +98,7 @@ export const fetchPerson = async (personId: string) => {
 export interface PersonSearchParams {
   name?: string;
   organization?: string;
+  sector?: string;
 }
 
 export enum PersonSearchParameter {
@@ -105,9 +106,14 @@ export enum PersonSearchParameter {
   Organization = 'organizationFacet',
   Page = 'page',
   Results = 'results',
+  Sector = 'sectorFacet',
 }
 
-export const searchForPerson = async (results: number, page: number, { name, organization }: PersonSearchParams) => {
+export const searchForPerson = async (
+  results: number,
+  page: number,
+  { name, organization, sector }: PersonSearchParams
+) => {
   const searchParams = new URLSearchParams();
   if (results) {
     searchParams.set(PersonSearchParameter.Results, results.toString());
@@ -120,6 +126,9 @@ export const searchForPerson = async (results: number, page: number, { name, org
   }
   if (organization) {
     searchParams.set(PersonSearchParameter.Organization, organization);
+  }
+  if (sector) {
+    searchParams.set(PersonSearchParameter.Sector, sector);
   }
 
   const queryContent = searchParams.toString();
