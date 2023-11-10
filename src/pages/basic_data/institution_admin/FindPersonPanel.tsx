@@ -90,24 +90,19 @@ export const FindPersonPanel = () => {
               </Field>
 
               <FormControlLabel
-                sx={{ whiteSpace: 'pre-line' }}
-                control={
-                  <Checkbox
-                    disabled={isSubmitting}
-                    checked={confirmedIdentity}
-                    onChange={() => {
-                      const newPerson: FlatCristinPerson = {
-                        ...values.user,
-                        nvi: {
-                          verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
-                          verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
-                        },
-                        nationalId: '',
-                      };
-                      setFieldValue('user', newPerson);
-                    }}
-                  />
-                }
+                sx={{ whiteSpace: 'pre-line', p: '0.2rem' }}
+                onChange={() => {
+                  const newPerson: FlatCristinPerson = {
+                    ...values.user,
+                    nvi: {
+                      verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
+                      verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
+                    },
+                    nationalId: '',
+                  };
+                  setFieldValue('user', newPerson);
+                }}
+                control={<Checkbox disabled={isSubmitting} checked={confirmedIdentity} />}
                 label={t('basic_data.add_employee.confirmed_identity')}
               />
             </>
