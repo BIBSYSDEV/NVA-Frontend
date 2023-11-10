@@ -17,7 +17,7 @@ export const SearchTextField = ({ clearValue, ...props }: SearchTextFieldProps) 
       data-testid={dataTestId.startPage.searchField}
       fullWidth
       variant="outlined"
-      label={t('common.search')}
+      aria-label={t('common.search')}
       InputProps={{
         startAdornment: (
           <IconButton
