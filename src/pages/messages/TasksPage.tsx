@@ -99,7 +99,7 @@ const TasksPage = () => {
     }
   }, [institutionUserQuery.data?.viewingScope?.includedUnits]);
 
-  const [showMyTasks, setShowMyTasks] = useState(false);
+  const [showOnlyMyTasks, setShowOnlyMyTasks] = useState(false);
 
   // Tickets/dialogue data
   const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
@@ -133,7 +133,7 @@ const TasksPage = () => {
       ? `(${selectedTicketStatuses.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const ticketAssigneeQuery = showMyTasks && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
+  const ticketAssigneeQuery = showOnlyMyTasks && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
 
   const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
@@ -175,7 +175,7 @@ const TasksPage = () => {
 
   const nviSearchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
 
-  const nviAssigneeQuery = showMyTasks && nvaUsername ? `&assignee=${nvaUsername}` : '';
+  const nviAssigneeQuery = showOnlyMyTasks && nvaUsername ? `&assignee=${nvaUsername}` : '';
 
   const nviAggregationQuery = `year=${nviYearFilter}&affiliations=${organizationScope.join(
     ','
@@ -298,21 +298,21 @@ const TasksPage = () => {
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               <StyledSearchModeButton
                 data-testid={dataTestId.tasksPage.searchMode.myTasksButton}
-                isSelected={showMyTasks}
-                startIcon={showMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+                isSelected={showOnlyMyTasks}
+                startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
                 onClick={() => {
                   if (ticketStatusFilter.New) {
                     setTicketStatusFilter({ ...ticketStatusFilter, New: false });
                   }
-                  setShowMyTasks(true);
+                  setShowOnlyMyTasks(true);
                 }}>
                 {t('tasks.my_user_dialogs')}
               </StyledSearchModeButton>
               <StyledSearchModeButton
                 data-testid={dataTestId.tasksPage.searchMode.allTasksButton}
-                isSelected={!showMyTasks}
-                startIcon={!showMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                onClick={() => setShowMyTasks(false)}>
+                isSelected={!showOnlyMyTasks}
+                startIcon={!showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+                onClick={() => setShowOnlyMyTasks(false)}>
                 {t('tasks.all_user_dialogs')}
               </StyledSearchModeButton>
             </StyledTicketSearchFormGroup>
@@ -323,7 +323,7 @@ const TasksPage = () => {
               </FormLabel>
               <FormControlLabel
                 data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
-                disabled={showMyTasks}
+                disabled={showOnlyMyTasks}
                 checked={ticketStatusFilter.New}
                 control={
                   <StyledStatusCheckbox
@@ -417,21 +417,21 @@ const TasksPage = () => {
                 <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
                   <StyledSearchModeButton
                     data-testid={dataTestId.tasksPage.searchMode.myTasksButton}
-                    isSelected={showMyTasks}
-                    startIcon={showMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+                    isSelected={showOnlyMyTasks}
+                    startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
                     onClick={() => {
                       if (ticketStatusFilter.New) {
                         setTicketStatusFilter({ ...ticketStatusFilter, New: false });
                       }
-                      setShowMyTasks(true);
+                      setShowOnlyMyTasks(true);
                     }}>
                     {t('tasks.my_nvi_results')}
                   </StyledSearchModeButton>
                   <StyledSearchModeButton
                     data-testid={dataTestId.tasksPage.searchMode.allTasksButton}
-                    isSelected={!showMyTasks}
-                    startIcon={!showMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                    onClick={() => setShowMyTasks(false)}>
+                    isSelected={!showOnlyMyTasks}
+                    startIcon={!showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+                    onClick={() => setShowOnlyMyTasks(false)}>
                     {t('tasks.all_nvi_results')}
                   </StyledSearchModeButton>
                 </StyledTicketSearchFormGroup>
