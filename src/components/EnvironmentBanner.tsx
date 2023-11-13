@@ -1,4 +1,5 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const testEnvironments = ['localhost', 'dev', 'test', 'sandbox', 'e2e'];
@@ -7,10 +8,17 @@ const hostnameIsTestEnvironment = testEnvironments.some((testEnvironment) => hos
 
 export const EnvironmentBanner = () => {
   const { t } = useTranslation();
+  const [minimizeBanner, setMinimizeBanner] = useState(false);
 
   return hostnameIsTestEnvironment ? (
-    <Typography sx={{ textAlign: 'center', background: '#ffd45a', p: '0.25rem' }}>
-      {t('common.test_environment')} ({hostname})
-    </Typography>
+    <Box
+      sx={{ background: '#ffd45a', p: '0.5rem', cursor: 'pointer' }}
+      onClick={() => setMinimizeBanner(!minimizeBanner)}>
+      {!minimizeBanner && (
+        <Typography sx={{ textAlign: 'center' }}>
+          {t('common.test_environment')} ({hostname})
+        </Typography>
+      )}
+    </Box>
   ) : null;
 };
