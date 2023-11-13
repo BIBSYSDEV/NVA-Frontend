@@ -91,11 +91,11 @@
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Institusjonens domene i Feide",
       "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
+      "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
       "invalid_ror_format": "Ugyldig ROR. Eksempel med gyldig format: https://ror.org/abcd0123ef",
       "password_hide": "Skjul passord",
       "password_show": "Vis passord",
-      "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
       "remove_role_text": "Er du sikker på at du vil fjerne denne rollen?",
       "remove_role_title": "Fjern rolle?",
       "ror": "Research Organization Registry (ROR)",
@@ -136,6 +136,7 @@
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
+    "back": "Tilbake",
     "cancel": "Avbryt",
     "category": "Kategori",
     "clear": "Fjern",
@@ -244,6 +245,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Arkitektur og design",
     "1005": "Asiatiske og afrikanske studier",
@@ -329,11 +334,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -395,7 +396,7 @@
       "create_customer": "Kunne ikke opprette institusjon",
       "create_doi_request": "Kunne ikke opprette DOI-forespørsel",
       "create_journal": "Kunne ikke opprette tidsskrift",
-      "create_note": "Kunne ikke lagre til merknad",
+      "create_note": "Kunne ikke lagre merknad",
       "create_nvi_period": "Kunne ikke opprette NVI-periode",
       "create_project": "Kunne ikke opprette prosjekt",
       "create_publisher": "Kunne ikke opprette utgiver",
@@ -1174,6 +1175,7 @@
     "public_page": {
       "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
+      "cristin_id": "Cristin ID",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
@@ -1293,7 +1295,7 @@
     },
     "registration": {
       "link_to_resource": "Lenke til original versjon",
-      "registration_doi_validation_message": "Dette resultatet er alt publisert i NVA. Om det har feil eller mangler, så må det resultatet endres.",
+      "registration_doi_validation_message": "Dette resultatet er allerede publisert i NVA. Om det har feil eller mangler, så må det resultatet endres.",
       "start_registration": "Start registrering",
       "start_with_empty_registration_description": "Legg inn informasjon etterpå",
       "start_with_empty_registration_title": "Start i tomt registreringsskjema",
@@ -1472,7 +1474,7 @@
         "web_link": "Lenke"
       },
       "change_registration_type": "Bytte registreringstype?",
-      "change_registration_type_description": "Merk at dette kan føre til at du mister noe av dataen du har lagt inn i de tilfellene hvor eksisterende data ikke er gyldig for den nye typen. Er du sikker på at du vil bytte registreringstype?",
+      "change_registration_type_description": "Merk at dette kan føre til at du mister noe av dataene du har lagt inn i de tilfellene hvor eksisterende data ikke er gyldig for den nye typen. Er du sikker på at du vil bytte registreringstype?",
       "chapter": {
         "info_anthology": "Antologien hvor kapittelet er publisert i må være publisert først",
         "info_book_of_abstracts": "Abstraktsamlingen hvor abstraktet er publisert i må være publisert først",
@@ -1513,6 +1515,7 @@
         }
       },
       "isbn": "ISBN",
+      "isbn_prefix": "ISBN-prefiks",
       "issn": "ISSN",
       "issue": "Hefte",
       "journal": "Tidsskrift",
@@ -1600,8 +1603,7 @@
       "title_of_event": "Tittel på arrangement",
       "type_work": "Type verk",
       "type_work_specified": "Egendefinert type verk",
-      "volume": "Volum",
-      "isbn_prefix": "ISBN-prefiks"
+      "volume": "Volum"
     },
     "status": {
       "DRAFT": "Kladd",
@@ -1621,24 +1623,32 @@
     "field_label": "Felt",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
+    "no_available_filters": "Ingen tilgjengelige filter",
     "not_containing": "Inneholder ikke",
     "operator": "Operator",
     "person_search_placeholder": "Søk etter navn",
     "persons": "Personer",
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
-    "reports": "Rapporter",
+    "reports": {
+      "nvi_all_institutions_description": "Nasjonalt, internasjonalt og uten samarbeid",
+      "nvi_all_institutions_title": "NVI: resultat, publiseringsindeks og bidragsyter andel per institusjon",
+      "reports": "Rapporter"
+    },
     "result": "Resultat",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",
+    "sector": "Sektor",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
   },
   "tasks": {
+    "all_nvi_results": "Alle NVI-resultater",
     "all_user_dialogs": "Alle brukerdialoger",
     "correction_list": "Retteliste",
+    "my_nvi_results": "Mine NVI-resultater",
     "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
@@ -1649,6 +1659,7 @@
       "delete_note": "Slett merknad",
       "delete_note_description": "Er du sikker på at du vil slette denne merknaden?",
       "exclude_subunits": "Ekskluder underenheter",
+      "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Merknad",
       "publication_points": "Publiseringspoeng",
@@ -1667,6 +1678,7 @@
       "waiting_for_other_institutions": "Venter på andre institusjoner",
       "waiting_for_your_institution": "Venter på din institusjon"
     },
+    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag eller lignende",
     "select_other_unit_filter": "Velg andre",
     "status": "Status",
     "unread": "Uleste",

@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { LocalStorageKey } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { AboutContent } from '../infopages/AboutContent';
-import SearchPage from '../search/SearchPage';
+import HomePage from './HomePage';
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -95,7 +95,7 @@ const Dashboard = () => {
           </Box>
         </Box>
       )}
-      <SearchPage />
+      <HomePage />
     </Box>
   );
 };
