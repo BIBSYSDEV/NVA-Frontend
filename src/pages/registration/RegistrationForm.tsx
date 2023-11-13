@@ -17,7 +17,7 @@ import { RouteLeavingGuard } from '../../components/RouteLeavingGuard';
 import { SkipLink } from '../../components/SkipLink';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { Registration, RegistrationTab } from '../../types/registration.types';
+import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
 import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
@@ -59,15 +59,21 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   });
   const registration = registrationQuery.data;
   const registrationId = registrationQuery.data?.id ?? '';
+  const canHaveNviCandidate =
+    registration?.status === RegistrationStatus.Published ||
+    registration?.status === RegistrationStatus.PublishedMetadata;
 
   const nviCandidateQuery = useQuery({
-    enabled: !!registrationId,
+    enabled: !!registrationId && canHaveNviCandidate,
     queryKey: ['nviCandidateForRegistration', registrationId],
     queryFn: () => fetchNviCandidateForRegistration(registrationId),
     retry: false,
     meta: { errorMessage: false },
   });
-  const showNviWarning = nviCandidateQuery.isSuccess && nviCandidateQuery.data && !hasAcceptedNviWarning;
+  const showNviWarning =
+    nviCandidateQuery.isSuccess &&
+    nviCandidateQuery.data.approvalStatuses.some((status) => status.status !== 'Pending') &&
+    !hasAcceptedNviWarning;
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -88,7 +94,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
 
   const canEditRegistration = registration && userCanEditRegistration(user, registration);
 
-  return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
+  return registrationQuery.isLoading || (canHaveNviCandidate && nviCandidateQuery.isLoading) ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : !canEditRegistration ? (
     <Forbidden />
