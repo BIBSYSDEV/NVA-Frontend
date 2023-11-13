@@ -522,8 +522,8 @@ export const dataTestId = {
       removeOrganizationScopeButton: 'remove-organization-scope-button',
     },
     searchMode: {
-      allUserDialogsButton: 'all-user-dialogs-button',
-      myUserDialogsButton: 'my-user-dialogs-button',
+      allTasksButton: 'all-tasks-button',
+      myTasksButton: 'my-tasks-button',
     },
     statusSearch: {
       closedCheckbox: 'closed-status-checkbox',
