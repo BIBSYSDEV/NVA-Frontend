@@ -83,3 +83,12 @@ export const updateNviPeriod = async (data: NviPeriod) => {
 
   return updateNviPeriodResponse.data;
 };
+
+export const fetchNviCandidateForRegistration = async (registrationId: string) => {
+  const fetchNviCandidateForRegistrationResponse = await authenticatedApiRequest2<NviCandidate>({
+    url: `${ScientificIndexApiPath.CandidateForRegistration}/${encodeURIComponent(registrationId)}`,
+    method: 'GET',
+  });
+
+  return fetchNviCandidateForRegistrationResponse.data;
+};
