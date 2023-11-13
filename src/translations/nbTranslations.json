@@ -1175,7 +1175,7 @@
     "nvi_warning": {
       "continue_editing_registration": "Vil du fortsatt redigere publikasjonen?",
       "registration_is_included_in_nvi": "Publikasjonen er en del av Norsk Vitenskapsindeks (NVI)",
-      "reset_nvi_warning": "Om du endrer årstall, bidragsyteres tilknytning(-er), kategori, eller publiseringskanal, så må kurator ved alle medvirkende institusjoner NVI-godkjenne publikasjonen på nytt."
+      "reset_nvi_warning": "Om du endrer årstall, bidragsyteres tilknytning(-er) til ny institusjon, kategori, eller publiseringskanal, så må kurator ved alle medvirkende institusjoner NVI-godkjenne publikasjonen på nytt."
     },
     "public_page": {
       "about_registration": "Om resultatet",
