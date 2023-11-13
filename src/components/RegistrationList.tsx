@@ -154,9 +154,11 @@ export const RegistrationListItemContent = ({
           </Box>
         </Box>
 
-        <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
-          {entityDescription?.abstract}
-        </TruncatableTypography>
+        {(entityDescription?.abstract || entityDescription?.description) && (
+          <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
+            {entityDescription?.abstract || entityDescription?.description}
+          </TruncatableTypography>
+        )}
       </ListItemText>
 
       {location.pathname.includes(UrlPathTemplate.ResearchProfile) && isPromotedPublication && (

@@ -7,6 +7,7 @@ import {
   CristinPerson,
   Employment,
   FlatCristinPerson,
+  PersonAggregations,
   PositionResponse,
 } from '../types/user.types';
 import { getIdentifierFromId } from '../utils/general-helpers';
@@ -94,22 +95,47 @@ export const fetchPerson = async (personId: string) => {
   return fetchPersonResponse.data;
 };
 
-export const searchForPerson = async (results: number, page: number, name: string) => {
+export interface PersonSearchParams {
+  name?: string;
+  organization?: string;
+  sector?: string;
+}
+
+export enum PersonSearchParameter {
+  Name = 'name',
+  Organization = 'organizationFacet',
+  Page = 'page',
+  Results = 'results',
+  Sector = 'sectorFacet',
+}
+
+export const searchForPerson = async (
+  results: number,
+  page: number,
+  { name, organization, sector }: PersonSearchParams
+) => {
   const searchParams = new URLSearchParams();
-  if (name) {
-    searchParams.set('name', name);
-  }
   if (results) {
-    searchParams.set('results', results.toString());
+    searchParams.set(PersonSearchParameter.Results, results.toString());
   }
   if (page) {
-    searchParams.set('page', page.toString());
+    searchParams.set(PersonSearchParameter.Page, page.toString());
+  }
+  if (name) {
+    searchParams.set(PersonSearchParameter.Name, name);
+  }
+  if (organization) {
+    searchParams.set(PersonSearchParameter.Organization, organization);
+  }
+  if (sector) {
+    searchParams.set(PersonSearchParameter.Sector, sector);
   }
 
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';
 
-  const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson>>({
+  const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson, PersonAggregations>>({
+    headers: { Accept: 'application/json; version=2023-11-03' },
     url: `${CristinApiPath.Person}${queryParams}`,
   });
   return fetchPersonResponse.data;

@@ -46,6 +46,7 @@ export enum UrlPathTemplate {
   RegistrationNew = '/registration',
   RegistrationWizard = '/registration/:identifier/edit',
   ResearchProfile = '/research-profile',
+  Reports = '/reports',
   Tasks = '/tasks',
   TasksDialogue = '/tasks/dialogue',
   TasksDialogueRegistration = '/tasks/dialogue/:identifier',

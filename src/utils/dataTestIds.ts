@@ -134,6 +134,7 @@ export const dataTestId = {
     facetItem: (value: string) => `facet-item-${value}`,
     filterAccordion: 'filter-accordion',
     fundingFacets: 'funding-facets',
+    nviReportRadioButton: 'nvi-report-radio-button',
     orderBySelect: 'order-by-select',
     personSearchButton: 'person-search-button',
     projectSearchButton: 'project-search-button',
@@ -143,6 +144,7 @@ export const dataTestId = {
     searchButton: 'search-button',
     searchField: 'search-field',
     searchResultItem: 'result-list-item',
+    sectorFacets: 'sector-facets',
     typeFacets: 'type-facets',
     institutionFacets: 'institution-facets',
   },
@@ -158,6 +160,7 @@ export const dataTestId = {
     abstractAccordion: 'abstract-accordion',
     authorLink: (id: string) => `presentation-author-link-${id}`,
     contributors: 'public-registration-contributors',
+    cristinLink: 'cristin-link',
     dmpAccordion: 'dmp-accordion',
     doiLink: 'doi-link',
     doiMessageField: 'request-doi-message',
@@ -489,12 +492,16 @@ export const dataTestId = {
     researchProfileLink: 'research-profile-link',
   },
   tasksPage: {
-    correctionListAccordion: 'correction-list-accordion',
+    correctionList: {
+      correctionListAccordion: 'correction-list-accordion',
+      correctionListRadioButton: 'correction-list-radio-button',
+    },
     messageField: 'message-field',
     messageSendButton: 'send-note-button',
     nvi: {
       approveButton: 'approve-button',
       candidatesList: 'nvi-candidates-list',
+      nextCandidateButton: 'next-candidate-button',
       rejectButton: 'reject-button',
       statusFilter: {
         approvedRadio: 'approved-radio',
@@ -515,8 +522,8 @@ export const dataTestId = {
       removeOrganizationScopeButton: 'remove-organization-scope-button',
     },
     searchMode: {
-      allUserDialogsButton: 'all-user-dialogs-button',
-      myUserDialogsButton: 'my-user-dialogs-button',
+      allTasksButton: 'all-tasks-button',
+      myTasksButton: 'my-tasks-button',
     },
     statusSearch: {
       closedCheckbox: 'closed-status-checkbox',

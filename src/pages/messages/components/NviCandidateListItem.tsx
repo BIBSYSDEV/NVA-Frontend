@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { NviCandidateSearchHit } from '../../../types/nvi.types';
+import { CandidateOffsetState, NviCandidateSearchHit } from '../../../types/nvi.types';
 import { displayDate } from '../../../utils/date-helpers';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -13,9 +13,10 @@ import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlP
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
+  offsetNextCandidate: number;
 }
 
-export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps) => {
+export const NviCandidateListItem = ({ nviCandidate, offsetNextCandidate }: NviCandidateListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -33,6 +34,10 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
 
   const myApproval = nviCandidate.approvals.find((approval) => approval.id === user?.topOrgCristinId);
 
+  const offsetNextCandidateState: CandidateOffsetState = {
+    offsetNextCandidate: offsetNextCandidate,
+  };
+
   return (
     <SearchListItem
       sx={{
@@ -48,7 +53,12 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
           </Typography>
         )}
         <Typography sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-          <MuiLink component={Link} to={getNviCandidatePath(nviCandidate.identifier)}>
+          <MuiLink
+            component={Link}
+            to={{
+              pathname: getNviCandidatePath(nviCandidate.identifier),
+              state: offsetNextCandidateState,
+            }}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>
         </Typography>
