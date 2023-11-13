@@ -1,19 +1,27 @@
 import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { LocalStorageKey } from '../utils/constants';
 
 const testEnvironments = ['localhost', 'dev', 'test', 'sandbox', 'e2e'];
 const hostname = window.location.hostname;
-const hostnameIsTestEnvironment = testEnvironments.some((testEnvironment) => hostname.startsWith(testEnvironment));
+const hostnameIsTestEnvironment =
+  hostname && testEnvironments.some((testEnvironment) => hostname.startsWith(testEnvironment));
+const defaultBannerState = localStorage.getItem(LocalStorageKey.EnvironmentBanner);
 
 export const EnvironmentBanner = () => {
   const { t } = useTranslation();
-  const [minimizeBanner, setMinimizeBanner] = useState(false);
 
-  return hostnameIsTestEnvironment ? (
+  const [minimizeBanner, setMinimizeBanner] = useState(defaultBannerState === 'minimized');
+
+  return hostnameIsTestEnvironment && defaultBannerState !== 'none' ? (
     <Box
       sx={{ background: '#ffd45a', p: '0.5rem', cursor: 'pointer' }}
-      onClick={() => setMinimizeBanner(!minimizeBanner)}>
+      onClick={() => {
+        const newMinimizeBannerState = !minimizeBanner;
+        setMinimizeBanner(newMinimizeBannerState);
+        localStorage.setItem(LocalStorageKey.EnvironmentBanner, newMinimizeBannerState ? 'minimized' : 'normal');
+      }}>
       {!minimizeBanner && (
         <Typography sx={{ textAlign: 'center' }}>
           {t('common.test_environment')} ({hostname})
