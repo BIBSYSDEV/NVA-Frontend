@@ -144,6 +144,7 @@ export const dataTestId = {
     searchButton: 'search-button',
     searchField: 'search-field',
     searchResultItem: 'result-list-item',
+    sectorFacets: 'sector-facets',
     typeFacets: 'type-facets',
     institutionFacets: 'institution-facets',
   },
