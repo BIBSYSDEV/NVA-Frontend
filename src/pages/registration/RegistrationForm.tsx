@@ -153,7 +153,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
         onAccept={() => setHasAcceptedNviWarning(true)}
         onCancel={() => (history.length > 1 ? history.goBack() : history.push(UrlPathTemplate.Home))}>
         <Typography paragraph>{t('registration.nvi_warning.reset_nvi_warning')}</Typography>
-        <Typography paragraph>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
+        <Typography>{t('registration.nvi_warning.continue_editing_registration')}</Typography>
       </ConfirmDialog>
     </>
   ) : null;
