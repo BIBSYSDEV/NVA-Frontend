@@ -1173,6 +1173,11 @@
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
     "new_registration": "Nytt resultat",
+    "nvi_warning": {
+      "continue_editing_registration": "Vil du fortsatt redigere publikasjonen?",
+      "registration_is_included_in_nvi": "Publikasjonen er en del av Norsk Vitenskapsindeks (NVI)",
+      "reset_nvi_warning": "Om du endrer årstall, bidragsyteres tilknytning(-er) til institusjon(-er), kategori, eller publiseringskanal, så må kurator ved alle medvirkende institusjoner NVI-godkjenne publikasjonen på nytt."
+    },
     "public_page": {
       "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
