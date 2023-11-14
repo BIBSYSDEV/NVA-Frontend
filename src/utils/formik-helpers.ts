@@ -78,12 +78,12 @@ export const getFirstErrorTab = (tabErrors?: TabErrors) =>
     ? tabErrors[RegistrationTab.Description].length > 0
       ? RegistrationTab.Description
       : tabErrors[RegistrationTab.ResourceType].length > 0
-      ? RegistrationTab.ResourceType
-      : tabErrors[RegistrationTab.Contributors].length > 0
-      ? RegistrationTab.Contributors
-      : tabErrors[RegistrationTab.FilesAndLicenses].length > 0
-      ? RegistrationTab.FilesAndLicenses
-      : -1
+        ? RegistrationTab.ResourceType
+        : tabErrors[RegistrationTab.Contributors].length > 0
+          ? RegistrationTab.Contributors
+          : tabErrors[RegistrationTab.FilesAndLicenses].length > 0
+            ? RegistrationTab.FilesAndLicenses
+            : -1
     : -1;
 
 const resourceFieldNames = Object.values(ResourceFieldNames);
