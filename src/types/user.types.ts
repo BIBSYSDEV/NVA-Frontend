@@ -123,6 +123,18 @@ export interface CristinPerson extends CreateCristinPerson {
   keywords: Keywords[];
 }
 
+interface PersonAggregationValue {
+  key: string;
+  id: string;
+  count: number;
+  labels: LanguageString;
+}
+
+export interface PersonAggregations {
+  organizationFacet: PersonAggregationValue[];
+  sectorFacet: PersonAggregationValue[];
+}
+
 export interface FlatCristinPerson {
   firstName: string;
   lastName: string;

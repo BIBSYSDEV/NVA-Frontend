@@ -72,8 +72,8 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           window.location.pathname === UrlPathTemplate.TasksDialogue
             ? getTasksRegistrationPath(identifier)
             : window.location.pathname === UrlPathTemplate.MyPageMyMessages
-            ? getMyMessagesRegistrationPath(identifier)
-            : ''
+              ? getMyMessagesRegistrationPath(identifier)
+              : ''
         }
         onClick={() => {
           if (!viewedByUser) {

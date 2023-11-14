@@ -32,8 +32,8 @@ export const getTranslatedVocabularyName = (t: TFunction, id: string) =>
   id === defaultHrcsActivity.id
     ? t('editor.hrcs_activity')
     : id === defaultHrcsCategory.id
-    ? t('editor.hrcs_categories')
-    : '';
+      ? t('editor.hrcs_categories')
+      : '';
 
 export const VocabularySettings = () => {
   const { t } = useTranslation();

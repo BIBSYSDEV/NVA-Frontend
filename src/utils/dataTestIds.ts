@@ -144,6 +144,7 @@ export const dataTestId = {
     searchButton: 'search-button',
     searchField: 'search-field',
     searchResultItem: 'result-list-item',
+    sectorFacets: 'sector-facets',
     typeFacets: 'type-facets',
     institutionFacets: 'institution-facets',
   },
@@ -521,8 +522,8 @@ export const dataTestId = {
       removeOrganizationScopeButton: 'remove-organization-scope-button',
     },
     searchMode: {
-      allUserDialogsButton: 'all-user-dialogs-button',
-      myUserDialogsButton: 'my-user-dialogs-button',
+      allTasksButton: 'all-tasks-button',
+      myTasksButton: 'my-tasks-button',
     },
     statusSearch: {
       closedCheckbox: 'closed-status-checkbox',
