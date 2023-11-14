@@ -1636,6 +1636,7 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "reports": {
+      "clinical_treatment_studies": "Kliniske behandlingsstudier",
       "external_reports": "Rapport generert fra ekstern løsning",
       "international_cooperation": "Internasjonalt samarbeid",
       "reports": "Rapporter"
