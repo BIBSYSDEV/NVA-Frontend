@@ -1636,8 +1636,8 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "reports": {
-      "nvi_all_institutions_description": "Nasjonalt, internasjonalt og uten samarbeid",
-      "nvi_all_institutions_title": "NVI: resultat, publiseringsindeks og bidragsyter andel per institusjon",
+      "external_reports": "Rapporter generert fra ekstern løsning (Tableau)",
+      "international_cooperation": "Internasjonalt samarbeid",
       "reports": "Rapporter"
     },
     "result": "Resultat",
