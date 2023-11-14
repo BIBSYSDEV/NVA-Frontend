@@ -1636,7 +1636,7 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "reports": {
-      "external_reports": "Rapporter generert fra ekstern løsning (Tableau)",
+      "external_reports": "Rapport generert fra ekstern løsning",
       "international_cooperation": "Internasjonalt samarbeid",
       "reports": "Rapporter"
     },

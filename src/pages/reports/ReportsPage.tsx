@@ -1,9 +1,9 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import internationalCooperationThumbnail from '../../resources/images/international-cooperation-report-thumbnail.png';
 import nviReportThumbnail from '../../resources/images/nvi-report-thumbnail.png';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { ReportButton } from './ReportButton';
 
 const ReportsPage = () => {
   const { t } = useTranslation();
@@ -34,29 +34,3 @@ const ReportsPage = () => {
 };
 
 export default ReportsPage;
-
-interface ReportButtonProps {
-  title: string;
-  description: string;
-  imageSrc: string;
-  path: string;
-}
-
-const ReportButton = ({ title, description, imageSrc, path }: ReportButtonProps) => (
-  <Button
-    component={Link}
-    to={path}
-    sx={{
-      border: '2px solid',
-      borderRadius: '8px',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '1rem',
-      textTransform: 'none',
-      justifySelf: { xs: 'center', md: 'start' },
-    }}>
-    <img src={imageSrc} alt="" style={{ height: '10rem', width: '14rem' }} />
-    <Typography variant="h3">{title}</Typography>
-    <Typography>{description}</Typography>
-  </Button>
-);
