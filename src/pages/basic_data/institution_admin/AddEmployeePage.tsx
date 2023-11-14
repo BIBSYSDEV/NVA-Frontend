@@ -76,12 +76,11 @@ export const AddEmployeePage = () => {
       if (isErrorStatus(createPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {
-        personId = createPersonResponse.data.id;
-
         if (!nationalId) {
           dispatch(setNotification({ message: t('feedback.success.create_person'), variant: 'success' }));
           resetForm();
         } else {
+          personId = createPersonResponse.data.id;
           await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
         }
       }
