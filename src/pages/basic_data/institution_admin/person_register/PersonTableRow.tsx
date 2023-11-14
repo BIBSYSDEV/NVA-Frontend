@@ -105,7 +105,6 @@ export const PersonTableRow = ({
   });
 
   const institutionUser = institutionUserQuery.data;
-  console.log(institutionUser);
 
   const activeEmployments = employments.filter(isActiveEmployment);
   const employmentsInThisInstitution: Employment[] = [];
