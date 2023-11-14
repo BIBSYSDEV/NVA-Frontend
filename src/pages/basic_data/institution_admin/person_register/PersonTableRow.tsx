@@ -384,7 +384,7 @@ export const PersonTableRow = ({
                           <UserRolesSelector
                             selectedRoles={values.roles}
                             updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || !!cristinPerson.nvi?.verifiedAt}
                             canAddInternalRoles
                           />
                         </Box>
