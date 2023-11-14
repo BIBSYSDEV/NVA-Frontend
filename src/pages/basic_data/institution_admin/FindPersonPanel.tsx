@@ -14,7 +14,6 @@ export const FindPersonPanel = () => {
   const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const [showCreatePerson, setShowCreatePerson] = useState(false);
   const confirmedIdentity = !!values.user.nvi?.verifiedAt.id && !!values.user.nvi?.verifiedBy.id;
-
   const user = useSelector((store: RootState) => store.user);
   const userCristinId = user?.cristinId ?? '';
   const userTopLevelOrg = user?.topOrgCristinId ?? '';
@@ -45,7 +44,6 @@ export const FindPersonPanel = () => {
           ) : (
             <>
               <Typography variant="h3">{t('basic_data.add_employee.create_person')}</Typography>
-
               <FormControlLabel
                 onChange={() => {
                   const newPerson: FlatCristinPerson = {
@@ -61,7 +59,6 @@ export const FindPersonPanel = () => {
                 control={<Checkbox disabled={isSubmitting} checked={confirmedIdentity} />}
                 label={t('basic_data.add_employee.confirmed_identity')}
               />
-
               <Field name="user.firstName">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField

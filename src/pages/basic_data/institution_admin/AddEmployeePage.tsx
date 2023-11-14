@@ -71,7 +71,6 @@ export const AddEmployeePage = () => {
         ...person,
         employments: [values.affiliation],
       });
-
       const createPersonResponse = await createCristinPerson(cristinPerson);
       if (isErrorStatus(createPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
