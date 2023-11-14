@@ -55,26 +55,26 @@ export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
     ? PublicationType.PublicationInJournal
     : isBook(instanceType)
-    ? PublicationType.Book
-    : isDegree(instanceType)
-    ? PublicationType.Degree
-    : isReport(instanceType)
-    ? PublicationType.Report
-    : isChapter(instanceType)
-    ? PublicationType.Anthology
-    : isPresentation(instanceType)
-    ? PublicationType.Presentation
-    : isArtistic(instanceType)
-    ? PublicationType.Artistic
-    : isMediaContribution(instanceType)
-    ? PublicationType.MediaContribution
-    : isResearchData(instanceType)
-    ? PublicationType.ResearchData
-    : isExhibitionContent(instanceType)
-    ? PublicationType.ExhibitionContent
-    : isOtherRegistration(instanceType)
-    ? PublicationType.GeographicalContent
-    : '';
+      ? PublicationType.Book
+      : isDegree(instanceType)
+        ? PublicationType.Degree
+        : isReport(instanceType)
+          ? PublicationType.Report
+          : isChapter(instanceType)
+            ? PublicationType.Anthology
+            : isPresentation(instanceType)
+              ? PublicationType.Presentation
+              : isArtistic(instanceType)
+                ? PublicationType.Artistic
+                : isMediaContribution(instanceType)
+                  ? PublicationType.MediaContribution
+                  : isResearchData(instanceType)
+                    ? PublicationType.ResearchData
+                    : isExhibitionContent(instanceType)
+                      ? PublicationType.ExhibitionContent
+                      : isOtherRegistration(instanceType)
+                        ? PublicationType.GeographicalContent
+                        : '';
 
 export const isJournal = (instanceType: any) => Object.values(JournalType).includes(instanceType);
 
