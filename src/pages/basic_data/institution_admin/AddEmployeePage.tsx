@@ -88,6 +88,9 @@ export const AddEmployeePage = () => {
       const addAffiliationResponse = await addEmployment(personId, values.affiliation);
       if (isErrorStatus(addAffiliationResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.add_employment'), variant: 'error' }));
+      } else if (isSuccessStatus(addAffiliationResponse.status) && !nationalId) {
+        dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
+        resetForm();
       }
     }
 
