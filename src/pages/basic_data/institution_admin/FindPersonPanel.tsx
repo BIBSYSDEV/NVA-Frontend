@@ -45,6 +45,23 @@ export const FindPersonPanel = () => {
           ) : (
             <>
               <Typography variant="h3">{t('basic_data.add_employee.create_person')}</Typography>
+
+              <FormControlLabel
+                onChange={() => {
+                  const newPerson: FlatCristinPerson = {
+                    ...values.user,
+                    nvi: {
+                      verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
+                      verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
+                    },
+                    nationalId: '',
+                  };
+                  setFieldValue('user', newPerson);
+                }}
+                control={<Checkbox disabled={isSubmitting} checked={confirmedIdentity} />}
+                label={t('basic_data.add_employee.confirmed_identity')}
+              />
+
               <Field name="user.firstName">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
@@ -87,23 +104,6 @@ export const FindPersonPanel = () => {
                   />
                 )}
               </Field>
-
-              <FormControlLabel
-                sx={{ whiteSpace: 'pre-line', p: '0.2rem' }}
-                onChange={() => {
-                  const newPerson: FlatCristinPerson = {
-                    ...values.user,
-                    nvi: {
-                      verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
-                      verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
-                    },
-                    nationalId: '',
-                  };
-                  setFieldValue('user', newPerson);
-                }}
-                control={<Checkbox disabled={isSubmitting} checked={confirmedIdentity} />}
-                label={t('basic_data.add_employee.confirmed_identity')}
-              />
             </>
           )}
         </>
