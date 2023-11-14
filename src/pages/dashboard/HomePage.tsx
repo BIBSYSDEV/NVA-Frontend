@@ -152,13 +152,13 @@ const HomePage = () => {
                 onClick={() => setValues(emptySearchParams)}>
                 <NavigationList>
                   <LinkButton
-                    data-testid={dataTestId.myPage.myProfileLink}
+                    data-testid={dataTestId.startPage.reportsOverviewButton}
                     isSelected={currentPath === UrlPathTemplate.Reports}
                     to={UrlPathTemplate.Reports}>
                     {t('common.overview')}
                   </LinkButton>
                   <LinkButton
-                    data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
+                    data-testid={dataTestId.startPage.reportsNviButton}
                     isSelected={currentPath === UrlPathTemplate.ReportsNvi}
                     to={UrlPathTemplate.ReportsNvi}>
                     {t('common.nvi')}
