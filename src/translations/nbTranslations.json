@@ -34,7 +34,7 @@
   "basic_data": {
     "add_employee": {
       "add_employee": "Legg til ansatt",
-      "confirmed_identity": "Institusjonen bekrefter personens identitet.\nGjelder personer uten fødselsnummer.",
+      "confirmed_identity": "Institusjonen bekrefter personens identitet. Gjelder personer uten fødselsnummer.",
       "create_person": "Opprett person",
       "name_or_nin": "Navn eller fødselsnummer",
       "new_search": "Nytt søk",
@@ -474,6 +474,7 @@
       "create_journal": "Tidsskriften ble opprettet",
       "create_note": "Merknaden ble lagret",
       "create_nvi_period": "NVI-periode ble opprettet",
+      "create_person": "Person ble opprettet",
       "create_project": "Prosjekt er opprettet",
       "create_publisher": "Utigveren ble opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",

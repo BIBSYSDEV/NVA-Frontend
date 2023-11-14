@@ -71,13 +71,17 @@ export const AddEmployeePage = () => {
         ...person,
         employments: [values.affiliation],
       });
-
       const createPersonResponse = await createCristinPerson(cristinPerson);
       if (isErrorStatus(createPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {
-        personId = createPersonResponse.data.id;
-        await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
+        if (!nationalId) {
+          dispatch(setNotification({ message: t('feedback.success.create_person'), variant: 'success' }));
+          resetForm();
+        } else {
+          personId = createPersonResponse.data.id;
+          await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
+        }
       }
     } else {
       // Add employment to existing Person
@@ -115,7 +119,7 @@ export const AddEmployeePage = () => {
         validationSchema={addEmployeeValidationSchema}
         onSubmit={onSubmit}
         validateOnMount>
-        {({ isValid, isSubmitting, values, setFieldValue, errors }: FormikProps<AddEmployeeData>) => (
+        {({ isSubmitting, values, setFieldValue, errors }: FormikProps<AddEmployeeData>) => (
           <Form noValidate>
             <Box
               sx={{
