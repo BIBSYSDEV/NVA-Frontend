@@ -1,6 +1,5 @@
 import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -11,7 +10,7 @@ import { SearchApiPath } from '../../api/apiPaths';
 import { PersonSearchParameter, PersonSearchParams, searchForPerson } from '../../api/cristinApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { SearchResponse } from '../../types/common.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
@@ -25,7 +24,7 @@ import {
   createSearchConfigFromSearchParams,
 } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { StyledSearchModeButton } from '../messages/TasksPage';
+import { NviReports } from '../reports/NviReports';
 import SearchPage from '../search/SearchPage';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import ReportsPage from '../search/registration_search/ReportsPage';
@@ -150,16 +149,21 @@ const HomePage = () => {
                 startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
                 accordionPath={UrlPathTemplate.Reports}
                 dataTestId={dataTestId.startPage.reportsAccordion}
-                onClick={() => {
-                  setValues(emptySearchParams);
-                }}>
-                <StyledSearchModeButton
-                  sx={{ mx: '1rem', mb: '1rem' }}
-                  data-testid={dataTestId.startPage.nviReportRadioButton}
-                  isSelected={currentPath === UrlPathTemplate.Reports}
-                  startIcon={<RadioButtonCheckedIcon />}>
-                  {t('common.nvi')}
-                </StyledSearchModeButton>
+                onClick={() => setValues(emptySearchParams)}>
+                <NavigationList>
+                  <LinkButton
+                    data-testid={dataTestId.myPage.myProfileLink}
+                    isSelected={currentPath === UrlPathTemplate.Reports}
+                    to={UrlPathTemplate.Reports}>
+                    {t('common.overview')}
+                  </LinkButton>
+                  <LinkButton
+                    data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
+                    isSelected={currentPath === UrlPathTemplate.ReportsNvi}
+                    to={UrlPathTemplate.ReportsNvi}>
+                    {t('common.nvi')}
+                  </LinkButton>
+                </NavigationList>
               </NavigationListAccordion>
             </SideMenu>
 
@@ -173,6 +177,7 @@ const HomePage = () => {
                   />
                 </Route>
                 <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
+                <Route exact path={UrlPathTemplate.ReportsNvi} component={NviReports} />
               </ErrorBoundary>
             </Switch>
           </StyledPageWithSideMenu>

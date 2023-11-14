@@ -136,7 +136,6 @@
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
-    "back": "Tilbake",
     "cancel": "Avbryt",
     "category": "Kategori",
     "clear": "Fjern",
