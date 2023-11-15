@@ -144,7 +144,6 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
             <NviApprovalStatuses
               approvalStatuses={nviCandidate?.approvalStatuses ?? []}
               totalPoints={nviCandidate?.totalPoints ?? 0}
-              undistributedPoints={nviCandidate?.undistributedPoints ?? 0}
             />
           </Paper>
         </ErrorBoundary>
