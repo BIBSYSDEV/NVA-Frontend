@@ -84,6 +84,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
 
+  const cristinIdentifier =
+    registration.additionalIdentifiers &&
+    registration.additionalIdentifiers.find((identifier) => identifier.sourceName === 'Cristin')?.value;
+
   return (
     <StyledGeneralInfo>
       <div data-testid={dataTestId.registrationLandingPage.generalInfo}>
@@ -159,6 +163,21 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 target="_blank"
                 rel="noopener noreferrer">
                 {registration.handle}
+              </Link>
+            </Typography>
+          </>
+        )}
+
+        {cristinIdentifier && (
+          <>
+            <Typography variant="overline">{t('registration.public_page.cristin_id')}</Typography>
+            <Typography>
+              <Link
+                data-testid={dataTestId.registrationLandingPage.cristinLink}
+                href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
+                target="_blank"
+                rel="noopener noreferrer">
+                {cristinIdentifier}
               </Link>
             </Typography>
           </>

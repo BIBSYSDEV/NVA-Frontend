@@ -10,6 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AppRoutes } from './AppRoutes';
 import { getCurrentUserAttributes } from './api/authApi';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
+import { EnvironmentBanner } from './components/EnvironmentBanner';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { PageSpinner } from './components/PageSpinner';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
@@ -105,6 +106,7 @@ export const App = () => {
             <Notifier />
             <SkipLink href="#main-content">{t('common.skip_to_main_content')}</SkipLink>
             <Header />
+            <EnvironmentBanner />
             <Box
               component="main"
               id="main-content"

@@ -136,7 +136,6 @@
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
-    "back": "Tilbake",
     "cancel": "Avbryt",
     "category": "Kategori",
     "clear": "Fjern",
@@ -225,6 +224,7 @@
     "start_date": "Startdato",
     "start_page": "Startside",
     "tasks": "Oppgaver",
+    "test_environment": "Testmiljø",
     "title": "Tittel",
     "today": "I dag",
     "type": "Type",
@@ -1172,9 +1172,15 @@
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
     "new_registration": "Nytt resultat",
+    "nvi_warning": {
+      "continue_editing_registration": "Vil du fortsatt redigere publikasjonen?",
+      "registration_is_included_in_nvi": "Publikasjonen er en del av Norsk Vitenskapsindeks (NVI)",
+      "reset_nvi_warning": "Om du endrer årstall, bidragsyteres tilknytning(-er) til institusjon(-er), kategori, eller publiseringskanal, så må kurator ved alle medvirkende institusjoner NVI-godkjenne publikasjonen på nytt."
+    },
     "public_page": {
       "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
+      "cristin_id": "Cristin ID",
       "error_description": "For å publisere må du rette følgende feil:",
       "find_in_channel_registry": "Finn i kanalregisteret",
       "go_back_to_wizard": "Gå tilbake til skjema",
@@ -1630,21 +1636,25 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "reports": {
-      "reports": "Rapporter",
-      "nvi_all_institutions_title": "NVI: resultat, publiseringsindeks og bidragsyter andel per institusjon",
-      "nvi_all_institutions_description": "Nasjonalt, internasjonalt og uten samarbeid"
+      "clinical_treatment_studies": "Kliniske behandlingsstudier",
+      "external_reports": "Rapport generert fra ekstern løsning",
+      "international_cooperation": "Internasjonalt samarbeid",
+      "reports": "Rapporter"
     },
     "result": "Resultat",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",
+    "sector": "Sektor",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
   },
   "tasks": {
+    "all_nvi_results": "Alle NVI-resultater",
     "all_user_dialogs": "Alle brukerdialoger",
     "correction_list": "Retteliste",
+    "my_nvi_results": "Mine NVI-resultater",
     "my_user_dialogs": "Mine brukerdialoger",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
@@ -1670,10 +1680,10 @@
         "Pending": "Kandidat",
         "Rejected": "Avvist"
       },
-      "undistributed_points": "Ikke fordelt",
       "waiting_for_other_institutions": "Venter på andre institusjoner",
       "waiting_for_your_institution": "Venter på din institusjon"
     },
+    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag eller lignende",
     "select_other_unit_filter": "Velg andre",
     "status": "Status",
     "unread": "Uleste",

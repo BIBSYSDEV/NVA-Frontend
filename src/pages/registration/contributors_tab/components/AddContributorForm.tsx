@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiRequest } from '../../../../api/apiRequest';
-import { searchForPerson } from '../../../../api/cristinApi';
+import { PersonSearchParams, searchForPerson } from '../../../../api/cristinApi';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { setNotification } from '../../../../redux/notificationSlice';
@@ -47,10 +47,13 @@ export const AddContributorForm = ({
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
+  const personQueryParams: PersonSearchParams = {
+    name: debouncedSearchTerm,
+  };
   const personQuery = useQuery({
     enabled: debouncedSearchTerm.length > 0,
-    queryKey: ['person', rowsPerPage, page, debouncedSearchTerm],
-    queryFn: () => searchForPerson(rowsPerPage, page, debouncedSearchTerm),
+    queryKey: ['person', rowsPerPage, page, personQueryParams],
+    queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
     meta: { errorMessage: t('feedback.error.search') },
   });
 

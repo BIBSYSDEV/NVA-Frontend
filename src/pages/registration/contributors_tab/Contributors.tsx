@@ -90,8 +90,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       newSequence - 1 > maxNewIndex
         ? maxNewIndex
         : newSequence < minNewIndex
-        ? minNewIndex
-        : contributors.findIndex((c) => c.sequence === newSequence);
+          ? minNewIndex
+          : contributors.findIndex((c) => c.sequence === newSequence);
 
     const orderedContributors =
       newIndex >= 0 ? (move(contributors, oldIndex, newIndex) as Contributor[]) : contributors;
@@ -151,18 +151,22 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       push(newContributor);
       goToLastPage();
     } else {
-      const relevantContributor = contributors[contributorIndex];
-      const relevantAffiliations = relevantContributor.affiliations ?? [];
+      const thisContributor = contributors[contributorIndex];
+      const verifiedAffiliations = thisContributor.affiliations ?? [];
+      const verifiedOrcid = thisContributor.identity.orcId;
 
-      relevantAffiliations.push(...existingAffiliations);
+      verifiedAffiliations.push(...existingAffiliations);
 
       const verifiedContributor: Contributor = {
-        ...relevantContributor,
+        ...thisContributor,
         role: {
           type: role,
         },
-        identity,
-        affiliations: relevantAffiliations,
+        identity: {
+          ...identity,
+          orcId: verifiedOrcid || identity.orcId || '',
+        },
+        affiliations: verifiedAffiliations,
       };
       replace(contributorIndex, verifiedContributor);
     }

@@ -76,6 +76,11 @@ interface RegistrationPublisher {
   id: string;
 }
 
+interface AdditionalIdentifier {
+  sourceName: 'Cristin' | 'SCOPUS' | 'ISI';
+  value: string;
+}
+
 export interface BaseRegistration {
   readonly type: 'Publication' | 'ImportCandidate';
   readonly id: string;
@@ -91,6 +96,7 @@ export interface BaseRegistration {
   readonly doi?: string;
   readonly publisher: RegistrationPublisher;
   readonly handle?: string;
+  readonly additionalIdentifiers?: AdditionalIdentifier[];
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
