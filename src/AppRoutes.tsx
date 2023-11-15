@@ -39,7 +39,12 @@ export const AppRoutes = () => {
       <Switch>
         <Route
           exact
-          path={[UrlPathTemplate.Home, UrlPathTemplate.Reports, UrlPathTemplate.ReportsNvi]}
+          path={[
+            UrlPathTemplate.Home,
+            UrlPathTemplate.Reports,
+            UrlPathTemplate.ReportsNvi,
+            UrlPathTemplate.ReportsInternationalCooperation,
+          ]}
           component={Dashboard}
         />
         <Route exact path={UrlPathTemplate.About} component={AboutPage} />

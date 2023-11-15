@@ -24,10 +24,11 @@ import {
   createSearchConfigFromSearchParams,
 } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { InternationalCooperationReports } from '../reports/InternationalCooperationReports';
 import { NviReports } from '../reports/NviReports';
+import ReportsPage from '../reports/ReportsPage';
 import SearchPage from '../search/SearchPage';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
-import ReportsPage from '../search/registration_search/ReportsPage';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
 
 enum SearchTypeValue {
@@ -163,6 +164,12 @@ const HomePage = () => {
                     to={UrlPathTemplate.ReportsNvi}>
                     {t('common.nvi')}
                   </LinkButton>
+                  <LinkButton
+                    data-testid={dataTestId.startPage.reportsInternationalWorkButton}
+                    isSelected={currentPath === UrlPathTemplate.ReportsInternationalCooperation}
+                    to={UrlPathTemplate.ReportsInternationalCooperation}>
+                    {t('search.reports.international_cooperation')}
+                  </LinkButton>
                 </NavigationList>
               </NavigationListAccordion>
             </SideMenu>
@@ -178,6 +185,11 @@ const HomePage = () => {
                 </Route>
                 <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
                 <Route exact path={UrlPathTemplate.ReportsNvi} component={NviReports} />
+                <Route
+                  exact
+                  path={UrlPathTemplate.ReportsInternationalCooperation}
+                  component={InternationalCooperationReports}
+                />
               </ErrorBoundary>
             </Switch>
           </StyledPageWithSideMenu>
