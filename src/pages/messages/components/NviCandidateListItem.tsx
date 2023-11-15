@@ -2,7 +2,6 @@ import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
 import { CandidateOffsetState, NviCandidateSearchHit } from '../../../types/nvi.types';
@@ -93,7 +92,6 @@ export const NviCandidateListItem = ({ nviCandidate, offsetNextCandidate }: NviC
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
-        <PublicationPointsTypography fontWeight={700} points={nviCandidate.points} />
       </Box>
     </SearchListItem>
   );

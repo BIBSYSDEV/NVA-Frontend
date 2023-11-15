@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { SearchForm } from '../../../components/SearchForm';
 import { NviCandidateSearchResponse } from '../../../types/nvi.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { NviCandidateListItem } from './NviCandidateListItem';
@@ -34,6 +35,8 @@ export const NviCandidatesList = ({
       <Helmet>
         <title>{helmetTitle}</title>
       </Helmet>
+
+      <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
 
       {nviCandidatesQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />

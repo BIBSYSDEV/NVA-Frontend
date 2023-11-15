@@ -48,8 +48,6 @@ type TicketStatusFilter = {
   [key in TicketStatus]: boolean;
 };
 
-type TicketSearchMode = 'current-user' | 'all';
-
 export const StyledSearchModeButton = styled(LinkButton)({
   borderRadius: '1.5rem',
   textTransform: 'none',
@@ -85,8 +83,10 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
+  const urlSearchQuery = new URLSearchParams(location.search).get('query');
+
   const [excludeSubunits, setExcludeSubunits] = useState(false);
-  const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : ''; // TODO: Use this for ticket search as well
+  const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : '';
 
   const [organizationScope, setOrganizationScope] = useState(
     institutionUserQuery.data?.viewingScope?.includedUnits ?? []
@@ -99,9 +99,9 @@ const TasksPage = () => {
     }
   }, [institutionUserQuery.data?.viewingScope?.includedUnits]);
 
-  // Tickets/dialogue data
-  const [ticketSearchMode, setTicketSearchMode] = useState<TicketSearchMode>('all');
+  const [showOnlyMyTasks, setShowOnlyMyTasks] = useState(false);
 
+  // Tickets/dialogue data
   const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
 
   const [ticketTypes, setTicketTypes] = useState({
@@ -133,12 +133,19 @@ const TasksPage = () => {
       ? `(${selectedTicketStatuses.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const ticketAssigneeQuery =
-    ticketSearchMode === 'current-user' && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
+  const ticketAssigneeQuery = showOnlyMyTasks && nvaUsername ? `(assignee.username:"${nvaUsername}")` : '';
 
   const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
-  const ticketQueryString = [ticketTypeQuery, ticketStatusQuery, ticketAssigneeQuery, ticketViewedByQuery]
+  const ticketsSearchQuery = urlSearchQuery ?? '';
+
+  const ticketQueryString = [
+    ticketsSearchQuery,
+    ticketTypeQuery,
+    ticketStatusQuery,
+    ticketAssigneeQuery,
+    ticketViewedByQuery,
+  ]
     .filter(Boolean)
     .join(' AND ');
 
@@ -166,9 +173,13 @@ const TasksPage = () => {
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
+  const nviSearchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
+
+  const nviAssigneeQuery = showOnlyMyTasks && nvaUsername ? `&assignee=${nvaUsername}` : '';
+
   const nviAggregationQuery = `year=${nviYearFilter}&affiliations=${organizationScope.join(
     ','
-  )}${excludeSubunitsQuery}`;
+  )}${excludeSubunitsQuery}${nviAssigneeQuery}${nviSearchQuery}`;
   const nviListQuery = `${nviAggregationQuery}&filter=${nviStatusFilter}`;
 
   const nviAggregationsQuery = useQuery({
@@ -286,24 +297,22 @@ const TasksPage = () => {
 
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
               <StyledSearchModeButton
-                data-testid={dataTestId.tasksPage.searchMode.myUserDialogsButton}
-                isSelected={ticketSearchMode === 'current-user'}
-                startIcon={
-                  ticketSearchMode === 'current-user' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />
-                }
+                data-testid={dataTestId.tasksPage.searchMode.myTasksButton}
+                isSelected={showOnlyMyTasks}
+                startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
                 onClick={() => {
                   if (ticketStatusFilter.New) {
                     setTicketStatusFilter({ ...ticketStatusFilter, New: false });
                   }
-                  setTicketSearchMode('current-user');
+                  setShowOnlyMyTasks(true);
                 }}>
                 {t('tasks.my_user_dialogs')}
               </StyledSearchModeButton>
               <StyledSearchModeButton
-                data-testid={dataTestId.tasksPage.searchMode.allUserDialogsButton}
-                isSelected={ticketSearchMode === 'all'}
-                startIcon={ticketSearchMode === 'all' ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-                onClick={() => setTicketSearchMode('all')}>
+                data-testid={dataTestId.tasksPage.searchMode.allTasksButton}
+                isSelected={!showOnlyMyTasks}
+                startIcon={!showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+                onClick={() => setShowOnlyMyTasks(false)}>
                 {t('tasks.all_user_dialogs')}
               </StyledSearchModeButton>
             </StyledTicketSearchFormGroup>
@@ -314,7 +323,7 @@ const TasksPage = () => {
               </FormLabel>
               <FormControlLabel
                 data-testid={dataTestId.tasksPage.statusSearch.newCheckbox}
-                disabled={ticketSearchMode === 'current-user'}
+                disabled={showOnlyMyTasks}
                 checked={ticketStatusFilter.New}
                 control={
                   <StyledStatusCheckbox
@@ -404,6 +413,28 @@ const TasksPage = () => {
                     </MenuItem>
                   ))}
                 </Select>
+
+                <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
+                  <StyledSearchModeButton
+                    data-testid={dataTestId.tasksPage.searchMode.myTasksButton}
+                    isSelected={showOnlyMyTasks}
+                    startIcon={showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+                    onClick={() => {
+                      if (ticketStatusFilter.New) {
+                        setTicketStatusFilter({ ...ticketStatusFilter, New: false });
+                      }
+                      setShowOnlyMyTasks(true);
+                    }}>
+                    {t('tasks.my_nvi_results')}
+                  </StyledSearchModeButton>
+                  <StyledSearchModeButton
+                    data-testid={dataTestId.tasksPage.searchMode.allTasksButton}
+                    isSelected={!showOnlyMyTasks}
+                    startIcon={!showOnlyMyTasks ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
+                    onClick={() => setShowOnlyMyTasks(false)}>
+                    {t('tasks.all_nvi_results')}
+                  </StyledSearchModeButton>
+                </StyledTicketSearchFormGroup>
 
                 <FormLabel component="legend" sx={{ fontWeight: 700 }}>
                   {t('tasks.status')}
@@ -531,11 +562,15 @@ const TasksPage = () => {
               title={t('tasks.correction_list')}
               startIcon={<RuleIcon sx={{ bgcolor: 'white' }} />}
               accordionPath={UrlPathTemplate.TasksNviCorrectionList}
-              dataTestId={dataTestId.tasksPage.correctionListAccordion}>
+              dataTestId={dataTestId.tasksPage.correctionList.correctionListAccordion}>
               <NavigationList>
-                <LinkButton isSelected={isOnCorrectionListPage} to={UrlPathTemplate.TasksNviCorrectionList}>
+                <StyledSearchModeButton
+                  sx={{ mx: '1rem', mb: '1rem' }}
+                  data-testid={dataTestId.tasksPage.correctionList.correctionListRadioButton}
+                  isSelected={isOnCorrectionListPage}
+                  startIcon={<RadioButtonCheckedIcon />}>
                   {t('tasks.correction_list')}
-                </LinkButton>
+                </StyledSearchModeButton>
               </NavigationList>
             </NavigationListAccordion>
           </>
