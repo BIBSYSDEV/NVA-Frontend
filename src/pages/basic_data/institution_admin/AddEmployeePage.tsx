@@ -97,7 +97,7 @@ export const AddEmployeePage = () => {
     if (personId && nationalId) {
       // Create NVA User with roles
       const createUserResponse = await createUser({
-        nationalIdentityNumber: values.user.nationalId,
+        nationalIdentityNumber: nationalId,
         customerId,
         roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
       });
