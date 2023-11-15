@@ -90,8 +90,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       newSequence - 1 > maxNewIndex
         ? maxNewIndex
         : newSequence < minNewIndex
-        ? minNewIndex
-        : contributors.findIndex((c) => c.sequence === newSequence);
+          ? minNewIndex
+          : contributors.findIndex((c) => c.sequence === newSequence);
 
     const orderedContributors =
       newIndex >= 0 ? (move(contributors, oldIndex, newIndex) as Contributor[]) : contributors;

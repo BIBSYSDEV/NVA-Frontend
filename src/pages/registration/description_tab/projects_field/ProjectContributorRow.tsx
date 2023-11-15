@@ -111,8 +111,8 @@ export const ProjectContributorRow = ({
               field.value === 'ProjectManager'
                 ? t('project.project_manager')
                 : field.value === 'ProjectParticipant'
-                ? t('project.project_participant')
-                : ''
+                  ? t('project.project_participant')
+                  : ''
             }
             disabled
             label={t('common.role')}

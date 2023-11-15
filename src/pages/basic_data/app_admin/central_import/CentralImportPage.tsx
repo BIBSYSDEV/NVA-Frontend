@@ -31,8 +31,8 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
   const queryValue: ImportCandidateStatus = statusFilter.NOT_IMPORTED
     ? 'NOT_IMPORTED'
     : statusFilter.IMPORTED
-    ? 'IMPORTED'
-    : 'NOT_APPLICABLE';
+      ? 'IMPORTED'
+      : 'NOT_APPLICABLE';
   const query = `importStatus.candidateStatus:${queryValue} AND publicationYear:${yearFilter}`;
 
   const importCandidateQuery = useQuery({

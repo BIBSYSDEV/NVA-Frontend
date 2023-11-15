@@ -9,14 +9,9 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 interface NviApprovalStatusesProps {
   approvalStatuses: ApprovalStatus[];
   totalPoints: number;
-  undistributedPoints: number;
 }
 
-export const NviApprovalStatuses = ({
-  approvalStatuses,
-  totalPoints,
-  undistributedPoints,
-}: NviApprovalStatusesProps) => {
+export const NviApprovalStatuses = ({ approvalStatuses, totalPoints }: NviApprovalStatusesProps) => {
   const { t } = useTranslation();
 
   return (
@@ -45,14 +40,6 @@ export const NviApprovalStatuses = ({
           {approvalStatuses.map((approvalStatus) => (
             <InstitutionApprovalStatusRow key={approvalStatus.institutionId} approvalStatus={approvalStatus} />
           ))}
-          {undistributedPoints > 0 && (
-            <>
-              <Typography sx={{ gridColumn: '2/3', whiteSpace: 'nowrap' }}>
-                {t('tasks.nvi.undistributed_points')}
-              </Typography>
-              <PublicationPointsTypography sx={{ gridColumn: '3/4' }} points={undistributedPoints} />
-            </>
-          )}
         </Paper>
       )}
     </Box>

@@ -23,6 +23,7 @@ export enum LocalStorageKey {
   AppUpdateTime = 'appUpdateTime',
   AmplifyRedirect = 'amplify-redirected-from-hosted-ui',
   Beta = 'beta',
+  EnvironmentBanner = 'environmentBanner',
   ExpiredToken = 'expiredToken',
   ShowTagline = 'showTagline',
   RedirectPath = 'redirect-path',
