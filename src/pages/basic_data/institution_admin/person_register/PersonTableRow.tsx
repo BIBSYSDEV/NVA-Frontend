@@ -167,8 +167,8 @@ export const PersonTableRow = ({
       }
     } else {
       if (!cristinPerson.verified && isSuccessStatus(updateCristinPerson.status)) {
-        dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' })) &&
-          toggleDialog();
+        dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' }));
+        toggleDialog();
       } else {
         dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
       }

@@ -168,7 +168,7 @@ export const emptyEmployment: Employment = {
   fullTimeEquivalentPercentage: '',
 };
 
-export interface NviVerification {
+interface NviVerification {
   verifiedAt: {
     id: string;
   };
