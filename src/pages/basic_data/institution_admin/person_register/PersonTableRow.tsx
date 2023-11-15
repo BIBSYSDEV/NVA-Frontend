@@ -166,10 +166,12 @@ export const PersonTableRow = ({
         dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
       }
     } else {
-      !cristinPerson.verified && isSuccessStatus(updateCristinPerson.status)
-        ? dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' })) &&
-          toggleDialog()
-        : dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
+      if (!cristinPerson.verified && isSuccessStatus(updateCristinPerson.status)) {
+        dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' })) &&
+          toggleDialog();
+      } else {
+        dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
+      }
     }
   };
 
@@ -386,9 +388,10 @@ export const PersonTableRow = ({
 
                         <Box sx={{ mt: '1rem' }} data-testid={dataTestId.basicData.personAdmin.roleSelector}>
                           <UserRolesSelector
+                            personHasNin={!!cristinPerson.verified}
                             selectedRoles={values.roles}
                             updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                            disabled={isSubmitting || !!cristinPerson.nvi?.verifiedAt}
+                            disabled={isSubmitting}
                             canAddInternalRoles
                           />
                         </Box>
