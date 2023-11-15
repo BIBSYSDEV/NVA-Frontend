@@ -28,7 +28,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
 
-  const offsetNextCandidate = location.state?.offsetNextCandidate;
+  const offsetCandidate = location.state?.offsetCandidate;
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -56,20 +56,19 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
 
   const periodStatus = nviCandidate?.periodStatus.status;
 
-  const nextCandidateQuery = useQuery({
-    queryKey: ['nextCandidate', 1, offsetNextCandidate, nviListQuery],
-    queryFn: offsetNextCandidate ? () => fetchNviCandidates(1, offsetNextCandidate, nviListQuery) : undefined,
+  const navigateCandidateQuery = useQuery({
+    queryKey: ['nextCandidate', 1, offsetCandidate, nviListQuery],
+    queryFn: offsetCandidate ? () => fetchNviCandidates(3, offsetCandidate - 2, nviListQuery) : undefined,
     meta: { errorMessage: false },
     retry: false,
   });
 
-  const nextCandidateIdentifier = nextCandidateQuery.data?.hits[0]?.identifier;
+  const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[2]?.identifier;
+  const previousCandidateIdentifier = navigateCandidateQuery.data?.hits[0]?.identifier;
 
-  const offsetNextCandidateState: CandidateOffsetState | undefined = offsetNextCandidate
-    ? {
-        offsetNextCandidate: offsetNextCandidate + 1,
-      }
-    : undefined;
+  console.log('prev:' + previousCandidateIdentifier);
+  console.log('current:' + identifier);
+  console.log('next:' + nextCandidateIdentifier);
 
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
@@ -89,34 +88,43 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
 
-            <IconButton
-              component={Link}
-              to={''}
-              data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
-              title={t('tasks.nvi.previous_candidate')}
-              size="small"
-              sx={{
-                display: { xs: 'none', sm: 'flex' },
-                gridArea: 'registration',
-                alignSelf: 'center',
-                justifySelf: 'start',
-                left: '-1rem',
-                border: '1px solid',
-                borderColor: 'info.main',
-                bgcolor: 'white',
-                '&:hover': {
+            {previousCandidateIdentifier && offsetCandidate && (
+              <IconButton
+                component={Link}
+                to={{
+                  pathname: getNviCandidatePath(previousCandidateIdentifier),
+                  state: {
+                    offsetCandidate: Math.max(0, offsetCandidate) ? offsetCandidate - 1 : offsetCandidate,
+                  },
+                }}
+                data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
+                title={t('tasks.nvi.previous_candidate')}
+                size="small"
+                sx={{
+                  display: { xs: 'none', sm: 'flex' },
+                  gridArea: 'registration',
+                  alignSelf: 'center',
+                  justifySelf: 'start',
+                  left: '-1rem',
+                  border: '1px solid',
+                  borderColor: 'info.main',
                   bgcolor: 'white',
-                },
-              }}>
-              <ArrowBackIosNewIcon fontSize="small" color="info" />
-            </IconButton>
+                  '&:hover': {
+                    bgcolor: 'white',
+                  },
+                }}>
+                <ArrowBackIosNewIcon fontSize="small" color="info" />
+              </IconButton>
+            )}
 
-            {nextCandidateIdentifier && offsetNextCandidate && (
+            {nextCandidateIdentifier && offsetCandidate && (
               <IconButton
                 component={Link}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
-                  state: offsetNextCandidateState,
+                  state: {
+                    offsetCandidate: offsetCandidate ? offsetCandidate + 1 : undefined,
+                  },
                 }}
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                 title={t('tasks.nvi.next_candidate')}
