@@ -137,7 +137,6 @@
     "actions": "Handlinger",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
-    "back": "Tilbake",
     "cancel": "Avbryt",
     "category": "Kategori",
     "clear": "Fjern",
@@ -226,6 +225,7 @@
     "start_date": "Startdato",
     "start_page": "Startside",
     "tasks": "Oppgaver",
+    "test_environment": "Testmiljø",
     "title": "Tittel",
     "today": "I dag",
     "type": "Type",
@@ -1174,6 +1174,11 @@
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
     "new_registration": "Nytt resultat",
+    "nvi_warning": {
+      "continue_editing_registration": "Vil du fortsatt redigere publikasjonen?",
+      "registration_is_included_in_nvi": "Publikasjonen er en del av Norsk Vitenskapsindeks (NVI)",
+      "reset_nvi_warning": "Om du endrer årstall, bidragsyteres tilknytning(-er) til institusjon(-er), kategori, eller publiseringskanal, så må kurator ved alle medvirkende institusjoner NVI-godkjenne publikasjonen på nytt."
+    },
     "public_page": {
       "about_registration": "Om resultatet",
       "approve_publish_request": "Publiser fil med lisens",
@@ -1633,8 +1638,9 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "reports": {
-      "nvi_all_institutions_description": "Nasjonalt, internasjonalt og uten samarbeid",
-      "nvi_all_institutions_title": "NVI: resultat, publiseringsindeks og bidragsyter andel per institusjon",
+      "clinical_treatment_studies": "Kliniske behandlingsstudier",
+      "external_reports": "Rapport generert fra ekstern løsning",
+      "international_cooperation": "Internasjonalt samarbeid",
       "reports": "Rapporter"
     },
     "result": "Resultat",
