@@ -132,7 +132,7 @@ export const PersonTableRow = ({
       method: 'PATCH',
       data: updatedPerson,
     });
-    if (isSuccessStatus(updateCristinPerson.status)) {
+    if (isSuccessStatus(updateCristinPerson.status) && cristinPerson.verified === true) {
       // Update NVA User
       const filteredRoles = !values.roles.includes(RoleName.Curator)
         ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
@@ -166,7 +166,10 @@ export const PersonTableRow = ({
         dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
       }
     } else {
-      dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
+      !cristinPerson.verified && isSuccessStatus(updateCristinPerson.status)
+        ? dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' })) &&
+          toggleDialog()
+        : dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
     }
   };
 
