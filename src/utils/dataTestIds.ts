@@ -137,6 +137,7 @@ export const dataTestId = {
     orderBySelect: 'order-by-select',
     personSearchButton: 'person-search-button',
     projectSearchButton: 'project-search-button',
+    reportsClinicalTreatmentStudiesButton: 'reports-clinical-treatment-studies-button',
     reportsInternationalWorkButton: 'reports-international-work-button',
     reportsNviButton: 'reports-nvi-button',
     reportsOverviewButton: 'reports-overview-button',

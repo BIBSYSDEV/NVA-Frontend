@@ -24,6 +24,7 @@ import {
   createSearchConfigFromSearchParams,
 } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { ClinicalTreatmentStudiesReports } from '../reports/ClinicalTreatmentStudiesReports';
 import { InternationalCooperationReports } from '../reports/InternationalCooperationReports';
 import { NviReports } from '../reports/NviReports';
 import ReportsPage from '../reports/ReportsPage';
@@ -170,6 +171,12 @@ const HomePage = () => {
                     to={UrlPathTemplate.ReportsInternationalCooperation}>
                     {t('search.reports.international_cooperation')}
                   </LinkButton>
+                  <LinkButton
+                    data-testid={dataTestId.startPage.reportsClinicalTreatmentStudiesButton}
+                    isSelected={currentPath === UrlPathTemplate.ReportsClinicalTreatmentStudies}
+                    to={UrlPathTemplate.ReportsClinicalTreatmentStudies}>
+                    {t('search.reports.clinical_treatment_studies')}
+                  </LinkButton>
                 </NavigationList>
               </NavigationListAccordion>
             </SideMenu>
@@ -189,6 +196,11 @@ const HomePage = () => {
                   exact
                   path={UrlPathTemplate.ReportsInternationalCooperation}
                   component={InternationalCooperationReports}
+                />
+                <Route
+                  exact
+                  path={UrlPathTemplate.ReportsClinicalTreatmentStudies}
+                  component={ClinicalTreatmentStudiesReports}
                 />
               </ErrorBoundary>
             </Switch>

@@ -44,6 +44,7 @@ export const AppRoutes = () => {
             UrlPathTemplate.Reports,
             UrlPathTemplate.ReportsNvi,
             UrlPathTemplate.ReportsInternationalCooperation,
+            UrlPathTemplate.ReportsClinicalTreatmentStudies,
           ]}
           component={Dashboard}
         />
