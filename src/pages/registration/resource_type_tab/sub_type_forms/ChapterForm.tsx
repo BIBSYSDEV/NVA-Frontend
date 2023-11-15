@@ -34,10 +34,10 @@ export const ChapterForm = () => {
             {anthologyChapterTypes.includes(instanceType)
               ? t('registration.resource_type.chapter.info_anthology')
               : instanceType === ChapterType.ConferenceAbstract
-              ? t('registration.resource_type.chapter.info_book_of_abstracts')
-              : instanceType === ChapterType.ReportChapter
-              ? t('registration.resource_type.chapter.info_report')
-              : null}
+                ? t('registration.resource_type.chapter.info_book_of_abstracts')
+                : instanceType === ChapterType.ReportChapter
+                  ? t('registration.resource_type.chapter.info_report')
+                  : null}
           </Typography>
         </Box>
 

@@ -58,7 +58,6 @@ export const deleteCandidateNote = async (candidateId: string, noteIdentifier: s
 export const fetchNviPeriods = async () => {
   const fetchNviPeriodsResponse = await authenticatedApiRequest2<NviPeriodResponse>({
     url: ScientificIndexApiPath.Period,
-    method: 'GET',
   });
 
   return fetchNviPeriodsResponse.data;
@@ -82,4 +81,12 @@ export const updateNviPeriod = async (data: NviPeriod) => {
   });
 
   return updateNviPeriodResponse.data;
+};
+
+export const fetchNviCandidateForRegistration = async (registrationId: string) => {
+  const fetchNviCandidateForRegistrationResponse = await authenticatedApiRequest2<NviCandidate>({
+    url: `${ScientificIndexApiPath.CandidateForRegistration}/${encodeURIComponent(registrationId)}`,
+  });
+
+  return fetchNviCandidateForRegistrationResponse.data;
 };
