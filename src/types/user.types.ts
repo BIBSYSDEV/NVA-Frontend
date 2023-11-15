@@ -120,7 +120,7 @@ export interface CristinPerson extends CreateCristinPerson {
     no?: string;
     en?: string;
   };
-  keywords: Keywords[];
+  keywords?: Keywords[];
 }
 
 interface PersonAggregationValue {
@@ -150,7 +150,7 @@ export interface FlatCristinPerson {
     no?: string | null;
     en?: string | null;
   };
-  keywords: Keywords[];
+  keywords?: Keywords[];
   nvi?: NviVerification;
 }
 

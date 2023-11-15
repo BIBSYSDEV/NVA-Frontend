@@ -125,13 +125,14 @@ export const PersonTableRow = ({
     const updatedPerson: CristinPerson = {
       ...cristinPerson,
       employments: values.employments,
+      keywords: cristinPerson.verified ? cristinPerson.keywords : undefined,
     };
     const updateCristinPerson = await authenticatedApiRequest({
       url: cristinPerson.id,
       method: 'PATCH',
       data: updatedPerson,
     });
-    if (isSuccessStatus(updateCristinPerson.status)) {
+    if (isSuccessStatus(updateCristinPerson.status) && cristinPerson.verified) {
       // Update NVA User
       const filteredRoles = !values.roles.includes(RoleName.Curator)
         ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
@@ -165,7 +166,10 @@ export const PersonTableRow = ({
         dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
       }
     } else {
-      dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
+      !cristinPerson.verified && isSuccessStatus(updateCristinPerson.status)
+        ? dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' })) &&
+          toggleDialog()
+        : dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
     }
   };
 
@@ -384,7 +388,7 @@ export const PersonTableRow = ({
                           <UserRolesSelector
                             selectedRoles={values.roles}
                             updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                            disabled={isSubmitting}
+                            disabled={isSubmitting || !!cristinPerson.nvi?.verifiedAt}
                             canAddInternalRoles
                           />
                         </Box>
