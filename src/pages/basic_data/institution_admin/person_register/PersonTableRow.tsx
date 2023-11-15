@@ -132,7 +132,7 @@ export const PersonTableRow = ({
       method: 'PATCH',
       data: updatedPerson,
     });
-    if (isSuccessStatus(updateCristinPerson.status) && cristinPerson.verified === true) {
+    if (isSuccessStatus(updateCristinPerson.status) && cristinPerson.verified) {
       // Update NVA User
       const filteredRoles = !values.roles.includes(RoleName.Curator)
         ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
