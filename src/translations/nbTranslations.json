@@ -1669,6 +1669,7 @@
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Merknad",
       "publication_points": "Publiseringspoeng",
+      "previous_candidate": "Gå til forrige kandidat",
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvisning av resultatet.",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",

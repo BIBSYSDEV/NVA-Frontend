@@ -1,3 +1,4 @@
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Box, Divider, IconButton, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
@@ -87,6 +88,28 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
         <ErrorBoundary>
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
+
+            <IconButton
+              component={Link}
+              to={''}
+              data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
+              title={t('tasks.nvi.previous_candidate')}
+              size="small"
+              sx={{
+                display: { xs: 'none', sm: 'flex' },
+                gridArea: 'registration',
+                alignSelf: 'center',
+                justifySelf: 'start',
+                left: '-1rem',
+                border: '1px solid',
+                borderColor: 'info.main',
+                bgcolor: 'white',
+                '&:hover': {
+                  bgcolor: 'white',
+                },
+              }}>
+              <ArrowBackIosNewIcon fontSize="small" color="info" />
+            </IconButton>
 
             {nextCandidateIdentifier && offsetNextCandidate && (
               <IconButton
