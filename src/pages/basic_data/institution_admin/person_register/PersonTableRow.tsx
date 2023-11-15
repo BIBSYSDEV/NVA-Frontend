@@ -132,46 +132,46 @@ export const PersonTableRow = ({
       method: 'PATCH',
       data: updatedPerson,
     });
-    if (isSuccessStatus(updateCristinPerson.status) && cristinPerson.verified) {
-      // Update NVA User
-      const filteredRoles = !values.roles.includes(RoleName.Curator)
-        ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
-        : values.roles;
+    if (isSuccessStatus(updateCristinPerson.status)) {
+      if (cristinPerson.verified) {
+        // Update NVA User
+        const filteredRoles = !values.roles.includes(RoleName.Curator)
+          ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
+          : values.roles;
 
-      let updateUserResponse;
-      if (institutionUser) {
-        const updatedInstitutionUser: InstitutionUser = {
-          ...institutionUser,
-          roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
-        };
+        let updateUserResponse;
+        if (institutionUser) {
+          const updatedInstitutionUser: InstitutionUser = {
+            ...institutionUser,
+            roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
+          };
 
-        updateUserResponse = await authenticatedApiRequest<null>({
-          url: `${RoleApiPath.Users}/${username}`,
-          method: 'PUT',
-          data: updatedInstitutionUser,
-        });
+          updateUserResponse = await authenticatedApiRequest<null>({
+            url: `${RoleApiPath.Users}/${username}`,
+            method: 'PUT',
+            data: updatedInstitutionUser,
+          });
+        } else {
+          updateUserResponse = await createUser({
+            nationalIdentityNumber: nationalId,
+            customerId,
+            roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
+          });
+        }
+        if (isSuccessStatus(updateUserResponse.status)) {
+          await institutionUserQuery.refetch();
+          await positionsQuery.refetch();
+          toggleDialog();
+          dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
+        } else if (isErrorStatus(updateUserResponse.status)) {
+          dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
+        }
       } else {
-        updateUserResponse = await createUser({
-          nationalIdentityNumber: nationalId,
-          customerId,
-          roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
-        });
-      }
-      if (isSuccessStatus(updateUserResponse.status)) {
-        await institutionUserQuery.refetch();
-        await positionsQuery.refetch();
-        toggleDialog();
-        dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
-      } else if (isErrorStatus(updateUserResponse.status)) {
-        dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
-      }
-    } else {
-      if (!cristinPerson.verified && isSuccessStatus(updateCristinPerson.status)) {
         dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' }));
         toggleDialog();
-      } else {
-        dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
       }
+    } else {
+      dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
     }
   };
 
