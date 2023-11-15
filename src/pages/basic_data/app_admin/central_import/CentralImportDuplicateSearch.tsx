@@ -28,11 +28,12 @@ export const CentralImportDuplicateSearch = ({
   const offset = rowsPerPage * (page - 1);
   const searchConfig: FetchResultsQuery = {
     doi: duplicateSearchFilters.doi,
-    contributor: duplicateSearchFilters.author,
+    contributorShould: duplicateSearchFilters.author,
     issn: duplicateSearchFilters.issn,
     publicationYear: duplicateSearchFilters.yearPublished,
     title: duplicateSearchFilters.title,
   };
+
   const duplicateCandidatesQuery = useQuery({
     queryKey: ['registrations', rowsPerPage, offset, searchConfig],
     queryFn: () => fetchResults(rowsPerPage, offset, searchConfig),

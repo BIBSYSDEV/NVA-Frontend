@@ -87,6 +87,7 @@ export interface FetchResultsQuery {
   categoryNot?: PublicationInstanceType;
   categorySome?: PublicationInstanceType[];
   contributor?: string;
+  contributorShould?: string;
   doi?: string;
   identifier?: string;
   identifierNot?: string;
@@ -105,6 +106,7 @@ export const fetchResults = async (
     categoryNot,
     categorySome,
     contributor,
+    contributorShould,
     doi,
     identifier,
     identifierNot,
@@ -124,10 +126,13 @@ export const fetchResults = async (
     fullQuery += `&category_not=${categoryNot}`;
   }
   if (categorySome) {
-    fullQuery += `&category_should=${categorySome.join(' ')}`;
+    fullQuery += `&category_should=${categorySome.join(',')}`;
   }
   if (contributor) {
     fullQuery += `&contributor=${contributor}`;
+  }
+  if (contributorShould) {
+    fullQuery += `&contributor_should=${contributorShould}`;
   }
   if (doi) {
     fullQuery += `&doi=${doi}`;
