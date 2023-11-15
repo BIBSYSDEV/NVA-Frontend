@@ -138,9 +138,10 @@ export const AddEmployeePage = () => {
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <AddAffiliationPanel />
                 <UserRolesSelector
+                  personHasNin={!values.user.nvi?.verifiedAt.id}
                   selectedRoles={values.roles}
                   updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                  disabled={isSubmitting || !!errors.user || !!errors.affiliation || !values.user.nationalId}
+                  disabled={isSubmitting || !!errors.user || !!errors.affiliation}
                 />
               </Box>
             </Box>

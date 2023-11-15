@@ -122,6 +122,7 @@
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
       "hide_full_nin": "Skjul personnummer",
       "national_identity_number": "Fødselsnummer",
+      "no_eligable_roles": "Personer uten fødselsnummer kan ikke ha roller",
       "no_employees_found": "Ingen ansatte funnet",
       "other_employments": "Andre aktive ansettelser",
       "person_id": "PersonID",
