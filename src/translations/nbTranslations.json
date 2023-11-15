@@ -34,6 +34,7 @@
   "basic_data": {
     "add_employee": {
       "add_employee": "Legg til ansatt",
+      "confirmed_identity": "Institusjonen bekrefter personens identitet. Gjelder personer uten fødselsnummer.",
       "create_person": "Opprett person",
       "name_or_nin": "Navn eller fødselsnummer",
       "new_search": "Nytt søk",
@@ -121,6 +122,7 @@
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
       "hide_full_nin": "Skjul personnummer",
       "national_identity_number": "Fødselsnummer",
+      "no_eligable_roles": "Personer uten fødselsnummer kan ikke ha roller",
       "no_employees_found": "Ingen ansatte funnet",
       "other_employments": "Andre aktive ansettelser",
       "person_id": "PersonID",
@@ -473,6 +475,7 @@
       "create_journal": "Tidsskriften ble opprettet",
       "create_note": "Merknaden ble lagret",
       "create_nvi_period": "NVI-periode ble opprettet",
+      "create_person": "Person ble opprettet",
       "create_project": "Prosjekt er opprettet",
       "create_publisher": "Utigveren ble opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
