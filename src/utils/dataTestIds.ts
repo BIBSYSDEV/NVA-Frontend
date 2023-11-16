@@ -144,6 +144,7 @@ export const dataTestId = {
     reportsNviButton: 'reports-nvi-button',
     reportsOverviewButton: 'reports-overview-button',
     reportsAccordion: 'reports-accordion',
+    responsibleFacets: 'responsible-facets',
     resultSearchButton: 'result-search-button',
     readMoreButton: 'button-read-more',
     searchButton: 'search-button',

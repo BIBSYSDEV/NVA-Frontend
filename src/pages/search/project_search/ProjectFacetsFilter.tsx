@@ -16,6 +16,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const sectorFacet = projectQuery.data?.aggregations?.sectorFacet;
   const coordinatingFacet = projectQuery.data?.aggregations?.coordinatingFacet;
   const healthProjectFacet = projectQuery.data?.aggregations?.healthProjectFacet;
+  const responsibleFacet = projectQuery.data?.aggregations?.responsibleFacet;
 
   const searchParams = new URLSearchParams(history.location.search);
   const currentSearchType = searchParams.get(SearchParam.Type);
@@ -23,6 +24,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const selectedCoordinating = searchParams.get(ProjectSearchParameter.CoordinatingFacet)?.split(',') ?? [];
   const selectedSectors = searchParams.get(ProjectSearchParameter.SectorFacet)?.split(',') ?? [];
   const selectedHealthProject = searchParams.get(ProjectSearchParameter.HealthProjectFacet)?.split(',') ?? [];
+  const selectedResponsible = searchParams.get(ProjectSearchParameter.ResponsibleFacet)?.split(',') ?? [];
 
   const addFacetFilter = (id: string) => {
     const searchParameters = new URL(id).searchParams;
@@ -108,6 +110,30 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeSectorFacetFilter(ProjectSearchParameter.HealthProjectFacet, facet.key)
+                    : addFacetFilter(facet.id)
+                }
+              />
+            );
+          })}
+        </FacetItem>
+      )}
+
+      {responsibleFacet && responsibleFacet?.length > 0 && (
+        <FacetItem title={t('search.responsible_institution')} dataTestId={dataTestId.startPage.responsibleFacets}>
+          {responsibleFacet.map((facet) => {
+            const isSelected = selectedResponsible.includes(facet.key);
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={projectQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeSectorFacetFilter(ProjectSearchParameter.ResponsibleFacet, facet.key)
                     : addFacetFilter(facet.id)
                 }
               />
