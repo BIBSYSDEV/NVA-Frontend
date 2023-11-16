@@ -142,18 +142,17 @@ export const searchForPerson = async (
 };
 
 export interface ProjectsSearchParams {
-  categoryFacet?: string;
-  coordinatingFacet?: string;
-  creator?: string;
-  fundingSourceFacet?: string;
-  healthProjectFacet?: string;
-  organizationFacet?: string;
-  participant?: string;
-  participantFacet?: string;
-  participantOrgFacet?: string;
-  responsibleFacet?: string;
-  sectorFacet?: string;
-  query?: string;
+  categoryFacet?: string | null;
+  coordinatingFacet?: string | null;
+  creator?: string | null;
+  fundingSourceFacet?: string | null;
+  healthProjectFacet?: string | null;
+  participant?: string | null;
+  participantFacet?: string | null;
+  participantOrgFacet?: string | null;
+  responsibleFacet?: string | null;
+  sectorFacet?: string | null;
+  query?: string | null;
 }
 
 export enum ProjectSearchParameter {

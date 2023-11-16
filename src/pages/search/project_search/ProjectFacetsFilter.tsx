@@ -45,34 +45,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
 
   return (
     <>
-      {/* TODO: Category */}
-      {/* TODO: Add funding source */}
-      {/* TODO: Participant */}
-
-      {sectorFacet && sectorFacet?.length > 0 && (
-        <FacetItem title={t('search.sector')} dataTestId={dataTestId.startPage.sectorFacets}>
-          {sectorFacet.map((facet) => {
-            const isSelected = selectedSectors.includes(facet.key);
-            return (
-              <FacetListItem
-                key={facet.key}
-                identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
-                isLoading={projectQuery.isLoading}
-                isSelected={isSelected}
-                label={getLanguageString(facet.labels)}
-                count={facet.count}
-                onClickFacet={() =>
-                  isSelected
-                    ? removeSectorFacetFilter(ProjectSearchParameter.SectorFacet, facet.key)
-                    : addFacetFilter(facet.id)
-                }
-              />
-            );
-          })}
-        </FacetItem>
-      )}
-
       {coordinatingFacet && coordinatingFacet?.length > 0 && (
         <FacetItem title={t('project.coordinating_institution')} dataTestId={dataTestId.startPage.coordinatingFacets}>
           {coordinatingFacet.map((facet) => {
@@ -89,30 +61,6 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeSectorFacetFilter(ProjectSearchParameter.CoordinatingFacet, facet.key)
-                    : addFacetFilter(facet.id)
-                }
-              />
-            );
-          })}
-        </FacetItem>
-      )}
-
-      {healthProjectFacet && healthProjectFacet?.length > 0 && (
-        <FacetItem title={t('search.health_project_type')} dataTestId={dataTestId.startPage.healthProjectFacets}>
-          {healthProjectFacet.map((facet) => {
-            const isSelected = selectedHealthProject.includes(facet.key);
-            return (
-              <FacetListItem
-                key={facet.key}
-                identifier={facet.key}
-                dataTestId={dataTestId.startPage.facetItem(facet.key)}
-                isLoading={projectQuery.isLoading}
-                isSelected={isSelected}
-                label={getLanguageString(facet.labels)}
-                count={facet.count}
-                onClickFacet={() =>
-                  isSelected
-                    ? removeSectorFacetFilter(ProjectSearchParameter.HealthProjectFacet, facet.key)
                     : addFacetFilter(facet.id)
                 }
               />
@@ -146,7 +94,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
       )}
 
       {participantOrgFacet && participantOrgFacet?.length > 0 && (
-        <FacetItem title={t('search.participating_institution')} dataTestId={dataTestId.startPage.responsibleFacets}>
+        <FacetItem title={t('search.participating_institution')} dataTestId={dataTestId.startPage.participantOrgFacets}>
           {participantOrgFacet.map((facet) => {
             const isSelected = selectedParticipantOrg.includes(facet.key);
             return (
@@ -168,6 +116,60 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
           })}
         </FacetItem>
       )}
+
+      {sectorFacet && sectorFacet?.length > 0 && (
+        <FacetItem title={t('search.sector')} dataTestId={dataTestId.startPage.sectorFacets}>
+          {sectorFacet.map((facet) => {
+            const isSelected = selectedSectors.includes(facet.key);
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={projectQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeSectorFacetFilter(ProjectSearchParameter.SectorFacet, facet.key)
+                    : addFacetFilter(facet.id)
+                }
+              />
+            );
+          })}
+        </FacetItem>
+      )}
+
+      {/* TODO: Category */}
+
+      {healthProjectFacet && healthProjectFacet?.length > 0 && (
+        <FacetItem title={t('search.health_project_type')} dataTestId={dataTestId.startPage.healthProjectFacets}>
+          {healthProjectFacet.map((facet) => {
+            const isSelected = selectedHealthProject.includes(facet.key);
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={projectQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeSectorFacetFilter(ProjectSearchParameter.HealthProjectFacet, facet.key)
+                    : addFacetFilter(facet.id)
+                }
+              />
+            );
+          })}
+        </FacetItem>
+      )}
+
+      {/* TODO: Participant */}
+
+      {/* TODO: Add funding source */}
     </>
   );
 };

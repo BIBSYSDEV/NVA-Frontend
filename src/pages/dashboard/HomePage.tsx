@@ -87,18 +87,19 @@ const HomePage = () => {
   });
 
   const projectQueryParams: ProjectsSearchParams = {
-    coordinatingFacet: requestParams.get(ProjectSearchParameter.CoordinatingFacet) ?? undefined,
-    categoryFacet: requestParams.get(ProjectSearchParameter.CategoryFacet) ?? undefined,
-    fundingSourceFacet: requestParams.get(ProjectSearchParameter.FundingSourceFacet) ?? undefined,
-    healthProjectFacet: requestParams.get(ProjectSearchParameter.HealthProjectFacet) ?? undefined,
-    participantFacet: requestParams.get(ProjectSearchParameter.ParticipantFacet) ?? undefined,
-    participantOrgFacet: requestParams.get(ProjectSearchParameter.ParticipantOrgFacet) ?? undefined,
-    responsibleFacet: requestParams.get(ProjectSearchParameter.ResponsibleFacet) ?? undefined,
-    sectorFacet: requestParams.get(ProjectSearchParameter.SectorFacet) ?? undefined,
-    query: requestParams.get(SearchParam.Query) ?? undefined,
+    coordinatingFacet: requestParams.get(ProjectSearchParameter.CoordinatingFacet),
+    categoryFacet: requestParams.get(ProjectSearchParameter.CategoryFacet),
+    fundingSourceFacet: requestParams.get(ProjectSearchParameter.FundingSourceFacet),
+    healthProjectFacet: requestParams.get(ProjectSearchParameter.HealthProjectFacet),
+    participantFacet: requestParams.get(ProjectSearchParameter.ParticipantFacet),
+    participantOrgFacet: requestParams.get(ProjectSearchParameter.ParticipantOrgFacet),
+    responsibleFacet: requestParams.get(ProjectSearchParameter.ResponsibleFacet),
+    sectorFacet: requestParams.get(ProjectSearchParameter.SectorFacet),
+    query: requestParams.get(SearchParam.Query),
   };
 
   const projectQuery = useQuery({
+    enabled: projectIsSelected,
     queryKey: ['projects', rowsPerPage, page, projectQueryParams],
     queryFn: () => searchForProjects(rowsPerPage, page, projectQueryParams),
     meta: { errorMessage: t('feedback.error.project_search') },
