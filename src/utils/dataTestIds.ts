@@ -131,6 +131,7 @@ export const dataTestId = {
       searchButton: 'search-button',
     },
     contributorFacets: 'contributor-facets',
+    coordinatingFacets: 'coordinating-facets',
     facetItem: (value: string) => `facet-item-${value}`,
     filterAccordion: 'filter-accordion',
     fundingFacets: 'funding-facets',
