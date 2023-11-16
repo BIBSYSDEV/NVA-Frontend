@@ -180,8 +180,8 @@ export const searchForProjects = async (results: number, page: number, params?: 
   if (page) {
     searchParams.set(ProjectSearchParameter.Page, page.toString());
   }
-  if (params?.coordinatingFacet) {
-    searchParams.set(ProjectSearchParameter.CategoryFacet, params.coordinatingFacet);
+  if (params?.categoryFacet) {
+    searchParams.set(ProjectSearchParameter.CategoryFacet, params.categoryFacet);
   }
   if (params?.coordinatingFacet) {
     searchParams.set(ProjectSearchParameter.CoordinatingFacet, params.coordinatingFacet);

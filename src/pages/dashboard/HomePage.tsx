@@ -1,7 +1,7 @@
 import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +37,7 @@ import { NviReports } from '../reports/NviReports';
 import ReportsPage from '../reports/ReportsPage';
 import SearchPage from '../search/SearchPage';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
+import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
 
 enum SearchTypeValue {
@@ -96,6 +97,7 @@ const HomePage = () => {
     sectorFacet: requestParams.get(ProjectSearchParameter.SectorFacet) ?? undefined,
     query: requestParams.get(SearchParam.Query) ?? undefined,
   };
+
   const projectQuery = useQuery({
     queryKey: ['projects', rowsPerPage, page, projectQueryParams],
     queryFn: () => searchForProjects(rowsPerPage, page, projectQueryParams),
@@ -166,7 +168,9 @@ const HomePage = () => {
                       <PersonFacetsFilter personQuery={personQuery} />
                     ) : null
                   ) : projectIsSelected ? (
-                    <Typography fontStyle="italic">{t('search.no_available_filters')}</Typography>
+                    projectQuery.data?.aggregations ? (
+                      <ProjectFacetsFilter projectQuery={projectQuery} />
+                    ) : null
                   ) : null}
                 </Box>
               </NavigationListAccordion>

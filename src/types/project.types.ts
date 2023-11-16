@@ -97,14 +97,14 @@ export interface CristinProject extends SaveCristinProject {
 }
 
 export interface ProjectAggregations {
-  [ProjectSearchParameter.CategoryFacet]?: CristinAggregationValue;
-  [ProjectSearchParameter.CoordinatingFacet]?: CristinAggregationValue;
-  [ProjectSearchParameter.FundingSourceFacet]?: CristinAggregationValue;
-  [ProjectSearchParameter.HealthProjectFacet]?: CristinAggregationValue;
-  [ProjectSearchParameter.ParticipantFacet]?: CristinAggregationValue;
-  [ProjectSearchParameter.ParticipantOrgFacet]?: CristinAggregationValue;
-  [ProjectSearchParameter.ResponsibleFacet]?: CristinAggregationValue;
-  [ProjectSearchParameter.SectorFacet]?: CristinAggregationValue;
+  [ProjectSearchParameter.CategoryFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.CoordinatingFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.FundingSourceFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.HealthProjectFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.ParticipantFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.ParticipantOrgFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.ResponsibleFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.SectorFacet]?: CristinAggregationValue[];
 }
 
 export interface FundingSource {
