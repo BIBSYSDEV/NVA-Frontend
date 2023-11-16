@@ -15,12 +15,14 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const history = useHistory();
   const sectorFacet = projectQuery.data?.aggregations?.sectorFacet;
   const coordinatingFacet = projectQuery.data?.aggregations?.coordinatingFacet;
+  const healthProjectFacet = projectQuery.data?.aggregations?.healthProjectFacet;
 
   const searchParams = new URLSearchParams(history.location.search);
   const currentSearchType = searchParams.get(SearchParam.Type);
 
   const selectedCoordinating = searchParams.get(ProjectSearchParameter.CoordinatingFacet)?.split(',') ?? [];
   const selectedSectors = searchParams.get(ProjectSearchParameter.SectorFacet)?.split(',') ?? [];
+  const selectedHealthProject = searchParams.get(ProjectSearchParameter.HealthProjectFacet)?.split(',') ?? [];
 
   const addFacetFilter = (id: string) => {
     const searchParameters = new URL(id).searchParams;
@@ -40,6 +42,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   return (
     <>
       {/* TODO: Category */}
+      {/* TODO: Add funding source */}
 
       {sectorFacet && sectorFacet?.length > 0 && (
         <FacetItem title={t('search.sector')} dataTestId={dataTestId.startPage.sectorFacets}>
@@ -81,6 +84,30 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeSectorFacetFilter(ProjectSearchParameter.CoordinatingFacet, facet.key)
+                    : addFacetFilter(facet.id)
+                }
+              />
+            );
+          })}
+        </FacetItem>
+      )}
+
+      {healthProjectFacet && healthProjectFacet?.length > 0 && (
+        <FacetItem title={t('search.health_project_type')} dataTestId={dataTestId.startPage.healthProjectFacets}>
+          {healthProjectFacet.map((facet) => {
+            const isSelected = selectedHealthProject.includes(facet.key);
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={projectQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeSectorFacetFilter(ProjectSearchParameter.HealthProjectFacet, facet.key)
                     : addFacetFilter(facet.id)
                 }
               />

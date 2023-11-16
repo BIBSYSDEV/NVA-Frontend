@@ -1626,6 +1626,7 @@
     "contains": "Inneholder",
     "export": "Eksporter",
     "field_label": "Felt",
+    "health_project_type": "Helseprosjekttype",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
     "not_containing": "Inneholder ikke",
