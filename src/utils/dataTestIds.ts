@@ -137,6 +137,7 @@ export const dataTestId = {
     fundingFacets: 'funding-facets',
     healthProjectFacets: 'health-project-facets',
     orderBySelect: 'order-by-select',
+    participantOrgFacets: 'participant-org-facets',
     personSearchButton: 'person-search-button',
     projectSearchButton: 'project-search-button',
     reportsClinicalTreatmentStudiesButton: 'reports-clinical-treatment-studies-button',

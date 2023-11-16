@@ -17,6 +17,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const coordinatingFacet = projectQuery.data?.aggregations?.coordinatingFacet;
   const healthProjectFacet = projectQuery.data?.aggregations?.healthProjectFacet;
   const responsibleFacet = projectQuery.data?.aggregations?.responsibleFacet;
+  const participantOrgFacet = projectQuery.data?.aggregations?.participantOrgFacet;
 
   const searchParams = new URLSearchParams(history.location.search);
   const currentSearchType = searchParams.get(SearchParam.Type);
@@ -25,6 +26,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const selectedSectors = searchParams.get(ProjectSearchParameter.SectorFacet)?.split(',') ?? [];
   const selectedHealthProject = searchParams.get(ProjectSearchParameter.HealthProjectFacet)?.split(',') ?? [];
   const selectedResponsible = searchParams.get(ProjectSearchParameter.ResponsibleFacet)?.split(',') ?? [];
+  const selectedParticipantOrg = searchParams.get(ProjectSearchParameter.ParticipantOrgFacet)?.split(',') ?? [];
 
   const addFacetFilter = (id: string) => {
     const searchParameters = new URL(id).searchParams;
@@ -45,6 +47,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
     <>
       {/* TODO: Category */}
       {/* TODO: Add funding source */}
+      {/* TODO: Participant */}
 
       {sectorFacet && sectorFacet?.length > 0 && (
         <FacetItem title={t('search.sector')} dataTestId={dataTestId.startPage.sectorFacets}>
@@ -134,6 +137,30 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeSectorFacetFilter(ProjectSearchParameter.ResponsibleFacet, facet.key)
+                    : addFacetFilter(facet.id)
+                }
+              />
+            );
+          })}
+        </FacetItem>
+      )}
+
+      {participantOrgFacet && participantOrgFacet?.length > 0 && (
+        <FacetItem title={t('search.participating_institution')} dataTestId={dataTestId.startPage.responsibleFacets}>
+          {participantOrgFacet.map((facet) => {
+            const isSelected = selectedParticipantOrg.includes(facet.key);
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={projectQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeSectorFacetFilter(ProjectSearchParameter.ParticipantOrgFacet, facet.key)
                     : addFacetFilter(facet.id)
                 }
               />
