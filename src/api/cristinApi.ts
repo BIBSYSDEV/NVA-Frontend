@@ -96,9 +96,9 @@ export const fetchPerson = async (personId: string) => {
 };
 
 export interface PersonSearchParams {
-  name?: string;
-  organization?: string;
-  sector?: string;
+  name?: string | null;
+  organization?: string | null;
+  sector?: string | null;
 }
 
 export enum PersonSearchParameter {

@@ -1,18 +1,14 @@
-import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { PersonSearchParameter } from '../../../api/cristinApi';
-import { SearchResponse } from '../../../types/common.types';
-import { CristinPerson, PersonAggregations } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
+import { SearchPageProps } from '../SearchPage';
 
-interface PersonFacetsFilterProps {
-  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
-}
+type PersonFacetsFilterProps = Pick<SearchPageProps, 'personQuery'>;
 
 export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => {
   const { t } = useTranslation();
@@ -28,23 +24,16 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
 
   const addFacetFilter = (id: string) => {
     const searchParameters = new URL(id).searchParams;
-
     const newSearchParams = new URLSearchParams(
       `${SearchParam.Type}=${currentSearchType}&${searchParameters.toString()}`
     );
-
     history.push({ search: newSearchParams.toString() });
   };
 
-  const removeOrganizationFacetFilter = (keyToRemove: string) => {
-    const newOrganizationsFilter = selectedOrganizations.filter((organization) => organization !== keyToRemove);
-    searchParams.set(PersonSearchParameter.Organization, newOrganizationsFilter.join(','));
-    history.push({ search: searchParams.toString() });
-  };
-
-  const removeSectorFacetFilter = (keyToRemove: string) => {
-    const newSectorFilter = selectedSectors.filter((sector) => sector !== keyToRemove);
-    searchParams.set(PersonSearchParameter.Sector, newSectorFilter.join(','));
+  const removeFacetFilter = (parameter: PersonSearchParameter, keyToRemove: string) => {
+    const selectedValues = searchParams.get(parameter)?.split(',') ?? [];
+    const newSectorFilter = selectedValues.filter((sector) => sector !== keyToRemove);
+    searchParams.set(parameter, newSectorFilter.join(','));
     history.push({ search: searchParams.toString() });
   };
 
@@ -63,7 +52,11 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
-                onClickFacet={() => (isSelected ? removeOrganizationFacetFilter(facet.key) : addFacetFilter(facet.id))}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter(PersonSearchParameter.Organization, facet.key)
+                    : addFacetFilter(facet.id)
+                }
               />
             );
           })}
@@ -83,7 +76,9 @@ export const PersonFacetsFilter = ({ personQuery }: PersonFacetsFilterProps) => 
                 isSelected={isSelected}
                 label={getLanguageString(facet.labels)}
                 count={facet.count}
-                onClickFacet={() => (isSelected ? removeSectorFacetFilter(facet.key) : addFacetFilter(facet.id))}
+                onClickFacet={() =>
+                  isSelected ? removeFacetFilter(PersonSearchParameter.Sector, facet.key) : addFacetFilter(facet.id)
+                }
               />
             );
           })}
