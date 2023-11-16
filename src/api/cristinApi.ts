@@ -142,29 +142,82 @@ export const searchForPerson = async (
 };
 
 interface ProjectsSearchParams {
-  query?: string;
+  categoryFacet?: string;
+  coordinatingFacet?: string;
   creator?: string;
+  fundingSourceFacet?: string;
+  healthProjectFacet?: string;
+  organizationFacet?: string;
   participant?: string;
+  participantFacet?: string;
+  participantOrgFacet?: string;
+  responsibleFacet?: string;
+  query?: string;
+}
+
+export enum ProjectSearchParameter {
+  CategoryFacet = 'categoryFacet',
+  CoordinatingFacet = 'coordinatingFacet',
+  Creator = 'creator',
+  FundingSourceFacet = 'fundingSourceFacet',
+  HealthProjectFacet = 'healthProjectFacet',
+  OrganizationFacet = 'organizationFacet',
+  Page = 'page',
+  Participant = 'participant',
+  ParticipantFacet = 'participantFacet',
+  ParticipantOrgFacet = 'participantOrgFacet',
+  ResponsibleFacet = 'responsibleFacet',
+  Results = 'results',
+  Query = 'query',
 }
 
 export const searchForProjects = async (results: number, page: number, params?: ProjectsSearchParams) => {
   const searchParams = new URLSearchParams();
-  if (params?.query) {
-    searchParams.set('query', params.query);
+  if (results) {
+    searchParams.set(ProjectSearchParameter.Results, results.toString());
   }
-  searchParams.set('results', results.toString());
-  searchParams.set('page', page.toString());
+  if (page) {
+    searchParams.set(ProjectSearchParameter.Page, page.toString());
+  }
+  if (params?.coordinatingFacet) {
+    searchParams.set(ProjectSearchParameter.CategoryFacet, params.coordinatingFacet);
+  }
+  if (params?.coordinatingFacet) {
+    searchParams.set(ProjectSearchParameter.CoordinatingFacet, params.coordinatingFacet);
+  }
   if (params?.creator) {
-    searchParams.set('creator', params.creator);
+    searchParams.set(ProjectSearchParameter.Creator, params.creator);
+  }
+  if (params?.fundingSourceFacet) {
+    searchParams.set(ProjectSearchParameter.FundingSourceFacet, params.fundingSourceFacet);
+  }
+  if (params?.healthProjectFacet) {
+    searchParams.set(ProjectSearchParameter.HealthProjectFacet, params.healthProjectFacet);
+  }
+  if (params?.organizationFacet) {
+    searchParams.set(ProjectSearchParameter.OrganizationFacet, params.organizationFacet);
   }
   if (params?.participant) {
-    searchParams.set('participant', params.participant);
+    searchParams.set(ProjectSearchParameter.Participant, params.participant);
+  }
+  if (params?.participantFacet) {
+    searchParams.set(ProjectSearchParameter.ParticipantFacet, params.participantFacet);
+  }
+  if (params?.participantOrgFacet) {
+    searchParams.set(ProjectSearchParameter.ParticipantOrgFacet, params.participantOrgFacet);
+  }
+  if (params?.responsibleFacet) {
+    searchParams.set(ProjectSearchParameter.ResponsibleFacet, params.responsibleFacet);
+  }
+  if (params?.query) {
+    searchParams.set(ProjectSearchParameter.Query, params.query);
   }
 
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';
 
   const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject>>({
+    headers: { Accept: 'application/json; version=2023-11-03' },
     url: `${CristinApiPath.Project}${queryParams}`,
   });
   return fetchProjectsResponse.data;
