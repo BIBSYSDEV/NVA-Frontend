@@ -1,7 +1,7 @@
 import { SearchResponse } from '../types/common.types';
 import { Keywords } from '../types/keywords.types';
 import { Organization } from '../types/organization.types';
-import { CristinProject, FundingSource, FundingSources } from '../types/project.types';
+import { CristinProject, FundingSource, FundingSources, ProjectAggegations } from '../types/project.types';
 import {
   CreateCristinPerson,
   CristinPerson,
@@ -152,6 +152,7 @@ interface ProjectsSearchParams {
   participantFacet?: string;
   participantOrgFacet?: string;
   responsibleFacet?: string;
+  sectorFacet?: string;
   query?: string;
 }
 
@@ -161,13 +162,13 @@ export enum ProjectSearchParameter {
   Creator = 'creator',
   FundingSourceFacet = 'fundingSourceFacet',
   HealthProjectFacet = 'healthProjectFacet',
-  OrganizationFacet = 'organizationFacet',
   Page = 'page',
   Participant = 'participant',
   ParticipantFacet = 'participantFacet',
   ParticipantOrgFacet = 'participantOrgFacet',
   ResponsibleFacet = 'responsibleFacet',
   Results = 'results',
+  SectorFacet = 'sectorFacet',
   Query = 'query',
 }
 
@@ -194,9 +195,6 @@ export const searchForProjects = async (results: number, page: number, params?: 
   if (params?.healthProjectFacet) {
     searchParams.set(ProjectSearchParameter.HealthProjectFacet, params.healthProjectFacet);
   }
-  if (params?.organizationFacet) {
-    searchParams.set(ProjectSearchParameter.OrganizationFacet, params.organizationFacet);
-  }
   if (params?.participant) {
     searchParams.set(ProjectSearchParameter.Participant, params.participant);
   }
@@ -209,6 +207,9 @@ export const searchForProjects = async (results: number, page: number, params?: 
   if (params?.responsibleFacet) {
     searchParams.set(ProjectSearchParameter.ResponsibleFacet, params.responsibleFacet);
   }
+  if (params?.sectorFacet) {
+    searchParams.set(ProjectSearchParameter.SectorFacet, params.sectorFacet);
+  }
   if (params?.query) {
     searchParams.set(ProjectSearchParameter.Query, params.query);
   }
@@ -216,7 +217,7 @@ export const searchForProjects = async (results: number, page: number, params?: 
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';
 
-  const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject>>({
+  const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject, ProjectAggegations>>({
     headers: { Accept: 'application/json; version=2023-11-03' },
     url: `${CristinApiPath.Project}${queryParams}`,
   });
