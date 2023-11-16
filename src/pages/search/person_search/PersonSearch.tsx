@@ -1,15 +1,11 @@
 import { Box, List, Typography } from '@mui/material';
-import { UseQueryResult } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { SearchResponse } from '../../../types/common.types';
-import { CristinPerson } from '../../../types/user.types';
 import { CristinSearchPagination } from '../CristinSearchPagination';
+import { SearchPageProps } from '../SearchPage';
 import { PersonListItem } from './PersonListItem';
 
-interface PersonSearchProps {
-  personQuery: UseQueryResult<SearchResponse<CristinPerson, unknown>>;
-}
+type PersonSearchProps = Pick<SearchPageProps, 'personQuery'>;
 
 export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
   const { t } = useTranslation();

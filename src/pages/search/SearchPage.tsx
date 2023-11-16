@@ -31,7 +31,7 @@ enum SearchTypeValue {
   Project = 'project',
 }
 
-interface SearchPageProps {
+export interface SearchPageProps {
   searchResults: SearchResponse<Registration, RegistrationAggregations> | undefined;
   personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
   isLoadingSearch: boolean;
