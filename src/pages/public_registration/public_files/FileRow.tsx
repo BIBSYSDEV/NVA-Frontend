@@ -160,7 +160,7 @@ export const FileRow = ({
             <Typography
               id={`preview-label-${file.identifier}`}
               data-testid={dataTestId.registrationLandingPage.filePreviewHeader}
-              sx={{ fontWeight: 500 }}>
+              sx={{ fontWeight: 500, lineBreak: 'anywhere' }}>
               {t('registration.public_page.preview_of', { fileName: file.name })}
             </Typography>
           </AccordionSummary>
