@@ -7,7 +7,14 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
-import { PersonSearchParameter, PersonSearchParams, searchForPerson } from '../../api/cristinApi';
+import {
+  PersonSearchParameter,
+  PersonSearchParams,
+  ProjectSearchParameter,
+  ProjectsSearchParams,
+  searchForPerson,
+  searchForProjects,
+} from '../../api/cristinApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -75,6 +82,24 @@ const HomePage = () => {
     queryKey: ['person', rowsPerPage, page, personQueryParams],
     queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
     meta: { errorMessage: t('feedback.error.search') },
+    keepPreviousData: true,
+  });
+
+  const projectQueryParams: ProjectsSearchParams = {
+    coordinatingFacet: requestParams.get(ProjectSearchParameter.CoordinatingFacet) ?? undefined,
+    categoryFacet: requestParams.get(ProjectSearchParameter.CategoryFacet) ?? undefined,
+    fundingSourceFacet: requestParams.get(ProjectSearchParameter.FundingSourceFacet) ?? undefined,
+    healthProjectFacet: requestParams.get(ProjectSearchParameter.HealthProjectFacet) ?? undefined,
+    participantFacet: requestParams.get(ProjectSearchParameter.ParticipantFacet) ?? undefined,
+    participantOrgFacet: requestParams.get(ProjectSearchParameter.ParticipantOrgFacet) ?? undefined,
+    responsibleFacet: requestParams.get(ProjectSearchParameter.ResponsibleFacet) ?? undefined,
+    sectorFacet: requestParams.get(ProjectSearchParameter.SectorFacet) ?? undefined,
+    query: requestParams.get(SearchParam.Query) ?? undefined,
+  };
+  const projectQuery = useQuery({
+    queryKey: ['projects', rowsPerPage, page, projectQueryParams],
+    queryFn: () => searchForProjects(rowsPerPage, page, projectQueryParams),
+    meta: { errorMessage: t('feedback.error.project_search') },
     keepPreviousData: true,
   });
 
@@ -188,6 +213,7 @@ const HomePage = () => {
                     searchResults={searchResults}
                     personQuery={personQuery}
                     isLoadingSearch={isLoadingSearch}
+                    projectQuery={projectQuery}
                   />
                 </Route>
                 <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />

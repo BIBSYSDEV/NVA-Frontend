@@ -96,7 +96,7 @@ export interface CristinProject extends SaveCristinProject {
   creator?: ProjectCreator;
 }
 
-export interface ProjectAggegations {
+export interface ProjectAggregations {
   [ProjectSearchParameter.CategoryFacet]?: CristinAggregationValue;
   [ProjectSearchParameter.CoordinatingFacet]?: CristinAggregationValue;
   [ProjectSearchParameter.FundingSourceFacet]?: CristinAggregationValue;

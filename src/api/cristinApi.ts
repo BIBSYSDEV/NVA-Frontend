@@ -1,7 +1,7 @@
 import { SearchResponse } from '../types/common.types';
 import { Keywords } from '../types/keywords.types';
 import { Organization } from '../types/organization.types';
-import { CristinProject, FundingSource, FundingSources, ProjectAggegations } from '../types/project.types';
+import { CristinProject, FundingSource, FundingSources, ProjectAggregations } from '../types/project.types';
 import {
   CreateCristinPerson,
   CristinPerson,
@@ -141,7 +141,7 @@ export const searchForPerson = async (
   return fetchPersonResponse.data;
 };
 
-interface ProjectsSearchParams {
+export interface ProjectsSearchParams {
   categoryFacet?: string;
   coordinatingFacet?: string;
   creator?: string;
@@ -217,7 +217,7 @@ export const searchForProjects = async (results: number, page: number, params?: 
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';
 
-  const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject, ProjectAggegations>>({
+  const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject, ProjectAggregations>>({
     headers: { Accept: 'application/json; version=2023-11-03' },
     url: `${CristinApiPath.Project}${queryParams}`,
   });
