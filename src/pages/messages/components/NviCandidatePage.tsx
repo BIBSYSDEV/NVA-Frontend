@@ -129,7 +129,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
                   state: {
-                    offsetCandidate: currentCandidateIndex ? currentCandidateIndex + 1 : undefined,
+                    offsetCandidate: currentCandidateIndex + 1,
                   },
                 }}
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
