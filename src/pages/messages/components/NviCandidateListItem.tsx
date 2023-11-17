@@ -13,10 +13,10 @@ import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlP
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
-  candidateIndex: number;
+  candidateOffset: number;
 }
 
-export const NviCandidateListItem = ({ nviCandidate, candidateIndex }: NviCandidateListItemProps) => {
+export const NviCandidateListItem = ({ nviCandidate, candidateOffset }: NviCandidateListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -34,8 +34,8 @@ export const NviCandidateListItem = ({ nviCandidate, candidateIndex }: NviCandid
 
   const myApproval = nviCandidate.approvals.find((approval) => approval.id === user?.topOrgCristinId);
 
-  const offsetCandidateState: CandidateOffsetState = {
-    offsetCandidate: candidateIndex,
+  const candidateOffsetState: CandidateOffsetState = {
+    candidateOffset: candidateOffset,
   };
 
   return (
@@ -57,7 +57,7 @@ export const NviCandidateListItem = ({ nviCandidate, candidateIndex }: NviCandid
             component={Link}
             to={{
               pathname: getNviCandidatePath(nviCandidate.identifier),
-              state: offsetCandidateState,
+              state: candidateOffsetState,
             }}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>

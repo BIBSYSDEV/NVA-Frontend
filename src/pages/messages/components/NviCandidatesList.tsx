@@ -48,10 +48,10 @@ export const NviCandidatesList = ({
             <>
               <List data-testid={dataTestId.tasksPage.nvi.candidatesList} disablePadding sx={{ mb: '0.5rem' }}>
                 {nviCandidatesQuery.data?.hits.map((nviCandidate, index) => {
-                  const candidateIndex = (page - 1) * rowsPerPage + (index + 1);
+                  const candidateOffset = (page - 1) * rowsPerPage + (index + 1);
                   return (
                     <ErrorBoundary key={nviCandidate.identifier}>
-                      <NviCandidateListItem nviCandidate={nviCandidate} candidateIndex={candidateIndex} />
+                      <NviCandidateListItem nviCandidate={nviCandidate} candidateOffset={candidateOffset} />
                     </ErrorBoundary>
                   );
                 })}

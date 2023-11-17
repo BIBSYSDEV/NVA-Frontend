@@ -28,8 +28,9 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
 
-  const currentCandidateIndex = location.state?.offsetCandidate;
-  const isFirstCandidate = currentCandidateIndex === 1;
+  const currentCandidateOffset = location.state?.candidateOffset;
+  const isFirstCandidate = currentCandidateOffset === 1;
+  const candidateOffset = currentCandidateOffset && currentCandidateOffset - (isFirstCandidate ? 0 : 2);
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -57,24 +58,16 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
 
   const periodStatus = nviCandidate?.periodStatus.status;
 
-  const navigateCandidatesQueryKey = [
-    'navigateCandidates',
-    3,
-    currentCandidateIndex && currentCandidateIndex - (isFirstCandidate ? 0 : 2),
-    nviListQuery,
-  ];
   const navigateCandidateQuery = useQuery({
-    queryKey: navigateCandidatesQueryKey,
-    queryFn: currentCandidateIndex
-      ? () => fetchNviCandidates(3, currentCandidateIndex - (isFirstCandidate ? 0 : 2), nviListQuery)
-      : undefined,
+    queryKey: ['navigateCandidates', 3, candidateOffset, nviListQuery],
+    queryFn: candidateOffset ? () => fetchNviCandidates(3, candidateOffset, nviListQuery) : undefined,
     meta: { errorMessage: false },
     retry: false,
   });
 
   const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[isFirstCandidate ? 0 : 2]?.identifier;
   const previousCandidateIdentifier =
-    currentCandidateIndex && currentCandidateIndex > 1 ? navigateCandidateQuery.data?.hits[0]?.identifier : undefined;
+    currentCandidateOffset && currentCandidateOffset > 1 ? navigateCandidateQuery.data?.hits[0]?.identifier : undefined;
 
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
@@ -94,20 +87,20 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
 
-            {previousCandidateIdentifier && currentCandidateIndex && (
+            {previousCandidateIdentifier && currentCandidateOffset && (
               <IconButton
                 component={Link}
                 to={{
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
                   state: {
-                    offsetCandidate: currentCandidateIndex - 1,
+                    offsetCandidate: currentCandidateOffset - 1,
                   },
                 }}
                 data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
                 title={t('tasks.nvi.previous_candidate')}
                 size="small"
                 sx={{
-                  display: { xs: 'none', sm: 'flex' },
+                  display: { xs: 'none', md: 'flex' },
                   gridArea: 'registration',
                   alignSelf: 'center',
                   justifySelf: 'start',
@@ -123,20 +116,20 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
               </IconButton>
             )}
 
-            {nextCandidateIdentifier && currentCandidateIndex && (
+            {nextCandidateIdentifier && currentCandidateOffset && (
               <IconButton
                 component={Link}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
                   state: {
-                    offsetCandidate: currentCandidateIndex + 1,
+                    offsetCandidate: currentCandidateOffset + 1,
                   },
                 }}
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                 title={t('tasks.nvi.next_candidate')}
                 size="small"
                 sx={{
-                  display: { xs: 'none', sm: 'flex' },
+                  display: { xs: 'none', md: 'flex' },
                   gridArea: 'registration',
                   alignSelf: 'center',
                   justifySelf: 'end',

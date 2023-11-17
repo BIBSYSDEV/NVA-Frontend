@@ -99,5 +99,5 @@ export interface NviPeriodResponse {
 }
 
 export interface CandidateOffsetState {
-  offsetCandidate: number;
+  candidateOffset: number;
 }
