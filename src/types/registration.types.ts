@@ -77,7 +77,7 @@ interface RegistrationPublisher {
 }
 
 interface AdditionalIdentifier {
-  sourceName: 'Cristin' | 'ScopusIdentifier' | 'ISI';
+  sourceName: 'Cristin' | 'Scopus';
   value: string;
 }
 
