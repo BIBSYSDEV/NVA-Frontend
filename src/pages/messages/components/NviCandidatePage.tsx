@@ -28,8 +28,8 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
 
-  const offsetCandidate = location.state?.offsetCandidate;
-  const isFirstCandidate = offsetCandidate === 1;
+  const currentCandidateIndex = location.state?.offsetCandidate;
+  const isFirstCandidate = currentCandidateIndex === 1;
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -57,10 +57,16 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
 
   const periodStatus = nviCandidate?.periodStatus.status;
 
+  const navigateCandidatesQueryKey = [
+    'navigateCandidates',
+    3,
+    currentCandidateIndex && currentCandidateIndex - (isFirstCandidate ? 0 : 2),
+    nviListQuery,
+  ];
   const navigateCandidateQuery = useQuery({
-    queryKey: ['nextCandidate', 1, offsetCandidate, nviListQuery],
-    queryFn: offsetCandidate
-      ? () => fetchNviCandidates(3, offsetCandidate - (isFirstCandidate ? 0 : 2), nviListQuery)
+    queryKey: navigateCandidatesQueryKey,
+    queryFn: currentCandidateIndex
+      ? () => fetchNviCandidates(3, currentCandidateIndex - (isFirstCandidate ? 0 : 2), nviListQuery)
       : undefined,
     meta: { errorMessage: false },
     retry: false,
@@ -68,7 +74,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
 
   const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[isFirstCandidate ? 0 : 2]?.identifier;
   const previousCandidateIdentifier =
-    offsetCandidate && offsetCandidate > 1 ? navigateCandidateQuery.data?.hits[0]?.identifier : undefined;
+    currentCandidateIndex && currentCandidateIndex > 1 ? navigateCandidateQuery.data?.hits[0]?.identifier : undefined;
 
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
@@ -88,13 +94,15 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
 
-            {previousCandidateIdentifier && offsetCandidate && (
+            {previousCandidateIdentifier && currentCandidateIndex && (
               <IconButton
                 component={Link}
                 to={{
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
                   state: {
-                    offsetCandidate: Math.max(0, offsetCandidate) ? offsetCandidate - 1 : offsetCandidate,
+                    offsetCandidate: Math.max(0, currentCandidateIndex)
+                      ? currentCandidateIndex - 1
+                      : currentCandidateIndex,
                   },
                 }}
                 data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
@@ -117,13 +125,13 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
               </IconButton>
             )}
 
-            {nextCandidateIdentifier && offsetCandidate && (
+            {nextCandidateIdentifier && currentCandidateIndex && (
               <IconButton
                 component={Link}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
                   state: {
-                    offsetCandidate: offsetCandidate ? offsetCandidate + 1 : undefined,
+                    offsetCandidate: currentCandidateIndex ? currentCandidateIndex + 1 : undefined,
                   },
                 }}
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
