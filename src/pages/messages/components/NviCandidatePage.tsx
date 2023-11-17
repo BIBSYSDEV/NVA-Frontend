@@ -29,6 +29,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const { identifier } = useParams<IdentifierParams>();
 
   const offsetCandidate = location.state?.offsetCandidate;
+  const isFirstCandidate = offsetCandidate === 1;
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -59,14 +60,13 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const navigateCandidateQuery = useQuery({
     queryKey: ['nextCandidate', 1, offsetCandidate, nviListQuery],
     queryFn: offsetCandidate
-      ? () => fetchNviCandidates(3, offsetCandidate - (offsetCandidate === 1 ? 0 : 2), nviListQuery)
+      ? () => fetchNviCandidates(3, offsetCandidate - (isFirstCandidate ? 0 : 2), nviListQuery)
       : undefined,
     meta: { errorMessage: false },
     retry: false,
   });
 
-  const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[offsetCandidate === 1 ? 0 : 2]?.identifier;
-
+  const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[isFirstCandidate ? 0 : 2]?.identifier;
   const previousCandidateIdentifier =
     offsetCandidate && offsetCandidate > 1 ? navigateCandidateQuery.data?.hits[0]?.identifier : undefined;
 
