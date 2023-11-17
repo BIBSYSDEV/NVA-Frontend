@@ -35,9 +35,9 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
       ? 'IMPORTED'
       : 'NOT_APPLICABLE';
 
-  const baseQuery = `(importStatus.candidateStatus:${queryValue} AND publicationYear:${yearFilter})`;
-  const urlQueryParam = params.get('query');
-  const query = urlQueryParam ? `${baseQuery} AND ${urlQueryParam}` : baseQuery;
+  const query = [`importStatus.candidateStatus:${queryValue}`, `publicationYear:${yearFilter}`, params.get('query')]
+    .filter(Boolean)
+    .join(' AND ');
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates', rowsPerPage, page, query],
