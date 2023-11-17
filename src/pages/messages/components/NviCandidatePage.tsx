@@ -58,17 +58,17 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
 
   const navigateCandidateQuery = useQuery({
     queryKey: ['nextCandidate', 1, offsetCandidate, nviListQuery],
-    queryFn: offsetCandidate ? () => fetchNviCandidates(3, offsetCandidate - 2, nviListQuery) : undefined,
+    queryFn: offsetCandidate
+      ? () => fetchNviCandidates(3, offsetCandidate - (offsetCandidate === 1 ? 0 : 2), nviListQuery)
+      : undefined,
     meta: { errorMessage: false },
     retry: false,
   });
 
-  const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[2]?.identifier;
-  const previousCandidateIdentifier = navigateCandidateQuery.data?.hits[0]?.identifier;
+  const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[offsetCandidate === 1 ? 0 : 2]?.identifier;
 
-  console.log('prev:' + previousCandidateIdentifier);
-  console.log('current:' + identifier);
-  console.log('next:' + nextCandidateIdentifier);
+  const previousCandidateIdentifier =
+    offsetCandidate && offsetCandidate > 1 ? navigateCandidateQuery.data?.hits[0]?.identifier : undefined;
 
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
