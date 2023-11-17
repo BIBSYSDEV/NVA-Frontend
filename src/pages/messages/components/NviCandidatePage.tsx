@@ -100,9 +100,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
                 to={{
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
                   state: {
-                    offsetCandidate: Math.max(0, currentCandidateIndex)
-                      ? currentCandidateIndex - 1
-                      : currentCandidateIndex,
+                    offsetCandidate: currentCandidateIndex - 1,
                   },
                 }}
                 data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
