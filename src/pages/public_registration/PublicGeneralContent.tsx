@@ -84,9 +84,12 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
 
-  const cristinIdentifier =
-    registration.additionalIdentifiers &&
-    registration.additionalIdentifiers.find((identifier) => identifier.sourceName === 'Cristin')?.value;
+  const cristinIdentifier = registration.additionalIdentifiers?.find(
+    (identifier) => identifier.sourceName === 'Cristin'
+  )?.value;
+  const scopusIdentifier = registration.additionalIdentifiers?.find(
+    (identifier) => identifier.sourceName === 'scopusIdentifier'
+  )?.value;
 
   return (
     <StyledGeneralInfo>
@@ -180,6 +183,12 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                 {cristinIdentifier}
               </Link>
             </Typography>
+          </>
+        )}
+        {scopusIdentifier && (
+          <>
+            <Typography variant="overline">{t('registration.public_page.scopus_id')}</Typography>
+            <Typography>{scopusIdentifier}</Typography>
           </>
         )}
       </div>
