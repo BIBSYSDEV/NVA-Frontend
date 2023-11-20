@@ -20,6 +20,7 @@ export interface ImportStatus {
   modifiedDate?: string;
   setBy?: string;
   nvaPublicationId?: string;
+  comment?: string;
 }
 
 export interface ImportCandidate extends Registration {

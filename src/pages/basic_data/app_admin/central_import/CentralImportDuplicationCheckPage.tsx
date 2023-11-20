@@ -1,4 +1,3 @@
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
@@ -7,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { fetchRegistration, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { fetchImportCandidates } from '../../../../api/searchApi';
+import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../../components/PageWithSideMenu';
 import { RegistrationListItemContent } from '../../../../components/RegistrationList';
@@ -32,6 +32,7 @@ export const CentralImportDuplicationCheckPage = () => {
   const { identifier } = useParams<IdentifierParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
   const [registrationIdentifier, setRegistrationIdentifier] = useState('');
+  const [isMarkingAsNotApplicable, setIsMarkingAsNotApplicable] = useState(false);
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidateSearch', identifier],
@@ -41,7 +42,8 @@ export const CentralImportDuplicationCheckPage = () => {
   const importCandidate = importCandidateQuery.data?.hits[0];
 
   const importCandidateStatusMutation = useMutation({
-    mutationFn: () => updateImportCandidateStatus(identifier, { candidateStatus: 'NOT_APPLICABLE' }),
+    mutationFn: (comment: string) =>
+      updateImportCandidateStatus(identifier, { candidateStatus: 'NOT_APPLICABLE', comment }),
     onError: () =>
       dispatch(
         setNotification({
@@ -186,14 +188,19 @@ export const CentralImportDuplicationCheckPage = () => {
                   <Divider sx={{ my: '1rem' }} />
 
                   <Typography gutterBottom>{t('basic_data.central_import.mark_as_not_applicable')}</Typography>
-                  <LoadingButton
-                    variant="outlined"
+                  <Button
+                    variant={isMarkingAsNotApplicable ? 'contained' : 'outlined'}
                     fullWidth
                     size="small"
-                    loading={importCandidateStatusMutation.isLoading}
-                    onClick={() => importCandidateStatusMutation.mutate()}>
+                    onClick={() => setIsMarkingAsNotApplicable(true)}>
                     {t('basic_data.central_import.not_applicable')}
-                  </LoadingButton>
+                  </Button>
+                  <ConfirmMessageDialog
+                    open={isMarkingAsNotApplicable}
+                    onCancel={() => setIsMarkingAsNotApplicable(false)}
+                    onAccept={(comment: string) => importCandidateStatusMutation.mutateAsync(comment)}
+                    title={t('basic_data.central_import.not_applicable')}
+                  />
                 </>
               ) : importCandidateStatusMutation.isSuccess ? (
                 <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
