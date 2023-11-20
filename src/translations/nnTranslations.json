@@ -34,6 +34,7 @@
   "basic_data": {
     "add_employee": {
       "add_employee": "Legg til tilsett",
+      "confirmed_identity": "Institusjonen bekreftar personens identitet. Gjeld personar utan fødselsnummer.",
       "create_person": "Opprett person",
       "name_or_nin": "Namn eller fødselsnummer",
       "new_search": "Nytt søk",
@@ -121,6 +122,7 @@
       "employment_x_of_y": "Tilsetting {{selected}} av {{total}}",
       "hide_full_nin": "Gøym personnummer",
       "national_identity_number": "Fødselsnummer",
+      "no_eligable_roles": "Personar utan fødselsnummer kan ikkje ha roller",
       "no_employees_found": "Inga tilsette funne",
       "other_employments": "Andre aktive tilsettingar",
       "person_id": "PersonID",
@@ -136,7 +138,6 @@
     "actions": "Handlingar",
     "add": "Legg til",
     "add_custom": "Legg til {{- name}}",
-    "back": "Attende",
     "cancel": "Avbryt",
     "category": "Kategori",
     "clear": "Fjern",
@@ -225,6 +226,7 @@
     "start_date": "Startdato",
     "start_page": "Startside",
     "tasks": "Oppgåver",
+    "test_environment": "Testmiljø",
     "title": "Tittel",
     "today": "I dag",
     "type": "Type",
@@ -250,7 +252,7 @@
     "0003": "Medisin og helsefag",
     "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
-    "1004": "Arkitektur og design",
+    "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
     "1006": "Dans",
     "1007": "Engelsk",
@@ -473,6 +475,7 @@
       "create_journal": "Tiddskriftet vart oppretta",
       "create_note": "Merknaden vart lagra",
       "create_nvi_period": "NVI-periode vart oppdatert",
+      "create_person": "Person vart oppretta",
       "create_project": "Prosjekt er oppretta",
       "create_publisher": "Utgjevaren vart oppretta",
       "create_publishing_request": "Publiseringsførespurnad vart oppretta",
@@ -1172,6 +1175,11 @@
     "modal_unsaved_changes_description": "Du har gjort endringar som ikkje er lagra. Er du sikker på at du vil forlate denne sida?",
     "modal_unsaved_changes_heading": "Forlate sida utan å ha lagra?",
     "new_registration": "Ny registrering",
+    "nvi_warning": {
+      "continue_editing_registration": "Vil du framleis redigere publikasjonen?",
+      "registration_is_included_in_nvi": "Publikasjonen er ein del av Norsk Vitskapsindeks (NVI)",
+      "reset_nvi_warning": "Viss du endrer årstal, bidragsytarens tilknyting(-ar) til institusjon(-ar), kategori, eller publiseringskanal, så må kurator ved alle medverkande institusjonar NVI-godkjenne publikasjonen på nytt."
+    },
     "public_page": {
       "about_registration": "Om registreringa",
       "approve_publish_request": "Godkjenn publisering",
@@ -1198,6 +1206,7 @@
       "request_doi_description": "Når du ber om ein DOI (Digital Object Identifier) vil bestillinga gå via ein kurator ved din institusjon for kvalitetskontroll. Legg til ein melding ved eventuelle spørsmål eller avklaringar.",
       "reserve_doi": "Reserver ein DOI",
       "reserved_doi": "Reservert DOI",
+      "scopus_id": "Scopus ID",
       "subject_and_classification": "Emne og klassifisering",
       "tasks_panel": {
         "assign_curator": "Sett kurator",
@@ -1631,24 +1640,25 @@
     "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "reports": {
-      "nvi_all_institutions_description": "Nasjonalt, internasjonalt og utan samarbeid",
-      "nvi_all_institutions_title": "NVI: resultat, publiseringsindeks og bidragsytar andel per institusjon",
+      "clinical_treatment_studies": "Kliniske behandlingsstudier",
+      "external_reports": "Rapport generert frå ekstern løysing",
+      "international_cooperation": "Internasjonalt samarbeid",
       "reports": "Rapportar"
     },
     "result": "Resultat",
     "search_placeholder": "Søk etter tittel, bidragsytar, samandrag, etc.",
     "search_term_label": "Verdi",
-    "sector": "",
+    "sector": "Sektor",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endra",
     "sort_by_published_date_asc": "Publiseringsdato (eldste fyrst)",
     "sort_by_published_date_desc": "Publiseringsdato (nyaste fyrst)"
   },
   "tasks": {
-    "all_nvi_results": "",
+    "all_nvi_results": "Alle NVI-resultat",
     "all_user_dialogs": "Alle brukardialoger",
     "correction_list": "Retteliste",
-    "my_nvi_results": "",
+    "my_nvi_results": "Mine NVI-resultat",
     "my_user_dialogs": "Mine brukardialoger",
     "nvi": {
       "approve_nvi_candidate": "Godkjenn",
@@ -1674,7 +1684,6 @@
         "Pending": "Kandidat",
         "Rejected": "Avvist"
       },
-      "undistributed_points": "Ikkje fordelt",
       "waiting_for_other_institutions": "Venter på andre institusjonar",
       "waiting_for_your_institution": "Venter på din institusjon"
     },

@@ -75,8 +75,8 @@ const HomePage = () => {
 
   const personQueryParams: PersonSearchParams = {
     name: requestParams.get(PersonSearchParameter.Name) ?? '.',
-    organization: requestParams.get(PersonSearchParameter.Organization) ?? undefined,
-    sector: requestParams.get(PersonSearchParameter.Sector) ?? undefined,
+    organization: requestParams.get(PersonSearchParameter.Organization),
+    sector: requestParams.get(PersonSearchParameter.Sector),
   };
   const personQuery = useQuery({
     enabled: personIsSeleced,

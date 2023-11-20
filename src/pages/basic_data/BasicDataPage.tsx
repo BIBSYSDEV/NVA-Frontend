@@ -255,6 +255,7 @@ const BasicDataPage = () => {
                   size="small"
                   sx={{ mt: '0.5rem' }}
                   value={candidateYearFilter}
+                  inputProps={{ 'aria-label': t('common.year') }}
                   onChange={(event) => setCandidateYearFilter(+event.target.value)}>
                   {yearOptions.map((year) => (
                     <MenuItem key={year} value={year}>

@@ -60,6 +60,7 @@ export const convertToCristinPerson = (user: FlatCristinPerson): CreateCristinPe
     { type: 'LastName', value: user.lastName },
   ],
   employments: user.employments,
+  nvi: user.nvi,
 });
 
 export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPerson => ({
@@ -75,6 +76,7 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
   orcid: getValueByKey('ORCID', user.identifiers),
   background: user.background,
   keywords: user.keywords,
+  nvi: user.nvi,
 });
 
 export const getFullName = (firstName?: string, lastName?: string) => [firstName, lastName].filter(Boolean).join(' ');

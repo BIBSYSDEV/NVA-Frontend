@@ -106,6 +106,7 @@ export interface CreateCristinPerson {
   identifiers: CristinPersonIdentifier[];
   names: CristinPersonName[];
   employments?: Employment[];
+  nvi?: NviVerification;
 }
 
 export interface CristinPerson extends CreateCristinPerson {
@@ -119,7 +120,7 @@ export interface CristinPerson extends CreateCristinPerson {
     no?: string;
     en?: string;
   };
-  keywords: Keywords[];
+  keywords?: Keywords[];
 }
 
 export interface PersonAggregations {
@@ -142,7 +143,8 @@ export interface FlatCristinPerson {
     no?: string | null;
     en?: string | null;
   };
-  keywords: Keywords[];
+  keywords?: Keywords[];
+  nvi?: NviVerification;
 }
 
 interface Position {
@@ -169,4 +171,22 @@ export const emptyEmployment: Employment = {
   startDate: '',
   endDate: '',
   fullTimeEquivalentPercentage: '',
+};
+
+interface NviVerification {
+  verifiedAt: {
+    id: string;
+  };
+  verifiedBy: {
+    id: string;
+  };
+}
+
+export const emptyNviVerification: NviVerification = {
+  verifiedAt: {
+    id: '',
+  },
+  verifiedBy: {
+    id: '',
+  },
 };
