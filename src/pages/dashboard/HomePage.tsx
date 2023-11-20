@@ -1,13 +1,20 @@
 import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
-import { PersonSearchParameter, PersonSearchParams, searchForPerson } from '../../api/cristinApi';
+import {
+  PersonSearchParameter,
+  PersonSearchParams,
+  ProjectSearchParameter,
+  ProjectsSearchParams,
+  searchForPerson,
+  searchForProjects,
+} from '../../api/cristinApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -30,6 +37,7 @@ import { NviReports } from '../reports/NviReports';
 import ReportsPage from '../reports/ReportsPage';
 import SearchPage from '../search/SearchPage';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
+import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
 
 enum SearchTypeValue {
@@ -67,14 +75,34 @@ const HomePage = () => {
 
   const personQueryParams: PersonSearchParams = {
     name: requestParams.get(PersonSearchParameter.Name) ?? '.',
-    organization: requestParams.get(PersonSearchParameter.Organization) ?? undefined,
-    sector: requestParams.get(PersonSearchParameter.Sector) ?? undefined,
+    organization: requestParams.get(PersonSearchParameter.Organization),
+    sector: requestParams.get(PersonSearchParameter.Sector),
   };
   const personQuery = useQuery({
     enabled: personIsSeleced,
     queryKey: ['person', rowsPerPage, page, personQueryParams],
     queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
     meta: { errorMessage: t('feedback.error.search') },
+    keepPreviousData: true,
+  });
+
+  const projectQueryParams: ProjectsSearchParams = {
+    coordinatingFacet: requestParams.get(ProjectSearchParameter.CoordinatingFacet),
+    categoryFacet: requestParams.get(ProjectSearchParameter.CategoryFacet),
+    fundingSourceFacet: requestParams.get(ProjectSearchParameter.FundingSourceFacet),
+    healthProjectFacet: requestParams.get(ProjectSearchParameter.HealthProjectFacet),
+    participantFacet: requestParams.get(ProjectSearchParameter.ParticipantFacet),
+    participantOrgFacet: requestParams.get(ProjectSearchParameter.ParticipantOrgFacet),
+    responsibleFacet: requestParams.get(ProjectSearchParameter.ResponsibleFacet),
+    sectorFacet: requestParams.get(ProjectSearchParameter.SectorFacet),
+    query: requestParams.get(SearchParam.Query),
+  };
+
+  const projectQuery = useQuery({
+    enabled: projectIsSelected,
+    queryKey: ['projects', rowsPerPage, page, projectQueryParams],
+    queryFn: () => searchForProjects(rowsPerPage, page, projectQueryParams),
+    meta: { errorMessage: t('feedback.error.project_search') },
     keepPreviousData: true,
   });
 
@@ -141,7 +169,9 @@ const HomePage = () => {
                       <PersonFacetsFilter personQuery={personQuery} />
                     ) : null
                   ) : projectIsSelected ? (
-                    <Typography fontStyle="italic">{t('search.no_available_filters')}</Typography>
+                    projectQuery.data?.aggregations ? (
+                      <ProjectFacetsFilter projectQuery={projectQuery} />
+                    ) : null
                   ) : null}
                 </Box>
               </NavigationListAccordion>
@@ -188,6 +218,7 @@ const HomePage = () => {
                     searchResults={searchResults}
                     personQuery={personQuery}
                     isLoadingSearch={isLoadingSearch}
+                    projectQuery={projectQuery}
                   />
                 </Route>
                 <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />

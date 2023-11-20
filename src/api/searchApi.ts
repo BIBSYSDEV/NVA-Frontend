@@ -144,7 +144,7 @@ export const fetchResults = async (
     fullQuery += `&id_not=${identifierNot}`;
   }
   if (issn) {
-    fullQuery += `&issn=${issn}`;
+    fullQuery += `&issn_should=${issn}`;
   }
   if (project) {
     fullQuery += `&project=${project}`;

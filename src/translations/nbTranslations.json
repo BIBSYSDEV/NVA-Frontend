@@ -34,6 +34,7 @@
   "basic_data": {
     "add_employee": {
       "add_employee": "Legg til ansatt",
+      "confirmed_identity": "Institusjonen bekrefter personens identitet. Gjelder personer uten fødselsnummer.",
       "create_person": "Opprett person",
       "name_or_nin": "Navn eller fødselsnummer",
       "new_search": "Nytt søk",
@@ -121,6 +122,7 @@
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
       "hide_full_nin": "Skjul personnummer",
       "national_identity_number": "Fødselsnummer",
+      "no_eligable_roles": "Personer uten fødselsnummer kan ikke ha roller",
       "no_employees_found": "Ingen ansatte funnet",
       "other_employments": "Andre aktive ansettelser",
       "person_id": "PersonID",
@@ -250,7 +252,7 @@
     "0003": "Medisin og helsefag",
     "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
-    "1004": "Arkitektur og design",
+    "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
     "1006": "Dans",
     "1007": "Engelsk",
@@ -473,6 +475,7 @@
       "create_journal": "Tidsskriften ble opprettet",
       "create_note": "Merknaden ble lagret",
       "create_nvi_period": "NVI-periode ble opprettet",
+      "create_person": "Person ble opprettet",
       "create_project": "Prosjekt er opprettet",
       "create_publisher": "Utigveren ble opprettet",
       "create_publishing_request": "Publiseringsforespørsel ble opprettet",
@@ -1175,7 +1178,7 @@
     "nvi_warning": {
       "continue_editing_registration": "Vil du fortsatt redigere publikasjonen?",
       "registration_is_included_in_nvi": "Publikasjonen er en del av Norsk Vitenskapsindeks (NVI)",
-      "reset_nvi_warning": "Om du endrer årstall, bidragsyteres tilknytning(-er) til institusjon(-er), kategori, eller publiseringskanal, så må kurator ved alle medvirkende institusjoner NVI-godkjenne publikasjonen på nytt."
+      "reset_nvi_warning": "Du kan endre årstall, bidragsyteres tilknytning(-er) til institusjon(-er), kategori, eller publiseringskanal, men kurator ved alle medvirkende institusjoner må NVI-godkjenne publikasjonen på nytt."
     },
     "public_page": {
       "about_registration": "Om resultatet",
@@ -1203,6 +1206,7 @@
       "request_doi_description": "Når du ber om en DOI (Digital Object Identifier) vil bestillingen gå via en kurator ved din institusjon for kvalitetskontroll. Legg til en melding ved eventuelle spørsmål eller oppklaringer.",
       "reserve_doi": "Reserver en DOI",
       "reserved_doi": "Reservert DOI",
+      "scopus_id": "Scopus ID",
       "subject_and_classification": "Emne og klassifisering",
       "tasks_panel": {
         "assign_curator": "Sett kurator",
@@ -1626,11 +1630,12 @@
     "contains": "Inneholder",
     "export": "Eksporter",
     "field_label": "Felt",
+    "health_project_type": "Helseprosjekttype",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
-    "no_available_filters": "Ingen tilgjengelige filter",
     "not_containing": "Inneholder ikke",
     "operator": "Operator",
+    "participating_institution": "Deltakende institusjon",
     "person_search_placeholder": "Søk etter navn",
     "persons": "Personer",
     "project_search_placeholder": "Søk etter tittel",
@@ -1641,6 +1646,7 @@
       "international_cooperation": "Internasjonalt samarbeid",
       "reports": "Rapporter"
     },
+    "responsible_institution": "Forskningsansvarlig institusjon",
     "result": "Resultat",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",

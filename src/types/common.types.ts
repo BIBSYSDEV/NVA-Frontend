@@ -63,3 +63,10 @@ export interface SearchResponse2<HitType, AggregationType = Aggregations>
   extends Pick<SearchResponse<HitType, AggregationType>, 'hits' | 'aggregations'> {
   totalHits: number;
 }
+
+export interface CristinAggregationValue {
+  key: string;
+  id: string;
+  count: number;
+  labels: LanguageString;
+}
