@@ -198,7 +198,10 @@ export const CentralImportDuplicationCheckPage = () => {
                   <ConfirmMessageDialog
                     open={showNotApplicableDialog}
                     onCancel={() => setShowNotApplicableDialog(false)}
-                    onAccept={(comment: string) => importCandidateStatusMutation.mutateAsync(comment)}
+                    onAccept={async (comment: string) => {
+                      await importCandidateStatusMutation.mutateAsync(comment);
+                      setShowNotApplicableDialog(false);
+                    }}
                     title={t('basic_data.central_import.not_applicable')}
                     textFieldLabel={t('tasks.nvi.note')}
                   />
