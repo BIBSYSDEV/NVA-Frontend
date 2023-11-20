@@ -9,9 +9,16 @@ interface ConfirmMessageDialogProps {
   title: string;
   onAccept: (message: string) => Promise<unknown>;
   onCancel: () => void;
+  textFieldLabel: string;
 }
 
-export const ConfirmMessageDialog = ({ open, onCancel, onAccept, title }: ConfirmMessageDialogProps) => {
+export const ConfirmMessageDialog = ({
+  open,
+  onCancel,
+  onAccept,
+  title,
+  textFieldLabel,
+}: ConfirmMessageDialogProps) => {
   const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -38,7 +45,7 @@ export const ConfirmMessageDialog = ({ open, onCancel, onAccept, title }: Confir
             multiline
             variant="filled"
             name="note"
-            label="Merknad"
+            label={textFieldLabel}
           />
         </DialogContent>
         <DialogActions>

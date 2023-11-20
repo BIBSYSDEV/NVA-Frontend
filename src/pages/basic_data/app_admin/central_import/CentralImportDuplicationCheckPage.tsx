@@ -32,7 +32,7 @@ export const CentralImportDuplicationCheckPage = () => {
   const { identifier } = useParams<IdentifierParams>();
   const [duplicateSearchFilters, setDuplicateSearchFilters] = useState(emptyDuplicateSearchFilter);
   const [registrationIdentifier, setRegistrationIdentifier] = useState('');
-  const [isMarkingAsNotApplicable, setIsMarkingAsNotApplicable] = useState(false);
+  const [showNotApplicableDialog, setShowNotApplicableDialog] = useState(false);
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidateSearch', identifier],
@@ -189,17 +189,18 @@ export const CentralImportDuplicationCheckPage = () => {
 
                   <Typography gutterBottom>{t('basic_data.central_import.mark_as_not_applicable')}</Typography>
                   <Button
-                    variant={isMarkingAsNotApplicable ? 'contained' : 'outlined'}
+                    variant={showNotApplicableDialog ? 'contained' : 'outlined'}
                     fullWidth
                     size="small"
-                    onClick={() => setIsMarkingAsNotApplicable(true)}>
+                    onClick={() => setShowNotApplicableDialog(true)}>
                     {t('basic_data.central_import.not_applicable')}
                   </Button>
                   <ConfirmMessageDialog
-                    open={isMarkingAsNotApplicable}
-                    onCancel={() => setIsMarkingAsNotApplicable(false)}
+                    open={showNotApplicableDialog}
+                    onCancel={() => setShowNotApplicableDialog(false)}
                     onAccept={(comment: string) => importCandidateStatusMutation.mutateAsync(comment)}
                     title={t('basic_data.central_import.not_applicable')}
+                    textFieldLabel={t('tasks.nvi.note')}
                   />
                 </>
               ) : importCandidateStatusMutation.isSuccess ? (
