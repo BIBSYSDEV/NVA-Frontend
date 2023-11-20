@@ -1,4 +1,4 @@
-import { LanguageString } from './common.types';
+import { CristinAggregationValue, LanguageString } from './common.types';
 import { Keywords } from './keywords.types';
 
 export enum RoleName {
@@ -123,16 +123,9 @@ export interface CristinPerson extends CreateCristinPerson {
   keywords?: Keywords[];
 }
 
-interface PersonAggregationValue {
-  key: string;
-  id: string;
-  count: number;
-  labels: LanguageString;
-}
-
 export interface PersonAggregations {
-  organizationFacet: PersonAggregationValue[];
-  sectorFacet: PersonAggregationValue[];
+  organizationFacet: CristinAggregationValue[];
+  sectorFacet: CristinAggregationValue[];
 }
 
 export interface FlatCristinPerson {

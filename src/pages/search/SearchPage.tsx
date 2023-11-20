@@ -7,6 +7,7 @@ import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchResponse } from '../../types/common.types';
+import { CristinProject, ProjectAggregations } from '../../types/project.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { CristinPerson, PersonAggregations } from '../../types/user.types';
 import { SearchConfig, SearchParam, emptySearchConfig } from '../../utils/searchHelpers';
@@ -33,11 +34,12 @@ enum SearchTypeValue {
 
 export interface SearchPageProps {
   searchResults: SearchResponse<Registration, RegistrationAggregations> | undefined;
-  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
   isLoadingSearch: boolean;
+  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
+  projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
 }
 
-const SearchPage = ({ searchResults, isLoadingSearch, personQuery }: SearchPageProps) => {
+const SearchPage = ({ searchResults, isLoadingSearch, personQuery, projectQuery }: SearchPageProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -135,7 +137,7 @@ const SearchPage = ({ searchResults, isLoadingSearch, personQuery }: SearchPageP
 
       {resultIsSelected && <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />}
       {personIsSeleced && <PersonSearch personQuery={personQuery} />}
-      {projectIsSelected && <ProjectSearch />}
+      {projectIsSelected && <ProjectSearch projectQuery={projectQuery} />}
     </Box>
   );
 };
