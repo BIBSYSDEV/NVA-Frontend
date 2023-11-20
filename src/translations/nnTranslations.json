@@ -1206,6 +1206,7 @@
       "request_doi_description": "Når du ber om ein DOI (Digital Object Identifier) vil bestillinga gå via ein kurator ved din institusjon for kvalitetskontroll. Legg til ein melding ved eventuelle spørsmål eller avklaringar.",
       "reserve_doi": "Reserver ein DOI",
       "reserved_doi": "Reservert DOI",
+      "scopus_id": "Scopus ID",
       "subject_and_classification": "Emne og klassifisering",
       "tasks_panel": {
         "assign_curator": "Sett kurator",

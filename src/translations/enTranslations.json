@@ -1178,7 +1178,7 @@
     "nvi_warning": {
       "continue_editing_registration": "Do you still want to edit the publication?",
       "registration_is_included_in_nvi": "The publication is a part of the Norwegian Science Index (NVI)",
-      "reset_nvi_warning": "If you change the year, contributor's affiliation(-s) to institution(-s) or publishing channel, the curator at all contributing institutions must re-approve the publication in the Norwegian Science Index (NVI)"
+      "reset_nvi_warning": "You may change the year, contributor's affiliation(-s) to institution(-s) or publishing channel, but the curator at all contributing institutions must re-approve the publication in the Norwegian Science Index (NVI)"
     },
     "public_page": {
       "about_registration": "About this registration",
@@ -1206,6 +1206,7 @@
       "request_doi_description": "When you request a DOI (Digital Object Identifier), the order will go through a curator at your institution for quality control. Add a message in case of any questions or clarifications.",
       "reserve_doi": "Reserve a DOI",
       "reserved_doi": "Reserved DOI",
+      "scopus_id": "Scopus ID",
       "subject_and_classification": "Subject and classification",
       "tasks_panel": {
         "assign_curator": "Assign curator",
@@ -1639,7 +1640,7 @@
     "project_search_placeholder": "Search for title",
     "remove_filter": "Remove filter",
     "reports": {
-      "clinical_treatment_studies": "Clinical treatment studies",
+      "clinical_treatment_studies": "Clinical trials",
       "external_reports": "Report generated from external service",
       "international_cooperation": "International cooperation",
       "reports": "Reports"
