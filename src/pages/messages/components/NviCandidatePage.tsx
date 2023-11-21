@@ -24,10 +24,10 @@ export const NviCandidatePage = () => {
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
 
-  const navigateCandidatesOffset = location.state?.candidateOffset;
-  const nviListQuery = location.state?.nviListQuery;
+  const navigateCandidatesOffset = location.state?.candidateOffset; // gives index of item + 1
   const isFirstCandidate = navigateCandidatesOffset === 1;
-  const candidateOffset = navigateCandidatesOffset ? navigateCandidatesOffset - (isFirstCandidate ? 0 : 2) : 0;
+  const candidateOffset = navigateCandidatesOffset && navigateCandidatesOffset - (isFirstCandidate ? 0 : 2);
+  const nviListQuery = `${location.state?.nviListQuery}${candidateOffset ? `&offset=${candidateOffset}` : ''}`;
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -42,9 +42,6 @@ export const NviCandidatePage = () => {
       return failureCount < 3;
     },
   });
-
-  console.log(nviListQuery);
-  console.log(navigateCandidatesOffset);
 
   const nviCandidate = nviCandidateQuery.data;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
@@ -96,7 +93,7 @@ export const NviCandidatePage = () => {
                 to={{
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
                   state: {
-                    offsetCandidate: candidateOffset - 1,
+                    candidateOffset: navigateCandidatesOffset - 1,
                     nviListQuery: nviListQuery,
                   },
                 }}
@@ -126,7 +123,7 @@ export const NviCandidatePage = () => {
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
                   state: {
-                    offsetCandidate: candidateOffset + 1,
+                    candidateOffset: navigateCandidatesOffset + 1,
                     nviListQuery: nviListQuery,
                   },
                 }}
