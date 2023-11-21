@@ -13,6 +13,7 @@ import { NviCandidateListItem } from './NviCandidateListItem';
 
 interface NviCandidatesListProps {
   nviCandidatesQuery: UseQueryResult<NviCandidateSearchResponse, unknown>;
+  nviListQuery: string;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
@@ -22,6 +23,7 @@ interface NviCandidatesListProps {
 
 export const NviCandidatesList = ({
   nviCandidatesQuery,
+  nviListQuery,
   setRowsPerPage,
   rowsPerPage,
   setPage,
@@ -48,10 +50,14 @@ export const NviCandidatesList = ({
             <>
               <List data-testid={dataTestId.tasksPage.nvi.candidatesList} disablePadding sx={{ mb: '0.5rem' }}>
                 {nviCandidatesQuery.data?.hits.map((nviCandidate, index) => {
-                  const candidateOffset = (page - 1) * rowsPerPage + (index + 1);
+                  const navigateCandidatesOffset = (page - 1) * rowsPerPage + (index + 1);
                   return (
                     <ErrorBoundary key={nviCandidate.identifier}>
-                      <NviCandidateListItem nviCandidate={nviCandidate} candidateOffset={candidateOffset} />
+                      <NviCandidateListItem
+                        nviCandidate={nviCandidate}
+                        nviListQuery={nviListQuery}
+                        navigateCandidatesOffset={navigateCandidatesOffset}
+                      />
                     </ErrorBoundary>
                   );
                 })}

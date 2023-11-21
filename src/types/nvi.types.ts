@@ -100,4 +100,5 @@ export interface NviPeriodResponse {
 
 export interface CandidateOffsetState {
   candidateOffset: number;
+  nviListQuery: string;
 }

@@ -19,18 +19,15 @@ import { PublicRegistrationContent } from '../../public_registration/PublicRegis
 import { NviApprovalStatuses } from './NviApprovalStatuses';
 import { NviCandidateActions } from './NviCandidateActions';
 
-interface NviCandidatePageProps {
-  nviListQuery: string;
-}
-
-export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
+export const NviCandidatePage = () => {
   const { t } = useTranslation();
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
 
-  const currentCandidateOffset = location.state?.candidateOffset;
-  const isFirstCandidate = currentCandidateOffset === 1;
-  const candidateOffset = currentCandidateOffset && currentCandidateOffset - (isFirstCandidate ? 0 : 2);
+  const navigateCandidatesOffset = location.state?.candidateOffset;
+  const nviListQuery = location.state?.nviListQuery;
+  const isFirstCandidate = navigateCandidatesOffset === 1;
+  const candidateOffset = navigateCandidatesOffset ? navigateCandidatesOffset - (isFirstCandidate ? 0 : 2) : 0;
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -46,6 +43,9 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
     },
   });
 
+  console.log(nviListQuery);
+  console.log(navigateCandidatesOffset);
+
   const nviCandidate = nviCandidateQuery.data;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
@@ -59,6 +59,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
   const periodStatus = nviCandidate?.periodStatus.status;
 
   const navigateCandidateQuery = useQuery({
+    enabled: !!candidateOffset,
     queryKey: ['navigateCandidates', 3, candidateOffset, nviListQuery],
     queryFn: candidateOffset ? () => fetchNviCandidates(3, candidateOffset, nviListQuery) : undefined,
     meta: { errorMessage: false },
@@ -67,7 +68,9 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
 
   const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[isFirstCandidate ? 0 : 2]?.identifier;
   const previousCandidateIdentifier =
-    currentCandidateOffset && currentCandidateOffset > 1 ? navigateCandidateQuery.data?.hits[0]?.identifier : undefined;
+    navigateCandidatesOffset && navigateCandidatesOffset > 1
+      ? navigateCandidateQuery.data?.hits[0]?.identifier
+      : undefined;
 
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
@@ -87,13 +90,14 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
 
-            {previousCandidateIdentifier && currentCandidateOffset && (
+            {previousCandidateIdentifier && navigateCandidatesOffset && (
               <IconButton
                 component={Link}
                 to={{
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
                   state: {
-                    offsetCandidate: currentCandidateOffset - 1,
+                    offsetCandidate: candidateOffset - 1,
+                    nviListQuery: nviListQuery,
                   },
                 }}
                 data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
@@ -116,13 +120,14 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
               </IconButton>
             )}
 
-            {nextCandidateIdentifier && currentCandidateOffset && (
+            {nextCandidateIdentifier && navigateCandidatesOffset && (
               <IconButton
                 component={Link}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
                   state: {
-                    offsetCandidate: currentCandidateOffset + 1,
+                    offsetCandidate: candidateOffset + 1,
+                    nviListQuery: nviListQuery,
                   },
                 }}
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
