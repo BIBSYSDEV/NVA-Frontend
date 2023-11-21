@@ -22,6 +22,7 @@ import {
   getImportCandidateWizardPath,
 } from '../../../../utils/urlPaths';
 import NotFound from '../../../errorpages/NotFound';
+import { MessageItem } from '../../../messages/components/MessageList';
 import { CentralImportDuplicateSearch } from './CentralImportDuplicateSearch';
 import { CentralImportResultItem } from './CentralImportResultItem';
 import { DuplicateSearchFilterForm } from './DuplicateSearchFilterForm';
@@ -135,7 +136,7 @@ export const CentralImportDuplicationCheckPage = () => {
         <Box sx={{ m: '0.5rem' }}>
           {importCandidate?.importStatus.candidateStatus === 'IMPORTED' && (
             <>
-              <Typography>{t('basic_data.central_import.import_completed')}</Typography>
+              <Typography gutterBottom>{t('basic_data.central_import.import_completed')}</Typography>
               {importCandidate.importStatus.modifiedDate && (
                 <Typography>
                   {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
@@ -145,12 +146,13 @@ export const CentralImportDuplicationCheckPage = () => {
           )}
           {importCandidate?.importStatus.candidateStatus === 'NOT_APPLICABLE' && (
             <>
-              <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
-              {importCandidate.importStatus.modifiedDate && (
-                <Typography>
-                  {t('common.date')}: {new Date(importCandidate.importStatus.modifiedDate).toLocaleString()}
-                </Typography>
-              )}
+              <Typography gutterBottom>{t('basic_data.central_import.import_not_applicable')}</Typography>
+              <MessageItem
+                text={importCandidate.importStatus.comment}
+                date={importCandidate.importStatus.modifiedDate ?? ''}
+                username={importCandidate.importStatus.setBy ?? ''}
+                backgroundColor="centralImport.main"
+              />
             </>
           )}
 
