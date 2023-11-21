@@ -38,6 +38,7 @@ export interface ImportCandidateAggregations {
 
 export interface ImportCandidateSummary {
   type: 'ImportCandidateSummary';
+  createdDate: string;
   id: string;
   additionalIdentifiers: string[];
   importStatus: ImportStatus;
