@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -42,8 +42,10 @@ export const CentralImportDuplicationCheckPage = () => {
   });
   const importCandidateSearch = importCandidateSearchQuery.data?.hits[0];
 
+  const queryClient = useQueryClient();
+  const importCandidateQueryKey = ['importCandidate', identifier];
   const importCandidateQuery = useQuery({
-    queryKey: ['importCandidate', identifier],
+    queryKey: importCandidateQueryKey,
     queryFn: () => fetchImportCandidate(identifier),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
@@ -204,8 +206,8 @@ export const CentralImportDuplicationCheckPage = () => {
                 open={showNotApplicableDialog}
                 onCancel={() => setShowNotApplicableDialog(false)}
                 onAccept={async (comment: string) => {
-                  await importCandidateStatusMutation.mutateAsync(comment);
-                  await importCandidateQuery.refetch();
+                  const updatedCandidate = await importCandidateStatusMutation.mutateAsync(comment);
+                  queryClient.setQueryData(importCandidateQueryKey, updatedCandidate);
                   setShowNotApplicableDialog(false);
                 }}
                 title={t('basic_data.central_import.not_applicable')}
