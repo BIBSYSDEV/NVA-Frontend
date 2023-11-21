@@ -373,11 +373,16 @@
       "registrator_publishes_metadata": "Registrator publiserer metadata",
       "registrator_publishes_metadata_description": "Filer og lisenser må godkjennes av Kurator før de blir offentlig tilgjengelig.",
       "registrator_publishes_without_curator": "Registrator publiserer uten godkjenning av Kurator",
-      "registrator_publishes_without_curator_description": "Institutsjonen bestemmer hvem som er Registrator."
+      "registrator_publishes_without_curator_description": "Institusjonen bestemmer hvem som er Registrator."
     },
     "retentions_strategy": {
-      "institution_rrs_info_page": "Institusjonenes informasjonsside om rettighetspolitikk*",
-      "retentions_strategy": "Rettighetspolitikk"
+      "institution_rrs": "Rettighetspolitikk",
+      "institution_rrs_info_page": "Institusjonenes informasjonsside om rettighetspolitikk",
+      "institution_rrs_link": "Skriv inn lenke",
+      "institution_rrs_required_link": "*Felt med stjerne er obligatorisk",
+      "registrator_rrs_override": "Registrator kan fraskrive seg RRS",
+      "institution_rrs_url": "url",
+      "rights_retentions_strategy": "Rights Retentions Strategy (RRS)"
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
     "vocabulary": "Vokabular",
@@ -466,6 +471,7 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
+      "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
@@ -506,6 +512,7 @@
       "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
+      "update_rights_retention_strategy": "Rettighetspolitikk ble oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
     },
