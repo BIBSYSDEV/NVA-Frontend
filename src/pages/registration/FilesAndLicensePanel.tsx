@@ -113,11 +113,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const originalDoi = entityDescription?.reference?.doi;
   const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance?.type);
 
+  const isImporter = values.type === 'ImportCandidate' && !!user?.isInternalImporter;
   const isRegistrationCurator = userIsRegistrationCurator(user, values);
   const isProtectedDegree = isDegreeWithProtectedFiles(entityDescription?.reference?.publicationInstance?.type);
   const canEditDegreeFiles = isRegistrationCurator && !!user?.isThesisCurator;
   const canEditOtherFiles = isRegistrationCurator || userIsRegistrationOwner(user, values);
-  const canEditFiles = (!isProtectedDegree && canEditOtherFiles) || (isProtectedDegree && canEditDegreeFiles);
+  const canEditFiles =
+    (!isProtectedDegree && canEditOtherFiles) || (isProtectedDegree && canEditDegreeFiles) || isImporter;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
