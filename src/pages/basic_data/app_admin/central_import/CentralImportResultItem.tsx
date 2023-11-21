@@ -77,7 +77,7 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
             </Typography>
           )}
         </ListItemText>
-        <Typography>{periodString}</Typography>
+        <Typography sx={{ whiteSpace: 'nowrap' }}>{periodString}</Typography>
       </Box>
     </SearchListItem>
   );
