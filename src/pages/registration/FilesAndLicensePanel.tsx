@@ -41,6 +41,7 @@ import {
   isTypeWithFileVersionField,
   userIsRegistrationCurator,
   userIsRegistrationOwner,
+  userIsValidImporter,
 } from '../../utils/registration-helpers';
 import {
   getChannelRegisterJournalUrl,
@@ -113,13 +114,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const originalDoi = entityDescription?.reference?.doi;
   const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance?.type);
 
-  const isImporter = values.type === 'ImportCandidate' && !!user?.isInternalImporter;
+  const isValidImporter = userIsValidImporter(user, values);
   const isRegistrationCurator = userIsRegistrationCurator(user, values);
   const isProtectedDegree = isDegreeWithProtectedFiles(entityDescription?.reference?.publicationInstance?.type);
   const canEditDegreeFiles = isRegistrationCurator && !!user?.isThesisCurator;
   const canEditOtherFiles = isRegistrationCurator || userIsRegistrationOwner(user, values);
   const canEditFiles =
-    (!isProtectedDegree && canEditOtherFiles) || (isProtectedDegree && canEditDegreeFiles) || isImporter;
+    (!isProtectedDegree && canEditOtherFiles) || (isProtectedDegree && canEditDegreeFiles) || isValidImporter;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
