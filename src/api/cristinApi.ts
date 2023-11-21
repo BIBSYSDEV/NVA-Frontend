@@ -1,12 +1,13 @@
 import { SearchResponse } from '../types/common.types';
 import { Keywords } from '../types/keywords.types';
 import { Organization } from '../types/organization.types';
-import { CristinProject, FundingSource, FundingSources } from '../types/project.types';
+import { CristinProject, FundingSource, FundingSources, ProjectAggregations } from '../types/project.types';
 import {
   CreateCristinPerson,
   CristinPerson,
   Employment,
   FlatCristinPerson,
+  PersonAggregations,
   PositionResponse,
 } from '../types/user.types';
 import { getIdentifierFromId } from '../utils/general-helpers';
@@ -94,51 +95,129 @@ export const fetchPerson = async (personId: string) => {
   return fetchPersonResponse.data;
 };
 
-export const searchForPerson = async (results: number, page: number, name: string) => {
+export interface PersonSearchParams {
+  name?: string | null;
+  organization?: string | null;
+  sector?: string | null;
+}
+
+export enum PersonSearchParameter {
+  Name = 'name',
+  Organization = 'organizationFacet',
+  Page = 'page',
+  Results = 'results',
+  Sector = 'sectorFacet',
+}
+
+export const searchForPerson = async (
+  results: number,
+  page: number,
+  { name, organization, sector }: PersonSearchParams
+) => {
   const searchParams = new URLSearchParams();
-  if (name) {
-    searchParams.set('name', name);
-  }
   if (results) {
-    searchParams.set('results', results.toString());
+    searchParams.set(PersonSearchParameter.Results, results.toString());
   }
   if (page) {
-    searchParams.set('page', page.toString());
+    searchParams.set(PersonSearchParameter.Page, page.toString());
+  }
+  if (name) {
+    searchParams.set(PersonSearchParameter.Name, name);
+  }
+  if (organization) {
+    searchParams.set(PersonSearchParameter.Organization, organization);
+  }
+  if (sector) {
+    searchParams.set(PersonSearchParameter.Sector, sector);
   }
 
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';
 
-  const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson>>({
+  const fetchPersonResponse = await apiRequest2<SearchResponse<CristinPerson, PersonAggregations>>({
+    headers: { Accept: 'application/json; version=2023-11-03' },
     url: `${CristinApiPath.Person}${queryParams}`,
   });
   return fetchPersonResponse.data;
 };
 
-interface ProjectsSearchParams {
-  query?: string;
-  creator?: string;
-  participant?: string;
+export interface ProjectsSearchParams {
+  categoryFacet?: string | null;
+  coordinatingFacet?: string | null;
+  creator?: string | null;
+  fundingSourceFacet?: string | null;
+  healthProjectFacet?: string | null;
+  participant?: string | null;
+  participantFacet?: string | null;
+  participantOrgFacet?: string | null;
+  responsibleFacet?: string | null;
+  sectorFacet?: string | null;
+  query?: string | null;
+}
+
+export enum ProjectSearchParameter {
+  CategoryFacet = 'categoryFacet',
+  CoordinatingFacet = 'coordinatingFacet',
+  Creator = 'creator',
+  FundingSourceFacet = 'fundingSourceFacet',
+  HealthProjectFacet = 'healthProjectFacet',
+  Page = 'page',
+  Participant = 'participant',
+  ParticipantFacet = 'participantFacet',
+  ParticipantOrgFacet = 'participantOrgFacet',
+  ResponsibleFacet = 'responsibleFacet',
+  Results = 'results',
+  SectorFacet = 'sectorFacet',
+  Query = 'query',
 }
 
 export const searchForProjects = async (results: number, page: number, params?: ProjectsSearchParams) => {
   const searchParams = new URLSearchParams();
-  if (params?.query) {
-    searchParams.set('query', params.query);
+  if (results) {
+    searchParams.set(ProjectSearchParameter.Results, results.toString());
   }
-  searchParams.set('results', results.toString());
-  searchParams.set('page', page.toString());
+  if (page) {
+    searchParams.set(ProjectSearchParameter.Page, page.toString());
+  }
+  if (params?.categoryFacet) {
+    searchParams.set(ProjectSearchParameter.CategoryFacet, params.categoryFacet);
+  }
+  if (params?.coordinatingFacet) {
+    searchParams.set(ProjectSearchParameter.CoordinatingFacet, params.coordinatingFacet);
+  }
   if (params?.creator) {
-    searchParams.set('creator', params.creator);
+    searchParams.set(ProjectSearchParameter.Creator, params.creator);
+  }
+  if (params?.fundingSourceFacet) {
+    searchParams.set(ProjectSearchParameter.FundingSourceFacet, params.fundingSourceFacet);
+  }
+  if (params?.healthProjectFacet) {
+    searchParams.set(ProjectSearchParameter.HealthProjectFacet, params.healthProjectFacet);
   }
   if (params?.participant) {
-    searchParams.set('participant', params.participant);
+    searchParams.set(ProjectSearchParameter.Participant, params.participant);
+  }
+  if (params?.participantFacet) {
+    searchParams.set(ProjectSearchParameter.ParticipantFacet, params.participantFacet);
+  }
+  if (params?.participantOrgFacet) {
+    searchParams.set(ProjectSearchParameter.ParticipantOrgFacet, params.participantOrgFacet);
+  }
+  if (params?.responsibleFacet) {
+    searchParams.set(ProjectSearchParameter.ResponsibleFacet, params.responsibleFacet);
+  }
+  if (params?.sectorFacet) {
+    searchParams.set(ProjectSearchParameter.SectorFacet, params.sectorFacet);
+  }
+  if (params?.query) {
+    searchParams.set(ProjectSearchParameter.Query, params.query);
   }
 
   const queryContent = searchParams.toString();
   const queryParams = queryContent ? `?${queryContent}` : '';
 
-  const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject>>({
+  const fetchProjectsResponse = await apiRequest2<SearchResponse<CristinProject, ProjectAggregations>>({
+    headers: { Accept: 'application/json; version=2023-11-03' },
     url: `${CristinApiPath.Project}${queryParams}`,
   });
   return fetchProjectsResponse.data;

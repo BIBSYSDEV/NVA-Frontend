@@ -2,11 +2,14 @@ import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Box, MenuItem, TextField } from '@mui/material';
+import { UseQueryResult } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchResponse } from '../../types/common.types';
+import { CristinProject, ProjectAggregations } from '../../types/project.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
+import { CristinPerson, PersonAggregations } from '../../types/user.types';
 import { SearchConfig, SearchParam, emptySearchConfig } from '../../utils/searchHelpers';
 import { SearchTextField } from './SearchTextField';
 import { PersonSearch } from './person_search/PersonSearch';
@@ -29,12 +32,14 @@ enum SearchTypeValue {
   Project = 'project',
 }
 
-interface SearchPageProps {
+export interface SearchPageProps {
   searchResults: SearchResponse<Registration, RegistrationAggregations> | undefined;
   isLoadingSearch: boolean;
+  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
+  projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
 }
 
-const SearchPage = ({ searchResults, isLoadingSearch }: SearchPageProps) => {
+const SearchPage = ({ searchResults, isLoadingSearch, personQuery, projectQuery }: SearchPageProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -131,8 +136,8 @@ const SearchPage = ({ searchResults, isLoadingSearch }: SearchPageProps) => {
       </Box>
 
       {resultIsSelected && <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />}
-      {personIsSeleced && <PersonSearch />}
-      {projectIsSelected && <ProjectSearch />}
+      {personIsSeleced && <PersonSearch personQuery={personQuery} />}
+      {projectIsSelected && <ProjectSearch projectQuery={projectQuery} />}
     </Box>
   );
 };

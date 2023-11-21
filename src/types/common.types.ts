@@ -58,3 +58,10 @@ export interface AggregationBucket {
   key: string;
   docCount: number;
 }
+
+export interface CristinAggregationValue {
+  key: string;
+  id: string;
+  count: number;
+  labels: LanguageString;
+}

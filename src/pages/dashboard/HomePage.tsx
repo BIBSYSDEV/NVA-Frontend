@@ -1,15 +1,23 @@
 import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { SearchApiPath } from '../../api/apiPaths';
+import {
+  PersonSearchParameter,
+  PersonSearchParams,
+  ProjectSearchParameter,
+  ProjectsSearchParams,
+  searchForPerson,
+  searchForProjects,
+} from '../../api/cristinApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
-import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
+import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { SearchResponse } from '../../types/common.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
@@ -23,9 +31,13 @@ import {
   createSearchConfigFromSearchParams,
 } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { StyledSearchModeButton } from '../messages/TasksPage';
+import { ClinicalTreatmentStudiesReports } from '../reports/ClinicalTreatmentStudiesReports';
+import { InternationalCooperationReports } from '../reports/InternationalCooperationReports';
+import { NviReports } from '../reports/NviReports';
+import ReportsPage from '../reports/ReportsPage';
 import SearchPage from '../search/SearchPage';
-import ReportsPage from '../search/registration_search/ReportsPage';
+import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
+import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
 
 enum SearchTypeValue {
@@ -52,9 +64,46 @@ const HomePage = () => {
 
   const requestParams = new URLSearchParams(history.location.search);
   requestParams.delete(SearchParam.Type);
+  const requestParamsString = requestParams.toString();
   const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration, RegistrationAggregations>>({
-    url: resultIsSelected ? `${SearchApiPath.Registrations}?${requestParams.toString()}` : '',
+    url: resultIsSelected ? `${SearchApiPath.Registrations}?${requestParamsString}` : '',
     errorMessage: t('feedback.error.search'),
+  });
+
+  const rowsPerPage = Number(requestParams.get(SearchParam.Results) ?? 10);
+  const page = Number(requestParams.get(SearchParam.Page) ?? 1);
+
+  const personQueryParams: PersonSearchParams = {
+    name: requestParams.get(PersonSearchParameter.Name) ?? '.',
+    organization: requestParams.get(PersonSearchParameter.Organization),
+    sector: requestParams.get(PersonSearchParameter.Sector),
+  };
+  const personQuery = useQuery({
+    enabled: personIsSeleced,
+    queryKey: ['person', rowsPerPage, page, personQueryParams],
+    queryFn: () => searchForPerson(rowsPerPage, page, personQueryParams),
+    meta: { errorMessage: t('feedback.error.search') },
+    keepPreviousData: true,
+  });
+
+  const projectQueryParams: ProjectsSearchParams = {
+    coordinatingFacet: requestParams.get(ProjectSearchParameter.CoordinatingFacet),
+    categoryFacet: requestParams.get(ProjectSearchParameter.CategoryFacet),
+    fundingSourceFacet: requestParams.get(ProjectSearchParameter.FundingSourceFacet),
+    healthProjectFacet: requestParams.get(ProjectSearchParameter.HealthProjectFacet),
+    participantFacet: requestParams.get(ProjectSearchParameter.ParticipantFacet),
+    participantOrgFacet: requestParams.get(ProjectSearchParameter.ParticipantOrgFacet),
+    responsibleFacet: requestParams.get(ProjectSearchParameter.ResponsibleFacet),
+    sectorFacet: requestParams.get(ProjectSearchParameter.SectorFacet),
+    query: requestParams.get(SearchParam.Query),
+  };
+
+  const projectQuery = useQuery({
+    enabled: projectIsSelected,
+    queryKey: ['projects', rowsPerPage, page, projectQueryParams],
+    queryFn: () => searchForProjects(rowsPerPage, page, projectQueryParams),
+    meta: { errorMessage: t('feedback.error.project_search') },
+    keepPreviousData: true,
   });
 
   const emptySearchParams: SearchConfig = {
@@ -107,26 +156,24 @@ const HomePage = () => {
                 accordionPath=""
                 expanded={isOnSearchPage}
                 dataTestId={dataTestId.startPage.filterAccordion}>
-                {resultIsSelected && searchResults?.aggregations ? (
-                  <Box
-                    sx={{
-                      m: '1rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '1rem',
-                    }}>
-                    <RegistrationFacetsFilter
-                      aggregations={searchResults.aggregations}
-                      isLoadingSearch={isLoadingSearch}
-                    />
-                  </Box>
-                ) : (
-                  !isLoadingSearch && (
-                    <Typography fontStyle="italic" sx={{ mx: '1rem', mb: '1rem' }}>
-                      {t('search.no_available_filters')}
-                    </Typography>
-                  )
-                )}
+                <Box sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {resultIsSelected ? (
+                    searchResults?.aggregations ? (
+                      <RegistrationFacetsFilter
+                        aggregations={searchResults.aggregations}
+                        isLoadingSearch={isLoadingSearch}
+                      />
+                    ) : null
+                  ) : personIsSeleced ? (
+                    personQuery.data?.aggregations ? (
+                      <PersonFacetsFilter personQuery={personQuery} />
+                    ) : null
+                  ) : projectIsSelected ? (
+                    projectQuery.data?.aggregations ? (
+                      <ProjectFacetsFilter projectQuery={projectQuery} />
+                    ) : null
+                  ) : null}
+                </Box>
               </NavigationListAccordion>
 
               <NavigationListAccordion
@@ -134,25 +181,58 @@ const HomePage = () => {
                 startIcon={<InsightsIcon sx={{ bgcolor: 'white' }} />}
                 accordionPath={UrlPathTemplate.Reports}
                 dataTestId={dataTestId.startPage.reportsAccordion}
-                onClick={() => {
-                  setValues(emptySearchParams);
-                }}>
-                <StyledSearchModeButton
-                  sx={{ mx: '1rem', mb: '1rem' }}
-                  data-testid={dataTestId.startPage.nviReportRadioButton}
-                  isSelected={currentPath === UrlPathTemplate.Reports}
-                  startIcon={<RadioButtonCheckedIcon />}>
-                  {t('common.nvi')}
-                </StyledSearchModeButton>
+                onClick={() => setValues(emptySearchParams)}>
+                <NavigationList>
+                  <LinkButton
+                    data-testid={dataTestId.startPage.reportsOverviewButton}
+                    isSelected={currentPath === UrlPathTemplate.Reports}
+                    to={UrlPathTemplate.Reports}>
+                    {t('common.overview')}
+                  </LinkButton>
+                  <LinkButton
+                    data-testid={dataTestId.startPage.reportsNviButton}
+                    isSelected={currentPath === UrlPathTemplate.ReportsNvi}
+                    to={UrlPathTemplate.ReportsNvi}>
+                    {t('common.nvi')}
+                  </LinkButton>
+                  <LinkButton
+                    data-testid={dataTestId.startPage.reportsInternationalWorkButton}
+                    isSelected={currentPath === UrlPathTemplate.ReportsInternationalCooperation}
+                    to={UrlPathTemplate.ReportsInternationalCooperation}>
+                    {t('search.reports.international_cooperation')}
+                  </LinkButton>
+                  <LinkButton
+                    data-testid={dataTestId.startPage.reportsClinicalTreatmentStudiesButton}
+                    isSelected={currentPath === UrlPathTemplate.ReportsClinicalTreatmentStudies}
+                    to={UrlPathTemplate.ReportsClinicalTreatmentStudies}>
+                    {t('search.reports.clinical_treatment_studies')}
+                  </LinkButton>
+                </NavigationList>
               </NavigationListAccordion>
             </SideMenu>
 
             <Switch>
               <ErrorBoundary>
                 <Route exact path={UrlPathTemplate.Home}>
-                  <SearchPage searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
+                  <SearchPage
+                    searchResults={searchResults}
+                    personQuery={personQuery}
+                    isLoadingSearch={isLoadingSearch}
+                    projectQuery={projectQuery}
+                  />
                 </Route>
                 <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
+                <Route exact path={UrlPathTemplate.ReportsNvi} component={NviReports} />
+                <Route
+                  exact
+                  path={UrlPathTemplate.ReportsInternationalCooperation}
+                  component={InternationalCooperationReports}
+                />
+                <Route
+                  exact
+                  path={UrlPathTemplate.ReportsClinicalTreatmentStudies}
+                  component={ClinicalTreatmentStudiesReports}
+                />
               </ErrorBoundary>
             </Switch>
           </StyledPageWithSideMenu>

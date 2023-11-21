@@ -16,6 +16,7 @@ import {
   FlatCristinPerson,
   RoleName,
   emptyEmployment,
+  emptyNviVerification,
 } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
@@ -40,6 +41,7 @@ export const emptyUser: FlatCristinPerson = {
   employments: [],
   background: {},
   keywords: [],
+  nvi: emptyNviVerification,
 };
 
 const initialValues: AddEmployeeData = {
@@ -59,32 +61,43 @@ export const AddEmployeePage = () => {
     }
 
     let personId = values.user.id;
+    const nationalId = values.user.nationalId;
+    const { nvi, ...personWithoutNvi } = values.user;
 
     if (!personId) {
+      const person = nationalId ? personWithoutNvi : values.user;
       // Create Person if it does not yet exist in Cristin
       const cristinPerson: CreateCristinPerson = convertToCristinPerson({
-        ...values.user,
+        ...person,
         employments: [values.affiliation],
       });
       const createPersonResponse = await createCristinPerson(cristinPerson);
       if (isErrorStatus(createPersonResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.create_user'), variant: 'error' }));
       } else if (isSuccessStatus(createPersonResponse.status)) {
-        personId = createPersonResponse.data.id;
-        await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
+        if (!nationalId) {
+          dispatch(setNotification({ message: t('feedback.success.create_person'), variant: 'success' }));
+          resetForm();
+        } else {
+          personId = createPersonResponse.data.id;
+          await new Promise((resolve) => setTimeout(resolve, 10_000)); // Wait 10sec before creating NVA User. TODO: NP-9121
+        }
       }
     } else {
       // Add employment to existing Person
       const addAffiliationResponse = await addEmployment(personId, values.affiliation);
       if (isErrorStatus(addAffiliationResponse.status)) {
         dispatch(setNotification({ message: t('feedback.error.add_employment'), variant: 'error' }));
+      } else if (isSuccessStatus(addAffiliationResponse.status) && !nationalId) {
+        dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
+        resetForm();
       }
     }
 
-    if (personId) {
+    if (personId && nationalId) {
       // Create NVA User with roles
       const createUserResponse = await createUser({
-        nationalIdentityNumber: values.user.nationalId,
+        nationalIdentityNumber: nationalId,
         customerId,
         roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
       });
@@ -109,7 +122,7 @@ export const AddEmployeePage = () => {
         validationSchema={addEmployeeValidationSchema}
         onSubmit={onSubmit}
         validateOnMount>
-        {({ isValid, isSubmitting, values, setFieldValue, errors }: FormikProps<AddEmployeeData>) => (
+        {({ isSubmitting, values, setFieldValue, errors }: FormikProps<AddEmployeeData>) => (
           <Form noValidate>
             <Box
               sx={{
@@ -125,6 +138,7 @@ export const AddEmployeePage = () => {
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <AddAffiliationPanel />
                 <UserRolesSelector
+                  personHasNin={!values.user.nvi?.verifiedAt.id}
                   selectedRoles={values.roles}
                   updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
                   disabled={isSubmitting || !!errors.user || !!errors.affiliation}
