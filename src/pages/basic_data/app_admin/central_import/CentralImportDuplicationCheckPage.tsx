@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { fetchRegistration, updateImportCandidateStatus } from '../../../../api/registrationApi';
+import { fetchImportCandidate, fetchRegistration, updateImportCandidateStatus } from '../../../../api/registrationApi';
 import { fetchImportCandidates } from '../../../../api/searchApi';
 import { ConfirmMessageDialog } from '../../../../components/ConfirmMessageDialog';
 import { PageSpinner } from '../../../../components/PageSpinner';
@@ -35,12 +35,19 @@ export const CentralImportDuplicationCheckPage = () => {
   const [registrationIdentifier, setRegistrationIdentifier] = useState('');
   const [showNotApplicableDialog, setShowNotApplicableDialog] = useState(false);
 
-  const importCandidateQuery = useQuery({
+  const importCandidateSearchQuery = useQuery({
     queryKey: ['importCandidateSearch', identifier],
     queryFn: () => fetchImportCandidates(1, 0, `id:"${identifier}"`),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
-  const importCandidate = importCandidateQuery.data?.hits[0];
+  const importCandidateSearch = importCandidateSearchQuery.data?.hits[0];
+
+  const importCandidateQuery = useQuery({
+    queryKey: ['importCandidate', identifier],
+    queryFn: () => fetchImportCandidate(identifier),
+    meta: { errorMessage: t('feedback.error.get_import_candidate') },
+  });
+  const importCandidate = importCandidateQuery.data;
 
   const importCandidateStatusMutation = useMutation({
     mutationFn: (comment: string) =>
@@ -62,17 +69,17 @@ export const CentralImportDuplicationCheckPage = () => {
   });
 
   useEffect(() => {
-    if (stringIncludesMathJax(importCandidate?.mainTitle)) {
+    if (stringIncludesMathJax(importCandidateSearch?.mainTitle)) {
       typesetMathJax();
     }
-  }, [importCandidate]);
+  }, [importCandidateSearch]);
 
   useEffect(() => {
     setDuplicateSearchFilters({
       ...emptyDuplicateSearchFilter,
-      doi: importCandidate?.doi ?? '',
+      doi: importCandidateSearch?.doi ?? '',
     });
-  }, [importCandidate]);
+  }, [importCandidateSearch]);
 
   return (
     <Box
@@ -84,14 +91,14 @@ export const CentralImportDuplicationCheckPage = () => {
         gap: '1rem',
       }}>
       <BackgroundDiv>
-        {importCandidateQuery.isLoading ? (
+        {importCandidateSearchQuery.isLoading || importCandidateQuery.isLoading ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
-        ) : importCandidate ? (
+        ) : importCandidateSearch && importCandidate ? (
           <>
             <Typography variant="h1" sx={{ mt: '1rem' }} gutterBottom>
               {t('basic_data.central_import.import_candidate')}:
             </Typography>
-            <CentralImportResultItem importCandidate={importCandidate} />
+            <CentralImportResultItem importCandidate={importCandidateSearch} />
 
             {importCandidate.importStatus.candidateStatus !== 'IMPORTED' ? (
               <>
@@ -99,7 +106,7 @@ export const CentralImportDuplicationCheckPage = () => {
                   {t('basic_data.central_import.search_for_duplicates')}:
                 </Typography>
                 <DuplicateSearchFilterForm
-                  importCandidate={importCandidate}
+                  importCandidate={importCandidateSearch}
                   setDuplicateSearchFilters={setDuplicateSearchFilters}
                 />
                 <CentralImportDuplicateSearch
@@ -158,59 +165,52 @@ export const CentralImportDuplicationCheckPage = () => {
 
           {importCandidate?.importStatus.candidateStatus === 'NOT_IMPORTED' && (
             <>
-              {!importCandidateStatusMutation.isSuccess ? (
-                <>
-                  <Typography gutterBottom>
-                    {t('basic_data.central_import.create_publication_from_import_candidate')}
-                  </Typography>
+              <Typography gutterBottom>
+                {t('basic_data.central_import.create_publication_from_import_candidate')}
+              </Typography>
 
-                  <Link to={getImportCandidateWizardPath(identifier)}>
-                    <Button variant="outlined" fullWidth size="small">
-                      {t('basic_data.central_import.create_new')}
-                    </Button>
-                  </Link>
+              <Link to={getImportCandidateWizardPath(identifier)}>
+                <Button variant="outlined" fullWidth size="small">
+                  {t('basic_data.central_import.create_new')}
+                </Button>
+              </Link>
 
-                  <Divider sx={{ my: '1rem' }} />
+              <Divider sx={{ my: '1rem' }} />
 
-                  <Typography gutterBottom>
-                    {t('basic_data.central_import.merge_candidate.merge_description')}
-                  </Typography>
-                  {registrationIdentifier ? (
-                    <Link to={getImportCandidateMergePath(identifier, registrationIdentifier)}>
-                      <Button variant="outlined" fullWidth size="small">
-                        {t('basic_data.central_import.merge_candidate.merge')}
-                      </Button>
-                    </Link>
-                  ) : (
-                    <Button variant="outlined" fullWidth size="small" disabled>
-                      {t('basic_data.central_import.merge_candidate.merge')}
-                    </Button>
-                  )}
-
-                  <Divider sx={{ my: '1rem' }} />
-
-                  <Typography gutterBottom>{t('basic_data.central_import.mark_as_not_applicable')}</Typography>
-                  <Button
-                    variant={showNotApplicableDialog ? 'contained' : 'outlined'}
-                    fullWidth
-                    size="small"
-                    onClick={() => setShowNotApplicableDialog(true)}>
-                    {t('basic_data.central_import.not_applicable')}
+              <Typography gutterBottom>{t('basic_data.central_import.merge_candidate.merge_description')}</Typography>
+              {registrationIdentifier ? (
+                <Link to={getImportCandidateMergePath(identifier, registrationIdentifier)}>
+                  <Button variant="outlined" fullWidth size="small">
+                    {t('basic_data.central_import.merge_candidate.merge')}
                   </Button>
-                  <ConfirmMessageDialog
-                    open={showNotApplicableDialog}
-                    onCancel={() => setShowNotApplicableDialog(false)}
-                    onAccept={async (comment: string) => {
-                      await importCandidateStatusMutation.mutateAsync(comment);
-                      setShowNotApplicableDialog(false);
-                    }}
-                    title={t('basic_data.central_import.not_applicable')}
-                    textFieldLabel={t('tasks.nvi.note')}
-                  />
-                </>
-              ) : importCandidateStatusMutation.isSuccess ? (
-                <Typography>{t('basic_data.central_import.import_not_applicable')}</Typography>
-              ) : null}
+                </Link>
+              ) : (
+                <Button variant="outlined" fullWidth size="small" disabled>
+                  {t('basic_data.central_import.merge_candidate.merge')}
+                </Button>
+              )}
+
+              <Divider sx={{ my: '1rem' }} />
+
+              <Typography gutterBottom>{t('basic_data.central_import.mark_as_not_applicable')}</Typography>
+              <Button
+                variant={showNotApplicableDialog ? 'contained' : 'outlined'}
+                fullWidth
+                size="small"
+                onClick={() => setShowNotApplicableDialog(true)}>
+                {t('basic_data.central_import.not_applicable')}
+              </Button>
+              <ConfirmMessageDialog
+                open={showNotApplicableDialog}
+                onCancel={() => setShowNotApplicableDialog(false)}
+                onAccept={async (comment: string) => {
+                  await importCandidateStatusMutation.mutateAsync(comment);
+                  await importCandidateQuery.refetch();
+                  setShowNotApplicableDialog(false);
+                }}
+                title={t('basic_data.central_import.not_applicable')}
+                textFieldLabel={t('tasks.nvi.note')}
+              />
             </>
           )}
 
