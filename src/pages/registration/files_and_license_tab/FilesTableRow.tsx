@@ -1,3 +1,4 @@
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {
   Box,
@@ -55,27 +56,33 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
       </TableCell>
 
       <TableCell>
-        {!disabled && (
-          <>
-            <Tooltip title={t('registration.files_and_license.remove_file')}>
-              <IconButton onClick={toggleOpenConfirmDialog}>
-                <CancelIcon color="primary" />
-              </IconButton>
-            </Tooltip>
-            <ConfirmDialog
-              open={openConfirmDialog}
-              title={t('registration.files_and_license.remove_file')}
-              onAccept={() => {
-                removeFile();
-                toggleOpenConfirmDialog();
-              }}
-              onCancel={toggleOpenConfirmDialog}>
-              <Typography>
-                {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
-              </Typography>
-            </ConfirmDialog>
-          </>
-        )}
+        <Box sx={{ display: 'flex' }}>
+          <IconButton size="small">
+            <AttachFileIcon color="primary" />
+          </IconButton>
+
+          {!disabled && (
+            <>
+              <Tooltip title={t('registration.files_and_license.remove_file')}>
+                <IconButton size="small" onClick={toggleOpenConfirmDialog}>
+                  <CancelIcon color="primary" />
+                </IconButton>
+              </Tooltip>
+              <ConfirmDialog
+                open={openConfirmDialog}
+                title={t('registration.files_and_license.remove_file')}
+                onAccept={() => {
+                  removeFile();
+                  toggleOpenConfirmDialog();
+                }}
+                onCancel={toggleOpenConfirmDialog}>
+                <Typography>
+                  {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
+                </Typography>
+              </ConfirmDialog>
+            </>
+          )}
+        </Box>
       </TableCell>
 
       <TableCell align="center" sx={{ minWidth: '5.5rem' }}>
