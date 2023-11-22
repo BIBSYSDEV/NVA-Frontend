@@ -51,6 +51,8 @@ export interface ImportCandidateSummary {
   journal: Pick<Journal, 'id'>;
   publicationInstance: PublicationInstance;
   contributors: Contributor[];
+  printIssn?: string;
+  onlineIssn?: string;
 }
 
 type PublicationInstance =
