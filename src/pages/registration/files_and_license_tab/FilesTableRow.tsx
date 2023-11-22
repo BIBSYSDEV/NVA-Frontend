@@ -58,6 +58,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
     queryKey: ['downloadFile', values.identifier, file.identifier],
     queryFn: () => downloadPrivateFile(values.identifier, file.identifier),
     meta: { errorMessage: t('feedback.error.download_file') },
+    cacheTime: 0,
   });
 
   useEffect(() => {
