@@ -184,10 +184,7 @@ export const PublishStrategySettings = () => {
           <Formik
             enableReinitialize
             initialValues={customer}
-            onSubmit={(values, { setSubmitting }) => {
-              updateRightsRetentionStrategy.mutate(values);
-              setSubmitting(false);
-            }}>
+            onSubmit={async (values) => await updateRightsRetentionStrategy.mutateAsync(values)}>
             {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => {
               const isRrs =
                 values.rightsRetentionStrategy?.type === RightsRetentionStrategyTypes.RightsRetentionStrategy;
@@ -235,7 +232,6 @@ export const PublishStrategySettings = () => {
 
                         <TextField
                           type="url"
-                          sx={{ color: 'primary.main', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}
                           data-testid={dataTestId.editor.rightsRetentionsStrategyLink}
                           {...field}
                           label={t('editor.retentions_strategy.institution_rrs_url')}
