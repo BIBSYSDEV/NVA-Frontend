@@ -3,6 +3,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import {
   Box,
   Checkbox,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -33,6 +34,7 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
+import { openFileInNewTab } from '../../../utils/registration-helpers';
 import { administrativeAgreementId } from '../FilesAndLicensePanel';
 
 interface FilesTableRowProps {
@@ -60,12 +62,9 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
   useEffect(() => {
     if (downloadFileQuery.data?.id) {
-      // Use timeout to ensure that file is opened on Safari/iOS: NP-30205, https://stackoverflow.com/a/70463940
-      setTimeout(() => {
-        window.open(downloadFileQuery.data?.id, '_blank');
-      });
+      openFileInNewTab(downloadFileQuery.data.id);
     }
-  }, [downloadFileQuery.data]);
+  }, [downloadFileQuery.data?.id]);
 
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
@@ -77,9 +76,20 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
       <TableCell>
         <Box sx={{ display: 'flex' }}>
-          <IconButton size="small" onClick={() => setDownloadFile(true)}>
-            <AttachFileIcon color="primary" />
-          </IconButton>
+          {downloadFileQuery.isFetching ? (
+            <CircularProgress />
+          ) : (
+            <IconButton
+              onClick={() => {
+                if (downloadFileQuery.isSuccess && downloadFileQuery.data?.id) {
+                  openFileInNewTab(downloadFileQuery.data.id);
+                } else {
+                  setDownloadFile(true);
+                }
+              }}>
+              <AttachFileIcon color="primary" />
+            </IconButton>
+          )}
 
           {!disabled && (
             <>
