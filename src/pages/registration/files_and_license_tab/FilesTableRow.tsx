@@ -23,7 +23,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { downloadPrivateFile } from '../../../api/fileApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
@@ -56,16 +56,15 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const downloadFileQuery = useQuery({
     enabled: downloadFile,
     queryKey: ['downloadFile', values.identifier, file.identifier],
-    queryFn: () => downloadPrivateFile(values.identifier, file.identifier),
+    queryFn: async () => {
+      const downloadFileResponse = await downloadPrivateFile(values.identifier, file.identifier);
+      if (downloadFileResponse) {
+        openFileInNewTab(downloadFileResponse.id);
+      }
+      return downloadFileResponse;
+    },
     meta: { errorMessage: t('feedback.error.download_file') },
-    cacheTime: 0,
   });
-
-  useEffect(() => {
-    if (downloadFileQuery.data?.id) {
-      openFileInNewTab(downloadFileQuery.data.id);
-    }
-  }, [downloadFileQuery.data?.id]);
 
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
