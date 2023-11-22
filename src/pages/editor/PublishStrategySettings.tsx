@@ -195,11 +195,10 @@ export const PublishStrategySettings = () => {
                 values.rightsRetentionStrategy?.type === RightsRetentionStrategyTypes.NullRightsRetentionStrategy;
 
               return (
-                <Box component={Form} sx={{ width: '50%', maxWidth: '40rem' }}>
+                <Box component={Form} sx={{ maxWidth: '35rem' }}>
                   <Field name={'rightsRetentionStrategy.type'}>
                     {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
                       <FormControlLabel
-                        sx={{ color: 'primary.main' }}
                         label={t('editor.retentions_strategy.rights_retentions_strategy')}
                         control={
                           <Checkbox
@@ -227,7 +226,7 @@ export const PublishStrategySettings = () => {
                     {({ field }: FieldProps<string>) => (
                       <FormLabel
                         component="legend"
-                        sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '2rem' }}>
+                        sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '1rem' }}>
                         {t('editor.retentions_strategy.institution_rrs_info_page')}
 
                         <TextField
@@ -237,10 +236,9 @@ export const PublishStrategySettings = () => {
                           label={t('editor.retentions_strategy.institution_rrs_url')}
                           required={isRrs || isOverridableRrs}
                           placeholder={t('editor.retentions_strategy.institution_rrs_link')}
-                          size="small"
                           variant="filled"
                           fullWidth
-                          disabled={isNullRrs}
+                          disabled={isNullRrs || isSubmitting}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -253,20 +251,19 @@ export const PublishStrategySettings = () => {
                     )}
                   </Field>
 
-                  <Typography sx={{ fontStyle: 'italic', marginTop: '1rem', marginBottom: '2rem' }}>
+                  <Typography sx={{ fontStyle: 'italic', marginTop: '0.5rem', marginBottom: '1rem' }}>
                     {t('editor.retentions_strategy.institution_rrs_required_link')}
                   </Typography>
 
                   <Field name={'rightsRetentionStrategy.type'}>
                     {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
                       <FormControlLabel
-                        sx={{ color: 'primary.main' }}
                         label={t('editor.retentions_strategy.registrator_rrs_override')}
                         control={
                           <Checkbox
                             data-testid={dataTestId.editor.rightsRetentionsStrategyOverride}
                             {...field}
-                            disabled={isNullRrs}
+                            disabled={isNullRrs || isSubmitting}
                             checked={isOverridableRrs}
                             value={values.rightsRetentionStrategy?.type}
                             onChange={() => {
