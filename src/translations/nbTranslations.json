@@ -1157,6 +1157,7 @@
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
+      "open_file": "Åpne fil",
       "published": "Publisert",
       "published_version": "Publisert versjon",
       "remove_file": "Fjern fil",

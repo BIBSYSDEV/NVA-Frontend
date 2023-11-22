@@ -79,14 +79,16 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           {downloadFileQuery.isFetching ? (
             <CircularProgress />
           ) : (
-            <IconButton
-              onClick={() =>
-                downloadFileQuery.isSuccess && downloadFileQuery.data?.id
-                  ? openFileInNewTab(downloadFileQuery.data.id)
-                  : setDownloadFile(true)
-              }>
-              <AttachFileIcon color="primary" />
-            </IconButton>
+            <Tooltip title={t('registration.files_and_license.open_file')}>
+              <IconButton
+                onClick={() =>
+                  downloadFileQuery.isSuccess && downloadFileQuery.data?.id
+                    ? openFileInNewTab(downloadFileQuery.data.id)
+                    : setDownloadFile(true)
+                }>
+                <AttachFileIcon color="primary" />
+              </IconButton>
+            </Tooltip>
           )}
 
           {!disabled && (
