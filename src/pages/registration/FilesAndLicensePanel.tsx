@@ -189,6 +189,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                             <TableHead>
                               <TableRow>
                                 <TableCell>{t('common.name')}</TableCell>
+                                <TableCell>{t('common.file')}</TableCell>
                                 <TableCell>{t('registration.files_and_license.size')}</TableCell>
                                 <TableCell id={administrativeAgreementId}>
                                   {t('registration.files_and_license.administrative_agreement')}
