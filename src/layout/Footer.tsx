@@ -9,6 +9,10 @@ import { Link } from 'react-router-dom';
 import { dataTestId } from '../utils/dataTestIds';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
+{
+  /*import { LanguageSelector } from './header/LanguageSelector';*/
+}
+
 export const Footer = () => {
   const { t } = useTranslation();
 
@@ -19,14 +23,23 @@ export const Footer = () => {
         padding: '1rem',
         bgcolor: 'info.light',
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', lg: '3fr 3fr 2fr' },
+        gridTemplateColumns: { xs: '1fr', lg: '3fr 3fr 3fr' },
         columnGap: '3rem',
       }}>
-      {/* Box 1 */}
+      {/* ---------------------------- Box 1 ---------------------------------- */}
+
       <Box>
-        {/* Om NVA */}
+        {/* Om Nasjonalt Vitenarkiv (NVA) */}
         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
           <ArrowRightAltIcon />
+
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}>
+            {t('footer.about_nva')}
+          </Typography>
+
           <MuiLink
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
@@ -36,7 +49,7 @@ export const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva'}>
-            {t('about.about_nva')}
+            {t('footer.read_more')}
           </MuiLink>
           <LaunchIcon fontSize="small" />
         </Box>
@@ -53,9 +66,32 @@ export const Footer = () => {
           }}>
           {t('footer.about_nva_text')}
         </Typography>
+
+        {/* Språkvalg */}
+
+        <Box
+          sx={{
+            display: 'flex',
+            justifySelf: { xs: 'start' },
+            gap: '0.5rem',
+            gridColumn: { xs: 1, lg: 2 },
+          }}>
+          <ArrowRightAltIcon />
+
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}>
+            {t('footer.language_selector')}
+          </Typography>
+        </Box>
+        <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
+
+        {/*<LanguageSelector /> */}
       </Box>
 
-      {/* Box 2 */}
+      {/* ---------------------------- Box 2 ---------------------------------- */}
+
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         {/* Hvordan bli kunde */}
         <Box
@@ -66,6 +102,13 @@ export const Footer = () => {
           }}>
           <ArrowRightAltIcon />
 
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}>
+            {t('footer.become_customer')}
+          </Typography>
+
           <MuiLink
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
@@ -75,7 +118,7 @@ export const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpesenter-nva'}>
-            {t('footer.become_customer')}
+            {t('footer.read_more')}
           </MuiLink>
 
           <LaunchIcon fontSize="small" />
@@ -96,6 +139,7 @@ export const Footer = () => {
         </Typography>
 
         {/* Om Sikt */}
+
         <Box
           sx={{
             display: 'flex',
@@ -104,6 +148,14 @@ export const Footer = () => {
             mt: '2rem',
           }}>
           <ArrowRightAltIcon />
+
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}>
+            {t('footer.about_sikt')}
+          </Typography>
+
           <MuiLink
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
@@ -113,7 +165,7 @@ export const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/'}>
-            {t('footer.about_sikt')}
+            {t('footer.read_more')}
           </MuiLink>
           <LaunchIcon fontSize="small" />
         </Box>
@@ -130,24 +182,57 @@ export const Footer = () => {
         </Typography>
       </Box>
 
-      {/* Box 3 */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: 'fit-content' }}>
-        {/* Driftsmeldinger */}
+      {/* ---------------------------- Box 3 ---------------------------------- */}
 
-        {/*<Box sx={{ display: 'flex', gap: '0.5rem' }}>
-          <ArrowCircleRightIcon />
+      <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: 'fit-content' }}>
+        {/* Hjelpesenter */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifySelf: { xs: 'start' },
+            gap: '0.5rem',
+          }}>
+          <ArrowRightAltIcon />
+
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+            }}>
+            {t('footer.help_center')}
+          </Typography>
+
           <MuiLink
-            data-testid={dataTestId.footer.systemStatusLink}
-            component={Link}
-            to={UrlPathTemplate.About}
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
               gridRow: { xs: 3, lg: 1 },
-            }}>
-            {t('footer.system_status_link')}
+            }}
+            data-testid={dataTestId.footer.becomeCustomer}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpesenter-nva'}>
+            {t('footer.read_more')}
+          </MuiLink>
+
+          <LaunchIcon fontSize="small" />
+        </Box>
+
+        <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
+
+        {/* Aktuelt */}
+
+        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+          <ArrowCircleRightIcon />
+          <MuiLink
+            data-testid={dataTestId.footer.newsLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpesenter-nva'}>
+            {t('footer.news_link')}
           </MuiLink>
           <LaunchIcon fontSize="small" />
-        </Box>*/}
+        </Box>
+
+        {/* Driftsmeldinger */}
 
         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
           <ArrowCircleRightIcon />
@@ -161,68 +246,11 @@ export const Footer = () => {
           <LaunchIcon fontSize="small" />
         </Box>
 
-        {/* Aktuelt */}
-
-        {/*<Box sx={{ display: 'flex', gap: '0.5rem' }}>
-          <ArrowCircleRightIcon />
-          <MuiLink
-            data-testid={dataTestId.footer.newsLink}
-            component={Link}
-            to={UrlPathTemplate.About}
-            sx={{
-              justifySelf: { xs: 'center', lg: 'start' },
-              gridRow: { xs: 3, lg: 1 },
-            }}>
-            {t('footer.news_link')}
-          </MuiLink>
-          <LaunchIcon fontSize="small" />
-        </Box> */}
-
-        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-          <ArrowCircleRightIcon />
-          <MuiLink
-            data-testid={dataTestId.footer.newsLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpesenter-nva'}>
-            {t('footer.news_link')}
-          </MuiLink>
-          <LaunchIcon fontSize="small" />
-        </Box>
-
-        {/* Opplæring */}
-
-        {/*<Box sx={{ display: 'flex', gap: '0.5rem' }}>
-          <ArrowCircleRightIcon />
-          <MuiLink
-            data-testid={dataTestId.footer.trainingLink}
-            component={Link}
-            to={UrlPathTemplate.About}
-            sx={{
-              justifySelf: { xs: 'center', lg: 'start' },
-              gridRow: { xs: 3, lg: 1 },
-            }}>
-            {t('footer.training_link')}
-          </MuiLink>
-          <LaunchIcon fontSize="small" />
-        </Box>*/}
-
-        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-          <ArrowCircleRightIcon />
-          <MuiLink
-            data-testid={dataTestId.footer.trainingLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpesenter-nva'}>
-            {t('footer.training_link')}
-          </MuiLink>
-          <LaunchIcon fontSize="small" />
-        </Box>
-
         <Divider sx={{ bgcolor: 'primary.main', mt: '0.5rem', mb: '1rem' }} />
 
         <Box>
           {/* Personvern og informasjonskapsler */}
+
           <Box
             sx={{
               display: 'flex',
@@ -237,6 +265,7 @@ export const Footer = () => {
           </Box>
 
           {/* Tilgjengelighetserklæring */}
+
           <Box
             sx={{
               display: 'flex',
@@ -254,7 +283,6 @@ export const Footer = () => {
             </MuiLink>
           </Box>
 
-          {/* Ved teknisk støtte ... */}
           <Box
             sx={{
               display: 'flex',
@@ -263,13 +291,6 @@ export const Footer = () => {
               gridColumn: { xs: 1, lg: 3 },
             }}>
             <ArrowRightAltIcon />
-            {/* <MuiLink
-              data-testid={dataTestId.footer.technicalSupportLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              href={'https://uustatus.no/nb/erklaringer/publisert/bffb4b1d-25eb-4fe0-bac7-2f0b4a8e0fd9'}>
-              {t('footer.technical_support_link')}
-            </MuiLink> */}
 
             <Typography paragraph>
               <Trans t={t} i18nKey="footer.technical_support_link">

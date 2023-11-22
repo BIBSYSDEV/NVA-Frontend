@@ -505,11 +505,15 @@
     }
   },
   "footer": {
+    "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
     "about_nva_text": "NVA er en nasjonal fellestjeneste som gjør resultater fra norsk forskning tilgjengelig. Tjenesten gjør forskningsresultatene lettere tilgjengelig i et søk som går på tvers av det som i dag er flere lokale vitenarkiver.",
     "about_sikt": "Om Sikt",
     "about_sikt_text": "Sikt er leverandør til norsk kunnskapssektor, og kundene våre er forskningsinstitutter og universiteter.",
     "become_customer": "Hvordan bli kunde?",
+    "help_center": "Hjelpesenter",
+    "language_selector": "Valgt språk",
     "news_link": "Aktuelt",
+    "read_more": "les mer",
     "system_status_link": "Driftsmeldinger",
     "technical_support_link": "Ved teknisk støtte <0>kontakt</0>",
     "training_link": "Opplæring"
