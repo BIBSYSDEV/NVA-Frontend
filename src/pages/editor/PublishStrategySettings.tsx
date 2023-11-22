@@ -175,7 +175,9 @@ export const PublishStrategySettings = () => {
         </StyledItemContainer>
       </Box>
 
-      <Divider sx={{ mt: '2.5rem', width: '50%' }} />
+      <Divider sx={{ my: '2.5rem' }} />
+
+      <Typography variant="h2">{t('editor.retentions_strategy.institution_rrs')}</Typography>
 
       {!customer ? (
         <PageSpinner />
@@ -189,14 +191,10 @@ export const PublishStrategySettings = () => {
           }}>
           {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => (
             <Form>
-              <Box sx={{ width: '50%' }}>
+              <Box sx={{ width: '50%', maxWidth: '40rem' }}>
                 <Field name={'rightsRetentionStrategy.type'}>
                   {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
                     <div>
-                      <FormLabel component="legend" sx={{ fontWeight: 'bold', marginTop: '3rem', color: 'black' }}>
-                        {t('editor.retentions_strategy.institution_rrs')}
-                      </FormLabel>
-
                       <FormControlLabel
                         sx={{ color: 'primary.main' }}
                         label={t('editor.retentions_strategy.rights_retentions_strategy')}
@@ -233,41 +231,37 @@ export const PublishStrategySettings = () => {
 
                 <Field name="rightsRetentionStrategy.id">
                   {({ field }: FieldProps<string>) => (
-                    <>
-                      <FormLabel
-                        component="legend"
-                        sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '2rem' }}>
-                        {t('editor.retentions_strategy.institution_rrs_info_page')}
+                    <FormLabel component="legend" sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '2rem' }}>
+                      {t('editor.retentions_strategy.institution_rrs_info_page')}
 
-                        <TextField
-                          sx={{ color: 'primary.main', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}
-                          data-testid={dataTestId.editor.rightsRetentionsStrategyLink}
-                          {...field}
-                          label={t('editor.retentions_strategy.institution_rrs_url')}
-                          required={
-                            values.rightsRetentionStrategy.type ===
-                              RightsRetentionStrategyTypes.RightsRetentionStrategy ||
-                            values.rightsRetentionStrategy.type ===
-                              RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                          }
-                          placeholder={t('editor.retentions_strategy.institution_rrs_link')}
-                          size="small"
-                          variant="filled"
-                          fullWidth
-                          disabled={
-                            values.rightsRetentionStrategy.type ===
-                            RightsRetentionStrategyTypes.NullRightsRetentionStrategy
-                          }
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <LinkIcon />
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                      </FormLabel>
-                    </>
+                      <TextField
+                        sx={{ color: 'primary.main', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}
+                        data-testid={dataTestId.editor.rightsRetentionsStrategyLink}
+                        {...field}
+                        label={t('editor.retentions_strategy.institution_rrs_url')}
+                        required={
+                          values.rightsRetentionStrategy.type ===
+                            RightsRetentionStrategyTypes.RightsRetentionStrategy ||
+                          values.rightsRetentionStrategy.type ===
+                            RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
+                        }
+                        placeholder={t('editor.retentions_strategy.institution_rrs_link')}
+                        size="small"
+                        variant="filled"
+                        fullWidth
+                        disabled={
+                          values.rightsRetentionStrategy.type ===
+                          RightsRetentionStrategyTypes.NullRightsRetentionStrategy
+                        }
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <LinkIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    </FormLabel>
                   )}
                 </Field>
 
