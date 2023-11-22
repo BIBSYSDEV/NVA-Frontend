@@ -1,10 +1,8 @@
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Divider, IconButton, Paper, Typography } from '@mui/material';
+import { Box, Divider, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
 import { fetchNviCandidate, fetchNviCandidates } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -16,6 +14,7 @@ import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
 import { Forbidden } from '../../errorpages/Forbidden';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
+import { NavigationIconButton } from './NavigationIconButton';
 import { NviApprovalStatuses } from './NviApprovalStatuses';
 import { NviCandidateActions } from './NviCandidateActions';
 
@@ -57,12 +56,10 @@ export const NviCandidatePage = () => {
 
   const navigateCandidateQuery = useQuery({
     queryKey: ['navigateCandidates', 3, candidateOffset, nviListQuery],
-    queryFn: () => fetchNviCandidates(3, candidateOffset ?? 1, nviListQuery),
+    queryFn: () => fetchNviCandidates(3, candidateOffset ?? 0, nviListQuery),
     meta: { errorMessage: false },
     retry: false,
   });
-
-  console.log(candidateOffset);
 
   const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[isFirstCandidate ? 0 : 2]?.identifier;
   const previousCandidateIdentifier =
@@ -89,8 +86,8 @@ export const NviCandidatePage = () => {
             <PublicRegistrationContent registration={registrationQuery.data} />
 
             {previousCandidateIdentifier && navigateCandidatesOffset && (
-              <IconButton
-                component={Link}
+              <NavigationIconButton
+                data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
                 to={{
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
                   state: {
@@ -98,29 +95,18 @@ export const NviCandidatePage = () => {
                     nviListQuery: nviListQuery,
                   },
                 }}
-                data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
                 title={t('tasks.nvi.previous_candidate')}
-                size="small"
+                navigateTo={'previous'}
                 sx={{
-                  display: { xs: 'none', md: 'flex' },
                   gridArea: 'registration',
-                  alignSelf: 'center',
-                  justifySelf: 'start',
                   left: '-1rem',
-                  border: '1px solid',
-                  borderColor: 'info.main',
-                  bgcolor: 'white',
-                  '&:hover': {
-                    bgcolor: 'white',
-                  },
-                }}>
-                <ArrowBackIosNewIcon fontSize="small" color="info" />
-              </IconButton>
+                }}
+              />
             )}
 
             {nextCandidateIdentifier && navigateCandidatesOffset && (
-              <IconButton
-                component={Link}
+              <NavigationIconButton
+                data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
                   state: {
@@ -128,24 +114,13 @@ export const NviCandidatePage = () => {
                     nviListQuery: nviListQuery,
                   },
                 }}
-                data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                 title={t('tasks.nvi.next_candidate')}
-                size="small"
+                navigateTo={'next'}
                 sx={{
-                  display: { xs: 'none', md: 'flex' },
                   gridArea: 'registration',
-                  alignSelf: 'center',
-                  justifySelf: 'end',
                   right: '-1rem',
-                  border: '1px solid',
-                  borderColor: 'info.main',
-                  bgcolor: 'white',
-                  '&:hover': {
-                    bgcolor: 'white',
-                  },
-                }}>
-                <ArrowForwardIosIcon fontSize="small" color="info" />
-              </IconButton>
+                }}
+              />
             )}
           </ErrorBoundary>
 
