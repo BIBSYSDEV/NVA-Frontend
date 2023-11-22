@@ -239,6 +239,7 @@ export const PublishStrategySettings = () => {
                         {t('editor.retentions_strategy.institution_rrs_info_page')}
 
                         <TextField
+                          type="url"
                           sx={{ color: 'primary.main', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}
                           data-testid={dataTestId.editor.rightsRetentionsStrategyLink}
                           {...field}
