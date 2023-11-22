@@ -182,7 +182,6 @@ export const PublishStrategySettings = () => {
           <Typography variant="h2">{t('editor.retentions_strategy.institution_rrs')}</Typography>
 
           <Formik
-            enableReinitialize
             initialValues={customer}
             onSubmit={async (values) => await updateRightsRetentionStrategy.mutateAsync(values)}>
             {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => {
