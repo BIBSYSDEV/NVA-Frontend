@@ -24,10 +24,10 @@ export const NviCandidatePage = () => {
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
 
-  const navigateCandidatesOffset = location.state?.candidateOffset; // gives index of item + 1
+  const navigateCandidatesOffset = location.state?.candidateOffset;
+  const nviListQuery = location.state?.nviListQuery;
   const isFirstCandidate = navigateCandidatesOffset === 1;
   const candidateOffset = navigateCandidatesOffset && navigateCandidatesOffset - (isFirstCandidate ? 0 : 2);
-  const nviListQuery = `${location.state?.nviListQuery}${candidateOffset ? `&offset=${candidateOffset}` : ''}`;
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -56,12 +56,13 @@ export const NviCandidatePage = () => {
   const periodStatus = nviCandidate?.periodStatus.status;
 
   const navigateCandidateQuery = useQuery({
-    enabled: !!candidateOffset,
     queryKey: ['navigateCandidates', 3, candidateOffset, nviListQuery],
-    queryFn: candidateOffset ? () => fetchNviCandidates(3, candidateOffset, nviListQuery) : undefined,
+    queryFn: () => fetchNviCandidates(3, candidateOffset ?? 1, nviListQuery),
     meta: { errorMessage: false },
     retry: false,
   });
+
+  console.log(candidateOffset);
 
   const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[isFirstCandidate ? 0 : 2]?.identifier;
   const previousCandidateIdentifier =
