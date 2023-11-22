@@ -111,212 +111,217 @@ export const PublishStrategySettings = () => {
       <Helmet>
         <title id="publish-strategy-label">{t('editor.publish_strategy.publish_strategy')}</title>
       </Helmet>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <StyledItemContainer>
-          <PublishStrategyButton
-            focusRipple
-            disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
-            isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
-            data-testid={dataTestId.editor.workflowRegistratorPublishesAll}
-            onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
-            <Box>
-              <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_publishes_without_curator')}
-              </Typography>
-              <StyledAccessRightsContainer>
-                <StyledAccessRight>
-                  <CheckCircleIcon color="primary" />
-                  <Typography>{t('editor.publish_strategy.metadata')}</Typography>
-                </StyledAccessRight>
-                <StyledAccessRight>
-                  <CheckCircleIcon color="primary" />
-                  <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
-                </StyledAccessRight>
-              </StyledAccessRightsContainer>
-              <Typography sx={{ textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_publishes_without_curator_description')}
-              </Typography>
-            </Box>
-          </PublishStrategyButton>
-          {isUpdating === 'RegistratorPublishesMetadataAndFiles' && (
-            <CircularProgress aria-labelledby="publish-strategy-label" />
-          )}
-        </StyledItemContainer>
-
-        <StyledItemContainer>
-          <PublishStrategyButton
-            focusRipple
-            disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
-            isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
-            data-testid={dataTestId.editor.workflowRegistratorPublishesMetadata}
-            onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
-            <Box>
-              <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_publishes_metadata')}
-              </Typography>
-              <StyledAccessRightsContainer>
-                <StyledAccessRight>
-                  <CheckCircleIcon color="primary" />
-                  <Typography>{t('editor.publish_strategy.metadata')}</Typography>
-                </StyledAccessRight>
-                <StyledAccessRight>
-                  <RemoveCircleIcon color="error" />
-                  <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
-                </StyledAccessRight>
-              </StyledAccessRightsContainer>
-              <Typography sx={{ textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_publishes_metadata_description')}
-              </Typography>
-            </Box>
-          </PublishStrategyButton>
-          {isUpdating === 'RegistratorPublishesMetadataOnly' && (
-            <CircularProgress aria-labelledby="publish-strategy-label" />
-          )}
-        </StyledItemContainer>
-      </Box>
-
-      <Divider sx={{ my: '2.5rem' }} />
-
-      <Typography variant="h2">{t('editor.retentions_strategy.institution_rrs')}</Typography>
 
       {!customer ? (
         <PageSpinner />
       ) : (
-        <Formik
-          enableReinitialize
-          initialValues={customer}
-          onSubmit={(values, { setSubmitting }) => {
-            updateRightsRetentionStrategy.mutate(values);
-            setSubmitting(false);
-          }}>
-          {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => (
-            <Form>
-              <Box sx={{ width: '50%', maxWidth: '40rem' }}>
-                <Field name={'rightsRetentionStrategy.type'}>
-                  {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
-                    <div>
-                      <FormControlLabel
-                        sx={{ color: 'primary.main' }}
-                        label={t('editor.retentions_strategy.rights_retentions_strategy')}
-                        control={
-                          <Checkbox
-                            data-testid={dataTestId.editor.rightsRetentionsStrategy}
-                            {...field}
-                            disabled={isSubmitting}
-                            checked={
-                              values.rightsRetentionStrategy?.type ===
-                                RightsRetentionStrategyTypes.RightsRetentionStrategy ||
-                              values.rightsRetentionStrategy?.type ===
-                                RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                            }
-                            value={values.rightsRetentionStrategy?.type}
-                            onChange={() => {
-                              setFieldValue(
-                                field.name,
+        <>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <StyledItemContainer>
+              <PublishStrategyButton
+                focusRipple
+                disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
+                isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
+                data-testid={dataTestId.editor.workflowRegistratorPublishesAll}
+                onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
+                <Box>
+                  <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+                    {t('editor.publish_strategy.registrator_publishes_without_curator')}
+                  </Typography>
+                  <StyledAccessRightsContainer>
+                    <StyledAccessRight>
+                      <CheckCircleIcon color="primary" />
+                      <Typography>{t('editor.publish_strategy.metadata')}</Typography>
+                    </StyledAccessRight>
+                    <StyledAccessRight>
+                      <CheckCircleIcon color="primary" />
+                      <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
+                    </StyledAccessRight>
+                  </StyledAccessRightsContainer>
+                  <Typography sx={{ textAlign: 'center' }}>
+                    {t('editor.publish_strategy.registrator_publishes_without_curator_description')}
+                  </Typography>
+                </Box>
+              </PublishStrategyButton>
+              {isUpdating === 'RegistratorPublishesMetadataAndFiles' && (
+                <CircularProgress aria-labelledby="publish-strategy-label" />
+              )}
+            </StyledItemContainer>
+
+            <StyledItemContainer>
+              <PublishStrategyButton
+                focusRipple
+                disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
+                isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
+                data-testid={dataTestId.editor.workflowRegistratorPublishesMetadata}
+                onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
+                <Box>
+                  <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+                    {t('editor.publish_strategy.registrator_publishes_metadata')}
+                  </Typography>
+                  <StyledAccessRightsContainer>
+                    <StyledAccessRight>
+                      <CheckCircleIcon color="primary" />
+                      <Typography>{t('editor.publish_strategy.metadata')}</Typography>
+                    </StyledAccessRight>
+                    <StyledAccessRight>
+                      <RemoveCircleIcon color="error" />
+                      <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
+                    </StyledAccessRight>
+                  </StyledAccessRightsContainer>
+                  <Typography sx={{ textAlign: 'center' }}>
+                    {t('editor.publish_strategy.registrator_publishes_metadata_description')}
+                  </Typography>
+                </Box>
+              </PublishStrategyButton>
+              {isUpdating === 'RegistratorPublishesMetadataOnly' && (
+                <CircularProgress aria-labelledby="publish-strategy-label" />
+              )}
+            </StyledItemContainer>
+          </Box>
+
+          <Divider sx={{ my: '2.5rem' }} />
+
+          <Typography variant="h2">{t('editor.retentions_strategy.institution_rrs')}</Typography>
+
+          <Formik
+            enableReinitialize
+            initialValues={customer}
+            onSubmit={(values, { setSubmitting }) => {
+              updateRightsRetentionStrategy.mutate(values);
+              setSubmitting(false);
+            }}>
+            {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => (
+              <Form>
+                <Box sx={{ width: '50%', maxWidth: '40rem' }}>
+                  <Field name={'rightsRetentionStrategy.type'}>
+                    {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
+                      <div>
+                        <FormControlLabel
+                          sx={{ color: 'primary.main' }}
+                          label={t('editor.retentions_strategy.rights_retentions_strategy')}
+                          control={
+                            <Checkbox
+                              data-testid={dataTestId.editor.rightsRetentionsStrategy}
+                              {...field}
+                              disabled={isSubmitting}
+                              checked={
                                 values.rightsRetentionStrategy?.type ===
                                   RightsRetentionStrategyTypes.RightsRetentionStrategy ||
-                                  values.rightsRetentionStrategy?.type ===
-                                    RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                                  ? RightsRetentionStrategyTypes.NullRightsRetentionStrategy
-                                  : RightsRetentionStrategyTypes.RightsRetentionStrategy
-                              );
-                              setFieldValue('rightsRetentionStrategy.id', '');
-                            }}
-                          />
-                        }
-                      />
-                    </div>
-                  )}
-                </Field>
-
-                <Field name="rightsRetentionStrategy.id">
-                  {({ field }: FieldProps<string>) => (
-                    <FormLabel component="legend" sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '2rem' }}>
-                      {t('editor.retentions_strategy.institution_rrs_info_page')}
-
-                      <TextField
-                        sx={{ color: 'primary.main', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}
-                        data-testid={dataTestId.editor.rightsRetentionsStrategyLink}
-                        {...field}
-                        label={t('editor.retentions_strategy.institution_rrs_url')}
-                        required={
-                          values.rightsRetentionStrategy.type ===
-                            RightsRetentionStrategyTypes.RightsRetentionStrategy ||
-                          values.rightsRetentionStrategy.type ===
-                            RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                        }
-                        placeholder={t('editor.retentions_strategy.institution_rrs_link')}
-                        size="small"
-                        variant="filled"
-                        fullWidth
-                        disabled={
-                          values.rightsRetentionStrategy.type ===
-                          RightsRetentionStrategyTypes.NullRightsRetentionStrategy
-                        }
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <LinkIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </FormLabel>
-                  )}
-                </Field>
-
-                <Typography sx={{ fontStyle: 'italic', marginTop: '1rem', marginBottom: '2rem' }}>
-                  {t('editor.retentions_strategy.institution_rrs_required_link')}
-                </Typography>
-
-                <Field name={'rightsRetentionStrategy.type'}>
-                  {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
-                    <div>
-                      <FormControlLabel
-                        sx={{ color: 'primary.main' }}
-                        label={t('editor.retentions_strategy.registrator_rrs_override')}
-                        control={
-                          <Checkbox
-                            data-testid={dataTestId.editor.rightsRetentionsStrategyOverride}
-                            {...field}
-                            disabled={
-                              values.rightsRetentionStrategy.type ===
-                              RightsRetentionStrategyTypes.NullRightsRetentionStrategy
-                            }
-                            checked={
-                              values.rightsRetentionStrategy?.type ===
-                              RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                            }
-                            value={values.rightsRetentionStrategy?.type}
-                            onChange={() => {
-                              setFieldValue(
-                                field.name,
                                 values.rightsRetentionStrategy?.type ===
-                                  RightsRetentionStrategyTypes.RightsRetentionStrategy
-                                  ? RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                                  : RightsRetentionStrategyTypes.RightsRetentionStrategy
-                              );
-                            }}
-                          />
-                        }
-                      />
-                    </div>
-                  )}
-                </Field>
+                                  RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
+                              }
+                              value={values.rightsRetentionStrategy?.type}
+                              onChange={() => {
+                                setFieldValue(
+                                  field.name,
+                                  values.rightsRetentionStrategy?.type ===
+                                    RightsRetentionStrategyTypes.RightsRetentionStrategy ||
+                                    values.rightsRetentionStrategy?.type ===
+                                      RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
+                                    ? RightsRetentionStrategyTypes.NullRightsRetentionStrategy
+                                    : RightsRetentionStrategyTypes.RightsRetentionStrategy
+                                );
+                                setFieldValue('rightsRetentionStrategy.id', '');
+                              }}
+                            />
+                          }
+                        />
+                      </div>
+                    )}
+                  </Field>
 
-                <StyledRightAlignedWrapper>
-                  <LoadingButton
-                    data-testid={dataTestId.editor.rightsRetentionsStrategySaveButton}
-                    variant="contained"
-                    loading={isSubmitting}
-                    type="submit">
-                    {t('common.save')}
-                  </LoadingButton>
-                </StyledRightAlignedWrapper>
-              </Box>
-            </Form>
-          )}
-        </Formik>
+                  <Field name="rightsRetentionStrategy.id">
+                    {({ field }: FieldProps<string>) => (
+                      <FormLabel
+                        component="legend"
+                        sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '2rem' }}>
+                        {t('editor.retentions_strategy.institution_rrs_info_page')}
+
+                        <TextField
+                          sx={{ color: 'primary.main', fontWeight: 'bold', display: 'flex', alignItems: 'center' }}
+                          data-testid={dataTestId.editor.rightsRetentionsStrategyLink}
+                          {...field}
+                          label={t('editor.retentions_strategy.institution_rrs_url')}
+                          required={
+                            values.rightsRetentionStrategy.type ===
+                              RightsRetentionStrategyTypes.RightsRetentionStrategy ||
+                            values.rightsRetentionStrategy.type ===
+                              RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
+                          }
+                          placeholder={t('editor.retentions_strategy.institution_rrs_link')}
+                          size="small"
+                          variant="filled"
+                          fullWidth
+                          disabled={
+                            values.rightsRetentionStrategy.type ===
+                            RightsRetentionStrategyTypes.NullRightsRetentionStrategy
+                          }
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <LinkIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </FormLabel>
+                    )}
+                  </Field>
+
+                  <Typography sx={{ fontStyle: 'italic', marginTop: '1rem', marginBottom: '2rem' }}>
+                    {t('editor.retentions_strategy.institution_rrs_required_link')}
+                  </Typography>
+
+                  <Field name={'rightsRetentionStrategy.type'}>
+                    {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
+                      <div>
+                        <FormControlLabel
+                          sx={{ color: 'primary.main' }}
+                          label={t('editor.retentions_strategy.registrator_rrs_override')}
+                          control={
+                            <Checkbox
+                              data-testid={dataTestId.editor.rightsRetentionsStrategyOverride}
+                              {...field}
+                              disabled={
+                                values.rightsRetentionStrategy.type ===
+                                RightsRetentionStrategyTypes.NullRightsRetentionStrategy
+                              }
+                              checked={
+                                values.rightsRetentionStrategy?.type ===
+                                RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
+                              }
+                              value={values.rightsRetentionStrategy?.type}
+                              onChange={() => {
+                                setFieldValue(
+                                  field.name,
+                                  values.rightsRetentionStrategy?.type ===
+                                    RightsRetentionStrategyTypes.RightsRetentionStrategy
+                                    ? RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
+                                    : RightsRetentionStrategyTypes.RightsRetentionStrategy
+                                );
+                              }}
+                            />
+                          }
+                        />
+                      </div>
+                    )}
+                  </Field>
+
+                  <StyledRightAlignedWrapper>
+                    <LoadingButton
+                      data-testid={dataTestId.editor.rightsRetentionsStrategySaveButton}
+                      variant="contained"
+                      loading={isSubmitting}
+                      type="submit">
+                      {t('common.save')}
+                    </LoadingButton>
+                  </StyledRightAlignedWrapper>
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        </>
       )}
     </>
   );
