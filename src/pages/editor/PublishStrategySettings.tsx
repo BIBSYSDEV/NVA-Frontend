@@ -103,9 +103,6 @@ export const PublishStrategySettings = () => {
       dispatch(setNotification({ message: t('feedback.error.update_rights_retention_strategy'), variant: 'error' })),
   });
 
-  const hasRightsRetentionStrategy =
-    customer?.rightsRetentionStrategy?.type !== RightsRetentionStrategyTypes.NullRightsRetentionStrategy;
-
   return (
     <>
       <Helmet>
@@ -191,43 +188,41 @@ export const PublishStrategySettings = () => {
               updateRightsRetentionStrategy.mutate(values);
               setSubmitting(false);
             }}>
-            {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => (
-              <Form>
-                <Box sx={{ width: '50%', maxWidth: '40rem' }}>
+            {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => {
+              const isRrs =
+                values.rightsRetentionStrategy?.type === RightsRetentionStrategyTypes.RightsRetentionStrategy;
+              const isOverridableRrs =
+                values.rightsRetentionStrategy?.type ===
+                RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy;
+              const isNullRrs =
+                values.rightsRetentionStrategy?.type === RightsRetentionStrategyTypes.NullRightsRetentionStrategy;
+
+              return (
+                <Box component={Form} sx={{ width: '50%', maxWidth: '40rem' }}>
                   <Field name={'rightsRetentionStrategy.type'}>
                     {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
-                      <div>
-                        <FormControlLabel
-                          sx={{ color: 'primary.main' }}
-                          label={t('editor.retentions_strategy.rights_retentions_strategy')}
-                          control={
-                            <Checkbox
-                              data-testid={dataTestId.editor.rightsRetentionsStrategy}
-                              {...field}
-                              disabled={isSubmitting}
-                              checked={
-                                values.rightsRetentionStrategy?.type ===
-                                  RightsRetentionStrategyTypes.RightsRetentionStrategy ||
-                                values.rightsRetentionStrategy?.type ===
-                                  RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                              }
-                              value={values.rightsRetentionStrategy?.type}
-                              onChange={() => {
-                                setFieldValue(
-                                  field.name,
-                                  values.rightsRetentionStrategy?.type ===
-                                    RightsRetentionStrategyTypes.RightsRetentionStrategy ||
-                                    values.rightsRetentionStrategy?.type ===
-                                      RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                                    ? RightsRetentionStrategyTypes.NullRightsRetentionStrategy
-                                    : RightsRetentionStrategyTypes.RightsRetentionStrategy
-                                );
-                                setFieldValue('rightsRetentionStrategy.id', '');
-                              }}
-                            />
-                          }
-                        />
-                      </div>
+                      <FormControlLabel
+                        sx={{ color: 'primary.main' }}
+                        label={t('editor.retentions_strategy.rights_retentions_strategy')}
+                        control={
+                          <Checkbox
+                            data-testid={dataTestId.editor.rightsRetentionsStrategy}
+                            {...field}
+                            disabled={isSubmitting}
+                            checked={isRrs || isOverridableRrs}
+                            value={values.rightsRetentionStrategy?.type}
+                            onChange={() => {
+                              setFieldValue(
+                                field.name,
+                                isRrs || isOverridableRrs
+                                  ? RightsRetentionStrategyTypes.NullRightsRetentionStrategy
+                                  : RightsRetentionStrategyTypes.RightsRetentionStrategy
+                              );
+                              setFieldValue('rightsRetentionStrategy.id', '');
+                            }}
+                          />
+                        }
+                      />
                     )}
                   </Field>
 
@@ -244,20 +239,12 @@ export const PublishStrategySettings = () => {
                           data-testid={dataTestId.editor.rightsRetentionsStrategyLink}
                           {...field}
                           label={t('editor.retentions_strategy.institution_rrs_url')}
-                          required={
-                            values.rightsRetentionStrategy.type ===
-                              RightsRetentionStrategyTypes.RightsRetentionStrategy ||
-                            values.rightsRetentionStrategy.type ===
-                              RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                          }
+                          required={isRrs || isOverridableRrs}
                           placeholder={t('editor.retentions_strategy.institution_rrs_link')}
                           size="small"
                           variant="filled"
                           fullWidth
-                          disabled={
-                            values.rightsRetentionStrategy.type ===
-                            RightsRetentionStrategyTypes.NullRightsRetentionStrategy
-                          }
+                          disabled={isNullRrs}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -276,36 +263,27 @@ export const PublishStrategySettings = () => {
 
                   <Field name={'rightsRetentionStrategy.type'}>
                     {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
-                      <div>
-                        <FormControlLabel
-                          sx={{ color: 'primary.main' }}
-                          label={t('editor.retentions_strategy.registrator_rrs_override')}
-                          control={
-                            <Checkbox
-                              data-testid={dataTestId.editor.rightsRetentionsStrategyOverride}
-                              {...field}
-                              disabled={
-                                values.rightsRetentionStrategy.type ===
-                                RightsRetentionStrategyTypes.NullRightsRetentionStrategy
-                              }
-                              checked={
-                                values.rightsRetentionStrategy?.type ===
-                                RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                              }
-                              value={values.rightsRetentionStrategy?.type}
-                              onChange={() => {
-                                setFieldValue(
-                                  field.name,
-                                  values.rightsRetentionStrategy?.type ===
-                                    RightsRetentionStrategyTypes.RightsRetentionStrategy
-                                    ? RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                                    : RightsRetentionStrategyTypes.RightsRetentionStrategy
-                                );
-                              }}
-                            />
-                          }
-                        />
-                      </div>
+                      <FormControlLabel
+                        sx={{ color: 'primary.main' }}
+                        label={t('editor.retentions_strategy.registrator_rrs_override')}
+                        control={
+                          <Checkbox
+                            data-testid={dataTestId.editor.rightsRetentionsStrategyOverride}
+                            {...field}
+                            disabled={isNullRrs}
+                            checked={isOverridableRrs}
+                            value={values.rightsRetentionStrategy?.type}
+                            onChange={() => {
+                              setFieldValue(
+                                field.name,
+                                isRrs
+                                  ? RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
+                                  : RightsRetentionStrategyTypes.RightsRetentionStrategy
+                              );
+                            }}
+                          />
+                        }
+                      />
                     )}
                   </Field>
 
@@ -319,8 +297,8 @@ export const PublishStrategySettings = () => {
                     </LoadingButton>
                   </StyledRightAlignedWrapper>
                 </Box>
-              </Form>
-            )}
+              );
+            }}
           </Formik>
         </>
       )}
