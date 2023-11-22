@@ -58,7 +58,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
     queryKey: ['downloadFile', values.identifier, file.identifier],
     queryFn: async () => {
       const downloadFileResponse = await downloadPrivateFile(values.identifier, file.identifier);
-      if (downloadFileResponse) {
+      if (downloadFileResponse?.id) {
         openFileInNewTab(downloadFileResponse.id);
       }
       setDownloadFile(false); // Ensure that a new URL is obtained every time, due to expiration
@@ -82,7 +82,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             <CircularProgress />
           ) : (
             <Tooltip title={t('registration.files_and_license.open_file')}>
-              <IconButton onClick={() => setDownloadFile(true)}>
+              <IconButton size="small" onClick={() => setDownloadFile(true)}>
                 <AttachFileIcon color="primary" />
               </IconButton>
             </Tooltip>
