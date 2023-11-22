@@ -40,7 +40,7 @@ export const CentralImportDuplicationCheckPage = () => {
     queryFn: () => fetchImportCandidates(1, 0, `id:"${identifier}"`),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
-  const importCandidateSearch = importCandidateSearchQuery.data?.hits[0];
+  const importCandidateSearchResult = importCandidateSearchQuery.data?.hits[0];
 
   const queryClient = useQueryClient();
   const importCandidateQueryKey = ['importCandidate', identifier];
@@ -71,17 +71,17 @@ export const CentralImportDuplicationCheckPage = () => {
   });
 
   useEffect(() => {
-    if (stringIncludesMathJax(importCandidateSearch?.mainTitle)) {
+    if (stringIncludesMathJax(importCandidateSearchResult?.mainTitle)) {
       typesetMathJax();
     }
-  }, [importCandidateSearch]);
+  }, [importCandidateSearchResult]);
 
   useEffect(() => {
     setDuplicateSearchFilters({
       ...emptyDuplicateSearchFilter,
-      doi: importCandidateSearch?.doi ?? '',
+      doi: importCandidateSearchResult?.doi ?? '',
     });
-  }, [importCandidateSearch]);
+  }, [importCandidateSearchResult]);
 
   return (
     <Box
@@ -95,12 +95,12 @@ export const CentralImportDuplicationCheckPage = () => {
       <BackgroundDiv>
         {importCandidateSearchQuery.isLoading || importCandidateQuery.isLoading ? (
           <PageSpinner aria-label={t('basic_data.central_import.central_import')} />
-        ) : importCandidateSearch && importCandidate ? (
+        ) : importCandidateSearchResult && importCandidate ? (
           <>
             <Typography variant="h1" sx={{ mt: '1rem' }} gutterBottom>
               {t('basic_data.central_import.import_candidate')}:
             </Typography>
-            <CentralImportResultItem importCandidate={importCandidateSearch} />
+            <CentralImportResultItem importCandidate={importCandidateSearchResult} />
 
             {importCandidate.importStatus.candidateStatus !== 'IMPORTED' ? (
               <>
@@ -108,7 +108,7 @@ export const CentralImportDuplicationCheckPage = () => {
                   {t('basic_data.central_import.search_for_duplicates')}:
                 </Typography>
                 <DuplicateSearchFilterForm
-                  importCandidate={importCandidateSearch}
+                  importCandidate={importCandidateSearchResult}
                   setDuplicateSearchFilters={setDuplicateSearchFilters}
                 />
                 <CentralImportDuplicateSearch
