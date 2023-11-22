@@ -80,13 +80,11 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             <CircularProgress />
           ) : (
             <IconButton
-              onClick={() => {
-                if (downloadFileQuery.isSuccess && downloadFileQuery.data?.id) {
-                  openFileInNewTab(downloadFileQuery.data.id);
-                } else {
-                  setDownloadFile(true);
-                }
-              }}>
+              onClick={() =>
+                downloadFileQuery.isSuccess && downloadFileQuery.data?.id
+                  ? openFileInNewTab(downloadFileQuery.data.id)
+                  : setDownloadFile(true)
+              }>
               <AttachFileIcon color="primary" />
             </IconButton>
           )}

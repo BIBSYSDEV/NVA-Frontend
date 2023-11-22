@@ -670,8 +670,6 @@ export const isEmbargoed = (embargoDate: Date | null) => {
 export const openFileInNewTab = (fileUri: string) => {
   if (fileUri) {
     // Use timeout to ensure that file is opened on Safari/iOS: NP-30205, https://stackoverflow.com/a/70463940
-    setTimeout(() => {
-      window.open(fileUri, '_blank');
-    });
+    setTimeout(() => window.open(fileUri, '_blank'));
   }
 };
