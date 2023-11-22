@@ -19,15 +19,18 @@ import {
   Typography,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
+import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { downloadPrivateFile } from '../../../api/fileApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
+import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
 import { administrativeAgreementId } from '../FilesAndLicensePanel';
@@ -45,7 +48,24 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
-  const { setFieldValue, setFieldTouched } = useFormikContext();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
+  const [downloadFile, setDownloadFile] = useState(false);
+
+  const downloadFileQuery = useQuery({
+    enabled: downloadFile,
+    queryKey: ['downloadFile', values.identifier, file.identifier],
+    queryFn: () => downloadPrivateFile(values.identifier, file.identifier),
+    meta: { errorMessage: t('feedback.error.download_file') },
+  });
+
+  useEffect(() => {
+    if (downloadFileQuery.data?.id) {
+      // Use timeout to ensure that file is opened on Safari/iOS: NP-30205, https://stackoverflow.com/a/70463940
+      setTimeout(() => {
+        window.open(downloadFileQuery.data?.id, '_blank');
+      });
+    }
+  }, [downloadFileQuery.data]);
 
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
@@ -57,7 +77,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
       <TableCell>
         <Box sx={{ display: 'flex' }}>
-          <IconButton size="small">
+          <IconButton size="small" onClick={() => setDownloadFile(true)}>
             <AttachFileIcon color="primary" />
           </IconButton>
 
