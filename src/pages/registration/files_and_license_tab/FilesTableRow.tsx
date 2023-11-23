@@ -1,7 +1,9 @@
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {
   Box,
   Checkbox,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -18,17 +20,21 @@ import {
   Typography,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
+import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { downloadPrivateFile2 } from '../../../api/fileApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
+import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
+import { openFileInNewTab } from '../../../utils/registration-helpers';
 import { administrativeAgreementId } from '../FilesAndLicensePanel';
 
 interface FilesTableRowProps {
@@ -44,18 +50,49 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
-  const { setFieldValue, setFieldTouched } = useFormikContext();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
+  const [downloadFile, setDownloadFile] = useState(false);
+
+  const downloadFileQuery = useQuery({
+    enabled: downloadFile,
+    queryKey: ['downloadFile', values.identifier, file.identifier],
+    queryFn: async () => {
+      const downloadFileResponse = await downloadPrivateFile2(values.identifier, file.identifier);
+      if (downloadFileResponse?.id) {
+        openFileInNewTab(downloadFileResponse.id);
+      }
+      setDownloadFile(false); // Ensure that a new URL is obtained every time, due to expiration
+      return downloadFileResponse;
+    },
+    meta: { errorMessage: t('feedback.error.download_file') },
+    cacheTime: 0,
+  });
 
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
       <TableCell sx={{ minWidth: '13rem' }}>
         <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
           <TruncatableTypography>{file.name}</TruncatableTypography>
+        </Box>
+      </TableCell>
+
+      <TableCell>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          {downloadFileQuery.isFetching ? (
+            <CircularProgress size="1.5rem" />
+          ) : (
+            <Tooltip title={t('registration.files_and_license.open_file')}>
+              <IconButton size="small" onClick={() => setDownloadFile(true)}>
+                <AttachFileIcon color="primary" />
+              </IconButton>
+            </Tooltip>
+          )}
+
           {!disabled && (
             <>
               <Tooltip title={t('registration.files_and_license.remove_file')}>
-                <IconButton onClick={toggleOpenConfirmDialog}>
-                  <CancelIcon color="error" />
+                <IconButton size="small" onClick={toggleOpenConfirmDialog}>
+                  <CancelIcon color="primary" />
                 </IconButton>
               </Tooltip>
               <ConfirmDialog
