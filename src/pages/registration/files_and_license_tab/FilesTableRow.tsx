@@ -77,9 +77,9 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
       </TableCell>
 
       <TableCell>
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           {downloadFileQuery.isFetching ? (
-            <CircularProgress />
+            <CircularProgress size="1.5rem" />
           ) : (
             <Tooltip title={t('registration.files_and_license.open_file')}>
               <IconButton size="small" onClick={() => setDownloadFile(true)}>
