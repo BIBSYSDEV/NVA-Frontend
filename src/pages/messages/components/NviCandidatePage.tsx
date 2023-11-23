@@ -73,6 +73,28 @@ export const NviCandidatePage = () => {
   const previousCandidateIdentifier =
     navigateCandidateQuery.isSuccess && !isFirstCandidate ? navigateCandidateQuery.data.hits[0]?.identifier : null;
 
+  const nextCandidateState: CandidateOffsetState | undefined = (() => {
+    if (thisCandidateOffset !== undefined && nviListQuery !== undefined) {
+      return {
+        currentOffset: thisCandidateOffset + 1,
+        nviQuery: nviListQuery,
+      };
+    } else {
+      return undefined;
+    }
+  })();
+
+  const previousCandidateState: CandidateOffsetState | undefined = (() => {
+    if (thisCandidateOffset !== undefined && nviListQuery !== undefined) {
+      return {
+        currentOffset: thisCandidateOffset - 1,
+        nviQuery: nviListQuery,
+      };
+    } else {
+      return undefined;
+    }
+  })();
+
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
   ) : registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
@@ -96,10 +118,7 @@ export const NviCandidatePage = () => {
                 data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
                 to={{
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
-                  state: {
-                    currentOffset: thisCandidateOffset - 1,
-                    nviQuery: nviListQuery,
-                  },
+                  state: previousCandidateState,
                 }}
                 title={t('tasks.nvi.previous_candidate')}
                 navigateTo={'previous'}
@@ -115,10 +134,7 @@ export const NviCandidatePage = () => {
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
-                  state: {
-                    currentOffset: thisCandidateOffset + 1,
-                    nviQuery: nviListQuery,
-                  },
+                  state: nextCandidateState,
                 }}
                 title={t('tasks.nvi.next_candidate')}
                 navigateTo={'next'}
