@@ -4,14 +4,12 @@ import { IconButton, IconButtonProps } from '@mui/material';
 import { Link, LinkProps } from 'react-router-dom';
 
 interface NavigationIconButtonProps extends IconButtonProps, Pick<LinkProps, 'to'> {
-  title: string;
   navigateTo: 'previous' | 'next';
 }
 
-export const NavigationIconButton = ({ title, navigateTo, sx, ...rest }: NavigationIconButtonProps) => (
+export const NavigationIconButton = ({ navigateTo, sx, ...rest }: NavigationIconButtonProps) => (
   <IconButton
     component={Link}
-    title={title}
     size="small"
     sx={{
       display: { xs: 'none', md: 'flex' },
