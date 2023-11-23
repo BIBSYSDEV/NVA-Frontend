@@ -58,7 +58,10 @@ export const NviCandidatePage = () => {
   const navigateCandidateQuery = useQuery({
     enabled: hasOffset,
     queryKey: ['navigateCandidates', 3, navigateCandidateSearchOffset, nviListQuery],
-    queryFn: () => fetchNviCandidates(3, navigateCandidateSearchOffset ?? 0, nviListQuery),
+    queryFn:
+      navigateCandidateSearchOffset !== null
+        ? () => fetchNviCandidates(3, navigateCandidateSearchOffset, nviListQuery)
+        : undefined,
     meta: { errorMessage: false },
     retry: false,
   });
