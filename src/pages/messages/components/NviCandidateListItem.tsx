@@ -13,15 +13,11 @@ import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlP
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
-  navigateCandidatesOffset: number;
+  currentOffset: number;
   nviListQuery: string;
 }
 
-export const NviCandidateListItem = ({
-  nviCandidate,
-  navigateCandidatesOffset,
-  nviListQuery,
-}: NviCandidateListItemProps) => {
+export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviListQuery }: NviCandidateListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -40,8 +36,8 @@ export const NviCandidateListItem = ({
   const myApproval = nviCandidate.approvals.find((approval) => approval.id === user?.topOrgCristinId);
 
   const candidateOffsetState: CandidateOffsetState = {
-    candidateOffset: navigateCandidatesOffset,
-    nviListQuery: nviListQuery,
+    currentOffset,
+    nviListQuery,
   };
 
   return (
