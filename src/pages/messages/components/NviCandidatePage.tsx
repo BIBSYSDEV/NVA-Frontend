@@ -23,11 +23,6 @@ export const NviCandidatePage = () => {
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
 
-  const navigateCandidatesOffset = location.state?.candidateOffset;
-  const nviListQuery = location.state?.nviListQuery;
-  const isFirstCandidate = navigateCandidatesOffset === 1;
-  const candidateOffset = navigateCandidatesOffset && navigateCandidatesOffset - (isFirstCandidate ? 0 : 2);
-
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
     enabled: !!identifier,
@@ -43,6 +38,7 @@ export const NviCandidatePage = () => {
   });
 
   const nviCandidate = nviCandidateQuery.data;
+  const periodStatus = nviCandidate?.periodStatus.status;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
   const registrationQuery = useQuery({
@@ -52,20 +48,26 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const periodStatus = nviCandidate?.periodStatus.status;
+  const nviListQuery = location.state?.nviListQuery;
+  const thisCandidateOffset = location.state?.currentOffset;
+
+  const hasOffset = typeof thisCandidateOffset === 'number';
+  const navigateCandidateSearchOffset = hasOffset ? Math.max(thisCandidateOffset - 1, 0) : null;
+  const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
 
   const navigateCandidateQuery = useQuery({
-    queryKey: ['navigateCandidates', 3, candidateOffset, nviListQuery],
-    queryFn: () => fetchNviCandidates(3, candidateOffset ?? 0, nviListQuery),
+    enabled: hasOffset,
+    queryKey: ['navigateCandidates', 3, navigateCandidateSearchOffset, nviListQuery],
+    queryFn: () => fetchNviCandidates(3, navigateCandidateSearchOffset ?? 0, nviListQuery),
     meta: { errorMessage: false },
     retry: false,
   });
 
-  const nextCandidateIdentifier = navigateCandidateQuery.data?.hits[isFirstCandidate ? 0 : 2]?.identifier;
+  const nextCandidateIdentifier = navigateCandidateQuery.isSuccess
+    ? navigateCandidateQuery.data.hits[isFirstCandidate ? 1 : 2]?.identifier
+    : null;
   const previousCandidateIdentifier =
-    navigateCandidatesOffset && navigateCandidatesOffset > 1
-      ? navigateCandidateQuery.data?.hits[0]?.identifier
-      : undefined;
+    navigateCandidateQuery.isSuccess && !isFirstCandidate ? navigateCandidateQuery.data.hits[0]?.identifier : null;
 
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
@@ -85,13 +87,13 @@ export const NviCandidatePage = () => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
 
-            {previousCandidateIdentifier && navigateCandidatesOffset && (
+            {hasOffset && previousCandidateIdentifier && (
               <NavigationIconButton
                 data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
                 to={{
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
                   state: {
-                    candidateOffset: navigateCandidatesOffset - 1,
+                    currentOffset: thisCandidateOffset - 1,
                     nviListQuery: nviListQuery,
                   },
                 }}
@@ -104,13 +106,13 @@ export const NviCandidatePage = () => {
               />
             )}
 
-            {nextCandidateIdentifier && navigateCandidatesOffset && (
+            {hasOffset && nextCandidateIdentifier && (
               <NavigationIconButton
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
                   state: {
-                    candidateOffset: navigateCandidatesOffset + 1,
+                    currentOffset: thisCandidateOffset + 1,
                     nviListQuery: nviListQuery,
                   },
                 }}
