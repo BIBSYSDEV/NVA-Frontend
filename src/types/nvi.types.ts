@@ -25,7 +25,6 @@ export interface NviCandidateSearchHit {
   };
   approvals: NviCandidateSearchHitApproval[];
   numberOfApprovals: number;
-  points: number;
 }
 
 interface AggregationCount {
@@ -78,7 +77,6 @@ export interface NviCandidate {
   periodStatus: {
     status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';
   };
-  totalPoints: number;
 }
 
 export interface Note {

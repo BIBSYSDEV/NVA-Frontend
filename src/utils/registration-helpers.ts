@@ -120,6 +120,9 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
+export const userIsValidImporter = (user: User | null, registration?: Registration) =>
+  !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
+
 export const getYearQuery = (yearValue: string) =>
   yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear().toString();
 

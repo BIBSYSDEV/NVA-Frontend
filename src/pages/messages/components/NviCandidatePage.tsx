@@ -38,6 +38,7 @@ export const NviCandidatePage = () => {
   });
 
   const nviCandidate = nviCandidateQuery.data;
+  const pointsSum = nviCandidate?.approvalStatuses.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
   const periodStatus = nviCandidate?.periodStatus.status;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
@@ -154,10 +155,7 @@ export const NviCandidatePage = () => {
             ) : null}
 
             <Divider sx={{ mt: 'auto' }} />
-            <NviApprovalStatuses
-              approvalStatuses={nviCandidate?.approvalStatuses ?? []}
-              totalPoints={nviCandidate?.totalPoints ?? 0}
-            />
+            <NviApprovalStatuses approvalStatuses={nviCandidate?.approvalStatuses ?? []} totalPoints={pointsSum} />
           </Paper>
         </ErrorBoundary>
       )}

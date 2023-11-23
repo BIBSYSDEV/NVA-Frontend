@@ -70,9 +70,14 @@ export const userValidationSchema = Yup.object<YupShape<FlatCristinPerson>>({
     .matches(nameRegexp, employeeErrorMessage.lastNameInvalidFormat)
     .min(2, employeeErrorMessage.lastNameRequired)
     .required(employeeErrorMessage.lastNameRequired),
-  nationalId: Yup.string()
-    .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat)
-    .required(employeeErrorMessage.nationalIdInvalid),
+  nvi: Yup.object().optional(),
+  nationalId: Yup.string().when('nvi', ([nvi], schema) =>
+    !nvi?.verifiedAt.id
+      ? schema
+          .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat)
+          .required(employeeErrorMessage.nationalIdInvalid)
+      : schema.optional()
+  ),
 });
 
 const employmentValidation = Yup.object<YupShape<Employment>>({

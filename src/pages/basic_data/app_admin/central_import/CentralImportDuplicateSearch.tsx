@@ -33,7 +33,9 @@ export const CentralImportDuplicateSearch = ({
   duplicateSearchFilters.author.length > 0 &&
     queryArray.push(`entityDescription.contributors.identity.name:"${duplicateSearchFilters.author}"`);
   duplicateSearchFilters.issn.length > 0 &&
-    queryArray.push(`entityDescription.reference.publicationContext.printIssn:"${duplicateSearchFilters.issn}"`);
+    queryArray.push(
+      `(entityDescription.reference.publicationContext.printIssn:"${duplicateSearchFilters.issn}" OR entityDescription.reference.publicationContext.onlineIssn:"${duplicateSearchFilters.issn}")`
+    );
   duplicateSearchFilters.yearPublished.length > 0 &&
     queryArray.push(`${DescriptionFieldNames.PublicationYear}:"${duplicateSearchFilters.yearPublished}"`);
 
