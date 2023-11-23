@@ -19,7 +19,7 @@ export enum CristinApiPath {
   Person = '/cristin/person',
   PersonIdentityNumber = '/cristin/person/identityNumber',
   Position = '/cristin/position',
-  Project = '/cristin-np-45525-add-facets-to-project-query/project',
+  Project = '/cristin/project',
 }
 
 export enum PublicationChannelApiPath {
