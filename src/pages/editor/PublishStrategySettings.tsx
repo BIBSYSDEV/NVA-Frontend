@@ -179,7 +179,7 @@ export const PublishStrategySettings = () => {
 
           <Divider sx={{ my: '2.5rem' }} />
 
-          <Typography variant="h2">{t('editor.retentions_strategy.institution_rrs')}</Typography>
+          <Typography variant="h2">{t('editor.retention_strategy.rrs')}</Typography>
 
           <Formik
             initialValues={customer}
@@ -198,10 +198,10 @@ export const PublishStrategySettings = () => {
                   <Field name={'rightsRetentionStrategy.type'}>
                     {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
                       <FormControlLabel
-                        label={t('editor.retentions_strategy.rights_retentions_strategy')}
+                        label={t('editor.retention_strategy.rights_retention_strategy')}
                         control={
                           <Checkbox
-                            data-testid={dataTestId.editor.rightsRetentionsStrategy}
+                            data-testid={dataTestId.editor.rrs}
                             {...field}
                             disabled={isSubmitting}
                             checked={isRrs || isOverridableRrs}
@@ -226,15 +226,15 @@ export const PublishStrategySettings = () => {
                       <FormLabel
                         component="legend"
                         sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '1rem' }}>
-                        {t('editor.retentions_strategy.institution_rrs_info_page')}
+                        {t('editor.retention_strategy.rrs_info_page')}
 
                         <TextField
                           type="url"
-                          data-testid={dataTestId.editor.rightsRetentionsStrategyLink}
+                          data-testid={dataTestId.editor.rrsLink}
                           {...field}
-                          label={t('editor.retentions_strategy.institution_rrs_url')}
+                          label={t('editor.retention_strategy.rrs_url')}
                           required={isRrs || isOverridableRrs}
-                          placeholder={t('editor.retentions_strategy.institution_rrs_link')}
+                          placeholder={t('editor.retention_strategy.rrs_link')}
                           variant="filled"
                           fullWidth
                           disabled={isNullRrs || isSubmitting}
@@ -251,16 +251,16 @@ export const PublishStrategySettings = () => {
                   </Field>
 
                   <Typography sx={{ fontStyle: 'italic', marginTop: '0.5rem', marginBottom: '1rem' }}>
-                    {t('editor.retentions_strategy.institution_rrs_required_link')}
+                    {t('editor.retention_strategy.rrs_required_link')}
                   </Typography>
 
                   <Field name={'rightsRetentionStrategy.type'}>
                     {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
                       <FormControlLabel
-                        label={t('editor.retentions_strategy.registrator_rrs_override')}
+                        label={t('editor.retention_strategy.rrs_override')}
                         control={
                           <Checkbox
-                            data-testid={dataTestId.editor.rightsRetentionsStrategyOverride}
+                            data-testid={dataTestId.editor.rrsOverride}
                             {...field}
                             disabled={isNullRrs || isSubmitting}
                             checked={isOverridableRrs}
@@ -281,7 +281,7 @@ export const PublishStrategySettings = () => {
 
                   <StyledRightAlignedWrapper>
                     <LoadingButton
-                      data-testid={dataTestId.editor.rightsRetentionsStrategySaveButton}
+                      data-testid={dataTestId.editor.rrsSaveButton}
                       variant="contained"
                       loading={isSubmitting}
                       type="submit">

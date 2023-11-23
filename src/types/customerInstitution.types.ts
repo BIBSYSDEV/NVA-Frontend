@@ -35,7 +35,7 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   rightsRetentionStrategy: RightsRetentionStrategy;
 }
 
-export interface RightsRetentionStrategy {
+interface RightsRetentionStrategy {
   type: RightsRetentionStrategyTypes;
   id: string;
 }

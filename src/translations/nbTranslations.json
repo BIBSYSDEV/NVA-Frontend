@@ -377,14 +377,14 @@
       "registrator_publishes_without_curator": "Registrator publiserer uten godkjenning av Kurator",
       "registrator_publishes_without_curator_description": "Institusjonen bestemmer hvem som er Registrator."
     },
-    "retentions_strategy": {
-      "institution_rrs": "Rettighetspolitikk",
-      "institution_rrs_info_page": "Institusjonenes informasjonsside om rettighetspolitikk",
-      "institution_rrs_link": "Skriv inn lenke",
-      "institution_rrs_required_link": "*Felt med stjerne er obligatorisk",
-      "registrator_rrs_override": "Registrator kan fraskrive seg RRS",
-      "institution_rrs_url": "url",
-      "rights_retentions_strategy": "Rights Retentions Strategy (RRS)"
+    "retention_strategy": {
+      "rrs": "Rettighetspolitikk",
+      "rrs_info_page": "Institusjonenes informasjonsside om rettighetspolitikk",
+      "rrs_link": "Skriv inn lenke",
+      "rrs_required_link": "*Felt med stjerne er obligatorisk",
+      "rrs_override": "Registrator kan fraskrive seg RRS",
+      "rrs_url": "URL",
+      "rights_retention_strategy": "Rights Retention Strategy (RRS)"
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
     "vocabulary": "Vokabular",
