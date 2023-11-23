@@ -36,7 +36,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviListQuery
 
   const candidateOffsetState: CandidateOffsetState = {
     currentOffset,
-    nviListQuery,
+    nviQuery: nviListQuery,
   };
 
   return (

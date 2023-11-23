@@ -49,7 +49,7 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const nviListQuery = location.state?.nviListQuery;
+  const nviListQuery = location.state?.nviQuery;
   const thisCandidateOffset = location.state?.currentOffset;
 
   const hasOffset = typeof thisCandidateOffset === 'number';
@@ -98,7 +98,7 @@ export const NviCandidatePage = () => {
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
                   state: {
                     currentOffset: thisCandidateOffset - 1,
-                    nviListQuery: nviListQuery,
+                    nviQuery: nviListQuery,
                   },
                 }}
                 title={t('tasks.nvi.previous_candidate')}
@@ -117,7 +117,7 @@ export const NviCandidatePage = () => {
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
                   state: {
                     currentOffset: thisCandidateOffset + 1,
-                    nviListQuery: nviListQuery,
+                    nviQuery: nviListQuery,
                   },
                 }}
                 title={t('tasks.nvi.next_candidate')}
