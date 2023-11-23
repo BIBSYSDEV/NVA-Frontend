@@ -31,7 +31,7 @@ export const DuplicateSearchFilterForm = ({
     doi: importCandidate.doi ?? '',
     title: importCandidate.mainTitle ?? '',
     author: importCandidate.contributors[0]?.identity.name ?? '',
-    issn: '',
+    issn: importCandidate.printIssn ?? importCandidate.onlineIssn ?? '',
     yearPublished: importCandidate.publicationYear ?? '',
     isDoiChecked: true,
     isTitleChecked: false,
