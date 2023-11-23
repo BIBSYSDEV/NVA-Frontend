@@ -93,7 +93,7 @@ export const NviCandidatePage = () => {
                 to={{
                   pathname: getNviCandidatePath(previousCandidateIdentifier),
                   state: {
-                    candidateOffset: thisCandidateOffset - 1,
+                    currentOffset: thisCandidateOffset - 1,
                     nviListQuery: nviListQuery,
                   },
                 }}
@@ -112,7 +112,7 @@ export const NviCandidatePage = () => {
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
                   state: {
-                    candidateOffset: thisCandidateOffset + 1,
+                    currentOffset: thisCandidateOffset + 1,
                     nviListQuery: nviListQuery,
                   },
                 }}
