@@ -25,7 +25,7 @@ import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { downloadPrivateFile } from '../../../api/fileApi';
+import { downloadPrivateFile2 } from '../../../api/fileApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
@@ -57,7 +57,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
     enabled: downloadFile,
     queryKey: ['downloadFile', values.identifier, file.identifier],
     queryFn: async () => {
-      const downloadFileResponse = await downloadPrivateFile(values.identifier, file.identifier);
+      const downloadFileResponse = await downloadPrivateFile2(values.identifier, file.identifier);
       if (downloadFileResponse?.id) {
         openFileInNewTab(downloadFileResponse.id);
       }
