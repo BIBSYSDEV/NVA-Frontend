@@ -44,6 +44,8 @@ export const Footer = () => {
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
               gridRow: { xs: 3, lg: 1 },
+
+              marginLeft: 'auto',
             }}
             data-testid={dataTestId.footer.aboutLink}
             target="_blank"
