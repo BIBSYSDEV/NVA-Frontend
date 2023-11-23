@@ -603,7 +603,7 @@ const TasksPage = () => {
           <PrivateRoute exact path={UrlPathTemplate.TasksNvi} isAuthorized={isNviCurator}>
             <NviCandidatesList
               nviCandidatesQuery={nviCandidatesQuery}
-              nviListQuery={nviListQuery}
+              nviQuery={nviListQuery}
               rowsPerPage={rowsPerPage}
               setRowsPerPage={setRowsPerPage}
               page={page}

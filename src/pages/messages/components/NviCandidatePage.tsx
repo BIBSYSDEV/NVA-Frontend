@@ -73,27 +73,21 @@ export const NviCandidatePage = () => {
   const previousCandidateIdentifier =
     navigateCandidateQuery.isSuccess && !isFirstCandidate ? navigateCandidateQuery.data.hits[0]?.identifier : null;
 
-  const nextCandidateState: CandidateOffsetState | undefined = (() => {
-    if (thisCandidateOffset !== undefined && nviListQuery !== undefined) {
-      return {
-        currentOffset: thisCandidateOffset + 1,
-        nviQuery: nviListQuery,
-      };
-    } else {
-      return undefined;
-    }
-  })();
+  const nextCandidateState: CandidateOffsetState | undefined =
+    hasOffset && nviListQuery
+      ? {
+          currentOffset: thisCandidateOffset + 1,
+          nviQuery: nviListQuery,
+        }
+      : undefined;
 
-  const previousCandidateState: CandidateOffsetState | undefined = (() => {
-    if (thisCandidateOffset !== undefined && nviListQuery !== undefined) {
-      return {
-        currentOffset: thisCandidateOffset - 1,
-        nviQuery: nviListQuery,
-      };
-    } else {
-      return undefined;
-    }
-  })();
+  const previousCandidateState: CandidateOffsetState | undefined =
+    hasOffset && nviListQuery
+      ? {
+          currentOffset: thisCandidateOffset - 1,
+          nviQuery: nviListQuery,
+        }
+      : undefined;
 
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
