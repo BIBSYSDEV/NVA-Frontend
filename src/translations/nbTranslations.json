@@ -232,6 +232,7 @@
     "type": "Type",
     "unknown": "Ukjent",
     "update": "Oppdater",
+    "url": "URL",
     "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
@@ -383,7 +384,6 @@
       "rrs_link": "Skriv inn lenke",
       "rrs_required_link": "*Felt med stjerne er obligatorisk",
       "rrs_override": "Registrator kan fraskrive seg RRS",
-      "rrs_url": "URL",
       "rights_retention_strategy": "Rights Retention Strategy (RRS)"
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",

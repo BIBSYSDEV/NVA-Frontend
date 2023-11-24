@@ -232,7 +232,7 @@ export const PublishStrategySettings = () => {
                           type="url"
                           data-testid={dataTestId.editor.rrsLink}
                           {...field}
-                          label={t('editor.retention_strategy.rrs_url')}
+                          label={t('common.url')}
                           required={isRrs || isOverridableRrs}
                           placeholder={t('editor.retention_strategy.rrs_link')}
                           variant="filled"
