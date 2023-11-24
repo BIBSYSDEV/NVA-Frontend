@@ -2,7 +2,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, TextField, TextFieldProps, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Formik, FormikProps, useFormikContext } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -141,21 +141,25 @@ export const CentralImportCandidateMerge = () => {
 
           <CompareFields
             label={t('common.title')}
-            fieldName={DescriptionFieldNames.Title}
+            onOverwrite={() => setFieldValue(DescriptionFieldNames.Title, importCandidate.entityDescription?.mainTitle)}
             candidateValue={importCandidate.entityDescription?.mainTitle}
             registrationValue={values.entityDescription?.mainTitle}
           />
 
           <CompareFields
             label={t('registration.description.abstract')}
-            fieldName={DescriptionFieldNames.Abstract}
+            onOverwrite={() =>
+              setFieldValue(DescriptionFieldNames.Abstract, importCandidate.entityDescription?.abstract)
+            }
             candidateValue={importCandidate.entityDescription?.abstract}
             registrationValue={values.entityDescription?.abstract}
           />
 
           <CompareFields
             label={t('registration.description.description_of_content')}
-            fieldName={DescriptionFieldNames.Description}
+            onOverwrite={() =>
+              setFieldValue(DescriptionFieldNames.Description, importCandidate.entityDescription?.description)
+            }
             candidateValue={importCandidate.entityDescription?.description}
             registrationValue={values.entityDescription?.description}
           />
@@ -188,7 +192,6 @@ export const CentralImportCandidateMerge = () => {
 
 interface CompareFieldsProps extends Pick<TextFieldProps, 'variant'> {
   label: string;
-  fieldName?: string;
   onOverwrite?: () => void;
   candidateValue: string | undefined;
   registrationValue: string | undefined;
@@ -196,14 +199,12 @@ interface CompareFieldsProps extends Pick<TextFieldProps, 'variant'> {
 
 const CompareFields = ({
   label,
-  fieldName,
   candidateValue,
   registrationValue,
   onOverwrite,
   variant = 'filled',
 }: CompareFieldsProps) => {
   const { t } = useTranslation();
-  const { setFieldValue } = useFormikContext<Registration>();
 
   return (
     <>
@@ -216,20 +217,14 @@ const CompareFields = ({
         value={candidateValue}
         InputLabelProps={{ shrink: true }}
       />
-      {fieldName || onOverwrite ? (
+      {onOverwrite ? (
         <IconButton
           size="small"
           color="primary"
           sx={{ bgcolor: 'white' }}
           title={t('basic_data.central_import.merge_candidate.update_value')}
           disabled={!candidateValue || candidateValue === registrationValue}
-          onClick={() => {
-            if (fieldName) {
-              setFieldValue(fieldName, candidateValue);
-            } else if (onOverwrite) {
-              onOverwrite();
-            }
-          }}>
+          onClick={onOverwrite}>
           <ArrowForwardIcon fontSize="small" />
         </IconButton>
       ) : (
