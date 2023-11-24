@@ -13,7 +13,7 @@ import { NviCandidateListItem } from './NviCandidateListItem';
 
 interface NviCandidatesListProps {
   nviCandidatesQuery: UseQueryResult<NviCandidateSearchResponse, unknown>;
-  nviQuery: string;
+  nviListQuery: string;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
@@ -23,7 +23,7 @@ interface NviCandidatesListProps {
 
 export const NviCandidatesList = ({
   nviCandidatesQuery,
-  nviQuery,
+  nviListQuery,
   setRowsPerPage,
   rowsPerPage,
   setPage,
@@ -55,7 +55,7 @@ export const NviCandidatesList = ({
                     <ErrorBoundary key={nviCandidate.identifier}>
                       <NviCandidateListItem
                         nviCandidate={nviCandidate}
-                        nviQuery={nviQuery}
+                        nviListQuery={nviListQuery}
                         currentOffset={currentOffset}
                       />
                     </ErrorBoundary>

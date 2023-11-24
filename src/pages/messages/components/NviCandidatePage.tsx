@@ -107,7 +107,7 @@ export const NviCandidatePage = () => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
 
-            {hasOffset && previousCandidateIdentifier && (
+            {previousCandidateIdentifier && (
               <NavigationIconButton
                 data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
                 to={{
@@ -123,7 +123,7 @@ export const NviCandidatePage = () => {
               />
             )}
 
-            {hasOffset && nextCandidateIdentifier && (
+            {nextCandidateIdentifier && (
               <NavigationIconButton
                 data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                 to={{

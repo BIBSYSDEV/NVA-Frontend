@@ -13,10 +13,10 @@ import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlP
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
   currentOffset: number;
-  nviQuery: string;
+  nviListQuery: string;
 }
 
-export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviQuery }: NviCandidateListItemProps) => {
+export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviListQuery }: NviCandidateListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -36,7 +36,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviQuery }: 
 
   const candidateOffsetState: CandidateOffsetState = {
     currentOffset,
-    nviQuery,
+    nviQuery: nviListQuery,
   };
 
   return (
