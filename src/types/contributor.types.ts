@@ -73,7 +73,13 @@ export interface Identity {
   id?: string;
   name: string;
   orcId?: string;
+  additionalIdentifiers?: AdditionalIdentifier[];
   verificationStatus?: VerificationStatus;
+}
+
+export interface AdditionalIdentifier {
+  sourceName: string;
+  value: string;
 }
 
 export interface Contributor {
