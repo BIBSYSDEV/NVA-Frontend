@@ -73,7 +73,13 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
 
   return (
     <section>
-      <Box sx={{ display: 'grid', gap: '1rem', gridTemplateColumns: '1fr auto' }}>
+      <Box
+        sx={{
+          mx: { xs: '0.5rem', sm: 0 },
+          display: 'grid',
+          gap: '1rem',
+          gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
+        }}>
         <SearchForm placeholder={t('tasks.search_placeholder')} />
         <SortSelector
           sx={{ minWidth: '15rem' }}
