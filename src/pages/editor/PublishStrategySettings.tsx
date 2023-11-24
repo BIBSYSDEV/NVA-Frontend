@@ -147,7 +147,7 @@ export const PublishStrategySettings = () => {
               )}
             </StyledItemContainer>
           </Box>
-          <RightsRetentionStrategySettings customer={customer} />
+          <RightsRetentionStrategySettings />
         </>
       )}
     </>
