@@ -3,6 +3,7 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, IconButton, TextField, TextFieldProps, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps, useFormikContext } from 'formik';
+import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
@@ -17,6 +18,7 @@ import { setNotification } from '../../../../redux/notificationSlice';
 import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
 
 interface MergeImportCandidateParams {
@@ -75,6 +77,14 @@ export const CentralImportCandidateMerge = () => {
     return <Redirect to={getImportCandidatePath(candidateIdentifier)} />;
   }
 
+  const getLanguageName = (languageUri?: string) => {
+    if (!languageUri) {
+      return '';
+    }
+    const language = getLanguageByUri(languageUri);
+    return getLanguageString({ no: language.nob, ny: language.nno, en: language.eng });
+  };
+
   return registrationQuery.isLoading || importCandidateQuery.isLoading ? (
     <PageSpinner />
   ) : !registration || !importCandidate ? null : (
@@ -132,33 +142,40 @@ export const CentralImportCandidateMerge = () => {
           <CompareFields
             label={t('common.title')}
             fieldName={DescriptionFieldNames.Title}
-            candidateValue={importCandidate?.entityDescription?.mainTitle}
+            candidateValue={importCandidate.entityDescription?.mainTitle}
             registrationValue={values.entityDescription?.mainTitle}
           />
 
           <CompareFields
             label={t('registration.description.abstract')}
             fieldName={DescriptionFieldNames.Abstract}
-            candidateValue={importCandidate?.entityDescription?.abstract}
+            candidateValue={importCandidate.entityDescription?.abstract}
             registrationValue={values.entityDescription?.abstract}
           />
 
           <CompareFields
             label={t('registration.description.description_of_content')}
             fieldName={DescriptionFieldNames.Description}
-            candidateValue={importCandidate?.entityDescription?.description}
+            candidateValue={importCandidate.entityDescription?.description}
             registrationValue={values.entityDescription?.description}
           />
-
           <CompareFields
             label={t('registration.description.date_published')}
             onOverwrite={() => {
-              if (importCandidate?.entityDescription?.publicationDate) {
+              if (importCandidate.entityDescription?.publicationDate) {
                 setFieldValue(DescriptionFieldNames.PublicationDate, importCandidate.entityDescription.publicationDate);
               }
             }}
-            candidateValue={displayDate(importCandidate?.entityDescription?.publicationDate)}
+            candidateValue={displayDate(importCandidate.entityDescription?.publicationDate)}
             registrationValue={displayDate(values.entityDescription?.publicationDate)}
+          />
+          <CompareFields
+            label={t('registration.description.primary_language')}
+            onOverwrite={() =>
+              setFieldValue(DescriptionFieldNames.Language, importCandidate.entityDescription?.language)
+            }
+            candidateValue={getLanguageName(importCandidate.entityDescription?.language)}
+            registrationValue={getLanguageName(values.entityDescription?.language)}
           />
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
             <Link to={getImportCandidatePath(candidateIdentifier)}>
