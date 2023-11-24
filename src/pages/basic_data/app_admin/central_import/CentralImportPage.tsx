@@ -3,7 +3,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { FetchImportCandidatesParams, SortOrder, fetchImportCandidates } from '../../../../api/searchApi';
+import {
+  FetchImportCandidatesParams,
+  ImportCandidateOrderBy,
+  SortOrder,
+  fetchImportCandidates,
+} from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
@@ -42,7 +47,7 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
 
   const importCandidateQueryParams: FetchImportCandidatesParams = {
     query,
-    orderBy: params.get(SearchParam.OrderBy) ?? 'createdDate',
+    orderBy: (params.get(SearchParam.OrderBy) as ImportCandidateOrderBy | null) ?? 'createdDate',
     sortOrder: (params.get(SearchParam.SortOrder) as SortOrder | null) ?? 'desc',
   };
 

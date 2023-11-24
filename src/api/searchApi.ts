@@ -21,11 +21,12 @@ export const fetchTickets = async (results: number, from: number, query = '', on
 };
 
 export type SortOrder = 'desc' | 'asc';
+export type ImportCandidateOrderBy = 'createdDate' | 'importStatus.modifiedDate';
 
 export interface FetchImportCandidatesParams {
   query?: string;
-  orderBy?: string | null;
-  sortOrder?: SortOrder | null;
+  orderBy?: ImportCandidateOrderBy;
+  sortOrder?: SortOrder;
 }
 
 export const fetchImportCandidates = async (
@@ -37,7 +38,7 @@ export const fetchImportCandidates = async (
   params.set('results', results.toString());
   params.set('from', from.toString());
   if (query) {
-    params.set('query', `${query}`);
+    params.set('query', query);
   }
   if (orderBy) {
     params.set('orderBy', orderBy);

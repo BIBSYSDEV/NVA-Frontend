@@ -21,7 +21,7 @@ export const SortSelector = ({ options, sx }: SortSelectorProps) => {
   const params = new URLSearchParams(history.location.search);
 
   const orderBy = params.get(SearchParam.OrderBy);
-  const sortOrder = params.get(SearchParam.SortOrder) as SortOrder;
+  const sortOrder = params.get(SearchParam.SortOrder);
 
   const selectedOption =
     options.find((option) => orderBy === option.orderBy && sortOrder === option.sortOrder) ?? options[0];
