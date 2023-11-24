@@ -87,7 +87,7 @@ export const CentralImportCandidateMerge = () => {
         registrationQuery.remove(); // Remove cached data, to ensure correct data is shown in wizard after redirect
         history.push(getRegistrationWizardPath(registrationIdentifier));
       }}>
-      {({ values, isSubmitting }: FormikProps<Registration>) => (
+      {({ values, isSubmitting, setFieldValue }: FormikProps<Registration>) => (
         <Box
           component={Form}
           sx={{
@@ -111,22 +111,22 @@ export const CentralImportCandidateMerge = () => {
           <CompareFields
             label={t('basic_data.central_import.merge_candidate.result_id')}
             variant="standard"
-            candidateValue=""
-            registrationValue={values.identifier}
+            candidateValue={candidateIdentifier}
+            registrationValue={registration.identifier}
           />
 
           <CompareFields
             label={t('common.doi')}
             variant="standard"
             candidateValue={importCandidate.doi || importCandidate.entityDescription?.reference?.doi}
-            registrationValue={values.doi || values.entityDescription?.reference?.doi}
+            registrationValue={registration.doi || registration.entityDescription?.reference?.doi}
           />
 
           <CompareFields
             label={t('registration.description.date_published')}
             variant="standard"
             candidateValue={displayDate(importCandidate.entityDescription?.publicationDate)}
-            registrationValue={displayDate(values.entityDescription?.publicationDate)}
+            registrationValue={displayDate(registration.entityDescription?.publicationDate)}
           />
 
           <CompareFields
@@ -150,6 +150,16 @@ export const CentralImportCandidateMerge = () => {
             registrationValue={values.entityDescription?.description}
           />
 
+          <CompareFields
+            label={t('registration.description.date_published')}
+            onOverwrite={() => {
+              if (importCandidate?.entityDescription?.publicationDate) {
+                setFieldValue(DescriptionFieldNames.PublicationDate, importCandidate.entityDescription.publicationDate);
+              }
+            }}
+            candidateValue={displayDate(importCandidate?.entityDescription?.publicationDate)}
+            registrationValue={displayDate(values.entityDescription?.publicationDate)}
+          />
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
             <Link to={getImportCandidatePath(candidateIdentifier)}>
               <Button>{t('common.cancel')}</Button>
@@ -170,6 +180,7 @@ export const CentralImportCandidateMerge = () => {
 interface CompareFieldsProps extends Pick<TextFieldProps, 'variant'> {
   label: string;
   fieldName?: string;
+  onOverwrite?: () => void;
   candidateValue: string | undefined;
   registrationValue: string | undefined;
 }
@@ -179,6 +190,7 @@ const CompareFields = ({
   fieldName,
   candidateValue,
   registrationValue,
+  onOverwrite,
   variant = 'filled',
 }: CompareFieldsProps) => {
   const { t } = useTranslation();
@@ -195,14 +207,20 @@ const CompareFields = ({
         value={candidateValue}
         InputLabelProps={{ shrink: true }}
       />
-      {fieldName ? (
+      {fieldName || onOverwrite ? (
         <IconButton
           size="small"
           color="primary"
           sx={{ bgcolor: 'white' }}
           title={t('basic_data.central_import.merge_candidate.update_value')}
           disabled={!candidateValue || candidateValue === registrationValue}
-          onClick={() => setFieldValue(fieldName, candidateValue)}>
+          onClick={() => {
+            if (fieldName) {
+              setFieldValue(fieldName, candidateValue);
+            } else if (onOverwrite) {
+              onOverwrite();
+            }
+          }}>
           <ArrowForwardIcon fontSize="small" />
         </IconButton>
       ) : (
