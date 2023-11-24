@@ -1637,6 +1637,7 @@
     "hits_other": "{{count}} treff",
     "not_containing": "Inneholder ikke",
     "operator": "Operator",
+    "participant": "Deltaker",
     "participating_institution": "Deltakende institusjon",
     "person_search_placeholder": "Søk etter navn",
     "persons": "Personer",
