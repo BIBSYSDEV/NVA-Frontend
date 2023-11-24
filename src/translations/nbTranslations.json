@@ -72,6 +72,8 @@
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
+      "sort_newest_first": "Nyeste kandidater først",
+      "sort_oldest_first": "Eldste kandidater først",
       "status": {
         "IMPORTED": "Importert",
         "NOT_APPLICABLE": "Mangelfull",
