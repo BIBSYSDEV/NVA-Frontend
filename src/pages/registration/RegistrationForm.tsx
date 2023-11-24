@@ -48,6 +48,11 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const uppy = useUppy(createUppy(i18n.language));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
 
+  // const hasChangedNviValues = Math.random() * (1 - 0) + 0 >= 0.5;
+  const hasChangedNviValues = true;
+
+  console.log(hasChangedNviValues);
+
   const highestValidatedTab =
     useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
@@ -142,7 +147,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
                   </ErrorBoundary>
                 )}
               </Box>
-              <RegistrationFormActions tabNumber={tabNumber} setTabNumber={setTabNumber} validateForm={validateForm} />
+              <RegistrationFormActions
+                tabNumber={tabNumber}
+                setTabNumber={setTabNumber}
+                validateForm={validateForm}
+                hasChangedNviValues={hasChangedNviValues}
+              />
             </BackgroundDiv>
           </Form>
         )}

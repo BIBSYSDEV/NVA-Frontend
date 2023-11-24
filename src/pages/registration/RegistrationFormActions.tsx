@@ -1,7 +1,7 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { updateRegistration } from '../../api/registrationApi';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { Registration, RegistrationTab } from '../../types/registration.types';
@@ -22,9 +23,15 @@ interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
   setTabNumber: (newTab: RegistrationTab) => void;
   validateForm: (values: Registration) => FormikErrors<Registration>;
+  hasChangedNviValues: boolean;
 }
 
-export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm }: RegistrationFormActionsProps) => {
+export const RegistrationFormActions = ({
+  tabNumber,
+  setTabNumber,
+  validateForm,
+  hasChangedNviValues,
+}: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -34,6 +41,7 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
   const [isSaving, setIsSaving] = useState(false);
+  const [openNviApprovalResetDialog, setOpenNviApprovalResetDialog] = useState(false);
 
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
@@ -59,9 +67,13 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
   };
 
   const onClickSaveAndPresent = async () => {
-    const registrationIsUpdated = await saveRegistration(values);
-    if (registrationIsUpdated) {
-      history.push(getRegistrationLandingPagePath(values.identifier));
+    if (hasChangedNviValues) {
+      setOpenNviApprovalResetDialog(true);
+    } else {
+      const registrationIsUpdated = await saveRegistration(values);
+      if (registrationIsUpdated) {
+        history.push(getRegistrationLandingPagePath(values.identifier));
+      }
     }
   };
 
@@ -126,7 +138,9 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
               variant="outlined"
               loading={isSaving}
               data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={async () => await saveRegistration(values)}>
+              onClick={async () => {
+                hasChangedNviValues ? setOpenNviApprovalResetDialog(true) : await saveRegistration(values);
+              }}>
               {t('common.save')}
             </LoadingButton>
             <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
@@ -166,6 +180,25 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
         dataTestId={dataTestId.registrationWizard.formActions.supportModal}>
         <SupportModalContent closeModal={toggleSupportModal} registration={values} />
       </Modal>
+
+      <ConfirmDialog
+        open={openNviApprovalResetDialog}
+        title={'NVI GODKJENNING'}
+        onAccept={async () => {
+          if (tabNumber === RegistrationTab.FilesAndLicenses) {
+            const registrationIsUpdated = await saveRegistration(values);
+            if (registrationIsUpdated) {
+              setOpenNviApprovalResetDialog(false);
+              history.push(getRegistrationLandingPagePath(values.identifier));
+            }
+          } else {
+            setOpenNviApprovalResetDialog(false);
+            saveRegistration(values);
+          }
+        }}
+        onCancel={() => setOpenNviApprovalResetDialog(false)}>
+        <Typography>{'Om du lagrer vil du nullstille alle NVI godkjenninger'}</Typography>
+      </ConfirmDialog>
     </>
   );
 };
