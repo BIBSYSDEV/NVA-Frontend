@@ -1,39 +1,20 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import LinkIcon from '@mui/icons-material/Link';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { LoadingButton } from '@mui/lab';
-import {
-  Box,
-  ButtonBase,
-  Checkbox,
-  CircularProgress,
-  Divider,
-  FormControlLabel,
-  FormLabel,
-  InputAdornment,
-  styled,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { useMutation } from '@tanstack/react-query';
-import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
+
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { PageSpinner } from '../../components/PageSpinner';
-import { StyledRightAlignedWrapper } from '../../components/styled/Wrappers';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import {
-  CustomerInstitution,
-  PublishStrategy,
-  RightsRetentionStrategyTypes,
-} from '../../types/customerInstitution.types';
+import { PublishStrategy } from '../../types/customerInstitution.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { RightsRetentionStrategySettings } from './RightsRetentionStrategySettings';
 
 const StyledItemContainer = styled('div')({
   display: 'grid',
@@ -92,16 +73,6 @@ export const PublishStrategySettings = () => {
   };
 
   const currentPublishStrategy = customer?.publicationWorkflow;
-
-  const updateRightsRetentionStrategy = useMutation({
-    mutationFn: (customer: CustomerInstitution) => updateCustomerInstitution(customer),
-    onSuccess: () =>
-      dispatch(
-        setNotification({ message: t('feedback.success.update_rights_retention_strategy'), variant: 'success' })
-      ),
-    onError: () =>
-      dispatch(setNotification({ message: t('feedback.error.update_rights_retention_strategy'), variant: 'error' })),
-  });
 
   return (
     <>
@@ -176,122 +147,7 @@ export const PublishStrategySettings = () => {
               )}
             </StyledItemContainer>
           </Box>
-
-          <Divider sx={{ my: '2.5rem' }} />
-
-          <Typography variant="h2">{t('editor.retention_strategy.rrs')}</Typography>
-
-          <Formik
-            initialValues={customer}
-            onSubmit={async (values) => await updateRightsRetentionStrategy.mutateAsync(values)}>
-            {({ values, isSubmitting, setFieldValue }: FormikProps<CustomerInstitution>) => {
-              const isRrs =
-                values.rightsRetentionStrategy?.type === RightsRetentionStrategyTypes.RightsRetentionStrategy;
-              const isOverridableRrs =
-                values.rightsRetentionStrategy?.type ===
-                RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy;
-              const isNullRrs =
-                values.rightsRetentionStrategy?.type === RightsRetentionStrategyTypes.NullRightsRetentionStrategy;
-
-              return (
-                <Box component={Form} sx={{ maxWidth: '35rem' }}>
-                  <Field name={'rightsRetentionStrategy.type'}>
-                    {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
-                      <FormControlLabel
-                        label={t('editor.retention_strategy.rights_retention_strategy')}
-                        control={
-                          <Checkbox
-                            data-testid={dataTestId.editor.rrs}
-                            {...field}
-                            disabled={isSubmitting}
-                            checked={isRrs || isOverridableRrs}
-                            value={values.rightsRetentionStrategy?.type}
-                            onChange={() => {
-                              setFieldValue(
-                                field.name,
-                                isRrs || isOverridableRrs
-                                  ? RightsRetentionStrategyTypes.NullRightsRetentionStrategy
-                                  : RightsRetentionStrategyTypes.RightsRetentionStrategy
-                              );
-                              setFieldValue('rightsRetentionStrategy.id', '');
-                            }}
-                          />
-                        }
-                      />
-                    )}
-                  </Field>
-
-                  <Field name="rightsRetentionStrategy.id">
-                    {({ field }: FieldProps<string>) => (
-                      <FormLabel
-                        component="legend"
-                        sx={{ color: 'primary.main', fontWeight: 'bold', marginTop: '1rem' }}>
-                        {t('editor.retention_strategy.rrs_info_page')}
-
-                        <TextField
-                          type="url"
-                          data-testid={dataTestId.editor.rrsLink}
-                          {...field}
-                          label={t('common.url')}
-                          required={isRrs || isOverridableRrs}
-                          placeholder={t('editor.retention_strategy.rrs_link')}
-                          variant="filled"
-                          fullWidth
-                          disabled={isNullRrs || isSubmitting}
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <LinkIcon />
-                              </InputAdornment>
-                            ),
-                          }}
-                        />
-                      </FormLabel>
-                    )}
-                  </Field>
-
-                  <Typography sx={{ fontStyle: 'italic', marginTop: '0.5rem', marginBottom: '1rem' }}>
-                    {t('editor.retention_strategy.rrs_required_link')}
-                  </Typography>
-
-                  <Field name={'rightsRetentionStrategy.type'}>
-                    {({ field }: FieldProps<RightsRetentionStrategyTypes>) => (
-                      <FormControlLabel
-                        label={t('editor.retention_strategy.rrs_override')}
-                        control={
-                          <Checkbox
-                            data-testid={dataTestId.editor.rrsOverride}
-                            {...field}
-                            disabled={isNullRrs || isSubmitting}
-                            checked={isOverridableRrs}
-                            value={values.rightsRetentionStrategy?.type}
-                            onChange={() => {
-                              setFieldValue(
-                                field.name,
-                                isRrs
-                                  ? RightsRetentionStrategyTypes.OverridableRightsRetentionStrategy
-                                  : RightsRetentionStrategyTypes.RightsRetentionStrategy
-                              );
-                            }}
-                          />
-                        }
-                      />
-                    )}
-                  </Field>
-
-                  <StyledRightAlignedWrapper>
-                    <LoadingButton
-                      data-testid={dataTestId.editor.rrsSaveButton}
-                      variant="contained"
-                      loading={isSubmitting}
-                      type="submit">
-                      {t('common.save')}
-                    </LoadingButton>
-                  </StyledRightAlignedWrapper>
-                </Box>
-              );
-            }}
-          </Formik>
+          <RightsRetentionStrategySettings customer={customer} />
         </>
       )}
     </>
