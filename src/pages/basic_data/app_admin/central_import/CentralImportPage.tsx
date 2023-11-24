@@ -42,8 +42,8 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
 
   const importCandidateQueryParams: FetchImportCandidatesParams = {
     query,
-    orderBy: params.get(SearchParam.OrderBy),
-    sortOrder: params.get(SearchParam.SortOrder) as SortOrder | null,
+    orderBy: params.get(SearchParam.OrderBy) ?? 'createdDate',
+    sortOrder: (params.get(SearchParam.SortOrder) as SortOrder | null) ?? 'desc',
   };
 
   const importCandidateQuery = useQuery({
@@ -75,6 +75,11 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
           options={[
             { orderBy: 'createdDate', sortOrder: 'desc', label: t('basic_data.central_import.sort_newest_first') },
             { orderBy: 'createdDate', sortOrder: 'asc', label: t('basic_data.central_import.sort_oldest_first') },
+            {
+              orderBy: 'importStatus.modifiedDate',
+              sortOrder: 'desc',
+              label: t('search.sort_by_modified_date'),
+            },
           ]}
         />
       </Box>
