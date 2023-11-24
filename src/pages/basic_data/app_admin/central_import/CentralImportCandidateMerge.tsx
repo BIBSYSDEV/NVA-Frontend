@@ -159,16 +159,7 @@ export const CentralImportCandidateMerge = () => {
             candidateValue={importCandidate.entityDescription?.description}
             registrationValue={values.entityDescription?.description}
           />
-          <CompareFields
-            label={t('registration.description.date_published')}
-            onOverwrite={() => {
-              if (importCandidate.entityDescription?.publicationDate) {
-                setFieldValue(DescriptionFieldNames.PublicationDate, importCandidate.entityDescription.publicationDate);
-              }
-            }}
-            candidateValue={displayDate(importCandidate.entityDescription?.publicationDate)}
-            registrationValue={displayDate(values.entityDescription?.publicationDate)}
-          />
+
           <CompareFields
             label={t('registration.description.primary_language')}
             onOverwrite={() =>
@@ -177,6 +168,7 @@ export const CentralImportCandidateMerge = () => {
             candidateValue={getLanguageName(importCandidate.entityDescription?.language)}
             registrationValue={getLanguageName(values.entityDescription?.language)}
           />
+
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
             <Link to={getImportCandidatePath(candidateIdentifier)}>
               <Button>{t('common.cancel')}</Button>
