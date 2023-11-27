@@ -186,9 +186,9 @@ export const RegistrationFormActions = ({
         title={'NVI GODKJENNING'}
         onAccept={async () => {
           if (tabNumber === RegistrationTab.FilesAndLicenses) {
+            setOpenNviApprovalResetDialog(false);
             const registrationIsUpdated = await saveRegistration(values);
             if (registrationIsUpdated) {
-              setOpenNviApprovalResetDialog(false);
               history.push(getRegistrationLandingPagePath(values.identifier));
             }
           } else {
