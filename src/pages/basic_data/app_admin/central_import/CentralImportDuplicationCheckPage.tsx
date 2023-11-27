@@ -37,7 +37,7 @@ export const CentralImportDuplicationCheckPage = () => {
 
   const importCandidateSearchQuery = useQuery({
     queryKey: ['importCandidateSearch', identifier],
-    queryFn: () => fetchImportCandidates(1, 0, `id:"${identifier}"`),
+    queryFn: () => fetchImportCandidates(1, 0, { query: `id:"${identifier}"` }),
     meta: { errorMessage: t('feedback.error.get_import_candidate') },
   });
   const importCandidateSearchResult = importCandidateSearchQuery.data?.hits[0];
