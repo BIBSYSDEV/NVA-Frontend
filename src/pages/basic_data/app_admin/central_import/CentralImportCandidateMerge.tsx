@@ -1,6 +1,5 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, TextField, TextFieldProps, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { getLanguageByUri } from 'nva-language';
@@ -15,11 +14,14 @@ import {
 } from '../../../../api/registrationApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
+import { DescriptionFieldNames, JournalType, PublicationType } from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
+import { getMainRegistrationType } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
+import { CompareFields } from './CompareFields';
+import { CompareJournalFields } from './CompareJournalFields';
 
 interface MergeImportCandidateParams {
   candidateIdentifier: string;
@@ -84,6 +86,10 @@ export const CentralImportCandidateMerge = () => {
     const language = getLanguageByUri(languageUri);
     return getLanguageString({ no: language.nob, ny: language.nno, en: language.eng });
   };
+
+  const mainType = getMainRegistrationType(
+    importCandidate?.entityDescription?.reference?.publicationInstance?.type ?? ''
+  );
 
   return registrationQuery.isLoading || importCandidateQuery.isLoading ? (
     <PageSpinner />
@@ -173,6 +179,11 @@ export const CentralImportCandidateMerge = () => {
             registrationValue={getLanguageName(values.entityDescription?.language)}
           />
 
+          {mainType === PublicationType.PublicationInJournal &&
+            importCandidate.entityDescription?.reference?.publicationInstance.type !== JournalType.Corrigendum && (
+              <CompareJournalFields importCandidate={importCandidate} />
+            )}
+
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
             <Link to={getImportCandidatePath(candidateIdentifier)}>
               <Button>{t('common.cancel')}</Button>
@@ -187,58 +198,5 @@ export const CentralImportCandidateMerge = () => {
         </Box>
       )}
     </Formik>
-  );
-};
-
-interface CompareFieldsProps extends Pick<TextFieldProps, 'variant'> {
-  label: string;
-  onOverwrite?: () => void;
-  candidateValue: string | undefined;
-  registrationValue: string | undefined;
-}
-
-const CompareFields = ({
-  label,
-  candidateValue,
-  registrationValue,
-  onOverwrite,
-  variant = 'filled',
-}: CompareFieldsProps) => {
-  const { t } = useTranslation();
-
-  return (
-    <>
-      <TextField
-        size="small"
-        variant={variant}
-        disabled
-        multiline
-        label={label}
-        value={candidateValue}
-        InputLabelProps={{ shrink: true }}
-      />
-      {onOverwrite ? (
-        <IconButton
-          size="small"
-          color="primary"
-          sx={{ bgcolor: 'white' }}
-          title={t('basic_data.central_import.merge_candidate.update_value')}
-          disabled={!candidateValue || candidateValue === registrationValue}
-          onClick={onOverwrite}>
-          <ArrowForwardIcon fontSize="small" />
-        </IconButton>
-      ) : (
-        <span />
-      )}
-      <TextField
-        size="small"
-        variant={variant}
-        disabled
-        multiline
-        label={label}
-        value={registrationValue}
-        InputLabelProps={{ shrink: true }}
-      />
-    </>
   );
 };
