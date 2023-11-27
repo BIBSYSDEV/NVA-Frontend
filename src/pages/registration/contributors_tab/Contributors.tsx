@@ -165,6 +165,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
         identity: {
           ...identity,
           orcId: verifiedOrcid || identity.orcId || '',
+          additionalIdentifiers: thisContributor.identity.additionalIdentifiers,
         },
         affiliations: verifiedAffiliations,
       };
