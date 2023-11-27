@@ -183,7 +183,7 @@ export const RegistrationFormActions = ({
 
       <ConfirmDialog
         open={openNviApprovalResetDialog}
-        title={'NVI GODKJENNING'}
+        title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={async () => {
           if (tabNumber === RegistrationTab.FilesAndLicenses) {
             setOpenNviApprovalResetDialog(false);
@@ -197,7 +197,8 @@ export const RegistrationFormActions = ({
           }
         }}
         onCancel={() => setOpenNviApprovalResetDialog(false)}>
-        <Typography>{'Om du lagrer vil du nullstille alle NVI godkjenninger'}</Typography>
+        <Typography paragraph>{t('registration.nvi_warning.approval_override_warning')}</Typography>
+        <Typography>{t('registration.nvi_warning.confirm_saving_registration')}</Typography>
       </ConfirmDialog>
     </>
   );

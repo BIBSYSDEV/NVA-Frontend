@@ -48,11 +48,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   const uppy = useUppy(createUppy(i18n.language));
   const [hasAcceptedNviWarning, setHasAcceptedNviWarning] = useState(false);
 
-  // const hasChangedNviValues = Math.random() * (1 - 0) + 0 >= 0.5;
-  const hasChangedNviValues = true;
-
-  console.log(hasChangedNviValues);
-
   const highestValidatedTab =
     useLocation<RegistrationLocationState>().state?.highestValidatedTab ?? RegistrationTab.FilesAndLicenses;
 
@@ -98,6 +93,12 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   };
 
   const canEditRegistration = registration && userCanEditRegistration(user, registration);
+
+  const compareRegistrationAndValues = (registration: Registration, values: Registration) => {
+    return registration.entityDescription?.publicationDate?.year !== values.entityDescription?.publicationDate?.year
+      ? true
+      : false;
+  };
 
   return registrationQuery.isLoading || (canHaveNviCandidate && nviCandidateQuery.isLoading) ? (
     <PageSpinner aria-label={t('common.result')} />
@@ -151,7 +152,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
                 tabNumber={tabNumber}
                 setTabNumber={setTabNumber}
                 validateForm={validateForm}
-                hasChangedNviValues={hasChangedNviValues}
+                hasChangedNviValues={compareRegistrationAndValues(registration, values)}
               />
             </BackgroundDiv>
           </Form>
