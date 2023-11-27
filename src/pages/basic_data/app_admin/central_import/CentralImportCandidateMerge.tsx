@@ -14,7 +14,13 @@ import {
 } from '../../../../api/registrationApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { DescriptionFieldNames, JournalType, PublicationType } from '../../../../types/publicationFieldNames';
+import { AssociatedLink } from '../../../../types/associatedArtifact.types';
+import {
+  DescriptionFieldNames,
+  FileFieldNames,
+  JournalType,
+  PublicationType,
+} from '../../../../types/publicationFieldNames';
 import { Registration } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
 import { getMainRegistrationType } from '../../../../utils/registration-helpers';
@@ -136,6 +142,41 @@ export const CentralImportCandidateMerge = () => {
             variant="standard"
             candidateValue={importCandidate.doi || importCandidate.entityDescription?.reference?.doi}
             registrationValue={registration.doi || registration.entityDescription?.reference?.doi}
+          />
+
+          <CompareFields
+            label={t('common.doi')}
+            onOverwrite={() => {
+              if (!importCandidate.entityDescription?.reference?.doi) {
+                return;
+              }
+              const currentAssociatedLinkIndex = values.associatedArtifacts.findIndex(
+                (artifact) => artifact.type === 'AssociatedLink'
+              );
+
+              if (currentAssociatedLinkIndex !== undefined && currentAssociatedLinkIndex > -1) {
+                setFieldValue(
+                  `${FileFieldNames.AssociatedArtifacts}.${currentAssociatedLinkIndex}.id`,
+                  importCandidate.entityDescription.reference.doi
+                );
+              } else {
+                setFieldValue(FileFieldNames.AssociatedArtifacts, [
+                  ...(values.associatedArtifacts ?? []),
+                  {
+                    type: 'AssociatedLink',
+                    id: importCandidate.entityDescription.reference.doi,
+                  },
+                ]);
+              }
+            }}
+            candidateValue={importCandidate.entityDescription?.reference?.doi}
+            registrationValue={
+              (
+                values.associatedArtifacts.find((artifact) => artifact.type === 'AssociatedLink') as
+                  | AssociatedLink
+                  | undefined
+              )?.id ?? ''
+            }
           />
 
           <CompareFields
