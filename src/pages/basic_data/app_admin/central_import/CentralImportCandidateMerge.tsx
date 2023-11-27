@@ -21,7 +21,7 @@ import {
   JournalType,
   PublicationType,
 } from '../../../../types/publicationFieldNames';
-import { Registration } from '../../../../types/registration.types';
+import { PublicationInstanceType, Registration } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
 import { getMainRegistrationType } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
@@ -93,8 +93,11 @@ export const CentralImportCandidateMerge = () => {
     return getLanguageString({ no: language.nob, ny: language.nno, en: language.eng });
   };
 
-  const mainType = getMainRegistrationType(
+  const candidateMainType = getMainRegistrationType(
     importCandidate?.entityDescription?.reference?.publicationInstance?.type ?? ''
+  );
+  const registrationMainType = getMainRegistrationType(
+    registration?.entityDescription?.reference?.publicationInstance?.type ?? ''
   );
 
   return registrationQuery.isLoading || importCandidateQuery.isLoading ? (
@@ -142,6 +145,21 @@ export const CentralImportCandidateMerge = () => {
             variant="standard"
             candidateValue={importCandidate.doi || importCandidate.entityDescription?.reference?.doi}
             registrationValue={registration.doi || registration.entityDescription?.reference?.doi}
+          />
+
+          <CompareFields
+            candidateLabel={t('common.category')}
+            variant="standard"
+            candidateValue={t(
+              `registration.publication_types.${
+                importCandidate.entityDescription?.reference?.publicationInstance.type as PublicationInstanceType
+              }`
+            )}
+            registrationValue={t(
+              `registration.publication_types.${
+                registration.entityDescription?.reference?.publicationInstance.type as PublicationInstanceType
+              }`
+            )}
           />
 
           <CompareFields
@@ -221,8 +239,10 @@ export const CentralImportCandidateMerge = () => {
             registrationValue={getLanguageName(values.entityDescription?.language)}
           />
 
-          {mainType === PublicationType.PublicationInJournal &&
-            importCandidate.entityDescription?.reference?.publicationInstance.type !== JournalType.Corrigendum && (
+          {candidateMainType === PublicationType.PublicationInJournal &&
+            importCandidate.entityDescription?.reference?.publicationInstance.type !== JournalType.Corrigendum &&
+            registrationMainType === PublicationType.PublicationInJournal &&
+            registration.entityDescription?.reference?.publicationInstance.type !== JournalType.Corrigendum && (
               <CompareJournalFields importCandidate={importCandidate} />
             )}
 
