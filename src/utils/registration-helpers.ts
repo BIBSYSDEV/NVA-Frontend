@@ -676,3 +676,9 @@ export const openFileInNewTab = (fileUri: string) => {
     setTimeout(() => window.open(fileUri, '_blank'));
   }
 };
+
+export const compareRegistrationAndValues = (registration: Registration, values: Registration) => {
+  return registration.entityDescription?.publicationDate?.year !== values.entityDescription?.publicationDate?.year
+    ? true
+    : false;
+};

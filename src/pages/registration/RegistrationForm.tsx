@@ -19,7 +19,11 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
-import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
+import {
+  compareRegistrationAndValues,
+  getTitleString,
+  userCanEditRegistration,
+} from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
@@ -93,12 +97,6 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   };
 
   const canEditRegistration = registration && userCanEditRegistration(user, registration);
-
-  const compareRegistrationAndValues = (registration: Registration, values: Registration) => {
-    return registration.entityDescription?.publicationDate?.year !== values.entityDescription?.publicationDate?.year
-      ? true
-      : false;
-  };
 
   return registrationQuery.isLoading || (canHaveNviCandidate && nviCandidateQuery.isLoading) ? (
     <PageSpinner aria-label={t('common.result')} />
