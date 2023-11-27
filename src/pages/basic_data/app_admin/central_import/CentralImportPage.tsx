@@ -7,6 +7,7 @@ import { fetchImportCandidates } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
+import { SearchForm } from '../../../../components/SearchForm';
 import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
@@ -31,9 +32,12 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
   const queryValue: ImportCandidateStatus = statusFilter.NOT_IMPORTED
     ? 'NOT_IMPORTED'
     : statusFilter.IMPORTED
-    ? 'IMPORTED'
-    : 'NOT_APPLICABLE';
-  const query = `importStatus.candidateStatus:${queryValue} AND publicationYear:${yearFilter}`;
+      ? 'IMPORTED'
+      : 'NOT_APPLICABLE';
+
+  const query = [`importStatus.candidateStatus:${queryValue}`, `publicationYear:${yearFilter}`, params.get('query')]
+    .filter(Boolean)
+    .join(' AND ');
 
   const importCandidateQuery = useQuery({
     queryKey: ['importCandidates', rowsPerPage, page, query],
@@ -57,6 +61,7 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
 
   return (
     <section>
+      <SearchForm placeholder={t('tasks.search_placeholder')} />
       {importCandidateQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : searchResults.length > 0 ? (
@@ -77,7 +82,7 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
           />
         </>
       ) : (
-        <Typography>{t('common.no_hits')}</Typography>
+        <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>
       )}
     </section>
   );

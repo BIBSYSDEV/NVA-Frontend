@@ -1,31 +1,31 @@
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Box, IconButton, Skeleton, Typography } from '@mui/material';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { ChangeEvent } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { ChangeEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { fetchProfilePicture, uploadProfilePicture } from '../../../api/cristinApi';
+import { uploadProfilePicture } from '../../../api/cristinApi';
+import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useProfilePicture } from '../../../utils/hooks/useProfilePicture';
 
 interface ProfilePictureUploaderProps {
-  id: string;
+  personId: string;
 }
 
-export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
+export const ProfilePictureUploader = ({ personId }: ProfilePictureUploaderProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const profilePictureQuery = useQuery({
-    queryKey: ['picture', id],
-    queryFn: () => fetchProfilePicture(id),
-    meta: { errorMessage: false },
-    retry: false,
-  });
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const toggleConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
+
+  const { profilePictureQuery, profilePictureString } = useProfilePicture(personId);
 
   const mutateProfilePicture = useMutation({
-    mutationFn: (base64String: string) => uploadProfilePicture(id, base64String),
+    mutationFn: (base64String: string) => uploadProfilePicture(personId, base64String),
     onSuccess: async () => {
       await profilePictureQuery.refetch();
       dispatch(setNotification({ message: t('feedback.success.update_profile_photo'), variant: 'success' }));
@@ -34,10 +34,6 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
       dispatch(setNotification({ message: t('feedback.error.update_profile_photo'), variant: 'error' }));
     },
   });
-
-  const profilePictureString = profilePictureQuery.isSuccess
-    ? `data:image/jpeg;base64,${profilePictureQuery.data.base64Data}`
-    : '';
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -60,7 +56,7 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <IconButton
             data-testid={dataTestId.myPage.myProfile.deleteProfilePictureButton}
-            onClick={() => mutateProfilePicture.mutate('')}
+            onClick={toggleConfirmDialog}
             sx={{
               alignSelf: 'end',
               boxShadow: '0px 10px 10px -8px rgba(0,0,0,0.75)',
@@ -73,10 +69,17 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
             <CancelIcon color="primary" />
           </IconButton>
 
-          <img
+          <Box
+            component="img"
             src={profilePictureString}
-            alt="user-avatar"
-            style={{ aspectRatio: '1/1', width: '100%', borderRadius: '50%', objectFit: 'cover' }}
+            alt={t('my_page.my_profile.profile_picture')}
+            sx={{
+              aspectRatio: '1/1',
+              width: '100%',
+              borderRadius: '50%',
+              border: '0.125rem solid black',
+              objectFit: 'cover',
+            }}
           />
         </Box>
       ) : (
@@ -102,9 +105,23 @@ export const ProfilePictureUploader = ({ id }: ProfilePictureUploaderProps) => {
             <AddAPhotoIcon color="primary" />
             <input accept=".jpg, .jpeg" onChange={handleFileChange} hidden type="file" />
           </IconButton>
+
           <Typography>{t('my_page.my_profile.identity.upload_profile_photo')}</Typography>
+          <Typography align="center">{t('my_page.my_profile.identity.upload_profile_photo_info')}</Typography>
         </Box>
       )}
+      <ConfirmDialog
+        open={openConfirmDialog}
+        title={t('my_page.my_profile.remove_profile_picture')}
+        onAccept={async () => {
+          await mutateProfilePicture.mutateAsync('');
+          toggleConfirmDialog();
+        }}
+        onCancel={toggleConfirmDialog}
+        isLoading={mutateProfilePicture.isLoading}
+        dialogDataTestId={dataTestId.myPage.myProfile.removeProfilePictureDialog}>
+        <Typography sx={{ whiteSpace: 'pre-wrap' }}>{t('my_page.my_profile.remove_profile_picture_info')}</Typography>
+      </ConfirmDialog>
     </Box>
   );
 };

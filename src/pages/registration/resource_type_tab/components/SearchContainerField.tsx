@@ -1,7 +1,9 @@
 import { Autocomplete, Box, Chip, Skeleton, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getById } from '../../../../api/commonApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
@@ -9,11 +11,11 @@ import { Contributor } from '../../../../types/contributor.types';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import {
-  Journal,
   PublicationInstanceType,
   Publisher,
   Registration,
   RegistrationDate,
+  Series,
 } from '../../../../types/registration.types';
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { displayDate } from '../../../../utils/date-helpers';
@@ -195,25 +197,49 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const publisherId = publicationContext.publisher?.id ?? '';
   const seriesId = publicationContext.series?.id ?? '';
 
-  const [publisher, isLoadingPublisher] = useFetchResource<Publisher>(publisherId, t('feedback.error.get_publisher'));
-  const [series, isLoadingSeries] = useFetchResource<Journal>(seriesId, t('feedback.error.get_series'));
+  const publisherQuery = useQuery({
+    queryKey: [publisherId],
+    enabled: !!publisherId,
+    queryFn: () => getById<Publisher>(publisherId),
+    meta: { errorMessage: t('feedback.error.get_publisher') },
+    staleTime: Infinity,
+  });
+
+  const seriesQuery = useQuery({
+    queryKey: [seriesId],
+    enabled: !!seriesId,
+    queryFn: () => getById<Series>(seriesId),
+    meta: { errorMessage: t('feedback.error.get_series') },
+    staleTime: Infinity,
+  });
+
+  const publisher = publisherQuery.data;
+  const series = seriesQuery.data;
 
   return seriesId ? (
     <>
       {publisherId && (
-        <ContainerDisplayName label={t('common.publisher')} value={publisher?.name} isLoading={isLoadingPublisher} />
+        <ContainerDisplayName
+          label={t('common.publisher')}
+          value={publisher?.name}
+          isLoading={publisherQuery.isFetching}
+        />
       )}
       <ContainerDisplayName
         label={t('registration.resource_type.series')}
         value={series?.name}
-        isLoading={isLoadingSeries}
+        isLoading={seriesQuery.isFetching}
       />
-      <NpiLevelTypography variant="body2" color="textSecondary" level={series?.level} />
+      <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={series?.scientificValue} />
     </>
   ) : publisherId ? (
     <>
-      <ContainerDisplayName label={t('common.publisher')} value={publisher?.name} isLoading={isLoadingPublisher} />
-      <NpiLevelTypography variant="body2" color="textSecondary" level={publisher?.level} />
+      <ContainerDisplayName
+        label={t('common.publisher')}
+        value={publisher?.name}
+        isLoading={publisherQuery.isFetching}
+      />
+      <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={publisher?.scientificValue} />
     </>
   ) : null;
 };

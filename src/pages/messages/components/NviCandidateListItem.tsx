@@ -2,19 +2,21 @@ import { Box, Link as MuiLink, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
 import { SearchListItem } from '../../../components/styled/Wrappers';
 import { RootState } from '../../../redux/store';
-import { NviCandidateSearchHit } from '../../../types/nvi.types';
+import { CandidateOffsetState, NviCandidateSearchHit } from '../../../types/nvi.types';
+import { displayDate } from '../../../utils/date-helpers';
 import { getTitleString } from '../../../utils/registration-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getNviCandidatePath, getResearchProfilePath } from '../../../utils/urlPaths';
 
 interface NviCandidateListItemProps {
   nviCandidate: NviCandidateSearchHit;
+  currentOffset: number;
+  nviListQuery: string;
 }
 
-export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps) => {
+export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviListQuery }: NviCandidateListItemProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
 
@@ -27,10 +29,15 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
   const typeString = nviCandidate.publicationDetails.type
     ? t(`registration.publication_types.${nviCandidate.publicationDetails.type}`)
     : '';
-  const dateString = new Date(nviCandidate.publicationDetails.publicationDate).toLocaleDateString();
+  const dateString = displayDate(nviCandidate.publicationDetails.publicationDate);
   const heading = [typeString, dateString].filter(Boolean).join(' — ');
 
   const myApproval = nviCandidate.approvals.find((approval) => approval.id === user?.topOrgCristinId);
+
+  const candidateOffsetState: CandidateOffsetState = {
+    currentOffset,
+    nviQuery: nviListQuery,
+  };
 
   return (
     <SearchListItem
@@ -47,7 +54,12 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
           </Typography>
         )}
         <Typography sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-          <MuiLink component={Link} to={getNviCandidatePath(nviCandidate.identifier)}>
+          <MuiLink
+            component={Link}
+            to={{
+              pathname: getNviCandidatePath(nviCandidate.identifier),
+              state: candidateOffsetState,
+            }}>
             {getTitleString(nviCandidate.publicationDetails.title)}
           </MuiLink>
         </Typography>
@@ -82,7 +94,6 @@ export const NviCandidateListItem = ({ nviCandidate }: NviCandidateListItemProps
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {myApproval && <Typography>{t(`tasks.nvi.status.${myApproval.approvalStatus}`)}</Typography>}
-        <PublicationPointsTypography fontWeight={700} points={nviCandidate.points} />
       </Box>
     </SearchListItem>
   );

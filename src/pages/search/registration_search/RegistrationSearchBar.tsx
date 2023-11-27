@@ -43,10 +43,6 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
   return (
     <Box
       sx={{
-        mx: {
-          xs: '1rem',
-          md: 0,
-        },
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', md: '5fr auto auto' },
         gridTemplateAreas: {

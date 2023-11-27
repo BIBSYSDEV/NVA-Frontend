@@ -4,7 +4,7 @@ import {
   BaseReference,
   BaseRegistration,
   ContextPublisher,
-  Series,
+  ContextSeries,
 } from '../registration.types';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 
@@ -27,7 +27,7 @@ export interface BookPublicationContext {
   isbnList: string[];
   publisher?: ContextPublisher;
   seriesNumber: string;
-  series?: Series;
+  series?: ContextSeries;
 }
 
 interface BookReference extends BaseReference {

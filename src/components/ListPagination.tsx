@@ -63,8 +63,11 @@ export const ListPagination = ({
       />
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        <Typography>{t('common.pagination_rows_per_page')}</Typography>
+        <Typography component="label">{t('common.pagination_rows_per_page')}</Typography>
         <Select
+          inputProps={{
+            'aria-label': t('common.pagination_rows_per_page'),
+          }}
           sx={{
             '.MuiSelect-select': {
               py: '0.3rem',

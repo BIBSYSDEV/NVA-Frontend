@@ -1,44 +1,27 @@
-import { LoadingButton } from '@mui/lab';
-import { Box, Button, Divider, Paper, Skeleton, Typography } from '@mui/material';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { Box, Divider, Paper, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { fetchOrganization } from '../../../api/cristinApi';
+import { useLocation, useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
-import {
-  CreateNoteData,
-  SetNviCandidateStatusData,
-  createNote,
-  setCandidateAssignee,
-  setCandidateStatus,
-} from '../../../api/scientificIndexApi';
-import { fetchNviCandidate } from '../../../api/searchApi';
-import { AssigneeSelector } from '../../../components/AssigneeSelector';
+import { fetchNviCandidate, fetchNviCandidates } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
-import { MessageForm } from '../../../components/MessageForm';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { StyledPaperHeader } from '../../../components/PageWithSideMenu';
-import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
-import { setNotification } from '../../../redux/notificationSlice';
-import { RootState } from '../../../redux/store';
-import { ApprovalStatus, Note, RejectedApprovalStatus } from '../../../types/nvi.types';
-import { RoleName } from '../../../types/user.types';
+import { CandidateOffsetState } from '../../../types/nvi.types';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { getLanguageString } from '../../../utils/translation-helpers';
-import { IdentifierParams } from '../../../utils/urlPaths';
+import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
+import { Forbidden } from '../../errorpages/Forbidden';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
-import { MessageItem } from './MessageList';
+import { NavigationIconButton } from './NavigationIconButton';
+import { NviApprovalStatuses } from './NviApprovalStatuses';
+import { NviCandidateActions } from './NviCandidateActions';
 
 export const NviCandidatePage = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
-  const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
-  const [hasSelectedRejectCandidate, setHasSelectedRejectCandidate] = useState(false);
-
-  const queryClient = useQueryClient();
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -46,9 +29,17 @@ export const NviCandidatePage = () => {
     queryKey: nviCandidateQueryKey,
     queryFn: () => fetchNviCandidate(identifier),
     meta: { errorMessage: t('feedback.error.get_nvi_candidate') },
+    retry(failureCount, error: Pick<AxiosError, 'response'>) {
+      if (error.response?.status === 401) {
+        return false;
+      }
+      return failureCount < 3;
+    },
   });
+
   const nviCandidate = nviCandidateQuery.data;
-  const myApprovalStatus = nviCandidate?.approvalStatuses.find((status) => status.institutionId === topOrgCristinId);
+  const pointsSum = nviCandidate?.approvalStatuses.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
+  const periodStatus = nviCandidate?.periodStatus.status;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
   const registrationQuery = useQuery({
@@ -58,66 +49,49 @@ export const NviCandidatePage = () => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const noteMutation = useMutation({
-    mutationFn: async (note: CreateNoteData) => {
-      const updatedCandidate = await createNote(identifier, note);
-      queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
-    },
-    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.create_note'), variant: 'success' })),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.create_note'), variant: 'error' })),
+  const nviListQuery = location.state?.nviQuery;
+  const thisCandidateOffset = location.state?.currentOffset;
+
+  const hasOffset = typeof thisCandidateOffset === 'number';
+  const navigateCandidateSearchOffset = hasOffset ? Math.max(thisCandidateOffset - 1, 0) : null;
+  const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
+
+  const navigateCandidateQuery = useQuery({
+    enabled: hasOffset,
+    queryKey: ['navigateCandidates', 3, navigateCandidateSearchOffset, nviListQuery],
+    queryFn:
+      navigateCandidateSearchOffset !== null
+        ? () => fetchNviCandidates(3, navigateCandidateSearchOffset, nviListQuery)
+        : undefined,
+    meta: { errorMessage: false },
+    retry: false,
   });
 
-  const statusMutation = useMutation({
-    mutationFn: async (data: Omit<SetNviCandidateStatusData, 'institutionId'>) => {
-      if (myApprovalStatus) {
-        const updatedCandidate = await setCandidateStatus(identifier, {
-          ...data,
-          institutionId: myApprovalStatus.institutionId,
-        });
-        queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
-      }
-    },
-    onSuccess: () =>
-      dispatch(setNotification({ message: t('feedback.success.update_nvi_status'), variant: 'success' })),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.update_nvi_status'), variant: 'error' })),
-  });
+  const nextCandidateIdentifier = navigateCandidateQuery.isSuccess
+    ? navigateCandidateQuery.data.hits[isFirstCandidate ? 1 : 2]?.identifier
+    : null;
+  const previousCandidateIdentifier =
+    navigateCandidateQuery.isSuccess && !isFirstCandidate ? navigateCandidateQuery.data.hits[0]?.identifier : null;
 
-  const assigneeMutation = useMutation({
-    mutationFn: async (assignee: string) => {
-      if (myApprovalStatus) {
-        const updatedCandidate = await setCandidateAssignee(identifier, {
-          institutionId: myApprovalStatus.institutionId,
-          assignee,
-        });
-        queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
-      }
-    },
-    onSuccess: () =>
-      dispatch(setNotification({ message: t('feedback.success.update_ticket_assignee'), variant: 'success' })),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.update_ticket_assignee'), variant: 'error' })),
-  });
+  const nextCandidateState: CandidateOffsetState | undefined =
+    hasOffset && nviListQuery
+      ? {
+          currentOffset: thisCandidateOffset + 1,
+          nviQuery: nviListQuery,
+        }
+      : undefined;
 
-  const isMutating = noteMutation.isLoading || statusMutation.isLoading;
+  const previousCandidateState: CandidateOffsetState | undefined =
+    hasOffset && nviListQuery
+      ? {
+          currentOffset: thisCandidateOffset - 1,
+          nviQuery: nviListQuery,
+        }
+      : undefined;
 
-  const rejectionNotes: Note[] = (
-    (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Rejected') ?? []) as RejectedApprovalStatus[]
-  ).map((rejectionStatus) => ({
-    createdDate: rejectionStatus.finalizedDate,
-    text: `[${t('tasks.nvi.status.Rejected')}] ${rejectionStatus.reason}`,
-    user: rejectionStatus.finalizedBy,
-  }));
-
-  const allNotes = [...(nviCandidate?.notes ?? []), ...rejectionNotes];
-
-  const sortedNotes = allNotes.sort((a, b) => {
-    const dateA = new Date(a.createdDate);
-    const dateB = new Date(b.createdDate);
-    return dateB.getTime() - dateA.getTime();
-  });
-
-  const publicationPointsSum = nviCandidate?.approvalStatuses.reduce((acc, status) => acc + status.points, 0);
-
-  return registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
+  return nviCandidateQuery.error?.response?.status === 401 ? (
+    <Forbidden />
+  ) : registrationQuery.isLoading || nviCandidateQuery.isLoading ? (
     <PageSpinner aria-label={t('common.result')} />
   ) : (
     <Box
@@ -132,6 +106,38 @@ export const NviCandidatePage = () => {
         <ErrorBoundary>
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
+
+            {previousCandidateIdentifier && (
+              <NavigationIconButton
+                data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
+                to={{
+                  pathname: getNviCandidatePath(previousCandidateIdentifier),
+                  state: previousCandidateState,
+                }}
+                title={t('tasks.nvi.previous_candidate')}
+                navigateTo={'previous'}
+                sx={{
+                  gridArea: 'registration',
+                  left: '-1rem',
+                }}
+              />
+            )}
+
+            {nextCandidateIdentifier && (
+              <NavigationIconButton
+                data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
+                to={{
+                  pathname: getNviCandidatePath(nextCandidateIdentifier),
+                  state: nextCandidateState,
+                }}
+                title={t('tasks.nvi.next_candidate')}
+                navigateTo={'next'}
+                sx={{
+                  gridArea: 'registration',
+                  right: '-1rem',
+                }}
+              />
+            )}
           </ErrorBoundary>
 
           <Paper
@@ -140,7 +146,7 @@ export const NviCandidatePage = () => {
               gridArea: 'nvi',
               bgcolor: 'nvi.light',
               height: 'fit-content',
-              minHeight: '85vh',
+              minHeight: { sm: '85vh' },
               display: 'flex',
               flexDirection: 'column',
             }}>
@@ -150,154 +156,19 @@ export const NviCandidatePage = () => {
               </Typography>
             </StyledPaperHeader>
 
-            <Box sx={{ m: '1rem' }}>
-              <AssigneeSelector
-                assignee={myApprovalStatus?.assignee}
-                canSetAssignee={myApprovalStatus?.status === 'Pending'}
-                onSelectAssignee={async (assigee) => await assigneeMutation.mutateAsync(assigee)}
-                isUpdating={assigneeMutation.isLoading}
-                roleFilter={RoleName.NviCurator}
-                iconBackgroundColor="nvi.main"
-              />
-            </Box>
-
-            <Divider />
-
-            <Box sx={{ m: '1rem' }}>
-              {sortedNotes.length > 0 && (
-                <Box
-                  component="ul"
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    listStyleType: 'none',
-                    p: 0,
-                    m: '0 0 1rem 0',
-                    gap: '0.25rem',
-                  }}>
-                  {sortedNotes.map((note) => (
-                    <ErrorBoundary key={note.createdDate}>
-                      <MessageItem
-                        text={note.text}
-                        date={note.createdDate}
-                        senderId={note.user}
-                        backgroundColor="nvi.main"
-                      />
-                    </ErrorBoundary>
-                  ))}
-                </Box>
-              )}
-
-              {myApprovalStatus?.status !== 'Approved' && (
-                <>
-                  <Typography gutterBottom>{t('tasks.nvi.approve_nvi_candidate_description')}</Typography>
-                  <LoadingButton
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    sx={{ mb: '1rem' }}
-                    loading={statusMutation.isLoading && statusMutation.variables?.status === 'Approved'}
-                    disabled={isMutating}
-                    onClick={() => statusMutation.mutate({ status: 'Approved' })}>
-                    {t('tasks.nvi.approve_nvi_candidate')}
-                  </LoadingButton>
-                </>
-              )}
-
-              {myApprovalStatus?.status !== 'Rejected' && (
-                <>
-                  <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    sx={{ mb: '1rem' }}
-                    disabled={isMutating || hasSelectedRejectCandidate}
-                    onClick={() => setHasSelectedRejectCandidate(true)}>
-                    {t('tasks.nvi.reject_nvi_candidate')}
-                  </Button>
-
-                  {hasSelectedRejectCandidate && (
-                    <MessageForm
-                      confirmAction={async (reason) => {
-                        await statusMutation.mutateAsync({ status: 'Rejected', reason });
-                        setHasSelectedRejectCandidate(false);
-                      }}
-                      fieldLabel={t('tasks.nvi.reject_nvi_candidate_form_label')}
-                      buttonTitle={t('tasks.nvi.reject_nvi_candidate')}
-                    />
-                  )}
-                </>
-              )}
-
-              {!hasSelectedRejectCandidate && (
-                <MessageForm
-                  confirmAction={async (text) => {
-                    await noteMutation.mutateAsync({ text });
-                  }}
-                  fieldLabel={t('tasks.nvi.note')}
-                  buttonTitle={t('tasks.nvi.save_note')}
-                />
-              )}
-            </Box>
+            {periodStatus === 'OpenPeriod' && nviCandidate ? (
+              <NviCandidateActions nviCandidate={nviCandidate} nviCandidateQueryKey={nviCandidateQueryKey} />
+            ) : periodStatus === 'ClosedPeriod' ? (
+              <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_closed')}</Typography>
+            ) : periodStatus === 'NoPeriod' ? (
+              <Typography sx={{ p: '1rem', bgcolor: 'nvi.main' }}>{t('tasks.nvi.reporting_period_missing')}</Typography>
+            ) : null}
 
             <Divider sx={{ mt: 'auto' }} />
-            <Box sx={{ m: '1rem' }}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-evenly',
-                  mb: '0.5rem',
-                }}>
-                <Typography>{t('tasks.nvi.publication_points')}</Typography>
-                {publicationPointsSum && <PublicationPointsTypography points={publicationPointsSum} />}
-              </Box>
-
-              {nviCandidate && nviCandidate.approvalStatuses.length > 0 && (
-                <Paper
-                  sx={{
-                    bgcolor: 'nvi.light',
-                    p: '0.5rem',
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, auto)',
-                    gap: '0.5rem 0.75rem',
-                    alignItems: 'center',
-                  }}>
-                  {nviCandidate.approvalStatuses.map((approvalStatus) => (
-                    <InstitutionApprovalStatusRow key={approvalStatus.institutionId} approvalStatus={approvalStatus} />
-                  ))}
-                </Paper>
-              )}
-            </Box>
+            <NviApprovalStatuses approvalStatuses={nviCandidate?.approvalStatuses ?? []} totalPoints={pointsSum} />
           </Paper>
         </ErrorBoundary>
       )}
     </Box>
-  );
-};
-
-interface InstitutionApprovalStatusRowProps {
-  approvalStatus: ApprovalStatus;
-}
-
-const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalStatusRowProps) => {
-  const { t } = useTranslation();
-
-  const institutionQuery = useQuery({
-    queryKey: [approvalStatus.institutionId],
-    queryFn: () => fetchOrganization(approvalStatus.institutionId),
-    meta: { errorMessage: t('feedback.error.get_institution') },
-  });
-
-  return (
-    <>
-      {institutionQuery.isLoading ? (
-        <Skeleton sx={{ width: '8rem' }} />
-      ) : (
-        <Typography>{getLanguageString(institutionQuery.data?.labels)}</Typography>
-      )}
-      <Typography sx={{ whiteSpace: 'nowrap' }}>{t(`tasks.nvi.status.${approvalStatus.status}`)}</Typography>
-      <PublicationPointsTypography sx={{ whiteSpace: 'nowrap' }} points={approvalStatus.points} />
-    </>
   );
 };

@@ -37,7 +37,17 @@ export const AppRoutes = () => {
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
       <Switch>
-        <Route exact path={UrlPathTemplate.Home} component={Dashboard} />
+        <Route
+          exact
+          path={[
+            UrlPathTemplate.Home,
+            UrlPathTemplate.Reports,
+            UrlPathTemplate.ReportsNvi,
+            UrlPathTemplate.ReportsInternationalCooperation,
+            UrlPathTemplate.ReportsClinicalTreatmentStudies,
+          ]}
+          component={Dashboard}
+        />
         <Route exact path={UrlPathTemplate.About} component={AboutPage} />
         <Route exact path={UrlPathTemplate.PrivacyPolicy} component={PrivacyPolicy} />
         <Route exact path={UrlPathTemplate.ResearchProfile} component={PublicResearchProfile} />

@@ -1,8 +1,8 @@
-import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import PersonIcon from '@mui/icons-material/Person';
+import NotesIcon from '@mui/icons-material/Notes';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Button, Divider, FormControlLabel, FormLabel } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -19,6 +19,7 @@ import {
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
+import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
@@ -30,6 +31,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getFullName } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { TicketList } from '../messages/components/TicketList';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
@@ -53,6 +55,8 @@ const MyPagePage = () => {
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
   const isCreator = !!user?.customerId && (user.isCreator || user.isCurator);
+  const personId = user?.cristinId ?? '';
+  const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
 
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
@@ -101,9 +105,12 @@ const MyPagePage = () => {
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
+  const urlSearchQuery = new URLSearchParams(location.search).get('query');
+  const searchQuery = urlSearchQuery ?? '';
+
   const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
-  const query = [typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
+  const query = [searchQuery, typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
 
   const ticketsQuery = useQuery({
     queryKey: ['tickets', rowsPerPage, apiPage, query],
@@ -148,7 +155,7 @@ const MyPagePage = () => {
             key={dataTestId.myPage.messagesAccordion}
             dataTestId={dataTestId.myPage.messagesAccordion}
             title={t('common.dialogue')}
-            startIcon={<ChatBubbleIcon fontSize="small" />}
+            startIcon={<ChatBubbleIcon fontSize="small" sx={{ color: 'white', bgcolor: 'primary.main' }} />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
             <StyledTicketSearchFormGroup>
@@ -269,7 +276,7 @@ const MyPagePage = () => {
           <NavigationListAccordion
             key={dataTestId.myPage.registrationsAccordion}
             title={t('common.result_registrations')}
-            startIcon={<AddIcon fontSize="small" />}
+            startIcon={<NotesIcon fontSize="small" sx={{ bgcolor: 'registration.main' }} />}
             accordionPath={UrlPathTemplate.MyPageRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
@@ -318,7 +325,7 @@ const MyPagePage = () => {
           <NavigationListAccordion
             key={dataTestId.myPage.projectRegistrationsAccordion}
             title={t('my_page.project_registrations')}
-            startIcon={<AddIcon sx={{ bgcolor: 'project.main' }} fontSize="small" />}
+            startIcon={<ShowChartIcon sx={{ bgcolor: 'project.main' }} fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageProjectRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyProjectRegistrations}
             dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
@@ -383,7 +390,7 @@ const MyPagePage = () => {
         ]}
         <NavigationListAccordion
           title={t('my_page.research_profile')}
-          startIcon={<img src={orcidIcon} height="20" alt={t('common.orcid')} />}
+          startIcon={<img src={orcidIcon} alt={t('common.orcid')} />}
           accordionPath={UrlPathTemplate.MyPageResearchProfile}
           defaultPath={UrlPathTemplate.MyPageMyResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
@@ -399,7 +406,7 @@ const MyPagePage = () => {
 
         <NavigationListAccordion
           title={t('my_page.my_profile.user_profile')}
-          startIcon={<PersonIcon fontSize="small" />}
+          startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
           accordionPath={UrlPathTemplate.MyPageMyProfile}
           defaultPath={UrlPathTemplate.MyPageMyPersonalia}
           dataTestId={dataTestId.myPage.myProfileAccordion}>

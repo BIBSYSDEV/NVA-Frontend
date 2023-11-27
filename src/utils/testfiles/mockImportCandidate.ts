@@ -3,6 +3,7 @@ import { JournalType } from '../../types/publicationFieldNames';
 
 export const mockImportCandidate: ImportCandidateSummary = {
   type: 'ImportCandidateSummary',
+  createdDate: '2023-08-02T15:15:58.910077Z',
   id: 'https://api.dev.nva.aws.unit.no/registration/12345679',
   contributors: [],
   additionalIdentifiers: ['12345'],

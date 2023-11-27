@@ -60,7 +60,6 @@ export const PeriodFields = ({ fromFieldName, toFieldName }: PeriodFieldsProps) 
               textField: {
                 inputProps: { 'data-testid': dataTestId.registrationWizard.resourceType.dateToField },
                 variant: 'filled',
-                required: true,
                 onBlur: () => !touched && setFieldTouched(field.name),
                 error: touched && !!error,
                 helperText: <ErrorMessage name={field.name} />,

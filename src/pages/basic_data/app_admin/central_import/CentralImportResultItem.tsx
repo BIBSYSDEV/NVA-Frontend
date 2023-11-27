@@ -5,7 +5,7 @@ import { ContributorIndicators } from '../../../../components/ContributorIndicat
 import { SearchListItem } from '../../../../components/styled/Wrappers';
 import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../../utils/general-helpers';
+import { getIdentifierFromId, getTimePeriodString } from '../../../../utils/general-helpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getResearchProfilePath } from '../../../../utils/urlPaths';
@@ -25,55 +25,60 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
   const verifiedContributorCount = importCandidate.totalVerifiedContributors;
   const contributorsCount = importCandidate.totalContributors;
 
+  const periodString = getTimePeriodString(new Date(importCandidate.createdDate), new Date(), t);
+
   return (
-    <SearchListItem sx={{ borderLeftColor: 'centralImport.main', display: 'flex', width: '100%', gap: '1rem' }}>
-      <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
-        {heading && (
-          <Typography variant="overline" sx={{ color: 'primary.main' }}>
-            {heading}
+    <SearchListItem sx={{ borderLeftColor: 'centralImport.main', display: 'flex', gap: '1rem' }}>
+      <Box sx={{ display: 'flex', gap: '1rem', justifyContent: 'space-between', width: '100%' }}>
+        <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
+          {heading && (
+            <Typography variant="overline" sx={{ color: 'primary.main' }}>
+              {heading}
+            </Typography>
+          )}
+          <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+            <MuiLink component={Link} to={getImportCandidatePath(getIdentifierFromId(importCandidate.id))}>
+              {getTitleString(importCandidate.mainTitle)}
+            </MuiLink>
           </Typography>
-        )}
-        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
-          <MuiLink component={Link} to={getImportCandidatePath(getIdentifierFromId(importCandidate.id))}>
-            {getTitleString(importCandidate.mainTitle)}
-          </MuiLink>
-        </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
-          {importCandidate.contributors.map((contributor, index) => (
-            <Box
-              key={index}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                '&:not(:last-child)': { '&:after': { content: '";"' } },
-              }}>
-              <Typography variant="body2">
-                {contributor.identity.id ? (
-                  <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
-                    {contributor.identity.name}
-                  </MuiLink>
-                ) : (
-                  contributor.identity.name
-                )}
-              </Typography>
-              <ContributorIndicators contributor={contributor} />
-            </Box>
-          ))}
+          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
+            {importCandidate.contributors.map((contributor, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  '&:not(:last-child)': { '&:after': { content: '";"' } },
+                }}>
+                <Typography variant="body2">
+                  {contributor.identity.id ? (
+                    <MuiLink component={Link} to={getResearchProfilePath(contributor.identity.id)}>
+                      {contributor.identity.name}
+                    </MuiLink>
+                  ) : (
+                    contributor.identity.name
+                  )}
+                </Typography>
+                <ContributorIndicators contributor={contributor} />
+              </Box>
+            ))}
 
-          <Typography>
-            {t('basic_data.central_import.verified_contributor_count', {
-              verifiedContributorCount,
-              contributorsCount,
-            })}
-          </Typography>
-        </Box>
+            <Typography>
+              {t('basic_data.central_import.verified_contributor_count', {
+                verifiedContributorCount,
+                contributorsCount,
+              })}
+            </Typography>
+          </Box>
 
-        {importCandidate.organizations.length > 0 && (
-          <Typography sx={{ mt: '0.5rem' }}>
-            {importCandidate.organizations.map((organization) => getLanguageString(organization.labels)).join(', ')}
-          </Typography>
-        )}
-      </ListItemText>
+          {importCandidate.organizations.length > 0 && (
+            <Typography sx={{ mt: '0.5rem' }}>
+              {importCandidate.organizations.map((organization) => getLanguageString(organization.labels)).join(', ')}
+            </Typography>
+          )}
+        </ListItemText>
+        <Typography sx={{ whiteSpace: 'nowrap' }}>{periodString}</Typography>
+      </Box>
     </SearchListItem>
   );
 };

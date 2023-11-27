@@ -1,5 +1,5 @@
 import { LanguageString, SearchResponse } from './common.types';
-import { PublicationInstanceType } from './registration.types';
+import { PublicationInstanceType, RegistrationDate } from './registration.types';
 
 interface NviCandidateContributor {
   id?: string;
@@ -20,12 +20,11 @@ export interface NviCandidateSearchHit {
     id: string;
     type: PublicationInstanceType;
     title: string;
-    publicationDate: string;
+    publicationDate: Omit<RegistrationDate, 'type'>;
     contributors: NviCandidateContributor[];
   };
   approvals: NviCandidateSearchHitApproval[];
   numberOfApprovals: number;
-  points: number;
 }
 
 interface AggregationCount {
@@ -59,7 +58,7 @@ export interface ApprovalStatus {
   assignee?: string;
 }
 
-interface FinalizedApprovalStatus extends ApprovalStatus {
+export interface FinalizedApprovalStatus extends ApprovalStatus {
   status: 'Rejected' | 'Approved';
   finalizedBy: string;
   finalizedDate: string;
@@ -75,10 +74,29 @@ export interface NviCandidate {
   publicationId: string;
   approvalStatuses: (ApprovalStatus | FinalizedApprovalStatus | RejectedApprovalStatus)[];
   notes: Note[];
+  periodStatus: {
+    status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';
+  };
 }
 
 export interface Note {
+  identifier: string;
   createdDate: string;
   text: string;
   user: string;
+}
+
+export interface NviPeriod {
+  publishingYear: string;
+  reportingDate: string;
+  startDate: string;
+}
+
+export interface NviPeriodResponse {
+  periods: NviPeriod[];
+}
+
+export interface CandidateOffsetState {
+  currentOffset: number;
+  nviQuery: string;
 }

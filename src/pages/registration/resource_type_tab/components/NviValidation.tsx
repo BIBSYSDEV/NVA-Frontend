@@ -1,15 +1,14 @@
 import InfoIcon from '@mui/icons-material/Info';
 import { Paper, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../redux/store';
+import { getById } from '../../../../api/commonApi';
 import { BookType, ChapterType, JournalType } from '../../../../types/publicationFieldNames';
 import { BookRegistration } from '../../../../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../../../../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../../../../types/publication_types/journalRegistration.types';
-import { Journal, Publisher, Registration } from '../../../../types/registration.types';
+import { Journal, Publisher, Registration, ScientificValue, Series } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
 
 interface NviValidationProps {
   registration: Registration;
@@ -41,59 +40,109 @@ export const NviValidation = ({ registration }: NviValidationProps) => {
 };
 
 const NviValidationJournalArticle = ({ registration }: { registration: JournalRegistration }) => {
-  const { reference } = registration.entityDescription;
+  const { t } = useTranslation();
+  const journalId = registration.entityDescription.reference?.publicationContext.id ?? '';
 
-  const resourceState = useSelector((store: RootState) => store.resources);
-  const journal = reference?.publicationContext.id ? (resourceState[reference.publicationContext.id] as Journal) : null;
+  const journalQuery = useQuery({
+    queryKey: [journalId],
+    enabled: !!journalId,
+    queryFn: () => getById<Journal>(journalId),
+    meta: { errorMessage: t('feedback.error.get_journal') },
+    staleTime: Infinity,
+  });
 
-  return <NviStatus level={journal?.level} />;
+  const journalScientificValue = journalQuery.data?.scientificValue;
+
+  return <NviStatus scientificValue={journalScientificValue} />;
 };
 
 const NviValidationBookMonograph = ({ registration }: { registration: BookRegistration }) => {
-  const { reference } = registration.entityDescription;
+  const { t } = useTranslation();
+  const publisherId = registration.entityDescription.reference?.publicationContext.publisher?.id ?? '';
+  const seriesId = registration.entityDescription.reference?.publicationContext.series?.id ?? '';
 
-  const resourceState = useSelector((store: RootState) => store.resources);
-  const publisher = reference?.publicationContext.publisher?.id
-    ? (resourceState[reference.publicationContext.publisher.id] as Publisher)
-    : null;
-  const series = reference?.publicationContext.series?.id
-    ? (resourceState[reference.publicationContext.series.id] as Journal)
-    : null;
+  const publisherQuery = useQuery({
+    queryKey: [publisherId],
+    enabled: !!publisherId,
+    queryFn: () => getById<Publisher>(publisherId),
+    meta: { errorMessage: t('feedback.error.get_publisher') },
+    staleTime: Infinity,
+  });
 
-  return <NviStatus level={series?.level ?? publisher?.level} />;
+  const seriesQuery = useQuery({
+    queryKey: [seriesId],
+    enabled: !!seriesId,
+    queryFn: () => getById<Series>(seriesId),
+    meta: { errorMessage: t('feedback.error.get_series') },
+    staleTime: Infinity,
+  });
+
+  const publisherScientificValue = publisherQuery.data?.scientificValue;
+  const seriesScientificValue = seriesQuery.data?.scientificValue;
+
+  return (
+    <NviStatus
+      scientificValue={
+        seriesScientificValue && seriesScientificValue !== 'Unassigned'
+          ? seriesScientificValue
+          : publisherScientificValue
+      }
+    />
+  );
 };
 
 const NviValidationChapterArticle = ({ registration }: { registration: ChapterRegistration }) => {
   const { t } = useTranslation();
-  const resourceState = useSelector((store: RootState) => store.resources);
+  const containerId = registration.entityDescription.reference?.publicationContext.id ?? '';
 
-  const { reference } = registration.entityDescription;
+  const containerQuery = useQuery({
+    queryKey: [containerId],
+    enabled: !!containerId,
+    queryFn: () => getById<BookRegistration>(containerId),
+    meta: { errorMessage: t('feedback.error.get_registration') },
+  });
 
-  const container = reference?.publicationContext.id
-    ? (resourceState[reference.publicationContext.id] as BookRegistration)
-    : null;
-  const containerPublicationContext = container?.entityDescription.reference?.publicationContext;
+  const publisherId = containerQuery.data?.entityDescription.reference?.publicationContext.publisher?.id ?? '';
+  const seriesId = containerQuery.data?.entityDescription.reference?.publicationContext.series?.id ?? '';
 
-  const [publisher] = useFetchResource<Publisher>(
-    containerPublicationContext?.publisher?.id ?? '',
-    t('feedback.error.get_publisher')
+  const publisherQuery = useQuery({
+    queryKey: [publisherId],
+    enabled: !!publisherId,
+    queryFn: () => getById<Publisher>(publisherId),
+    meta: { errorMessage: t('feedback.error.get_publisher') },
+    staleTime: Infinity,
+  });
+
+  const seriesQuery = useQuery({
+    queryKey: [seriesId],
+    enabled: !!seriesId,
+    queryFn: () => getById<Series>(seriesId),
+    meta: { errorMessage: t('feedback.error.get_series') },
+    staleTime: Infinity,
+  });
+
+  const publisherScientificValue = publisherQuery.data?.scientificValue;
+  const seriesScientificValue = seriesQuery.data?.scientificValue;
+
+  return (
+    <NviStatus
+      scientificValue={
+        seriesScientificValue && seriesScientificValue !== 'Unassigned'
+          ? seriesScientificValue
+          : publisherScientificValue
+      }
+    />
   );
-  const [series] = useFetchResource<Journal>(
-    containerPublicationContext?.series?.id ?? '',
-    t('feedback.error.get_series')
-  );
-
-  return <NviStatus level={series?.level ?? publisher?.level} />;
 };
 
 interface NviStatusProps {
-  level?: string;
+  scientificValue?: ScientificValue;
 }
 
-const NviStatus = ({ level = '' }: NviStatusProps) => {
+const NviStatus = ({ scientificValue }: NviStatusProps) => {
   const { t } = useTranslation();
 
-  const isRated = parseInt(level) > 0;
+  const isRated = scientificValue === 'LevelOne' || scientificValue === 'LevelTwo';
 
   return (
     <Paper elevation={5} sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', p: '1rem' }}>

@@ -9,6 +9,7 @@ interface NavigationListAccordionProps extends AccordionProps {
   accordionPath: string;
   defaultPath?: string;
   dataTestId: string;
+  expanded?: boolean;
 }
 
 export const NavigationListAccordion = ({
@@ -16,13 +17,14 @@ export const NavigationListAccordion = ({
   startIcon,
   accordionPath,
   defaultPath = accordionPath,
+  expanded,
   dataTestId,
   children,
   ...props
 }: NavigationListAccordionProps) => {
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
-  const isExpanded = currentPath.startsWith(accordionPath);
+  const isExpanded = expanded !== undefined ? expanded : currentPath.startsWith(accordionPath);
 
   return (
     <Accordion
@@ -39,7 +41,14 @@ export const NavigationListAccordion = ({
         sx={{ paddingX: '0.75rem' }}
         expandIcon={!isExpanded ? <ExpandMoreIcon /> : null}
         onClick={() => !isExpanded && history.push(defaultPath)}>
-        <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center', svg: { borderRadius: '50%' } }}>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '1rem',
+            alignItems: 'center',
+            'svg, img, div': { borderRadius: '50%', height: '25px', width: '25px' },
+            svg: { padding: '0.2rem' },
+          }}>
           {startIcon}
           <Typography variant="h2" fontWeight={500}>
             {title}

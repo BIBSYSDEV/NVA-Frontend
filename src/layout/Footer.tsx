@@ -9,9 +9,7 @@ import { Link } from 'react-router-dom';
 import { dataTestId } from '../utils/dataTestIds';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
-{
-  /*import { LanguageSelector } from './header/LanguageSelector';*/
-}
+import { LanguageSelector } from './header/LanguageSelector';
 
 export const Footer = () => {
   const { t } = useTranslation();
@@ -77,6 +75,7 @@ export const Footer = () => {
             justifySelf: { xs: 'start' },
             gap: '0.5rem',
             gridColumn: { xs: 1, lg: 2 },
+            mt: '2rem',
           }}>
           <ArrowRightAltIcon />
 
@@ -89,7 +88,7 @@ export const Footer = () => {
         </Box>
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
 
-        {/*<LanguageSelector /> */}
+        <LanguageSelector />
       </Box>
 
       {/* ---------------------------- Box 2 ---------------------------------- */}
@@ -115,6 +114,8 @@ export const Footer = () => {
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
               gridRow: { xs: 3, lg: 1 },
+
+              marginLeft: 'auto',
             }}
             data-testid={dataTestId.footer.becomeCustomer}
             target="_blank"
@@ -162,6 +163,8 @@ export const Footer = () => {
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
               gridRow: { xs: 3, lg: 1 },
+
+              marginLeft: 'auto',
             }}
             data-testid={dataTestId.footer.aboutSikt}
             target="_blank"
@@ -207,6 +210,8 @@ export const Footer = () => {
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
               gridRow: { xs: 3, lg: 1 },
+
+              marginLeft: 'auto',
             }}
             data-testid={dataTestId.footer.becomeCustomer}
             target="_blank"
@@ -231,7 +236,7 @@ export const Footer = () => {
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpesenter-nva'}>
             {t('footer.news_link')}
           </MuiLink>
-          <LaunchIcon fontSize="small" />
+          <LaunchIcon fontSize="small" sx={{ marginLeft: 'auto' }} />
         </Box>
 
         {/* Driftsmeldinger */}
@@ -245,7 +250,7 @@ export const Footer = () => {
             href={'https://sikt.no/driftsmeldinger'}>
             {t('footer.system_status_link')}
           </MuiLink>
-          <LaunchIcon fontSize="small" />
+          <LaunchIcon fontSize="small" sx={{ marginLeft: 'auto' }} />
         </Box>
 
         <Divider sx={{ bgcolor: 'primary.main', mt: '0.5rem', mb: '1rem' }} />
