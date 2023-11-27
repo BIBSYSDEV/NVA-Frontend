@@ -32,6 +32,18 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   sector: Sector;
   nviInstitution: boolean;
   rboInstitution: boolean;
+  rightsRetentionStrategy: RightsRetentionStrategy;
+}
+
+interface RightsRetentionStrategy {
+  type: RightsRetentionStrategyTypes;
+  id: string;
+}
+
+export enum RightsRetentionStrategyTypes {
+  NullRightsRetentionStrategy = 'NullRightsRetentionStrategy',
+  RightsRetentionStrategy = 'RightsRetentionStrategy',
+  OverridableRightsRetentionStrategy = 'OverridableRightsRetentionStrategy',
 }
 
 export interface DoiAgent {
@@ -81,6 +93,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   sector: Sector.Uhi,
   nviInstitution: false,
   rboInstitution: false,
+  rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {

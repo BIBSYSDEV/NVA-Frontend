@@ -18,6 +18,9 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const healthProjectFacet = projectQuery.data?.aggregations?.healthProjectFacet;
   const responsibleFacet = projectQuery.data?.aggregations?.responsibleFacet;
   const participantOrgFacet = projectQuery.data?.aggregations?.participantOrgFacet;
+  const categoryFacet = projectQuery.data?.aggregations?.categoryFacet;
+  const participantFacet = projectQuery.data?.aggregations?.participantFacet;
+  const fundingSourceFacet = projectQuery.data?.aggregations?.fundingSourceFacet;
 
   const searchParams = new URLSearchParams(history.location.search);
   const currentSearchType = searchParams.get(SearchParam.Type);
@@ -27,6 +30,9 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const selectedHealthProject = searchParams.get(ProjectSearchParameter.HealthProjectFacet)?.split(',') ?? [];
   const selectedResponsible = searchParams.get(ProjectSearchParameter.ResponsibleFacet)?.split(',') ?? [];
   const selectedParticipantOrg = searchParams.get(ProjectSearchParameter.ParticipantOrgFacet)?.split(',') ?? [];
+  const selecetedCategories = searchParams.get(ProjectSearchParameter.CategoryFacet)?.split(',') ?? [];
+  const selectedParticipants = searchParams.get(ProjectSearchParameter.ParticipantFacet)?.split(',') ?? [];
+  const selectedFundingSources = searchParams.get(ProjectSearchParameter.FundingSourceFacet)?.split(',') ?? [];
 
   const addFacetFilter = (id: string) => {
     const searchParameters = new URL(id).searchParams;
@@ -141,7 +147,29 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
         </FacetItem>
       )}
 
-      {/* TODO: Add category facet */}
+      {categoryFacet && categoryFacet?.length > 0 && (
+        <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.categoryFacets}>
+          {categoryFacet.map((facet) => {
+            const isSelected = selecetedCategories.includes(facet.key);
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={projectQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter(ProjectSearchParameter.CategoryFacet, facet.key)
+                    : addFacetFilter(facet.id)
+                }
+              />
+            );
+          })}
+        </FacetItem>
+      )}
 
       {healthProjectFacet && healthProjectFacet?.length > 0 && (
         <FacetItem title={t('search.health_project_type')} dataTestId={dataTestId.startPage.healthProjectFacets}>
@@ -167,9 +195,53 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
         </FacetItem>
       )}
 
-      {/* TODO: Add participant facet */}
+      {participantFacet && participantFacet?.length > 0 && (
+        <FacetItem title={t('search.participant')} dataTestId={dataTestId.startPage.participantFacets}>
+          {participantFacet.map((facet) => {
+            const isSelected = selectedParticipants.includes(facet.key);
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={projectQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter(ProjectSearchParameter.ParticipantFacet, facet.key)
+                    : addFacetFilter(facet.id)
+                }
+              />
+            );
+          })}
+        </FacetItem>
+      )}
 
-      {/* TODO: Add funding source facet */}
+      {fundingSourceFacet && fundingSourceFacet?.length > 0 && (
+        <FacetItem title={t('common.funding')} dataTestId={dataTestId.startPage.fundingSourceFacets}>
+          {fundingSourceFacet.map((facet) => {
+            const isSelected = selectedFundingSources.includes(facet.key);
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={projectQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter(ProjectSearchParameter.FundingSourceFacet, facet.key)
+                    : addFacetFilter(facet.id)
+                }
+              />
+            );
+          })}
+        </FacetItem>
+      )}
     </>
   );
 };

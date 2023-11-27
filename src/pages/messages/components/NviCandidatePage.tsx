@@ -1,9 +1,8 @@
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Box, Divider, IconButton, Paper, Typography } from '@mui/material';
+import { Box, Divider, Paper, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { fetchRegistration } from '../../../api/registrationApi';
 import { fetchNviCandidate, fetchNviCandidates } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
@@ -15,19 +14,14 @@ import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
 import { Forbidden } from '../../errorpages/Forbidden';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
+import { NavigationIconButton } from './NavigationIconButton';
 import { NviApprovalStatuses } from './NviApprovalStatuses';
 import { NviCandidateActions } from './NviCandidateActions';
 
-interface NviCandidatePageProps {
-  nviListQuery: string;
-}
-
-export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
+export const NviCandidatePage = () => {
   const { t } = useTranslation();
   const location = useLocation<CandidateOffsetState | undefined>();
   const { identifier } = useParams<IdentifierParams>();
-
-  const offsetNextCandidate = location.state?.offsetNextCandidate;
 
   const nviCandidateQueryKey = ['nviCandidate', identifier];
   const nviCandidateQuery = useQuery({
@@ -45,6 +39,7 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
 
   const nviCandidate = nviCandidateQuery.data;
   const pointsSum = nviCandidate?.approvalStatuses.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
+  const periodStatus = nviCandidate?.periodStatus.status;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
   const registrationQuery = useQuery({
@@ -54,22 +49,45 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
     meta: { errorMessage: t('feedback.error.get_registration') },
   });
 
-  const periodStatus = nviCandidate?.periodStatus.status;
+  const nviListQuery = location.state?.nviQuery;
+  const thisCandidateOffset = location.state?.currentOffset;
 
-  const nextCandidateQuery = useQuery({
-    queryKey: ['nextCandidate', 1, offsetNextCandidate, nviListQuery],
-    queryFn: offsetNextCandidate ? () => fetchNviCandidates(1, offsetNextCandidate, nviListQuery) : undefined,
+  const hasOffset = typeof thisCandidateOffset === 'number';
+  const navigateCandidateSearchOffset = hasOffset ? Math.max(thisCandidateOffset - 1, 0) : null;
+  const isFirstCandidate = hasOffset && thisCandidateOffset === 0;
+
+  const navigateCandidateQuery = useQuery({
+    enabled: hasOffset,
+    queryKey: ['navigateCandidates', 3, navigateCandidateSearchOffset, nviListQuery],
+    queryFn:
+      navigateCandidateSearchOffset !== null
+        ? () => fetchNviCandidates(3, navigateCandidateSearchOffset, nviListQuery)
+        : undefined,
     meta: { errorMessage: false },
     retry: false,
   });
 
-  const nextCandidateIdentifier = nextCandidateQuery.data?.hits[0]?.identifier;
+  const nextCandidateIdentifier = navigateCandidateQuery.isSuccess
+    ? navigateCandidateQuery.data.hits[isFirstCandidate ? 1 : 2]?.identifier
+    : null;
+  const previousCandidateIdentifier =
+    navigateCandidateQuery.isSuccess && !isFirstCandidate ? navigateCandidateQuery.data.hits[0]?.identifier : null;
 
-  const offsetNextCandidateState: CandidateOffsetState | undefined = offsetNextCandidate
-    ? {
-        offsetNextCandidate: offsetNextCandidate + 1,
-      }
-    : undefined;
+  const nextCandidateState: CandidateOffsetState | undefined =
+    hasOffset && nviListQuery
+      ? {
+          currentOffset: thisCandidateOffset + 1,
+          nviQuery: nviListQuery,
+        }
+      : undefined;
+
+  const previousCandidateState: CandidateOffsetState | undefined =
+    hasOffset && nviListQuery
+      ? {
+          currentOffset: thisCandidateOffset - 1,
+          nviQuery: nviListQuery,
+        }
+      : undefined;
 
   return nviCandidateQuery.error?.response?.status === 401 ? (
     <Forbidden />
@@ -89,31 +107,36 @@ export const NviCandidatePage = ({ nviListQuery }: NviCandidatePageProps) => {
           <ErrorBoundary>
             <PublicRegistrationContent registration={registrationQuery.data} />
 
-            {nextCandidateIdentifier && offsetNextCandidate && (
-              <IconButton
-                component={Link}
+            {previousCandidateIdentifier && (
+              <NavigationIconButton
+                data-testid={dataTestId.tasksPage.nvi.previousCandidateButton}
+                to={{
+                  pathname: getNviCandidatePath(previousCandidateIdentifier),
+                  state: previousCandidateState,
+                }}
+                title={t('tasks.nvi.previous_candidate')}
+                navigateTo={'previous'}
+                sx={{
+                  gridArea: 'registration',
+                  left: '-1rem',
+                }}
+              />
+            )}
+
+            {nextCandidateIdentifier && (
+              <NavigationIconButton
+                data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                 to={{
                   pathname: getNviCandidatePath(nextCandidateIdentifier),
-                  state: offsetNextCandidateState,
+                  state: nextCandidateState,
                 }}
-                data-testid={dataTestId.tasksPage.nvi.nextCandidateButton}
                 title={t('tasks.nvi.next_candidate')}
-                size="small"
+                navigateTo={'next'}
                 sx={{
-                  display: { xs: 'none', sm: 'flex' },
                   gridArea: 'registration',
-                  alignSelf: 'center',
-                  justifySelf: 'end',
                   right: '-1rem',
-                  border: '1px solid',
-                  borderColor: 'info.main',
-                  bgcolor: 'white',
-                  '&:hover': {
-                    bgcolor: 'white',
-                  },
-                }}>
-                <ArrowForwardIosIcon fontSize="small" color="info" />
-              </IconButton>
+                }}
+              />
             )}
           </ErrorBoundary>
 
