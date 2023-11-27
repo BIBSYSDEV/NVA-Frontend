@@ -77,7 +77,7 @@ export interface Identity {
   verificationStatus?: VerificationStatus;
 }
 
-export interface AdditionalIdentifier {
+interface AdditionalIdentifier {
   sourceName: string;
   value: string;
 }
