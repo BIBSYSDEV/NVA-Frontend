@@ -97,5 +97,6 @@ export interface NviPeriodResponse {
 }
 
 export interface CandidateOffsetState {
-  offsetNextCandidate: number;
+  currentOffset: number;
+  nviQuery: string;
 }

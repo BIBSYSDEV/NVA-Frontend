@@ -235,6 +235,7 @@
     "type": "Type",
     "unknown": "Ukjent",
     "update": "Oppdater",
+    "url": "URL",
     "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
@@ -378,7 +379,15 @@
       "registrator_publishes_metadata": "Registrator publiserer metadata",
       "registrator_publishes_metadata_description": "Filer og lisenser må godkjennes av Kurator før de blir offentlig tilgjengelig.",
       "registrator_publishes_without_curator": "Registrator publiserer uten godkjenning av Kurator",
-      "registrator_publishes_without_curator_description": "Institutsjonen bestemmer hvem som er Registrator."
+      "registrator_publishes_without_curator_description": "Institusjonen bestemmer hvem som er Registrator."
+    },
+    "retention_strategy": {
+      "rrs": "Rettighetspolitikk",
+      "rrs_info_page": "Institusjonenes informasjonsside om rettighetspolitikk",
+      "rrs_link": "Skriv inn lenke",
+      "rrs_required_link": "*Felt med stjerne er obligatorisk",
+      "rrs_override": "Registrator kan fraskrive seg RRS",
+      "rights_retention_strategy": "Rights Retention Strategy (RRS)"
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
     "vocabulary": "Vokabular",
@@ -467,6 +476,7 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
+      "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
@@ -508,6 +518,7 @@
       "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
+      "update_rights_retention_strategy": "Rettighetspolitikk ble oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
     },
@@ -1639,6 +1650,7 @@
     "hits_other": "{{count}} treff",
     "not_containing": "Inneholder ikke",
     "operator": "Operator",
+    "participant": "Deltaker",
     "participating_institution": "Deltakende institusjon",
     "person_search_placeholder": "Søk etter navn",
     "persons": "Personer",
@@ -1679,6 +1691,7 @@
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Merknad",
       "publication_points": "Publiseringspoeng",
+      "previous_candidate": "Gå til forrige kandidat",
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvisning av resultatet.",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
