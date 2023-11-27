@@ -20,7 +20,7 @@ export const CompareJournalFields = ({ importCandidate }: CompareJournalFieldsPr
   return (
     <>
       <CompareFields
-        label={t('registration.resource_type.volume')}
+        candidateLabel={t('registration.resource_type.volume')}
         onOverwrite={() =>
           setFieldValue(
             ResourceFieldNames.Volume,
@@ -31,7 +31,7 @@ export const CompareJournalFields = ({ importCandidate }: CompareJournalFieldsPr
         registrationValue={journalValues.entityDescription?.reference?.publicationInstance?.volume ?? ''}
       />
       <CompareFields
-        label={t('registration.resource_type.issue')}
+        candidateLabel={t('registration.resource_type.issue')}
         onOverwrite={() =>
           setFieldValue(
             ResourceFieldNames.Issue,
@@ -42,7 +42,7 @@ export const CompareJournalFields = ({ importCandidate }: CompareJournalFieldsPr
         registrationValue={journalValues.entityDescription?.reference?.publicationInstance.issue ?? ''}
       />
       <CompareFields
-        label={t('registration.resource_type.pages_from')}
+        candidateLabel={t('registration.resource_type.pages_from')}
         onOverwrite={() =>
           setFieldValue(
             ResourceFieldNames.PagesFrom,
@@ -53,7 +53,7 @@ export const CompareJournalFields = ({ importCandidate }: CompareJournalFieldsPr
         registrationValue={journalValues.entityDescription?.reference?.publicationInstance.pages?.begin ?? ''}
       />
       <CompareFields
-        label={t('basic_data.central_import.merge_candidate.page_to')}
+        candidateLabel={t('basic_data.central_import.merge_candidate.page_to')}
         onOverwrite={() =>
           setFieldValue(
             ResourceFieldNames.PagesTo,

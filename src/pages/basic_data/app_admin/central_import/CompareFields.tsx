@@ -3,14 +3,16 @@ import { IconButton, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 interface CompareFieldsProps extends Pick<TextFieldProps, 'variant'> {
-  label: string;
+  candidateLabel: string;
+  registrationLabel?: string;
   onOverwrite?: () => void;
   candidateValue: string | undefined;
   registrationValue: string | undefined;
 }
 
 export const CompareFields = ({
-  label,
+  candidateLabel,
+  registrationLabel = candidateLabel,
   candidateValue,
   registrationValue,
   onOverwrite,
@@ -25,7 +27,7 @@ export const CompareFields = ({
         variant={variant}
         disabled
         multiline
-        label={label}
+        label={candidateLabel}
         value={candidateValue}
         InputLabelProps={{ shrink: true }}
       />
@@ -47,7 +49,7 @@ export const CompareFields = ({
         variant={variant}
         disabled
         multiline
-        label={label}
+        label={registrationLabel}
         value={registrationValue}
         InputLabelProps={{ shrink: true }}
       />

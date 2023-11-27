@@ -131,21 +131,29 @@ export const CentralImportCandidateMerge = () => {
           <Typography variant="h1">{t('basic_data.central_import.merge_candidate.result_in_nva')}</Typography>
 
           <CompareFields
-            label={t('basic_data.central_import.merge_candidate.result_id')}
+            candidateLabel={t('basic_data.central_import.merge_candidate.result_id')}
             variant="standard"
             candidateValue={candidateIdentifier}
             registrationValue={registration.identifier}
           />
 
           <CompareFields
-            label={t('common.doi')}
+            candidateLabel={t('common.doi')}
             variant="standard"
             candidateValue={importCandidate.doi || importCandidate.entityDescription?.reference?.doi}
             registrationValue={registration.doi || registration.entityDescription?.reference?.doi}
           />
 
           <CompareFields
-            label={t('common.doi')}
+            candidateLabel={t('registration.description.date_published')}
+            variant="standard"
+            candidateValue={displayDate(importCandidate.entityDescription?.publicationDate)}
+            registrationValue={displayDate(registration.entityDescription?.publicationDate)}
+          />
+
+          <CompareFields
+            candidateLabel={t('common.doi')}
+            registrationLabel={t('registration.files_and_license.link_to_resource')}
             onOverwrite={() => {
               if (!importCandidate.entityDescription?.reference?.doi) {
                 return;
@@ -180,21 +188,14 @@ export const CentralImportCandidateMerge = () => {
           />
 
           <CompareFields
-            label={t('registration.description.date_published')}
-            variant="standard"
-            candidateValue={displayDate(importCandidate.entityDescription?.publicationDate)}
-            registrationValue={displayDate(registration.entityDescription?.publicationDate)}
-          />
-
-          <CompareFields
-            label={t('common.title')}
+            candidateLabel={t('common.title')}
             onOverwrite={() => setFieldValue(DescriptionFieldNames.Title, importCandidate.entityDescription?.mainTitle)}
             candidateValue={importCandidate.entityDescription?.mainTitle}
             registrationValue={values.entityDescription?.mainTitle}
           />
 
           <CompareFields
-            label={t('registration.description.abstract')}
+            candidateLabel={t('registration.description.abstract')}
             onOverwrite={() =>
               setFieldValue(DescriptionFieldNames.Abstract, importCandidate.entityDescription?.abstract)
             }
@@ -203,7 +204,7 @@ export const CentralImportCandidateMerge = () => {
           />
 
           <CompareFields
-            label={t('registration.description.description_of_content')}
+            candidateLabel={t('registration.description.description_of_content')}
             onOverwrite={() =>
               setFieldValue(DescriptionFieldNames.Description, importCandidate.entityDescription?.description)
             }
@@ -212,7 +213,7 @@ export const CentralImportCandidateMerge = () => {
           />
 
           <CompareFields
-            label={t('registration.description.primary_language')}
+            candidateLabel={t('registration.description.primary_language')}
             onOverwrite={() =>
               setFieldValue(DescriptionFieldNames.Language, importCandidate.entityDescription?.language)
             }
