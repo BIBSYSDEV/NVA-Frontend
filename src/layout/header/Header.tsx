@@ -47,10 +47,10 @@ export const Header = () => {
           display: 'grid',
           justifyItems: 'center',
           gridTemplateAreas: {
-            xs: '"logo user-menu"',
-            lg: '"logo search new-result user-menu"',
+            xs: '"logo new-result user-menu"',
+            md: '"logo search new-result user-menu"',
           },
-          gridTemplateColumns: { xs: 'auto auto auto', lg: '3fr 1fr 10fr 5fr' },
+          gridTemplateColumns: { xs: 'auto 1fr auto', md: 'auto 1fr 10fr auto' },
           gap: '1rem',
           px: '1rem',
         }}>
@@ -74,10 +74,7 @@ export const Header = () => {
               fontSize: '1rem',
               fontWeight: 700,
               gap: '0.5rem',
-              display: { xs: 'none', lg: 'inline-flex' },
-              '.MuiButton-startIcon > :nth-of-type(1)': {
-                fontSize: '1.875rem',
-              },
+              display: { xs: 'none', sm: 'inline-flex' },
             }}
             color="inherit"
             component={RouterLink}
@@ -86,6 +83,7 @@ export const Header = () => {
             startIcon={
               <AddIcon
                 sx={{
+                  display: { xs: 'none', sm: 'inline-flex' },
                   color: 'white',
                   bgcolor: 'primary.light',
                   borderRadius: '50%',

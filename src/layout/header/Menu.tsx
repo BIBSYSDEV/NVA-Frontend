@@ -30,7 +30,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   return (
     <Box sx={{ gridArea: 'user-items', display: 'flex' }}>
       {isMobile ? (
-        <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit">
+        <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit" size="large">
           <AccountCircle fontSize="large" />
         </IconButton>
       ) : (
