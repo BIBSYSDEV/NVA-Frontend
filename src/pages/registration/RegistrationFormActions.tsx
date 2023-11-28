@@ -43,6 +43,9 @@ export const RegistrationFormActions = ({
   const [isSaving, setIsSaving] = useState(false);
   const [openNviApprovalResetDialog, setOpenNviApprovalResetDialog] = useState(false);
 
+  const isFirstTab = tabNumber === RegistrationTab.Description;
+  const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
+
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
     const formattedValues = getFormattedRegistration(values);
@@ -66,19 +69,28 @@ export const RegistrationFormActions = ({
     return isSuccess;
   };
 
-  const onClickSaveAndPresent = async () => {
+  const handleSaveClick = async () => {
     if (hasChangedNviValues) {
       setOpenNviApprovalResetDialog(true);
     } else {
-      const registrationIsUpdated = await saveRegistration(values);
-      if (registrationIsUpdated) {
+      await saveRegistration(values);
+      if (isLastTab) {
         history.push(getRegistrationLandingPagePath(values.identifier));
       }
     }
   };
 
-  const isFirstTab = tabNumber === RegistrationTab.Description;
-  const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
+  const handleDialogAccept = async () => {
+    setOpenNviApprovalResetDialog(false);
+    if (isLastTab) {
+      const registrationIsUpdated = await saveRegistration(values);
+      if (registrationIsUpdated) {
+        history.push(getRegistrationLandingPagePath(values.identifier));
+      }
+    } else {
+      saveRegistration(values);
+    }
+  };
 
   return (
     <>
@@ -138,9 +150,7 @@ export const RegistrationFormActions = ({
               variant="outlined"
               loading={isSaving}
               data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={async () => {
-                hasChangedNviValues ? setOpenNviApprovalResetDialog(true) : await saveRegistration(values);
-              }}>
+              onClick={handleSaveClick}>
               {t('common.save')}
             </LoadingButton>
             <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
@@ -164,7 +174,7 @@ export const RegistrationFormActions = ({
             variant="contained"
             loading={isSaving}
             data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-            onClick={onClickSaveAndPresent}
+            onClick={handleSaveClick}
             sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
             {t('common.save_and_view')}
           </LoadingButton>
@@ -184,18 +194,7 @@ export const RegistrationFormActions = ({
       <ConfirmDialog
         open={openNviApprovalResetDialog}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
-        onAccept={async () => {
-          if (tabNumber === RegistrationTab.FilesAndLicenses) {
-            setOpenNviApprovalResetDialog(false);
-            const registrationIsUpdated = await saveRegistration(values);
-            if (registrationIsUpdated) {
-              history.push(getRegistrationLandingPagePath(values.identifier));
-            }
-          } else {
-            setOpenNviApprovalResetDialog(false);
-            saveRegistration(values);
-          }
-        }}
+        onAccept={handleDialogAccept}
         onCancel={() => setOpenNviApprovalResetDialog(false)}>
         <Typography paragraph>{t('registration.nvi_warning.approval_override_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.confirm_saving_registration')}</Typography>

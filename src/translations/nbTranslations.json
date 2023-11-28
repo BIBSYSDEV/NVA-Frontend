@@ -1194,7 +1194,7 @@
     "nvi_warning": {
       "confirm_saving_registration": "Vil du lagre endringene dine?",
       "continue_editing_registration": "Vil du fortsatt redigere publikasjonen?",
-      "approval_override_warning": "Du har endret publikasjonen, på en slik måte at alle institusjoner som har medforfattere, må godkjenne den på nytt, for at den skal bli med på årets NVI-rapport.",
+      "approval_override_warning": "Du har endret publikasjonen på en slik måte at alle institusjoner som har medforfattere må godkjenne den på nytt for at den skal bli med på årets NVI-rapport.",
       "registration_is_included_in_nvi": "Publikasjonen er en del av Norsk Vitenskapsindeks (NVI)",
       "reset_nvi_warning": "Du kan endre årstall, bidragsyteres tilknytning(-er) til institusjon(-er), kategori, eller publiseringskanal, men kurator ved alle medvirkende institusjoner må NVI-godkjenne publikasjonen på nytt."
     },
