@@ -54,7 +54,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {user?.isCreator && isExtraSmallScreen && (
+        {isExtraSmallScreen && user?.isCreator && (
           <MenuItem
             key={dataTestId.header.newRegistrationLink}
             data-testid={dataTestId.header.newRegistrationLink}
@@ -65,6 +65,16 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           </MenuItem>
         )}
         {isSmallScreen && [
+          user?.isCreator && (
+            <MenuItem
+              key={dataTestId.header.myPageLink}
+              data-testid={dataTestId.header.myPageLink}
+              onClick={closeMenu}
+              component={Link}
+              to={UrlPathTemplate.MyPage}>
+              <Typography>{t('my_page.my_page')}</Typography>
+            </MenuItem>
+          ),
           user?.isEditor && (
             <MenuItem
               key={dataTestId.header.editorLink}
@@ -85,27 +95,17 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               <Typography>{t('common.tasks')}</Typography>
             </MenuItem>
           ),
-          user?.isCreator && [
+          (user?.isAppAdmin || user?.isInstitutionAdmin) && (
             <MenuItem
-              key={dataTestId.header.myPageLink}
-              data-testid={dataTestId.header.myPageLink}
+              key={dataTestId.header.basicDataLink}
+              data-testid={dataTestId.header.basicDataLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.MyPage}>
-              <Typography>{t('my_page.my_page')}</Typography>
-            </MenuItem>,
-          ],
+              to={UrlPathTemplate.BasicData}>
+              <Typography>{t('basic_data.basic_data')}</Typography>
+            </MenuItem>
+          ),
         ]}
-        {(user?.isAppAdmin || user?.isInstitutionAdmin) && isSmallScreen && (
-          <MenuItem
-            key={dataTestId.header.basicDataLink}
-            data-testid={dataTestId.header.basicDataLink}
-            onClick={closeMenu}
-            component={Link}
-            to={UrlPathTemplate.BasicData}>
-            <Typography>{t('basic_data.basic_data')}</Typography>
-          </MenuItem>
-        )}
         <MenuItem data-testid={dataTestId.header.logOutLink} onClick={handleLogout}>
           {t('authorization.logout')}
         </MenuItem>
