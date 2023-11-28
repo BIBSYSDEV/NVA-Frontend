@@ -56,7 +56,6 @@ export const Menu = ({ handleLogout }: MenuProps) => {
         }}>
         {isExtraSmallScreen && user?.isCreator && (
           <MenuItem
-            key={dataTestId.header.newRegistrationLink}
             data-testid={dataTestId.header.newRegistrationLink}
             onClick={closeMenu}
             component={Link}
