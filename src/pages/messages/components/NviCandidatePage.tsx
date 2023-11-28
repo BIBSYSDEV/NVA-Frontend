@@ -15,7 +15,7 @@ import { IdentifierParams, getNviCandidatePath } from '../../../utils/urlPaths';
 import { Forbidden } from '../../errorpages/Forbidden';
 import { PublicRegistrationContent } from '../../public_registration/PublicRegistrationContent';
 import { NavigationIconButton } from './NavigationIconButton';
-import { NviApprovalStatuses } from './NviApprovalStatuses';
+import { NviApprovals } from './NviApprovals';
 import { NviCandidateActions } from './NviCandidateActions';
 
 export const NviCandidatePage = () => {
@@ -38,7 +38,7 @@ export const NviCandidatePage = () => {
   });
 
   const nviCandidate = nviCandidateQuery.data;
-  const pointsSum = nviCandidate?.approvalStatuses.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
+  const pointsSum = nviCandidate?.approvals.reduce((acc, curr) => acc + curr.points, 0) ?? 0;
   const periodStatus = nviCandidate?.periodStatus.status;
   const registrationIdentifier = getIdentifierFromId(nviCandidate?.publicationId ?? '');
 
@@ -165,7 +165,7 @@ export const NviCandidatePage = () => {
             ) : null}
 
             <Divider sx={{ mt: 'auto' }} />
-            <NviApprovalStatuses approvalStatuses={nviCandidate?.approvalStatuses ?? []} totalPoints={pointsSum} />
+            <NviApprovals approvals={nviCandidate?.approvals ?? []} totalPoints={pointsSum} />
           </Paper>
         </ErrorBoundary>
       )}

@@ -81,9 +81,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     onError: () => dispatch(setNotification({ message: t('feedback.error.delete_note'), variant: 'error' })),
   });
 
-  const myApprovalStatus = nviCandidate?.approvalStatuses.find(
-    (status) => status.institutionId === user?.topOrgCristinId
-  );
+  const myApprovalStatus = nviCandidate?.approvals.find((status) => status.institutionId === user?.topOrgCristinId);
 
   const statusMutation = useMutation({
     mutationFn: async (data: Omit<SetNviCandidateStatusData, 'institutionId'>) => {
@@ -103,7 +101,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   const isMutating = createNoteMutation.isLoading || statusMutation.isLoading;
 
   const rejectionNotes: NviNote[] = (
-    (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Rejected') ?? []) as RejectedApprovalStatus[]
+    (nviCandidate?.approvals.filter((status) => status.status === 'Rejected') ?? []) as RejectedApprovalStatus[]
   ).map((rejectionStatus) => ({
     type: 'FinalizedNote',
     date: rejectionStatus.finalizedDate,
@@ -119,7 +117,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   }));
 
   const approvalNotes: NviNote[] = (
-    (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Approved') ?? []) as FinalizedApprovalStatus[]
+    (nviCandidate?.approvals.filter((status) => status.status === 'Approved') ?? []) as FinalizedApprovalStatus[]
   ).map((approvalStatus) => ({
     type: 'FinalizedNote',
     date: approvalStatus.finalizedDate,

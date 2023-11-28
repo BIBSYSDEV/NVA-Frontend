@@ -72,7 +72,7 @@ export interface RejectedApprovalStatus extends FinalizedApprovalStatus {
 export interface NviCandidate {
   id: string;
   publicationId: string;
-  approvalStatuses: (ApprovalStatus | FinalizedApprovalStatus | RejectedApprovalStatus)[];
+  approvals: (ApprovalStatus | FinalizedApprovalStatus | RejectedApprovalStatus)[];
   notes: Note[];
   periodStatus: {
     status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';

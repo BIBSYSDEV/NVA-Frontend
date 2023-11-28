@@ -72,7 +72,7 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
   });
   const showNviWarning =
     nviCandidateQuery.isSuccess &&
-    nviCandidateQuery.data.approvalStatuses.some((status) => status.status !== 'Pending') &&
+    nviCandidateQuery.data.approvals.some((status) => status.status !== 'Pending') &&
     !hasAcceptedNviWarning;
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
