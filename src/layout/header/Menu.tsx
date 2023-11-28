@@ -17,8 +17,8 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const isExtraSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
   const name = user?.givenName ?? '';
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
@@ -29,7 +29,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
 
   return (
     <Box sx={{ gridArea: 'user-items', display: 'flex' }}>
-      {isMobile ? (
+      {isSmallScreen ? (
         <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit" size="large">
           <AccountCircle fontSize="large" />
         </IconButton>
@@ -54,7 +54,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {user?.isCreator && !isMobile && !isLargeScreen && (
+        {user?.isCreator && isExtraSmallScreen && (
           <MenuItem
             key={dataTestId.header.newRegistrationLink}
             data-testid={dataTestId.header.newRegistrationLink}
@@ -64,7 +64,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             <Typography>{t('registration.new_registration')}</Typography>
           </MenuItem>
         )}
-        {isMobile && [
+        {isSmallScreen && [
           user?.isEditor && (
             <MenuItem
               key={dataTestId.header.editorLink}
@@ -87,14 +87,6 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           ),
           user?.isCreator && [
             <MenuItem
-              key={dataTestId.header.newRegistrationLink}
-              data-testid={dataTestId.header.newRegistrationLink}
-              onClick={closeMenu}
-              component={Link}
-              to={UrlPathTemplate.RegistrationNew}>
-              <Typography>{t('registration.new_registration')}</Typography>
-            </MenuItem>,
-            <MenuItem
               key={dataTestId.header.myPageLink}
               data-testid={dataTestId.header.myPageLink}
               onClick={closeMenu}
@@ -104,7 +96,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             </MenuItem>,
           ],
         ]}
-        {(user?.isAppAdmin || user?.isInstitutionAdmin) && isMobile && (
+        {(user?.isAppAdmin || user?.isInstitutionAdmin) && isSmallScreen && (
           <MenuItem
             key={dataTestId.header.basicDataLink}
             data-testid={dataTestId.header.basicDataLink}

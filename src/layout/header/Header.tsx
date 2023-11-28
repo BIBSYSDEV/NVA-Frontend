@@ -37,7 +37,6 @@ export const Header = () => {
   }, [dispatch, customer]);
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   return (
     <AppBar position="sticky" elevation={0} sx={{ color: 'white' }}>
@@ -46,26 +45,21 @@ export const Header = () => {
         sx={{
           display: 'grid',
           justifyItems: 'center',
-          gridTemplateAreas: {
-            xs: '"logo new-result user-menu"',
-            md: '"logo search new-result user-menu"',
-          },
-          gridTemplateColumns: { xs: 'auto 1fr auto', md: 'auto 1fr 10fr auto' },
-          gap: '1rem',
+          gridTemplateAreas: '"logo search new-result user-menu"',
+          gridTemplateColumns: { xs: 'auto auto 1fr auto', md: 'auto 1fr 10fr auto' },
+          gap: { xs: '0.5rem', sm: '1rem' },
           px: '1rem',
         }}>
         <Logo />
 
-        {isLargeScreen && (
-          <MenuIconButton
-            color="inherit"
-            sx={{ gridArea: 'search' }}
-            title={t('common.search')}
-            isSelected={location.pathname === UrlPathTemplate.Home || currentPath === UrlPathTemplate.Home}
-            to={UrlPathTemplate.Home}>
-            <SearchIcon fontSize="large" />
-          </MenuIconButton>
-        )}
+        <MenuIconButton
+          color="inherit"
+          sx={{ gridArea: 'search' }}
+          title={t('common.search')}
+          isSelected={location.pathname === UrlPathTemplate.Home || currentPath === UrlPathTemplate.Home}
+          to={UrlPathTemplate.Home}>
+          <SearchIcon fontSize="large" />
+        </MenuIconButton>
 
         {user?.isCreator && (
           <Button
@@ -83,7 +77,6 @@ export const Header = () => {
             startIcon={
               <AddIcon
                 sx={{
-                  display: { xs: 'none', sm: 'inline-flex' },
                   color: 'white',
                   bgcolor: 'primary.light',
                   borderRadius: '50%',
