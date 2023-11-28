@@ -383,12 +383,12 @@
       "registrator_publishes_without_curator_description": "Institusjonen bestemmer hvem som er Registrator."
     },
     "retention_strategy": {
+      "rights_retention_strategy": "Rights Retention Strategy (RRS)",
       "rrs": "Rettighetspolitikk",
       "rrs_info_page": "Institusjonenes informasjonsside om rettighetspolitikk",
       "rrs_link": "Skriv inn lenke",
-      "rrs_required_link": "*Felt med stjerne er obligatorisk",
       "rrs_override": "Registrator kan fraskrive seg RRS",
-      "rights_retention_strategy": "Rights Retention Strategy (RRS)"
+      "rrs_required_link": "*Felt med stjerne er obligatorisk"
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
     "vocabulary": "Vokabular",
@@ -1691,8 +1691,8 @@
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Merknad",
-      "publication_points": "Publiseringspoeng",
       "previous_candidate": "Gå til forrige kandidat",
+      "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvisning av resultatet.",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",
