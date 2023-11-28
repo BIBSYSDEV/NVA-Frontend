@@ -1,10 +1,7 @@
-import { Link as MuiLink, Typography } from '@mui/material';
-import { Trans, useTranslation } from 'react-i18next';
-
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import LaunchIcon from '@mui/icons-material/Launch';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { dataTestId } from '../utils/dataTestIds';
 import { UrlPathTemplate } from '../utils/urlPaths';
@@ -21,19 +18,19 @@ export const Footer = () => {
         padding: '1rem',
         bgcolor: 'info.light',
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', lg: '3fr 3fr 3fr' },
+        gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr 1fr' },
         columnGap: '3rem',
+        color: 'primary.main',
       }}>
-      {/* ---------------------------- Box 1 ---------------------------------- */}
+      {/* Box 1 */}
 
       <Box>
         {/* Om Nasjonalt Vitenarkiv (NVA) */}
         <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-          <ArrowRightAltIcon />
-
           <Typography
             sx={{
               fontWeight: 'bold',
+              color: 'primary.main',
             }}>
             {t('footer.about_nva')}
           </Typography>
@@ -44,6 +41,7 @@ export const Footer = () => {
               gridRow: { xs: 3, lg: 1 },
 
               marginLeft: 'auto',
+              color: 'primary.main',
             }}
             data-testid={dataTestId.footer.aboutLink}
             target="_blank"
@@ -62,13 +60,11 @@ export const Footer = () => {
             color: 'primary.main',
             gridColumn: { xs: 1, lg: 1 },
             justifySelf: 'center',
-            ml: '2rem',
           }}>
           {t('footer.about_nva_text')}
         </Typography>
 
         {/* Språkvalg */}
-
         <Box
           sx={{
             display: 'flex',
@@ -77,11 +73,10 @@ export const Footer = () => {
             gridColumn: { xs: 1, lg: 2 },
             mt: '2rem',
           }}>
-          <ArrowRightAltIcon />
-
           <Typography
             sx={{
               fontWeight: 'bold',
+              color: 'primary.main',
             }}>
             {t('footer.language_selector')}
           </Typography>
@@ -91,7 +86,7 @@ export const Footer = () => {
         <LanguageSelector />
       </Box>
 
-      {/* ---------------------------- Box 2 ---------------------------------- */}
+      {/* Box 2 */}
 
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         {/* Hvordan bli kunde */}
@@ -101,11 +96,10 @@ export const Footer = () => {
             justifySelf: { xs: 'start' },
             gap: '0.5rem',
           }}>
-          <ArrowRightAltIcon />
-
           <Typography
             sx={{
               fontWeight: 'bold',
+              color: 'primary.main',
             }}>
             {t('footer.become_customer')}
           </Typography>
@@ -114,7 +108,6 @@ export const Footer = () => {
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
               gridRow: { xs: 3, lg: 1 },
-
               marginLeft: 'auto',
             }}
             data-testid={dataTestId.footer.becomeCustomer}
@@ -130,19 +123,16 @@ export const Footer = () => {
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
 
         {/* Tekst: Sikt er leverandør til norsk kunnskapssektor .... */}
-
         <Typography
           sx={{
             color: 'primary.main',
             gridColumn: { xs: 1, lg: 2 },
             justifySelf: 'start',
-            ml: '2rem',
           }}>
           {t('footer.about_sikt_text')}
         </Typography>
 
         {/* Om Sikt */}
-
         <Box
           sx={{
             display: 'flex',
@@ -150,11 +140,10 @@ export const Footer = () => {
             gap: '0.5rem',
             mt: '2rem',
           }}>
-          <ArrowRightAltIcon />
-
           <Typography
             sx={{
               fontWeight: 'bold',
+              color: 'primary.main',
             }}>
             {t('footer.about_sikt')}
           </Typography>
@@ -163,7 +152,6 @@ export const Footer = () => {
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
               gridRow: { xs: 3, lg: 1 },
-
               marginLeft: 'auto',
             }}
             data-testid={dataTestId.footer.aboutSikt}
@@ -181,15 +169,14 @@ export const Footer = () => {
             color: 'primary.main',
             gridColumn: { xs: 1, lg: 2 },
             justifySelf: 'start',
-            ml: '2rem',
           }}>
           {t('about.footer_text')}
         </Typography>
       </Box>
 
-      {/* ---------------------------- Box 3 ---------------------------------- */}
+      {/* Box 3 */}
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: 'fit-content' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         {/* Hjelpesenter */}
         <Box
           sx={{
@@ -197,11 +184,10 @@ export const Footer = () => {
             justifySelf: { xs: 'start' },
             gap: '0.5rem',
           }}>
-          <ArrowRightAltIcon />
-
           <Typography
             sx={{
               fontWeight: 'bold',
+              color: 'primary.main',
             }}>
             {t('footer.help_center')}
           </Typography>
@@ -226,9 +212,7 @@ export const Footer = () => {
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
 
         {/* Aktuelt */}
-
-        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-          <ArrowCircleRightIcon />
+        <Box sx={{ display: 'flex', gap: '0.5rem', mt: '0.3rem', mb: '0.4rem' }}>
           <MuiLink
             data-testid={dataTestId.footer.newsLink}
             target="_blank"
@@ -236,13 +220,11 @@ export const Footer = () => {
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpesenter-nva'}>
             {t('footer.news_link')}
           </MuiLink>
-          <LaunchIcon fontSize="small" sx={{ marginLeft: 'auto' }} />
+          <LaunchIcon fontSize="small" />
         </Box>
 
         {/* Driftsmeldinger */}
-
-        <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-          <ArrowCircleRightIcon />
+        <Box sx={{ display: 'flex', gap: '0.5rem', mb: '0.5rem' }}>
           <MuiLink
             data-testid={dataTestId.footer.systemStatusLink}
             target="_blank"
@@ -250,14 +232,13 @@ export const Footer = () => {
             href={'https://sikt.no/driftsmeldinger'}>
             {t('footer.system_status_link')}
           </MuiLink>
-          <LaunchIcon fontSize="small" sx={{ marginLeft: 'auto' }} />
+          <LaunchIcon fontSize="small" />
         </Box>
 
         <Divider sx={{ bgcolor: 'primary.main', mt: '0.5rem', mb: '1rem' }} />
 
         <Box>
           {/* Personvern og informasjonskapsler */}
-
           <Box
             sx={{
               display: 'flex',
@@ -272,7 +253,6 @@ export const Footer = () => {
           </Box>
 
           {/* Tilgjengelighetserklæring */}
-
           <Box
             sx={{
               display: 'flex',
@@ -288,6 +268,7 @@ export const Footer = () => {
               href={'https://uustatus.no/nb/erklaringer/publisert/bffb4b1d-25eb-4fe0-bac7-2f0b4a8e0fd9'}>
               {t('about.availability_statement')}
             </MuiLink>
+            <LaunchIcon fontSize="small" />
           </Box>
 
           <Box
