@@ -37,7 +37,6 @@ export const Header = () => {
   }, [dispatch, customer]);
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   return (
     <AppBar position="sticky" elevation={0} sx={{ color: 'white' }}>
@@ -46,26 +45,21 @@ export const Header = () => {
         sx={{
           display: 'grid',
           justifyItems: 'center',
-          gridTemplateAreas: {
-            xs: '"logo user-menu"',
-            lg: '"logo search new-result user-menu"',
-          },
-          gridTemplateColumns: { xs: 'auto auto auto', lg: '3fr 1fr 10fr 5fr' },
-          gap: '1rem',
+          gridTemplateAreas: '"logo search new-result user-menu"',
+          gridTemplateColumns: { xs: 'auto auto 1fr auto', md: 'auto 1fr 10fr auto' },
+          gap: { xs: '0.5rem', sm: '1rem' },
           px: '1rem',
         }}>
         <Logo />
 
-        {isLargeScreen && (
-          <MenuIconButton
-            color="inherit"
-            sx={{ gridArea: 'search' }}
-            title={t('common.search')}
-            isSelected={location.pathname === UrlPathTemplate.Home || currentPath === UrlPathTemplate.Home}
-            to={UrlPathTemplate.Home}>
-            <SearchIcon fontSize="large" />
-          </MenuIconButton>
-        )}
+        <MenuIconButton
+          color="inherit"
+          sx={{ gridArea: 'search' }}
+          title={t('common.search')}
+          isSelected={location.pathname === UrlPathTemplate.Home || currentPath === UrlPathTemplate.Home}
+          to={UrlPathTemplate.Home}>
+          <SearchIcon fontSize="large" />
+        </MenuIconButton>
 
         {user?.isCreator && (
           <Button
@@ -74,10 +68,7 @@ export const Header = () => {
               fontSize: '1rem',
               fontWeight: 700,
               gap: '0.5rem',
-              display: { xs: 'none', lg: 'inline-flex' },
-              '.MuiButton-startIcon > :nth-of-type(1)': {
-                fontSize: '1.875rem',
-              },
+              display: { xs: 'none', sm: 'inline-flex' },
             }}
             color="inherit"
             component={RouterLink}

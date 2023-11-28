@@ -63,6 +63,7 @@
         "merge_details_1": "Resultatet finnes i NVA. Gå til veiviseren for å endre alle felter etter at du har slått sammen importdata med resultat i NVA. Dette kan være viktig for Norsk Vitenskapsindeks (NVI).",
         "merge_details_2": "Data fra NVA vises til høyre. Metadata fra importkandidat vises til venstre og har ofte bedre datagrunnlag. Du kan velge enkeltvis hva du vil ta med.",
         "metadata_to_import": "Metadata til import",
+        "page_to": "Sidetall til",
         "result_id": "Resultat-ID",
         "result_in_nva": "Resultat i NVA",
         "update_value": "Oppdater verdi"
@@ -72,6 +73,8 @@
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
+      "sort_newest_first": "Nyeste kandidater først",
+      "sort_oldest_first": "Eldste kandidater først",
       "status": {
         "IMPORTED": "Importert",
         "NOT_APPLICABLE": "Mangelfull",
@@ -233,6 +236,7 @@
     "type": "Type",
     "unknown": "Ukjent",
     "update": "Oppdater",
+    "url": "URL",
     "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
@@ -376,7 +380,15 @@
       "registrator_publishes_metadata": "Registrator publiserer metadata",
       "registrator_publishes_metadata_description": "Filer og lisenser må godkjennes av Kurator før de blir offentlig tilgjengelig.",
       "registrator_publishes_without_curator": "Registrator publiserer uten godkjenning av Kurator",
-      "registrator_publishes_without_curator_description": "Institutsjonen bestemmer hvem som er Registrator."
+      "registrator_publishes_without_curator_description": "Institusjonen bestemmer hvem som er Registrator."
+    },
+    "retention_strategy": {
+      "rights_retention_strategy": "Rights Retention Strategy (RRS)",
+      "rrs": "Rettighetspolitikk",
+      "rrs_info_page": "Institusjonenes informasjonsside om rettighetspolitikk",
+      "rrs_link": "Skriv inn lenke",
+      "rrs_override": "Registrator kan fraskrive seg RRS",
+      "rrs_required_link": "*Felt med stjerne er obligatorisk"
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
     "vocabulary": "Vokabular",
@@ -465,6 +477,7 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
+      "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
@@ -506,6 +519,7 @@
       "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
+      "update_rights_retention_strategy": "Rettighetspolitikk ble oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
     },
@@ -1679,8 +1693,8 @@
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Merknad",
-      "publication_points": "Publiseringspoeng",
       "previous_candidate": "Gå til forrige kandidat",
+      "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvisning av resultatet.",
       "reject_nvi_candidate_form_label": "Begrunnelse for avvisning",

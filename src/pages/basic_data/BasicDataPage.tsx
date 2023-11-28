@@ -62,7 +62,7 @@ const BasicDataPage = () => {
   const importCandidatesFacetsQuery = useQuery({
     enabled: location.pathname === UrlPathTemplate.BasicDataCentralImport,
     queryKey: ['importCandidatesFacets', candidateYearFilter],
-    queryFn: () => fetchImportCandidates(0, 0, `publicationYear:${candidateYearFilter}`),
+    queryFn: () => fetchImportCandidates(0, 0, { query: `publicationYear:${candidateYearFilter}` }),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
 

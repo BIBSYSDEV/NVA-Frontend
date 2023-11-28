@@ -1,17 +1,20 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Box, ButtonBase, CircularProgress, styled, Typography } from '@mui/material';
+
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
+import { PageSpinner } from '../../components/PageSpinner';
 import { setCustomer } from '../../redux/customerReducer';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublishStrategy } from '../../types/customerInstitution.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { RightsRetentionStrategySettings } from './RightsRetentionStrategySettings';
 
 const StyledItemContainer = styled('div')({
   display: 'grid',
@@ -76,69 +79,77 @@ export const PublishStrategySettings = () => {
       <Helmet>
         <title id="publish-strategy-label">{t('editor.publish_strategy.publish_strategy')}</title>
       </Helmet>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <StyledItemContainer>
-          <PublishStrategyButton
-            focusRipple
-            disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
-            isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
-            data-testid={dataTestId.editor.workflowRegistratorPublishesAll}
-            onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
-            <Box>
-              <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_publishes_without_curator')}
-              </Typography>
-              <StyledAccessRightsContainer>
-                <StyledAccessRight>
-                  <CheckCircleIcon color="primary" />
-                  <Typography>{t('editor.publish_strategy.metadata')}</Typography>
-                </StyledAccessRight>
-                <StyledAccessRight>
-                  <CheckCircleIcon color="primary" />
-                  <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
-                </StyledAccessRight>
-              </StyledAccessRightsContainer>
-              <Typography sx={{ textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_publishes_without_curator_description')}
-              </Typography>
-            </Box>
-          </PublishStrategyButton>
-          {isUpdating === 'RegistratorPublishesMetadataAndFiles' && (
-            <CircularProgress aria-labelledby="publish-strategy-label" />
-          )}
-        </StyledItemContainer>
 
-        <StyledItemContainer>
-          <PublishStrategyButton
-            focusRipple
-            disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
-            isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
-            data-testid={dataTestId.editor.workflowRegistratorPublishesMetadata}
-            onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
-            <Box>
-              <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_publishes_metadata')}
-              </Typography>
-              <StyledAccessRightsContainer>
-                <StyledAccessRight>
-                  <CheckCircleIcon color="primary" />
-                  <Typography>{t('editor.publish_strategy.metadata')}</Typography>
-                </StyledAccessRight>
-                <StyledAccessRight>
-                  <RemoveCircleIcon color="error" />
-                  <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
-                </StyledAccessRight>
-              </StyledAccessRightsContainer>
-              <Typography sx={{ textAlign: 'center' }}>
-                {t('editor.publish_strategy.registrator_publishes_metadata_description')}
-              </Typography>
-            </Box>
-          </PublishStrategyButton>
-          {isUpdating === 'RegistratorPublishesMetadataOnly' && (
-            <CircularProgress aria-labelledby="publish-strategy-label" />
-          )}
-        </StyledItemContainer>
-      </Box>
+      {!customer ? (
+        <PageSpinner />
+      ) : (
+        <>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <StyledItemContainer>
+              <PublishStrategyButton
+                focusRipple
+                disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
+                isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataAndFiles'}
+                data-testid={dataTestId.editor.workflowRegistratorPublishesAll}
+                onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataAndFiles')}>
+                <Box>
+                  <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+                    {t('editor.publish_strategy.registrator_publishes_without_curator')}
+                  </Typography>
+                  <StyledAccessRightsContainer>
+                    <StyledAccessRight>
+                      <CheckCircleIcon color="primary" />
+                      <Typography>{t('editor.publish_strategy.metadata')}</Typography>
+                    </StyledAccessRight>
+                    <StyledAccessRight>
+                      <CheckCircleIcon color="primary" />
+                      <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
+                    </StyledAccessRight>
+                  </StyledAccessRightsContainer>
+                  <Typography sx={{ textAlign: 'center' }}>
+                    {t('editor.publish_strategy.registrator_publishes_without_curator_description')}
+                  </Typography>
+                </Box>
+              </PublishStrategyButton>
+              {isUpdating === 'RegistratorPublishesMetadataAndFiles' && (
+                <CircularProgress aria-labelledby="publish-strategy-label" />
+              )}
+            </StyledItemContainer>
+
+            <StyledItemContainer>
+              <PublishStrategyButton
+                focusRipple
+                disabled={!!isUpdating || currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
+                isSelected={!isUpdating && currentPublishStrategy === 'RegistratorPublishesMetadataOnly'}
+                data-testid={dataTestId.editor.workflowRegistratorPublishesMetadata}
+                onClick={() => setPublicationWorkflow('RegistratorPublishesMetadataOnly')}>
+                <Box>
+                  <Typography sx={{ fontWeight: 700, textAlign: 'center' }}>
+                    {t('editor.publish_strategy.registrator_publishes_metadata')}
+                  </Typography>
+                  <StyledAccessRightsContainer>
+                    <StyledAccessRight>
+                      <CheckCircleIcon color="primary" />
+                      <Typography>{t('editor.publish_strategy.metadata')}</Typography>
+                    </StyledAccessRight>
+                    <StyledAccessRight>
+                      <RemoveCircleIcon color="error" />
+                      <Typography>{t('editor.publish_strategy.files_and_licenses')}</Typography>
+                    </StyledAccessRight>
+                  </StyledAccessRightsContainer>
+                  <Typography sx={{ textAlign: 'center' }}>
+                    {t('editor.publish_strategy.registrator_publishes_metadata_description')}
+                  </Typography>
+                </Box>
+              </PublishStrategyButton>
+              {isUpdating === 'RegistratorPublishesMetadataOnly' && (
+                <CircularProgress aria-labelledby="publish-strategy-label" />
+              )}
+            </StyledItemContainer>
+          </Box>
+          <RightsRetentionStrategySettings />
+        </>
+      )}
     </>
   );
 };
