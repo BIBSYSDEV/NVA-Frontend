@@ -3,11 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
-import { ApprovalStatus } from '../../../types/nvi.types';
+import { Approval } from '../../../types/nvi.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface NviApprovalsProps {
-  approvals: ApprovalStatus[];
+  approvals: Approval[];
   totalPoints: number;
 }
 
@@ -47,7 +47,7 @@ export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
 };
 
 interface InstitutionApprovalStatusRowProps {
-  approvalStatus: ApprovalStatus;
+  approvalStatus: Approval;
 }
 
 const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalStatusRowProps) => {

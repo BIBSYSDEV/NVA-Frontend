@@ -51,20 +51,20 @@ export type NviCandidateSearchResponse = Omit<
   totalHits: number;
 };
 
-export interface ApprovalStatus {
+export interface Approval {
   institutionId: string;
   status: NviCandidateStatus;
   points: number;
   assignee?: string;
 }
 
-export interface FinalizedApprovalStatus extends ApprovalStatus {
+export interface FinalizedApproval extends Approval {
   status: 'Rejected' | 'Approved';
   finalizedBy: string;
   finalizedDate: string;
 }
 
-export interface RejectedApprovalStatus extends FinalizedApprovalStatus {
+export interface RejectedApproval extends FinalizedApproval {
   status: 'Rejected';
   reason: string;
 }
@@ -72,7 +72,7 @@ export interface RejectedApprovalStatus extends FinalizedApprovalStatus {
 export interface NviCandidate {
   id: string;
   publicationId: string;
-  approvals: (ApprovalStatus | FinalizedApprovalStatus | RejectedApprovalStatus)[];
+  approvals: (Approval | FinalizedApproval | RejectedApproval)[];
   notes: Note[];
   periodStatus: {
     status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';
