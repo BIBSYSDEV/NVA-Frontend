@@ -543,8 +543,7 @@
     "news_link": "Aktuelt",
     "read_more": "les mer",
     "system_status_link": "Driftsmeldinger",
-    "technical_support_link": "Ved teknisk støtte <0>kontakt</0>",
-    "training_link": "Opplæring"
+    "technical_support_link": "Ved teknisk støtte <0>kontakt</0>"
   },
   "licenses": {
     "description": {
