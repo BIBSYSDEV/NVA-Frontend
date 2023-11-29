@@ -39,17 +39,18 @@ export const Footer = () => {
             sx={{
               justifySelf: { xs: 'center', lg: 'start' },
               gridRow: { xs: 3, lg: 1 },
-
               marginLeft: 'auto',
               color: 'primary.main',
+              display: 'flex',
+              gap: '0.5rem',
             }}
             data-testid={dataTestId.footer.aboutLink}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva'}>
             {t('footer.read_more')}
+            <LaunchIcon fontSize="small" />
           </MuiLink>
-          <LaunchIcon fontSize="small" />
         </Box>
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
@@ -109,15 +110,16 @@ export const Footer = () => {
               gridRow: { xs: 3, lg: 1 },
               marginLeft: 'auto',
               color: 'primary.main',
+              display: 'flex',
+              gap: '0.5rem',
             }}
             data-testid={dataTestId.footer.becomeCustomer}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva'}>
             {t('footer.read_more')}
+            <LaunchIcon fontSize="small" />
           </MuiLink>
-
-          <LaunchIcon fontSize="small" />
         </Box>
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
@@ -153,14 +155,16 @@ export const Footer = () => {
               gridRow: { xs: 3, lg: 1 },
               marginLeft: 'auto',
               color: 'primary.main',
+              display: 'flex',
+              gap: '0.5rem',
             }}
             data-testid={dataTestId.footer.aboutSikt}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/'}>
             {t('footer.read_more')}
+            <LaunchIcon fontSize="small" />
           </MuiLink>
-          <LaunchIcon fontSize="small" />
         </Box>
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
@@ -181,32 +185,38 @@ export const Footer = () => {
         {/* Hjelpeside */}
         <Box sx={{ display: 'flex', gap: '0.5rem', mb: '0.4rem', fontWeight: 'bold' }}>
           <MuiLink
+            sx={{
+              color: 'primary.main',
+              display: 'flex',
+              gap: '0.5rem',
+            }}
             data-testid={dataTestId.footer.helpPage}
-            color={'primary.main'}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva'}>
             {t('footer.help_page')}
+            <LaunchIcon fontSize="small" />
           </MuiLink>
-          <LaunchIcon fontSize="small" />
         </Box>
 
         {/* Driftsmeldinger */}
         <Box sx={{ display: 'flex', gap: '0.5rem', mb: '1rem', fontWeight: 'bold' }}>
           <MuiLink
+            sx={{
+              color: 'primary.main',
+              display: 'flex',
+              gap: '0.5rem',
+            }}
             data-testid={dataTestId.footer.systemStatusLink}
-            color={'primary.main'}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/driftsmeldinger'}>
             {t('footer.system_status_link')}
+            <LaunchIcon fontSize="small" />
           </MuiLink>
-          <LaunchIcon fontSize="small" />
         </Box>
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
-
-        {/* --------------------------------------------------------------------------------------- */}
 
         {/* Nyhetsbrev */}
         <Box
@@ -218,14 +228,18 @@ export const Footer = () => {
           }}>
           <ArrowRightAltIcon />
           <MuiLink
+            sx={{
+              color: 'primary.main',
+              display: 'flex',
+              gap: '0.5rem',
+            }}
             data-testid={dataTestId.footer.newsLink}
-            color={'primary.main'}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://pub.dialogapi.no/s/MjI2NDQ6MWVmZmQxOTktMGVkZi00YjZhLWE2ZjQtNzNmZWU2NjI2ZmFi'}>
             {t('footer.news_link')}
+            <LaunchIcon fontSize="small" />
           </MuiLink>
-          <LaunchIcon fontSize="small" />
         </Box>
 
         {/* Personvern og informasjonskapsler */}
@@ -258,14 +272,16 @@ export const Footer = () => {
           <MuiLink
             sx={{
               color: 'primary.main',
+              display: 'flex',
+              gap: '0.5rem',
             }}
             data-testid={dataTestId.footer.availabilityStatement}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://uustatus.no/nb/erklaringer/publisert/bffb4b1d-25eb-4fe0-bac7-2f0b4a8e0fd9'}>
             {t('about.availability_statement')}
+            <LaunchIcon fontSize="small" />
           </MuiLink>
-          <LaunchIcon fontSize="small" />
         </Box>
 
         <Box
