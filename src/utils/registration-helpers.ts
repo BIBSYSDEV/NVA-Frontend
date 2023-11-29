@@ -678,7 +678,5 @@ export const openFileInNewTab = (fileUri: string) => {
 };
 
 export const compareRegistrationAndValues = (registration: Registration, values: Registration) => {
-  return registration.entityDescription?.publicationDate?.year !== values.entityDescription?.publicationDate?.year
-    ? true
-    : false;
+  return registration.entityDescription?.mainTitle !== values.entityDescription?.mainTitle ? true : false;
 };

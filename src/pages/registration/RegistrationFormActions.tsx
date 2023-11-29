@@ -15,7 +15,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { getFormattedRegistration } from '../../utils/registration-helpers';
+import { compareRegistrationAndValues, getFormattedRegistration } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 
@@ -23,14 +23,16 @@ interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
   setTabNumber: (newTab: RegistrationTab) => void;
   validateForm: (values: Registration) => FormikErrors<Registration>;
-  hasChangedNviValues: boolean;
+  persistedRegistration: Registration;
+  isNviCandidate: boolean;
 }
 
 export const RegistrationFormActions = ({
   tabNumber,
   setTabNumber,
   validateForm,
-  hasChangedNviValues,
+  persistedRegistration,
+  isNviCandidate,
 }: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
   const history = useHistory();
@@ -60,11 +62,12 @@ export const RegistrationFormActions = ({
         ['registration', updateRegistrationResponse.data.identifier],
         updateRegistrationResponse.data
       );
-      const newErrors = validateForm(updateRegistrationResponse.data);
-      setTouched(setNestedObjectValues(newErrors, true));
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
       if (isLastTab) {
         history.push(getRegistrationLandingPagePath(values.identifier));
+      } else {
+        const newErrors = validateForm(updateRegistrationResponse.data);
+        setTouched(setNestedObjectValues(newErrors, true));
       }
     }
     setIsSaving(false);
@@ -73,7 +76,7 @@ export const RegistrationFormActions = ({
   };
 
   const handleSaveClick = async () => {
-    if (hasChangedNviValues) {
+    if (compareRegistrationAndValues(persistedRegistration, values) && isNviCandidate) {
       setOpenNviApprovalResetDialog(true);
     } else {
       await saveRegistration(values);

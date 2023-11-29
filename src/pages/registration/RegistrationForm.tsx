@@ -19,11 +19,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationStatus, RegistrationTab } from '../../types/registration.types';
 import { getTouchedTabFields } from '../../utils/formik-helpers';
-import {
-  compareRegistrationAndValues,
-  getTitleString,
-  userCanEditRegistration,
-} from '../../utils/registration-helpers';
+import { getTitleString, userCanEditRegistration } from '../../utils/registration-helpers';
 import { createUppy } from '../../utils/uppy/uppy-config';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { registrationValidationSchema } from '../../utils/validation/registration/registrationValidation';
@@ -74,10 +70,9 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
     retry: false,
     meta: { errorMessage: false },
   });
-  const showNviWarning =
-    nviCandidateQuery.isSuccess &&
-    nviCandidateQuery.data.approvals.some((status) => status.status !== 'Pending') &&
-    !hasAcceptedNviWarning;
+
+  const isNviCandidate =
+    nviCandidateQuery.isSuccess && nviCandidateQuery.data.approvals.some((status) => status.status !== 'Pending');
 
   const initialTabNumber = new URLSearchParams(history.location.search).get('tab');
   const [tabNumber, setTabNumber] = useState(initialTabNumber ? +initialTabNumber : RegistrationTab.Description);
@@ -150,14 +145,15 @@ export const RegistrationForm = ({ identifier }: RegistrationFormProps) => {
                 tabNumber={tabNumber}
                 setTabNumber={setTabNumber}
                 validateForm={validateForm}
-                hasChangedNviValues={compareRegistrationAndValues(registration, values)}
+                persistedRegistration={registration}
+                isNviCandidate={isNviCandidate}
               />
             </BackgroundDiv>
           </Form>
         )}
       </Formik>
       <ConfirmDialog
-        open={showNviWarning}
+        open={isNviCandidate && !hasAcceptedNviWarning}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
         onAccept={() => setHasAcceptedNviWarning(true)}
         onCancel={() => (history.length > 1 ? history.goBack() : history.push(UrlPathTemplate.Home))}>
