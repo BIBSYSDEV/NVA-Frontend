@@ -17,8 +17,8 @@ export const Menu = ({ handleLogout }: MenuProps) => {
   const user = useSelector((store: RootState) => store.user);
   const customer = useSelector((store: RootState) => store.customer);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const isExtraSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
   const name = user?.givenName ?? '';
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
@@ -29,8 +29,8 @@ export const Menu = ({ handleLogout }: MenuProps) => {
 
   return (
     <Box sx={{ gridArea: 'user-items', display: 'flex' }}>
-      {isMobile ? (
-        <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit">
+      {isSmallScreen ? (
+        <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit" size="large">
           <AccountCircle fontSize="large" />
         </IconButton>
       ) : (
@@ -54,9 +54,8 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {user?.isCreator && !isMobile && !isLargeScreen && (
+        {isExtraSmallScreen && user?.isCreator && (
           <MenuItem
-            key={dataTestId.header.newRegistrationLink}
             data-testid={dataTestId.header.newRegistrationLink}
             onClick={closeMenu}
             component={Link}
@@ -64,7 +63,17 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             <Typography>{t('registration.new_registration')}</Typography>
           </MenuItem>
         )}
-        {isMobile && [
+        {isSmallScreen && [
+          user?.isCreator && (
+            <MenuItem
+              key={dataTestId.header.myPageLink}
+              data-testid={dataTestId.header.myPageLink}
+              onClick={closeMenu}
+              component={Link}
+              to={UrlPathTemplate.MyPage}>
+              <Typography>{t('my_page.my_page')}</Typography>
+            </MenuItem>
+          ),
           user?.isEditor && (
             <MenuItem
               key={dataTestId.header.editorLink}
@@ -85,35 +94,17 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               <Typography>{t('common.tasks')}</Typography>
             </MenuItem>
           ),
-          user?.isCreator && [
+          (user?.isAppAdmin || user?.isInstitutionAdmin) && (
             <MenuItem
-              key={dataTestId.header.newRegistrationLink}
-              data-testid={dataTestId.header.newRegistrationLink}
+              key={dataTestId.header.basicDataLink}
+              data-testid={dataTestId.header.basicDataLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.RegistrationNew}>
-              <Typography>{t('registration.new_registration')}</Typography>
-            </MenuItem>,
-            <MenuItem
-              key={dataTestId.header.myPageLink}
-              data-testid={dataTestId.header.myPageLink}
-              onClick={closeMenu}
-              component={Link}
-              to={UrlPathTemplate.MyPage}>
-              <Typography>{t('my_page.my_page')}</Typography>
-            </MenuItem>,
-          ],
+              to={UrlPathTemplate.BasicData}>
+              <Typography>{t('basic_data.basic_data')}</Typography>
+            </MenuItem>
+          ),
         ]}
-        {(user?.isAppAdmin || user?.isInstitutionAdmin) && isMobile && (
-          <MenuItem
-            key={dataTestId.header.basicDataLink}
-            data-testid={dataTestId.header.basicDataLink}
-            onClick={closeMenu}
-            component={Link}
-            to={UrlPathTemplate.BasicData}>
-            <Typography>{t('basic_data.basic_data')}</Typography>
-          </MenuItem>
-        )}
         <MenuItem data-testid={dataTestId.header.logOutLink} onClick={handleLogout}>
           {t('authorization.logout')}
         </MenuItem>

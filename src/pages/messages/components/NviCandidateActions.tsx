@@ -17,7 +17,7 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
-import { FinalizedApprovalStatus, NviCandidate, RejectedApprovalStatus } from '../../../types/nvi.types';
+import { FinalizedApproval, NviCandidate, RejectedApproval } from '../../../types/nvi.types';
 import { RoleName } from '../../../types/user.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
@@ -48,9 +48,9 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
 
   const assigneeMutation = useMutation({
     mutationFn: async (assignee: string) => {
-      if (myApprovalStatus) {
+      if (myApproval) {
         const updatedCandidate = await setCandidateAssignee(candidateIdentifier, {
-          institutionId: myApprovalStatus.institutionId,
+          institutionId: myApproval.institutionId,
           assignee,
         });
         queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
@@ -81,16 +81,14 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     onError: () => dispatch(setNotification({ message: t('feedback.error.delete_note'), variant: 'error' })),
   });
 
-  const myApprovalStatus = nviCandidate?.approvalStatuses.find(
-    (status) => status.institutionId === user?.topOrgCristinId
-  );
+  const myApproval = nviCandidate?.approvals.find((status) => status.institutionId === user?.topOrgCristinId);
 
   const statusMutation = useMutation({
     mutationFn: async (data: Omit<SetNviCandidateStatusData, 'institutionId'>) => {
-      if (myApprovalStatus) {
+      if (myApproval) {
         const updatedCandidate = await setCandidateStatus(candidateIdentifier, {
           ...data,
-          institutionId: myApprovalStatus.institutionId,
+          institutionId: myApproval.institutionId,
         });
         queryClient.setQueryData(nviCandidateQueryKey, updatedCandidate);
       }
@@ -103,7 +101,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   const isMutating = createNoteMutation.isLoading || statusMutation.isLoading;
 
   const rejectionNotes: NviNote[] = (
-    (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Rejected') ?? []) as RejectedApprovalStatus[]
+    (nviCandidate?.approvals.filter((status) => status.status === 'Rejected') ?? []) as RejectedApproval[]
   ).map((rejectionStatus) => ({
     type: 'FinalizedNote',
     date: rejectionStatus.finalizedDate,
@@ -119,7 +117,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
   }));
 
   const approvalNotes: NviNote[] = (
-    (nviCandidate?.approvalStatuses.filter((status) => status.status === 'Approved') ?? []) as FinalizedApprovalStatus[]
+    (nviCandidate?.approvals.filter((status) => status.status === 'Approved') ?? []) as FinalizedApproval[]
   ).map((approvalStatus) => ({
     type: 'FinalizedNote',
     date: approvalStatus.finalizedDate,
@@ -145,8 +143,8 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
     <>
       <Box sx={{ m: '1rem' }}>
         <AssigneeSelector
-          assignee={myApprovalStatus?.assignee}
-          canSetAssignee={myApprovalStatus?.status === 'Pending'}
+          assignee={myApproval?.assignee}
+          canSetAssignee={myApproval?.status === 'Pending'}
           onSelectAssignee={async (assigee) => await assigneeMutation.mutateAsync(assigee)}
           isUpdating={assigneeMutation.isLoading}
           roleFilter={RoleName.NviCurator}
@@ -199,7 +197,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           </Box>
         )}
 
-        {myApprovalStatus?.status !== 'Approved' && (
+        {myApproval?.status !== 'Approved' && (
           <>
             <Typography gutterBottom>{t('tasks.nvi.approve_nvi_candidate_description')}</Typography>
             <LoadingButton
@@ -216,7 +214,7 @@ export const NviCandidateActions = ({ nviCandidate, nviCandidateQueryKey }: NviC
           </>
         )}
 
-        {myApprovalStatus?.status !== 'Rejected' && (
+        {myApproval?.status !== 'Rejected' && (
           <>
             <Typography gutterBottom>{t('tasks.nvi.reject_nvi_candidate_description')}</Typography>
             <Button

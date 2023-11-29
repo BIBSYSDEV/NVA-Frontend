@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
@@ -84,9 +84,11 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
 
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
 
-  const cristinIdentifier =
-    registration.additionalIdentifiers &&
-    registration.additionalIdentifiers.find((identifier) => identifier.sourceName === 'Cristin')?.value;
+  const cristinIdentifier = registration.additionalIdentifiers?.find(
+    (identifier) => identifier.sourceName === 'Cristin'
+  )?.value;
+  const scopusIdentifier = registration.additionalIdentifiers?.find((identifier) => identifier.sourceName === 'Scopus')
+    ?.value;
 
   return (
     <StyledGeneralInfo>
@@ -168,19 +170,29 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           </>
         )}
 
-        {cristinIdentifier && (
-          <>
-            <Typography variant="overline">{t('registration.public_page.cristin_id')}</Typography>
-            <Typography>
-              <Link
-                data-testid={dataTestId.registrationLandingPage.cristinLink}
-                href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
-                target="_blank"
-                rel="noopener noreferrer">
-                {cristinIdentifier}
-              </Link>
-            </Typography>
-          </>
+        {(cristinIdentifier || scopusIdentifier) && (
+          <Box sx={{ display: 'flex', columnGap: '2rem', flexWrap: 'wrap' }}>
+            {cristinIdentifier && (
+              <div>
+                <Typography variant="overline">{t('registration.public_page.cristin_id')}</Typography>
+                <Typography>
+                  <Link
+                    data-testid={dataTestId.registrationLandingPage.cristinLink}
+                    href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    {cristinIdentifier}
+                  </Link>
+                </Typography>
+              </div>
+            )}
+            {scopusIdentifier && (
+              <div>
+                <Typography variant="overline">{t('registration.public_page.scopus_id')}</Typography>
+                <Typography>{scopusIdentifier}</Typography>
+              </div>
+            )}
+          </Box>
         )}
       </div>
 

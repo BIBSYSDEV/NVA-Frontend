@@ -62,7 +62,7 @@ const BasicDataPage = () => {
   const importCandidatesFacetsQuery = useQuery({
     enabled: location.pathname === UrlPathTemplate.BasicDataCentralImport,
     queryKey: ['importCandidatesFacets', candidateYearFilter],
-    queryFn: () => fetchImportCandidates(0, 0, `publicationYear:${candidateYearFilter}`),
+    queryFn: () => fetchImportCandidates(0, 0, { query: `publicationYear:${candidateYearFilter}` }),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
 
@@ -255,6 +255,7 @@ const BasicDataPage = () => {
                   size="small"
                   sx={{ mt: '0.5rem' }}
                   value={candidateYearFilter}
+                  inputProps={{ 'aria-label': t('common.year') }}
                   onChange={(event) => setCandidateYearFilter(+event.target.value)}>
                   {yearOptions.map((year) => (
                     <MenuItem key={year} value={year}>

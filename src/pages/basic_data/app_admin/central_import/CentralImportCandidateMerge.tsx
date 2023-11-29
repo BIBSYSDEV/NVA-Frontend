@@ -1,8 +1,8 @@
-import ArrowForwardIcon from '@mui/icons-material/ArrowForwardIos';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, TextField, TextFieldProps, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Formik, FormikProps, useFormikContext } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
+import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
@@ -14,10 +14,20 @@ import {
 } from '../../../../api/registrationApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
-import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
-import { Registration } from '../../../../types/registration.types';
+import { AssociatedLink } from '../../../../types/associatedArtifact.types';
+import {
+  DescriptionFieldNames,
+  FileFieldNames,
+  JournalType,
+  PublicationType,
+} from '../../../../types/publicationFieldNames';
+import { PublicationInstanceType, Registration } from '../../../../types/registration.types';
 import { displayDate } from '../../../../utils/date-helpers';
+import { getMainRegistrationType } from '../../../../utils/registration-helpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 import { getImportCandidatePath, getRegistrationWizardPath } from '../../../../utils/urlPaths';
+import { CompareFields } from './CompareFields';
+import { CompareJournalFields } from './CompareJournalFields';
 
 interface MergeImportCandidateParams {
   candidateIdentifier: string;
@@ -75,6 +85,21 @@ export const CentralImportCandidateMerge = () => {
     return <Redirect to={getImportCandidatePath(candidateIdentifier)} />;
   }
 
+  const getLanguageName = (languageUri?: string) => {
+    if (!languageUri) {
+      return '';
+    }
+    const language = getLanguageByUri(languageUri);
+    return getLanguageString({ no: language.nob, ny: language.nno, en: language.eng });
+  };
+
+  const candidateMainType = getMainRegistrationType(
+    importCandidate?.entityDescription?.reference?.publicationInstance?.type ?? ''
+  );
+  const registrationMainType = getMainRegistrationType(
+    registration?.entityDescription?.reference?.publicationInstance?.type ?? ''
+  );
+
   return registrationQuery.isLoading || importCandidateQuery.isLoading ? (
     <PageSpinner />
   ) : !registration || !importCandidate ? null : (
@@ -87,7 +112,7 @@ export const CentralImportCandidateMerge = () => {
         registrationQuery.remove(); // Remove cached data, to ensure correct data is shown in wizard after redirect
         history.push(getRegistrationWizardPath(registrationIdentifier));
       }}>
-      {({ values, isSubmitting }: FormikProps<Registration>) => (
+      {({ values, isSubmitting, setFieldValue }: FormikProps<Registration>) => (
         <Box
           component={Form}
           sx={{
@@ -109,46 +134,117 @@ export const CentralImportCandidateMerge = () => {
           <Typography variant="h1">{t('basic_data.central_import.merge_candidate.result_in_nva')}</Typography>
 
           <CompareFields
-            label={t('basic_data.central_import.merge_candidate.result_id')}
+            candidateLabel={t('basic_data.central_import.merge_candidate.result_id')}
             variant="standard"
-            candidateValue=""
-            registrationValue={values.identifier}
+            candidateValue={candidateIdentifier}
+            registrationValue={registration.identifier}
           />
 
           <CompareFields
-            label={t('common.doi')}
+            candidateLabel={t('common.doi')}
             variant="standard"
             candidateValue={importCandidate.doi || importCandidate.entityDescription?.reference?.doi}
-            registrationValue={values.doi || values.entityDescription?.reference?.doi}
+            registrationValue={registration.doi || registration.entityDescription?.reference?.doi}
           />
 
           <CompareFields
-            label={t('registration.description.date_published')}
+            candidateLabel={t('common.category')}
+            variant="standard"
+            candidateValue={t(
+              `registration.publication_types.${
+                importCandidate.entityDescription?.reference?.publicationInstance.type as PublicationInstanceType
+              }`
+            )}
+            registrationValue={t(
+              `registration.publication_types.${
+                registration.entityDescription?.reference?.publicationInstance.type as PublicationInstanceType
+              }`
+            )}
+          />
+
+          <CompareFields
+            candidateLabel={t('registration.description.date_published')}
             variant="standard"
             candidateValue={displayDate(importCandidate.entityDescription?.publicationDate)}
-            registrationValue={displayDate(values.entityDescription?.publicationDate)}
+            registrationValue={displayDate(registration.entityDescription?.publicationDate)}
           />
 
           <CompareFields
-            label={t('common.title')}
-            fieldName={DescriptionFieldNames.Title}
-            candidateValue={importCandidate?.entityDescription?.mainTitle}
+            candidateLabel={t('common.doi')}
+            registrationLabel={t('registration.files_and_license.link_to_resource')}
+            onOverwrite={() => {
+              if (!importCandidate.entityDescription?.reference?.doi) {
+                return;
+              }
+              const currentAssociatedLinkIndex = values.associatedArtifacts.findIndex(
+                (artifact) => artifact.type === 'AssociatedLink'
+              );
+
+              if (currentAssociatedLinkIndex !== undefined && currentAssociatedLinkIndex > -1) {
+                setFieldValue(
+                  `${FileFieldNames.AssociatedArtifacts}.${currentAssociatedLinkIndex}.id`,
+                  importCandidate.entityDescription.reference.doi
+                );
+              } else {
+                setFieldValue(FileFieldNames.AssociatedArtifacts, [
+                  ...(values.associatedArtifacts ?? []),
+                  {
+                    type: 'AssociatedLink',
+                    id: importCandidate.entityDescription.reference.doi,
+                  },
+                ]);
+              }
+            }}
+            candidateValue={importCandidate.entityDescription?.reference?.doi}
+            registrationValue={
+              (
+                values.associatedArtifacts.find((artifact) => artifact.type === 'AssociatedLink') as
+                  | AssociatedLink
+                  | undefined
+              )?.id ?? ''
+            }
+          />
+
+          <CompareFields
+            candidateLabel={t('common.title')}
+            onOverwrite={() => setFieldValue(DescriptionFieldNames.Title, importCandidate.entityDescription?.mainTitle)}
+            candidateValue={importCandidate.entityDescription?.mainTitle}
             registrationValue={values.entityDescription?.mainTitle}
           />
 
           <CompareFields
-            label={t('registration.description.abstract')}
-            fieldName={DescriptionFieldNames.Abstract}
-            candidateValue={importCandidate?.entityDescription?.abstract}
+            candidateLabel={t('registration.description.abstract')}
+            onOverwrite={() =>
+              setFieldValue(DescriptionFieldNames.Abstract, importCandidate.entityDescription?.abstract)
+            }
+            candidateValue={importCandidate.entityDescription?.abstract}
             registrationValue={values.entityDescription?.abstract}
           />
 
           <CompareFields
-            label={t('registration.description.description_of_content')}
-            fieldName={DescriptionFieldNames.Description}
-            candidateValue={importCandidate?.entityDescription?.description}
+            candidateLabel={t('registration.description.description_of_content')}
+            onOverwrite={() =>
+              setFieldValue(DescriptionFieldNames.Description, importCandidate.entityDescription?.description)
+            }
+            candidateValue={importCandidate.entityDescription?.description}
             registrationValue={values.entityDescription?.description}
           />
+
+          <CompareFields
+            candidateLabel={t('registration.description.primary_language')}
+            onOverwrite={() =>
+              setFieldValue(DescriptionFieldNames.Language, importCandidate.entityDescription?.language)
+            }
+            candidateValue={getLanguageName(importCandidate.entityDescription?.language)}
+            registrationValue={getLanguageName(values.entityDescription?.language)}
+          />
+
+          {candidateMainType === PublicationType.PublicationInJournal &&
+            importCandidate.entityDescription?.reference?.publicationInstance.type !== JournalType.Corrigendum &&
+            registrationMainType === PublicationType.PublicationInJournal &&
+            registration.entityDescription?.reference?.publicationInstance.type !== JournalType.Corrigendum && (
+              <CompareJournalFields importCandidate={importCandidate} />
+            )}
 
           <Box sx={{ gridColumn: '1/-1', display: 'flex', justifyContent: 'end', gap: '1rem' }}>
             <Link to={getImportCandidatePath(candidateIdentifier)}>
@@ -164,59 +260,5 @@ export const CentralImportCandidateMerge = () => {
         </Box>
       )}
     </Formik>
-  );
-};
-
-interface CompareFieldsProps extends Pick<TextFieldProps, 'variant'> {
-  label: string;
-  fieldName?: string;
-  candidateValue: string | undefined;
-  registrationValue: string | undefined;
-}
-
-const CompareFields = ({
-  label,
-  fieldName,
-  candidateValue,
-  registrationValue,
-  variant = 'filled',
-}: CompareFieldsProps) => {
-  const { t } = useTranslation();
-  const { setFieldValue } = useFormikContext<Registration>();
-
-  return (
-    <>
-      <TextField
-        size="small"
-        variant={variant}
-        disabled
-        multiline
-        label={label}
-        value={candidateValue}
-        InputLabelProps={{ shrink: true }}
-      />
-      {fieldName ? (
-        <IconButton
-          size="small"
-          color="primary"
-          sx={{ bgcolor: 'white' }}
-          title={t('basic_data.central_import.merge_candidate.update_value')}
-          disabled={!candidateValue || candidateValue === registrationValue}
-          onClick={() => setFieldValue(fieldName, candidateValue)}>
-          <ArrowForwardIcon fontSize="small" />
-        </IconButton>
-      ) : (
-        <span />
-      )}
-      <TextField
-        size="small"
-        variant={variant}
-        disabled
-        multiline
-        label={label}
-        value={registrationValue}
-        InputLabelProps={{ shrink: true }}
-      />
-    </>
   );
 };
