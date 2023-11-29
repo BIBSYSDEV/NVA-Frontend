@@ -210,7 +210,7 @@ export const mainTheme = createTheme(
       MuiLink: {
         styleOverrides: {
           root: {
-            color: `${Color.TextPrimary} !important`,
+            color: Color.TextPrimary,
           },
           underlineAlways: {
             textDecorationColor: Color.PrimaryMain,

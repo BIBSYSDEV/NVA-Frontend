@@ -108,6 +108,7 @@ export const dataTestId = {
     aboutSikt: 'about-sikt',
     availabilityStatement: 'availability-statement',
     becomeCustomer: 'become-customer',
+    helpPage: 'help_page',
     newsLink: 'news-link',
     privacyLink: 'privacy-link',
     systemStatusLink: 'system-staus-link',
