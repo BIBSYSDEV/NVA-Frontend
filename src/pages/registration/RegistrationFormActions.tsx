@@ -63,6 +63,9 @@ export const RegistrationFormActions = ({
       const newErrors = validateForm(updateRegistrationResponse.data);
       setTouched(setNestedObjectValues(newErrors, true));
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
+      if (isLastTab) {
+        history.push(getRegistrationLandingPagePath(values.identifier));
+      }
     }
     setIsSaving(false);
 
@@ -74,21 +77,6 @@ export const RegistrationFormActions = ({
       setOpenNviApprovalResetDialog(true);
     } else {
       await saveRegistration(values);
-      if (isLastTab) {
-        history.push(getRegistrationLandingPagePath(values.identifier));
-      }
-    }
-  };
-
-  const handleDialogAccept = async () => {
-    setOpenNviApprovalResetDialog(false);
-    if (isLastTab) {
-      const registrationIsUpdated = await saveRegistration(values);
-      if (registrationIsUpdated) {
-        history.push(getRegistrationLandingPagePath(values.identifier));
-      }
-    } else {
-      saveRegistration(values);
     }
   };
 
@@ -194,7 +182,10 @@ export const RegistrationFormActions = ({
       <ConfirmDialog
         open={openNviApprovalResetDialog}
         title={t('registration.nvi_warning.registration_is_included_in_nvi')}
-        onAccept={handleDialogAccept}
+        onAccept={async () => {
+          setOpenNviApprovalResetDialog(false);
+          await saveRegistration(values);
+        }}
         onCancel={() => setOpenNviApprovalResetDialog(false)}>
         <Typography paragraph>{t('registration.nvi_warning.approval_override_warning')}</Typography>
         <Typography>{t('registration.nvi_warning.confirm_saving_registration')}</Typography>
