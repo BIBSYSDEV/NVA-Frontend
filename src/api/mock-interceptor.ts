@@ -13,6 +13,7 @@ import { mockDoiLookup } from '../utils/testfiles/mockDoiLookup';
 import { mockCompleteUpload, mockCreateUpload, mockDownload, mockPrepareUpload } from '../utils/testfiles/mockFiles';
 import { mockJournalsSearch } from '../utils/testfiles/mockJournals';
 import { mockMyRegistrations } from '../utils/testfiles/mockMyRegistrations';
+import { mockNviCandidate } from '../utils/testfiles/mockNviCandidate';
 import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearch';
 import { mockPositionResponse } from '../utils/testfiles/mockPositions';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
@@ -34,6 +35,9 @@ import {
 // AXIOS INTERCEPTOR
 export const interceptRequestsOnMock = () => {
   const mock = new MockAdapter(Axios);
+
+  // Scientific Index
+  mock.onGet(new RegExp(SearchApiPath.NviCandidate)).reply(200, mockNviCandidate);
 
   // SEARCH
   mock.onGet(new RegExp(SearchApiPath.Registrations)).reply(200, mockSearchResults);
