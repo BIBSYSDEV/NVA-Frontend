@@ -8,6 +8,7 @@ import {
   Checkbox,
   CircularProgress,
   Collapse,
+  Divider,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -121,7 +122,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           </Box>
         </TableCell>
 
-        <TableCell sx={{ minWidth: '5.5rem' }}>{prettyBytes(file.size)}</TableCell>
+        <TableCell>{prettyBytes(file.size)}</TableCell>
 
         <TableCell>
           <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
@@ -232,53 +233,57 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell sx={{ pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
-          <Collapse in={openCollapsable}>
-            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-              <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
-                {({ field, meta: { error, touched } }: FieldProps) => (
-                  <Box sx={{ minWidth: '12rem' }}>
-                    <DatePicker
-                      {...field}
-                      label={t('registration.files_and_license.embargo')}
-                      value={field.value ? new Date(field.value) : null}
-                      onChange={(date) => setFieldValue(field.name, date ?? '')}
-                      format="dd.MM.yyyy"
-                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                      disabled={file.administrativeAgreement || disabled}
-                      slotProps={{
-                        textField: {
-                          inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
-                          variant: 'filled',
-                          onBlur: () => !touched && setFieldTouched(field.name),
-                          error: !!error && touched,
-                          helperText: <ErrorMessage name={field.name} />,
-                        },
-                      }}
-                    />
-                  </Box>
-                )}
-              </Field>
+        <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
+          <Collapse in={openCollapsable} sx={{ mx: '2rem' }}>
+            <Divider orientation="horizontal" sx={{ my: '1rem' }} />
 
-              <Tooltip title={t('common.help')}>
-                <IconButton onClick={(event) => setEmbargoPopperAnchorEl(event.currentTarget)}>
-                  <HelpOutlineIcon />
-                </IconButton>
-              </Tooltip>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span />
+              <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
+                  {({ field, meta: { error, touched } }: FieldProps) => (
+                    <Box sx={{ minWidth: '12rem' }}>
+                      <DatePicker
+                        {...field}
+                        label={t('registration.files_and_license.embargo')}
+                        value={field.value ? new Date(field.value) : null}
+                        onChange={(date) => setFieldValue(field.name, date ?? '')}
+                        format="dd.MM.yyyy"
+                        maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                        disabled={file.administrativeAgreement || disabled}
+                        slotProps={{
+                          textField: {
+                            inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
+                            variant: 'filled',
+                            onBlur: () => !touched && setFieldTouched(field.name),
+                            error: !!error && touched,
+                            helperText: <ErrorMessage name={field.name} />,
+                          },
+                        }}
+                      />
+                    </Box>
+                  )}
+                </Field>
+
+                <Tooltip title={t('common.help')}>
+                  <IconButton onClick={(event) => setEmbargoPopperAnchorEl(event.currentTarget)}>
+                    <HelpOutlineIcon />
+                  </IconButton>
+                </Tooltip>
+                <Popover
+                  open={!!embargoPopperAnchorEl}
+                  anchorEl={embargoPopperAnchorEl}
+                  onClose={() => setEmbargoPopperAnchorEl(null)}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}>
+                  <Paper sx={{ p: '1rem' }}>
+                    <Typography>{t('registration.files_and_license.file_publish_date_helper_text')}</Typography>
+                  </Paper>
+                </Popover>
+              </Box>
             </Box>
-
-            <Popover
-              open={!!embargoPopperAnchorEl}
-              anchorEl={embargoPopperAnchorEl}
-              onClose={() => setEmbargoPopperAnchorEl(null)}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}>
-              <Paper sx={{ p: '1rem' }}>
-                <Typography>{t('registration.files_and_license.file_publish_date_helper_text')}</Typography>
-              </Paper>
-            </Popover>
           </Collapse>
           <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
             <IconButton onClick={() => setOpenCollapsable(!openCollapsable)} sx={{ mt: '-0.5rem' }} size="small">
