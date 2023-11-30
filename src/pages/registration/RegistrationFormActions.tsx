@@ -15,7 +15,7 @@ import { setNotification } from '../../redux/notificationSlice';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { compareRegistrationAndValues, getFormattedRegistration } from '../../utils/registration-helpers';
+import { getFormattedRegistration, willResetNviStatuses } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
 
@@ -76,7 +76,7 @@ export const RegistrationFormActions = ({
   };
 
   const handleSaveClick = async () => {
-    if (compareRegistrationAndValues(persistedRegistration, values) && isNviCandidate) {
+    if (isNviCandidate && willResetNviStatuses(persistedRegistration, values)) {
       setOpenNviApprovalResetDialog(true);
     } else {
       await saveRegistration(values);

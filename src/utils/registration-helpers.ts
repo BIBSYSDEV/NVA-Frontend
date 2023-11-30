@@ -677,8 +677,9 @@ export const openFileInNewTab = (fileUri: string) => {
   }
 };
 
-export const compareRegistrationAndValues = (registration: Registration, values: Registration) => {
-  return registration.entityDescription?.publicationDate?.year !== values.entityDescription?.publicationDate?.year
+export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
+  return persistedRegistration.entityDescription?.publicationDate?.year !==
+    updatedRegistration.entityDescription?.publicationDate?.year
     ? true
     : false;
 };
