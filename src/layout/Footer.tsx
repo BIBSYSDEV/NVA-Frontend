@@ -19,10 +19,10 @@ export const Footer = () => {
         bgcolor: 'info.light',
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr 1fr' },
-        columnGap: '3rem',
+        gap: '3rem',
         color: 'primary.main',
       }}>
-      <Box>
+      <div>
         <Box sx={{ display: 'flex', gap: '0.5rem', color: 'primary.main' }}>
           <Typography
             sx={{
@@ -61,32 +61,30 @@ export const Footer = () => {
           {t('footer.about_nva_text')}
         </Typography>
 
-        <Box
+        <Typography
           sx={{
+            fontWeight: 'bold',
+            color: 'primary.main',
             display: 'flex',
             justifySelf: { xs: 'start' },
             gap: '0.5rem',
             gridColumn: { xs: 1, lg: 2 },
             mt: '2rem',
           }}>
-          <Typography
-            sx={{
-              fontWeight: 'bold',
-              color: 'primary.main',
-            }}>
-            {t('footer.language_selector')}
-          </Typography>
-        </Box>
+          {t('footer.language_selector')}
+        </Typography>
+
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
 
         <LanguageSelector />
-      </Box>
+      </div>
 
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Box
           sx={{
             display: 'flex',
-            justifySelf: { xs: 'start' },
+            // justifySelf: { xs: 'start' },
+            justifyContent: 'space-between',
             gap: '0.5rem',
           }}>
           <Typography
@@ -99,9 +97,9 @@ export const Footer = () => {
 
           <MuiLink
             sx={{
-              justifySelf: { xs: 'center', lg: 'start' },
-              gridRow: { xs: 3, lg: 1 },
-              marginLeft: 'auto',
+              // justifySelf: { xs: 'center', lg: 'start' },
+              // gridRow: { xs: 3, lg: 1 },
+              // marginLeft: 'auto',
               color: 'primary.main',
               display: 'flex',
               gap: '0.5rem',
