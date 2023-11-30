@@ -83,7 +83,6 @@ export const Footer = () => {
         <Box
           sx={{
             display: 'flex',
-            // justifySelf: { xs: 'start' },
             justifyContent: 'space-between',
             gap: '0.5rem',
           }}>
@@ -97,9 +96,6 @@ export const Footer = () => {
 
           <MuiLink
             sx={{
-              // justifySelf: { xs: 'center', lg: 'start' },
-              // gridRow: { xs: 3, lg: 1 },
-              // marginLeft: 'auto',
               color: 'primary.main',
               display: 'flex',
               gap: '0.5rem',
