@@ -676,3 +676,10 @@ export const openFileInNewTab = (fileUri: string) => {
     setTimeout(() => window.open(fileUri, '_blank'));
   }
 };
+
+export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
+  return persistedRegistration.entityDescription?.publicationDate?.year !==
+    updatedRegistration.entityDescription?.publicationDate?.year
+    ? true
+    : false;
+};
