@@ -79,7 +79,7 @@ export const Footer = () => {
         <LanguageSelector />
       </div>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <div>
         <Box
           sx={{
             display: 'flex',
@@ -167,9 +167,9 @@ export const Footer = () => {
           }}>
           {t('about.footer_text')}
         </Typography>
-      </Box>
+      </div>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <div>
         <Box sx={{ display: 'flex', gap: '0.5rem', mb: '0.5rem', fontWeight: 'bold' }}>
           <MuiLink
             sx={{
@@ -298,7 +298,7 @@ export const Footer = () => {
             </Trans>
           </Typography>
         </Box>
-      </Box>
+      </div>
     </Box>
   );
 };
