@@ -185,8 +185,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
                     {files.length > 0 && (
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                        <TableContainer component={Paper}>
-                          <Table sx={alternatingTableRowColor}>
+                        <TableContainer component={Paper} elevation={3}>
+                          <Table>
                             <TableHead>
                               <TableRow>
                                 <TableCell>{t('common.name')}</TableCell>

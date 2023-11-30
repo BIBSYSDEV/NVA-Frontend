@@ -78,13 +78,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
   return (
     <>
-      <TableRow data-testid={dataTestId.registrationWizard.files.fileRow} sx={{ td: { pb: 0 } }}>
-        {/* <TableCell>
-          <IconButton onClick={() => setOpenCollapsable(!openCollapsable)}>
-            {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell> */}
-
+      <TableRow data-testid={dataTestId.registrationWizard.files.fileRow} sx={{ td: { pb: 0, borderBottom: 'unset' } }}>
         <TableCell sx={{ minWidth: '13rem' }}>
           <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
             <TruncatableTypography>{file.name}</TruncatableTypography>
@@ -92,7 +86,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         </TableCell>
 
         <TableCell>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: 'fit-content' }}>
             {downloadFileQuery.isFetching ? (
               <CircularProgress size="1.5rem" />
             ) : (
@@ -127,11 +121,9 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           </Box>
         </TableCell>
 
-        <TableCell align="center" sx={{ minWidth: '5.5rem' }}>
-          {prettyBytes(file.size)}
-        </TableCell>
+        <TableCell sx={{ minWidth: '5.5rem' }}>{prettyBytes(file.size)}</TableCell>
 
-        <TableCell align="center">
+        <TableCell>
           <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
             {({ field }: FieldProps) => (
               <Tooltip title={t('registration.files_and_license.administrative_contract')}>
@@ -240,13 +232,8 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell sx={{ pt: 0 }} colSpan={6}>
-          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
-            <IconButton onClick={() => setOpenCollapsable(!openCollapsable)} size="small" sx={{ mt: '-0.5rem' }}>
-              {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </Box>
-          <Collapse in={openCollapsable} sx={{ width: '100%' }}>
+        <TableCell sx={{ pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
+          <Collapse in={openCollapsable}>
             <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
               <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
                 {({ field, meta: { error, touched } }: FieldProps) => (
@@ -293,6 +280,11 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               </Paper>
             </Popover>
           </Collapse>
+          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
+            <IconButton onClick={() => setOpenCollapsable(!openCollapsable)} sx={{ mt: '-0.5rem' }} size="small">
+              {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </Box>
         </TableCell>
       </TableRow>
     </>
