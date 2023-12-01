@@ -18,12 +18,12 @@ export const Footer = () => {
         padding: '1rem',
         bgcolor: 'info.light',
         display: 'grid',
-        gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr 1fr' },
+        gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' },
         gap: '3rem',
         color: 'primary.main',
       }}>
       <div>
-        <Box sx={{ display: 'flex', gap: '0.5rem', color: 'primary.main' }}>
+        <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
           <Typography
             sx={{
               fontWeight: 'bold',
@@ -33,14 +33,7 @@ export const Footer = () => {
           </Typography>
 
           <MuiLink
-            sx={{
-              justifySelf: { xs: 'center', lg: 'start' },
-              gridRow: { xs: 3, lg: 1 },
-              marginLeft: 'auto',
-              color: 'primary.main',
-              display: 'flex',
-              gap: '0.5rem',
-            }}
+            sx={{ color: 'primary.main', display: 'flex', gap: '0.5rem' }}
             data-testid={dataTestId.footer.aboutLink}
             target="_blank"
             rel="noopener noreferrer"
@@ -120,13 +113,7 @@ export const Footer = () => {
           {t('footer.about_sikt_text')}
         </Typography>
 
-        <Box
-          sx={{
-            display: 'flex',
-            justifySelf: { xs: 'start' },
-            gap: '0.5rem',
-            mt: '2rem',
-          }}>
+        <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', mt: '2rem' }}>
           <Typography
             sx={{
               fontWeight: 'bold',
@@ -136,14 +123,7 @@ export const Footer = () => {
           </Typography>
 
           <MuiLink
-            sx={{
-              justifySelf: { xs: 'center', lg: 'start' },
-              gridRow: { xs: 3, lg: 1 },
-              marginLeft: 'auto',
-              color: 'primary.main',
-              display: 'flex',
-              gap: '0.5rem',
-            }}
+            sx={{ color: 'primary.main', display: 'flex', gap: '0.5rem' }}
             data-testid={dataTestId.footer.aboutSikt}
             target="_blank"
             rel="noopener noreferrer"
