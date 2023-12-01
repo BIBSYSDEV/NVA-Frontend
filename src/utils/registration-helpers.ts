@@ -677,6 +677,13 @@ export const openFileInNewTab = (fileUri: string) => {
   }
 };
 
+const scientificLevelHasBeenChanged = (persistedPublisherId: string, updatedPublisherId: string) => {
+  if (persistedPublisherId !== updatedPublisherId) {
+    return true;
+  }
+  return false;
+};
+
 export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
   const canBeNviCandidate = nviApplicableTypes.includes(
     persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
