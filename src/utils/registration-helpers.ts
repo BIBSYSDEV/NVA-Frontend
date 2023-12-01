@@ -681,18 +681,21 @@ export const willResetNviStatuses = (persistedRegistration: Registration, update
   const canBeNviCandidate = nviApplicableTypes.includes(
     persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
   );
-  if (canBeNviCandidate) {
-    if (
-      persistedRegistration.entityDescription?.publicationDate?.year !==
-      updatedRegistration.entityDescription?.publicationDate?.year
-    ) {
-      return true;
-    }
-    if (
-      persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
-      updatedRegistration.entityDescription?.reference?.publicationInstance.type
-    ) {
-      return true;
-    }
+  if (!canBeNviCandidate) {
+    return false;
+  }
+
+  const hasChangedYear =
+    persistedRegistration.entityDescription?.publicationDate?.year !==
+    updatedRegistration.entityDescription?.publicationDate?.year;
+  if (hasChangedYear) {
+    return true;
+  }
+
+  const hasChangedCategory =
+    persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
+    updatedRegistration.entityDescription?.reference?.publicationInstance.type;
+  if (hasChangedCategory) {
+    return true;
   }
 };
