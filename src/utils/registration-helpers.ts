@@ -678,14 +678,21 @@ export const openFileInNewTab = (fileUri: string) => {
 };
 
 export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
-  const valueChecks = [
-    () =>
+  const canBeNviCandidate = nviApplicableTypes.includes(
+    persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
+  );
+  if (canBeNviCandidate) {
+    if (
       persistedRegistration.entityDescription?.publicationDate?.year !==
-      updatedRegistration.entityDescription?.publicationDate?.year,
-    () =>
+      updatedRegistration.entityDescription?.publicationDate?.year
+    ) {
+      return true;
+    }
+    if (
       persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
-      updatedRegistration.entityDescription?.reference?.publicationInstance.type,
-  ];
-
-  return valueChecks.some((check) => check());
+      updatedRegistration.entityDescription?.reference?.publicationInstance.type
+    ) {
+      return true;
+    }
+  }
 };
