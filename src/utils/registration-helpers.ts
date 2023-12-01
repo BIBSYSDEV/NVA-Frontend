@@ -677,7 +677,7 @@ export const openFileInNewTab = (fileUri: string) => {
   }
 };
 
-export const compareRegistrationAndValues = (registration: Registration, values: Registration) => {
+export const willResetNviStatuses = (registration: Registration, values: Registration) => {
   const valueChecks = [
     () => registration.entityDescription?.publicationDate?.year !== values.entityDescription?.publicationDate?.year,
     () =>
