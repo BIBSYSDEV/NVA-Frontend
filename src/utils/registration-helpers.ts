@@ -677,12 +677,14 @@ export const openFileInNewTab = (fileUri: string) => {
   }
 };
 
-export const willResetNviStatuses = (registration: Registration, values: Registration) => {
+export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
   const valueChecks = [
-    () => registration.entityDescription?.publicationDate?.year !== values.entityDescription?.publicationDate?.year,
     () =>
-      registration.entityDescription?.reference?.publicationInstance.type !==
-      values.entityDescription?.reference?.publicationInstance.type,
+      persistedRegistration.entityDescription?.publicationDate?.year !==
+      updatedRegistration.entityDescription?.publicationDate?.year,
+    () =>
+      persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
+      updatedRegistration.entityDescription?.reference?.publicationInstance.type,
   ];
 
   return valueChecks.some((check) => check());
