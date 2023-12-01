@@ -22,7 +22,7 @@ import { AssociatedFile } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
-import { isEmbargoed } from '../../../utils/registration-helpers';
+import { isEmbargoed, openFileInNewTab } from '../../../utils/registration-helpers';
 import { PreviewFile } from './preview_file/PreviewFile';
 
 interface FileRowProps {
@@ -59,7 +59,7 @@ export const FileRow = ({
         if (previewFile) {
           setPreviewFileUrl(downloadFileResponse.id);
         } else {
-          window.open(downloadFileResponse.id, '_blank');
+          openFileInNewTab(downloadFileResponse.id);
         }
       }
       previewFile && setIsLoadingPreviewFile(false);
@@ -157,7 +157,7 @@ export const FileRow = ({
             <Typography
               id={`preview-label-${file.identifier}`}
               data-testid={dataTestId.registrationLandingPage.filePreviewHeader}
-              sx={{ fontWeight: 500 }}>
+              sx={{ fontWeight: 500, lineBreak: 'anywhere' }}>
               {t('registration.public_page.preview_of', { fileName: file.name })}
             </Typography>
           </AccordionSummary>

@@ -46,11 +46,16 @@ export enum UrlPathTemplate {
   RegistrationNew = '/registration',
   RegistrationWizard = '/registration/:identifier/edit',
   ResearchProfile = '/research-profile',
+  Reports = '/reports',
+  ReportsClinicalTreatmentStudies = '/reports/clinical-treatment-studies',
+  ReportsInternationalCooperation = '/reports/international-cooperation',
+  ReportsNvi = '/reports/nvi',
   Tasks = '/tasks',
   TasksDialogue = '/tasks/dialogue',
   TasksDialogueRegistration = '/tasks/dialogue/:identifier',
   TasksNvi = '/tasks/nvi',
   TasksNviCandidate = '/tasks/nvi/:identifier',
+  TasksNviCorrectionList = '/tasks/correction-list',
   Wildcard = '*',
 }
 

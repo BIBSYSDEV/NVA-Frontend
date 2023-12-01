@@ -1,31 +1,21 @@
-import FilterAltOutlined from '@mui/icons-material/FilterAltOutlined';
 import NotesIcon from '@mui/icons-material/Notes';
 import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Box, Divider, MenuItem, TextField } from '@mui/material';
-import { Form, Formik, FormikProps } from 'formik';
-import { useState } from 'react';
+import { Box, MenuItem, TextField } from '@mui/material';
+import { UseQueryResult } from '@tanstack/react-query';
+import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { SearchApiPath } from '../../api/apiPaths';
-import { SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
-import { SideMenu } from '../../components/SideMenu';
 import { SearchResponse } from '../../types/common.types';
+import { CristinProject, ProjectAggregations } from '../../types/project.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
-import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { useFetch } from '../../utils/hooks/useFetch';
-import {
-  SearchConfig,
-  SearchParam,
-  createRegistrationSearchQuery,
-  createSearchConfigFromSearchParams,
-  emptySearchConfig,
-} from '../../utils/searchHelpers';
+import { CristinPerson, PersonAggregations } from '../../types/user.types';
+import { SearchConfig, SearchParam, emptySearchConfig } from '../../utils/searchHelpers';
+import { SearchTextField } from './SearchTextField';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
-import { RegistrationFacetsFilter } from './registration_search/filters/RegistrationFacetsFilter';
 
 /*
  * The Search Page allows for users to search for 3 things (types): Registrations/Results, Persons, and Projects
@@ -42,161 +32,113 @@ enum SearchTypeValue {
   Project = 'project',
 }
 
-const defaultResultSize = ROWS_PER_PAGE_OPTIONS[0].toString();
+export interface SearchPageProps {
+  searchResults: SearchResponse<Registration, RegistrationAggregations> | undefined;
+  isLoadingSearch: boolean;
+  personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
+  projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
+}
 
-const SearchPage = () => {
+const SearchPage = ({ searchResults, isLoadingSearch, personQuery, projectQuery }: SearchPageProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
-  const [selectedSearchType, setSelectedSearchType] = useState(SearchTypeValue.Result);
+  const { setValues } = useFormikContext<SearchConfig>();
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
   const projectIsSelected = paramsSearchType === SearchTypeValue.Project;
 
-  const requestParams = new URLSearchParams(history.location.search);
-  requestParams.delete(SearchParam.Type);
-  const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration, RegistrationAggregations>>({
-    url: resultIsSelected ? `${SearchApiPath.Registrations}?${requestParams.toString()}` : '',
-    errorMessage: t('feedback.error.search'),
-  });
-
-  const initialSearchParams = createSearchConfigFromSearchParams(params);
-
   return (
-    <Formik
-      initialValues={initialSearchParams}
-      validateOnChange={false}
-      validateOnBlur={false}
-      onSubmit={(values) => {
-        const previousParamsResults = params.get(SearchParam.Results);
-        const newSearchParams = new URLSearchParams();
-        if (resultIsSelected) {
-          const queryString = createRegistrationSearchQuery(values);
-          if (queryString) {
-            newSearchParams.set(SearchParam.Query, queryString);
-          }
-          newSearchParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
-          newSearchParams.set(SearchParam.From, '0');
-        } else if (personIsSeleced) {
-          newSearchParams.set(SearchParam.Type, SearchTypeValue.Person);
-          if (values.searchTerm) {
-            newSearchParams.set(SearchParam.Name, values.searchTerm);
-            newSearchParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
-            newSearchParams.set(SearchParam.Page, '1');
-          }
-        } else if (projectIsSelected) {
-          newSearchParams.set(SearchParam.Type, SearchTypeValue.Project);
-          if (values.searchTerm) {
-            newSearchParams.set(SearchParam.Query, values.searchTerm);
-            newSearchParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
-            newSearchParams.set(SearchParam.Page, '1');
-          }
-        }
-        history.push({ search: newSearchParams.toString() });
-      }}>
-      {({ setValues }: FormikProps<SearchConfig>) => (
-        <Form style={{ width: '100%' }}>
-          <StyledPageWithSideMenu>
-            <SideMenu>
-              <SideNavHeader icon={FilterAltOutlined} text={t('common.filter')} />
-              <Box
-                sx={{
-                  m: '1rem',
-                }}>
-                <TextField
-                  select
-                  fullWidth
-                  size="small"
-                  value={selectedSearchType}
-                  onChange={(event) => setSelectedSearchType(event.target.value as SearchTypeValue)}
-                  sx={{
-                    '.MuiSelect-select': {
-                      display: 'flex',
-                      gap: '0.5rem',
-                      alignItems: 'center',
-                      bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
-                    },
-                  }}
-                  inputProps={{ 'aria-label': t('common.filter') }}>
-                  <MenuItem
-                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-                    value={SearchTypeValue.Result}
-                    onClick={() => {
-                      if (!resultIsSelected) {
-                        const resultParams = new URLSearchParams();
-                        history.push({ search: resultParams.toString() });
-                        setValues(emptySearchConfig);
-                      }
-                    }}>
-                    <NotesIcon fontSize="small" />
-                    {t('search.result')}
-                  </MenuItem>
-                  <MenuItem
-                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-                    value={SearchTypeValue.Person}
-                    onClick={() => {
-                      if (!personIsSeleced) {
-                        const personParams = new URLSearchParams();
-                        personParams.set(SearchParam.Type, SearchTypeValue.Person);
-                        history.push({ search: personParams.toString() });
-                        setValues(emptySearchConfig);
-                      }
-                    }}>
-                    <PersonIcon />
-                    {t('search.persons')}
-                  </MenuItem>
-                  <MenuItem
-                    sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
-                    value={SearchTypeValue.Project}
-                    onClick={() => {
-                      if (!projectIsSelected) {
-                        const projectParams = new URLSearchParams();
-                        projectParams.set(SearchParam.Type, SearchTypeValue.Project);
-                        history.push({ search: projectParams.toString() });
-                        setValues(emptySearchConfig);
-                      }
-                    }}>
-                    <ShowChartIcon />
-                    {t('project.project')}
-                  </MenuItem>
-                </TextField>
-              </Box>
+    <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
+          gap: '1rem 0.5rem',
+          mx: { xs: '0.5rem', md: 0 },
+        }}>
+        <TextField
+          select
+          value={!paramsSearchType ? SearchTypeValue.Result : paramsSearchType}
+          sx={{
+            mb: !resultIsSelected ? '1rem' : 0,
+            minWidth: '10rem',
+            '.MuiSelect-select': {
+              display: 'flex',
+              gap: '0.5rem',
+              alignItems: 'center',
+              bgcolor: personIsSeleced || projectIsSelected ? `${paramsSearchType}.main` : 'registration.main',
+            },
+          }}
+          inputProps={{ 'aria-label': t('common.type') }}>
+          <MenuItem
+            sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+            value={SearchTypeValue.Result}
+            onClick={() => {
+              if (!resultIsSelected) {
+                const resultParams = new URLSearchParams();
+                history.push({ search: resultParams.toString() });
+                setValues(emptySearchConfig);
+              }
+            }}>
+            <NotesIcon fontSize="small" />
+            {t('search.result')}
+          </MenuItem>
+          <MenuItem
+            sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+            value={SearchTypeValue.Person}
+            onClick={() => {
+              if (!personIsSeleced) {
+                const personParams = new URLSearchParams();
+                personParams.set(SearchParam.Type, SearchTypeValue.Person);
+                history.push({ search: personParams.toString() });
+                setValues(emptySearchConfig);
+              }
+            }}>
+            <PersonIcon fontSize="small" />
+            {t('search.persons')}
+          </MenuItem>
+          <MenuItem
+            sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+            value={SearchTypeValue.Project}
+            onClick={() => {
+              if (!projectIsSelected) {
+                const projectParams = new URLSearchParams();
+                projectParams.set(SearchParam.Type, SearchTypeValue.Project);
+                history.push({ search: projectParams.toString() });
+                setValues(emptySearchConfig);
+              }
+            }}>
+            <ShowChartIcon fontSize="small" />
+            {t('project.project')}
+          </MenuItem>
+        </TextField>
 
-              {resultIsSelected && searchResults?.aggregations && (
-                <>
-                  <Divider />
-                  <Box
-                    sx={{
-                      m: '1rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '1rem',
-                    }}>
-                    <RegistrationFacetsFilter
-                      aggregations={searchResults.aggregations}
-                      isLoadingSearch={isLoadingSearch}
-                    />
-                  </Box>
-                </>
-              )}
-            </SideMenu>
+        {resultIsSelected && <RegistrationSearchBar aggregations={searchResults?.aggregations} />}
+        {(personIsSeleced || projectIsSelected) && (
+          <Field name="searchTerm">
+            {({ field, form: { submitForm } }: FieldProps<string>) => (
+              <SearchTextField
+                {...field}
+                placeholder={
+                  personIsSeleced ? t('search.person_search_placeholder') : t('search.project_search_placeholder')
+                }
+                clearValue={() => {
+                  field.onChange({ target: { value: '', id: field.name } });
+                  submitForm();
+                }}
+              />
+            )}
+          </Field>
+        )}
+      </Box>
 
-            <Box sx={{ mb: { xs: '0.5rem', md: 0 } }}>
-              {resultIsSelected && (
-                <>
-                  <RegistrationSearchBar aggregations={searchResults?.aggregations} />
-                  <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />
-                </>
-              )}
-              {personIsSeleced && <PersonSearch />}
-              {projectIsSelected && <ProjectSearch />}
-            </Box>
-          </StyledPageWithSideMenu>
-        </Form>
-      )}
-    </Formik>
+      {resultIsSelected && <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />}
+      {personIsSeleced && <PersonSearch personQuery={personQuery} />}
+      {projectIsSelected && <ProjectSearch projectQuery={projectQuery} />}
+    </Box>
   );
 };
 

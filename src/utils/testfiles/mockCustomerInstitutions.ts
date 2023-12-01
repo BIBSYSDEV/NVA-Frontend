@@ -1,6 +1,7 @@
 import {
   CustomerInstitution,
   CustomerList,
+  RightsRetentionStrategyTypes,
   Sector,
   VocabularyList,
   VocabularyStatus,
@@ -45,6 +46,8 @@ export const mockCustomerInstitution: CustomerInstitution = {
   },
   sector: Sector.Uhi,
   nviInstitution: false,
+  rboInstitution: false,
+  rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
 };
 
 export const mockCustomerInstitutions: CustomerList = {

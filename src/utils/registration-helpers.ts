@@ -41,33 +41,40 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import { PublicationInstanceType, Registration, RegistrationStatus } from '../types/registration.types';
+import {
+  Journal,
+  PublicationInstanceType,
+  Publisher,
+  Registration,
+  RegistrationStatus,
+  Series,
+} from '../types/registration.types';
 import { User } from '../types/user.types';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
     ? PublicationType.PublicationInJournal
     : isBook(instanceType)
-    ? PublicationType.Book
-    : isDegree(instanceType)
-    ? PublicationType.Degree
-    : isReport(instanceType)
-    ? PublicationType.Report
-    : isChapter(instanceType)
-    ? PublicationType.Anthology
-    : isPresentation(instanceType)
-    ? PublicationType.Presentation
-    : isArtistic(instanceType)
-    ? PublicationType.Artistic
-    : isMediaContribution(instanceType)
-    ? PublicationType.MediaContribution
-    : isResearchData(instanceType)
-    ? PublicationType.ResearchData
-    : isExhibitionContent(instanceType)
-    ? PublicationType.ExhibitionContent
-    : isOtherRegistration(instanceType)
-    ? PublicationType.GeographicalContent
-    : '';
+      ? PublicationType.Book
+      : isDegree(instanceType)
+        ? PublicationType.Degree
+        : isReport(instanceType)
+          ? PublicationType.Report
+          : isChapter(instanceType)
+            ? PublicationType.Anthology
+            : isPresentation(instanceType)
+              ? PublicationType.Presentation
+              : isArtistic(instanceType)
+                ? PublicationType.Artistic
+                : isMediaContribution(instanceType)
+                  ? PublicationType.MediaContribution
+                  : isResearchData(instanceType)
+                    ? PublicationType.ResearchData
+                    : isExhibitionContent(instanceType)
+                      ? PublicationType.ExhibitionContent
+                      : isOtherRegistration(instanceType)
+                        ? PublicationType.GeographicalContent
+                        : '';
 
 export const isJournal = (instanceType: any) => Object.values(JournalType).includes(instanceType);
 
@@ -113,8 +120,11 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
+export const userIsValidImporter = (user: User | null, registration?: Registration) =>
+  !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
+
 export const getYearQuery = (yearValue: string) =>
-  yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear();
+  yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear().toString();
 
 const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?: string | null) => {
   const issnString =
@@ -129,9 +139,13 @@ const getPublicationChannelIssnString = (onlineIssn?: string | null, printIssn?:
   return issnString;
 };
 
-export const getPublicationChannelString = (title: string, onlineIssn?: string | null, printIssn?: string | null) => {
-  const issnString = getPublicationChannelIssnString(onlineIssn, printIssn);
-  return issnString ? `${title} (${issnString})` : title;
+export const getPublicationChannelString = (publicationChannel: Journal | Series | Publisher) => {
+  if (publicationChannel.type === 'Publisher') {
+    return publicationChannel.name;
+  } else {
+    const issnString = getPublicationChannelIssnString(publicationChannel.onlineIssn, publicationChannel.printIssn);
+    return issnString ? `${publicationChannel.name} (${issnString})` : publicationChannel.name;
+  }
 };
 
 // Ensure Registration has correct type values, etc
@@ -512,13 +526,15 @@ export const contributorConfig: ContributorConfig = {
     primaryRoles: [
       ContributorRole.ProjectLeader,
       ContributorRole.Curator,
-      ContributorRole.LightDesigner,
-      ContributorRole.SoundDesigner,
+      ContributorRole.Conservator,
+      ContributorRole.Registrar,
+      ContributorRole.MuseumEducator,
+      ContributorRole.CollaborationPartner,
+      ContributorRole.ExhibitionDesigner,
       ContributorRole.Designer,
-      ContributorRole.Architect,
-      ContributorRole.InteriorArchitect,
+      ContributorRole.Writer,
       ContributorRole.Photographer,
-      ContributorRole.Sponsor,
+      ContributorRole.AudioVisualContributor,
       ContributorRole.Other,
     ],
     secondaryRoles: [],
@@ -603,7 +619,7 @@ export const userCanEditRegistration = (user: User | null, registration: Registr
   }
 
   const isValidCurator = userIsRegistrationCurator(user, registration);
-  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance.type)) {
+  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance?.type)) {
     return isValidCurator && user.isThesisCurator;
   }
 
@@ -652,4 +668,34 @@ export const isEmbargoed = (embargoDate: Date | null) => {
     return false;
   }
   return new Date(embargoDate) > new Date();
+};
+
+export const openFileInNewTab = (fileUri: string) => {
+  if (fileUri) {
+    // Use timeout to ensure that file is opened on Safari/iOS: NP-30205, https://stackoverflow.com/a/70463940
+    setTimeout(() => window.open(fileUri, '_blank'));
+  }
+};
+
+export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
+  const canBeNviCandidate = nviApplicableTypes.includes(
+    persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
+  );
+  if (!canBeNviCandidate) {
+    return false;
+  }
+
+  const hasChangedYear =
+    persistedRegistration.entityDescription?.publicationDate?.year !==
+    updatedRegistration.entityDescription?.publicationDate?.year;
+  if (hasChangedYear) {
+    return true;
+  }
+
+  const hasChangedCategory =
+    persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
+    updatedRegistration.entityDescription?.reference?.publicationInstance.type;
+  if (hasChangedCategory) {
+    return true;
+  }
 };

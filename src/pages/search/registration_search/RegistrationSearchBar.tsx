@@ -11,8 +11,9 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { fetchRegistrationsExport } from '../../../api/searchApi';
+import { SortSelector } from '../../../components/SortSelector';
 import { setNotification } from '../../../redux/notificationSlice';
-import { ResourceFieldNames, SearchFieldName } from '../../../types/publicationFieldNames';
+import { RegistrationFieldName, ResourceFieldNames, SearchFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType, RegistrationAggregations } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
@@ -20,7 +21,6 @@ import { getLabelFromBucket, getLanguageString } from '../../../utils/translatio
 import { getFullCristinName } from '../../../utils/user-helpers';
 import { SearchTextField } from '../SearchTextField';
 import { AdvancedSearchRow, registrationFilters } from '../registration_search/filters/AdvancedSearchRow';
-import { RegistrationSortSelector } from './RegistrationSortSelector';
 
 interface RegistrationSearchBarProps {
   aggregations?: RegistrationAggregations;
@@ -43,10 +43,6 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
   return (
     <Box
       sx={{
-        mx: {
-          xs: '1rem',
-          md: 0,
-        },
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', md: '5fr auto auto' },
         gridTemplateAreas: {
@@ -68,7 +64,27 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
           />
         )}
       </Field>
-      <RegistrationSortSelector />
+
+      <SortSelector
+        sx={{ minWidth: '15rem', gridArea: 'sorting' }}
+        options={[
+          {
+            orderBy: RegistrationFieldName.ModifiedDate,
+            sortOrder: 'desc',
+            label: t('search.sort_by_modified_date'),
+          },
+          {
+            orderBy: RegistrationFieldName.PublishedDate,
+            sortOrder: 'desc',
+            label: t('search.sort_by_published_date_desc'),
+          },
+          {
+            orderBy: RegistrationFieldName.PublishedDate,
+            sortOrder: 'asc',
+            label: t('search.sort_by_published_date_asc'),
+          },
+        ]}
+      />
 
       <LoadingButton
         variant="outlined"

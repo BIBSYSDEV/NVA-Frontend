@@ -3,16 +3,16 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
-import { ApprovalStatus } from '../../../types/nvi.types';
+import { Approval } from '../../../types/nvi.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
-interface NviApprovalStatusesProps {
-  approvalStatuses: ApprovalStatus[];
+interface NviApprovalsProps {
+  approvals: Approval[];
+  totalPoints: number;
 }
 
-export const NviApprovalStatuses = ({ approvalStatuses }: NviApprovalStatusesProps) => {
+export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
   const { t } = useTranslation();
-  const publicationPointsSum = approvalStatuses.reduce((acc, status) => acc + status.points, 0);
 
   return (
     <Box sx={{ m: '1rem' }}>
@@ -23,10 +23,10 @@ export const NviApprovalStatuses = ({ approvalStatuses }: NviApprovalStatusesPro
           mb: '0.5rem',
         }}>
         <Typography>{t('tasks.nvi.publication_points')}</Typography>
-        {publicationPointsSum && <PublicationPointsTypography points={publicationPointsSum} />}
+        {totalPoints && <PublicationPointsTypography points={totalPoints} />}
       </Box>
 
-      {approvalStatuses.length > 0 && (
+      {approvals.length > 0 && (
         <Paper
           elevation={4}
           sx={{
@@ -37,7 +37,7 @@ export const NviApprovalStatuses = ({ approvalStatuses }: NviApprovalStatusesPro
             gap: '0.5rem 0.75rem',
             alignItems: 'center',
           }}>
-          {approvalStatuses.map((approvalStatus) => (
+          {approvals.map((approvalStatus) => (
             <InstitutionApprovalStatusRow key={approvalStatus.institutionId} approvalStatus={approvalStatus} />
           ))}
         </Paper>
@@ -47,7 +47,7 @@ export const NviApprovalStatuses = ({ approvalStatuses }: NviApprovalStatusesPro
 };
 
 interface InstitutionApprovalStatusRowProps {
-  approvalStatus: ApprovalStatus;
+  approvalStatus: Approval;
 }
 
 const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalStatusRowProps) => {

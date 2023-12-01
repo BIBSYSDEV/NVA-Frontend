@@ -12,6 +12,7 @@ export enum Sector {
   Health = 'HEALTH',
   Institute = 'INSTITUTE',
   Abm = 'ABM',
+  Other = 'OTHER',
 }
 
 export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id' | 'createdDate' | 'displayName'> {
@@ -30,6 +31,19 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   doiAgent: DoiAgent;
   sector: Sector;
   nviInstitution: boolean;
+  rboInstitution: boolean;
+  rightsRetentionStrategy: RightsRetentionStrategy;
+}
+
+interface RightsRetentionStrategy {
+  type: RightsRetentionStrategyTypes;
+  id: string;
+}
+
+export enum RightsRetentionStrategyTypes {
+  NullRightsRetentionStrategy = 'NullRightsRetentionStrategy',
+  RightsRetentionStrategy = 'RightsRetentionStrategy',
+  OverridableRightsRetentionStrategy = 'OverridableRightsRetentionStrategy',
 }
 
 export interface DoiAgent {
@@ -78,6 +92,8 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   rorId: '',
   sector: Sector.Uhi,
   nviInstitution: false,
+  rboInstitution: false,
+  rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
@@ -103,6 +119,7 @@ export enum CustomerInstitutionFieldNames {
   Sector = 'customer.sector',
   NviInstitution = 'customer.nviInstitution',
   CanAssignDoi = 'canAssignDoi',
+  RboInstitution = 'customer.rboInstitution',
 }
 
 export interface CustomerList {

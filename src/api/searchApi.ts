@@ -20,15 +20,38 @@ export const fetchTickets = async (results: number, from: number, query = '', on
   return getTickets.data;
 };
 
-export const fetchImportCandidates = async (results: number, from: number, query = '') => {
-  const paginationQuery = `results=${results}&from=${from}`;
-  const searchQuery = query ? `query=${query}` : '';
-  const fullQuery = [searchQuery, paginationQuery].filter(Boolean).join('&');
+export type SortOrder = 'desc' | 'asc';
+export type ImportCandidateOrderBy = 'createdDate' | 'importStatus.modifiedDate';
+
+export interface FetchImportCandidatesParams {
+  query?: string;
+  orderBy?: ImportCandidateOrderBy;
+  sortOrder?: SortOrder;
+}
+
+export const fetchImportCandidates = async (
+  results: number,
+  from: number,
+  { query, orderBy, sortOrder }: FetchImportCandidatesParams
+) => {
+  const params = new URLSearchParams();
+  params.set('results', results.toString());
+  params.set('from', from.toString());
+  if (query) {
+    params.set('query', query);
+  }
+  if (orderBy) {
+    params.set('orderBy', orderBy);
+  }
+  if (sortOrder) {
+    params.set('sortOrder', sortOrder);
+  }
+  const paramsString = params.toString();
 
   const getImportCandidates = await authenticatedApiRequest2<
     SearchResponse<ImportCandidateSummary, ImportCandidateAggregations>
   >({
-    url: `${SearchApiPath.ImportCandidates}?${fullQuery}`,
+    url: `${SearchApiPath.ImportCandidates}?${paramsString}`,
   });
 
   return getImportCandidates.data;

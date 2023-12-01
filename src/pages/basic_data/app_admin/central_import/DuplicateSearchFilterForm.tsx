@@ -31,17 +31,14 @@ export const DuplicateSearchFilterForm = ({
     doi: importCandidate.doi ?? '',
     title: importCandidate.mainTitle ?? '',
     author: importCandidate.contributors[0]?.identity.name ?? '',
-    issn: '',
-    yearPublished: '',
+    issn: importCandidate.printIssn ?? importCandidate.onlineIssn ?? '',
+    yearPublished: importCandidate.publicationYear ?? '',
     isDoiChecked: true,
     isTitleChecked: false,
     isAuthorChecked: false,
     isIssnChecked: false,
     isYearPublishedChecked: false,
   };
-
-  //TODO: Bruker bør ikke kunne søke med tomme verdier i avsjekkede felter.
-  //TODO: Implementer tester ;-)
 
   return (
     <Formik
