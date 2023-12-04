@@ -58,9 +58,14 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
   const { values, setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
   const [downloadFile, setDownloadFile] = useState(false);
-  const collapsibleHasError =
-    !!getIn(errors, `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`) &&
-    !!getIn(touched, `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
+
+  const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
+  const administrativeAgreementFieldName = `${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`;
+  const publisherAuthorityFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`;
+  const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
+  const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
+
+  const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
   const [embargoPopperAnchorEl, setEmbargoPopperAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -127,7 +132,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         <TableCell>{prettyBytes(file.size)}</TableCell>
 
         <TableCell>
-          <Field name={`${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`}>
+          <Field name={administrativeAgreementFieldName}>
             {({ field }: FieldProps) => (
               <Tooltip title={t('registration.files_and_license.administrative_contract')}>
                 <Checkbox
@@ -141,12 +146,12 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                   onChange={(event) => {
                     const newAssociatedFileType: AssociatedFileType =
                       field.value === true ? 'UnpublishedFile' : 'UnpublishableFile';
-                    setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.Type}`, newAssociatedFileType);
+                    setFieldValue(fileTypeFieldName, newAssociatedFileType);
 
                     field.onChange(event);
-                    setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`, null);
-                    setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.License}`, null);
-                    setFieldValue(`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`, null);
+                    setFieldValue(publisherAuthorityFieldName, null);
+                    setFieldValue(licenseFieldName, null);
+                    setFieldValue(embargoFieldName, null);
                   }}
                 />
               </Tooltip>
@@ -156,7 +161,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
 
         {showFileVersion && (
           <TableCell>
-            <Field name={`${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`}>
+            <Field name={publisherAuthorityFieldName}>
               {({ field, meta: { error, touched } }: FieldProps) => (
                 <FormControl
                   data-testid={dataTestId.registrationWizard.files.version}
@@ -185,7 +190,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
         )}
 
         <TableCell>
-          <Field name={`${baseFieldName}.${SpecificFileFieldNames.License}`}>
+          <Field name={licenseFieldName}>
             {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
                 id={field.name}
@@ -239,7 +244,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
           <Collapse in={openCollapsable}>
             <Box sx={{ mt: '0.5rem', display: 'flex', justifyContent: 'space-evenly' }}>
               <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
+                <Field name={embargoFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps) => (
                     <DatePicker
                       {...field}
