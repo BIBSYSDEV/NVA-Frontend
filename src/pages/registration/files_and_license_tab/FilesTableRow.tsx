@@ -280,7 +280,10 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             </Box>
           </Collapse>
           <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
-            <IconButton onClick={() => setOpenCollapsable(!openCollapsable)} size="small">
+            <IconButton
+              onClick={() => setOpenCollapsable(!openCollapsable)}
+              size="small"
+              data-testid={dataTestId.registrationWizard.files.expandFileRowButton}>
               {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </Box>
