@@ -27,7 +27,7 @@ import {
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
-import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -56,9 +56,12 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
-  const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
+  const { values, setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
   const [downloadFile, setDownloadFile] = useState(false);
-  const [openCollapsable, setOpenCollapsable] = useState(false);
+  const collapsibleHasError =
+    !!getIn(errors, `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`) &&
+    !!getIn(touched, `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`);
+  const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
   const [embargoPopperAnchorEl, setEmbargoPopperAnchorEl] = useState<null | HTMLElement>(null);
 
   const downloadFileQuery = useQuery({
