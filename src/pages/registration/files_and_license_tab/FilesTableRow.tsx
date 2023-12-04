@@ -8,7 +8,6 @@ import {
   Checkbox,
   CircularProgress,
   Collapse,
-  Divider,
   FormControl,
   FormControlLabel,
   FormHelperText,
@@ -234,34 +233,29 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
       </TableRow>
       <TableRow>
         <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
-          <Collapse in={openCollapsable} sx={{ mx: '2rem' }}>
-            <Divider orientation="horizontal" sx={{ my: '1rem' }} />
-
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span />
+          <Collapse in={openCollapsable}>
+            <Box sx={{ mt: '0.5rem', display: 'flex', justifyContent: 'space-evenly' }}>
               <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 <Field name={`${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`}>
                   {({ field, meta: { error, touched } }: FieldProps) => (
-                    <Box sx={{ minWidth: '12rem' }}>
-                      <DatePicker
-                        {...field}
-                        label={t('registration.files_and_license.embargo')}
-                        value={field.value ? new Date(field.value) : null}
-                        onChange={(date) => setFieldValue(field.name, date ?? '')}
-                        format="dd.MM.yyyy"
-                        maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
-                        disabled={file.administrativeAgreement || disabled}
-                        slotProps={{
-                          textField: {
-                            inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
-                            variant: 'filled',
-                            onBlur: () => !touched && setFieldTouched(field.name),
-                            error: !!error && touched,
-                            helperText: <ErrorMessage name={field.name} />,
-                          },
-                        }}
-                      />
-                    </Box>
+                    <DatePicker
+                      {...field}
+                      label={t('registration.files_and_license.embargo')}
+                      value={field.value ? new Date(field.value) : null}
+                      onChange={(date) => setFieldValue(field.name, date ?? '')}
+                      format="dd.MM.yyyy"
+                      maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
+                      disabled={file.administrativeAgreement || disabled}
+                      slotProps={{
+                        textField: {
+                          inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },
+                          variant: 'filled',
+                          onBlur: () => !touched && setFieldTouched(field.name),
+                          error: !!error && touched,
+                          helperText: <ErrorMessage name={field.name} />,
+                        },
+                      }}
+                    />
                   )}
                 </Field>
 
@@ -286,7 +280,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
             </Box>
           </Collapse>
           <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
-            <IconButton onClick={() => setOpenCollapsable(!openCollapsable)} sx={{ mt: '-0.5rem' }} size="small">
+            <IconButton onClick={() => setOpenCollapsable(!openCollapsable)} size="small">
               {openCollapsable ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </Box>

@@ -14,7 +14,8 @@ const associatedArtifactErrorMessage = {
     field: i18n.t('registration.files_and_license.conditions_for_using_file'),
   }),
   embargoDateInvalid: i18n.t('feedback.validation.has_invalid_format', {
-    field: i18n.t('registration.files_and_license.file_publish_date'),
+    field: i18n.t('registration.files_and_license.embargo'),
+    interpolation: { escapeValue: false },
   }),
   linkInvalid: i18n.t('feedback.validation.has_invalid_format', {
     field: i18n.t('registration.files_and_license.link_to_resource'),
