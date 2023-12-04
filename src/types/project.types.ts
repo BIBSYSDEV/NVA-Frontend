@@ -1,4 +1,5 @@
-import { LanguageString } from './common.types';
+import { ProjectSearchParameter } from '../api/cristinApi';
+import { CristinAggregationValue, LanguageString } from './common.types';
 import { Organization } from './organization.types';
 import { Funding } from './registration.types';
 
@@ -93,6 +94,17 @@ export interface CristinProject extends SaveCristinProject {
     sourceShortName: 'REK' | 'NVA' | 'FORSKDOK';
   };
   creator?: ProjectCreator;
+}
+
+export interface ProjectAggregations {
+  [ProjectSearchParameter.CategoryFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.CoordinatingFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.FundingSourceFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.HealthProjectFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.ParticipantFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.ParticipantOrgFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.ResponsibleFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.SectorFacet]?: CristinAggregationValue[];
 }
 
 export interface FundingSource {

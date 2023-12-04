@@ -1,8 +1,10 @@
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { SearchForCristinPerson } from '../SearchForCristinPerson';
 import { AddEmployeeData, emptyUser } from './AddEmployeePage';
@@ -11,6 +13,10 @@ export const FindPersonPanel = () => {
   const { t } = useTranslation();
   const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const [showCreatePerson, setShowCreatePerson] = useState(false);
+  const confirmedIdentity = !!values.user.nvi?.verifiedAt.id && !!values.user.nvi?.verifiedBy.id;
+  const user = useSelector((store: RootState) => store.user);
+  const userCristinId = user?.cristinId ?? '';
+  const userTopLevelOrg = user?.topOrgCristinId ?? '';
 
   const setSelectedPerson = useCallback(
     (person?: FlatCristinPerson) => setFieldValue('user', person ? person : emptyUser),
@@ -38,6 +44,21 @@ export const FindPersonPanel = () => {
           ) : (
             <>
               <Typography variant="h3">{t('basic_data.add_employee.create_person')}</Typography>
+              <FormControlLabel
+                onChange={() => {
+                  const newPerson: FlatCristinPerson = {
+                    ...values.user,
+                    nvi: {
+                      verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
+                      verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
+                    },
+                    nationalId: '',
+                  };
+                  setFieldValue('user', newPerson);
+                }}
+                control={<Checkbox disabled={isSubmitting} checked={confirmedIdentity} />}
+                label={t('basic_data.add_employee.confirmed_identity')}
+              />
               <Field name="user.firstName">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
@@ -70,12 +91,11 @@ export const FindPersonPanel = () => {
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
-                    disabled={isSubmitting}
-                    required
+                    disabled={isSubmitting || confirmedIdentity}
+                    required={!confirmedIdentity}
                     fullWidth
                     variant="filled"
                     label={t('basic_data.person_register.national_identity_number')}
-                    value={values.user.nationalId}
                     error={touched && !!error}
                     helperText={<ErrorMessage name={field.name} />}
                   />

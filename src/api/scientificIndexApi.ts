@@ -1,11 +1,4 @@
-import {
-  ApprovalStatus,
-  Note,
-  NviCandidate,
-  NviPeriod,
-  NviPeriodResponse,
-  RejectedApprovalStatus,
-} from '../types/nvi.types';
+import { Approval, Note, NviCandidate, NviPeriod, NviPeriodResponse, RejectedApproval } from '../types/nvi.types';
 import { ScientificIndexApiPath } from './apiPaths';
 import { authenticatedApiRequest2 } from './apiRequest';
 
@@ -21,8 +14,8 @@ export const createNote = async (candidateIdentifier: string, note: CreateNoteDa
   return createNoteResponse.data;
 };
 
-export type SetNviCandidateStatusData = Pick<ApprovalStatus, 'institutionId' | 'status'> &
-  Partial<Pick<RejectedApprovalStatus, 'reason'>>;
+export type SetNviCandidateStatusData = Pick<Approval, 'institutionId' | 'status'> &
+  Partial<Pick<RejectedApproval, 'reason'>>;
 
 export const setCandidateStatus = async (candidateIdentifier: string, data: SetNviCandidateStatusData) => {
   const setCandidateStatusResponse = await authenticatedApiRequest2<NviCandidate>({
@@ -34,7 +27,7 @@ export const setCandidateStatus = async (candidateIdentifier: string, data: SetN
   return setCandidateStatusResponse.data;
 };
 
-type SetAssigneeData = Pick<ApprovalStatus, 'institutionId' | 'assignee'>;
+type SetAssigneeData = Pick<Approval, 'institutionId' | 'assignee'>;
 
 export const setCandidateAssignee = async (candidateIdentifier: string, data: SetAssigneeData) => {
   const setCandidateAssigneeResponse = await authenticatedApiRequest2<NviCandidate>({

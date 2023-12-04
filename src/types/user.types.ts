@@ -1,4 +1,4 @@
-import { LanguageString } from './common.types';
+import { CristinAggregationValue, LanguageString } from './common.types';
 import { Keywords } from './keywords.types';
 
 export enum RoleName {
@@ -106,6 +106,7 @@ export interface CreateCristinPerson {
   identifiers: CristinPersonIdentifier[];
   names: CristinPersonName[];
   employments?: Employment[];
+  nvi?: NviVerification;
 }
 
 export interface CristinPerson extends CreateCristinPerson {
@@ -119,19 +120,12 @@ export interface CristinPerson extends CreateCristinPerson {
     no?: string;
     en?: string;
   };
-  keywords: Keywords[];
-}
-
-interface PersonAggregationValue {
-  key: string;
-  id: string;
-  count: number;
-  labels: LanguageString;
+  keywords?: Keywords[];
 }
 
 export interface PersonAggregations {
-  organizationFacet: PersonAggregationValue[];
-  sectorFacet: PersonAggregationValue[];
+  organizationFacet: CristinAggregationValue[];
+  sectorFacet: CristinAggregationValue[];
 }
 
 export interface FlatCristinPerson {
@@ -149,7 +143,8 @@ export interface FlatCristinPerson {
     no?: string | null;
     en?: string | null;
   };
-  keywords: Keywords[];
+  keywords?: Keywords[];
+  nvi?: NviVerification;
 }
 
 interface Position {
@@ -176,4 +171,22 @@ export const emptyEmployment: Employment = {
   startDate: '',
   endDate: '',
   fullTimeEquivalentPercentage: '',
+};
+
+interface NviVerification {
+  verifiedAt: {
+    id: string;
+  };
+  verifiedBy: {
+    id: string;
+  };
+}
+
+export const emptyNviVerification: NviVerification = {
+  verifiedAt: {
+    id: '',
+  },
+  verifiedBy: {
+    id: '',
+  },
 };

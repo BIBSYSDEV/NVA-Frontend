@@ -120,6 +120,9 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
 
+export const userIsValidImporter = (user: User | null, registration?: Registration) =>
+  !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
+
 export const getYearQuery = (yearValue: string) =>
   yearValue && Number.isInteger(Number(yearValue)) ? yearValue : new Date().getFullYear().toString();
 
@@ -665,4 +668,11 @@ export const isEmbargoed = (embargoDate: Date | null) => {
     return false;
   }
   return new Date(embargoDate) > new Date();
+};
+
+export const openFileInNewTab = (fileUri: string) => {
+  if (fileUri) {
+    // Use timeout to ensure that file is opened on Safari/iOS: NP-30205, https://stackoverflow.com/a/70463940
+    setTimeout(() => window.open(fileUri, '_blank'));
+  }
 };

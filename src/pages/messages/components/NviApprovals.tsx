@@ -3,15 +3,15 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { fetchOrganization } from '../../../api/cristinApi';
 import { PublicationPointsTypography } from '../../../components/PublicationPointsTypography';
-import { ApprovalStatus } from '../../../types/nvi.types';
+import { Approval } from '../../../types/nvi.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
-interface NviApprovalStatusesProps {
-  approvalStatuses: ApprovalStatus[];
+interface NviApprovalsProps {
+  approvals: Approval[];
   totalPoints: number;
 }
 
-export const NviApprovalStatuses = ({ approvalStatuses, totalPoints }: NviApprovalStatusesProps) => {
+export const NviApprovals = ({ approvals, totalPoints }: NviApprovalsProps) => {
   const { t } = useTranslation();
 
   return (
@@ -26,7 +26,7 @@ export const NviApprovalStatuses = ({ approvalStatuses, totalPoints }: NviApprov
         {totalPoints && <PublicationPointsTypography points={totalPoints} />}
       </Box>
 
-      {approvalStatuses.length > 0 && (
+      {approvals.length > 0 && (
         <Paper
           elevation={4}
           sx={{
@@ -37,7 +37,7 @@ export const NviApprovalStatuses = ({ approvalStatuses, totalPoints }: NviApprov
             gap: '0.5rem 0.75rem',
             alignItems: 'center',
           }}>
-          {approvalStatuses.map((approvalStatus) => (
+          {approvals.map((approvalStatus) => (
             <InstitutionApprovalStatusRow key={approvalStatus.institutionId} approvalStatus={approvalStatus} />
           ))}
         </Paper>
@@ -47,7 +47,7 @@ export const NviApprovalStatuses = ({ approvalStatuses, totalPoints }: NviApprov
 };
 
 interface InstitutionApprovalStatusRowProps {
-  approvalStatus: ApprovalStatus;
+  approvalStatus: Approval;
 }
 
 const InstitutionApprovalStatusRow = ({ approvalStatus }: InstitutionApprovalStatusRowProps) => {
