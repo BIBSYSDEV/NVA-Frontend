@@ -35,7 +35,7 @@ interface ProjectIdentifier {
   value: string;
 }
 
-export type ProjectOrganization = Omit<Organization, 'partOf' | 'hasPart'>;
+export type ProjectOrganization = Omit<Organization, 'partOf' | 'hasPart' | 'acronym'>;
 
 export interface ProjectContributorIdentity {
   type: 'Person';

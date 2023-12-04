@@ -110,8 +110,7 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Øvrige",
         "UHI": "Universitet og høyskoler (UH)"
-      },
-      "short_name": "Forkortet visningsnavn på institusjonen"
+      }
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",

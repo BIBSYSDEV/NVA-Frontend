@@ -47,7 +47,6 @@ export const dataTestId = {
       rorField: 'ror-field',
       saveButton: 'save-button',
       sectorChip: (sector: string) => `sector-chip-${sector}`,
-      shortNameField: 'short-name-field',
     },
     nationalIdentityNumberField: 'national-identity-number-field',
     nviPeriod: {
