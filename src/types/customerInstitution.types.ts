@@ -24,7 +24,6 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   institutionDns: string;
   name: string;
   modifiedDate?: string;
-  shortName: string;
   vocabularies: CustomerVocabulary[];
   publicationWorkflow: PublishStrategy;
   rorId?: string;
@@ -32,6 +31,18 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   sector: Sector;
   nviInstitution: boolean;
   rboInstitution: boolean;
+  rightsRetentionStrategy: RightsRetentionStrategy;
+}
+
+interface RightsRetentionStrategy {
+  type: RightsRetentionStrategyTypes;
+  id: string;
+}
+
+export enum RightsRetentionStrategyTypes {
+  NullRightsRetentionStrategy = 'NullRightsRetentionStrategy',
+  RightsRetentionStrategy = 'RightsRetentionStrategy',
+  OverridableRightsRetentionStrategy = 'OverridableRightsRetentionStrategy',
 }
 
 export interface DoiAgent {
@@ -74,13 +85,13 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   identifier: '',
   institutionDns: '',
   name: '',
-  shortName: '',
   vocabularies: [],
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   rorId: '',
   sector: Sector.Uhi,
   nviInstitution: false,
   rboInstitution: false,
+  rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
@@ -102,7 +113,6 @@ export enum CustomerInstitutionFieldNames {
   InstitutionDns = 'customer.institutionDns',
   Name = 'customer.name',
   RorId = 'customer.rorId',
-  ShortName = 'customer.shortName',
   Sector = 'customer.sector',
   NviInstitution = 'customer.nviInstitution',
   CanAssignDoi = 'canAssignDoi',

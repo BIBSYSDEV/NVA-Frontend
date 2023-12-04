@@ -57,7 +57,7 @@ const SearchPage = ({ searchResults, isLoadingSearch, personQuery, projectQuery 
           display: 'grid',
           gridTemplateColumns: { sm: '1fr', md: 'auto 1fr' },
           gap: '1rem 0.5rem',
-          mx: { xs: '1rem', md: 0 },
+          mx: { xs: '0.5rem', md: 0 },
         }}>
         <TextField
           select

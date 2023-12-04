@@ -20,6 +20,7 @@ export interface ImportStatus {
   modifiedDate?: string;
   setBy?: string;
   nvaPublicationId?: string;
+  comment?: string;
 }
 
 export interface ImportCandidate extends Registration {
@@ -38,6 +39,7 @@ export interface ImportCandidateAggregations {
 
 export interface ImportCandidateSummary {
   type: 'ImportCandidateSummary';
+  createdDate: string;
   id: string;
   additionalIdentifiers: string[];
   importStatus: ImportStatus;
@@ -46,11 +48,13 @@ export interface ImportCandidateSummary {
   mainTitle: string;
   totalContributors: number;
   totalVerifiedContributors: number;
-  organizations: Organization[];
+  organizations: Omit<Organization, 'acronym'>[];
   publisher: Pick<Publisher, 'id' | 'name'>;
   journal: Pick<Journal, 'id'>;
   publicationInstance: PublicationInstance;
   contributors: Contributor[];
+  printIssn?: string;
+  onlineIssn?: string;
 }
 
 type PublicationInstance =

@@ -63,6 +63,7 @@
         "merge_details_1": "Resultatet finnes i NVA. Gå til veiviseren for å endre alle felter etter at du har slått sammen importdata med resultat i NVA. Dette kan være viktig for Norsk Vitenskapsindeks (NVI).",
         "merge_details_2": "Data fra NVA vises til høyre. Metadata fra importkandidat vises til venstre og har ofte bedre datagrunnlag. Du kan velge enkeltvis hva du vil ta med.",
         "metadata_to_import": "Metadata til import",
+        "page_to": "Sidetall til",
         "result_id": "Resultat-ID",
         "result_in_nva": "Resultat i NVA",
         "update_value": "Oppdater verdi"
@@ -72,6 +73,8 @@
       "reset_search_values": "Tilbakestill verdier",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikater",
+      "sort_newest_first": "Nyeste kandidater først",
+      "sort_oldest_first": "Eldste kandidater først",
       "status": {
         "IMPORTED": "Importert",
         "NOT_APPLICABLE": "Mangelfull",
@@ -107,8 +110,7 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Øvrige",
         "UHI": "Universitet og høyskoler (UH)"
-      },
-      "short_name": "Forkortet visningsnavn på institusjonen"
+      }
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
@@ -156,6 +158,7 @@
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
     "error_occurred": "En uventet feil har oppstått",
+    "file": "Fil",
     "filter": "Filter",
     "first_name": "Fornavn",
     "funding": "Finansiering",
@@ -232,6 +235,7 @@
     "type": "Type",
     "unknown": "Ukjent",
     "update": "Oppdater",
+    "url": "URL",
     "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
@@ -375,7 +379,15 @@
       "registrator_publishes_metadata": "Registrator publiserer metadata",
       "registrator_publishes_metadata_description": "Filer og lisenser må godkjennes av Kurator før de blir offentlig tilgjengelig.",
       "registrator_publishes_without_curator": "Registrator publiserer uten godkjenning av Kurator",
-      "registrator_publishes_without_curator_description": "Institutsjonen bestemmer hvem som er Registrator."
+      "registrator_publishes_without_curator_description": "Institusjonen bestemmer hvem som er Registrator."
+    },
+    "retention_strategy": {
+      "rights_retention_strategy": "Rights Retention Strategy (RRS)",
+      "rrs": "Rettighetspolitikk",
+      "rrs_info_page": "Institusjonenes informasjonsside om rettighetspolitikk",
+      "rrs_link": "Skriv inn lenke",
+      "rrs_override": "Registrator kan fraskrive seg RRS",
+      "rrs_required_link": "*Felt med stjerne er obligatorisk"
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
     "vocabulary": "Vokabular",
@@ -464,6 +476,7 @@
       "update_publish_strategy": "Kunne ikke oppdatere publiseringstrategi",
       "update_publishing_request": "Kunne ikke oppdatere publiseringsforespørsel",
       "update_registration": "Kunne ikke oppdatere registrering",
+      "update_rights_retention_strategy": "Kunne ikke oppdatere rettighetspolitikk",
       "update_ticket_assignee": "Kunne ikke sette kurator",
       "update_ticket_status": "Kunne ikke oppdatere status",
       "update_vocabulary": "Oppdatering av {{vocabulary}} feilet"
@@ -505,6 +518,7 @@
       "update_promoted_publication": "Favorittmarkering ble oppdatert",
       "update_publish_strategy": "Publiseringstrategi ble oppdatert",
       "update_registration": "Registreringen er oppdatert",
+      "update_rights_retention_strategy": "Rettighetspolitikk ble oppdatert",
       "update_ticket_assignee": "Kurator ble oppdatert",
       "update_vocabulary": "{{vocabulary}} er nå {{status}}"
     },
@@ -1156,6 +1170,7 @@
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
+      "open_file": "Åpne fil",
       "published": "Publisert",
       "published_version": "Publisert versjon",
       "remove_file": "Fjern fil",
@@ -1176,7 +1191,9 @@
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
     "new_registration": "Nytt resultat",
     "nvi_warning": {
+      "confirm_saving_registration": "Vil du lagre endringene dine?",
       "continue_editing_registration": "Vil du fortsatt redigere publikasjonen?",
+      "approval_override_warning": "Du har endret publikasjonen på en slik måte at alle institusjoner som har medforfattere må godkjenne den på nytt for at den skal bli med på årets NVI-rapport.",
       "registration_is_included_in_nvi": "Publikasjonen er en del av Norsk Vitenskapsindeks (NVI)",
       "reset_nvi_warning": "Du kan endre årstall, bidragsyteres tilknytning(-er) til institusjon(-er), kategori, eller publiseringskanal, men kurator ved alle medvirkende institusjoner må NVI-godkjenne publikasjonen på nytt."
     },
@@ -1635,6 +1652,7 @@
     "hits_other": "{{count}} treff",
     "not_containing": "Inneholder ikke",
     "operator": "Operator",
+    "participant": "Deltaker",
     "participating_institution": "Deltakende institusjon",
     "person_search_placeholder": "Søk etter navn",
     "persons": "Personer",
@@ -1674,6 +1692,7 @@
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidater",
       "note": "Merknad",
+      "previous_candidate": "Gå til forrige kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvisning av resultatet.",

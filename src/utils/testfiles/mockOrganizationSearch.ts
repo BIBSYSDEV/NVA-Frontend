@@ -8,6 +8,7 @@ export const mockOrganizationSearch: SearchResponse<Organization> = {
     {
       type: 'Organization',
       id: 'https://api.dev.nva.aws.unit.no/cristin/organization/20754.0.0.0',
+      acronym: 'SIKT',
       labels: {
         en: 'Sikt - Norwegian Agency for Shared Services in Education and Research',
         nb: 'Sikt – Kunnskapssektorens tjenesteleverandør',

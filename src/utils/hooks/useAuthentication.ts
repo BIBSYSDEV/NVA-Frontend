@@ -31,7 +31,7 @@ export const useAuthentication = (): UseAuthentication => {
       dispatch(logoutSuccess());
       window.location.pathname = UrlPathTemplate.Logout;
     } else {
-      await Auth.signOut();
+      await Auth.signOut({ global: true });
     }
   };
 

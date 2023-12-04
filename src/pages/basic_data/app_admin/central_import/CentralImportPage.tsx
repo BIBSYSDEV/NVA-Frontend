@@ -1,13 +1,19 @@
-import { List, Typography } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { fetchImportCandidates } from '../../../../api/searchApi';
+import {
+  FetchImportCandidatesParams,
+  ImportCandidateOrderBy,
+  SortOrder,
+  fetchImportCandidates,
+} from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
 import { ListSkeleton } from '../../../../components/ListSkeleton';
 import { SearchForm } from '../../../../components/SearchForm';
+import { SortSelector } from '../../../../components/SortSelector';
 import { ImportCandidateStatus } from '../../../../types/importCandidate.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
@@ -39,9 +45,15 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
     .filter(Boolean)
     .join(' AND ');
 
+  const importCandidateQueryParams: FetchImportCandidatesParams = {
+    query,
+    orderBy: (params.get(SearchParam.OrderBy) as ImportCandidateOrderBy | null) ?? 'createdDate',
+    sortOrder: (params.get(SearchParam.SortOrder) as SortOrder | null) ?? 'desc',
+  };
+
   const importCandidateQuery = useQuery({
-    queryKey: ['importCandidates', rowsPerPage, page, query],
-    queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, query),
+    queryKey: ['importCandidates', rowsPerPage, page, importCandidateQueryParams],
+    queryFn: () => fetchImportCandidates(rowsPerPage, page * rowsPerPage, importCandidateQueryParams),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
   });
 
@@ -61,7 +73,27 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
 
   return (
     <section>
-      <SearchForm placeholder={t('tasks.search_placeholder')} />
+      <Box
+        sx={{
+          mx: { xs: '0.5rem', sm: 0 },
+          display: 'grid',
+          gap: '1rem',
+          gridTemplateColumns: { xs: '1fr', sm: '1fr auto' },
+        }}>
+        <SearchForm placeholder={t('tasks.search_placeholder')} />
+        <SortSelector
+          sx={{ minWidth: '15rem' }}
+          options={[
+            { orderBy: 'createdDate', sortOrder: 'desc', label: t('basic_data.central_import.sort_newest_first') },
+            { orderBy: 'createdDate', sortOrder: 'asc', label: t('basic_data.central_import.sort_oldest_first') },
+            {
+              orderBy: 'importStatus.modifiedDate',
+              sortOrder: 'desc',
+              label: t('search.sort_by_modified_date'),
+            },
+          ]}
+        />
+      </Box>
       {importCandidateQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : searchResults.length > 0 ? (

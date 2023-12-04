@@ -1,10 +1,13 @@
 import AccountCircle from '@mui/icons-material/AccountCircleOutlined';
 import { Box, Button, IconButton, MenuItem, Menu as MuiMenu, Theme, Typography, useMediaQuery } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { MouseEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getById } from '../../api/commonApi';
 import { RootState } from '../../redux/store';
+import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 
@@ -15,11 +18,19 @@ interface MenuProps {
 export const Menu = ({ handleLogout }: MenuProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
-  const customer = useSelector((store: RootState) => store.customer);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
+  const isSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const isExtraSmallScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
   const name = user?.givenName ?? '';
+  const institutionId = user?.topOrgCristinId ?? '';
+
+  const organizationQuery = useQuery({
+    queryKey: [institutionId],
+    queryFn: () => getById<Organization>(institutionId),
+    staleTime: Infinity,
+    cacheTime: 1_800_000, // 30 minutes
+    meta: { errorMessage: t('feedback.error.get_institution') },
+  });
 
   const handleClickMenuAnchor = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -29,8 +40,8 @@ export const Menu = ({ handleLogout }: MenuProps) => {
 
   return (
     <Box sx={{ gridArea: 'user-items', display: 'flex' }}>
-      {isMobile ? (
-        <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit">
+      {isSmallScreen ? (
+        <IconButton onClick={handleClickMenuAnchor} title={t('common.menu')} color="inherit" size="large">
           <AccountCircle fontSize="large" />
         </IconButton>
       ) : (
@@ -54,9 +65,8 @@ export const Menu = ({ handleLogout }: MenuProps) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}>
-        {user?.isCreator && !isMobile && !isLargeScreen && (
+        {isExtraSmallScreen && user?.isCreator && (
           <MenuItem
-            key={dataTestId.header.newRegistrationLink}
             data-testid={dataTestId.header.newRegistrationLink}
             onClick={closeMenu}
             component={Link}
@@ -64,7 +74,17 @@ export const Menu = ({ handleLogout }: MenuProps) => {
             <Typography>{t('registration.new_registration')}</Typography>
           </MenuItem>
         )}
-        {isMobile && [
+        {isSmallScreen && [
+          user?.isCreator && (
+            <MenuItem
+              key={dataTestId.header.myPageLink}
+              data-testid={dataTestId.header.myPageLink}
+              onClick={closeMenu}
+              component={Link}
+              to={UrlPathTemplate.MyPage}>
+              <Typography>{t('my_page.my_page')}</Typography>
+            </MenuItem>
+          ),
           user?.isEditor && (
             <MenuItem
               key={dataTestId.header.editorLink}
@@ -72,7 +92,7 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               onClick={closeMenu}
               component={Link}
               to={UrlPathTemplate.EditorCurators}>
-              <Typography>{customer?.shortName}</Typography>
+              <Typography>{organizationQuery.data?.acronym}</Typography>
             </MenuItem>
           ),
           user?.isCurator && (
@@ -85,35 +105,17 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               <Typography>{t('common.tasks')}</Typography>
             </MenuItem>
           ),
-          user?.isCreator && [
+          (user?.isAppAdmin || user?.isInstitutionAdmin) && (
             <MenuItem
-              key={dataTestId.header.newRegistrationLink}
-              data-testid={dataTestId.header.newRegistrationLink}
+              key={dataTestId.header.basicDataLink}
+              data-testid={dataTestId.header.basicDataLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.RegistrationNew}>
-              <Typography>{t('registration.new_registration')}</Typography>
-            </MenuItem>,
-            <MenuItem
-              key={dataTestId.header.myPageLink}
-              data-testid={dataTestId.header.myPageLink}
-              onClick={closeMenu}
-              component={Link}
-              to={UrlPathTemplate.MyPage}>
-              <Typography>{t('my_page.my_page')}</Typography>
-            </MenuItem>,
-          ],
+              to={UrlPathTemplate.BasicData}>
+              <Typography>{t('basic_data.basic_data')}</Typography>
+            </MenuItem>
+          ),
         ]}
-        {(user?.isAppAdmin || user?.isInstitutionAdmin) && isMobile && (
-          <MenuItem
-            key={dataTestId.header.basicDataLink}
-            data-testid={dataTestId.header.basicDataLink}
-            onClick={closeMenu}
-            component={Link}
-            to={UrlPathTemplate.BasicData}>
-            <Typography>{t('basic_data.basic_data')}</Typography>
-          </MenuItem>
-        )}
         <MenuItem data-testid={dataTestId.header.logOutLink} onClick={handleLogout}>
           {t('authorization.logout')}
         </MenuItem>

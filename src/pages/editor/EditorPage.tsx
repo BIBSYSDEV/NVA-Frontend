@@ -1,15 +1,18 @@
 import ArchitectureIcon from '@mui/icons-material/Architecture';
 import GavelIcon from '@mui/icons-material/Gavel';
 import StoreIcon from '@mui/icons-material/Store';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Switch, useHistory } from 'react-router-dom';
+import { getById } from '../../api/commonApi';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import NotFound from '../../pages/errorpages/NotFound';
 import { RootState } from '../../redux/store';
+import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
@@ -21,9 +24,18 @@ import { VocabularySettings } from './VocabularySettings';
 
 const EditorPage = () => {
   const { t } = useTranslation();
-  const customer = useSelector((store: RootState) => store.customer);
   const user = useSelector((store: RootState) => store.user);
   const isEditor = !!user?.customerId && user.isEditor;
+
+  const institutionId = user?.topOrgCristinId ?? '';
+
+  const organizationQuery = useQuery({
+    queryKey: [institutionId],
+    queryFn: () => getById<Organization>(institutionId),
+    staleTime: Infinity,
+    cacheTime: 1_800_000, // 30 minutes
+    meta: { errorMessage: t('feedback.error.get_institution') },
+  });
 
   const history = useHistory();
   const currentPath = history.location.pathname.replace(/\/$/, ''); // Remove trailing slash
@@ -31,7 +43,7 @@ const EditorPage = () => {
   return (
     <StyledPageWithSideMenu>
       <SideMenu>
-        <SideNavHeader text={customer?.shortName} icon={StoreIcon} />
+        <SideNavHeader text={organizationQuery.data?.acronym} icon={StoreIcon} />
         <NavigationListAccordion
           dataTestId={dataTestId.editor.overviewAccordion}
           title={t('common.overview')}
