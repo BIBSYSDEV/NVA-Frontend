@@ -287,7 +287,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               </Box>
             </Box>
           </Collapse>
-          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
             <IconButton
               onClick={() => setOpenCollapsable(!openCollapsable)}
               size="small"
