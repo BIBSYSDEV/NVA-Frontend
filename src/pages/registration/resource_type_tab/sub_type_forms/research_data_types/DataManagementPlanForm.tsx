@@ -4,7 +4,7 @@ import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { FetchResultsQuery, fetchResults } from '../../../../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
@@ -30,7 +30,7 @@ export const DataManagementPlanForm = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
 
-  const searchOptionsQueryConfig: FetchResultsQuery = {
+  const searchOptionsQueryConfig: FetchResultsParams = {
     title: debouncedSearchQuery,
     identifierNot: params.identifier,
   };

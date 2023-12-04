@@ -105,7 +105,7 @@ export const fetchNviCandidate = async (identifier: string) => {
   return getNviCandidates.data;
 };
 
-export interface FetchResultsQuery {
+export interface FetchResultsParams {
   category?: PublicationInstanceType;
   categoryNot?: PublicationInstanceType;
   categorySome?: PublicationInstanceType[];
@@ -121,65 +121,47 @@ export interface FetchResultsQuery {
   title?: string;
 }
 
-export const fetchResults = async (
-  results: number,
-  from: number,
-  {
-    category,
-    categoryNot,
-    categorySome,
-    contributor,
-    contributorShould,
-    doi,
-    identifier,
-    identifierNot,
-    issn,
-    project,
-    publicationYear,
-    query,
-    title,
-  }: FetchResultsQuery
-) => {
+export const fetchResults = async (results: number, from: number, params: FetchResultsParams) => {
   let fullQuery = `results=${results}&from=${from}`;
 
-  if (category) {
-    fullQuery += `&category=${category}`;
+  if (params.category) {
+    fullQuery += `&category=${params.category}`;
   }
-  if (categoryNot) {
-    fullQuery += `&category_not=${categoryNot}`;
+  if (params.categoryNot) {
+    fullQuery += `&category_not=${params.categoryNot}`;
   }
-  if (categorySome) {
-    fullQuery += `&category_should=${categorySome.join(',')}`;
+  if (params.categorySome) {
+    fullQuery += `&category_should=${params.categorySome.join(',')}`;
   }
-  if (contributor) {
-    fullQuery += `&contributor=${contributor}`;
+  if (params.contributor) {
+    fullQuery += `&contributor=${params.contributor}`;
   }
-  if (contributorShould) {
-    fullQuery += `&contributor_should=${contributorShould}`;
+  if (params.contributorShould) {
+    fullQuery += `&contributor_should=${params.contributorShould}`;
   }
-  if (doi) {
-    fullQuery += `&doi=${doi}`;
+  if (params.doi) {
+    fullQuery += `&doi=${params.doi}`;
   }
-  if (identifier) {
-    fullQuery += `&id=${identifier}`;
+  if (params.identifier) {
+    fullQuery += `&id=${params.identifier}`;
   }
-  if (identifierNot) {
-    fullQuery += `&id_not=${identifierNot}`;
+  if (params.identifierNot) {
+    fullQuery += `&id_not=${params.identifierNot}`;
   }
-  if (issn) {
-    fullQuery += `&issn_should=${issn}`;
+  if (params.issn) {
+    fullQuery += `&issn_should=${params.issn}`;
   }
-  if (project) {
-    fullQuery += `&project=${project}`;
+  if (params.project) {
+    fullQuery += `&project=${params.project}`;
   }
-  if (publicationYear) {
-    fullQuery += `&publication_year=${publicationYear}`;
+  if (params.publicationYear) {
+    fullQuery += `&publication_year=${params.publicationYear}`;
   }
-  if (query) {
-    fullQuery += `&query=${query}`;
+  if (params.query) {
+    fullQuery += `&query=${params.query}`;
   }
-  if (title) {
-    fullQuery += `&title=${title}`;
+  if (params.title) {
+    fullQuery += `&title=${params.title}`;
   }
 
   const getResults = await apiRequest2<SearchResponse2<Registration>>({

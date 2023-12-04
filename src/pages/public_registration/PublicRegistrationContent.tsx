@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { FetchResultsQuery, fetchResults } from '../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../api/searchApi';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
@@ -44,7 +44,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
 
-  const relatedRegistrationsQueryConfig: FetchResultsQuery = {
+  const relatedRegistrationsQueryConfig: FetchResultsParams = {
     query: identifier,
     identifierNot: identifier,
   };

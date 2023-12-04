@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsQuery, fetchResults } from '../../../../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
 import { ResearchDataType, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
@@ -22,7 +22,7 @@ export const DatasetForm = () => {
   const [relatedRegistrationsQuery, setRelatedRegistrationsQuery] = useState('');
   const debouncedRelatedRegistrationsQuery = useDebounce(relatedRegistrationsQuery);
 
-  const relatedRegistrationsOptionsQueryConfig: FetchResultsQuery = {
+  const relatedRegistrationsOptionsQueryConfig: FetchResultsParams = {
     query: debouncedRelatedRegistrationsQuery,
     categoryNot: ResearchDataType.DataManagementPlan,
     identifierNot: values.identifier,
@@ -36,7 +36,7 @@ export const DatasetForm = () => {
   const [relatedDmpQuery, setRelatedDmpQuery] = useState('');
   const debouncedRelatedDmpQuery = useDebounce(relatedDmpQuery);
 
-  const relatedDmpOptionsQueryConfig: FetchResultsQuery = {
+  const relatedDmpOptionsQueryConfig: FetchResultsParams = {
     title: debouncedRelatedDmpQuery,
     category: ResearchDataType.DataManagementPlan,
   };
