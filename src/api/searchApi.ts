@@ -119,6 +119,7 @@ export interface FetchResultsParams {
   publicationYear?: string | null;
   query?: string | null;
   title?: string | null;
+  topLevelOrganization?: string[] | string | null;
 }
 
 export const fetchResults = async (results: number, from: number, params: FetchResultsParams) => {
@@ -162,6 +163,15 @@ export const fetchResults = async (results: number, from: number, params: FetchR
   }
   if (params.title) {
     fullQuery += `&title=${params.title}`;
+  }
+  if (params.topLevelOrganization) {
+    if (Array.isArray(params.topLevelOrganization)) {
+      params.topLevelOrganization.forEach((org) => {
+        fullQuery += `&topLevelOrganization=${org}`;
+      });
+    } else {
+      fullQuery += `&topLevelOrganization=${params.topLevelOrganization}`;
+    }
   }
 
   const getResults = await apiRequest2<SearchResponse2<Registration>>({

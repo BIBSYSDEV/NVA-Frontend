@@ -38,8 +38,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
   const searchParamsArray = Array.from(searchParams.entries());
-  // searchParams.forEach((value, param) => console.log(param, value));
-  // console.log(searchParams.entries());
+
   const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
 
@@ -194,10 +193,12 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       }
                       break;
                     }
-                    case SearchFieldName.TopLevelOrganizationId: {
+                    case 'topLevelOrganization': {
+                      fieldName = t('common.institution');
                       const institutionLabels = aggregations.topLevelOrganization?.find(
                         (bucket) => bucket.key === value
                       )?.labels;
+
                       const institutionName = institutionLabels ? getLanguageString(institutionLabels) : '';
                       if (institutionName) {
                         fieldValueText = institutionName;

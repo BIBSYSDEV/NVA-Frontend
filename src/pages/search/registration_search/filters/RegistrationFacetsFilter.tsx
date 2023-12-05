@@ -3,19 +3,19 @@ import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SearchFieldName } from '../../../../types/publicationFieldNames';
-import { PublicationInstanceType, RegistrationAggregations } from '../../../../types/registration.types';
+import { PublicationInstanceType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
+import {
+  ExpressionStatement,
+  PropertySearch,
+  SearchConfig,
+  removeSearchParamValue,
+} from '../../../../utils/searchHelpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { FacetItem } from '../../FacetItem';
 import { FacetListItem } from '../../FacetListItem';
 import { SearchPageProps } from '../../SearchPage';
-
-interface RegistrationFacetsFilterProps {
-  aggregations: RegistrationAggregations;
-  isLoadingSearch: boolean;
-}
 
 const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   display: 'flex',
@@ -54,20 +54,22 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   };
 
   const selectedCategory = searchParams.get('instanceType');
+  const selectedOrganizations = searchParams.getAll('topLevelOrganization');
 
-  const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization;
   const typeFacet = registrationQuery.data?.aggregations?.instanceType;
+  const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization;
+
   // const contributorFacet = registrationQuery.data?.aggregations?.contributors;
   const fundingFacet = registrationQuery.data?.aggregations?.fundingSource;
 
-  function addFacetFilter(param: string, key: string): void {
+  const addFacetFilter = (param: string, key: string) => {
     searchParams.set(param, key);
     history.push({ search: searchParams.toString() });
-  }
+  };
 
-  const removeFacetFilter = (param: string) => {
-    searchParams.delete(param);
-    history.push({ search: searchParams.toString() });
+  const removeFacetFilter = (param: string, key: string) => {
+    const newSearchParams = removeSearchParamValue(searchParams, param, key);
+    history.push({ search: newSearchParams.toString() });
   };
 
   return (
@@ -88,7 +90,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 label={t(`registration.publication_types.${registrationType}`)}
                 count={facet.count}
                 onClickFacet={() =>
-                  isSelected ? removeFacetFilter('instanceType') : addFacetFilter('instanceType', facet.key)
+                  isSelected ? removeFacetFilter('instanceType', facet.key) : addFacetFilter('instanceType', facet.key)
                 }
               />
             );
@@ -98,23 +100,26 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
 
       {topLevelOrganizationFacet && topLevelOrganizationFacet.length > 0 && (
         <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
-          {topLevelOrganizationFacet.map((organizationAggregation) => (
-            <ListItem
-              disablePadding
-              key={organizationAggregation.key}
-              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(organizationAggregation.key))}>
-              <StyledListItemButton
-                disabled={registrationQuery.isLoading}
-                onClick={() => updateFilter(SearchFieldName.TopLevelOrganizationId, organizationAggregation.key)}
-                selected={properties.some(
-                  (searchProperty) =>
-                    typeof searchProperty.value === 'string' && searchProperty.value === organizationAggregation.key
-                )}>
-                <span>{getLanguageString(organizationAggregation.labels)}</span>
-                {organizationAggregation.count && <span>({organizationAggregation.count.toLocaleString()})</span>}
-              </StyledListItemButton>
-            </ListItem>
-          ))}
+          {topLevelOrganizationFacet.map((facet) => {
+            const isSelected = selectedOrganizations.includes(facet.key);
+
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={registrationQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels) || getIdentifierFromId(facet.key)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter('topLevelOrganization', facet.key)
+                    : addFacetFilter('topLevelOrganization', facet.key)
+                }
+              />
+            );
+          })}
         </FacetItem>
       )}
 
