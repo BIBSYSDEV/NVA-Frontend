@@ -701,27 +701,27 @@ export const willResetNviStatuses = (persistedRegistration: Registration, update
     return true;
   }
 
-  const persistedRegistrationWithJournal = persistedRegistration as JournalRegistration | ChapterRegistration;
-  const updatedRegistrationWithJournal = updatedRegistration as JournalRegistration | ChapterRegistration;
+  const persistedRegistrationWithContextId = persistedRegistration as JournalRegistration | ChapterRegistration;
+  const updatedRegistrationWithContextId = updatedRegistration as JournalRegistration | ChapterRegistration;
   const hasChangedJournalId =
-    persistedRegistrationWithJournal.entityDescription?.reference?.publicationContext?.id !==
-    updatedRegistrationWithJournal.entityDescription?.reference?.publicationContext?.id;
+    persistedRegistrationWithContextId.entityDescription?.reference?.publicationContext?.id !==
+    updatedRegistrationWithContextId.entityDescription?.reference?.publicationContext?.id;
   if (hasChangedJournalId) {
     return true;
   }
 
-  const persistedRegistrationWithBook = persistedRegistration as BookRegistration;
-  const updatedRegistrationWithBook = updatedRegistration as BookRegistration;
+  const persistedRegistrationWithPublisher = persistedRegistration as BookRegistration;
+  const updatedRegistrationWithPublisher = updatedRegistration as BookRegistration;
   const hasChangedPublisher =
-    updatedRegistrationWithBook.entityDescription?.reference?.publicationContext?.publisher?.id !==
-    persistedRegistrationWithBook.entityDescription?.reference?.publicationContext?.publisher?.id;
+    updatedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.publisher?.id !==
+    persistedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.publisher?.id;
   if (hasChangedPublisher) {
     return true;
   }
 
   const hasChangedSeries =
-    updatedRegistrationWithBook.entityDescription?.reference?.publicationContext?.series?.id !==
-    persistedRegistrationWithBook.entityDescription?.reference?.publicationContext?.series?.id;
+    updatedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.series?.id !==
+    persistedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.series?.id;
   if (hasChangedSeries) {
     return true;
   }
