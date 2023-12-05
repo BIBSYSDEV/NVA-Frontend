@@ -695,8 +695,8 @@ export const willResetNviStatuses = (persistedRegistration: Registration, update
   }
 
   const hasChangedCategory =
-    persistedRegistration.entityDescription?.reference?.publicationContext.type !==
-    updatedRegistration.entityDescription?.reference?.publicationContext.type;
+    persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
+    updatedRegistration.entityDescription?.reference?.publicationInstance.type;
   if (hasChangedCategory) {
     return true;
   }
