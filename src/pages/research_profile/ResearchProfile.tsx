@@ -191,7 +191,7 @@ const ResearchProfile = () => {
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <>
             <RegistrationSearchResults
-              searchResult={registrationsQuery.data}
+              searchResult={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
             />
             <ListPagination

@@ -106,19 +106,19 @@ export const fetchNviCandidate = async (identifier: string) => {
 };
 
 export interface FetchResultsParams {
-  category?: PublicationInstanceType;
-  categoryNot?: PublicationInstanceType;
+  category?: PublicationInstanceType | null;
+  categoryNot?: PublicationInstanceType | null;
   categorySome?: PublicationInstanceType[];
-  contributor?: string;
-  contributorShould?: string;
-  doi?: string;
-  identifier?: string;
-  identifierNot?: string;
-  issn?: string;
-  project?: string;
-  publicationYear?: string;
-  query?: string;
-  title?: string;
+  contributor?: string | null;
+  contributorShould?: string | null;
+  doi?: string | null;
+  identifier?: string | null;
+  identifierNot?: string | null;
+  issn?: string | null;
+  project?: string | null;
+  publicationYear?: string | null;
+  query?: string | null;
+  title?: string | null;
 }
 
 export const fetchResults = async (results: number, from: number, params: FetchResultsParams) => {

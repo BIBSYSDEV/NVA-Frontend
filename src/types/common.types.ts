@@ -64,9 +64,9 @@ export interface SearchResponse2<HitType, AggregationType = Aggregations>
   totalHits: number;
 }
 
-export interface CristinAggregationValue {
+export interface AggregationValue {
   key: string;
   id: string;
   count: number;
-  labels: LanguageString;
+  labels?: LanguageString;
 }

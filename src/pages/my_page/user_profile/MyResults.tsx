@@ -49,7 +49,7 @@ export const MyResults = () => {
         <>
           <RegistrationSearchResults
             canEditRegistration={true}
-            searchResult={registrationsQuery.data}
+            searchResult={registrationsQuery.data.hits}
             promotedPublications={promotedPublications}
           />
           <ListPagination

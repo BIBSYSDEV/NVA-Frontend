@@ -6,7 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import { SearchApiPath } from '../../api/apiPaths';
 import {
   PersonSearchParameter,
   PersonSearchParams,
@@ -15,15 +14,14 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
+import { FetchResultsParams, fetchResults } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
 import { SideMenu } from '../../components/SideMenu';
-import { SearchResponse } from '../../types/common.types';
-import { Registration, RegistrationAggregations } from '../../types/registration.types';
+import { PublicationInstanceType } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useFetch } from '../../utils/hooks/useFetch';
 import {
   SearchConfig,
   SearchParam,
@@ -35,7 +33,7 @@ import { ClinicalTreatmentStudiesReports } from '../reports/ClinicalTreatmentStu
 import { InternationalCooperationReports } from '../reports/InternationalCooperationReports';
 import { NviReports } from '../reports/NviReports';
 import ReportsPage from '../reports/ReportsPage';
-import SearchPage from '../search/SearchPage';
+import { SearchPage } from '../search/SearchPage';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
@@ -64,14 +62,21 @@ const HomePage = () => {
 
   const requestParams = new URLSearchParams(history.location.search);
   requestParams.delete(SearchParam.Type);
-  const requestParamsString = requestParams.toString();
-  const [searchResults, isLoadingSearch] = useFetch<SearchResponse<Registration, RegistrationAggregations>>({
-    url: resultIsSelected ? `${SearchApiPath.Registrations}?${requestParamsString}` : '',
-    errorMessage: t('feedback.error.search'),
-  });
 
   const rowsPerPage = Number(requestParams.get(SearchParam.Results) ?? 10);
   const page = Number(requestParams.get(SearchParam.Page) ?? 1);
+
+  const registrationsQueryConfig: FetchResultsParams = {
+    query: requestParams.get(SearchParam.Query),
+    category: requestParams.get('instanceType') as PublicationInstanceType | null,
+  };
+  const registrationOffset = (page - 1) * rowsPerPage;
+  const registrationQuery = useQuery({
+    queryKey: ['registrations', rowsPerPage, registrationOffset, registrationsQueryConfig],
+    queryFn: () => fetchResults(rowsPerPage, registrationOffset, registrationsQueryConfig),
+    meta: { errorMessage: t('feedback.error.search') },
+    keepPreviousData: true,
+  });
 
   const personQueryParams: PersonSearchParams = {
     name: requestParams.get(PersonSearchParameter.Name) ?? '.',
@@ -158,11 +163,8 @@ const HomePage = () => {
                 dataTestId={dataTestId.startPage.filterAccordion}>
                 <Box sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   {resultIsSelected ? (
-                    searchResults?.aggregations ? (
-                      <RegistrationFacetsFilter
-                        aggregations={searchResults.aggregations}
-                        isLoadingSearch={isLoadingSearch}
-                      />
+                    registrationQuery.data?.aggregations ? (
+                      <RegistrationFacetsFilter registrationQuery={registrationQuery} />
                     ) : null
                   ) : personIsSeleced ? (
                     personQuery.data?.aggregations ? (
@@ -215,9 +217,8 @@ const HomePage = () => {
               <ErrorBoundary>
                 <Route exact path={UrlPathTemplate.Home}>
                   <SearchPage
-                    searchResults={searchResults}
+                    registrationQuery={registrationQuery}
                     personQuery={personQuery}
-                    isLoadingSearch={isLoadingSearch}
                     projectQuery={projectQuery}
                   />
                 </Route>

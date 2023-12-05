@@ -6,7 +6,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { SearchResponse } from '../../types/common.types';
+import { SearchResponse, SearchResponse2 } from '../../types/common.types';
 import { CristinProject, ProjectAggregations } from '../../types/project.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { CristinPerson, PersonAggregations } from '../../types/user.types';
@@ -33,13 +33,12 @@ enum SearchTypeValue {
 }
 
 export interface SearchPageProps {
-  searchResults: SearchResponse<Registration, RegistrationAggregations> | undefined;
-  isLoadingSearch: boolean;
+  registrationQuery: UseQueryResult<SearchResponse2<Registration, RegistrationAggregations>>;
   personQuery: UseQueryResult<SearchResponse<CristinPerson, PersonAggregations>>;
   projectQuery: UseQueryResult<SearchResponse<CristinProject, ProjectAggregations>>;
 }
 
-const SearchPage = ({ searchResults, isLoadingSearch, personQuery, projectQuery }: SearchPageProps) => {
+export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: SearchPageProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -116,7 +115,7 @@ const SearchPage = ({ searchResults, isLoadingSearch, personQuery, projectQuery 
           </MenuItem>
         </TextField>
 
-        {resultIsSelected && <RegistrationSearchBar aggregations={searchResults?.aggregations} />}
+        {resultIsSelected && <RegistrationSearchBar aggregations={registrationQuery.data?.aggregations} />}
         {(personIsSeleced || projectIsSelected) && (
           <Field name="searchTerm">
             {({ field, form: { submitForm } }: FieldProps<string>) => (
@@ -135,11 +134,9 @@ const SearchPage = ({ searchResults, isLoadingSearch, personQuery, projectQuery 
         )}
       </Box>
 
-      {resultIsSelected && <RegistrationSearch searchResults={searchResults} isLoadingSearch={isLoadingSearch} />}
+      {resultIsSelected && <RegistrationSearch registrationQuery={registrationQuery} />}
       {personIsSeleced && <PersonSearch personQuery={personQuery} />}
       {projectIsSelected && <ProjectSearch projectQuery={projectQuery} />}
     </Box>
   );
 };
-
-export default SearchPage;

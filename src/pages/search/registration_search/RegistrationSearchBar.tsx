@@ -9,15 +9,21 @@ import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext 
 import { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { fetchRegistrationsExport } from '../../../api/searchApi';
 import { SortSelector } from '../../../components/SortSelector';
 import { setNotification } from '../../../redux/notificationSlice';
-import { RegistrationFieldName, ResourceFieldNames, SearchFieldName } from '../../../types/publicationFieldNames';
+import { RegistrationFieldName, SearchFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType, RegistrationAggregations } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../utils/searchHelpers';
-import { getLabelFromBucket, getLanguageString } from '../../../utils/translation-helpers';
+import {
+  ExpressionStatement,
+  PropertySearch,
+  SearchConfig,
+  removeSearchParamValue,
+} from '../../../utils/searchHelpers';
+import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullCristinName } from '../../../utils/user-helpers';
 import { SearchTextField } from '../SearchTextField';
 import { AdvancedSearchRow, registrationFilters } from '../registration_search/filters/AdvancedSearchRow';
@@ -29,6 +35,11 @@ interface RegistrationSearchBarProps {
 export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const searchParams = new URLSearchParams(history.location.search);
+  const searchParamsArray = Array.from(searchParams.entries());
+  // searchParams.forEach((value, param) => console.log(param, value));
+  // console.log(searchParams.entries());
   const { values, submitForm } = useFormikContext<SearchConfig>();
   const properties = values.properties ?? [];
 
@@ -162,74 +173,68 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
 
             {aggregations && (
               <Box sx={{ gridArea: 'facets', display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
-                {properties.map((property, index) => {
-                  const thisFilter = registrationFilters.find((filter) => filter.field === property.fieldName);
-
-                  if (!thisFilter || thisFilter.manuallyAddable) {
-                    return null;
-                  }
-
-                  const fieldName = t(thisFilter.i18nKey) as string;
+                {searchParamsArray.map(([param, value]) => {
+                  let fieldName = '';
                   let fieldValueText: ReactNode = '';
 
-                  switch (thisFilter.field) {
-                    case ResourceFieldNames.RegistrationType:
-                      fieldValueText = t(`registration.publication_types.${property.value as PublicationInstanceType}`);
+                  switch (param) {
+                    case 'instanceType':
+                      fieldName = t('common.category');
+                      fieldValueText = t(`registration.publication_types.${value as PublicationInstanceType}`);
                       break;
                     case SearchFieldName.ContributorId: {
-                      const personName = aggregations.entityDescription?.contributors?.identity?.id?.buckets.find(
-                        (bucket) => bucket.key === property.value
-                      )?.name.buckets[0].key;
+                      // TODO
+                      const personName = aggregations.contributor?.find((bucket) => bucket.key === value)?.labels;
                       if (personName) {
-                        fieldValueText = personName;
+                        fieldValueText = getLanguageString(personName);
                       } else {
                         fieldValueText = (
-                          <SelectedContributorFacetButton
-                            personId={typeof property.value === 'string' ? property.value : property.value[0]}
-                          />
+                          <SelectedContributorFacetButton personId={typeof value === 'string' ? value : value[0]} />
                         );
                       }
                       break;
                     }
                     case SearchFieldName.TopLevelOrganizationId: {
-                      const institutionLabels = aggregations.topLevelOrganizations?.id?.buckets.find(
-                        (bucket) => bucket.key === property.value
-                      );
-                      const institutionName = institutionLabels ? getLabelFromBucket(institutionLabels) : '';
+                      const institutionLabels = aggregations.topLevelOrganization?.find(
+                        (bucket) => bucket.key === value
+                      )?.labels;
+                      const institutionName = institutionLabels ? getLanguageString(institutionLabels) : '';
                       if (institutionName) {
                         fieldValueText = institutionName;
                       } else {
                         fieldValueText = (
                           <SelectedInstitutionFacetButton
-                            institutionId={typeof property.value === 'string' ? property.value : property.value[0]}
+                            institutionId={typeof value === 'string' ? value : value[0]}
                           />
                         );
                       }
                       break;
                     }
                     case SearchFieldName.FundingSource: {
-                      const fundingLabels = aggregations.fundings?.identifier?.buckets.find(
-                        (bucket) => bucket.key === property.value
-                      );
-                      const fundingName = fundingLabels ? getLabelFromBucket(fundingLabels) : '';
+                      const fundingLabels = aggregations.fundingSource?.find((bucket) => bucket.key === value)?.labels;
+                      const fundingName = fundingLabels ? getLanguageString(fundingLabels) : '';
                       if (fundingName) {
                         fieldValueText = fundingName;
                       } else {
                         fieldValueText = (
                           <SelectedFundingFacetButton
-                            fundingIdentifier={typeof property.value === 'string' ? property.value : property.value[0]}
+                            fundingIdentifier={typeof value === 'string' ? value : value[0]}
                           />
                         );
                       }
                       break;
                     }
                     default:
-                      fieldValueText = typeof property.value === 'string' ? property.value : t('common.unknown');
+                      fieldValueText = typeof value === 'string' ? value : t('common.unknown');
+                  }
+
+                  if (!fieldName || !fieldValueText) {
+                    return null;
                   }
 
                   return (
                     <Button
-                      key={`${property.fieldName}-${property.value}`}
+                      key={`${param}-${value}`}
                       data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
                       variant="outlined"
                       size="small"
@@ -237,8 +242,8 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       sx={{ textTransform: 'none' }}
                       endIcon={<ClearIcon />}
                       onClick={() => {
-                        remove(index);
-                        submitForm();
+                        const newParams = removeSearchParamValue(searchParams, param, value);
+                        history.push({ search: newParams.toString() });
                       }}>
                       {fieldName}: {fieldValueText}
                     </Button>

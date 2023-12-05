@@ -21,42 +21,9 @@ export const mockSearchResults: SearchResponse<Registration, RegistrationAggrega
     mockRegistration,
   ],
   aggregations: {
-    entityDescription: {
-      contributors: {
-        identity: {
-          id: {
-            buckets: [
-              {
-                key: '1234',
-                docCount: 1,
-                name: {
-                  buckets: [
-                    {
-                      key: 'Test Testesen',
-                      docCount: 1,
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-      },
-      reference: {
-        publicationInstance: {
-          type: {
-            buckets: [
-              {
-                key: 'AcademicArticle',
-                docCount: 3,
-              },
-            ],
-          },
-        },
-      },
-    },
-    fundings: { identifier: { buckets: [] } },
-    topLevelOrganizations: { id: { buckets: [] } },
+    instanceType: [{ id: 'asd', key: 'AcademicArticle', count: 3 }],
+    fundingSource: [],
+    topLevelOrganization: [],
   },
 };
 

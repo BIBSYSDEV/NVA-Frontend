@@ -1,5 +1,5 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
-import { AggregationBucket, Aggregations, LanguageString } from './common.types';
+import { AggregationBucket, AggregationValue, Aggregations, LanguageString } from './common.types';
 import { Contributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import {
@@ -264,37 +264,9 @@ export interface LabelAggregationBucket extends AggregationBucket {
   labels: Aggregations;
 }
 
-interface ContributorAggregationBucket extends AggregationBucket {
-  name: {
-    buckets: AggregationBucket[];
-  };
-}
-
 export interface RegistrationAggregations {
-  topLevelOrganizations?: {
-    id?: {
-      buckets: LabelAggregationBucket[];
-    };
-  };
-  entityDescription?: {
-    reference?: {
-      publicationInstance?: {
-        type?: {
-          buckets: AggregationBucket[];
-        };
-      };
-    };
-    contributors?: {
-      identity?: {
-        id?: {
-          buckets: ContributorAggregationBucket[];
-        };
-      };
-    };
-  };
-  fundings?: {
-    identifier?: {
-      buckets: LabelAggregationBucket[];
-    };
-  };
+  topLevelOrganization?: AggregationValue[];
+  instanceType?: AggregationValue[];
+  fundingSource?: AggregationValue[];
+  contributor?: AggregationValue[];
 }

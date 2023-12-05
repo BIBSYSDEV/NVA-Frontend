@@ -1,13 +1,16 @@
-import { Box, ListItem, ListItemButton, styled } from '@mui/material';
+import { ListItem, ListItemButton, styled } from '@mui/material';
 import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
+import { useHistory } from 'react-router-dom';
+import { SearchFieldName } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType, RegistrationAggregations } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
-import { getLabelFromBucket } from '../../../../utils/translation-helpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 import { FacetItem } from '../../FacetItem';
+import { FacetListItem } from '../../FacetListItem';
+import { SearchPageProps } from '../../SearchPage';
 
 interface RegistrationFacetsFilterProps {
   aggregations: RegistrationAggregations;
@@ -23,9 +26,12 @@ const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
   },
 }));
 
-export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: RegistrationFacetsFilterProps) => {
+export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
   const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
+  const history = useHistory();
+
+  const searchParams = new URLSearchParams(history.location.search);
 
   const properties = values.properties ?? [];
 
@@ -47,92 +53,112 @@ export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: Regi
     submitForm();
   };
 
-  const topLevelOrganizationFacet = aggregations.topLevelOrganizations?.id;
-  const typeFacet = aggregations.entityDescription?.reference?.publicationInstance?.type;
-  const contributorFacet = aggregations.entityDescription?.contributors?.identity?.id;
-  const fundingFacet = aggregations.fundings?.identifier;
+  const selectedCategory = searchParams.get('instanceType');
+
+  const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization;
+  const typeFacet = registrationQuery.data?.aggregations?.instanceType;
+  // const contributorFacet = registrationQuery.data?.aggregations?.contributors;
+  const fundingFacet = registrationQuery.data?.aggregations?.fundingSource;
+
+  function addFacetFilter(param: string, key: string): void {
+    searchParams.set(param, key);
+    history.push({ search: searchParams.toString() });
+  }
+
+  const removeFacetFilter = (param: string) => {
+    searchParams.delete(param);
+    history.push({ search: searchParams.toString() });
+  };
 
   return (
     <>
-      {typeFacet && typeFacet.buckets.length > 0 && (
+      {typeFacet && typeFacet.length > 0 && (
         <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
-          {typeFacet.buckets.map((bucket) => {
-            const registrationType = bucket.key as PublicationInstanceType;
+          {typeFacet.map((facet) => {
+            const registrationType = facet.key as PublicationInstanceType;
+            const isSelected = selectedCategory === registrationType;
+
             return (
-              <ListItem disablePadding key={registrationType} data-testid={dataTestId.startPage.facetItem(bucket.key)}>
-                <StyledListItemButton
-                  disabled={isLoadingSearch}
-                  onClick={() => updateFilter(ResourceFieldNames.RegistrationType, registrationType)}
-                  selected={properties.some((searchProperty) => searchProperty.value === registrationType)}>
-                  <Box component="span" sx={{ wordBreak: 'break-word' }}>
-                    {t(`registration.publication_types.${registrationType}`)}
-                  </Box>
-                  {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
-                </StyledListItemButton>
-              </ListItem>
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={registrationQuery.isLoading}
+                isSelected={isSelected}
+                label={t(`registration.publication_types.${registrationType}`)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected ? removeFacetFilter('instanceType') : addFacetFilter('instanceType', facet.key)
+                }
+              />
             );
           })}
         </FacetItem>
       )}
 
-      {topLevelOrganizationFacet && topLevelOrganizationFacet.buckets.length > 0 && (
+      {topLevelOrganizationFacet && topLevelOrganizationFacet.length > 0 && (
         <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
-          {topLevelOrganizationFacet.buckets.map((bucket) => (
+          {topLevelOrganizationFacet.map((organizationAggregation) => (
             <ListItem
               disablePadding
-              key={bucket.key}
-              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(bucket.key))}>
+              key={organizationAggregation.key}
+              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(organizationAggregation.key))}>
               <StyledListItemButton
-                disabled={isLoadingSearch}
-                onClick={() => updateFilter(SearchFieldName.TopLevelOrganizationId, bucket.key)}
+                disabled={registrationQuery.isLoading}
+                onClick={() => updateFilter(SearchFieldName.TopLevelOrganizationId, organizationAggregation.key)}
                 selected={properties.some(
-                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
+                  (searchProperty) =>
+                    typeof searchProperty.value === 'string' && searchProperty.value === organizationAggregation.key
                 )}>
-                <span>{getLabelFromBucket(bucket)}</span>
-                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
+                <span>{getLanguageString(organizationAggregation.labels)}</span>
+                {organizationAggregation.count && <span>({organizationAggregation.count.toLocaleString()})</span>}
               </StyledListItemButton>
             </ListItem>
           ))}
         </FacetItem>
       )}
 
-      {contributorFacet && contributorFacet.buckets.length > 0 && (
+      {/* {contributorFacet && contributorFacet.length > 0 && (
         <FacetItem
           title={t('registration.contributors.contributor')}
           dataTestId={dataTestId.startPage.contributorFacets}>
-          {contributorFacet.buckets.map((bucket) => (
+          {contributorFacet.buckets.map((contributorAggregation) => (
             <ListItem
               disablePadding
-              key={bucket.key}
-              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(bucket.key))}>
+              key={contributorAggregation.key}
+              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(contributorAggregation.key))}>
               <StyledListItemButton
-                disabled={isLoadingSearch}
-                onClick={() => updateFilter(SearchFieldName.ContributorId, bucket.key)}
+                disabled={registrationQuery.isLoading}
+                onClick={() => updateFilter(SearchFieldName.ContributorId, contributorAggregation.key)}
                 selected={properties.some(
-                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
+                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === contributorAggregation.key
                 )}>
                 <span>
-                  {bucket.name.buckets.length > 0 ? bucket.name.buckets[0].key : <i>{t('common.unknown')}</i>}
+                  {contributorAggregation.name.buckets.length > 0 ? contributorAggregation.name.buckets[0].key : <i>{t('common.unknown')}</i>}
                 </span>
-                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
+                {contributorAggregation.count && <span>({contributorAggregation.count.toLocaleString()})</span>}
               </StyledListItemButton>
             </ListItem>
           ))}
         </FacetItem>
-      )}
+      )} */}
 
-      {fundingFacet && fundingFacet.buckets.length > 0 && (
+      {fundingFacet && fundingFacet.length > 0 && (
         <FacetItem title={t('common.funding')} dataTestId={dataTestId.startPage.institutionFacets}>
-          {fundingFacet.buckets.map((bucket) => (
-            <ListItem disablePadding key={bucket.key} data-testid={dataTestId.startPage.facetItem(bucket.key)}>
+          {fundingFacet.map((fundingAggregation) => (
+            <ListItem
+              disablePadding
+              key={fundingAggregation.key}
+              data-testid={dataTestId.startPage.facetItem(fundingAggregation.key)}>
               <StyledListItemButton
-                disabled={isLoadingSearch}
-                onClick={() => updateFilter(SearchFieldName.FundingSource, bucket.key)}
+                disabled={registrationQuery.isLoading}
+                onClick={() => updateFilter(SearchFieldName.FundingSource, fundingAggregation.key)}
                 selected={properties.some(
-                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
+                  (searchProperty) =>
+                    typeof searchProperty.value === 'string' && searchProperty.value === fundingAggregation.key
                 )}>
-                <span>{getLabelFromBucket(bucket)}</span>
-                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
+                <span>{getLanguageString(fundingAggregation.labels)}</span>
+                {fundingAggregation.count && <span>({fundingAggregation.count.toLocaleString()})</span>}
               </StyledListItemButton>
             </ListItem>
           ))}
