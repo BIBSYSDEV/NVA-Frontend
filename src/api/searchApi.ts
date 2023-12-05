@@ -111,6 +111,7 @@ export interface FetchResultsParams {
   categorySome?: PublicationInstanceType[];
   contributor?: string | null;
   contributorShould?: string | null;
+  fundingSource?: string | null;
   doi?: string | null;
   identifier?: string | null;
   identifierNot?: string | null;
@@ -119,7 +120,7 @@ export interface FetchResultsParams {
   publicationYear?: string | null;
   query?: string | null;
   title?: string | null;
-  topLevelOrganization?: string[] | string | null;
+  topLevelOrganization?: string | null;
 }
 
 export const fetchResults = async (results: number, from: number, params: FetchResultsParams) => {
@@ -139,6 +140,9 @@ export const fetchResults = async (results: number, from: number, params: FetchR
   }
   if (params.contributorShould) {
     fullQuery += `&contributor_should=${params.contributorShould}`;
+  }
+  if (params.fundingSource) {
+    fullQuery += `&fundingSource=${params.fundingSource}`;
   }
   if (params.doi) {
     fullQuery += `&doi=${params.doi}`;
@@ -165,13 +169,7 @@ export const fetchResults = async (results: number, from: number, params: FetchR
     fullQuery += `&title=${params.title}`;
   }
   if (params.topLevelOrganization) {
-    if (Array.isArray(params.topLevelOrganization)) {
-      params.topLevelOrganization.forEach((org) => {
-        fullQuery += `&topLevelOrganization=${org}`;
-      });
-    } else {
-      fullQuery += `&topLevelOrganization=${params.topLevelOrganization}`;
-    }
+    fullQuery += `&topLevelOrganization=${params.topLevelOrganization}`;
   }
 
   const getResults = await apiRequest2<SearchResponse2<Registration>>({

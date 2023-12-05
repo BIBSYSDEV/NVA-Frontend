@@ -266,7 +266,7 @@ export interface LabelAggregationBucket extends AggregationBucket {
 
 export interface RegistrationAggregations {
   topLevelOrganization?: AggregationValue[];
-  instanceType?: AggregationValue[];
+  type?: AggregationValue[];
   fundingSource?: AggregationValue[];
-  contributor?: AggregationValue[];
+  contributorId?: AggregationValue[];
 }

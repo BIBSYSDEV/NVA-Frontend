@@ -177,13 +177,12 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                   let fieldValueText: ReactNode = '';
 
                   switch (param) {
-                    case 'instanceType':
+                    case 'type':
                       fieldName = t('common.category');
                       fieldValueText = t(`registration.publication_types.${value as PublicationInstanceType}`);
                       break;
                     case SearchFieldName.ContributorId: {
-                      // TODO
-                      const personName = aggregations.contributor?.find((bucket) => bucket.key === value)?.labels;
+                      const personName = aggregations.contributorId?.find((bucket) => bucket.key === value)?.labels;
                       if (personName) {
                         fieldValueText = getLanguageString(personName);
                       } else {
@@ -211,7 +210,8 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       }
                       break;
                     }
-                    case SearchFieldName.FundingSource: {
+                    case 'fundingSource': {
+                      fieldName = t('common.funding');
                       const fundingLabels = aggregations.fundingSource?.find((bucket) => bucket.key === value)?.labels;
                       const fundingName = fundingLabels ? getLanguageString(fundingLabels) : '';
                       if (fundingName) {

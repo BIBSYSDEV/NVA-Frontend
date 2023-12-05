@@ -21,7 +21,7 @@ export const mockSearchResults: SearchResponse<Registration, RegistrationAggrega
     mockRegistration,
   ],
   aggregations: {
-    instanceType: [{ id: 'asd', key: 'AcademicArticle', count: 3 }],
+    type: [{ id: 'asd', key: 'AcademicArticle', count: 3 }],
     fundingSource: [],
     topLevelOrganization: [],
   },

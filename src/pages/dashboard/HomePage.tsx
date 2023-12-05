@@ -68,8 +68,9 @@ const HomePage = () => {
 
   const registrationsQueryConfig: FetchResultsParams = {
     query: requestParams.get(SearchParam.Query),
-    category: requestParams.get('instanceType') as PublicationInstanceType | null,
-    topLevelOrganization: requestParams.getAll('topLevelOrganization'),
+    category: requestParams.get('type') as PublicationInstanceType | null,
+    topLevelOrganization: requestParams.get('topLevelOrganization'),
+    fundingSource: requestParams.get('fundingSource'),
   };
   const registrationOffset = (page - 1) * rowsPerPage;
   const registrationQuery = useQuery({
