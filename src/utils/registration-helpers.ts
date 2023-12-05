@@ -703,10 +703,10 @@ export const willResetNviStatuses = (persistedRegistration: Registration, update
 
   const persistedRegistrationWithContextId = persistedRegistration as JournalRegistration | ChapterRegistration;
   const updatedRegistrationWithContextId = updatedRegistration as JournalRegistration | ChapterRegistration;
-  const hasChangedJournalId =
+  const hasChangedContextId =
     persistedRegistrationWithContextId.entityDescription?.reference?.publicationContext?.id !==
     updatedRegistrationWithContextId.entityDescription?.reference?.publicationContext?.id;
-  if (hasChangedJournalId) {
+  if (hasChangedContextId) {
     return true;
   }
 
