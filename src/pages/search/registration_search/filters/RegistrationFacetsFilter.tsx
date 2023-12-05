@@ -17,11 +17,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const selectedCategory = searchParams.get('type');
   const selectedOrganization = searchParams.get('topLevelOrganization');
   const selectedFunding = searchParams.get('fundingSource');
+  const selectedContributor = searchParams.get('contributorId');
 
   const typeFacet = registrationQuery.data?.aggregations?.type;
   const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization;
-
-  // const contributorFacet = registrationQuery.data?.aggregations?.contributors;
+  const contributorFacet = registrationQuery.data?.aggregations?.contributorId;
   const fundingFacet = registrationQuery.data?.aggregations?.fundingSource;
 
   const addFacetFilter = (param: string, key: string) => {
@@ -85,30 +85,32 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
         </FacetItem>
       )}
 
-      {/* {contributorFacet && contributorFacet.length > 0 && (
+      {contributorFacet && contributorFacet.length > 0 && (
         <FacetItem
           title={t('registration.contributors.contributor')}
           dataTestId={dataTestId.startPage.contributorFacets}>
-          {contributorFacet.buckets.map((contributorAggregation) => (
-            <ListItem
-              disablePadding
-              key={contributorAggregation.key}
-              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(contributorAggregation.key))}>
-              <StyledListItemButton
-                disabled={registrationQuery.isLoading}
-                onClick={() => updateFilter(SearchFieldName.ContributorId, contributorAggregation.key)}
-                selected={properties.some(
-                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === contributorAggregation.key
-                )}>
-                <span>
-                  {contributorAggregation.name.buckets.length > 0 ? contributorAggregation.name.buckets[0].key : <i>{t('common.unknown')}</i>}
-                </span>
-                {contributorAggregation.count && <span>({contributorAggregation.count.toLocaleString()})</span>}
-              </StyledListItemButton>
-            </ListItem>
-          ))}
+          {contributorFacet.map((facet) => {
+            const isSelected = selectedContributor === facet.key;
+
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={registrationQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter('contributorId', facet.key)
+                    : addFacetFilter('contributorId', facet.key)
+                }
+              />
+            );
+          })}
         </FacetItem>
-      )} */}
+      )}
 
       {fundingFacet && fundingFacet.length > 0 && (
         <FacetItem title={t('common.funding')} dataTestId={dataTestId.startPage.institutionFacets}>

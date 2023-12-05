@@ -71,6 +71,7 @@ const HomePage = () => {
     category: requestParams.get('type') as PublicationInstanceType | null,
     topLevelOrganization: requestParams.get('topLevelOrganization'),
     fundingSource: requestParams.get('fundingSource'),
+    contributor: requestParams.get('contributorId'),
   };
   const registrationOffset = (page - 1) * rowsPerPage;
   const registrationQuery = useQuery({
