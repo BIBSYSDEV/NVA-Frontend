@@ -34,6 +34,8 @@ import {
   OtherRelease,
   Venue,
 } from '../types/publication_types/artisticRegistration.types';
+import { BookRegistration } from '../types/publication_types/bookRegistration.types';
+import { ChapterRegistration } from '../types/publication_types/chapterRegistration.types';
 import {
   ExhibitionBasic,
   ExhibitionMentionInPublication,
@@ -677,13 +679,6 @@ export const openFileInNewTab = (fileUri: string) => {
   }
 };
 
-const scientificLevelHasBeenChanged = (persistedPublisherId: string, updatedPublisherId: string) => {
-  if (persistedPublisherId !== updatedPublisherId) {
-    return true;
-  }
-  return false;
-};
-
 export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
   const canBeNviCandidate = nviApplicableTypes.includes(
     persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
@@ -700,9 +695,34 @@ export const willResetNviStatuses = (persistedRegistration: Registration, update
   }
 
   const hasChangedCategory =
-    persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
-    updatedRegistration.entityDescription?.reference?.publicationInstance.type;
+    persistedRegistration.entityDescription?.reference?.publicationContext.type !==
+    updatedRegistration.entityDescription?.reference?.publicationContext.type;
   if (hasChangedCategory) {
+    return true;
+  }
+
+  const persistedRegistrationWithJournal = persistedRegistration as JournalRegistration | ChapterRegistration;
+  const updatedRegistrationWithJournal = updatedRegistration as JournalRegistration | ChapterRegistration;
+  const hasChangedJournalId =
+    persistedRegistrationWithJournal.entityDescription?.reference?.publicationContext?.id !==
+    updatedRegistrationWithJournal.entityDescription?.reference?.publicationContext?.id;
+  if (hasChangedJournalId) {
+    return true;
+  }
+
+  const persistedRegistrationWithBook = persistedRegistration as BookRegistration;
+  const updatedRegistrationWithBook = updatedRegistration as BookRegistration;
+  const hasChangedPublisher =
+    updatedRegistrationWithBook.entityDescription?.reference?.publicationContext?.publisher?.id !==
+    persistedRegistrationWithBook.entityDescription?.reference?.publicationContext?.publisher?.id;
+  if (hasChangedPublisher) {
+    return true;
+  }
+
+  const hasChangedSeries =
+    updatedRegistrationWithBook.entityDescription?.reference?.publicationContext?.series?.id !==
+    persistedRegistrationWithBook.entityDescription?.reference?.publicationContext?.series?.id;
+  if (hasChangedSeries) {
     return true;
   }
 };
