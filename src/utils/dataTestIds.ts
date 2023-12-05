@@ -309,6 +309,7 @@ export const dataTestId = {
       addFilesOrLinksButton: 'add-files-or-links-button',
       administrativeAgreement: 'administrative-agreement-checkbox',
       embargoDateField: 'embargo-date-field',
+      expandFileRowButton: 'expand-file-row-button',
       fileRow: 'uploaded-file-row',
       noFilesOrLinksButton: 'no-files-or-links-button',
       noFilesOrLinksWarning: 'no-files-or-links-warning',

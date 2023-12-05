@@ -343,6 +343,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=uploaded-file-select-license] p.Mui-error').should('not.exist');
 
     // Embargo field
+    cy.get(`[data-testid=${dataTestId.registrationWizard.files.expandFileRowButton}]`).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`).type('01013000').blur();
     cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`)
       .get('p.Mui-error')
