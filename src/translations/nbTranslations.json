@@ -502,6 +502,7 @@
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
       "merge_import_candidate": "Importdata ble slått sammen med resultatdata",
+      "publish_as_curator": "Registrering ble publisert (ingen godkjenning nødvendig siden du er kurator)",
       "publishing_request_approved": "Registreringen ble publisert",
       "publishing_request_rejected": "Publiseringsforespørselen ble avvist",
       "removed_role": "Rollen ble fjernet",
