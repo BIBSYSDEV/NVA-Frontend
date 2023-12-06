@@ -1,8 +1,8 @@
 import { SearchResponse, SearchResponse2 } from '../types/common.types';
 import { ImportCandidateAggregations, ImportCandidateSummary } from '../types/importCandidate.types';
 import { NviCandidate, NviCandidateSearchResponse } from '../types/nvi.types';
-import { ExpandedTicket } from '../types/publication_types/ticket.types';
-import { PublicationInstanceType, Registration } from '../types/registration.types';
+import { TicketSearchResponse } from '../types/publication_types/ticket.types';
+import { PublicationInstanceType, Registration, RegistrationAggregations } from '../types/registration.types';
 import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
@@ -13,7 +13,7 @@ export const fetchTickets = async (results: number, from: number, query = '', on
   const searchQuery = query ? `query=${query}` : '';
   const fullQuery = [paginationQuery, roleQuery, searchQuery].filter(Boolean).join('&');
 
-  const getTickets = await authenticatedApiRequest2<SearchResponse<ExpandedTicket>>({
+  const getTickets = await authenticatedApiRequest2<TicketSearchResponse>({
     url: `${SearchApiPath.Tickets}?${fullQuery}`,
   });
 
@@ -172,7 +172,7 @@ export const fetchResults = async (results: number, from: number, params: FetchR
     fullQuery += `&topLevelOrganization=${encodeURIComponent(params.topLevelOrganization)}`;
   }
 
-  const getResults = await apiRequest2<SearchResponse2<Registration>>({
+  const getResults = await apiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
     url: `${SearchApiPath.Registrations2}?${fullQuery}`,
   });
 

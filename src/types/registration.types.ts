@@ -1,5 +1,5 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
-import { AggregationBucket, AggregationValue, Aggregations, LanguageString } from './common.types';
+import { AggregationValue, LanguageString } from './common.types';
 import { Contributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import {
@@ -259,10 +259,6 @@ export const emptyContextPublisher: ContextPublisher = {
   type: PublicationChannelType.Publisher,
   id: '',
 };
-
-export interface LabelAggregationBucket extends AggregationBucket {
-  labels: Aggregations;
-}
 
 export interface RegistrationAggregations {
   topLevelOrganization?: AggregationValue[];
