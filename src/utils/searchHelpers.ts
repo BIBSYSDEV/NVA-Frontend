@@ -20,7 +20,7 @@ export enum ExpressionStatement {
 export interface PropertySearch {
   fieldName: string;
   value: string | string[]; // Can check for one or multiple values
-  operator: ExpressionStatement;
+  operator?: ExpressionStatement;
 }
 export interface SearchConfig {
   searchTerm?: string;

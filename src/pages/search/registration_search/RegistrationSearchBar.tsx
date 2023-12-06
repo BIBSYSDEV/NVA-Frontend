@@ -44,6 +44,9 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
 
   const [isLoadingExport, setIsLoadingExport] = useState(false);
 
+  // const titleParams = searchParams.get('title')?.split(',');
+  // const contributorNameParams = searchParams.get('contributorName')?.split(',');
+
   const showAdvancedSearch = properties.some(
     (property) =>
       !property.fieldName ||

@@ -2,13 +2,7 @@ import { Box, Button, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { TFuncKey } from 'i18next';
 import { useTranslation } from 'react-i18next';
-import {
-  ContributorFieldNames,
-  DescriptionFieldNames,
-  ResourceFieldNames,
-  SearchFieldName,
-  SpecificContributorFieldNames,
-} from '../../../../types/publicationFieldNames';
+import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHelpers';
@@ -20,35 +14,35 @@ interface FilterItem {
 }
 
 export const registrationFilters: FilterItem[] = [
-  { field: DescriptionFieldNames.Title, i18nKey: 'common.title', manuallyAddable: true },
-  { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract', manuallyAddable: true },
+  { field: 'title', i18nKey: 'common.title', manuallyAddable: true },
+  // { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract', manuallyAddable: true },
+  // {
+  //   field: ResourceFieldNames.RegistrationType,
+  //   i18nKey: 'registration.resource_type.resource_type',
+  //   manuallyAddable: false,
+  // },
+  // { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords', manuallyAddable: true },
   {
-    field: ResourceFieldNames.RegistrationType,
-    i18nKey: 'registration.resource_type.resource_type',
-    manuallyAddable: false,
-  },
-  { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords', manuallyAddable: true },
-  {
-    field: `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Name}`,
+    field: 'contributorName',
     i18nKey: 'registration.contributors.contributor',
     manuallyAddable: true,
   },
-  {
-    field: SearchFieldName.ContributorId,
-    i18nKey: 'registration.contributors.contributor',
-    manuallyAddable: false,
-  },
-  {
-    field: `${DescriptionFieldNames.PublicationDate}.year`,
-    i18nKey: 'registration.year_published',
-    manuallyAddable: true,
-  },
-  { field: SearchFieldName.TopLevelOrganizationId, i18nKey: 'common.institution', manuallyAddable: false },
-  {
-    field: SearchFieldName.FundingSource,
-    i18nKey: 'common.funding',
-    manuallyAddable: false,
-  },
+  // {
+  //   field: SearchFieldName.ContributorId,
+  //   i18nKey: 'registration.contributors.contributor',
+  //   manuallyAddable: false,
+  // },
+  // {
+  //   field: `${DescriptionFieldNames.PublicationDate}.year`,
+  //   i18nKey: 'registration.year_published',
+  //   manuallyAddable: true,
+  // },
+  // { field: SearchFieldName.TopLevelOrganizationId, i18nKey: 'common.institution', manuallyAddable: false },
+  // {
+  //   field: SearchFieldName.FundingSource,
+  //   i18nKey: 'common.funding',
+  //   manuallyAddable: false,
+  // },
 ];
 
 interface AdvancedSearchRowProps {

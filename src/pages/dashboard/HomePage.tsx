@@ -22,12 +22,7 @@ import { SideMenu } from '../../components/SideMenu';
 import { PublicationInstanceType } from '../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import {
-  SearchConfig,
-  SearchParam,
-  createRegistrationSearchQuery,
-  createSearchConfigFromSearchParams,
-} from '../../utils/searchHelpers';
+import { SearchConfig, SearchParam, createSearchConfigFromSearchParams } from '../../utils/searchHelpers';
 import { UrlPathTemplate } from '../../utils/urlPaths';
 import { ClinicalTreatmentStudiesReports } from '../reports/ClinicalTreatmentStudiesReports';
 import { InternationalCooperationReports } from '../reports/InternationalCooperationReports';
@@ -66,12 +61,16 @@ const HomePage = () => {
   const rowsPerPage = Number(requestParams.get(SearchParam.Results) ?? 10);
   const page = Number(requestParams.get(SearchParam.Page) ?? 1);
 
+  const titleParam = requestParams.get('title');
+  const contributorNamesParam = requestParams.get('contributorName');
   const registrationsQueryConfig: FetchResultsParams = {
     query: requestParams.get(SearchParam.Query),
     category: requestParams.get('category') as PublicationInstanceType | null,
     topLevelOrganization: requestParams.get('topLevelOrganization'),
     fundingSource: requestParams.get('fundingSource'),
     contributor: requestParams.get('contributorId'),
+    contributorShould: contributorNamesParam,
+    title: titleParam,
   };
   const registrationOffset = (page - 1) * rowsPerPage;
   const registrationQuery = useQuery({
@@ -118,7 +117,6 @@ const HomePage = () => {
     searchTerm: '',
     properties: [],
   };
-
   const initialSearchParams = createSearchConfigFromSearchParams(params);
 
   return (
@@ -130,12 +128,26 @@ const HomePage = () => {
         const previousParamsResults = params.get(SearchParam.Results);
         const newSearchParams = new URLSearchParams();
         if (resultIsSelected) {
-          const queryString = createRegistrationSearchQuery(values);
-          if (queryString) {
-            newSearchParams.set(SearchParam.Query, queryString);
+          const newRegistrationParams = requestParams;
+          if (values.searchTerm) {
+            newRegistrationParams.set(SearchParam.Query, values.searchTerm);
           }
-          newSearchParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
-          newSearchParams.set(SearchParam.From, '0');
+
+          const contributorNames =
+            values.properties?.filter((p) => p.fieldName === 'contributorName' && p.value).map((p) => p.value) ?? [];
+          if (contributorNames.length > 0) {
+            newRegistrationParams.set('contributorName', contributorNames.join(','));
+          }
+
+          const title = values.properties?.filter((p) => p.fieldName === 'title' && p.value).map((p) => p.value) ?? [];
+          if (title.length > 0) {
+            newRegistrationParams.set('title', title.join(','));
+          }
+
+          newRegistrationParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
+          newRegistrationParams.set(SearchParam.From, '0');
+          history.push({ search: newRegistrationParams.toString() });
+          return;
         } else if (personIsSeleced) {
           newSearchParams.set(SearchParam.Type, SearchTypeValue.Person);
           if (values.searchTerm) {
