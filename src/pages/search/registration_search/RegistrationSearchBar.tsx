@@ -176,7 +176,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                   let fieldValueText: ReactNode = '';
 
                   switch (param) {
-                    case 'type':
+                    case 'category':
                       fieldName = t('common.category');
                       fieldValueText = t(`registration.publication_types.${value as PublicationInstanceType}`);
                       break;

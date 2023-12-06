@@ -68,7 +68,7 @@ const HomePage = () => {
 
   const registrationsQueryConfig: FetchResultsParams = {
     query: requestParams.get(SearchParam.Query),
-    category: requestParams.get('type') as PublicationInstanceType | null,
+    category: requestParams.get('category') as PublicationInstanceType | null,
     topLevelOrganization: requestParams.get('topLevelOrganization'),
     fundingSource: requestParams.get('fundingSource'),
     contributor: requestParams.get('contributorId'),

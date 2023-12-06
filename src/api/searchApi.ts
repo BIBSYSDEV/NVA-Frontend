@@ -136,7 +136,7 @@ export const fetchResults = async (results: number, from: number, params: FetchR
     fullQuery += `&category_should=${params.categorySome.join(',')}`;
   }
   if (params.contributor) {
-    fullQuery += `&contributor=${params.contributor}`;
+    fullQuery += `&contributor=${encodeURIComponent(params.contributor)}`;
   }
   if (params.contributorShould) {
     fullQuery += `&contributor_should=${params.contributorShould}`;
@@ -169,7 +169,7 @@ export const fetchResults = async (results: number, from: number, params: FetchR
     fullQuery += `&title=${params.title}`;
   }
   if (params.topLevelOrganization) {
-    fullQuery += `&topLevelOrganization=${params.topLevelOrganization}`;
+    fullQuery += `&topLevelOrganization=${encodeURIComponent(params.topLevelOrganization)}`;
   }
 
   const getResults = await apiRequest2<SearchResponse2<Registration>>({

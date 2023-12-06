@@ -14,7 +14,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const selectedCategory = searchParams.get('type');
+  const selectedCategory = searchParams.get('category');
   const selectedOrganization = searchParams.get('topLevelOrganization');
   const selectedFunding = searchParams.get('fundingSource');
   const selectedContributor = searchParams.get('contributorId');
@@ -52,7 +52,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 label={t(`registration.publication_types.${registrationType}`)}
                 count={facet.count}
                 onClickFacet={() =>
-                  isSelected ? removeFacetFilter('type', facet.key) : addFacetFilter('type', facet.key)
+                  isSelected ? removeFacetFilter('category', facet.key) : addFacetFilter('category', facet.key)
                 }
               />
             );
