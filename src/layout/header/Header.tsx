@@ -3,7 +3,8 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Box, Button, Divider, Theme, Typography, useMediaQuery } from '@mui/material';
+import StoreIcon from '@mui/icons-material/Store';
+import { AppBar, Box, Button, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -63,10 +64,19 @@ export const Header = () => {
           justifyItems: 'center',
           gridTemplateAreas: '"logo search new-result user-menu"',
           gridTemplateColumns: { xs: 'auto auto 1fr auto', md: 'auto 1fr 10fr auto' },
+
+          // gridTemplateAreas: '"logo text search new-result user-menu"',
+          // gridTemplateColumns: { xs: 'auto auto auto 1fr auto', md: 'auto 1fr 10fr auto' },
           gap: { xs: '0.5rem', sm: '1rem' },
           px: '1rem',
         }}>
         <Logo />
+
+        <Button data-testid="header.nvaLink" component={RouterLink} to={UrlPathTemplate.Home}>
+          <Typography variant="h1" component="span" sx={{ color: 'white', fontWeight: 20, fontSize: '1rem' }}>
+            {t('common.page_title')}
+          </Typography>
+        </Button>
 
         <MenuIconButton
           color="inherit"
@@ -85,6 +95,7 @@ export const Header = () => {
               fontWeight: 700,
               gap: '0.5rem',
               display: { xs: 'none', sm: 'inline-flex' },
+              textDecoration: 'underline',
             }}
             color="inherit"
             component={RouterLink}
@@ -97,8 +108,8 @@ export const Header = () => {
                   bgcolor: 'primary.light',
                   borderRadius: '50%',
                   padding: '0.2rem',
-                  width: '3.125rem',
-                  height: '3.125rem',
+                  width: '2rem',
+                  height: '2rem',
                 }}
               />
             }>
@@ -122,32 +133,40 @@ export const Header = () => {
             <>
               {organization?.acronym &&
                 (user?.isEditor ? (
-                  <MenuButton
-                    sx={{
-                      fontSize: '1.25rem',
-                      fontWeight: 700,
-                      textTransform: 'none',
-                    }}
-                    isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
-                    color="inherit"
-                    data-testid={dataTestId.header.editorLink}
-                    to={UrlPathTemplate.EditorCurators}>
-                    {organization.acronym}
-                  </MenuButton>
+                  <>
+                    <StoreIcon fontSize="small" sx={{ alignSelf: 'center' }} />
+                    <MenuButton
+                      sx={{
+                        fontSize: '1.25rem',
+                        fontWeight: 700,
+                        textTransform: 'none',
+                        display: 'flex',
+                      }}
+                      isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
+                      color="inherit"
+                      data-testid={dataTestId.header.editorLink}
+                      to={UrlPathTemplate.EditorCurators}>
+                      {/* <StoreIcon fontSize="small" /> */}
+                      {organization.acronym}
+                    </MenuButton>
+                  </>
                 ) : (
-                  <Typography
-                    variant="h1"
-                    component="span"
-                    sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
-                    {organization.acronym}
-                  </Typography>
+                  <>
+                    <StoreIcon fontSize="small" />
+                    <Typography
+                      variant="h1"
+                      component="span"
+                      sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
+                      {organization.acronym}
+                    </Typography>
+                  </>
                 ))}
-              <Divider
+              {/* <Divider
                 variant="middle"
                 sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}
                 orientation="vertical"
                 flexItem
-              />
+              /> */}
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
                 <MenuButton
                   color="inherit"
