@@ -148,58 +148,61 @@ export interface FetchResultsParams {
 }
 
 export const fetchResults = async (results: number, from: number, params: FetchResultsParams) => {
-  let fullQuery = `results=${results}&from=${from}&order=${params.order ?? 'modifiedDate'}&sort=${
-    params.sort ?? 'desc'
-  }`;
+  const searchParams = new URLSearchParams();
 
   if (params.category) {
-    fullQuery += `&${ResultParam.Category}=${params.category}`;
+    searchParams.set(ResultParam.Category, params.category);
   }
   if (params.categoryNot) {
-    fullQuery += `&${ResultParam.CategoryNot}=${params.categoryNot}`;
+    searchParams.set(ResultParam.CategoryNot, params.categoryNot);
   }
   if (params.categoryShould) {
-    fullQuery += `&${ResultParam.CategoryShould}=${params.categoryShould.join(',')}`;
+    searchParams.set(ResultParam.CategoryShould, params.categoryShould.join(','));
   }
   if (params.contributor) {
-    fullQuery += `&${ResultParam.Contributor}=${encodeURIComponent(params.contributor)}`;
+    searchParams.set(ResultParam.Contributor, encodeURIComponent(params.contributor));
   }
   if (params.contributorShould) {
-    fullQuery += `&${ResultParam.ContributorShould}=${params.contributorShould}`;
+    searchParams.set(ResultParam.ContributorShould, params.contributorShould);
   }
   if (params.fundingSource) {
-    fullQuery += `&${ResultParam.FundingSource}=${params.fundingSource}`;
+    searchParams.set(ResultParam.FundingSource, params.fundingSource);
   }
   if (params.doi) {
-    fullQuery += `&${ResultParam.Doi}=${params.doi}`;
+    searchParams.set(ResultParam.Doi, params.doi);
   }
   if (params.id) {
-    fullQuery += `&${ResultParam.Identifier}=${params.id}`;
+    searchParams.set(ResultParam.Identifier, params.id);
   }
   if (params.idNot) {
-    fullQuery += `&${ResultParam.IdentifierNot}=${params.idNot}`;
+    searchParams.set(ResultParam.IdentifierNot, params.idNot);
   }
   if (params.issn) {
-    fullQuery += `&${ResultParam.Issn}=${params.issn}`;
+    searchParams.set(ResultParam.Issn, params.issn);
   }
   if (params.project) {
-    fullQuery += `&${ResultParam.Project}=${params.project}`;
+    searchParams.set(ResultParam.Project, params.project);
   }
   if (params.publicationYear) {
-    fullQuery += `&${ResultParam.PublicationYear}=${params.publicationYear}`;
+    searchParams.set(ResultParam.PublicationYear, params.publicationYear);
   }
   if (params.query) {
-    fullQuery += `&${ResultParam.Query}=${params.query}`;
+    searchParams.set(ResultParam.Query, params.query);
   }
   if (params.title) {
-    fullQuery += `&${ResultParam.Title}=${params.title}`;
+    searchParams.set(ResultParam.Title, params.title);
   }
   if (params.topLevelOrganization) {
-    fullQuery += `&${ResultParam.TopLevelOrganization}=${encodeURIComponent(params.topLevelOrganization)}`;
+    searchParams.set(ResultParam.TopLevelOrganization, params.topLevelOrganization);
   }
 
+  searchParams.set('from', from.toString());
+  searchParams.set('results', results.toString());
+  searchParams.set(ResultParam.Order, params.order ?? 'modifiedDate');
+  searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
+
   const getResults = await apiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
-    url: `${SearchApiPath.Registrations}?${fullQuery}`,
+    url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
   });
 
   return getResults.data;
