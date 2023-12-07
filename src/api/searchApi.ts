@@ -57,15 +57,6 @@ export const fetchImportCandidates = async (
   return getImportCandidates.data;
 };
 
-export const fetchRegistrationsExport = async (searchParams: URLSearchParams) => {
-  searchParams.set('from', '0');
-  searchParams.set('results', '1000');
-  const url = `${SearchApiPath.Registrations}?${searchParams.toString()}`;
-
-  const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });
-  return fetchExport.data;
-};
-
 export const fetchEmployees = async (
   organizationId: string,
   results: number,
@@ -210,4 +201,13 @@ export const fetchResults = async (params: FetchResultsParams) => {
   });
 
   return getResults.data;
+};
+
+export const fetchRegistrationsExport = async (searchParams: URLSearchParams) => {
+  searchParams.set(ResultParam.From, '0');
+  searchParams.set(ResultParam.Results, '1000');
+  const url = `${SearchApiPath.Registrations}?${searchParams.toString()}`;
+
+  const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });
+  return fetchExport.data;
 };
