@@ -315,24 +315,49 @@ export const contributorConfig: ContributorConfig = {
   },
   // Degree
   [DegreeType.Bachelor]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Master]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Phd]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Licentiate]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Other]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   // Chapter
   [ChapterType.AcademicChapter]: {
