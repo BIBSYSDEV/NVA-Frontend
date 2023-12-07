@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
-import { fetchRegistrationsExport } from '../../../api/searchApi';
+import { ResultParam, fetchRegistrationsExport } from '../../../api/searchApi';
 import { SortSelector } from '../../../components/SortSelector';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
@@ -75,6 +75,8 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
 
       <SortSelector
         sx={{ minWidth: '15rem', gridArea: 'sorting' }}
+        sortKey="sort"
+        orderKey="order"
         options={[
           {
             orderBy: RegistrationFieldName.ModifiedDate,
@@ -171,11 +173,11 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                   let fieldValueText: ReactNode = '';
 
                   switch (param) {
-                    case 'category':
+                    case ResultParam.Category:
                       fieldName = t('common.category');
                       fieldValueText = t(`registration.publication_types.${value as PublicationInstanceType}`);
                       break;
-                    case 'contributorId': {
+                    case ResultParam.Contributor: {
                       fieldName = t('registration.contributors.contributor');
                       const personName = aggregations?.contributorId?.find((bucket) => bucket.key === value)?.labels;
                       if (personName) {
@@ -187,7 +189,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       }
                       break;
                     }
-                    case 'topLevelOrganization': {
+                    case ResultParam.TopLevelOrganization: {
                       fieldName = t('common.institution');
                       const institutionLabels = aggregations?.topLevelOrganization?.find(
                         (bucket) => bucket.key === value
@@ -205,7 +207,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       }
                       break;
                     }
-                    case 'fundingSource': {
+                    case ResultParam.FundingSource: {
                       fieldName = t('common.funding');
                       const fundingLabels = aggregations?.fundingSource?.find((bucket) => bucket.key === value)?.labels;
                       const fundingName = fundingLabels ? getLanguageString(fundingLabels) : '';

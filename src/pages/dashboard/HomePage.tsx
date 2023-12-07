@@ -14,7 +14,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { FetchResultsParams, fetchResults } from '../../api/searchApi';
+import { FetchResultsParams, ResultParam, fetchResults } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -62,18 +62,16 @@ const HomePage = () => {
   const page = Number(requestParams.get(SearchParam.Page) ?? 1);
   const from = Number(requestParams.get(SearchParam.From) ?? 0);
 
-  const titleParam = requestParams.get('title');
-  const contributorNamesParam = requestParams.get('contributorName');
   const registrationsQueryConfig: FetchResultsParams = {
-    query: requestParams.get(SearchParam.Query),
-    category: requestParams.get('category') as PublicationInstanceType | null,
-    topLevelOrganization: requestParams.get('topLevelOrganization'),
-    fundingSource: requestParams.get('fundingSource'),
-    contributor: requestParams.get('contributorId'),
-    contributorShould: contributorNamesParam,
-    title: titleParam,
-    sort: requestParams.get(SearchParam.SortOrder) as 'asc' | 'desc' | null,
-    order: requestParams.get(SearchParam.OrderBy),
+    query: requestParams.get(ResultParam.Query),
+    category: requestParams.get(ResultParam.Category) as PublicationInstanceType | null,
+    topLevelOrganization: requestParams.get(ResultParam.TopLevelOrganization),
+    fundingSource: requestParams.get(ResultParam.FundingSource),
+    contributor: requestParams.get(ResultParam.Contributor),
+    contributorShould: requestParams.get(ResultParam.ContributorShould),
+    title: requestParams.get(ResultParam.Title),
+    sort: requestParams.get(ResultParam.Sort) as 'asc' | 'desc' | null,
+    order: requestParams.get(ResultParam.Order),
   };
 
   const registrationQuery = useQuery({
@@ -137,14 +135,19 @@ const HomePage = () => {
           }
 
           const contributorNames =
-            values.properties?.filter((p) => p.fieldName === 'contributorName' && p.value).map((p) => p.value) ?? [];
+            values.properties
+              ?.filter((property) => property.fieldName === ResultParam.ContributorShould && property.value)
+              .map((property) => property.value) ?? [];
           if (contributorNames.length > 0) {
-            newRegistrationParams.set('contributorName', contributorNames.join(','));
+            newRegistrationParams.set(ResultParam.ContributorShould, contributorNames.join(','));
           }
 
-          const title = values.properties?.filter((p) => p.fieldName === 'title' && p.value).map((p) => p.value) ?? [];
+          const title =
+            values.properties
+              ?.filter((property) => property.fieldName === ResultParam.Title && property.value)
+              .map((property) => property.value) ?? [];
           if (title.length > 0) {
-            newRegistrationParams.set('title', title.join(','));
+            newRegistrationParams.set(ResultParam.Title, title.join(','));
           }
 
           newRegistrationParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);

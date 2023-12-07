@@ -2,6 +2,7 @@ import { Box, Button, MenuItem, TextField } from '@mui/material';
 import { Field, FieldProps } from 'formik';
 import { TFuncKey } from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { ResultParam } from '../../../../api/searchApi';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
@@ -13,8 +14,8 @@ interface FilterItem {
 }
 
 export const registrationFilters: FilterItem[] = [
-  { field: 'title', i18nKey: 'common.title' },
-  { field: 'contributorName', i18nKey: 'registration.contributors.contributor' },
+  { field: ResultParam.Title, i18nKey: 'common.title' },
+  { field: ResultParam.ContributorShould, i18nKey: 'registration.contributors.contributor' },
 ];
 
 interface AdvancedSearchRowProps {

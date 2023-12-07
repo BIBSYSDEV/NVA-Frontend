@@ -32,7 +32,7 @@ export const DataManagementPlanForm = () => {
 
   const searchOptionsQueryConfig: FetchResultsParams = {
     title: debouncedSearchQuery,
-    identifierNot: params.identifier,
+    idNot: params.identifier,
   };
   const searchOptionsQuery = useQuery({
     queryKey: ['registrations', 20, 0, searchOptionsQueryConfig],

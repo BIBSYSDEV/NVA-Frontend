@@ -105,24 +105,44 @@ export const fetchNviCandidate = async (identifier: string) => {
   return getNviCandidates.data;
 };
 
+export enum ResultParam {
+  Category = 'category',
+  CategoryNot = 'categoryNot',
+  CategoryShould = 'categoryShould',
+  Contributor = 'contributor',
+  ContributorShould = 'contributorShould',
+  Sort = 'sort',
+  FundingSource = 'fundingSource',
+  Doi = 'doi',
+  Identifier = 'id',
+  IdentifierNot = 'idNot',
+  Issn = 'issn',
+  Order = 'order',
+  Project = 'project',
+  PublicationYear = 'publicationYear',
+  Query = 'query',
+  Title = 'title',
+  TopLevelOrganization = 'topLevelOrganization',
+}
+
 export interface FetchResultsParams {
-  category?: PublicationInstanceType | null;
-  categoryNot?: PublicationInstanceType | null;
-  categorySome?: PublicationInstanceType[];
-  contributor?: string | null;
-  contributorShould?: string | null;
-  fundingSource?: string | null;
-  doi?: string | null;
-  identifier?: string | null;
-  identifierNot?: string | null;
-  issn?: string | null;
-  project?: string | null;
-  publicationYear?: string | null;
-  query?: string | null;
-  title?: string | null;
-  topLevelOrganization?: string | null;
-  sort?: 'asc' | 'desc' | null;
-  order?: string | null;
+  [ResultParam.Category]?: PublicationInstanceType | null;
+  [ResultParam.CategoryNot]?: PublicationInstanceType | null;
+  [ResultParam.CategoryShould]?: PublicationInstanceType[];
+  [ResultParam.Contributor]?: string | null;
+  [ResultParam.ContributorShould]?: string | null;
+  [ResultParam.Sort]?: SortOrder | null;
+  [ResultParam.FundingSource]?: string | null;
+  [ResultParam.Doi]?: string | null;
+  [ResultParam.Identifier]?: string | null;
+  [ResultParam.IdentifierNot]?: string | null;
+  [ResultParam.Issn]?: string | null;
+  [ResultParam.Order]?: string | null;
+  [ResultParam.Project]?: string | null;
+  [ResultParam.PublicationYear]?: string | null;
+  [ResultParam.Query]?: string | null;
+  [ResultParam.Title]?: string | null;
+  [ResultParam.TopLevelOrganization]?: string | null;
 }
 
 export const fetchResults = async (results: number, from: number, params: FetchResultsParams) => {
@@ -131,53 +151,53 @@ export const fetchResults = async (results: number, from: number, params: FetchR
   }`;
 
   if (params.category) {
-    fullQuery += `&category=${params.category}`;
+    fullQuery += `&${ResultParam.Category}=${params.category}`;
   }
   if (params.categoryNot) {
-    fullQuery += `&category_not=${params.categoryNot}`;
+    fullQuery += `&${ResultParam.CategoryNot}=${params.categoryNot}`;
   }
-  if (params.categorySome) {
-    fullQuery += `&category_should=${params.categorySome.join(',')}`;
+  if (params.categoryShould) {
+    fullQuery += `&${ResultParam.CategoryShould}=${params.categoryShould.join(',')}`;
   }
   if (params.contributor) {
-    fullQuery += `&contributor=${encodeURIComponent(params.contributor)}`;
+    fullQuery += `&${ResultParam.Contributor}=${encodeURIComponent(params.contributor)}`;
   }
   if (params.contributorShould) {
-    fullQuery += `&contributor_should=${params.contributorShould}`;
+    fullQuery += `&${ResultParam.ContributorShould}=${params.contributorShould}`;
   }
   if (params.fundingSource) {
-    fullQuery += `&fundingSource=${params.fundingSource}`;
+    fullQuery += `&${ResultParam.FundingSource}=${params.fundingSource}`;
   }
   if (params.doi) {
-    fullQuery += `&doi=${params.doi}`;
+    fullQuery += `&${ResultParam.Doi}=${params.doi}`;
   }
-  if (params.identifier) {
-    fullQuery += `&id=${params.identifier}`;
+  if (params.id) {
+    fullQuery += `&${ResultParam.Identifier}=${params.id}`;
   }
-  if (params.identifierNot) {
-    fullQuery += `&id_not=${params.identifierNot}`;
+  if (params.idNot) {
+    fullQuery += `&${ResultParam.IdentifierNot}=${params.idNot}`;
   }
   if (params.issn) {
-    fullQuery += `&issn_should=${params.issn}`;
+    fullQuery += `&${ResultParam.Issn}=${params.issn}`;
   }
   if (params.project) {
-    fullQuery += `&project=${params.project}`;
+    fullQuery += `&${ResultParam.Project}=${params.project}`;
   }
   if (params.publicationYear) {
-    fullQuery += `&publication_year=${params.publicationYear}`;
+    fullQuery += `&${ResultParam.PublicationYear}=${params.publicationYear}`;
   }
   if (params.query) {
-    fullQuery += `&query=${params.query}`;
+    fullQuery += `&${ResultParam.Query}=${params.query}`;
   }
   if (params.title) {
-    fullQuery += `&title=${params.title}`;
+    fullQuery += `&${ResultParam.Title}=${params.title}`;
   }
   if (params.topLevelOrganization) {
-    fullQuery += `&topLevelOrganization=${encodeURIComponent(params.topLevelOrganization)}`;
+    fullQuery += `&${ResultParam.TopLevelOrganization}=${encodeURIComponent(params.topLevelOrganization)}`;
   }
 
   const getResults = await apiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
-    url: `${SearchApiPath.Registrations2}?${fullQuery}`,
+    url: `${SearchApiPath.Registrations}?${fullQuery}`,
   });
 
   return getResults.data;

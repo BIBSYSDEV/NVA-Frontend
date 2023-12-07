@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { ResultParam } from '../../../../api/searchApi';
 import { PublicationInstanceType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
@@ -14,10 +15,10 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const selectedCategory = searchParams.get('category');
-  const selectedOrganization = searchParams.get('topLevelOrganization');
-  const selectedFunding = searchParams.get('fundingSource');
-  const selectedContributor = searchParams.get('contributorId');
+  const selectedCategory = searchParams.get(ResultParam.Category);
+  const selectedOrganization = searchParams.get(ResultParam.TopLevelOrganization);
+  const selectedFunding = searchParams.get(ResultParam.FundingSource);
+  const selectedContributor = searchParams.get(ResultParam.Contributor);
 
   const typeFacet = registrationQuery.data?.aggregations?.type;
   const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization;
@@ -52,7 +53,9 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 label={t(`registration.publication_types.${registrationType}`)}
                 count={facet.count}
                 onClickFacet={() =>
-                  isSelected ? removeFacetFilter('category', facet.key) : addFacetFilter('category', facet.key)
+                  isSelected
+                    ? removeFacetFilter(ResultParam.Category, facet.key)
+                    : addFacetFilter(ResultParam.Category, facet.key)
                 }
               />
             );
@@ -76,8 +79,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
-                    ? removeFacetFilter('topLevelOrganization', facet.key)
-                    : addFacetFilter('topLevelOrganization', facet.key)
+                    ? removeFacetFilter(ResultParam.TopLevelOrganization, facet.key)
+                    : addFacetFilter(ResultParam.TopLevelOrganization, facet.key)
                 }
               />
             );
@@ -103,8 +106,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
-                    ? removeFacetFilter('contributorId', facet.key)
-                    : addFacetFilter('contributorId', facet.key)
+                    ? removeFacetFilter(ResultParam.Contributor, facet.key)
+                    : addFacetFilter(ResultParam.Contributor, facet.key)
                 }
               />
             );
@@ -128,8 +131,8 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
                 count={facet.count}
                 onClickFacet={() =>
                   isSelected
-                    ? removeFacetFilter('fundingSource', facet.key)
-                    : addFacetFilter('fundingSource', facet.key)
+                    ? removeFacetFilter(ResultParam.FundingSource, facet.key)
+                    : addFacetFilter(ResultParam.FundingSource, facet.key)
                 }
               />
             );

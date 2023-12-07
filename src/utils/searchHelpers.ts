@@ -1,3 +1,5 @@
+import { ResultParam } from '../api/searchApi';
+
 export enum SearchParam {
   From = 'from',
   OrderBy = 'orderBy',
@@ -30,18 +32,18 @@ export const emptySearchConfig: SearchConfig = {
 };
 
 export const createSearchConfigFromSearchParams = (params: URLSearchParams): SearchConfig => {
-  const searchTerm = params.get('query') ?? '';
-  const titleParams = params.get('title')?.split(',') ?? [];
-  const contributorNameParams = params.get('contributorName')?.split(',') ?? [];
+  const searchTerm = params.get(ResultParam.Query) ?? '';
+  const titleParams = params.get(ResultParam.Title)?.split(',') ?? [];
+  const contributorNameParams = params.get(ResultParam.ContributorShould)?.split(',') ?? [];
 
   const titleFilters = titleParams.map((title) => ({
-    fieldName: 'title',
+    fieldName: ResultParam.Title,
     value: title,
     operator: ExpressionStatement.Contains,
   }));
 
   const contributorNameFilters = contributorNameParams.map((contributorName) => ({
-    fieldName: 'contributorName',
+    fieldName: ResultParam.ContributorShould,
     value: contributorName,
     operator: ExpressionStatement.Contains,
   }));

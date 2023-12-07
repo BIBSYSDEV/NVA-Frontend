@@ -25,7 +25,7 @@ export const DatasetForm = () => {
   const relatedRegistrationsOptionsQueryConfig: FetchResultsParams = {
     query: debouncedRelatedRegistrationsQuery,
     categoryNot: ResearchDataType.DataManagementPlan,
-    identifierNot: values.identifier,
+    idNot: values.identifier,
   };
   const relatedRegistrationsOptionsQuery = useQuery({
     queryKey: ['registrations', 20, 0, relatedRegistrationsOptionsQueryConfig],
