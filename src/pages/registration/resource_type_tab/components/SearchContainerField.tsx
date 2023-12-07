@@ -51,7 +51,7 @@ export const SearchContainerField = ({
   const containerOptionsQuery = useQuery({
     enabled: debouncedQuery === query,
     queryKey: ['container', debouncedQuery, searchSubtypes],
-    queryFn: () => fetchResults(25, 0, { title: debouncedQuery, categoryShould: searchSubtypes }),
+    queryFn: () => fetchResults({ title: debouncedQuery, categoryShould: searchSubtypes, results: 25 }),
     meta: { errorMessage: t('feedback.error.search') },
   });
 

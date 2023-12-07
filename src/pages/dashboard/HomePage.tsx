@@ -14,7 +14,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
-import { FetchResultsParams, ResultParam, fetchResults } from '../../api/searchApi';
+import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -60,7 +60,6 @@ const HomePage = () => {
 
   const rowsPerPage = Number(requestParams.get(SearchParam.Results) ?? 10);
   const page = Number(requestParams.get(SearchParam.Page) ?? 1);
-  const from = Number(requestParams.get(SearchParam.From) ?? 0);
 
   const registrationsQueryConfig: FetchResultsParams = {
     query: requestParams.get(ResultParam.Query),
@@ -70,13 +69,15 @@ const HomePage = () => {
     contributor: requestParams.get(ResultParam.Contributor),
     contributorShould: requestParams.get(ResultParam.ContributorShould),
     title: requestParams.get(ResultParam.Title),
-    sort: requestParams.get(ResultParam.Sort) as 'asc' | 'desc' | null,
+    sort: requestParams.get(ResultParam.Sort) as SortOrder | null,
     order: requestParams.get(ResultParam.Order),
+    from: Number(requestParams.get(SearchParam.From) ?? 0),
+    results: rowsPerPage,
   };
 
   const registrationQuery = useQuery({
-    queryKey: ['registrations', rowsPerPage, from, registrationsQueryConfig],
-    queryFn: () => fetchResults(rowsPerPage, from, registrationsQueryConfig),
+    queryKey: ['registrations', registrationsQueryConfig],
+    queryFn: () => fetchResults(registrationsQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
     keepPreviousData: true,
   });

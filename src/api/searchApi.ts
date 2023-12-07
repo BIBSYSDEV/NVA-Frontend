@@ -113,6 +113,7 @@ export enum ResultParam {
   CategoryShould = 'categoryShould',
   Contributor = 'contributor',
   ContributorShould = 'contributorShould',
+  From = 'from',
   Sort = 'sort',
   FundingSource = 'fundingSource',
   Doi = 'doi',
@@ -122,6 +123,7 @@ export enum ResultParam {
   Order = 'order',
   Project = 'project',
   PublicationYear = 'publicationYear',
+  Results = 'results',
   Query = 'query',
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
@@ -133,6 +135,7 @@ export interface FetchResultsParams {
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
   [ResultParam.Contributor]?: string | null;
   [ResultParam.ContributorShould]?: string | null;
+  [ResultParam.From]?: number | null;
   [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.FundingSource]?: string | null;
   [ResultParam.Doi]?: string | null;
@@ -142,12 +145,13 @@ export interface FetchResultsParams {
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationYear]?: string | null;
+  [ResultParam.Results]?: number | null;
   [ResultParam.Query]?: string | null;
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
 }
 
-export const fetchResults = async (results: number, from: number, params: FetchResultsParams) => {
+export const fetchResults = async (params: FetchResultsParams) => {
   const searchParams = new URLSearchParams();
 
   if (params.category) {
@@ -196,8 +200,8 @@ export const fetchResults = async (results: number, from: number, params: FetchR
     searchParams.set(ResultParam.TopLevelOrganization, params.topLevelOrganization);
   }
 
-  searchParams.set('from', from.toString());
-  searchParams.set('results', results.toString());
+  searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
+  searchParams.set(ResultParam.Results, typeof params.results === 'number' ? params.results.toString() : '10');
   searchParams.set(ResultParam.Order, params.order ?? 'modifiedDate');
   searchParams.set(ResultParam.Sort, params.sort ?? 'desc');
 

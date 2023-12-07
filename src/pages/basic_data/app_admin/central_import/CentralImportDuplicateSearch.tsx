@@ -25,18 +25,19 @@ export const CentralImportDuplicateSearch = ({
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
-  const offset = rowsPerPage * (page - 1);
   const searchConfig: FetchResultsParams = {
     doi: duplicateSearchFilters.doi,
     contributorShould: duplicateSearchFilters.author,
     issn: duplicateSearchFilters.issn,
     publicationYear: duplicateSearchFilters.yearPublished,
     title: duplicateSearchFilters.title,
+    from: rowsPerPage * (page - 1),
+    results: rowsPerPage,
   };
 
   const duplicateCandidatesQuery = useQuery({
-    queryKey: ['registrations', rowsPerPage, offset, searchConfig],
-    queryFn: () => fetchResults(rowsPerPage, offset, searchConfig),
+    queryKey: ['registrations', searchConfig],
+    queryFn: () => fetchResults(searchConfig),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
   const duplicateCandidatesSize = duplicateCandidatesQuery.data?.totalHits ?? 0;

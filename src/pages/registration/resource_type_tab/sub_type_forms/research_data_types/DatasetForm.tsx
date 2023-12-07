@@ -26,10 +26,11 @@ export const DatasetForm = () => {
     query: debouncedRelatedRegistrationsQuery,
     categoryNot: ResearchDataType.DataManagementPlan,
     idNot: values.identifier,
+    results: 20,
   };
   const relatedRegistrationsOptionsQuery = useQuery({
-    queryKey: ['registrations', 20, 0, relatedRegistrationsOptionsQueryConfig],
-    queryFn: () => fetchResults(20, 0, relatedRegistrationsOptionsQueryConfig),
+    queryKey: ['registrations', relatedRegistrationsOptionsQueryConfig],
+    queryFn: () => fetchResults(relatedRegistrationsOptionsQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
@@ -39,10 +40,11 @@ export const DatasetForm = () => {
   const relatedDmpOptionsQueryConfig: FetchResultsParams = {
     title: debouncedRelatedDmpQuery,
     category: ResearchDataType.DataManagementPlan,
+    results: 20,
   };
   const relatedDmpOptionsQuery = useQuery({
-    queryKey: ['registrations', 20, 0, relatedDmpOptionsQueryConfig],
-    queryFn: () => fetchResults(20, 0, relatedDmpOptionsQueryConfig),
+    queryKey: ['registrations', relatedDmpOptionsQueryConfig],
+    queryFn: () => fetchResults(relatedDmpOptionsQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
   });
 

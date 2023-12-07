@@ -18,7 +18,7 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
 
   const containerQuery = useQuery({
     queryKey: ['container', identifier],
-    queryFn: () => fetchResults(1, 0, { id: identifier }),
+    queryFn: () => fetchResults({ id: identifier, results: 1 }),
     meta: { errorMessage: t('feedback.error.search') },
   });
 

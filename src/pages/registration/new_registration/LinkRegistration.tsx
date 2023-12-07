@@ -71,7 +71,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const resultsQuery = useQuery({
     enabled: !!doiQuery,
     queryKey: ['doi-results', doiQuery],
-    queryFn: () => fetchResults(10, 0, { doi: doiQuery }),
+    queryFn: () => fetchResults({ doi: doiQuery }),
   });
 
   const searchResults = resultsQuery.data?.hits ?? [];

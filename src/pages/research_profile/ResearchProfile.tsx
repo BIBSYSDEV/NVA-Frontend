@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { fetchResults } from '../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
@@ -51,11 +51,15 @@ const ResearchProfile = () => {
 
   const person = personQuery.data;
 
-  const registrationOffset = (registrationsPage - 1) * registrationRowsPerPage;
+  const registrationsQueryConfig: FetchResultsParams = {
+    contributor: personId,
+    from: (registrationsPage - 1) * registrationRowsPerPage,
+    results: registrationRowsPerPage,
+  };
   const registrationsQuery = useQuery({
     enabled: !!personId,
-    queryKey: ['registrations', registrationRowsPerPage, registrationOffset, personId],
-    queryFn: () => fetchResults(registrationRowsPerPage, registrationOffset, { contributor: personId }),
+    queryKey: ['registrations', registrationsQueryConfig],
+    queryFn: () => fetchResults(registrationsQueryConfig),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 

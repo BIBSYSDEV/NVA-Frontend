@@ -47,10 +47,11 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   const relatedRegistrationsQueryConfig: FetchResultsParams = {
     query: identifier,
     idNot: identifier,
+    results: 20,
   };
   const relatedRegistrationsQuery = useQuery({
-    queryKey: ['registrations', 20, 0, relatedRegistrationsQueryConfig],
-    queryFn: () => fetchResults(20, 0, relatedRegistrationsQueryConfig),
+    queryKey: ['registrations', relatedRegistrationsQueryConfig],
+    queryFn: () => fetchResults(relatedRegistrationsQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
   });
 

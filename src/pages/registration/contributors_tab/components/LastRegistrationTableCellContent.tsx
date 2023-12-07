@@ -1,7 +1,7 @@
 import { Skeleton, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { fetchResults } from '../../../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../../../api/searchApi';
 import { TruncatableTypography } from '../../../../components/TruncatableTypography';
 import { getTitleString } from '../../../../utils/registration-helpers';
 
@@ -12,10 +12,14 @@ interface LastRegistrationTableCellContentPorps {
 export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationTableCellContentPorps) => {
   const { t } = useTranslation();
 
+  const registrationsQueryConfig: FetchResultsParams = {
+    contributor: personId,
+    results: 1,
+  };
   const registrationsQuery = useQuery({
     enabled: !!personId,
-    queryKey: ['registrations', 1, 0, personId],
-    queryFn: () => fetchResults(1, 0, { contributor: personId }),
+    queryKey: ['registrations', registrationsQueryConfig],
+    queryFn: () => fetchResults(registrationsQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
   });
 

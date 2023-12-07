@@ -33,10 +33,11 @@ export const DataManagementPlanForm = () => {
   const searchOptionsQueryConfig: FetchResultsParams = {
     title: debouncedSearchQuery,
     idNot: params.identifier,
+    results: 20,
   };
   const searchOptionsQuery = useQuery({
-    queryKey: ['registrations', 20, 0, searchOptionsQueryConfig],
-    queryFn: () => fetchResults(20, 0, searchOptionsQueryConfig),
+    queryKey: ['registrations', searchOptionsQueryConfig],
+    queryFn: () => fetchResults(searchOptionsQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
