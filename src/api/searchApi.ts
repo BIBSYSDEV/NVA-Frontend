@@ -121,10 +121,14 @@ export interface FetchResultsParams {
   query?: string | null;
   title?: string | null;
   topLevelOrganization?: string | null;
+  sort?: 'asc' | 'desc' | null;
+  order?: string | null;
 }
 
 export const fetchResults = async (results: number, from: number, params: FetchResultsParams) => {
-  let fullQuery = `results=${results}&from=${from}`;
+  let fullQuery = `results=${results}&from=${from}&order=${params.order ?? 'modifiedDate'}&sort=${
+    params.sort ?? 'desc'
+  }`;
 
   if (params.category) {
     fullQuery += `&category=${params.category}`;

@@ -72,6 +72,8 @@ const HomePage = () => {
     contributor: requestParams.get('contributorId'),
     contributorShould: contributorNamesParam,
     title: titleParam,
+    sort: requestParams.get(SearchParam.SortOrder) as 'asc' | 'desc' | null,
+    order: requestParams.get(SearchParam.OrderBy),
   };
 
   const registrationQuery = useQuery({
