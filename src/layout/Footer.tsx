@@ -5,7 +5,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { dataTestId } from '../utils/dataTestIds';
 import { UrlPathTemplate } from '../utils/urlPaths';
-
 import { LanguageSelector } from './header/LanguageSelector';
 
 const StyledArrowLinkContainer = styled(Box)({
@@ -30,11 +29,7 @@ export const Footer = () => {
       }}>
       <div>
         <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between' }}>
-          <Typography
-            sx={{
-              fontWeight: 'bold',
-              color: 'primary.main',
-            }}>
+          <Typography color="primary" sx={{ fontWeight: 'bold' }}>
             {t('footer.about_nva')}
           </Typography>
 
@@ -51,18 +46,11 @@ export const Footer = () => {
 
         <Divider sx={{ bgcolor: 'primary.main', mb: '0.5rem' }} />
 
-        <Typography
-          sx={{
-            color: 'primary.main',
-            gridColumn: { xs: 1, lg: 1 },
-            justifySelf: 'center',
-          }}>
-          {t('footer.about_nva_text')}
-        </Typography>
+        <Typography color="primary">{t('footer.about_nva_text')}</Typography>
 
         <Typography
+          color="primary"
           sx={{
-            color: 'primary.main',
             fontWeight: 'bold',
             gap: '0.5rem',
             mt: '2rem',
@@ -82,11 +70,7 @@ export const Footer = () => {
             justifyContent: 'space-between',
             gap: '0.5rem',
           }}>
-          <Typography
-            sx={{
-              fontWeight: 'bold',
-              color: 'primary.main',
-            }}>
+          <Typography color="primary" sx={{ fontWeight: 'bold' }}>
             {t('footer.become_customer')}
           </Typography>
 
@@ -216,9 +200,7 @@ export const Footer = () => {
           <Typography color="primary">
             <Trans t={t} i18nKey="footer.technical_support_link">
               <MuiLink
-                sx={{
-                  color: 'primary.main',
-                }}
+                color="primary"
                 href={'mailto:kontakt@sikt.no'}
                 target="_blank"
                 rel="noopener noreferrer"

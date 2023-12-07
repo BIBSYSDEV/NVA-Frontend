@@ -7,13 +7,6 @@ describe('About and Privacy policy', () => {
     cy.visit('/');
   });
 
-  // it('The user should see about page', () => {
-  //   cy.get(`[data-testid=${dataTestId.footer.aboutLink}]`).click({ force: true });
-  //   cy.url().should('include', UrlPathTemplate.About);
-  //   cy.injectAxe();
-  //   cy.checkA11y(null, { retries: 3, interval: 250 }, a11yLogErrors);
-  // });
-
   it('The user should see privacy policy page', () => {
     cy.get(`[data-testid=${dataTestId.footer.privacyLink}]`).click();
     cy.url().should('include', UrlPathTemplate.PrivacyPolicy);
