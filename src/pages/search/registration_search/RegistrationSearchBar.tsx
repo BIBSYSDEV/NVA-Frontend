@@ -105,7 +105,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
         onClick={async () => {
           setIsLoadingExport(true);
           try {
-            const fetchExportData = await fetchRegistrationsExport(window.location.search);
+            const fetchExportData = await fetchRegistrationsExport(searchParams);
             // Force UTF-8 for excel with '\uFEFF': https://stackoverflow.com/a/42466254
             const blob = new Blob(['\uFEFF', fetchExportData], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);

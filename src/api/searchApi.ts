@@ -57,8 +57,10 @@ export const fetchImportCandidates = async (
   return getImportCandidates.data;
 };
 
-export const fetchRegistrationsExport = async (searchParams: string) => {
-  const url = `${SearchApiPath.Registrations}${searchParams}`;
+export const fetchRegistrationsExport = async (searchParams: URLSearchParams) => {
+  searchParams.set('from', '0');
+  searchParams.set('results', '1000');
+  const url = `${SearchApiPath.Registrations}?${searchParams.toString()}`;
 
   const fetchExport = await apiRequest2<string>({ url, headers: { Accept: 'text/csv' } });
   return fetchExport.data;
