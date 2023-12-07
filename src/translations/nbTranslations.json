@@ -1650,7 +1650,6 @@
     "health_project_type": "Helseprosjekttype",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
-    "not_containing": "Inneholder ikke",
     "operator": "Operator",
     "participant": "Deltaker",
     "participating_institution": "Deltakende institusjon",
