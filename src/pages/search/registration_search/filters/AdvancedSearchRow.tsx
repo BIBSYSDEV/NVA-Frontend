@@ -10,39 +10,11 @@ import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHel
 interface FilterItem {
   field: string;
   i18nKey: TFuncKey;
-  manuallyAddable: boolean;
 }
 
 export const registrationFilters: FilterItem[] = [
-  { field: 'title', i18nKey: 'common.title', manuallyAddable: true },
-  // { field: DescriptionFieldNames.Abstract, i18nKey: 'registration.description.abstract', manuallyAddable: true },
-  // {
-  //   field: ResourceFieldNames.RegistrationType,
-  //   i18nKey: 'registration.resource_type.resource_type',
-  //   manuallyAddable: false,
-  // },
-  // { field: DescriptionFieldNames.Tags, i18nKey: 'registration.description.keywords', manuallyAddable: true },
-  {
-    field: 'contributorName',
-    i18nKey: 'registration.contributors.contributor',
-    manuallyAddable: true,
-  },
-  // {
-  //   field: SearchFieldName.ContributorId,
-  //   i18nKey: 'registration.contributors.contributor',
-  //   manuallyAddable: false,
-  // },
-  // {
-  //   field: `${DescriptionFieldNames.PublicationDate}.year`,
-  //   i18nKey: 'registration.year_published',
-  //   manuallyAddable: true,
-  // },
-  // { field: SearchFieldName.TopLevelOrganizationId, i18nKey: 'common.institution', manuallyAddable: false },
-  // {
-  //   field: SearchFieldName.FundingSource,
-  //   i18nKey: 'common.funding',
-  //   manuallyAddable: false,
-  // },
+  { field: 'title', i18nKey: 'common.title' },
+  { field: 'contributorName', i18nKey: 'registration.contributors.contributor' },
 ];
 
 interface AdvancedSearchRowProps {
@@ -64,13 +36,11 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
             variant="outlined"
             label={t('search.field_label')}
             data-testid={dataTestId.startPage.advancedSearch.advancedFieldSelect}>
-            {registrationFilters
-              .filter((filter) => filter.manuallyAddable)
-              .map((filter) => (
-                <MenuItem key={filter.i18nKey} value={filter.field}>
-                  {t<any>(filter.i18nKey)}
-                </MenuItem>
-              ))}
+            {registrationFilters.map((filter) => (
+              <MenuItem key={filter.i18nKey} value={filter.field}>
+                {t<any>(filter.i18nKey)}
+              </MenuItem>
+            ))}
           </TextField>
         )}
       </Field>

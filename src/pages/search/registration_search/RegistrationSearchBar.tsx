@@ -45,9 +45,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
   const [isLoadingExport, setIsLoadingExport] = useState(false);
 
   const showAdvancedSearch = properties.some(
-    (property) =>
-      !property.fieldName ||
-      registrationFilters.some((filter) => filter.field === property.fieldName && filter.manuallyAddable)
+    (property) => !property.fieldName || registrationFilters.some((filter) => filter.field === property.fieldName)
   );
 
   return (
@@ -127,10 +125,6 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
           <>
             <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {properties.map((property, index) => {
-                const thisFilter = registrationFilters.find((filter) => filter.field === property.fieldName);
-                if (property.fieldName && !thisFilter?.manuallyAddable) {
-                  return null;
-                }
                 return (
                   <AdvancedSearchRow
                     key={index}
