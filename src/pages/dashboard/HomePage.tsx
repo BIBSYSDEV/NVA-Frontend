@@ -60,6 +60,7 @@ const HomePage = () => {
 
   const rowsPerPage = Number(requestParams.get(SearchParam.Results) ?? 10);
   const page = Number(requestParams.get(SearchParam.Page) ?? 1);
+  const from = Number(requestParams.get(SearchParam.From) ?? 0);
 
   const titleParam = requestParams.get('title');
   const contributorNamesParam = requestParams.get('contributorName');
@@ -72,10 +73,10 @@ const HomePage = () => {
     contributorShould: contributorNamesParam,
     title: titleParam,
   };
-  const registrationOffset = (page - 1) * rowsPerPage;
+
   const registrationQuery = useQuery({
-    queryKey: ['registrations', rowsPerPage, registrationOffset, registrationsQueryConfig],
-    queryFn: () => fetchResults(rowsPerPage, registrationOffset, registrationsQueryConfig),
+    queryKey: ['registrations', rowsPerPage, from, registrationsQueryConfig],
+    queryFn: () => fetchResults(rowsPerPage, from, registrationsQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
     keepPreviousData: true,
   });

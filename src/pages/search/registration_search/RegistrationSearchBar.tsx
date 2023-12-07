@@ -44,9 +44,6 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
 
   const [isLoadingExport, setIsLoadingExport] = useState(false);
 
-  // const titleParams = searchParams.get('title')?.split(',');
-  // const contributorNameParams = searchParams.get('contributorName')?.split(',');
-
   const showAdvancedSearch = properties.some(
     (property) =>
       !property.fieldName ||
@@ -146,6 +143,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                   />
                 );
               })}
+
               <Box sx={{ display: 'flex', gap: '1rem' }}>
                 <Button
                   data-testid={dataTestId.startPage.advancedSearch.addFilterButton}

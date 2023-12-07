@@ -79,11 +79,11 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
           <TextField
             {...field}
             select
-            variant="outlined"
+            disabled
             label={t('search.operator')}
             data-testid={dataTestId.startPage.advancedSearch.advancedOperatorSelect}>
             <MenuItem value={ExpressionStatement.Contains}>{t('search.contains')}</MenuItem>
-            <MenuItem value={ExpressionStatement.NotContaining}>{t('search.not_containing')}</MenuItem>
+            {/* <MenuItem value={ExpressionStatement.NotContaining}>{t('search.not_containing')}</MenuItem> */}
           </TextField>
         )}
       </Field>
