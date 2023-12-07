@@ -8,14 +8,14 @@ import { UrlPathTemplate } from '../utils/urlPaths';
 
 import { LanguageSelector } from './header/LanguageSelector';
 
+const StyledArrowLinkContainer = styled(Box)({
+  display: 'flex',
+  gap: '0.5rem',
+  marginBottom: '0.3rem',
+});
+
 export const Footer = () => {
   const { t } = useTranslation();
-
-  const StyledArrowLinkContainer = styled(Box)({
-    display: 'flex',
-    gap: '0.5rem',
-    marginBottom: '0.3rem',
-  });
 
   return (
     <Box
@@ -62,6 +62,7 @@ export const Footer = () => {
 
         <Typography
           sx={{
+            color: 'primary.main',
             fontWeight: 'bold',
             gap: '0.5rem',
             mt: '2rem',
@@ -212,11 +213,7 @@ export const Footer = () => {
         <StyledArrowLinkContainer>
           <ArrowRightAltIcon />
 
-          <Typography
-            paragraph
-            sx={{
-              color: 'primary.main',
-            }}>
+          <Typography color="primary">
             <Trans t={t} i18nKey="footer.technical_support_link">
               <MuiLink
                 sx={{
