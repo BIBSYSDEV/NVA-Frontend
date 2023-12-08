@@ -134,6 +134,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                     remove(index);
                     const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
                     const newParams = removeSearchParamValue(searchParams, property.fieldName, valueToRemove);
+                    newParams.set(ResultParam.From, '0');
                     history.push({ search: newParams.toString() });
                   }}
                   baseFieldName={`properties[${index}]`}
