@@ -1,14 +1,32 @@
 import { Box } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import { fetchResults } from '../../api/searchApi';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { SearchForm } from '../../components/SearchForm';
 import { SortSelector } from '../../components/SortSelector';
 import { RegistrationFieldName } from '../../types/publicationFieldNames';
+import { RegistrationSearch } from '../search/registration_search/RegistrationSearch';
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+
+  const titleQuery = params.get('title') ?? '';
+
+  const query = titleQuery ? `entityDescription.mainTitle:"${titleQuery}"` : '';
+
+  const resultSearchQuery = useQuery({
+    queryKey: ['registrations', query],
+    queryFn: () => fetchResults(10, 0, query),
+    meta: { errorMessage: t('feedback.error.search') },
+    keepPreviousData: true,
+  });
 
   return (
-    <>
+    <BetaFunctionality>
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <SearchForm
           sx={{ width: '100%' }}
@@ -36,6 +54,8 @@ export const AdvancedSearchPage = () => {
           ]}
         />
       </Box>
-    </>
+
+      <RegistrationSearch isLoadingSearch={resultSearchQuery.isLoading} searchResults={resultSearchQuery.data} />
+    </BetaFunctionality>
   );
 };

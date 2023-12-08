@@ -15,6 +15,7 @@ import {
   searchForPerson,
   searchForProjects,
 } from '../../api/cristinApi';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -176,13 +177,15 @@ const HomePage = () => {
                 </Box>
               </NavigationListAccordion>
 
-              <NavigationListAccordion
-                title={t('search.advanced_search')}
-                startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
-                accordionPath={UrlPathTemplate.Search}
-                dataTestId={dataTestId.startPage.advancedSearchAccordion}>
-                <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>{t('search.advanced_search_description')}</Typography>
-              </NavigationListAccordion>
+              <BetaFunctionality>
+                <NavigationListAccordion
+                  title={t('search.advanced_search')}
+                  startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
+                  accordionPath={UrlPathTemplate.Search}
+                  dataTestId={dataTestId.startPage.advancedSearchAccordion}>
+                  <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>{t('search.advanced_search_description')}</Typography>
+                </NavigationListAccordion>
+              </BetaFunctionality>
 
               <NavigationListAccordion
                 title={t('search.reports.reports')}
