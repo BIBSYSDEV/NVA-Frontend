@@ -15,7 +15,7 @@ interface SortSelectorProps extends Pick<TextFieldProps, 'sx'> {
   options: SortSelectorOption[];
 }
 
-export const SortSelector = ({ options, sx }: SortSelectorProps) => {
+export const SortSelector = ({ options, sx = {} }: SortSelectorProps) => {
   const history = useHistory();
   const { t } = useTranslation();
   const params = new URLSearchParams(history.location.search);
@@ -28,7 +28,7 @@ export const SortSelector = ({ options, sx }: SortSelectorProps) => {
 
   return (
     <TextField
-      sx={sx}
+      sx={{ minWidth: '15rem', ...sx }}
       data-testid={dataTestId.startPage.orderBySelect}
       select
       value={selectedOption}

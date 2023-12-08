@@ -122,9 +122,7 @@ const SearchPage = ({ searchResults, isLoadingSearch, personQuery, projectQuery 
             {({ field, form: { submitForm } }: FieldProps<string>) => (
               <SearchTextField
                 {...field}
-                placeholder={
-                  personIsSeleced ? t('search.person_search_placeholder') : t('search.project_search_placeholder')
-                }
+                placeholder={personIsSeleced ? t('search.person_search_placeholder') : t('search.search_for_title')}
                 clearValue={() => {
                   field.onChange({ target: { value: '', id: field.name } });
                   submitForm();

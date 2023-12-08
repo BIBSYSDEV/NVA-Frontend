@@ -66,7 +66,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
       </Field>
 
       <SortSelector
-        sx={{ minWidth: '15rem', gridArea: 'sorting' }}
+        sx={{ gridArea: 'sorting' }}
         options={[
           {
             orderBy: RegistrationFieldName.ModifiedDate,

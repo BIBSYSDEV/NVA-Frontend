@@ -1669,7 +1669,6 @@
     "participating_institution": "Deltakende institusjon",
     "person_search_placeholder": "Søk etter navn",
     "persons": "Personer",
-    "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "reports": {
       "clinical_treatment_studies": "Kliniske behandlingsstudier",
@@ -1679,6 +1678,7 @@
     },
     "responsible_institution": "Forskningsansvarlig institusjon",
     "result": "Resultat",
+    "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",
     "sector": "Sektor",
