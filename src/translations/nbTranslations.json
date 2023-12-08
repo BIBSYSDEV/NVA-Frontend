@@ -250,10 +250,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
@@ -339,7 +335,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "curators": {
@@ -1653,6 +1653,8 @@
   },
   "search": {
     "add_filter": "Legg til filter",
+    "advanced_search": "Avansert søk",
+    "advanced_search_description": "Søk blant alle publiserte resultater",
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
     "contains": "Inneholder",
