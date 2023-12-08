@@ -108,8 +108,14 @@ export const dataTestId = {
   },
   footer: {
     aboutLink: 'about-link',
+    aboutSikt: 'about-sikt',
     availabilityStatement: 'availability-statement',
+    becomeCustomer: 'become-customer',
+    helpPage: 'help-page',
+    newsLink: 'news-link',
     privacyLink: 'privacy-link',
+    systemStatusLink: 'system-status-link',
+    technicalSupportLink: 'technical-support-link',
   },
   header: {
     basicDataLink: 'basic-data-link',
@@ -309,6 +315,7 @@ export const dataTestId = {
       addFilesOrLinksButton: 'add-files-or-links-button',
       administrativeAgreement: 'administrative-agreement-checkbox',
       embargoDateField: 'embargo-date-field',
+      expandFileRowButton: 'expand-file-row-button',
       fileRow: 'uploaded-file-row',
       noFilesOrLinksButton: 'no-files-or-links-button',
       noFilesOrLinksWarning: 'no-files-or-links-warning',

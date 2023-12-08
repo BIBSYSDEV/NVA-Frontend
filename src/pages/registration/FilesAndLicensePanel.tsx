@@ -65,7 +65,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
-  const [isEmbargoModalOpen, setIsEmbargoModalOpen] = useState(false);
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
   const filesToPublish = files.filter((file) => !file.administrativeAgreement);
   const filesNotToPublish = files.filter((file) => file.administrativeAgreement);
@@ -98,7 +97,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   }, [t, uppy, filesRef]);
 
   const toggleLicenseModal = () => setIsLicenseModalOpen(!isLicenseModalOpen);
-  const toggleEmbargoModal = () => setIsEmbargoModalOpen(!isEmbargoModalOpen);
 
   const publisherIdentifier =
     (publicationContext &&
@@ -187,8 +185,8 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
 
                     {files.length > 0 && (
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mb: '2rem' }}>
-                        <TableContainer component={Paper}>
-                          <Table sx={alternatingTableRowColor}>
+                        <TableContainer component={Paper} elevation={3}>
+                          <Table>
                             <TableHead>
                               <TableRow>
                                 <TableCell>{t('common.name')}</TableCell>
@@ -205,18 +203,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                     </Box>
                                   </TableCell>
                                 )}
-                                <TableCell>
-                                  <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                                    {t('registration.files_and_license.embargo')}
-                                    <Tooltip title={t('common.help')}>
-                                      <IconButton
-                                        data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
-                                        onClick={toggleEmbargoModal}>
-                                        <HelpOutlineIcon />
-                                      </IconButton>
-                                    </Tooltip>
-                                  </Box>
-                                </TableCell>
                                 <TableCell>
                                   <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                                     {t('registration.files_and_license.license')}
@@ -429,14 +415,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             )}
           </Box>
         ))}
-      </Modal>
-
-      <Modal
-        headingText={t('registration.files_and_license.embargo')}
-        open={isEmbargoModalOpen}
-        onClose={toggleEmbargoModal}
-        maxWidth="sm">
-        <Typography>{t('registration.files_and_license.file_publish_date_helper_text')}</Typography>
       </Modal>
     </Box>
   );

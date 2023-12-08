@@ -117,7 +117,14 @@ export const PublishingAccordion = ({
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
+      userIsCurator
+        ? dispatch(
+            setNotification({
+              message: t('feedback.success.publish_as_curator'),
+              variant: 'success',
+            })
+          )
+        : dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
       refetchData();
     }
     setIsLoading(LoadingState.None);
