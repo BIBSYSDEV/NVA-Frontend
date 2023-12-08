@@ -154,7 +154,6 @@ const HomePage = () => {
           newRegistrationParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
           newRegistrationParams.set(SearchParam.From, '0');
           history.push({ search: newRegistrationParams.toString() });
-          return;
         } else if (personIsSeleced) {
           newSearchParams.set(SearchParam.Type, SearchTypeValue.Person);
           if (values.searchTerm) {
@@ -162,6 +161,7 @@ const HomePage = () => {
             newSearchParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
             newSearchParams.set(SearchParam.Page, '1');
           }
+          history.push({ search: newSearchParams.toString() });
         } else if (projectIsSelected) {
           newSearchParams.set(SearchParam.Type, SearchTypeValue.Project);
           if (values.searchTerm) {
@@ -169,8 +169,8 @@ const HomePage = () => {
             newSearchParams.set(SearchParam.Results, previousParamsResults ?? defaultResultSize);
             newSearchParams.set(SearchParam.Page, '1');
           }
+          history.push({ search: newSearchParams.toString() });
         }
-        history.push({ search: newSearchParams.toString() });
       }}>
       {({ setValues }: FormikHelpers<SearchConfig>) => (
         <Form style={{ width: '100%' }}>
