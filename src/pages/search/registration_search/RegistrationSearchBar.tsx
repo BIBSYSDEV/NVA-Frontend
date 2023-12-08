@@ -241,6 +241,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                       endIcon={<ClearIcon />}
                       onClick={() => {
                         const newParams = removeSearchParamValue(searchParams, param, value);
+                        newParams.set(ResultParam.From, '0');
                         history.push({ search: newParams.toString() });
                       }}>
                       {fieldName}: {fieldValueText}

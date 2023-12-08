@@ -27,11 +27,13 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
 
   const addFacetFilter = (param: string, key: string) => {
     searchParams.set(param, key);
+    searchParams.set(ResultParam.From, '0');
     history.push({ search: searchParams.toString() });
   };
 
   const removeFacetFilter = (param: string, key: string) => {
     const newSearchParams = removeSearchParamValue(searchParams, param, key);
+    newSearchParams.set(ResultParam.From, '0');
     history.push({ search: newSearchParams.toString() });
   };
 

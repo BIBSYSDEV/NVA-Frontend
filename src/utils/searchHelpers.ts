@@ -53,7 +53,6 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
 };
 
 export const removeSearchParamValue = (params: URLSearchParams, key: string, value: string) => {
-  // TODO: reuse for person and project
   const selectedValues = params.get(key)?.split(',') ?? [];
   const newValues = selectedValues.filter((selectedValue) => selectedValue !== value);
   if (newValues.length === 0) {
