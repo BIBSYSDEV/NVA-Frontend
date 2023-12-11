@@ -168,7 +168,7 @@ export enum ProjectSearchParameter {
   ResponsibleFacet = 'responsibleFacet',
   Results = 'results',
   SectorFacet = 'sectorFacet',
-  Query = 'query',
+  Title = 'title',
 }
 
 export const searchForProjects = async (results: number, page: number, params?: ProjectsSearchParams) => {
@@ -210,7 +210,7 @@ export const searchForProjects = async (results: number, page: number, params?: 
     searchParams.set(ProjectSearchParameter.SectorFacet, params.sectorFacet);
   }
   if (params?.query) {
-    searchParams.set(ProjectSearchParameter.Query, params.query);
+    searchParams.set(ProjectSearchParameter.Title, params.query);
   }
 
   const queryContent = searchParams.toString();

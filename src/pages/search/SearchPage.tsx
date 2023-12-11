@@ -3,15 +3,15 @@ import PersonIcon from '@mui/icons-material/Person';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Box, MenuItem, TextField } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
-import { Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { PersonSearchParameter, ProjectSearchParameter } from '../../api/cristinApi';
+import { SearchForm } from '../../components/SearchForm';
 import { SearchResponse, SearchResponse2 } from '../../types/common.types';
 import { CristinProject, ProjectAggregations } from '../../types/project.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { CristinPerson, PersonAggregations } from '../../types/user.types';
-import { SearchConfig, SearchParam, emptySearchConfig } from '../../utils/searchHelpers';
-import { SearchTextField } from './SearchTextField';
+import { SearchParam } from '../../utils/searchHelpers';
 import { PersonSearch } from './person_search/PersonSearch';
 import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
@@ -43,7 +43,6 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const paramsSearchType = params.get(SearchParam.Type);
-  const { setValues } = useFormikContext<SearchConfig>();
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
@@ -79,7 +78,6 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
               if (!resultIsSelected) {
                 const resultParams = new URLSearchParams();
                 history.push({ search: resultParams.toString() });
-                setValues(emptySearchConfig);
               }
             }}>
             <NotesIcon fontSize="small" />
@@ -93,7 +91,6 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
                 const personParams = new URLSearchParams();
                 personParams.set(SearchParam.Type, SearchTypeValue.Person);
                 history.push({ search: personParams.toString() });
-                setValues(emptySearchConfig);
               }
             }}>
             <PersonIcon fontSize="small" />
@@ -107,7 +104,6 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
                 const projectParams = new URLSearchParams();
                 projectParams.set(SearchParam.Type, SearchTypeValue.Project);
                 history.push({ search: projectParams.toString() });
-                setValues(emptySearchConfig);
               }
             }}>
             <ShowChartIcon fontSize="small" />
@@ -116,21 +112,11 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
         </TextField>
 
         {resultIsSelected && <RegistrationSearchBar aggregations={registrationQuery.data?.aggregations} />}
-        {(personIsSeleced || projectIsSelected) && (
-          <Field name="searchTerm">
-            {({ field, form: { submitForm } }: FieldProps<string>) => (
-              <SearchTextField
-                {...field}
-                placeholder={
-                  personIsSeleced ? t('search.person_search_placeholder') : t('search.project_search_placeholder')
-                }
-                clearValue={() => {
-                  field.onChange({ target: { value: '', id: field.name } });
-                  submitForm();
-                }}
-              />
-            )}
-          </Field>
+        {personIsSeleced && (
+          <SearchForm name={PersonSearchParameter.Name} placeholder={t('search.person_search_placeholder')} />
+        )}
+        {projectIsSelected && (
+          <SearchForm name={ProjectSearchParameter.Title} placeholder={t('search.project_search_placeholder')} />
         )}
       </Box>
 

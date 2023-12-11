@@ -21,17 +21,8 @@ export interface PropertySearch {
   value: string | string[]; // Can check for one or multiple values
   operator?: ExpressionStatement;
 }
-export interface SearchConfig {
-  searchTerm?: string;
-  properties?: PropertySearch[];
-}
 
-export const emptySearchConfig: SearchConfig = {
-  searchTerm: '',
-  properties: [],
-};
-
-export const createSearchConfigFromSearchParams = (params: URLSearchParams): SearchConfig => {
+export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
   const searchTerm = params.get(ResultParam.Query) ?? '';
   const titleParams = params.get(ResultParam.Title)?.split(',') ?? [];
   const contributorNameParams = params.get(ResultParam.ContributorShould)?.split(',') ?? [];

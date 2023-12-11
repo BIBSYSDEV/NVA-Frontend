@@ -13,7 +13,7 @@ interface FilterItem {
   i18nKey: TFuncKey;
 }
 
-export const registrationFilters: FilterItem[] = [
+const registrationFilters: FilterItem[] = [
   { field: ResultParam.Title, i18nKey: 'common.title' },
   { field: ResultParam.ContributorShould, i18nKey: 'registration.contributors.contributor' },
 ];
