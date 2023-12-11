@@ -19,19 +19,9 @@ export enum ExpressionStatement {
 export interface PropertySearch {
   fieldName: string;
   value: string | string[]; // Can check for one or multiple values
-  operator?: ExpressionStatement;
-}
-export interface SearchConfig {
-  searchTerm?: string;
-  properties?: PropertySearch[];
 }
 
-export const emptySearchConfig: SearchConfig = {
-  searchTerm: '',
-  properties: [],
-};
-
-export const createSearchConfigFromSearchParams = (params: URLSearchParams): SearchConfig => {
+export const createSearchConfigFromSearchParams = (params: URLSearchParams) => {
   const searchTerm = params.get(ResultParam.Query) ?? '';
   const titleParams = params.get(ResultParam.Title)?.split(',') ?? [];
   const contributorNameParams = params.get(ResultParam.ContributorShould)?.split(',') ?? [];
@@ -39,13 +29,11 @@ export const createSearchConfigFromSearchParams = (params: URLSearchParams): Sea
   const titleFilters = titleParams.map((title) => ({
     fieldName: ResultParam.Title,
     value: title,
-    operator: ExpressionStatement.Contains,
   }));
 
   const contributorNameFilters = contributorNameParams.map((contributorName) => ({
     fieldName: ResultParam.ContributorShould,
     value: contributorName,
-    operator: ExpressionStatement.Contains,
   }));
   const properties = [...titleFilters, ...contributorNameFilters];
 
