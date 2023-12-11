@@ -152,7 +152,7 @@ export interface ProjectsSearchParams {
   participantOrgFacet?: string | null;
   responsibleFacet?: string | null;
   sectorFacet?: string | null;
-  query?: string | null;
+  title?: string | null;
 }
 
 export enum ProjectSearchParameter {
@@ -209,8 +209,8 @@ export const searchForProjects = async (results: number, page: number, params?: 
   if (params?.sectorFacet) {
     searchParams.set(ProjectSearchParameter.SectorFacet, params.sectorFacet);
   }
-  if (params?.query) {
-    searchParams.set(ProjectSearchParameter.Title, params.query);
+  if (params?.title) {
+    searchParams.set(ProjectSearchParameter.Title, params.title);
   }
 
   const queryContent = searchParams.toString();
