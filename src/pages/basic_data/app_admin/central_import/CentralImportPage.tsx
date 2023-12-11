@@ -82,7 +82,6 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
         }}>
         <SearchForm placeholder={t('tasks.search_placeholder')} />
         <SortSelector
-          sx={{ minWidth: '15rem' }}
           sortKey={SearchParam.SortOrder}
           orderKey={SearchParam.OrderBy}
           options={[

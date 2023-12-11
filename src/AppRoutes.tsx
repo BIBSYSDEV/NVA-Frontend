@@ -40,6 +40,7 @@ export const AppRoutes = () => {
           exact
           path={[
             UrlPathTemplate.Home,
+            UrlPathTemplate.Search,
             UrlPathTemplate.Reports,
             UrlPathTemplate.ReportsNvi,
             UrlPathTemplate.ReportsInternationalCooperation,

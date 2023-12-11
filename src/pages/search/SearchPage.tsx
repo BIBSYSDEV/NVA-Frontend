@@ -116,7 +116,7 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
           <SearchForm paramName={PersonSearchParameter.Name} placeholder={t('search.person_search_placeholder')} />
         )}
         {projectIsSelected && (
-          <SearchForm paramName={ProjectSearchParameter.Title} placeholder={t('search.project_search_placeholder')} />
+          <SearchForm paramName={ProjectSearchParameter.Title} placeholder={t('search.search_for_title')} />
         )}
       </Box>
 

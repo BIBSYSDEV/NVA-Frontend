@@ -56,7 +56,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
       <SearchForm placeholder={t('search.search_placeholder')} />
 
       <SortSelector
-        sx={{ minWidth: '15rem', gridArea: 'sorting' }}
+        sx={{ gridArea: 'sorting' }}
         sortKey="sort"
         orderKey="order"
         options={[

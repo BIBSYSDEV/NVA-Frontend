@@ -1,7 +1,7 @@
 import FilterIcon from '@mui/icons-material/FilterAltOutlined';
 import InsightsIcon from '@mui/icons-material/Insights';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
@@ -14,6 +14,7 @@ import {
   searchForProjects,
 } from '../../api/cristinApi';
 import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../api/searchApi';
+import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -27,6 +28,7 @@ import { ClinicalTreatmentStudiesReports } from '../reports/ClinicalTreatmentStu
 import { InternationalCooperationReports } from '../reports/InternationalCooperationReports';
 import { NviReports } from '../reports/NviReports';
 import ReportsPage from '../reports/ReportsPage';
+import { AdvancedSearchPage } from '../search/AdvancesSearchPage';
 import { SearchPage } from '../search/SearchPage';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
@@ -46,7 +48,6 @@ const HomePage = () => {
   const paramsSearchType = params.get(SearchParam.Type);
 
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
-  const isOnSearchPage = currentPath === '';
 
   const resultIsSelected = !paramsSearchType || paramsSearchType === SearchTypeValue.Result;
   const personIsSeleced = paramsSearchType === SearchTypeValue.Person;
@@ -118,7 +119,7 @@ const HomePage = () => {
           title={t('common.filter')}
           startIcon={<FilterIcon sx={{ bgcolor: 'white' }} />}
           accordionPath=""
-          expanded={isOnSearchPage}
+          expanded={currentPath === ''}
           dataTestId={dataTestId.startPage.filterAccordion}>
           <Box sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {resultIsSelected ? (
@@ -136,6 +137,16 @@ const HomePage = () => {
             ) : null}
           </Box>
         </NavigationListAccordion>
+
+        <BetaFunctionality>
+          <NavigationListAccordion
+            title={t('search.advanced_search')}
+            startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
+            accordionPath={UrlPathTemplate.Search}
+            dataTestId={dataTestId.startPage.advancedSearchAccordion}>
+            <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>{t('search.advanced_search_description')}</Typography>
+          </NavigationListAccordion>
+        </BetaFunctionality>
 
         <NavigationListAccordion
           title={t('search.reports.reports')}
@@ -176,6 +187,7 @@ const HomePage = () => {
           <Route exact path={UrlPathTemplate.Home}>
             <SearchPage registrationQuery={registrationQuery} personQuery={personQuery} projectQuery={projectQuery} />
           </Route>
+          <Route exact path={UrlPathTemplate.Search} component={AdvancedSearchPage} />
           <Route exact path={UrlPathTemplate.Reports} component={ReportsPage} />
           <Route exact path={UrlPathTemplate.ReportsNvi} component={NviReports} />
           <Route
