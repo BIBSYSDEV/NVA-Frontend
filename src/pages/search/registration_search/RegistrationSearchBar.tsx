@@ -152,138 +152,133 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
 
             <FieldArray name="properties">
               {({ push, remove }: FieldArrayRenderProps) => (
-                <>
-                  <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    {values.properties.map((property, index) => (
-                      <AdvancedSearchRow
-                        key={index}
-                        removeFilter={() => {
-                          remove(index);
-                          const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
-                          const newParams = removeSearchParamValue(searchParams, property.fieldName, valueToRemove);
-                          newParams.set(ResultParam.From, '0');
-                          history.push({ search: newParams.toString() });
-                        }}
-                        baseFieldName={`properties[${index}]`}
-                      />
-                    ))}
+                <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {values.properties.map((property, index) => (
+                    <AdvancedSearchRow
+                      key={index}
+                      removeFilter={() => {
+                        remove(index);
+                        const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
+                        const newParams = removeSearchParamValue(searchParams, property.fieldName, valueToRemove);
+                        newParams.set(ResultParam.From, '0');
+                        history.push({ search: newParams.toString() });
+                      }}
+                      baseFieldName={`properties[${index}]`}
+                    />
+                  ))}
 
-                    <Box sx={{ display: 'flex', gap: '1rem' }}>
+                  <Box sx={{ display: 'flex', gap: '1rem' }}>
+                    <Button
+                      data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
+                      variant="outlined"
+                      onClick={() => {
+                        const newPropertyFilter: PropertySearch = {
+                          fieldName: '',
+                          value: '',
+                        };
+                        push(newPropertyFilter);
+                      }}
+                      startIcon={<FilterAltIcon />}>
+                      {t('search.add_filter')}
+                    </Button>
+                    {values.properties && values.properties.length > 0 && (
                       <Button
-                        data-testid={dataTestId.startPage.advancedSearch.addFilterButton}
-                        variant="outlined"
-                        onClick={() => {
-                          const newPropertyFilter: PropertySearch = {
-                            fieldName: '',
-                            value: '',
-                          };
-                          push(newPropertyFilter);
-                        }}
-                        startIcon={<FilterAltIcon />}>
-                        {t('search.add_filter')}
+                        variant="contained"
+                        type="submit"
+                        startIcon={<SearchIcon />}
+                        data-testid={dataTestId.startPage.advancedSearch.searchButton}>
+                        {t('common.search')}
                       </Button>
-                      {values.properties && values.properties.length > 0 && (
-                        <Button
-                          variant="contained"
-                          type="submit"
-                          startIcon={<SearchIcon />}
-                          data-testid={dataTestId.startPage.advancedSearch.searchButton}>
-                          {t('common.search')}
-                        </Button>
-                      )}
-                    </Box>
+                    )}
                   </Box>
-                  {searchParamsArray.length > 0 && (
-                    <Box sx={{ gridArea: 'facets', display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
-                      {searchParamsArray.map(([param, value]) => {
-                        let fieldName = '';
-                        let fieldValueText: ReactNode = '';
-
-                        switch (param) {
-                          case ResultParam.Category:
-                            fieldName = t('common.category');
-                            fieldValueText = t(`registration.publication_types.${value as PublicationInstanceType}`);
-                            break;
-                          case ResultParam.Contributor: {
-                            fieldName = t('registration.contributors.contributor');
-                            const personName = aggregations?.contributorId?.find((bucket) => bucket.key === value)
-                              ?.labels;
-                            if (personName) {
-                              fieldValueText = getLanguageString(personName);
-                            } else {
-                              fieldValueText = (
-                                <SelectedContributorFacetButton
-                                  personId={typeof value === 'string' ? value : value[0]}
-                                />
-                              );
-                            }
-                            break;
-                          }
-                          case ResultParam.TopLevelOrganization: {
-                            fieldName = t('common.institution');
-                            const institutionLabels = aggregations?.topLevelOrganization?.find(
-                              (bucket) => bucket.key === value
-                            )?.labels;
-
-                            const institutionName = institutionLabels ? getLanguageString(institutionLabels) : '';
-                            if (institutionName) {
-                              fieldValueText = institutionName;
-                            } else {
-                              fieldValueText = (
-                                <SelectedInstitutionFacetButton
-                                  institutionId={typeof value === 'string' ? value : value[0]}
-                                />
-                              );
-                            }
-                            break;
-                          }
-                          case ResultParam.FundingSource: {
-                            fieldName = t('common.funding');
-                            const fundingLabels = aggregations?.fundingSource?.find((bucket) => bucket.key === value)
-                              ?.labels;
-                            const fundingName = fundingLabels ? getLanguageString(fundingLabels) : '';
-                            if (fundingName) {
-                              fieldValueText = fundingName;
-                            } else {
-                              fieldValueText = (
-                                <SelectedFundingFacetButton
-                                  fundingIdentifier={typeof value === 'string' ? value : value[0]}
-                                />
-                              );
-                            }
-                            break;
-                          }
-                          default:
-                            fieldValueText = typeof value === 'string' ? value : t('common.unknown');
-                        }
-
-                        if (!fieldName || !fieldValueText) {
-                          return null;
-                        }
-
-                        return (
-                          <Button
-                            key={`${param}-${value}`}
-                            data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
-                            variant="outlined"
-                            size="small"
-                            title={t('search.remove_filter')}
-                            sx={{ textTransform: 'none' }}
-                            endIcon={<ClearIcon />}
-                            onClick={() => {
-                              const newParams = removeSearchParamValue(searchParams, param, value);
-                              newParams.set(ResultParam.From, '0');
-                              history.push({ search: newParams.toString() });
-                            }}>
-                            {fieldName}: {fieldValueText}
-                          </Button>
-                        );
-                      })}
-                    </Box>
-                  )}
-                </>
+                </Box>
               )}
             </FieldArray>
+
+            {searchParamsArray.length > 0 && (
+              <Box sx={{ gridArea: 'facets', display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
+                {searchParamsArray.map(([param, value]) => {
+                  let fieldName = '';
+                  let fieldValueText: ReactNode = '';
+
+                  switch (param) {
+                    case ResultParam.Category:
+                      fieldName = t('common.category');
+                      fieldValueText = t(`registration.publication_types.${value as PublicationInstanceType}`);
+                      break;
+                    case ResultParam.Contributor: {
+                      fieldName = t('registration.contributors.contributor');
+                      const personName = aggregations?.contributorId?.find((bucket) => bucket.key === value)?.labels;
+                      if (personName) {
+                        fieldValueText = getLanguageString(personName);
+                      } else {
+                        fieldValueText = (
+                          <SelectedContributorFacetButton personId={typeof value === 'string' ? value : value[0]} />
+                        );
+                      }
+                      break;
+                    }
+                    case ResultParam.TopLevelOrganization: {
+                      fieldName = t('common.institution');
+                      const institutionLabels = aggregations?.topLevelOrganization?.find(
+                        (bucket) => bucket.key === value
+                      )?.labels;
+
+                      const institutionName = institutionLabels ? getLanguageString(institutionLabels) : '';
+                      if (institutionName) {
+                        fieldValueText = institutionName;
+                      } else {
+                        fieldValueText = (
+                          <SelectedInstitutionFacetButton
+                            institutionId={typeof value === 'string' ? value : value[0]}
+                          />
+                        );
+                      }
+                      break;
+                    }
+                    case ResultParam.FundingSource: {
+                      fieldName = t('common.funding');
+                      const fundingLabels = aggregations?.fundingSource?.find((bucket) => bucket.key === value)?.labels;
+                      const fundingName = fundingLabels ? getLanguageString(fundingLabels) : '';
+                      if (fundingName) {
+                        fieldValueText = fundingName;
+                      } else {
+                        fieldValueText = (
+                          <SelectedFundingFacetButton
+                            fundingIdentifier={typeof value === 'string' ? value : value[0]}
+                          />
+                        );
+                      }
+                      break;
+                    }
+                    default:
+                      fieldValueText = typeof value === 'string' ? value : t('common.unknown');
+                  }
+
+                  if (!fieldName || !fieldValueText) {
+                    return null;
+                  }
+
+                  return (
+                    <Button
+                      key={`${param}-${value}`}
+                      data-testid={dataTestId.startPage.advancedSearch.removeFacetButton}
+                      variant="outlined"
+                      size="small"
+                      title={t('search.remove_filter')}
+                      sx={{ textTransform: 'none' }}
+                      endIcon={<ClearIcon />}
+                      onClick={() => {
+                        const newParams = removeSearchParamValue(searchParams, param, value);
+                        newParams.set(ResultParam.From, '0');
+                        history.push({ search: newParams.toString() });
+                      }}>
+                      {fieldName}: {fieldValueText}
+                    </Button>
+                  );
+                })}
+              </Box>
+            )}
           </Box>
         </Form>
       )}
