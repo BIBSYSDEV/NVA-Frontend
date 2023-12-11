@@ -18,7 +18,6 @@ import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType, RegistrationAggregations } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
-  ExpressionStatement,
   PropertySearch,
   createSearchConfigFromSearchParams,
   removeSearchParamValue,
@@ -155,10 +154,9 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
               {({ push, remove }: FieldArrayRenderProps) => (
                 <>
                   <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    {values.properties?.map((property, index) => (
+                    {values.properties.map((property, index) => (
                       <AdvancedSearchRow
                         key={index}
-                        propertySearchItem={property}
                         removeFilter={() => {
                           remove(index);
                           const valueToRemove = typeof property.value === 'string' ? property.value : property.value[0];
@@ -178,7 +176,6 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                           const newPropertyFilter: PropertySearch = {
                             fieldName: '',
                             value: '',
-                            operator: ExpressionStatement.Contains,
                           };
                           push(newPropertyFilter);
                         }}

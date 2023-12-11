@@ -3,10 +3,8 @@ import { Field, FieldProps } from 'formik';
 import { TFuncKey } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { ResultParam } from '../../../../api/searchApi';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
-import { PublicationInstanceType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { ExpressionStatement, PropertySearch } from '../../../../utils/searchHelpers';
+import { ExpressionStatement } from '../../../../utils/searchHelpers';
 
 interface FilterItem {
   field: string;
@@ -21,10 +19,9 @@ const registrationFilters: FilterItem[] = [
 interface AdvancedSearchRowProps {
   baseFieldName: string;
   removeFilter: () => void;
-  propertySearchItem: PropertySearch;
 }
 
-export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchItem }: AdvancedSearchRowProps) => {
+export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearchRowProps) => {
   const { t } = useTranslation();
 
   return (
@@ -45,28 +42,21 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName, propertySearchI
           </TextField>
         )}
       </Field>
-      <Field name={`${baseFieldName}.operator`}>
-        {({ field }: FieldProps<string>) => (
-          <TextField
-            {...field}
-            select
-            disabled
-            label={t('search.operator')}
-            data-testid={dataTestId.startPage.advancedSearch.advancedOperatorSelect}>
-            <MenuItem value={ExpressionStatement.Contains}>{t('search.contains')}</MenuItem>
-          </TextField>
-        )}
-      </Field>
+
+      <TextField
+        select
+        disabled
+        label={t('search.operator')}
+        value={ExpressionStatement.Contains}
+        data-testid={dataTestId.startPage.advancedSearch.advancedOperatorSelect}>
+        <MenuItem value={ExpressionStatement.Contains}>{t('search.contains')}</MenuItem>
+      </TextField>
+
       <Field name={`${baseFieldName}.value`}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
             data-testid={dataTestId.startPage.advancedSearch.advancedValueField}
-            value={
-              propertySearchItem.value && propertySearchItem.fieldName === ResourceFieldNames.RegistrationType
-                ? t(`registration.publication_types.${propertySearchItem.value as PublicationInstanceType}`)
-                : field.value
-            }
             variant="outlined"
             label={t('search.search_term_label')}
           />
