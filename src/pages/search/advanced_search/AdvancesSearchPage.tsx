@@ -1,4 +1,4 @@
-import { Autocomplete, Box } from '@mui/material';
+import { Autocomplete, Box, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,7 @@ import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { setNotification } from '../../../redux/notificationSlice';
+import { Organization } from '../../../types/organization.types';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -100,42 +101,113 @@ export const OrganizationFilters = ({ currentTopLevelOrganization }: Organizatio
   const options = institutionSearchQuery.data?.hits ?? [];
 
   return (
-    <Autocomplete
-      options={options}
-      inputMode="search"
-      getOptionLabel={(option) => getLanguageString(option.labels)}
-      filterOptions={(options) => options}
-      onInputChange={(_, value, reason) => {
-        if (reason !== 'reset') {
-          setSearchTerm(value);
-        }
-      }}
-      onChange={(_, selectedInstitution) => {
-        const params = new URLSearchParams(history.location.search);
-        if (selectedInstitution) {
-          params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
-        } else {
-          params.delete(ResultParam.TopLevelOrganization);
-        }
-        history.push({ search: params.toString() });
+    <Box sx={{ width: '100%', display: 'flex', gap: '1rem' }}>
+      <Autocomplete
+        options={options}
+        inputMode="search"
+        fullWidth
+        sx={{ maxWidth: '30rem' }}
+        getOptionLabel={(option) => getLanguageString(option.labels)}
+        filterOptions={(options) => options}
+        onInputChange={(_, value, reason) => {
+          if (reason !== 'reset') {
+            setSearchTerm(value);
+          }
+        }}
+        onChange={(_, selectedInstitution) => {
+          const params = new URLSearchParams(history.location.search);
+          if (selectedInstitution) {
+            params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
+          } else {
+            params.delete(ResultParam.TopLevelOrganization);
+          }
+          history.push({ search: params.toString() });
 
-        setSearchTerm('');
-      }}
-      disabled={organizationQuery.isFetching}
-      value={organizationQuery.data ?? null}
-      loading={institutionSearchQuery.isFetching}
-      renderInput={(params) => (
-        <AutocompleteTextField
-          {...params}
-          sx={{ maxWidth: '25rem' }}
-          variant="outlined"
-          isLoading={institutionSearchQuery.isFetching}
-          // data-testid={customDataTestId ?? dataTestId.organization.searchField}
-          label={t('common.institution')}
-          placeholder={t('project.search_for_institution')}
-          showSearchIcon
-        />
+          setSearchTerm('');
+        }}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        disabled={organizationQuery.isFetching}
+        value={organizationQuery.data ?? null}
+        loading={institutionSearchQuery.isFetching}
+        renderInput={(params) => (
+          <AutocompleteTextField
+            {...params}
+            variant="outlined"
+            isLoading={institutionSearchQuery.isFetching}
+            // data-testid={customDataTestId ?? dataTestId.organization.searchField}
+            label={t('common.institution')}
+            placeholder={t('project.search_for_institution')}
+            showSearchIcon
+          />
+        )}
+      />
+      {organizationQuery.data?.hasPart && organizationQuery.data.hasPart.length > 0 && (
+        <SubOrganizationFilter units={organizationQuery.data.hasPart} level={1} />
       )}
-    />
+    </Box>
+  );
+};
+
+interface SubOrganizationFilterProps {
+  units: Organization[];
+  level: number;
+}
+
+const subUnitParamName = 'subUnit';
+
+const SubOrganizationFilter = ({ units, level }: SubOrganizationFilterProps) => {
+  const { t } = useTranslation();
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
+
+  const paramName = `${subUnitParamName}${level}`;
+  const selectedUnitId = params.get(paramName);
+
+  const selectedUnit = units.find((unit) => unit.id === selectedUnitId);
+
+  return (
+    <>
+      <Autocomplete
+        options={units}
+        value={selectedUnit ?? null}
+        inputMode="search"
+        fullWidth
+        sx={{ maxWidth: '30rem' }}
+        getOptionLabel={(option) => getLanguageString(option.labels)}
+        onChange={(_, selectedInstitution) => {
+          const params = new URLSearchParams(history.location.search);
+          if (selectedInstitution) {
+            params.set(paramName, selectedInstitution.id);
+          } else {
+            params.delete(paramName);
+          }
+
+          const paramKeys = params.keys();
+          for (const key of paramKeys) {
+            if (key.startsWith(subUnitParamName) && key !== paramName) {
+              const paramLevel = +key[key.length - 1];
+              if (paramLevel >= level) {
+                params.delete(key);
+              }
+            }
+          }
+
+          history.push({ search: params.toString() });
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="outlined"
+            // data-testid={dataTestId.organization.subSearchField}
+            label={t('search.sub_unit')}
+            placeholder={t('common.search')}
+          />
+        )}
+      />
+
+      {selectedUnit?.hasPart && selectedUnit.hasPart.length > 0 && (
+        <SubOrganizationFilter units={selectedUnit.hasPart} level={++level} />
+      )}
+    </>
   );
 };
