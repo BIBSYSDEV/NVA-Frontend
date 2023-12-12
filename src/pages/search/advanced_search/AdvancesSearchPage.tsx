@@ -121,6 +121,12 @@ export const OrganizationFilters = ({ currentTopLevelOrganization }: Organizatio
           } else {
             params.delete(ResultParam.TopLevelOrganization);
           }
+
+          const paramKeys = Array.from(params.keys()).filter((key) => key.startsWith(subUnitParamName));
+          for (const key of paramKeys) {
+            params.delete(key);
+          }
+
           history.push({ search: params.toString() });
 
           setSearchTerm('');
@@ -182,13 +188,13 @@ const SubOrganizationFilter = ({ units, level }: SubOrganizationFilterProps) => 
             params.delete(paramName);
           }
 
-          const paramKeys = params.keys();
+          const paramKeys = Array.from(params.keys()).filter(
+            (key) => key.startsWith(subUnitParamName) && key !== paramName
+          );
           for (const key of paramKeys) {
-            if (key.startsWith(subUnitParamName) && key !== paramName) {
-              const paramLevel = +key[key.length - 1];
-              if (paramLevel >= level) {
-                params.delete(key);
-              }
+            const paramLevel = +key[key.length - 1];
+            if (paramLevel >= level) {
+              params.delete(key);
             }
           }
 
@@ -198,6 +204,7 @@ const SubOrganizationFilter = ({ units, level }: SubOrganizationFilterProps) => 
           <TextField
             {...params}
             variant="outlined"
+            multiline
             // data-testid={dataTestId.organization.subSearchField}
             label={t('search.sub_unit')}
             placeholder={t('common.search')}
