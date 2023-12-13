@@ -2,7 +2,6 @@ import { Autocomplete, Box, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { OrganizationSearchParams, fetchOrganization, searchForOrganizations } from '../../../api/cristinApi';
 import { FetchResultsParams, ResultParam, fetchResults } from '../../../api/searchApi';
@@ -10,22 +9,30 @@ import { AutocompleteTextField } from '../../../components/AutocompleteTextField
 import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
-import { setNotification } from '../../../redux/notificationSlice';
-import { Organization } from '../../../types/organization.types';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
+import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
+
+enum AdvancedQueryParams {
+  Institution = 'institution',
+  SubUnit = 'subUnit',
+}
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
 
-  const topLevelOrganization = params.get(ResultParam.TopLevelOrganization);
+  const institutionId = params.get(AdvancedQueryParams.Institution);
+  const subUnitId = params.get(AdvancedQueryParams.SubUnit);
+
+  const unitFilter = subUnitId ?? institutionId;
+
   const resultSearchQueryConfig: FetchResultsParams = {
     title: params.get(ResultParam.Title),
-    topLevelOrganization: topLevelOrganization,
+    unit: unitFilter,
   };
 
   const resultSearchQuery = useQuery({
@@ -62,7 +69,7 @@ export const AdvancedSearchPage = () => {
         />
       </Box>
 
-      <OrganizationFilters currentTopLevelOrganization={topLevelOrganization} />
+      <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
 
       <RegistrationSearch registrationQuery={resultSearchQuery} />
     </Box>
@@ -70,21 +77,21 @@ export const AdvancedSearchPage = () => {
 };
 
 interface OrganizationFiltersProps {
-  currentTopLevelOrganization: string | null;
+  institutionId: string | null;
+  subUnitId: string | null;
 }
 
-export const OrganizationFilters = ({ currentTopLevelOrganization }: OrganizationFiltersProps) => {
+export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFiltersProps) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
 
   const organizationQuery = useQuery({
-    queryKey: [currentTopLevelOrganization],
-    enabled: !!currentTopLevelOrganization,
-    queryFn: () => fetchOrganization(currentTopLevelOrganization ?? ''),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_institution'), variant: 'error' })),
+    queryKey: [institutionId],
+    enabled: !!institutionId,
+    queryFn: () => fetchOrganization(institutionId ?? ''),
+    meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes
   });
@@ -96,9 +103,13 @@ export const OrganizationFilters = ({ currentTopLevelOrganization }: Organizatio
     enabled: !!debouncedQuery,
     queryKey: ['organization', institutionQueryParams],
     queryFn: () => searchForOrganizations(institutionQueryParams),
+    // meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
   const options = institutionSearchQuery.data?.hits ?? [];
+
+  const subUnits = getSortedSubUnits(organizationQuery.data?.hasPart);
+  const selectedSubUnit = subUnits.find((unit) => unit.id === subUnitId) ?? null;
 
   return (
     <Box sx={{ width: '100%', display: 'flex', gap: '1rem' }}>
@@ -117,18 +128,12 @@ export const OrganizationFilters = ({ currentTopLevelOrganization }: Organizatio
         onChange={(_, selectedInstitution) => {
           const params = new URLSearchParams(history.location.search);
           if (selectedInstitution) {
-            params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
+            params.set(AdvancedQueryParams.Institution, selectedInstitution.id);
           } else {
-            params.delete(ResultParam.TopLevelOrganization);
+            params.delete(AdvancedQueryParams.Institution);
           }
-
-          const paramKeys = Array.from(params.keys()).filter((key) => key.startsWith(subUnitParamName));
-          for (const key of paramKeys) {
-            params.delete(key);
-          }
-
+          params.delete(AdvancedQueryParams.SubUnit);
           history.push({ search: params.toString() });
-
           setSearchTerm('');
         }}
         isOptionEqualToValue={(option, value) => option.id === value.id}
@@ -147,55 +152,21 @@ export const OrganizationFilters = ({ currentTopLevelOrganization }: Organizatio
           />
         )}
       />
-      {organizationQuery.data?.hasPart && organizationQuery.data.hasPart.length > 0 && (
-        <SubOrganizationFilter units={organizationQuery.data.hasPart} level={1} />
-      )}
-    </Box>
-  );
-};
 
-interface SubOrganizationFilterProps {
-  units: Organization[];
-  level: number;
-}
-
-const subUnitParamName = 'subUnit';
-
-const SubOrganizationFilter = ({ units, level }: SubOrganizationFilterProps) => {
-  const { t } = useTranslation();
-  const history = useHistory();
-  const params = new URLSearchParams(history.location.search);
-
-  const paramName = `${subUnitParamName}${level}`;
-  const selectedUnitId = params.get(paramName);
-
-  const selectedUnit = units.find((unit) => unit.id === selectedUnitId);
-
-  return (
-    <>
       <Autocomplete
-        options={units}
-        value={selectedUnit ?? null}
+        options={subUnits}
+        value={selectedSubUnit}
         inputMode="search"
+        disabled={!institutionId || subUnits.length === 0}
         fullWidth
         sx={{ maxWidth: '30rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
-        onChange={(_, selectedInstitution) => {
+        onChange={(_, selectedUnit) => {
           const params = new URLSearchParams(history.location.search);
-          if (selectedInstitution) {
-            params.set(paramName, selectedInstitution.id);
+          if (selectedUnit) {
+            params.set(AdvancedQueryParams.SubUnit, selectedUnit.id);
           } else {
-            params.delete(paramName);
-          }
-
-          const paramKeys = Array.from(params.keys()).filter(
-            (key) => key.startsWith(subUnitParamName) && key !== paramName
-          );
-          for (const key of paramKeys) {
-            const paramLevel = +key[key.length - 1];
-            if (paramLevel >= level) {
-              params.delete(key);
-            }
+            params.delete(AdvancedQueryParams.SubUnit);
           }
 
           history.push({ search: params.toString() });
@@ -211,10 +182,6 @@ const SubOrganizationFilter = ({ units, level }: SubOrganizationFilterProps) => 
           />
         )}
       />
-
-      {selectedUnit?.hasPart && selectedUnit.hasPart.length > 0 && (
-        <SubOrganizationFilter units={selectedUnit.hasPart} level={++level} />
-      )}
-    </>
+    </Box>
   );
 };

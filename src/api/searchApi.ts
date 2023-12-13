@@ -118,6 +118,7 @@ export enum ResultParam {
   Query = 'query',
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
+  Unit = 'unit',
 }
 
 export interface FetchResultsParams {
@@ -140,6 +141,7 @@ export interface FetchResultsParams {
   [ResultParam.Query]?: string | null;
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
+  [ResultParam.Unit]?: string | null;
 }
 
 export const fetchResults = async (params: FetchResultsParams) => {
@@ -189,6 +191,9 @@ export const fetchResults = async (params: FetchResultsParams) => {
   }
   if (params.topLevelOrganization) {
     searchParams.set(ResultParam.TopLevelOrganization, params.topLevelOrganization);
+  }
+  if (params.unit) {
+    searchParams.set(ResultParam.Unit, params.unit);
   }
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
