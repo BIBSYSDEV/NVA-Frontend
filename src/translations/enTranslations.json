@@ -1,6 +1,5 @@
 {
   "about": {
-    "about_nva": "About NVA",
     "availability_statement": "Availability statement",
     "description": {
       "paragraph0": {
@@ -63,7 +62,7 @@
         "merge_details_1": "The result exists in NVA. Go to the wizard to edit all fields after you have merged import data with the result in NVA. This may be important for the Norwegian Science Index (NVI).",
         "merge_details_2": "Data from NVA is shown on the right. Metadata from the import candidate is shown on the left and often has better data. You can individually select what you want to include.",
         "metadata_to_import": "Metadata for import",
-        "page_to": "",
+        "page_to": "Page numbers to",
         "result_id": "Result ID",
         "result_in_nva": "Result in NVA",
         "update_value": "Update value"
@@ -73,8 +72,8 @@
       "reset_search_values": "Reset values",
       "search_again": "Search again",
       "search_for_duplicates": "Search for duplicates",
-      "sort_newest_first": "",
-      "sort_oldest_first": "",
+      "sort_newest_first": "Newest candidates first",
+      "sort_oldest_first": "Oldest candidates first",
       "status": {
         "IMPORTED": "Imported",
         "NOT_APPLICABLE": "Incomplete",
@@ -110,8 +109,7 @@
         "INSTITUTE": "Institute sector",
         "OTHER": "Other",
         "UHI": "University and college"
-      },
-      "short_name": "Shortened display name"
+      }
     },
     "nvi": {
       "add_reporting_period": "Add reporting period",
@@ -236,7 +234,7 @@
     "type": "Type",
     "unknown": "Unknown",
     "update": "Update",
-    "url": "",
+    "url": "URL",
     "username": "Username",
     "version": "Version",
     "will_be_available": "Will be available",
@@ -383,12 +381,12 @@
       "registrator_publishes_without_curator_description": "The institution determines who is the Registrar."
     },
     "retention_strategy": {
-      "rights_retention_strategy": "",
-      "rrs": "",
-      "rrs_info_page": "",
-      "rrs_link": "",
-      "rrs_override": "",
-      "rrs_required_link": ""
+      "rights_retention_strategy": "Rights Retention Strategy (RRS)",
+      "rrs": "Rights policy",
+      "rrs_info_page": "The institution's information page about rights policy",
+      "rrs_link": "Fill in link",
+      "rrs_override": "Registrar can waive RRS",
+      "rrs_required_link": "*Fields with an asterisk are mandatory"
     },
     "select_vocabulary_description": "Activate controlled vocabularies when registering a new result",
     "vocabulary": "Vocabulary",
@@ -477,7 +475,7 @@
       "update_publish_strategy": "Failed to update publishing strategy",
       "update_publishing_request": "Could not update publishing request",
       "update_registration": "Failed to update registration",
-      "update_rights_retention_strategy": "",
+      "update_rights_retention_strategy": "Failed to update rights policy",
       "update_ticket_assignee": "Failed to assign case",
       "update_ticket_status": "Failed to update status",
       "update_vocabulary": "Failed to update {{vocabulary}}"
@@ -503,6 +501,7 @@
       "doi_request_sent": "DOI request sent",
       "doi_request_updated": "DOI request is updated",
       "merge_import_candidate": "Import data was merged with existing result data",
+      "publish_as_curator": "The registration was published (no approval required as you are the curator)",
       "publishing_request_approved": "The registration was published",
       "publishing_request_rejected": "The publishing request was rejected",
       "removed_role": "Role removed",
@@ -519,7 +518,7 @@
       "update_promoted_publication": "",
       "update_publish_strategy": "Updated publishing strategy",
       "update_registration": "Updated registration",
-      "update_rights_retention_strategy": "",
+      "update_rights_retention_strategy": "Rights policy updated successfully",
       "update_ticket_assignee": "Successfully updated curator",
       "update_vocabulary": "{{vocabulary}} is now {{status}}"
     },
@@ -545,6 +544,18 @@
       "must_have_minimum": "Must have at least {{min}} {{-field}}",
       "not_selected": "{{field}} is not selected"
     }
+  },
+  "footer": {
+    "about_nva": "About the national research archive (NVA)",
+    "about_nva_text": "The national research archive (NVA) collects publications and other research results and makes them openly available in a joint national solution. This makes results from Norwegian research available in a single service.",
+    "about_sikt": "About Sikt",
+    "about_sikt_text": "Sikt enters an agreement with each individual institution regarding use of the service. Customers are typically universities, university colleges, research institutes and organizations in the health sector.",
+    "become_customer": "How to become a customer?",
+    "help_page": "Help page",
+    "language_selector": "Selected language",
+    "news_link": "Newsletter",
+    "system_status_link": "System Status",
+    "technical_support_link": "For technical support, please contact <0>kontakt@sikt.no</0>"
   },
   "licenses": {
     "description": {
@@ -1155,7 +1166,6 @@
       "administrative_contract": "Internal file that should never be published. E.g. author agreement or other documentation for the registered result",
       "conditions_for_using_file": "Terms of use",
       "embargo": "Embargo",
-      "file_publish_date": "Postponed publication",
       "file_publish_date_helper_text": "File is locked until the specified date",
       "files": "Files",
       "files_are_not_published": "Files are not published",
@@ -1190,8 +1200,10 @@
     "missing_title": "Missing title",
     "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
     "modal_unsaved_changes_heading": "Leave without saving?",
-    "new_registration": "New registration",
+    "new_registration": "New result",
     "nvi_warning": {
+      "approval_override_warning": "You have made significant changes to the publication. This means all institutions with participating co-authors must re-approve the publication in order for it to be included in this year's NVI report.",
+      "confirm_saving_registration": "Do you want to save your changes?",
       "continue_editing_registration": "Do you still want to edit the publication?",
       "registration_is_included_in_nvi": "The publication is a part of the Norwegian Science Index (NVI)",
       "reset_nvi_warning": "You may change the year, contributor's affiliation(-s) to institution(-s) or publishing channel, but the curator at all contributing institutions must re-approve the publication in the Norwegian Science Index (NVI)"
@@ -1651,7 +1663,7 @@
     "hits_other": "{{count}} hits",
     "not_containing": "Does not contain",
     "operator": "Operator",
-    "participant": "",
+    "participant": "Participant",
     "participating_institution": "Participating institution",
     "person_search_placeholder": "Search for name",
     "persons": "Persons",
@@ -1691,7 +1703,7 @@
       "next_candidate": "Go to the next candidate",
       "no_nvi_candidates": "No NVI candidates",
       "note": "Note",
-      "previous_candidate": "",
+      "previous_candidate": "Go to previous candidate",
       "publication_points": "Publication points",
       "reject_nvi_candidate": "Reject",
       "reject_nvi_candidate_description": "Rejection of the result.",
