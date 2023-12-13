@@ -104,7 +104,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
     enabled: !!debouncedQuery,
     queryKey: ['organization', institutionQueryParams],
     queryFn: () => searchForOrganizations(institutionQueryParams),
-    // meta: { errorMessage: t('feedback.error.get_institution') },
+    meta: { errorMessage: t('feedback.error.get_institutions') },
   });
 
   const options = institutionSearchQuery.data?.hits ?? [];
@@ -112,8 +112,10 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
   const subUnits = getSortedSubUnits(organizationQuery.data?.hasPart);
   const selectedSubUnit = subUnits.find((unit) => unit.id === subUnitId) ?? null;
 
+  const isLoading = organizationQuery.isFetching || institutionSearchQuery.isFetching;
+
   return (
-    <Box sx={{ width: '100%', display: 'flex', gap: '1rem' }}>
+    <Box sx={{ display: 'flex', gap: '1rem' }}>
       <Autocomplete
         options={options}
         inputMode="search"
@@ -127,25 +129,29 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
           }
         }}
         onChange={(_, selectedInstitution) => {
-          const params = new URLSearchParams(history.location.search);
-          if (selectedInstitution) {
-            params.set(AdvancedQueryParams.Institution, selectedInstitution.id);
-          } else {
-            params.delete(AdvancedQueryParams.Institution);
+          if (selectedInstitution !== institutionId) {
+            const params = new URLSearchParams(history.location.search);
+            if (selectedInstitution) {
+              params.set(AdvancedQueryParams.Institution, selectedInstitution.id);
+            } else {
+              params.delete(AdvancedQueryParams.Institution);
+            }
+
+            params.delete(AdvancedQueryParams.SubUnit);
+            history.push({ search: params.toString() });
+            setSearchTerm('');
           }
-          params.delete(AdvancedQueryParams.SubUnit);
-          history.push({ search: params.toString() });
-          setSearchTerm('');
         }}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         disabled={organizationQuery.isFetching}
         value={organizationQuery.data ?? null}
-        loading={institutionSearchQuery.isFetching}
+        loading={isLoading}
         renderInput={(params) => (
           <AutocompleteTextField
             {...params}
             variant="outlined"
-            isLoading={institutionSearchQuery.isFetching}
+            multiline
+            isLoading={isLoading}
             data-testid={dataTestId.organization.searchField}
             label={t('common.institution')}
             placeholder={t('project.search_for_institution')}
@@ -180,7 +186,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
             InputLabelProps={{ shrink: true }}
             data-testid={dataTestId.organization.subSearchField}
             label={t('search.sub_unit')}
-            placeholder={t('common.search')}
+            placeholder={t('search.search_for_sub_unit')}
           />
         )}
       />
