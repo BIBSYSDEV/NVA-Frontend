@@ -3,7 +3,6 @@ export interface IdentifierParams {
 }
 
 export enum UrlPathTemplate {
-  About = '/about',
   BasicData = '/basic-data',
   BasicDataAddEmployee = '/basic-data/person-register/new',
   BasicDataCentralImport = '/basic-data/central-import',
