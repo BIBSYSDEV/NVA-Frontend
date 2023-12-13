@@ -10,6 +10,7 @@ import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
+import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -117,7 +118,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
         options={options}
         inputMode="search"
         fullWidth
-        sx={{ maxWidth: '30rem' }}
+        sx={{ maxWidth: '20rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
         filterOptions={(options) => options}
         onInputChange={(_, value, reason) => {
@@ -145,7 +146,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
             {...params}
             variant="outlined"
             isLoading={institutionSearchQuery.isFetching}
-            // data-testid={customDataTestId ?? dataTestId.organization.searchField}
+            data-testid={dataTestId.organization.searchField}
             label={t('common.institution')}
             placeholder={t('project.search_for_institution')}
             showSearchIcon
@@ -159,7 +160,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
         inputMode="search"
         disabled={!institutionId || subUnits.length === 0}
         fullWidth
-        sx={{ maxWidth: '30rem' }}
+        sx={{ maxWidth: '20rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
         onChange={(_, selectedUnit) => {
           const params = new URLSearchParams(history.location.search);
@@ -176,7 +177,8 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
             {...params}
             variant="outlined"
             multiline
-            // data-testid={dataTestId.organization.subSearchField}
+            InputLabelProps={{ shrink: true }}
+            data-testid={dataTestId.organization.subSearchField}
             label={t('search.sub_unit')}
             placeholder={t('common.search')}
           />

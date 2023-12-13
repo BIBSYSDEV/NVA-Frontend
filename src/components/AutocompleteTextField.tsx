@@ -20,7 +20,6 @@ export const AutocompleteTextField = ({
     variant="filled"
     {...params}
     fullWidth
-    multiline
     InputProps={{
       ...params.InputProps,
       startAdornment: (
