@@ -34,6 +34,8 @@ import {
   OtherRelease,
   Venue,
 } from '../types/publication_types/artisticRegistration.types';
+import { BookRegistration } from '../types/publication_types/bookRegistration.types';
+import { ChapterRegistration } from '../types/publication_types/chapterRegistration.types';
 import {
   ExhibitionBasic,
   ExhibitionMentionInPublication,
@@ -313,24 +315,49 @@ export const contributorConfig: ContributorConfig = {
   },
   // Degree
   [DegreeType.Bachelor]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Master]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Phd]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Licentiate]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Other]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   // Chapter
   [ChapterType.AcademicChapter]: {
@@ -674,5 +701,53 @@ export const openFileInNewTab = (fileUri: string) => {
   if (fileUri) {
     // Use timeout to ensure that file is opened on Safari/iOS: NP-30205, https://stackoverflow.com/a/70463940
     setTimeout(() => window.open(fileUri, '_blank'));
+  }
+};
+
+export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
+  const canBeNviCandidate = nviApplicableTypes.includes(
+    persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
+  );
+  if (!canBeNviCandidate) {
+    return false;
+  }
+
+  const hasChangedYear =
+    persistedRegistration.entityDescription?.publicationDate?.year !==
+    updatedRegistration.entityDescription?.publicationDate?.year;
+  if (hasChangedYear) {
+    return true;
+  }
+
+  const hasChangedCategory =
+    persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
+    updatedRegistration.entityDescription?.reference?.publicationInstance.type;
+  if (hasChangedCategory) {
+    return true;
+  }
+
+  const persistedRegistrationWithContextId = persistedRegistration as JournalRegistration | ChapterRegistration;
+  const updatedRegistrationWithContextId = updatedRegistration as JournalRegistration | ChapterRegistration;
+  const hasChangedContextId =
+    persistedRegistrationWithContextId.entityDescription?.reference?.publicationContext?.id !==
+    updatedRegistrationWithContextId.entityDescription?.reference?.publicationContext?.id;
+  if (hasChangedContextId) {
+    return true;
+  }
+
+  const persistedRegistrationWithPublisher = persistedRegistration as BookRegistration;
+  const updatedRegistrationWithPublisher = updatedRegistration as BookRegistration;
+  const hasChangedPublisher =
+    updatedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.publisher?.id !==
+    persistedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.publisher?.id;
+  if (hasChangedPublisher) {
+    return true;
+  }
+
+  const hasChangedSeries =
+    updatedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.series?.id !==
+    persistedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.series?.id;
+  if (hasChangedSeries) {
+    return true;
   }
 };

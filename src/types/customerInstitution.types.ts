@@ -24,7 +24,6 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   institutionDns: string;
   name: string;
   modifiedDate?: string;
-  shortName: string;
   vocabularies: CustomerVocabulary[];
   publicationWorkflow: PublishStrategy;
   rorId?: string;
@@ -86,7 +85,6 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   identifier: '',
   institutionDns: '',
   name: '',
-  shortName: '',
   vocabularies: [],
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   rorId: '',
@@ -115,7 +113,6 @@ export enum CustomerInstitutionFieldNames {
   InstitutionDns = 'customer.institutionDns',
   Name = 'customer.name',
   RorId = 'customer.rorId',
-  ShortName = 'customer.shortName',
   Sector = 'customer.sector',
   NviInstitution = 'customer.nviInstitution',
   CanAssignDoi = 'canAssignDoi',

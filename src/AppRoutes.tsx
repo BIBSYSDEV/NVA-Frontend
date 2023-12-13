@@ -7,7 +7,6 @@ import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
 
-const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/EditorPage'));
@@ -48,7 +47,7 @@ export const AppRoutes = () => {
           ]}
           component={Dashboard}
         />
-        <Route exact path={UrlPathTemplate.About} component={AboutPage} />
+
         <Route exact path={UrlPathTemplate.PrivacyPolicy} component={PrivacyPolicy} />
         <Route exact path={UrlPathTemplate.ResearchProfile} component={PublicResearchProfile} />
         <Route exact path={UrlPathTemplate.RegistrationLandingPage} component={PublicRegistration} />
