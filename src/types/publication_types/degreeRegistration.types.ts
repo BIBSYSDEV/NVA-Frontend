@@ -28,6 +28,10 @@ export interface DegreePublicationContext {
   publisher?: ContextPublisher;
   seriesNumber: string;
   series?: ContextSeries;
+  course: {
+    type: 'UnconfirmedCourse';
+    code: string;
+  };
 }
 
 interface DegreeReference extends BaseReference {
