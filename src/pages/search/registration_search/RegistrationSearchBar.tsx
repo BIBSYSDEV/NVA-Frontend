@@ -28,12 +28,33 @@ import { getFullCristinName } from '../../../utils/user-helpers';
 import { SearchPageProps } from '../SearchPage';
 import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
 
+const facetParams: string[] = [
+  ResultParam.Category,
+  ResultParam.Contributor,
+  ResultParam.TopLevelOrganization,
+  ResultParam.FundingSource,
+];
+
+interface SelectedFacet {
+  param: string;
+  value: string;
+}
+
 export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
-  const searchParamsArray = Array.from(searchParams.entries());
+
+  const selectedFacets: SelectedFacet[] = [];
+  searchParams.forEach((value, param) => {
+    if (facetParams.includes(param)) {
+      const values = value.split(',');
+      values.forEach((thisValue) => {
+        selectedFacets.push({ param, value: thisValue });
+      });
+    }
+  });
 
   const [isLoadingExport, setIsLoadingExport] = useState(false);
 
@@ -178,9 +199,9 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
         )}
       </Formik>
 
-      {!registrationQuery.isLoading && searchParamsArray.length > 0 && (
+      {!registrationQuery.isLoading && selectedFacets.length > 0 && (
         <Box sx={{ gridArea: 'facets', display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
-          {searchParamsArray.map(([param, value]) => {
+          {selectedFacets.map(({ param, value }) => {
             let fieldName = '';
             let fieldValueText: ReactNode = '';
 

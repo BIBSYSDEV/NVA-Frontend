@@ -188,7 +188,7 @@ export const fetchResults = async (params: FetchResultsParams) => {
     searchParams.set(ResultParam.Title, params.title);
   }
   if (params.topLevelOrganization) {
-    searchParams.set(ResultParam.TopLevelOrganization, params.topLevelOrganization);
+    searchParams.set(ResultParam.TopLevelOrganization, encodeURIComponent(params.topLevelOrganization));
   }
 
   searchParams.set(ResultParam.From, typeof params.from === 'number' ? params.from.toString() : '0');
