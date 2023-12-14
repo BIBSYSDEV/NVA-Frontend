@@ -427,6 +427,7 @@
       "get_customers": "Kunne ikke hente kundeinstitusjoner",
       "get_doi": "Kunne ikke hente lenkedata",
       "get_doi_agent": "Kunne ikke hente DOI-konfigurasjon",
+      "get_funding_source": "Kunne ikke hente finansieringskilde",
       "get_funding_sources": "Kunne ikke hente finansieringskilder",
       "get_import_candidate": "Kunne ikke hente importkandidat",
       "get_import_candidates": "Kunne ikke hente importkandidater",

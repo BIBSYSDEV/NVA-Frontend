@@ -274,6 +274,7 @@ const SelectedContributorFacetButton = ({ personId }: SelectedContributorFacetBu
   const personQuery = useQuery({
     queryKey: [personId],
     queryFn: () => (personId ? fetchPerson(personId) : undefined),
+    meta: { errorMessage: t('feedback.error.get_person') },
   });
 
   const personName = getFullCristinName(personQuery.data?.names) || t('common.unknown');
@@ -293,6 +294,7 @@ const SelectedInstitutionFacetButton = ({ institutionId }: SelectedInstitutionFa
     queryFn: () => (institutionId ? fetchOrganization(institutionId) : undefined),
     staleTime: Infinity,
     cacheTime: 1_800_000,
+    meta: { errorMessage: t('feedback.error.get_institution') },
   });
 
   const institutionName = getLanguageString(organizationQuery.data?.labels) || t('common.unknown');
@@ -312,6 +314,7 @@ const SelectedFundingFacetButton = ({ fundingIdentifier }: SelectedFundingFacetB
     queryFn: () => (fundingIdentifier ? fetchFundingSource(fundingIdentifier) : undefined),
     staleTime: Infinity,
     cacheTime: 1_800_000,
+    meta: { errorMessage: t('feedback.error.get_funding_source') },
   });
 
   const fundingName = getLanguageString(fundingSourcesQuery.data?.name) || t('common.unknown');
