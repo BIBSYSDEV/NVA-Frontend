@@ -111,7 +111,7 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
           </MenuItem>
         </TextField>
 
-        {resultIsSelected && <RegistrationSearchBar aggregations={registrationQuery.data?.aggregations} />}
+        {resultIsSelected && <RegistrationSearchBar registrationQuery={registrationQuery} />}
         {personIsSeleced && (
           <SearchForm paramName={PersonSearchParameter.Name} placeholder={t('search.person_search_placeholder')} />
         )}

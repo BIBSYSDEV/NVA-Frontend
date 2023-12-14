@@ -16,7 +16,7 @@ import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
-import { PublicationInstanceType, RegistrationAggregations } from '../../../types/registration.types';
+import { PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   PropertySearch,
@@ -25,13 +25,10 @@ import {
 } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullCristinName } from '../../../utils/user-helpers';
+import { SearchPageProps } from '../SearchPage';
 import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
 
-interface RegistrationSearchBarProps {
-  aggregations?: RegistrationAggregations;
-}
-
-export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarProps) => {
+export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -181,7 +178,7 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
         )}
       </Formik>
 
-      {searchParamsArray.length > 0 && (
+      {!registrationQuery.isLoading && searchParamsArray.length > 0 && (
         <Box sx={{ gridArea: 'facets', display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
           {searchParamsArray.map(([param, value]) => {
             let fieldName = '';
@@ -194,7 +191,9 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
                 break;
               case ResultParam.Contributor: {
                 fieldName = t('registration.contributors.contributor');
-                const personName = aggregations?.contributorId?.find((bucket) => bucket.key === value)?.labels;
+                const personName = registrationQuery.data?.aggregations?.contributorId?.find(
+                  (bucket) => bucket.key === value
+                )?.labels;
                 if (personName) {
                   fieldValueText = getLanguageString(personName);
                 } else {
@@ -206,8 +205,9 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
               }
               case ResultParam.TopLevelOrganization: {
                 fieldName = t('common.institution');
-                const institutionLabels = aggregations?.topLevelOrganization?.find((bucket) => bucket.key === value)
-                  ?.labels;
+                const institutionLabels = registrationQuery.data?.aggregations?.topLevelOrganization?.find(
+                  (bucket) => bucket.key === value
+                )?.labels;
 
                 const institutionName = institutionLabels ? getLanguageString(institutionLabels) : '';
                 if (institutionName) {
@@ -221,7 +221,9 @@ export const RegistrationSearchBar = ({ aggregations }: RegistrationSearchBarPro
               }
               case ResultParam.FundingSource: {
                 fieldName = t('common.funding');
-                const fundingLabels = aggregations?.fundingSource?.find((bucket) => bucket.key === value)?.labels;
+                const fundingLabels = registrationQuery.data?.aggregations?.fundingSource?.find(
+                  (bucket) => bucket.key === value
+                )?.labels;
                 const fundingName = fundingLabels ? getLanguageString(fundingLabels) : '';
                 if (fundingName) {
                   fieldValueText = fundingName;
