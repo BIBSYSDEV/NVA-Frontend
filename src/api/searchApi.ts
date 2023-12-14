@@ -103,7 +103,7 @@ export enum ResultParam {
   CategoryNot = 'categoryNot',
   CategoryShould = 'categoryShould',
   Contributor = 'contributor',
-  ContributorShould = 'contributorShould',
+  ContributorName = 'contributorName',
   From = 'from',
   Sort = 'sort',
   FundingSource = 'fundingSource',
@@ -125,7 +125,7 @@ export interface FetchResultsParams {
   [ResultParam.CategoryNot]?: PublicationInstanceType | null;
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
   [ResultParam.Contributor]?: string | null;
-  [ResultParam.ContributorShould]?: string | null;
+  [ResultParam.ContributorName]?: string | null;
   [ResultParam.From]?: number | null;
   [ResultParam.Sort]?: SortOrder | null;
   [ResultParam.FundingSource]?: string | null;
@@ -157,8 +157,8 @@ export const fetchResults = async (params: FetchResultsParams) => {
   if (params.contributor) {
     searchParams.set(ResultParam.Contributor, encodeURIComponent(params.contributor));
   }
-  if (params.contributorShould) {
-    searchParams.set(ResultParam.ContributorShould, params.contributorShould);
+  if (params.contributorName) {
+    searchParams.set(ResultParam.ContributorName, params.contributorName);
   }
   if (params.fundingSource) {
     searchParams.set(ResultParam.FundingSource, params.fundingSource);

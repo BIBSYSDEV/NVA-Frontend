@@ -27,7 +27,7 @@ export const CentralImportDuplicateSearch = ({
 
   const searchConfig: FetchResultsParams = {
     doi: duplicateSearchFilters.doi,
-    contributorShould: duplicateSearchFilters.author,
+    contributorName: duplicateSearchFilters.author,
     issn: duplicateSearchFilters.issn,
     publicationYear: duplicateSearchFilters.yearPublished,
     title: duplicateSearchFilters.title,

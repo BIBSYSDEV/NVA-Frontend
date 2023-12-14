@@ -131,12 +131,12 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
 
           const contributorNames =
             values.properties
-              ?.filter((property) => property.fieldName === ResultParam.ContributorShould && property.value)
+              ?.filter((property) => property.fieldName === ResultParam.ContributorName && property.value)
               .map((property) => property.value) ?? [];
           if (contributorNames.length > 0) {
-            searchParams.set(ResultParam.ContributorShould, contributorNames.join(','));
+            searchParams.set(ResultParam.ContributorName, contributorNames.join(','));
           } else {
-            searchParams.delete(ResultParam.ContributorShould);
+            searchParams.delete(ResultParam.ContributorName);
           }
 
           const title =

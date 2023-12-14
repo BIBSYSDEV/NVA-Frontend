@@ -13,7 +13,7 @@ interface FilterItem {
 
 const registrationFilters: FilterItem[] = [
   { field: ResultParam.Title, i18nKey: 'common.title' },
-  { field: ResultParam.ContributorShould, i18nKey: 'registration.contributors.contributor' },
+  { field: ResultParam.ContributorName, i18nKey: 'registration.contributors.contributor' },
 ];
 
 interface AdvancedSearchRowProps {
