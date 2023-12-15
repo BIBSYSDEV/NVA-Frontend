@@ -213,7 +213,9 @@ export const periodField = Yup.object().shape({
 });
 
 const publisherField: Yup.ObjectSchema<ContextPublisher> = Yup.object({
-  type: Yup.string<PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher>().defined(),
+  type: Yup.string<PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher>().defined(
+    resourceErrorMessage.publisherNotSelected
+  ),
   name: Yup.string().optional(),
   id: Yup.string().when('name', ([name], schema) =>
     name
