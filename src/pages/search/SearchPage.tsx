@@ -15,21 +15,14 @@ import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 
-export const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
-  marginBottom: '1rem',
-  display: 'grid',
-  gap: '1rem 0.5rem',
+const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '0.75rem',
 
-  marginLeft: 0,
-  marginRight: 0,
+  margin: '0 0 1rem 0',
   [theme.breakpoints.down('md')]: {
-    marginLeft: '0.5rem',
-    marginRight: '0.5rem',
-  },
-
-  gridTemplateColumns: 'auto 1fr',
-  [theme.breakpoints.down('xs')]: {
-    gridTemplateColumns: '1fr',
+    margin: '0 0.5rem 1rem 0.5rem',
   },
 }));
 

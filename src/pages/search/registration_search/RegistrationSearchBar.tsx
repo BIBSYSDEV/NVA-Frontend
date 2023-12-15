@@ -102,78 +102,80 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           component={Form}
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: '1fr', sm: 'auto 5fr auto auto' },
+            gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
             gridTemplateAreas: {
-              xs: "'typeSearch' 'searchbar' 'sorting' 'export' 'advanced' 'facets'",
-              sm: "'typeSearch searchbar sorting export' 'advanced advanced advanced advanced' 'facets facets facets facets'",
+              xs: "'typeSearch' 'searchbar' 'advanced' 'facets'",
+              md: "'typeSearch searchbar' 'advanced advanced' 'facets facets'",
             },
             gap: '0.75rem 0.5rem',
             mx: { xs: '0.5rem', md: 0 },
           }}>
           <SearchTypeField sx={{ gridArea: 'typeSearch', width: 'fit-content' }} />
 
-          <Field name="searchTerm">
-            {({ field }: FieldProps<string>) => (
-              <SearchTextField
-                {...field}
-                sx={{ gridArea: 'searchbar' }}
-                placeholder={t('search.search_placeholder')}
-                clearValue={() => {
-                  field.onChange({ target: { value: '', id: field.name } });
-                  submitForm();
-                }}
-              />
-            )}
-          </Field>
+          <Box sx={{ gridArea: 'searchbar', display: 'flex', gap: '0.75rem 0.5rem', flexWrap: 'wrap' }}>
+            <Field name="searchTerm">
+              {({ field }: FieldProps<string>) => (
+                <SearchTextField
+                  {...field}
+                  sx={{ flex: '1 0 15rem' }}
+                  placeholder={t('search.search_placeholder')}
+                  clearValue={() => {
+                    field.onChange({ target: { value: '', id: field.name } });
+                    submitForm();
+                  }}
+                />
+              )}
+            </Field>
 
-          <SortSelector
-            sx={{ gridArea: 'sorting' }}
-            sortKey="sort"
-            orderKey="order"
-            options={[
-              {
-                orderBy: RegistrationFieldName.ModifiedDate,
-                sortOrder: 'desc',
-                label: t('search.sort_by_modified_date'),
-              },
-              {
-                orderBy: RegistrationFieldName.PublishedDate,
-                sortOrder: 'desc',
-                label: t('search.sort_by_published_date_desc'),
-              },
-              {
-                orderBy: RegistrationFieldName.PublishedDate,
-                sortOrder: 'asc',
-                label: t('search.sort_by_published_date_asc'),
-              },
-            ]}
-          />
+            <SortSelector
+              sortKey="sort"
+              orderKey="order"
+              options={[
+                {
+                  orderBy: RegistrationFieldName.ModifiedDate,
+                  sortOrder: 'desc',
+                  label: t('search.sort_by_modified_date'),
+                },
+                {
+                  orderBy: RegistrationFieldName.PublishedDate,
+                  sortOrder: 'desc',
+                  label: t('search.sort_by_published_date_desc'),
+                },
+                {
+                  orderBy: RegistrationFieldName.PublishedDate,
+                  sortOrder: 'asc',
+                  label: t('search.sort_by_published_date_asc'),
+                },
+              ]}
+            />
 
-          <LoadingButton
-            variant="outlined"
-            startIcon={<FileDownloadIcon />}
-            loadingPosition="start"
-            sx={{ gridArea: 'export' }}
-            loading={isLoadingExport}
-            onClick={async () => {
-              setIsLoadingExport(true);
-              try {
-                const fetchExportData = await fetchRegistrationsExport(searchParams);
-                // Force UTF-8 for excel with '\uFEFF': https://stackoverflow.com/a/42466254
-                const blob = new Blob(['\uFEFF', fetchExportData], { type: 'text/csv' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.download = 'result-export.csv';
-                link.href = url;
-                link.click();
-              } catch {
-                dispatch(setNotification({ message: t('feedback.error.get_registrations_export'), variant: 'error' }));
-              } finally {
-                setIsLoadingExport(false);
-              }
-            }}>
-            {t('search.export')}
-          </LoadingButton>
+            <LoadingButton
+              variant="outlined"
+              startIcon={<FileDownloadIcon />}
+              loadingPosition="start"
+              loading={isLoadingExport}
+              onClick={async () => {
+                setIsLoadingExport(true);
+                try {
+                  const fetchExportData = await fetchRegistrationsExport(searchParams);
+                  // Force UTF-8 for excel with '\uFEFF': https://stackoverflow.com/a/42466254
+                  const blob = new Blob(['\uFEFF', fetchExportData], { type: 'text/csv' });
+                  const url = URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.download = 'result-export.csv';
+                  link.href = url;
+                  link.click();
+                } catch {
+                  dispatch(
+                    setNotification({ message: t('feedback.error.get_registrations_export'), variant: 'error' })
+                  );
+                } finally {
+                  setIsLoadingExport(false);
+                }
+              }}>
+              {t('search.export')}
+            </LoadingButton>
+          </Box>
 
           <FieldArray name="properties">
             {({ push, remove }: FieldArrayRenderProps) => (
