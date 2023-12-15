@@ -16,9 +16,13 @@ import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 
 const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.75rem',
+  display: 'grid',
+  gridTemplateColumns: 'auto 1fr',
+  [theme.breakpoints.down('sm')]: {
+    gridTemplateColumns: '1fr',
+  },
+
+  gap: '0.75rem 0.5rem',
 
   margin: '0 0 1rem 0',
   [theme.breakpoints.down('md')]: {

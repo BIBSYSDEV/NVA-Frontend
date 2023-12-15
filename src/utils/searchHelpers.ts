@@ -11,11 +11,6 @@ export enum SearchParam {
   Name = 'name',
 }
 
-export enum ExpressionStatement {
-  Contains,
-  NotContaining,
-}
-
 export interface PropertySearch {
   fieldName: string;
   value: string | string[]; // Can check for one or multiple values
