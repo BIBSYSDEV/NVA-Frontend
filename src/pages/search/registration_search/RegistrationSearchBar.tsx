@@ -179,7 +179,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
 
           <FieldArray name="properties">
             {({ push, remove }: FieldArrayRenderProps) => (
-              <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <Box gridArea="advanced" sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {values.properties.map((property, index) => (
                   <AdvancedSearchRow
                     key={index}
