@@ -123,7 +123,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           </Field>
 
           <SortSelector
-            sx={{ minWidth: '15rem', gridArea: 'sorting' }}
+            sx={{ width: 'fit-content', gridArea: 'sorting' }}
             sortKey="sort"
             orderKey="order"
             options={[
