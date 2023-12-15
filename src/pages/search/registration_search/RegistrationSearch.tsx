@@ -42,7 +42,7 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
           />
         </>
       ) : (
-        <Typography>{t('common.no_hits')}</Typography>
+        <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>
       )}
     </section>
   );

@@ -63,7 +63,7 @@ const HomePage = () => {
     topLevelOrganization: params.get(ResultParam.TopLevelOrganization),
     fundingSource: params.get(ResultParam.FundingSource),
     contributor: params.get(ResultParam.Contributor),
-    contributorShould: params.get(ResultParam.ContributorShould),
+    contributorName: params.get(ResultParam.ContributorName),
     title: params.get(ResultParam.Title),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     order: params.get(ResultParam.Order),
