@@ -26,6 +26,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullCristinName } from '../../../utils/user-helpers';
 import { SearchPageProps } from '../SearchPage';
 import { SearchTextField } from '../SearchTextField';
+import { SearchTypeField } from '../SearchTypeField';
 import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearchRow';
 
 const facetParams: string[] = [
@@ -101,13 +102,16 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           component={Form}
           sx={{
             display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: '5fr auto auto' },
+            gridTemplateColumns: { xs: '1fr', sm: 'auto 5fr auto auto' },
             gridTemplateAreas: {
-              xs: "'searchbar' 'sorting' 'export' 'advanced' 'facets'",
-              sm: "'searchbar sorting export' 'advanced advanced advanced' 'facets facets facets'",
+              xs: "'typeSearch' 'searchbar' 'sorting' 'export' 'advanced' 'facets'",
+              sm: "'typeSearch searchbar sorting export' 'advanced advanced advanced advanced' 'facets facets facets facets'",
             },
-            gap: '0.75rem 1rem',
+            gap: '0.75rem 0.5rem',
+            mx: { xs: '0.5rem', md: 0 },
           }}>
+          <SearchTypeField sx={{ gridArea: 'typeSearch', width: 'fit-content' }} />
+
           <Field name="searchTerm">
             {({ field }: FieldProps<string>) => (
               <SearchTextField
@@ -123,7 +127,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           </Field>
 
           <SortSelector
-            sx={{ width: 'fit-content', gridArea: 'sorting' }}
+            sx={{ gridArea: 'sorting' }}
             sortKey="sort"
             orderKey="order"
             options={[
