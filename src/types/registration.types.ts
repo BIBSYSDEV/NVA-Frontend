@@ -264,5 +264,5 @@ export interface RegistrationAggregations {
   topLevelOrganization?: AggregationValue[];
   type?: AggregationValue[];
   fundingSource?: AggregationValue[];
-  contributorId?: AggregationValue[];
+  contributor?: AggregationValue[];
 }

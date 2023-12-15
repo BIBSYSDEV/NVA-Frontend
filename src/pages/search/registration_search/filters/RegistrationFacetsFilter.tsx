@@ -22,7 +22,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
 
   const typeFacet = registrationQuery.data?.aggregations?.type;
   const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization;
-  const contributorFacet = registrationQuery.data?.aggregations?.contributorId;
+  const contributorFacet = registrationQuery.data?.aggregations?.contributor;
   const fundingFacet = registrationQuery.data?.aggregations?.fundingSource;
 
   const addFacetFilter = (param: string, key: string) => {

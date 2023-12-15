@@ -235,7 +235,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                     break;
                   case ResultParam.Contributor: {
                     fieldName = t('registration.contributors.contributor');
-                    const personName = registrationQuery.data?.aggregations?.contributorId?.find(
+                    const personName = registrationQuery.data?.aggregations?.contributor?.find(
                       (bucket) => bucket.key === value
                     )?.labels;
                     if (personName) {
