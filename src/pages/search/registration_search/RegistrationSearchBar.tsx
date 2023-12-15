@@ -110,7 +110,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
             gap: '0.75rem 0.5rem',
             mx: { xs: '0.5rem', md: 0 },
           }}>
-          <SearchTypeField sx={{ gridArea: 'typeSearch', width: 'fit-content' }} />
+          <SearchTypeField sx={{ gridArea: 'typeSearch' }} />
 
           <Box sx={{ gridArea: 'searchbar', display: 'flex', gap: '0.75rem 0.5rem', flexWrap: 'wrap' }}>
             <Field name="searchTerm">
