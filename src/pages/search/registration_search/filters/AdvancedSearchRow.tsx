@@ -31,7 +31,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
             {...field}
             select
             variant="outlined"
-            sx={{ width: '10rem' }}
+            sx={{ minWidth: '8rem' }}
             label={t('search.field_label')}
             data-testid={dataTestId.startPage.advancedSearch.advancedFieldSelect}>
             {registrationFilters.map((filter) => (
