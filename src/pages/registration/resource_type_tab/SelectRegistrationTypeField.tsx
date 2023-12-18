@@ -127,6 +127,7 @@ export const SelectRegistrationTypeField = () => {
                 type: PublicationType.Degree,
                 publisher: { type: PublicationChannelType.UnconfirmedPublisher },
                 series: { type: PublicationChannelType.UnconfirmedSeries },
+                course: { type: 'UnconfirmedCourse', code: '' },
               },
               false
             );
