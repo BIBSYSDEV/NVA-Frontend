@@ -7,6 +7,12 @@ frontend:
     build:
       commands:
         - npm run build
+        - if [ "$AWS_BRANCH" == "main" ]; then
+          cp robots/main-robots.txt public/robots.txt
+          else
+          cp robots/dev-robots.txt public/robots.txt
+          fi
+        - echo "Current branch: $BRANCH  -  $AWS_BRANCH"
   artifacts:
     baseDirectory: build
     files:
