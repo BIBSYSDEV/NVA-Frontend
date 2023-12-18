@@ -131,7 +131,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
                   publicationInstance.type === DegreeType.Other) && (
                   <Typography>
                     {t('registration.resource_type.course_code')}:{' '}
-                    {(publicationContext as DegreePublicationContext).course.code}
+                    {(publicationContext as DegreePublicationContext).course?.code}
                   </Typography>
                 )}
 

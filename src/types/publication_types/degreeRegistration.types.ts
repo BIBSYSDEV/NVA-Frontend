@@ -28,7 +28,7 @@ export interface DegreePublicationContext {
   publisher?: ContextPublisher;
   seriesNumber: string;
   series?: ContextSeries;
-  course: {
+  course?: {
     type: 'UnconfirmedCourse';
     code: string;
   };
