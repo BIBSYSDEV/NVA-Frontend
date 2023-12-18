@@ -143,6 +143,7 @@ export enum ResourceFieldNames {
   PublicationContextTimeFrom = 'entityDescription.reference.publicationContext.time.from',
   PublicationContextTimeTo = 'entityDescription.reference.publicationContext.time.to',
   PublicationContextType = 'entityDescription.reference.publicationContext.type',
+  PublicationContextCourseCode = 'entityDescription.reference.publicationContext.course.code',
   PublicationInstanceAgreeTerms = 'entityDescription.reference.publicationInstance.userAgreesToTermsAndConditions',
   PublicationInstanceArchitectureOutput = 'entityDescription.reference.publicationInstance.architectureOutput',
   PublicationInstanceCompliesWith = 'entityDescription.reference.publicationInstance.compliesWith',
