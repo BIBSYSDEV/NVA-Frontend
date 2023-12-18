@@ -750,4 +750,38 @@ export const willResetNviStatuses = (persistedRegistration: Registration, update
   if (hasChangedSeries) {
     return true;
   }
+
+  const hasChangedContributorsAndAffiliations = (
+    persistedContributors: Contributor[],
+    updatedContributors: Contributor[]
+  ): boolean => {
+    if (persistedContributors.length !== updatedContributors.length) {
+      return true;
+    }
+
+    return persistedContributors
+      .map((contributor, index) => {
+        const updatedContributor = updatedContributors[index];
+
+        if ((contributor.affiliations?.length || 0) !== (updatedContributor.affiliations?.length || 0)) {
+          return true;
+        }
+
+        return contributor.affiliations
+          ?.map((institution, index) => {
+            return institution.id !== updatedContributor.affiliations?.[index]?.id;
+          })
+          .some((hasChanged) => hasChanged === true);
+      })
+      .some((hasChanged) => hasChanged === true);
+  };
+
+  if (
+    hasChangedContributorsAndAffiliations(
+      persistedRegistration.entityDescription?.contributors || [],
+      updatedRegistration.entityDescription?.contributors || []
+    )
+  ) {
+    return true;
+  }
 };
