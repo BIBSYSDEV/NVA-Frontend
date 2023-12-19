@@ -7,7 +7,7 @@ export const Logo = () => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
   return (
-    <Box sx={{ gridArea: 'logo', maxWidth: '14rem' }}>
+    <Box sx={{ gridArea: 'logo' }}>
       <Button data-testid="logo" component={RouterLink} to={UrlPathTemplate.Home}>
         <Typography variant="h5" component="span" sx={{ color: 'white', fontWeight: 900, fontSize: '3rem' }}>
           NVA
@@ -22,6 +22,7 @@ export const Logo = () => {
               color: 'white',
               fontWeight: 20,
               fontSize: '1rem',
+              maxWidth: '6rem',
             }}>
             {t('common.page_title')}
           </Typography>
