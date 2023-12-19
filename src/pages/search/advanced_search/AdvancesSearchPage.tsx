@@ -1,5 +1,6 @@
-import { Box } from '@mui/material';
+import { Box, Button, Dialog } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { FetchResultsParams, ResultParam, fetchResults } from '../../../api/searchApi';
@@ -8,6 +9,7 @@ import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
+import { CategoryFilter } from './CategoryFilter';
 import { OrganizationFilters } from './OrganizationFilters';
 
 export enum AdvancedSearchQueryParams {
@@ -18,6 +20,9 @@ export enum AdvancedSearchQueryParams {
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
+  const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
+
   const params = new URLSearchParams(location.search);
 
   const institutionId = params.get(AdvancedSearchQueryParams.Institution);
@@ -65,6 +70,13 @@ export const AdvancedSearchPage = () => {
       </Box>
 
       <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
+
+      <Button variant="outlined" onClick={toggleCategoryFilter}>
+        Velg kategori
+      </Button>
+      <Dialog open={openCategoryFilter} onClose={toggleCategoryFilter} maxWidth="md">
+        <CategoryFilter />
+      </Dialog>
 
       <RegistrationSearch registrationQuery={resultSearchQuery} />
     </Box>
