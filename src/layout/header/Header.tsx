@@ -3,7 +3,7 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import StoreIcon from '@mui/icons-material/Store';
+
 import { AppBar, Box, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
@@ -122,7 +122,6 @@ export const Header = () => {
               {organization?.acronym &&
                 (user?.isEditor ? (
                   <>
-                    <StoreIcon fontSize="small" sx={{ alignSelf: 'center' }} />
                     <MenuButton
                       sx={{
                         fontSize: '1.25rem',
@@ -139,7 +138,6 @@ export const Header = () => {
                   </>
                 ) : (
                   <>
-                    <StoreIcon fontSize="small" />
                     <Typography
                       variant="h1"
                       component="span"
