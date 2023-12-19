@@ -22,11 +22,16 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
 
   const typeFacet = registrationQuery.data?.aggregations?.type;
   const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization;
-  const contributorFacet = registrationQuery.data?.aggregations?.contributorId;
+  const contributorFacet = registrationQuery.data?.aggregations?.contributor;
   const fundingFacet = registrationQuery.data?.aggregations?.fundingSource;
 
   const addFacetFilter = (param: string, key: string) => {
-    searchParams.set(param, key);
+    const currentValues = searchParams.get(param)?.split(',') ?? [];
+    if (currentValues.length === 0) {
+      searchParams.set(param, key);
+    } else {
+      searchParams.set(param, [...currentValues, key].join(','));
+    }
     searchParams.set(ResultParam.From, '0');
     history.push({ search: searchParams.toString() });
   };
@@ -68,7 +73,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       {topLevelOrganizationFacet && topLevelOrganizationFacet.length > 0 && (
         <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
           {topLevelOrganizationFacet.map((facet) => {
-            const isSelected = selectedOrganization === facet.key;
+            const isSelected = !!selectedOrganization?.includes(facet.key);
 
             return (
               <FacetListItem
@@ -95,7 +100,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           title={t('registration.contributors.contributor')}
           dataTestId={dataTestId.startPage.contributorFacets}>
           {contributorFacet.map((facet) => {
-            const isSelected = selectedContributor === facet.key;
+            const isSelected = !!selectedContributor?.includes(facet.key);
 
             return (
               <FacetListItem
@@ -120,7 +125,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       {fundingFacet && fundingFacet.length > 0 && (
         <FacetItem title={t('common.funding')} dataTestId={dataTestId.startPage.institutionFacets}>
           {fundingFacet.map((facet) => {
-            const isSelected = selectedFunding === facet.key;
+            const isSelected = !!selectedFunding?.includes(facet.key);
 
             return (
               <FacetListItem

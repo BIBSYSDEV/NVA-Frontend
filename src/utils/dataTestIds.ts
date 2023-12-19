@@ -133,7 +133,6 @@ export const dataTestId = {
     advancedSearch: {
       addFilterButton: 'add-filter-button',
       advancedFieldSelect: 'advanced-field-select',
-      advancedOperatorSelect: 'advanced-operator-select',
       advancedValueField: 'advanced-value-field',
       removeFacetButton: 'remove-facet-button',
       removeFilterButton: 'remove-filter-button',
@@ -394,6 +393,7 @@ export const dataTestId = {
       concertProgramRemove: 'concert-program-remove',
       confirmDatasetTypeDialog: 'research-data-confirm-dialog',
       corrigendumForField: 'corrigendum-for-field',
+      courseCodeField: 'course-code-field',
       eventCountryField: 'event-country-field',
       exhibitionBasicNameField: 'exhibition-basic-name-field',
       exhibitionCatalogSearchField: 'exhibition-catalog-search-field',

@@ -4,7 +4,6 @@ import { TFuncKey } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { ResultParam } from '../../../../api/searchApi';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { ExpressionStatement } from '../../../../utils/searchHelpers';
 
 interface FilterItem {
   field: string;
@@ -13,7 +12,7 @@ interface FilterItem {
 
 const registrationFilters: FilterItem[] = [
   { field: ResultParam.Title, i18nKey: 'common.title' },
-  { field: ResultParam.ContributorShould, i18nKey: 'registration.contributors.contributor' },
+  { field: ResultParam.ContributorName, i18nKey: 'registration.contributors.contributor' },
 ];
 
 interface AdvancedSearchRowProps {
@@ -25,13 +24,14 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
   const { t } = useTranslation();
 
   return (
-    <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '3fr 3fr 5fr auto' }, gap: '1rem' }}>
+    <Box sx={{ display: 'flex', gap: '0.5rem' }}>
       <Field name={`${baseFieldName}.fieldName`}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
             select
             variant="outlined"
+            sx={{ minWidth: '8rem' }}
             label={t('search.field_label')}
             data-testid={dataTestId.startPage.advancedSearch.advancedFieldSelect}>
             {registrationFilters.map((filter) => (
@@ -43,21 +43,14 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
         )}
       </Field>
 
-      <TextField
-        select
-        disabled
-        label={t('search.operator')}
-        value={ExpressionStatement.Contains}
-        data-testid={dataTestId.startPage.advancedSearch.advancedOperatorSelect}>
-        <MenuItem value={ExpressionStatement.Contains}>{t('search.contains')}</MenuItem>
-      </TextField>
-
       <Field name={`${baseFieldName}.value`}>
         {({ field }: FieldProps<string>) => (
           <TextField
             {...field}
-            data-testid={dataTestId.startPage.advancedSearch.advancedValueField}
+            fullWidth
+            sx={{ maxWidth: '30rem' }}
             variant="outlined"
+            data-testid={dataTestId.startPage.advancedSearch.advancedValueField}
             label={t('search.search_term_label')}
           />
         )}
