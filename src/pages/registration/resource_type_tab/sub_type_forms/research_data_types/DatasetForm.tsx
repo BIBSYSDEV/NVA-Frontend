@@ -1,20 +1,14 @@
 import { Autocomplete, Box, List, TextField, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SearchApiPath } from '../../../../../api/apiPaths';
+import { FetchResultsParams, fetchResults } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
-import { SearchResponse } from '../../../../../types/common.types';
-import {
-  RegistrationFieldName,
-  ResearchDataType,
-  ResourceFieldNames,
-} from '../../../../../types/publicationFieldNames';
+import { ResearchDataType, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
-import { Registration } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../../utils/registration-helpers';
 import { YearAndContributorsText } from '../../components/SearchContainerField';
 import { ExternalLinkField } from './ExternalLinkField';
@@ -27,18 +21,31 @@ export const DatasetForm = () => {
 
   const [relatedRegistrationsQuery, setRelatedRegistrationsQuery] = useState('');
   const debouncedRelatedRegistrationsQuery = useDebounce(relatedRegistrationsQuery);
-  const [relatedRegistrationsOptions, isLoadingRelatedRegistrationsOptions] = useFetch<SearchResponse<Registration>>({
-    url: debouncedRelatedRegistrationsQuery
-      ? `${SearchApiPath.Registrations}?query=${debouncedRelatedRegistrationsQuery} AND NOT (${ResourceFieldNames.RegistrationType}:"${ResearchDataType.DataManagementPlan}") AND NOT (${RegistrationFieldName.Identifier}:"${values.identifier}")`
-      : '',
+
+  const relatedRegistrationsOptionsQueryConfig: FetchResultsParams = {
+    query: debouncedRelatedRegistrationsQuery,
+    categoryNot: ResearchDataType.DataManagementPlan,
+    idNot: values.identifier,
+    results: 20,
+  };
+  const relatedRegistrationsOptionsQuery = useQuery({
+    queryKey: ['registrations', relatedRegistrationsOptionsQueryConfig],
+    queryFn: () => fetchResults(relatedRegistrationsOptionsQueryConfig),
+    meta: { errorMessage: t('feedback.error.search') },
   });
 
   const [relatedDmpQuery, setRelatedDmpQuery] = useState('');
   const debouncedRelatedDmpQuery = useDebounce(relatedDmpQuery);
-  const [relatedDmpOptions, isLoadingRelatedDmpOptions] = useFetch<SearchResponse<Registration>>({
-    url: debouncedRelatedDmpQuery
-      ? `${SearchApiPath.Registrations}?query=${debouncedRelatedDmpQuery} AND (${ResourceFieldNames.RegistrationType}:"${ResearchDataType.DataManagementPlan}")`
-      : `${SearchApiPath.Registrations}?query=${ResourceFieldNames.RegistrationType}:"${ResearchDataType.DataManagementPlan}"`,
+
+  const relatedDmpOptionsQueryConfig: FetchResultsParams = {
+    title: debouncedRelatedDmpQuery,
+    category: ResearchDataType.DataManagementPlan,
+    results: 20,
+  };
+  const relatedDmpOptionsQuery = useQuery({
+    queryKey: ['registrations', relatedDmpOptionsQueryConfig],
+    queryFn: () => fetchResults(relatedDmpOptionsQueryConfig),
+    meta: { errorMessage: t('feedback.error.search') },
   });
 
   return (
@@ -59,7 +66,7 @@ export const DatasetForm = () => {
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
             <Autocomplete
-              options={relatedRegistrationsOptions?.hits ?? []}
+              options={relatedRegistrationsOptionsQuery.data?.hits ?? []}
               value={null}
               onChange={(_, value) => {
                 if (value?.id && !referencedBy?.includes(value.id)) {
@@ -68,7 +75,7 @@ export const DatasetForm = () => {
                 setRelatedRegistrationsQuery('');
               }}
               blurOnSelect
-              loading={isLoadingRelatedRegistrationsOptions}
+              loading={relatedRegistrationsOptionsQuery.isLoading}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
               renderOption={(props, option, state) => (
@@ -120,7 +127,7 @@ export const DatasetForm = () => {
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
             <Autocomplete
-              options={relatedDmpOptions?.hits ?? []}
+              options={relatedDmpOptionsQuery.data?.hits ?? []}
               value={null}
               onChange={(_, value) => {
                 if (value?.id && !compliesWith?.includes(value.id)) {
@@ -129,7 +136,7 @@ export const DatasetForm = () => {
                 setRelatedDmpQuery('');
               }}
               blurOnSelect
-              loading={isLoadingRelatedDmpOptions}
+              loading={relatedDmpOptionsQuery.isLoading}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
               renderOption={(props, option, state) => (

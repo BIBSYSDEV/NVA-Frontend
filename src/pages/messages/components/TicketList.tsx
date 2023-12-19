@@ -7,13 +7,12 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
-import { SearchResponse } from '../../../types/common.types';
-import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
+import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
-  ticketsQuery: UseQueryResult<SearchResponse<ExpandedTicket>, unknown>;
+  ticketsQuery: UseQueryResult<TicketSearchResponse>;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
