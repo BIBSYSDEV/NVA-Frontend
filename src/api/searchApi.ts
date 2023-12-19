@@ -153,7 +153,7 @@ export const fetchResults = async (params: FetchResultsParams) => {
   if (params.categoryNot) {
     searchParams.set(ResultParam.CategoryNot, params.categoryNot);
   }
-  if (params.categoryShould) {
+  if (params.categoryShould && params.categoryShould.length > 0) {
     searchParams.set(ResultParam.CategoryShould, params.categoryShould.join(','));
   }
   if (params.contributor) {

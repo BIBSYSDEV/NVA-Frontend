@@ -10,21 +10,16 @@ interface RegistrationTypesRowProps {
   onChangeType: (type: PublicationInstanceType) => void;
   mainType: PublicationType;
   registrationTypes: RegistrationTypeElement[];
-  value: string;
 }
 
 export interface RegistrationTypeElement {
   value: PublicationInstanceType;
   text: string;
+  selected: boolean;
   disabled?: boolean;
 }
 
-export const RegistrationTypesRow = ({
-  mainType,
-  registrationTypes,
-  value,
-  onChangeType,
-}: RegistrationTypesRowProps) => {
+export const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType }: RegistrationTypesRowProps) => {
   const { t } = useTranslation();
 
   return registrationTypes.length > 0 ? (
@@ -32,30 +27,41 @@ export const RegistrationTypesRow = ({
       <Typography>{t(`registration.publication_types.${mainType}`)}</Typography>
       <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
         {registrationTypes.map((registrationType) => (
-          <Tooltip
-            key={registrationType.value}
-            title={registrationType.disabled ? t('registration.resource_type.protected_type') : ''}>
-            <span>
-              <Chip
-                data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(registrationType.value)}
-                disabled={registrationType.disabled}
-                icon={
-                  nviApplicableTypes.includes(registrationType.value) ? (
-                    <FilterVintageIcon
-                      titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
-                      fontSize="small"
-                    />
-                  ) : undefined
-                }
-                variant={value === registrationType.value ? 'filled' : 'outlined'}
-                color="primary"
-                onClick={() => onChangeType(registrationType.value)}
-                label={registrationType.text}
-              />
-            </span>
-          </Tooltip>
+          <CategoryChip key={registrationType.value} category={registrationType} onClickChip={onChangeType} />
         ))}
       </Box>
     </>
   ) : null;
+};
+
+interface CategoryChipProps {
+  category: RegistrationTypeElement;
+  onClickChip: (type: PublicationInstanceType) => void;
+}
+
+export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
+  const { t } = useTranslation();
+
+  return (
+    <Tooltip title={category.disabled ? t('registration.resource_type.protected_type') : ''}>
+      <span>
+        <Chip
+          data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(category.value)}
+          disabled={category.disabled}
+          icon={
+            nviApplicableTypes.includes(category.value) ? (
+              <FilterVintageIcon
+                titleAccess={t('registration.resource_type.nvi.can_give_publication_points')}
+                fontSize="small"
+              />
+            ) : undefined
+          }
+          variant={category.selected ? 'filled' : 'outlined'}
+          color="primary"
+          onClick={() => onClickChip(category.value)}
+          label={category.text}
+        />
+      </span>
+    </Tooltip>
+  );
 };

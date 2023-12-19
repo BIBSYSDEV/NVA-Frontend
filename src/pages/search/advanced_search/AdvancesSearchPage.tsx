@@ -1,4 +1,4 @@
-import { Box, Button, Dialog } from '@mui/material';
+import { Box, Button, FormLabel } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,8 +8,10 @@ import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
+import { PublicationInstanceType } from '../../../types/registration.types';
+import { CategoryChip } from '../../registration/resource_type_tab/components/RegistrationTypesRow';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
-import { CategoryFilter } from './CategoryFilter';
+import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { OrganizationFilters } from './OrganizationFilters';
 
 export enum AdvancedSearchQueryParams {
@@ -25,6 +27,8 @@ export const AdvancedSearchPage = () => {
 
   const params = new URLSearchParams(location.search);
 
+  const categoriesShould =
+    (params.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
   const institutionId = params.get(AdvancedSearchQueryParams.Institution);
   const subUnitId = params.get(AdvancedSearchQueryParams.SubUnit);
 
@@ -33,6 +37,7 @@ export const AdvancedSearchPage = () => {
   const resultSearchQueryConfig: FetchResultsParams = {
     title: params.get(ResultParam.Title),
     unit: unitFilter,
+    categoryShould: categoriesShould,
   };
 
   const resultSearchQuery = useQuery({
@@ -71,12 +76,34 @@ export const AdvancedSearchPage = () => {
 
       <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
 
-      <Button variant="outlined" onClick={toggleCategoryFilter}>
-        Velg kategori
-      </Button>
-      <Dialog open={openCategoryFilter} onClose={toggleCategoryFilter} maxWidth="md">
-        <CategoryFilter />
-      </Dialog>
+      <div>
+        <FormLabel component="legend" sx={{ mb: '0.25rem' }}>
+          {t('registration.resource_type.resource_type')}
+        </FormLabel>
+        {categoriesShould.length === 0 ? (
+          <Button variant="outlined" onClick={toggleCategoryFilter} size="small">
+            {t('registration.resource_type.select_resource_type')}
+          </Button>
+        ) : (
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+            {categoriesShould.map((category) => (
+              <CategoryChip
+                category={{
+                  value: category,
+                  text: t(`registration.publication_types.${category}`),
+                  selected: true,
+                }}
+                onClickChip={toggleCategoryFilter}
+              />
+            ))}
+          </Box>
+        )}
+        <CategoryFilterDialog
+          open={openCategoryFilter}
+          currentCategories={categoriesShould}
+          closeDialog={toggleCategoryFilter}
+        />
+      </div>
 
       <RegistrationSearch registrationQuery={resultSearchQuery} />
     </Box>
