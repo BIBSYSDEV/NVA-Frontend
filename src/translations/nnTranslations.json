@@ -1,6 +1,5 @@
 {
   "about": {
-    "about_nva": "Om NVA",
     "availability_statement": "Tilgjengelegheitserklæring",
     "description": {
       "paragraph0": {
@@ -63,7 +62,7 @@
         "merge_details_1": "Resultatet finns i NVA. Gå til vegvisaren for å endre alle felt etter at du har slått saman importdata med resultat i NVA. Dette kan vere viktig for Norsk Vitskapsindeks (NVI).",
         "merge_details_2": "Data frå NVA vert vist til høgre. Metadata frå importkandidat vert vist til venstre og har ofte betre datagrunnlag. Du kan velje enkelvis kva du vil ta med.",
         "metadata_to_import": "Metadata til import",
-        "page_to": "",
+        "page_to": "Sidetal til",
         "result_id": "Resultat-ID",
         "result_in_nva": "Resultat i NVA",
         "update_value": "Oppdater verdi"
@@ -73,8 +72,8 @@
       "reset_search_values": "Tilbakestill verdiar",
       "search_again": "Søk igjen",
       "search_for_duplicates": "Søk etter duplikat",
-      "sort_newest_first": "",
-      "sort_oldest_first": "",
+      "sort_newest_first": "Nyaste kandidatar fyrst",
+      "sort_oldest_first": "Eldste kandidatar fyrst",
       "status": {
         "IMPORTED": "Importert",
         "NOT_APPLICABLE": "Mangelfull",
@@ -110,8 +109,7 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Øvrige",
         "UHI": "Universitet og høgskuler (UH)"
-      },
-      "short_name": "Forkorta visingsnamn på institusjonen"
+      }
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
@@ -236,7 +234,7 @@
     "type": "Type",
     "unknown": "Ukjend",
     "update": "Oppdater",
-    "url": "",
+    "url": "URL",
     "username": "Brukarnamn",
     "version": "Versjon",
     "will_be_available": "Vert tilgjengeleg",
@@ -383,12 +381,12 @@
       "registrator_publishes_without_curator_description": "Institusjonen bestemmer kven som er Registrator."
     },
     "retention_strategy": {
-      "rights_retention_strategy": "",
+      "rights_retention_strategy": "Rights Retention Strategy (RRS)",
       "rrs": "",
       "rrs_info_page": "",
-      "rrs_link": "",
-      "rrs_override": "",
-      "rrs_required_link": ""
+      "rrs_link": "Skriv inn lenkje",
+      "rrs_override": "Registrator kan fråskrive seg RRS",
+      "rrs_required_link": "*Felt med stjerne er obligatorisk"
     },
     "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
     "vocabulary": "Vokabular",
@@ -503,6 +501,7 @@
       "doi_request_sent": "DOI-førespurnad sendt",
       "doi_request_updated": "DOI-førespurnaden vart oppdatert",
       "merge_import_candidate": "Importdata vart slått saman med resultatdata",
+      "publish_as_curator": "Registrering vart publisering (ingen godkjenning nødvendig sidan du er kurator)",
       "publishing_request_approved": "Registreringa vart publisert",
       "publishing_request_rejected": "Publiseringsførespurnaden vart avvist",
       "removed_role": "Rollen vart fjerna",
@@ -545,6 +544,18 @@
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
       "not_selected": "{{field}} er ikkje vald"
     }
+  },
+  "footer": {
+    "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
+    "about_nva_text": "Nasjonalt vitenarkiv (NVA) samlar publikasjonar og andre forskingsresultat, og gjer dei opent tilgjengeleg i ein felles nasjonal løysing. Dette gjer resultat frå norsk forsking tilgjengeleg i ein teneste.",
+    "about_sikt": "Om Sikt",
+    "about_sikt_text": "Sikt inngår avtale med den enkelte institusjon om bruk av tenesta. Kundene våre er typisk universitet, høgskular, forskingsinstitutt og organisasjonar i helsesektoren.",
+    "become_customer": "Kvifor bli kunde?",
+    "help_page": "Hjelpeside",
+    "language_selector": "Vald språk",
+    "news_link": "Nyheitsbrev",
+    "system_status_link": "Driftsmeldingar",
+    "technical_support_link": "Ved teknisk støtte kontakt <0>kontakt@sikt.no</0>"
   },
   "licenses": {
     "description": {
@@ -592,10 +603,10 @@
       "mark_as_completed": "Sett til ferdig",
       "no_messages": "Du har inga meldingar",
       "ticket_types": {
-        "Closed": "Lukka",
+        "Closed": "Avvist",
         "Completed": "Ferdig",
-        "New": "Ny",
-        "Pending": "Under handsaming"
+        "New": "Innmeldt",
+        "Pending": "Handsamas"
       },
       "types": {
         "DoiRequest": "DOI-førespurnad",
@@ -1155,7 +1166,6 @@
       "administrative_contract": "Intern fil som aldri skal publiserast. F.eks. forfattaravtale eller anna dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Føresetnad for bruk",
       "embargo": "Embargo",
-      "file_publish_date": "Utsett publisering",
       "file_publish_date_helper_text": "Fila er låst fram til angjeve dato",
       "files": "Filer",
       "files_are_not_published": "Filer vert ikkje publisert",
@@ -1190,8 +1200,10 @@
     "missing_title": "Manglar tittel",
     "modal_unsaved_changes_description": "Du har gjort endringar som ikkje er lagra. Er du sikker på at du vil forlate denne sida?",
     "modal_unsaved_changes_heading": "Forlate sida utan å ha lagra?",
-    "new_registration": "Ny registrering",
+    "new_registration": "Nytt resultat",
     "nvi_warning": {
+      "approval_override_warning": "Du har endra publikasjonen på ein slik måte at alle institusjonar som har medforfattarar må godkjenne den på nytt for at den skal bli med på årets NVI-rapport.",
+      "confirm_saving_registration": "Vil du lagre endringane dine?",
       "continue_editing_registration": "Vil du framleis redigere publikasjonen?",
       "registration_is_included_in_nvi": "Publikasjonen er ein del av Norsk Vitskapsindeks (NVI)",
       "reset_nvi_warning": "Viss du endrer årstal, bidragsytarens tilknyting(-ar) til institusjon(-ar), kategori, eller publiseringskanal, så må kurator ved alle medverkande institusjonar NVI-godkjenne publikasjonen på nytt."
@@ -1651,7 +1663,7 @@
     "hits_other": "{{count}} treff",
     "not_containing": "Inneheld ikkje",
     "operator": "Operator",
-    "participant": "",
+    "participant": "Deltakar",
     "participating_institution": "Deltakande institusjon",
     "person_search_placeholder": "Søk etter namn",
     "persons": "Personar",
@@ -1691,7 +1703,7 @@
       "next_candidate": "Gå til neste kandidat",
       "no_nvi_candidates": "Ingen NVI-kandidatar",
       "note": "Merknad",
-      "previous_candidate": "",
+      "previous_candidate": "Gå til førre kandidat",
       "publication_points": "Publiseringspoeng",
       "reject_nvi_candidate": "Avvis",
       "reject_nvi_candidate_description": "Avvising av resultatet.",
