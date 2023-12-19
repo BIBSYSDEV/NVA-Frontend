@@ -64,20 +64,8 @@ export const Header = () => {
           justifyItems: 'center',
           gridTemplateAreas: '"logo search new-result user-menu"',
           gridTemplateColumns: { xs: 'auto auto 1fr auto', md: 'auto 1fr 10fr auto' },
-
-          // gridTemplateAreas: '"logo text search new-result user-menu"',
-          // gridTemplateColumns: { xs: 'auto auto auto 1fr auto', md: 'auto 1fr 10fr auto' },
-          gap: { xs: '0.5rem', sm: '1rem' },
-          px: '1rem',
         }}>
         <Logo />
-
-        <Button data-testid="header.nvaLink" component={RouterLink} to={UrlPathTemplate.Home}>
-          <Typography variant="h1" component="span" sx={{ color: 'white', fontWeight: 20, fontSize: '1rem' }}>
-            {t('common.page_title')}
-          </Typography>
-        </Button>
-
         <MenuIconButton
           color="inherit"
           sx={{ gridArea: 'search' }}
@@ -86,7 +74,6 @@ export const Header = () => {
           to={UrlPathTemplate.Home}>
           <SearchIcon fontSize="large" />
         </MenuIconButton>
-
         {user?.isCreator && (
           <Button
             sx={{
@@ -95,7 +82,7 @@ export const Header = () => {
               fontWeight: 700,
               gap: '0.5rem',
               display: { xs: 'none', sm: 'inline-flex' },
-              textDecoration: 'underline',
+              textDecoration: 'none',
             }}
             color="inherit"
             component={RouterLink}
@@ -146,7 +133,6 @@ export const Header = () => {
                       color="inherit"
                       data-testid={dataTestId.header.editorLink}
                       to={UrlPathTemplate.EditorCurators}>
-                      {/* <StoreIcon fontSize="small" /> */}
                       {organization.acronym}
                     </MenuButton>
                   </>
@@ -161,12 +147,7 @@ export const Header = () => {
                     </Typography>
                   </>
                 ))}
-              {/* <Divider
-                variant="middle"
-                sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}
-                orientation="vertical"
-                flexItem
-              /> */}
+
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
                 <MenuButton
                   color="inherit"
