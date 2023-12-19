@@ -3,7 +3,8 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Box, Button, Theme, Typography, useMediaQuery } from '@mui/material';
+import StoreIcon from '@mui/icons-material/Store';
+import { AppBar, Box, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -74,7 +75,7 @@ export const Header = () => {
           <SearchIcon fontSize="large" />
         </MenuIconButton>
         {user?.isCreator && (
-          <Button
+          <MenuButton
             sx={{
               gridArea: 'new-result',
               fontSize: '1rem',
@@ -83,6 +84,7 @@ export const Header = () => {
               display: { xs: 'none', sm: 'inline-flex' },
               textDecoration: 'none',
             }}
+            isSelected={currentPath.startsWith(UrlPathTemplate.RegistrationNew)}
             color="inherit"
             component={RouterLink}
             data-testid={dataTestId.header.newRegistrationLink}
@@ -100,7 +102,7 @@ export const Header = () => {
               />
             }>
             {t('registration.new_registration')}
-          </Button>
+          </MenuButton>
         )}
         <Box
           sx={{
@@ -120,6 +122,7 @@ export const Header = () => {
               {organization?.acronym &&
                 (user?.isEditor ? (
                   <>
+                    <StoreIcon fontSize="small" sx={{ alignSelf: 'center' }} />
                     <MenuButton
                       sx={{
                         fontSize: '1.25rem',
@@ -136,6 +139,7 @@ export const Header = () => {
                   </>
                 ) : (
                   <>
+                    <StoreIcon fontSize="small" />
                     <Typography
                       variant="h1"
                       component="span"
