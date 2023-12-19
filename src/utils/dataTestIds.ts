@@ -138,6 +138,7 @@ export const dataTestId = {
       removeFilterButton: 'remove-filter-button',
       searchButton: 'search-button',
     },
+    advancedSearchAccordion: 'advanced-search-accordion',
     categoryFacets: 'category-facets',
     contributorFacets: 'contributor-facets',
     coordinatingFacets: 'coordinating-facets',

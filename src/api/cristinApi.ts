@@ -74,6 +74,30 @@ export const fetchFundingSource = async (fundingId: string) => {
   return getFundingSource.data;
 };
 
+export interface OrganizationSearchParams {
+  query?: string;
+  page?: number;
+  results?: number;
+}
+
+export const searchForOrganizations = async (params: OrganizationSearchParams) => {
+  const searchParams = new URLSearchParams();
+  if (params.query) {
+    searchParams.set('query', params.query);
+  }
+  searchParams.set('results', params.results?.toString() ?? '20');
+  searchParams.set('page', params.page?.toString() ?? '1');
+
+  const queryContent = searchParams.toString();
+  const queryParams = queryContent ? `?${queryContent}` : '';
+
+  const fetchOrganizationsResponse = await apiRequest2<SearchResponse<Organization>>({
+    url: `${CristinApiPath.Organization}${queryParams}`,
+  });
+
+  return fetchOrganizationsResponse.data;
+};
+
 export const fetchOrganization = async (id: string) => {
   const fetchOrganizationResponse = await apiRequest2<Organization>({
     url: id,
