@@ -1,10 +1,10 @@
 import { Link, Skeleton } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { RegistrationFieldName } from '../../types/publicationFieldNames';
+import { fetchResults } from '../../api/searchApi';
 import { getIdentifierFromId } from '../../utils/general-helpers';
-import { useSearchRegistrations } from '../../utils/hooks/useSearchRegistrations';
 import { getTitleString } from '../../utils/registration-helpers';
-import { ExpressionStatement } from '../../utils/searchHelpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 
 interface RegistrationSummaryProps {
@@ -12,16 +12,19 @@ interface RegistrationSummaryProps {
 }
 
 export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
+  const { t } = useTranslation();
+
   const identifier = getIdentifierFromId(id);
-  const [searchContainer, isLoadingSearchContainer] = useSearchRegistrations({
-    properties: [
-      { fieldName: RegistrationFieldName.Identifier, value: identifier, operator: ExpressionStatement.Contains },
-    ],
+
+  const containerQuery = useQuery({
+    queryKey: ['container', identifier],
+    queryFn: () => fetchResults({ id: identifier, results: 1 }),
+    meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const container = searchContainer && searchContainer.hits.length === 1 ? searchContainer.hits[0] : null;
+  const container = containerQuery && containerQuery.data?.hits.length === 1 ? containerQuery.data.hits[0] : null;
 
-  return isLoadingSearchContainer ? (
+  return containerQuery.isLoading ? (
     <Skeleton width={400} />
   ) : (
     container && (

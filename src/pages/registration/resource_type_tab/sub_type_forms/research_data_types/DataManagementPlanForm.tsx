@@ -1,18 +1,16 @@
 import { Autocomplete, Box, List, TextField, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
-import { SearchApiPath } from '../../../../../api/apiPaths';
+import { FetchResultsParams, fetchResults } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
-import { SearchResponse } from '../../../../../types/common.types';
-import { RegistrationFieldName, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
+import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
 import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
-import { Registration } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
-import { useFetch } from '../../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../../../utils/urlPaths';
 import { PublisherField } from '../../components/PublisherField';
@@ -32,10 +30,15 @@ export const DataManagementPlanForm = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
 
-  const [searchOptions, isLoadingSearchOptions] = useFetch<SearchResponse<Registration>>({
-    url: debouncedSearchQuery
-      ? `${SearchApiPath.Registrations}?query=${debouncedSearchQuery} AND NOT (${RegistrationFieldName.Identifier}:"${params.identifier}")`
-      : '',
+  const searchOptionsQueryConfig: FetchResultsParams = {
+    title: debouncedSearchQuery,
+    idNot: params.identifier,
+    results: 20,
+  };
+  const searchOptionsQuery = useQuery({
+    queryKey: ['registrations', searchOptionsQueryConfig],
+    queryFn: () => fetchResults(searchOptionsQueryConfig),
+    meta: { errorMessage: t('feedback.error.search') },
   });
 
   return (
@@ -47,7 +50,7 @@ export const DataManagementPlanForm = () => {
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
             <Autocomplete
-              options={searchOptions?.hits ?? []}
+              options={searchOptionsQuery.data?.hits ?? []}
               value={null}
               onChange={(_, value) => {
                 if (value?.id && !relatedResources.includes(value.id)) {
@@ -56,7 +59,7 @@ export const DataManagementPlanForm = () => {
                 setSearchQuery('');
               }}
               blurOnSelect
-              loading={isLoadingSearchOptions}
+              loading={searchOptionsQuery.isLoading}
               filterOptions={(options) => options}
               getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
               renderOption={(props, option, state) => (
