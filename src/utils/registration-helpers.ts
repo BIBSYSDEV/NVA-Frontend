@@ -712,7 +712,23 @@ const hasChangedContributors = (persistedContributors: Contributor[], updatedCon
   const sortedPersistedContributorIds = persistedContributors.map((contributor) => contributor.identity.id).sort();
   const sortedUpdatedContributorIds = updatedContributors.map((contributor) => contributor.identity.id).sort();
 
-  return !sortedPersistedContributorIds.some((id, index) => id === sortedUpdatedContributorIds[index]);
+  return sortedPersistedContributorIds.some((id, index) => id !== sortedUpdatedContributorIds[index]);
+};
+
+const countInstitutionIds = (contributors: Contributor[]): { [id: string]: number } => {
+  const affiliationIdCount: { [id: string]: number } = {};
+
+  for (const contributor of contributors) {
+    for (const institution of contributor.affiliations ?? []) {
+      if (affiliationIdCount[institution.id ?? '']) {
+        affiliationIdCount[institution.id ?? '']++;
+      } else {
+        affiliationIdCount[institution.id ?? ''] = 1;
+      }
+    }
+  }
+
+  return affiliationIdCount;
 };
 
 export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
@@ -770,4 +786,11 @@ export const willResetNviStatuses = (persistedRegistration: Registration, update
   ) {
     return true;
   }
+
+  // if (
+  //   countInstitutionIds(persistedRegistration.entityDescription?.contributors ?? []) !==
+  //   countInstitutionIds(updatedRegistration.entityDescription?.contributors ?? [])
+  // ) {
+  //   return true;
+  // }
 };
