@@ -128,7 +128,6 @@ export const Header = () => {
                       fontSize: '1.25rem',
                       fontWeight: 700,
                       textTransform: 'none',
-                      display: 'flex',
                     }}
                     isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
                     color="inherit"

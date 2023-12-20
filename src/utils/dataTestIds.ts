@@ -121,7 +121,6 @@ export const dataTestId = {
     menuButton: 'menu-button',
     myPageLink: 'my-page-link',
     newRegistrationLink: 'new-registration',
-    nvaLink: 'nva-link',
     tasksLink: 'tasks-link',
   },
   startPage: {
