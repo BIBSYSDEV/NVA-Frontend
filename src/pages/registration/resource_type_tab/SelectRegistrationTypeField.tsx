@@ -282,16 +282,22 @@ export const SelectRegistrationTypeField = () => {
           </Box>
         </Box>
 
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem', alignItems: 'center' }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
+            gap: '1rem',
+            alignItems: 'center',
+          }}>
           <RegistrationTypesRow
             mainType={PublicationType.PublicationInJournal}
             registrationTypes={filterRegistrationTypes(
               Object.values(JournalType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
@@ -300,9 +306,9 @@ export const SelectRegistrationTypeField = () => {
               Object.values(BookType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
@@ -311,9 +317,9 @@ export const SelectRegistrationTypeField = () => {
               Object.values(ReportType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
@@ -322,10 +328,10 @@ export const SelectRegistrationTypeField = () => {
               Object.values(DegreeType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
                 disabled: isDegreeWithProtectedFiles(registrationType) && !user?.isThesisCurator,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
@@ -334,9 +340,9 @@ export const SelectRegistrationTypeField = () => {
               Object.values(ChapterType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
@@ -345,9 +351,9 @@ export const SelectRegistrationTypeField = () => {
               Object.values(PresentationType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
@@ -356,9 +362,9 @@ export const SelectRegistrationTypeField = () => {
               Object.values(ArtisticType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
@@ -367,9 +373,9 @@ export const SelectRegistrationTypeField = () => {
               Object.values(MediaType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
@@ -378,9 +384,9 @@ export const SelectRegistrationTypeField = () => {
               Object.values(ResearchDataType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
@@ -389,9 +395,9 @@ export const SelectRegistrationTypeField = () => {
               Object.values(ExhibitionContentType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
           <RegistrationTypesRow
@@ -400,9 +406,9 @@ export const SelectRegistrationTypeField = () => {
               Object.values(OtherRegistrationType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
+                selected: registrationType === currentInstanceType,
               }))
             )}
-            value={currentInstanceType}
             onChangeType={onChangeType}
           />
         </Box>
