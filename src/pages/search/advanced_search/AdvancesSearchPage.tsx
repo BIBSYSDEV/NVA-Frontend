@@ -1,4 +1,4 @@
-import { Box, Button, FormLabel } from '@mui/material';
+import { Box, Chip, FormLabel } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -79,14 +79,12 @@ export const AdvancedSearchPage = () => {
         <FormLabel component="legend" sx={{ mb: '0.25rem' }}>
           {t('registration.resource_type.resource_type')}
         </FormLabel>
-        {categoryShould.length === 0 ? (
-          <Button variant="outlined" onClick={toggleCategoryFilter} size="small">
-            {t('registration.resource_type.select_resource_type')}
-          </Button>
-        ) : (
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-            {categoryShould.map((category) => (
+
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+          {categoryShould.length > 0 ? (
+            categoryShould.map((category) => (
               <CategoryChip
+                key={category}
                 category={{
                   value: category,
                   text: t(`registration.publication_types.${category}`),
@@ -94,9 +92,15 @@ export const AdvancedSearchPage = () => {
                 }}
                 onClickChip={toggleCategoryFilter}
               />
-            ))}
-          </Box>
-        )}
+            ))
+          ) : (
+            <Chip
+              label={t('registration.resource_type.select_resource_type')}
+              color="primary"
+              onClick={toggleCategoryFilter}
+            />
+          )}
+        </Box>
         <CategoryFilterDialog
           open={openCategoryFilter}
           currentCategories={categoryShould}
