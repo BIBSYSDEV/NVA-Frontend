@@ -81,7 +81,6 @@ export const Header = () => {
           <MenuButton
             sx={{
               gridArea: 'new-result',
-              // fontSize: '1rem',
               fontSize: '1.4rem',
               fontWeight: 700,
               gap: '0.5rem',
