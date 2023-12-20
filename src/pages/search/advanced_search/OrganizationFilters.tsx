@@ -87,7 +87,6 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
             multiline
             isLoading={isLoading}
             data-testid={dataTestId.organization.searchField}
-            label={t('common.institution')}
             placeholder={t('project.search_for_institution')}
             showSearchIcon
           />
@@ -119,7 +118,6 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
             multiline
             InputLabelProps={{ shrink: true }}
             data-testid={dataTestId.organization.subSearchField}
-            label={t('search.sub_unit')}
             placeholder={t('search.search_for_sub_unit')}
           />
         )}
