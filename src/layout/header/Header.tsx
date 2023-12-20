@@ -64,6 +64,8 @@ export const Header = () => {
           justifyItems: 'center',
           gridTemplateAreas: '"logo search new-result user-menu"',
           gridTemplateColumns: { xs: 'auto auto 1fr auto', md: 'auto 1fr 10fr auto' },
+          gap: { xs: '0.5rem', sm: '1rem' },
+          px: '1rem',
         }}>
         <Logo />
         <MenuIconButton
@@ -74,17 +76,18 @@ export const Header = () => {
           to={UrlPathTemplate.Home}>
           <SearchIcon fontSize="large" />
         </MenuIconButton>
+
         {user?.isCreator && (
           <MenuButton
             sx={{
               gridArea: 'new-result',
-              fontSize: '1rem',
+              // fontSize: '1rem',
+              fontSize: '1.4rem',
               fontWeight: 700,
               gap: '0.5rem',
               display: { xs: 'none', sm: 'inline-flex' },
-              textDecoration: 'none',
             }}
-            isSelected={currentPath.startsWith(UrlPathTemplate.RegistrationNew)}
+            isSelected={currentPath === UrlPathTemplate.RegistrationNew}
             color="inherit"
             component={RouterLink}
             data-testid={dataTestId.header.newRegistrationLink}
@@ -96,8 +99,8 @@ export const Header = () => {
                   bgcolor: 'primary.light',
                   borderRadius: '50%',
                   padding: '0.2rem',
-                  width: '2rem',
-                  height: '2rem',
+                  width: '2.7rem',
+                  height: '2.7rem',
                 }}
               />
             }>
@@ -121,30 +124,26 @@ export const Header = () => {
             <>
               {organization?.acronym &&
                 (user?.isEditor ? (
-                  <>
-                    <MenuButton
-                      sx={{
-                        fontSize: '1.25rem',
-                        fontWeight: 700,
-                        textTransform: 'none',
-                        display: 'flex',
-                      }}
-                      isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
-                      color="inherit"
-                      data-testid={dataTestId.header.editorLink}
-                      to={UrlPathTemplate.EditorCurators}>
-                      {organization.acronym}
-                    </MenuButton>
-                  </>
+                  <MenuButton
+                    sx={{
+                      fontSize: '1.25rem',
+                      fontWeight: 700,
+                      textTransform: 'none',
+                      display: 'flex',
+                    }}
+                    isSelected={currentPath.startsWith(UrlPathTemplate.Editor)}
+                    color="inherit"
+                    data-testid={dataTestId.header.editorLink}
+                    to={UrlPathTemplate.EditorCurators}>
+                    {organization.acronym}
+                  </MenuButton>
                 ) : (
-                  <>
-                    <Typography
-                      variant="h1"
-                      component="span"
-                      sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
-                      {organization.acronym}
-                    </Typography>
-                  </>
+                  <Typography
+                    variant="h1"
+                    component="span"
+                    sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
+                    {organization.acronym}
+                  </Typography>
                 ))}
 
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
