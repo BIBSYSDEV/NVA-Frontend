@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getById } from '../../api/commonApi';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
@@ -87,7 +87,6 @@ export const Header = () => {
             }}
             isSelected={currentPath === UrlPathTemplate.RegistrationNew}
             color="inherit"
-            component={RouterLink}
             data-testid={dataTestId.header.newRegistrationLink}
             to={UrlPathTemplate.RegistrationNew}
             startIcon={
