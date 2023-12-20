@@ -62,22 +62,28 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
         <Box
           sx={{
             display: 'flex',
+            alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
             gap: '0.5rem',
-            my: '1rem',
+            mb: '1rem',
           }}>
-          <TextField
-            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeSearchField}
-            sx={{ maxWidth: '17rem' }}
-            type="search"
-            variant="filled"
-            label={t('common.search')}
-            InputProps={{
-              endAdornment: <SearchIcon />,
-            }}
-            onChange={(event) => setSearchValue(event.target.value)}
-          />
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <TextField
+              data-testid={dataTestId.registrationWizard.resourceType.resourceTypeSearchField}
+              sx={{ maxWidth: '17rem' }}
+              type="search"
+              variant="filled"
+              label={t('common.search')}
+              InputProps={{
+                endAdornment: <SearchIcon />,
+              }}
+              onChange={(event) => setSearchValue(event.target.value)}
+            />
+            <Button variant="outlined" onClick={() => setSelectedCategories([])}>
+              {t('search.reset_selection')}
+            </Button>
+          </Box>
           <Box
             sx={{
               display: 'flex',
