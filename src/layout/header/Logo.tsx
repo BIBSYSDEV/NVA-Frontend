@@ -5,14 +5,15 @@ import { UrlPathTemplate } from '../../utils/urlPaths';
 
 export const Logo = () => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
+  const showFullAppName = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
+
   return (
     <Button sx={{ gridArea: 'logo' }} data-testid="logo" component={RouterLink} to={UrlPathTemplate.Home}>
       <Typography variant="h5" component="span" sx={{ color: 'white', fontWeight: 900, fontSize: '3rem' }}>
         NVA
       </Typography>
 
-      {!isMobile && (
+      {!showFullAppName && (
         <Typography
           variant="h1"
           component="span"
