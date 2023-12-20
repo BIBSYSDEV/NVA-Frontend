@@ -24,7 +24,9 @@ export const RegistrationTypesRow = ({ mainType, registrationTypes, onChangeType
 
   return registrationTypes.length > 0 ? (
     <>
-      <Typography fontWeight={700}>{t(`registration.publication_types.${mainType}`)}</Typography>
+      <Typography fontWeight={700} sx={{ maxWidth: '10rem' }}>
+        {t(`registration.publication_types.${mainType}`)}
+      </Typography>
       <Box sx={{ display: 'flex', gap: '0.25rem 0.5rem', flexWrap: 'wrap' }}>
         {registrationTypes.map((registrationType) => (
           <CategoryChip key={registrationType.value} category={registrationType} onClickChip={onChangeType} />
