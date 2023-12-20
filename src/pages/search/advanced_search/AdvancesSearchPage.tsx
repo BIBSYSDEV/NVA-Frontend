@@ -27,8 +27,7 @@ export const AdvancedSearchPage = () => {
 
   const params = new URLSearchParams(location.search);
 
-  const categoriesShould =
-    (params.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
+  const categoryShould = (params.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
   const institutionId = params.get(AdvancedSearchQueryParams.Institution);
   const subUnitId = params.get(AdvancedSearchQueryParams.SubUnit);
 
@@ -37,7 +36,7 @@ export const AdvancedSearchPage = () => {
   const resultSearchQueryConfig: FetchResultsParams = {
     title: params.get(ResultParam.Title),
     unit: unitFilter,
-    categoryShould: categoriesShould,
+    categoryShould,
   };
 
   const resultSearchQuery = useQuery({
@@ -80,13 +79,13 @@ export const AdvancedSearchPage = () => {
         <FormLabel component="legend" sx={{ mb: '0.25rem' }}>
           {t('registration.resource_type.resource_type')}
         </FormLabel>
-        {categoriesShould.length === 0 ? (
+        {categoryShould.length === 0 ? (
           <Button variant="outlined" onClick={toggleCategoryFilter} size="small">
             {t('registration.resource_type.select_resource_type')}
           </Button>
         ) : (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-            {categoriesShould.map((category) => (
+            {categoryShould.map((category) => (
               <CategoryChip
                 category={{
                   value: category,
@@ -100,7 +99,7 @@ export const AdvancedSearchPage = () => {
         )}
         <CategoryFilterDialog
           open={openCategoryFilter}
-          currentCategories={categoriesShould}
+          currentCategories={categoryShould}
           closeDialog={toggleCategoryFilter}
         />
       </div>

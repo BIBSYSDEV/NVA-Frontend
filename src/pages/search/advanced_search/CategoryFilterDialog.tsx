@@ -57,7 +57,7 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
   };
 
   return (
-    <Dialog open={open} onClose={closeDialog} maxWidth="md">
+    <Dialog open={open} onClose={closeDialog} maxWidth="md" fullWidth>
       <DialogTitle>{t('search.select_one_or_more_categories')}</DialogTitle>
       <DialogContent>
         <Box
@@ -225,9 +225,9 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
           variant="outlined"
           onClick={() => {
             const params = new URLSearchParams(history.location.search);
-            const newValues = selectedCategories.join(',');
-            if (newValues) {
-              params.set(ResultParam.CategoryShould, newValues);
+            const newCategoryShould = selectedCategories.join(',');
+            if (newCategoryShould) {
+              params.set(ResultParam.CategoryShould, newCategoryShould);
             } else {
               params.delete(ResultParam.CategoryShould);
             }
