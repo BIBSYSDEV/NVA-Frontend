@@ -1,4 +1,10 @@
+import FilterVintageIcon from '@mui/icons-material/FilterVintage';
+import SearchIcon from '@mui/icons-material/Search';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { ResultParam } from '../../../api/searchApi';
 import {
   ArtisticType,
   BookType,
@@ -13,19 +19,12 @@ import {
   ReportType,
   ResearchDataType,
 } from '../../../types/publicationFieldNames';
+import { PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
   RegistrationTypeElement,
   RegistrationTypesRow,
 } from '../../registration/resource_type_tab/components/RegistrationTypesRow';
-
-import FilterVintageIcon from '@mui/icons-material/FilterVintage';
-import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import { ResultParam } from '../../../api/searchApi';
-import { PublicationInstanceType } from '../../../types/registration.types';
 
 interface CategoryFilterDialogProps {
   open: boolean;
