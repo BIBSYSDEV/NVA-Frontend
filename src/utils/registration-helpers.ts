@@ -709,10 +709,10 @@ const hasChangedContributors = (persistedContributors: Contributor[], updatedCon
     return true;
   }
 
-  const sortedPersistedContributors = persistedContributors.map((contributor) => contributor.identity.id).sort();
-  const sortedUpdatedContributors = updatedContributors.map((contributor) => contributor.identity.id).sort();
+  const sortedPersistedContributorIds = persistedContributors.map((contributor) => contributor.identity.id).sort();
+  const sortedUpdatedContributorIds = updatedContributors.map((contributor) => contributor.identity.id).sort();
 
-  return !sortedPersistedContributors.every((id, index) => id === sortedUpdatedContributors[index]);
+  return !sortedPersistedContributorIds.some((id, index) => id === sortedUpdatedContributorIds[index]);
 };
 
 export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
