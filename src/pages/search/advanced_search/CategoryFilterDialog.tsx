@@ -99,7 +99,13 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
           </Box>
         </Box>
 
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '1rem', alignItems: 'center' }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: 'auto 1fr' },
+            gap: '1rem',
+            alignItems: 'center',
+          }}>
           <RegistrationTypesRow
             mainType={PublicationType.PublicationInJournal}
             registrationTypes={filterRegistrationTypes(
