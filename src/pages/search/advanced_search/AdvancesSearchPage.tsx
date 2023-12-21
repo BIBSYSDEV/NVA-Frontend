@@ -1,4 +1,4 @@
-import { Box, Chip, FormLabel } from '@mui/material';
+import { Box, Chip, Divider } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -73,40 +73,40 @@ export const AdvancedSearchPage = () => {
         />
       </Box>
 
-      <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+        <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
 
-      <div>
-        <FormLabel component="legend" sx={{ mb: '0.25rem' }}>
-          {t('registration.resource_type.resource_type')}
-        </FormLabel>
+        <Divider orientation="vertical" flexItem />
 
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-          {categoryShould.length > 0 ? (
-            categoryShould.map((category) => (
-              <CategoryChip
-                key={category}
-                category={{
-                  value: category,
-                  text: t(`registration.publication_types.${category}`),
-                  selected: true,
-                }}
-                onClickChip={toggleCategoryFilter}
+        <div>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+            {categoryShould.length > 0 ? (
+              categoryShould.map((category) => (
+                <CategoryChip
+                  key={category}
+                  category={{
+                    value: category,
+                    text: t(`registration.publication_types.${category}`),
+                    selected: true,
+                  }}
+                  onClickChip={toggleCategoryFilter}
+                />
+              ))
+            ) : (
+              <Chip
+                label={t('registration.resource_type.select_resource_type')}
+                color="primary"
+                onClick={toggleCategoryFilter}
               />
-            ))
-          ) : (
-            <Chip
-              label={t('registration.resource_type.select_resource_type')}
-              color="primary"
-              onClick={toggleCategoryFilter}
-            />
-          )}
-        </Box>
-        <CategoryFilterDialog
-          open={openCategoryFilter}
-          currentCategories={categoryShould}
-          closeDialog={toggleCategoryFilter}
-        />
-      </div>
+            )}
+          </Box>
+          <CategoryFilterDialog
+            open={openCategoryFilter}
+            currentCategories={categoryShould}
+            closeDialog={toggleCategoryFilter}
+          />
+        </div>
+      </Box>
 
       <RegistrationSearch registrationQuery={resultSearchQuery} />
     </Box>
