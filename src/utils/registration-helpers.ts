@@ -704,6 +704,17 @@ export const openFileInNewTab = (fileUri: string) => {
   }
 };
 
+const hasChangedContributors = (persistedContributors: Contributor[], updatedContributors: Contributor[]) => {
+  if (persistedContributors.length !== updatedContributors.length) {
+    return true;
+  }
+
+  const sortedPersistedContributorIds = persistedContributors.map((contributor) => contributor.identity.id).sort();
+  const sortedUpdatedContributorIds = updatedContributors.map((contributor) => contributor.identity.id).sort();
+
+  return sortedPersistedContributorIds.some((id, index) => id !== sortedUpdatedContributorIds[index]);
+};
+
 export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
   const canBeNviCandidate = nviApplicableTypes.includes(
     persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
@@ -748,6 +759,15 @@ export const willResetNviStatuses = (persistedRegistration: Registration, update
     updatedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.series?.id !==
     persistedRegistrationWithPublisher.entityDescription?.reference?.publicationContext?.series?.id;
   if (hasChangedSeries) {
+    return true;
+  }
+
+  if (
+    hasChangedContributors(
+      persistedRegistration.entityDescription?.contributors ?? [],
+      updatedRegistration.entityDescription?.contributors ?? []
+    )
+  ) {
     return true;
   }
 };
