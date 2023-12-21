@@ -115,7 +115,7 @@ export const RegistrationListItemContent = ({
               </Typography>
             )}
         </Box>
-        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
           {ticketView ? (
             getTitleString(entityDescription?.mainTitle)
           ) : (
