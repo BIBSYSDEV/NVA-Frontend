@@ -296,7 +296,6 @@ export const PersonTableRow = ({
                                 <TextField
                                   {...field}
                                   value={field.value ?? ''}
-                                  required
                                   disabled={isSubmitting}
                                   fullWidth
                                   type="number"
