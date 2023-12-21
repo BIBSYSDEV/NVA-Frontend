@@ -10,12 +10,16 @@ import {
   ResearchDataType,
   ResourceFieldNames,
 } from '../../../../../types/publicationFieldNames';
-import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
+import {
+  ConfirmedDocument,
+  ResearchDataRegistration,
+} from '../../../../../types/publication_types/researchDataRegistration.types';
 import { Registration } from '../../../../../types/registration.types';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
-import { getTitleString } from '../../../../../utils/registration-helpers';
+import { findRelatedDocumentIndex, getTitleString } from '../../../../../utils/registration-helpers';
+import { filterConfirmedDocuments } from '../../../../public_registration/PublicRegistrationContent';
 import { YearAndContributorsText } from '../../components/SearchContainerField';
 import { ExternalLinkField } from './ExternalLinkField';
 import { RelatedResourceRow } from './RelatedResourceRow';
@@ -24,6 +28,9 @@ export const DatasetForm = () => {
   const { t } = useTranslation();
   const { values } = useFormikContext<ResearchDataRegistration>();
   const { related, compliesWith, referencedBy } = values.entityDescription.reference.publicationInstance;
+
+  const relatedResources = related ?? [];
+  const confirmedRelatedResources = filterConfirmedDocuments(relatedResources);
 
   const [relatedRegistrationsQuery, setRelatedRegistrationsQuery] = useState('');
   const debouncedRelatedRegistrationsQuery = useDebounce(relatedRegistrationsQuery);
@@ -153,9 +160,7 @@ export const DatasetForm = () => {
                   {...params}
                   data-testid={dataTestId.registrationWizard.resourceType.compliesWithField}
                   sx={{ maxWidth: '40rem' }}
-                  onChange={(event) => {
-                    setRelatedDmpQuery(event.target.value);
-                  }}
+                  onChange={(event) => setRelatedDmpQuery(event.target.value)}
                   variant="filled"
                   label={t('registration.resource_type.research_data.search_for_related_dmps')}
                 />
@@ -182,16 +187,24 @@ export const DatasetForm = () => {
           <>
             <ExternalLinkField
               onAddClick={(url) => {
-                if (!related?.includes(url)) {
-                  push(url);
+                if (url && !confirmedRelatedResources.includes(url)) {
+                  const confirmedDocument: ConfirmedDocument = {
+                    type: 'ConfirmedDocument',
+                    identifier: url,
+                  };
+                  push(confirmedDocument);
                 }
               }}
             />
 
-            {related && related.length > 0 && (
+            {confirmedRelatedResources.length > 0 && (
               <List>
-                {related.map((uri) => (
-                  <RelatedResourceRow key={uri} uri={uri} removeRelatedResource={() => remove(related.indexOf(uri))} />
+                {confirmedRelatedResources.map((uri) => (
+                  <RelatedResourceRow
+                    key={uri}
+                    uri={uri}
+                    removeRelatedResource={() => remove(findRelatedDocumentIndex(relatedResources, uri))}
+                  />
                 ))}
               </List>
             )}
