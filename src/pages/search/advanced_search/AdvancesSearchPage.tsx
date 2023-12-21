@@ -80,18 +80,24 @@ export const AdvancedSearchPage = () => {
 
         <div>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-            {categoryShould.length > 0 ? (
-              categoryShould.map((category) => (
-                <CategoryChip
-                  key={category}
-                  category={{
-                    value: category,
-                    text: t(`registration.publication_types.${category}`),
-                    selected: true,
-                  }}
-                  onClickChip={toggleCategoryFilter}
-                />
-              ))
+            {categoryShould.slice(0, 3).map((category) => (
+              <CategoryChip
+                key={category}
+                category={{
+                  value: category,
+                  text: t(`registration.publication_types.${category}`),
+                  selected: true,
+                }}
+                onClickChip={toggleCategoryFilter}
+              />
+            ))}
+            {categoryShould.length > 3 ? (
+              <Chip
+                label={t('common.x_others', { count: categoryShould.length - 3 })}
+                variant="filled"
+                color="primary"
+                onClick={toggleCategoryFilter}
+              />
             ) : (
               <Chip
                 label={t('registration.resource_type.select_resource_type')}
