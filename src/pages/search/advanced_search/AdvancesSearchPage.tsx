@@ -46,74 +46,76 @@ export const AdvancedSearchPage = () => {
   });
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <SearchForm sx={{ width: '100%' }} paramName={ResultParam.Title} placeholder={t('search.search_for_title')} />
-        <SortSelector
-          options={[
-            {
-              orderBy: RegistrationFieldName.ModifiedDate,
-              sortOrder: 'desc',
-              label: t('search.sort_by_modified_date'),
-            },
-            {
-              orderBy: RegistrationFieldName.PublishedDate,
-              sortOrder: 'desc',
-              label: t('search.sort_by_published_date_desc'),
-            },
-            {
-              orderBy: RegistrationFieldName.PublishedDate,
-              sortOrder: 'asc',
-              label: t('search.sort_by_published_date_asc'),
-            },
-          ]}
-          sortKey="sort"
-          orderKey="order"
-        />
-      </Box>
-
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-        <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
-
-        <Divider orientation="vertical" flexItem />
-
-        <div>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-            {categoryShould.slice(0, 3).map((category) => (
-              <CategoryChip
-                key={category}
-                category={{
-                  value: category,
-                  text: t(`registration.publication_types.${category}`),
-                  selected: true,
-                }}
-                onClickChip={toggleCategoryFilter}
-              />
-            ))}
-            {categoryShould.length > 3 ? (
-              <Chip
-                label={t('common.x_others', { count: categoryShould.length - 3 })}
-                variant="filled"
-                color="primary"
-                onClick={toggleCategoryFilter}
-              />
-            ) : (
-              <Chip
-                label={t('registration.resource_type.select_resource_type')}
-                color="primary"
-                onClick={toggleCategoryFilter}
-              />
-            )}
-          </Box>
-          <CategoryFilterDialog
-            open={openCategoryFilter}
-            currentCategories={categoryShould}
-            closeDialog={toggleCategoryFilter}
+    <section>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mx: { xs: '0.5rem', md: 0 }, mb: '0.75rem' }}>
+        <Box sx={{ display: 'flex', gap: '1rem' }}>
+          <SearchForm sx={{ width: '100%' }} paramName={ResultParam.Title} placeholder={t('search.search_for_title')} />
+          <SortSelector
+            options={[
+              {
+                orderBy: RegistrationFieldName.ModifiedDate,
+                sortOrder: 'desc',
+                label: t('search.sort_by_modified_date'),
+              },
+              {
+                orderBy: RegistrationFieldName.PublishedDate,
+                sortOrder: 'desc',
+                label: t('search.sort_by_published_date_desc'),
+              },
+              {
+                orderBy: RegistrationFieldName.PublishedDate,
+                sortOrder: 'asc',
+                label: t('search.sort_by_published_date_asc'),
+              },
+            ]}
+            sortKey="sort"
+            orderKey="order"
           />
-        </div>
+        </Box>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
+
+          <Divider orientation="vertical" flexItem />
+
+          <div>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+              {categoryShould.slice(0, 3).map((category) => (
+                <CategoryChip
+                  key={category}
+                  category={{
+                    value: category,
+                    text: t(`registration.publication_types.${category}`),
+                    selected: true,
+                  }}
+                  onClickChip={toggleCategoryFilter}
+                />
+              ))}
+              {categoryShould.length > 3 ? (
+                <Chip
+                  label={t('common.x_others', { count: categoryShould.length - 3 })}
+                  variant="filled"
+                  color="primary"
+                  onClick={toggleCategoryFilter}
+                />
+              ) : (
+                <Chip
+                  label={t('registration.resource_type.select_resource_type')}
+                  color="primary"
+                  onClick={toggleCategoryFilter}
+                />
+              )}
+            </Box>
+            <CategoryFilterDialog
+              open={openCategoryFilter}
+              currentCategories={categoryShould}
+              closeDialog={toggleCategoryFilter}
+            />
+          </div>
+        </Box>
       </Box>
 
       <RegistrationSearch registrationQuery={resultSearchQuery} />
-    </Box>
+    </section>
   );
 };
