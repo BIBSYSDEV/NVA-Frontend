@@ -715,22 +715,6 @@ const hasChangedContributors = (persistedContributors: Contributor[], updatedCon
   return sortedPersistedContributorIds.some((id, index) => id !== sortedUpdatedContributorIds[index]);
 };
 
-const countInstitutionIds = (contributors: Contributor[]): { [id: string]: number } => {
-  const affiliationIdCount: { [id: string]: number } = {};
-
-  for (const contributor of contributors) {
-    for (const institution of contributor.affiliations ?? []) {
-      if (affiliationIdCount[institution.id ?? '']) {
-        affiliationIdCount[institution.id ?? '']++;
-      } else {
-        affiliationIdCount[institution.id ?? ''] = 1;
-      }
-    }
-  }
-
-  return affiliationIdCount;
-};
-
 export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
   const canBeNviCandidate = nviApplicableTypes.includes(
     persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
