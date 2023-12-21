@@ -43,6 +43,7 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import { RelatedDocument } from '../types/publication_types/researchDataRegistration.types';
 import {
   Journal,
   PublicationInstanceType,
@@ -703,6 +704,9 @@ export const openFileInNewTab = (fileUri: string) => {
     setTimeout(() => window.open(fileUri, '_blank'));
   }
 };
+
+export const findRelatedDocumentIndex = (related: RelatedDocument[], uri: string) =>
+  related.findIndex((document) => document.type === 'ConfirmedDocument' && document.identifier === uri);
 
 const hasChangedContributors = (persistedContributors: Contributor[], updatedContributors: Contributor[]) => {
   if (persistedContributors.length !== updatedContributors.length) {
