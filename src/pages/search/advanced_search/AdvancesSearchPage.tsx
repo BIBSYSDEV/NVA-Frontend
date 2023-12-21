@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { FetchResultsParams, ResultParam, fetchResults } from '../../../api/searchApi';
-import { BetaFunctionality } from '../../../components/BetaFunctionality';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
@@ -47,7 +46,7 @@ export const AdvancedSearchPage = () => {
   });
 
   return (
-    <Box component={BetaFunctionality} sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <SearchForm sx={{ width: '100%' }} paramName={ResultParam.Title} placeholder={t('search.search_for_title')} />
         <SortSelector
