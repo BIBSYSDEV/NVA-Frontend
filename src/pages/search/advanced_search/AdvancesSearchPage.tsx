@@ -46,10 +46,14 @@ export const AdvancedSearchPage = () => {
   });
 
   return (
-    <section>
+    <Box sx={{ mb: '0.5rem' }} component="section">
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mx: { xs: '0.5rem', md: 0 }, mb: '0.75rem' }}>
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
-          <SearchForm sx={{ width: '100%' }} paramName={ResultParam.Title} placeholder={t('search.search_for_title')} />
+        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          <SearchForm
+            sx={{ flex: '1 0 15rem' }}
+            paramName={ResultParam.Title}
+            placeholder={t('search.search_for_title')}
+          />
           <SortSelector
             options={[
               {
@@ -116,6 +120,6 @@ export const AdvancedSearchPage = () => {
       </Box>
 
       <RegistrationSearch registrationQuery={resultSearchQuery} />
-    </section>
+    </Box>
   );
 };

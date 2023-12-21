@@ -15,7 +15,7 @@ import { ProjectSearch } from './project_search/ProjectSearch';
 import { RegistrationSearch } from './registration_search/RegistrationSearch';
 import { RegistrationSearchBar } from './registration_search/RegistrationSearchBar';
 
-const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
+export const StyledSearchBarContainer = styled(Box)(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'auto 1fr',
   [theme.breakpoints.down('sm')]: {

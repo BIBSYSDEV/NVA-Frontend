@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { RegistrationList } from '../../../components/RegistrationList';
 import { Registration } from '../../../types/registration.types';
@@ -27,12 +26,10 @@ export const RegistrationSearchResults = ({
   }, [searchResult]);
 
   return (
-    <Box data-testid="search-results">
-      <RegistrationList
-        canEditRegistration={canEditRegistration}
-        registrations={searchResult}
-        promotedPublications={promotedPublications}
-      />
-    </Box>
+    <RegistrationList
+      canEditRegistration={canEditRegistration}
+      registrations={searchResult}
+      promotedPublications={promotedPublications}
+    />
   );
 };

@@ -33,7 +33,7 @@ interface RegistrationListProps {
 }
 
 export const RegistrationList = ({ registrations, ...rest }: RegistrationListProps) => (
-  <List>
+  <List data-testid="search-results">
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
