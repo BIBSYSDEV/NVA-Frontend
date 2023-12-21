@@ -1,4 +1,4 @@
-import { Box, Chip, Divider } from '@mui/material';
+import { Box, Chip, Divider, Theme, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,8 @@ export enum AdvancedSearchQueryParams {
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
+  const showFilterDivider = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
+
   const [openCategoryFilter, setOpenCategoryFilter] = useState(false);
   const toggleCategoryFilter = () => setOpenCategoryFilter(!openCategoryFilter);
 
@@ -80,7 +82,7 @@ export const AdvancedSearchPage = () => {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
           <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
 
-          <Divider orientation="vertical" flexItem />
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <div>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
