@@ -720,10 +720,12 @@ const countInstitutionIds = (contributors: Contributor[]) => {
 
   for (const contributor of contributors) {
     for (const institution of contributor.affiliations ?? []) {
-      if (affiliationIdCount[institution.id ?? '']) {
-        affiliationIdCount[institution.id ?? '']++;
-      } else {
-        affiliationIdCount[institution.id ?? ''] = 1;
+      if (institution.id) {
+        if (affiliationIdCount[institution.id]) {
+          affiliationIdCount[institution.id]++;
+        } else {
+          affiliationIdCount[institution.id] = 1;
+        }
       }
     }
   }
