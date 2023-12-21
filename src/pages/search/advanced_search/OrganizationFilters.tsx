@@ -49,7 +49,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
   const isLoading = organizationQuery.isFetching || institutionSearchQuery.isFetching;
 
   return (
-    <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+    <Box sx={{ display: 'flex', gap: '0.5rem 1rem', flexWrap: 'wrap' }}>
       <Autocomplete
         options={options}
         inputMode="search"
