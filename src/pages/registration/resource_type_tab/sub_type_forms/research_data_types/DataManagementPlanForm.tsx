@@ -7,14 +7,18 @@ import { SearchApiPath } from '../../../../../api/apiPaths';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
 import { SearchResponse } from '../../../../../types/common.types';
 import { RegistrationFieldName, ResourceFieldNames } from '../../../../../types/publicationFieldNames';
-import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
+import {
+  ConfirmedDocument,
+  ResearchDataRegistration,
+} from '../../../../../types/publication_types/researchDataRegistration.types';
 import { Registration } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';
 import { useFetch } from '../../../../../utils/hooks/useFetch';
-import { getTitleString } from '../../../../../utils/registration-helpers';
+import { findRelatedDocumentIndex, getTitleString } from '../../../../../utils/registration-helpers';
 import { IdentifierParams } from '../../../../../utils/urlPaths';
+import { filterConfirmedDocuments } from '../../../../public_registration/PublicRegistrationContent';
 import { PublisherField } from '../../components/PublisherField';
 import { YearAndContributorsText } from '../../components/SearchContainerField';
 import { ExternalLinkField } from './ExternalLinkField';
@@ -26,8 +30,9 @@ export const DataManagementPlanForm = () => {
   const { values } = useFormikContext<ResearchDataRegistration>();
 
   const relatedResources = values.entityDescription?.reference?.publicationInstance.related ?? [];
-  const internalResources = relatedResources.filter((uri) => uri.includes(API_URL));
-  const externalResources = relatedResources.filter((uri) => !uri.includes(API_URL));
+  const confirmedRelatedResources = filterConfirmedDocuments(relatedResources);
+  const internalResources = confirmedRelatedResources.filter((uri) => uri.includes(API_URL));
+  const externalResources = confirmedRelatedResources.filter((uri) => !uri.includes(API_URL));
 
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery);
@@ -50,8 +55,12 @@ export const DataManagementPlanForm = () => {
               options={searchOptions?.hits ?? []}
               value={null}
               onChange={(_, value) => {
-                if (value?.id && !relatedResources.includes(value.id)) {
-                  push(value.id);
+                if (value?.id && !confirmedRelatedResources.includes(value.id)) {
+                  const confirmedDocument: ConfirmedDocument = {
+                    type: 'ConfirmedDocument',
+                    identifier: value.id,
+                  };
+                  push(confirmedDocument);
                 }
                 setSearchQuery('');
               }}
@@ -79,9 +88,7 @@ export const DataManagementPlanForm = () => {
                 <TextField
                   {...params}
                   sx={{ maxWidth: '40rem' }}
-                  onChange={(event) => {
-                    setSearchQuery(event.target.value);
-                  }}
+                  onChange={(event) => setSearchQuery(event.target.value)}
                   variant="filled"
                   label={t('registration.resource_type.research_data.search_for_related_registrations')}
                   helperText={t('registration.resource_type.research_data.search_for_related_registrations_helper')}
@@ -95,15 +102,19 @@ export const DataManagementPlanForm = () => {
                 <RelatedResourceRow
                   key={uri}
                   uri={uri}
-                  removeRelatedResource={() => remove(relatedResources.indexOf(uri))}
+                  removeRelatedResource={() => remove(findRelatedDocumentIndex(relatedResources, uri))}
                 />
               ))}
             </List>
 
             <ExternalLinkField
               onAddClick={(url) => {
-                if (!relatedResources.includes(url)) {
-                  push(url);
+                if (url && !confirmedRelatedResources.includes(url)) {
+                  const confirmedDocument: ConfirmedDocument = {
+                    type: 'ConfirmedDocument',
+                    identifier: url,
+                  };
+                  push(confirmedDocument);
                 }
               }}
             />
@@ -113,7 +124,7 @@ export const DataManagementPlanForm = () => {
                 <RelatedResourceRow
                   key={uri}
                   uri={uri}
-                  removeRelatedResource={() => remove(relatedResources.indexOf(uri))}
+                  removeRelatedResource={() => remove(findRelatedDocumentIndex(relatedResources, uri))}
                 />
               ))}
             </List>
