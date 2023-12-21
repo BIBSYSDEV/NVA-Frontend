@@ -704,7 +704,7 @@ export const openFileInNewTab = (fileUri: string) => {
   }
 };
 
-const hasChangedContributors = (persistedContributors: Contributor[], updatedContributors: Contributor[]): boolean => {
+const hasChangedContributors = (persistedContributors: Contributor[], updatedContributors: Contributor[]) => {
   if (persistedContributors.length !== updatedContributors.length) {
     return true;
   }
