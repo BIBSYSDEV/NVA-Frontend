@@ -770,11 +770,4 @@ export const willResetNviStatuses = (persistedRegistration: Registration, update
   ) {
     return true;
   }
-
-  // if (
-  //   countInstitutionIds(persistedRegistration.entityDescription?.contributors ?? []) !==
-  //   countInstitutionIds(updatedRegistration.entityDescription?.contributors ?? [])
-  // ) {
-  //   return true;
-  // }
 };
