@@ -27,22 +27,23 @@ const hasChangedContributors = (persistedContributors: Contributor[], updatedCon
   return sortedPersistedContributorIds.some((id, index) => id !== sortedUpdatedContributorIds[index]);
 };
 
-const countInstitutionIds = (contributors: Contributor[]) => {
-  const affiliationIdCount: { [id: string]: number } = {};
-
-  for (const contributor of contributors) {
-    for (const institution of contributor.affiliations ?? []) {
-      if (institution.id) {
-        if (affiliationIdCount[institution.id]) {
-          affiliationIdCount[institution.id]++;
-        } else {
-          affiliationIdCount[institution.id] = 1;
-        }
+const hasChangedAffiliations = (persistedContributors: Contributor[], updatedContributors: Contributor[]) => {
+  for (const persistedContributor of persistedContributors) {
+    const updatedContributor = updatedContributors.find(
+      (contributor) => contributor.identity.id === persistedContributor.identity.id
+    );
+    if (updatedContributor) {
+      const persistedAffiliations = persistedContributor.affiliations ?? [];
+      const updatedAffiliations = updatedContributor.affiliations ?? [];
+      if (
+        persistedAffiliations.length !== updatedAffiliations.length ||
+        persistedAffiliations.some((value, index) => value !== updatedAffiliations[index])
+      ) {
+        return true;
       }
     }
   }
-
-  return affiliationIdCount;
+  return false;
 };
 
 export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
