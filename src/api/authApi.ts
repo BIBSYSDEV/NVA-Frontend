@@ -1,23 +1,30 @@
-import { CognitoUser } from 'amazon-cognito-identity-js';
-import { Auth } from 'aws-amplify';
+// import { fetchUserAttributes, getCurrentUser } from 'aws-amplify';
+// import { fetchAuthSession } from 'aws-amplify/auth';
+import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
-    const currentSession = await Auth.currentSession();
+    // const currentSession = await fetchAuthSession();
+    // const currentUser = await getCurrentUser();
+    const userAttributes = await fetchUserAttributes();
 
-    if (!currentSession.isValid()) {
-      const cognitoUser: CognitoUser = await Auth.currentAuthenticatedUser();
-      // Refresh session
-      await new Promise((resolve) => {
-        cognitoUser.refreshSession(currentSession.getRefreshToken(), (error, session) => {
-          resolve(session);
-        });
-      });
-    }
-    const userInfo = await Auth.currentUserInfo();
-    return userInfo.attributes;
+    return userAttributes;
+    // TODO: refresh session?
+
+    // if (!currentSession.isValid()) {
+    //   const cognitoUser: CognitoUser = await Auth.currentAuthenticatedUser();
+    //   // Refresh session
+    //   await new Promise((resolve) => {
+    //     cognitoUser.refreshSession(currentSession.getRefreshToken(), (error, session) => {
+    //       resolve(session);
+    //     });
+    //   });
+    // }
+
+    // const userInfo = await Auth.currentUserInfo();
+    // return userInfo.attributes;
   } catch {
     // Don't do anything if user is not supposed to be logged in
     if (localStorage.getItem(LocalStorageKey.AmplifyRedirect)) {
@@ -36,8 +43,8 @@ export const getAccessToken = async () => {
     return '';
   }
   try {
-    const cognitoUser = await Auth.currentAuthenticatedUser();
-    return cognitoUser?.signInUserSession?.accessToken?.jwtToken ?? null;
+    const currentSession = await fetchAuthSession();
+    return currentSession.tokens?.accessToken.toString() ?? null;
   } catch (error) {
     if (error === 'The user is not authenticated') {
       // Expired session token. Set state in localStorage that App.tsx can act upon
