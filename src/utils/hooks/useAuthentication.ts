@@ -1,4 +1,4 @@
-import { Auth } from '@aws-amplify/auth';
+import { Auth } from 'aws-amplify';
 import { useDispatch } from 'react-redux';
 import { logoutSuccess, setUser } from '../../redux/userSlice';
 import { LocalStorageKey, USE_MOCK_DATA } from '../constants';
