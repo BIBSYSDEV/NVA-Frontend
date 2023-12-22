@@ -48,7 +48,7 @@ export const AdvancedSearchPage = () => {
   });
 
   return (
-    <Box sx={{ mb: '0.5rem' }} component="section">
+    <section>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mx: { xs: '0.5rem', md: 0 }, mb: '0.75rem' }}>
         <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <SearchForm
@@ -84,44 +84,42 @@ export const AdvancedSearchPage = () => {
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
-          <div>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
-              {categoryShould.slice(0, 3).map((category) => (
-                <CategoryChip
-                  key={category}
-                  category={{
-                    value: category,
-                    text: t(`registration.publication_types.${category}`),
-                    selected: true,
-                  }}
-                  onClickChip={toggleCategoryFilter}
-                />
-              ))}
-              {categoryShould.length > 3 ? (
-                <Chip
-                  label={t('common.x_others', { count: categoryShould.length - 3 })}
-                  variant="filled"
-                  color="primary"
-                  onClick={toggleCategoryFilter}
-                />
-              ) : (
-                <Chip
-                  label={t('registration.resource_type.select_resource_type')}
-                  color="primary"
-                  onClick={toggleCategoryFilter}
-                />
-              )}
-            </Box>
-            <CategoryFilterDialog
-              open={openCategoryFilter}
-              currentCategories={categoryShould}
-              closeDialog={toggleCategoryFilter}
-            />
-          </div>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem' }}>
+            {categoryShould.slice(0, 3).map((category) => (
+              <CategoryChip
+                key={category}
+                category={{
+                  value: category,
+                  text: t(`registration.publication_types.${category}`),
+                  selected: true,
+                }}
+                onClickChip={toggleCategoryFilter}
+              />
+            ))}
+            {categoryShould.length > 3 ? (
+              <Chip
+                label={t('common.x_others', { count: categoryShould.length - 3 })}
+                variant="filled"
+                color="primary"
+                onClick={toggleCategoryFilter}
+              />
+            ) : (
+              <Chip
+                label={t('registration.resource_type.select_resource_type')}
+                color="primary"
+                onClick={toggleCategoryFilter}
+              />
+            )}
+          </Box>
+          <CategoryFilterDialog
+            open={openCategoryFilter}
+            currentCategories={categoryShould}
+            closeDialog={toggleCategoryFilter}
+          />
         </Box>
       </Box>
 
       <RegistrationSearch registrationQuery={resultSearchQuery} />
-    </Box>
+    </section>
   );
 };
