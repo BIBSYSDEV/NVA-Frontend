@@ -15,14 +15,10 @@ export const LoginButton = () => {
   const { t } = useTranslation();
   const { handleLogout } = useAuthentication();
 
-  const handleLogoutWrapper = () => {
-    handleLogout();
-  };
-
   const previousPathState: PreviousPathState = { previousPath: getCurrentPath() };
 
   return user ? (
-    <Menu handleLogout={handleLogoutWrapper} />
+    <Menu handleLogout={handleLogout} />
   ) : (
     <Button
       variant="outlined"

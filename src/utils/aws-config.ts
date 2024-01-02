@@ -13,7 +13,6 @@ export const authOptions: ResourcesConfig = {
           redirectSignOut: [process.env.REACT_APP_REDIRECT_SIGN_OUT ?? ''],
           responseType: 'code',
         },
-        // username: true, ??
       },
     },
   },
