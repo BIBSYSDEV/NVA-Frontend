@@ -2,26 +2,18 @@ import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
-export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
+export const getUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
-    console.log('Fetch user attributes', retryNumber);
-
     const userAttributes = await fetchUserAttributes();
-    console.log('userAttributes', userAttributes);
-
     return userAttributes;
-    // TODO: refresh session?
   } catch (error) {
-    console.log('getCurrentUserAttributes error', error);
-    // Don't do anything if user is not supposed to be logged in
-    if (localStorage.getItem(LocalStorageKey.AmplifyRedirect)) {
-      if (retryNumber < 3) {
-        return await getCurrentUserAttributes(retryNumber + 1);
-      } else {
-        window.location.search = ''; // Avoid infinite error loop if code parameter gets stuck in URL
-        return null;
-      }
+    if (localStorage.getItem(LocalStorageKey.AmplifyRedirect) && retryNumber < 3) {
+      await new Promise((resolve) => setTimeout(resolve, 1000 * (retryNumber + 1)));
+      return await getUserAttributes(retryNumber + 1);
     }
+    return null;
+  } finally {
+    localStorage.removeItem(LocalStorageKey.AmplifyRedirect);
   }
 };
 
@@ -34,8 +26,6 @@ export const getAccessToken = async () => {
     return currentSession.tokens?.accessToken.toString() ?? null;
   } catch (error) {
     if (error === 'The user is not authenticated') {
-      // Expired session token. Set state in localStorage that App.tsx can act upon
-      localStorage.setItem(LocalStorageKey.ExpiredToken, 'true');
       window.location.href = UrlPathTemplate.Home;
     }
     return null;
