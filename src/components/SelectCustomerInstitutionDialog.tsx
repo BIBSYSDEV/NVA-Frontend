@@ -58,7 +58,9 @@ export const SelectCustomerInstitutionDialog = ({ allowedCustomerIds }: SelectCu
         });
         if (isSuccessStatus(response.status)) {
           const newUserInfo = await getUserAttributes();
-          dispatch(setUser(newUserInfo));
+          if (newUserInfo) {
+            dispatch(setUser(newUserInfo));
+          }
           setOpenDialog(false);
         }
       } catch {
