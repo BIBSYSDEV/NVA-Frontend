@@ -86,7 +86,7 @@ export const App = () => {
     }
   }, [dispatch]);
 
-  const mustCreateperson = user && !user.cristinId;
+  const mustCreatePerson = user && !user.cristinId;
   const mustSelectCustomer = user && user.cristinId && user.allowedCustomers.length > 1 && !user.customerId;
 
   return (
@@ -95,7 +95,7 @@ export const App = () => {
         <html lang={getLanguageTagValue(i18n.language)} />
       </Helmet>
 
-      {mustCreateperson && <CreateCristinPersonDialog user={user} />}
+      {mustCreatePerson && <CreateCristinPersonDialog user={user} />}
       {mustSelectCustomer && <SelectCustomerInstitutionDialog allowedCustomerIds={user.allowedCustomers} />}
 
       {isLoadingUserAttributes ? (
