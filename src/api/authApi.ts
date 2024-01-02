@@ -1,31 +1,18 @@
-// import { fetchUserAttributes, getCurrentUser } from 'aws-amplify';
-// import { fetchAuthSession } from 'aws-amplify/auth';
 import { fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
 import { LocalStorageKey, USE_MOCK_DATA } from '../utils/constants';
 import { UrlPathTemplate } from '../utils/urlPaths';
 
 export const getCurrentUserAttributes = async (retryNumber = 0): Promise<any> => {
   try {
-    // const currentSession = await fetchAuthSession();
-    // const currentUser = await getCurrentUser();
+    console.log('Fetch user attributes', retryNumber);
+
     const userAttributes = await fetchUserAttributes();
+    console.log('userAttributes', userAttributes);
 
     return userAttributes;
     // TODO: refresh session?
-
-    // if (!currentSession.isValid()) {
-    //   const cognitoUser: CognitoUser = await Auth.currentAuthenticatedUser();
-    //   // Refresh session
-    //   await new Promise((resolve) => {
-    //     cognitoUser.refreshSession(currentSession.getRefreshToken(), (error, session) => {
-    //       resolve(session);
-    //     });
-    //   });
-    // }
-
-    // const userInfo = await Auth.currentUserInfo();
-    // return userInfo.attributes;
-  } catch {
+  } catch (error) {
+    console.log('getCurrentUserAttributes error', error);
     // Don't do anything if user is not supposed to be logged in
     if (localStorage.getItem(LocalStorageKey.AmplifyRedirect)) {
       if (retryNumber < 3) {
