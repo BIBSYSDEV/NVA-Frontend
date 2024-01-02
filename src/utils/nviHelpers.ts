@@ -18,7 +18,7 @@ export const getNviYearFilterValues = () => {
   return nviYearFilterValues;
 };
 
-const areTopLevelOrgsEqual = <T>(set1: Set<T>, set2: Set<T>) => {
+const isEqualSets = (set1: Set<string>, set2: Set<string>) => {
   if (set1.size !== set2.size) {
     return false;
   }
@@ -45,45 +45,46 @@ const hasChangedContributorsOrAffiliations = async (
     return topLevelOrgCache[affiliationId];
   };
 
-  if (persistedContributors.length === updatedContributors.length) {
-    for (const persistedContributor of persistedContributors) {
-      const updatedContributor = updatedContributors.find(
-        (contributor) => contributor.identity.id === persistedContributor.identity.id
-      );
-      if (updatedContributor) {
-        const persistedAffiliations = persistedContributor.affiliations ?? [];
-        const updatedAffiliations = updatedContributor.affiliations ?? [];
-        const persistedTopLevelOrgs = new Set<string>();
-        const updatedTopLevelOrgs = new Set<string>();
+  if (persistedContributors.length !== updatedContributors.length) {
+    return true;
+  }
 
-        for (const affiliation of persistedAffiliations) {
+  for (const persistedContributor of persistedContributors) {
+    const updatedContributor = updatedContributors.find(
+      (contributor) => contributor.identity.id === persistedContributor.identity.id
+    );
+    if (updatedContributor) {
+      const persistedAffiliations = persistedContributor.affiliations ?? [];
+      const updatedAffiliations = updatedContributor.affiliations ?? [];
+      const persistedTopLevelOrgs = new Set<string>();
+      const updatedTopLevelOrgs = new Set<string>();
+
+      for (const affiliation of persistedAffiliations) {
+        if (affiliation.id) {
           const topLevelOrgId = await getTopLevelOrgId(affiliation.id ?? '');
           persistedTopLevelOrgs.add(topLevelOrgId);
         }
+      }
 
-        for (const affiliation of updatedAffiliations) {
+      for (const affiliation of updatedAffiliations) {
+        if (affiliation.id) {
           const topLevelOrgId = await getTopLevelOrgId(affiliation.id ?? '');
           updatedTopLevelOrgs.add(topLevelOrgId);
         }
+      }
 
-        if (!areTopLevelOrgsEqual(persistedTopLevelOrgs, updatedTopLevelOrgs)) {
-          return true;
-        }
-      } else {
+      if (!isEqualSets(persistedTopLevelOrgs, updatedTopLevelOrgs)) {
         return true;
       }
+    } else {
+      return true;
     }
-  } else {
-    return true;
   }
+
   return false;
 };
 
 export const willResetNviStatuses = async (persistedRegistration: Registration, updatedRegistration: Registration) => {
-  hasChangedContributorsOrAffiliations(
-    persistedRegistration.entityDescription?.contributors ?? [],
-    updatedRegistration.entityDescription?.contributors ?? []
-  );
   const canBeNviCandidate = nviApplicableTypes.includes(
     persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
   );
