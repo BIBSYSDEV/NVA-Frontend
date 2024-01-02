@@ -77,7 +77,7 @@ export const RegistrationFormActions = ({
   };
 
   const handleSaveClick = async () => {
-    if (isNviCandidate && willResetNviStatuses(persistedRegistration, values)) {
+    if (isNviCandidate && (await willResetNviStatuses(persistedRegistration, values))) {
       setOpenNviApprovalResetDialog(true);
     } else {
       await saveRegistration(values);

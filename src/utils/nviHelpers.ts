@@ -1,8 +1,10 @@
+import { fetchOrganization } from '../api/cristinApi';
 import { Contributor } from '../types/contributor.types';
 import { BookRegistration } from '../types/publication_types/bookRegistration.types';
 import { ChapterRegistration } from '../types/publication_types/chapterRegistration.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { Registration } from '../types/registration.types';
+import { getTopLevelOrganization } from './institutions-helpers';
 import { nviApplicableTypes } from './registration-helpers';
 
 const minNviYear = 2011;
@@ -16,37 +18,72 @@ export const getNviYearFilterValues = () => {
   return nviYearFilterValues;
 };
 
-const hasChangedContributors = (persistedContributors: Contributor[], updatedContributors: Contributor[]) => {
-  if (persistedContributors.length !== updatedContributors.length) {
-    return true;
+const areTopLevelOrgsEqual = <T>(set1: Set<T>, set2: Set<T>) => {
+  if (set1.size !== set2.size) {
+    return false;
   }
-
-  const sortedPersistedContributorIds = persistedContributors.map((contributor) => contributor.identity.id).sort();
-  const sortedUpdatedContributorIds = updatedContributors.map((contributor) => contributor.identity.id).sort();
-
-  return sortedPersistedContributorIds.some((id, index) => id !== sortedUpdatedContributorIds[index]);
+  for (const item of set1) {
+    if (!set2.has(item)) {
+      return false;
+    }
+  }
+  return true;
 };
 
-const hasChangedAffiliations = (persistedContributors: Contributor[], updatedContributors: Contributor[]) => {
-  for (const persistedContributor of persistedContributors) {
-    const updatedContributor = updatedContributors.find(
-      (contributor) => contributor.identity.id === persistedContributor.identity.id
-    );
-    if (updatedContributor) {
-      const persistedAffiliations = persistedContributor.affiliations ?? [];
-      const updatedAffiliations = updatedContributor.affiliations ?? [];
-      if (
-        persistedAffiliations.length !== updatedAffiliations.length ||
-        persistedAffiliations.some((value, index) => value !== updatedAffiliations[index])
-      ) {
+const hasChangedContributorsOrAffiliations = async (
+  persistedContributors: Contributor[],
+  updatedContributors: Contributor[]
+) => {
+  const topLevelOrgCache: { [key: string]: string } = {};
+
+  const getTopLevelOrgId = async (affiliationId: string) => {
+    if (!topLevelOrgCache[affiliationId]) {
+      const organization = await fetchOrganization(affiliationId);
+      const topLevelOrg = getTopLevelOrganization(organization);
+      topLevelOrgCache[affiliationId] = topLevelOrg.id;
+    }
+    return topLevelOrgCache[affiliationId];
+  };
+
+  if (persistedContributors.length === updatedContributors.length) {
+    for (const persistedContributor of persistedContributors) {
+      const updatedContributor = updatedContributors.find(
+        (contributor) => contributor.identity.id === persistedContributor.identity.id
+      );
+      if (updatedContributor) {
+        const persistedAffiliations = persistedContributor.affiliations ?? [];
+        const updatedAffiliations = updatedContributor.affiliations ?? [];
+        const persistedTopLevelOrgs = new Set<string>();
+        const updatedTopLevelOrgs = new Set<string>();
+
+        for (const affiliation of persistedAffiliations) {
+          const topLevelOrgId = await getTopLevelOrgId(affiliation.id ?? '');
+          persistedTopLevelOrgs.add(topLevelOrgId);
+        }
+
+        for (const affiliation of updatedAffiliations) {
+          const topLevelOrgId = await getTopLevelOrgId(affiliation.id ?? '');
+          updatedTopLevelOrgs.add(topLevelOrgId);
+        }
+
+        if (!areTopLevelOrgsEqual(persistedTopLevelOrgs, updatedTopLevelOrgs)) {
+          return true;
+        }
+      } else {
         return true;
       }
     }
+  } else {
+    return true;
   }
   return false;
 };
 
-export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
+export const willResetNviStatuses = async (persistedRegistration: Registration, updatedRegistration: Registration) => {
+  hasChangedContributorsOrAffiliations(
+    persistedRegistration.entityDescription?.contributors ?? [],
+    updatedRegistration.entityDescription?.contributors ?? []
+  );
   const canBeNviCandidate = nviApplicableTypes.includes(
     persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
   );
@@ -94,7 +131,7 @@ export const willResetNviStatuses = (persistedRegistration: Registration, update
   }
 
   if (
-    hasChangedContributors(
+    await hasChangedContributorsOrAffiliations(
       persistedRegistration.entityDescription?.contributors ?? [],
       updatedRegistration.entityDescription?.contributors ?? []
     )
