@@ -21,6 +21,7 @@ const PublicRegistration = () => {
         width: '100%',
         display: 'grid',
         gridTemplateColumns: { xs: '1fr', md: '1fr 5fr' },
+        gap: '0.5rem',
       }}>
       {previousPath && (
         <Box sx={{ alignSelf: 'start', justifySelf: 'start' }} component={Link} to={previousPath}>
@@ -29,7 +30,7 @@ const PublicRegistration = () => {
           </StyledMinimizedMenuButton>
         </Box>
       )}
-      <Box sx={{ gridColumn: '2' }}>
+      <Box sx={{ gridColumn: { md: '2' } }}>
         <RegistrationLandingPage />
       </Box>
     </Box>
