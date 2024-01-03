@@ -13,6 +13,7 @@ import { LandingPageAccordion } from '../../components/landing_page/LandingPageA
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { ResearchDataType } from '../../types/publicationFieldNames';
+import { ConfirmedDocument, RelatedDocument } from '../../types/publication_types/researchDataRegistration.types';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -167,7 +168,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             defaultExpanded
             heading={t('registration.resource_type.research_data.related_publications')}>
             <ShowRelatedRegistrationUris
-              links={entityDescription.reference.publicationInstance.related?.filter(
+              links={filterConfirmedDocuments(entityDescription.reference.publicationInstance.related).filter(
                 (uri) => uri.includes(API_URL) // DMP can have both internal and external links in .related
               )}
               emptyMessage={t('registration.resource_type.research_data.no_related_publications')}
@@ -217,7 +218,9 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               heading={`${t('registration.resource_type.research_data.external_links')} (${
                 entityDescription.reference.publicationInstance.related?.length ?? 0
               })`}>
-              <ListExternalRelations links={entityDescription.reference.publicationInstance.related} />
+              <ListExternalRelations
+                links={filterConfirmedDocuments(entityDescription.reference.publicationInstance.related)}
+              />
             </LandingPageAccordion>
           </>
         )}
@@ -226,10 +229,14 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
             defaultExpanded
             heading={`${t('registration.resource_type.research_data.external_links')} (${
-              filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related).length ?? 0 // DMP can have both internal and external links in .related
+              filterExternalRelatedLinks(
+                filterConfirmedDocuments(entityDescription.reference.publicationInstance.related)
+              ).length ?? 0 // DMP can have both internal and external links in .related
             })`}>
             <ListExternalRelations
-              links={filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related)}
+              links={filterExternalRelatedLinks(
+                filterConfirmedDocuments(entityDescription.reference.publicationInstance.related)
+              )}
             />
           </LandingPageAccordion>
         )}
@@ -250,5 +257,10 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     </Paper>
   );
 };
+
+export const filterConfirmedDocuments = (relatedDocuments: RelatedDocument[] = []) =>
+  relatedDocuments
+    .filter((relatedDocument) => relatedDocument.type === 'ConfirmedDocument')
+    .map((confirmedDocument) => (confirmedDocument as ConfirmedDocument).identifier);
 
 const filterExternalRelatedLinks = (links: string[] = []) => links.filter((link) => !link.includes(API_URL));

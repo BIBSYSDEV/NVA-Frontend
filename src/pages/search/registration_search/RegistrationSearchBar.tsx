@@ -63,6 +63,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
 
   return (
     <Formik
+      enableReinitialize
       initialValues={initialSearchParams}
       validateOnChange={false}
       validateOnBlur={false}

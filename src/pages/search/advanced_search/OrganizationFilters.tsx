@@ -49,12 +49,11 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
   const isLoading = organizationQuery.isFetching || institutionSearchQuery.isFetching;
 
   return (
-    <Box sx={{ display: 'flex', gap: '1rem' }}>
+    <Box sx={{ display: 'flex', gap: '0.5rem 1rem', flexWrap: 'wrap' }}>
       <Autocomplete
         options={options}
         inputMode="search"
-        fullWidth
-        sx={{ maxWidth: '20rem' }}
+        sx={{ width: '20rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
         filterOptions={(options) => options}
         onInputChange={(_, value, reason) => {
@@ -98,8 +97,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
         value={selectedSubUnit}
         inputMode="search"
         disabled={!institutionId || subUnits.length === 0}
-        fullWidth
-        sx={{ maxWidth: '20rem' }}
+        sx={{ width: '20rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
         onChange={(_, selectedUnit) => {
           const params = new URLSearchParams(history.location.search);

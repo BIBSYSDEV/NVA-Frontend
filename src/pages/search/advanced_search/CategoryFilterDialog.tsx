@@ -145,7 +145,6 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
               Object.values(DegreeType).map((registrationType) => ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
-
                 selected: selectedCategories.includes(registrationType),
               }))
             )}

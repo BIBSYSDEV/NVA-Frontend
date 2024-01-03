@@ -33,7 +33,7 @@ interface RegistrationListProps {
 }
 
 export const RegistrationList = ({ registrations, ...rest }: RegistrationListProps) => (
-  <List>
+  <List data-testid="search-results">
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
@@ -115,7 +115,7 @@ export const RegistrationListItemContent = ({
               </Typography>
             )}
         </Box>
-        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
           {ticketView ? (
             getTitleString(entityDescription?.mainTitle)
           ) : (
