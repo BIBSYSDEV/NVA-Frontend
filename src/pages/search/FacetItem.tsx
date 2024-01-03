@@ -35,7 +35,7 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
           },
         },
       }}>
-      <ListItemButton onClick={toggleOpen}>
+      <ListItemButton onClick={toggleOpen} dense>
         <ListItemText>
           <Typography fontWeight={600}>{title}</Typography>
         </ListItemText>

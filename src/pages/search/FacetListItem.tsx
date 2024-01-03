@@ -29,7 +29,7 @@ export const FacetListItem = ({
   onClickFacet,
 }: FacetListItemProps) => (
   <ListItem disablePadding key={identifier} data-testid={dataTestId}>
-    <StyledListItemButton disabled={isLoading} selected={isSelected} onClick={onClickFacet}>
+    <StyledListItemButton disabled={isLoading} dense selected={isSelected} onClick={onClickFacet}>
       <Typography component="span" sx={{ wordBreak: 'break-word' }}>
         {label}
       </Typography>
