@@ -61,14 +61,14 @@ const hasChangedContributorsOrAffiliations = async (
 
       for (const affiliation of persistedAffiliations) {
         if (affiliation.id) {
-          const topLevelOrgId = await getTopLevelOrgId(affiliation.id ?? '');
+          const topLevelOrgId = await getTopLevelOrgId(affiliation.id);
           persistedTopLevelOrgs.add(topLevelOrgId);
         }
       }
 
       for (const affiliation of updatedAffiliations) {
         if (affiliation.id) {
-          const topLevelOrgId = await getTopLevelOrgId(affiliation.id ?? '');
+          const topLevelOrgId = await getTopLevelOrgId(affiliation.id);
           updatedTopLevelOrgs.add(topLevelOrgId);
         }
       }
