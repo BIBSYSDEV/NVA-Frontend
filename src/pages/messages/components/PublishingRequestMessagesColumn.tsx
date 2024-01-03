@@ -18,9 +18,13 @@ export const StyledStatusMessageBox = styled(Box)({
 
 interface PublishingRequestMessagesColumnProps {
   ticket: ExpandedPublishingTicket | PublishingTicket;
+  registrationHasFiles: boolean;
 }
 
-export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMessagesColumnProps) => {
+export const PublishingRequestMessagesColumn = ({
+  ticket,
+  registrationHasFiles = true,
+}: PublishingRequestMessagesColumnProps) => {
   const { t } = useTranslation();
 
   return (
@@ -40,14 +44,16 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
               <Typography>{t('registration.files_and_license.files_awaits_approval_unknown')}</Typography>
             </StyledStatusMessageBox>
           ) : (
-            <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-              {ticket.status === 'Completed' ? (
-                <Typography>{t('my_page.messages.files_published')}</Typography>
-              ) : ticket.status === 'Closed' ? (
-                <Typography>{t('my_page.messages.files_rejected')}</Typography>
-              ) : null}
-              {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
-            </StyledStatusMessageBox>
+            registrationHasFiles && (
+              <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+                {ticket.status === 'Completed' ? (
+                  <Typography>{t('my_page.messages.files_published')}</Typography>
+                ) : (
+                  ticket.status === 'Closed' && <Typography>{t('my_page.messages.files_rejected')}</Typography>
+                )}
+                {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
+              </StyledStatusMessageBox>
+            )
           )}
         </>
       ) : null}

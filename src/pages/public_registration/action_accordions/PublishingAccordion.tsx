@@ -30,6 +30,7 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
+import { associatedArtifactIsFile } from '../../../utils/registration-helpers';
 import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
@@ -67,6 +68,8 @@ export const PublishingAccordion = ({
 
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
+
+  const registrationHasFile = registration.associatedArtifacts.some((artifact) => associatedArtifactIsFile(artifact));
 
   const ticketMutation = useMutation({
     mutationFn: publishingRequestTicket
@@ -192,7 +195,12 @@ export const PublishingAccordion = ({
           />
         )}
 
-        {publishingRequestTicket && <PublishingRequestMessagesColumn ticket={publishingRequestTicket} />}
+        {publishingRequestTicket && (
+          <PublishingRequestMessagesColumn
+            ticket={publishingRequestTicket}
+            registrationHasFiles={registrationHasFile}
+          />
+        )}
 
         {hasPendingTicket && <Divider sx={{ my: '0.5rem' }} />}
 
@@ -257,11 +265,18 @@ export const PublishingAccordion = ({
           <Typography>{t('registration.public_page.tasks_panel.metadata_published_waiting_for_files')}</Typography>
         )}
 
-        {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
-          <Typography sx={{ mt: '0.5rem' }}>
-            {t('registration.public_page.tasks_panel.registration_is_published')}
-          </Typography>
-        )}
+        {isPublishedRegistration &&
+          !isOnTasksPath &&
+          hasCompletedTicket &&
+          (registrationHasFile ? (
+            <Typography sx={{ mt: '0.5rem' }}>
+              {t('registration.public_page.tasks_panel.registration_is_published_with_files')}
+            </Typography>
+          ) : (
+            <Typography sx={{ mt: '0.5rem' }}>
+              {t('registration.public_page.tasks_panel.registration_is_published')}
+            </Typography>
+          ))}
 
         {canHandlePublishingRequest && !hasMismatchingPublishedStatus && isOnTasksPath && (
           <Box sx={{ mt: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
