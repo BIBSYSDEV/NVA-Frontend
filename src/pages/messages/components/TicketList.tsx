@@ -41,7 +41,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
         {title}
       </Typography>
 
-      <SearchForm sx={{ mb: '1.8rem' }} placeholder={t('tasks.search_placeholder')} />
+      <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
 
       {ticketsQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
