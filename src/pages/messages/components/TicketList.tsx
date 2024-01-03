@@ -3,14 +3,12 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
 import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
@@ -19,17 +17,10 @@ interface TicketListProps {
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
   page: number;
-  helmetTitle: string;
+  title: string;
 }
 
-export const TicketList = ({
-  ticketsQuery,
-  setRowsPerPage,
-  rowsPerPage,
-  setPage,
-  page,
-  helmetTitle,
-}: TicketListProps) => {
+export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
@@ -40,22 +31,17 @@ export const TicketList = ({
     }
   }, [tickets]);
 
-  const location = useLocation();
-  const currentPath = location.pathname.replace(/\/$/, '').toLowerCase(); // Remove trailing slash
-
   return (
     <section>
       <Helmet>
-        <title>{helmetTitle}</title>
+        <title>{title}</title>
       </Helmet>
 
-      <SearchForm sx={{ mb: '1.8rem' }} placeholder={t('tasks.search_placeholder')} />
+      <Typography variant="h2" sx={{ mb: '1rem' }}>
+        {title}
+      </Typography>
 
-      {currentPath === UrlPathTemplate.MyPageMyMessages ? (
-        <Typography variant="h2" sx={{ mb: '1rem' }}>
-          {t('common.dialogue')}
-        </Typography>
-      ) : null}
+      <SearchForm sx={{ mb: '1.8rem' }} placeholder={t('tasks.search_placeholder')} />
 
       {ticketsQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
