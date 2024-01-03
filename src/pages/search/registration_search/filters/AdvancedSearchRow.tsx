@@ -13,6 +13,8 @@ interface FilterItem {
 const registrationFilters: FilterItem[] = [
   { field: ResultParam.Title, i18nKey: 'common.title' },
   { field: ResultParam.ContributorName, i18nKey: 'registration.contributors.contributor' },
+  { field: ResultParam.Abstract, i18nKey: 'registration.description.abstract' },
+  { field: ResultParam.Tags, i18nKey: 'registration.description.keywords' },
 ];
 
 interface AdvancedSearchRowProps {

@@ -96,6 +96,26 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           searchParams.delete(ResultParam.Title);
         }
 
+        const abstracts =
+          values.properties
+            ?.filter((property) => property.fieldName === ResultParam.Abstract && property.value)
+            .map((property) => property.value) ?? [];
+        if (abstracts.length > 0) {
+          searchParams.set(ResultParam.Abstract, abstracts.join(','));
+        } else {
+          searchParams.delete(ResultParam.Abstract);
+        }
+
+        const tags =
+          values.properties
+            ?.filter((property) => property.fieldName === ResultParam.Tags && property.value)
+            .map((property) => property.value) ?? [];
+        if (tags.length > 0) {
+          searchParams.set(ResultParam.Tags, tags.join(','));
+        } else {
+          searchParams.delete(ResultParam.Tags);
+        }
+
         history.push({ search: searchParams.toString() });
       }}>
       {({ values, submitForm }) => (
