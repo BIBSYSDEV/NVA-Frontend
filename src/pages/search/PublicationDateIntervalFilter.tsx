@@ -15,6 +15,22 @@ export const PublicationDateIntervalFilter = () => {
   const selectedYearAfterDate = selectedYearAfter ? new Date(selectedYearAfter) : null;
   const selectedYearBeforeDate = selectedYearBefore ? new Date(selectedYearBefore) : null;
 
+  const onChangeDate = (
+    newDate: Date | null,
+    param: ResultParam.PublicationYearAfter | ResultParam.PublicationYearBefore
+  ) => {
+    if (newDate) {
+      const year = newDate.getFullYear();
+      if (year.toString().length === 4) {
+        searchParams.set(param, year.toString());
+        history.push({ search: searchParams.toString() });
+      }
+    } else {
+      searchParams.delete(param);
+      history.push({ search: searchParams.toString() });
+    }
+  };
+
   return (
     <Box sx={{ m: '0.5rem 1rem 1rem 1rem', display: 'flex', justifyContent: 'space-evenly', gap: '1rem' }}>
       <DatePicker
@@ -26,18 +42,7 @@ export const PublicationDateIntervalFilter = () => {
         }
         disableHighlightToday
         slotProps={{ textField: { size: 'small' } }}
-        onChange={(date) => {
-          if (date) {
-            const year = date.getFullYear();
-            if (year.toString().length === 4) {
-              searchParams.set(ResultParam.PublicationYearAfter, year.toString());
-              history.push({ search: searchParams.toString() });
-            }
-          } else {
-            searchParams.delete(ResultParam.PublicationYearAfter);
-            history.push({ search: searchParams.toString() });
-          }
-        }}
+        onChange={(date) => onChangeDate(date, ResultParam.PublicationYearAfter)}
       />
       <DatePicker
         views={['year']}
@@ -47,18 +52,7 @@ export const PublicationDateIntervalFilter = () => {
         maxDate={new Date()}
         disableHighlightToday
         slotProps={{ textField: { size: 'small' } }}
-        onChange={(date) => {
-          if (date) {
-            const year = date.getFullYear();
-            if (year.toString().length === 4) {
-              searchParams.set(ResultParam.PublicationYearBefore, year.toString());
-              history.push({ search: searchParams.toString() });
-            }
-          } else {
-            searchParams.delete(ResultParam.PublicationYearBefore);
-            history.push({ search: searchParams.toString() });
-          }
-        }}
+        onChange={(date) => onChangeDate(date, ResultParam.PublicationYearBefore)}
       />
     </Box>
   );
