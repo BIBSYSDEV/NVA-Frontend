@@ -21,7 +21,6 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
   const [showAll, setShowAll] = useState(false);
 
   const childrenIsList = Array.isArray(children);
-  const childrenToShow = !showAll && childrenIsList ? children.slice(0, itemsToShowByDefault) : children;
 
   return (
     <Box
@@ -46,7 +45,7 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         {childrenIsList ? (
           <List disablePadding>
-            {childrenToShow}
+            {showAll ? children : children.slice(0, itemsToShowByDefault)}
             {children.length > itemsToShowByDefault && (
               <li>
                 <ListItemButton

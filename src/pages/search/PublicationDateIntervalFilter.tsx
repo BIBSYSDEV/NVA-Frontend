@@ -1,8 +1,15 @@
+import { DatePickerProps } from '@mui/lab';
 import { Box } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../api/searchApi';
+
+const commonDatepickerProps: Partial<DatePickerProps<Date | null>> = {
+  views: ['year'],
+  disableHighlightToday: true,
+  slotProps: { textField: { size: 'small' } },
+};
 
 export const PublicationDateIntervalFilter = () => {
   const { t } = useTranslation();
@@ -14,8 +21,6 @@ export const PublicationDateIntervalFilter = () => {
 
   const selectedYearAfterDate = selectedYearAfterParam ? new Date(selectedYearAfterParam) : null;
   const selectedYearBeforeDate = selectedYearBeforeParam ? new Date(selectedYearBeforeParam) : null;
-
-  const defaultMaxDate = new Date();
 
   const onChangeDate = (
     newDate: Date | null,
@@ -33,10 +38,12 @@ export const PublicationDateIntervalFilter = () => {
     }
   };
 
+  const defaultMaxDate = new Date();
+
   return (
     <Box sx={{ m: '0.5rem 1rem 1rem 1rem', display: 'flex', justifyContent: 'space-evenly', gap: '1rem' }}>
       <DatePicker
-        views={['year']}
+        {...commonDatepickerProps}
         label={t('search.year_from')}
         defaultValue={selectedYearAfterDate}
         maxDate={
@@ -44,18 +51,14 @@ export const PublicationDateIntervalFilter = () => {
             ? new Date(selectedYearBeforeDate.getFullYear(), 11, 31, 23, 59, 59, 999)
             : defaultMaxDate
         }
-        disableHighlightToday
-        slotProps={{ textField: { size: 'small' } }}
         onChange={(date) => onChangeDate(date, ResultParam.PublicationYearAfter)}
       />
       <DatePicker
-        views={['year']}
+        {...commonDatepickerProps}
         label={t('search.year_to')}
         defaultValue={selectedYearBeforeDate}
         minDate={selectedYearAfterDate}
         maxDate={defaultMaxDate}
-        disableHighlightToday
-        slotProps={{ textField: { size: 'small' } }}
         onChange={(date) => onChangeDate(date, ResultParam.PublicationYearBefore)}
       />
     </Box>
