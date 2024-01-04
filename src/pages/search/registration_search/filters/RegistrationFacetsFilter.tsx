@@ -169,9 +169,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
             slotProps={{ textField: { size: 'small' } }}
             onChange={(date) => {
               if (date) {
-                const year = (date as Date).getFullYear();
-                searchParams.set(ResultParam.PublicationYearAfter, year.toString());
-                history.push({ search: searchParams.toString() });
+                const year = date.getFullYear();
+                if (year.toString().length === 4) {
+                  searchParams.set(ResultParam.PublicationYearAfter, year.toString());
+                  history.push({ search: searchParams.toString() });
+                }
               } else {
                 searchParams.delete(ResultParam.PublicationYearAfter);
                 history.push({ search: searchParams.toString() });
@@ -188,9 +190,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
             slotProps={{ textField: { size: 'small' } }}
             onChange={(date) => {
               if (date) {
-                const year = (date as Date).getFullYear();
-                searchParams.set(ResultParam.PublicationYearBefore, year.toString());
-                history.push({ search: searchParams.toString() });
+                const year = date.getFullYear();
+                if (year.toString().length === 4) {
+                  searchParams.set(ResultParam.PublicationYearBefore, year.toString());
+                  history.push({ search: searchParams.toString() });
+                }
               } else {
                 searchParams.delete(ResultParam.PublicationYearBefore);
                 history.push({ search: searchParams.toString() });
