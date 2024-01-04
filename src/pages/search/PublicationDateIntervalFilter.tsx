@@ -9,11 +9,13 @@ export const PublicationDateIntervalFilter = () => {
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
-  const selectedYearAfter = searchParams.get(ResultParam.PublicationYearAfter);
-  const selectedYearBefore = searchParams.get(ResultParam.PublicationYearBefore);
+  const selectedYearAfterParam = searchParams.get(ResultParam.PublicationYearAfter);
+  const selectedYearBeforeParam = searchParams.get(ResultParam.PublicationYearBefore);
 
-  const selectedYearAfterDate = selectedYearAfter ? new Date(selectedYearAfter) : null;
-  const selectedYearBeforeDate = selectedYearBefore ? new Date(selectedYearBefore) : null;
+  const selectedYearAfterDate = selectedYearAfterParam ? new Date(selectedYearAfterParam) : null;
+  const selectedYearBeforeDate = selectedYearBeforeParam ? new Date(selectedYearBeforeParam) : null;
+
+  const defaultMaxDate = new Date();
 
   const onChangeDate = (
     newDate: Date | null,
@@ -36,9 +38,11 @@ export const PublicationDateIntervalFilter = () => {
       <DatePicker
         views={['year']}
         label={t('search.year_from')}
-        defaultValue={selectedYearAfter ? new Date(selectedYearAfter) : null}
+        defaultValue={selectedYearAfterDate}
         maxDate={
-          selectedYearBeforeDate ? new Date(selectedYearBeforeDate.getFullYear(), 11, 31, 23, 59, 59, 999) : new Date()
+          selectedYearBeforeDate
+            ? new Date(selectedYearBeforeDate.getFullYear(), 11, 31, 23, 59, 59, 999)
+            : defaultMaxDate
         }
         disableHighlightToday
         slotProps={{ textField: { size: 'small' } }}
@@ -47,9 +51,9 @@ export const PublicationDateIntervalFilter = () => {
       <DatePicker
         views={['year']}
         label={t('search.year_to')}
-        defaultValue={selectedYearBefore ? new Date(selectedYearBefore) : null}
+        defaultValue={selectedYearBeforeDate}
         minDate={selectedYearAfterDate}
-        maxDate={new Date()}
+        maxDate={defaultMaxDate}
         disableHighlightToday
         slotProps={{ textField: { size: 'small' } }}
         onChange={(date) => onChangeDate(date, ResultParam.PublicationYearBefore)}
