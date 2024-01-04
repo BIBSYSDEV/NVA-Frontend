@@ -1,6 +1,5 @@
-import { DatePickerProps } from '@mui/lab';
 import { Box } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
+import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../api/searchApi';
