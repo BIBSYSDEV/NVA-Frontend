@@ -69,6 +69,8 @@ const HomePage = () => {
     order: params.get(ResultParam.Order),
     from: Number(params.get(SearchParam.From) ?? 0),
     results: rowsPerPage,
+    publicationYearAfter: params.get(ResultParam.PublicationYearAfter),
+    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
   };
   const registrationQuery = useQuery({
     queryKey: ['registrations', registrationsQueryConfig],
@@ -123,9 +125,7 @@ const HomePage = () => {
           dataTestId={dataTestId.startPage.filterAccordion}>
           <Box sx={{ m: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {resultIsSelected ? (
-              registrationQuery.data?.aggregations ? (
-                <RegistrationFacetsFilter registrationQuery={registrationQuery} />
-              ) : null
+              <RegistrationFacetsFilter registrationQuery={registrationQuery} />
             ) : personIsSeleced ? (
               personQuery.data?.aggregations ? (
                 <PersonFacetsFilter personQuery={personQuery} />

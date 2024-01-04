@@ -1,3 +1,5 @@
+import { Box } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../../api/searchApi';
@@ -19,6 +21,11 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
   const selectedOrganization = searchParams.get(ResultParam.TopLevelOrganization);
   const selectedFunding = searchParams.get(ResultParam.FundingSource);
   const selectedContributor = searchParams.get(ResultParam.Contributor);
+  const selectedYearAfter = searchParams.get(ResultParam.PublicationYearAfter);
+  const selectedYearBefore = searchParams.get(ResultParam.PublicationYearBefore);
+
+  const selectedYearAfterDate = selectedYearAfter ? new Date(selectedYearAfter) : null;
+  const selectedYearBeforeDate = selectedYearBefore ? new Date(selectedYearBefore) : null;
 
   const typeFacet = registrationQuery.data?.aggregations?.type;
   const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization;
@@ -146,6 +153,46 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
           })}
         </FacetItem>
       )}
+
+      <FacetItem dataTestId={dataTestId.startPage.publicationDateFilter} title={t('common.publishing_year')}>
+        <Box sx={{ m: '0.5rem 1rem 1rem 1rem', display: 'flex', justifyContent: 'space-evenly', gap: '1rem' }}>
+          <DatePicker
+            views={['year']}
+            label={t('search.year_from')}
+            defaultValue={selectedYearAfter ? new Date(selectedYearAfter) : null}
+            maxDate={selectedYearBeforeDate ?? new Date()}
+            slotProps={{ textField: { size: 'small' } }}
+            onChange={(date) => {
+              if (date) {
+                const year = (date as Date).getFullYear();
+                searchParams.set(ResultParam.PublicationYearAfter, year.toString());
+                history.push({ search: searchParams.toString() });
+              } else {
+                searchParams.delete(ResultParam.PublicationYearAfter);
+                history.push({ search: searchParams.toString() });
+              }
+            }}
+          />
+          <DatePicker
+            views={['year']}
+            label={t('search.year_to')}
+            defaultValue={selectedYearBefore ? new Date(selectedYearBefore) : null}
+            minDate={selectedYearAfterDate}
+            maxDate={new Date()}
+            slotProps={{ textField: { size: 'small' } }}
+            onChange={(date) => {
+              if (date) {
+                const year = (date as Date).getFullYear();
+                searchParams.set(ResultParam.PublicationYearBefore, year.toString());
+                history.push({ search: searchParams.toString() });
+              } else {
+                searchParams.delete(ResultParam.PublicationYearBefore);
+                history.push({ search: searchParams.toString() });
+              }
+            }}
+          />
+        </Box>
+      </FacetItem>
     </>
   );
 };

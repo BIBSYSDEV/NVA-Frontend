@@ -152,6 +152,7 @@ export const dataTestId = {
     participantOrgFacets: 'participant-org-facets',
     personSearchButton: 'person-search-button',
     projectSearchButton: 'project-search-button',
+    publicationDateFilter: 'publication-date-filter',
     reportsClinicalTreatmentStudiesButton: 'reports-clinical-treatment-studies-button',
     reportsInternationalWorkButton: 'reports-international-work-button',
     reportsNviButton: 'reports-nvi-button',

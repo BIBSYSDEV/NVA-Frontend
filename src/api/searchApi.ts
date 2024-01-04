@@ -114,6 +114,8 @@ export enum ResultParam {
   Order = 'order',
   Project = 'project',
   PublicationYear = 'publicationYear',
+  PublicationYearAfter = 'publicationYearAfter',
+  PublicationYearBefore = 'publicationYearBefore',
   Results = 'results',
   Query = 'query',
   Title = 'title',
@@ -137,6 +139,8 @@ export interface FetchResultsParams {
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
   [ResultParam.PublicationYear]?: string | null;
+  [ResultParam.PublicationYearAfter]?: string | null;
+  [ResultParam.PublicationYearBefore]?: string | null;
   [ResultParam.Results]?: number | null;
   [ResultParam.Query]?: string | null;
   [ResultParam.Title]?: string | null;
@@ -182,6 +186,12 @@ export const fetchResults = async (params: FetchResultsParams) => {
   }
   if (params.publicationYear) {
     searchParams.set(ResultParam.PublicationYear, params.publicationYear);
+  }
+  if (params.publicationYearAfter) {
+    searchParams.set(ResultParam.PublicationYear, params.publicationYearAfter); // TODO
+  }
+  if (params.publicationYearBefore) {
+    searchParams.set(ResultParam.PublicationYear, params.publicationYearBefore); // TODO
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
