@@ -20,8 +20,8 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
 
   const [showAll, setShowAll] = useState(false);
 
-  const hasList = Array.isArray(children);
-  const itemsToShow = !showAll && hasList ? children.slice(0, itemsToShowByDefault) : children;
+  const childrenIsList = Array.isArray(children);
+  const childrenToShow = !showAll && childrenIsList ? children.slice(0, itemsToShowByDefault) : children;
 
   return (
     <Box
@@ -44,20 +44,24 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
-        <List disablePadding>
-          {itemsToShow}
-          {hasList && children.length > itemsToShowByDefault && (
-            <li>
-              <ListItemButton
-                title={showAll ? t('common.show_fewer') : t('common.show_more')}
-                dense
-                sx={{ justifyContent: 'space-around' }}
-                onClick={() => setShowAll(!showAll)}>
-                {showAll ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-            </li>
-          )}
-        </List>
+        {childrenIsList ? (
+          <List disablePadding>
+            {childrenToShow}
+            {children.length > itemsToShowByDefault && (
+              <li>
+                <ListItemButton
+                  title={showAll ? t('common.show_fewer') : t('common.show_more')}
+                  dense
+                  sx={{ justifyContent: 'space-around' }}
+                  onClick={() => setShowAll(!showAll)}>
+                  {showAll ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+              </li>
+            )}
+          </List>
+        ) : (
+          children
+        )}
       </Collapse>
     </Box>
   );
