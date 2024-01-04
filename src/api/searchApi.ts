@@ -188,10 +188,14 @@ export const fetchResults = async (params: FetchResultsParams) => {
     searchParams.set(ResultParam.PublicationYear, params.publicationYear);
   }
   if (params.publicationYearAfter) {
-    searchParams.set(ResultParam.PublicationYear, params.publicationYearAfter); // TODO
+    if (!params.publicationYearBefore || +params.publicationYearAfter <= +params.publicationYearBefore) {
+      searchParams.set(ResultParam.PublicationYear, params.publicationYearAfter); // TODO: Use correct param
+    }
   }
   if (params.publicationYearBefore) {
-    searchParams.set(ResultParam.PublicationYear, params.publicationYearBefore); // TODO
+    if (!params.publicationYearAfter || +params.publicationYearAfter <= +params.publicationYearBefore) {
+      searchParams.set(ResultParam.PublicationYear, params.publicationYearBefore); // TODO: Use correct param
+    }
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);

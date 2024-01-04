@@ -160,7 +160,12 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
             views={['year']}
             label={t('search.year_from')}
             defaultValue={selectedYearAfter ? new Date(selectedYearAfter) : null}
-            maxDate={selectedYearBeforeDate ?? new Date()}
+            maxDate={
+              selectedYearBeforeDate
+                ? new Date(selectedYearBeforeDate.getFullYear(), 11, 31, 23, 59, 59, 999)
+                : new Date()
+            }
+            disableHighlightToday
             slotProps={{ textField: { size: 'small' } }}
             onChange={(date) => {
               if (date) {
@@ -179,6 +184,7 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
             defaultValue={selectedYearBefore ? new Date(selectedYearBefore) : null}
             minDate={selectedYearAfterDate}
             maxDate={new Date()}
+            disableHighlightToday
             slotProps={{ textField: { size: 'small' } }}
             onChange={(date) => {
               if (date) {
