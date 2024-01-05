@@ -37,7 +37,6 @@ import { dataTestId } from '../../utils/dataTestIds';
 import { getNviYearFilterValues } from '../../utils/nviHelpers';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { hasCuratorRole } from '../../utils/user-helpers';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import { NviCandidatePage } from './components/NviCandidatePage';
 import { NviCandidatesList } from './components/NviCandidatesList';
@@ -68,7 +67,7 @@ const TasksPage = () => {
   const isSupportCurator = !!user?.isSupportCurator;
   const isDoiCurator = !!user?.isDoiCurator;
   const isPublishingCurator = !!user?.isPublishingCurator;
-  const isTicketCurator = hasCuratorRole(user);
+  const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
   const isNviCurator = !!user?.isNviCurator;
   const nvaUsername = user?.nvaUsername ?? '';
 

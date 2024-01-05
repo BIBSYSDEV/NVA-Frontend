@@ -25,11 +25,13 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
   const hasAnyRole =
     isAppAdmin ||
     isInstitutionAdmin ||
+    isEditor ||
     isDoiCurator ||
     isPublishingCurator ||
     isSupportCurator ||
-    isEditor ||
-    isCreator;
+    isCreator ||
+    isInternalImporter ||
+    isNviCurator;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
