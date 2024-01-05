@@ -67,7 +67,7 @@ const HomePage = () => {
     title: params.get(ResultParam.Title),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     order: params.get(ResultParam.Order),
-    from: Number(params.get(SearchParam.From) ?? 0),
+    from: Number(params.get(ResultParam.From) ?? 0),
     results: rowsPerPage,
   };
   const registrationQuery = useQuery({

@@ -3,11 +3,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { FetchResultsParams, ResultParam, fetchResults } from '../../../api/searchApi';
+import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../../api/searchApi';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { CategoryChip } from '../../registration/resource_type_tab/components/RegistrationTypesRow';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
@@ -38,6 +39,10 @@ export const AdvancedSearchPage = () => {
     title: params.get(ResultParam.Title),
     unit: unitFilter,
     categoryShould,
+    sort: params.get(ResultParam.Sort) as SortOrder | null,
+    order: params.get(ResultParam.Order),
+    from: Number(params.get(ResultParam.From) ?? 0),
+    results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
   };
 
   const resultSearchQuery = useQuery({
