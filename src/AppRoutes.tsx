@@ -6,6 +6,7 @@ import { PageSpinner } from './components/PageSpinner';
 import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
+import { hasCuratorRole } from './utils/user-helpers';
 
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
@@ -28,7 +29,7 @@ export const AppRoutes = () => {
   const isAuthenticated = !!user;
   const hasCustomerId = isAuthenticated && !!user.customerId;
   const isCreator = hasCustomerId && user.isCreator;
-  const isCurator = hasCustomerId && user.isCurator;
+  const isCurator = hasCuratorRole(user);
   const isEditor = hasCustomerId && user.isEditor;
   const isAdmin = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin);
   const isNviCurator = hasCustomerId && user.isNviCurator;

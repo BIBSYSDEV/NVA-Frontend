@@ -9,6 +9,7 @@ import {
   CristinPersonNameType,
   Employment,
   FlatCristinPerson,
+  User,
 } from '../types/user.types';
 import { ORCID_BASE_URL } from './constants';
 
@@ -80,3 +81,16 @@ export const convertToFlatCristinPerson = (user: CristinPerson): FlatCristinPers
 });
 
 export const getFullName = (firstName?: string, lastName?: string) => [firstName, lastName].filter(Boolean).join(' ');
+
+/**
+ * @deprecated This method is used for a simpler transition to new curator roles, and can be used while we move over to using access rights.
+ */
+export const hasCuratorRole = (user: User | null) =>
+  !!user &&
+  !!user.customerId &&
+  (user.isCurator ||
+    user.isDoiCurator ||
+    user.isPublishingCurator ||
+    user.isSupportCurator ||
+    user.isThesisCurator ||
+    user.isEmbargoThesisCurator);

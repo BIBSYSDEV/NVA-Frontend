@@ -95,13 +95,13 @@ export const Menu = ({ handleLogout }: MenuProps) => {
               <Typography>{organizationQuery.data?.acronym}</Typography>
             </MenuItem>
           ),
-          user?.isCurator && (
+          (user?.isDoiCurator || user?.isPublishingCurator || user?.isSupportCurator || user?.isNviCurator) && (
             <MenuItem
               key={dataTestId.header.tasksLink}
               data-testid={dataTestId.header.tasksLink}
               onClick={closeMenu}
               component={Link}
-              to={UrlPathTemplate.TasksDialogue}>
+              to={UrlPathTemplate.Tasks}>
               <Typography>{t('common.tasks')}</Typography>
             </MenuItem>
           ),
