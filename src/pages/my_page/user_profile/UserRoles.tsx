@@ -10,8 +10,26 @@ interface UserRolesProps {
 
 export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
   const { t } = useTranslation();
-  const { isAppAdmin, isInstitutionAdmin, isEditor, isCurator, isCreator, isInternalImporter, isNviCurator } = user;
-  const hasAnyRole = isAppAdmin || isInstitutionAdmin || isCurator || isEditor || isCreator;
+  const {
+    isAppAdmin,
+    isInstitutionAdmin,
+    isEditor,
+    isDoiCurator,
+    isPublishingCurator,
+    isSupportCurator,
+    isCreator,
+    isInternalImporter,
+    isNviCurator,
+  } = user;
+
+  const hasAnyRole =
+    isAppAdmin ||
+    isInstitutionAdmin ||
+    isDoiCurator ||
+    isPublishingCurator ||
+    isSupportCurator ||
+    isEditor ||
+    isCreator;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -38,11 +56,25 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
           text={t('my_page.roles.creator_description')}
         />
       )}
-      {isCurator && (
+      {isSupportCurator && (
         <RoleItem
-          dataTestId="user-role-curator"
-          label={t('my_page.roles.curator')}
-          text={t('my_page.roles.curator_description')}
+          dataTestId="user-role-support-curator"
+          label={t('my_page.roles.support_curator')}
+          text={t('my_page.roles.support_curator_description')}
+        />
+      )}
+      {isDoiCurator && (
+        <RoleItem
+          dataTestId="user-role-doi-curator"
+          label={t('my_page.roles.doi_curator')}
+          text={t('my_page.roles.doi_curator_description')}
+        />
+      )}
+      {isPublishingCurator && (
+        <RoleItem
+          dataTestId="user-role-publishing-curator"
+          label={t('my_page.roles.publishing_curator')}
+          text={t('my_page.roles.publishing_curator_description')}
         />
       )}
       {isEditor && (

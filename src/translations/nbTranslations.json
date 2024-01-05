@@ -694,7 +694,8 @@
       "creator": "Registrator",
       "creator_description": "Kan registrere publikasjoner og andre ressurser.",
       "curator": "Kurator",
-      "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
+      "doi_curator": "DOI-kurator",
+      "doi_curator_description": "Kan se og behandle DOI-forespørsler.",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "institution_admin": "Administrator",
@@ -706,7 +707,11 @@
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
       "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen",
       "nvi_curator": "NVI-kurator",
-      "nvi_curator_description": "Kan se og behandle NVI-kandidater."
+      "nvi_curator_description": "Kan se og behandle NVI-kandidater.",
+      "publishing_curator": "Publiseringskurator",
+      "publishing_curator_description": "Kan se og behandle publiseringsforespørsler.",
+      "support_curator": "Brukerstøttekurator",
+      "support_curator_description": "Kan se og behandle brukerstøttehenvendelser."
     }
   },
   "privacy": {
