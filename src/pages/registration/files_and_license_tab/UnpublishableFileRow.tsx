@@ -1,5 +1,5 @@
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, Checkbox, IconButton, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
+import { Checkbox, IconButton, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import { Field, FieldProps, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
@@ -27,26 +27,27 @@ export const UnpublishableFileRow = ({ file, removeFile, baseFieldName, disabled
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
       <TableCell sx={{ minWidth: '13rem' }}>
-        <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
-          <TruncatableTypography>{file.name}</TruncatableTypography>
-          <Tooltip title={t('registration.files_and_license.remove_file')}>
-            <IconButton onClick={toggleOpenConfirmDialog} disabled={disabled}>
-              <CancelIcon color="error" />
-            </IconButton>
-          </Tooltip>
-          <ConfirmDialog
-            open={openConfirmDialog}
-            title={t('registration.files_and_license.remove_file')}
-            onAccept={() => {
-              removeFile();
-              toggleOpenConfirmDialog();
-            }}
-            onCancel={toggleOpenConfirmDialog}>
-            <Typography>
-              {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
-            </Typography>
-          </ConfirmDialog>
-        </Box>
+        <TruncatableTypography>{file.name}</TruncatableTypography>
+      </TableCell>
+
+      <TableCell>
+        <Tooltip title={t('registration.files_and_license.remove_file')}>
+          <IconButton onClick={toggleOpenConfirmDialog} disabled={disabled}>
+            <CancelIcon color="primary" />
+          </IconButton>
+        </Tooltip>
+        <ConfirmDialog
+          open={openConfirmDialog}
+          title={t('registration.files_and_license.remove_file')}
+          onAccept={() => {
+            removeFile();
+            toggleOpenConfirmDialog();
+          }}
+          onCancel={toggleOpenConfirmDialog}>
+          <Typography>
+            {t('registration.files_and_license.remove_file_description', { fileName: file.name })}
+          </Typography>
+        </ConfirmDialog>
       </TableCell>
 
       <TableCell sx={{ minWidth: '5.5rem' }}>{prettyBytes(file.size)}</TableCell>
