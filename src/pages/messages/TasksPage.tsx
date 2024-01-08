@@ -590,7 +590,7 @@ const TasksPage = () => {
               setRowsPerPage={setRowsPerPage}
               page={page}
               setPage={setPage}
-              helmetTitle={t('common.tasks')}
+              title={t('common.tasks')}
             />
           </PrivateRoute>
           <PrivateRoute

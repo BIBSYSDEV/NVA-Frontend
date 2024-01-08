@@ -3,12 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { FetchResultsParams, ResultParam, fetchResults } from '../../../api/searchApi';
+import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../../api/searchApi';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { CategoryChip } from '../../registration/resource_type_tab/components/RegistrationTypesRow';
+import { ExportResultsButton } from '../ExportResultsButton';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { OrganizationFilters } from './OrganizationFilters';
@@ -38,6 +40,10 @@ export const AdvancedSearchPage = () => {
     title: params.get(ResultParam.Title),
     unit: unitFilter,
     categoryShould,
+    sort: params.get(ResultParam.Sort) as SortOrder | null,
+    order: params.get(ResultParam.Order),
+    from: Number(params.get(ResultParam.From) ?? 0),
+    results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
   };
 
   const resultSearchQuery = useQuery({
@@ -50,7 +56,7 @@ export const AdvancedSearchPage = () => {
   return (
     <section>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mx: { xs: '0.5rem', md: 0 }, mb: '0.75rem' }}>
-        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <SearchForm
             sx={{ flex: '1 0 15rem' }}
             paramName={ResultParam.Title}
@@ -77,6 +83,7 @@ export const AdvancedSearchPage = () => {
             sortKey="sort"
             orderKey="order"
           />
+          <ExportResultsButton searchParams={params} />
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>

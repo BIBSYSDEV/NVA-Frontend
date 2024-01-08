@@ -14,7 +14,6 @@ import {
   searchForProjects,
 } from '../../api/cristinApi';
 import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../api/searchApi';
-import { BetaFunctionality } from '../../components/BetaFunctionality';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -29,7 +28,7 @@ import { InternationalCooperationReports } from '../reports/InternationalCoopera
 import { NviReports } from '../reports/NviReports';
 import ReportsPage from '../reports/ReportsPage';
 import { SearchPage } from '../search/SearchPage';
-import { AdvancedSearchPage } from '../search/advanced_search/AdvancesSearchPage';
+import { AdvancedSearchPage } from '../search/advanced_search/AdvancedSearchPage';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
@@ -69,7 +68,7 @@ const HomePage = () => {
     title: params.get(ResultParam.Title),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     order: params.get(ResultParam.Order),
-    from: Number(params.get(SearchParam.From) ?? 0),
+    from: Number(params.get(ResultParam.From) ?? 0),
     results: rowsPerPage,
   };
   const registrationQuery = useQuery({
@@ -140,15 +139,13 @@ const HomePage = () => {
           </Box>
         </NavigationListAccordion>
 
-        <BetaFunctionality>
-          <NavigationListAccordion
-            title={t('search.advanced_search')}
-            startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
-            accordionPath={UrlPathTemplate.Search}
-            dataTestId={dataTestId.startPage.advancedSearchAccordion}>
-            <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>{t('search.advanced_search_description')}</Typography>
-          </NavigationListAccordion>
-        </BetaFunctionality>
+        <NavigationListAccordion
+          title={t('search.advanced_search')}
+          startIcon={<SearchIcon sx={{ bgcolor: 'white' }} />}
+          accordionPath={UrlPathTemplate.Search}
+          dataTestId={dataTestId.startPage.advancedSearchAccordion}>
+          <Typography sx={{ m: '0.5rem 1rem 1rem 1rem' }}>{t('search.advanced_search_description')}</Typography>
+        </NavigationListAccordion>
 
         <NavigationListAccordion
           title={t('search.reports.reports')}

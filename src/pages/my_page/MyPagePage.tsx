@@ -456,7 +456,7 @@ const MyPagePage = () => {
               setRowsPerPage={setRowsPerPage}
               page={page}
               setPage={setPage}
-              helmetTitle={t('common.dialogue')}
+              title={t('common.dialogue')}
             />
           </PrivateRoute>
           <PrivateRoute
