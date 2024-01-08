@@ -16,7 +16,7 @@ import { AutocompleteTextField } from './AutocompleteTextField';
 interface AssigneeSelectorProps {
   assignee: string | undefined;
   iconBackgroundColor: string;
-  roleFilter: RoleName;
+  roleFilter: RoleName; // TODO: specify publisher, doi, support
   onSelectAssignee: (assignee: string) => Promise<void>;
   canSetAssignee: boolean;
   isUpdating: boolean;

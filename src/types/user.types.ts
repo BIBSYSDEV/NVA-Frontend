@@ -27,7 +27,7 @@ export interface User {
   feideId: string;
   isAppAdmin: boolean;
   isInternalImporter: boolean;
-  isCurator: boolean; // TODO: remove
+  isCurator: boolean;
   isDoiCurator: boolean;
   isPublishingCurator: boolean;
   isSupportCurator: boolean;
