@@ -98,7 +98,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const isLookingUpDoi = resultsQuery.isFetching || mutateDoi.isLoading;
 
   const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
-    let doiUrl = values.link.trim().toLowerCase();
+    let doiUrl = values.link.trim();
 
     if (!isValidUrl(doiUrl)) {
       const regexMatch = doiRegExp.exec(doiUrl);
