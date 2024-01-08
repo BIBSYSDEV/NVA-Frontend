@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { OrganizationSearchParams, fetchOrganization, searchForOrganizations } from '../../../api/cristinApi';
+import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
@@ -69,7 +70,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
             } else {
               params.delete(AdvancedSearchQueryParams.Institution);
             }
-
+            params.set(ResultParam.From, '0');
             params.delete(AdvancedSearchQueryParams.SubUnit);
             history.push({ search: params.toString() });
             setSearchTerm('');
@@ -106,7 +107,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
           } else {
             params.delete(AdvancedSearchQueryParams.SubUnit);
           }
-
+          params.set(ResultParam.From, '0');
           history.push({ search: params.toString() });
         }}
         renderInput={(params) => (

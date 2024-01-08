@@ -241,6 +241,7 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
             } else {
               params.delete(ResultParam.CategoryShould);
             }
+            params.set(ResultParam.From, '0');
             history.push({ search: params.toString() });
             closeDialog();
           }}>
