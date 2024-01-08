@@ -58,13 +58,6 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
           text={t('my_page.roles.creator_description')}
         />
       )}
-      {isSupportCurator && (
-        <RoleItem
-          dataTestId="user-role-support-curator"
-          label={t('my_page.roles.support_curator')}
-          text={t('my_page.roles.support_curator_description')}
-        />
-      )}
       {isPublishingCurator && (
         <RoleItem
           dataTestId="user-role-publishing-curator"
@@ -77,6 +70,20 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
           dataTestId="user-role-doi-curator"
           label={t('my_page.roles.doi_curator')}
           text={t('my_page.roles.doi_curator_description')}
+        />
+      )}
+      {isSupportCurator && (
+        <RoleItem
+          dataTestId="user-role-support-curator"
+          label={t('my_page.roles.support_curator')}
+          text={t('my_page.roles.support_curator_description')}
+        />
+      )}
+      {isNviCurator && (
+        <RoleItem
+          dataTestId="user-role-nvi-curator"
+          label={t('my_page.roles.nvi_curator')}
+          text={t('my_page.roles.nvi_curator_description')}
         />
       )}
       {isEditor && (
@@ -105,13 +112,6 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
           dataTestId="user-role-internal-importer"
           label={t('my_page.roles.internal_importer')}
           text={t('my_page.roles.internal_importer_description')}
-        />
-      )}
-      {isNviCurator && (
-        <RoleItem
-          dataTestId="user-role-nvi-curator"
-          label={t('my_page.roles.nvi_curator')}
-          text={t('my_page.roles.nvi_curator_description')}
         />
       )}
     </Box>
