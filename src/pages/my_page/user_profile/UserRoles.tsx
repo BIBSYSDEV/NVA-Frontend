@@ -65,18 +65,18 @@ export const UserRoles = ({ user, hasActiveEmployment }: UserRolesProps) => {
           text={t('my_page.roles.support_curator_description')}
         />
       )}
-      {isDoiCurator && (
-        <RoleItem
-          dataTestId="user-role-doi-curator"
-          label={t('my_page.roles.doi_curator')}
-          text={t('my_page.roles.doi_curator_description')}
-        />
-      )}
       {isPublishingCurator && (
         <RoleItem
           dataTestId="user-role-publishing-curator"
           label={t('my_page.roles.publishing_curator')}
           text={t('my_page.roles.publishing_curator_description')}
+        />
+      )}
+      {isDoiCurator && (
+        <RoleItem
+          dataTestId="user-role-doi-curator"
+          label={t('my_page.roles.doi_curator')}
+          text={t('my_page.roles.doi_curator_description')}
         />
       )}
       {isEditor && (
