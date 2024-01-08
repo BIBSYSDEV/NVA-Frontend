@@ -9,7 +9,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { AdvancedSearchQueryParams } from './AdvancesSearchPage';
+import { AdvancedSearchQueryParams } from './AdvancedSearchPage';
 
 interface OrganizationFiltersProps {
   institutionId: string | null;

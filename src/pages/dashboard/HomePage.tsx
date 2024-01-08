@@ -28,7 +28,7 @@ import { InternationalCooperationReports } from '../reports/InternationalCoopera
 import { NviReports } from '../reports/NviReports';
 import ReportsPage from '../reports/ReportsPage';
 import { SearchPage } from '../search/SearchPage';
-import { AdvancedSearchPage } from '../search/advanced_search/AdvancesSearchPage';
+import { AdvancedSearchPage } from '../search/advanced_search/AdvancedSearchPage';
 import { PersonFacetsFilter } from '../search/person_search/PersonFacetsFilter';
 import { ProjectFacetsFilter } from '../search/project_search/ProjectFacetsFilter';
 import { RegistrationFacetsFilter } from '../search/registration_search/filters/RegistrationFacetsFilter';
