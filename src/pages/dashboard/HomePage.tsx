@@ -58,11 +58,13 @@ const HomePage = () => {
   const registrationSearchTerm = params.get(ResultParam.Query);
   const registrationsQueryConfig: FetchResultsParams = {
     query: registrationSearchTerm,
+    abstract: params.get(ResultParam.Abstract),
     category: params.get(ResultParam.Category) as PublicationInstanceType | null,
     topLevelOrganization: params.get(ResultParam.TopLevelOrganization),
     fundingSource: params.get(ResultParam.FundingSource),
     contributor: params.get(ResultParam.Contributor),
     contributorName: params.get(ResultParam.ContributorName),
+    tags: params.get(ResultParam.Tags),
     title: params.get(ResultParam.Title),
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     order: params.get(ResultParam.Order),
