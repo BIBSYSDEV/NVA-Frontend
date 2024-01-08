@@ -194,7 +194,7 @@ export const fetchResults = async (params: FetchResultsParams) => {
     searchParams.set(ResultParam.Query, params.query);
   }
   if (params.tags) {
-    searchParams.set(ResultParam.Tags, params.tags);
+    searchParams.set(ResultParam.Tags, encodeURIComponent(params.tags));
   }
   if (params.title) {
     searchParams.set(ResultParam.Title, params.title);
