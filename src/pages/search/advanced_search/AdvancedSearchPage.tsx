@@ -10,6 +10,7 @@ import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { CategoryChip } from '../../registration/resource_type_tab/components/RegistrationTypesRow';
+import { ExportResultsButton } from '../ExportResultsButton';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { OrganizationFilters } from './OrganizationFilters';
@@ -82,6 +83,7 @@ export const AdvancedSearchPage = () => {
             sortKey="sort"
             orderKey="order"
           />
+          <ExportResultsButton searchParams={params} />
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
