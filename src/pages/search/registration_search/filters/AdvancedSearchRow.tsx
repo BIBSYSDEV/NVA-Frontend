@@ -13,6 +13,8 @@ interface FilterItem {
 const registrationFilters: FilterItem[] = [
   { field: ResultParam.Title, i18nKey: 'common.title' },
   { field: ResultParam.ContributorName, i18nKey: 'registration.contributors.contributor' },
+  { field: ResultParam.Abstract, i18nKey: 'registration.description.abstract' },
+  { field: ResultParam.Tags, i18nKey: 'registration.description.keywords' },
 ];
 
 interface AdvancedSearchRowProps {
@@ -32,6 +34,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
             select
             variant="outlined"
             sx={{ minWidth: '8rem' }}
+            inputProps={{ sx: { py: '0.75rem' } }}
             label={t('search.field_label')}
             data-testid={dataTestId.startPage.advancedSearch.advancedFieldSelect}>
             {registrationFilters.map((filter) => (
@@ -50,6 +53,7 @@ export const AdvancedSearchRow = ({ removeFilter, baseFieldName }: AdvancedSearc
             fullWidth
             sx={{ maxWidth: '30rem' }}
             variant="outlined"
+            inputProps={{ sx: { py: '0.75rem' } }}
             data-testid={dataTestId.startPage.advancedSearch.advancedValueField}
             label={t('search.search_term_label')}
           />

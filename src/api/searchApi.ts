@@ -99,6 +99,7 @@ export const fetchNviCandidate = async (identifier: string) => {
 };
 
 export enum ResultParam {
+  Abstract = 'abstract',
   Category = 'category',
   CategoryNot = 'categoryNot',
   CategoryShould = 'categoryShould',
@@ -116,14 +117,16 @@ export enum ResultParam {
   PublicationYear = 'publicationYear',
   PublicationYearAfter = 'publicationYearAfter',
   PublicationYearBefore = 'publicationYearBefore',
-  Results = 'results',
   Query = 'query',
+  Results = 'results',
+  Tags = 'tags',
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
   Unit = 'unit',
 }
 
 export interface FetchResultsParams {
+  [ResultParam.Abstract]?: string | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
   [ResultParam.CategoryNot]?: PublicationInstanceType | null;
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
@@ -141,8 +144,9 @@ export interface FetchResultsParams {
   [ResultParam.PublicationYear]?: string | null;
   [ResultParam.PublicationYearAfter]?: string | null;
   [ResultParam.PublicationYearBefore]?: string | null;
-  [ResultParam.Results]?: number | null;
   [ResultParam.Query]?: string | null;
+  [ResultParam.Results]?: number | null;
+  [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
   [ResultParam.Unit]?: string | null;
@@ -151,6 +155,9 @@ export interface FetchResultsParams {
 export const fetchResults = async (params: FetchResultsParams) => {
   const searchParams = new URLSearchParams();
 
+  if (params.abstract) {
+    searchParams.set(ResultParam.Abstract, encodeURIComponent(params.abstract));
+  }
   if (params.category) {
     searchParams.set(ResultParam.Category, params.category);
   }
@@ -199,6 +206,9 @@ export const fetchResults = async (params: FetchResultsParams) => {
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
+  }
+  if (params.tags) {
+    searchParams.set(ResultParam.Tags, encodeURIComponent(params.tags));
   }
   if (params.title) {
     searchParams.set(ResultParam.Title, params.title);
