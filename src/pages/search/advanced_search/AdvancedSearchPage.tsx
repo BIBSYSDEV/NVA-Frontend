@@ -45,6 +45,8 @@ export const AdvancedSearchPage = () => {
     order: params.get(ResultParam.Order),
     from: Number(params.get(ResultParam.From) ?? 0),
     results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    publicationYearSince: params.get(ResultParam.PublicationYearSince),
+    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
   };
 
   const resultSearchQuery = useQuery({

@@ -192,8 +192,9 @@ export const fetchResults = async (params: FetchResultsParams) => {
     searchParams.set(ResultParam.Project, params.project);
   }
   if (params.publicationYearBefore) {
-    if (!params.publicationYearSince || +params.publicationYearSince <= +params.publicationYearBefore) {
-      searchParams.set(ResultParam.PublicationYearBefore, params.publicationYearBefore);
+    const yearNumer = +params.publicationYearBefore;
+    if (!params.publicationYearSince || +params.publicationYearSince <= yearNumer) {
+      searchParams.set(ResultParam.PublicationYearBefore, (yearNumer + 1).toString());
     }
   }
   if (params.publicationYearSince) {
