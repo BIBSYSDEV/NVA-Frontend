@@ -24,11 +24,23 @@ export const fetchUser = async (username: string) => {
   return userResponse.data;
 };
 
-export const fetchUsers = async (customerId: string, role: RoleName) => {
-  const roleQuery = role ? `&role=${role}` : '';
+export const fetchUsers = async (customerId: string, role: RoleName | RoleName[]) => {
+  const searchParams = new URLSearchParams();
+
+  if (customerId) {
+    searchParams.set('institution', encodeURIComponent(customerId));
+  }
+
+  if (role) {
+    if (typeof role === 'string') {
+      searchParams.set('role', role);
+    } else if (Array.isArray(role) && role.length > 0) {
+      searchParams.set('role', encodeURIComponent(role.join(',')));
+    }
+  }
 
   const usersResponse = await authenticatedApiRequest2<UserList>({
-    url: `${RoleApiPath.InstitutionUsers}?institution=${customerId}${roleQuery}`,
+    url: `${RoleApiPath.InstitutionUsers}?${searchParams.toString()}`,
   });
 
   return usersResponse.data.users.sort((a, b) => {
