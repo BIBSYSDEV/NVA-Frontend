@@ -6,7 +6,7 @@ export enum RoleName {
   Curator = 'Curator', // TODO: remove
   DoiCurator = 'Doi-Curator',
   SupportCurator = 'Support-Curator',
-  PublishingCurator = 'File-Curator',
+  PublishingCurator = 'Publishing-Curator',
   CuratorThesis = 'Curator-thesis',
   CuratorThesisEmbargo = 'Curator-thesis-embargo',
   Creator = 'Creator',
