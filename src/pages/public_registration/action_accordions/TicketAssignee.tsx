@@ -49,7 +49,13 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
         }
       }}
       isUpdating={ticketMutation.isLoading}
-      roleFilter={RoleName.Curator}
+      roleFilter={
+        ticket.type === 'PublishingRequest'
+          ? RoleName.PublishingCurator
+          : ticket.type === 'DoiRequest'
+            ? RoleName.DoiCurator
+            : RoleName.SupportCurator
+      }
       iconBackgroundColor={ticketColor[ticket.type]}
     />
   );
