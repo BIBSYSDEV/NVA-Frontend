@@ -194,6 +194,7 @@ export const fetchResults = async (params: FetchResultsParams) => {
   if (params.publicationYearBefore) {
     const beforeYearNumber = +params.publicationYearBefore;
     if (!params.publicationYearSince || +params.publicationYearSince <= beforeYearNumber) {
+      // Add one year, to include the "before" year as well
       searchParams.set(ResultParam.PublicationYearBefore, (beforeYearNumber + 1).toString());
     }
   }
