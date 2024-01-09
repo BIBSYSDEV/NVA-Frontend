@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ResultParam } from '../../../../api/searchApi';
@@ -149,7 +150,9 @@ export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageP
       )}
 
       <FacetItem dataTestId={dataTestId.startPage.publicationDateFilter} title={t('common.publishing_year')}>
-        <PublicationDateIntervalFilter />
+        <Box sx={{ m: '0.5rem 1rem 1rem 1rem' }}>
+          <PublicationDateIntervalFilter datePickerProps={{ slotProps: { textField: { size: 'small' } } }} />
+        </Box>
       </FacetItem>
     </>
   );

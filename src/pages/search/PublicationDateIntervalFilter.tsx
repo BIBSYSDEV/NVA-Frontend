@@ -7,10 +7,13 @@ import { ResultParam } from '../../api/searchApi';
 const commonDatepickerProps: Partial<DatePickerProps<Date | null>> = {
   views: ['year'],
   disableHighlightToday: true,
-  slotProps: { textField: { size: 'small' } },
 };
 
-export const PublicationDateIntervalFilter = () => {
+interface PublicationDateIntervalFilterProps {
+  datePickerProps?: Partial<DatePickerProps<Date | null>>;
+}
+
+export const PublicationDateIntervalFilter = ({ datePickerProps }: PublicationDateIntervalFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
@@ -40,9 +43,10 @@ export const PublicationDateIntervalFilter = () => {
   const defaultMaxDate = new Date();
 
   return (
-    <Box sx={{ m: '0.5rem 1rem 1rem 1rem', display: 'flex', justifyContent: 'space-evenly', gap: '1rem' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-evenly', gap: '1rem' }}>
       <DatePicker
         {...commonDatepickerProps}
+        {...datePickerProps}
         label={t('search.year_from')}
         defaultValue={selectedYearAfterDate}
         maxDate={
@@ -54,6 +58,7 @@ export const PublicationDateIntervalFilter = () => {
       />
       <DatePicker
         {...commonDatepickerProps}
+        {...datePickerProps}
         label={t('search.year_to')}
         defaultValue={selectedYearBeforeDate}
         minDate={selectedYearAfterDate}
