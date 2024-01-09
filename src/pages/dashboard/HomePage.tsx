@@ -70,7 +70,7 @@ const HomePage = () => {
     order: params.get(ResultParam.Order),
     from: Number(params.get(ResultParam.From) ?? 0),
     results: rowsPerPage,
-    publicationYearAfter: params.get(ResultParam.PublicationYearAfter),
+    publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
   };
   const registrationQuery = useQuery({
