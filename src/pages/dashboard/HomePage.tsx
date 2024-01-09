@@ -74,6 +74,7 @@ const HomePage = () => {
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
   };
   const registrationQuery = useQuery({
+    enabled: resultIsSelected,
     queryKey: ['registrations', registrationsQueryConfig],
     queryFn: () => fetchResults(registrationsQueryConfig),
     meta: { errorMessage: t('feedback.error.search') },
