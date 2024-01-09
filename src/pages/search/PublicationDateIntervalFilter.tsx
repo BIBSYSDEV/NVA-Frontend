@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, BoxProps } from '@mui/material';
 import { DatePicker, DatePickerProps } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -11,10 +11,11 @@ const commonDatepickerProps: Partial<DatePickerProps<Date | null>> = {
 };
 
 interface PublicationDateIntervalFilterProps {
+  boxProps?: Pick<BoxProps, 'sx'>;
   datePickerProps?: Partial<DatePickerProps<Date | null>>;
 }
 
-export const PublicationDateIntervalFilter = ({ datePickerProps }: PublicationDateIntervalFilterProps) => {
+export const PublicationDateIntervalFilter = ({ datePickerProps, boxProps }: PublicationDateIntervalFilterProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
@@ -44,7 +45,7 @@ export const PublicationDateIntervalFilter = ({ datePickerProps }: PublicationDa
   const defaultMaxDate = new Date();
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-evenly', gap: '1rem' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-evenly', gap: '1rem', ...boxProps?.sx }}>
       <DatePicker
         {...commonDatepickerProps}
         {...datePickerProps}
