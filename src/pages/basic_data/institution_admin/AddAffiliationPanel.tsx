@@ -64,7 +64,6 @@ export const AddAffiliationPanel = () => {
           {({ field, meta: { error, touched } }: FieldProps<string>) => (
             <TextField
               {...field}
-              required
               disabled={isDisabled}
               fullWidth
               type="number"

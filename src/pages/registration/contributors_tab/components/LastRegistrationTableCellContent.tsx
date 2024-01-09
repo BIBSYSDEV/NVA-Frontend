@@ -1,11 +1,8 @@
 import { Skeleton, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { SearchApiPath } from '../../../../api/apiPaths';
+import { FetchResultsParams, fetchResults } from '../../../../api/searchApi';
 import { TruncatableTypography } from '../../../../components/TruncatableTypography';
-import { SearchResponse } from '../../../../types/common.types';
-import { ContributorFieldNames, SpecificContributorFieldNames } from '../../../../types/publicationFieldNames';
-import { Registration } from '../../../../types/registration.types';
-import { useFetch } from '../../../../utils/hooks/useFetch';
 import { getTitleString } from '../../../../utils/registration-helpers';
 
 interface LastRegistrationTableCellContentPorps {
@@ -14,22 +11,32 @@ interface LastRegistrationTableCellContentPorps {
 
 export const LastRegistrationTableCellContent = ({ personId }: LastRegistrationTableCellContentPorps) => {
   const { t } = useTranslation();
-  const [registrationSearch, isLoadingRegistrationSearch] = useFetch<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}?query=(${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}:"${personId}")&results=1`,
-    errorMessage: t('feedback.error.search'),
-  });
-  const registration = registrationSearch && registrationSearch.size > 0 ? registrationSearch.hits[0] : null;
 
-  return isLoadingRegistrationSearch ? (
+  const registrationsQueryConfig: FetchResultsParams = {
+    contributor: personId,
+    results: 1,
+  };
+  const registrationsQuery = useQuery({
+    enabled: !!personId,
+    queryKey: ['registrations', registrationsQueryConfig],
+    queryFn: () => fetchResults(registrationsQueryConfig),
+    meta: { errorMessage: t('feedback.error.search') },
+  });
+
+  const registration =
+    registrationsQuery.data?.hits && registrationsQuery.data.hits.length > 0 ? registrationsQuery.data.hits[0] : null;
+  const totalHits = registrationsQuery.data?.totalHits ?? 0;
+
+  return registrationsQuery.isLoading ? (
     <Skeleton />
   ) : registration ? (
     <>
       <TruncatableTypography lines={2}>
         {getTitleString(registration.entityDescription?.mainTitle)}
       </TruncatableTypography>
-      {registrationSearch && registrationSearch.size > 1 && (
+      {totalHits > 1 && (
         <Typography fontStyle="italic">
-          {t('registration.contributors.other_registrations', { count: registrationSearch.size - 1 })}
+          {t('registration.contributors.other_registrations', { count: totalHits - 1 })}
         </Typography>
       )}
     </>

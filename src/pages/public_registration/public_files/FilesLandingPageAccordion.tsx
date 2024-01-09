@@ -26,7 +26,7 @@ export const FilesLandingPageAccordion = ({ registration }: PublicRegistrationCo
   const unpublishedFiles = associatedFiles.filter((file) => file.type === 'UnpublishedFile');
   const publishableFilesLength = publishedFiles.length + unpublishedFiles.length;
 
-  const filesToShow = userIsRegistrationAdmin ? associatedFiles : publishedFiles;
+  const filesToShow = userIsRegistrationAdmin ? [...publishedFiles, ...unpublishedFiles] : publishedFiles;
 
   const showFileVersionField = isTypeWithFileVersionField(
     registration.entityDescription?.reference?.publicationInstance?.type

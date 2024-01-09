@@ -30,7 +30,7 @@ describe('Search', () => {
     const searchTerm = 'test';
     cy.get(`[data-testid=${dataTestId.startPage.searchField}] input`).type(searchTerm);
     cy.get(`[data-testid=${dataTestId.startPage.searchButton}]`).click();
-    cy.url().should('include', `query=%22${searchTerm}%22`);
+    cy.url().should('include', `query=${searchTerm}`);
     cy.injectAxe();
     cy.checkA11y(null, undefined, a11yLogErrors);
   });

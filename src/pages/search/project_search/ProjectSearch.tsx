@@ -26,7 +26,7 @@ export const ProjectSearch = ({ projectQuery }: ProjectSearchProps) => {
           <CristinSearchPagination totalCount={projectQuery.data?.size ?? 0} />
         </div>
       ) : (
-        <Typography>{t('common.no_hits')}</Typography>
+        <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>
       )}
     </Box>
   );

@@ -4,11 +4,11 @@ import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getById } from '../../../../api/commonApi';
+import { fetchResults } from '../../../../api/searchApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { Contributor } from '../../../../types/contributor.types';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import {
   PublicationInstanceType,
@@ -21,10 +21,8 @@ import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
-import { ExpressionStatement } from '../../../../utils/searchHelpers';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -45,23 +43,17 @@ export const SearchContainerField = ({
   fetchErrorMessage,
   descriptionToShow = 'year-and-contributors',
 }: SearchContainerFieldProps) => {
+  const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
 
-  const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations(
-    {
-      searchTerm: debouncedQuery,
-      properties: [
-        {
-          fieldName: ResourceFieldNames.RegistrationType,
-          value: searchSubtypes,
-          operator: ExpressionStatement.Contains,
-        },
-      ],
-    },
-    25
-  );
+  const containerOptionsQuery = useQuery({
+    enabled: debouncedQuery === query,
+    queryKey: ['container', debouncedQuery, searchSubtypes],
+    queryFn: () => fetchResults({ title: debouncedQuery, categoryShould: searchSubtypes, results: 25 }),
+    meta: { errorMessage: t('feedback.error.search') },
+  });
 
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
     getIn(values, fieldName),
@@ -85,7 +77,7 @@ export const SearchContainerField = ({
             aria-labelledby={`${dataTestId}-label`}
             popupIcon={null}
             options={
-              query === debouncedQuery && !isLoadingSearchContainerOptions ? searchContainerOptions?.hits ?? [] : []
+              query === debouncedQuery && !containerOptionsQuery.isLoading ? containerOptionsQuery.data?.hits ?? [] : []
             }
             filterOptions={(options) => options}
             inputValue={query}
@@ -106,7 +98,7 @@ export const SearchContainerField = ({
               }
               setQuery('');
             }}
-            loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
+            loading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
             getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
             renderOption={(props, option, state) => (
               <li {...props}>
@@ -154,7 +146,7 @@ export const SearchContainerField = ({
                 {...params}
                 required
                 label={label}
-                isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
+                isLoading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
                 placeholder={!field.value ? placeholder : ''}
                 showSearchIcon={!field.value}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}

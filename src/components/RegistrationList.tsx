@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { updatePromotedPublications } from '../api/preferencesApi';
+import { PreviousPathLocationState } from '../pages/public_registration/PublicRegistration';
 import { setNotification } from '../redux/notificationSlice';
 import { RootState } from '../redux/store';
 import { Registration, RegistrationStatus } from '../types/registration.types';
@@ -33,7 +34,7 @@ interface RegistrationListProps {
 }
 
 export const RegistrationList = ({ registrations, ...rest }: RegistrationListProps) => (
-  <List>
+  <List data-testid="search-results">
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
@@ -93,6 +94,8 @@ export const RegistrationListItemContent = ({
       dispatch(setNotification({ message: t('feedback.error.update_promoted_publication'), variant: 'error' })),
   });
 
+  const linkLocationState: PreviousPathLocationState = { previousPath: `${location.pathname}${location.search}` };
+
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
       <ListItemText disableTypography data-testid={dataTestId.startPage.searchResultItem}>
@@ -115,11 +118,16 @@ export const RegistrationListItemContent = ({
               </Typography>
             )}
         </Box>
-        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
           {ticketView ? (
             getTitleString(entityDescription?.mainTitle)
           ) : (
-            <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
+            <MuiLink
+              component={Link}
+              to={{
+                pathname: getRegistrationLandingPagePath(identifier),
+                state: linkLocationState,
+              }}>
               {getTitleString(entityDescription?.mainTitle)}
             </MuiLink>
           )}

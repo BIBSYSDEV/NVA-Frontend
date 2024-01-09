@@ -96,7 +96,7 @@ export const FileRow = ({
       }}>
       <Typography
         data-testid={dataTestId.registrationLandingPage.fileName}
-        sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere' }}>
+        sx={{ gridArea: 'name', fontSize: '1rem', fontWeight: 700, lineBreak: 'anywhere', minWidth: '6rem' }}>
         {file.name}
       </Typography>
       <Typography data-testid={dataTestId.registrationLandingPage.fileSize} sx={{ gridArea: 'size' }}>
