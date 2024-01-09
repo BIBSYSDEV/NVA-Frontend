@@ -62,7 +62,7 @@ export const AdvancedSearchPage = () => {
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          gap: '0.75rem 0.5rem',
+          gap: '0.75rem',
           mx: { xs: '0.5rem', md: 0 },
           mb: '0.75rem',
         }}>

@@ -192,9 +192,9 @@ export const fetchResults = async (params: FetchResultsParams) => {
     searchParams.set(ResultParam.Project, params.project);
   }
   if (params.publicationYearBefore) {
-    const yearNumer = +params.publicationYearBefore;
-    if (!params.publicationYearSince || +params.publicationYearSince <= yearNumer) {
-      searchParams.set(ResultParam.PublicationYearBefore, (yearNumer + 1).toString());
+    const beforeYearNumber = +params.publicationYearBefore;
+    if (!params.publicationYearSince || +params.publicationYearSince <= beforeYearNumber) {
+      searchParams.set(ResultParam.PublicationYearBefore, (beforeYearNumber + 1).toString());
     }
   }
   if (params.publicationYearSince) {
