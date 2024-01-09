@@ -29,7 +29,7 @@ export const CentralImportDuplicateSearch = ({
     doi: duplicateSearchFilters.doi,
     contributorName: duplicateSearchFilters.author,
     issn: duplicateSearchFilters.issn,
-    publicationYear: duplicateSearchFilters.yearPublished,
+    publicationYearShould: duplicateSearchFilters.yearPublished,
     title: duplicateSearchFilters.title,
     from: rowsPerPage * (page - 1),
     results: rowsPerPage,

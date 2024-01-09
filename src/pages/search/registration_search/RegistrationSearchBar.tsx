@@ -1,19 +1,15 @@
-import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import FilterAltIcon from '@mui/icons-material/FilterAltOutlined';
 import SearchIcon from '@mui/icons-material/Search';
-import { LoadingButton } from '@mui/lab';
 import { Box, Button, Skeleton } from '@mui/material';
 import { ClearIcon } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, Form, Formik } from 'formik';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
-import { ResultParam, fetchRegistrationsExport } from '../../../api/searchApi';
+import { ResultParam } from '../../../api/searchApi';
 import { SortSelector } from '../../../components/SortSelector';
-import { setNotification } from '../../../redux/notificationSlice';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -24,6 +20,7 @@ import {
 } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { getFullCristinName } from '../../../utils/user-helpers';
+import { ExportResultsButton } from '../ExportResultsButton';
 import { SearchPageProps } from '../SearchPage';
 import { SearchTextField } from '../SearchTextField';
 import { SearchTypeField } from '../SearchTypeField';
@@ -43,7 +40,6 @@ interface SelectedFacet {
 
 export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const history = useHistory();
   const searchParams = new URLSearchParams(history.location.search);
 
@@ -56,8 +52,6 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
       });
     }
   });
-
-  const [isLoadingExport, setIsLoadingExport] = useState(false);
 
   const initialSearchParams = createSearchConfigFromSearchParams(searchParams);
 
@@ -94,6 +88,26 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           searchParams.set(ResultParam.Title, title.join(','));
         } else {
           searchParams.delete(ResultParam.Title);
+        }
+
+        const abstracts =
+          values.properties
+            ?.filter((property) => property.fieldName === ResultParam.Abstract && property.value)
+            .map((property) => property.value) ?? [];
+        if (abstracts.length > 0) {
+          searchParams.set(ResultParam.Abstract, abstracts.join(','));
+        } else {
+          searchParams.delete(ResultParam.Abstract);
+        }
+
+        const tags =
+          values.properties
+            ?.filter((property) => property.fieldName === ResultParam.Tags && property.value)
+            .map((property) => property.value) ?? [];
+        if (tags.length > 0) {
+          searchParams.set(ResultParam.Tags, tags.join(','));
+        } else {
+          searchParams.delete(ResultParam.Tags);
         }
 
         history.push({ search: searchParams.toString() });
@@ -150,32 +164,7 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
               ]}
             />
 
-            <LoadingButton
-              variant="outlined"
-              startIcon={<FileDownloadIcon />}
-              loadingPosition="start"
-              loading={isLoadingExport}
-              onClick={async () => {
-                setIsLoadingExport(true);
-                try {
-                  const fetchExportData = await fetchRegistrationsExport(searchParams);
-                  // Force UTF-8 for excel with '\uFEFF': https://stackoverflow.com/a/42466254
-                  const blob = new Blob(['\uFEFF', fetchExportData], { type: 'text/csv' });
-                  const url = URL.createObjectURL(blob);
-                  const link = document.createElement('a');
-                  link.download = 'result-export.csv';
-                  link.href = url;
-                  link.click();
-                } catch {
-                  dispatch(
-                    setNotification({ message: t('feedback.error.get_registrations_export'), variant: 'error' })
-                  );
-                } finally {
-                  setIsLoadingExport(false);
-                }
-              }}>
-              {t('search.export')}
-            </LoadingButton>
+            <ExportResultsButton searchParams={searchParams} />
           </Box>
 
           <FieldArray name="properties">

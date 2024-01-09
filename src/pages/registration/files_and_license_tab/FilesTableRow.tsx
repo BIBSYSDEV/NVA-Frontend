@@ -1,4 +1,3 @@
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CancelIcon from '@mui/icons-material/Cancel';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -6,7 +5,6 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
   Box,
   Checkbox,
-  CircularProgress,
   Collapse,
   FormControl,
   FormControlLabel,
@@ -26,12 +24,10 @@ import {
   Typography,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { downloadPrivateFile2 } from '../../../api/fileApi';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
 import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
@@ -40,8 +36,8 @@ import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
-import { openFileInNewTab } from '../../../utils/registration-helpers';
 import { administrativeAgreementId } from '../FilesAndLicensePanel';
+import { DownloadFileButton } from './DownloadFileButton';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
@@ -56,8 +52,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const { t } = useTranslation();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
-  const { values, setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
-  const [downloadFile, setDownloadFile] = useState(false);
+  const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
   const administrativeAgreementFieldName = `${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`;
@@ -69,41 +64,16 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
   const [embargoPopperAnchorEl, setEmbargoPopperAnchorEl] = useState<null | HTMLElement>(null);
 
-  const downloadFileQuery = useQuery({
-    enabled: downloadFile,
-    queryKey: ['downloadFile', values.identifier, file.identifier],
-    queryFn: async () => {
-      const downloadFileResponse = await downloadPrivateFile2(values.identifier, file.identifier);
-      if (downloadFileResponse?.id) {
-        openFileInNewTab(downloadFileResponse.id);
-      }
-      setDownloadFile(false); // Ensure that a new URL is obtained every time, due to expiration
-      return downloadFileResponse;
-    },
-    meta: { errorMessage: t('feedback.error.download_file') },
-    cacheTime: 0,
-  });
-
   return (
     <>
       <TableRow data-testid={dataTestId.registrationWizard.files.fileRow} sx={{ td: { pb: 0, borderBottom: 'unset' } }}>
         <TableCell sx={{ minWidth: '13rem' }}>
-          <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
-            <TruncatableTypography>{file.name}</TruncatableTypography>
-          </Box>
+          <TruncatableTypography>{file.name}</TruncatableTypography>
         </TableCell>
 
         <TableCell>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: 'fit-content' }}>
-            {downloadFileQuery.isFetching ? (
-              <CircularProgress size="1.5rem" />
-            ) : (
-              <Tooltip title={t('registration.files_and_license.open_file')}>
-                <IconButton size="small" onClick={() => setDownloadFile(true)}>
-                  <AttachFileIcon color="primary" />
-                </IconButton>
-              </Tooltip>
-            )}
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <DownloadFileButton file={file} />
 
             {!disabled && (
               <>

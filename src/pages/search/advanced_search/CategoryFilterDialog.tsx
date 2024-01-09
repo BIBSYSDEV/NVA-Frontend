@@ -68,22 +68,14 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
             gap: '0.5rem',
             mb: '1rem',
           }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <TextField
-              data-testid={dataTestId.registrationWizard.resourceType.resourceTypeSearchField}
-              sx={{ maxWidth: '17rem' }}
-              type="search"
-              variant="filled"
-              label={t('common.search')}
-              InputProps={{
-                endAdornment: <SearchIcon />,
-              }}
-              onChange={(event) => setSearchValue(event.target.value)}
-            />
-            <Button variant="outlined" onClick={() => setSelectedCategories([])}>
-              {t('search.reset_selection')}
-            </Button>
-          </Box>
+          <TextField
+            data-testid={dataTestId.registrationWizard.resourceType.resourceTypeSearchField}
+            type="search"
+            variant="filled"
+            label={t('common.search')}
+            InputProps={{ endAdornment: <SearchIcon /> }}
+            onChange={(event) => setSearchValue(event.target.value)}
+          />
           <Box
             sx={{
               display: 'flex',
@@ -231,6 +223,9 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
       </DialogContent>
       <DialogActions>
         <Button onClick={closeDialog}>{t('common.cancel')}</Button>
+        <Button disabled={selectedCategories.length === 0} onClick={() => setSelectedCategories([])}>
+          {t('search.reset_selection')}
+        </Button>
         <Button
           variant="outlined"
           onClick={() => {
@@ -241,6 +236,7 @@ export const CategoryFilterDialog = ({ open, currentCategories, closeDialog }: C
             } else {
               params.delete(ResultParam.CategoryShould);
             }
+            params.set(ResultParam.From, '0');
             history.push({ search: params.toString() });
             closeDialog();
           }}>

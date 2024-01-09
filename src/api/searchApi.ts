@@ -99,6 +99,7 @@ export const fetchNviCandidate = async (identifier: string) => {
 };
 
 export enum ResultParam {
+  Abstract = 'abstract',
   Category = 'category',
   CategoryNot = 'categoryNot',
   CategoryShould = 'categoryShould',
@@ -113,15 +114,19 @@ export enum ResultParam {
   Issn = 'issn',
   Order = 'order',
   Project = 'project',
-  PublicationYear = 'publicationYear',
-  Results = 'results',
+  PublicationYearBefore = 'publicationYearBefore',
+  PublicationYearSince = 'publicationYearSince',
+  PublicationYearShould = 'publicationYearShould',
   Query = 'query',
+  Results = 'results',
+  Tags = 'tags',
   Title = 'title',
   TopLevelOrganization = 'topLevelOrganization',
   Unit = 'unit',
 }
 
 export interface FetchResultsParams {
+  [ResultParam.Abstract]?: string | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
   [ResultParam.CategoryNot]?: PublicationInstanceType | null;
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
@@ -136,9 +141,12 @@ export interface FetchResultsParams {
   [ResultParam.Issn]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
-  [ResultParam.PublicationYear]?: string | null;
-  [ResultParam.Results]?: number | null;
+  [ResultParam.PublicationYearBefore]?: string | null;
+  [ResultParam.PublicationYearSince]?: string | null;
+  [ResultParam.PublicationYearShould]?: string | null;
   [ResultParam.Query]?: string | null;
+  [ResultParam.Results]?: number | null;
+  [ResultParam.Tags]?: string | null;
   [ResultParam.Title]?: string | null;
   [ResultParam.TopLevelOrganization]?: string | null;
   [ResultParam.Unit]?: string | null;
@@ -147,6 +155,9 @@ export interface FetchResultsParams {
 export const fetchResults = async (params: FetchResultsParams) => {
   const searchParams = new URLSearchParams();
 
+  if (params.abstract) {
+    searchParams.set(ResultParam.Abstract, encodeURIComponent(params.abstract));
+  }
   if (params.category) {
     searchParams.set(ResultParam.Category, params.category);
   }
@@ -180,11 +191,26 @@ export const fetchResults = async (params: FetchResultsParams) => {
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
   }
-  if (params.publicationYear) {
-    searchParams.set(ResultParam.PublicationYear, params.publicationYear);
+  if (params.publicationYearBefore) {
+    const beforeYearNumber = +params.publicationYearBefore;
+    if (!params.publicationYearSince || +params.publicationYearSince <= beforeYearNumber) {
+      // Add one year, to include the "before" year as well
+      searchParams.set(ResultParam.PublicationYearBefore, (beforeYearNumber + 1).toString());
+    }
+  }
+  if (params.publicationYearSince) {
+    if (!params.publicationYearBefore || +params.publicationYearSince <= +params.publicationYearBefore) {
+      searchParams.set(ResultParam.PublicationYearSince, params.publicationYearSince);
+    }
+  }
+  if (params.publicationYearShould) {
+    searchParams.set(ResultParam.PublicationYearShould, params.publicationYearShould);
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);
+  }
+  if (params.tags) {
+    searchParams.set(ResultParam.Tags, encodeURIComponent(params.tags));
   }
   if (params.title) {
     searchParams.set(ResultParam.Title, params.title);

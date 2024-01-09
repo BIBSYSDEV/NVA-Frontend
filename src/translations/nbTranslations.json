@@ -192,6 +192,7 @@
     "place": "Sted",
     "previous": "Forrige",
     "publisher": "Utgiver",
+    "publishing_year": "Publiseringsår",
     "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
     "read_less": "Les mindre",
@@ -1661,10 +1662,10 @@
   },
   "search": {
     "add_filter": "Legg til filter",
-    "advanced_search": "Avansert søk",
-    "advanced_search_description": "Søk blant alle publiserte resultater",
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
+    "advanced_search": "Avansert søk",
+    "advanced_search_description": "Søk blant alle publiserte resultater",
     "export": "Eksporter",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",
@@ -1693,7 +1694,9 @@
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
-    "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
+    "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
+    "year_from": "Fra år",
+    "year_to": "Til år"
   },
   "tasks": {
     "all_nvi_results": "Alle NVI-resultater",
