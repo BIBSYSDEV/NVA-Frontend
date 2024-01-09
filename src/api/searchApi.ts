@@ -114,7 +114,9 @@ export enum ResultParam {
   Issn = 'issn',
   Order = 'order',
   Project = 'project',
-  PublicationYear = 'publicationYear',
+  PublicationYearBefore = 'publicationYearBefore',
+  PublicationYearSince = 'publicationYearSince',
+  PublicationYearShould = 'publicationYearShould',
   Query = 'query',
   Results = 'results',
   Tags = 'tags',
@@ -139,7 +141,9 @@ export interface FetchResultsParams {
   [ResultParam.Issn]?: string | null;
   [ResultParam.Order]?: string | null;
   [ResultParam.Project]?: string | null;
-  [ResultParam.PublicationYear]?: string | null;
+  [ResultParam.PublicationYearBefore]?: string | null;
+  [ResultParam.PublicationYearSince]?: string | null;
+  [ResultParam.PublicationYearShould]?: string | null;
   [ResultParam.Query]?: string | null;
   [ResultParam.Results]?: number | null;
   [ResultParam.Tags]?: string | null;
@@ -187,8 +191,20 @@ export const fetchResults = async (params: FetchResultsParams) => {
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
   }
-  if (params.publicationYear) {
-    searchParams.set(ResultParam.PublicationYear, params.publicationYear);
+  if (params.publicationYearBefore) {
+    const beforeYearNumber = +params.publicationYearBefore;
+    if (!params.publicationYearSince || +params.publicationYearSince <= beforeYearNumber) {
+      // Add one year, to include the "before" year as well
+      searchParams.set(ResultParam.PublicationYearBefore, (beforeYearNumber + 1).toString());
+    }
+  }
+  if (params.publicationYearSince) {
+    if (!params.publicationYearBefore || +params.publicationYearSince <= +params.publicationYearBefore) {
+      searchParams.set(ResultParam.PublicationYearSince, params.publicationYearSince);
+    }
+  }
+  if (params.publicationYearShould) {
+    searchParams.set(ResultParam.PublicationYearShould, params.publicationYearShould);
   }
   if (params.query) {
     searchParams.set(ResultParam.Query, params.query);

@@ -11,6 +11,7 @@ import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { CategoryChip } from '../../registration/resource_type_tab/components/RegistrationTypesRow';
 import { ExportResultsButton } from '../ExportResultsButton';
+import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { OrganizationFilters } from './OrganizationFilters';
@@ -44,6 +45,8 @@ export const AdvancedSearchPage = () => {
     order: params.get(ResultParam.Order),
     from: Number(params.get(ResultParam.From) ?? 0),
     results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    publicationYearSince: params.get(ResultParam.PublicationYearSince),
+    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
   };
 
   const resultSearchQuery = useQuery({
@@ -55,7 +58,14 @@ export const AdvancedSearchPage = () => {
 
   return (
     <section>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mx: { xs: '0.5rem', md: 0 }, mb: '0.75rem' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.75rem',
+          mx: { xs: '0.5rem', md: 0 },
+          mb: '0.75rem',
+        }}>
         <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <SearchForm
             sx={{ flex: '1 0 15rem' }}
@@ -87,6 +97,10 @@ export const AdvancedSearchPage = () => {
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          <PublicationDateIntervalFilter />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
           <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
