@@ -21,7 +21,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import { getRegistrationByDoi } from '../../../api/registrationApi';
-import { fetchResults2 } from '../../../api/searchApi';
+import { fetchResults } from '../../../api/searchApi';
 import { RegistrationList } from '../../../components/RegistrationList';
 import { setNotification } from '../../../redux/notificationSlice';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -71,7 +71,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const resultsQuery = useQuery({
     enabled: !!doiQuery,
     queryKey: ['doi-results', doiQuery],
-    queryFn: () => fetchResults2(10, 0, { doi: doiQuery }),
+    queryFn: () => fetchResults({ doi: doiQuery }),
   });
 
   const searchResults = resultsQuery.data?.hits ?? [];
@@ -98,7 +98,7 @@ export const LinkRegistration = ({ expanded, onChange }: StartRegistrationAccord
   const isLookingUpDoi = resultsQuery.isFetching || mutateDoi.isLoading;
 
   const onSubmit = async (values: DoiFormValues, { setValues }: FormikHelpers<DoiFormValues>) => {
-    let doiUrl = values.link.trim().toLowerCase();
+    let doiUrl = values.link.trim();
 
     if (!isValidUrl(doiUrl)) {
       const regexMatch = doiRegExp.exec(doiUrl);

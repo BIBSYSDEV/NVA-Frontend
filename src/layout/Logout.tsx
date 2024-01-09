@@ -7,6 +7,7 @@ const registrationLandingPageParts = UrlPathTemplate.RegistrationLandingPage.spl
 const isPublicPage = (path: string) => {
   if (
     path === UrlPathTemplate.Home ||
+    path === UrlPathTemplate.Search ||
     path === UrlPathTemplate.PrivacyPolicy ||
     path.startsWith(UrlPathTemplate.ResearchProfile) ||
     path.startsWith(UrlPathTemplate.Projects) ||

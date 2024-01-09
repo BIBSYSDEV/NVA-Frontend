@@ -1,5 +1,5 @@
 import { ProjectSearchParameter } from '../api/cristinApi';
-import { CristinAggregationValue, LanguageString } from './common.types';
+import { AggregationValue, LanguageString } from './common.types';
 import { Organization } from './organization.types';
 import { Funding } from './registration.types';
 
@@ -97,14 +97,14 @@ export interface CristinProject extends SaveCristinProject {
 }
 
 export interface ProjectAggregations {
-  [ProjectSearchParameter.CategoryFacet]?: CristinAggregationValue[];
-  [ProjectSearchParameter.CoordinatingFacet]?: CristinAggregationValue[];
-  [ProjectSearchParameter.FundingSourceFacet]?: CristinAggregationValue[];
-  [ProjectSearchParameter.HealthProjectFacet]?: CristinAggregationValue[];
-  [ProjectSearchParameter.ParticipantFacet]?: CristinAggregationValue[];
-  [ProjectSearchParameter.ParticipantOrgFacet]?: CristinAggregationValue[];
-  [ProjectSearchParameter.ResponsibleFacet]?: CristinAggregationValue[];
-  [ProjectSearchParameter.SectorFacet]?: CristinAggregationValue[];
+  [ProjectSearchParameter.CategoryFacet]?: AggregationValue[];
+  [ProjectSearchParameter.CoordinatingFacet]?: AggregationValue[];
+  [ProjectSearchParameter.FundingSourceFacet]?: AggregationValue[];
+  [ProjectSearchParameter.HealthProjectFacet]?: AggregationValue[];
+  [ProjectSearchParameter.ParticipantFacet]?: AggregationValue[];
+  [ProjectSearchParameter.ParticipantOrgFacet]?: AggregationValue[];
+  [ProjectSearchParameter.ResponsibleFacet]?: AggregationValue[];
+  [ProjectSearchParameter.SectorFacet]?: AggregationValue[];
 }
 
 export interface FundingSource {
