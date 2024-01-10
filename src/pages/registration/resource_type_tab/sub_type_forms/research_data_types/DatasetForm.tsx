@@ -37,7 +37,7 @@ export const DatasetForm = () => {
   };
   const relatedRegistrationsOptionsQuery = useQuery({
     queryKey: ['registrations', relatedRegistrationsOptionsQueryConfig],
-    queryFn: () => fetchResults(relatedRegistrationsOptionsQueryConfig),
+    queryFn: ({ signal }) => fetchResults(relatedRegistrationsOptionsQueryConfig, signal),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
@@ -51,7 +51,7 @@ export const DatasetForm = () => {
   };
   const relatedDmpOptionsQuery = useQuery({
     queryKey: ['registrations', relatedDmpOptionsQueryConfig],
-    queryFn: () => fetchResults(relatedDmpOptionsQueryConfig),
+    queryFn: ({ signal }) => fetchResults(relatedDmpOptionsQueryConfig, signal),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
