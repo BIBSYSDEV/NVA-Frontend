@@ -1189,7 +1189,11 @@
       "resource_has_no_files_or_links": "The resource does not have any files or links to publish",
       "resource_has_no_files_or_links_paragraph0": "Without files or links, the published resource is harder to reuse and may provide less value to others. If data cannot be shared, information about data and how access can be obtained should be shared.",
       "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), is a set of principles to support the reuse of digital resources. NFR and EC set clear requirements for data to be available and deposited together with metadata that clarifies any conditions for access.",
-      "size": "Size"
+      "size": "Size",
+      "version_accepted_helper_text": "The version of a research paper accepted by a journal after peer review. This version does not normally include any changes made after acceptance such as copy editing, or typesetting. This version should be shared in NVA, preferable in PDF format and under a CC-BY licence.",
+      "version_helper_text": "Deposit what you have access to - accepted and/or published versions of the work and any publishing agreements - formal contracts or other communication with the editor. A curator will look into the details and ensure that only files legal to share - is shared and with correct licences.",
+      "version_published_helper_text": "Also known as VOR or the “version of record”. The published version of the article, is the one presented in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The licence is normally decided by the publisher, so the safe option for a licence is “Publisher's conditions”. But, many publishers supports Open Access and allow use of the CC-BY licence.",
+      "version_publishing_agreement_helper_text": "is a contract between a publisher and the artist or author. It sets out things like intellectual property ownership, where and when the work can be published, payment terms, liability protections, confidentiality and royalties. This document is of much help for the curators when questions about licence and publications dates needs to be decided on, please deposit it. Such agreements will not be publicly displayed."
     },
     "heading": {
       "contributors": "Contributors",

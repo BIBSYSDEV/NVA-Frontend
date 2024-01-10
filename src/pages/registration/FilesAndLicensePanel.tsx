@@ -65,6 +65,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+  const [isVersionModalOpen, setIsVersionModalOpen] = useState(false);
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
   const filesToPublish = files.filter((file) => !file.administrativeAgreement);
   const filesNotToPublish = files.filter((file) => file.administrativeAgreement);
@@ -97,6 +98,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   }, [t, uppy, filesRef]);
 
   const toggleLicenseModal = () => setIsLicenseModalOpen(!isLicenseModalOpen);
+  const toggleVersionModal = () => setIsVersionModalOpen(!isVersionModalOpen);
 
   const publisherIdentifier =
     (publicationContext &&
@@ -197,9 +199,18 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                 </TableCell>
                                 {showFileVersion && (
                                   <TableCell>
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                      {t('common.version')}
-                                      <Typography color="error">*</Typography>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                        {t('common.version')}
+                                        <Typography color="error">*</Typography>
+                                      </Box>
+                                      <Tooltip title={t('common.help')}>
+                                        <IconButton
+                                          data-testid={dataTestId.registrationWizard.files.versionHelpButton}
+                                          onClick={toggleVersionModal}>
+                                          <HelpOutlineIcon />
+                                        </IconButton>
+                                      </Tooltip>
                                     </Box>
                                   </TableCell>
                                 )}
@@ -415,6 +426,31 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             )}
           </Box>
         ))}
+      </Modal>
+
+      <Modal
+        headingText={t('common.version')}
+        open={isVersionModalOpen}
+        onClose={toggleVersionModal}
+        maxWidth="sm"
+        dataTestId={dataTestId.registrationWizard.files.versionModal}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <Typography>{t('registration.files_and_license.version_helper_text')}</Typography>
+          <Typography>
+            <b>{t('registration.files_and_license.accepted_version')}</b>
+            {': '}
+            {t('registration.files_and_license.version_accepted_helper_text')}
+          </Typography>
+          <Typography>
+            <b>{t('registration.files_and_license.published_version')}</b>
+            {': '}
+            {t('registration.files_and_license.version_published_helper_text')}
+          </Typography>
+          <Typography>
+            <b>{t('registration.files_and_license.administrative_agreement')}</b>{' '}
+            {t('registration.files_and_license.version_publishing_agreement_helper_text')}
+          </Typography>
+        </Box>
       </Modal>
     </Box>
   );
