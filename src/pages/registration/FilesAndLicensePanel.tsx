@@ -20,7 +20,7 @@ import {
 import { UppyFile } from '@uppy/core';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Modal } from '../../components/Modal';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
@@ -200,7 +200,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                 {showFileVersion && (
                                   <TableCell>
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                                      <Box sx={{ display: 'flex' }}>
                                         {t('common.version')}
                                         <Typography color="error">*</Typography>
                                       </Box>
@@ -437,18 +437,16 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <Typography>{t('registration.files_and_license.version_helper_text')}</Typography>
           <Typography>
-            <b>{t('registration.files_and_license.accepted_version')}</b>
-            {': '}
-            {t('registration.files_and_license.version_accepted_helper_text')}
+            <Trans i18nKey="registration.files_and_license.version_accepted_helper_text" components={[<strong />]} />
           </Typography>
           <Typography>
-            <b>{t('registration.files_and_license.published_version')}</b>
-            {': '}
-            {t('registration.files_and_license.version_published_helper_text')}
+            <Trans i18nKey="registration.files_and_license.version_published_helper_text" components={[<strong />]} />
           </Typography>
           <Typography>
-            <b>{t('registration.files_and_license.administrative_agreement')}</b>{' '}
-            {t('registration.files_and_license.version_publishing_agreement_helper_text')}
+            <Trans
+              i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
+              components={[<strong />]}
+            />
           </Typography>
         </Box>
       </Modal>
