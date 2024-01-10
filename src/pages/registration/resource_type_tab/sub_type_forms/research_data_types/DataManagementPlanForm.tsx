@@ -42,7 +42,7 @@ export const DataManagementPlanForm = () => {
   };
   const searchOptionsQuery = useQuery({
     queryKey: ['registrations', searchOptionsQueryConfig],
-    queryFn: () => fetchResults(searchOptionsQueryConfig),
+    queryFn: ({ signal }) => fetchResults(searchOptionsQueryConfig, signal),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
