@@ -22,7 +22,7 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
 
-  const organizationQuery = useQuery({
+  const topLevelOrganizationQuery = useQuery({
     queryKey: [topLevelOrganizationId],
     enabled: !!topLevelOrganizationId,
     queryFn: () => fetchOrganization(topLevelOrganizationId ?? ''),
@@ -31,22 +31,22 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
     cacheTime: 1_800_000, // 30 minutes
   });
 
-  const institutionQueryParams: OrganizationSearchParams = {
+  const organizationQueryParams: OrganizationSearchParams = {
     query: debouncedQuery,
   };
-  const institutionSearchQuery = useQuery({
+  const organizationSearchQuery = useQuery({
     enabled: !!debouncedQuery,
-    queryKey: ['organization', institutionQueryParams],
-    queryFn: () => searchForOrganizations(institutionQueryParams),
+    queryKey: ['organization', organizationQueryParams],
+    queryFn: () => searchForOrganizations(organizationQueryParams),
     meta: { errorMessage: t('feedback.error.get_institutions') },
   });
 
-  const options = institutionSearchQuery.data?.hits ?? [];
+  const options = organizationSearchQuery.data?.hits ?? [];
 
-  const subUnits = getSortedSubUnits(organizationQuery.data?.hasPart);
+  const subUnits = getSortedSubUnits(topLevelOrganizationQuery.data?.hasPart);
   const selectedSubUnit = subUnits.find((unit) => unit.id === unitId) ?? null;
 
-  const isLoading = organizationQuery.isFetching || institutionSearchQuery.isFetching;
+  const isLoading = topLevelOrganizationQuery.isFetching || organizationSearchQuery.isFetching;
 
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem 1rem', flexWrap: 'wrap' }}>
@@ -76,8 +76,8 @@ export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: Organiza
           }
         }}
         isOptionEqualToValue={(option, value) => option.id === value.id}
-        disabled={organizationQuery.isFetching}
-        value={organizationQuery.data ?? null}
+        disabled={topLevelOrganizationQuery.isFetching}
+        value={topLevelOrganizationQuery.data ?? null}
         loading={isLoading}
         renderInput={(params) => (
           <AutocompleteTextField
