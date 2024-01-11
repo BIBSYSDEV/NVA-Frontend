@@ -16,11 +16,6 @@ import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { OrganizationFilters } from './OrganizationFilters';
 
-export enum AdvancedSearchQueryParams {
-  Institution = 'institution',
-  SubUnit = 'subUnit',
-}
-
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -32,14 +27,13 @@ export const AdvancedSearchPage = () => {
   const params = new URLSearchParams(location.search);
 
   const categoryShould = (params.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
-  const institutionId = params.get(AdvancedSearchQueryParams.Institution);
-  const subUnitId = params.get(AdvancedSearchQueryParams.SubUnit);
-
-  const unitFilter = subUnitId ?? institutionId;
+  const topLevelOrganizationId = params.get(ResultParam.TopLevelOrganization);
+  const unitId = params.get(ResultParam.Unit);
 
   const resultSearchQueryConfig: FetchResultsParams = {
     title: params.get(ResultParam.Title),
-    unit: unitFilter,
+    topLevelOrganization: params.get(ResultParam.TopLevelOrganization),
+    unit: params.get(ResultParam.Unit),
     categoryShould,
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     order: params.get(ResultParam.Order),
@@ -101,7 +95,7 @@ export const AdvancedSearchPage = () => {
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
-          <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
+          <OrganizationFilters institutionId={topLevelOrganizationId} subUnitId={unitId} />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 

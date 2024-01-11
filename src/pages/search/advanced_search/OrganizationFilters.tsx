@@ -10,7 +10,6 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { AdvancedSearchQueryParams } from './AdvancedSearchPage';
 
 interface OrganizationFiltersProps {
   institutionId: string | null;
@@ -66,12 +65,12 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
           if (selectedInstitution !== institutionId) {
             const params = new URLSearchParams(history.location.search);
             if (selectedInstitution) {
-              params.set(AdvancedSearchQueryParams.Institution, selectedInstitution.id);
+              params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
             } else {
-              params.delete(AdvancedSearchQueryParams.Institution);
+              params.delete(ResultParam.TopLevelOrganization);
             }
             params.set(ResultParam.From, '0');
-            params.delete(AdvancedSearchQueryParams.SubUnit);
+            params.delete(ResultParam.Unit);
             history.push({ search: params.toString() });
             setSearchTerm('');
           }
@@ -103,9 +102,9 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
         onChange={(_, selectedUnit) => {
           const params = new URLSearchParams(history.location.search);
           if (selectedUnit) {
-            params.set(AdvancedSearchQueryParams.SubUnit, selectedUnit.id);
+            params.set(ResultParam.Unit, selectedUnit.id);
           } else {
-            params.delete(AdvancedSearchQueryParams.SubUnit);
+            params.delete(ResultParam.Unit);
           }
           params.set(ResultParam.From, '0');
           history.push({ search: params.toString() });
