@@ -220,7 +220,6 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
               sx={{
                 m: '1rem 1rem 0 1rem',
                 display: 'flex',
-                justifyContent: 'space-evenly',
                 gap: '1rem',
                 alignItems: 'start',
               }}>

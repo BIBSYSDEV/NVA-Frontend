@@ -1180,6 +1180,7 @@
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
       "find_series_in_channel_register": "Se informasjon om serien i Kanalregisteret",
       "info_from_channel_register": "Mer informasjon om valgt publiseringskanal",
+      "legal_note": "Note for juridisk avklaring",
       "license": "Lisens",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
@@ -1192,8 +1193,7 @@
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_has_no_files_or_links_paragraph0": "Uten filer eller lenker er den publiserte ressursen vanskeligere å gjenbruke og kan gi mindre verdi for andre. Om ikke data kan deles, så bør informasjon om data og hvordan tilgang kan oppnås, deles.",
       "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er et sett med prinsipper for å støtte gjenbruk av digitale ressurser. NFR og EC stiller klare krav til at data skal være tilgjengelig og deponert sammen med metadata som avklarer eventuelle betingelser for tilgang.",
-      "size": "Størrelse",
-      "legal_note": "Note for juridisk avklaring"
+      "size": "Størrelse"
     },
     "heading": {
       "contributors": "Bidragsytere",
