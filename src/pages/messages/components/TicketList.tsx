@@ -7,28 +7,20 @@ import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { SearchForm } from '../../../components/SearchForm';
-import { SearchResponse } from '../../../types/common.types';
-import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
+import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
-  ticketsQuery: UseQueryResult<SearchResponse<ExpandedTicket>, unknown>;
+  ticketsQuery: UseQueryResult<TicketSearchResponse>;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
   page: number;
-  helmetTitle: string;
+  title: string;
 }
 
-export const TicketList = ({
-  ticketsQuery,
-  setRowsPerPage,
-  rowsPerPage,
-  setPage,
-  page,
-  helmetTitle,
-}: TicketListProps) => {
+export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
@@ -42,8 +34,12 @@ export const TicketList = ({
   return (
     <section>
       <Helmet>
-        <title>{helmetTitle}</title>
+        <title>{title}</title>
       </Helmet>
+
+      <Typography variant="h2" sx={{ mb: '1rem' }}>
+        {title}
+      </Typography>
 
       <SearchForm sx={{ mb: '1rem' }} placeholder={t('tasks.search_placeholder')} />
 

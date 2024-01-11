@@ -1,22 +1,22 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { SearchApiPath } from '../../api/apiPaths';
+import { FetchResultsParams, fetchResults } from '../../api/searchApi';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { SearchResponse } from '../../types/common.types';
-import { RegistrationFieldName, ResearchDataType } from '../../types/publicationFieldNames';
+import { ResearchDataType } from '../../types/publicationFieldNames';
+import { ConfirmedDocument, RelatedDocument } from '../../types/publication_types/researchDataRegistration.types';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
-import { useFetch } from '../../utils/hooks/useFetch';
 import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
 import { getRegistrationWizardPath } from '../../utils/urlPaths';
 import { PublicFundingsContent } from './PublicFundingsContent';
@@ -45,9 +45,15 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   const abstract = entityDescription?.abstract;
   const description = entityDescription?.description;
 
-  const [relatedRegistrations] = useFetch<SearchResponse<Registration>>({
-    url: `${SearchApiPath.Registrations}?query="${identifier}" AND NOT (${RegistrationFieldName.Identifier}:"${identifier}")`,
-    errorMessage: t('feedback.error.search'),
+  const relatedRegistrationsQueryConfig: FetchResultsParams = {
+    query: identifier,
+    idNot: identifier,
+    results: 20,
+  };
+  const relatedRegistrationsQuery = useQuery({
+    queryKey: ['registrations', relatedRegistrationsQueryConfig],
+    queryFn: ({ signal }) => fetchResults(relatedRegistrationsQueryConfig, signal),
+    meta: { errorMessage: t('feedback.error.search') },
   });
 
   return (
@@ -162,7 +168,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             defaultExpanded
             heading={t('registration.resource_type.research_data.related_publications')}>
             <ShowRelatedRegistrationUris
-              links={entityDescription.reference.publicationInstance.related?.filter(
+              links={filterConfirmedDocuments(entityDescription.reference.publicationInstance.related).filter(
                 (uri) => uri.includes(API_URL) // DMP can have both internal and external links in .related
               )}
               emptyMessage={t('registration.resource_type.research_data.no_related_publications')}
@@ -212,7 +218,9 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               heading={`${t('registration.resource_type.research_data.external_links')} (${
                 entityDescription.reference.publicationInstance.related?.length ?? 0
               })`}>
-              <ListExternalRelations links={entityDescription.reference.publicationInstance.related} />
+              <ListExternalRelations
+                links={filterConfirmedDocuments(entityDescription.reference.publicationInstance.related)}
+              />
             </LandingPageAccordion>
           </>
         )}
@@ -221,19 +229,26 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             dataTestId={dataTestId.registrationLandingPage.externalLinksAccordion}
             defaultExpanded
             heading={`${t('registration.resource_type.research_data.external_links')} (${
-              filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related).length ?? 0 // DMP can have both internal and external links in .related
+              filterExternalRelatedLinks(
+                filterConfirmedDocuments(entityDescription.reference.publicationInstance.related)
+              ).length ?? 0 // DMP can have both internal and external links in .related
             })`}>
             <ListExternalRelations
-              links={filterExternalRelatedLinks(entityDescription.reference.publicationInstance.related)}
+              links={filterExternalRelatedLinks(
+                filterConfirmedDocuments(entityDescription.reference.publicationInstance.related)
+              )}
             />
           </LandingPageAccordion>
         )}
-        {relatedRegistrations && relatedRegistrations.hits.length > 0 && (
+
+        {relatedRegistrationsQuery.data && relatedRegistrationsQuery.data.totalHits > 0 && (
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedRegistrationsAccordion}
             defaultExpanded
-            heading={`${t('registration.public_page.other_related_registrations')} (${relatedRegistrations.size})`}>
-            <ListRegistrationRelations registrations={relatedRegistrations.hits} />
+            heading={`${t('registration.public_page.other_related_registrations')} (${
+              relatedRegistrationsQuery.data.totalHits
+            })`}>
+            <ListRegistrationRelations registrations={relatedRegistrationsQuery.data.hits} />
           </LandingPageAccordion>
         )}
 
@@ -242,5 +257,10 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
     </Paper>
   );
 };
+
+export const filterConfirmedDocuments = (relatedDocuments: RelatedDocument[] = []) =>
+  relatedDocuments
+    .filter((relatedDocument) => relatedDocument.type === 'ConfirmedDocument')
+    .map((confirmedDocument) => (confirmedDocument as ConfirmedDocument).identifier);
 
 const filterExternalRelatedLinks = (links: string[] = []) => links.filter((link) => !link.includes(API_URL));

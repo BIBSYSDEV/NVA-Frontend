@@ -8,9 +8,6 @@ const customerErrorMessage = {
   institutionRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('common.institution'),
   }),
-  shortNameRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('basic_data.institutions.short_name'),
-  }),
   rorInvalid: i18n.t('basic_data.institutions.invalid_ror_format'),
   doiNameRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('basic_data.institutions.doi_repo_id'),
@@ -26,7 +23,6 @@ export const customerInstitutionValidationSchema = Yup.object({
   customer: Yup.object({
     name: Yup.string().required(customerErrorMessage.institutionRequired),
     displayName: Yup.string().required(customerErrorMessage.displayNameRequired),
-    shortName: Yup.string().required(customerErrorMessage.shortNameRequired),
     archiveName: Yup.string(),
     feideOrganizationDomain: Yup.string(),
     rorId: Yup.string().matches(/^https?:\/\/ror\.org\/([a-z0-9]{9})/, customerErrorMessage.rorInvalid),

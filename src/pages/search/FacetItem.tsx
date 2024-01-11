@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 interface FacetItemProps {
   dataTestId: string;
   title: string;
-  children: ReactNode[];
+  children: ReactNode | ReactNode[];
 }
 
 const itemsToShowByDefault = 3;
@@ -19,7 +19,8 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
   const toggleOpen = () => setIsOpen(!isOpen);
 
   const [showAll, setShowAll] = useState(false);
-  const itemsToShow = !showAll ? children.slice(0, itemsToShowByDefault) : children;
+
+  const childrenIsList = Array.isArray(children);
 
   return (
     <Box
@@ -35,27 +36,31 @@ export const FacetItem = ({ title, children, dataTestId }: FacetItemProps) => {
           },
         },
       }}>
-      <ListItemButton onClick={toggleOpen}>
+      <ListItemButton onClick={toggleOpen} dense>
         <ListItemText>
           <Typography fontWeight={600}>{title}</Typography>
         </ListItemText>
         {isOpen ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
-        <List disablePadding>
-          {itemsToShow}
-          {children.length > itemsToShowByDefault && (
-            <li>
-              <ListItemButton
-                title={showAll ? t('common.show_fewer') : t('common.show_more')}
-                dense
-                sx={{ justifyContent: 'space-around' }}
-                onClick={() => setShowAll(!showAll)}>
-                {showAll ? <ExpandLess /> : <ExpandMore />}
-              </ListItemButton>
-            </li>
-          )}
-        </List>
+        {childrenIsList ? (
+          <List disablePadding>
+            {showAll ? children : children.slice(0, itemsToShowByDefault)}
+            {children.length > itemsToShowByDefault && (
+              <li>
+                <ListItemButton
+                  title={showAll ? t('common.show_fewer') : t('common.show_more')}
+                  dense
+                  sx={{ justifyContent: 'space-around' }}
+                  onClick={() => setShowAll(!showAll)}>
+                  {showAll ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+              </li>
+            )}
+          </List>
+        ) : (
+          children
+        )}
       </Collapse>
     </Box>
   );

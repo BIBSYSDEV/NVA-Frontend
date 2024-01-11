@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { ProjectSearchParameter } from '../../../api/cristinApi';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { SearchParam } from '../../../utils/searchHelpers';
+import { SearchParam, removeSearchParamValue } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
@@ -39,14 +39,14 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
     const newSearchParams = new URLSearchParams(
       `${SearchParam.Type}=${currentSearchType}&${searchParameters.toString()}`
     );
+    newSearchParams.set(SearchParam.Page, '1');
     history.push({ search: newSearchParams.toString() });
   };
 
   const removeFacetFilter = (parameter: ProjectSearchParameter, keyToRemove: string) => {
-    const selectedValues = searchParams.get(parameter)?.split(',') ?? [];
-    const newSectorFilter = selectedValues.filter((sector) => sector !== keyToRemove);
-    searchParams.set(parameter, newSectorFilter.join(','));
-    history.push({ search: searchParams.toString() });
+    const newSearchParams = removeSearchParamValue(searchParams, parameter, keyToRemove);
+    newSearchParams.set(SearchParam.Page, '1');
+    history.push({ search: newSearchParams.toString() });
   };
 
   return (

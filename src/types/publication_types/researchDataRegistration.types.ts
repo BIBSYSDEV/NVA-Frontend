@@ -50,8 +50,20 @@ export interface ResearchDataEntityDescription extends BaseEntityDescription {
   reference: ResearchDataContributionReference;
 }
 
+export interface ConfirmedDocument {
+  type: 'ConfirmedDocument';
+  identifier: string;
+}
+
+interface UnconfirmedDocument {
+  type: 'UnconfirmedDocument';
+  text: string;
+}
+
+export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
+
 interface DataManagementPlanPublicationInstance {
-  related: string[]; // Related Registrations and external links
+  related: RelatedDocument[]; // Related Registrations and external links
 }
 
 interface DataManagementPlanPublicationContext {
@@ -63,7 +75,7 @@ interface DatasetPublicationInstance {
   geographicalCoverage: GeographicalDescription;
   compliesWith: string[]; // Related DMPs
   referencedBy: string[]; // Related Registrations (not DMPs)
-  related: string[]; // External links
+  related: RelatedDocument[]; // External links
 }
 
 interface GeographicalDescription {

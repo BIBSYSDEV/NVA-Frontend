@@ -3,7 +3,7 @@ import { AutocompleteRenderInputParams, CircularProgress, TextField, TextFieldPr
 
 interface AutocompleteTextFieldProps
   extends AutocompleteRenderInputParams,
-    Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur' | 'multiline'> {
+    Pick<TextFieldProps, 'placeholder' | 'label' | 'required' | 'name' | 'value' | 'onBlur' | 'multiline' | 'variant'> {
   isLoading: boolean;
   showSearchIcon?: boolean;
   errorMessage?: string;
@@ -17,8 +17,8 @@ export const AutocompleteTextField = ({
 }: AutocompleteTextFieldProps) => (
   <TextField
     type="search"
-    {...params}
     variant="filled"
+    {...params}
     fullWidth
     InputProps={{
       ...params.InputProps,

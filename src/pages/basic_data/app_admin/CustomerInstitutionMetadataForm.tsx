@@ -135,12 +135,6 @@ export const CustomerInstitutionMetadataForm = ({
               dataTestId={dataTestId.basicData.institutionAdmin.displayNameField}
             />
             <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.ShortName}
-              label={t('basic_data.institutions.short_name')}
-              required
-              dataTestId={dataTestId.basicData.institutionAdmin.shortNameField}
-            />
-            <CustomerInstitutionTextField
               name={CustomerInstitutionFieldNames.ArchiveName}
               label={t('basic_data.institutions.archive_name')}
               dataTestId={dataTestId.basicData.institutionAdmin.archiveNameField}
