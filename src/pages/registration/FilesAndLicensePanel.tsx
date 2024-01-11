@@ -434,21 +434,19 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
         onClose={toggleVersionModal}
         maxWidth="sm"
         dataTestId={dataTestId.registrationWizard.files.versionModal}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <Typography>{t('registration.files_and_license.version_helper_text')}</Typography>
-          <Typography>
-            <Trans i18nKey="registration.files_and_license.version_accepted_helper_text" components={[<strong />]} />
-          </Typography>
-          <Typography>
-            <Trans i18nKey="registration.files_and_license.version_published_helper_text" components={[<strong />]} />
-          </Typography>
-          <Typography>
-            <Trans
-              i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
-              components={[<strong />]}
-            />
-          </Typography>
-        </Box>
+        <Typography paragraph>{t('registration.files_and_license.version_helper_text')}</Typography>
+        <Typography paragraph>
+          <Trans i18nKey="registration.files_and_license.version_accepted_helper_text" components={[<strong />]} />
+        </Typography>
+        <Typography paragraph>
+          <Trans i18nKey="registration.files_and_license.version_published_helper_text" components={[<strong />]} />
+        </Typography>
+        <Typography paragraph>
+          <Trans
+            i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
+            components={[<strong />]}
+          />
+        </Typography>
       </Modal>
     </Box>
   );
