@@ -276,7 +276,8 @@ export const PublishingAccordion = ({
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-              {t('registration.public_page.approve_publish_request')} ({registration.associatedArtifacts.length})
+              {t('registration.public_page.approve_publish_request')} (
+              {registration.associatedArtifacts.filter((artifact) => artifact.type === 'UnpublishedFile').length})
             </LoadingButton>
             <LoadingButton
               sx={{ bgcolor: 'white' }}
