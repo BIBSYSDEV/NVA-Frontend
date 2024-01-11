@@ -20,6 +20,11 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
 
+  const canEditTicket =
+    !!(ticket.type === 'DoiRequest' && user?.isDoiCurator) ||
+    !!(ticket.type === 'GeneralSupportCase' && user?.isSupportCurator) ||
+    !!(ticket.type === 'PublishingRequest' && user?.isPublishingCurator);
+
   const ticketMutation = useMutation({
     mutationFn: async (assigneeUsername: string) => await updateTicket(ticket.id, { assignee: assigneeUsername }),
     onSuccess: () => {
@@ -31,7 +36,7 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
 
   const canSetAssignee =
     window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue) &&
-    !!user?.isCurator &&
+    canEditTicket &&
     (ticket.status === 'Pending' || ticket.status === 'New');
 
   return (
@@ -39,10 +44,18 @@ export const TicketAssignee = ({ ticket, refetchTickets }: TicketAssigneeProps) 
       assignee={ticket.assignee}
       canSetAssignee={canSetAssignee}
       onSelectAssignee={async (assignee) => {
-        await ticketMutation.mutateAsync(assignee);
+        if (canEditTicket) {
+          await ticketMutation.mutateAsync(assignee);
+        }
       }}
       isUpdating={ticketMutation.isLoading}
-      roleFilter={RoleName.Curator}
+      roleFilter={
+        ticket.type === 'PublishingRequest'
+          ? RoleName.PublishingCurator
+          : ticket.type === 'DoiRequest'
+            ? RoleName.DoiCurator
+            : RoleName.SupportCurator
+      }
       iconBackgroundColor={ticketColor[ticket.type]}
     />
   );
