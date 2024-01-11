@@ -52,7 +52,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
   };
   const relatedRegistrationsQuery = useQuery({
     queryKey: ['registrations', relatedRegistrationsQueryConfig],
-    queryFn: () => fetchResults(relatedRegistrationsQueryConfig),
+    queryFn: ({ signal }) => fetchResults(relatedRegistrationsQueryConfig, signal),
     meta: { errorMessage: t('feedback.error.search') },
   });
 

@@ -695,7 +695,8 @@
       "creator": "Registrator",
       "creator_description": "Kan registrere publikasjoner og andre ressurser.",
       "curator": "Kurator",
-      "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
+      "doi_curator": "DOI-kurator",
+      "doi_curator_description": "Kan se og behandle DOI-forespørsler.",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "institution_admin": "Administrator",
@@ -707,7 +708,11 @@
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
       "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen",
       "nvi_curator": "NVI-kurator",
-      "nvi_curator_description": "Kan se og behandle NVI-kandidater."
+      "nvi_curator_description": "Kan se og behandle NVI-kandidater.",
+      "publishing_curator": "Publiseringskurator",
+      "publishing_curator_description": "Kan se og behandle publiseringsforespørsler.",
+      "support_curator": "Brukerstøttekurator",
+      "support_curator_description": "Kan se og behandle brukerstøttehenvendelser."
     }
   },
   "privacy": {
@@ -1193,7 +1198,11 @@
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_has_no_files_or_links_paragraph0": "Uten filer eller lenker er den publiserte ressursen vanskeligere å gjenbruke og kan gi mindre verdi for andre. Om ikke data kan deles, så bør informasjon om data og hvordan tilgang kan oppnås, deles.",
       "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er et sett med prinsipper for å støtte gjenbruk av digitale ressurser. NFR og EC stiller klare krav til at data skal være tilgjengelig og deponert sammen med metadata som avklarer eventuelle betingelser for tilgang.",
-      "size": "Størrelse"
+      "size": "Størrelse",
+      "version_accepted_helper_text": "<0>Akseptert versjon</0>: Versjonen av en forskningsartikkel som er akseptert av et tidsskrift etter fagfellevurdering. Denne versjonen inkluderer normalt ikke endringer som er gjort etter aksept, som kopiredigering eller typografi. Denne versjonen bør deles i NVA, helst i PDF-format og under en CC-BY-lisens.",
+      "version_helper_text": "Deponer det du har tilgang til - aksepterte og/eller publiserte versjoner av arbeidet og eventuelle publiseringsavtaler - formelle kontrakter eller annen kommunikasjon med redaktøren. En kurator vil se på detaljene og sørge for at bare filer som er lovlige å dele - blir delt og med korrekte lisenser.",
+      "version_published_helper_text": "<0>Publisert versjon</0>: Også kjent som VOR eller “version of record”. Den publiserte versjonen av artikkelen, er den som presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere eventuelle redaksjonelle forbedringer som kopiredigering, eller typografi, gjort etter at fagfellevurderingsprosessen er fullført. Den er vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Lisensen er normalt bestemt av utgiveren, så det sikre valget for en lisens er “Utgivers betingelser“. Men, mange utgivere støtter Open Access og tillater bruk av CC-BY-lisensen.",
+      "version_publishing_agreement_helper_text": "<0>Administrativ avtale</0> er en kontrakt mellom en utgiver og kunstneren eller forfatteren. Den fastsetter ting som rettigheter til intellektuell eiendom, hvor og når arbeidet kan publiseres, betalingsvilkår, beskyttelse mot ansvar, konfidensialitet og vederlag. Dette dokumentet er til stor hjelp for kuratorene når det skal avgjøres spørsmål om lisens og publiseringsdatoer, vennligst deponer det. Slike avtaler vil ikke bli offentliggjort."
     },
     "heading": {
       "contributors": "Bidragsytere",

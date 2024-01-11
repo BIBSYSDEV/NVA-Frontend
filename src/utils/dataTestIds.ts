@@ -328,6 +328,8 @@ export const dataTestId = {
       removeFileButton: 'button-remove-file',
       selectLicenseField: 'uploaded-file-select-license',
       version: 'version-radios',
+      versionHelpButton: 'version-help-button',
+      versionModal: 'version-modal',
     },
     new: {
       emptyRegistrationAccordion: 'new-registration-empty',

@@ -41,6 +41,10 @@ const userSlice = createSlice({
         isInternalImporter: !!customerId && roles.includes(RoleName.InternalImporter),
         isInstitutionAdmin: !!customerId && roles.includes(RoleName.InstitutionAdmin),
         isCurator: !!customerId && roles.includes(RoleName.Curator),
+        isDoiCurator: !!customerId && (roles.includes(RoleName.Curator) || roles.includes(RoleName.DoiCurator)),
+        isPublishingCurator:
+          !!customerId && (roles.includes(RoleName.Curator) || roles.includes(RoleName.PublishingCurator)),
+        isSupportCurator: !!customerId && (roles.includes(RoleName.Curator) || roles.includes(RoleName.SupportCurator)),
         isThesisCurator: !!customerId && roles.includes(RoleName.CuratorThesis),
         isEmbargoThesisCurator: !!customerId && roles.includes(RoleName.CuratorThesisEmbargo),
         isEditor: !!customerId && roles.includes(RoleName.Editor),
