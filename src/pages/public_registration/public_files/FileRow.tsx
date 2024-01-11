@@ -88,8 +88,7 @@ export const FileRow = ({
           sm: `"name size version license download" "note note note note note" "preview preview preview preview preview"`,
         },
         gridTemplateColumns: { xs: '4fr 1fr', sm: '5fr 1fr auto 2fr 2fr' },
-        rowGap: { xs: '1rem', sm: 0 },
-        columnGap: '1rem',
+        gap: '0.5rem 0.75rem',
         alignItems: 'center',
         marginBottom: '2rem',
         opacity: registrationMetadataIsPublished && file.type === 'UnpublishedFile' ? 0.6 : 1,
@@ -142,19 +141,14 @@ export const FileRow = ({
         )}
       </Box>
       {file.legalNote && (
-        <Typography
-          sx={{ gridArea: 'note', bgcolor: 'secondary.main', borderRadius: '5px', p: '0.5rem', mt: { sm: '1rem' } }}>
+        <Typography sx={{ gridArea: 'note', bgcolor: 'secondary.main', borderRadius: '5px', p: '0.5rem' }}>
           {file.legalNote}
         </Typography>
       )}
       {!fileIsEmbargoed && (
         <Accordion
-          sx={{
-            gridArea: 'preview',
-            marginTop: '1rem',
-            maxHeight: '35rem',
-            display: { xs: 'none', sm: 'block' },
-          }}
+          sx={{ gridArea: 'preview', maxHeight: '35rem', display: { xs: 'none', sm: 'block' } }}
+          disableGutters
           variant="outlined"
           square
           expanded={openPreviewAccordion}
