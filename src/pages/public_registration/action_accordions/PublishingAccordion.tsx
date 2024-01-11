@@ -197,7 +197,7 @@ export const PublishingAccordion = ({
         {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
 
         {/* Option to reload data if status is not up to date with ticket */}
-        {hasMismatchingPublishedStatus && (
+        {!tabErrors && hasMismatchingPublishedStatus && (
           <>
             <Typography gutterBottom>
               {hasUnpublishedFiles && isPublishedRegistration
