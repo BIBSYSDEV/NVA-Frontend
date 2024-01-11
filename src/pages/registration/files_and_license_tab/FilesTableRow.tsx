@@ -223,7 +223,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 gap: '1rem',
                 alignItems: 'start',
               }}>
-              {user?.isCurator /*TODO: check for Publishing-Curator*/ && (
+              {user?.isPublishingCurator && (
                 <Field name={legalNoteFieldName}>
                   {({ field }: FieldProps<string>) => (
                     <TextField
