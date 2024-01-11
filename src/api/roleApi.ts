@@ -28,14 +28,14 @@ export const fetchUsers = async (customerId: string, role: RoleName | RoleName[]
   const searchParams = new URLSearchParams();
 
   if (customerId) {
-    searchParams.set('institution', encodeURIComponent(customerId));
+    searchParams.set('institution', customerId);
   }
 
   if (role) {
     if (typeof role === 'string') {
       searchParams.set('role', role);
     } else if (Array.isArray(role) && role.length > 0) {
-      searchParams.set('role', encodeURIComponent(role.join(',')));
+      role.forEach((role) => searchParams.append('role', role));
     }
   }
 
