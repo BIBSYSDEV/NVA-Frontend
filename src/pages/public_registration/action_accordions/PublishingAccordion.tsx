@@ -176,25 +176,25 @@ export const PublishingAccordion = ({
         {publishingRequestTicket && <TicketAssignee ticket={publishingRequestTicket} refetchTickets={refetchData} />}
 
         {tabErrors && (
-          <ErrorList
-            tabErrors={tabErrors}
-            description={<Typography>{t('registration.public_page.error_description')}</Typography>}
-            actions={
-              <Button
-                variant="outlined"
-                component={RouterLink}
-                to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
-                endIcon={<EditIcon />}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
-                {t('registration.public_page.go_back_to_wizard')}
-              </Button>
-            }
-          />
+          <>
+            <Typography>{t('registration.public_page.error_description')}</Typography>
+            <ErrorList tabErrors={tabErrors} />
+            <Button
+              variant="outlined"
+              component={RouterLink}
+              size="small"
+              sx={{ mb: publishingRequestTicket ? '1rem' : undefined }}
+              to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
+              endIcon={<EditIcon />}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
+              {t('registration.public_page.go_back_to_wizard')}
+            </Button>
+          </>
         )}
 
         {publishingRequestTicket && <PublishingRequestMessagesColumn ticket={publishingRequestTicket} />}
 
-        {hasPendingTicket && <Divider sx={{ my: '0.5rem' }} />}
+        {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
 
         {/* Option to reload data if status is not up to date with ticket */}
         {hasMismatchingPublishedStatus && (
