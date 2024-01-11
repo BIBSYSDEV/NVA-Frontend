@@ -12,20 +12,20 @@ import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 interface OrganizationFiltersProps {
-  institutionId: string | null;
-  subUnitId: string | null;
+  topLevelOrganizationId: string | null;
+  unitId: string | null;
 }
 
-export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFiltersProps) => {
+export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: OrganizationFiltersProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
 
   const organizationQuery = useQuery({
-    queryKey: [institutionId],
-    enabled: !!institutionId,
-    queryFn: () => fetchOrganization(institutionId ?? ''),
+    queryKey: [topLevelOrganizationId],
+    enabled: !!topLevelOrganizationId,
+    queryFn: () => fetchOrganization(topLevelOrganizationId ?? ''),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes
@@ -44,7 +44,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
   const options = institutionSearchQuery.data?.hits ?? [];
 
   const subUnits = getSortedSubUnits(organizationQuery.data?.hasPart);
-  const selectedSubUnit = subUnits.find((unit) => unit.id === subUnitId) ?? null;
+  const selectedSubUnit = subUnits.find((unit) => unit.id === unitId) ?? null;
 
   const isLoading = organizationQuery.isFetching || institutionSearchQuery.isFetching;
 
@@ -62,7 +62,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
           }
         }}
         onChange={(_, selectedInstitution) => {
-          if (selectedInstitution !== institutionId) {
+          if (selectedInstitution !== topLevelOrganizationId) {
             const params = new URLSearchParams(history.location.search);
             if (selectedInstitution) {
               params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
@@ -96,7 +96,7 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
         options={subUnits}
         value={selectedSubUnit}
         inputMode="search"
-        disabled={!institutionId || subUnits.length === 0}
+        disabled={!topLevelOrganizationId || subUnits.length === 0}
         sx={{ width: '20rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
         onChange={(_, selectedUnit) => {

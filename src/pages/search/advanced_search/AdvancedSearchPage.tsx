@@ -32,8 +32,8 @@ export const AdvancedSearchPage = () => {
 
   const resultSearchQueryConfig: FetchResultsParams = {
     title: params.get(ResultParam.Title),
-    topLevelOrganization: params.get(ResultParam.TopLevelOrganization),
-    unit: params.get(ResultParam.Unit),
+    topLevelOrganization: topLevelOrganizationId,
+    unit: unitId,
     categoryShould,
     sort: params.get(ResultParam.Sort) as SortOrder | null,
     order: params.get(ResultParam.Order),
@@ -95,7 +95,7 @@ export const AdvancedSearchPage = () => {
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
-          <OrganizationFilters institutionId={topLevelOrganizationId} subUnitId={unitId} />
+          <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
