@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { fetchResults } from '../../api/searchApi';
+import { FetchResultsParams, fetchResults } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
@@ -16,7 +16,6 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import orcidIcon from '../../resources/images/orcid_logo.svg';
-import { ContributorFieldNames, SpecificContributorFieldNames } from '../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getLanguageString } from '../../utils/translation-helpers';
@@ -52,15 +51,15 @@ const ResearchProfile = () => {
 
   const person = personQuery.data;
 
-  const registrationsPersonQuery = `${ContributorFieldNames.Contributors}.${SpecificContributorFieldNames.Id}:"${personId}"`;
+  const registrationsQueryConfig: FetchResultsParams = {
+    contributor: personId,
+    from: (registrationsPage - 1) * registrationRowsPerPage,
+    results: registrationRowsPerPage,
+  };
   const registrationsQuery = useQuery({
-    queryKey: ['registrationsSearch', registrationRowsPerPage, registrationsPage, registrationsPersonQuery],
-    queryFn: () =>
-      fetchResults(
-        registrationRowsPerPage,
-        (registrationsPage - 1) * registrationRowsPerPage,
-        registrationsPersonQuery
-      ),
+    enabled: !!personId,
+    queryKey: ['registrations', registrationsQueryConfig],
+    queryFn: () => fetchResults(registrationsQueryConfig),
     meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
@@ -90,7 +89,7 @@ const ResearchProfile = () => {
   const personKeywords = person?.keywords ?? [];
 
   const registrationsHeading = registrationsQuery.data
-    ? `${t('my_page.my_profile.results')} (${registrationsQuery.data.size})`
+    ? `${t('my_page.my_profile.results')} (${registrationsQuery.data.totalHits})`
     : t('my_page.my_profile.results');
 
   const projectHeading = projectsQuery.data
@@ -193,14 +192,14 @@ const ResearchProfile = () => {
         </Typography>
         {registrationsQuery.isLoading || promotedPublicationsQuery.isLoading ? (
           <CircularProgress aria-labelledby="registration-label" />
-        ) : registrationsQuery.data && registrationsQuery.data.size > 0 ? (
+        ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
           <>
             <RegistrationSearchResults
-              searchResult={registrationsQuery.data}
+              searchResult={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
             />
             <ListPagination
-              count={registrationsQuery.data.size}
+              count={registrationsQuery.data.totalHits}
               rowsPerPage={registrationRowsPerPage}
               page={registrationsPage}
               onPageChange={(newPage) => setRegistrationsPage(newPage)}

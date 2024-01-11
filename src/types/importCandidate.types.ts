@@ -48,7 +48,7 @@ export interface ImportCandidateSummary {
   mainTitle: string;
   totalContributors: number;
   totalVerifiedContributors: number;
-  organizations: Organization[];
+  organizations: Omit<Organization, 'acronym'>[];
   publisher: Pick<Publisher, 'id' | 'name'>;
   journal: Pick<Journal, 'id'>;
   publicationInstance: PublicationInstance;

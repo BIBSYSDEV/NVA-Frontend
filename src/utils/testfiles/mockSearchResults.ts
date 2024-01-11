@@ -1,13 +1,12 @@
-import { SearchResponse } from '../../types/common.types';
+import { SearchResponse, SearchResponse2 } from '../../types/common.types';
 import { ImportCandidateSummary } from '../../types/importCandidate.types';
 import { Ticket } from '../../types/publication_types/ticket.types';
 import { Registration, RegistrationAggregations } from '../../types/registration.types';
 import { mockImportCandidate } from './mockImportCandidate';
 import { mockMathJaxRegistration, mockRegistration, mockTicketCollection } from './mockRegistration';
 
-export const mockSearchResults: SearchResponse<Registration, RegistrationAggregations> = {
-  processingTime: 10,
-  size: 50,
+export const mockSearchResults: SearchResponse2<Registration, RegistrationAggregations> = {
+  totalHits: 50,
   hits: [
     mockMathJaxRegistration,
     mockRegistration,
@@ -21,42 +20,9 @@ export const mockSearchResults: SearchResponse<Registration, RegistrationAggrega
     mockRegistration,
   ],
   aggregations: {
-    entityDescription: {
-      contributors: {
-        identity: {
-          id: {
-            buckets: [
-              {
-                key: '1234',
-                docCount: 1,
-                name: {
-                  buckets: [
-                    {
-                      key: 'Test Testesen',
-                      docCount: 1,
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-      },
-      reference: {
-        publicationInstance: {
-          type: {
-            buckets: [
-              {
-                key: 'AcademicArticle',
-                docCount: 3,
-              },
-            ],
-          },
-        },
-      },
-    },
-    fundings: { identifier: { buckets: [] } },
-    topLevelOrganizations: { id: { buckets: [] } },
+    type: [{ id: 'asd', key: 'AcademicArticle', count: 3 }],
+    fundingSource: [],
+    topLevelOrganization: [],
   },
 };
 

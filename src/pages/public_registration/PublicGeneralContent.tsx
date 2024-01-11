@@ -125,13 +125,24 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             </>
           ) : isDegree(publicationInstance.type) ? (
             <>
-              {publicationInstance.type === DegreeType.Phd && (
+              {(publicationContext as DegreePublicationContext)?.course?.code &&
+                (publicationInstance.type === DegreeType.Bachelor ||
+                  publicationInstance.type === DegreeType.Master ||
+                  publicationInstance.type === DegreeType.Other) && (
+                  <Typography>
+                    {t('registration.resource_type.course_code')}:{' '}
+                    {(publicationContext as DegreePublicationContext).course?.code}
+                  </Typography>
+                )}
+
+              {publicationInstance.type !== DegreeType.Bachelor && publicationInstance.type !== DegreeType.Master && (
                 <PublicIsbnContent
                   isbnList={
                     (registration as DegreeRegistration).entityDescription.reference?.publicationContext.isbnList
                   }
                 />
               )}
+
               <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
             </>
           ) : isReport(publicationInstance.type) ? (
@@ -218,7 +229,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           ) : isDegree(publicationInstance.type) ? (
             <>
               <PublicPublisher publisher={(publicationContext as DegreePublicationContext).publisher} />
-              {publicationInstance.type === DegreeType.Phd && (
+              {(publicationInstance.type === DegreeType.Phd || publicationInstance.type === DegreeType.Licentiate) && (
                 <PublicSeries publicationContext={publicationContext as DegreePublicationContext} />
               )}
             </>

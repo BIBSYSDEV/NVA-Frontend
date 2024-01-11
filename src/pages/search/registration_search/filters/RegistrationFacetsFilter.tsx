@@ -1,143 +1,159 @@
-import { Box, ListItem, ListItemButton, styled } from '@mui/material';
-import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { ResourceFieldNames, SearchFieldName } from '../../../../types/publicationFieldNames';
-import { PublicationInstanceType, RegistrationAggregations } from '../../../../types/registration.types';
+import { useHistory } from 'react-router-dom';
+import { ResultParam } from '../../../../api/searchApi';
+import { PublicationInstanceType } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
-import { ExpressionStatement, PropertySearch, SearchConfig } from '../../../../utils/searchHelpers';
-import { getLabelFromBucket } from '../../../../utils/translation-helpers';
+import { removeSearchParamValue } from '../../../../utils/searchHelpers';
+import { getLanguageString } from '../../../../utils/translation-helpers';
 import { FacetItem } from '../../FacetItem';
+import { FacetListItem } from '../../FacetListItem';
+import { PublicationDateIntervalFilter } from '../../PublicationDateIntervalFilter';
+import { SearchPageProps } from '../../SearchPage';
 
-interface RegistrationFacetsFilterProps {
-  aggregations: RegistrationAggregations;
-  isLoadingSearch: boolean;
-}
-
-const StyledListItemButton = styled(ListItemButton)(({ theme }) => ({
-  display: 'flex',
-  gap: '1rem',
-  justifyContent: 'space-between',
-  '&.Mui-selected': {
-    background: theme.palette.info.light,
-  },
-}));
-
-export const RegistrationFacetsFilter = ({ aggregations, isLoadingSearch }: RegistrationFacetsFilterProps) => {
+export const RegistrationFacetsFilter = ({ registrationQuery }: Pick<SearchPageProps, 'registrationQuery'>) => {
   const { t } = useTranslation();
-  const { setFieldValue, submitForm, values } = useFormikContext<SearchConfig>();
+  const history = useHistory();
+  const searchParams = new URLSearchParams(history.location.search);
 
-  const properties = values.properties ?? [];
+  const selectedCategory = searchParams.get(ResultParam.Category);
+  const selectedOrganization = searchParams.get(ResultParam.TopLevelOrganization);
+  const selectedFunding = searchParams.get(ResultParam.FundingSource);
+  const selectedContributor = searchParams.get(ResultParam.Contributor);
 
-  const updateFilter = (fieldName: string, value: string) => {
-    const shouldRemoveThisSearchParam = properties.some((searchProperty) => searchProperty.value === value);
+  const typeFacet = registrationQuery.data?.aggregations?.type;
+  const topLevelOrganizationFacet = registrationQuery.data?.aggregations?.topLevelOrganization;
+  const contributorFacet = registrationQuery.data?.aggregations?.contributor;
+  const fundingFacet = registrationQuery.data?.aggregations?.fundingSource;
 
-    if (shouldRemoveThisSearchParam) {
-      const updatedFilter = properties.filter((filter) => filter.fieldName !== fieldName || filter.value !== value);
-      setFieldValue('properties', updatedFilter);
+  const addFacetFilter = (param: string, key: string) => {
+    const currentValues = searchParams.get(param)?.split(',') ?? [];
+    if (currentValues.length === 0) {
+      searchParams.set(param, key);
     } else {
-      const newFilter: PropertySearch = {
-        fieldName,
-        value,
-        operator: ExpressionStatement.Contains,
-      };
-      const updatedFilter = [...properties, newFilter];
-      setFieldValue('properties', updatedFilter);
+      searchParams.set(param, [...currentValues, key].join(','));
     }
-    submitForm();
+    searchParams.set(ResultParam.From, '0');
+    history.push({ search: searchParams.toString() });
   };
 
-  const topLevelOrganizationFacet = aggregations.topLevelOrganizations?.id;
-  const typeFacet = aggregations.entityDescription?.reference?.publicationInstance?.type;
-  const contributorFacet = aggregations.entityDescription?.contributors?.identity?.id;
-  const fundingFacet = aggregations.fundings?.identifier;
+  const removeFacetFilter = (param: string, key: string) => {
+    const newSearchParams = removeSearchParamValue(searchParams, param, key);
+    newSearchParams.set(ResultParam.From, '0');
+    history.push({ search: newSearchParams.toString() });
+  };
 
   return (
     <>
-      {typeFacet && typeFacet.buckets.length > 0 && (
+      {typeFacet && typeFacet.length > 0 && (
         <FacetItem title={t('common.category')} dataTestId={dataTestId.startPage.typeFacets}>
-          {typeFacet.buckets.map((bucket) => {
-            const registrationType = bucket.key as PublicationInstanceType;
+          {typeFacet.map((facet) => {
+            const registrationType = facet.key as PublicationInstanceType;
+            const isSelected = selectedCategory === registrationType;
+
             return (
-              <ListItem disablePadding key={registrationType} data-testid={dataTestId.startPage.facetItem(bucket.key)}>
-                <StyledListItemButton
-                  disabled={isLoadingSearch}
-                  onClick={() => updateFilter(ResourceFieldNames.RegistrationType, registrationType)}
-                  selected={properties.some((searchProperty) => searchProperty.value === registrationType)}>
-                  <Box component="span" sx={{ wordBreak: 'break-word' }}>
-                    {t(`registration.publication_types.${registrationType}`)}
-                  </Box>
-                  {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
-                </StyledListItemButton>
-              </ListItem>
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={registrationQuery.isLoading}
+                isSelected={isSelected}
+                label={t(`registration.publication_types.${registrationType}`)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter(ResultParam.Category, facet.key)
+                    : addFacetFilter(ResultParam.Category, facet.key)
+                }
+              />
             );
           })}
         </FacetItem>
       )}
 
-      {topLevelOrganizationFacet && topLevelOrganizationFacet.buckets.length > 0 && (
+      {topLevelOrganizationFacet && topLevelOrganizationFacet.length > 0 && (
         <FacetItem title={t('common.institution')} dataTestId={dataTestId.startPage.institutionFacets}>
-          {topLevelOrganizationFacet.buckets.map((bucket) => (
-            <ListItem
-              disablePadding
-              key={bucket.key}
-              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(bucket.key))}>
-              <StyledListItemButton
-                disabled={isLoadingSearch}
-                onClick={() => updateFilter(SearchFieldName.TopLevelOrganizationId, bucket.key)}
-                selected={properties.some(
-                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
-                )}>
-                <span>{getLabelFromBucket(bucket)}</span>
-                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
-              </StyledListItemButton>
-            </ListItem>
-          ))}
+          {topLevelOrganizationFacet.map((facet) => {
+            const isSelected = !!selectedOrganization?.includes(facet.key);
+
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={registrationQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels) || getIdentifierFromId(facet.key)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter(ResultParam.TopLevelOrganization, facet.key)
+                    : addFacetFilter(ResultParam.TopLevelOrganization, facet.key)
+                }
+              />
+            );
+          })}
         </FacetItem>
       )}
 
-      {contributorFacet && contributorFacet.buckets.length > 0 && (
+      {contributorFacet && contributorFacet.length > 0 && (
         <FacetItem
           title={t('registration.contributors.contributor')}
           dataTestId={dataTestId.startPage.contributorFacets}>
-          {contributorFacet.buckets.map((bucket) => (
-            <ListItem
-              disablePadding
-              key={bucket.key}
-              data-testid={dataTestId.startPage.facetItem(getIdentifierFromId(bucket.key))}>
-              <StyledListItemButton
-                disabled={isLoadingSearch}
-                onClick={() => updateFilter(SearchFieldName.ContributorId, bucket.key)}
-                selected={properties.some(
-                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
-                )}>
-                <span>
-                  {bucket.name.buckets.length > 0 ? bucket.name.buckets[0].key : <i>{t('common.unknown')}</i>}
-                </span>
-                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
-              </StyledListItemButton>
-            </ListItem>
-          ))}
+          {contributorFacet.map((facet) => {
+            const isSelected = !!selectedContributor?.includes(facet.key);
+
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={registrationQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter(ResultParam.Contributor, facet.key)
+                    : addFacetFilter(ResultParam.Contributor, facet.key)
+                }
+              />
+            );
+          })}
         </FacetItem>
       )}
 
-      {fundingFacet && fundingFacet.buckets.length > 0 && (
+      {fundingFacet && fundingFacet.length > 0 && (
         <FacetItem title={t('common.funding')} dataTestId={dataTestId.startPage.institutionFacets}>
-          {fundingFacet.buckets.map((bucket) => (
-            <ListItem disablePadding key={bucket.key} data-testid={dataTestId.startPage.facetItem(bucket.key)}>
-              <StyledListItemButton
-                disabled={isLoadingSearch}
-                onClick={() => updateFilter(SearchFieldName.FundingSource, bucket.key)}
-                selected={properties.some(
-                  (searchProperty) => typeof searchProperty.value === 'string' && searchProperty.value === bucket.key
-                )}>
-                <span>{getLabelFromBucket(bucket)}</span>
-                {bucket.docCount && <span>({bucket.docCount.toLocaleString()})</span>}
-              </StyledListItemButton>
-            </ListItem>
-          ))}
+          {fundingFacet.map((facet) => {
+            const isSelected = !!selectedFunding?.includes(facet.key);
+
+            return (
+              <FacetListItem
+                key={facet.key}
+                identifier={facet.key}
+                dataTestId={dataTestId.startPage.facetItem(facet.key)}
+                isLoading={registrationQuery.isLoading}
+                isSelected={isSelected}
+                label={getLanguageString(facet.labels)}
+                count={facet.count}
+                onClickFacet={() =>
+                  isSelected
+                    ? removeFacetFilter(ResultParam.FundingSource, facet.key)
+                    : addFacetFilter(ResultParam.FundingSource, facet.key)
+                }
+              />
+            );
+          })}
         </FacetItem>
       )}
+
+      <FacetItem dataTestId={dataTestId.startPage.publicationDateFilter} title={t('common.publishing_year')}>
+        <PublicationDateIntervalFilter
+          datePickerProps={{ slotProps: { textField: { size: 'small' } } }}
+          boxProps={{ sx: { m: '0.5rem 1rem 1rem 1rem' } }}
+        />
+      </FacetItem>
     </>
   );
 };

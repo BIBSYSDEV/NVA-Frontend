@@ -3,7 +3,6 @@ export interface IdentifierParams {
 }
 
 export enum UrlPathTemplate {
-  About = '/about',
   BasicData = '/basic-data',
   BasicDataAddEmployee = '/basic-data/person-register/new',
   BasicDataCentralImport = '/basic-data/central-import',
@@ -50,6 +49,7 @@ export enum UrlPathTemplate {
   ReportsClinicalTreatmentStudies = '/reports/clinical-treatment-studies',
   ReportsInternationalCooperation = '/reports/international-cooperation',
   ReportsNvi = '/reports/nvi',
+  Search = '/search',
   Tasks = '/tasks',
   TasksDialogue = '/tasks/dialogue',
   TasksDialogueRegistration = '/tasks/dialogue/:identifier',

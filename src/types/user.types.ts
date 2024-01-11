@@ -1,9 +1,12 @@
-import { CristinAggregationValue, LanguageString } from './common.types';
+import { AggregationValue, LanguageString } from './common.types';
 import { Keywords } from './keywords.types';
 
 export enum RoleName {
   AppAdmin = 'App-admin',
-  Curator = 'Curator',
+  Curator = 'Curator', // TODO: remove
+  DoiCurator = 'Doi-Curator',
+  SupportCurator = 'Support-Curator',
+  PublishingCurator = 'Publishing-Curator',
   CuratorThesis = 'Curator-thesis',
   CuratorThesisEmbargo = 'Curator-thesis-embargo',
   Creator = 'Creator',
@@ -25,6 +28,9 @@ export interface User {
   isAppAdmin: boolean;
   isInternalImporter: boolean;
   isCurator: boolean;
+  isDoiCurator: boolean;
+  isPublishingCurator: boolean;
+  isSupportCurator: boolean;
   isThesisCurator: boolean;
   isEmbargoThesisCurator: boolean;
   isInstitutionAdmin: boolean;
@@ -124,8 +130,8 @@ export interface CristinPerson extends CreateCristinPerson {
 }
 
 export interface PersonAggregations {
-  organizationFacet: CristinAggregationValue[];
-  sectorFacet: CristinAggregationValue[];
+  organizationFacet: AggregationValue[];
+  sectorFacet: AggregationValue[];
 }
 
 export interface FlatCristinPerson {

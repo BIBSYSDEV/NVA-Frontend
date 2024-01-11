@@ -1,6 +1,5 @@
 {
   "about": {
-    "about_nva": "Om NVA",
     "availability_statement": "Tilgjengelighetserklæring",
     "description": {
       "paragraph0": {
@@ -14,7 +13,7 @@
       "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
       "paragraph5": "Selv om NVA er etablert og i bruk av flere institusjoner, vil tjenesten være i kontinuerlig utvikling i hele sin levetid. Institusjoner som ikke har et vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
     },
-    "footer_text": "Tjenesten er levert av Sikt - kunnskapssektorens tjenesteleverandør",
+    "footer_text": "Tjenesten blir levert av Sikt – Kunnskapssektorens tjenesteleverandør. Sikt er leverandør av fellestjenester til norsk kunnskapssektor.",
     "short_description": "Nasjonalt vitenarkiv (NVA) samler informasjon om norsk forskning og gjør forskningsresultater og forskningsinformasjon åpent tilgjengelig."
   },
   "authorization": {
@@ -110,8 +109,7 @@
         "INSTITUTE": "Instituttsektoren",
         "OTHER": "Øvrige",
         "UHI": "Universitet og høyskoler (UH)"
-      },
-      "short_name": "Forkortet visningsnavn på institusjonen"
+      }
     },
     "nvi": {
       "add_reporting_period": "Legg til rapporteringsperiode",
@@ -194,6 +192,7 @@
     "place": "Sted",
     "previous": "Forrige",
     "publisher": "Utgiver",
+    "publishing_year": "Publiseringsår",
     "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
     "read_less": "Les mindre",
@@ -237,6 +236,7 @@
     "unknown": "Ukjent",
     "update": "Oppdater",
     "url": "URL",
+    "use": "Bruk",
     "username": "Brukernavn",
     "version": "Versjon",
     "will_be_available": "Blir tilgjengelig",
@@ -429,6 +429,7 @@
       "get_customers": "Kunne ikke hente kundeinstitusjoner",
       "get_doi": "Kunne ikke hente lenkedata",
       "get_doi_agent": "Kunne ikke hente DOI-konfigurasjon",
+      "get_funding_source": "Kunne ikke hente finansieringskilde",
       "get_funding_sources": "Kunne ikke hente finansieringskilder",
       "get_import_candidate": "Kunne ikke hente importkandidat",
       "get_import_candidates": "Kunne ikke hente importkandidater",
@@ -503,6 +504,7 @@
       "doi_request_sent": "DOI-forespørsel sendt",
       "doi_request_updated": "DOI-forespørselen ble oppdatert",
       "merge_import_candidate": "Importdata ble slått sammen med resultatdata",
+      "publish_as_curator": "Registrering ble publisert (ingen godkjenning nødvendig siden du er kurator)",
       "publishing_request_approved": "Registreringen ble publisert",
       "publishing_request_rejected": "Publiseringsforespørselen ble avvist",
       "removed_role": "Rollen ble fjernet",
@@ -545,6 +547,18 @@
       "must_have_minimum": "Må ha minst {{min}} {{-field}}",
       "not_selected": "{{field}} er ikke valgt"
     }
+  },
+  "footer": {
+    "about_nva": "Om Nasjonalt vitenarkiv (NVA)",
+    "about_nva_text": "Nasjonalt vitenarkiv (NVA) samler publikasjoner og andre forskningsresultater, og gjør dem åpent tilgjengelig i en felles nasjonal løsning. Dette gjør resultater fra norsk forskning tilgjengelig i én tjeneste.",
+    "about_sikt": "Om Sikt",
+    "about_sikt_text": "Sikt inngår avtale med den enkelte institusjon om bruk av tjenesten. Kundene våre er typisk universiteter, høgskoler, forskningsinstitutter og organisasjoner i helsesektoren.",
+    "become_customer": "Hvordan bli kunde?",
+    "help_page": "Hjelpeside",
+    "language_selector": "Valgt språk",
+    "news_link": "Nyhetsbrev",
+    "system_status_link": "Driftsmeldinger",
+    "technical_support_link": "Ved teknisk støtte kontakt <0>kontakt@sikt.no</0>"
   },
   "licenses": {
     "description": {
@@ -681,7 +695,8 @@
       "creator": "Registrator",
       "creator_description": "Kan registrere publikasjoner og andre ressurser.",
       "curator": "Kurator",
-      "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
+      "doi_curator": "DOI-kurator",
+      "doi_curator_description": "Kan se og behandle DOI-forespørsler.",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "institution_admin": "Administrator",
@@ -693,7 +708,11 @@
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
       "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen",
       "nvi_curator": "NVI-kurator",
-      "nvi_curator_description": "Kan se og behandle NVI-kandidater."
+      "nvi_curator_description": "Kan se og behandle NVI-kandidater.",
+      "publishing_curator": "Publiseringskurator",
+      "publishing_curator_description": "Kan se og behandle publiseringsforespørsler.",
+      "support_curator": "Brukerstøttekurator",
+      "support_curator_description": "Kan se og behandle brukerstøttehenvendelser."
     }
   },
   "privacy": {
@@ -793,7 +812,7 @@
         }
       }
     },
-    "privacy_statement": "Personvernerklæring",
+    "privacy_statement": "Personvern og informasjonskapsler",
     "purpose": {
       "heading": "Formålet med behandling av personopplysninger i tjenesten",
       "paragraph": "Tjenesten behandler ulike persontyper med følgende formål:",
@@ -1154,8 +1173,7 @@
       "administrative_agreement": "Administrativ avtale",
       "administrative_contract": "Intern fil som aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
-      "embargo": "Embargo",
-      "file_publish_date": "Utsatt publisering",
+      "embargo": "Embargo/utsatt publisering",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "files": "Filer",
       "files_are_not_published": "Filer publiseres ikke",
@@ -1179,7 +1197,11 @@
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_has_no_files_or_links_paragraph0": "Uten filer eller lenker er den publiserte ressursen vanskeligere å gjenbruke og kan gi mindre verdi for andre. Om ikke data kan deles, så bør informasjon om data og hvordan tilgang kan oppnås, deles.",
       "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er et sett med prinsipper for å støtte gjenbruk av digitale ressurser. NFR og EC stiller klare krav til at data skal være tilgjengelig og deponert sammen med metadata som avklarer eventuelle betingelser for tilgang.",
-      "size": "Størrelse"
+      "size": "Størrelse",
+      "version_accepted_helper_text": "<0>Akseptert versjon</0>: Versjonen av en forskningsartikkel som er akseptert av et tidsskrift etter fagfellevurdering. Denne versjonen inkluderer normalt ikke endringer som er gjort etter aksept, som kopiredigering eller typografi. Denne versjonen bør deles i NVA, helst i PDF-format og under en CC-BY-lisens.",
+      "version_helper_text": "Deponer det du har tilgang til - aksepterte og/eller publiserte versjoner av arbeidet og eventuelle publiseringsavtaler - formelle kontrakter eller annen kommunikasjon med redaktøren. En kurator vil se på detaljene og sørge for at bare filer som er lovlige å dele - blir delt og med korrekte lisenser.",
+      "version_published_helper_text": "<0>Publisert versjon</0>: Også kjent som VOR eller “version of record”. Den publiserte versjonen av artikkelen, er den som presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere eventuelle redaksjonelle forbedringer som kopiredigering, eller typografi, gjort etter at fagfellevurderingsprosessen er fullført. Den er vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Lisensen er normalt bestemt av utgiveren, så det sikre valget for en lisens er “Utgivers betingelser“. Men, mange utgivere støtter Open Access og tillater bruk av CC-BY-lisensen.",
+      "version_publishing_agreement_helper_text": "<0>Administrativ avtale</0> er en kontrakt mellom en utgiver og kunstneren eller forfatteren. Den fastsetter ting som rettigheter til intellektuell eiendom, hvor og når arbeidet kan publiseres, betalingsvilkår, beskyttelse mot ansvar, konfidensialitet og vederlag. Dette dokumentet er til stor hjelp for kuratorene når det skal avgjøres spørsmål om lisens og publiseringsdatoer, vennligst deponer det. Slike avtaler vil ikke bli offentliggjort."
     },
     "heading": {
       "contributors": "Bidragsytere",
@@ -1192,9 +1214,9 @@
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
     "new_registration": "Nytt resultat",
     "nvi_warning": {
+      "approval_override_warning": "Du har endret publikasjonen på en slik måte at alle institusjoner som har medforfattere må godkjenne den på nytt for at den skal bli med på årets NVI-rapport.",
       "confirm_saving_registration": "Vil du lagre endringene dine?",
       "continue_editing_registration": "Vil du fortsatt redigere publikasjonen?",
-      "approval_override_warning": "Du har endret publikasjonen på en slik måte at alle institusjoner som har medforfattere må godkjenne den på nytt for at den skal bli med på årets NVI-rapport.",
       "registration_is_included_in_nvi": "Publikasjonen er en del av Norsk Vitenskapsindeks (NVI)",
       "reset_nvi_warning": "Du kan endre årstall, bidragsyteres tilknytning(-er) til institusjon(-er), kategori, eller publiseringskanal, men kurator ved alle medvirkende institusjoner må NVI-godkjenne publikasjonen på nytt."
     },
@@ -1512,6 +1534,7 @@
         "search_for_report": "Søk etter rapporten hvor kapittelet er publisert"
       },
       "click_to_change_resource_type": "Trykk på valgt kategori om du vil endre",
+      "course_code": "Emnekode",
       "create_journal": "Opprett tidsskrift",
       "create_publisher": "Opprett utgiver",
       "create_series": "Opprett serie",
@@ -1645,19 +1668,17 @@
     "add_filter": "Legg til filter",
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
-    "contains": "Inneholder",
+    "advanced_search": "Avansert søk",
+    "advanced_search_description": "Søk blant alle publiserte resultater",
     "export": "Eksporter",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
-    "not_containing": "Inneholder ikke",
-    "operator": "Operator",
     "participant": "Deltaker",
     "participating_institution": "Deltakende institusjon",
     "person_search_placeholder": "Søk etter navn",
     "persons": "Personer",
-    "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "reports": {
       "clinical_treatment_studies": "Kliniske behandlingsstudier",
@@ -1665,15 +1686,21 @@
       "international_cooperation": "Internasjonalt samarbeid",
       "reports": "Rapporter"
     },
+    "reset_selection": "Nullstill valg",
     "responsible_institution": "Forskningsansvarlig institusjon",
     "result": "Resultat",
+    "search_for_sub_unit": "Søk etter underenhet",
+    "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
     "search_term_label": "Verdi",
     "sector": "Sektor",
+    "select_one_or_more_categories": "Velg en eller flere kategorier",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
-    "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
+    "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
+    "year_from": "Fra år",
+    "year_to": "Til år"
   },
   "tasks": {
     "all_nvi_results": "Alle NVI-resultater",

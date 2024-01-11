@@ -41,6 +41,7 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
+import { RelatedDocument } from '../types/publication_types/researchDataRegistration.types';
 import {
   Journal,
   PublicationInstanceType,
@@ -50,6 +51,7 @@ import {
   Series,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -118,7 +120,11 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
   !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
+  !!user &&
+  !!registration &&
+  hasCuratorRole(user) &&
+  !!user.customerId &&
+  user.customerId === registration.publisher.id;
 
 export const userIsValidImporter = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
@@ -313,24 +319,49 @@ export const contributorConfig: ContributorConfig = {
   },
   // Degree
   [DegreeType.Bachelor]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Master]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Phd]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Licentiate]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   [DegreeType.Other]: {
-    primaryRoles: [ContributorRole.Creator, ContributorRole.Supervisor],
-    secondaryRoles: [ContributorRole.ContactPerson, ContributorRole.RightsHolder, ContributorRole.Other],
+    primaryRoles: [ContributorRole.Creator],
+    secondaryRoles: [
+      ContributorRole.Supervisor,
+      ContributorRole.ContactPerson,
+      ContributorRole.RightsHolder,
+      ContributorRole.Other,
+    ],
   },
   // Chapter
   [ChapterType.AcademicChapter]: {
@@ -677,25 +708,5 @@ export const openFileInNewTab = (fileUri: string) => {
   }
 };
 
-export const willResetNviStatuses = (persistedRegistration: Registration, updatedRegistration: Registration) => {
-  const canBeNviCandidate = nviApplicableTypes.includes(
-    persistedRegistration.entityDescription?.reference?.publicationInstance?.type ?? ''
-  );
-  if (!canBeNviCandidate) {
-    return false;
-  }
-
-  const hasChangedYear =
-    persistedRegistration.entityDescription?.publicationDate?.year !==
-    updatedRegistration.entityDescription?.publicationDate?.year;
-  if (hasChangedYear) {
-    return true;
-  }
-
-  const hasChangedCategory =
-    persistedRegistration.entityDescription?.reference?.publicationInstance.type !==
-    updatedRegistration.entityDescription?.reference?.publicationInstance.type;
-  if (hasChangedCategory) {
-    return true;
-  }
-};
+export const findRelatedDocumentIndex = (related: RelatedDocument[], uri: string) =>
+  related.findIndex((document) => document.type === 'ConfirmedDocument' && document.identifier === uri);

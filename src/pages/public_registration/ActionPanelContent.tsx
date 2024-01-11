@@ -59,6 +59,8 @@ export const ActionPanelContent = ({
 
   const isInRegistrationWizard =
     window.location.pathname.startsWith(UrlPathTemplate.RegistrationNew) && window.location.pathname.endsWith('/edit');
+  const canDeleteRegistration =
+    (registration.status === 'DRAFT' || registration.status === 'NEW') && isInRegistrationWizard;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -133,26 +135,27 @@ export const ActionPanelContent = ({
           />
         </ErrorBoundary>
       )}
-      {(registration.status === 'DRAFT' || registration.status === 'NEW') && (
+
+      {canDeleteRegistration && (
         <Box sx={{ m: '0.5rem', mt: '1rem' }}>
           <Button sx={{ bgcolor: 'white' }} fullWidth variant="outlined" onClick={() => setShowDeleteModal(true)}>
             {t('common.delete')}
           </Button>
+
+          <ConfirmDialog
+            open={!!showDeleteModal}
+            title={t('my_page.registrations.delete_registration')}
+            onAccept={draftRegistrationMutation.mutate}
+            onCancel={() => setShowDeleteModal(false)}
+            isLoading={draftRegistrationMutation.isLoading}>
+            <Typography>
+              {t('my_page.registrations.delete_registration_message', {
+                title: getTitleString(registration?.entityDescription?.mainTitle),
+              })}
+            </Typography>
+          </ConfirmDialog>
         </Box>
       )}
-
-      <ConfirmDialog
-        open={!!showDeleteModal}
-        title={t('my_page.registrations.delete_registration')}
-        onAccept={draftRegistrationMutation.mutate}
-        onCancel={() => setShowDeleteModal(false)}
-        isLoading={draftRegistrationMutation.isLoading}>
-        <Typography>
-          {t('my_page.registrations.delete_registration_message', {
-            title: getTitleString(registration?.entityDescription?.mainTitle),
-          })}
-        </Typography>
-      </ConfirmDialog>
     </>
   );
 };

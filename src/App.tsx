@@ -116,6 +116,7 @@ export const App = () => {
                 width: '100%',
                 alignItems: 'center',
                 flexGrow: 1,
+                mb: '0.5rem',
               }}>
               <ErrorBoundary>
                 <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={getDateFnsLocale(i18n.language)}>
