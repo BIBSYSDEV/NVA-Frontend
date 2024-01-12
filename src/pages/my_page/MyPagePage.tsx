@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { FetchTicketsParams, fetchTickets } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -106,10 +106,7 @@ const MyPagePage = () => {
       : '';
 
   const searchParams = new URLSearchParams(location.search);
-
-  const queryParam = searchParams.get('query');
-  const orderBy = searchParams.get('orderBy') as 'createdDate' | null;
-  const sortOrder = searchParams.get('sortOrder') as 'asc' | 'desc' | null;
+  const queryParam = searchParams.get(TicketSearchParam.Query);
 
   const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
@@ -120,8 +117,8 @@ const MyPagePage = () => {
     results: rowsPerPage,
     from: apiPage * rowsPerPage,
     role: 'creator',
-    orderBy,
-    sortOrder,
+    orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
+    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
   };
 
   const ticketsQuery = useQuery({

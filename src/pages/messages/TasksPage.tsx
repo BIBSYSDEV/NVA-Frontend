@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { FetchTicketsParams, fetchNviCandidates, fetchTickets } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -88,10 +88,7 @@ const TasksPage = () => {
 
   const searchParams = new URLSearchParams(location.search);
 
-  const orderBy = searchParams.get('orderBy') as 'createdDate' | null;
-  const sortOrder = searchParams.get('sortOrder') as 'asc' | 'desc' | null;
-
-  const queryParam = searchParams.get('query');
+  const queryParam = searchParams.get(TicketSearchParam.Query);
 
   const [excludeSubunits, setExcludeSubunits] = useState(false);
   const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : '';
@@ -153,8 +150,8 @@ const TasksPage = () => {
     query: ticketQueryString,
     results: rowsPerPage,
     from: (page - 1) * rowsPerPage,
-    orderBy,
-    sortOrder,
+    orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
+    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
     viewingScope: organizationScope.length > 0 ? organizationScope.join(',') : null,
     excludeSubUnits: excludeSubunits,
   };
