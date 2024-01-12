@@ -222,6 +222,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                 display: 'flex',
                 gap: '1rem',
                 alignItems: 'start',
+                justifyContent: 'space-evenly',
               }}>
               {user?.isPublishingCurator && (
                 <Field name={legalNoteFieldName}>
