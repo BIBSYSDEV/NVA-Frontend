@@ -18,7 +18,7 @@ export interface FetchTicketsParams {
   excludeSubUnits?: boolean | null;
 }
 
-export const fetchTickets2 = async (params: FetchTicketsParams) => {
+export const fetchTickets = async (params: FetchTicketsParams) => {
   const searchParams = new URLSearchParams();
   if (params.query) {
     searchParams.set('query', params.query);
@@ -36,23 +36,10 @@ export const fetchTickets2 = async (params: FetchTicketsParams) => {
   searchParams.set('from', (params.from ?? 0).toString());
   searchParams.set('results', (params.results ?? 10).toString());
   searchParams.set('orderBy', params.orderBy || 'createdDate');
-  searchParams.set('sortOrder', params.sortOrder || 'asc');
+  searchParams.set('sortOrder', params.sortOrder || 'desc');
 
   const getTickets = await authenticatedApiRequest2<TicketSearchResponse>({
     url: `${SearchApiPath.Tickets}?${searchParams.toString()}`,
-  });
-
-  return getTickets.data;
-};
-
-export const fetchTickets = async (results: number, from: number, query = '', onlyCreator = false) => {
-  const paginationQuery = `results=${results}&from=${from}`;
-  const roleQuery = onlyCreator ? 'role=creator' : '';
-  const searchQuery = query ? `query=${query}` : '';
-  const fullQuery = [paginationQuery, roleQuery, searchQuery].filter(Boolean).join('&');
-
-  const getTickets = await authenticatedApiRequest2<TicketSearchResponse>({
-    url: `${SearchApiPath.Tickets}?${fullQuery}`,
   });
 
   return getTickets.data;

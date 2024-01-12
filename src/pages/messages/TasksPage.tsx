@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { FetchTicketsParams, fetchNviCandidates, fetchTickets2 } from '../../api/searchApi';
+import { FetchTicketsParams, fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -162,7 +162,7 @@ const TasksPage = () => {
   const ticketsQuery = useQuery({
     enabled: isOnTicketsPage,
     queryKey: ['tickets', ticketSearchParams],
-    queryFn: () => fetchTickets2(ticketSearchParams),
+    queryFn: () => fetchTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
