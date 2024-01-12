@@ -28,8 +28,10 @@ import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
+import { RootState } from '../../../redux/store';
 import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
@@ -50,6 +52,7 @@ interface FilesTableRowProps {
 
 export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion, disabled }: FilesTableRowProps) => {
   const { t } = useTranslation();
+  const user = useSelector((state: RootState) => state.user);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
   const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
@@ -59,6 +62,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
   const publisherAuthorityFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`;
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
+  const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
 
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
@@ -212,7 +216,31 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
       <TableRow>
         <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
           <Collapse in={openCollapsable}>
-            <Box sx={{ mt: '0.5rem', display: 'flex', justifyContent: 'space-evenly' }}>
+            <Box
+              sx={{
+                m: '1rem 1rem 0 1rem',
+                display: 'flex',
+                gap: '1rem',
+                alignItems: 'start',
+                justifyContent: 'space-evenly',
+              }}>
+              {user?.isPublishingCurator && (
+                <Field name={legalNoteFieldName}>
+                  {({ field }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      value={field.value ?? ''}
+                      data-testid={dataTestId.registrationWizard.files.legalNoteField}
+                      variant="filled"
+                      fullWidth
+                      label={t('registration.files_and_license.legal_note')}
+                      multiline
+                      disabled={disabled}
+                    />
+                  )}
+                </Field>
+              )}
+
               <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 <Field name={embargoFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps) => (
@@ -224,6 +252,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       format="dd.MM.yyyy"
                       maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
                       disabled={file.administrativeAgreement || disabled}
+                      sx={{ minWidth: '15rem' }}
                       slotProps={{
                         textField: {
                           inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },

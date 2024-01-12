@@ -320,6 +320,7 @@ export const dataTestId = {
       fileRow: 'uploaded-file-row',
       noFilesOrLinksButton: 'no-files-or-links-button',
       noFilesOrLinksWarning: 'no-files-or-links-warning',
+      legalNoteField: 'legal-note-field',
       licenseHelpButton: 'license-help-button',
       licenseItem: 'license-item',
       licenseModal: 'license-modal',
