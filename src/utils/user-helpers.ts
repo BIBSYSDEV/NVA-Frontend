@@ -85,8 +85,7 @@ export const getFullName = (firstName?: string, lastName?: string) => [firstName
 export const hasCuratorRole = (user: User | null) =>
   !!user &&
   !!user.customerId &&
-  (user.isCurator ||
-    user.isDoiCurator ||
+  (user.isDoiCurator ||
     user.isPublishingCurator ||
     user.isSupportCurator ||
     user.isThesisCurator ||
