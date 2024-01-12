@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
+import { FetchTicketsParams, fetchNviCandidates, fetchTickets2 } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -86,7 +86,12 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
-  const urlSearchQuery = new URLSearchParams(location.search).get('query');
+  const searchParams = new URLSearchParams(location.search);
+
+  const orderBy = searchParams.get('orderBy') as 'createdDate' | null;
+  const sortOrder = searchParams.get('sortOrder') as 'asc' | 'desc' | null;
+
+  const urlSearchQuery = searchParams.get('query');
 
   const [excludeSubunits, setExcludeSubunits] = useState(false);
   const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : '';
@@ -152,12 +157,20 @@ const TasksPage = () => {
     .filter(Boolean)
     .join(' AND ');
 
-  const ticketQuery = `${ticketQueryString}&viewingScope=${organizationScope.join(',')}${excludeSubunitsQuery}`;
+  const ticketSearchParams: FetchTicketsParams = {
+    query: ticketQueryString,
+    results: rowsPerPage,
+    from: (page - 1) * rowsPerPage,
+    orderBy,
+    sortOrder,
+    viewingScope: organizationScope.length > 0 ? organizationScope.join(',') : null,
+    excludeSubUnits: excludeSubunits,
+  };
 
   const ticketsQuery = useQuery({
     enabled: isOnTicketsPage,
-    queryKey: ['tickets', rowsPerPage, page, ticketQuery],
-    queryFn: () => fetchTickets(rowsPerPage, (page - 1) * rowsPerPage, ticketQuery),
+    queryKey: ['tickets', ticketSearchParams],
+    queryFn: () => fetchTickets2(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 

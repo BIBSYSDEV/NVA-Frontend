@@ -7,6 +7,48 @@ import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
+export interface FetchTicketsParams {
+  query?: string | null;
+  role?: 'creator';
+  results?: number | null;
+  from?: number | null;
+  orderBy?: 'createdDate' | null;
+  sortOrder?: 'desc' | 'asc' | null;
+  viewingScope?: string | null;
+  excludeSubUnits?: boolean | null;
+}
+
+export const fetchTickets2 = async (params: FetchTicketsParams) => {
+  const searchParams = new URLSearchParams();
+  if (params.query) {
+    searchParams.set('query', params.query);
+  }
+  if (params.role) {
+    searchParams.set('role', params.role);
+  }
+  if (params.orderBy) {
+    searchParams.set('orderBy', params.orderBy);
+  }
+  if (params.sortOrder) {
+    searchParams.set('sortOrder', params.sortOrder);
+  }
+  if (params.viewingScope) {
+    searchParams.set('viewingScope', params.viewingScope);
+  }
+  if (params.excludeSubUnits) {
+    searchParams.set('excludeSubUnits', 'true');
+  }
+
+  searchParams.set('results', (params.results ?? 10).toString());
+  searchParams.set('from', (params.from ?? 0).toString());
+
+  const getTickets = await authenticatedApiRequest2<TicketSearchResponse>({
+    url: `${SearchApiPath.Tickets}?${searchParams.toString()}`,
+  });
+
+  return getTickets.data;
+};
+
 export const fetchTickets = async (results: number, from: number, query = '', onlyCreator = false) => {
   const paginationQuery = `results=${results}&from=${from}`;
   const roleQuery = onlyCreator ? 'role=creator' : '';
