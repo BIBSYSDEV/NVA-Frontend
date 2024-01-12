@@ -19,7 +19,9 @@ export const mockRoles: InstitutionUser = {
   roles: [
     { type: 'Role', rolename: RoleName.AppAdmin },
     { type: 'Role', rolename: RoleName.Creator },
-    { type: 'Role', rolename: RoleName.Curator },
+    { type: 'Role', rolename: RoleName.DoiCurator },
+    { type: 'Role', rolename: RoleName.PublishingCurator },
+    { type: 'Role', rolename: RoleName.SupportCurator },
     { type: 'Role', rolename: RoleName.CuratorThesis },
     { type: 'Role', rolename: RoleName.CuratorThesisEmbargo },
     { type: 'Role', rolename: RoleName.Editor },

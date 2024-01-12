@@ -64,7 +64,10 @@ const TasksPage = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
-  const isCurator = !!user?.isCurator;
+  const isSupportCurator = !!user?.isSupportCurator;
+  const isDoiCurator = !!user?.isDoiCurator;
+  const isPublishingCurator = !!user?.isPublishingCurator;
+  const isTicketCurator = isSupportCurator || isDoiCurator || isPublishingCurator;
   const isNviCurator = !!user?.isNviCurator;
   const nvaUsername = user?.nvaUsername ?? '';
 
@@ -105,9 +108,9 @@ const TasksPage = () => {
   const [ticketUnreadFilter, setTicketUnreadFilter] = useState(false);
 
   const [ticketTypes, setTicketTypes] = useState({
-    doiRequest: true,
-    generalSupportCase: true,
-    publishingRequest: true,
+    doiRequest: isDoiCurator,
+    generalSupportCase: isSupportCurator,
+    publishingRequest: isPublishingCurator,
   });
 
   const [ticketStatusFilter, setTicketStatusFilter] = useState<TicketStatusFilter>({
@@ -234,7 +237,7 @@ const TasksPage = () => {
           hide={isOnCorrectionListPage}
         />
 
-        {isCurator && (
+        {isTicketCurator && (
           <NavigationListAccordion
             title={t('tasks.user_dialog')}
             startIcon={<AssignmentIcon sx={{ bgcolor: 'white' }} />}
@@ -261,38 +264,46 @@ const TasksPage = () => {
             </StyledTicketSearchFormGroup>
 
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
-              <SelectableButton
-                data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
-                showCheckbox
-                isSelected={ticketTypes.publishingRequest}
-                color="publishingRequest"
-                onClick={() => setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest })}>
-                {ticketTypes.publishingRequest && publishingRequestCount
-                  ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
-                  : t('my_page.messages.types.PublishingRequest')}
-              </SelectableButton>
+              {isPublishingCurator && (
+                <SelectableButton
+                  data-testid={dataTestId.tasksPage.typeSearch.publishingButton}
+                  showCheckbox
+                  isSelected={ticketTypes.publishingRequest}
+                  color="publishingRequest"
+                  onClick={() => setTicketTypes({ ...ticketTypes, publishingRequest: !ticketTypes.publishingRequest })}>
+                  {ticketTypes.publishingRequest && publishingRequestCount
+                    ? `${t('my_page.messages.types.PublishingRequest')} (${publishingRequestCount})`
+                    : t('my_page.messages.types.PublishingRequest')}
+                </SelectableButton>
+              )}
 
-              <SelectableButton
-                data-testid={dataTestId.tasksPage.typeSearch.doiButton}
-                showCheckbox
-                isSelected={ticketTypes.doiRequest}
-                color="doiRequest"
-                onClick={() => setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest })}>
-                {ticketTypes.doiRequest && doiRequestCount
-                  ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
-                  : t('my_page.messages.types.DoiRequest')}
-              </SelectableButton>
+              {isDoiCurator && (
+                <SelectableButton
+                  data-testid={dataTestId.tasksPage.typeSearch.doiButton}
+                  showCheckbox
+                  isSelected={ticketTypes.doiRequest}
+                  color="doiRequest"
+                  onClick={() => setTicketTypes({ ...ticketTypes, doiRequest: !ticketTypes.doiRequest })}>
+                  {ticketTypes.doiRequest && doiRequestCount
+                    ? `${t('my_page.messages.types.DoiRequest')} (${doiRequestCount})`
+                    : t('my_page.messages.types.DoiRequest')}
+                </SelectableButton>
+              )}
 
-              <SelectableButton
-                data-testid={dataTestId.tasksPage.typeSearch.supportButton}
-                showCheckbox
-                isSelected={ticketTypes.generalSupportCase}
-                color="generalSupportCase"
-                onClick={() => setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase })}>
-                {ticketTypes.generalSupportCase && generalSupportCaseCount
-                  ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
-                  : t('my_page.messages.types.GeneralSupportCase')}
-              </SelectableButton>
+              {isSupportCurator && (
+                <SelectableButton
+                  data-testid={dataTestId.tasksPage.typeSearch.supportButton}
+                  showCheckbox
+                  isSelected={ticketTypes.generalSupportCase}
+                  color="generalSupportCase"
+                  onClick={() =>
+                    setTicketTypes({ ...ticketTypes, generalSupportCase: !ticketTypes.generalSupportCase })
+                  }>
+                  {ticketTypes.generalSupportCase && generalSupportCaseCount
+                    ? `${t('my_page.messages.types.GeneralSupportCase')} (${generalSupportCaseCount})`
+                    : t('my_page.messages.types.GeneralSupportCase')}
+                </SelectableButton>
+              )}
             </StyledTicketSearchFormGroup>
 
             <StyledTicketSearchFormGroup sx={{ gap: '0.5rem' }}>
@@ -579,11 +590,15 @@ const TasksPage = () => {
 
       <ErrorBoundary>
         <Switch>
-          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isCurator || isNviCurator}>
-            {isCurator ? <Redirect to={UrlPathTemplate.TasksDialogue} /> : <Redirect to={UrlPathTemplate.TasksNvi} />}
+          <PrivateRoute exact path={UrlPathTemplate.Tasks} isAuthorized={isTicketCurator || isNviCurator}>
+            {isTicketCurator ? (
+              <Redirect to={UrlPathTemplate.TasksDialogue} />
+            ) : (
+              <Redirect to={UrlPathTemplate.TasksNvi} />
+            )}
           </PrivateRoute>
 
-          <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isCurator}>
+          <PrivateRoute exact path={UrlPathTemplate.TasksDialogue} isAuthorized={isTicketCurator}>
             <TicketList
               ticketsQuery={ticketsQuery}
               rowsPerPage={rowsPerPage}
@@ -597,7 +612,7 @@ const TasksPage = () => {
             exact
             path={UrlPathTemplate.TasksDialogueRegistration}
             component={RegistrationLandingPage}
-            isAuthorized={isCurator}
+            isAuthorized={isTicketCurator}
           />
 
           <PrivateRoute exact path={UrlPathTemplate.TasksNvi} isAuthorized={isNviCurator}>
