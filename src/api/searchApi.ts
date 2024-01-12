@@ -26,12 +26,6 @@ export const fetchTickets2 = async (params: FetchTicketsParams) => {
   if (params.role) {
     searchParams.set('role', params.role);
   }
-  if (params.orderBy) {
-    searchParams.set('orderBy', params.orderBy);
-  }
-  if (params.sortOrder) {
-    searchParams.set('sortOrder', params.sortOrder);
-  }
   if (params.viewingScope) {
     searchParams.set('viewingScope', params.viewingScope);
   }
@@ -39,8 +33,10 @@ export const fetchTickets2 = async (params: FetchTicketsParams) => {
     searchParams.set('excludeSubUnits', 'true');
   }
 
-  searchParams.set('results', (params.results ?? 10).toString());
   searchParams.set('from', (params.from ?? 0).toString());
+  searchParams.set('results', (params.results ?? 10).toString());
+  searchParams.set('orderBy', params.orderBy || 'createdDate');
+  searchParams.set('sortOrder', params.sortOrder || 'asc');
 
   const getTickets = await authenticatedApiRequest2<TicketSearchResponse>({
     url: `${SearchApiPath.Tickets}?${searchParams.toString()}`,

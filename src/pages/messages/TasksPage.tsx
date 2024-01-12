@@ -91,7 +91,7 @@ const TasksPage = () => {
   const orderBy = searchParams.get('orderBy') as 'createdDate' | null;
   const sortOrder = searchParams.get('sortOrder') as 'asc' | 'desc' | null;
 
-  const urlSearchQuery = searchParams.get('query');
+  const queryParam = searchParams.get('query');
 
   const [excludeSubunits, setExcludeSubunits] = useState(false);
   const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : '';
@@ -145,15 +145,7 @@ const TasksPage = () => {
 
   const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
-  const ticketsSearchQuery = urlSearchQuery ?? '';
-
-  const ticketQueryString = [
-    ticketsSearchQuery,
-    ticketTypeQuery,
-    ticketStatusQuery,
-    ticketAssigneeQuery,
-    ticketViewedByQuery,
-  ]
+  const ticketQueryString = [queryParam, ticketTypeQuery, ticketStatusQuery, ticketAssigneeQuery, ticketViewedByQuery]
     .filter(Boolean)
     .join(' AND ');
 
@@ -189,7 +181,7 @@ const TasksPage = () => {
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
-  const nviSearchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
+  const nviSearchQuery = queryParam ? `&query=${queryParam}` : '';
 
   const nviAssigneeQuery = showOnlyMyTasks && nvaUsername ? `&assignee=${nvaUsername}` : '';
 
