@@ -135,9 +135,10 @@ export const PersonTableRow = ({
     if (isSuccessStatus(updateCristinPerson.status)) {
       if (cristinPerson.verified) {
         // Update NVA User
-        const filteredRoles = !values.roles.includes(RoleName.Curator)
-          ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
-          : values.roles;
+        const filteredRoles =
+          !values.roles.includes(RoleName.Curator) && !values.roles.includes(RoleName.PublishingCurator)
+            ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
+            : values.roles;
 
         let updateUserResponse;
         if (institutionUser) {

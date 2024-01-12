@@ -152,7 +152,7 @@ export interface FetchResultsParams {
   [ResultParam.Unit]?: string | null;
 }
 
-export const fetchResults = async (params: FetchResultsParams) => {
+export const fetchResults = async (params: FetchResultsParams, signal?: AbortSignal) => {
   const searchParams = new URLSearchParams();
 
   if (params.abstract) {
@@ -229,6 +229,7 @@ export const fetchResults = async (params: FetchResultsParams) => {
 
   const getResults = await apiRequest2<SearchResponse2<Registration, RegistrationAggregations>>({
     url: `${SearchApiPath.Registrations}?${searchParams.toString()}`,
+    signal,
   });
 
   return getResults.data;

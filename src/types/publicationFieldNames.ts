@@ -194,6 +194,7 @@ export enum SpecificFileFieldNames {
   PublisherAuthority = 'publisherAuthority',
   EmbargoDate = 'embargoDate',
   License = 'license',
+  LegalNote = 'legalNote',
 }
 
 // The following fields should be present in "associatedArtifacts[index].<KEY> for links"

@@ -20,7 +20,7 @@ import {
 import { UppyFile } from '@uppy/core';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Modal } from '../../components/Modal';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
@@ -65,6 +65,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+  const [isVersionModalOpen, setIsVersionModalOpen] = useState(false);
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
   const filesToPublish = files.filter((file) => !file.administrativeAgreement);
   const filesNotToPublish = files.filter((file) => file.administrativeAgreement);
@@ -97,6 +98,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   }, [t, uppy, filesRef]);
 
   const toggleLicenseModal = () => setIsLicenseModalOpen(!isLicenseModalOpen);
+  const toggleVersionModal = () => setIsVersionModalOpen(!isVersionModalOpen);
 
   const publisherIdentifier =
     (publicationContext &&
@@ -197,9 +199,18 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                 </TableCell>
                                 {showFileVersion && (
                                   <TableCell>
-                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                      {t('common.version')}
-                                      <Typography color="error">*</Typography>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                      <Box sx={{ display: 'flex' }}>
+                                        {t('common.version')}
+                                        <Typography color="error">*</Typography>
+                                      </Box>
+                                      <Tooltip title={t('common.help')}>
+                                        <IconButton
+                                          data-testid={dataTestId.registrationWizard.files.versionHelpButton}
+                                          onClick={toggleVersionModal}>
+                                          <HelpOutlineIcon />
+                                        </IconButton>
+                                      </Tooltip>
                                     </Box>
                                   </TableCell>
                                 )}
@@ -416,6 +427,27 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
             )}
           </Box>
         ))}
+      </Modal>
+
+      <Modal
+        headingText={t('common.version')}
+        open={isVersionModalOpen}
+        onClose={toggleVersionModal}
+        maxWidth="sm"
+        dataTestId={dataTestId.registrationWizard.files.versionModal}>
+        <Typography paragraph>{t('registration.files_and_license.version_helper_text')}</Typography>
+        <Typography paragraph>
+          <Trans i18nKey="registration.files_and_license.version_accepted_helper_text" components={[<strong />]} />
+        </Typography>
+        <Typography paragraph>
+          <Trans i18nKey="registration.files_and_license.version_published_helper_text" components={[<strong />]} />
+        </Typography>
+        <Typography paragraph>
+          <Trans
+            i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
+            components={[<strong />]}
+          />
+        </Typography>
       </Modal>
     </Box>
   );

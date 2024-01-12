@@ -31,7 +31,7 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { getFullName } from '../../utils/user-helpers';
+import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { TicketList } from '../messages/components/TicketList';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
@@ -54,7 +54,7 @@ const MyPagePage = () => {
   const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
-  const isCreator = !!user?.customerId && (user.isCreator || user.isCurator);
+  const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
   const personId = user?.cristinId ?? '';
   const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
 
