@@ -1,10 +1,8 @@
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import {
   Box,
   Button,
   FormHelperText,
-  IconButton,
   Link,
   Paper,
   Table,
@@ -14,7 +12,6 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import { UppyFile } from '@uppy/core';
@@ -22,7 +19,6 @@ import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTo
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { Modal } from '../../components/Modal';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
@@ -47,6 +43,7 @@ import {
   getChannelRegisterJournalUrl,
   getChannelRegisterPublisherUrl,
 } from '../public_registration/PublicPublicationContext';
+import { HelperTextModal } from './HelperTextModal';
 import { FileUploader } from './files_and_license_tab/FileUploader';
 import { FilesTableRow } from './files_and_license_tab/FilesTableRow';
 import { UnpublishableFileRow } from './files_and_license_tab/UnpublishableFileRow';
@@ -65,7 +62,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
   const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
-  const [isVersionModalOpen, setIsVersionModalOpen] = useState(false);
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
   const filesToPublish = files.filter((file) => !file.administrativeAgreement);
   const filesNotToPublish = files.filter((file) => file.administrativeAgreement);
@@ -98,7 +94,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   }, [t, uppy, filesRef]);
 
   const toggleLicenseModal = () => setIsLicenseModalOpen(!isLicenseModalOpen);
-  const toggleVersionModal = () => setIsVersionModalOpen(!isVersionModalOpen);
 
   const publisherIdentifier =
     (publicationContext &&
@@ -204,26 +199,57 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                         {t('common.version')}
                                         <Typography color="error">*</Typography>
                                       </Box>
-                                      <Tooltip title={t('common.help')}>
-                                        <IconButton
-                                          data-testid={dataTestId.registrationWizard.files.versionHelpButton}
-                                          onClick={toggleVersionModal}>
-                                          <HelpOutlineIcon />
-                                        </IconButton>
-                                      </Tooltip>
+                                      <HelperTextModal
+                                        modalTitle={t('common.version')}
+                                        modalDataTestId={dataTestId.registrationWizard.files.versionModal}
+                                        buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
+                                        <Typography paragraph>
+                                          {t('registration.files_and_license.version_helper_text')}
+                                        </Typography>
+                                        <Typography paragraph>
+                                          <Trans
+                                            i18nKey="registration.files_and_license.version_accepted_helper_text"
+                                            components={[<strong />]}
+                                          />
+                                        </Typography>
+                                        <Typography paragraph>
+                                          <Trans
+                                            i18nKey="registration.files_and_license.version_published_helper_text"
+                                            components={[<strong />]}
+                                          />
+                                        </Typography>
+                                        <Typography paragraph>
+                                          <Trans
+                                            i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
+                                            components={[<strong />]}
+                                          />
+                                        </Typography>
+                                      </HelperTextModal>
                                     </Box>
                                   </TableCell>
                                 )}
                                 <TableCell>
                                   <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                                     {t('registration.files_and_license.license')}
-                                    <Tooltip title={t('common.help')}>
-                                      <IconButton
-                                        data-testid={dataTestId.registrationWizard.files.licenseHelpButton}
-                                        onClick={toggleLicenseModal}>
-                                        <HelpOutlineIcon />
-                                      </IconButton>
-                                    </Tooltip>
+                                    <HelperTextModal
+                                      modalTitle={t('registration.files_and_license.license')}
+                                      modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
+                                      buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
+                                      {licenses.map((license) => (
+                                        <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+                                          <Typography variant="h3" gutterBottom>
+                                            {license.name}
+                                          </Typography>
+                                          <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
+                                          <Typography paragraph>{license.description}</Typography>
+                                          {license.link && (
+                                            <Link href={license.link} target="blank">
+                                              {license.link}
+                                            </Link>
+                                          )}
+                                        </Box>
+                                      ))}
+                                    </HelperTextModal>
                                   </Box>
                                 </TableCell>
                               </TableRow>
@@ -407,48 +433,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
           </>
         )}
       </FieldArray>
-      <Modal
-        headingText={t('registration.files_and_license.licenses')}
-        open={isLicenseModalOpen}
-        onClose={toggleLicenseModal}
-        maxWidth="sm"
-        dataTestId={dataTestId.registrationWizard.files.licenseModal}>
-        {licenses.map((license) => (
-          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-            <Typography variant="h3" gutterBottom>
-              {license.name}
-            </Typography>
-            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
-            <Typography paragraph>{license.description}</Typography>
-            {license.link && (
-              <Link href={license.link} target="blank">
-                {license.link}
-              </Link>
-            )}
-          </Box>
-        ))}
-      </Modal>
-
-      <Modal
-        headingText={t('common.version')}
-        open={isVersionModalOpen}
-        onClose={toggleVersionModal}
-        maxWidth="sm"
-        dataTestId={dataTestId.registrationWizard.files.versionModal}>
-        <Typography paragraph>{t('registration.files_and_license.version_helper_text')}</Typography>
-        <Typography paragraph>
-          <Trans i18nKey="registration.files_and_license.version_accepted_helper_text" components={[<strong />]} />
-        </Typography>
-        <Typography paragraph>
-          <Trans i18nKey="registration.files_and_license.version_published_helper_text" components={[<strong />]} />
-        </Typography>
-        <Typography paragraph>
-          <Trans
-            i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
-            components={[<strong />]}
-          />
-        </Typography>
-      </Modal>
     </Box>
   );
 };
