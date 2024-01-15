@@ -1,8 +1,12 @@
+import { LoadingButton } from '@mui/lab';
 import { Box, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
+import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import {
   ArtisticType,
@@ -25,10 +29,22 @@ import {
 } from '../registration/resource_type_tab/components/RegistrationTypesRow';
 
 export const CategoriesWithFiles = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const customer = useSelector((store: RootState) => store.customer);
 
   const [selectedCategories, setSelectedCategories] = useState(customer?.allowFileUploadForTypes ?? []);
+  useEffect(() => {
+    setSelectedCategories(customer?.allowFileUploadForTypes ?? []);
+  }, [customer]);
+
+  const customerMutation = useMutation({
+    mutationFn: customer
+      ? () => updateCustomerInstitution({ ...customer, allowFileUploadForTypes: selectedCategories })
+      : undefined,
+    onSuccess: () => dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' })),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' })),
+  });
 
   const searchValue = '';
 
@@ -187,6 +203,14 @@ export const CategoriesWithFiles = () => {
           onChangeType={onSelectType}
         />
       </Box>
+
+      <LoadingButton
+        variant="contained"
+        sx={{ mt: '2rem' }}
+        onClick={() => customerMutation.mutate()}
+        loading={customerMutation.isLoading}>
+        {t('common.save')}
+      </LoadingButton>
     </>
   );
 };
