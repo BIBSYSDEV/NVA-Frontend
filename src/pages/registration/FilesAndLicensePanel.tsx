@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { UppyFile } from '@uppy/core';
 import { ErrorMessage, FieldArray, FieldArrayRenderProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
@@ -61,7 +61,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
-  const [isLicenseModalOpen, setIsLicenseModalOpen] = useState(false);
+
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
   const filesToPublish = files.filter((file) => !file.administrativeAgreement);
   const filesNotToPublish = files.filter((file) => file.administrativeAgreement);
@@ -92,8 +92,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
       },
     });
   }, [t, uppy, filesRef]);
-
-  const toggleLicenseModal = () => setIsLicenseModalOpen(!isLicenseModalOpen);
 
   const publisherIdentifier =
     (publicationContext &&
@@ -287,7 +285,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                         setFieldTouched(name);
                                       }
                                     }}
-                                    toggleLicenseModal={toggleLicenseModal}
                                     baseFieldName={`${name}[${associatedFileIndex}]`}
                                     showFileVersion={showFileVersion}
                                   />
@@ -342,7 +339,6 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                         setFieldTouched(name);
                                       }
                                     }}
-                                    toggleLicenseModal={toggleLicenseModal}
                                     baseFieldName={`${name}[${associatedFileIndex}]`}
                                   />
                                 );
