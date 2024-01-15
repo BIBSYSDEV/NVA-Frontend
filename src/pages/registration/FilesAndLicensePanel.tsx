@@ -230,7 +230,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                   <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                                     {t('registration.files_and_license.license')}
                                     <HelperTextModal
-                                      modalTitle={t('registration.files_and_license.license')}
+                                      modalTitle={t('registration.files_and_license.licenses')}
                                       modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
                                       buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
                                       {licenses.map((license) => (
