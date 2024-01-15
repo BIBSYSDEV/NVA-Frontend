@@ -39,12 +39,12 @@ export const PublishingRequestMessagesColumn = ({
               <Typography>{new Date(ticket.createdDate).toLocaleDateString()}</Typography>
             )}
           </StyledStatusMessageBox>
-          {(ticket.status === 'Pending' || ticket.status === 'New') && registrationHasFiles ? (
-            <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-              <Typography>{t('registration.files_and_license.files_awaits_approval_unknown')}</Typography>
-            </StyledStatusMessageBox>
-          ) : (
-            registrationHasFiles && (
+          {registrationHasFiles &&
+            ((ticket.status === 'Pending' || ticket.status === 'New') && registrationHasFiles ? (
+              <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+                <Typography>{t('registration.files_and_license.files_awaits_approval_unknown')}</Typography>
+              </StyledStatusMessageBox>
+            ) : (
               <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
                 {ticket.status === 'Completed' ? (
                   <Typography>{t('my_page.messages.files_published')}</Typography>
@@ -53,8 +53,7 @@ export const PublishingRequestMessagesColumn = ({
                 )}
                 {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
               </StyledStatusMessageBox>
-            )
-          )}
+            ))}
         </>
       ) : null}
     </StyledMessagesContainer>
