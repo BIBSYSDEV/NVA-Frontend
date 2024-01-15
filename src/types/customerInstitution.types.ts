@@ -1,3 +1,5 @@
+import { PublicationInstanceType } from './registration.types';
+
 export interface SimpleCustomerInstitution {
   id: string;
   createdDate: string;
@@ -32,6 +34,7 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   nviInstitution: boolean;
   rboInstitution: boolean;
   rightsRetentionStrategy: RightsRetentionStrategy;
+  allowFileUploadForTypes: PublicationInstanceType[];
 }
 
 interface RightsRetentionStrategy {
@@ -92,6 +95,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   nviInstitution: false,
   rboInstitution: false,
   rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
+  allowFileUploadForTypes: [], // TODO: Set all types?
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
