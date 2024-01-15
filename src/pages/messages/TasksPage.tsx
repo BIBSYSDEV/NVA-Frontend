@@ -157,7 +157,7 @@ const TasksPage = () => {
   };
 
   const ticketsQuery = useQuery({
-    enabled: isOnTicketsPage && !!institutionUserQuery.data,
+    enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
     queryKey: ['tickets', ticketSearchParams],
     queryFn: () => fetchTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
