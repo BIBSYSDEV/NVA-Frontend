@@ -8,7 +8,7 @@
         "intro": "Med NVA får norske forskningsinstitusjoner en tjeneste for å:"
       },
       "paragraph1": "NVA utvikles også til bruk ved rapportering av vitenskapelig publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskningsadministrative oppgaver.",
-      "paragraph2": "Sikt er databehandler. Den enkelte Institusjon er behandlingsansvarlig og registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold fra andre datakilder.",
+      "paragraph2": "Sikt er databehandler. Den enkelte Institusjon er behandlingsansvarlig og registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett, osv.). Tjenesten får også overført innhold fra andre datakilder.",
       "paragraph3": "NVA har støtte for utsatt publisering av ressurser. Det betyr at en registrering kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato. Tjenesten tillater ikke behandling av sensitive personopplysninger.",
       "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
       "paragraph5": "Selv om NVA er etablert og i bruk av flere institusjoner, vil tjenesten være i kontinuerlig utvikling i hele sin levetid. Institusjoner som ikke har et vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
@@ -934,7 +934,7 @@
     },
     "service_in_brief": {
       "heading": "Kort om tjenesten",
-      "paragraph0": "NVA er en tjeneste for å samle og gjøre tilgjengelig informasjon om, og resultater fra, norsk forskning. Institusjonen (den behandlingsansvarlige) registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold tilhørende institusjonen fra andre datakilder. NVA tilgjengeliggjør institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
+      "paragraph0": "NVA er en tjeneste for å samle og gjøre tilgjengelig informasjon om, og resultater fra, norsk forskning. Institusjonen (den behandlingsansvarlige) registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett, osv.). Tjenesten får også overført innhold tilhørende institusjonen fra andre datakilder. NVA tilgjengeliggjør institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
       "paragraph1": "NVA har støtte for utsatt publisering av ressurser. Det betyr at registreringen kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato.",
       "paragraph2": "Tjenesten tillater ikke behandling av sensitive personopplysninger."
     },
@@ -1588,8 +1588,8 @@
           "Radio": "Radio",
           "TV": "TV"
         },
-        "name_of_issue_episode": "Navn på hefte, episode, etc. (hvis relevant)",
-        "name_of_series_program": "Navn på serie, program, etc. (hvis relevant)"
+        "name_of_issue_episode": "Navn på hefte, episode, osv. (hvis relevant)",
+        "name_of_series_program": "Navn på serie, program, osv. (hvis relevant)"
       },
       "more_info_about_work": "Mer informasjon om verket",
       "number_of_pages": "Totalt antall sider",
@@ -1616,9 +1616,9 @@
       "research_data": {
         "accept_dataset_terms": {
           "contains_personal_data": "Datasettet inneholder personopplysninger?*",
-          "contains_personal_data_description": "Personopplysninger er enhver opplysning om en identifisert eller identifiserbar fysisk person. Dette kan være navn, adresse, telefonnummer, e-post, bilde, lydopptak, fingeravtrykk, nettidentifikator, lokaliseringsopplysninger, etc.",
+          "contains_personal_data_description": "Personopplysninger er enhver opplysning om en identifisert eller identifiserbar fysisk person. Dette kan være navn, adresse, telefonnummer, e-post, bilde, lydopptak, fingeravtrykk, nettidentifikator, lokaliseringsopplysninger, osv.",
           "contains_sensitive_data": "Datasettet inneholder andre sensitive eller konfidensielle data?*",
-          "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger, bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, etc.",
+          "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger, bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, osv.",
           "dialog_title": "For å legge til forskningsdata må du først avklare om",
           "further_info": "Når du trykker JA eller er usikker så må du sende melding til kuratorstøtte der din kurator avklarer videre prosess for å publisere datasettet."
         },
@@ -1692,7 +1692,7 @@
     "result": "Resultat",
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
-    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
+    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
     "search_term_label": "Verdi",
     "sector": "Sektor",
     "select_one_or_more_categories": "Velg en eller flere kategorier",
