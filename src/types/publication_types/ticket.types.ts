@@ -1,5 +1,5 @@
 import { SearchResponse } from '../common.types';
-import { PublishStrategy } from '../customerInstitution.types';
+import { PublishStrategy, RightsRetentionStrategyTypes } from '../customerInstitution.types';
 import { BaseEntityDescription, PublicationInstanceType, Registration } from '../registration.types';
 
 interface BaseMessage {
@@ -42,6 +42,7 @@ export interface Ticket extends BaseTicket {
 }
 
 export interface ExpandedTicket extends BaseTicket {
+  approvedFiles: ApprovedFile[];
   assignee?: Person;
   owner: Person;
   viewedBy: Person[];
@@ -84,3 +85,17 @@ interface AggregationBucket {
 }
 
 export type TicketSearchResponse = SearchResponse<ExpandedTicket, TicketAggregations>;
+
+interface ApprovedFile {
+  administrativeAgreement: boolean;
+  identifier: string;
+  license: string;
+  mimeType: string;
+  name: string;
+  publishedDate: string;
+  publisherAuthority: boolean;
+  rightsRetentionStrategy: RightsRetentionStrategyTypes;
+  size: number;
+  type: string;
+  visibleForNonOwner: boolean;
+}
