@@ -87,6 +87,7 @@ export const dataTestId = {
   },
   editor: {
     areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
+    categoriesLinkButton: 'categories-link-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
     doiLinkButton: 'doi-link-button',
     overviewAccordion: 'overview-accordion',
