@@ -48,8 +48,8 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
           orderKey="orderBy"
           sortKey="sortOrder"
           options={[
-            { label: 'Nyeste først', orderBy: 'createdDate', sortOrder: 'desc' },
-            { label: 'Eldste først', orderBy: 'createdDate', sortOrder: 'asc' },
+            { label: t('common.sort_newest_first'), orderBy: 'createdDate', sortOrder: 'desc' },
+            { label: t('common.sort_oldest_first'), orderBy: 'createdDate', sortOrder: 'asc' },
           ]}
         />
       </Box>
