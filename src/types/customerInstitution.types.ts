@@ -1,3 +1,4 @@
+import { allPublicationInstanceTypes } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
 
 export interface SimpleCustomerInstitution {
@@ -95,7 +96,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   nviInstitution: false,
   rboInstitution: false,
   rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
-  allowFileUploadForTypes: [], // TODO: Set all types?
+  allowFileUploadForTypes: allPublicationInstanceTypes,
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
