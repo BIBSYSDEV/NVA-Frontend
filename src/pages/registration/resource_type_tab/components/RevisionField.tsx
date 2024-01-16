@@ -17,7 +17,6 @@ export const RevisionField = () => {
           control={
             <Checkbox
               checked={Revision.Revised === field.value}
-              inputProps={{ 'aria-label': t('registration.is_revision') }}
               data-testid={dataTestId.registrationWizard.resourceType.revisionField}
               {...field}
               onChange={(_event, checked) => {
