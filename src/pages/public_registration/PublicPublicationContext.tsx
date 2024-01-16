@@ -146,7 +146,7 @@ export const PublicPublishedInContent = ({ id }: { id: string | null }) => {
 
 export const RevisionInformation = ({ revision }: { revision?: Revision | undefined | null }) => {
   const { t } = useTranslation();
-  return Revision.REVISED === revision ? <Typography>{t('registration.is_revision')}</Typography> : <></>;
+  return Revision.Revised === revision ? <Typography>{t('registration.is_revision')}</Typography> : <></>;
 };
 
 export const PublicSeries = ({

@@ -23,8 +23,8 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
 };
 
 export enum Revision {
-  REVISED = 'Revised',
-  UNREVISED = 'Unrevised',
+  Revised = 'Revised',
+  Unrevised = 'Unrevised',
 }
 
 export interface BookPublicationContext {
