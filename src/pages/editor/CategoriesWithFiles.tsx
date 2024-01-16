@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCustomerInstitution } from '../../api/customerInstitutionsApi';
 import { CategorySelector } from '../../components/CategorySelector';
+import { PageSpinner } from '../../components/PageSpinner';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { PublicationInstanceType } from '../../types/registration.types';
@@ -48,15 +49,25 @@ export const CategoriesWithFiles = () => {
 
       <Typography sx={{ my: '2rem' }}>{t('editor.categories_with_files_description')}</Typography>
 
-      <CategorySelector selectedCategories={selectedCategories} onCategoryClick={onSelectType} />
+      {!customer ? (
+        <PageSpinner />
+      ) : (
+        <>
+          <CategorySelector selectedCategories={selectedCategories} onCategoryClick={onSelectType} />
 
-      <LoadingButton
-        variant="contained"
-        sx={{ mt: '2rem' }}
-        onClick={() => customerMutation.mutate()}
-        loading={customerMutation.isLoading}>
-        {t('common.save')}
-      </LoadingButton>
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: '1rem', mt: '2rem' }}>
+            <Button onClick={() => setSelectedCategories(customer?.allowFileUploadForTypes ?? [])}>
+              {t('common.cancel')}
+            </Button>
+            <LoadingButton
+              variant="contained"
+              onClick={() => customerMutation.mutate()}
+              loading={customerMutation.isLoading}>
+              {t('common.save')}
+            </LoadingButton>
+          </Box>
+        </>
+      )}
     </>
   );
 };
