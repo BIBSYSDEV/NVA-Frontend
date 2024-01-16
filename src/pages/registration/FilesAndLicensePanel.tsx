@@ -211,19 +211,19 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                             <Typography paragraph>
                                               <Trans
                                                 i18nKey="registration.files_and_license.version_accepted_helper_text_metadata_only"
-                                                components={[<strong />]}
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
                                               />
                                             </Typography>
                                             <Typography paragraph>
                                               <Trans
                                                 i18nKey="registration.files_and_license.version_published_helper_text_metadata_only"
-                                                components={[<strong />]}
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
                                               />
                                             </Typography>
                                             <Typography paragraph>
                                               <Trans
                                                 i18nKey="registration.files_and_license.version_publishing_agreement_helper_text_metadata_only"
-                                                components={[<strong />]}
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
                                               />
                                             </Typography>
                                           </>
@@ -241,25 +241,25 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                             <Typography paragraph>
                                               <Trans
                                                 i18nKey="registration.files_and_license.version_accepted_helper_text"
-                                                components={[<strong />]}
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
                                               />
                                             </Typography>
                                             <Typography paragraph>
                                               <Trans
                                                 i18nKey="registration.files_and_license.version_published_helper_text"
-                                                components={[<strong />]}
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
                                               />
                                             </Typography>
                                             <Typography paragraph>
                                               <Trans
                                                 i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
-                                                components={[<strong />]}
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
                                               />
                                             </Typography>
                                             <Typography paragraph>
                                               <Trans
                                                 i18nKey="registration.files_and_license.version_embargo_helper_text"
-                                                components={[<strong />]}
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
                                               />
                                             </Typography>
                                           </>
