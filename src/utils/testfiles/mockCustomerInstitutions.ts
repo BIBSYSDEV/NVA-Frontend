@@ -6,6 +6,7 @@ import {
   VocabularyList,
   VocabularyStatus,
 } from '../../types/customerInstitution.types';
+import { allPublicationInstanceTypes } from '../../types/publicationFieldNames';
 
 export const mockCustomerInstitutionVocabularies: VocabularyList = {
   type: 'VocabularyList',
@@ -47,7 +48,7 @@ export const mockCustomerInstitution: CustomerInstitution = {
   nviInstitution: false,
   rboInstitution: false,
   rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
-  allowFileUploadForTypes: [],
+  allowFileUploadForTypes: allPublicationInstanceTypes,
 };
 
 export const mockCustomerInstitutions: CustomerList = {

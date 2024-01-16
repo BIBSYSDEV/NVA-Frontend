@@ -43,9 +43,7 @@ const CategoriesWithFilesForCustomer = ({ customer }: CategoriesWithFilesForCust
   const [selectedCategories, setSelectedCategories] = useState(customer.allowFileUploadForTypes);
 
   const customerMutation = useMutation({
-    mutationFn: customer
-      ? () => updateCustomerInstitution({ ...customer, allowFileUploadForTypes: selectedCategories })
-      : undefined,
+    mutationFn: () => updateCustomerInstitution({ ...customer, allowFileUploadForTypes: selectedCategories }),
     onSuccess: () => dispatch(setNotification({ message: t('feedback.success.update_customer'), variant: 'success' })),
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_customer'), variant: 'error' })),
   });
