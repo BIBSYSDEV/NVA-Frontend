@@ -3,6 +3,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { TicketSearchParam } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
@@ -45,8 +46,8 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       <Box sx={{ mb: '1rem', display: 'flex', gap: '0.5rem' }}>
         <SearchForm sx={{ flex: '1 0 15rem' }} placeholder={t('tasks.search_placeholder')} />
         <SortSelector
-          orderKey="orderBy"
-          sortKey="sortOrder"
+          orderKey={TicketSearchParam.OrderBy}
+          sortKey={TicketSearchParam.SortOrder}
           options={[
             { label: t('common.sort_newest_first'), orderBy: 'createdDate', sortOrder: 'desc' },
             { label: t('common.sort_oldest_first'), orderBy: 'createdDate', sortOrder: 'asc' },
