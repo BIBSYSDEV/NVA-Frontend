@@ -232,7 +232,10 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                             <Typography paragraph>
                                               <Trans
                                                 i18nKey="registration.files_and_license.version_helper_text"
-                                                components={[<u />, <br />]}
+                                                components={[
+                                                  <Box component="span" sx={{ textDecoration: 'underline' }} />,
+                                                  <br />,
+                                                ]}
                                               />
                                             </Typography>
                                             <Typography paragraph>
