@@ -11,7 +11,7 @@ export const RevisionField = () => {
 
   return (
     <Field name={ResourceFieldNames.Revision}>
-      {({ field }: FieldProps) => (
+      {({ field }: FieldProps<Revision | null | undefined>) => (
         <FormControlLabel
           label={t('registration.is_revision')}
           control={
