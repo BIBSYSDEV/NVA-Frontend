@@ -95,7 +95,9 @@ export interface Contributor {
   sequence: number;
 }
 
-export type Affiliation = Pick<Organization, 'type' | 'id'> | UnconfirmedOrganization;
+export type ConfirmedAffiliation = Pick<Organization, 'type' | 'id'>;
+
+export type Affiliation = ConfirmedAffiliation | UnconfirmedOrganization;
 
 export const emptyContributor: Contributor = {
   affiliations: [],

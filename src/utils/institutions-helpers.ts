@@ -1,5 +1,5 @@
 import { CristinApiPath } from '../api/apiPaths';
-import { Contributor } from '../types/contributor.types';
+import { ConfirmedAffiliation, Contributor } from '../types/contributor.types';
 import { SimpleCustomerInstitution } from '../types/customerInstitution.types';
 import { Organization } from '../types/organization.types';
 import { API_URL } from './constants';
@@ -11,7 +11,7 @@ export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   const unitIds = contributors
     .flatMap((contributor) => contributor.affiliations)
     .filter((affiliation) => affiliation?.type === 'Organization' && affiliation.id !== unitIdToIgnore)
-    .map((unit) => (unit?.type === 'Organization' ? unit.id : ''));
+    .map((unit) => (unit as ConfirmedAffiliation).id);
   return [...new Set(unitIds)];
 };
 
