@@ -35,7 +35,9 @@ export const ProjectsField = () => {
       <Divider />
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="h2">{t('project.project')}</Typography>
-        <HelperTextModal modalTitle={t('project.project')}>
+        <HelperTextModal
+          modalTitle={t('project.project')}
+          modalDataTestId={dataTestId.registrationWizard.description.projectModal}>
           <Trans i18nKey="registration.description.project_helper_text" components={[<Typography paragraph />]} />
         </HelperTextModal>
       </Box>
@@ -90,12 +92,23 @@ export const ProjectsField = () => {
                   />
                 )}
               />
-              <Button
-                data-testid={dataTestId.registrationWizard.description.createProjectButton}
-                onClick={() => setOpenNewProjectDialog(true)}
-                startIcon={<AddIcon />}>
-                {t('project.create_project')}
-              </Button>
+
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Button
+                  data-testid={dataTestId.registrationWizard.description.createProjectButton}
+                  onClick={() => setOpenNewProjectDialog(true)}
+                  startIcon={<AddIcon />}>
+                  {t('project.create_project')}
+                </Button>
+                <HelperTextModal
+                  modalTitle={t('project.create_project')}
+                  modalDataTestId={dataTestId.registrationWizard.description.createProjectModal}>
+                  <Trans
+                    i18nKey="registration.description.create_project_helper_text"
+                    components={[<Typography paragraph />]}
+                  />
+                </HelperTextModal>
+              </Box>
               <ProjectFormDialog
                 open={openNewProjectDialog}
                 onClose={() => setOpenNewProjectDialog(false)}

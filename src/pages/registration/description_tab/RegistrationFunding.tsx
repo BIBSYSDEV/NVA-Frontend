@@ -26,7 +26,9 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
     <div>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="h2">{t('common.funding')}</Typography>
-        <HelperTextModal modalTitle={t('common.funding')}>
+        <HelperTextModal
+          modalTitle={t('common.funding')}
+          modalDataTestId={dataTestId.registrationWizard.description.fundingModal}>
           <Trans
             i18nKey="registration.description.funding.funding_helper_text"
             components={[<Typography paragraph />]}
