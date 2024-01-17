@@ -36,9 +36,7 @@ export const ProjectsField = () => {
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="h2">{t('project.project')}</Typography>
         <HelperTextModal modalTitle={t('project.project')}>
-          <Typography>
-            <Trans i18nKey="registration.description.project_helper_text" components={[<br />]} />
-          </Typography>
+          <Trans i18nKey="registration.description.project_helper_text" components={[<Typography paragraph />]} />
         </HelperTextModal>
       </Box>
       <Box sx={{ display: 'grid', alignItems: 'center', gridTemplateColumns: '4fr 1fr', gap: '0.5rem' }}>

@@ -1149,6 +1149,7 @@
       "description_of_content": "Beskrivelse av innhold, hvis relevant",
       "funding": {
         "funder": "Finansiør",
+        "funding_helper_text": "<0>Du kan registrere finansiering direkte på resultatet. Særlig relevant om du ikke kjenner til hvilket prosjekt resultatet er del av, eller dersom resultatet har andre finansiører enn prosjektet det eventuelt tilhører.</0> <0>Om resultatet er tilknyttet et prosjekt vil det arve alle prosjektfinansieringer. Det er ikke nødvendig å legge inn de samme finansieringene dobbelt opp.</0>",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
@@ -1162,7 +1163,7 @@
       "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
       "primary_language": "Hovedspråk for innhold",
       "project_association": "Prosjekttilknytning",
-      "project_helper_text": "Registrerer du finansieringskilde på et prosjekt, vil resultatene du kobler til det prosjektet «arve» informasjon om finansiering. Det gjør at du slipper å registrere alle finansieringskilder på alle resultatene til prosjektet. Søker du på finansieringskilden i NVA får du treff på både prosjektet og resultatene, og rapportering til Forskningsrådet eller andre vil ta med alle resultat. <0/><0/>Et resultat kan være koblet til flere prosjekter.",
+      "project_helper_text": "<0>Registrerer du finansieringskilde på et prosjekt, vil resultatene du kobler til det prosjektet «arve» informasjon om finansiering. Det gjør at du slipper å registrere alle finansieringskilder på alle resultatene til prosjektet. Søker du på finansieringskilden i NVA får du treff på både prosjektet og resultatene, og rapportering til Forskningsrådet eller andre vil ta med alle resultat.</0> <0>Et resultat kan være koblet til flere prosjekter.</0>",
       "remove_vocabulary": "Fjern vokabular",
       "search_for_npi_discipline": "Søk etter fagfelt",
       "search_for_project": "Søk i Cristins prosjektkatalog",
