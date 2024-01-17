@@ -37,7 +37,7 @@ export const ProjectsField = () => {
         <Typography variant="h2">{t('project.project')}</Typography>
         <HelperTextModal modalTitle={t('project.project')}>
           <Typography>
-            <Trans i18nKey={'registration.description.project_helper_text'} components={[<br />]} />
+            <Trans i18nKey="registration.description.project_helper_text" components={[<br />]} />
           </Typography>
         </HelperTextModal>
       </Box>
