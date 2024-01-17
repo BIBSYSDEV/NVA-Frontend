@@ -28,6 +28,25 @@ interface RegistrationTypeElement {
   disabled?: boolean;
 }
 
+interface RegistrationRowConfig {
+  mainType: PublicationType;
+  registrationTypes: PublicationInstanceType[];
+}
+
+const registrationRows: RegistrationRowConfig[] = [
+  { mainType: PublicationType.PublicationInJournal, registrationTypes: Object.values(JournalType) },
+  { mainType: PublicationType.Book, registrationTypes: Object.values(BookType) },
+  { mainType: PublicationType.Report, registrationTypes: Object.values(ReportType) },
+  { mainType: PublicationType.Degree, registrationTypes: Object.values(DegreeType) },
+  { mainType: PublicationType.Anthology, registrationTypes: Object.values(ChapterType) },
+  { mainType: PublicationType.Presentation, registrationTypes: Object.values(PresentationType) },
+  { mainType: PublicationType.Artistic, registrationTypes: Object.values(ArtisticType) },
+  { mainType: PublicationType.MediaContribution, registrationTypes: Object.values(MediaType) },
+  { mainType: PublicationType.ResearchData, registrationTypes: Object.values(ResearchDataType) },
+  { mainType: PublicationType.ExhibitionContent, registrationTypes: Object.values(ExhibitionContentType) },
+  { mainType: PublicationType.GeographicalContent, registrationTypes: Object.values(OtherRegistrationType) },
+];
+
 interface CategorySelectorProps {
   selectedCategories: PublicationInstanceType[];
   onCategoryClick: (category: PublicationInstanceType) => void;
@@ -90,128 +109,21 @@ export const CategorySelector = ({
           gap: '1rem',
           alignItems: 'center',
         }}>
-        <RegistrationTypesRow
-          mainType={PublicationType.PublicationInJournal}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(JournalType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
-        <RegistrationTypesRow
-          mainType={PublicationType.Book}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(BookType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
-        <RegistrationTypesRow
-          mainType={PublicationType.Report}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(ReportType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
-        <RegistrationTypesRow
-          mainType={PublicationType.Degree}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(DegreeType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-              disabled: disabledCategories?.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
-        <RegistrationTypesRow
-          mainType={PublicationType.Anthology}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(ChapterType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
-        <RegistrationTypesRow
-          mainType={PublicationType.Presentation}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(PresentationType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
-        <RegistrationTypesRow
-          mainType={PublicationType.Artistic}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(ArtisticType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
-        <RegistrationTypesRow
-          mainType={PublicationType.MediaContribution}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(MediaType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
-        <RegistrationTypesRow
-          mainType={PublicationType.ResearchData}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(ResearchDataType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
-        <RegistrationTypesRow
-          mainType={PublicationType.ExhibitionContent}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(ExhibitionContentType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
-        <RegistrationTypesRow
-          mainType={PublicationType.GeographicalContent}
-          registrationTypes={filterRegistrationTypes(
-            Object.values(OtherRegistrationType).map((registrationType) => ({
-              value: registrationType,
-              text: t(`registration.publication_types.${registrationType}`),
-              selected: selectedCategories.includes(registrationType),
-            }))
-          )}
-          onChangeType={onCategoryClick}
-        />
+        {registrationRows.map(({ mainType, registrationTypes }) => (
+          <RegistrationTypesRow
+            key={mainType}
+            mainType={mainType}
+            registrationTypes={filterRegistrationTypes(
+              registrationTypes.map((registrationType) => ({
+                value: registrationType,
+                text: t(`registration.publication_types.${registrationType}`),
+                selected: selectedCategories.includes(registrationType),
+                disabled: disabledCategories?.includes(registrationType),
+              }))
+            )}
+            onChangeType={onCategoryClick}
+          />
+        ))}
       </Box>
     </>
   );
