@@ -44,7 +44,6 @@ import { DownloadFileButton } from './DownloadFileButton';
 interface FilesTableRowProps {
   file: AssociatedFile;
   removeFile: () => void;
-  toggleLicenseModal: () => void;
   baseFieldName: string;
   showFileVersion: boolean;
   disabled: boolean;
