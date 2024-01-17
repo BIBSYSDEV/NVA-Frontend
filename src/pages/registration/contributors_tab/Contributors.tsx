@@ -22,10 +22,10 @@ import { ListPagination } from '../../../components/ListPagination';
 import { setNotification } from '../../../redux/notificationSlice';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import {
+  Affiliation,
   Contributor,
   ContributorRole,
   Identity,
-  Institution,
   emptyContributor,
 } from '../../../types/contributor.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
@@ -133,7 +133,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     };
 
     const activeAffiliations = filterActiveAffiliations(selectedContributor.affiliations);
-    const existingAffiliations: Institution[] = activeAffiliations.map(({ organization }) => ({
+    const existingAffiliations: Affiliation[] = activeAffiliations.map(({ organization }) => ({
       type: 'Organization',
       id: organization,
     }));

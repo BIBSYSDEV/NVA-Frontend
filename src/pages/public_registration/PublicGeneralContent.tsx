@@ -58,6 +58,7 @@ import {
   PublicPublishedInContent,
   PublicPublisher,
   PublicSeries,
+  RevisionInformation,
 } from './PublicPublicationContext';
 import {
   PublicIsbnContent,
@@ -122,6 +123,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicIsbnContent
                 isbnList={(registration as BookRegistration).entityDescription.reference?.publicationContext.isbnList}
               />
+              <RevisionInformation revision={(publicationContext as BookPublicationContext).revision} />
             </>
           ) : isDegree(publicationInstance.type) ? (
             <>

@@ -225,6 +225,8 @@
     "show_more": "Vis flere",
     "skip_to_main_content": "Hopp til hovedinnhold",
     "skip_to_schema": "Hopp til skjema",
+    "sort_newest_first": "Nyeste først",
+    "sort_oldest_first": "Eldste først",
     "start": "Start",
     "start_date": "Startdato",
     "start_page": "Startside",
@@ -252,6 +254,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
@@ -337,11 +343,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "curators": {
@@ -1215,6 +1217,7 @@
       "files_and_license": "Fil, lisens og lenke",
       "resource_type": "Kategori"
     },
+    "is_revision": "Arbeidet er en revisjon",
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",

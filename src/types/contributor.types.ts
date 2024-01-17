@@ -1,4 +1,5 @@
-import { LanguageString } from './common.types';
+import { UnconfirmedOrganization } from './common.types';
+import { Organization } from './organization.types';
 
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/main/nva-datamodel-java/src/main/java/no/unit/nva/model/Role.java
 export enum ContributorRole {
@@ -84,7 +85,7 @@ interface AdditionalIdentifier {
 
 export interface Contributor {
   type: 'Contributor';
-  affiliations?: Institution[];
+  affiliations?: Affiliation[];
   correspondingAuthor?: boolean;
   identity: Identity;
   role: {
@@ -94,13 +95,9 @@ export interface Contributor {
   sequence: number;
 }
 
-// DOI lookup can give labels without id for institutions,
-// while when a contributor is added manually there will be ids present, and no need for labels.
-export interface Institution {
-  type: 'Organization';
-  id?: string;
-  labels?: LanguageString;
-}
+export type ConfirmedAffiliation = Pick<Organization, 'type' | 'id'>;
+
+export type Affiliation = ConfirmedAffiliation | UnconfirmedOrganization;
 
 export const emptyContributor: Contributor = {
   affiliations: [],

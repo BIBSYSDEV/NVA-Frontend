@@ -192,6 +192,7 @@
     "place": "Place",
     "previous": "Previous",
     "publisher": "Publisher",
+    "publishing_year": "",
     "rbo": "Results-based redistribution (RBO)",
     "read": "Read",
     "read_less": "Read less",
@@ -224,6 +225,8 @@
     "show_more": "Show more",
     "skip_to_main_content": "Jump to main content",
     "skip_to_schema": "Jump to form",
+    "sort_newest_first": "",
+    "sort_oldest_first": "",
     "start": "Start",
     "start_date": "Start date",
     "start_page": "Start page",
@@ -694,7 +697,8 @@
       "creator": "Registrar",
       "creator_description": "Can register publications and other resources.",
       "curator": "Curator",
-      "curator_description": "Can edit the institution's registrations, answer user support inquiries and possibly also assign DOI.",
+      "doi_curator": "",
+      "doi_curator_description": "",
       "editor": "Editor",
       "editor_description": "Determines access to controlled vocabularies and publication strategy for the institution.",
       "institution_admin": "Administrator",
@@ -706,7 +710,11 @@
       "no_roles": "You do not have any roles because your administrator has not assigned any roles to you",
       "not_customer": "You do not have any roles because your institution is unknown to the application",
       "nvi_curator": "NVI curator",
-      "nvi_curator_description": "View and process NVI candidates."
+      "nvi_curator_description": "View and process NVI candidates.",
+      "publishing_curator": "",
+      "publishing_curator_description": "",
+      "support_curator": "",
+      "support_curator_description": ""
     }
   },
   "privacy": {
@@ -1179,6 +1187,7 @@
       "find_publisher_in_channel_register": "See information about the publisher in the Norwegian Register",
       "find_series_in_channel_register": "See information about the series in the Norwegian Register",
       "info_from_channel_register": "More information about the selected publication channel",
+      "legal_note": "",
       "license": "License",
       "licenses": "Licenses",
       "link_to_resource": "Link to resource",
@@ -1208,6 +1217,7 @@
       "files_and_license": "Files and License",
       "resource_type": "Resource type"
     },
+    "is_revision": "",
     "missing_title": "Missing title",
     "modal_unsaved_changes_description": "You have unsaved changes. Are you sure you want to leave this page?",
     "modal_unsaved_changes_heading": "Leave without saving?",
@@ -1697,7 +1707,9 @@
     "sort_by": "Order by",
     "sort_by_modified_date": "Last modified",
     "sort_by_published_date_asc": "Publication date (oldest first)",
-    "sort_by_published_date_desc": "Publication date (newest first)"
+    "sort_by_published_date_desc": "Publication date (newest first)",
+    "year_from": "",
+    "year_to": ""
   },
   "tasks": {
     "all_nvi_results": "All NVI results",

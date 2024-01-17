@@ -72,10 +72,8 @@ export const mockRegistration: JournalRegistration = {
         type: 'Contributor',
         affiliations: [
           {
-            type: 'Organization',
-            labels: {
-              en: 'My institution',
-            },
+            type: 'UnconfirmedOrganization',
+            name: 'My institution',
           },
         ],
         correspondingAuthor: false,
