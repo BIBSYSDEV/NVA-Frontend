@@ -58,9 +58,11 @@ interface FilesAndLicensePanelProps {
 export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
+  const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
   const filesToPublish = files.filter((file) => !file.administrativeAgreement);
@@ -105,11 +107,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   const originalDoi = entityDescription?.reference?.doi;
-  const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance?.type);
+  const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
 
   const isValidImporter = userIsValidImporter(user, values);
   const isRegistrationCurator = userIsRegistrationCurator(user, values);
-  const isProtectedDegree = isDegreeWithProtectedFiles(entityDescription?.reference?.publicationInstance?.type);
+  const isProtectedDegree = isDegreeWithProtectedFiles(publicationInstanceType);
   const canEditDegreeFiles = isRegistrationCurator && !!user?.isThesisCurator;
   const canEditOtherFiles = isRegistrationCurator || userIsRegistrationOwner(user, values);
   const canEditFiles =
@@ -348,8 +350,12 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         </TableContainer>
                       </Box>
                     )}
-
-                    <FileUploader uppy={uppy} addFile={push} disabled={!canEditFiles} />
+                    {publicationInstanceType &&
+                      customer &&
+                      (customer as any) /* TODO: Remove any after NP-45815 */.allowFileUploadForTypes
+                        .includes(publicationInstanceType) && (
+                        <FileUploader uppy={uppy} addFile={push} disabled={!canEditFiles} />
+                      )}
                   </BackgroundDiv>
                 </Paper>
 
