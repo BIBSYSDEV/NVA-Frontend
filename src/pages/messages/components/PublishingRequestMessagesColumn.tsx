@@ -40,7 +40,7 @@ export const PublishingRequestMessagesColumn = ({
             )}
           </StyledStatusMessageBox>
           {registrationHasFiles &&
-            ((ticket.status === 'Pending' || ticket.status === 'New') && registrationHasFiles ? (
+            (ticket.status === 'Pending' || ticket.status === 'New' ? (
               <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
                 <Typography>{t('registration.files_and_license.files_awaits_approval_unknown')}</Typography>
               </StyledStatusMessageBox>
