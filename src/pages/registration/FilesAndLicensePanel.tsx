@@ -229,15 +229,16 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                           </>
                                         ) : (
                                           <>
-                                            <Typography paragraph>
-                                              <Trans
-                                                i18nKey="registration.files_and_license.version_helper_text"
-                                                components={[
-                                                  <Box component="span" sx={{ textDecoration: 'underline' }} />,
-                                                  <br />,
-                                                ]}
-                                              />
-                                            </Typography>
+                                            <Trans
+                                              i18nKey="registration.files_and_license.version_helper_text"
+                                              components={[
+                                                <Typography paragraph />,
+                                                <Typography paragraph>
+                                                  <Box component="span" sx={{ textDecoration: 'underline' }} />
+                                                </Typography>,
+                                              ]}
+                                            />
+
                                             <Typography paragraph>
                                               <Trans
                                                 i18nKey="registration.files_and_license.version_accepted_helper_text"
