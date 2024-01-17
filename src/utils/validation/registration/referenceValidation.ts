@@ -1,4 +1,4 @@
-import { parse as parseIsbn } from 'isbn-utils';
+import { parse as parseIsbn } from 'isbn3';
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import {
@@ -163,7 +163,7 @@ export const emptyStringToNull = (value: string, originalValue: string) => (orig
 export const isbnListField = Yup.array().of(
   Yup.string()
     .min(13, resourceErrorMessage.isbnTooShort)
-    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? '')?.isIsbn13())
+    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? ''))
 );
 
 const pagesMonographField = Yup.object()
