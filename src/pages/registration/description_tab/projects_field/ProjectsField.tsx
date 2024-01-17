@@ -3,7 +3,7 @@ import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { searchForProjects } from '../../../../api/cristinApi';
 import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -12,6 +12,7 @@ import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
+import { HelperTextModal } from '../../HelperTextModal';
 import { ProjectChip } from './ProjectChip';
 
 export const ProjectsField = () => {
@@ -32,7 +33,14 @@ export const ProjectsField = () => {
   return (
     <>
       <Divider />
-      <Typography variant="h2">{t('project.project')}</Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography variant="h2">{t('project.project')}</Typography>
+        <HelperTextModal modalTitle={t('project.project')}>
+          <Typography>
+            <Trans i18nKey={'registration.description.project_helper_text'} components={[<br />]} />
+          </Typography>
+        </HelperTextModal>
+      </Box>
       <Box sx={{ display: 'grid', alignItems: 'center', gridTemplateColumns: '4fr 1fr', gap: '0.5rem' }}>
         <Field name={DescriptionFieldNames.Projects}>
           {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => (

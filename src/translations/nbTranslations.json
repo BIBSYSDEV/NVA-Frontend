@@ -1162,6 +1162,7 @@
       "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
       "primary_language": "Hovedspråk for innhold",
       "project_association": "Prosjekttilknytning",
+      "project_helper_text": "Registrerer du finansieringskilde på et prosjekt, vil resultatene du kobler til det prosjektet «arve» informasjon om finansiering. Det gjør at du slipper å registrere alle finansieringskilder på alle resultatene til prosjektet. Søker du på finansieringskilden i NVA får du treff på både prosjektet og resultatene, og rapportering til Forskningsrådet eller andre vil ta med alle resultat. <0/><0/>Et resultat kan være koblet til flere prosjekter.",
       "remove_vocabulary": "Fjern vokabular",
       "search_for_npi_discipline": "Søk etter fagfelt",
       "search_for_project": "Søk i Cristins prosjektkatalog",
