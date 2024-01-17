@@ -144,9 +144,9 @@ export const PublicPublishedInContent = ({ id }: { id: string | null }) => {
   ) : null;
 };
 
-export const RevisionInformation = ({ revision }: { revision?: Revision | undefined | null }) => {
+export const RevisionInformation = ({ revision }: { revision?: Revision | null }) => {
   const { t } = useTranslation();
-  return Revision.Revised === revision ? <Typography>{t('registration.is_revision')}</Typography> : <></>;
+  return Revision.Revised === revision ? <Typography>{t('registration.is_revision')}</Typography> : null;
 };
 
 export const PublicSeries = ({
