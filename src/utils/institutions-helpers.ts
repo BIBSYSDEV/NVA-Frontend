@@ -10,8 +10,8 @@ const unitIdToIgnore = `${API_URL}${CristinApiPath.Organization.substring(1)}/0.
 export const getDistinctContributorUnits = (contributors: Contributor[]) => {
   const unitIds = contributors
     .flatMap((contributor) => contributor.affiliations)
-    .filter((affiliation) => !!affiliation?.id && affiliation.id !== unitIdToIgnore)
-    .map((unit) => unit?.id) as string[];
+    .filter((affiliation) => affiliation?.type === 'Organization' && affiliation.id !== unitIdToIgnore)
+    .map((unit) => (unit?.type === 'Organization' ? unit.id : ''));
   return [...new Set(unitIds)];
 };
 
