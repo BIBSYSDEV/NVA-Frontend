@@ -86,14 +86,19 @@ export const SearchRelatedResultField = () => {
               />
             )}
           />
-
           {confirmedRelatedResources.length > 0 && (
             <List>
               {confirmedRelatedResources.map((uri) => (
                 <RelatedResourceRow
                   key={uri}
                   uri={uri}
-                  removeRelatedResource={() => remove(confirmedRelatedResources.indexOf(uri))}
+                  removeRelatedResource={() => {
+                    const indexToRemove =
+                      related?.findIndex((r) => r.type === 'ConfirmedDocument' && r.identifier === uri) ?? -1;
+                    if (indexToRemove > -1) {
+                      remove(indexToRemove);
+                    }
+                  }}
                 />
               ))}
             </List>
