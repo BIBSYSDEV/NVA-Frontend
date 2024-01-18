@@ -198,6 +198,8 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
   }
   if (params.aggregation) {
     searchParams.set(ResultParam.Aggregation, params.aggregation);
+  } else {
+    searchParams.set(ResultParam.Aggregation, 'none');
   }
   if (params.category) {
     searchParams.set(ResultParam.Category, params.category);
