@@ -33,7 +33,7 @@ interface RegistrationRowConfig {
   registrationTypes: PublicationInstanceType[];
 }
 
-interface DisabledCategory {
+export interface DisabledCategory {
   type: PublicationInstanceType;
   text: string;
 }
