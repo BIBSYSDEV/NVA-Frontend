@@ -346,6 +346,8 @@
     "1144": "Ernæring"
   },
   "editor": {
+    "categories_with_files": "",
+    "categories_with_files_description": "",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensingar",
@@ -1145,10 +1147,12 @@
       "alternative_title": "Alternativ tittel",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønskjer å fjerne vokabular for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
+      "create_project_helper_text": "",
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskriving av innhald, viss relevant",
       "funding": {
         "funder": "Finansiør",
+        "funding_helper_text": "",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnamn eller prosjektleiar",
@@ -1162,6 +1166,7 @@
       "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
       "primary_language": "Hovudspråk for innhald",
       "project_association": "Prosjekttilknyting",
+      "project_helper_text": "",
       "remove_vocabulary": "Fjern vokabular",
       "search_for_npi_discipline": "Søk etter fagfelt",
       "search_for_project": "Søk i Cristins prosjektkatalog",
@@ -1202,9 +1207,14 @@
       "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er eit sett med prinsipp for å støtte gjenbruk av digitale ressursar. NFR og EC stiller krav til at data skal vere tilgjengeleg og deponert saman med metadata som avklarer eventuelle føresetnadar for tilgang.",
       "size": "Storleik",
       "version_accepted_helper_text": "",
+      "version_accepted_helper_text_metadata_only": "",
+      "version_embargo_helper_text": "",
       "version_helper_text": "",
+      "version_helper_text_metadata_only": "",
       "version_published_helper_text": "",
-      "version_publishing_agreement_helper_text": ""
+      "version_published_helper_text_metadata_only": "",
+      "version_publishing_agreement_helper_text": "",
+      "version_publishing_agreement_helper_text_metadata_only": ""
     },
     "heading": {
       "contributors": "Bidragsytere",
