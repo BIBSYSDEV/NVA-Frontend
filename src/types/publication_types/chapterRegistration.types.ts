@@ -1,5 +1,5 @@
 import { ChapterType, PublicationType } from '../publicationFieldNames';
-import { BaseEntityDescription, BaseReference, BaseRegistration } from '../registration.types';
+import { BaseEntityDescription, BaseReference, BaseRegistration, ContextPublisher } from '../registration.types';
 import { PagesRange, emptyPagesRange } from './pages.types';
 
 export interface ChapterRegistration extends BaseRegistration {
@@ -13,6 +13,7 @@ export interface ChapterPublicationInstance {
 
 export interface ChapterPublicationContext {
   type: PublicationType.Anthology;
+  publisher: ContextPublisher;
   id: string | null;
 }
 
