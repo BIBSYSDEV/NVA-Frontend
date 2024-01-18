@@ -12,7 +12,7 @@ import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { ResearchDataType } from '../../types/publicationFieldNames';
+import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import { ConfirmedDocument, RelatedDocument } from '../../types/publication_types/researchDataRegistration.types';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
@@ -160,6 +160,21 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               />
             </LandingPageAccordion>
           </>
+        )}
+
+        {entityDescription?.reference?.publicationInstance?.type === DegreeType.Phd && (
+          <LandingPageAccordion
+            dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
+            defaultExpanded
+            heading={t('registration.resource_type.related_result')}>
+            <ShowRelatedRegistrationUris
+              links={entityDescription.reference.publicationInstance.related
+                ?.map((r) => (r.type === 'ConfirmedDocument' ? r.identifier : ''))
+                .filter(Boolean)}
+              emptyMessage={t('registration.resource_type.research_data.no_related_publications')}
+              loadingLabel={t('registration.resource_type.related_result')}
+            />
+          </LandingPageAccordion>
         )}
 
         {entityDescription?.reference?.publicationInstance?.type === ResearchDataType.DataManagementPlan && (
