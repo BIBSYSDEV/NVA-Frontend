@@ -57,6 +57,7 @@ const HomePage = () => {
 
   const registrationSearchTerm = params.get(ResultParam.Query);
   const registrationsQueryConfig: FetchResultsParams = {
+    aggregation: 'all',
     query: registrationSearchTerm,
     abstract: params.get(ResultParam.Abstract),
     category: params.get(ResultParam.Category) as PublicationInstanceType | null,
