@@ -350,12 +350,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         </TableContainer>
                       </Box>
                     )}
-                    {publicationInstanceType &&
-                      customer &&
-                      (customer as any) /* TODO: Remove any after NP-45815 */.allowFileUploadForTypes
-                        .includes(publicationInstanceType) && (
-                        <FileUploader uppy={uppy} addFile={push} disabled={!canEditFiles} />
-                      )}
+                    {publicationInstanceType && customer?.allowFileUploadForTypes.includes(publicationInstanceType) && (
+                      <FileUploader uppy={uppy} addFile={push} disabled={!canEditFiles} />
+                    )}
                   </BackgroundDiv>
                 </Paper>
 
