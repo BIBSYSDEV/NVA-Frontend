@@ -13,6 +13,7 @@ import {
   PublicationType,
   ResearchDataType,
   ResourceFieldNames,
+  allPublicationInstanceTypes,
   contextTypeBaseFieldName,
   instanceTypeBaseFieldName,
 } from '../../../types/publicationFieldNames';
@@ -47,6 +48,7 @@ import {
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
+  getAssociatedFiles,
   getMainRegistrationType,
   isPeriodicalMediaContribution,
   nviApplicableTypes,
@@ -55,6 +57,7 @@ import {
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
 
@@ -212,6 +215,26 @@ export const SelectRegistrationTypeField = () => {
     }
   };
 
+  const disabledCategories = [];
+  if (!user?.isThesisCurator) {
+    disabledCategories.push(
+      { type: DegreeType.Bachelor, text: t('registration.resource_type.protected_type') },
+      { type: DegreeType.Master, text: t('registration.resource_type.protected_type') },
+      { type: DegreeType.Phd, text: t('registration.resource_type.protected_type') },
+      { type: DegreeType.Other, text: t('registration.resource_type.protected_type') }
+    );
+  }
+
+  const hasFiles = getAssociatedFiles(values.associatedArtifacts).length > 0;
+
+  if (hasFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
+    const categoriesWithoutFileSupport = allPublicationInstanceTypes
+      .filter((type) => !customer.allowFileUploadForTypes.includes(type))
+      .map((type) => ({ type, text: t('registration.resource_type.category_not_supporting_file') }));
+
+    disabledCategories.push(...categoriesWithoutFileSupport);
+  }
+
   return openSelectType || !currentInstanceType ? (
     <>
       <Paper sx={{ p: '1rem' }} elevation={10}>
@@ -230,11 +253,7 @@ export const SelectRegistrationTypeField = () => {
         <CategorySelector
           selectedCategories={currentInstanceType ? [currentInstanceType] : []}
           onCategoryClick={onChangeType}
-          disabledCategories={
-            !user?.isThesisCurator
-              ? [DegreeType.Bachelor, DegreeType.Master, DegreeType.Phd, DegreeType.Other]
-              : undefined
-          }
+          disabledCategories={disabledCategories}
         />
 
         {!currentInstanceType && (
