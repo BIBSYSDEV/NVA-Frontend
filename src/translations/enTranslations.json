@@ -346,6 +346,8 @@
     "1144": "Nutrition"
   },
   "editor": {
+    "categories_with_files": "",
+    "categories_with_files_description": "",
     "curators": {
       "area_of_responsibility": "Area of responsibility",
       "area_of_responsibility_placeholder": "No limitations",
@@ -1145,10 +1147,12 @@
       "alternative_title": "Alternative title",
       "confirm_remove_vocabulary_text": "Are you sure you want to remove vocabulary for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Remove vocabulary?",
+      "create_project_helper_text": "",
       "date_published": "Date published",
       "description_of_content": "Description of content, if relevant",
       "funding": {
         "funder": "Funder",
+        "funding_helper_text": "",
         "funding_sum": "Sum",
         "nfr_project": "NFR project",
         "nfr_project_search": "Search by project name or project leader",
@@ -1162,6 +1166,7 @@
       "npi_disciplines": "Scientific field in Norwegian publication indicator",
       "primary_language": "Primary language for content",
       "project_association": "Project association",
+      "project_helper_text": "",
       "remove_vocabulary": "Remove vocabulary",
       "search_for_npi_discipline": "Search for scientific field",
       "search_for_project": "Search in Cristin project catalogue",
@@ -1201,10 +1206,15 @@
       "resource_has_no_files_or_links_paragraph0": "Without files or links, the published resource is harder to reuse and may provide less value to others. If data cannot be shared, information about data and how access can be obtained should be shared.",
       "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), is a set of principles to support the reuse of digital resources. NFR and EC set clear requirements for data to be available and deposited together with metadata that clarifies any conditions for access.",
       "size": "Size",
-      "version_accepted_helper_text": "",
-      "version_helper_text": "",
-      "version_published_helper_text": "",
-      "version_publishing_agreement_helper_text": ""
+      "version_accepted_helper_text": "<0>Accepted version</0>: The version of a research paper accepted by a journal after peer review. This version does not normally include any changes made after acceptance such as copy editing, or typesetting. This version should be shared in NVA, preferable in PDF format and under a CC-BY license.",
+      "version_accepted_helper_text_metadata_only": "<0>Accepted version</0>: The version of a research paper accepted by a journal after peer review. This version does not normally include any changes made after acceptance such as copy editing, or typesetting. This version should be shared in NVA, preferable in PDF format and under a CC-BY license.",
+      "version_embargo_helper_text": "<0>Embargo/delayed date of publication</0>: most publishers will not allow the author to make the published version of the article openly available until a certain time has passed. The date is usually specified in the publishing agreement. In some cases, even the accepted version may have similar restrictions.",
+      "version_helper_text": "<0>Upload the accepted and/or published versions of the article. If the published version of the article is openly available, you don’t have to upload the accepted version.</0> <1>Include any publishing agreements, like formal contracts or other communication with the editor. The documents should specify conditions for embargo and licenses. <0>Remember to mark for “not publish”, to hide the documents from public view.</0></1>",
+      "version_helper_text_metadata_only": "Upload the accepted and/or published versions of the article and any publishing agreements - formal contracts or other communication with the editor. A curator will check the details and ensure that only files legal to share is shared, and with correct licenses.",
+      "version_published_helper_text": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The licence is normally decided by the publisher, so the safe option for a license is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY license.",
+      "version_published_helper_text_metadata_only": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The licence is normally decided by the publisher, so the safe option for a license is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY license.",
+      "version_publishing_agreement_helper_text": "<0>Publishing Agreement</0> is a contract between a publisher and the artist or author. It sets out things like intellectual property ownership, where and when the work can be published, payment terms, liability protections, confidentiality, and royalties. This document is of much help for the curators when questions about license and publications dates needs to be decided on, please deposit it. Such agreements will not be publicly displayed.",
+      "version_publishing_agreement_helper_text_metadata_only": "<0>Publishing Agreement</0> is a contract between a publisher and the artist or author. It sets out things like intellectual property ownership, where and when the work can be published, payment terms, liability protections, confidentiality, and royalties. This document is of much help for the curators when questions about license and publications dates needs to be decided on, please deposit it. Such agreements will not be publicly displayed."
     },
     "heading": {
       "contributors": "Contributors",

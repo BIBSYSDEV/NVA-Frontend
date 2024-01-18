@@ -63,6 +63,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
   const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
+  const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
   const filesToPublish = files.filter((file) => !file.administrativeAgreement);
@@ -203,27 +204,68 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                         modalTitle={t('common.version')}
                                         modalDataTestId={dataTestId.registrationWizard.files.versionModal}
                                         buttonDataTestId={dataTestId.registrationWizard.files.versionHelpButton}>
-                                        <Typography paragraph>
-                                          {t('registration.files_and_license.version_helper_text')}
-                                        </Typography>
-                                        <Typography paragraph>
-                                          <Trans
-                                            i18nKey="registration.files_and_license.version_accepted_helper_text"
-                                            components={[<strong />]}
-                                          />
-                                        </Typography>
-                                        <Typography paragraph>
-                                          <Trans
-                                            i18nKey="registration.files_and_license.version_published_helper_text"
-                                            components={[<strong />]}
-                                          />
-                                        </Typography>
-                                        <Typography paragraph>
-                                          <Trans
-                                            i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
-                                            components={[<strong />]}
-                                          />
-                                        </Typography>
+                                        {registratorPublishesMetadataOnly ? (
+                                          <>
+                                            <Typography paragraph>
+                                              {t('registration.files_and_license.version_helper_text_metadata_only')}
+                                            </Typography>
+                                            <Typography paragraph>
+                                              <Trans
+                                                i18nKey="registration.files_and_license.version_accepted_helper_text_metadata_only"
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                              />
+                                            </Typography>
+                                            <Typography paragraph>
+                                              <Trans
+                                                i18nKey="registration.files_and_license.version_published_helper_text_metadata_only"
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                              />
+                                            </Typography>
+                                            <Typography paragraph>
+                                              <Trans
+                                                i18nKey="registration.files_and_license.version_publishing_agreement_helper_text_metadata_only"
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                              />
+                                            </Typography>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <Trans
+                                              i18nKey="registration.files_and_license.version_helper_text"
+                                              components={[
+                                                <Typography paragraph />,
+                                                <Typography paragraph>
+                                                  <Box component="span" sx={{ textDecoration: 'underline' }} />
+                                                </Typography>,
+                                              ]}
+                                            />
+
+                                            <Typography paragraph>
+                                              <Trans
+                                                i18nKey="registration.files_and_license.version_accepted_helper_text"
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                              />
+                                            </Typography>
+                                            <Typography paragraph>
+                                              <Trans
+                                                i18nKey="registration.files_and_license.version_published_helper_text"
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                              />
+                                            </Typography>
+                                            <Typography paragraph>
+                                              <Trans
+                                                i18nKey="registration.files_and_license.version_publishing_agreement_helper_text"
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                              />
+                                            </Typography>
+                                            <Typography paragraph>
+                                              <Trans
+                                                i18nKey="registration.files_and_license.version_embargo_helper_text"
+                                                components={[<Box component="span" sx={{ fontWeight: 'bold' }} />]}
+                                              />
+                                            </Typography>
+                                          </>
+                                        )}
                                       </HelperTextModal>
                                     </Box>
                                   </TableCell>
