@@ -13,7 +13,11 @@ import { LandingPageAccordion } from '../../components/landing_page/LandingPageA
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
-import { ConfirmedDocument, RelatedDocument } from '../../types/publication_types/researchDataRegistration.types';
+import {
+  ConfirmedDocument,
+  RelatedDocument,
+  UnconfirmedDocument,
+} from '../../types/publication_types/researchDataRegistration.types';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -169,11 +173,15 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             heading={t('registration.resource_type.related_result')}>
             <ShowRelatedRegistrationUris
               links={entityDescription.reference.publicationInstance.related
-                ?.map((r) => (r.type === 'ConfirmedDocument' ? r.identifier : ''))
-                .filter(Boolean)}
+                ?.filter((r) => r.type === 'ConfirmedDocument')
+                .map((r) => (r as ConfirmedDocument).identifier)}
               emptyMessage={t('registration.resource_type.research_data.no_related_publications')}
               loadingLabel={t('registration.resource_type.related_result')}
             />
+            {/* TODO: Handle no hits and inconsistent indentantion (<p> vs <li>) */}
+            {entityDescription.reference.publicationInstance.related
+              ?.filter((r) => r.type === 'UnconfirmedDocument')
+              .map((r) => <Typography paragraph>{(r as UnconfirmedDocument).text}</Typography>)}
           </LandingPageAccordion>
         )}
 

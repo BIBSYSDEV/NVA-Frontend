@@ -649,17 +649,19 @@ export const userCanEditRegistration = (user: User | null, registration: Registr
     return false;
   }
 
-  const isValidCurator = userIsRegistrationCurator(user, registration);
-  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance?.type)) {
-    return isValidCurator && user.isThesisCurator;
-  }
+  return true; // TODO: temporary hack to be able to edit an PhD owned by another institution
 
-  return (
-    isValidCurator ||
-    userIsRegistrationOwner(user, registration) ||
-    userIsContributorOnPublishedRegistration(user, registration) ||
-    user.isEditor
-  );
+  // const isValidCurator = userIsRegistrationCurator(user, registration);
+  // if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance?.type)) {
+  //   return isValidCurator && user.isThesisCurator;
+  // }
+
+  // return (
+  //   isValidCurator ||
+  //   userIsRegistrationOwner(user, registration) ||
+  //   userIsContributorOnPublishedRegistration(user, registration) ||
+  //   user.isEditor
+  // );
 };
 
 export const hyphenateIsrc = (isrc: string) =>

@@ -55,7 +55,7 @@ export interface ConfirmedDocument {
   identifier: string;
 }
 
-interface UnconfirmedDocument {
+export interface UnconfirmedDocument {
   type: 'UnconfirmedDocument';
   text: string;
 }
