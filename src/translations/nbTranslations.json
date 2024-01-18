@@ -1196,7 +1196,6 @@
       "license": "Lisens",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
-      "must_select_category_before_uploading_files": "Du må velge en kategori før du kan laste opp filer.",
       "no_duplicates": "Kunne ikke legge til \"{{fileName}}\", siden en fil med samme navn allerede finnes",
       "open_file": "Åpne fil",
       "published": "Publisert",
