@@ -94,7 +94,7 @@ export const SearchRelatedResultField = () => {
                   uri={uri}
                   removeRelatedResource={() => {
                     const indexToRemove =
-                      related?.findIndex((r) => r.type === 'ConfirmedDocument' && r.identifier === uri) ?? -1;
+                      (related as ConfirmedDocument[])?.findIndex((r) => r.identifier === uri) ?? -1;
                     if (indexToRemove > -1) {
                       remove(indexToRemove);
                     }
