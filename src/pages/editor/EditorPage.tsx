@@ -16,6 +16,7 @@ import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { CategoriesWithFiles } from './CategoriesWithFiles';
 import { EditorCurators } from './EditorCurators';
 import { EditorDoi } from './EditorDoi';
 import { EditorInstitution } from './EditorInstitution';
@@ -104,6 +105,12 @@ const EditorPage = () => {
               to={UrlPathTemplate.EditorPublishStrategy}>
               {t('editor.publish_strategy.publish_strategy')}
             </LinkButton>
+            <LinkButton
+              isSelected={currentPath === UrlPathTemplate.EditorCategories}
+              data-testid={dataTestId.editor.categoriesLinkButton}
+              to={UrlPathTemplate.EditorCategories}>
+              {t('editor.categories_with_files')}
+            </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
       </SideMenu>
@@ -134,6 +141,12 @@ const EditorPage = () => {
             isAuthorized={isEditor}
           />
           <PrivateRoute exact path={UrlPathTemplate.EditorDoi} component={EditorDoi} isAuthorized={isEditor} />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.EditorCategories}
+            component={CategoriesWithFiles}
+            isAuthorized={isEditor}
+          />
           <PrivateRoute path={UrlPathTemplate.Wildcard} component={NotFound} isAuthorized={isEditor} />
         </Switch>
       </BackgroundDiv>

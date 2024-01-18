@@ -87,6 +87,7 @@ export const dataTestId = {
   },
   editor: {
     areaOfResponsibilityLinkButton: 'area-of-responsibility-link-button',
+    categoriesLinkButton: 'categories-link-button',
     institutionsNameLinkButton: 'institutions-name-link-button',
     doiLinkButton: 'doi-link-button',
     overviewAccordion: 'overview-accordion',
@@ -450,6 +451,7 @@ export const dataTestId = {
       removeRelationButton: (value: string) => (value ? `remove-relation-button-${value}` : 'remove-relation-button'),
       resourceTypeChip: (type: string) => `resource-type-chip-${type}`,
       resourceTypeSearchField: 'resource-type-search-field',
+      revisionField: 'revision-field',
       scientificSubjectField: 'scientific-subject-field',
       scoreEnsemble: 'score-ensemble',
       scoreMovements: 'score-movements',
