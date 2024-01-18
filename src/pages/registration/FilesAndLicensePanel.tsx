@@ -392,7 +392,14 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                         </TableContainer>
                       </Box>
                     )}
-                    {publicationInstanceType && customer?.allowFileUploadForTypes.includes(publicationInstanceType) && (
+
+                    {!publicationInstanceType ? (
+                      <Typography>
+                        {t('registration.files_and_license.must_select_category_before_uploading_files')}
+                      </Typography>
+                    ) : customer && !customer.allowFileUploadForTypes.includes(publicationInstanceType) ? (
+                      <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
+                    ) : (
                       <FileUploader uppy={uppy} addFile={push} disabled={!canEditFiles} />
                     )}
                   </BackgroundDiv>
