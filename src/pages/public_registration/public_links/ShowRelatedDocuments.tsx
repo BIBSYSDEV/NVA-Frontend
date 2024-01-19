@@ -10,22 +10,28 @@ interface ShowRelatedDocumentsProps {
 export const ShowRelatedDocuments = ({ related }: ShowRelatedDocumentsProps) => {
   const { t } = useTranslation();
 
+  const confirmedDocuments = related
+    .filter((document) => document.type === 'ConfirmedDocument')
+    .map((document) => (document as ConfirmedDocument).identifier);
+
+  const unconfirmedDocuments = related
+    .filter((document) => document.type === 'UnconfirmedDocument')
+    .map((document) => (document as UnconfirmedDocument).text);
+
   return (
     <>
-      {related.some((document) => document.type === 'ConfirmedDocument') && (
+      {confirmedDocuments.length > 0 && (
         <ShowRelatedRegistrationUris
-          links={related
-            ?.filter((document) => document.type === 'ConfirmedDocument')
-            .map((document) => (document as ConfirmedDocument).identifier)}
+          links={confirmedDocuments}
           loadingLabel={t('registration.resource_type.related_results')}
         />
       )}
 
-      {related.some((document) => document.type === 'UnconfirmedDocument') && (
+      {unconfirmedDocuments.length > 0 && (
         <List disablePadding>
-          {related
-            ?.filter((document) => document.type === 'UnconfirmedDocument')
-            .map((document) => <ListItem disableGutters>{(document as UnconfirmedDocument).text}</ListItem>)}
+          {unconfirmedDocuments.map((text) => (
+            <ListItem disableGutters>{text}</ListItem>
+          ))}
         </List>
       )}
     </>
