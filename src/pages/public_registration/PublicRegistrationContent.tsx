@@ -1,5 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, IconButton, List, ListItem, Paper, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -13,13 +13,7 @@ import { LandingPageAccordion } from '../../components/landing_page/LandingPageA
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
-import {
-  ConfirmedDocument,
-  Registration,
-  RegistrationStatus,
-  RelatedDocument,
-  UnconfirmedDocument,
-} from '../../types/registration.types';
+import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
@@ -34,6 +28,7 @@ import { ShareOptions } from './ShareOptions';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
+import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
 import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
 
 export interface PublicRegistrationContentProps {
@@ -167,29 +162,16 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           </>
         )}
 
-        {entityDescription?.reference?.publicationInstance?.type === DegreeType.Phd && (
-          <LandingPageAccordion
-            dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
-            defaultExpanded
-            heading={t('registration.resource_type.related_results')}>
-            <ShowRelatedRegistrationUris
-              links={entityDescription.reference.publicationInstance.related
-                ?.filter((document) => document.type === 'ConfirmedDocument')
-                .map((document) => (document as ConfirmedDocument).identifier)}
-              emptyMessage={t('registration.resource_type.research_data.no_related_publications')}
-              loadingLabel={t('registration.resource_type.related_results')}
-            />
-
-            {entityDescription.reference.publicationInstance.related &&
-              entityDescription.reference.publicationInstance.related.length > 0 && (
-                <List disablePadding>
-                  {entityDescription.reference.publicationInstance.related
-                    ?.filter((document) => document.type === 'UnconfirmedDocument')
-                    .map((document) => <ListItem disableGutters>{(document as UnconfirmedDocument).text}</ListItem>)}
-                </List>
-              )}
-          </LandingPageAccordion>
-        )}
+        {entityDescription?.reference?.publicationInstance?.type === DegreeType.Phd &&
+          entityDescription.reference.publicationInstance.related &&
+          entityDescription.reference.publicationInstance.related.length > 0 && (
+            <LandingPageAccordion
+              dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
+              defaultExpanded
+              heading={t('registration.resource_type.related_results')}>
+              <ShowRelatedDocuments related={entityDescription.reference.publicationInstance.related} />
+            </LandingPageAccordion>
+          )}
 
         {entityDescription?.reference?.publicationInstance?.type === ResearchDataType.DataManagementPlan && (
           <LandingPageAccordion
