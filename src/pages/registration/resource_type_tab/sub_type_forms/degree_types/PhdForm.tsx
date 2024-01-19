@@ -31,7 +31,7 @@ export const PhdForm = () => {
       <IsbnAndPages />
       <SeriesFields />
 
-      <Typography variant="h2">{t('registration.resource_type.related_result')}</Typography>
+      <Typography variant="h2">{t('registration.resource_type.related_results')}</Typography>
 
       <SearchRelatedResultField />
 
@@ -57,7 +57,15 @@ export const PhdForm = () => {
             return (
               <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'center', gap: '1rem', mb: '0.5rem' }}>
                 <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
-                  {({ field }: FieldProps<string>) => <TextField {...field} variant="filled" multiline fullWidth />}
+                  {({ field }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      label={t('registration.resource_type.related_result')}
+                      variant="filled"
+                      multiline
+                      fullWidth
+                    />
+                  )}
                 </Field>
                 <Button
                   size="small"

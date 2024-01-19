@@ -1624,7 +1624,8 @@
       "print_issn": "Print ISSN",
       "protected_type": "Du mangler tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
       "publisher_or_organizer": "Utgiver/arrangør eller lignende",
-      "related_result": "Relaterte resultat",
+      "related_result": "Relatert resultat",
+      "related_results": "Relaterte resultat",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
       "research_data": {

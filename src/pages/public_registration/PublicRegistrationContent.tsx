@@ -171,13 +171,13 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
           <LandingPageAccordion
             dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
             defaultExpanded
-            heading={t('registration.resource_type.related_result')}>
+            heading={t('registration.resource_type.related_results')}>
             <ShowRelatedRegistrationUris
               links={entityDescription.reference.publicationInstance.related
                 ?.filter((document) => document.type === 'ConfirmedDocument')
                 .map((document) => (document as ConfirmedDocument).identifier)}
               emptyMessage={t('registration.resource_type.research_data.no_related_publications')}
-              loadingLabel={t('registration.resource_type.related_result')}
+              loadingLabel={t('registration.resource_type.related_results')}
             />
 
             {entityDescription.reference.publicationInstance.related &&
