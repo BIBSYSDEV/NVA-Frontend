@@ -39,7 +39,7 @@ export const ContributorIndicator = ({ contributor }: ContributorIndicatorProps)
 
   const hasId = !!contributor.identity.id;
   const hasVerifiedAffiliation =
-    !!contributor.affiliations && contributor.affiliations.some((affiliation) => affiliation.id);
+    !!contributor.affiliations && contributor.affiliations.some((affiliation) => affiliation.type === 'Organization');
 
   const verifiedContributor = hasId && hasVerifiedAffiliation;
   const verifiedContributorWithoutAffiliation = hasId && !hasVerifiedAffiliation;

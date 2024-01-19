@@ -49,12 +49,7 @@ export const EditorCurators = () => {
     enabled: !!customerId,
     queryFn: () =>
       customerId
-        ? fetchUsers(customerId, [
-            RoleName.DoiCurator,
-            RoleName.SupportCurator,
-            RoleName.PublishingCurator,
-            RoleName.Curator,
-          ])
+        ? fetchUsers(customerId, [RoleName.DoiCurator, RoleName.SupportCurator, RoleName.PublishingCurator])
         : undefined,
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
