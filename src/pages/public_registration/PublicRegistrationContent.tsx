@@ -1,5 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, IconButton, Paper, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, List, ListItem, Paper, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -178,10 +178,15 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               emptyMessage={t('registration.resource_type.research_data.no_related_publications')}
               loadingLabel={t('registration.resource_type.related_result')}
             />
-            {/* TODO: Handle no hits and inconsistent indentantion (<p> vs <li>) */}
-            {entityDescription.reference.publicationInstance.related
-              ?.filter((r) => r.type === 'UnconfirmedDocument')
-              .map((r) => <Typography paragraph>{(r as UnconfirmedDocument).text}</Typography>)}
+
+            {entityDescription.reference.publicationInstance.related &&
+              entityDescription.reference.publicationInstance.related.length > 0 && (
+                <List disablePadding>
+                  {entityDescription.reference.publicationInstance.related
+                    ?.filter((r) => r.type === 'UnconfirmedDocument')
+                    .map((r) => <ListItem disableGutters>{(r as UnconfirmedDocument).text}</ListItem>)}
+                </List>
+              )}
           </LandingPageAccordion>
         )}
 

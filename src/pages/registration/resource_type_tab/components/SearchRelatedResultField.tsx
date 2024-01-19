@@ -1,4 +1,4 @@
-import { Autocomplete, List, TextField, Typography } from '@mui/material';
+import { Autocomplete, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useQuery } from '@tanstack/react-query';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
@@ -12,8 +12,6 @@ import { ConfirmedDocument } from '../../../../types/publication_types/researchD
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { getTitleString } from '../../../../utils/registration-helpers';
-import { filterConfirmedDocuments } from '../../../public_registration/PublicRegistrationContent';
-import { RelatedResourceRow } from '../sub_type_forms/research_data_types/RelatedResourceRow';
 import { YearAndContributorsText } from './SearchContainerField';
 
 export const SearchRelatedResultField = () => {
@@ -21,8 +19,6 @@ export const SearchRelatedResultField = () => {
 
   const { values } = useFormikContext<DegreeRegistration>();
   const related = values.entityDescription.reference?.publicationInstance.related;
-
-  const confirmedRelatedResources = filterConfirmedDocuments(related);
 
   const [relatedRegistrationsQuery, setRelatedRegistrationsQuery] = useState('');
   const debouncedRelatedRegistrationsQuery = useDebounce(relatedRegistrationsQuery);
@@ -40,7 +36,7 @@ export const SearchRelatedResultField = () => {
 
   return (
     <FieldArray name={ResourceFieldNames.PublicationInstanceRelated}>
-      {({ push, remove }: FieldArrayRenderProps) => (
+      {({ push }: FieldArrayRenderProps) => (
         <>
           <Autocomplete
             options={relatedRegistrationsOptionsQuery.data?.hits ?? []}
@@ -86,23 +82,6 @@ export const SearchRelatedResultField = () => {
               />
             )}
           />
-          {confirmedRelatedResources.length > 0 && (
-            <List>
-              {confirmedRelatedResources.map((uri) => (
-                <RelatedResourceRow
-                  key={uri}
-                  uri={uri}
-                  removeRelatedResource={() => {
-                    const indexToRemove =
-                      (related as ConfirmedDocument[])?.findIndex((r) => r.identifier === uri) ?? -1;
-                    if (indexToRemove > -1) {
-                      remove(indexToRemove);
-                    }
-                  }}
-                />
-              ))}
-            </List>
-          )}
         </>
       )}
     </FieldArray>

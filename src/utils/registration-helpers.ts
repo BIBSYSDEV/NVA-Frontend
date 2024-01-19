@@ -710,5 +710,9 @@ export const openFileInNewTab = (fileUri: string) => {
   }
 };
 
-export const findRelatedDocumentIndex = (related: RelatedDocument[], uri: string) =>
-  related.findIndex((document) => document.type === 'ConfirmedDocument' && document.identifier === uri);
+export const findRelatedDocumentIndex = (related: RelatedDocument[] = [], value: string) =>
+  related.findIndex(
+    (document) =>
+      (document.type === 'ConfirmedDocument' && document.identifier === value) ||
+      (document.type === 'UnconfirmedDocument' && document.text === value)
+  );
