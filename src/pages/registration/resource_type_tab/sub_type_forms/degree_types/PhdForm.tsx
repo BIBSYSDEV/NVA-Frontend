@@ -19,7 +19,7 @@ import { RelatedResourceRow } from '../research_data_types/RelatedResourceRow';
 export const PhdForm = () => {
   const { t } = useTranslation();
   const { values, setFieldValue } = useFormikContext<DegreeRegistration>();
-  const [unconfirmedRelationToRemove, setUnconfirmedRelationToRemove] = useState('');
+  const [indexToRemove, setIndexToRemove] = useState<number | null>(null);
   const related = values.entityDescription.reference?.publicationInstance.related;
 
   const confirmedDocuments = filterConfirmedDocuments(related);
@@ -47,48 +47,45 @@ export const PhdForm = () => {
               removeRelatedResource={() => {
                 const indexToRemove = findRelatedDocumentIndex(related, uri);
                 if (indexToRemove > -1) {
-                  const newRelated = related?.filter(
-                    (document) => document.type === 'ConfirmedDocument' && document.identifier === uri
-                  );
+                  const newRelated = related?.filter((_, index) => index !== indexToRemove);
                   setFieldValue(ResourceFieldNames.PublicationInstanceRelated, newRelated);
                 }
               }}
             />
           ))}
 
-          {unconfirmedRelatedTexts?.map((relation) => {
-            const relatedIndex = findRelatedDocumentIndex(related, relation.text);
+          {related?.map((relation, index) => {
+            if (relation.type === 'ConfirmedDocument') {
+              return null;
+            }
+
             return (
-              <Box
-                key={relation.text}
-                component="li"
-                sx={{ display: 'flex', alignItems: 'center', gap: '1rem', mb: '0.5rem' }}>
-                <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${relatedIndex}].text`}>
+              <Box key={index} component="li" sx={{ display: 'flex', alignItems: 'center', gap: '1rem', mb: '0.5rem' }}>
+                <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${index}].text`}>
                   {({ field }: FieldProps<string>) => <TextField {...field} variant="filled" multiline fullWidth />}
                 </Field>
                 <Button
                   size="small"
                   variant="outlined"
                   color="error"
-                  data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(relatedIndex.toString())}
-                  onClick={() => setUnconfirmedRelationToRemove(relation.text)}
+                  data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
+                  onClick={() => setIndexToRemove(index)}
                   startIcon={<RemoveCircleOutlineIcon />}>
                   {t('registration.resource_type.research_data.remove_relation')}
                 </Button>
               </Box>
             );
           })}
+
           <ConfirmDialog
-            open={!!unconfirmedRelationToRemove}
+            open={indexToRemove !== null && indexToRemove > -1}
             title={t('registration.resource_type.research_data.remove_relation')}
             onAccept={() => {
-              const newRelated = related?.filter(
-                (document) => document.type === 'UnconfirmedDocument' && document.text !== unconfirmedRelationToRemove
-              );
+              const newRelated = related?.filter((_, index) => index !== indexToRemove);
               setFieldValue(ResourceFieldNames.PublicationInstanceRelated, newRelated);
-              setUnconfirmedRelationToRemove('');
+              setIndexToRemove(null);
             }}
-            onCancel={() => setUnconfirmedRelationToRemove('')}>
+            onCancel={() => setIndexToRemove(null)}>
             <Typography>{t('registration.resource_type.research_data.remove_relation_confirm_text')}</Typography>
           </ConfirmDialog>
         </List>
