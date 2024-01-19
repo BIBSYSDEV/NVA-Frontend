@@ -8,7 +8,7 @@ import { FetchResultsParams, fetchResults } from '../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { DegreeRegistration } from '../../../../types/publication_types/degreeRegistration.types';
-import { ConfirmedDocument } from '../../../../types/publication_types/researchDataRegistration.types';
+import { ConfirmedDocument } from '../../../../types/registration.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { getTitleString } from '../../../../utils/registration-helpers';
@@ -42,7 +42,10 @@ export const SearchRelatedResultField = () => {
             options={relatedRegistrationsOptionsQuery.data?.hits ?? []}
             value={null}
             onChange={(_, value) => {
-              if (value?.id && !related?.some((r) => r.type === 'ConfirmedDocument' && r.identifier === value.id)) {
+              if (
+                value?.id &&
+                !related?.some((document) => document.type === 'ConfirmedDocument' && document.identifier === value.id)
+              ) {
                 const newRelation: ConfirmedDocument = {
                   type: 'ConfirmedDocument',
                   identifier: value.id,

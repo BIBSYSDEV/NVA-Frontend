@@ -15,10 +15,11 @@ import { RootState } from '../../redux/store';
 import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
 import {
   ConfirmedDocument,
+  Registration,
+  RegistrationStatus,
   RelatedDocument,
   UnconfirmedDocument,
-} from '../../types/publication_types/researchDataRegistration.types';
-import { Registration, RegistrationStatus } from '../../types/registration.types';
+} from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
@@ -173,8 +174,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             heading={t('registration.resource_type.related_result')}>
             <ShowRelatedRegistrationUris
               links={entityDescription.reference.publicationInstance.related
-                ?.filter((r) => r.type === 'ConfirmedDocument')
-                .map((r) => (r as ConfirmedDocument).identifier)}
+                ?.filter((document) => document.type === 'ConfirmedDocument')
+                .map((document) => (document as ConfirmedDocument).identifier)}
               emptyMessage={t('registration.resource_type.research_data.no_related_publications')}
               loadingLabel={t('registration.resource_type.related_result')}
             />
@@ -183,8 +184,8 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
               entityDescription.reference.publicationInstance.related.length > 0 && (
                 <List disablePadding>
                   {entityDescription.reference.publicationInstance.related
-                    ?.filter((r) => r.type === 'UnconfirmedDocument')
-                    .map((r) => <ListItem disableGutters>{(r as UnconfirmedDocument).text}</ListItem>)}
+                    ?.filter((document) => document.type === 'UnconfirmedDocument')
+                    .map((document) => <ListItem disableGutters>{(document as UnconfirmedDocument).text}</ListItem>)}
                 </List>
               )}
           </LandingPageAccordion>

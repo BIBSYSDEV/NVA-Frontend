@@ -5,9 +5,9 @@ import {
   BaseRegistration,
   ContextPublisher,
   ContextSeries,
+  RelatedDocument,
 } from '../registration.types';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
-import { RelatedDocument } from './researchDataRegistration.types';
 
 export interface DegreeRegistration extends BaseRegistration {
   entityDescription: DegreeEntityDescription;

@@ -5,6 +5,7 @@ import {
   BaseRegistration,
   ContextPublisher,
   PublicationChannelType,
+  RelatedDocument,
 } from '../registration.types';
 
 export interface ResearchDataRegistration extends BaseRegistration {
@@ -49,18 +50,6 @@ interface ResearchDataContributionReference extends BaseReference {
 export interface ResearchDataEntityDescription extends BaseEntityDescription {
   reference: ResearchDataContributionReference;
 }
-
-export interface ConfirmedDocument {
-  type: 'ConfirmedDocument';
-  identifier: string;
-}
-
-export interface UnconfirmedDocument {
-  type: 'UnconfirmedDocument';
-  text: string;
-}
-
-export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
 
 interface DataManagementPlanPublicationInstance {
   related: RelatedDocument[]; // Related Registrations and external links
