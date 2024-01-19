@@ -649,19 +649,17 @@ export const userCanEditRegistration = (user: User | null, registration: Registr
     return false;
   }
 
-  return true; // TODO: temporary hack to be able to edit an PhD owned by another institution
+  const isValidCurator = userIsRegistrationCurator(user, registration);
+  if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance?.type)) {
+    return isValidCurator && user.isThesisCurator;
+  }
 
-  // const isValidCurator = userIsRegistrationCurator(user, registration);
-  // if (isDegreeWithProtectedFiles(registration.entityDescription?.reference?.publicationInstance?.type)) {
-  //   return isValidCurator && user.isThesisCurator;
-  // }
-
-  // return (
-  //   isValidCurator ||
-  //   userIsRegistrationOwner(user, registration) ||
-  //   userIsContributorOnPublishedRegistration(user, registration) ||
-  //   user.isEditor
-  // );
+  return (
+    isValidCurator ||
+    userIsRegistrationOwner(user, registration) ||
+    userIsContributorOnPublishedRegistration(user, registration) ||
+    user.isEditor
+  );
 };
 
 export const hyphenateIsrc = (isrc: string) =>
@@ -710,5 +708,5 @@ export const openFileInNewTab = (fileUri: string) => {
   }
 };
 
-export const findRelatedDocumentIndex = (related: RelatedDocument[] = [], value: string) =>
-  related.findIndex((document) => document.type === 'ConfirmedDocument' && document.identifier === value);
+export const findRelatedDocumentIndex = (related: RelatedDocument[], uri: string) =>
+  related.findIndex((document) => document.type === 'ConfirmedDocument' && document.identifier === uri);
