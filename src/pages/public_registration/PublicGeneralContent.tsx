@@ -88,8 +88,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const cristinIdentifier = registration.additionalIdentifiers?.find(
     (identifier) => identifier.sourceName === 'Cristin'
   )?.value;
-  const scopusIdentifier = registration.additionalIdentifiers?.find((identifier) => identifier.sourceName === 'Scopus')
-    ?.value;
+  const scopusIdentifier = registration.additionalIdentifiers?.find(
+    (identifier) => identifier.sourceName === 'Scopus'
+  )?.value;
 
   return (
     <StyledGeneralInfo>
