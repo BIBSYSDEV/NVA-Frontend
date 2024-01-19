@@ -1,6 +1,6 @@
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { Box, Button, List, TextField, Typography } from '@mui/material';
-import { useFormikContext } from 'formik';
+import { Field, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConfirmDialog } from '../../../../../components/ConfirmDialog';
@@ -24,7 +24,8 @@ export const PhdForm = () => {
 
   const confirmedDocuments = filterConfirmedDocuments(related);
 
-  const unconfirmedRelated = (related?.filter((r) => r.type === 'UnconfirmedDocument') ?? []) as UnconfirmedDocument[];
+  const unconfirmedRelatedTexts = (related?.filter((r) => r.type === 'UnconfirmedDocument') ??
+    []) as UnconfirmedDocument[];
 
   return (
     <>
@@ -37,7 +38,7 @@ export const PhdForm = () => {
 
       <SearchRelatedResultField />
 
-      {(confirmedDocuments.length > 0 || unconfirmedRelated.length > 0) && (
+      {(confirmedDocuments.length > 0 || unconfirmedRelatedTexts.length > 0) && (
         <List disablePadding>
           {confirmedDocuments.map((uri) => (
             <RelatedResourceRow
@@ -55,23 +56,28 @@ export const PhdForm = () => {
             />
           ))}
 
-          {unconfirmedRelated?.map((relation, index) => (
-            <Box
-              key={relation.text}
-              component="li"
-              sx={{ display: 'flex', alignItems: 'center', gap: '1rem', mb: '0.5rem' }}>
-              <TextField variant="filled" multiline value={relation.text} fullWidth />
-              <Button
-                size="small"
-                variant="outlined"
-                color="error"
-                data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(index.toString())}
-                onClick={() => setUnconfirmedRelationToRemove(relation.text)}
-                startIcon={<RemoveCircleOutlineIcon />}>
-                {t('registration.resource_type.research_data.remove_relation')}
-              </Button>
-            </Box>
-          ))}
+          {unconfirmedRelatedTexts?.map((relation) => {
+            const relatedIndex = findRelatedDocumentIndex(related, relation.text);
+            return (
+              <Box
+                key={relation.text}
+                component="li"
+                sx={{ display: 'flex', alignItems: 'center', gap: '1rem', mb: '0.5rem' }}>
+                <Field name={`${ResourceFieldNames.PublicationInstanceRelated}[${relatedIndex}].text`}>
+                  {({ field }: FieldProps<string>) => <TextField {...field} variant="filled" multiline fullWidth />}
+                </Field>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="error"
+                  data-testid={dataTestId.registrationWizard.resourceType.removeRelationButton(relatedIndex.toString())}
+                  onClick={() => setUnconfirmedRelationToRemove(relation.text)}
+                  startIcon={<RemoveCircleOutlineIcon />}>
+                  {t('registration.resource_type.research_data.remove_relation')}
+                </Button>
+              </Box>
+            );
+          })}
           <ConfirmDialog
             open={!!unconfirmedRelationToRemove}
             title={t('registration.resource_type.research_data.remove_relation')}
