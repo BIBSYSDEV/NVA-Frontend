@@ -1,6 +1,8 @@
 import { Box, Link, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
+import { fetchResults } from '../../api/searchApi';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
 import { ArtisticType, DegreeType, JournalType } from '../../types/publicationFieldNames';
 import { ArtisticPublicationInstance } from '../../types/publication_types/artisticRegistration.types';
@@ -36,6 +38,7 @@ import {
 } from '../../types/publication_types/reportRegistration.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { displayDate } from '../../utils/date-helpers';
+import { getIdentifierFromId } from '../../utils/general-helpers';
 import {
   isArtistic,
   isBook,
@@ -90,6 +93,32 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   )?.value;
   const scopusIdentifier = registration.additionalIdentifiers?.find((identifier) => identifier.sourceName === 'Scopus')
     ?.value;
+
+  const getContextPublisherIdentifierFromId = (id: string | null) => {
+    if (id !== null) {
+      const publisherId = getIdentifierFromId(id);
+      return publisherId;
+    }
+  };
+
+  const publisherIdentifier = getContextPublisherIdentifierFromId((publicationContext as ChapterPublicationContext).id);
+
+  const publisherQuery = useQuery({
+    enabled: !!publisherIdentifier,
+    queryKey: ['publisher', publisherIdentifier],
+    queryFn: () => fetchResults({ id: publisherIdentifier, results: 1 }),
+    meta: { errorMessage: t('feedback.error.search') },
+  });
+
+  const publisherQueryResult = publisherQuery.data?.hits[0];
+
+  const publisherIsbn =
+    publisherQueryResult &&
+    (publisherQueryResult?.entityDescription?.reference?.publicationContext as BookPublicationContext).isbnList[0];
+
+  const publisher =
+    publisherQueryResult &&
+    (publisherQueryResult?.entityDescription?.reference?.publicationContext as BookPublicationContext).publisher;
 
   return (
     <StyledGeneralInfo>
@@ -241,7 +270,20 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicSeries publicationContext={publicationContext as ReportPublicationContext} />
             </>
           ) : isChapter(publicationInstance.type) ? (
-            <PublicPublishedInContent id={(publicationContext as ChapterPublicationContext).id} />
+            <>
+              <Box sx={{ mb: '0.5rem' }}>
+                <PublicPublishedInContent id={(publicationContext as ChapterPublicationContext).id} />
+              </Box>
+
+              {publisherIsbn && (
+                <Box sx={{ display: 'flex', flexDirection: 'column', mb: '0.5rem' }}>
+                  <Typography fontWeight="bold">{t('registration.resource_type.isbn')}</Typography>
+                  <Typography>{publisherIsbn}</Typography>
+                </Box>
+              )}
+
+              <PublicPublisher publisher={publisher} />
+            </>
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
           ) : isArtistic(publicationInstance.type) ? (
