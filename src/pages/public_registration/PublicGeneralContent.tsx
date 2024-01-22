@@ -49,6 +49,7 @@ import {
   isPresentation,
   isReport,
 } from '../../utils/registration-helpers';
+import { ChapterPublisherInfo } from './ChapterPublisherInfo';
 import { PublicDoi } from './PublicDoi';
 import {
   PublicJournal,
@@ -242,7 +243,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicSeries publicationContext={publicationContext as ReportPublicationContext} />
             </>
           ) : isChapter(publicationInstance.type) ? (
-            <PublicPublishedInContent id={(publicationContext as ChapterPublicationContext).id} />
+            <>
+              <PublicPublishedInContent id={(publicationContext as ChapterPublicationContext).id} />
+              <ChapterPublisherInfo publicationContext={publicationContext as ChapterPublicationContext} />
+            </>
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
           ) : isArtistic(publicationInstance.type) ? (
