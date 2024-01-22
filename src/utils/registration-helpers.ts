@@ -45,13 +45,13 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import { RelatedDocument } from '../types/publication_types/researchDataRegistration.types';
 import {
   Journal,
   PublicationInstanceType,
   Publisher,
   Registration,
   RegistrationStatus,
+  RelatedDocument,
   Series,
 } from '../types/registration.types';
 import { User } from '../types/user.types';

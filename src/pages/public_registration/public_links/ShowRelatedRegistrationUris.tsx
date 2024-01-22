@@ -7,7 +7,7 @@ import { ListRegistrationRelations } from './ListRegistrationRelations';
 
 interface ShowRelatedRegistrationUrisProps {
   links?: string[];
-  emptyMessage: string;
+  emptyMessage?: string;
   loadingLabel: string;
 }
 
@@ -47,7 +47,9 @@ export const ShowRelatedRegistrationUris = ({
   }, [linksRef]);
 
   return linksRef.current.length === 0 ? (
-    <Typography>{emptyMessage}</Typography>
+    emptyMessage ? (
+      <Typography>{emptyMessage}</Typography>
+    ) : null
   ) : isLoadingRegistrations ? (
     <CircularProgress aria-label={loadingLabel} />
   ) : (

@@ -23,7 +23,7 @@ export const RelatedResourceRow = ({ uri, removeRelatedResource }: RelatedResour
   const [confirmRemoveRelation, setConfirmRemoveRelation] = useState(false);
 
   return (
-    <ListItem>
+    <ListItem disableGutters>
       {isLoadingRegistration ? (
         <Skeleton width="30%" />
       ) : (
