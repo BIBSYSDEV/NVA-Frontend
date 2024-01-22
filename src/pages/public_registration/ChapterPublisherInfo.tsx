@@ -1,9 +1,10 @@
 import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { fetchResults } from '../../api/searchApi';
 import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
 import { ChapterPublicationContext } from '../../types/publication_types/chapterRegistration.types';
+import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { PublicPublisher } from './PublicPublicationContext';
 
@@ -12,6 +13,8 @@ interface ChapterPublisherInfoProps {
 }
 
 export const ChapterPublisherInfo = ({ publicationContext }: ChapterPublisherInfoProps) => {
+  const { t } = useTranslation();
+
   const publisherIdentifier = publicationContext.id && getIdentifierFromId(publicationContext.id);
 
   const publisherQuery = useQuery({
@@ -23,23 +26,27 @@ export const ChapterPublisherInfo = ({ publicationContext }: ChapterPublisherInf
 
   const publisherQueryResult = publisherQuery.data?.hits[0];
 
-  const publisher =
+  const bookPublicationContext =
     publisherQueryResult &&
-    (publisherQueryResult?.entityDescription?.reference?.publicationContext as BookPublicationContext).publisher;
-
-  const publisherIsbn =
-    publisherQueryResult &&
-    (publisherQueryResult?.entityDescription?.reference?.publicationContext as BookPublicationContext).isbnList[0];
+    (publisherQueryResult?.entityDescription?.reference?.publicationContext as
+      | BookPublicationContext
+      | ReportPublicationContext);
 
   return (
     <>
-      {publisherIsbn && (
-        <Box sx={{ display: 'flex', flexDirection: 'column', mb: '0.5rem', mt: '0.5rem' }}>
-          <Typography fontWeight="bold">{t('registration.resource_type.isbn')}</Typography>
-          <Typography>{publisherIsbn}</Typography>
-        </Box>
+      {bookPublicationContext && (
+        <>
+          {bookPublicationContext?.isbnList && (
+            <Box sx={{ display: 'flex', flexDirection: 'column', mb: '0.5rem', mt: '0.5rem' }}>
+              <Typography fontWeight="bold">{t('registration.resource_type.isbn')}</Typography>
+              {bookPublicationContext.isbnList.map((isbn) => (
+                <Typography>{isbn}</Typography>
+              ))}
+            </Box>
+          )}
+          <PublicPublisher publisher={bookPublicationContext.publisher} />
+        </>
       )}
-      <PublicPublisher publisher={publisher} />
     </>
   );
 };
