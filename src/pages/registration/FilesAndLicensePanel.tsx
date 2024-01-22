@@ -62,6 +62,7 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
   const { values, setFieldTouched, setFieldValue, errors, touched } = useFormikContext<Registration>();
   const { entityDescription, associatedArtifacts } = values;
   const publicationContext = entityDescription?.reference?.publicationContext;
+  const publicationInstanceType = entityDescription?.reference?.publicationInstance?.type;
   const registratorPublishesMetadataOnly = customer?.publicationWorkflow === 'RegistratorPublishesMetadataOnly';
 
   const files = useMemo(() => getAssociatedFiles(associatedArtifacts), [associatedArtifacts]);
@@ -107,11 +108,11 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
     (publicationContext && 'id' in publicationContext && publicationContext.id?.split('/').reverse()[1]) || '';
 
   const originalDoi = entityDescription?.reference?.doi;
-  const showFileVersion = isTypeWithFileVersionField(entityDescription?.reference?.publicationInstance?.type);
+  const showFileVersion = isTypeWithFileVersionField(publicationInstanceType);
 
   const isValidImporter = userIsValidImporter(user, values);
   const isRegistrationCurator = userIsRegistrationCurator(user, values);
-  const isProtectedDegree = isDegreeWithProtectedFiles(entityDescription?.reference?.publicationInstance?.type);
+  const isProtectedDegree = isDegreeWithProtectedFiles(publicationInstanceType);
   const canEditDegreeFiles = isRegistrationCurator && !!user?.isThesisCurator;
   const canEditOtherFiles = isRegistrationCurator || userIsRegistrationOwner(user, values);
   const canEditFiles =
@@ -392,7 +393,13 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                       </Box>
                     )}
 
-                    <FileUploader uppy={uppy} addFile={push} disabled={!canEditFiles} />
+                    {customer &&
+                    publicationInstanceType &&
+                    !customer.allowFileUploadForTypes.includes(publicationInstanceType) ? (
+                      <Typography>{t('registration.resource_type.protected_file_type')}</Typography>
+                    ) : (
+                      <FileUploader uppy={uppy} addFile={push} disabled={!canEditFiles} />
+                    )}
                   </BackgroundDiv>
                 </Paper>
 

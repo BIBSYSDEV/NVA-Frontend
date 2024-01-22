@@ -9,7 +9,6 @@ import { CategorySelector } from '../../../components/CategorySelector';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { RootState } from '../../../redux/store';
 import {
-  DegreeType,
   PublicationType,
   ResearchDataType,
   ResourceFieldNames,
@@ -47,6 +46,7 @@ import {
 import { PublicationChannelType, PublicationInstanceType, Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
+  getDisabledCategories,
   getMainRegistrationType,
   isPeriodicalMediaContribution,
   nviApplicableTypes,
@@ -55,6 +55,7 @@ import {
 export const SelectRegistrationTypeField = () => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
+  const customer = useSelector((store: RootState) => store.customer);
   const { values, setFieldValue, validateForm } = useFormikContext<Registration>();
   const currentInstanceType = values.entityDescription?.reference?.publicationInstance?.type ?? '';
 
@@ -212,6 +213,8 @@ export const SelectRegistrationTypeField = () => {
     }
   };
 
+  const disabledCategories = getDisabledCategories(user, customer, values, t);
+
   return openSelectType || !currentInstanceType ? (
     <>
       <Paper sx={{ p: '1rem' }} elevation={10}>
@@ -230,11 +233,7 @@ export const SelectRegistrationTypeField = () => {
         <CategorySelector
           selectedCategories={currentInstanceType ? [currentInstanceType] : []}
           onCategoryClick={onChangeType}
-          disabledCategories={
-            !user?.isThesisCurator
-              ? [DegreeType.Bachelor, DegreeType.Master, DegreeType.Phd, DegreeType.Other]
-              : undefined
-          }
+          disabledCategories={disabledCategories}
         />
 
         {!currentInstanceType && (
