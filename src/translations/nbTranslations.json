@@ -254,10 +254,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
@@ -343,7 +339,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1622,7 +1622,8 @@
       "pages_to": "til",
       "place_for_event": "Sted for arrangement",
       "print_issn": "Print ISSN",
-      "protected_type": "Du mangler tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
+      "protected_degree_type": "Du mangler tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
+      "protected_file_type": "Din institusjon har valgt å ikke støtte filer for denne kategorien.",
       "publisher_or_organizer": "Utgiver/arrangør eller lignende",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
