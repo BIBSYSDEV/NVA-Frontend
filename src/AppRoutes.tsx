@@ -6,11 +6,11 @@ import { PageSpinner } from './components/PageSpinner';
 import { RootState } from './redux/store';
 import { PrivateRoute } from './utils/routes/Routes';
 import { UrlPathTemplate } from './utils/urlPaths';
+import { hasCuratorRole } from './utils/user-helpers';
 
 const BasicDataPage = lazy(() => import('./pages/basic_data/BasicDataPage'));
 const EditorPage = lazy(() => import('./pages/editor/EditorPage'));
 const TasksPage = lazy(() => import('./pages/messages/TasksPage'));
-const AboutPage = lazy(() => import('./pages/infopages/AboutPage'));
 const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
 const EditRegistration = lazy(() => import('./pages/registration/new_registration/EditRegistration'));
 const PublicRegistration = lazy(() => import('./pages/public_registration/PublicRegistration'));
@@ -29,15 +29,27 @@ export const AppRoutes = () => {
   const isAuthenticated = !!user;
   const hasCustomerId = isAuthenticated && !!user.customerId;
   const isCreator = hasCustomerId && user.isCreator;
-  const isCurator = hasCustomerId && user.isCurator;
+  const isCurator = hasCuratorRole(user);
   const isEditor = hasCustomerId && user.isEditor;
   const isAdmin = hasCustomerId && (user.isAppAdmin || user.isInstitutionAdmin);
+  const isNviCurator = hasCustomerId && user.isNviCurator;
 
   return (
     <Suspense fallback={<PageSpinner aria-label={t('common.page_title')} />}>
       <Switch>
-        <Route exact path={UrlPathTemplate.Home} component={Dashboard} />
-        <Route exact path={UrlPathTemplate.About} component={AboutPage} />
+        <Route
+          exact
+          path={[
+            UrlPathTemplate.Home,
+            UrlPathTemplate.Search,
+            UrlPathTemplate.Reports,
+            UrlPathTemplate.ReportsNvi,
+            UrlPathTemplate.ReportsInternationalCooperation,
+            UrlPathTemplate.ReportsClinicalTreatmentStudies,
+          ]}
+          component={Dashboard}
+        />
+
         <Route exact path={UrlPathTemplate.PrivacyPolicy} component={PrivacyPolicy} />
         <Route exact path={UrlPathTemplate.ResearchProfile} component={PublicResearchProfile} />
         <Route exact path={UrlPathTemplate.RegistrationLandingPage} component={PublicRegistration} />
@@ -63,7 +75,7 @@ export const AppRoutes = () => {
         />
 
         {/* CuratorRoutes */}
-        <PrivateRoute path={UrlPathTemplate.Tasks} component={TasksPage} isAuthorized={isCurator} />
+        <PrivateRoute path={UrlPathTemplate.Tasks} component={TasksPage} isAuthorized={isCurator || isNviCurator} />
 
         {/* BasicDataRoutes */}
         <PrivateRoute path={UrlPathTemplate.BasicData} component={BasicDataPage} isAuthorized={isAdmin} />

@@ -25,9 +25,6 @@ const employeeErrorMessage = {
   affiliationOrganizationRequired: i18n.t('feedback.validation.is_required', {
     field: i18n.t('common.institution'),
   }),
-  affiliationPercentageRequired: i18n.t('feedback.validation.is_required', {
-    field: i18n.t('basic_data.add_employee.position_percent'),
-  }),
   affiliationPercentageMax: i18n.t('feedback.validation.must_be_smaller_than', {
     field: i18n.t('basic_data.add_employee.position_percent'),
     limit: 100,
@@ -70,9 +67,14 @@ export const userValidationSchema = Yup.object<YupShape<FlatCristinPerson>>({
     .matches(nameRegexp, employeeErrorMessage.lastNameInvalidFormat)
     .min(2, employeeErrorMessage.lastNameRequired)
     .required(employeeErrorMessage.lastNameRequired),
-  nationalId: Yup.string()
-    .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat)
-    .required(employeeErrorMessage.nationalIdInvalid),
+  nvi: Yup.object().optional(),
+  nationalId: Yup.string().when('nvi', ([nvi], schema) =>
+    !nvi?.verifiedAt.id
+      ? schema
+          .matches(/^\d{11}$/, employeeErrorMessage.nationalIdInvalidFormat)
+          .required(employeeErrorMessage.nationalIdInvalid)
+      : schema.optional()
+  ),
 });
 
 const employmentValidation = Yup.object<YupShape<Employment>>({
@@ -80,8 +82,7 @@ const employmentValidation = Yup.object<YupShape<Employment>>({
   organization: Yup.string().required(employeeErrorMessage.affiliationOrganizationRequired),
   fullTimeEquivalentPercentage: Yup.number()
     .min(0, employeeErrorMessage.affiliationPercentageMin)
-    .max(100, employeeErrorMessage.affiliationPercentageMax)
-    .required(employeeErrorMessage.affiliationPercentageRequired),
+    .max(100, employeeErrorMessage.affiliationPercentageMax),
   startDate: Yup.date()
     .required(employeeErrorMessage.affiliationStartDateRequired)
     .typeError(employeeErrorMessage.affiliationStartDateInvalid),

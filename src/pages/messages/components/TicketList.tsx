@@ -1,33 +1,28 @@
-import { List, Typography } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 import { UseQueryResult } from '@tanstack/react-query';
 import { Dispatch, SetStateAction, useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import { TicketSearchParam } from '../../../api/searchApi';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { SearchResponse } from '../../../types/common.types';
-import { ExpandedTicket } from '../../../types/publication_types/ticket.types';
+import { SearchForm } from '../../../components/SearchForm';
+import { SortSelector } from '../../../components/SortSelector';
+import { TicketSearchResponse } from '../../../types/publication_types/ticket.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 import { TicketListItem } from './TicketListItem';
 
 interface TicketListProps {
-  ticketsQuery: UseQueryResult<SearchResponse<ExpandedTicket>, unknown>;
+  ticketsQuery: UseQueryResult<TicketSearchResponse>;
   setRowsPerPage: Dispatch<SetStateAction<number>>;
   rowsPerPage: number;
   setPage: Dispatch<SetStateAction<number>>;
   page: number;
-  helmetTitle: string;
+  title: string;
 }
 
-export const TicketList = ({
-  ticketsQuery,
-  setRowsPerPage,
-  rowsPerPage,
-  setPage,
-  page,
-  helmetTitle,
-}: TicketListProps) => {
+export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage, page, title }: TicketListProps) => {
   const { t } = useTranslation();
 
   const tickets = useMemo(() => ticketsQuery.data?.hits ?? [], [ticketsQuery.data?.hits]);
@@ -41,8 +36,24 @@ export const TicketList = ({
   return (
     <section>
       <Helmet>
-        <title>{helmetTitle}</title>
+        <title>{title}</title>
       </Helmet>
+
+      <Typography variant="h2" sx={{ mb: '1rem' }}>
+        {title}
+      </Typography>
+
+      <Box sx={{ mb: '1rem', display: 'flex', gap: '0.5rem' }}>
+        <SearchForm sx={{ flex: '1 0 15rem' }} placeholder={t('tasks.search_placeholder')} />
+        <SortSelector
+          orderKey={TicketSearchParam.OrderBy}
+          sortKey={TicketSearchParam.SortOrder}
+          options={[
+            { label: t('common.sort_newest_first'), orderBy: 'createdDate', sortOrder: 'desc' },
+            { label: t('common.sort_oldest_first'), orderBy: 'createdDate', sortOrder: 'asc' },
+          ]}
+        />
+      </Box>
 
       {ticketsQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />

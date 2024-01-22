@@ -1,28 +1,28 @@
 import { Autocomplete, Box, Chip, Skeleton, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, getIn, useFormikContext } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getById } from '../../../../api/commonApi';
+import { fetchResults } from '../../../../api/searchApi';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
 import { EmphasizeSubstring } from '../../../../components/EmphasizeSubstring';
 import { NpiLevelTypography } from '../../../../components/NpiLevelTypography';
 import { Contributor } from '../../../../types/contributor.types';
-import { ResourceFieldNames } from '../../../../types/publicationFieldNames';
 import { BookPublicationContext } from '../../../../types/publication_types/bookRegistration.types';
 import {
-  Journal,
   PublicationInstanceType,
   Publisher,
   Registration,
   RegistrationDate,
+  Series,
 } from '../../../../types/registration.types';
 import { dataTestId as dataTestIds } from '../../../../utils/dataTestIds';
 import { displayDate } from '../../../../utils/date-helpers';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { useFetchResource } from '../../../../utils/hooks/useFetchResource';
-import { useSearchRegistrations } from '../../../../utils/hooks/useSearchRegistrations';
 import { stringIncludesMathJax, typesetMathJax } from '../../../../utils/mathJaxHelpers';
 import { getTitleString } from '../../../../utils/registration-helpers';
-import { ExpressionStatement } from '../../../../utils/searchHelpers';
 
 interface SearchContainerFieldProps {
   fieldName: string;
@@ -43,23 +43,17 @@ export const SearchContainerField = ({
   fetchErrorMessage,
   descriptionToShow = 'year-and-contributors',
 }: SearchContainerFieldProps) => {
+  const { t } = useTranslation();
   const { values, setFieldValue, setFieldTouched } = useFormikContext<Registration>();
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query);
 
-  const [searchContainerOptions, isLoadingSearchContainerOptions] = useSearchRegistrations(
-    {
-      searchTerm: debouncedQuery,
-      properties: [
-        {
-          fieldName: ResourceFieldNames.RegistrationType,
-          value: searchSubtypes,
-          operator: ExpressionStatement.Contains,
-        },
-      ],
-    },
-    25
-  );
+  const containerOptionsQuery = useQuery({
+    enabled: debouncedQuery === query,
+    queryKey: ['container', debouncedQuery, searchSubtypes],
+    queryFn: () => fetchResults({ title: debouncedQuery, categoryShould: searchSubtypes, results: 25 }),
+    meta: { errorMessage: t('feedback.error.search') },
+  });
 
   const [selectedContainer, isLoadingSelectedContainer] = useFetchResource<Registration>(
     getIn(values, fieldName),
@@ -83,7 +77,7 @@ export const SearchContainerField = ({
             aria-labelledby={`${dataTestId}-label`}
             popupIcon={null}
             options={
-              query === debouncedQuery && !isLoadingSearchContainerOptions ? searchContainerOptions?.hits ?? [] : []
+              query === debouncedQuery && !containerOptionsQuery.isLoading ? containerOptionsQuery.data?.hits ?? [] : []
             }
             filterOptions={(options) => options}
             inputValue={query}
@@ -104,7 +98,7 @@ export const SearchContainerField = ({
               }
               setQuery('');
             }}
-            loading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
+            loading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
             getOptionLabel={(option) => getTitleString(option.entityDescription?.mainTitle)}
             renderOption={(props, option, state) => (
               <li {...props}>
@@ -152,7 +146,7 @@ export const SearchContainerField = ({
                 {...params}
                 required
                 label={label}
-                isLoading={isLoadingSearchContainerOptions || isLoadingSelectedContainer}
+                isLoading={containerOptionsQuery.isFetching || isLoadingSelectedContainer}
                 placeholder={!field.value ? placeholder : ''}
                 showSearchIcon={!field.value}
                 errorMessage={meta.touched && !!meta.error ? meta.error : ''}
@@ -195,25 +189,49 @@ const ContainerAndLevelText = ({ registration }: ContainerAndLevelTextProps) => 
   const publisherId = publicationContext.publisher?.id ?? '';
   const seriesId = publicationContext.series?.id ?? '';
 
-  const [publisher, isLoadingPublisher] = useFetchResource<Publisher>(publisherId, t('feedback.error.get_publisher'));
-  const [series, isLoadingSeries] = useFetchResource<Journal>(seriesId, t('feedback.error.get_series'));
+  const publisherQuery = useQuery({
+    queryKey: [publisherId],
+    enabled: !!publisherId,
+    queryFn: () => getById<Publisher>(publisherId),
+    meta: { errorMessage: t('feedback.error.get_publisher') },
+    staleTime: Infinity,
+  });
+
+  const seriesQuery = useQuery({
+    queryKey: [seriesId],
+    enabled: !!seriesId,
+    queryFn: () => getById<Series>(seriesId),
+    meta: { errorMessage: t('feedback.error.get_series') },
+    staleTime: Infinity,
+  });
+
+  const publisher = publisherQuery.data;
+  const series = seriesQuery.data;
 
   return seriesId ? (
     <>
       {publisherId && (
-        <ContainerDisplayName label={t('common.publisher')} value={publisher?.name} isLoading={isLoadingPublisher} />
+        <ContainerDisplayName
+          label={t('common.publisher')}
+          value={publisher?.name}
+          isLoading={publisherQuery.isFetching}
+        />
       )}
       <ContainerDisplayName
         label={t('registration.resource_type.series')}
         value={series?.name}
-        isLoading={isLoadingSeries}
+        isLoading={seriesQuery.isFetching}
       />
-      <NpiLevelTypography variant="body2" color="textSecondary" level={series?.level} />
+      <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={series?.scientificValue} />
     </>
   ) : publisherId ? (
     <>
-      <ContainerDisplayName label={t('common.publisher')} value={publisher?.name} isLoading={isLoadingPublisher} />
-      <NpiLevelTypography variant="body2" color="textSecondary" level={publisher?.level} />
+      <ContainerDisplayName
+        label={t('common.publisher')}
+        value={publisher?.name}
+        isLoading={publisherQuery.isFetching}
+      />
+      <NpiLevelTypography variant="body2" color="textSecondary" scientificValue={publisher?.scientificValue} />
     </>
   ) : null;
 };

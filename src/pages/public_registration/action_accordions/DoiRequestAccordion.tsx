@@ -33,7 +33,7 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { DoiRequestMessagesColumn } from '../../messages/components/DoiRequestMessagesColumn';
-import { MessageList } from '../../messages/components/MessageList';
+import { TicketMessageList } from '../../messages/components/MessageList';
 import { TicketAssignee } from './TicketAssignee';
 
 interface DoiRequestAccordionProps {
@@ -258,7 +258,7 @@ export const DoiRequestAccordion = ({
         {isPendingDoiRequest && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {messages.length > 0 ? (
-              <MessageList ticket={doiRequestTicket} />
+              <TicketMessageList ticket={doiRequestTicket} />
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}

@@ -14,6 +14,7 @@ export enum FileApiPath {
 
 export enum CristinApiPath {
   FundingSources = '/cristin/funding-sources',
+  Keyword = '/cristin/keyword',
   Organization = '/cristin/organization',
   Person = '/cristin/person',
   PersonIdentityNumber = '/cristin/person/identityNumber',
@@ -22,8 +23,9 @@ export enum CristinApiPath {
 }
 
 export enum PublicationChannelApiPath {
-  JournalSearch = '/publication-channels/journal',
-  PublisherSearch = '/publication-channels/publisher',
+  Journal = '/publication-channels-v2/journal',
+  Series = '/publication-channels-v2/series',
+  Publisher = '/publication-channels-v2/publisher',
 }
 
 export enum PublicationsApiPath {
@@ -44,11 +46,22 @@ export enum RoleApiPath {
 }
 
 export enum SearchApiPath {
-  Registrations = '/search/resources',
+  Registrations = '/search/resources2',
   Tickets = '/search/tickets',
   ImportCandidates = '/search/import-candidates',
+  NviCandidate = '/scientific-index/candidate',
 }
 
 export enum VerifiedFundingApiPath {
   Nfr = '/verified-funding/nfr',
+}
+
+export enum PersonPreferencesApiPath {
+  PersonPreferences = '/person-preferences',
+}
+
+export enum ScientificIndexApiPath {
+  Candidate = '/scientific-index/candidate',
+  CandidateForRegistration = '/scientific-index/candidate/publication',
+  Period = '/scientific-index/period',
 }

@@ -4,6 +4,7 @@ export interface Organization {
   type: 'Organization';
   id: string;
   labels: LanguageString;
-  partOf?: Organization[];
-  hasPart?: Organization[];
+  acronym?: string;
+  partOf?: Omit<Organization, 'acronym'>[];
+  hasPart?: Omit<Organization, 'acronym'>[];
 }

@@ -4,7 +4,7 @@ import {
   BaseReference,
   BaseRegistration,
   ContextPublisher,
-  Series,
+  ContextSeries,
 } from '../registration.types';
 import { PagesMonograph, emptyPagesMonograph } from './pages.types';
 
@@ -22,12 +22,18 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
   pages: emptyPagesMonograph,
 };
 
+export enum Revision {
+  Revised = 'Revised',
+  Unrevised = 'Unrevised',
+}
+
 export interface BookPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
   publisher?: ContextPublisher;
   seriesNumber: string;
-  series?: Series;
+  series?: ContextSeries;
+  revision?: Revision | null;
 }
 
 interface BookReference extends BaseReference {

@@ -73,11 +73,11 @@ describe('User opens registration form and can see validation errors', () => {
     // Journal (publicationContext) field
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] input`)
       .click()
-      .type(mockJournalsSearch[0].name);
-    cy.contains(mockJournalsSearch[0].name).click();
+      .type(mockJournalsSearch.hits[0].name);
+    cy.contains(mockJournalsSearch.hits[0].name).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should(
       'contain',
-      mockJournalsSearch[0].name
+      mockJournalsSearch.hits[0].name
     );
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('not.exist');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}] svg`).click();
@@ -85,11 +85,11 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('be.visible');
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] input`)
       .click()
-      .type(mockJournalsSearch[0].name);
-    cy.contains(mockJournalsSearch[0].name).click();
+      .type(mockJournalsSearch.hits[0].name);
+    cy.contains(mockJournalsSearch.hits[0].name).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalChip}]`).should(
       'contain',
-      mockJournalsSearch[0].name
+      mockJournalsSearch.hits[0].name
     );
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.journalField}] p.Mui-error`).should('not.exist');
 
@@ -130,8 +130,8 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationContext
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
       .click()
-      .type(mockPublishersSearch[0].name);
-    cy.contains(mockPublishersSearch[0].name).click();
+      .type(mockPublishersSearch.hits[0].name);
+    cy.contains(mockPublishersSearch.hits[0].name).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] p.Mui-error`).should(
       'not.exist'
     );
@@ -179,8 +179,8 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationContext
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
       .click()
-      .type(mockPublishersSearch[0].name);
-    cy.contains(mockPublishersSearch[0].name).click();
+      .type(mockPublishersSearch.hits[0].name);
+    cy.contains(mockPublishersSearch.hits[0].name).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] p.Mui-error`).should(
       'not.exist'
     );
@@ -206,7 +206,7 @@ describe('User opens registration form and can see validation errors', () => {
     );
     cy.get('[data-testid=nav-tabpanel-resource-type]').click({ force: true });
     cy.get('[data-testid=publication-instance-type] p.Mui-error').should('not.exist');
-    cy.get('p.Mui-error').should('have.length', 6);
+    cy.get('p.Mui-error').should('have.length', 5);
 
     // publicationContext
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.eventTitleField}] input`).type('My Event');
@@ -286,8 +286,8 @@ describe('User opens registration form and can see validation errors', () => {
     // publicationContext
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] input`)
       .click()
-      .type(mockPublishersSearch[0].name);
-    cy.contains(mockPublishersSearch[0].name).click();
+      .type(mockPublishersSearch.hits[0].name);
+    cy.contains(mockPublishersSearch.hits[0].name).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.resourceType.publisherField}] p.Mui-error`).should(
       'not.exist'
     );
@@ -343,6 +343,7 @@ describe('User opens registration form and can see validation errors', () => {
     cy.get('[data-testid=uploaded-file-select-license] p.Mui-error').should('not.exist');
 
     // Embargo field
+    cy.get(`[data-testid=${dataTestId.registrationWizard.files.expandFileRowButton}]`).click();
     cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`).type('01013000').blur();
     cy.get(`[data-testid=${dataTestId.registrationWizard.files.embargoDateField}]`)
       .get('p.Mui-error')

@@ -1,10 +1,12 @@
 import {
   CustomerInstitution,
   CustomerList,
+  RightsRetentionStrategyTypes,
   Sector,
   VocabularyList,
   VocabularyStatus,
 } from '../../types/customerInstitution.types';
+import { allPublicationInstanceTypes } from '../../types/publicationFieldNames';
 
 export const mockCustomerInstitutionVocabularies: VocabularyList = {
   type: 'VocabularyList',
@@ -31,7 +33,6 @@ export const mockCustomerInstitution: CustomerInstitution = {
   identifier: '1',
   createdDate: '2020-11-01',
   displayName: 'Norwegian University of Science and Technology',
-  shortName: 'NTNU',
   archiveName: 'NTNU Open',
   cristinId: 'https://api.dev.nva.aws.unit.no/cristin/organization/194.0.0.0',
   institutionDns: '1.1.1.1',
@@ -45,6 +46,9 @@ export const mockCustomerInstitution: CustomerInstitution = {
   },
   sector: Sector.Uhi,
   nviInstitution: false,
+  rboInstitution: false,
+  rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
+  allowFileUploadForTypes: allPublicationInstanceTypes,
 };
 
 export const mockCustomerInstitutions: CustomerList = {
@@ -58,6 +62,7 @@ export const mockCustomerInstitutions: CustomerList = {
       id: 'https://api.dev.nva.aws.unit.no/customer/2',
       createdDate: '2020-11-01',
       displayName: 'Name 1',
+      doiPrefix: '10.12345',
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/customer/3',
@@ -68,6 +73,7 @@ export const mockCustomerInstitutions: CustomerList = {
       id: 'https://api.dev.nva.aws.unit.no/customer/4',
       createdDate: '2020-01-27',
       displayName: 'Name 3',
+      doiPrefix: '10.12347',
     },
     {
       id: 'https://api.dev.nva.aws.unit.no/customer/5',

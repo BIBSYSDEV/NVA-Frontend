@@ -22,10 +22,10 @@ import { ListPagination } from '../../../components/ListPagination';
 import { setNotification } from '../../../redux/notificationSlice';
 import { alternatingTableRowColor } from '../../../themes/mainTheme';
 import {
+  Affiliation,
   Contributor,
   ContributorRole,
   Identity,
-  Institution,
   emptyContributor,
 } from '../../../types/contributor.types';
 import { ContributorFieldNames } from '../../../types/publicationFieldNames';
@@ -90,8 +90,8 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       newSequence - 1 > maxNewIndex
         ? maxNewIndex
         : newSequence < minNewIndex
-        ? minNewIndex
-        : contributors.findIndex((c) => c.sequence === newSequence);
+          ? minNewIndex
+          : contributors.findIndex((c) => c.sequence === newSequence);
 
     const orderedContributors =
       newIndex >= 0 ? (move(contributors, oldIndex, newIndex) as Contributor[]) : contributors;
@@ -133,7 +133,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     };
 
     const activeAffiliations = filterActiveAffiliations(selectedContributor.affiliations);
-    const existingAffiliations: Institution[] = activeAffiliations.map(({ organization }) => ({
+    const existingAffiliations: Affiliation[] = activeAffiliations.map(({ organization }) => ({
       type: 'Organization',
       id: organization,
     }));
@@ -151,18 +151,23 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
       push(newContributor);
       goToLastPage();
     } else {
-      const relevantContributor = contributors[contributorIndex];
-      const relevantAffiliations = relevantContributor.affiliations ?? [];
+      const thisContributor = contributors[contributorIndex];
+      const verifiedAffiliations = thisContributor.affiliations ?? [];
+      const verifiedOrcid = thisContributor.identity.orcId;
 
-      relevantAffiliations.push(...existingAffiliations);
+      verifiedAffiliations.push(...existingAffiliations);
 
       const verifiedContributor: Contributor = {
-        ...relevantContributor,
+        ...thisContributor,
         role: {
           type: role,
         },
-        identity,
-        affiliations: relevantAffiliations,
+        identity: {
+          ...identity,
+          orcId: verifiedOrcid || identity.orcId || '',
+          additionalIdentifiers: thisContributor.identity.additionalIdentifiers,
+        },
+        affiliations: verifiedAffiliations,
       };
       replace(contributorIndex, verifiedContributor);
     }
@@ -172,6 +177,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
     <>
       {contributors.length > 5 && (
         <TextField
+          data-testid={dataTestId.registrationWizard.contributors.contributorSearchField}
           type="search"
           sx={{ display: 'block', mb: '1rem' }}
           label={t('common.search_by_name')}
@@ -184,7 +190,7 @@ export const Contributors = ({ contributorRoles, push, replace }: ContributorsPr
             ),
           }}
           onChange={(event) => {
-            setCurrentPage(0);
+            setCurrentPage(1);
             setFilterInput(event.target.value);
           }}
         />

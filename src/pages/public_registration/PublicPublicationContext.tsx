@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
-import { hyphenate } from 'isbn-utils';
+import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -49,7 +49,7 @@ import {
   OtherRelease,
   Venue,
 } from '../../types/publication_types/artisticRegistration.types';
-import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
+import { BookPublicationContext, Revision } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import {
   ExhibitionBasic,
@@ -63,7 +63,7 @@ import {
 } from '../../types/publication_types/mediaContributionRegistration.types';
 import { PresentationPublicationContext } from '../../types/publication_types/presentationRegistration.types';
 import { ReportPublicationContext } from '../../types/publication_types/reportRegistration.types';
-import { ContextPublisher, Journal, Publisher } from '../../types/registration.types';
+import { ContextPublisher, Journal, Publisher, Series } from '../../types/registration.types';
 import { getIdentifierFromId, getPeriodString } from '../../utils/general-helpers';
 import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { getOutputName, hyphenateIsrc } from '../../utils/registration-helpers';
@@ -117,13 +117,12 @@ export const PublicPublisher = ({ publisher }: { publisher?: ContextPublisher })
       ) : fetchedPublisher ? (
         <>
           <Typography>{fetchedPublisher.name}</Typography>
-          <NpiLevelTypography level={fetchedPublisher.level} />
-          <Typography
-            component={Link}
-            href={getChannelRegisterPublisherUrl(fetchedPublisher.identifier)}
-            target="_blank">
-            {t('registration.public_page.find_in_channel_registry')}
-          </Typography>
+          <NpiLevelTypography scientificValue={fetchedPublisher.scientificValue} />
+          {fetchedPublisher.sameAs && (
+            <Typography component={Link} href={fetchedPublisher.sameAs} target="_blank">
+              {t('registration.public_page.find_in_channel_registry')}
+            </Typography>
+          )}
         </>
       ) : (
         <Typography>{publisher.name}</Typography>
@@ -143,6 +142,11 @@ export const PublicPublishedInContent = ({ id }: { id: string | null }) => {
       <RegistrationSummary id={id} />
     </>
   ) : null;
+};
+
+export const RevisionInformation = ({ revision }: { revision?: Revision | null }) => {
+  const { t } = useTranslation();
+  return Revision.Revised === revision ? <Typography>{t('registration.is_revision')}</Typography> : null;
 };
 
 export const PublicSeries = ({
@@ -179,7 +183,7 @@ interface PublicJournalContentProps {
 
 const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) => {
   const { t } = useTranslation();
-  const [journal, isLoadingJournal] = useFetchResource<Journal>(id ?? '', errorMessage);
+  const [journal, isLoadingJournal] = useFetchResource<Journal | Series>(id ?? '', errorMessage);
 
   return id ? (
     <>
@@ -197,10 +201,12 @@ const PublicJournalContent = ({ id, errorMessage }: PublicJournalContentProps) =
                 .filter((issn) => issn)
                 .join(', ')}
             </Typography>
-            <NpiLevelTypography level={journal.level} />
-            <Typography component={Link} href={getChannelRegisterJournalUrl(journal.identifier)} target="_blank">
-              {t('registration.public_page.find_in_channel_registry')}
-            </Typography>
+            <NpiLevelTypography scientificValue={journal.scientificValue} />
+            {journal.sameAs && (
+              <Typography component={Link} href={journal.sameAs} target="_blank">
+                {t('registration.public_page.find_in_channel_registry')}
+              </Typography>
+            )}
           </>
         )
       )}
@@ -279,7 +285,13 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
     enabled: !!exhibitionCatalogIdentifier,
     queryKey: ['registration', exhibitionCatalogIdentifier],
     queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
+    onError: () =>
+      dispatch(
+        setNotification({
+          message: t('feedback.error.get_registration'),
+          variant: 'error',
+        })
+      ),
   });
 
   const nameString = exhibitionCatalogIdentifier

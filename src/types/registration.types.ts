@@ -1,5 +1,5 @@
 import { AssociatedArtifact } from './associatedArtifact.types';
-import { AggregationBucket, Aggregations, LanguageString, SearchResponse } from './common.types';
+import { AggregationValue, LanguageString } from './common.types';
 import { Contributor } from './contributor.types';
 import { ResearchProject } from './project.types';
 import {
@@ -45,28 +45,27 @@ export enum RegistrationTab {
   FilesAndLicenses = 3,
 }
 
-export interface Journal {
+export type ScientificValue = 'Unassigned' | 'LevelZero' | 'LevelOne' | 'LevelTwo';
+
+interface PublicationChannel {
   id: string;
-  identifier: string;
   name: string;
-  active: boolean;
-  website: string;
-  level?: string;
-  onlineIssn: string | null;
-  printIssn: string | null;
-  npiDomain: string;
-  openAccess: boolean | null;
-  language: string | null;
-  publisherId: string | null;
+  scientificValue: ScientificValue;
+  sameAs: string;
+  printIssn?: string;
+  onlineIssn?: string;
 }
 
-export interface Publisher {
-  id: string;
-  identifier: string;
-  name: string;
-  website: string;
-  active: boolean;
-  level?: string;
+export interface Journal extends PublicationChannel {
+  type: 'Journal';
+}
+
+export interface Series extends PublicationChannel {
+  type: 'Series';
+}
+
+export interface Publisher extends PublicationChannel {
+  type: 'Publisher';
 }
 
 export interface MyRegistrationsResponse {
@@ -77,8 +76,13 @@ interface RegistrationPublisher {
   id: string;
 }
 
+interface AdditionalIdentifier {
+  sourceName: 'Cristin' | 'Scopus';
+  value: string;
+}
+
 export interface BaseRegistration {
-  readonly type: 'Publication';
+  readonly type: 'Publication' | 'ImportCandidate';
   readonly id: string;
   readonly identifier: string;
   readonly createdDate: string;
@@ -92,6 +96,7 @@ export interface BaseRegistration {
   readonly doi?: string;
   readonly publisher: RegistrationPublisher;
   readonly handle?: string;
+  readonly additionalIdentifiers?: AdditionalIdentifier[];
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
@@ -238,7 +243,7 @@ export const emptyRegistration: Registration = {
   fundings: [],
 };
 
-export interface Series {
+export interface ContextSeries {
   type: PublicationChannelType.Series | PublicationChannelType.UnconfirmedSeries;
   id?: string;
   title?: string;
@@ -255,45 +260,9 @@ export const emptyContextPublisher: ContextPublisher = {
   id: '',
 };
 
-export interface LabelAggregationBucket extends AggregationBucket {
-  labels: Aggregations;
-}
-
-interface ContributorAggregationBucket extends AggregationBucket {
-  name: {
-    buckets: AggregationBucket[];
-  };
-}
-
-export interface RegistrationSearchAggregations {
-  topLevelOrganization: {
-    id: {
-      buckets: LabelAggregationBucket[];
-    };
-  };
-  entityDescription: {
-    reference: {
-      publicationInstance: {
-        type: {
-          buckets: AggregationBucket[];
-        };
-      };
-    };
-    contributors: {
-      identity: {
-        id: {
-          buckets: ContributorAggregationBucket[];
-        };
-      };
-    };
-  };
-  fundings: {
-    identifier: {
-      buckets: LabelAggregationBucket[];
-    };
-  };
-}
-
-export interface RegistrationSearchResponse extends Omit<SearchResponse<Registration>, 'aggregations'> {
-  aggregations?: RegistrationSearchAggregations;
+export interface RegistrationAggregations {
+  topLevelOrganization?: AggregationValue[];
+  type?: AggregationValue[];
+  fundingSource?: AggregationValue[];
+  contributor?: AggregationValue[];
 }

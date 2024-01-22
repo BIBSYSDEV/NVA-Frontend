@@ -1,7 +1,9 @@
 import { CircularProgress, Link, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { getById } from '../../api/commonApi';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
 import { Organization } from '../../types/organization.types';
@@ -20,6 +22,16 @@ export const EditorInstitution = () => {
     user?.topOrgCristinId ? user.topOrgCristinId : '',
     t('feedback.error.get_institution')
   );
+
+  const institutionId = user?.topOrgCristinId ?? '';
+
+  const organizationQuery = useQuery({
+    queryKey: [institutionId],
+    queryFn: () => getById<Organization>(institutionId),
+    staleTime: Infinity,
+    cacheTime: 1_800_000, // 30 minutes
+    meta: { errorMessage: t('feedback.error.get_institution') },
+  });
 
   return (
     <>
@@ -43,7 +55,7 @@ export const EditorInstitution = () => {
           <Typography variant="h3" component="h2">
             {t('editor.institution.institution_short_name')}
           </Typography>
-          <Typography paragraph>{customer?.shortName ?? '-'}</Typography>
+          <Typography paragraph>{organizationQuery.data?.acronym ?? '-'}</Typography>
 
           <Typography variant="h3" component="h2">
             {t('editor.institution.institution_code')}
@@ -61,6 +73,22 @@ export const EditorInstitution = () => {
             ) : (
               '-'
             )}
+          </Typography>
+
+          <Typography variant="h3" component="h2">
+            {t('common.nvi')}
+          </Typography>
+          <Typography paragraph>
+            {customer?.nviInstitution
+              ? t('editor.institution.institution_is_nvi_institution')
+              : t('editor.institution.institution_is_not_nvi_institution')}
+          </Typography>
+
+          <Typography variant="h3" component="h2">
+            {t('common.rbo')}
+          </Typography>
+          <Typography paragraph>
+            {customer?.rboInstitution ? t('editor.institution.rbo_funded') : t('editor.institution.not_rbo_funded')}
           </Typography>
 
           <Typography sx={{ pt: '1rem' }}>

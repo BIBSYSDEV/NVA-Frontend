@@ -1,13 +1,18 @@
-import { LanguageString } from './common.types';
+import { AggregationValue, LanguageString } from './common.types';
+import { Keywords } from './keywords.types';
 
 export enum RoleName {
-  InstitutionAdmin = 'Institution-admin',
   AppAdmin = 'App-admin',
-  Curator = 'Curator',
+  DoiCurator = 'Doi-Curator',
+  SupportCurator = 'Support-Curator',
+  PublishingCurator = 'Publishing-Curator',
   CuratorThesis = 'Curator-thesis',
   CuratorThesisEmbargo = 'Curator-thesis-embargo',
   Creator = 'Creator',
   Editor = 'Editor',
+  InstitutionAdmin = 'Institution-admin',
+  InternalImporter = 'Internal-importer',
+  NviCurator = 'Nvi-curator',
 }
 
 export interface User {
@@ -20,12 +25,16 @@ export interface User {
   givenName: string;
   feideId: string;
   isAppAdmin: boolean;
-  isCurator: boolean;
+  isInternalImporter: boolean;
+  isDoiCurator: boolean;
+  isPublishingCurator: boolean;
+  isSupportCurator: boolean;
   isThesisCurator: boolean;
   isEmbargoThesisCurator: boolean;
   isInstitutionAdmin: boolean;
   isCreator: boolean;
   isEditor: boolean;
+  isNviCurator: boolean;
   roles: RoleName[];
   nvaUsername: string;
   orcid?: string;
@@ -101,6 +110,7 @@ export interface CreateCristinPerson {
   identifiers: CristinPersonIdentifier[];
   names: CristinPersonName[];
   employments?: Employment[];
+  nvi?: NviVerification;
 }
 
 export interface CristinPerson extends CreateCristinPerson {
@@ -109,6 +119,17 @@ export interface CristinPerson extends CreateCristinPerson {
   employments: Employment[];
   contactDetails?: CristinPersonContactDetails;
   verified?: boolean;
+  image?: string;
+  background: {
+    no?: string;
+    en?: string;
+  };
+  keywords?: Keywords[];
+}
+
+export interface PersonAggregations {
+  organizationFacet: AggregationValue[];
+  sectorFacet: AggregationValue[];
 }
 
 export interface FlatCristinPerson {
@@ -122,6 +143,12 @@ export interface FlatCristinPerson {
   affiliations: CristinPersonAffiliation[];
   employments: Employment[];
   orcid?: string;
+  background: {
+    no?: string | null;
+    en?: string | null;
+  };
+  keywords?: Keywords[];
+  nvi?: NviVerification;
 }
 
 interface Position {
@@ -148,4 +175,22 @@ export const emptyEmployment: Employment = {
   startDate: '',
   endDate: '',
   fullTimeEquivalentPercentage: '',
+};
+
+interface NviVerification {
+  verifiedAt: {
+    id: string;
+  };
+  verifiedBy: {
+    id: string;
+  };
+}
+
+export const emptyNviVerification: NviVerification = {
+  verifiedAt: {
+    id: '',
+  },
+  verifiedBy: {
+    id: '',
+  },
 };

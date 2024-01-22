@@ -6,6 +6,12 @@ frontend:
         - npm ci
     build:
       commands:
+        - |
+          if [ "$AWS_BRANCH" == "main" ]; then
+            cp robots/main-robots.txt public/robots.txt
+          else
+            cp robots/dev-robots.txt public/robots.txt
+          fi
         - npm run build
   artifacts:
     baseDirectory: build

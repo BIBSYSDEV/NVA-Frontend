@@ -41,20 +41,21 @@ export const emptyInstant: Instant = {
   value: '',
 };
 
-export interface SearchResponse<T> {
+export interface SearchResponse<HitType, AggregationType = undefined> {
   processingTime: number;
   size: number;
-  hits: T[];
-  aggregations?: Aggregations;
+  hits: HitType[];
+  aggregations?: AggregationType;
 }
 
-export type Aggregations = {
-  [fieldName: string]: {
-    buckets?: AggregationBucket[];
-  };
-};
+export interface SearchResponse2<HitType, AggregationType = undefined>
+  extends Pick<SearchResponse<HitType, AggregationType>, 'hits' | 'aggregations'> {
+  totalHits: number;
+}
 
-export interface AggregationBucket {
+export interface AggregationValue {
   key: string;
-  docCount: number;
+  id: string;
+  count: number;
+  labels?: LanguageString;
 }

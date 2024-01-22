@@ -32,7 +32,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
 import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
-import { MessageList } from '../../messages/components/MessageList';
+import { TicketMessageList } from '../../messages/components/MessageList';
 import { PublishingRequestMessagesColumn } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { TicketAssignee } from './TicketAssignee';
@@ -117,7 +117,14 @@ export const PublishingAccordion = ({
     if (isErrorStatus(createPublishingRequestTicketResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.create_publishing_request'), variant: 'error' }));
     } else if (isSuccessStatus(createPublishingRequestTicketResponse.status)) {
-      dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
+      userIsCurator
+        ? dispatch(
+            setNotification({
+              message: t('feedback.success.publish_as_curator'),
+              variant: 'success',
+            })
+          )
+        : dispatch(setNotification({ message: t('feedback.success.create_publishing_request'), variant: 'success' }));
       refetchData();
     }
     setIsLoading(LoadingState.None);
@@ -148,7 +155,7 @@ export const PublishingAccordion = ({
 
   const ticketMessages = publishingRequestTicket?.messages ?? [];
 
-  const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.Tasks);
+  const isOnTasksPath = window.location.pathname.startsWith(UrlPathTemplate.TasksDialogue);
 
   return (
     <Accordion
@@ -169,28 +176,28 @@ export const PublishingAccordion = ({
         {publishingRequestTicket && <TicketAssignee ticket={publishingRequestTicket} refetchTickets={refetchData} />}
 
         {tabErrors && (
-          <ErrorList
-            tabErrors={tabErrors}
-            description={<Typography>{t('registration.public_page.error_description')}</Typography>}
-            actions={
-              <Button
-                variant="outlined"
-                component={RouterLink}
-                to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
-                endIcon={<EditIcon />}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
-                {t('registration.public_page.go_back_to_wizard')}
-              </Button>
-            }
-          />
+          <>
+            <Typography>{t('registration.public_page.error_description')}</Typography>
+            <ErrorList tabErrors={tabErrors} />
+            <Button
+              variant="outlined"
+              component={RouterLink}
+              size="small"
+              sx={{ mb: publishingRequestTicket ? '1rem' : undefined }}
+              to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
+              endIcon={<EditIcon />}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
+              {t('registration.public_page.go_back_to_wizard')}
+            </Button>
+          </>
         )}
 
         {publishingRequestTicket && <PublishingRequestMessagesColumn ticket={publishingRequestTicket} />}
 
-        {hasPendingTicket && <Divider sx={{ my: '0.5rem' }} />}
+        {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
 
         {/* Option to reload data if status is not up to date with ticket */}
-        {hasMismatchingPublishedStatus && (
+        {!tabErrors && hasMismatchingPublishedStatus && (
           <>
             <Typography gutterBottom>
               {hasUnpublishedFiles && isPublishedRegistration
@@ -269,7 +276,8 @@ export const PublishingAccordion = ({
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-              {t('registration.public_page.approve_publish_request')} ({registration.associatedArtifacts.length})
+              {t('registration.public_page.approve_publish_request')} (
+              {registration.associatedArtifacts.filter((artifact) => artifact.type === 'UnpublishedFile').length})
             </LoadingButton>
             <LoadingButton
               sx={{ bgcolor: 'white' }}
@@ -287,7 +295,7 @@ export const PublishingAccordion = ({
         {hasPendingTicket && (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
             {ticketMessages.length > 0 ? (
-              <MessageList ticket={publishingRequestTicket} />
+              <TicketMessageList ticket={publishingRequestTicket} />
             ) : (
               <Typography>{t('registration.public_page.publishing_request_message_about')}</Typography>
             )}

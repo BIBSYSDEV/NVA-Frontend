@@ -1,13 +1,26 @@
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
+import StarIcon from '@mui/icons-material/Star';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { Box, IconButton, List, ListItemText, Link as MuiLink, Tooltip, Typography } from '@mui/material';
+import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { updatePromotedPublications } from '../api/preferencesApi';
+import { PreviousPathLocationState } from '../pages/public_registration/PublicRegistration';
+import { setNotification } from '../redux/notificationSlice';
+import { RootState } from '../redux/store';
 import { Registration, RegistrationStatus } from '../types/registration.types';
 import { dataTestId } from '../utils/dataTestIds';
 import { displayDate } from '../utils/date-helpers';
 import { getTitleString } from '../utils/registration-helpers';
-import { getRegistrationLandingPagePath, getRegistrationWizardPath, getResearchProfilePath } from '../utils/urlPaths';
+import {
+  UrlPathTemplate,
+  getRegistrationLandingPagePath,
+  getRegistrationWizardPath,
+  getResearchProfilePath,
+} from '../utils/urlPaths';
 import { ContributorIndicators } from './ContributorIndicators';
 import { ErrorBoundary } from './ErrorBoundary';
 import { TruncatableTypography } from './TruncatableTypography';
@@ -17,33 +30,24 @@ interface RegistrationListProps {
   registrations: Registration[];
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
+  promotedPublications?: string[];
 }
 
-export const RegistrationList = ({
-  registrations,
-  canEditRegistration = false,
-  onDeleteDraftRegistration,
-}: RegistrationListProps) => (
-  <List>
+export const RegistrationList = ({ registrations, ...rest }: RegistrationListProps) => (
+  <List data-testid="search-results">
     {registrations.map((registration) => (
       <ErrorBoundary key={registration.id}>
         <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
-          <RegistrationListItemContent
-            onDeleteDraftRegistration={onDeleteDraftRegistration}
-            registration={registration}
-            canEditRegistration={canEditRegistration}
-          />
+          <RegistrationListItemContent registration={registration} {...rest} />
         </SearchListItem>
       </ErrorBoundary>
     ))}
   </List>
 );
 
-interface RegistrationListItemContentProps {
+interface RegistrationListItemContentProps extends Omit<RegistrationListProps, 'registrations'> {
   registration: Registration;
   ticketView?: boolean;
-  canEditRegistration?: boolean;
-  onDeleteDraftRegistration?: (registration: Registration) => void;
 }
 
 export const RegistrationListItemContent = ({
@@ -51,9 +55,17 @@ export const RegistrationListItemContent = ({
   ticketView = false,
   canEditRegistration,
   onDeleteDraftRegistration,
+  promotedPublications = [],
 }: RegistrationListItemContentProps) => {
   const { t } = useTranslation();
-  const { identifier, entityDescription } = registration;
+  const { identifier, entityDescription, id } = registration;
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+
+  const user = useSelector((store: RootState) => store.user);
+  const userCristinId = user?.cristinId ?? '';
+  const mutationKey = ['person-preferences', userCristinId];
 
   const contributors = entityDescription?.contributors ?? [];
   const focusedContributors = contributors.slice(0, 5);
@@ -65,6 +77,24 @@ export const RegistrationListItemContent = ({
 
   const publicationDate = displayDate(entityDescription?.publicationDate);
   const heading = [typeString, publicationDate].filter(Boolean).join(' — ');
+
+  const isPromotedPublication = promotedPublications.includes(id);
+
+  const isMutating = useIsMutating({ mutationKey }) > 0;
+
+  const mutatePromotedPublications = useMutation({
+    mutationKey,
+    mutationFn: (newPromotedPublications: string[]) =>
+      updatePromotedPublications(userCristinId, newPromotedPublications),
+    onSuccess: (newData) => {
+      queryClient.setQueryData(mutationKey, newData);
+      dispatch(setNotification({ message: t('feedback.success.update_promoted_publication'), variant: 'success' }));
+    },
+    onError: () =>
+      dispatch(setNotification({ message: t('feedback.error.update_promoted_publication'), variant: 'error' })),
+  });
+
+  const linkLocationState: PreviousPathLocationState = { previousPath: `${location.pathname}${location.search}` };
 
   return (
     <Box sx={{ display: 'flex', width: '100%', gap: '1rem' }}>
@@ -88,11 +118,16 @@ export const RegistrationListItemContent = ({
               </Typography>
             )}
         </Box>
-        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordWrap: 'break-word' }}>
+        <Typography gutterBottom sx={{ fontSize: '1rem', fontWeight: '600', wordBreak: 'break-word' }}>
           {ticketView ? (
             getTitleString(entityDescription?.mainTitle)
           ) : (
-            <MuiLink component={Link} to={getRegistrationLandingPagePath(identifier)}>
+            <MuiLink
+              component={Link}
+              to={{
+                pathname: getRegistrationLandingPagePath(identifier),
+                state: linkLocationState,
+              }}>
               {getTitleString(entityDescription?.mainTitle)}
             </MuiLink>
           )}
@@ -127,13 +162,38 @@ export const RegistrationListItemContent = ({
           </Box>
         </Box>
 
-        <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
-          {entityDescription?.abstract}
-        </TruncatableTypography>
+        {(entityDescription?.abstract || entityDescription?.description) && (
+          <TruncatableTypography sx={{ mt: '0.5rem', maxWidth: '60rem' }}>
+            {entityDescription?.abstract || entityDescription?.description}
+          </TruncatableTypography>
+        )}
       </ListItemText>
+
+      {location.pathname.includes(UrlPathTemplate.ResearchProfile) && isPromotedPublication && (
+        <StarIcon fontSize="small" />
+      )}
 
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
+          {location.pathname === UrlPathTemplate.MyPageMyResults && (
+            <IconButton
+              title={t('my_page.my_profile.edit_promoted_publication')}
+              data-testid={dataTestId.myPage.addPromotedPublicationButton}
+              disabled={isMutating}
+              onClick={() => {
+                if (isPromotedPublication) {
+                  mutatePromotedPublications.mutate(
+                    promotedPublications.filter((promotedPublicationId) => promotedPublicationId !== id)
+                  );
+                } else {
+                  mutatePromotedPublications.mutate([...promotedPublications, id]);
+                }
+              }}
+              size="small"
+              sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
+              {isPromotedPublication ? <StarIcon fontSize="inherit" /> : <StarOutlineIcon fontSize="inherit" />}
+            </IconButton>
+          )}
           <Tooltip title={t('common.edit')}>
             <IconButton
               data-testid={`edit-registration-${identifier}`}

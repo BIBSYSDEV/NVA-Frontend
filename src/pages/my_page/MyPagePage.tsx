@@ -1,15 +1,15 @@
-import AddIcon from '@mui/icons-material/Add';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
-import PersonIcon from '@mui/icons-material/Person';
+import NotesIcon from '@mui/icons-material/Notes';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
 import { Button, Divider, FormControlLabel, FormLabel } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { fetchTickets } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -19,6 +19,7 @@ import {
   SideNavHeader,
   StyledPageWithSideMenu,
 } from '../../components/PageWithSideMenu';
+import { ProfilePicture } from '../../components/ProfilePicture';
 import { SelectableButton } from '../../components/SelectableButton';
 import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
@@ -30,12 +31,14 @@ import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { PrivateRoute } from '../../utils/routes/Routes';
 import { UrlPathTemplate } from '../../utils/urlPaths';
+import { getFullName, hasCuratorRole } from '../../utils/user-helpers';
 import NotFound from '../errorpages/NotFound';
 import { TicketList } from '../messages/components/TicketList';
 import { MyRegistrations } from '../my_registrations/MyRegistrations';
 import { ProjectFormDialog } from '../projects/form/ProjectFormDialog';
 import { RegistrationLandingPage } from '../public_registration/RegistrationLandingPage';
 import ResearchProfile from '../research_profile/ResearchProfile';
+import { MyFieldAndBackground } from './user_profile/MyFieldAndBackground';
 import { MyProfile } from './user_profile/MyProfile';
 import { MyProjectRegistrations } from './user_profile/MyProjectRegistrations';
 import { MyProjects } from './user_profile/MyProjects';
@@ -51,7 +54,9 @@ const MyPagePage = () => {
   const location = useLocation();
   const user = useSelector((store: RootState) => store.user);
   const isAuthenticated = !!user;
-  const isCreator = !!user?.customerId && (user.isCreator || user.isCurator);
+  const isCreator = !!user?.customerId && (user.isCreator || hasCuratorRole(user));
+  const personId = user?.cristinId ?? '';
+  const fullName = user ? getFullName(user?.givenName, user?.familyName) : '';
 
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
@@ -100,13 +105,25 @@ const MyPagePage = () => {
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
+  const searchParams = new URLSearchParams(location.search);
+  const queryParam = searchParams.get(TicketSearchParam.Query);
+
   const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
-  const query = [typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
+  const query = [queryParam, typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
+
+  const ticketSearchParams: FetchTicketsParams = {
+    query,
+    results: rowsPerPage,
+    from: apiPage * rowsPerPage,
+    role: 'creator',
+    orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
+    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
+  };
 
   const ticketsQuery = useQuery({
-    queryKey: ['tickets', rowsPerPage, apiPage, query],
-    queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, query, true),
+    queryKey: ['tickets', ticketSearchParams],
+    queryFn: () => fetchTickets(ticketSearchParams),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 
@@ -146,8 +163,8 @@ const MyPagePage = () => {
           <NavigationListAccordion
             key={dataTestId.myPage.messagesAccordion}
             dataTestId={dataTestId.myPage.messagesAccordion}
-            title={t('my_page.messages.dialogue')}
-            startIcon={<ChatBubbleIcon fontSize="small" />}
+            title={t('common.dialogue')}
+            startIcon={<ChatBubbleIcon fontSize="small" sx={{ color: 'white', bgcolor: 'primary.main' }} />}
             accordionPath={UrlPathTemplate.MyPageMessages}
             defaultPath={UrlPathTemplate.MyPageMyMessages}>
             <StyledTicketSearchFormGroup>
@@ -268,7 +285,7 @@ const MyPagePage = () => {
           <NavigationListAccordion
             key={dataTestId.myPage.registrationsAccordion}
             title={t('common.result_registrations')}
-            startIcon={<AddIcon fontSize="small" />}
+            startIcon={<NotesIcon fontSize="small" sx={{ bgcolor: 'registration.main' }} />}
             accordionPath={UrlPathTemplate.MyPageRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyRegistrations}
             dataTestId={dataTestId.myPage.registrationsAccordion}>
@@ -317,7 +334,7 @@ const MyPagePage = () => {
           <NavigationListAccordion
             key={dataTestId.myPage.projectRegistrationsAccordion}
             title={t('my_page.project_registrations')}
-            startIcon={<AddIcon sx={{ bgcolor: 'project.main' }} fontSize="small" />}
+            startIcon={<ShowChartIcon sx={{ bgcolor: 'project.main' }} fontSize="small" />}
             accordionPath={UrlPathTemplate.MyPageProjectRegistrations}
             defaultPath={UrlPathTemplate.MyPageMyProjectRegistrations}
             dataTestId={dataTestId.myPage.projectRegistrationsAccordion}>
@@ -382,7 +399,7 @@ const MyPagePage = () => {
         ]}
         <NavigationListAccordion
           title={t('my_page.research_profile')}
-          startIcon={<img src={orcidIcon} height="20" alt={t('common.orcid')} />}
+          startIcon={<img src={orcidIcon} alt={t('common.orcid')} />}
           accordionPath={UrlPathTemplate.MyPageResearchProfile}
           defaultPath={UrlPathTemplate.MyPageMyResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
@@ -398,7 +415,7 @@ const MyPagePage = () => {
 
         <NavigationListAccordion
           title={t('my_page.my_profile.user_profile')}
-          startIcon={<PersonIcon fontSize="small" />}
+          startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
           accordionPath={UrlPathTemplate.MyPageMyProfile}
           defaultPath={UrlPathTemplate.MyPageMyPersonalia}
           dataTestId={dataTestId.myPage.myProfileAccordion}>
@@ -408,6 +425,12 @@ const MyPagePage = () => {
               isSelected={currentPath === UrlPathTemplate.MyPageMyPersonalia}
               to={UrlPathTemplate.MyPageMyPersonalia}>
               {t('my_page.my_profile.heading.personalia')}
+            </LinkButton>
+            <LinkButton
+              data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMyFieldAndBackground}
+              to={UrlPathTemplate.MyPageMyFieldAndBackground}>
+              {t('my_page.my_profile.field_and_background.field_and_background')}
             </LinkButton>
             <LinkButton
               data-testid={dataTestId.myPage.myResultsLink}
@@ -442,7 +465,7 @@ const MyPagePage = () => {
               setRowsPerPage={setRowsPerPage}
               page={page}
               setPage={setPage}
-              helmetTitle={t('my_page.messages.dialogue')}
+              title={t('common.dialogue')}
             />
           </PrivateRoute>
           <PrivateRoute
@@ -461,6 +484,12 @@ const MyPagePage = () => {
             exact
             path={UrlPathTemplate.MyPageMyPersonalia}
             component={MyProfile}
+            isAuthorized={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path={UrlPathTemplate.MyPageMyFieldAndBackground}
+            component={MyFieldAndBackground}
             isAuthorized={isAuthenticated}
           />
           <PrivateRoute

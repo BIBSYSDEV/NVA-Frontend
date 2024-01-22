@@ -1,4 +1,5 @@
-import { LanguageString } from './common.types';
+import { UnconfirmedOrganization } from './common.types';
+import { Organization } from './organization.types';
 
 // For available roles, see https://github.com/BIBSYSDEV/nva-datamodel-java/blob/main/nva-datamodel-java/src/main/java/no/unit/nva/model/Role.java
 export enum ContributorRole {
@@ -8,9 +9,12 @@ export enum ContributorRole {
   ArchitecturalPlanner = 'ArchitecturalPlanner',
   Artist = 'Artist',
   ArtisticDirector = 'ArtisticDirector',
+  AudioVisualContributor = 'AudioVisualContributor',
   Choreographer = 'Choreographer',
+  CollaborationPartner = 'CollaborationPartner',
   Composer = 'Composer',
   Conductor = 'Conductor',
+  Conservator = 'Conservator',
   Consultant = 'Consultant',
   ContactPerson = 'ContactPerson',
   CostumeDesigner = 'CostumeDesigner',
@@ -27,12 +31,14 @@ export enum ContributorRole {
   Dramatist = 'Dramatist',
   Dramaturge = 'Dramaturge',
   Editor = 'Editor',
+  ExhibitionDesigner = 'ExhibitionDesigner',
   InteriorArchitect = 'InteriorArchitect',
   InterviewSubject = 'InterviewSubject',
   Journalist = 'Journalist',
   LandscapeArchitect = 'LandscapeArchitect',
   Librettist = 'Librettist',
   LightDesigner = 'LightDesigner',
+  MuseumEducator = 'MuseumEducator',
   Musician = 'Musician',
   Organizer = 'Organizer',
   Other = 'RoleOther',
@@ -42,6 +48,7 @@ export enum ContributorRole {
   ProgrammeLeader = 'ProgrammeLeader',
   ProgrammeParticipant = 'ProgrammeParticipant',
   ProjectLeader = 'ProjectLeader',
+  Registrar = 'Registrar',
   RelatedPerson = 'RelatedPerson',
   Researcher = 'Researcher',
   RightsHolder = 'RightsHolder',
@@ -49,7 +56,6 @@ export enum ContributorRole {
   Screenwriter = 'Screenwriter',
   Soloist = 'Soloist',
   SoundDesigner = 'SoundDesigner',
-  Sponsor = 'Sponsor',
   Supervisor = 'Supervisor',
   TranslatorAdapter = 'TranslatorAdapter',
   VfxSupervisor = 'VfxSupervisor',
@@ -68,12 +74,18 @@ export interface Identity {
   id?: string;
   name: string;
   orcId?: string;
+  additionalIdentifiers?: AdditionalIdentifier[];
   verificationStatus?: VerificationStatus;
+}
+
+interface AdditionalIdentifier {
+  sourceName: string;
+  value: string;
 }
 
 export interface Contributor {
   type: 'Contributor';
-  affiliations?: Institution[];
+  affiliations?: Affiliation[];
   correspondingAuthor?: boolean;
   identity: Identity;
   role: {
@@ -83,13 +95,9 @@ export interface Contributor {
   sequence: number;
 }
 
-// DOI lookup can give labels without id for institutions,
-// while when a contributor is added manually there will be ids present, and no need for labels.
-export interface Institution {
-  type: 'Organization';
-  id?: string;
-  labels?: LanguageString;
-}
+export type ConfirmedAffiliation = Pick<Organization, 'type' | 'id'>;
+
+export type Affiliation = ConfirmedAffiliation | UnconfirmedOrganization;
 
 export const emptyContributor: Contributor = {
   affiliations: [],

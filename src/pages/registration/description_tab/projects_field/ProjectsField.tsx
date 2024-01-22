@@ -3,7 +3,7 @@ import { Autocomplete, Box, Button, Divider, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps } from 'formik';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { searchForProjects } from '../../../../api/cristinApi';
 import { AutocompleteProjectOption } from '../../../../components/AutocompleteProjectOption';
 import { AutocompleteTextField } from '../../../../components/AutocompleteTextField';
@@ -12,6 +12,7 @@ import { DescriptionFieldNames } from '../../../../types/publicationFieldNames';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { ProjectFormDialog } from '../../../projects/form/ProjectFormDialog';
+import { HelperTextModal } from '../../HelperTextModal';
 import { ProjectChip } from './ProjectChip';
 
 export const ProjectsField = () => {
@@ -23,7 +24,7 @@ export const ProjectsField = () => {
   const projectsQuery = useQuery({
     enabled: debouncedSearchTerm.length > 0,
     queryKey: ['projects', 10, 1, debouncedSearchTerm],
-    queryFn: () => searchForProjects(10, 1, { query: debouncedSearchTerm }),
+    queryFn: () => searchForProjects(10, 1, { title: debouncedSearchTerm }),
     meta: { errorMessage: t('feedback.error.project_search') },
   });
 
@@ -32,7 +33,14 @@ export const ProjectsField = () => {
   return (
     <>
       <Divider />
-      <Typography variant="h2">{t('project.project')}</Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography variant="h2">{t('project.project')}</Typography>
+        <HelperTextModal
+          modalTitle={t('project.project')}
+          modalDataTestId={dataTestId.registrationWizard.description.projectModal}>
+          <Trans i18nKey="registration.description.project_helper_text" components={[<Typography paragraph />]} />
+        </HelperTextModal>
+      </Box>
       <Box sx={{ display: 'grid', alignItems: 'center', gridTemplateColumns: '4fr 1fr', gap: '0.5rem' }}>
         <Field name={DescriptionFieldNames.Projects}>
           {({ field, form: { setFieldValue } }: FieldProps<ResearchProject[]>) => (
@@ -84,12 +92,23 @@ export const ProjectsField = () => {
                   />
                 )}
               />
-              <Button
-                data-testid={dataTestId.registrationWizard.description.createProjectButton}
-                onClick={() => setOpenNewProjectDialog(true)}
-                startIcon={<AddIcon />}>
-                {t('project.create_project')}
-              </Button>
+
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Button
+                  data-testid={dataTestId.registrationWizard.description.createProjectButton}
+                  onClick={() => setOpenNewProjectDialog(true)}
+                  startIcon={<AddIcon />}>
+                  {t('project.create_project')}
+                </Button>
+                <HelperTextModal
+                  modalTitle={t('project.create_project')}
+                  modalDataTestId={dataTestId.registrationWizard.description.createProjectModal}>
+                  <Trans
+                    i18nKey="registration.description.create_project_helper_text"
+                    components={[<Typography paragraph />]}
+                  />
+                </HelperTextModal>
+              </Box>
               <ProjectFormDialog
                 open={openNewProjectDialog}
                 onClose={() => setOpenNewProjectDialog(false)}

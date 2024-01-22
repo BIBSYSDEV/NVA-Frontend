@@ -1,4 +1,4 @@
-import { parse as parseIsbn } from 'isbn-utils';
+import { parse as parseIsbn } from 'isbn3';
 import * as Yup from 'yup';
 import i18n from '../../../translations/i18n';
 import {
@@ -163,7 +163,7 @@ export const emptyStringToNull = (value: string, originalValue: string) => (orig
 export const isbnListField = Yup.array().of(
   Yup.string()
     .min(13, resourceErrorMessage.isbnTooShort)
-    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? '')?.isIsbn13())
+    .test('isbn-test', resourceErrorMessage.isbnInvalid, (isbn) => !isbn || !!parseIsbn(isbn ?? ''))
 );
 
 const pagesMonographField = Yup.object()
@@ -204,7 +204,6 @@ const pagesRangeField = Yup.object()
 export const periodField = Yup.object().shape({
   from: Yup.date().required(resourceErrorMessage.dateFromRequired).typeError(resourceErrorMessage.dateFromInvalid),
   to: Yup.date()
-    .required(resourceErrorMessage.dateToRequired)
     .typeError(resourceErrorMessage.dateToInvalid)
     .when('from', ([from], schema) =>
       from instanceof Date && !isNaN(from.getTime())
@@ -214,7 +213,9 @@ export const periodField = Yup.object().shape({
 });
 
 const publisherField: Yup.ObjectSchema<ContextPublisher> = Yup.object({
-  type: Yup.string<PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher>().defined(),
+  type: Yup.string<PublicationChannelType.UnconfirmedPublisher | PublicationChannelType.Publisher>().defined(
+    resourceErrorMessage.publisherRequired
+  ),
   name: Yup.string().optional(),
   id: Yup.string().when('name', ([name], schema) =>
     name

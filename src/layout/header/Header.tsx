@@ -3,18 +3,21 @@ import AssignmentIcon from '@mui/icons-material/AssignmentOutlined';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenterOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Box, Button, Divider, Theme, Typography, useMediaQuery } from '@mui/material';
+import { AppBar, Box, Theme, Typography, useMediaQuery } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { getById } from '../../api/commonApi';
 import { setCustomer } from '../../redux/customerReducer';
 import { RootState } from '../../redux/store';
 import { CustomerInstitution } from '../../types/customerInstitution.types';
+import { Organization } from '../../types/organization.types';
 import { dataTestId } from '../../utils/dataTestIds';
 import { useFetch } from '../../utils/hooks/useFetch';
 import { UrlPathTemplate } from '../../utils/urlPaths';
-import { LanguageSelector } from './LanguageSelector';
+import { hasCuratorRole } from '../../utils/user-helpers';
 import { LoginButton } from './LoginButton';
 import { Logo } from './Logo';
 import { MenuButton, MenuIconButton } from './MenuButton';
@@ -25,6 +28,17 @@ export const Header = () => {
   const currentPath = location.pathname.replace(/\/$/, '').toLowerCase(); // Remove trailing slash
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
+  const institutionId = user?.topOrgCristinId ?? '';
+
+  const organizationQuery = useQuery({
+    queryKey: [institutionId],
+    queryFn: () => getById<Organization>(institutionId),
+    staleTime: Infinity,
+    cacheTime: 1_800_000, // 30 minutes
+    meta: { errorMessage: t('feedback.error.get_institution') },
+  });
+  const organization = organizationQuery.data;
+
   const [customer] = useFetch<CustomerInstitution>({
     url: user?.customerId ?? '',
     errorMessage: t('feedback.error.get_customer'),
@@ -33,12 +47,13 @@ export const Header = () => {
 
   useEffect(() => {
     if (customer) {
+      // This is needed to ensure user has correct publish workflow etc from Customer.
+      // TODO: Should be moved away from redux at one point.
       dispatch(setCustomer(customer));
     }
   }, [dispatch, customer]);
 
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const isLargeScreen = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 
   return (
     <AppBar position="sticky" elevation={0} sx={{ color: 'white' }}>
@@ -47,43 +62,32 @@ export const Header = () => {
         sx={{
           display: 'grid',
           justifyItems: 'center',
-          gridTemplateAreas: {
-            xs: '"language logo user-menu"',
-            lg: '"language logo search new-result user-menu"',
-          },
-          gridTemplateColumns: { xs: 'auto auto auto', lg: '3fr auto 1fr 10fr 5fr' },
-          gap: '1rem',
+          gridTemplateAreas: '"logo search new-result user-menu"',
+          gridTemplateColumns: { xs: 'auto auto 1fr auto', md: 'auto 1fr 10fr auto' },
+          gap: { xs: '0.5rem', sm: '1rem' },
           px: '1rem',
         }}>
-        <LanguageSelector isMobile={isMobile} />
-
         <Logo />
-
-        {isLargeScreen && (
-          <MenuIconButton
-            color="inherit"
-            sx={{ gridArea: 'search' }}
-            title={t('common.search')}
-            isSelected={location.pathname === UrlPathTemplate.Home || currentPath === UrlPathTemplate.Home}
-            to={UrlPathTemplate.Home}>
-            <SearchIcon fontSize="large" />
-          </MenuIconButton>
-        )}
+        <MenuIconButton
+          color="inherit"
+          sx={{ gridArea: 'search' }}
+          title={t('common.search')}
+          isSelected={location.pathname === UrlPathTemplate.Home || currentPath === UrlPathTemplate.Home}
+          to={UrlPathTemplate.Home}>
+          <SearchIcon fontSize="large" />
+        </MenuIconButton>
 
         {user?.isCreator && (
-          <Button
+          <MenuButton
             sx={{
               gridArea: 'new-result',
-              fontSize: '1rem',
+              fontSize: '1.4rem',
               fontWeight: 700,
               gap: '0.5rem',
-              display: { xs: 'none', lg: 'inline-flex' },
-              '.MuiButton-startIcon > :nth-of-type(1)': {
-                fontSize: '1.875rem',
-              },
+              display: { xs: 'none', sm: 'inline-flex' },
             }}
+            isSelected={currentPath === UrlPathTemplate.RegistrationNew}
             color="inherit"
-            component={RouterLink}
             data-testid={dataTestId.header.newRegistrationLink}
             to={UrlPathTemplate.RegistrationNew}
             startIcon={
@@ -93,13 +97,13 @@ export const Header = () => {
                   bgcolor: 'primary.light',
                   borderRadius: '50%',
                   padding: '0.2rem',
-                  width: '3.125rem',
-                  height: '3.125rem',
+                  width: '2.7rem',
+                  height: '2.7rem',
                 }}
               />
             }>
             {t('registration.new_registration')}
-          </Button>
+          </MenuButton>
         )}
         <Box
           sx={{
@@ -116,7 +120,7 @@ export const Header = () => {
           }}>
           {!isMobile && (
             <>
-              {customer?.shortName &&
+              {organization?.acronym &&
                 (user?.isEditor ? (
                   <MenuButton
                     sx={{
@@ -128,22 +132,17 @@ export const Header = () => {
                     color="inherit"
                     data-testid={dataTestId.header.editorLink}
                     to={UrlPathTemplate.EditorCurators}>
-                    {customer.shortName}
+                    {organization.acronym}
                   </MenuButton>
                 ) : (
                   <Typography
                     variant="h1"
                     component="span"
                     sx={{ whiteSpace: 'nowrap', color: 'inherit', alignSelf: 'center' }}>
-                    {customer.shortName}
+                    {organization.acronym}
                   </Typography>
                 ))}
-              <Divider
-                variant="middle"
-                sx={{ gridArea: 'divider', borderColor: 'white', opacity: 0.8 }}
-                orientation="vertical"
-                flexItem
-              />
+
               {(user?.isInstitutionAdmin || user?.isAppAdmin) && (
                 <MenuButton
                   color="inherit"
@@ -154,7 +153,7 @@ export const Header = () => {
                   {t('basic_data.basic_data')}
                 </MenuButton>
               )}
-              {user?.isCurator && (
+              {(hasCuratorRole(user) || user?.isNviCurator) && (
                 <MenuButton
                   color="inherit"
                   data-testid={dataTestId.header.tasksLink}

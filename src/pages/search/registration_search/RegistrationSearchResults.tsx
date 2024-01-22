@@ -1,18 +1,22 @@
-import { Box } from '@mui/material';
 import { useEffect } from 'react';
 import { RegistrationList } from '../../../components/RegistrationList';
-import { RegistrationSearchResponse } from '../../../types/registration.types';
+import { Registration } from '../../../types/registration.types';
 import { stringIncludesMathJax, typesetMathJax } from '../../../utils/mathJaxHelpers';
 
 interface SearchResultsProps {
-  searchResult: RegistrationSearchResponse;
+  searchResult: Registration[];
   canEditRegistration?: boolean;
+  promotedPublications?: string[];
 }
 
-export const RegistrationSearchResults = ({ searchResult, canEditRegistration = false }: SearchResultsProps) => {
+export const RegistrationSearchResults = ({
+  searchResult,
+  canEditRegistration = false,
+  promotedPublications = [],
+}: SearchResultsProps) => {
   useEffect(() => {
     if (
-      searchResult.hits.some(
+      searchResult.some(
         ({ entityDescription }) =>
           stringIncludesMathJax(entityDescription?.mainTitle) || stringIncludesMathJax(entityDescription?.abstract)
       )
@@ -22,8 +26,10 @@ export const RegistrationSearchResults = ({ searchResult, canEditRegistration = 
   }, [searchResult]);
 
   return (
-    <Box data-testid="search-results">
-      <RegistrationList canEditRegistration={canEditRegistration} registrations={searchResult.hits} />
-    </Box>
+    <RegistrationList
+      canEditRegistration={canEditRegistration}
+      registrations={searchResult}
+      promotedPublications={promotedPublications}
+    />
   );
 };

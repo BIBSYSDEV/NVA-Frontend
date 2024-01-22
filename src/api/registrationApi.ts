@@ -1,4 +1,4 @@
-import { ImportCandidate } from '../types/importCandidate.types';
+import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
 import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
@@ -18,12 +18,15 @@ export const updateRegistration = async (registration: Registration) =>
     data: registration,
   });
 
-export const getRegistrationByDoi = async (doiUrl: string) =>
-  await authenticatedApiRequest<Doi>({
+export const getRegistrationByDoi = async (doiUrl: string) => {
+  const getRegistrationByDoiResponse = await authenticatedApiRequest2<Doi>({
     url: `${PublicationsApiPath.DoiLookup}/`,
     data: { doiUrl },
     method: 'POST',
   });
+
+  return getRegistrationByDoiResponse.data;
+};
 
 export const deleteRegistration = async (identifier: string) =>
   await authenticatedApiRequest({
@@ -111,10 +114,23 @@ export const fetchImportCandidate = async (importCandidateIdentifier: string) =>
 };
 
 export const createRegistrationFromImportCandidate = async (importCandidate: ImportCandidate) => {
-  const creatRegistrationResponse = await authenticatedApiRequest2<Registration>({
+  const createRegistrationResponse = await authenticatedApiRequest2<Registration>({
     url: `${PublicationsApiPath.ImportCandidate}/${importCandidate.identifier}`,
     method: 'POST',
     data: importCandidate,
   });
-  return creatRegistrationResponse.data;
+  return createRegistrationResponse.data;
+};
+
+export const updateImportCandidateStatus = async (
+  importCandidateIdentifier: string,
+  importStatus: Partial<ImportStatus>
+) => {
+  const updateImportCandidateStatusResponse = await authenticatedApiRequest2<ImportCandidate>({
+    url: `${PublicationsApiPath.ImportCandidate}/${importCandidateIdentifier}`,
+    method: 'PUT',
+    data: importStatus,
+  });
+
+  return updateImportCandidateStatusResponse.data;
 };

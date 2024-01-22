@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { hyphenate as hyphenateIsbn } from 'isbn-utils';
+import { hyphenate } from 'isbn3';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../translations/i18n';
 import { ArtisticType } from '../../types/publicationFieldNames';
@@ -102,16 +102,16 @@ export const PublicPublicationInstanceArtistic = ({
     type === ArtisticType.ArtisticDesign
       ? 'registration.resource_type.artistic.design_type.'
       : type === ArtisticType.ArtisticArchitecture
-      ? 'registration.resource_type.artistic.architecture_type.'
-      : type === ArtisticType.PerformingArts
-      ? 'registration.resource_type.artistic.performing_arts_type.'
-      : type === ArtisticType.MovingPicture
-      ? 'registration.resource_type.artistic.moving_picture_type.'
-      : type === ArtisticType.VisualArts
-      ? 'registration.resource_type.artistic.visual_arts_type.'
-      : type === ArtisticType.LiteraryArts
-      ? 'registration.resource_type.artistic.literary_arts_type.'
-      : '';
+        ? 'registration.resource_type.artistic.architecture_type.'
+        : type === ArtisticType.PerformingArts
+          ? 'registration.resource_type.artistic.performing_arts_type.'
+          : type === ArtisticType.MovingPicture
+            ? 'registration.resource_type.artistic.moving_picture_type.'
+            : type === ArtisticType.VisualArts
+              ? 'registration.resource_type.artistic.visual_arts_type.'
+              : type === ArtisticType.LiteraryArts
+                ? 'registration.resource_type.artistic.literary_arts_type.'
+                : '';
 
   const typeString = subtype?.type
     ? subtype.type === DesignType.Other && subtype.description
@@ -170,7 +170,7 @@ export const PublicIsbnContent = ({ isbnList }: { isbnList?: string[] }) => {
       {t('registration.resource_type.isbn')}:{' '}
       {isbnList
         .filter((isbn) => isbn)
-        .map((isbn) => hyphenateIsbn(isbn))
+        .map((isbn) => hyphenate(isbn))
         .join(', ')}
     </Typography>
   ) : null;

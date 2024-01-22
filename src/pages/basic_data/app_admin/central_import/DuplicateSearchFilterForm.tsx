@@ -4,7 +4,7 @@ import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DuplicateSearchFilters, DuplicateSearchForm } from '../../../../types/duplicateSearchTypes';
-import { Registration } from '../../../../types/registration.types';
+import { ImportCandidateSummary } from '../../../../types/importCandidate.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 
 const StyledFormElementWrapper = muiStyled('div')({
@@ -17,31 +17,28 @@ const StyledFormControlLabel = muiStyled(FormControlLabel)({
 });
 
 interface DuplicateSearchFilterFormProps {
-  publication: Registration;
+  importCandidate: ImportCandidateSummary;
   setDuplicateSearchFilters: Dispatch<SetStateAction<DuplicateSearchFilters>>;
 }
 
 export const DuplicateSearchFilterForm = ({
-  publication,
+  importCandidate,
   setDuplicateSearchFilters,
 }: DuplicateSearchFilterFormProps) => {
   const { t } = useTranslation();
 
   const initialSearchParams: DuplicateSearchForm = {
-    doi: publication.entityDescription?.reference?.doi ?? '',
-    title: publication.entityDescription?.mainTitle ?? '',
-    author: publication.entityDescription?.contributors[0]?.identity.name ?? '',
-    issn: '',
-    yearPublished: '',
+    doi: importCandidate.doi ?? '',
+    title: importCandidate.mainTitle ?? '',
+    author: importCandidate.contributors[0]?.identity.name ?? '',
+    issn: importCandidate.printIssn ?? importCandidate.onlineIssn ?? '',
+    yearPublished: importCandidate.publicationYear ?? '',
     isDoiChecked: true,
     isTitleChecked: false,
     isAuthorChecked: false,
     isIssnChecked: false,
     isYearPublishedChecked: false,
   };
-
-  //TODO: Bruker bør ikke kunne søke med tomme verdier i avsjekkede felter.
-  //TODO: Implementer tester ;-)
 
   return (
     <Formik

@@ -1,4 +1,4 @@
-import { Link, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { getLanguageByUri } from 'nva-language';
 import { useTranslation } from 'react-i18next';
 import { StyledGeneralInfo } from '../../components/styled/Wrappers';
@@ -58,6 +58,7 @@ import {
   PublicPublishedInContent,
   PublicPublisher,
   PublicSeries,
+  RevisionInformation,
 } from './PublicPublicationContext';
 import {
   PublicIsbnContent,
@@ -83,6 +84,13 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
     | undefined;
 
   const language = entityDescription?.language ? getLanguageByUri(entityDescription.language) : null;
+
+  const cristinIdentifier = registration.additionalIdentifiers?.find(
+    (identifier) => identifier.sourceName === 'Cristin'
+  )?.value;
+  const scopusIdentifier = registration.additionalIdentifiers?.find(
+    (identifier) => identifier.sourceName === 'Scopus'
+  )?.value;
 
   return (
     <StyledGeneralInfo>
@@ -116,16 +124,28 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicIsbnContent
                 isbnList={(registration as BookRegistration).entityDescription.reference?.publicationContext.isbnList}
               />
+              <RevisionInformation revision={(publicationContext as BookPublicationContext).revision} />
             </>
           ) : isDegree(publicationInstance.type) ? (
             <>
-              {publicationInstance.type === DegreeType.Phd && (
+              {(publicationContext as DegreePublicationContext)?.course?.code &&
+                (publicationInstance.type === DegreeType.Bachelor ||
+                  publicationInstance.type === DegreeType.Master ||
+                  publicationInstance.type === DegreeType.Other) && (
+                  <Typography>
+                    {t('registration.resource_type.course_code')}:{' '}
+                    {(publicationContext as DegreePublicationContext).course?.code}
+                  </Typography>
+                )}
+
+              {publicationInstance.type !== DegreeType.Bachelor && publicationInstance.type !== DegreeType.Master && (
                 <PublicIsbnContent
                   isbnList={
                     (registration as DegreeRegistration).entityDescription.reference?.publicationContext.isbnList
                   }
                 />
               )}
+
               <PublicPublicationInstanceDegree publicationInstance={publicationInstance as DegreePublicationInstance} />
             </>
           ) : isReport(publicationInstance.type) ? (
@@ -163,6 +183,31 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
             </Typography>
           </>
         )}
+
+        {(cristinIdentifier || scopusIdentifier) && (
+          <Box sx={{ display: 'flex', columnGap: '2rem', flexWrap: 'wrap' }}>
+            {cristinIdentifier && (
+              <div>
+                <Typography variant="overline">{t('registration.public_page.cristin_id')}</Typography>
+                <Typography>
+                  <Link
+                    data-testid={dataTestId.registrationLandingPage.cristinLink}
+                    href={`https://app.cristin.no/results/show.jsf?id=${cristinIdentifier}`}
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    {cristinIdentifier}
+                  </Link>
+                </Typography>
+              </div>
+            )}
+            {scopusIdentifier && (
+              <div>
+                <Typography variant="overline">{t('registration.public_page.scopus_id')}</Typography>
+                <Typography>{scopusIdentifier}</Typography>
+              </div>
+            )}
+          </Box>
+        )}
       </div>
 
       <div data-testid={dataTestId.registrationLandingPage.subtypeFields}>
@@ -187,7 +232,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
           ) : isDegree(publicationInstance.type) ? (
             <>
               <PublicPublisher publisher={(publicationContext as DegreePublicationContext).publisher} />
-              {publicationInstance.type === DegreeType.Phd && (
+              {(publicationInstance.type === DegreeType.Phd || publicationInstance.type === DegreeType.Licentiate) && (
                 <PublicSeries publicationContext={publicationContext as DegreePublicationContext} />
               )}
             </>

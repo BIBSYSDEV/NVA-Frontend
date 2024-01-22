@@ -1,7 +1,11 @@
+import { allPublicationInstanceTypes } from './publicationFieldNames';
+import { PublicationInstanceType } from './registration.types';
+
 export interface SimpleCustomerInstitution {
   id: string;
   createdDate: string;
   displayName: string;
+  doiPrefix?: string;
 }
 
 export type PublishStrategy = 'RegistratorPublishesMetadataOnly' | 'RegistratorPublishesMetadataAndFiles';
@@ -11,9 +15,10 @@ export enum Sector {
   Health = 'HEALTH',
   Institute = 'INSTITUTE',
   Abm = 'ABM',
+  Other = 'OTHER',
 }
 
-export interface CustomerInstitution extends SimpleCustomerInstitution {
+export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id' | 'createdDate' | 'displayName'> {
   type?: 'Customer';
   archiveName: string;
   cristinId: string;
@@ -22,13 +27,26 @@ export interface CustomerInstitution extends SimpleCustomerInstitution {
   institutionDns: string;
   name: string;
   modifiedDate?: string;
-  shortName: string;
   vocabularies: CustomerVocabulary[];
   publicationWorkflow: PublishStrategy;
   rorId?: string;
   doiAgent: DoiAgent;
   sector: Sector;
   nviInstitution: boolean;
+  rboInstitution: boolean;
+  rightsRetentionStrategy: RightsRetentionStrategy;
+  allowFileUploadForTypes: PublicationInstanceType[];
+}
+
+interface RightsRetentionStrategy {
+  type: RightsRetentionStrategyTypes;
+  id: string;
+}
+
+export enum RightsRetentionStrategyTypes {
+  NullRightsRetentionStrategy = 'NullRightsRetentionStrategy',
+  RightsRetentionStrategy = 'RightsRetentionStrategy',
+  OverridableRightsRetentionStrategy = 'OverridableRightsRetentionStrategy',
 }
 
 export interface DoiAgent {
@@ -71,12 +89,14 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   identifier: '',
   institutionDns: '',
   name: '',
-  shortName: '',
   vocabularies: [],
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   rorId: '',
   sector: Sector.Uhi,
   nviInstitution: false,
+  rboInstitution: false,
+  rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
+  allowFileUploadForTypes: allPublicationInstanceTypes,
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
@@ -98,10 +118,10 @@ export enum CustomerInstitutionFieldNames {
   InstitutionDns = 'customer.institutionDns',
   Name = 'customer.name',
   RorId = 'customer.rorId',
-  ShortName = 'customer.shortName',
   Sector = 'customer.sector',
   NviInstitution = 'customer.nviInstitution',
   CanAssignDoi = 'canAssignDoi',
+  RboInstitution = 'customer.rboInstitution',
 }
 
 export interface CustomerList {

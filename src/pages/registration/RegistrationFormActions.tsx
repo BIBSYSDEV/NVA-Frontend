@@ -1,7 +1,7 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 import { FormikErrors, setNestedObjectValues, useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -9,11 +9,13 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { updateRegistration } from '../../api/registrationApi';
+import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { Modal } from '../../components/Modal';
 import { setNotification } from '../../redux/notificationSlice';
 import { Registration, RegistrationTab } from '../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
+import { willResetNviStatuses } from '../../utils/nviHelpers';
 import { getFormattedRegistration } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
 import { SupportModalContent } from './SupportModalContent';
@@ -22,9 +24,17 @@ interface RegistrationFormActionsProps {
   tabNumber: RegistrationTab;
   setTabNumber: (newTab: RegistrationTab) => void;
   validateForm: (values: Registration) => FormikErrors<Registration>;
+  persistedRegistration: Registration;
+  isNviCandidate: boolean;
 }
 
-export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm }: RegistrationFormActionsProps) => {
+export const RegistrationFormActions = ({
+  tabNumber,
+  setTabNumber,
+  validateForm,
+  persistedRegistration,
+  isNviCandidate,
+}: RegistrationFormActionsProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -34,6 +44,10 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
   const [openSupportModal, setOpenSupportModal] = useState(false);
   const toggleSupportModal = () => setOpenSupportModal((state) => !state);
   const [isSaving, setIsSaving] = useState(false);
+  const [openNviApprovalResetDialog, setOpenNviApprovalResetDialog] = useState(false);
+
+  const isFirstTab = tabNumber === RegistrationTab.Description;
+  const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
 
   const saveRegistration = async (values: Registration) => {
     setIsSaving(true);
@@ -49,24 +63,26 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
         ['registration', updateRegistrationResponse.data.identifier],
         updateRegistrationResponse.data
       );
-      const newErrors = validateForm(updateRegistrationResponse.data);
-      setTouched(setNestedObjectValues(newErrors, true));
       dispatch(setNotification({ message: t('feedback.success.update_registration'), variant: 'success' }));
+      if (isLastTab) {
+        history.push(getRegistrationLandingPagePath(values.identifier));
+      } else {
+        const newErrors = validateForm(updateRegistrationResponse.data);
+        setTouched(setNestedObjectValues(newErrors, true));
+      }
     }
     setIsSaving(false);
 
     return isSuccess;
   };
 
-  const onClickSaveAndPresent = async () => {
-    const registrationIsUpdated = await saveRegistration(values);
-    if (registrationIsUpdated) {
-      history.push(getRegistrationLandingPagePath(values.identifier));
+  const handleSaveClick = async () => {
+    if (isNviCandidate && (await willResetNviStatuses(persistedRegistration, values))) {
+      setOpenNviApprovalResetDialog(true);
+    } else {
+      await saveRegistration(values);
     }
   };
-
-  const isFirstTab = tabNumber === RegistrationTab.Description;
-  const isLastTab = tabNumber === RegistrationTab.FilesAndLicenses;
 
   return (
     <>
@@ -126,7 +142,7 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
               variant="outlined"
               loading={isSaving}
               data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-              onClick={async () => await saveRegistration(values)}>
+              onClick={handleSaveClick}>
               {t('common.save')}
             </LoadingButton>
             <Tooltip title={t('common.next')} sx={{ gridArea: 'next-button' }}>
@@ -150,7 +166,7 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
             variant="contained"
             loading={isSaving}
             data-testid={dataTestId.registrationWizard.formActions.saveRegistrationButton}
-            onClick={onClickSaveAndPresent}
+            onClick={handleSaveClick}
             sx={{ gridArea: 'save-button', width: 'fit-content', justifySelf: 'end' }}>
             {t('common.save_and_view')}
           </LoadingButton>
@@ -166,6 +182,18 @@ export const RegistrationFormActions = ({ tabNumber, setTabNumber, validateForm 
         dataTestId={dataTestId.registrationWizard.formActions.supportModal}>
         <SupportModalContent closeModal={toggleSupportModal} registration={values} />
       </Modal>
+
+      <ConfirmDialog
+        open={openNviApprovalResetDialog}
+        title={t('registration.nvi_warning.registration_is_included_in_nvi')}
+        onAccept={async () => {
+          setOpenNviApprovalResetDialog(false);
+          await saveRegistration(values);
+        }}
+        onCancel={() => setOpenNviApprovalResetDialog(false)}>
+        <Typography paragraph>{t('registration.nvi_warning.approval_override_warning')}</Typography>
+        <Typography>{t('registration.nvi_warning.confirm_saving_registration')}</Typography>
+      </ConfirmDialog>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { Auth } from '@aws-amplify/auth';
 import { Box } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AppRoutes } from './AppRoutes';
 import { getCurrentUserAttributes } from './api/authApi';
 import { CreateCristinPersonDialog } from './components/CreateCristinPersonDialog';
+import { EnvironmentBanner } from './components/EnvironmentBanner';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { PageSpinner } from './components/PageSpinner';
 import { SelectCustomerInstitutionDialog } from './components/SelectCustomerInstitutionDialog';
@@ -105,6 +106,7 @@ export const App = () => {
             <Notifier />
             <SkipLink href="#main-content">{t('common.skip_to_main_content')}</SkipLink>
             <Header />
+            <EnvironmentBanner />
             <Box
               component="main"
               id="main-content"
@@ -114,6 +116,7 @@ export const App = () => {
                 width: '100%',
                 alignItems: 'center',
                 flexGrow: 1,
+                mb: '0.5rem',
               }}>
               <ErrorBoundary>
                 <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={getDateFnsLocale(i18n.language)}>

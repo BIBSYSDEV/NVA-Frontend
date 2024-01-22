@@ -12,6 +12,7 @@ export interface AssociatedFile {
   publisherAuthority: boolean | null;
   embargoDate: Date | null;
   license: string | null;
+  legalNote?: string;
 }
 
 export const emptyFile: AssociatedFile = {

@@ -19,11 +19,18 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
       defaultOptions: {
         queries: {
           refetchOnWindowFocus: false,
+          retry: 2,
         },
       },
       queryCache: new QueryCache({
         onError: (error: any, query) => {
-          let errorMessage = typeof query.meta?.errorMessage === 'string' ? query.meta.errorMessage : '';
+          const queryErrorMessage = query.meta?.errorMessage;
+
+          if (queryErrorMessage === false) {
+            return;
+          }
+
+          let errorMessage = typeof queryErrorMessage === 'string' ? queryErrorMessage : '';
           if (!errorMessage) {
             if (typeof error?.response?.data?.detail === 'string') {
               errorMessage = error.response.data.detail;

@@ -1,5 +1,4 @@
 import { InstitutionUser, RoleName, UserList, UserRole } from '../types/user.types';
-import { filterUsersByRole } from '../utils/role-helpers';
 import { getFullName } from '../utils/user-helpers';
 import { RoleApiPath } from './apiPaths';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
@@ -25,13 +24,26 @@ export const fetchUser = async (username: string) => {
   return userResponse.data;
 };
 
-export const fetchUsers = async (customerId: string, role: RoleName) => {
-  const usersResponse = await authenticatedApiRequest2<UserList>({
-    url: `${RoleApiPath.InstitutionUsers}?institution=${customerId}`,
-  });
-  const filteredUsers = filterUsersByRole(usersResponse.data.users, role);
+export const fetchUsers = async (customerId: string, role: RoleName | RoleName[]) => {
+  const searchParams = new URLSearchParams();
 
-  return filteredUsers.sort((a, b) => {
+  if (customerId) {
+    searchParams.set('institution', customerId);
+  }
+
+  if (role) {
+    if (typeof role === 'string') {
+      searchParams.set('role', role);
+    } else if (Array.isArray(role) && role.length > 0) {
+      role.forEach((role) => searchParams.append('role', role));
+    }
+  }
+
+  const usersResponse = await authenticatedApiRequest2<UserList>({
+    url: `${RoleApiPath.InstitutionUsers}?${searchParams.toString()}`,
+  });
+
+  return usersResponse.data.users.sort((a, b) => {
     const nameA = getFullName(a.givenName, a.familyName);
     const nameB = getFullName(b.givenName, b.familyName);
     return nameA.localeCompare(nameB);
