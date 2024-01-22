@@ -4,49 +4,49 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { OrganizationSearchParams, fetchOrganization, searchForOrganizations } from '../../../api/cristinApi';
+import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getSortedSubUnits } from '../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { AdvancedSearchQueryParams } from './AdvancesSearchPage';
 
 interface OrganizationFiltersProps {
-  institutionId: string | null;
-  subUnitId: string | null;
+  topLevelOrganizationId: string | null;
+  unitId: string | null;
 }
 
-export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFiltersProps) => {
+export const OrganizationFilters = ({ topLevelOrganizationId, unitId }: OrganizationFiltersProps) => {
   const { t } = useTranslation();
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedQuery = useDebounce(searchTerm);
 
-  const organizationQuery = useQuery({
-    queryKey: [institutionId],
-    enabled: !!institutionId,
-    queryFn: () => fetchOrganization(institutionId ?? ''),
+  const topLevelOrganizationQuery = useQuery({
+    queryKey: [topLevelOrganizationId],
+    enabled: !!topLevelOrganizationId,
+    queryFn: () => fetchOrganization(topLevelOrganizationId ?? ''),
     meta: { errorMessage: t('feedback.error.get_institution') },
     staleTime: Infinity,
     cacheTime: 1_800_000, // 30 minutes
   });
 
-  const institutionQueryParams: OrganizationSearchParams = {
+  const organizationQueryParams: OrganizationSearchParams = {
     query: debouncedQuery,
   };
-  const institutionSearchQuery = useQuery({
+  const organizationSearchQuery = useQuery({
     enabled: !!debouncedQuery,
-    queryKey: ['organization', institutionQueryParams],
-    queryFn: () => searchForOrganizations(institutionQueryParams),
+    queryKey: ['organization', organizationQueryParams],
+    queryFn: () => searchForOrganizations(organizationQueryParams),
     meta: { errorMessage: t('feedback.error.get_institutions') },
   });
 
-  const options = institutionSearchQuery.data?.hits ?? [];
+  const options = organizationSearchQuery.data?.hits ?? [];
 
-  const subUnits = getSortedSubUnits(organizationQuery.data?.hasPart);
-  const selectedSubUnit = subUnits.find((unit) => unit.id === subUnitId) ?? null;
+  const subUnits = getSortedSubUnits(topLevelOrganizationQuery.data?.hasPart);
+  const selectedSubUnit = subUnits.find((unit) => unit.id === unitId) ?? null;
 
-  const isLoading = organizationQuery.isFetching || institutionSearchQuery.isFetching;
+  const isLoading = topLevelOrganizationQuery.isFetching || organizationSearchQuery.isFetching;
 
   return (
     <Box sx={{ display: 'flex', gap: '0.5rem 1rem', flexWrap: 'wrap' }}>
@@ -62,22 +62,22 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
           }
         }}
         onChange={(_, selectedInstitution) => {
-          if (selectedInstitution !== institutionId) {
+          if (selectedInstitution !== topLevelOrganizationId) {
             const params = new URLSearchParams(history.location.search);
             if (selectedInstitution) {
-              params.set(AdvancedSearchQueryParams.Institution, selectedInstitution.id);
+              params.set(ResultParam.TopLevelOrganization, selectedInstitution.id);
             } else {
-              params.delete(AdvancedSearchQueryParams.Institution);
+              params.delete(ResultParam.TopLevelOrganization);
             }
-
-            params.delete(AdvancedSearchQueryParams.SubUnit);
+            params.set(ResultParam.From, '0');
+            params.delete(ResultParam.Unit);
             history.push({ search: params.toString() });
             setSearchTerm('');
           }
         }}
         isOptionEqualToValue={(option, value) => option.id === value.id}
-        disabled={organizationQuery.isFetching}
-        value={organizationQuery.data ?? null}
+        disabled={topLevelOrganizationQuery.isFetching}
+        value={topLevelOrganizationQuery.data ?? null}
         loading={isLoading}
         renderInput={(params) => (
           <AutocompleteTextField
@@ -96,17 +96,17 @@ export const OrganizationFilters = ({ institutionId, subUnitId }: OrganizationFi
         options={subUnits}
         value={selectedSubUnit}
         inputMode="search"
-        disabled={!institutionId || subUnits.length === 0}
+        disabled={!topLevelOrganizationId || subUnits.length === 0}
         sx={{ width: '20rem' }}
         getOptionLabel={(option) => getLanguageString(option.labels)}
         onChange={(_, selectedUnit) => {
           const params = new URLSearchParams(history.location.search);
           if (selectedUnit) {
-            params.set(AdvancedSearchQueryParams.SubUnit, selectedUnit.id);
+            params.set(ResultParam.Unit, selectedUnit.id);
           } else {
-            params.delete(AdvancedSearchQueryParams.SubUnit);
+            params.delete(ResultParam.Unit);
           }
-
+          params.set(ResultParam.From, '0');
           history.push({ search: params.toString() });
         }}
         renderInput={(params) => (

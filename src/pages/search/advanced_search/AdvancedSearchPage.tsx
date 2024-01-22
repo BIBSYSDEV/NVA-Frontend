@@ -3,20 +3,18 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { FetchResultsParams, ResultParam, fetchResults } from '../../../api/searchApi';
+import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../../api/searchApi';
+import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
 import { SortSelector } from '../../../components/SortSelector';
 import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
-import { CategoryChip } from '../../registration/resource_type_tab/components/RegistrationTypesRow';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
+import { ExportResultsButton } from '../ExportResultsButton';
+import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter';
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { OrganizationFilters } from './OrganizationFilters';
-
-export enum AdvancedSearchQueryParams {
-  Institution = 'institution',
-  SubUnit = 'subUnit',
-}
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
@@ -29,15 +27,20 @@ export const AdvancedSearchPage = () => {
   const params = new URLSearchParams(location.search);
 
   const categoryShould = (params.get(ResultParam.CategoryShould)?.split(',') as PublicationInstanceType[] | null) ?? [];
-  const institutionId = params.get(AdvancedSearchQueryParams.Institution);
-  const subUnitId = params.get(AdvancedSearchQueryParams.SubUnit);
-
-  const unitFilter = subUnitId ?? institutionId;
+  const topLevelOrganizationId = params.get(ResultParam.TopLevelOrganization);
+  const unitId = params.get(ResultParam.Unit);
 
   const resultSearchQueryConfig: FetchResultsParams = {
     title: params.get(ResultParam.Title),
-    unit: unitFilter,
+    topLevelOrganization: topLevelOrganizationId,
+    unit: unitId,
     categoryShould,
+    sort: params.get(ResultParam.Sort) as SortOrder | null,
+    order: params.get(ResultParam.Order),
+    from: Number(params.get(ResultParam.From) ?? 0),
+    results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
+    publicationYearSince: params.get(ResultParam.PublicationYearSince),
+    publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
   };
 
   const resultSearchQuery = useQuery({
@@ -49,8 +52,15 @@ export const AdvancedSearchPage = () => {
 
   return (
     <section>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mx: { xs: '0.5rem', md: 0 }, mb: '0.75rem' }}>
-        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.75rem',
+          mx: { xs: '0.5rem', md: 0 },
+          mb: '0.75rem',
+        }}>
+        <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <SearchForm
             sx={{ flex: '1 0 15rem' }}
             paramName={ResultParam.Title}
@@ -77,10 +87,15 @@ export const AdvancedSearchPage = () => {
             sortKey="sort"
             orderKey="order"
           />
+          <ExportResultsButton searchParams={params} />
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-          <OrganizationFilters institutionId={institutionId} subUnitId={subUnitId} />
+          <PublicationDateIntervalFilter />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 

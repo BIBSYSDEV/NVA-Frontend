@@ -176,7 +176,7 @@ export interface ProjectsSearchParams {
   participantOrgFacet?: string | null;
   responsibleFacet?: string | null;
   sectorFacet?: string | null;
-  title?: string | null;
+  query?: string | null;
 }
 
 export enum ProjectSearchParameter {
@@ -192,7 +192,7 @@ export enum ProjectSearchParameter {
   ResponsibleFacet = 'responsibleFacet',
   Results = 'results',
   SectorFacet = 'sectorFacet',
-  Title = 'title',
+  Query = 'multiple',
 }
 
 export const searchForProjects = async (results: number, page: number, params?: ProjectsSearchParams) => {
@@ -233,8 +233,8 @@ export const searchForProjects = async (results: number, page: number, params?: 
   if (params?.sectorFacet) {
     searchParams.set(ProjectSearchParameter.SectorFacet, params.sectorFacet);
   }
-  if (params?.title) {
-    searchParams.set(ProjectSearchParameter.Title, params.title);
+  if (params?.query) {
+    searchParams.set(ProjectSearchParameter.Query, params.query);
   }
 
   const queryContent = searchParams.toString();

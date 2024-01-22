@@ -9,11 +9,11 @@ import { TruncatableTypography } from '../../../components/TruncatableTypography
 import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { DownloadFileButton } from './DownloadFileButton';
 
 interface UnpublishableFileRowProps {
   file: AssociatedFile;
   removeFile: () => void;
-  toggleLicenseModal: () => void;
   baseFieldName: string;
   disabled: boolean;
 }
@@ -26,12 +26,16 @@ export const UnpublishableFileRow = ({ file, removeFile, baseFieldName, disabled
 
   return (
     <TableRow data-testid={dataTestId.registrationWizard.files.fileRow}>
-      <TableCell sx={{ minWidth: '13rem' }}>
-        <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
-          <TruncatableTypography>{file.name}</TruncatableTypography>
+      <TableCell sx={{ minWidth: '13rem', maxWidth: '20rem' }}>
+        <TruncatableTypography>{file.name}</TruncatableTypography>
+      </TableCell>
+
+      <TableCell>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <DownloadFileButton file={file} />
           <Tooltip title={t('registration.files_and_license.remove_file')}>
             <IconButton onClick={toggleOpenConfirmDialog} disabled={disabled}>
-              <CancelIcon color="error" />
+              <CancelIcon color="primary" />
             </IconButton>
           </Tooltip>
           <ConfirmDialog

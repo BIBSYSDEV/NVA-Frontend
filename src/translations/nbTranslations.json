@@ -8,7 +8,7 @@
         "intro": "Med NVA får norske forskningsinstitusjoner en tjeneste for å:"
       },
       "paragraph1": "NVA utvikles også til bruk ved rapportering av vitenskapelig publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskningsadministrative oppgaver.",
-      "paragraph2": "Sikt er databehandler. Den enkelte Institusjon er behandlingsansvarlig og registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold fra andre datakilder.",
+      "paragraph2": "Sikt er databehandler. Den enkelte Institusjon er behandlingsansvarlig og registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett, osv.). Tjenesten får også overført innhold fra andre datakilder.",
       "paragraph3": "NVA har støtte for utsatt publisering av ressurser. Det betyr at en registrering kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato. Tjenesten tillater ikke behandling av sensitive personopplysninger.",
       "paragraph4": "NVA vil tilgjengeliggjøre institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
       "paragraph5": "Selv om NVA er etablert og i bruk av flere institusjoner, vil tjenesten være i kontinuerlig utvikling i hele sin levetid. Institusjoner som ikke har et vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
@@ -192,6 +192,7 @@
     "place": "Sted",
     "previous": "Forrige",
     "publisher": "Utgiver",
+    "publishing_year": "Publiseringsår",
     "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
     "read_less": "Les mindre",
@@ -224,6 +225,8 @@
     "show_more": "Vis flere",
     "skip_to_main_content": "Hopp til hovedinnhold",
     "skip_to_schema": "Hopp til skjema",
+    "sort_newest_first": "Nyeste først",
+    "sort_oldest_first": "Eldste først",
     "start": "Start",
     "start_date": "Startdato",
     "start_page": "Startside",
@@ -251,10 +254,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
@@ -340,9 +339,15 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
+    "categories_with_files": "Kategorier med filopplasting",
+    "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensninger",
@@ -694,7 +699,8 @@
       "creator": "Registrator",
       "creator_description": "Kan registrere publikasjoner og andre ressurser.",
       "curator": "Kurator",
-      "curator_description": "Kan redigere institusjonens registreringer, besvare brukerstøttehenvendelser og ev. også tildele DOI.",
+      "doi_curator": "DOI-kurator",
+      "doi_curator_description": "Kan se og behandle DOI-forespørsler.",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "institution_admin": "Administrator",
@@ -706,7 +712,11 @@
       "no_roles": "Du har ingen roller fordi du ikke har fått tildelt roller av din administrator",
       "not_customer": "Du har ingen roller fordi din institusjon er ukjent for applikasjonen",
       "nvi_curator": "NVI-kurator",
-      "nvi_curator_description": "Kan se og behandle NVI-kandidater."
+      "nvi_curator_description": "Kan se og behandle NVI-kandidater.",
+      "publishing_curator": "Publiseringskurator",
+      "publishing_curator_description": "Kan se og behandle publiseringsforespørsler.",
+      "support_curator": "Brukerstøttekurator",
+      "support_curator_description": "Kan se og behandle brukerstøttehenvendelser."
     }
   },
   "privacy": {
@@ -928,7 +938,7 @@
     },
     "service_in_brief": {
       "heading": "Kort om tjenesten",
-      "paragraph0": "NVA er en tjeneste for å samle og gjøre tilgjengelig informasjon om, og resultater fra, norsk forskning. Institusjonen (den behandlingsansvarlige) registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett etc.). Tjenesten får også overført innhold tilhørende institusjonen fra andre datakilder. NVA tilgjengeliggjør institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
+      "paragraph0": "NVA er en tjeneste for å samle og gjøre tilgjengelig informasjon om, og resultater fra, norsk forskning. Institusjonen (den behandlingsansvarlige) registrerer og vedlikeholder eget innhold i tjenesten og konfigurerer distribusjonsregler for publiserte ressurser (artikler, rapporter, datasett, osv.). Tjenesten får også overført innhold tilhørende institusjonen fra andre datakilder. NVA tilgjengeliggjør institusjonens åpne innhold via åpne grensesnitt, med hensikt å gjøre dette kjent og søkbart for omverdenen og fremme indeksering i søkemotorer og søkeportaler.",
       "paragraph1": "NVA har støtte for utsatt publisering av ressurser. Det betyr at registreringen kan ferdigstilles slik at metadata om ressursen blir publisert, mens ressursen ikke blir åpent tilgjengelig før angitt dato.",
       "paragraph2": "Tjenesten tillater ikke behandling av sensitive personopplysninger."
     },
@@ -1137,10 +1147,12 @@
       "alternative_title": "Alternativ tittel",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønsker å fjerne vokabular for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
+      "create_project_helper_text": "<0>Forskeren definerer selv sine prosjekter.</0> <0>Et prosjekt må ha en tittel, en prosjektleder, en koordinerende institusjon, en start- og sluttdato. Et prosjekt kan ha prosjektdeltakere, finansiørerer, godkjenninger eller forskningsresultat.</0> <0>Om du har en NFR finansiering så kan du etablere et prosjekt med den som utgangspunkt. Da starter du med å søker du opp din NFR finansiering, den blir lagt til prosjektet og alle obligatoriske felt er ferdig utfylt, foruten prosjektleder som må søkes opp og bekreftes.</0> <0>(Det planlegges tilsvarende funksjonalitet med utgangspunkt i en REK-godkjenning. Alle prosjekter som skal være del av KBS-rapporteringen må ha en REK-godkjenning som identifiserer prosjektet som en klinisk behandlingsstudie.)</0>",
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskrivelse av innhold, hvis relevant",
       "funding": {
         "funder": "Finansiør",
+        "funding_helper_text": "<0>Du kan registrere finansiering direkte på resultatet. Særlig relevant om du ikke kjenner til hvilket prosjekt resultatet er del av, eller dersom resultatet har andre finansiører enn prosjektet det eventuelt tilhører.</0> <0>Om resultatet er tilknyttet et prosjekt vil det arve alle prosjektfinansieringer. Det er ikke nødvendig å legge inn de samme finansieringene dobbelt opp.</0>",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
@@ -1154,9 +1166,9 @@
       "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
       "primary_language": "Hovedspråk for innhold",
       "project_association": "Prosjekttilknytning",
+      "project_helper_text": "<0>Registrerer du finansieringskilde på et prosjekt, vil resultatene du kobler til det prosjektet «arve» informasjon om finansiering. Det gjør at du slipper å registrere alle finansieringskilder på alle resultatene til prosjektet. Søker du på finansieringskilden i NVA får du treff på både prosjektet og resultatene, og rapportering til Forskningsrådet eller andre vil ta med alle resultat.</0> <0>Et resultat kan være koblet til flere prosjekter.</0>",
       "remove_vocabulary": "Fjern vokabular",
       "search_for_npi_discipline": "Søk etter fagfelt",
-      "search_for_project": "Søk i Cristins prosjektkatalog",
       "year_only": "Kun årstall"
     },
     "edit_registration": "Endre registrering",
@@ -1179,6 +1191,7 @@
       "find_publisher_in_channel_register": "Se informasjon om utgiveren i Kanalregisteret",
       "find_series_in_channel_register": "Se informasjon om serien i Kanalregisteret",
       "info_from_channel_register": "Mer informasjon om valgt publiseringskanal",
+      "legal_note": "Note for juridisk avklaring",
       "license": "Lisens",
       "licenses": "Lisenser",
       "link_to_resource": "Lenke til ressurs",
@@ -1191,7 +1204,16 @@
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenker å publisere",
       "resource_has_no_files_or_links_paragraph0": "Uten filer eller lenker er den publiserte ressursen vanskeligere å gjenbruke og kan gi mindre verdi for andre. Om ikke data kan deles, så bør informasjon om data og hvordan tilgang kan oppnås, deles.",
       "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er et sett med prinsipper for å støtte gjenbruk av digitale ressurser. NFR og EC stiller klare krav til at data skal være tilgjengelig og deponert sammen med metadata som avklarer eventuelle betingelser for tilgang.",
-      "size": "Størrelse"
+      "size": "Størrelse",
+      "version_accepted_helper_text": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
+      "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfatters siste gjennomarbeidede versjon etter at artikkelen har vært gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikke forlagets sidetall og grafiske stil, eller eventuelle redaksjonelle omskrivinger, som den publiserte versjonen har. Denne versjonen bør deles i NVA, helst i pdf-format, med en CC-BY-lisens.",
+      "version_embargo_helper_text": "<0>Embargo/utsatt publiseringsdato</0>: De fleste forlag vil kreve at du ikke offentliggjør publisert versjon av artikkelen før det har gått en viss tid. Dato for tillatt offentliggjøring er normalt spesifisert i en forfatteravtale. I noen tilfeller kan også akseptert versjon være underlagt krav om utsatt publiseringsdato.",
+      "version_helper_text": "<0>Last opp akseptert og/eller publisert versjon av artikkelen. Hvis publisert versjon av artikkelen er åpent tilgjengelig, trenger du ikke laste opp akseptert versjon.</0> <1>Publiseringsavtale eller annen formell kommunikasjon (epost) med redaktøren, som avklarer betingelser for utsatt publiseringstidspunkt (embargo) og lisens bør laster opp. <0>Marker slike filer med “Ikke publiser”</0></1>.",
+      "version_helper_text_metadata_only": "Last opp akseptert og/eller publisert versjon av artikkelen og publiseringsavtaler, som formelle kontrakter eller annen kommunikasjon med redaktøren. En kurator ved din institusjon vil gå gjennom filene og sørge for at det bare er de filene du har lov til å dele som blir delt, og at de har påført korrekte lisenser.",
+      "version_published_helper_text": "<0>Publisert versjon</0>: Artikkelen slik den presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere eventuelle redaksjonelle forbedringer, og forlagets grafiske profil, etter utført fagfellevurdering. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Lisensen er normalt bestemt av utgiveren, så det sikre valget for lisens er «Utgivers betingelser». Mange utgivere støtter derimot Open Access og tillater bruk av CC-BY-lisensen.",
+      "version_published_helper_text_metadata_only": "<0>Publisert versjon</0>: Artikkelen slik den presenteres i et tidsskrift, i trykk og/eller online. Denne versjonen vil inkludere eventuelle redaksjonelle forbedringer og forlagets grafiske profil, etter utført fagfellevurdering. Vanligvis tilgjengelig på en utgivers nettsted, i PDF-format. Lisensen er normalt bestemt av utgiveren, så det sikre valget for lisens er «Utgivers betingelser». Mange utgivere støtter derimot Open Access og tillater bruk av CC-BY-lisensen.",
+      "version_publishing_agreement_helper_text": "<0>Forfatteravtalen</0> er en kontrakt mellom en utgiver og en artist eller forfatter. Den spesifiserer forhold som intellektuelt eierskap, hvor og hvordan verket kan offentliggjøres, betalinger, ansvarsbeskyttelse, konfidensialitet og royalty. Dette dokumentet er til stor hjelp for kuratorer når de gjør vurderinger om lisens og publiseringsdato (embargo). Slike dokumenter vil ikke være synlig for andre.",
+      "version_publishing_agreement_helper_text_metadata_only": "<0>Forfatteravtalen</0> er en kontrakt mellom en utgiver og en artist eller forfatter. Den spesifiserer forhold som intellektuelt eierskap, hvor og hvordan verket kan offentliggjøres, betalinger, ansvarsbeskyttelse, konfidensialitet og royalty. Dette dokumentet er til stor hjelp for kuratorer når de gjør vurderinger om lisens og publiseringsdato (embargo). Slike dokumenter vil ikke være synlig for andre."
     },
     "heading": {
       "contributors": "Bidragsytere",
@@ -1199,6 +1221,7 @@
       "files_and_license": "Fil, lisens og lenke",
       "resource_type": "Kategori"
     },
+    "is_revision": "Arbeidet er en revisjon",
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
     "modal_unsaved_changes_heading": "Forlate siden uten å ha lagret?",
@@ -1578,8 +1601,8 @@
           "Radio": "Radio",
           "TV": "TV"
         },
-        "name_of_issue_episode": "Navn på hefte, episode, etc. (hvis relevant)",
-        "name_of_series_program": "Navn på serie, program, etc. (hvis relevant)"
+        "name_of_issue_episode": "Navn på hefte, episode, osv. (hvis relevant)",
+        "name_of_series_program": "Navn på serie, program, osv. (hvis relevant)"
       },
       "more_info_about_work": "Mer informasjon om verket",
       "number_of_pages": "Totalt antall sider",
@@ -1599,16 +1622,19 @@
       "pages_to": "til",
       "place_for_event": "Sted for arrangement",
       "print_issn": "Print ISSN",
-      "protected_type": "Du mangler tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
+      "protected_degree_type": "Du mangler tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Om den er utenlandsk, be om kuratorstøtte for hjelp til publiseringen.",
+      "protected_file_type": "Din institusjon har valgt å ikke støtte filer for denne kategorien.",
       "publisher_or_organizer": "Utgiver/arrangør eller lignende",
+      "related_result": "Relatert resultat",
+      "related_results": "Relaterte resultat",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som ble brukt ved registreringsstart.\nØnsker du å fjerne kobling til original DOI?",
       "research_data": {
         "accept_dataset_terms": {
           "contains_personal_data": "Datasettet inneholder personopplysninger?*",
-          "contains_personal_data_description": "Personopplysninger er enhver opplysning om en identifisert eller identifiserbar fysisk person. Dette kan være navn, adresse, telefonnummer, e-post, bilde, lydopptak, fingeravtrykk, nettidentifikator, lokaliseringsopplysninger, etc.",
+          "contains_personal_data_description": "Personopplysninger er enhver opplysning om en identifisert eller identifiserbar fysisk person. Dette kan være navn, adresse, telefonnummer, e-post, bilde, lydopptak, fingeravtrykk, nettidentifikator, lokaliseringsopplysninger, osv.",
           "contains_sensitive_data": "Datasettet inneholder andre sensitive eller konfidensielle data?*",
-          "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger, bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, etc.",
+          "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysninger som har behov for beskyttelse eller skjerming, og som må sikres mot urettmessig innsyn og tilgang. Dette kan være personopplysninger, bedriftshemmeligheter, sikkerhetsinformasjon, kommersielle rettigheter, patenter, osv.",
           "dialog_title": "For å legge til forskningsdata må du først avklare om",
           "further_info": "Når du trykker JA eller er usikker så må du sende melding til kuratorstøtte der din kurator avklarer videre prosess for å publisere datasettet."
         },
@@ -1657,10 +1683,10 @@
   },
   "search": {
     "add_filter": "Legg til filter",
-    "advanced_search": "Avansert søk",
-    "advanced_search_description": "Søk blant alle publiserte resultater",
     "additional_participants_one": "+{{count}} deltaker",
     "additional_participants_other": "+{{count}} deltakere",
+    "advanced_search": "Avansert søk",
+    "advanced_search_description": "Søk blant alle publiserte resultater",
     "export": "Eksporter",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",
@@ -1682,14 +1708,17 @@
     "result": "Resultat",
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
-    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, etc.",
+    "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
+    "search_project_placeholder": "Søk etter tittel, prosjekt-ID, tilskudds-ID eller deltaker",
     "search_term_label": "Verdi",
     "sector": "Sektor",
     "select_one_or_more_categories": "Velg en eller flere kategorier",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
-    "sort_by_published_date_desc": "Publiseringsdato (nyeste først)"
+    "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
+    "year_from": "Fra år",
+    "year_to": "Til år"
   },
   "tasks": {
     "all_nvi_results": "Alle NVI-resultater",

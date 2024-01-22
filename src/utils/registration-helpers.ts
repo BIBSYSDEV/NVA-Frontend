@@ -1,7 +1,10 @@
+import { TFunction } from 'i18next';
+import { DisabledCategory } from '../components/CategorySelector';
 import { OutputItem } from '../pages/registration/resource_type_tab/sub_type_forms/artistic_types/OutputRow';
 import i18n from '../translations/i18n';
 import { AssociatedArtifact, AssociatedFile, AssociatedLink } from '../types/associatedArtifact.types';
 import { Contributor, ContributorRole } from '../types/contributor.types';
+import { CustomerInstitution } from '../types/customerInstitution.types';
 import {
   ArtisticType,
   BookType,
@@ -15,6 +18,7 @@ import {
   PublicationType,
   ReportType,
   ResearchDataType,
+  allPublicationInstanceTypes,
 } from '../types/publicationFieldNames';
 import {
   AudioVisualPublication,
@@ -41,16 +45,17 @@ import {
 } from '../types/publication_types/exhibitionContent.types';
 import { JournalRegistration } from '../types/publication_types/journalRegistration.types';
 import { PresentationRegistration } from '../types/publication_types/presentationRegistration.types';
-import { RelatedDocument } from '../types/publication_types/researchDataRegistration.types';
 import {
   Journal,
   PublicationInstanceType,
   Publisher,
   Registration,
   RegistrationStatus,
+  RelatedDocument,
   Series,
 } from '../types/registration.types';
 import { User } from '../types/user.types';
+import { hasCuratorRole } from './user-helpers';
 
 export const getMainRegistrationType = (instanceType: string) =>
   isJournal(instanceType)
@@ -119,7 +124,11 @@ export const userIsRegistrationOwner = (user: User | null, registration?: Regist
   !!user && !!registration && user.isCreator && user.nvaUsername === registration.resourceOwner.owner;
 
 export const userIsRegistrationCurator = (user: User | null, registration?: Registration) =>
-  !!user && !!registration && user.isCurator && !!user.customerId && user.customerId === registration.publisher.id;
+  !!user &&
+  !!registration &&
+  hasCuratorRole(user) &&
+  !!user.customerId &&
+  user.customerId === registration.publisher.id;
 
 export const userIsValidImporter = (user: User | null, registration?: Registration) =>
   !!user && !!registration && user.isInternalImporter && registration.type === 'ImportCandidate';
@@ -705,3 +714,33 @@ export const openFileInNewTab = (fileUri: string) => {
 
 export const findRelatedDocumentIndex = (related: RelatedDocument[], uri: string) =>
   related.findIndex((document) => document.type === 'ConfirmedDocument' && document.identifier === uri);
+
+export const getDisabledCategories = (
+  user: User | null,
+  customer: CustomerInstitution | null,
+  registration: Registration,
+  t: TFunction
+) => {
+  const disabledCategories: DisabledCategory[] = [];
+
+  if (!user?.isThesisCurator) {
+    disabledCategories.push(
+      { type: DegreeType.Bachelor, text: t('registration.resource_type.protected_degree_type') },
+      { type: DegreeType.Master, text: t('registration.resource_type.protected_degree_type') },
+      { type: DegreeType.Phd, text: t('registration.resource_type.protected_degree_type') },
+      { type: DegreeType.Other, text: t('registration.resource_type.protected_degree_type') }
+    );
+  }
+
+  const hasFiles = getAssociatedFiles(registration.associatedArtifacts).length > 0;
+
+  if (hasFiles && customer && customer.allowFileUploadForTypes.length !== allPublicationInstanceTypes.length) {
+    const categoriesWithoutFileSupport = allPublicationInstanceTypes
+      .filter((type) => !customer.allowFileUploadForTypes.includes(type))
+      .map((type) => ({ type, text: t('registration.resource_type.protected_file_type') }));
+
+    disabledCategories.push(...categoriesWithoutFileSupport);
+  }
+
+  return disabledCategories;
+};

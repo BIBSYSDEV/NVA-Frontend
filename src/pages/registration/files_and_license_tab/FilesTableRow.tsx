@@ -1,4 +1,3 @@
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CancelIcon from '@mui/icons-material/Cancel';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -6,7 +5,6 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {
   Box,
   Checkbox,
-  CircularProgress,
   Collapse,
   FormControl,
   FormControlLabel,
@@ -26,27 +24,26 @@ import {
   Typography,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
-import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, getIn, useFormikContext } from 'formik';
 import prettyBytes from 'pretty-bytes';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { downloadPrivateFile2 } from '../../../api/fileApi';
+import { useSelector } from 'react-redux';
 import { ConfirmDialog } from '../../../components/ConfirmDialog';
 import { TruncatableTypography } from '../../../components/TruncatableTypography';
+import { RootState } from '../../../redux/store';
 import { AssociatedFile, AssociatedFileType } from '../../../types/associatedArtifact.types';
 import { licenses } from '../../../types/license.types';
 import { SpecificFileFieldNames } from '../../../types/publicationFieldNames';
 import { Registration } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { equalUris } from '../../../utils/general-helpers';
-import { openFileInNewTab } from '../../../utils/registration-helpers';
 import { administrativeAgreementId } from '../FilesAndLicensePanel';
+import { DownloadFileButton } from './DownloadFileButton';
 
 interface FilesTableRowProps {
   file: AssociatedFile;
   removeFile: () => void;
-  toggleLicenseModal: () => void;
   baseFieldName: string;
   showFileVersion: boolean;
   disabled: boolean;
@@ -54,56 +51,32 @@ interface FilesTableRowProps {
 
 export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion, disabled }: FilesTableRowProps) => {
   const { t } = useTranslation();
+  const user = useSelector((state: RootState) => state.user);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const toggleOpenConfirmDialog = () => setOpenConfirmDialog(!openConfirmDialog);
-  const { values, setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
-  const [downloadFile, setDownloadFile] = useState(false);
+  const { setFieldValue, setFieldTouched, errors, touched } = useFormikContext<Registration>();
 
   const fileTypeFieldName = `${baseFieldName}.${SpecificFileFieldNames.Type}`;
   const administrativeAgreementFieldName = `${baseFieldName}.${SpecificFileFieldNames.AdministrativeAgreement}`;
   const publisherAuthorityFieldName = `${baseFieldName}.${SpecificFileFieldNames.PublisherAuthority}`;
   const licenseFieldName = `${baseFieldName}.${SpecificFileFieldNames.License}`;
   const embargoFieldName = `${baseFieldName}.${SpecificFileFieldNames.EmbargoDate}`;
+  const legalNoteFieldName = `${baseFieldName}.${SpecificFileFieldNames.LegalNote}`;
 
   const collapsibleHasError = !!getIn(errors, embargoFieldName) && !!getIn(touched, embargoFieldName);
   const [openCollapsable, setOpenCollapsable] = useState(collapsibleHasError);
   const [embargoPopperAnchorEl, setEmbargoPopperAnchorEl] = useState<null | HTMLElement>(null);
 
-  const downloadFileQuery = useQuery({
-    enabled: downloadFile,
-    queryKey: ['downloadFile', values.identifier, file.identifier],
-    queryFn: async () => {
-      const downloadFileResponse = await downloadPrivateFile2(values.identifier, file.identifier);
-      if (downloadFileResponse?.id) {
-        openFileInNewTab(downloadFileResponse.id);
-      }
-      setDownloadFile(false); // Ensure that a new URL is obtained every time, due to expiration
-      return downloadFileResponse;
-    },
-    meta: { errorMessage: t('feedback.error.download_file') },
-    cacheTime: 0,
-  });
-
   return (
     <>
       <TableRow data-testid={dataTestId.registrationWizard.files.fileRow} sx={{ td: { pb: 0, borderBottom: 'unset' } }}>
         <TableCell sx={{ minWidth: '13rem' }}>
-          <Box sx={{ display: 'flex', gap: '0.5rem', justifyContent: 'space-between', alignItems: 'center' }}>
-            <TruncatableTypography>{file.name}</TruncatableTypography>
-          </Box>
+          <TruncatableTypography>{file.name}</TruncatableTypography>
         </TableCell>
 
         <TableCell>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: 'fit-content' }}>
-            {downloadFileQuery.isFetching ? (
-              <CircularProgress size="1.5rem" />
-            ) : (
-              <Tooltip title={t('registration.files_and_license.open_file')}>
-                <IconButton size="small" onClick={() => setDownloadFile(true)}>
-                  <AttachFileIcon color="primary" />
-                </IconButton>
-              </Tooltip>
-            )}
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <DownloadFileButton file={file} />
 
             {!disabled && (
               <>
@@ -242,7 +215,31 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
       <TableRow>
         <TableCell sx={{ pt: 0, pb: 0 }} colSpan={showFileVersion ? 6 : 5}>
           <Collapse in={openCollapsable}>
-            <Box sx={{ mt: '0.5rem', display: 'flex', justifyContent: 'space-evenly' }}>
+            <Box
+              sx={{
+                m: '1rem 1rem 0 1rem',
+                display: 'flex',
+                gap: '1rem',
+                alignItems: 'start',
+                justifyContent: 'space-evenly',
+              }}>
+              {user?.isPublishingCurator && (
+                <Field name={legalNoteFieldName}>
+                  {({ field }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      value={field.value ?? ''}
+                      data-testid={dataTestId.registrationWizard.files.legalNoteField}
+                      variant="filled"
+                      fullWidth
+                      label={t('registration.files_and_license.legal_note')}
+                      multiline
+                      disabled={disabled}
+                    />
+                  )}
+                </Field>
+              )}
+
               <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 <Field name={embargoFieldName}>
                   {({ field, meta: { error, touched } }: FieldProps) => (
@@ -254,6 +251,7 @@ export const FilesTableRow = ({ file, removeFile, baseFieldName, showFileVersion
                       format="dd.MM.yyyy"
                       maxDate={new Date(new Date().getFullYear() + 5, 11, 31)}
                       disabled={file.administrativeAgreement || disabled}
+                      sx={{ minWidth: '15rem' }}
                       slotProps={{
                         textField: {
                           inputProps: { 'data-testid': dataTestId.registrationWizard.files.embargoDateField },

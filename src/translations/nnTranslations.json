@@ -8,7 +8,7 @@
         "intro": "Med NVA får norske forskingsinstitusjonar ei teneste for å:"
       },
       "paragraph1": "NVA vert òg utvikla til bruk ved rapportering og vitskapeleg publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskingsadministrative oppgåver.",
-      "paragraph2": "Sikt er databehandlar. Den enkelte Institusjon er handsamingsansvarleg og registrerer og vedlikeheld eiga innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett etc.). Tenesta får òg overført innhald frå andre datakjelder.",
+      "paragraph2": "Sikt er databehandlar. Den enkelte Institusjon er handsamingsansvarleg og registrerer og vedlikeheld eiga innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett osv.). Tenesta får òg overført innhald frå andre datakjelder.",
       "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det betyr at ein registrering kan verte ferdigstilt slik at metadata om ressursen vert publisert, mens ressursen ikkje vert opent tilgjengeleg før angjeve dato. Tenesta tillèt ikkje handsaming av sensitive personopplysingar.",
       "paragraph4": "NVA vil gjere institusjonen sitt opne innhald tilgjengeleg via opne grensesnitt, med hensikt å gjere dette kjend og søkbart for omverda og fremje indeksering i søkjemotorar og søkjeportalar.",
       "paragraph5": "Sjølv om NVA er etablert og i bruk av fleire institusjonar, vil tenesta vere i kontinuerleg utvikling i heile sin levetid. Institusjonar som ikkje har eit vitenarkiv kan kontakte <0>Sikt</0> for å få nytte NVA som pilotinstitusjon."
@@ -192,6 +192,7 @@
     "place": "Stad",
     "previous": "Førre",
     "publisher": "Utgjevar",
+    "publishing_year": "",
     "rbo": "Resultatbasert omfordeling (RBO)",
     "read": "Les",
     "read_less": "Les mindre",
@@ -224,6 +225,8 @@
     "show_more": "Vis fleire",
     "skip_to_main_content": "Hopp til hovudinnhald",
     "skip_to_schema": "Hopp til skjema",
+    "sort_newest_first": "",
+    "sort_oldest_first": "",
     "start": "Start",
     "start_date": "Startdato",
     "start_page": "Startside",
@@ -235,6 +238,7 @@
     "unknown": "Ukjend",
     "update": "Oppdater",
     "url": "URL",
+    "use": "",
     "username": "Brukarnamn",
     "version": "Versjon",
     "will_be_available": "Vert tilgjengeleg",
@@ -342,6 +346,8 @@
     "1144": "Ernæring"
   },
   "editor": {
+    "categories_with_files": "",
+    "categories_with_files_description": "",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
       "area_of_responsibility_placeholder": "Ingen avgrensingar",
@@ -427,6 +433,7 @@
       "get_customers": "Kunne ikkje hente kundeinstitusjonar",
       "get_doi": "Kunne ikkje hente lenkjedata",
       "get_doi_agent": "Kunne ikkje hente DOI-konfigurering",
+      "get_funding_source": "",
       "get_funding_sources": "",
       "get_import_candidate": "Kunne ikkje hente importkandidat",
       "get_import_candidates": "Kunne ikkje hente importkandidatar",
@@ -692,7 +699,8 @@
       "creator": "Registrator",
       "creator_description": "Kan registrere publikasjonar og andre ressursar.",
       "curator": "Kurator",
-      "curator_description": "Kan redigere institusjonens registreringar, svare på førespurnadar i brukarstøtte og ev. òg tildele DOI.",
+      "doi_curator": "",
+      "doi_curator_description": "",
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "institution_admin": "Administrator",
@@ -704,7 +712,11 @@
       "no_roles": "Du har inga roller av di du ikkje har fått tildelt roller av din adiminstrator",
       "not_customer": "Du har inga roller av di din institusjon er ukjend for applikasjonen",
       "nvi_curator": "NVI-kurator",
-      "nvi_curator_description": "Kan sjå og handsame NVI-kandidatar."
+      "nvi_curator_description": "Kan sjå og handsame NVI-kandidatar.",
+      "publishing_curator": "",
+      "publishing_curator_description": "",
+      "support_curator": "",
+      "support_curator_description": ""
     }
   },
   "privacy": {
@@ -926,7 +938,7 @@
     },
     "service_in_brief": {
       "heading": "Kort om tenesta",
-      "paragraph0": "NVA er ein teneste for å samle og gjere tilgjengeleg informasjon om, og resultat frå, norsk forsking. Institusjonen (den handsamingsansvarlege) registrerer og vedlikeheld eiga innhold i tenesten og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett etc.). Tenesta får òg overført innhald som høyrer til institusjonen frå andre datakjelder. NVA gjer institusjonens opne innhald tilgjengeleg via opne grensesnitt, med hensikt å gjere dette kjend og søkbart for omverda og framme indeksering i søkjemotorar og søkjeportalar.",
+      "paragraph0": "NVA er ein teneste for å samle og gjere tilgjengeleg informasjon om, og resultat frå, norsk forsking. Institusjonen (den handsamingsansvarlege) registrerer og vedlikeheld eiga innhold i tenesten og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett osv.). Tenesta får òg overført innhald som høyrer til institusjonen frå andre datakjelder. NVA gjer institusjonens opne innhald tilgjengeleg via opne grensesnitt, med hensikt å gjere dette kjend og søkbart for omverda og framme indeksering i søkjemotorar og søkjeportalar.",
       "paragraph1": "NVA har støtte for utsatt publisering av ressursar. Det betyr at registreringa kan verte ferdigstilt slik at metadata om ressursen vert publisert, mens ressursen ikkje vert opent tilgjengeleg før angjeve dato.",
       "paragraph2": "Tenesta tillèt ikkje handsaming av sensitive personopplysingar."
     },
@@ -1135,10 +1147,12 @@
       "alternative_title": "Alternativ tittel",
       "confirm_remove_vocabulary_text": "Er du sikker på at du ønskjer å fjerne vokabular for {{vocabulary}}?",
       "confirm_remove_vocabulary_title": "Fjern vokabular?",
+      "create_project_helper_text": "",
       "date_published": "Publiseringsdato",
       "description_of_content": "Beskriving av innhald, viss relevant",
       "funding": {
         "funder": "Finansiør",
+        "funding_helper_text": "",
         "funding_sum": "Sum",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnamn eller prosjektleiar",
@@ -1152,6 +1166,7 @@
       "npi_disciplines": "Fagfelt i Norsk publiseringsindikator",
       "primary_language": "Hovudspråk for innhald",
       "project_association": "Prosjekttilknyting",
+      "project_helper_text": "",
       "remove_vocabulary": "Fjern vokabular",
       "search_for_npi_discipline": "Søk etter fagfelt",
       "search_for_project": "Søk i Cristins prosjektkatalog",
@@ -1177,6 +1192,7 @@
       "find_publisher_in_channel_register": "Sjå informasjon om utgjevaren i Kanalregisteret",
       "find_series_in_channel_register": "Sjå informasjon om serien i Kanalregisteret",
       "info_from_channel_register": "Meir informasjon om vald publiseringskanal",
+      "legal_note": "",
       "license": "Lisens",
       "licenses": "Lisensar",
       "link_to_resource": "Lenkje til ressurs",
@@ -1189,7 +1205,16 @@
       "resource_has_no_files_or_links": "Ressursen har ingen filer eller lenkjer å publisere",
       "resource_has_no_files_or_links_paragraph0": "Utan filer eller lenkjer er den publiserte ressursen vanskelegare å gjenbruke og kan gje mindre verdi for andre. Om data ikkje kan delast bør informasjon om data og korleis tilgang kan verte oppnådd, delast.",
       "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er eit sett med prinsipp for å støtte gjenbruk av digitale ressursar. NFR og EC stiller krav til at data skal vere tilgjengeleg og deponert saman med metadata som avklarer eventuelle føresetnadar for tilgang.",
-      "size": "Storleik"
+      "size": "Storleik",
+      "version_accepted_helper_text": "",
+      "version_accepted_helper_text_metadata_only": "",
+      "version_embargo_helper_text": "",
+      "version_helper_text": "",
+      "version_helper_text_metadata_only": "",
+      "version_published_helper_text": "",
+      "version_published_helper_text_metadata_only": "",
+      "version_publishing_agreement_helper_text": "",
+      "version_publishing_agreement_helper_text_metadata_only": ""
     },
     "heading": {
       "contributors": "Bidragsytere",
@@ -1197,6 +1222,7 @@
       "files_and_license": "Filer og lisens",
       "resource_type": "Ressurstype"
     },
+    "is_revision": "",
     "missing_title": "Manglar tittel",
     "modal_unsaved_changes_description": "Du har gjort endringar som ikkje er lagra. Er du sikker på at du vil forlate denne sida?",
     "modal_unsaved_changes_heading": "Forlate sida utan å ha lagra?",
@@ -1522,6 +1548,7 @@
         "search_for_report": "Søk etter rapporten kor kapittelet er publisert"
       },
       "click_to_change_resource_type": "Trykk på vald ressurstype om du vil endre",
+      "course_code": "",
       "create_journal": "Opprett tidsskrift",
       "create_publisher": "Opprett utgjevar",
       "create_series": "Opprett serie",
@@ -1574,8 +1601,8 @@
           "Radio": "Radio",
           "TV": "TV"
         },
-        "name_of_issue_episode": "Namn på hefte, episode, etc. (viss relevant)",
-        "name_of_series_program": "Namn på serie, program, etc. (viss relevant)"
+        "name_of_issue_episode": "Namn på hefte, episode, osv. (viss relevant)",
+        "name_of_series_program": "Namn på serie, program, osv. (viss relevant)"
       },
       "more_info_about_work": "Meir informasjon om verket",
       "number_of_pages": "Totalt tal sider",
@@ -1602,9 +1629,9 @@
       "research_data": {
         "accept_dataset_terms": {
           "contains_personal_data": "Datasettet inneheld personopplysingar?*",
-          "contains_personal_data_description": "Personopplysingar er kvar og ein opplysing om ein identifisert eller indentifiserbar fysisk person. Dette kan vere namn, adresse, telefonnummer, e-post, bilete, lydopptak, fingeravtrykk, nettidentifikator, lokaliseringsopplysingar, etc.",
+          "contains_personal_data_description": "Personopplysingar er kvar og ein opplysing om ein identifisert eller indentifiserbar fysisk person. Dette kan vere namn, adresse, telefonnummer, e-post, bilete, lydopptak, fingeravtrykk, nettidentifikator, lokaliseringsopplysingar, osv.",
           "contains_sensitive_data": "Datasettet inneheld andre sensitive eller konfidensielle data?*",
-          "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysingar som har behov for beskytting eller skjerming, og må sikrast mot urettmessig innsyn og tilgang. Dette kan vere personopplysingar, bedriftshemmelegheiter, sikkerhetsinformasjon, kommersielle rettar, patent, etc.",
+          "contains_sensitive_data_description": "Sensitive eller konfidensielle data er informasjon og opplysingar som har behov for beskytting eller skjerming, og må sikrast mot urettmessig innsyn og tilgang. Dette kan vere personopplysingar, bedriftshemmelegheiter, sikkerhetsinformasjon, kommersielle rettar, patent, osv.",
           "dialog_title": "For å leggje til forskingsdata må du fyrst avklåre om",
           "further_info": "Når du trykkjer JA eller er usikker så må du sende melding til brukarstøtte der din kurator avklårer vidare prosess for å publisere datasettet."
         },
@@ -1655,19 +1682,17 @@
     "add_filter": "Legg til filter",
     "additional_participants_one": "+{{count}} deltakar",
     "additional_participants_other": "+{{count}} deltakarar",
-    "contains": "Inneheld",
+    "advanced_search": "",
+    "advanced_search_description": "",
     "export": "Eksporter",
     "field_label": "Felt",
     "health_project_type": "Helseprosjekttype",
     "hits_one": "{{count}} treff",
     "hits_other": "{{count}} treff",
-    "not_containing": "Inneheld ikkje",
-    "operator": "Operator",
     "participant": "Deltakar",
     "participating_institution": "Deltakande institusjon",
     "person_search_placeholder": "Søk etter namn",
     "persons": "Personar",
-    "project_search_placeholder": "Søk etter tittel",
     "remove_filter": "Fjern filter",
     "reports": {
       "clinical_treatment_studies": "Kliniske behandlingsstudier",
@@ -1675,15 +1700,21 @@
       "international_cooperation": "Internasjonalt samarbeid",
       "reports": "Rapportar"
     },
+    "reset_selection": "",
     "responsible_institution": "Forskingsansvarleg institusjon",
     "result": "Resultat",
-    "search_placeholder": "Søk etter tittel, bidragsytar, samandrag, etc.",
+    "search_for_sub_unit": "",
+    "search_for_title": "",
+    "search_placeholder": "Søk etter tittel, bidragsytar, samandrag, osv.",
     "search_term_label": "Verdi",
     "sector": "Sektor",
+    "select_one_or_more_categories": "",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endra",
     "sort_by_published_date_asc": "Publiseringsdato (eldste fyrst)",
-    "sort_by_published_date_desc": "Publiseringsdato (nyaste fyrst)"
+    "sort_by_published_date_desc": "Publiseringsdato (nyaste fyrst)",
+    "year_from": "",
+    "year_to": ""
   },
   "tasks": {
     "all_nvi_results": "Alle NVI-resultat",

@@ -179,20 +179,20 @@ export const PublishingAccordion = ({
         {publishingRequestTicket && <TicketAssignee ticket={publishingRequestTicket} refetchTickets={refetchData} />}
 
         {tabErrors && (
-          <ErrorList
-            tabErrors={tabErrors}
-            description={<Typography>{t('registration.public_page.error_description')}</Typography>}
-            actions={
-              <Button
-                variant="outlined"
-                component={RouterLink}
-                to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
-                endIcon={<EditIcon />}
-                data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
-                {t('registration.public_page.go_back_to_wizard')}
-              </Button>
-            }
-          />
+          <>
+            <Typography>{t('registration.public_page.error_description')}</Typography>
+            <ErrorList tabErrors={tabErrors} />
+            <Button
+              variant="outlined"
+              component={RouterLink}
+              size="small"
+              sx={{ mb: publishingRequestTicket ? '1rem' : undefined }}
+              to={`${getRegistrationWizardPath(registration.identifier)}?tab=${firstErrorTab}`}
+              endIcon={<EditIcon />}
+              data-testid={dataTestId.registrationLandingPage.tasksPanel.backToWizard}>
+              {t('registration.public_page.go_back_to_wizard')}
+            </Button>
+          </>
         )}
 
         {publishingRequestTicket && (
@@ -202,10 +202,10 @@ export const PublishingAccordion = ({
           />
         )}
 
-        {hasPendingTicket && <Divider sx={{ my: '0.5rem' }} />}
+        {hasPendingTicket && <Divider sx={{ my: '1rem' }} />}
 
         {/* Option to reload data if status is not up to date with ticket */}
-        {hasMismatchingPublishedStatus && (
+        {!tabErrors && hasMismatchingPublishedStatus && (
           <>
             <Typography gutterBottom>
               {hasUnpublishedFiles && isPublishedRegistration
@@ -291,7 +291,8 @@ export const PublishingAccordion = ({
               onClick={() => ticketMutation.mutate({ status: 'Completed' })}
               loading={isLoading === LoadingState.ApprovePulishingRequest}
               disabled={isLoadingData || isLoading !== LoadingState.None || !registrationIsValid}>
-              {t('registration.public_page.approve_publish_request')} ({registration.associatedArtifacts.length})
+              {t('registration.public_page.approve_publish_request')} (
+              {registration.associatedArtifacts.filter((artifact) => artifact.type === 'UnpublishedFile').length})
             </LoadingButton>
             <LoadingButton
               sx={{ bgcolor: 'white' }}

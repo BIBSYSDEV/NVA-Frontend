@@ -47,7 +47,10 @@ export const EditorCurators = () => {
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId],
     enabled: !!customerId,
-    queryFn: () => (customerId ? fetchUsers(customerId, RoleName.Curator) : undefined),
+    queryFn: () =>
+      customerId
+        ? fetchUsers(customerId, [RoleName.DoiCurator, RoleName.SupportCurator, RoleName.PublishingCurator])
+        : undefined,
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
   const curators = curatorsQuery.data ?? [];
