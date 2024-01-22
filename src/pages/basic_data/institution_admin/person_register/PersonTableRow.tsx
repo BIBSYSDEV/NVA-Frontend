@@ -47,6 +47,7 @@ import { personDataValidationSchema } from '../../../../utils/validation/basic_d
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
 import { UserRolesSelector } from '../UserRolesSelector';
+import { ViewingScopeCell } from '../ViewingScopeCell';
 
 export interface PersonData {
   employments: Employment[];
@@ -221,7 +222,7 @@ export const PersonTableRow = ({
         </TableCell>
       </TableRow>
 
-      <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
+      <Dialog open={openDialog} onClose={toggleDialog} maxWidth="xl" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>
           <span id="edit-person-label">{t('basic_data.person_register.edit_person')}</span>
         </DialogTitle>
@@ -233,8 +234,14 @@ export const PersonTableRow = ({
           {({ values, isSubmitting, setFieldValue, errors, touched }: FormikProps<PersonData>) => (
             <Form noValidate>
               <DialogContent>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr auto 1fr auto 1fr auto 1fr',
+                    gap: '1rem',
+                  }}>
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <Typography variant="h3">Person</Typography>
                     <TextField
                       variant="filled"
                       disabled
@@ -384,19 +391,36 @@ export const PersonTableRow = ({
                         {!!errors.employments && touched.employments && (
                           <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
                         )}
-
-                        <Box sx={{ mt: '1rem' }} data-testid={dataTestId.basicData.personAdmin.roleSelector}>
-                          <UserRolesSelector
-                            personHasNin={!!cristinPerson.verified}
-                            selectedRoles={values.roles}
-                            updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                            disabled={isSubmitting}
-                            canAddInternalRoles
-                          />
-                        </Box>
                       </div>
                     )
                   )}
+                  <Divider flexItem orientation="vertical" />
+                  <Box data-testid={dataTestId.basicData.personAdmin.roleSelector}>
+                    <UserRolesSelector
+                      personHasNin={!!cristinPerson.verified}
+                      selectedRoles={values.roles}
+                      updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                      disabled={isSubmitting}
+                      canAddInternalRoles
+                    />
+                  </Box>
+                  <Divider flexItem orientation="vertical" />
+                  <Box>
+                    <Typography variant="h3" gutterBottom>
+                      Ansvarsområder
+                    </Typography>
+                    {institutionUser &&
+                    values.roles.some(
+                      (role) =>
+                        role === RoleName.DoiCurator ||
+                        role === RoleName.PublishingCurator ||
+                        role === RoleName.SupportCurator
+                    ) ? (
+                      <ViewingScopeCell user={institutionUser} options={[]} />
+                    ) : (
+                      <Typography>Man må være kurator for å ha ansvarsområde.</Typography>
+                    )}
+                  </Box>
                 </Box>
               </DialogContent>
               <DialogActions>
