@@ -26,27 +26,23 @@ export const ChapterPublisherInfo = ({ publicationContext }: ChapterPublisherInf
 
   const publisherQueryResult = publisherQuery.data?.hits[0];
 
-  const bookPublicationContext =
+  const publisherPublicationContext =
     publisherQueryResult &&
     (publisherQueryResult?.entityDescription?.reference?.publicationContext as
       | BookPublicationContext
       | ReportPublicationContext);
 
-  return (
+  return publisherPublicationContext ? (
     <>
-      {bookPublicationContext && (
-        <>
-          {bookPublicationContext?.isbnList && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', mb: '0.5rem', mt: '0.5rem' }}>
-              <Typography fontWeight="bold">{t('registration.resource_type.isbn')}</Typography>
-              {bookPublicationContext.isbnList.map((isbn) => (
-                <Typography>{isbn}</Typography>
-              ))}
-            </Box>
-          )}
-          <PublicPublisher publisher={bookPublicationContext.publisher} />
-        </>
+      {publisherPublicationContext.isbnList && (
+        <Box sx={{ display: 'flex', flexDirection: 'column', mb: '0.5rem', mt: '0.5rem' }}>
+          <Typography fontWeight="bold">{t('registration.resource_type.isbn')}</Typography>
+          {publisherPublicationContext.isbnList.map((isbn) => (
+            <Typography key={isbn}>{isbn}</Typography>
+          ))}
+        </Box>
       )}
+      <PublicPublisher publisher={publisherPublicationContext.publisher} />
     </>
-  );
+  ) : null;
 };
