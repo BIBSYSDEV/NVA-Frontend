@@ -47,7 +47,9 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
 
   const ticketAge = getTimePeriodString(new Date(ticket.createdDate), new Date(), t);
 
-  const registrationHasFile = ticket.approvedFiles && ticket.approvedFiles.length !== 0;
+  const registrationHasFile =
+    (ticket.approvedFiles && ticket.approvedFiles.length > 0) ||
+    (ticket.filesForApproval && ticket.filesForApproval.length > 0);
 
   const assigneeFullName = ticket.assignee
     ? getFullName(

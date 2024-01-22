@@ -45,6 +45,7 @@ export interface Ticket extends BaseTicket {
 export interface ExpandedTicket extends BaseTicket {
   approvedFiles: AssociatedFile[];
   assignee?: Person;
+  filesForApproval: AssociatedFile[];
   owner: Person;
   viewedBy: Person[];
   messages: ExpandedMessage[];
