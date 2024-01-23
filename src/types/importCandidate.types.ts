@@ -1,3 +1,4 @@
+import { UnconfirmedOrganization } from './common.types';
 import { Contributor } from './contributor.types';
 import { Organization } from './organization.types';
 import { ArtisticPublicationInstance } from './publication_types/artisticRegistration.types';
@@ -48,7 +49,7 @@ export interface ImportCandidateSummary {
   mainTitle: string;
   totalContributors: number;
   totalVerifiedContributors: number;
-  organizations: Omit<Organization, 'acronym'>[];
+  organizations: (Pick<Organization, 'type' | 'id' | 'labels'> | UnconfirmedOrganization)[];
   publisher: Pick<Publisher, 'id' | 'name'>;
   journal: Pick<Journal, 'id'>;
   publicationInstance: PublicationInstance;
