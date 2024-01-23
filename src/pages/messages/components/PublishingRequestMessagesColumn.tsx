@@ -18,14 +18,14 @@ export const StyledStatusMessageBox = styled(Box)({
 
 interface PublishingRequestMessagesColumnProps {
   ticket: ExpandedPublishingTicket | PublishingTicket;
-  registrationHasFiles: boolean;
 }
 
-export const PublishingRequestMessagesColumn = ({
-  ticket,
-  registrationHasFiles = true,
-}: PublishingRequestMessagesColumnProps) => {
+export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMessagesColumnProps) => {
   const { t } = useTranslation();
+
+  const registrationHasFiles =
+    (ticket.approvedFiles && ticket.approvedFiles.length > 0) ||
+    (ticket.filesForApproval && ticket.filesForApproval.length > 0);
 
   return (
     <StyledMessagesContainer>

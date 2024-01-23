@@ -47,10 +47,6 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
 
   const ticketAge = getTimePeriodString(new Date(ticket.createdDate), new Date(), t);
 
-  const registrationHasFile =
-    (ticket.approvedFiles && ticket.approvedFiles.length > 0) ||
-    (ticket.filesForApproval && ticket.filesForApproval.length > 0);
-
   const assigneeFullName = ticket.assignee
     ? getFullName(
         ticket.assignee.preferredFirstName || ticket.assignee.firstName,
@@ -93,10 +89,7 @@ export const TicketListItem = ({ ticket }: TicketListItemProps) => {
           }}>
           <RegistrationListItemContent registration={registrationCopy} ticketView />
           {ticket.type === 'PublishingRequest' ? (
-            <PublishingRequestMessagesColumn
-              ticket={ticket as ExpandedPublishingTicket}
-              registrationHasFiles={registrationHasFile}
-            />
+            <PublishingRequestMessagesColumn ticket={ticket as ExpandedPublishingTicket} />
           ) : ticket.type === 'DoiRequest' ? (
             <DoiRequestMessagesColumn ticket={ticket} />
           ) : ticket.type === 'GeneralSupportCase' ? (
