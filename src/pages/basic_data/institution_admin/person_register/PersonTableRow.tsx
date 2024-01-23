@@ -46,6 +46,7 @@ import {
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
+import { UserFormDialog } from '../UserFormDialog';
 import { UserRolesSelector } from '../UserRolesSelector';
 import { ViewingScopeCell } from '../ViewingScopeCell';
 
@@ -222,7 +223,9 @@ export const PersonTableRow = ({
         </TableCell>
       </TableRow>
 
-      <Dialog open={openDialog} onClose={toggleDialog} maxWidth="xl" fullWidth transitionDuration={{ exit: 0 }}>
+      <UserFormDialog open={openDialog} onClose={toggleDialog} person={cristinPerson} />
+
+      <Dialog open={false} onClose={toggleDialog} maxWidth="xl" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>
           <span id="edit-person-label">{t('basic_data.person_register.edit_person')}</span>
         </DialogTitle>
