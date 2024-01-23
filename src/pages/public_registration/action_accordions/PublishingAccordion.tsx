@@ -30,7 +30,6 @@ import { Registration, RegistrationStatus } from '../../../types/registration.ty
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
-import { associatedArtifactIsFile } from '../../../utils/registration-helpers';
 import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
@@ -69,7 +68,7 @@ export const PublishingAccordion = ({
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
 
-  const registrationHasFile = registration.associatedArtifacts.some((artifact) => associatedArtifactIsFile(artifact));
+  const registrationHasFile = registration.associatedArtifacts.some((artifact) => artifact.type === 'PublishedFile');
 
   const ticketMutation = useMutation({
     mutationFn: publishingRequestTicket
