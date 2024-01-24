@@ -27,7 +27,6 @@ export const RolesFormSection = () => {
       ) : (
         <FormControl
           component="fieldset"
-          sx={{ width: '100%' }}
           onChange={(event: ChangeEvent<any>) => {
             const role = event.target.value as RoleName;
             const hasRole = selectedRoles.some((thisRole) => thisRole.rolename === role);
