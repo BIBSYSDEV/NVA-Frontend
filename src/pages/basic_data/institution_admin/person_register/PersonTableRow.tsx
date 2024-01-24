@@ -410,7 +410,7 @@ export const PersonTableRow = ({
                   <Divider flexItem orientation="vertical" />
                   <Box>
                     <Typography variant="h3" gutterBottom>
-                      Ansvarsområder
+                      {t('editor.curators.area_of_responsibility')}
                     </Typography>
                     {institutionUser &&
                     values.roles.some(
