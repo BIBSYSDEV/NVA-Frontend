@@ -46,9 +46,9 @@ import {
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
-import { UserFormDialog } from '../UserFormDialog';
 import { UserRolesSelector } from '../UserRolesSelector';
 import { ViewingScopeCell } from '../ViewingScopeCell';
+import { UserFormDialog } from '../edit_user/UserFormDialog';
 
 export interface PersonData {
   employments: Employment[];

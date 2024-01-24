@@ -1,169 +1,21 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { DatePicker, LoadingButton } from '@mui/lab';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogProps,
-  DialogTitle,
-  Divider,
-  IconButton,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, CircularProgress, IconButton, TextField, Typography } from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { fetchPositions } from '../../../api/cristinApi';
-import { ConfirmDialog } from '../../../components/ConfirmDialog';
-import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
-import { AffiliationHierarchy } from '../../../components/institution/AffiliationHierarchy';
-import { RootState } from '../../../redux/store';
-import { CristinPerson, Employment, InstitutionUser, RoleName } from '../../../types/user.types';
-import { dataTestId } from '../../../utils/dataTestIds';
-import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { convertToFlatCristinPerson, isActiveEmployment } from '../../../utils/user-helpers';
-import { personDataValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-import { PositionField } from '../fields/PositionField';
-import { StartDateField } from '../fields/StartDateField';
-import { UserRolesSelector } from './UserRolesSelector';
-import { ViewingScopeSection } from './ViewingScopeSection';
+import { fetchPositions } from '../../../../api/cristinApi';
+import { ConfirmDialog } from '../../../../components/ConfirmDialog';
+import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
+import { dataTestId } from '../../../../utils/dataTestIds';
+import { PositionField } from '../../fields/PositionField';
+import { StartDateField } from '../../fields/StartDateField';
+import { UserFormData } from './UserFormDialog';
 
-interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
-  person: CristinPerson;
-  onClose: () => void;
-}
-
-interface UserFormData {
-  person?: CristinPerson;
-  user?: InstitutionUser;
-}
-
-export const UserFormDialog = ({ open, onClose, person }: UserFormDialogProps) => {
-  const { t } = useTranslation();
-
-  const initialValues: UserFormData = {
-    person,
-    user: undefined,
-  };
-
-  return (
-    <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth transitionDuration={{ exit: 0 }}>
-      <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
-      <Formik
-        initialValues={initialValues}
-        enableReinitialize // Needed to update roles values when the institutionUser is recieved
-        onSubmit={(values) => console.log('values', values)}
-        validationSchema={personDataValidationSchema}>
-        {({ values, isSubmitting, setFieldValue }: FormikProps<UserFormData>) => (
-          <Form noValidate>
-            <DialogContent>
-              <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr auto 1fr', gap: '1rem' }}>
-                <PersonSection />
-                <Divider flexItem orientation="vertical" />
-                <AffiliationSection />
-                <Divider flexItem orientation="vertical" />
-                <section>
-                  <UserRolesSelector
-                    selectedRoles={[]}
-                    updateRoles={function (roles: RoleName[]): void {
-                      throw new Error('Function not implemented.');
-                    }}
-                    personHasNin={false}
-                  />
-                </section>
-                <Divider flexItem orientation="vertical" />
-                <ViewingScopeSection />
-              </Box>
-            </DialogContent>
-            <DialogActions sx={{ justifyContent: 'center' }}>
-              <Button onClick={onClose}>{t('common.cancel')}</Button>
-              <LoadingButton loading={isSubmitting} variant="contained" type="submit">
-                {t('common.save')}
-              </LoadingButton>
-            </DialogActions>
-          </Form>
-        )}
-      </Formik>
-    </Dialog>
-  );
-};
-
-const PersonSection = () => {
-  const { t } = useTranslation();
-  const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
-
-  const { values } = useFormikContext<UserFormData>();
-  if (!values.person) {
-    return null;
-  }
-
-  const { firstName, lastName, employments, orcid, nationalId } = convertToFlatCristinPerson(values.person);
-
-  const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
-
-  const employmentsInThisInstitution: Employment[] = [];
-  const employmentsInOtherInstitutions: Employment[] = [];
-  const targetOrganizationIdStart = `${topOrgCristinIdentifier?.split('.')[0]}.`;
-
-  employments.forEach((employment) => {
-    const organizationIdentifier = employment.organization.split('/').pop();
-    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
-      employmentsInThisInstitution.push(employment);
-    } else {
-      employmentsInOtherInstitutions.push(employment);
-    }
-  });
-
-  return (
-    <section>
-      <Typography variant="h3" gutterBottom>
-        Person
-      </Typography>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <TextField
-          variant="filled"
-          disabled
-          value={firstName}
-          label={t('common.first_name')}
-          data-testid={dataTestId.basicData.personAdmin.firstName}
-        />
-        <TextField
-          variant="filled"
-          disabled
-          value={lastName}
-          label={t('common.last_name')}
-          data-testid={dataTestId.basicData.personAdmin.lastName}
-        />
-        <NationalIdNumberField nationalId={nationalId} />
-        {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
-        {employmentsInOtherInstitutions.some(isActiveEmployment) && (
-          <div>
-            <Typography variant="h3">{t('basic_data.person_register.other_employments')}</Typography>
-            <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
-              {employmentsInOtherInstitutions.filter(isActiveEmployment).map((affiliation) => (
-                <li key={affiliation.organization}>
-                  <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                    <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
-                  </Box>
-                </li>
-              ))}
-            </Box>
-          </div>
-        )}
-      </Box>
-    </section>
-  );
-};
-
-const AffiliationSection = () => {
+export const AffiliationFormSection = () => {
   const { t } = useTranslation();
 
   const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(false);
