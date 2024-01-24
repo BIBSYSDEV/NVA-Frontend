@@ -2,7 +2,7 @@ import { Link, Skeleton } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { fetchResults } from '../../api/searchApi';
+import { fetchRegistration } from '../../api/registrationApi';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
@@ -18,11 +18,11 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
 
   const containerQuery = useQuery({
     queryKey: ['container', identifier],
-    queryFn: () => fetchResults({ id: identifier, results: 1 }),
+    queryFn: () => fetchRegistration(identifier),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const container = containerQuery && containerQuery.data?.hits.length === 1 ? containerQuery.data.hits[0] : null;
+  const container = containerQuery.data ? containerQuery.data : null;
 
   return containerQuery.isLoading ? (
     <Skeleton width={400} />
