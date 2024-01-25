@@ -174,3 +174,17 @@ export const mockPublishedRegistration = {
   identifier: '123',
   status: RegistrationStatus.Published,
 };
+
+export const mockDeletedRegistration = {
+  ...mockRegistration,
+  identifier: 'dasdfasdf',
+  status: RegistrationStatus.DraftForDeletion,
+  associatedArtifacts: [],
+};
+
+export const mockDeletedRegistrationProblem = {
+  title: 'Gone',
+  status: 410,
+  requestId: 'dfadfkjasdf',
+  resource: mockDeletedRegistration,
+};

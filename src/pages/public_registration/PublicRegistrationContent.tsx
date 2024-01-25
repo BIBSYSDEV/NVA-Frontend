@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { FetchResultsParams, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
@@ -35,6 +35,15 @@ export interface PublicRegistrationContentProps {
   registration: Registration;
 }
 
+const DeletionInformation = ({ registration }: PublicRegistrationContentProps) => {
+  return (
+    <>
+      {(registration.status === RegistrationStatus.Deleted ||
+        registration.status === RegistrationStatus.Unpublished) && <p>FYI: This publication is deleted</p>}
+    </>
+  );
+};
+
 export const PublicRegistrationContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
   const user = useSelector((store: RootState) => store.user);
@@ -58,6 +67,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
+      <DeletionInformation registration={registration} />
       {registration.status === RegistrationStatus.Published && <StructuredSeoData uri={registration.id} />}
       <Helmet>
         <title>{mainTitle}</title>
