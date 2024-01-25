@@ -4,7 +4,7 @@ import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
-import { RoleName } from '../../../../types/user.types';
+import { RoleName, UserRole } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { UserFormData } from './UserFormDialog';
 
@@ -34,9 +34,9 @@ export const RolesFormSection = ({ isLoadingUser }: RolesFormSectionProps) => {
           onChange={(event: ChangeEvent<any>) => {
             const role = event.target.value as RoleName;
             const hasRole = selectedRoles.some((thisRole) => thisRole.rolename === role);
-            const newRoles = hasRole
+            const newRoles: UserRole[] = hasRole
               ? selectedRoles.filter((selectedRole) => selectedRole.rolename !== role)
-              : [...selectedRoles, role];
+              : [...selectedRoles, { type: 'Role', rolename: role }];
             setFieldValue('user.roles', newRoles);
           }}
           data-testid={dataTestId.basicData.personAdmin.roleSelector}

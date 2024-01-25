@@ -47,7 +47,7 @@ export const PersonRegisterPage = () => {
     queryKey: ['employees', user?.topOrgCristinId, rowsPerPage, page, debouncedSearchQuery, searchQuery],
     queryFn: ({ signal }) =>
       user?.topOrgCristinId
-        ? fetchEmployees(user?.topOrgCristinId, rowsPerPage, page, debouncedSearchQuery, signal)
+        ? fetchEmployees(user?.topOrgCristinId, rowsPerPage, page, 'k' /*debouncedSearchQuery*/, signal)
         : null,
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
     keepPreviousData: true,
