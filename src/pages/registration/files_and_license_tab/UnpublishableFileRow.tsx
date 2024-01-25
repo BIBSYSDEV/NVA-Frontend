@@ -14,7 +14,6 @@ import { DownloadFileButton } from './DownloadFileButton';
 interface UnpublishableFileRowProps {
   file: AssociatedFile;
   removeFile: () => void;
-  toggleLicenseModal: () => void;
   baseFieldName: string;
   disabled: boolean;
 }

@@ -3,7 +3,6 @@ import { Keywords } from './keywords.types';
 
 export enum RoleName {
   AppAdmin = 'App-admin',
-  Curator = 'Curator', // TODO: remove
   DoiCurator = 'Doi-Curator',
   SupportCurator = 'Support-Curator',
   PublishingCurator = 'Publishing-Curator',
@@ -13,7 +12,7 @@ export enum RoleName {
   Editor = 'Editor',
   InstitutionAdmin = 'Institution-admin',
   InternalImporter = 'Internal-importer',
-  NviCurator = 'Nvi-curator',
+  NviCurator = 'Nvi-Curator',
 }
 
 export interface User {
@@ -27,7 +26,6 @@ export interface User {
   feideId: string;
   isAppAdmin: boolean;
   isInternalImporter: boolean;
-  isCurator: boolean;
   isDoiCurator: boolean;
   isPublishingCurator: boolean;
   isSupportCurator: boolean;

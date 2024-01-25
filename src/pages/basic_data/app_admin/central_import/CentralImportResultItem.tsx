@@ -73,7 +73,12 @@ export const CentralImportResultItem = ({ importCandidate }: CentralImportResult
 
           {importCandidate.organizations.length > 0 && (
             <Typography sx={{ mt: '0.5rem' }}>
-              {importCandidate.organizations.map((organization) => getLanguageString(organization.labels)).join(', ')}
+              {importCandidate.organizations
+                .map((organization) =>
+                  organization.type === 'Organization' ? getLanguageString(organization.labels) : organization.name
+                )
+                .filter(Boolean)
+                .join(', ')}
             </Typography>
           )}
         </ListItemText>
