@@ -18,7 +18,7 @@ const isOfficeFile = (mimeType: string) => mimeType.startsWith('application/vnd.
 const isPdf = (mimeType: string) => mimeType === 'application/pdf';
 
 export const PreviewFile = ({ url, file, ...props }: PreviewFileProps) => {
-  const mimeType = file.mimeType.toLowerCase();
+  const mimeType = file.mimeType?.toLowerCase() ?? '';
 
   return isPdf(mimeType) ? (
     <PreviewPdf url={url} altText={file.name} {...props} />

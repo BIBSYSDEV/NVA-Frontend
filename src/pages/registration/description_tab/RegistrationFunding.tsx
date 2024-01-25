@@ -3,7 +3,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material';
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { VerifiedFundingApiPath } from '../../../api/apiPaths';
 import { FundingSourceField } from '../../../components/FundingSourceField';
 import { NfrProjectSearch } from '../../../components/NfrProjectSearch';
@@ -12,6 +12,7 @@ import { Funding, emptyFunding } from '../../../types/registration.types';
 import { API_URL } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { HelperTextModal } from '../HelperTextModal';
 import { fundingSourceIsNfr, getNfrProjectUrl } from './projects_field/projectHelpers';
 
 interface FundingsFieldProps {
@@ -23,9 +24,17 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
 
   return (
     <div>
-      <Typography variant="h2" gutterBottom>
-        {t('common.funding')}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography variant="h2">{t('common.funding')}</Typography>
+        <HelperTextModal
+          modalTitle={t('common.funding')}
+          modalDataTestId={dataTestId.registrationWizard.description.fundingModal}>
+          <Trans
+            i18nKey="registration.description.funding.funding_helper_text"
+            components={[<Typography paragraph />]}
+          />
+        </HelperTextModal>
+      </Box>
 
       <FieldArray name={DescriptionFieldNames.Fundings}>
         {({ name, remove, push, form: { setFieldValue } }: FieldArrayRenderProps) => (

@@ -67,7 +67,7 @@ export const SearchPage = ({ registrationQuery, personQuery, projectQuery }: Sea
         <>
           <StyledSearchBarContainer>
             <SearchTypeField />
-            <SearchForm paramName={ProjectSearchParameter.Title} placeholder={t('search.search_for_title')} />
+            <SearchForm paramName={ProjectSearchParameter.Query} placeholder={t('search.search_project_placeholder')} />
           </StyledSearchBarContainer>
           <ProjectSearch projectQuery={projectQuery} />
         </>

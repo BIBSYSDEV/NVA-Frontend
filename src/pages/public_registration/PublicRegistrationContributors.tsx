@@ -123,7 +123,7 @@ const ContributorsRow = ({
             identity: { id, name },
           } = contributor;
           const affiliationIndexes = contributor.affiliations
-            ?.map((affiliation) => affiliation.id && distinctUnits.indexOf(affiliation.id) + 1)
+            ?.map((affiliation) => affiliation.type === 'Organization' && distinctUnits.indexOf(affiliation.id) + 1)
             .filter((affiliationIndex) => affiliationIndex)
             .sort();
 

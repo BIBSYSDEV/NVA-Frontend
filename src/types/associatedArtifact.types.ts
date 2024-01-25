@@ -7,7 +7,7 @@ export interface AssociatedFile {
   identifier: string;
   name: string;
   size: number;
-  mimeType: string;
+  mimeType?: string;
   administrativeAgreement: boolean;
   publisherAuthority: boolean | null;
   embargoDate: Date | null;
