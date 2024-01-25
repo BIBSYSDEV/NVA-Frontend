@@ -71,14 +71,18 @@ export const UserFormDialog = ({ open, onClose, person }: UserFormDialogProps) =
                 <Divider orientation="vertical" />
                 <AffiliationFormSection />
                 <Divider orientation="vertical" />
-                <RolesFormSection />
+                <RolesFormSection isLoadingUser={institutionUserQuery.isLoading} />
                 <Divider orientation="vertical" />
                 <TasksFormSection isLoadingUser={institutionUserQuery.isLoading} />
               </Box>
             </DialogContent>
             <DialogActions sx={{ justifyContent: 'center' }}>
               <Button onClick={onClose}>{t('common.cancel')}</Button>
-              <LoadingButton loading={isSubmitting} variant="contained" type="submit">
+              <LoadingButton
+                loading={isSubmitting}
+                disabled={institutionUserQuery.isLoading}
+                variant="contained"
+                type="submit">
                 {t('common.save')}
               </LoadingButton>
             </DialogActions>

@@ -11,11 +11,11 @@ import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { UserFormData } from './UserFormDialog';
 
-interface RolesFormSectionProps {
+interface TasksFormSectionProps {
   isLoadingUser: boolean;
 }
 
-export const TasksFormSection = ({ isLoadingUser }: RolesFormSectionProps) => {
+export const TasksFormSection = ({ isLoadingUser }: TasksFormSectionProps) => {
   const { t } = useTranslation();
   const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
   const { isSubmitting } = useFormikContext<UserFormData>();
