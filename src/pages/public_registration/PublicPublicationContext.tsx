@@ -135,12 +135,12 @@ export const PublicPublishedInContent = ({ id }: { id: string | null }) => {
   const { t } = useTranslation();
 
   return id ? (
-    <>
+    <Box sx={{ mb: '0.5rem' }}>
       <Typography variant="h3" component="p">
         {t('registration.resource_type.chapter.published_in')}
       </Typography>
       <RegistrationSummary id={id} />
-    </>
+    </Box>
   ) : null;
 };
 

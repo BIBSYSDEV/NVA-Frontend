@@ -1169,7 +1169,6 @@
       "project_helper_text": "",
       "remove_vocabulary": "Fjern vokabular",
       "search_for_npi_discipline": "Søk etter fagfelt",
-      "search_for_project": "Søk i Cristins prosjektkatalog",
       "year_only": "Kun årstal"
     },
     "edit_registration": "Endre registrering",
@@ -1622,8 +1621,11 @@
       "pages_to": "til",
       "place_for_event": "Stad for arrangement",
       "print_issn": "Print ISSN",
-      "protected_type": "Du manglar tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Viss den er utanlandsk, be om kuratorstøtte for hjelp til publiseringa.",
+      "protected_degree_type": "Du manglar tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Viss den er utanlandsk, be om kuratorstøtte for hjelp til publiseringa.",
+      "protected_file_type": "",
       "publisher_or_organizer": "Utgjevar/arrangør eller liknande",
+      "related_result": "",
+      "related_results": "",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som vart nytta ved registeringsstart. Ønskjer du å fjerne kobling til original DOI?",
       "research_data": {
@@ -1706,6 +1708,7 @@
     "search_for_sub_unit": "",
     "search_for_title": "",
     "search_placeholder": "Søk etter tittel, bidragsytar, samandrag, osv.",
+    "search_project_placeholder": "",
     "search_term_label": "Verdi",
     "sector": "Sektor",
     "select_one_or_more_categories": "",

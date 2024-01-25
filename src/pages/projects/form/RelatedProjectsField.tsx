@@ -20,7 +20,7 @@ export const RelatedProjectsField = () => {
   const projectsQuery = useQuery({
     enabled: debouncedSearchTerm.length > 0,
     queryKey: ['projects', 10, 1, debouncedSearchTerm],
-    queryFn: () => searchForProjects(10, 1, { title: debouncedSearchTerm }),
+    queryFn: () => searchForProjects(10, 1, { query: debouncedSearchTerm }),
     meta: { errorMessage: t('feedback.error.project_search') },
   });
 
@@ -70,7 +70,7 @@ export const RelatedProjectsField = () => {
               {...params}
               label={t('project.form.related_projects')}
               isLoading={projectsQuery.isFetching}
-              placeholder={t('registration.description.search_for_project')}
+              placeholder={t('search.search_project_placeholder')}
               showSearchIcon={field.value.length === 0}
             />
           )}
