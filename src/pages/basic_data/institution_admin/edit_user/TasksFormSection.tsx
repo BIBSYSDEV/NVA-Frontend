@@ -24,7 +24,7 @@ export const TasksFormSection = ({ isLoadingUser }: TasksFormSectionProps) => {
       {isLoadingUser ? (
         <Skeleton sx={{ maxWidth: '15rem', height: '2rem' }} />
       ) : !userIsCurator ? (
-        <Typography>Man må være kurator for å ha ansvarsområde.</Typography>
+        <Typography>{t('basic_data.person_register.must_be_curator_to_have_area_of_responsibility')}</Typography>
       ) : (
         <AreaOfResponsibility />
       )}

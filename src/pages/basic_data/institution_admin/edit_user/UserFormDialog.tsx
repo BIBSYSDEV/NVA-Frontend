@@ -5,11 +5,12 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateCristinPerson } from '../../../../api/cristinApi';
-import { fetchUser, updateUser } from '../../../../api/roleApi';
+import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
 import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
+import { getValueByKey } from '../../../../utils/user-helpers';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { AffiliationFormSection } from './AffiliationFormSection';
 import { PersonFormSection } from './PersonFormSection';
@@ -31,7 +32,7 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId;
-  const customerId = user?.customerId;
+  const customerId = user?.customerId ?? '';
 
   const personCristinIdentifier = getIdentifierFromId(existingPerson.id);
   const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
@@ -52,7 +53,14 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
   });
 
   const userMutation = useMutation({
-    mutationFn: async (user: InstitutionUser) => await updateUser(user.username, user),
+    mutationFn: async (user: InstitutionUser) =>
+      institutionUserQuery.isSuccess
+        ? await updateUser(user.username, user)
+        : await createUser({
+            customerId,
+            roles: user.roles,
+            nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', existingPerson.identifiers),
+          }),
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' })),
     onSuccess: () =>
@@ -84,8 +92,6 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
 
           try {
             await personMutation.mutateAsync(values.person);
-
-            // TODO: create user if not existing
             await userMutation.mutateAsync(values.user);
             await institutionUserQuery.refetch();
 

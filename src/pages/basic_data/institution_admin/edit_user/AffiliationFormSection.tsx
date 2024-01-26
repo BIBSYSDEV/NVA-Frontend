@@ -44,7 +44,7 @@ export const AffiliationFormSection = () => {
       {positionsQuery.isLoading ? (
         <CircularProgress />
       ) : employments.length === 0 ? (
-        <Typography>Ingen ansettelser.</Typography>
+        <Typography>{t('my_page.no_employments')}</Typography>
       ) : (
         <div>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

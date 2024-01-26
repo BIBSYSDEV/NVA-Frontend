@@ -40,7 +40,7 @@ export const PersonFormSection = () => {
   return (
     <section>
       <Typography variant="h3" gutterBottom>
-        Person
+        {t('common.person')}
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <TextField

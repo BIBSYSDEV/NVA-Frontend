@@ -122,6 +122,7 @@
       "employee_table_caption": "Liste over alle ansatte",
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
       "hide_full_nin": "Skjul personnummer",
+      "must_be_curator_to_have_area_of_responsibility": "Må være kurator for å ha ansvarsområde",
       "national_identity_number": "Fødselsnummer",
       "no_eligable_roles": "Personer uten fødselsnummer kan ikke ha roller",
       "no_employees_found": "Ingen ansatte funnet",
@@ -251,7 +252,8 @@
     "x_years_one": "{{count}} år",
     "x_years_other": "{{count}} år",
     "year": "År",
-    "yes": "Ja"
+    "yes": "Ja",
+    "person": "Person"
   },
   "disciplines": {
     "1003": "Arkeologi og konservering",
