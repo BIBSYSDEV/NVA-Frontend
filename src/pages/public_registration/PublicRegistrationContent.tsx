@@ -30,19 +30,13 @@ import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccord
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
 import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
-
+import {
+  DeletedPublicationInformation,
+  DeletedPublicationScreenReaderInformation,
+} from './DeletedPublicationInformation';
 export interface PublicRegistrationContentProps {
   registration: Registration;
 }
-
-const DeletionInformation = ({ registration }: PublicRegistrationContentProps) => {
-  return (
-    <>
-      {(registration.status === RegistrationStatus.Deleted ||
-        registration.status === RegistrationStatus.Unpublished) && <p>FYI: This publication is deleted</p>}
-    </>
-  );
-};
 
 export const PublicRegistrationContent = ({ registration }: PublicRegistrationContentProps) => {
   const { t } = useTranslation();
@@ -67,11 +61,11 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
 
   return (
     <Paper elevation={0} sx={{ gridArea: 'registration' }}>
-      <DeletionInformation registration={registration} />
       {registration.status === RegistrationStatus.Published && <StructuredSeoData uri={registration.id} />}
       <Helmet>
         <title>{mainTitle}</title>
       </Helmet>
+      <DeletedPublicationScreenReaderInformation registration={registration} />
       <StyledPaperHeader>
         {entityDescription?.reference?.publicationInstance?.type ? (
           <Typography data-testid={dataTestId.registrationLandingPage.registrationSubtype} sx={{ color: 'inherit' }}>
@@ -100,6 +94,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             registrationType={entityDescription.reference.publicationInstance.type}
           />
         )}
+        <DeletedPublicationInformation registration={registration} />
 
         <PublicGeneralContent registration={registration} />
 

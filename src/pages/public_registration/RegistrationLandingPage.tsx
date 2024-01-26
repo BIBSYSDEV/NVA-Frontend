@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { fetchRegistration, fetchRegistrationTickets } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
-import { setNotification } from '../../redux/notificationSlice';
+import { removeNotification, setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
@@ -16,15 +16,11 @@ import { NotPublished } from '../errorpages/NotPublished';
 import { ActionPanel } from './ActionPanel';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
 import { AxiosError } from 'axios';
+import { DeletedRegistrationProblem } from '../../types/error_responses';
 
-interface Problem {
-  title: string;
-  status: number;
-  requestId: string;
-  resource: Registration | undefined;
-}
-
-const resolveRegistration = (registrationQuery: UseQueryResult<Registration, AxiosError<Problem>>) => {
+const resolveRegistration = (
+  registrationQuery: UseQueryResult<Registration, AxiosError<DeletedRegistrationProblem>>
+) => {
   if (registrationQuery.data) {
     return registrationQuery.data;
   } else if (registrationQuery.error?.response?.status === 410 && registrationQuery.error.response.data.resource) {
@@ -40,12 +36,20 @@ export const RegistrationLandingPage = () => {
   const { identifier } = useParams<IdentifierParams>();
   const user = useSelector((store: RootState) => store.user);
 
-  const registrationQuery = useQuery<Registration, AxiosError<Problem>>({
+  const registrationQuery = useQuery<Registration, AxiosError<DeletedRegistrationProblem>>({
     queryKey: ['registration', identifier],
     queryFn: () => fetchRegistration(identifier),
     onError: (err: AxiosError) => {
+      if (err.response?.status === 410) {
+        dispatch(removeNotification());
+      }
       if (err.response?.status !== 410)
-        dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' }));
+        dispatch(
+          setNotification({
+            message: t('feedback.error.get_registration'),
+            variant: 'error',
+          })
+        );
     },
   });
 
@@ -65,7 +69,13 @@ export const RegistrationLandingPage = () => {
     enabled: isRegistrationAdmin,
     queryKey: ['registrationTickets', registrationId],
     queryFn: () => fetchRegistrationTickets(registrationId),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
+    onError: () =>
+      dispatch(
+        setNotification({
+          message: t('feedback.error.get_tickets'),
+          variant: 'error',
+        })
+      ),
   });
 
   const refetchRegistrationAndTickets = () => {
