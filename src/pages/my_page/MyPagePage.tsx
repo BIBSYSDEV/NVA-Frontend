@@ -122,7 +122,7 @@ const MyPagePage = () => {
   };
 
   const ticketsQuery = useQuery({
-    enabled: isAuthenticated && user.isCreator,
+    enabled: !!user?.isCreator,
     queryKey: ['tickets', ticketSearchParams],
     queryFn: () => fetchTickets(ticketSearchParams),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
