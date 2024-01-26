@@ -1,10 +1,12 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle, Divider } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { fetchUser } from '../../../../api/roleApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCristinPerson } from '../../../../api/cristinApi';
+import { fetchUser, updateUser } from '../../../../api/roleApi';
+import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
 import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
@@ -15,7 +17,7 @@ import { RolesFormSection } from './RolesFormSection';
 import { TasksFormSection } from './TasksFormSection';
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
-  person: CristinPerson;
+  existingPerson: CristinPerson;
   onClose: () => void;
 }
 
@@ -24,13 +26,14 @@ export interface UserFormData {
   user?: InstitutionUser;
 }
 
-export const UserFormDialog = ({ open, onClose, person }: UserFormDialogProps) => {
+export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialogProps) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId;
   const customerId = user?.customerId;
 
-  const personCristinIdentifier = getIdentifierFromId(person.id);
+  const personCristinIdentifier = getIdentifierFromId(existingPerson.id);
   const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
   const username =
     personCristinIdentifier && topOrgCristinIdentifier ? `${personCristinIdentifier}@${topOrgCristinIdentifier}` : '';
@@ -43,8 +46,21 @@ export const UserFormDialog = ({ open, onClose, person }: UserFormDialogProps) =
     retry: false,
   });
 
+  const personMutation = useMutation({
+    mutationFn: async (person: CristinPerson) => await updateCristinPerson(person.id, person),
+    onError: () => dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' })),
+  });
+
+  const userMutation = useMutation({
+    mutationFn: async (user: InstitutionUser) => await updateUser(user.username, user),
+    onError: () =>
+      dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' })),
+    onSuccess: () =>
+      dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' })),
+  });
+
   const initialValues: UserFormData = {
-    person,
+    person: existingPerson,
     user: institutionUserQuery.isError
       ? {
           institution: customerId ?? '',
@@ -60,8 +76,24 @@ export const UserFormDialog = ({ open, onClose, person }: UserFormDialogProps) =
 
       <Formik
         initialValues={initialValues}
-        enableReinitialize // Needed to update roles values when the institutionUser is recieved
-        onSubmit={(values) => console.log('values', values)}
+        enableReinitialize // Needed to update user values when institutionUser is fetched
+        onSubmit={async (values) => {
+          if (!values.person || !values.user) {
+            return;
+          }
+
+          try {
+            await personMutation.mutateAsync(values.person);
+
+            // TODO: create user if not existing
+            await userMutation.mutateAsync(values.user);
+            await institutionUserQuery.refetch();
+
+            onClose();
+          } catch {
+            return;
+          }
+        }}
         validationSchema={personDataValidationSchema}>
         {({ isSubmitting }: FormikProps<UserFormData>) => (
           <Form noValidate>

@@ -223,7 +223,7 @@ export const PersonTableRow = ({
         </TableCell>
       </TableRow>
 
-      <UserFormDialog open={openDialog} onClose={toggleDialog} person={cristinPerson} />
+      <UserFormDialog open={openDialog} onClose={toggleDialog} existingPerson={cristinPerson} />
 
       <Dialog open={false} onClose={toggleDialog} maxWidth="xl" fullWidth transitionDuration={{ exit: 0 }}>
         <DialogTitle>

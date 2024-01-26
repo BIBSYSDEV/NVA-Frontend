@@ -39,7 +39,11 @@ export const AreaOfResponsibility = () => {
             {currentAreas.length > 0 && (
               <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '0.5rem' }}>
                 {currentAreas.map((organizationId, index) => (
-                  <ViewingScopeChip organizationId={organizationId} onRemove={() => remove(index)} />
+                  <ViewingScopeChip
+                    key={organizationId}
+                    organizationId={organizationId}
+                    onRemove={() => remove(index)}
+                  />
                 ))}
               </Box>
             )}
@@ -94,6 +98,8 @@ interface ViewingScopeChipProps {
 
 const ViewingScopeChip = ({ organizationId, onRemove }: ViewingScopeChipProps) => {
   const { t } = useTranslation();
+  const { isSubmitting } = useFormikContext<UserFormData>();
+
   const organizationQuery = useQuery({
     enabled: !!organizationId,
     queryKey: [organizationId],
@@ -107,6 +113,7 @@ const ViewingScopeChip = ({ organizationId, onRemove }: ViewingScopeChipProps) =
     <Chip
       key={organizationId}
       color="primary"
+      disabled={isSubmitting}
       label={
         organizationQuery.isLoading ? (
           <Skeleton sx={{ width: '15rem' }} />
