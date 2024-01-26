@@ -107,6 +107,7 @@ export const interceptRequestsOnMock = () => {
 
   // Organizations
   mock.onGet(new RegExp(`${CristinApiPath.Organization}\\?query=*`)).reply(200, mockOrganizationSearch);
+  mock.onGet(new RegExp(`${CristinApiPath.Organization}.*/persons.*`)).reply(200, mockCristinPersonSearch);
   mock.onGet(mockOrganizationSearch.hits[0].id).reply(200, mockOrganizationSearch.hits[0]);
   mock.onGet(mockOrganizationSearch.hits[0].hasPart?.[0].id).reply(200, mockOrganizationSearch.hits[0].hasPart?.[0]);
 
