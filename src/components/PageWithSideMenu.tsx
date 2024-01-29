@@ -1,6 +1,7 @@
 import { SvgIconComponent } from '@mui/icons-material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, BoxProps, Button, ButtonProps, styled, Typography } from '@mui/material';
+import { ReactNode } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
@@ -57,7 +58,6 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
       mb: '0.5rem',
       mx: '0.5rem',
       display: 'flex',
-      maxWidth: 'fit-content',
       flexDirection: 'column',
       gap: '0.5rem',
       a: { textTransform: 'none' },
@@ -69,11 +69,20 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
 
 interface LinkButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
   isSelected?: boolean;
+  startIcon?: ReactNode;
+  endIcon?: ReactNode;
 }
 
-export const LinkButton = ({ isSelected, sx, ...rest }: LinkButtonProps) => (
+export const LinkButton = ({ isSelected, startIcon, endIcon, sx, ...rest }: LinkButtonProps) => (
   <Button
-    sx={{ bgcolor: isSelected ? 'primary.main' : 'background.default', justifyContent: 'start', ...sx }}
+    endIcon={endIcon}
+    startIcon={startIcon}
+    sx={{
+      border: '1px solid',
+      bgcolor: isSelected ? 'info.main' : 'background.default',
+      justifyContent: endIcon ? 'space-between' : 'start',
+      ...sx,
+    }}
     variant={isSelected ? 'contained' : 'outlined'}
     LinkComponent={rest.to ? Link : undefined}
     {...rest}

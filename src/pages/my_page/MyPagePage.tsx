@@ -1,9 +1,11 @@
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import EditIcon from '@mui/icons-material/Edit';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Button, Divider, FormControlLabel, FormLabel } from '@mui/material';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import { Button, Divider, FormControlLabel, FormLabel, Typography } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +27,6 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -159,6 +160,54 @@ const MyPagePage = () => {
           </Link>
         }>
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
+        <NavigationListAccordion
+          title={t('my_page.research_profile')}
+          startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
+          accordionPath={UrlPathTemplate.MyPageResearchProfile || UrlPathTemplate.MyPageResearchProfile}
+          defaultPath={UrlPathTemplate.MyPageMyResearchProfile}
+          dataTestId={dataTestId.myPage.researchProfileAccordion}>
+          <NavigationList>
+            <Typography>{t('my_page.public_research_profile')}</Typography>
+            <LinkButton
+              startIcon={
+                <ProfilePicture personId={personId} fullName={fullName} sx={{ height: '25px', width: '25px' }} />
+              }
+              data-testid={dataTestId.myPage.researchProfileLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMyResearchProfile}
+              to={UrlPathTemplate.MyPageMyResearchProfile}>
+              {fullName}
+            </LinkButton>
+            <Typography>{t('my_page.my_profile.edit_research_profile')}</Typography>
+            <LinkButton
+              endIcon={<EditIcon />}
+              data-testid={dataTestId.myPage.myProfileLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMyPersonalia}
+              to={UrlPathTemplate.MyPageMyPersonalia}>
+              {t('my_page.my_profile.heading.personalia')}
+            </LinkButton>
+            <LinkButton
+              endIcon={<EditIcon />}
+              data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMyFieldAndBackground}
+              to={UrlPathTemplate.MyPageMyFieldAndBackground}>
+              {t('my_page.my_profile.field_and_background.field_and_background')}
+            </LinkButton>
+            <LinkButton
+              endIcon={<StarOutlineIcon />}
+              data-testid={dataTestId.myPage.myResultsLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
+              to={UrlPathTemplate.MyPageMyResults}>
+              {t('my_page.my_profile.results')}
+            </LinkButton>
+            <LinkButton
+              endIcon={<StarOutlineIcon />}
+              data-testid={dataTestId.myPage.myProjectsLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
+              to={UrlPathTemplate.MyPageMyProjects}>
+              {t('my_page.my_profile.projects')}
+            </LinkButton>
+          </NavigationList>
+        </NavigationListAccordion>
 
         {user?.isCreator && [
           <NavigationListAccordion
@@ -398,55 +447,6 @@ const MyPagePage = () => {
             />
           </NavigationListAccordion>,
         ]}
-        <NavigationListAccordion
-          title={t('my_page.research_profile')}
-          startIcon={<img src={orcidIcon} alt={t('common.orcid')} />}
-          accordionPath={UrlPathTemplate.MyPageResearchProfile}
-          defaultPath={UrlPathTemplate.MyPageMyResearchProfile}
-          dataTestId={dataTestId.myPage.researchProfileAccordion}>
-          <NavigationList>
-            <LinkButton
-              data-testid={dataTestId.myPage.researchProfileLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyResearchProfile}
-              to={UrlPathTemplate.MyPageMyResearchProfile}>
-              {t('my_page.research_profile')}
-            </LinkButton>
-          </NavigationList>
-        </NavigationListAccordion>
-
-        <NavigationListAccordion
-          title={t('my_page.my_profile.user_profile')}
-          startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
-          accordionPath={UrlPathTemplate.MyPageMyProfile}
-          defaultPath={UrlPathTemplate.MyPageMyPersonalia}
-          dataTestId={dataTestId.myPage.myProfileAccordion}>
-          <NavigationList>
-            <LinkButton
-              data-testid={dataTestId.myPage.myProfileLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyPersonalia}
-              to={UrlPathTemplate.MyPageMyPersonalia}>
-              {t('my_page.my_profile.heading.personalia')}
-            </LinkButton>
-            <LinkButton
-              data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyFieldAndBackground}
-              to={UrlPathTemplate.MyPageMyFieldAndBackground}>
-              {t('my_page.my_profile.field_and_background.field_and_background')}
-            </LinkButton>
-            <LinkButton
-              data-testid={dataTestId.myPage.myResultsLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
-              to={UrlPathTemplate.MyPageMyResults}>
-              {t('my_page.my_profile.results')}
-            </LinkButton>
-            <LinkButton
-              data-testid={dataTestId.myPage.myProjectsLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
-              to={UrlPathTemplate.MyPageMyProjects}>
-              {t('my_page.my_profile.projects')}
-            </LinkButton>
-          </NavigationList>
-        </NavigationListAccordion>
       </SideMenu>
 
       <ErrorBoundary>

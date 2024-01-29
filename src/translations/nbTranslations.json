@@ -625,6 +625,7 @@
     "my_profile": {
       "background": "Bakgrunn",
       "edit_promoted_publication": "Legg til/fjern som favoritt",
+      "edit_research_profile": "Rediger forskerprofil",
       "field_and_background": {
         "background_placeholder": "Skriv inn",
         "english": "Engelsk",
@@ -683,6 +684,7 @@
       "not_started": "Ikke startet",
       "ongoing": "Pågående"
     },
+    "public_research_profile": "Offentlig forskerprofil",
     "project_registrations": "Prosjektregistreringer",
     "registrations": {
       "delete_all_draft_registrations": "Slett alle kladder",
