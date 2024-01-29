@@ -26,11 +26,9 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
 
   return containerQuery.isLoading ? (
     <Skeleton width={400} />
-  ) : (
-    container && (
-      <Link component={RouterLink} to={getRegistrationLandingPagePath(identifier)}>
-        {getTitleString(container.entityDescription?.mainTitle)}
-      </Link>
-    )
-  );
+  ) : container ? (
+    <Link component={RouterLink} to={getRegistrationLandingPagePath(identifier)}>
+      {getTitleString(container.entityDescription?.mainTitle)}
+    </Link>
+  ) : null;
 };
