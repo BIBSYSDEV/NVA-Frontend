@@ -1,13 +1,15 @@
 import { Box } from '@mui/material';
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { Query, useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchRegistration, fetchRegistrationTickets } from '../../api/registrationApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
-import { removeNotification, setNotification } from '../../redux/notificationSlice';
+import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
+import { DeletedRegistrationProblem } from '../../types/error_responses';
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { IdentifierParams } from '../../utils/urlPaths';
@@ -15,20 +17,6 @@ import NotFound from '../errorpages/NotFound';
 import { NotPublished } from '../errorpages/NotPublished';
 import { ActionPanel } from './ActionPanel';
 import { PublicRegistrationContent } from './PublicRegistrationContent';
-import { AxiosError } from 'axios';
-import { DeletedRegistrationProblem } from '../../types/error_responses';
-
-const resolveRegistration = (
-  registrationQuery: UseQueryResult<Registration, AxiosError<DeletedRegistrationProblem>>
-) => {
-  if (registrationQuery.data) {
-    return registrationQuery.data;
-  } else if (registrationQuery.error?.response?.status === 410 && registrationQuery.error.response.data.resource) {
-    return registrationQuery.error.response.data.resource;
-  } else {
-    return undefined;
-  }
-};
 
 export const RegistrationLandingPage = () => {
   const { t } = useTranslation();
@@ -39,21 +27,29 @@ export const RegistrationLandingPage = () => {
   const registrationQuery = useQuery<Registration, AxiosError<DeletedRegistrationProblem>>({
     queryKey: ['registration', identifier],
     queryFn: () => fetchRegistration(identifier),
-    onError: (err: AxiosError) => {
-      if (err.response?.status === 410) {
-        dispatch(removeNotification());
-      }
-      if (err.response?.status !== 410)
-        dispatch(
-          setNotification({
-            message: t('feedback.error.get_registration'),
-            variant: 'error',
-          })
-        );
+    meta: {
+      handleError: (
+        error: AxiosError<DeletedRegistrationProblem>,
+        query: Query<Registration, AxiosError<DeletedRegistrationProblem>>
+      ) => {
+        if (error.response?.status === 410) {
+          const errorRegistration = query.state.error?.response?.data?.resource;
+          if (errorRegistration) {
+            query.setData(errorRegistration);
+          }
+        } else {
+          dispatch(
+            setNotification({
+              message: t('feedback.error.get_registration'),
+              variant: 'error',
+            })
+          );
+        }
+      },
     },
   });
 
-  const registration = resolveRegistration(registrationQuery);
+  const registration = registrationQuery.data;
   const registrationId = registration?.id ?? '';
 
   const isRegistrationAdmin =
@@ -69,13 +65,7 @@ export const RegistrationLandingPage = () => {
     enabled: isRegistrationAdmin,
     queryKey: ['registrationTickets', registrationId],
     queryFn: () => fetchRegistrationTickets(registrationId),
-    onError: () =>
-      dispatch(
-        setNotification({
-          message: t('feedback.error.get_tickets'),
-          variant: 'error',
-        })
-      ),
+    meta: { errorMessage: t('feedback.error.get_tickets') },
   });
 
   const refetchRegistrationAndTickets = () => {
