@@ -19,16 +19,14 @@ export const ChapterPublisherInfo = ({ publicationContext }: ChapterPublisherInf
 
   const publisherQuery = useQuery({
     enabled: !!identifier,
-    queryKey: ['publisher', identifier],
+    queryKey: ['registration', identifier],
     queryFn: () => fetchRegistration(identifier),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const publisher = publisherQuery.data;
-
-  const publisherPublicationContext =
-    publisher &&
-    (publisher?.entityDescription?.reference?.publicationContext as BookPublicationContext | ReportPublicationContext);
+  const publisherPublicationContext = publisherQuery.data?.entityDescription?.reference?.publicationContext as
+    | BookPublicationContext
+    | ReportPublicationContext;
 
   return publisherPublicationContext ? (
     <>

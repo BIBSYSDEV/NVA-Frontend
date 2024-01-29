@@ -17,12 +17,12 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
   const identifier = getIdentifierFromId(id);
 
   const containerQuery = useQuery({
-    queryKey: ['container', identifier],
+    queryKey: ['registration', identifier],
     queryFn: () => fetchRegistration(identifier),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const container = containerQuery.data ? containerQuery.data : null;
+  const container = containerQuery.data;
 
   return containerQuery.isLoading ? (
     <Skeleton width={400} />
