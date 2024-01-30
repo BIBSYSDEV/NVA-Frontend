@@ -56,61 +56,6 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, refetch
     }
   });
 
-  // TODO: ensure all this code is kept (if needed)
-  // const updatePersonAndRoles = async (values: PersonData) => {
-  //   // Update Cristin Person
-  //   const updatedPerson: CristinPerson = {
-  //     ...cristinPerson,
-  //     employments: values.employments,
-  //     keywords: cristinPerson.verified ? cristinPerson.keywords : undefined,
-  //   };
-  //   const updateCristinPerson = await authenticatedApiRequest({
-  //     url: cristinPerson.id,
-  //     method: 'PATCH',
-  //     data: updatedPerson,
-  //   });
-  //   if (isSuccessStatus(updateCristinPerson.status)) {
-  //     if (cristinPerson.verified) {
-  //       // Update NVA User
-  //       const filteredRoles = !values.roles.includes(RoleName.PublishingCurator)
-  //         ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
-  //         : values.roles;
-
-  //       let updateUserResponse;
-  //       if (institutionUser) {
-  //         const updatedInstitutionUser: InstitutionUser = {
-  //           ...institutionUser,
-  //           roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
-  //         };
-
-  //         updateUserResponse = await authenticatedApiRequest<null>({
-  //           url: `${RoleApiPath.Users}/${username}`,
-  //           method: 'PUT',
-  //           data: updatedInstitutionUser,
-  //         });
-  //       } else {
-  //         updateUserResponse = await createUser({
-  //           nationalIdentityNumber: nationalId,
-  //           customerId,
-  //           roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
-  //         });
-  //       }
-  //       if (isSuccessStatus(updateUserResponse.status)) {
-  //         await institutionUserQuery.refetch();
-  //         toggleDialog();
-  //         dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
-  //       } else if (isErrorStatus(updateUserResponse.status)) {
-  //         dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
-  //       }
-  //     } else {
-  //       dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' }));
-  //       toggleDialog();
-  //     }
-  //   } else {
-  //     dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
-  //   }
-  // };
-
   return (
     <>
       <TableRow onClick={toggleDialog} sx={{ cursor: 'pointer' }}>

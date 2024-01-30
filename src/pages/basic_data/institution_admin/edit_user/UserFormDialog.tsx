@@ -48,19 +48,34 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
   });
 
   const personMutation = useMutation({
-    mutationFn: async (person: CristinPerson) => await updateCristinPerson(person.id, person),
+    mutationFn: async (person: CristinPerson) => {
+      if (!person.verified) {
+        person.keywords = undefined;
+      }
+
+      return await updateCristinPerson(person.id, person);
+    },
     onError: () => dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' })),
   });
 
   const userMutation = useMutation({
-    mutationFn: async (user: InstitutionUser) =>
-      institutionUserQuery.isSuccess
-        ? await updateUser(user.username, user)
-        : await createUser({
-            customerId,
-            roles: user.roles,
-            nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', existingPerson.identifiers),
-          }),
+    mutationFn: async (user: InstitutionUser) => {
+      const filteredRoles = !user.roles.some((role) => role.rolename === RoleName.PublishingCurator)
+        ? user.roles.filter(
+            (role) => role.rolename !== RoleName.CuratorThesis && role.rolename !== RoleName.CuratorThesisEmbargo
+          )
+        : user.roles;
+      user.roles = filteredRoles;
+      if (institutionUserQuery.isSuccess) {
+        return await updateUser(user.username, user);
+      } else {
+        return await createUser({
+          customerId,
+          roles: user.roles,
+          nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', existingPerson.identifiers),
+        });
+      }
+    },
     onError: () =>
       dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' })),
     onSuccess: () =>
