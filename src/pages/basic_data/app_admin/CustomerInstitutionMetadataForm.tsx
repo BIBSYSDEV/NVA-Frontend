@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Checkbox, Chip, FormControlLabel, FormLabel, TextField } from '@mui/material';
+import { Box, Checkbox, Chip, Divider, FormControlLabel, FormLabel, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -33,6 +33,16 @@ interface CustomerInstitutionMetadataFormProps {
   customerInstitution?: CustomerInstitution;
   doiAgent?: DoiAgent;
   editMode: boolean;
+}
+
+function inactiveFromIsInThePast(inactiveFrom: string) {
+  const now = new Date(Date.now());
+  const inactiveFromDate = new Date(inactiveFrom);
+  return inactiveFromDate < now;
+}
+
+function isInactive(inactiveFrom: string | null | undefined): boolean {
+  return inactiveFrom ? inactiveFromIsInThePast(inactiveFrom) : false;
 }
 
 export const CustomerInstitutionMetadataForm = ({
@@ -220,6 +230,30 @@ export const CustomerInstitutionMetadataForm = ({
                 )}
               </Field>
             </div>
+
+            <Divider />
+
+            <Field name={CustomerInstitutionFieldNames.InactiveFrom}>
+              {({ field }: FieldProps<string | null | undefined>) => (
+                <FormControlLabel
+                  label={t('basic_data.institutions.institution_is_inactive')}
+                  control={
+                    <Checkbox
+                      onChange={(_event, checked) => {
+                        setFieldValue(
+                          CustomerInstitutionFieldNames.InactiveFrom,
+                          checked ? new Date(Date.now()).toISOString() : null
+                        );
+                      }}
+                      data-testid={dataTestId.basicData.institutionAdmin.inactiveCheckbox}
+                      checked={isInactive(field.value)}
+                    />
+                  }
+                />
+              )}
+            </Field>
+
+            <Divider />
 
             {editMode && (
               <div>
