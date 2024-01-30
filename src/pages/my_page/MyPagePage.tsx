@@ -1,10 +1,8 @@
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import EditIcon from '@mui/icons-material/Edit';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { Button, Divider, FormControlLabel, FormLabel, Typography } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -179,28 +177,24 @@ const MyPagePage = () => {
             </LinkButton>
             <Typography>{t('my_page.my_profile.edit_research_profile')}</Typography>
             <LinkButton
-              endIcon={<EditIcon />}
               data-testid={dataTestId.myPage.myProfileLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMyPersonalia}
               to={UrlPathTemplate.MyPageMyPersonalia}>
               {t('my_page.my_profile.heading.personalia')}
             </LinkButton>
             <LinkButton
-              endIcon={<EditIcon />}
               data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMyFieldAndBackground}
               to={UrlPathTemplate.MyPageMyFieldAndBackground}>
               {t('my_page.my_profile.field_and_background.field_and_background')}
             </LinkButton>
             <LinkButton
-              endIcon={<StarOutlineIcon />}
               data-testid={dataTestId.myPage.myResultsLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
               to={UrlPathTemplate.MyPageMyResults}>
               {t('my_page.my_profile.results')}
             </LinkButton>
             <LinkButton
-              endIcon={<StarOutlineIcon />}
               data-testid={dataTestId.myPage.myProjectsLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
               to={UrlPathTemplate.MyPageMyProjects}>

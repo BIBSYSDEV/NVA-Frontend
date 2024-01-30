@@ -1,7 +1,6 @@
 import { SvgIconComponent } from '@mui/icons-material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Box, BoxProps, Button, ButtonProps, styled, Typography } from '@mui/material';
-import { ReactNode } from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 
 export const StyledPageWithSideMenu = styled(Box)(({ theme }) => ({
@@ -69,18 +68,15 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
 
 interface LinkButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
   isSelected?: boolean;
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
 }
 
-export const LinkButton = ({ isSelected, startIcon, endIcon, sx, ...rest }: LinkButtonProps) => (
+export const LinkButton = ({ isSelected, startIcon, sx, ...rest }: LinkButtonProps) => (
   <Button
-    endIcon={endIcon}
     startIcon={startIcon}
     sx={{
-      border: '1px solid',
+      border: '1px solid black',
       bgcolor: isSelected ? 'primary.main' : 'background.default',
-      justifyContent: endIcon ? 'space-between' : 'start',
+      justifyContent: 'start',
       boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.20)',
       ...sx,
     }}
