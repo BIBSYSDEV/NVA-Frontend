@@ -161,6 +161,7 @@
     "filter": "Filter",
     "first_name": "Fornavn",
     "funding": "Finansiering",
+    "project_status": "Prosjektstatus",
     "help": "Hjelp",
     "id": "ID",
     "institution": "Institusjon",

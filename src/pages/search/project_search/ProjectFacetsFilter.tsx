@@ -7,6 +7,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { FacetItem } from '../FacetItem';
 import { FacetListItem } from '../FacetListItem';
 import { SearchPageProps } from '../SearchPage';
+import { ProjectStatusFilter } from './ProjectStatusFilter';
 
 type ProjectFacetsFilterProps = Pick<SearchPageProps, 'projectQuery'>;
 
@@ -34,13 +35,16 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const selectedParticipants = searchParams.get(ProjectSearchParameter.ParticipantFacet)?.split(',') ?? [];
   const selectedFundingSources = searchParams.get(ProjectSearchParameter.FundingSourceFacet)?.split(',') ?? [];
 
-  const addFacetFilter = (id: string) => {
-    const searchParameters = new URL(id).searchParams;
-    const newSearchParams = new URLSearchParams(
-      `${SearchParam.Type}=${currentSearchType}&${searchParameters.toString()}`
-    );
-    newSearchParams.set(SearchParam.Page, '1');
-    history.push({ search: newSearchParams.toString() });
+  const addFacetFilter = (param: string, key: string) => {
+    const currentValues = searchParams.get(param)?.split(',') ?? [];
+    if (currentValues.length === 0) {
+      searchParams.set(param, key);
+    } else {
+      searchParams.set(param, [...currentValues, key].join(','));
+    }
+    searchParams.set(SearchParam.Type, currentSearchType ?? '');
+    searchParams.set(SearchParam.Page, '1');
+    history.push({ search: searchParams.toString() });
   };
 
   const removeFacetFilter = (parameter: ProjectSearchParameter, keyToRemove: string) => {
@@ -67,7 +71,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeFacetFilter(ProjectSearchParameter.CoordinatingFacet, facet.key)
-                    : addFacetFilter(facet.id)
+                    : addFacetFilter(ProjectSearchParameter.CoordinatingFacet, facet.key)
                 }
               />
             );
@@ -91,7 +95,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeFacetFilter(ProjectSearchParameter.ResponsibleFacet, facet.key)
-                    : addFacetFilter(facet.id)
+                    : addFacetFilter(ProjectSearchParameter.ResponsibleFacet, facet.key)
                 }
               />
             );
@@ -115,7 +119,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeFacetFilter(ProjectSearchParameter.ParticipantOrgFacet, facet.key)
-                    : addFacetFilter(facet.id)
+                    : addFacetFilter(ProjectSearchParameter.ParticipantOrgFacet, facet.key)
                 }
               />
             );
@@ -139,7 +143,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeFacetFilter(ProjectSearchParameter.SectorFacet, facet.key)
-                    : addFacetFilter(facet.id)
+                    : addFacetFilter(ProjectSearchParameter.SectorFacet, facet.key)
                 }
               />
             );
@@ -163,7 +167,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeFacetFilter(ProjectSearchParameter.CategoryFacet, facet.key)
-                    : addFacetFilter(facet.id)
+                    : addFacetFilter(ProjectSearchParameter.CategoryFacet, facet.key)
                 }
               />
             );
@@ -187,7 +191,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeFacetFilter(ProjectSearchParameter.HealthProjectFacet, facet.key)
-                    : addFacetFilter(facet.id)
+                    : addFacetFilter(ProjectSearchParameter.HealthProjectFacet, facet.key)
                 }
               />
             );
@@ -211,7 +215,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeFacetFilter(ProjectSearchParameter.ParticipantFacet, facet.key)
-                    : addFacetFilter(facet.id)
+                    : addFacetFilter(ProjectSearchParameter.ParticipantFacet, facet.key)
                 }
               />
             );
@@ -235,13 +239,15 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
                 onClickFacet={() =>
                   isSelected
                     ? removeFacetFilter(ProjectSearchParameter.FundingSourceFacet, facet.key)
-                    : addFacetFilter(facet.id)
+                    : addFacetFilter(ProjectSearchParameter.FundingSourceFacet, facet.key)
                 }
               />
             );
           })}
         </FacetItem>
       )}
+
+      <ProjectStatusFilter />
     </>
   );
 };
