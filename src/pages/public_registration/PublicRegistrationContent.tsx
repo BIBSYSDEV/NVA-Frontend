@@ -65,7 +65,9 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
       <Helmet>
         <title>{mainTitle}</title>
       </Helmet>
-      <DeletedPublicationScreenReaderInformation registration={registration} />
+      <Box sx={visuallyHidden}>
+        <DeletedPublicationInformation registration={registration} />
+      </Box>
       <StyledPaperHeader>
         {entityDescription?.reference?.publicationInstance?.type ? (
           <Typography data-testid={dataTestId.registrationLandingPage.registrationSubtype} sx={{ color: 'inherit' }}>
