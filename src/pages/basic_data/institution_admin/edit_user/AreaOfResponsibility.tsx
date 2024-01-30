@@ -10,7 +10,7 @@ import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { UserFormData } from './UserFormDialog';
+import { UserFormData, UserFormFieldName } from './UserFormDialog';
 
 export const AreaOfResponsibility = () => {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export const AreaOfResponsibility = () => {
 
   return (
     <section>
-      <FieldArray name="user.viewingScope.includedUnits">
+      <FieldArray name={UserFormFieldName.ViewingScope}>
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
             {currentAreas.length > 0 && (

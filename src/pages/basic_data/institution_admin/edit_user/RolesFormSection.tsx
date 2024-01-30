@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import { RoleName, UserRole } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
-import { UserFormData } from './UserFormDialog';
+import { UserFormData, UserFormFieldName } from './UserFormDialog';
 
 interface RolesFormSectionProps {
   isLoadingUser: boolean;
@@ -37,7 +37,7 @@ export const RolesFormSection = ({ isLoadingUser }: RolesFormSectionProps) => {
             const newRoles: UserRole[] = hasRole
               ? selectedRoles.filter((selectedRole) => selectedRole.rolename !== role)
               : [...selectedRoles, { type: 'Role', rolename: role }];
-            setFieldValue('user.roles', newRoles);
+            setFieldValue(UserFormFieldName.Roles, newRoles);
           }}
           data-testid={dataTestId.basicData.personAdmin.roleSelector}
           disabled={isSubmitting || isLoadingUser}>

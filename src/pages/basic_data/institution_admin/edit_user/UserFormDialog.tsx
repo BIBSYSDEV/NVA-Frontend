@@ -17,6 +17,12 @@ import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
 import { TasksFormSection } from './TasksFormSection';
 
+export enum UserFormFieldName {
+  Employments = 'person.employments',
+  Roles = 'user.roles',
+  ViewingScope = 'user.viewingScope.includedUnits',
+}
+
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
   existingPerson: CristinPerson;
   onClose: () => void;
@@ -109,7 +115,6 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
             await personMutation.mutateAsync(values.person);
             await userMutation.mutateAsync(values.user);
             await institutionUserQuery.refetch();
-
             onClose();
           } catch {
             return;

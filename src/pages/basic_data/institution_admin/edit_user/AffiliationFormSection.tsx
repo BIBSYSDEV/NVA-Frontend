@@ -13,7 +13,7 @@ import { AffiliationHierarchy } from '../../../../components/institution/Affilia
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
-import { UserFormData } from './UserFormDialog';
+import { UserFormData, UserFormFieldName } from './UserFormDialog';
 
 export const AffiliationFormSection = () => {
   const { t } = useTranslation();
@@ -34,7 +34,7 @@ export const AffiliationFormSection = () => {
     cacheTime: 1_800_000, // 30 minutes
   });
 
-  const employmentBaseFieldName = `person.employments[${employmentIndex}]`;
+  const employmentBaseFieldName = `${UserFormFieldName.Employments}[${employmentIndex}]`;
 
   return (
     <section>
@@ -156,7 +156,7 @@ export const AffiliationFormSection = () => {
         title={t('basic_data.person_register.remove_employment_title')}
         onAccept={() => {
           const filteredEmployments = employments.filter((_, index) => index !== employmentIndex);
-          setFieldValue('person.employments', filteredEmployments);
+          setFieldValue(UserFormFieldName.Employments, filteredEmployments);
           setEmploymentIndex(employmentIndex !== 0 ? employmentIndex - 1 : 0);
           toggleConfirmDeleteDialog();
         }}
