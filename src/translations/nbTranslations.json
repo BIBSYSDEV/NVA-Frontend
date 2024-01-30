@@ -661,8 +661,10 @@
         "remove_connection": "Fjern kobling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
+      "person_name": "Personnavn",
       "preferred_first_name": "Foretrukket fornavn",
       "preferred_last_name": "Foretrukket etternavn",
+      "preferred_name": "Forfatternavn",
       "profile_picture": "Profilbilde",
       "projects": "Prosjekt",
       "remove_profile_picture": "Fjern profilbilde?",

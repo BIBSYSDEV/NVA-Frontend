@@ -89,7 +89,7 @@ export const MyProfile = () => {
         }}>
         <BackgroundDiv
           sx={{
-            bgcolor: 'info.light',
+            bgcolor: 'secondary.main',
             gridArea: 'user-profile',
           }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -111,7 +111,7 @@ export const MyProfile = () => {
                             xs: '"user-info" "profile-picture"',
                             md: '"user-info profile-picture"',
                           },
-                          gridTemplateColumns: { xs: '1fr', md: '2fr auto' },
+                          gridTemplateColumns: { xs: '1fr', md: '3fr 1fr' },
                           columnGap: '2rem',
                         }}>
                         <Box
@@ -122,8 +122,33 @@ export const MyProfile = () => {
                             justifyContent: 'space-between',
                             gridArea: 'user-info',
                           }}>
-                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <Box sx={{ display: 'flex', gap: '1rem' }}>
+                          <Box sx={{ display: 'flex' }}>
+                            <Box
+                              sx={{
+                                display: 'grid',
+                                gridTemplateColumns: '1fr 4fr 4fr',
+                                gap: '1rem',
+                                alignItems: 'center',
+                                width: '80%',
+                              }}>
+                              <Typography sx={{ fontWeight: 'bold' }}>{t('my_page.my_profile.person_name')}</Typography>
+                              <TextField
+                                value={user.givenName}
+                                disabled
+                                label={t('common.first_name')}
+                                size="small"
+                                variant="filled"
+                              />
+                              <TextField
+                                value={user.familyName}
+                                disabled
+                                label={t('common.last_name')}
+                                size="small"
+                                variant="filled"
+                              />
+                              <Typography sx={{ fontWeight: 'bold' }}>
+                                {t('my_page.my_profile.preferred_name')}
+                              </Typography>
                               <Field name={'preferredFirstName'}>
                                 {({ field }: FieldProps<string>) => (
                                   <TextField
@@ -137,6 +162,7 @@ export const MyProfile = () => {
                                   />
                                 )}
                               </Field>
+
                               <Field name={'preferredLastName'}>
                                 {({ field }: FieldProps<string>) => (
                                   <TextField
@@ -150,6 +176,8 @@ export const MyProfile = () => {
                                   />
                                 )}
                               </Field>
+                            </Box>
+                            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
                               <Tooltip title={t('common.edit')}>
                                 <IconButton
                                   data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
@@ -158,6 +186,16 @@ export const MyProfile = () => {
                                 </IconButton>
                               </Tooltip>
                             </Box>
+                          </Box>
+                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <Box
+                              sx={{
+                                display: 'grid',
+                                gridTemplateColumns: '1fr 4fr 4fr auto',
+                                gap: '1rem',
+                                alignItems: 'center',
+                                width: '80%',
+                              }}></Box>
                             <TextField
                               sx={{ width: 'fit-content' }}
                               value={personTelephone}
@@ -190,7 +228,7 @@ export const MyProfile = () => {
                           sx={{
                             gridArea: 'profile-picture',
                           }}>
-                          <Typography variant="h3" sx={{ alignSelf: 'start', my: '1rem' }}>
+                          <Typography variant="h3" sx={{ alignSelf: 'start', mb: '1rem' }}>
                             {t('my_page.my_profile.profile_picture')}
                           </Typography>
                           <ProfilePictureUploader personId={personId} />
