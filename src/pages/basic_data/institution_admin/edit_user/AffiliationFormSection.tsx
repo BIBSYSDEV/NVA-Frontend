@@ -4,12 +4,13 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Box, Button, CircularProgress, IconButton, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
-import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
+import { ErrorMessage, Field, FieldProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchPositions } from '../../../../api/cristinApi';
 import { ConfirmDialog } from '../../../../components/ConfirmDialog';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
+import { CristinPerson } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { PositionField } from '../../fields/PositionField';
 import { StartDateField } from '../../fields/StartDateField';
@@ -145,9 +146,11 @@ export const AffiliationFormSection = () => {
               </IconButton>
             </Box>
           )}
-          {!!(errors.person as any)?.employments && !!(touched.person as any)?.employments && (
-            <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
-          )}
+
+          {!!(errors.person as FormikErrors<Partial<CristinPerson> | undefined>)?.employments &&
+            !!(touched.person as FormikTouched<Partial<CristinPerson> | undefined>)?.employments && (
+              <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
+            )}
         </Box>
       )}
 

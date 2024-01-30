@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
 import { updateCristinPerson } from '../../../../api/cristinApi';
 import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
 import { setNotification } from '../../../../redux/notificationSlice';
@@ -11,7 +12,10 @@ import { RootState } from '../../../../redux/store';
 import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getValueByKey } from '../../../../utils/user-helpers';
-import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
+import {
+  personDataValidationSchema,
+  userValidationSchema,
+} from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { AffiliationFormSection } from './AffiliationFormSection';
 import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
@@ -22,6 +26,11 @@ export enum UserFormFieldName {
   Roles = 'user.roles',
   ViewingScope = 'user.viewingScope.includedUnits',
 }
+
+const validationSchema = Yup.object().shape({
+  user: userValidationSchema,
+  person: personDataValidationSchema,
+});
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
   existingPerson: CristinPerson;
@@ -120,7 +129,7 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
             return;
           }
         }}
-        validationSchema={personDataValidationSchema}>
+        validationSchema={validationSchema}>
         {({ isSubmitting }: FormikProps<UserFormData>) => (
           <Form noValidate>
             <DialogContent>
