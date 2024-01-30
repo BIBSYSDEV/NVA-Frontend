@@ -1,6 +1,6 @@
 import { Registration } from './registration.types';
 
-export interface Problem {
+interface Problem {
   title: string;
   status: number;
   requestId: string;
