@@ -1,7 +1,6 @@
 import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { visuallyHidden } from '@mui/utils';
 
 interface DeletePublicationInformationProps {
   registration: Registration;
@@ -30,12 +29,4 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
       )}
     </>
   );
-};
-
-export const DeletedPublicationScreenReaderInformation = ({ registration }: DeletePublicationInformationProps) => {
-  const { t } = useTranslation();
-  return registration.status === RegistrationStatus.Deleted ||
-    registration.status === RegistrationStatus.Unpublished ? (
-    <span style={visuallyHidden}>{t('registration.result_is_deleted')}</span>
-  ) : null;
 };
