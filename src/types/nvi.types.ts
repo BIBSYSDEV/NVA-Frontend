@@ -9,7 +9,7 @@ interface NviCandidateContributor {
 type NviCandidateStatus = 'Pending' | 'Rejected' | 'Approved';
 
 interface NviCandidateSearchHitApproval {
-  id: string;
+  institutionId: string;
   labels: LanguageString;
   approvalStatus: NviCandidateStatus;
 }

@@ -25,12 +25,17 @@ interface RegistrationTypeElement {
   value: PublicationInstanceType;
   text: string;
   selected: boolean;
-  disabled?: boolean;
+  disableText?: string;
 }
 
 interface RegistrationRowConfig {
   mainType: PublicationType;
   registrationTypes: PublicationInstanceType[];
+}
+
+export interface DisabledCategory {
+  type: PublicationInstanceType;
+  text: string;
 }
 
 const registrationRows: RegistrationRowConfig[] = [
@@ -50,7 +55,7 @@ const registrationRows: RegistrationRowConfig[] = [
 interface CategorySelectorProps {
   selectedCategories: PublicationInstanceType[];
   onCategoryClick: (category: PublicationInstanceType) => void;
-  disabledCategories?: PublicationInstanceType[];
+  disabledCategories?: DisabledCategory[];
 }
 
 export const CategorySelector = ({
@@ -118,7 +123,7 @@ export const CategorySelector = ({
                 value: registrationType,
                 text: t(`registration.publication_types.${registrationType}`),
                 selected: selectedCategories.includes(registrationType),
-                disabled: disabledCategories?.includes(registrationType),
+                disableText: disabledCategories?.find((category) => category.type === registrationType)?.text,
               }))
             )}
             onChangeType={onCategoryClick}
@@ -161,11 +166,11 @@ export const CategoryChip = ({ category, onClickChip }: CategoryChipProps) => {
   const { t } = useTranslation();
 
   return (
-    <Tooltip title={category.disabled ? t('registration.resource_type.protected_type') : ''}>
+    <Tooltip title={category.disableText}>
       <span>
         <Chip
           data-testid={dataTestId.registrationWizard.resourceType.resourceTypeChip(category.value)}
-          disabled={category.disabled}
+          disabled={!!category.disableText}
           icon={
             nviApplicableTypes.includes(category.value) ? (
               <FilterVintageIcon

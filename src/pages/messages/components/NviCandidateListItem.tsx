@@ -32,7 +32,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviListQuery
   const dateString = displayDate(nviCandidate.publicationDetails.publicationDate);
   const heading = [typeString, dateString].filter(Boolean).join(' — ');
 
-  const myApproval = nviCandidate.approvals.find((approval) => approval.id === user?.topOrgCristinId);
+  const myApproval = nviCandidate.approvals.find((approval) => approval.institutionId === user?.topOrgCristinId);
 
   const candidateOffsetState: CandidateOffsetState = {
     currentOffset,
@@ -83,7 +83,7 @@ export const NviCandidateListItem = ({ nviCandidate, currentOffset, nviListQuery
         {nviCandidate.approvals.length > 0 && (
           <Box sx={{ display: 'flex', alignItems: 'center', columnGap: '0.5rem', flexWrap: 'wrap' }}>
             {focusedApprovals.map((approval) => (
-              <Typography key={approval.id} sx={{ '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
+              <Typography key={approval.institutionId} sx={{ '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
                 {getLanguageString(approval.labels)}
               </Typography>
             ))}

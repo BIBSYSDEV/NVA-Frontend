@@ -9,9 +9,9 @@ interface ListRegistrationRelationsProps {
 }
 
 export const ListRegistrationRelations = ({ registrations }: ListRegistrationRelationsProps) => (
-  <List>
+  <List disablePadding>
     {registrations.map((registration) => (
-      <ListItem key={registration.identifier}>
+      <ListItem disableGutters key={registration.identifier}>
         <Link component={RouterLink} to={getRegistrationLandingPagePath(registration.identifier)}>
           {getTitleString(registration.entityDescription?.mainTitle)}
         </Link>

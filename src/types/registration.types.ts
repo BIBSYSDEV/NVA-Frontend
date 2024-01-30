@@ -268,3 +268,15 @@ export interface RegistrationAggregations {
   fundingSource?: AggregationValue[];
   contributor?: AggregationValue[];
 }
+
+export interface ConfirmedDocument {
+  type: 'ConfirmedDocument';
+  identifier: string;
+}
+
+export interface UnconfirmedDocument {
+  type: 'UnconfirmedDocument';
+  text: string;
+}
+
+export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;

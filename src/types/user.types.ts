@@ -12,7 +12,7 @@ export enum RoleName {
   Editor = 'Editor',
   InstitutionAdmin = 'Institution-admin',
   InternalImporter = 'Internal-importer',
-  NviCurator = 'Nvi-curator',
+  NviCurator = 'Nvi-Curator',
 }
 
 export interface User {
