@@ -2,7 +2,7 @@ import { Registration, RegistrationStatus } from '../../types/registration.types
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-interface DeletePublicationInformationProps {
+interface DeletedPublicationInformationProps {
   registration: Registration;
 }
 
