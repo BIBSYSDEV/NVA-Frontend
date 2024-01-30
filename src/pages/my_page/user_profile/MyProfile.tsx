@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
+import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
@@ -15,10 +16,12 @@ import { RootState } from '../../../redux/store';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-helpers';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
 import { ResearchProfilePanel } from './ResearchProfilePanel';
 import { UserIdentity } from './UserIdentity';
+import { UserOrcid } from './UserOrcid';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
 
@@ -119,7 +122,6 @@ export const MyProfile = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '1rem',
-                            justifyContent: 'space-between',
                             gridArea: 'user-info',
                           }}>
                           <Box sx={{ display: 'flex' }}>
@@ -131,7 +133,7 @@ export const MyProfile = () => {
                                 alignItems: 'center',
                                 width: '80%',
                               }}>
-                              <Typography sx={{ fontWeight: 'bold' }}>{t('my_page.my_profile.person_name')}</Typography>
+                              <Typography fontWeight="bold">{t('my_page.my_profile.person_name')}</Typography>
                               <TextField
                                 value={user.givenName}
                                 disabled
@@ -146,9 +148,7 @@ export const MyProfile = () => {
                                 size="small"
                                 variant="filled"
                               />
-                              <Typography sx={{ fontWeight: 'bold' }}>
-                                {t('my_page.my_profile.preferred_name')}
-                              </Typography>
+                              <Typography fontWeight="bold">{t('my_page.my_profile.preferred_name')}</Typography>
                               <Field name={'preferredFirstName'}>
                                 {({ field }: FieldProps<string>) => (
                                   <TextField
@@ -187,15 +187,21 @@ export const MyProfile = () => {
                               </Tooltip>
                             </Box>
                           </Box>
-                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                            <Box
-                              sx={{
-                                display: 'grid',
-                                gridTemplateColumns: '1fr 4fr 4fr auto',
-                                gap: '1rem',
-                                alignItems: 'center',
-                                width: '80%',
-                              }}></Box>
+                          <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                            <Typography fontWeight="bold">Identitetsnumre</Typography>
+                            <Box>
+                              <NationalIdNumberField nationalId={user.nationalIdNumber} />
+                            </Box>
+                            <Box>
+                              <TextField
+                                value={getIdentifierFromId(user.cristinId ?? '')}
+                                disabled
+                                label={t('common.id')}
+                                size="small"
+                                variant="filled"
+                              />
+                            </Box>
+
                             <TextField
                               sx={{ width: 'fit-content' }}
                               value={personTelephone}
@@ -206,21 +212,9 @@ export const MyProfile = () => {
                               variant="filled"
                             />
                           </Box>
-                          <Box sx={{ display: 'flex', gap: '1rem' }}>
-                            <Button
-                              onClick={() => {
-                                resetForm();
-                              }}>
-                              {t('common.cancel')}
-                            </Button>
-                            <LoadingButton
-                              data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
-                              loading={isSubmitting}
-                              disabled={!dirty}
-                              variant="contained"
-                              type="submit">
-                              {t('common.save')}
-                            </LoadingButton>
+                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+                            <Typography fontWeight={600}>{t('common.orcid')}</Typography>
+                            <UserOrcid user={user} />
                           </Box>
                         </Box>
 
@@ -233,6 +227,30 @@ export const MyProfile = () => {
                           </Typography>
                           <ProfilePictureUploader personId={personId} />
                         </Box>
+                      </Box>
+
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          gap: '1rem',
+                          bgcolor: 'secondary.dark',
+                          justifyContent: 'center',
+                          py: '1rem',
+                        }}>
+                        <Button
+                          onClick={() => {
+                            resetForm();
+                          }}>
+                          {t('common.cancel')}
+                        </Button>
+                        <LoadingButton
+                          data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
+                          loading={isSubmitting}
+                          disabled={!dirty}
+                          variant="contained"
+                          type="submit">
+                          {t('common.save')}
+                        </LoadingButton>
                       </Box>
                     </Form>
                   )}
