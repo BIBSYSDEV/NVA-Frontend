@@ -58,8 +58,7 @@ export const RegistrationLandingPage = () => {
     registration?.status === RegistrationStatus.Published ||
     isRegistrationAdmin ||
     registration?.status === RegistrationStatus.DraftForDeletion ||
-    registration?.status ||
-    RegistrationStatus.Unpublished;
+    registration?.status === RegistrationStatus.Unpublished;
 
   const ticketsQuery = useQuery({
     enabled: isRegistrationAdmin,
