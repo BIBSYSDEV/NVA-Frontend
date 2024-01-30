@@ -70,9 +70,8 @@ interface LinkButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
   isSelected?: boolean;
 }
 
-export const LinkButton = ({ isSelected, startIcon, sx, ...rest }: LinkButtonProps) => (
+export const LinkButton = ({ isSelected, sx, ...rest }: LinkButtonProps) => (
   <Button
-    startIcon={startIcon}
     sx={{
       border: '1px solid black',
       bgcolor: isSelected ? 'primary.main' : 'background.default',
