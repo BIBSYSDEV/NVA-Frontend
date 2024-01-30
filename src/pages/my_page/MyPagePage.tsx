@@ -163,7 +163,7 @@ const MyPagePage = () => {
         <NavigationListAccordion
           title={t('my_page.research_profile')}
           startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
-          accordionPath={UrlPathTemplate.MyPageResearchProfile || UrlPathTemplate.MyPageResearchProfile}
+          accordionPath={UrlPathTemplate.MyPageProfile}
           defaultPath={UrlPathTemplate.MyPageMyResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
           <NavigationList>
