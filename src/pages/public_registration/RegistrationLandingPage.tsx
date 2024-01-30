@@ -24,7 +24,7 @@ export const RegistrationLandingPage = () => {
   const { identifier } = useParams<IdentifierParams>();
   const user = useSelector((store: RootState) => store.user);
 
-  const registrationQuery = useQuery<Registration, AxiosError<DeletedRegistrationProblem>>({
+  const registrationQuery = useQuery({
     queryKey: ['registration', identifier],
     queryFn: () => fetchRegistration(identifier),
     meta: {
