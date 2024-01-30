@@ -68,11 +68,7 @@ export const AreaOfResponsibility = () => {
                   setAddAreaOfResponsibility(false);
                 }}
                 renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    placeholder={t('editor.curators.area_of_responsibility_placeholder')}
-                  />
+                  <TextField {...params} fullWidth placeholder={t('basic_data.person_register.select_unit')} />
                 )}
               />
             ) : (

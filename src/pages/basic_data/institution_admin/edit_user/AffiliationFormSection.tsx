@@ -38,11 +38,11 @@ export const AffiliationFormSection = () => {
 
   return (
     <section>
-      <Typography variant="h3" gutterBottom>
+      <Typography id="employments-heading" variant="h3" gutterBottom>
         {t('common.employments')}
       </Typography>
       {positionsQuery.isLoading ? (
-        <CircularProgress />
+        <CircularProgress aria-labelledby="employments-heading" />
       ) : employments.length === 0 ? (
         <Typography>{t('my_page.no_employments')}</Typography>
       ) : (
