@@ -12,10 +12,7 @@ import { RootState } from '../../../../redux/store';
 import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getValueByKey } from '../../../../utils/user-helpers';
-import {
-  personDataValidationSchema,
-  userValidationSchema,
-} from '../../../../utils/validation/basic_data/addEmployeeValidation';
+import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { AffiliationFormSection } from './AffiliationFormSection';
 import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
@@ -28,7 +25,6 @@ export enum UserFormFieldName {
 }
 
 const validationSchema = Yup.object().shape({
-  user: userValidationSchema,
   person: personDataValidationSchema,
 });
 
@@ -65,7 +61,7 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
   const personMutation = useMutation({
     mutationFn: async (person: CristinPerson) => {
       if (!person.verified) {
-        person.keywords = undefined;
+        person.keywords = undefined; // Person must be verified to have keywords
       }
 
       return await updateCristinPerson(person.id, person);

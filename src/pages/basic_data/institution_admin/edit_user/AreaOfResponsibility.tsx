@@ -42,7 +42,7 @@ export const AreaOfResponsibility = () => {
                   <ViewingScopeChip
                     key={organizationId}
                     organizationId={organizationId}
-                    onRemove={() => remove(index)}
+                    onRemove={currentAreas.length > 1 ? () => remove(index) : undefined}
                   />
                 ))}
               </Box>
@@ -88,7 +88,7 @@ export const AreaOfResponsibility = () => {
 
 interface ViewingScopeChipProps {
   organizationId: string;
-  onRemove: () => void;
+  onRemove?: () => void;
 }
 
 const ViewingScopeChip = ({ organizationId, onRemove }: ViewingScopeChipProps) => {
