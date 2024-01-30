@@ -33,23 +33,8 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
 
 export const DeletedPublicationScreenReaderInformation = ({ registration }: DeletePublicationInformationProps) => {
   const { t } = useTranslation();
-  return (
-    <>
-      {(registration.status === RegistrationStatus.Deleted ||
-        registration.status === RegistrationStatus.Unpublished) && (
-        <Box
-          sx={{
-            position: 'absolute',
-            left: '-10000px',
-            width: '1px',
-            height: '1px',
-            overflow: 'hidden',
-          }}>
-          <Typography variant="h2" component="h1">
-            {t('registration.result_is_deleted')}
-          </Typography>
-        </Box>
-      )}
-    </>
-  );
+  return registration.status === RegistrationStatus.Deleted ||
+    registration.status === RegistrationStatus.Unpublished ? (
+    <span style={visuallyHidden}>{t('registration.result_is_deleted')}</span>
+  ) : null;
 };
