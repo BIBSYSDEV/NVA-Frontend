@@ -30,10 +30,9 @@ import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccord
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
 import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
-import {
-  DeletedPublicationInformation,
-  DeletedPublicationScreenReaderInformation,
-} from './DeletedPublicationInformation';
+import { DeletedPublicationInformation } from './DeletedPublicationInformation';
+import { visuallyHidden } from '@mui/utils';
+
 export interface PublicRegistrationContentProps {
   registration: Registration;
 }
