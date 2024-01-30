@@ -453,7 +453,7 @@ const MyPagePage = () => {
         <Switch>
           <PrivateRoute exact path={UrlPathTemplate.MyPage} isAuthorized={isAuthenticated}>
             {isCreator ? (
-              <Redirect to={UrlPathTemplate.MyPageMyMessages} />
+              <Redirect to={UrlPathTemplate.MyPageMyResearchProfile} />
             ) : (
               <Redirect to={UrlPathTemplate.MyPageMyResearchProfile} />
             )}
