@@ -7,5 +7,5 @@ interface Problem {
 }
 
 export interface DeletedRegistrationProblem extends Problem {
-  resource: Registration | undefined;
+  resource?: Registration;
 }
