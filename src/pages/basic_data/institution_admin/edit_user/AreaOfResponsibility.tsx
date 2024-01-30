@@ -79,7 +79,6 @@ export const AreaOfResponsibility = () => {
               <Button
                 startIcon={<AddCircleOutlineIcon />}
                 disabled={isSubmitting}
-                sx={{ alignSelf: 'center' }}
                 onClick={() => setAddAreaOfResponsibility(true)}>
                 {t('common.add')}
               </Button>

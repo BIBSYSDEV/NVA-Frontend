@@ -190,6 +190,7 @@
     "page_title": "Nasjonalt Vitenarkiv",
     "pagination_rows_per_page": "Antall rader per side:",
     "pagination_showing_interval": "Viser {{start}}-{{end}} av {{total}}",
+    "person": "Person",
     "place": "Sted",
     "previous": "Forrige",
     "publisher": "Utgiver",
@@ -252,8 +253,7 @@
     "x_years_one": "{{count}} år",
     "x_years_other": "{{count}} år",
     "year": "År",
-    "yes": "Ja",
-    "person": "Person"
+    "yes": "Ja"
   },
   "disciplines": {
     "1003": "Arkeologi og konservering",

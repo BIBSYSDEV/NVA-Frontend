@@ -29,7 +29,7 @@ export const PersonFormSection = () => {
   const targetOrganizationIdStart = `${topOrgCristinIdentifier?.split('.')[0]}.`;
 
   employments.forEach((employment) => {
-    const organizationIdentifier = employment.organization.split('/').pop();
+    const organizationIdentifier = getIdentifierFromId(employment.organization);
     if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
       employmentsInThisInstitution.push(employment);
     } else {

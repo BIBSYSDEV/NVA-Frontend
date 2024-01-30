@@ -181,7 +181,7 @@ interface RoleLabelProps {
 
 const RoleLabel = ({ title, description }: RoleLabelProps) => (
   <>
-    <Typography sx={{ fontWeight: 600, lineHeight: '1' }}>{title}</Typography>
+    <Typography sx={{ fontWeight: 600 }}>{title}</Typography>
     <Typography>{description}</Typography>
   </>
 );

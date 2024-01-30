@@ -122,7 +122,6 @@ export const PersonRegisterPage = () => {
                           topOrgCristinIdentifier={
                             user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''
                           }
-                          customerId={user?.customerId ?? ''}
                           refetchEmployees={employeeSearchQuery.refetch}
                         />
                       </ErrorBoundary>

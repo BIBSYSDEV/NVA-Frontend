@@ -46,111 +46,109 @@ export const AffiliationFormSection = () => {
       ) : employments.length === 0 ? (
         <Typography>{t('my_page.no_employments')}</Typography>
       ) : (
-        <div>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            <Field
-              name={`${employmentBaseFieldName}.organization`}
-              data-testid={dataTestId.basicData.personAdmin.employments()}>
-              {({ field }: FieldProps<string>) => <AffiliationHierarchy unitUri={field.value} commaSeparated />}
-            </Field>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <Field
+            name={`${employmentBaseFieldName}.organization`}
+            data-testid={dataTestId.basicData.personAdmin.employments()}>
+            {({ field }: FieldProps<string>) => <AffiliationHierarchy unitUri={field.value} commaSeparated />}
+          </Field>
 
-            <Box display={{ display: 'flex', gap: '1rem' }}>
-              <PositionField
-                fieldName={`${employmentBaseFieldName}.type`}
-                disabled={isSubmitting}
-                includeDisabledPositions
-              />
-
-              <Field name={`${employmentBaseFieldName}.fullTimeEquivalentPercentage`}>
-                {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                  <TextField
-                    {...field}
-                    value={field.value ?? ''}
-                    disabled={isSubmitting}
-                    fullWidth
-                    type="number"
-                    inputProps={{ min: '0', max: '100' }}
-                    variant="filled"
-                    label={t('basic_data.add_employee.position_percent')}
-                    error={touched && !!error}
-                    helperText={touched && error}
-                    data-testid={dataTestId.basicData.personAdmin.positionPercent}
-                  />
-                )}
-              </Field>
-            </Box>
-            <Box display={{ display: 'flex', gap: '1rem' }}>
-              <StartDateField
-                fieldName={`${employmentBaseFieldName}.startDate`}
-                disabled={isSubmitting}
-                maxDate={
-                  employments[employmentIndex].endDate ? new Date(employments[employmentIndex].endDate) : undefined
-                }
-                dataTestId={dataTestId.basicData.personAdmin.startDate}
-              />
-
-              <Field name={`${employmentBaseFieldName}.endDate`} data-testid={dataTestId.basicData.personAdmin.endDate}>
-                {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                  <DatePicker
-                    disabled={isSubmitting}
-                    label={t('common.end_date')}
-                    value={field.value ? new Date(field.value) : null}
-                    onChange={(date: any) => setFieldValue(field.name, date ?? '')}
-                    format="dd.MM.yyyy"
-                    views={['year', 'month', 'day']}
-                    minDate={
-                      employments[employmentIndex].startDate
-                        ? new Date(employments[employmentIndex].startDate)
-                        : undefined
-                    }
-                    slotProps={{
-                      textField: {
-                        inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
-                        variant: 'filled',
-                        error: touched && !!error,
-                        helperText: <ErrorMessage name={field.name} />,
-                      },
-                    }}
-                  />
-                )}
-              </Field>
-            </Box>
-            <Button
+          <Box display={{ display: 'flex', gap: '1rem' }}>
+            <PositionField
+              fieldName={`${employmentBaseFieldName}.type`}
               disabled={isSubmitting}
-              color="error"
-              variant="outlined"
-              onClick={toggleConfirmDeleteDialog}
-              endIcon={<CancelIcon />}
-              data-testid={dataTestId.basicData.personAdmin.removeEmployment}>
-              {t('basic_data.person_register.remove_employment')}
-            </Button>
-            {employments.length > 1 && (
-              <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'center' }}>
-                <IconButton
-                  title={t('common.previous')}
-                  disabled={employmentIndex === 0}
-                  onClick={() => setEmploymentIndex(employmentIndex - 1)}>
-                  <NavigateBeforeIcon />
-                </IconButton>
-                <Typography>
-                  {t('basic_data.person_register.employment_x_of_y', {
-                    selected: employmentIndex + 1,
-                    total: employments.length,
-                  })}
-                </Typography>
-                <IconButton
-                  title={t('common.next')}
-                  disabled={employmentIndex === employments.length - 1}
-                  onClick={() => setEmploymentIndex(employmentIndex + 1)}>
-                  <NavigateNextIcon />
-                </IconButton>
-              </Box>
-            )}
+              includeDisabledPositions
+            />
+
+            <Field name={`${employmentBaseFieldName}.fullTimeEquivalentPercentage`}>
+              {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                <TextField
+                  {...field}
+                  value={field.value ?? ''}
+                  disabled={isSubmitting}
+                  fullWidth
+                  type="number"
+                  inputProps={{ min: '0', max: '100' }}
+                  variant="filled"
+                  label={t('basic_data.add_employee.position_percent')}
+                  error={touched && !!error}
+                  helperText={touched && error}
+                  data-testid={dataTestId.basicData.personAdmin.positionPercent}
+                />
+              )}
+            </Field>
           </Box>
+          <Box display={{ display: 'flex', gap: '1rem' }}>
+            <StartDateField
+              fieldName={`${employmentBaseFieldName}.startDate`}
+              disabled={isSubmitting}
+              maxDate={
+                employments[employmentIndex].endDate ? new Date(employments[employmentIndex].endDate) : undefined
+              }
+              dataTestId={dataTestId.basicData.personAdmin.startDate}
+            />
+
+            <Field name={`${employmentBaseFieldName}.endDate`} data-testid={dataTestId.basicData.personAdmin.endDate}>
+              {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                <DatePicker
+                  disabled={isSubmitting}
+                  label={t('common.end_date')}
+                  value={field.value ? new Date(field.value) : null}
+                  onChange={(date: any) => setFieldValue(field.name, date ?? '')}
+                  format="dd.MM.yyyy"
+                  views={['year', 'month', 'day']}
+                  minDate={
+                    employments[employmentIndex].startDate
+                      ? new Date(employments[employmentIndex].startDate)
+                      : undefined
+                  }
+                  slotProps={{
+                    textField: {
+                      inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
+                      variant: 'filled',
+                      error: touched && !!error,
+                      helperText: <ErrorMessage name={field.name} />,
+                    },
+                  }}
+                />
+              )}
+            </Field>
+          </Box>
+          <Button
+            disabled={isSubmitting}
+            color="error"
+            variant="outlined"
+            onClick={toggleConfirmDeleteDialog}
+            endIcon={<CancelIcon />}
+            data-testid={dataTestId.basicData.personAdmin.removeEmployment}>
+            {t('basic_data.person_register.remove_employment')}
+          </Button>
+          {employments.length > 1 && (
+            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'center' }}>
+              <IconButton
+                title={t('common.previous')}
+                disabled={employmentIndex === 0}
+                onClick={() => setEmploymentIndex(employmentIndex - 1)}>
+                <NavigateBeforeIcon />
+              </IconButton>
+              <Typography>
+                {t('basic_data.person_register.employment_x_of_y', {
+                  selected: employmentIndex + 1,
+                  total: employments.length,
+                })}
+              </Typography>
+              <IconButton
+                title={t('common.next')}
+                disabled={employmentIndex === employments.length - 1}
+                onClick={() => setEmploymentIndex(employmentIndex + 1)}>
+                <NavigateNextIcon />
+              </IconButton>
+            </Box>
+          )}
           {!!(errors.person as any)?.employments && !!(touched.person as any)?.employments && (
             <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
           )}
-        </div>
+        </Box>
       )}
 
       <ConfirmDialog
