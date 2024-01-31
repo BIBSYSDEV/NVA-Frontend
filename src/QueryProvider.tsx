@@ -25,8 +25,13 @@ export const QueryProvider = ({ children }: QueryProviderProps) => {
       queryCache: new QueryCache({
         onError: (error: any, query) => {
           const queryErrorMessage = query.meta?.errorMessage;
+          const handleError = query.meta?.handleError;
+          if (handleError && typeof handleError === 'function') {
+            handleError(error, query);
+            return;
+          }
 
-          if (queryErrorMessage === false) {
+          if (!queryErrorMessage) {
             return;
           }
 
