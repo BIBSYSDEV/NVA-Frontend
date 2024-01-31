@@ -1,6 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, IconButton, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
@@ -10,17 +10,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
 import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 import { PageSpinner } from '../../../components/PageSpinner';
-import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { filterActiveAffiliations, getValueByKey } from '../../../utils/user-helpers';
+import { getValueByKey } from '../../../utils/user-helpers';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
-import { ResearchProfilePanel } from './ResearchProfilePanel';
-import { UserIdentity } from './UserIdentity';
 import { UserOrcid } from './UserOrcid';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
@@ -39,16 +36,14 @@ export const MyProfile = () => {
     queryFn: () => fetchPerson(personId),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_person'), variant: 'error' })),
   });
-  const person = personQuery.data;
 
-  const hasActiveEmployment = filterActiveAffiliations(person?.affiliations).length > 0;
+  const person = personQuery.data;
 
   const firstName = getValueByKey('FirstName', person?.names);
   const lastName = getValueByKey('LastName', person?.names);
   const personPreferredFirstName = getValueByKey('PreferredFirstName', person?.names);
   const personPreferredLastName = getValueByKey('PreferredLastName', person?.names);
   const [editPreferredNames, setEditPreferredNames] = useState(false);
-  const personTelephone = person?.contactDetails?.telephone;
 
   const initialValues: CristinPersonFormData = {
     preferredFirstName: personPreferredFirstName ? personPreferredFirstName : firstName,
@@ -77,193 +72,305 @@ export const MyProfile = () => {
       <Helmet>
         <title>{t('my_page.my_profile.user_profile')}</title>
       </Helmet>
+
       <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: '1fr',
-            md: '3fr 1fr',
-          },
-          columnGap: '1rem',
-          gridTemplateAreas: {
-            xs: '"user-profile" "user-identity" "research-profile"',
-            md: '"user-profile research-profile" "user-identity research-profile" ',
-          },
-        }}>
-        <BackgroundDiv
-          sx={{
-            bgcolor: 'secondary.main',
-            gridArea: 'user-profile',
-          }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            <Typography variant="h2" id="personalia-id">
-              {t('my_page.my_profile.heading.personalia')}
-            </Typography>
-            {personQuery.isLoading && !person ? (
-              <PageSpinner aria-labelledby="personalia-id" />
-            ) : (
-              <>
-                <Typography>{t('my_page.my_profile.user_profile_description')}</Typography>
-                <Formik initialValues={initialValues} onSubmit={updatePerson} enableReinitialize>
-                  {({ isSubmitting, dirty, resetForm }: FormikProps<CristinPersonFormData>) => (
-                    <Form>
+        sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'secondary.main', justifyContent: 'space-between' }}>
+        <Typography variant="h2" sx={{ margin: '1rem' }}>
+          {t('my_page.my_profile.heading.personalia')}
+        </Typography>
+        {personQuery.isLoading && !person ? (
+          <PageSpinner aria-labelledby="personalia-id" />
+        ) : (
+          <Formik initialValues={initialValues} onSubmit={updatePerson} enableReinitialize>
+            {({ isSubmitting, dirty, resetForm }: FormikProps<CristinPersonFormData>) => (
+              <Form>
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: 'grid',
+                    gridTemplateColumns: '2fr 1fr',
+                    columnGap: '2rem',
+                    ml: '1rem',
+                  }}>
+                  <Grid container gridColumn={1} rowGap={1}>
+                    <Grid item xs={2}>
                       <Box
                         sx={{
-                          display: 'grid',
-                          gridTemplateAreas: {
-                            xs: '"user-info" "profile-picture"',
-                            md: '"user-info profile-picture"',
-                          },
-                          gridTemplateColumns: { xs: '1fr', md: '3fr 1fr' },
-                          columnGap: '2rem',
+                          height: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
                         }}>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '1rem',
-                            gridArea: 'user-info',
-                          }}>
-                          <Box sx={{ display: 'flex' }}>
-                            <Box
-                              sx={{
-                                display: 'grid',
-                                gridTemplateColumns: '1fr 4fr 4fr',
-                                gap: '1rem',
-                                alignItems: 'center',
-                                width: '80%',
-                              }}>
-                              <Typography fontWeight="bold">{t('my_page.my_profile.person_name')}</Typography>
-                              <TextField
-                                value={user.givenName}
-                                disabled
-                                label={t('common.first_name')}
-                                size="small"
-                                variant="filled"
-                              />
-                              <TextField
-                                value={user.familyName}
-                                disabled
-                                label={t('common.last_name')}
-                                size="small"
-                                variant="filled"
-                              />
-                              <Typography fontWeight="bold">{t('my_page.my_profile.preferred_name')}</Typography>
-                              <Field name={'preferredFirstName'}>
-                                {({ field }: FieldProps<string>) => (
-                                  <TextField
-                                    {...field}
-                                    data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
-                                    id={field.name}
-                                    disabled={!editPreferredNames || isSubmitting}
-                                    label={t('my_page.my_profile.preferred_first_name')}
-                                    size="small"
-                                    variant="filled"
-                                  />
-                                )}
-                              </Field>
-
-                              <Field name={'preferredLastName'}>
-                                {({ field }: FieldProps<string>) => (
-                                  <TextField
-                                    {...field}
-                                    data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
-                                    id={field.name}
-                                    disabled={!editPreferredNames || isSubmitting}
-                                    label={t('my_page.my_profile.preferred_last_name')}
-                                    size="small"
-                                    variant="filled"
-                                  />
-                                )}
-                              </Field>
-                            </Box>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-                              <Tooltip title={t('common.edit')}>
-                                <IconButton
-                                  data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
-                                  onClick={() => setEditPreferredNames(!editPreferredNames)}>
-                                  <EditIcon sx={{ width: '1.2rem' }} />
-                                </IconButton>
-                              </Tooltip>
-                            </Box>
-                          </Box>
-                          <Box sx={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                            <Typography fontWeight="bold">Identitetsnumre</Typography>
-                            <Box>
-                              <NationalIdNumberField nationalId={user.nationalIdNumber} />
-                            </Box>
-                            <Box>
-                              <TextField
-                                value={getIdentifierFromId(user.cristinId ?? '')}
-                                disabled
-                                label={t('common.id')}
-                                size="small"
-                                variant="filled"
-                              />
-                            </Box>
-
+                        <Typography fontWeight="bold">{t('my_page.my_profile.person_name')}</Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={9}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'grid',
+                          gridTemplateColumns: '1fr 1fr',
+                          gap: '1rem',
+                          justifyContent: 'space-evenly',
+                          alignItems: 'center',
+                        }}>
+                        <TextField
+                          value={user.givenName}
+                          disabled
+                          label={t('common.first_name')}
+                          size="small"
+                          variant="filled"
+                        />
+                        <TextField
+                          value={user.familyName}
+                          disabled
+                          label={t('common.last_name')}
+                          size="small"
+                          variant="filled"
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}>
+                        <Typography fontWeight="bold">{t('my_page.my_profile.preferred_name')}</Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={9}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'grid',
+                          gridTemplateColumns: '1fr 1fr',
+                          gap: '1rem',
+                          justifyContent: 'space-evenly',
+                          alignItems: 'center',
+                        }}>
+                        <Field name={'preferredFirstName'}>
+                          {({ field }: FieldProps<string>) => (
                             <TextField
-                              sx={{ width: 'fit-content' }}
-                              value={personTelephone}
-                              data-testid={dataTestId.myPage.myProfile.telephoneField}
-                              disabled
-                              label={t('my_page.my_profile.telephone')}
+                              {...field}
+                              data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
+                              id={field.name}
+                              disabled={!editPreferredNames || isSubmitting}
+                              label={t('my_page.my_profile.preferred_first_name')}
                               size="small"
                               variant="filled"
                             />
-                          </Box>
-                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-                            <Typography fontWeight={600}>{t('common.orcid')}</Typography>
-                            <UserOrcid user={user} />
-                          </Box>
-                        </Box>
+                          )}
+                        </Field>
 
-                        <Box
-                          sx={{
-                            gridArea: 'profile-picture',
-                          }}>
-                          <Typography variant="h3" sx={{ alignSelf: 'start', mb: '1rem' }}>
-                            {t('my_page.my_profile.profile_picture')}
-                          </Typography>
-                          <ProfilePictureUploader personId={personId} />
-                        </Box>
+                        <Field name={'preferredLastName'}>
+                          {({ field }: FieldProps<string>) => (
+                            <TextField
+                              {...field}
+                              data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
+                              id={field.name}
+                              disabled={!editPreferredNames || isSubmitting}
+                              label={t('my_page.my_profile.preferred_last_name')}
+                              size="small"
+                              variant="filled"
+                            />
+                          )}
+                        </Field>
                       </Box>
-
+                    </Grid>
+                    <Grid item xs={1}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'flex',
+                          justifyContent: 'start',
+                          alignItems: 'center',
+                        }}>
+                        <Tooltip title={t('common.edit')}>
+                          <IconButton
+                            data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
+                            onClick={() => setEditPreferredNames(!editPreferredNames)}>
+                            <EditIcon sx={{ width: '1.2rem' }} />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}>
+                        <Typography fontWeight="bold">Identitetsnumre</Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={9}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'grid',
+                          gridTemplateColumns: '1fr 1fr',
+                          gap: '1rem',
+                          justifyContent: 'space-evenly',
+                          alignItems: 'center',
+                        }}>
+                        <NationalIdNumberField nationalId={user.nationalIdNumber} />
+                        <TextField
+                          value={getIdentifierFromId(user.cristinId ?? '')}
+                          disabled
+                          label={t('common.id')}
+                          size="small"
+                          variant="filled"
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={11}>
                       <Box
                         sx={{
                           display: 'flex',
-                          gap: '1rem',
-                          bgcolor: 'secondary.dark',
-                          justifyContent: 'center',
-                          py: '1rem',
+                          flexDirection: 'column',
+                          alignItems: 'start',
+                          my: '0.5rem',
                         }}>
-                        <Button
-                          onClick={() => {
-                            resetForm();
-                          }}>
-                          {t('common.cancel')}
-                        </Button>
-                        <LoadingButton
-                          data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
-                          loading={isSubmitting}
-                          disabled={!dirty}
-                          variant="contained"
-                          type="submit">
-                          {t('common.save')}
-                        </LoadingButton>
+                        <Typography fontWeight={600}>{t('common.orcid')}</Typography>
+                        <UserOrcid user={user} />
                       </Box>
-                    </Form>
-                  )}
-                </Formik>
-              </>
-            )}
-          </Box>
-        </BackgroundDiv>
-        <UserIdentity user={user} hasActiveEmployment={hasActiveEmployment} />
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}>
+                        <Typography fontWeight="bold">{t('my_page.my_profile.telephone')}</Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={9}>
+                      <Box
+                        sx={{
+                          display: 'grid',
+                          gridTemplateColumns: '1fr',
+                          justifyContent: 'space-evenly',
+                          alignItems: 'center',
+                        }}>
+                        <TextField
+                          value={person?.contactDetails?.telephone}
+                          disabled
+                          label={t('my_page.my_profile.telephone')}
+                          size="small"
+                          variant="filled"
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}>
+                        <Typography fontWeight="bold">{t('common.email')}</Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={9}>
+                      <Box
+                        sx={{
+                          display: 'grid',
+                          gridTemplateColumns: '1fr',
+                          justifyContent: 'space-evenly',
+                          alignItems: 'center',
+                        }}>
+                        <TextField
+                          value={person?.contactDetails?.email}
+                          disabled
+                          label={t('common.email')}
+                          size="small"
+                          variant="filled"
+                        />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}>
+                        <Typography fontWeight="bold" noWrap>
+                          Personlig nettside
+                        </Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={9}>
+                      <Box
+                        sx={{
+                          display: 'grid',
+                          gridTemplateColumns: '1fr',
+                          justifyContent: 'space-evenly',
+                          alignItems: 'center',
+                        }}>
+                        <TextField
+                          value={person?.contactDetails?.webPage}
+                          disabled
+                          label={t('my_page.my_profile.personal_web_page')}
+                          size="small"
+                          variant="filled"
+                        />
+                      </Box>
+                    </Grid>
+                  </Grid>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <Box
+                        sx={{
+                          height: '100%',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                        }}>
+                        <Typography variant="h3" sx={{ mb: '1rem' }}>
+                          {t('my_page.my_profile.profile_picture')}
+                        </Typography>
+                        <ProfilePictureUploader personId={personId} />
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
 
-        <Box sx={{ gridArea: 'research-profile' }}>
-          <ResearchProfilePanel person={person} isLoadingPerson={personQuery.isLoading} />
-        </Box>
+                <Box sx={{ mt: '1rem' }}>
+                  <Grid container></Grid>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: '1rem',
+                    bgcolor: 'secondary.dark',
+                    justifyContent: 'center',
+                    py: '1rem',
+                    mt: '1rem',
+                  }}>
+                  <Button
+                    onClick={() => {
+                      resetForm();
+                    }}>
+                    {t('common.cancel')}
+                  </Button>
+                  <LoadingButton
+                    data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
+                    loading={isSubmitting}
+                    disabled={!dirty}
+                    variant="contained"
+                    type="submit">
+                    {t('common.save')}
+                  </LoadingButton>
+                </Box>
+              </Form>
+            )}
+          </Formik>
+        )}
       </Box>
     </>
   );

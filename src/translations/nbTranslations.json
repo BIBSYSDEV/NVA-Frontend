@@ -154,6 +154,7 @@
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
+    "email": "E-post",
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
     "error_occurred": "En uventet feil har oppstått",
@@ -677,7 +678,8 @@
       "results": "Resultat",
       "telephone": "Telefon",
       "user_profile": "Brukerprofil",
-      "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil."
+      "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil.",
+      "personal_web_page": "Personlig nettside"
     },
     "no_employments": "Ingen ansettelser",
     "project_registration_status": {
