@@ -184,8 +184,8 @@ const MyPagePage = () => {
             </LinkButton>
             <LinkButton
               data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyFieldAndBackground}
-              to={UrlPathTemplate.MyPageMyFieldAndBackground}>
+              isSelected={currentPath === UrlPathTemplate.MyPageFieldAndBackground}
+              to={UrlPathTemplate.MyPageFieldAndBackground}>
               {t('my_page.my_profile.field_and_background.field_and_background')}
             </LinkButton>
             <LinkButton
@@ -479,7 +479,7 @@ const MyPagePage = () => {
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.MyPageMyFieldAndBackground}
+            path={UrlPathTemplate.MyPageFieldAndBackground}
             component={MyFieldAndBackground}
             isAuthorized={isAuthenticated}
           />
