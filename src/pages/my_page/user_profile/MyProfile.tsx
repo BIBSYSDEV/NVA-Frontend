@@ -264,24 +264,17 @@ export const MyProfile = () => {
                       </Box>
                     </Grid>
                     <Grid item xs={9}>
-                      <Box
-                        sx={{
-                          display: 'grid',
-                          gridTemplateColumns: '1fr',
-                          justifyContent: 'space-evenly',
-                          alignItems: 'center',
-                        }}>
-                        <Field name={'contactDetails.telephone'}>
-                          {({ field }: FieldProps<string>) => (
-                            <TextField
-                              {...field}
-                              label={t('my_page.my_profile.telephone')}
-                              size="small"
-                              variant="filled"
-                            />
-                          )}
-                        </Field>
-                      </Box>
+                      <Field name={'contactDetails.telephone'}>
+                        {({ field }: FieldProps<string>) => (
+                          <TextField
+                            {...field}
+                            label={t('my_page.my_profile.telephone')}
+                            fullWidth
+                            size="small"
+                            variant="filled"
+                          />
+                        )}
+                      </Field>
                     </Grid>
                     <Grid item xs={2}>
                       <Box
@@ -294,19 +287,11 @@ export const MyProfile = () => {
                       </Box>
                     </Grid>
                     <Grid item xs={9}>
-                      <Box
-                        sx={{
-                          display: 'grid',
-                          gridTemplateColumns: '1fr',
-                          justifyContent: 'space-evenly',
-                          alignItems: 'center',
-                        }}>
-                        <Field name={'contactDetails.email'}>
-                          {({ field }: FieldProps<string>) => (
-                            <TextField {...field} label={t('common.email')} size="small" variant="filled" />
-                          )}
-                        </Field>
-                      </Box>
+                      <Field name={'contactDetails.email'}>
+                        {({ field }: FieldProps<string>) => (
+                          <TextField {...field} label={t('common.email')} fullWidth size="small" variant="filled" />
+                        )}
+                      </Field>
                     </Grid>
                     <Grid item xs={2}>
                       <Box
@@ -321,24 +306,17 @@ export const MyProfile = () => {
                       </Box>
                     </Grid>
                     <Grid item xs={9}>
-                      <Box
-                        sx={{
-                          display: 'grid',
-                          gridTemplateColumns: '1fr',
-                          justifyContent: 'space-evenly',
-                          alignItems: 'center',
-                        }}>
-                        <Field name={'contactDetails.webPage'}>
-                          {({ field }: FieldProps<string>) => (
-                            <TextField
-                              {...field}
-                              label={t('my_page.my_profile.personal_web_page')}
-                              size="small"
-                              variant="filled"
-                            />
-                          )}
-                        </Field>
-                      </Box>
+                      <Field name={'contactDetails.webPage'}>
+                        {({ field }: FieldProps<string>) => (
+                          <TextField
+                            {...field}
+                            fullWidth
+                            label={t('my_page.my_profile.personal_web_page')}
+                            size="small"
+                            variant="filled"
+                          />
+                        )}
+                      </Field>
                     </Grid>
                   </Grid>
                   <Grid container>
