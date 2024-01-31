@@ -109,7 +109,7 @@ export const UserOrcid = ({ user }: UserOrcidProps) => {
         }
       }
       setIsAddingOrcid(false);
-      history.replace(UrlPathTemplate.MyPageMyPersonalia);
+      history.replace(UrlPathTemplate.MyPagePersonalia);
     };
 
     const searchParams = new URLSearchParams(history.location.search);

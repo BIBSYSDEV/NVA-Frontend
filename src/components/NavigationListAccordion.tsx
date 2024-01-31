@@ -46,7 +46,7 @@ export const NavigationListAccordion = ({
             display: 'flex',
             gap: '1rem',
             alignItems: 'center',
-            'svg, img, div': { borderRadius: '50%', height: '25px', width: '25px' },
+            div: { borderRadius: '50%', height: '25px', width: '25px' },
             svg: { padding: '0.2rem' },
           }}>
           {startIcon}

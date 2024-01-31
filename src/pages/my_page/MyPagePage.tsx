@@ -162,7 +162,7 @@ const MyPagePage = () => {
           title={t('my_page.research_profile')}
           startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
           accordionPath={UrlPathTemplate.MyPageProfile}
-          defaultPath={UrlPathTemplate.MyPageMyResearchProfile}
+          defaultPath={UrlPathTemplate.MyPageResearchProfile}
           dataTestId={dataTestId.myPage.researchProfileAccordion}>
           <NavigationList>
             <Typography>{t('my_page.public_research_profile')}</Typography>
@@ -171,15 +171,15 @@ const MyPagePage = () => {
                 <ProfilePicture personId={personId} fullName={fullName} sx={{ height: '25px', width: '25px' }} />
               }
               data-testid={dataTestId.myPage.researchProfileLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyResearchProfile}
-              to={UrlPathTemplate.MyPageMyResearchProfile}>
+              isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
+              to={UrlPathTemplate.MyPageResearchProfile}>
               {fullName}
             </LinkButton>
             <Typography>{t('my_page.my_profile.edit_research_profile')}</Typography>
             <LinkButton
               data-testid={dataTestId.myPage.myProfileLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyPersonalia}
-              to={UrlPathTemplate.MyPageMyPersonalia}>
+              isSelected={currentPath === UrlPathTemplate.MyPagePersonalia}
+              to={UrlPathTemplate.MyPagePersonalia}>
               {t('my_page.my_profile.heading.personalia')}
             </LinkButton>
             <LinkButton
@@ -190,8 +190,8 @@ const MyPagePage = () => {
             </LinkButton>
             <LinkButton
               data-testid={dataTestId.myPage.myResultsLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
-              to={UrlPathTemplate.MyPageMyResults}>
+              isSelected={currentPath === UrlPathTemplate.MyPageResults}
+              to={UrlPathTemplate.MyPageResults}>
               {t('my_page.my_profile.results')}
             </LinkButton>
             <LinkButton
@@ -446,11 +446,7 @@ const MyPagePage = () => {
       <ErrorBoundary>
         <Switch>
           <PrivateRoute exact path={UrlPathTemplate.MyPage} isAuthorized={isAuthenticated}>
-            {isCreator ? (
-              <Redirect to={UrlPathTemplate.MyPageMyResearchProfile} />
-            ) : (
-              <Redirect to={UrlPathTemplate.MyPageMyResearchProfile} />
-            )}
+            <Redirect to={UrlPathTemplate.MyPageResearchProfile} />
           </PrivateRoute>
 
           <PrivateRoute exact path={UrlPathTemplate.MyPageMyMessages} isAuthorized={isCreator}>
@@ -477,7 +473,7 @@ const MyPagePage = () => {
           </PrivateRoute>
           <PrivateRoute
             exact
-            path={UrlPathTemplate.MyPageMyPersonalia}
+            path={UrlPathTemplate.MyPagePersonalia}
             component={MyProfile}
             isAuthorized={isAuthenticated}
           />
@@ -495,13 +491,13 @@ const MyPagePage = () => {
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.MyPageMyResearchProfile}
+            path={UrlPathTemplate.MyPageResearchProfile}
             component={ResearchProfile}
             isAuthorized={isAuthenticated}
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.MyPageMyResults}
+            path={UrlPathTemplate.MyPageResults}
             component={MyResults}
             isAuthorized={isAuthenticated}
           />
