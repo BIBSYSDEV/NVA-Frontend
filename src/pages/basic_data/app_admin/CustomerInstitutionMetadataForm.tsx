@@ -36,7 +36,7 @@ interface CustomerInstitutionMetadataFormProps {
 }
 
 function inactiveFromIsInThePast(inactiveFrom: string) {
-  const now = new Date(Date.now());
+  const now = new Date();
   const inactiveFromDate = new Date(inactiveFrom);
   return inactiveFromDate < now;
 }
