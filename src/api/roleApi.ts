@@ -10,7 +10,7 @@ interface CreateUserPayload {
 }
 
 export const updateUser = async (username: string, newUser: InstitutionUser) =>
-  await authenticatedApiRequest<InstitutionUser>({
+  await authenticatedApiRequest2<InstitutionUser>({
     url: `${RoleApiPath.Users}/${encodeURIComponent(username)}`,
     method: 'PUT',
     data: newUser,
