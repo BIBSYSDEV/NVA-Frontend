@@ -20,7 +20,7 @@ import { getValueByKey } from '../../../utils/user-helpers';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
 import { UserOrcid } from './UserOrcid';
 
-type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName'>;
+type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName' | 'contactDetails'>;
 
 export const MyProfile = () => {
   const { t } = useTranslation();
@@ -43,11 +43,17 @@ export const MyProfile = () => {
   const lastName = getValueByKey('LastName', person?.names);
   const personPreferredFirstName = getValueByKey('PreferredFirstName', person?.names);
   const personPreferredLastName = getValueByKey('PreferredLastName', person?.names);
+  const personTelephone = person?.contactDetails?.telephone;
   const [editPreferredNames, setEditPreferredNames] = useState(false);
 
   const initialValues: CristinPersonFormData = {
     preferredFirstName: personPreferredFirstName ? personPreferredFirstName : firstName,
     preferredLastName: personPreferredLastName ? personPreferredLastName : lastName,
+    contactDetails: {
+      telephone: personTelephone ? personTelephone : '',
+      email: person?.contactDetails?.email ? person.contactDetails.email : '',
+      webPage: person?.contactDetails?.webPage ? person.contactDetails.webPage : '',
+    },
   };
 
   const updatePerson = async (values: CristinPersonFormData) => {
@@ -55,6 +61,11 @@ export const MyProfile = () => {
       const payload: CristinPersonFormData = {
         preferredFirstName: values.preferredFirstName === '' ? null : values.preferredFirstName?.trim(),
         preferredLastName: values.preferredLastName === '' ? null : values.preferredLastName?.trim(),
+        contactDetails: {
+          telephone: values.contactDetails?.telephone === '' ? null : values.contactDetails?.telephone?.trim(),
+          email: values.contactDetails?.email === '' ? null : values.contactDetails?.email?.trim(),
+          webPage: values.contactDetails?.webPage === '' ? null : values.contactDetails?.webPage?.trim(),
+        },
       };
       const updatePersonResponse = await updateCristinPerson(user.cristinId, payload);
       if (isErrorStatus(updatePersonResponse.status)) {
@@ -260,13 +271,16 @@ export const MyProfile = () => {
                           justifyContent: 'space-evenly',
                           alignItems: 'center',
                         }}>
-                        <TextField
-                          value={person?.contactDetails?.telephone}
-                          disabled
-                          label={t('my_page.my_profile.telephone')}
-                          size="small"
-                          variant="filled"
-                        />
+                        <Field name={'contactDetails.telephone'}>
+                          {({ field }: FieldProps<string>) => (
+                            <TextField
+                              {...field}
+                              label={t('my_page.my_profile.telephone')}
+                              size="small"
+                              variant="filled"
+                            />
+                          )}
+                        </Field>
                       </Box>
                     </Grid>
                     <Grid item xs={2}>
@@ -287,13 +301,11 @@ export const MyProfile = () => {
                           justifyContent: 'space-evenly',
                           alignItems: 'center',
                         }}>
-                        <TextField
-                          value={person?.contactDetails?.email}
-                          disabled
-                          label={t('common.email')}
-                          size="small"
-                          variant="filled"
-                        />
+                        <Field name={'contactDetails.email'}>
+                          {({ field }: FieldProps<string>) => (
+                            <TextField {...field} label={t('common.email')} size="small" variant="filled" />
+                          )}
+                        </Field>
                       </Box>
                     </Grid>
                     <Grid item xs={2}>
@@ -316,13 +328,16 @@ export const MyProfile = () => {
                           justifyContent: 'space-evenly',
                           alignItems: 'center',
                         }}>
-                        <TextField
-                          value={person?.contactDetails?.webPage}
-                          disabled
-                          label={t('my_page.my_profile.personal_web_page')}
-                          size="small"
-                          variant="filled"
-                        />
+                        <Field name={'contactDetails.webPage'}>
+                          {({ field }: FieldProps<string>) => (
+                            <TextField
+                              {...field}
+                              label={t('my_page.my_profile.personal_web_page')}
+                              size="small"
+                              variant="filled"
+                            />
+                          )}
+                        </Field>
                       </Box>
                     </Grid>
                   </Grid>
