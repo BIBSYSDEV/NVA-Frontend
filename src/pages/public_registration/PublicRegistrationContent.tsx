@@ -95,7 +95,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             registrationType={entityDescription.reference.publicationInstance.type}
           />
         )}
-        <DeletedPublicationInformation registration={registration} />
+        <DeletedPublicationInformation aria-hidden={true} registration={registration} />
 
         <PublicGeneralContent registration={registration} />
 

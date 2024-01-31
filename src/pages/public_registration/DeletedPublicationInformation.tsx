@@ -13,7 +13,6 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
       {(registration.status === RegistrationStatus.Deleted ||
         registration.status === RegistrationStatus.Unpublished) && (
         <Box
-          aria-hidden="true" // works in pair with DeletedPublicationScreenReaderInformation
           sx={{
             display: 'flex',
             justifyContent: 'center',
