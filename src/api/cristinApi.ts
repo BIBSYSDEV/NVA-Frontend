@@ -138,7 +138,7 @@ export const searchForPerson = async (
   page: number,
   { name, organization, sector }: PersonSearchParams
 ) => {
-  const searchParams = new URLSearchParams();
+  const searchParams = new URLSearchParams({ sort: 'name' });
   if (results) {
     searchParams.set(PersonSearchParameter.Results, results.toString());
   }
