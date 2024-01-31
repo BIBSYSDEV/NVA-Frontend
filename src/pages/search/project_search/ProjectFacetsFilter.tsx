@@ -35,7 +35,7 @@ export const ProjectFacetsFilter = ({ projectQuery }: ProjectFacetsFilterProps) 
   const selectedParticipants = searchParams.get(ProjectSearchParameter.ParticipantFacet)?.split(',') ?? [];
   const selectedFundingSources = searchParams.get(ProjectSearchParameter.FundingSourceFacet)?.split(',') ?? [];
 
-  const addFacetFilter = (param: string, key: string) => {
+  const addFacetFilter = (param: ProjectSearchParameter, key: string) => {
     const currentValues = searchParams.get(param)?.split(',') ?? [];
     if (currentValues.length === 0) {
       searchParams.set(param, key);
