@@ -36,13 +36,10 @@ export const ProjectStatusFilter = () => {
             paddingTop: '6px',
           },
           '&::before': {
-            borderBottom: 'none',
+            borderBottom: 'none !important',
           },
           '&::after': {
             borderBottom: 'none',
-          },
-          '&:hover::before': {
-            borderBottom: 'none !important',
           },
         }}
         defaultValue={searchParams.get(ProjectSearchParameter.Status) ?? ''}
