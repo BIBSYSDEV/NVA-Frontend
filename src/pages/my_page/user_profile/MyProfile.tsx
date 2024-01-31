@@ -316,7 +316,7 @@ export const MyProfile = () => {
                           alignItems: 'center',
                         }}>
                         <Typography fontWeight="bold" noWrap>
-                          Personlig nettside
+                          {t('my_page.my_profile.personal_web_page')}
                         </Typography>
                       </Box>
                     </Grid>
