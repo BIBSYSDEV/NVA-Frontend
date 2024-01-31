@@ -5,6 +5,7 @@ import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+import { getById } from '../../../../api/commonApi';
 import { updateCristinPerson } from '../../../../api/cristinApi';
 import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
 import { setNotification } from '../../../../redux/notificationSlice';
@@ -29,7 +30,8 @@ const validationSchema = Yup.object().shape({
 });
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
-  existingPerson: CristinPerson;
+  existingPerson?: CristinPerson;
+  personId: string;
   onClose: () => void;
 }
 
@@ -38,14 +40,23 @@ export interface UserFormData {
   user?: InstitutionUser;
 }
 
-export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialogProps) => {
+export const UserFormDialog = ({ open, onClose, existingPerson, personId }: UserFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId;
   const customerId = user?.customerId ?? '';
 
-  const personCristinIdentifier = getIdentifierFromId(existingPerson.id);
+  const personQuery = useQuery({
+    enabled: open && !existingPerson,
+    queryKey: [personId],
+    queryFn: () => getById<CristinPerson>(personId),
+    meta: { errorMessage: t('feedback.error.get_person') },
+  });
+
+  const cristinPerson = existingPerson ?? personQuery.data ?? undefined;
+
+  const personCristinIdentifier = getValueByKey('CristinIdentifier', cristinPerson?.identifiers);
   const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
   const username =
     personCristinIdentifier && topOrgCristinIdentifier ? `${personCristinIdentifier}@${topOrgCristinIdentifier}` : '';
@@ -83,7 +94,7 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
         return await createUser({
           customerId,
           roles: user.roles,
-          nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', existingPerson.identifiers),
+          nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', cristinPerson?.identifiers),
         });
       }
     },
@@ -94,7 +105,7 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
   });
 
   const initialValues: UserFormData = {
-    person: existingPerson,
+    person: cristinPerson,
     user: institutionUserQuery.isError
       ? {
           institution: customerId ?? '',
@@ -107,7 +118,6 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth transitionDuration={{ exit: 0 }}>
       <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
-
       <Formik
         initialValues={initialValues}
         enableReinitialize // Needed to update user values when institutionUser is fetched
@@ -128,7 +138,7 @@ export const UserFormDialog = ({ open, onClose, existingPerson }: UserFormDialog
         validationSchema={validationSchema}>
         {({ isSubmitting }: FormikProps<UserFormData>) => (
           <Form noValidate>
-            <DialogContent>
+            <DialogContent sx={{ minHeight: '30vh' }}>
               <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr auto 1fr', gap: '1rem' }}>
                 <PersonFormSection />
                 <Divider orientation="vertical" />

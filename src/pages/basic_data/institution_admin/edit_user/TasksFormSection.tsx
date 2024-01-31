@@ -5,11 +5,16 @@ import { RoleName } from '../../../../types/user.types';
 import { AreaOfResponsibility } from './AreaOfResponsibility';
 import { UserFormData } from './UserFormDialog';
 
+export const curatorRoles = [
+  RoleName.DoiCurator,
+  RoleName.PublishingCurator,
+  RoleName.SupportCurator,
+  RoleName.NviCurator,
+];
+
 interface TasksFormSectionProps {
   isLoadingUser: boolean;
 }
-
-const curatorRoles = [RoleName.DoiCurator, RoleName.PublishingCurator, RoleName.SupportCurator, RoleName.NviCurator];
 
 export const TasksFormSection = ({ isLoadingUser }: TasksFormSectionProps) => {
   const { t } = useTranslation();

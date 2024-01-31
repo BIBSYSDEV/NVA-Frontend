@@ -95,7 +95,12 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, refetch
         </TableCell>
       </TableRow>
 
-      <UserFormDialog open={openDialog} onClose={toggleDialog} existingPerson={cristinPerson} />
+      <UserFormDialog
+        open={openDialog}
+        onClose={toggleDialog}
+        existingPerson={cristinPerson}
+        personId={cristinPerson.id}
+      />
     </>
   );
 };
