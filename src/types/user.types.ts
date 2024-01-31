@@ -52,6 +52,7 @@ export interface InstitutionUser {
   institution: string;
   roles: UserRole[];
   username: string;
+  cristinId?: string;
   viewingScope?: {
     type: 'ViewingScope';
     includedUnits: string[];

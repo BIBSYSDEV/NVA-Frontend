@@ -43,6 +43,7 @@ export const AreaOfResponsibility = () => {
                     key={organizationId}
                     organizationId={organizationId}
                     onRemove={currentAreas.length > 1 ? () => remove(index) : undefined}
+                    disabled={isSubmitting}
                   />
                 ))}
               </Box>
@@ -89,11 +90,11 @@ export const AreaOfResponsibility = () => {
 interface ViewingScopeChipProps {
   organizationId: string;
   onRemove?: () => void;
+  disabled?: boolean;
 }
 
-const ViewingScopeChip = ({ organizationId, onRemove }: ViewingScopeChipProps) => {
+export const ViewingScopeChip = ({ organizationId, onRemove, disabled }: ViewingScopeChipProps) => {
   const { t } = useTranslation();
-  const { isSubmitting } = useFormikContext<UserFormData>();
 
   const organizationQuery = useQuery({
     enabled: !!organizationId,
@@ -108,7 +109,7 @@ const ViewingScopeChip = ({ organizationId, onRemove }: ViewingScopeChipProps) =
     <Chip
       key={organizationId}
       color="primary"
-      disabled={isSubmitting}
+      disabled={disabled}
       label={
         organizationQuery.isLoading ? (
           <Skeleton sx={{ width: '15rem' }} />
