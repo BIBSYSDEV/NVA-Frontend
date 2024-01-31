@@ -1169,7 +1169,6 @@
       "project_helper_text": "",
       "remove_vocabulary": "Remove vocabulary",
       "search_for_npi_discipline": "Search for scientific field",
-      "search_for_project": "Search in Cristin project catalogue",
       "year_only": "Year only"
     },
     "edit_registration": "Edit registration",
@@ -1622,8 +1621,11 @@
       "pages_to": "to",
       "place_for_event": "Place for event",
       "print_issn": "Print ISSN",
-      "protected_type": "You do not have access. Contact the institution that awarded you the degree to have it published. If it is foreign, ask for curatorial support with the publication.",
+      "protected_degree_type": "You do not have access. Contact the institution that awarded you the degree to have it published. If it is foreign, ask for curatorial support with the publication.",
+      "protected_file_type": "",
       "publisher_or_organizer": "Publisher/organizer etc.",
+      "related_result": "",
+      "related_results": "",
       "remove_doi": "Remove DOI",
       "remove_doi_text": "You can remove the DOI that was used when starting registration.\nDo you want to remove the link to the original DOI?",
       "research_data": {
@@ -1706,6 +1708,7 @@
     "search_for_sub_unit": "Search for subunit",
     "search_for_title": "Search for title",
     "search_placeholder": "Search for title, contributor, abstract, etc.",
+    "search_project_placeholder": "",
     "search_term_label": "Value",
     "sector": "Sector",
     "select_one_or_more_categories": "Select one or more categories",

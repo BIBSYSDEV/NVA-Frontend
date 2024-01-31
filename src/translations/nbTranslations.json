@@ -257,6 +257,10 @@
     "yes": "Ja"
   },
   "disciplines": {
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
@@ -342,11 +346,7 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring",
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi"
+    "1144": "Ernæring"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -1274,7 +1274,8 @@
         "metadata_published_waiting_for_files_curator": "Alle filer og valgte lisenser blir publisert og vil umiddelbart bli tilgjengelig for andre.",
         "publish_metadata": "Publiser metadata",
         "publish_metadata_and_files": "Publiser metadata og fil(er)",
-        "registration_is_published": "Registreringen er publisert. Metadata og eventuelle filer er offentlig tilgjengelig.",
+        "registration_is_published": "Registreringen er publisert. Metadata er offentlig tilgjengelig.",
+        "registration_is_published_with_files": "Registreringen er publisert. Metadata og fil(er) er offentlig tilgjengelig.",
         "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
         "reload": "Last på nytt",
         "review_preview_before_publishing": "Se over utkast før du går videre.",
@@ -1368,6 +1369,7 @@
       "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på Internett",
       "start_with_uploading_file_title": "Start med å laste opp fil"
     },
+    "result_is_deleted": "Resultatet er slettet",
     "resource_type": {
       "article_number": "Artikkelnummer",
       "artistic": {
