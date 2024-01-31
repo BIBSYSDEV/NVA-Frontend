@@ -36,7 +36,7 @@ interface CustomerInstitutionMetadataFormProps {
 }
 
 function inactiveFromIsInThePast(inactiveFrom: string) {
-  const now = new Date(Date.now());
+  const now = new Date();
   const inactiveFromDate = new Date(inactiveFrom);
   return inactiveFromDate < now;
 }
@@ -242,7 +242,7 @@ export const CustomerInstitutionMetadataForm = ({
                       onChange={(_event, checked) => {
                         setFieldValue(
                           CustomerInstitutionFieldNames.InactiveFrom,
-                          checked ? new Date(Date.now()).toISOString() : null
+                          checked ? new Date().toISOString() : null
                         );
                       }}
                       data-testid={dataTestId.basicData.institutionAdmin.inactiveCheckbox}
