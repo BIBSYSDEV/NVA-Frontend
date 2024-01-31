@@ -242,7 +242,7 @@ export const CustomerInstitutionMetadataForm = ({
                       onChange={(_event, checked) => {
                         setFieldValue(
                           CustomerInstitutionFieldNames.InactiveFrom,
-                          checked ? new Date(Date.now()).toISOString() : null
+                          checked ? new Date().toISOString() : null
                         );
                       }}
                       data-testid={dataTestId.basicData.institutionAdmin.inactiveCheckbox}
