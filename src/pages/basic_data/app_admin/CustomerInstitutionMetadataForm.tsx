@@ -41,7 +41,7 @@ function inactiveFromIsInThePast(inactiveFrom: string) {
   return inactiveFromDate < now;
 }
 
-function isInactive(inactiveFrom: string | null | undefined): boolean {
+function isInactive(inactiveFrom: string | undefined): boolean {
   return inactiveFrom ? inactiveFromIsInThePast(inactiveFrom) : false;
 }
 
