@@ -167,9 +167,6 @@ const MyPagePage = () => {
           <NavigationList>
             <Typography>{t('my_page.public_research_profile')}</Typography>
             <LinkButton
-              startIcon={
-                <ProfilePicture personId={personId} fullName={fullName} sx={{ height: '25px', width: '25px' }} />
-              }
               data-testid={dataTestId.myPage.researchProfileLink}
               isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
               to={UrlPathTemplate.MyPageResearchProfile}>
