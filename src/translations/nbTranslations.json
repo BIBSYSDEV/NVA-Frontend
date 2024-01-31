@@ -625,6 +625,7 @@
     "my_page": "Min side",
     "my_profile": {
       "background": "Bakgrunn",
+      "contact_information": "Kontaktinformasjon",
       "edit_promoted_publication": "Legg til/fjern som favoritt",
       "field_and_background": {
         "background_placeholder": "Skriv inn",

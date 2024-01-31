@@ -237,6 +237,11 @@ export const MyProfile = () => {
                         <UserOrcid user={user} />
                       </Box>
                     </Grid>
+                    <Grid item xs={12}>
+                      <Typography fontWeight="bold" fontSize={15}>
+                        {t('my_page.my_profile.contact_information')}
+                      </Typography>
+                    </Grid>
                     <Grid item xs={2}>
                       <Box
                         sx={{
