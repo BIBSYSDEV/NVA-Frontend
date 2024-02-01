@@ -35,16 +35,6 @@ interface CustomerInstitutionMetadataFormProps {
   editMode: boolean;
 }
 
-function inactiveFromIsInThePast(inactiveFrom: string) {
-  const now = new Date();
-  const inactiveFromDate = new Date(inactiveFrom);
-  return inactiveFromDate < now;
-}
-
-function isInactive(inactiveFrom: string | undefined): boolean {
-  return inactiveFrom ? inactiveFromIsInThePast(inactiveFrom) : false;
-}
-
 export const CustomerInstitutionMetadataForm = ({
   customerInstitution,
   doiAgent,
