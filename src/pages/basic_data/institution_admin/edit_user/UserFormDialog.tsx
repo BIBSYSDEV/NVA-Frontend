@@ -159,7 +159,12 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
               ) : !values.person ? (
                 <Typography>{t('feedback.error.get_person')}</Typography>
               ) : (
-                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr auto 1fr', gap: '1rem' }}>
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gridTemplateColumns: { xs: '1fr', lg: '1fr auto 1fr auto 1fr auto 1fr' },
+                    gap: '1rem',
+                  }}>
                   <PersonFormSection />
                   <Divider orientation="vertical" />
                   <AffiliationFormSection />
