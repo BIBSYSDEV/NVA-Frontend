@@ -268,6 +268,7 @@ export const MyProfile = () => {
                         {({ field }: FieldProps<string>) => (
                           <TextField
                             {...field}
+                            data-testid={dataTestId.myPage.myProfile.telephoneField}
                             label={t('my_page.my_profile.telephone')}
                             fullWidth
                             size="small"
@@ -289,7 +290,14 @@ export const MyProfile = () => {
                     <Grid item xs={9}>
                       <Field name={'contactDetails.email'}>
                         {({ field }: FieldProps<string>) => (
-                          <TextField {...field} label={t('common.email')} fullWidth size="small" variant="filled" />
+                          <TextField
+                            {...field}
+                            data-testid={dataTestId.myPage.myProfile.emailField}
+                            label={t('common.email')}
+                            fullWidth
+                            size="small"
+                            variant="filled"
+                          />
                         )}
                       </Field>
                     </Grid>
@@ -311,6 +319,7 @@ export const MyProfile = () => {
                           <TextField
                             {...field}
                             fullWidth
+                            data-testid={dataTestId.myPage.myProfile.webPageField}
                             label={t('my_page.my_profile.personal_web_page')}
                             size="small"
                             variant="filled"
