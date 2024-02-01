@@ -16,9 +16,9 @@ import {
   CustomerInstitutionFieldNames,
   CustomerInstitutionFormData,
   DoiAgent,
-  Sector,
   emptyCustomerInstitution,
   emptyProtectedDoiAgent,
+  Sector,
 } from '../../../types/customerInstitution.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -33,16 +33,6 @@ interface CustomerInstitutionMetadataFormProps {
   customerInstitution?: CustomerInstitution;
   doiAgent?: DoiAgent;
   editMode: boolean;
-}
-
-function inactiveFromIsInThePast(inactiveFrom: string) {
-  const now = new Date();
-  const inactiveFromDate = new Date(inactiveFrom);
-  return inactiveFromDate < now;
-}
-
-function isInactive(inactiveFrom: string | null | undefined): boolean {
-  return inactiveFrom ? inactiveFromIsInThePast(inactiveFrom) : false;
 }
 
 export const CustomerInstitutionMetadataForm = ({
@@ -246,7 +236,7 @@ export const CustomerInstitutionMetadataForm = ({
                         );
                       }}
                       data-testid={dataTestId.basicData.institutionAdmin.inactiveCheckbox}
-                      checked={isInactive(field.value)}
+                      checked={!!field.value}
                     />
                   }
                 />
