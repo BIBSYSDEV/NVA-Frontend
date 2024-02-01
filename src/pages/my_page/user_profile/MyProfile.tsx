@@ -258,6 +258,7 @@ export const MyProfile = () => {
                         {({ field }: FieldProps<string>) => (
                           <TextField
                             {...field}
+                            type="tel"
                             data-testid={dataTestId.myPage.myProfile.telephoneField}
                             label={t('my_page.my_profile.telephone')}
                             fullWidth
@@ -277,6 +278,7 @@ export const MyProfile = () => {
                         {({ field }: FieldProps<string>) => (
                           <TextField
                             {...field}
+                            type="email"
                             data-testid={dataTestId.myPage.myProfile.emailField}
                             label={t('common.email')}
                             fullWidth
@@ -296,6 +298,7 @@ export const MyProfile = () => {
                         {({ field }: FieldProps<string>) => (
                           <TextField
                             {...field}
+                            type="url"
                             fullWidth
                             data-testid={dataTestId.myPage.myProfile.webPageField}
                             label={t('my_page.my_profile.personal_web_page')}
