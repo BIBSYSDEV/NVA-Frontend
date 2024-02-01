@@ -218,7 +218,7 @@ export const MyProfile = () => {
                           display: 'flex',
                           alignItems: 'center',
                         }}>
-                        <Typography fontWeight="bold">Identitetsnumre</Typography>
+                        <Typography fontWeight="bold">{t('my_page.my_profile.identity.identity_numbers')}</Typography>
                       </Box>
                     </Grid>
                     <Grid item xs={14} md={12}>
