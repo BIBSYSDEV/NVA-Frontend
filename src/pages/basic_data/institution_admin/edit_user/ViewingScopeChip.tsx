@@ -24,7 +24,6 @@ export const ViewingScopeChip = ({ organizationId, onRemove, disabled }: Viewing
 
   return (
     <Chip
-      key={organizationId}
       color="primary"
       disabled={disabled}
       label={

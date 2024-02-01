@@ -14,11 +14,7 @@ export const CuratorRow = ({ curator }: CuratorRowProps) => {
 
   return (
     <>
-      <TableRow
-        key={curator.username}
-        hover
-        onClick={curator.cristinId ? toggleDialog : undefined}
-        sx={{ cursor: 'pointer' }}>
+      <TableRow hover onClick={curator.cristinId ? toggleDialog : undefined} sx={{ cursor: 'pointer' }}>
         <TableCell>
           {curator.givenName} {curator.familyName}
         </TableCell>

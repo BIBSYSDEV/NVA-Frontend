@@ -58,7 +58,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
   const topOrgCristinId = user?.topOrgCristinId;
   const customerId = user?.customerId ?? '';
 
-  const personId = typeof existingPerson === 'string' ? existingPerson : '';
+  const personId = typeof existingPerson === 'string' ? existingPerson : existingPerson.id;
   const existingPersonObject = typeof existingPerson === 'object' ? existingPerson : undefined;
 
   const personQuery = useQuery({
@@ -122,7 +122,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     person: personQuery.data,
     user: institutionUserQuery.isError
       ? {
-          institution: customerId ?? '',
+          institution: customerId,
           roles: [{ type: 'Role', rolename: RoleName.Creator }],
           username: username,
         }
