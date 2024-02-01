@@ -104,12 +104,12 @@ export const MyProfile = () => {
                   sx={{
                     flexGrow: 1,
                     display: 'grid',
-                    gridTemplateColumns: '2fr 1fr',
+                    gridTemplateColumns: { xs: '2fr', md: '2fr 1fr' },
                     columnGap: '2rem',
                     ml: '1rem',
                   }}>
-                  <Grid container gridColumn={1} rowGap={1}>
-                    <Grid item xs={2}>
+                  <Grid container gridColumn={1} rowGap={1} columns={16}>
+                    <Grid item xs={12} md={3}>
                       <Box
                         sx={{
                           height: '100%',
@@ -119,7 +119,7 @@ export const MyProfile = () => {
                         <Typography fontWeight="bold">{t('my_page.my_profile.person_name')}</Typography>
                       </Box>
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={14} md={12}>
                       <Box
                         sx={{
                           height: '100%',
@@ -145,7 +145,7 @@ export const MyProfile = () => {
                         />
                       </Box>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={12} md={3}>
                       <Box
                         sx={{
                           height: '100%',
@@ -155,7 +155,7 @@ export const MyProfile = () => {
                         <Typography fontWeight="bold">{t('my_page.my_profile.preferred_name')}</Typography>
                       </Box>
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={14} md={12}>
                       <Box
                         sx={{
                           height: '100%',
@@ -194,7 +194,7 @@ export const MyProfile = () => {
                         </Field>
                       </Box>
                     </Grid>
-                    <Grid item xs={1}>
+                    <Grid item xs={1} md={1}>
                       <Box
                         sx={{
                           height: '100%',
@@ -211,7 +211,7 @@ export const MyProfile = () => {
                         </Tooltip>
                       </Box>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={16} md={3}>
                       <Box
                         sx={{
                           height: '100%',
@@ -221,7 +221,7 @@ export const MyProfile = () => {
                         <Typography fontWeight="bold">Identitetsnumre</Typography>
                       </Box>
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={14} md={12}>
                       <Box
                         sx={{
                           height: '100%',
@@ -241,7 +241,7 @@ export const MyProfile = () => {
                         />
                       </Box>
                     </Grid>
-                    <Grid item xs={11}>
+                    <Grid item md={13}>
                       <Box
                         sx={{
                           display: 'flex',
@@ -253,12 +253,12 @@ export const MyProfile = () => {
                         <UserOrcid user={user} />
                       </Box>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={16}>
                       <Typography fontWeight="bold" fontSize={15}>
                         {t('my_page.my_profile.contact_information')}
                       </Typography>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={16} md={3}>
                       <Box
                         sx={{
                           height: '100%',
@@ -268,7 +268,7 @@ export const MyProfile = () => {
                         <Typography fontWeight="bold">{t('my_page.my_profile.telephone')}</Typography>
                       </Box>
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.telephone'}>
                         {({ field }: FieldProps<string>) => (
                           <TextField
@@ -282,7 +282,7 @@ export const MyProfile = () => {
                         )}
                       </Field>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={16} md={3}>
                       <Box
                         sx={{
                           height: '100%',
@@ -292,7 +292,7 @@ export const MyProfile = () => {
                         <Typography fontWeight="bold">{t('common.email')}</Typography>
                       </Box>
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.email'}>
                         {({ field }: FieldProps<string>) => (
                           <TextField
@@ -306,7 +306,7 @@ export const MyProfile = () => {
                         )}
                       </Field>
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={16} md={3}>
                       <Box
                         sx={{
                           height: '100%',
@@ -318,7 +318,7 @@ export const MyProfile = () => {
                         </Typography>
                       </Box>
                     </Grid>
-                    <Grid item xs={9}>
+                    <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.webPage'}>
                         {({ field }: FieldProps<string>) => (
                           <TextField
@@ -334,13 +334,13 @@ export const MyProfile = () => {
                     </Grid>
                   </Grid>
                   <Grid container>
-                    <Grid item xs={12}>
+                    <Grid item xs={16}>
                       <Box
                         sx={{
                           height: '100%',
                           display: 'flex',
                           flexDirection: 'column',
-                          justifyContent: 'flex-start',
+                          justifyContent: { xs: 'center', md: 'flex-start' },
                           alignItems: 'center',
                         }}>
                         <Typography variant="h3" sx={{ mb: '1rem' }}>
