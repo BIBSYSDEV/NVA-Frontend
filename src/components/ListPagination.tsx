@@ -2,6 +2,7 @@ import { Box, BoxProps, MenuItem, Pagination, PaginationItem, Select, Typography
 import { useTranslation } from 'react-i18next';
 import { ROWS_PER_PAGE_OPTIONS } from '../utils/constants';
 import { dataTestId } from '../utils/dataTestIds';
+import { ListPaginationCounter } from './ListPaginationCounter';
 
 interface ListPaginationProps extends Pick<BoxProps, 'sx'> {
   count: number;
@@ -29,8 +30,8 @@ export const ListPagination = ({
   const totalPages = Math.ceil(count / rowsPerPage);
   const pages = Math.min(maxPages, totalPages);
 
-  const itemsStart = count > 0 ? ((page - 1) * rowsPerPage + 1).toLocaleString() : '0';
-  const itemsEnd = Math.min(page * rowsPerPage, count).toLocaleString();
+  const itemsStart = count > 0 ? (page - 1) * rowsPerPage + 1 : 0;
+  const itemsEnd = Math.min(page * rowsPerPage, count);
 
   return (
     <Box
@@ -44,9 +45,7 @@ export const ListPagination = ({
         ...sx,
       }}
       data-testid={dataTestId.common.pagination}>
-      <Typography aria-live="polite">
-        {t('common.pagination_showing_interval', { start: itemsStart, end: itemsEnd, total: count.toLocaleString() })}
-      </Typography>
+      <ListPaginationCounter start={itemsStart} end={itemsEnd} total={count} />
 
       <Pagination
         sx={{

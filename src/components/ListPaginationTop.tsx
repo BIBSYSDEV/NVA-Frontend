@@ -1,5 +1,5 @@
-import { Box, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { Box } from '@mui/material';
+import { ListPaginationCounter } from './ListPaginationCounter';
 
 interface ListPaginationTopProps {
   count: number;
@@ -8,20 +8,12 @@ interface ListPaginationTopProps {
 }
 
 export const ListPaginationTop = ({ count, rowsPerPage, page }: ListPaginationTopProps) => {
-  const { t } = useTranslation();
-
-  const itemsStart = count > 0 ? ((page - 1) * rowsPerPage + 1).toLocaleString() : '0';
-  const itemsEnd = Math.min(page * rowsPerPage, count).toLocaleString();
+  const itemsStart = count > 0 ? (page - 1) * rowsPerPage + 1 : 0;
+  const itemsEnd = Math.min(page * rowsPerPage, count);
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-      <Typography aria-live="polite">
-        {t('common.pagination_showing_interval', {
-          start: itemsStart,
-          end: itemsEnd,
-          total: count.toLocaleString(),
-        })}
-      </Typography>
+      <ListPaginationCounter start={itemsStart} end={itemsEnd} total={count} />
     </Box>
   );
 };
