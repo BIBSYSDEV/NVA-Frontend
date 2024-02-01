@@ -85,7 +85,12 @@ export const MyProfile = () => {
       </Helmet>
 
       <Box
-        sx={{ display: 'flex', flexDirection: 'column', bgcolor: 'secondary.main', justifyContent: 'space-between' }}>
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          bgcolor: 'secondary.main',
+          justifyContent: personQuery.isLoading ? 'start' : 'space-between',
+        }}>
         <Typography variant="h2" sx={{ margin: '1rem' }}>
           {t('my_page.my_profile.heading.personalia')}
         </Typography>
