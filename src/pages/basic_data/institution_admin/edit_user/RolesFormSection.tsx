@@ -8,11 +8,7 @@ import { RoleName, UserRole } from '../../../../types/user.types';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { UserFormData, UserFormFieldName } from './UserFormDialog';
 
-interface RolesFormSectionProps {
-  isLoadingUser: boolean;
-}
-
-export const RolesFormSection = ({ isLoadingUser }: RolesFormSectionProps) => {
+export const RolesFormSection = () => {
   const { t } = useTranslation();
   const isAppAdmin = !!useSelector((store: RootState) => store.user?.isAppAdmin);
   const { values, isSubmitting, setFieldValue } = useFormikContext<UserFormData>();
@@ -40,13 +36,13 @@ export const RolesFormSection = ({ isLoadingUser }: RolesFormSectionProps) => {
             setFieldValue(UserFormFieldName.Roles, newRoles);
           }}
           data-testid={dataTestId.basicData.personAdmin.roleSelector}
-          disabled={isSubmitting || isLoadingUser}>
+          disabled={isSubmitting}>
           <FormGroup sx={{ gap: '0.5rem' }}>
             <FormControlLabel
               disabled
               control={
                 <Checkbox
-                  checked={selectedRoles.some((role) => role.rolename === RoleName.Creator) || isLoadingUser}
+                  checked={selectedRoles.some((role) => role.rolename === RoleName.Creator)}
                   value={RoleName.Creator}
                 />
               }
