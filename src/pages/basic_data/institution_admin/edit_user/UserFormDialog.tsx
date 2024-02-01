@@ -1,5 +1,15 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogProps, DialogTitle, Divider } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogProps,
+  DialogTitle,
+  Divider,
+  Typography,
+} from '@mui/material';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +18,7 @@ import * as Yup from 'yup';
 import { getById } from '../../../../api/commonApi';
 import { updateCristinPerson } from '../../../../api/cristinApi';
 import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
+import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
 import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
@@ -30,6 +41,7 @@ const validationSchema = Yup.object().shape({
 });
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
+  existingUser?: InstitutionUser;
   existingPerson?: CristinPerson;
   personId: string;
   onClose: () => void;
@@ -40,7 +52,7 @@ export interface UserFormData {
   user?: InstitutionUser;
 }
 
-export const UserFormDialog = ({ open, onClose, existingPerson, personId }: UserFormDialogProps) => {
+export const UserFormDialog = ({ open, onClose, existingUser, existingPerson, personId }: UserFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
@@ -48,13 +60,14 @@ export const UserFormDialog = ({ open, onClose, existingPerson, personId }: User
   const customerId = user?.customerId ?? '';
 
   const personQuery = useQuery({
-    enabled: open && !existingPerson,
+    enabled: open && !existingPerson && !!personId,
     queryKey: [personId],
     queryFn: () => getById<CristinPerson>(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
+    initialData: existingPerson,
   });
 
-  const cristinPerson = existingPerson ?? personQuery.data ?? undefined;
+  const cristinPerson = personQuery.data;
 
   const personCristinIdentifier = getValueByKey('CristinIdentifier', cristinPerson?.identifiers);
   const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
@@ -62,11 +75,12 @@ export const UserFormDialog = ({ open, onClose, existingPerson, personId }: User
     personCristinIdentifier && topOrgCristinIdentifier ? `${personCristinIdentifier}@${topOrgCristinIdentifier}` : '';
 
   const institutionUserQuery = useQuery({
-    enabled: open && !!username,
+    enabled: open && !existingUser && !!username,
     queryKey: [username],
     queryFn: () => fetchUser(username),
     meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
     retry: false,
+    initialData: existingUser,
   });
 
   const personMutation = useMutation({
@@ -117,7 +131,8 @@ export const UserFormDialog = ({ open, onClose, existingPerson, personId }: User
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xl" fullWidth transitionDuration={{ exit: 0 }}>
-      <DialogTitle>{t('basic_data.person_register.edit_person')}</DialogTitle>
+      <DialogTitle id="edit-user-heading">{t('basic_data.person_register.edit_person')}</DialogTitle>
+
       <Formik
         initialValues={initialValues}
         enableReinitialize // Needed to update user values when institutionUser is fetched
@@ -136,24 +151,30 @@ export const UserFormDialog = ({ open, onClose, existingPerson, personId }: User
           }
         }}
         validationSchema={validationSchema}>
-        {({ isSubmitting }: FormikProps<UserFormData>) => (
+        {({ isSubmitting, values }: FormikProps<UserFormData>) => (
           <Form noValidate>
             <DialogContent sx={{ minHeight: '30vh' }}>
-              <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr auto 1fr', gap: '1rem' }}>
-                <PersonFormSection />
-                <Divider orientation="vertical" />
-                <AffiliationFormSection />
-                <Divider orientation="vertical" />
-                <RolesFormSection isLoadingUser={institutionUserQuery.isLoading} />
-                <Divider orientation="vertical" />
-                <TasksFormSection isLoadingUser={institutionUserQuery.isLoading} />
-              </Box>
+              {(!values.person && personQuery.isLoading) || (!values.user && institutionUserQuery.isLoading) ? (
+                <PageSpinner aria-labelledby="edit-user-heading" />
+              ) : !values.person ? (
+                <Typography>{t('feedback.error.get_person')}</Typography>
+              ) : (
+                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr auto 1fr auto 1fr', gap: '1rem' }}>
+                  <PersonFormSection />
+                  <Divider orientation="vertical" />
+                  <AffiliationFormSection />
+                  <Divider orientation="vertical" />
+                  <RolesFormSection />
+                  <Divider orientation="vertical" />
+                  <TasksFormSection />
+                </Box>
+              )}
             </DialogContent>
             <DialogActions sx={{ justifyContent: 'center' }}>
               <Button onClick={onClose}>{t('common.cancel')}</Button>
               <LoadingButton
                 loading={isSubmitting}
-                disabled={institutionUserQuery.isLoading}
+                disabled={!values.person || !values.user}
                 variant="contained"
                 type="submit">
                 {t('common.save')}

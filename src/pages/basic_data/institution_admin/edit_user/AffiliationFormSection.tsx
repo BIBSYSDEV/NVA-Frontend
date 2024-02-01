@@ -1,7 +1,7 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Box, Button, CircularProgress, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, FormikErrors, FormikTouched, useFormikContext } from 'formik';
@@ -42,9 +42,7 @@ export const AffiliationFormSection = () => {
       <Typography id="employments-heading" variant="h3" gutterBottom>
         {t('common.employments')}
       </Typography>
-      {positionsQuery.isLoading ? (
-        <CircularProgress aria-labelledby="employments-heading" />
-      ) : employments.length === 0 ? (
+      {employments.length === 0 ? (
         <Typography>{t('my_page.no_employments')}</Typography>
       ) : (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -57,7 +55,7 @@ export const AffiliationFormSection = () => {
           <Box display={{ display: 'flex', gap: '1rem' }}>
             <PositionField
               fieldName={`${employmentBaseFieldName}.type`}
-              disabled={isSubmitting}
+              disabled={isSubmitting || positionsQuery.isLoading}
               includeDisabledPositions
             />
 
