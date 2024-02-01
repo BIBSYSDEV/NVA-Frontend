@@ -41,9 +41,8 @@ const validationSchema = Yup.object().shape({
 });
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
+  existingPerson: CristinPerson | string;
   existingUser?: InstitutionUser;
-  existingPerson?: CristinPerson;
-  personId: string;
   onClose: () => void;
 }
 
@@ -52,24 +51,25 @@ export interface UserFormData {
   user?: InstitutionUser;
 }
 
-export const UserFormDialog = ({ open, onClose, existingUser, existingPerson, personId }: UserFormDialogProps) => {
+export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: UserFormDialogProps) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user);
   const topOrgCristinId = user?.topOrgCristinId;
   const customerId = user?.customerId ?? '';
 
+  const personId = typeof existingPerson === 'string' ? existingPerson : '';
+  const existingPersonObject = typeof existingPerson === 'object' ? existingPerson : undefined;
+
   const personQuery = useQuery({
-    enabled: open && !existingPerson && !!personId,
+    enabled: open && !existingPersonObject && !!personId,
     queryKey: [personId],
     queryFn: () => getById<CristinPerson>(personId),
     meta: { errorMessage: t('feedback.error.get_person') },
-    initialData: existingPerson,
+    initialData: existingPersonObject,
   });
 
-  const cristinPerson = personQuery.data;
-
-  const personCristinIdentifier = getValueByKey('CristinIdentifier', cristinPerson?.identifiers);
+  const personCristinIdentifier = getValueByKey('CristinIdentifier', personQuery.data?.identifiers);
   const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
   const username =
     personCristinIdentifier && topOrgCristinIdentifier ? `${personCristinIdentifier}@${topOrgCristinIdentifier}` : '';
@@ -108,7 +108,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson, pe
         return await createUser({
           customerId,
           roles: user.roles,
-          nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', cristinPerson?.identifiers),
+          nationalIdentityNumber: getValueByKey('NationalIdentificationNumber', personQuery.data?.identifiers),
         });
       }
     },
@@ -119,7 +119,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson, pe
   });
 
   const initialValues: UserFormData = {
-    person: cristinPerson,
+    person: personQuery.data,
     user: institutionUserQuery.isError
       ? {
           institution: customerId ?? '',

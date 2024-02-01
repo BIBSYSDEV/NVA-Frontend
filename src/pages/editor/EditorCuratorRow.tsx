@@ -31,7 +31,12 @@ export const EditorCuratorRow = ({ curator }: EditorCuratorRowProps) => {
         </TableCell>
       </TableRow>
       {curator.cristinId && (
-        <UserFormDialog open={openDialog} onClose={toggleDialog} personId={curator.cristinId} existingUser={curator} />
+        <UserFormDialog
+          open={openDialog}
+          onClose={toggleDialog}
+          existingPerson={curator.cristinId}
+          existingUser={curator}
+        />
       )}
     </>
   );
