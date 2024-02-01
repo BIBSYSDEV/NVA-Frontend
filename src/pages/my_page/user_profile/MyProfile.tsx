@@ -46,6 +46,12 @@ export const MyProfile = () => {
   const personTelephone = person?.contactDetails?.telephone;
   const [editPreferredNames, setEditPreferredNames] = useState(false);
 
+  const typographyStyling = {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  };
+
   const initialValues: CristinPersonFormData = {
     preferredFirstName: personPreferredFirstName ? personPreferredFirstName : firstName,
     preferredLastName: personPreferredLastName ? personPreferredLastName : lastName,
@@ -94,6 +100,7 @@ export const MyProfile = () => {
         <Typography variant="h2" sx={{ margin: '1rem' }}>
           {t('my_page.my_profile.heading.personalia')}
         </Typography>
+
         {personQuery.isLoading && !person ? (
           <PageSpinner aria-labelledby="personalia-id" />
         ) : (
@@ -102,22 +109,16 @@ export const MyProfile = () => {
               <Form>
                 <Box
                   sx={{
-                    flexGrow: 1,
                     display: 'grid',
-                    gridTemplateColumns: { xs: '2fr', md: '2fr 1fr' },
+                    gridTemplateColumns: { xs: '1fr', md: '2fr 1fr' },
                     columnGap: '2rem',
                     ml: '1rem',
                   }}>
                   <Grid container gridColumn={1} rowGap={1} columns={16}>
-                    <Grid item xs={12} md={3}>
-                      <Box
-                        sx={{
-                          height: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}>
-                        <Typography fontWeight="bold">{t('my_page.my_profile.person_name')}</Typography>
-                      </Box>
+                    <Grid item xs={16} md={3}>
+                      <Typography fontWeight="bold" sx={typographyStyling}>
+                        {t('my_page.my_profile.person_name')}
+                      </Typography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Box
@@ -146,14 +147,9 @@ export const MyProfile = () => {
                       </Box>
                     </Grid>
                     <Grid item xs={12} md={3}>
-                      <Box
-                        sx={{
-                          height: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}>
-                        <Typography fontWeight="bold">{t('my_page.my_profile.preferred_name')}</Typography>
-                      </Box>
+                      <Typography fontWeight="bold" sx={typographyStyling}>
+                        {t('my_page.my_profile.preferred_name')}
+                      </Typography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Box
@@ -178,7 +174,6 @@ export const MyProfile = () => {
                             />
                           )}
                         </Field>
-
                         <Field name={'preferredLastName'}>
                           {({ field }: FieldProps<string>) => (
                             <TextField
@@ -212,14 +207,9 @@ export const MyProfile = () => {
                       </Box>
                     </Grid>
                     <Grid item xs={16} md={3}>
-                      <Box
-                        sx={{
-                          height: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}>
-                        <Typography fontWeight="bold">{t('my_page.my_profile.identity.identity_numbers')}</Typography>
-                      </Box>
+                      <Typography fontWeight="bold" sx={typographyStyling}>
+                        {t('my_page.my_profile.identity.identity_numbers')}
+                      </Typography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Box
@@ -259,14 +249,9 @@ export const MyProfile = () => {
                       </Typography>
                     </Grid>
                     <Grid item xs={16} md={3}>
-                      <Box
-                        sx={{
-                          height: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}>
-                        <Typography fontWeight="bold">{t('my_page.my_profile.telephone')}</Typography>
-                      </Box>
+                      <Typography fontWeight="bold" sx={typographyStyling}>
+                        {t('my_page.my_profile.telephone')}
+                      </Typography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.telephone'}>
@@ -283,14 +268,9 @@ export const MyProfile = () => {
                       </Field>
                     </Grid>
                     <Grid item xs={16} md={3}>
-                      <Box
-                        sx={{
-                          height: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}>
-                        <Typography fontWeight="bold">{t('common.email')}</Typography>
-                      </Box>
+                      <Typography fontWeight="bold" sx={typographyStyling}>
+                        {t('common.email')}
+                      </Typography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.email'}>
@@ -307,16 +287,9 @@ export const MyProfile = () => {
                       </Field>
                     </Grid>
                     <Grid item xs={16} md={3}>
-                      <Box
-                        sx={{
-                          height: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                        }}>
-                        <Typography fontWeight="bold" noWrap>
-                          {t('my_page.my_profile.personal_web_page')}
-                        </Typography>
-                      </Box>
+                      <Typography fontWeight="bold" sx={typographyStyling}>
+                        {t('my_page.my_profile.personal_web_page')}
+                      </Typography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.webPage'}>
