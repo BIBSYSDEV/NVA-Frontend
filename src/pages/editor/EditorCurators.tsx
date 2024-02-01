@@ -19,8 +19,8 @@ import { ListPagination } from '../../components/ListPagination';
 import { RootState } from '../../redux/store';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
-import { curatorRoles } from '../basic_data/institution_admin/edit_user/TasksFormSection';
-import { EditorCuratorRow } from './EditorCuratorRow';
+import { rolesWithAreaOfResponsibility } from '../basic_data/institution_admin/edit_user/TasksFormSection';
+import { CuratorRow } from './CuratorRow';
 
 export const EditorCurators = () => {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export const EditorCurators = () => {
   const curatorsQuery = useQuery({
     queryKey: ['curators', customerId],
     enabled: !!customerId,
-    queryFn: () => (customerId ? fetchUsers(customerId, curatorRoles) : undefined),
+    queryFn: () => (customerId ? fetchUsers(customerId, rolesWithAreaOfResponsibility) : undefined),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
   });
   const curators = curatorsQuery.data ?? [];
@@ -63,7 +63,7 @@ export const EditorCurators = () => {
 
           <TableBody>
             {curatorsOnPage.map((curator) => (
-              <EditorCuratorRow key={curator.username} curator={curator} />
+              <CuratorRow key={curator.username} curator={curator} />
             ))}
           </TableBody>
         </Table>

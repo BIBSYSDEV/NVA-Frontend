@@ -5,7 +5,7 @@ import { RoleName } from '../../../../types/user.types';
 import { AreaOfResponsibility } from './AreaOfResponsibility';
 import { UserFormData } from './UserFormDialog';
 
-export const curatorRoles = [
+export const rolesWithAreaOfResponsibility = [
   RoleName.DoiCurator,
   RoleName.PublishingCurator,
   RoleName.SupportCurator,
@@ -15,7 +15,7 @@ export const curatorRoles = [
 export const TasksFormSection = () => {
   const { t } = useTranslation();
   const { values } = useFormikContext<UserFormData>();
-  const userIsCurator = values.user?.roles.some((role) => curatorRoles.includes(role.rolename));
+  const userIsCurator = values.user?.roles.some((role) => rolesWithAreaOfResponsibility.includes(role.rolename));
 
   return (
     <section>

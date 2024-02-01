@@ -1,14 +1,14 @@
 import { Box, TableCell, TableRow } from '@mui/material';
 import { useState } from 'react';
 import { InstitutionUser } from '../../types/user.types';
-import { ViewingScopeChip } from '../basic_data/institution_admin/edit_user/AreaOfResponsibility';
 import { UserFormDialog } from '../basic_data/institution_admin/edit_user/UserFormDialog';
+import { ViewingScopeChip } from '../basic_data/institution_admin/edit_user/ViewingScopeChip';
 
-interface EditorCuratorRowProps {
+interface CuratorRowProps {
   curator: InstitutionUser;
 }
 
-export const EditorCuratorRow = ({ curator }: EditorCuratorRowProps) => {
+export const CuratorRow = ({ curator }: CuratorRowProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => setOpenDialog(!openDialog);
 
