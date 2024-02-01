@@ -138,7 +138,7 @@ export const searchForPerson = async (
   page: number,
   { name, organization, sector }: PersonSearchParams
 ) => {
-  const searchParams = new URLSearchParams();
+  const searchParams = new URLSearchParams({ sort: 'name' });
   if (results) {
     searchParams.set(PersonSearchParameter.Results, results.toString());
   }
@@ -170,6 +170,7 @@ export interface ProjectsSearchParams {
   coordinatingFacet?: string | null;
   creator?: string | null;
   fundingSourceFacet?: string | null;
+  status?: string | null;
   healthProjectFacet?: string | null;
   participant?: string | null;
   participantFacet?: string | null;
@@ -192,6 +193,7 @@ export enum ProjectSearchParameter {
   ResponsibleFacet = 'responsibleFacet',
   Results = 'results',
   SectorFacet = 'sectorFacet',
+  Status = 'status',
   Query = 'multiple',
 }
 
@@ -214,6 +216,9 @@ export const searchForProjects = async (results: number, page: number, params?: 
   }
   if (params?.fundingSourceFacet) {
     searchParams.set(ProjectSearchParameter.FundingSourceFacet, params.fundingSourceFacet);
+  }
+  if (params?.status) {
+    searchParams.set(ProjectSearchParameter.Status, params.status);
   }
   if (params?.healthProjectFacet) {
     searchParams.set(ProjectSearchParameter.HealthProjectFacet, params.healthProjectFacet);

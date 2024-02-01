@@ -106,6 +106,7 @@ const HomePage = () => {
     participantOrgFacet: params.get(ProjectSearchParameter.ParticipantOrgFacet),
     responsibleFacet: params.get(ProjectSearchParameter.ResponsibleFacet),
     sectorFacet: params.get(ProjectSearchParameter.SectorFacet),
+    status: params.get(ProjectSearchParameter.Status),
     query: projectSearchTerm,
   };
   const projectQuery = useQuery({
