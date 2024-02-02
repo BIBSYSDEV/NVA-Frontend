@@ -306,6 +306,7 @@ export const MyProfile = () => {
                         {({ field }: FieldProps<string>) => (
                           <TextField
                             {...field}
+                            type="url"
                             fullWidth
                             data-testid={dataTestId.myPage.myProfile.webPageField}
                             label={t('my_page.my_profile.personal_web_page')}
@@ -341,6 +342,7 @@ export const MyProfile = () => {
                       variant="outlined"
                       type="submit"
                       loading={isSubmitting}
+                      disabled={!dirty}
                       sx={{ boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.20)' }}
                       data-testid={dataTestId.myPage.myProfile.saveAndViewResearchProfileButton}
                       onClick={() => handleSaveAndView(values)}>
