@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
 import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 import { PageSpinner } from '../../../components/PageSpinner';
@@ -16,6 +17,7 @@ import { FlatCristinPerson } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
+import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
 import { UserOrcid } from './UserOrcid';
@@ -25,6 +27,7 @@ type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'pre
 export const MyProfile = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
@@ -84,6 +87,11 @@ export const MyProfile = () => {
     }
   };
 
+  const handleSaveAndView = async (values: CristinPersonFormData) => {
+    await updatePerson(values);
+    history.push(UrlPathTemplate.MyPageResearchProfile);
+  };
+
   return (
     <>
       <Helmet>
@@ -105,7 +113,7 @@ export const MyProfile = () => {
           <PageSpinner aria-labelledby="personalia-id" />
         ) : (
           <Formik initialValues={initialValues} onSubmit={updatePerson} enableReinitialize>
-            {({ isSubmitting, dirty, resetForm }: FormikProps<CristinPersonFormData>) => (
+            {({ isSubmitting, dirty, resetForm, values }: FormikProps<CristinPersonFormData>) => (
               <Form>
                 <Box
                   sx={{
@@ -298,7 +306,6 @@ export const MyProfile = () => {
                         {({ field }: FieldProps<string>) => (
                           <TextField
                             {...field}
-                            type="url"
                             fullWidth
                             data-testid={dataTestId.myPage.myProfile.webPageField}
                             label={t('my_page.my_profile.personal_web_page')}
@@ -328,33 +335,42 @@ export const MyProfile = () => {
                   </Grid>
                 </Box>
 
-                <Box sx={{ mt: '1rem' }}>
-                  <Grid container></Grid>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: '1rem',
-                    bgcolor: 'secondary.dark',
-                    justifyContent: 'center',
-                    py: '1rem',
-                    mt: '1rem',
-                  }}>
-                  <Button
-                    onClick={() => {
-                      resetForm();
-                    }}>
-                    {t('common.cancel')}
-                  </Button>
-                  <LoadingButton
-                    data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
-                    loading={isSubmitting}
-                    disabled={!dirty}
-                    variant="contained"
-                    type="submit">
-                    {t('common.save')}
-                  </LoadingButton>
-                </Box>
+                <Grid container sx={{ bgcolor: 'secondary.dark', py: '1rem', mt: '1rem' }}>
+                  <Grid item md={5} sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <LoadingButton
+                      variant="outlined"
+                      type="submit"
+                      loading={isSubmitting}
+                      sx={{ boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.20)' }}
+                      data-testid={dataTestId.myPage.myProfile.saveAndViewResearchProfileButton}
+                      onClick={() => handleSaveAndView(values)}>
+                      {t('my_page.my_profile.save_and_view_research_profile')}
+                    </LoadingButton>
+                  </Grid>
+                  <Grid item md={7}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        gap: '1rem',
+                        justifyContent: 'start',
+                      }}>
+                      <Button
+                        onClick={() => {
+                          resetForm();
+                        }}>
+                        {t('common.cancel')}
+                      </Button>
+                      <LoadingButton
+                        data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
+                        loading={isSubmitting}
+                        disabled={!dirty}
+                        variant="contained"
+                        type="submit">
+                        {t('common.save')}
+                      </LoadingButton>
+                    </Box>
+                  </Grid>
+                </Grid>
               </Form>
             )}
           </Formik>
