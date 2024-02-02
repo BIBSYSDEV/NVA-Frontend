@@ -277,6 +277,9 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                       modalTitle={t('registration.files_and_license.licenses')}
                                       modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
                                       buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
+                                      <Typography paragraph>
+                                        {t('registration.files_and_license.file_and_license_info')}
+                                      </Typography>
                                       {licenses
                                         .filter(
                                           (license) =>
