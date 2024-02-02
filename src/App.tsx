@@ -35,7 +35,7 @@ const getLanguageTagValue = (language: string) => {
 };
 
 if (
-  window.location.pathname === UrlPathTemplate.MyPageMyPersonalia &&
+  window.location.pathname === UrlPathTemplate.MyPagePersonalia &&
   window.location.hash.startsWith('#access_token=')
 ) {
   // Workaround to allow adding orcid for aws-amplify > 4.2.2

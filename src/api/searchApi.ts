@@ -103,8 +103,9 @@ export const fetchEmployees = async (
   if (!organizationId) {
     return;
   }
+  const sortQueryParam = 'sort=name';
   const nameQueryParam = nameQuery ? `&name=${nameQuery}` : '';
-  const url = `${organizationId}/persons?page=${page}&results=${results}${nameQueryParam}`;
+  const url = `${organizationId}/persons?page=${page}&${sortQueryParam}&results=${results}${nameQueryParam}`;
 
   const getEmployees = await authenticatedApiRequest2<SearchResponse<CristinPerson>>({ url, signal });
 

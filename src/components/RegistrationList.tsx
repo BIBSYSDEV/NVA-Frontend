@@ -175,7 +175,7 @@ export const RegistrationListItemContent = ({
 
       {canEditRegistration && (
         <Box sx={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
-          {location.pathname === UrlPathTemplate.MyPageMyResults && (
+          {location.pathname === UrlPathTemplate.MyPageResults && (
             <IconButton
               title={t('my_page.my_profile.edit_promoted_publication')}
               data-testid={dataTestId.myPage.addPromotedPublicationButton}
