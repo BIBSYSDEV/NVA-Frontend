@@ -11,14 +11,10 @@ interface DeletePublicationInformationProps {
   registration: Registration;
 }
 
-function extractOriginalIdentifier(registration: Registration): string | null {
-  return registration.duplicateOf ? getIdentifierFromId(registration.duplicateOf) : null;
-}
-
 export const DeletedPublicationInformation = ({ registration }: DeletePublicationInformationProps) => {
   const { t } = useTranslation();
 
-  const originalIdentifier = extractOriginalIdentifier(registration);
+  const originalIdentifier = registration.duplicateOf ? getIdentifierFromId(registration.duplicateOf) : '';
 
   const originalRegistrationQuery = useQuery({
     queryKey: ['registration', originalIdentifier],
