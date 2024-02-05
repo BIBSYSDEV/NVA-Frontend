@@ -304,11 +304,7 @@ const BasicDataPage = () => {
           </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataPersonRegister} isAuthorized={isInstitutionAdmin}>
             <PersonRegisterPage />
-            <UserFormDialog
-              existingPerson={''}
-              onClose={() => setShowAddEmployeeDialog(false)}
-              open={showAddEmployeeDialog}
-            />
+            <UserFormDialog onClose={() => setShowAddEmployeeDialog(false)} open={showAddEmployeeDialog} />
           </PrivateRoute>
           <PrivateRoute path={UrlPathTemplate.BasicDataNvi} isAuthorized={isAppAdmin}>
             <NviPeriodsPage />
