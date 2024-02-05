@@ -21,7 +21,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { UpdateTicketData, createTicket, updateTicket } from '../../../api/registrationApi';
+import { createTicket, updateTicket, UpdateTicketData } from '../../../api/registrationApi';
 import { MessageForm } from '../../../components/MessageForm';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
@@ -29,13 +29,14 @@ import { PublishingTicket } from '../../../types/publication_types/ticket.types'
 import { Registration, RegistrationStatus } from '../../../types/registration.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
-import { TabErrors, getFirstErrorTab, getTabErrors } from '../../../utils/formik-helpers';
-import { UrlPathTemplate, getRegistrationWizardPath } from '../../../utils/urlPaths';
+import { getFirstErrorTab, getTabErrors, TabErrors } from '../../../utils/formik-helpers';
+import { getRegistrationWizardPath, UrlPathTemplate } from '../../../utils/urlPaths';
 import { registrationValidationSchema } from '../../../utils/validation/registration/registrationValidation';
 import { TicketMessageList } from '../../messages/components/MessageList';
 import { PublishingRequestMessagesColumn } from '../../messages/components/PublishingRequestMessagesColumn';
 import { ErrorList } from '../../registration/ErrorList';
 import { TicketAssignee } from './TicketAssignee';
+import { DeletePublication } from './DeletePublication';
 
 interface PublishingAccordionProps {
   registration: Registration;
@@ -305,6 +306,9 @@ export const PublishingAccordion = ({
             )}
             <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
           </Box>
+        )}
+        {registration.status === RegistrationStatus.Published && (
+          <DeletePublication refetchData={refetchData} registration={registration} />
         )}
       </AccordionDetails>
     </Accordion>
