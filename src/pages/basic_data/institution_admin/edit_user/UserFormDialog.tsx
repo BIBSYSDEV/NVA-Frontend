@@ -41,7 +41,7 @@ const validationSchema = Yup.object().shape({
 });
 
 interface UserFormDialogProps extends Pick<DialogProps, 'open'> {
-  existingPerson: CristinPerson | string;
+  existingPerson?: CristinPerson | string;
   existingUser?: InstitutionUser;
   onClose: () => void;
 }
@@ -58,8 +58,8 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
   const topOrgCristinId = user?.topOrgCristinId;
   const customerId = user?.customerId ?? '';
 
-  const personId = typeof existingPerson === 'string' ? existingPerson : existingPerson.id;
-  const existingPersonObject = typeof existingPerson === 'object' ? existingPerson : undefined;
+  const personId = existingPerson && typeof existingPerson === 'string' ? existingPerson : '';
+  const existingPersonObject = existingPerson && typeof existingPerson === 'object' ? existingPerson : undefined;
 
   const personQuery = useQuery({
     enabled: open && !existingPersonObject && !!personId,
@@ -154,9 +154,10 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
         {({ isSubmitting, values }: FormikProps<UserFormData>) => (
           <Form noValidate>
             <DialogContent sx={{ minHeight: '30vh' }}>
-              {(!values.person && personQuery.isLoading) || (!values.user && institutionUserQuery.isLoading) ? (
+              {existingPerson &&
+              ((!values.person && personQuery.isLoading) || (!values.user && institutionUserQuery.isLoading)) ? (
                 <PageSpinner aria-labelledby="edit-user-heading" />
-              ) : !values.person ? (
+              ) : existingPerson && !values.person ? (
                 <Typography>{t('feedback.error.get_person')}</Typography>
               ) : (
                 <Box
