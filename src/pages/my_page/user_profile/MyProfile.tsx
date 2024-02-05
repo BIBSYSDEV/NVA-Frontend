@@ -351,7 +351,7 @@ export const MyProfile = () => {
                 </Box>
 
                 <Grid container sx={{ bgcolor: 'secondary.dark', py: '1rem', mt: '1rem' }}>
-                  <Grid item md={5} sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Grid item xs={16} md={5} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <LoadingButton
                       variant="outlined"
                       type="submit"
@@ -363,12 +363,13 @@ export const MyProfile = () => {
                       {t('my_page.my_profile.save_and_view_research_profile')}
                     </LoadingButton>
                   </Grid>
-                  <Grid item md={7}>
+                  <Grid item xs={16} md={7}>
                     <Box
                       sx={{
                         display: 'flex',
                         gap: '1rem',
-                        justifyContent: 'start',
+                        justifyContent: { xs: 'center', md: 'start' },
+                        mt: { xs: '1rem' },
                       }}>
                       <Button
                         onClick={() => {
