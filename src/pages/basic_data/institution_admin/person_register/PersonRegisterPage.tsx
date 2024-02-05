@@ -62,7 +62,7 @@ export const PersonRegisterPage = () => {
       </Helmet>
 
       <TextField
-        datatest-id={dataTestId.basicData.personRegisterSearchBar}
+        data-testid={dataTestId.basicData.personRegisterSearchBar}
         type="search"
         variant="filled"
         value={searchQuery}

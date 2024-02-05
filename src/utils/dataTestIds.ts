@@ -41,6 +41,7 @@ export const dataTestId = {
       doiPrefixField: 'doi-prefix-field',
       doiUrlField: 'doi-url-field',
       feideField: 'feide-field',
+      inactiveCheckbox: 'inactive-checkbox',
       nameField: 'institution-name-field',
       nviInstitutionCheckbox: 'nvi-institution-checkbox',
       rboInstitutionCheckbox: 'rbo-institution-checkbox',
