@@ -281,6 +281,7 @@ export const MyProfile = () => {
                             label={t('my_page.my_profile.telephone')}
                             error={!!error && touched}
                             helperText={<ErrorMessage name={field.name} />}
+                            disabled={isSubmitting}
                             fullWidth
                             size="small"
                             variant="filled"
@@ -302,6 +303,7 @@ export const MyProfile = () => {
                             label={t('common.email')}
                             error={!!error && touched}
                             helperText={<ErrorMessage name={field.name} />}
+                            disabled={isSubmitting}
                             fullWidth
                             size="small"
                             variant="filled"
@@ -324,6 +326,7 @@ export const MyProfile = () => {
                             label={t('my_page.my_profile.personal_web_page')}
                             error={!!error && touched}
                             helperText={<ErrorMessage name={field.name} />}
+                            disabled={isSubmitting}
                             size="small"
                             variant="filled"
                           />
