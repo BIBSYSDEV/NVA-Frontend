@@ -682,7 +682,12 @@
       "telephone": "Telefon",
       "user_profile": "Brukerprofil",
       "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil.",
-      "user_role_and_help": "Brukerrolle og hjelp"
+      "user_role_and_help": {
+        "application_help_helper_text": "Om du trenger veiledning til utfylling, kan denne være til hjelp.",
+        "customer_help_helper_text": "Veiledning for å registrere et resultat",
+        "customer_help_text": "Ved behov for teknisk hjelp.",
+        "user_role_and_help": "Brukerrolle og hjelp"
+      }
     },
     "no_employments": "Ingen ansettelser",
     "project_registration_status": {

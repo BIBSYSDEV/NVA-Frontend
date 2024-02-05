@@ -200,10 +200,10 @@ const MyPagePage = () => {
             </LinkButton>
             <Typography>{t('my_page.my_profile.overview_and_settings')}</Typography>
             <LinkButton
-              data-testid={dataTestId.myPage.myResultsLink}
+              data-testid={dataTestId.myPage.userRolesAndHelpLink}
               isSelected={currentPath === UrlPathTemplate.MyPageUserRoleAndHelp}
               to={UrlPathTemplate.MyPageUserRoleAndHelp}>
-              {t('my_page.my_profile.user_role_and_help')}
+              {t('my_page.my_profile.user_role_and_help.user_role_and_help')}
             </LinkButton>
           </NavigationList>
         </NavigationListAccordion>
