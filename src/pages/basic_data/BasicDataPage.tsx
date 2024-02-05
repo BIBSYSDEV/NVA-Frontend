@@ -31,7 +31,7 @@ import { CentralImportCandidateForm } from './app_admin/central_import/CentralIm
 import { CentralImportCandidateMerge } from './app_admin/central_import/CentralImportCandidateMerge';
 import { CentralImportDuplicationCheckPage } from './app_admin/central_import/CentralImportDuplicationCheckPage';
 import { CentralImportPage } from './app_admin/central_import/CentralImportPage';
-import { AddEmployeePage } from './institution_admin/AddEmployeePage';
+import { UserFormDialog } from './institution_admin/edit_user/UserFormDialog';
 import { PersonRegisterPage } from './institution_admin/person_register/PersonRegisterPage';
 
 export type CandidateStatusFilter = {
@@ -49,6 +49,8 @@ const BasicDataPage = () => {
   const isInternalImporter = !!user?.customerId && user.isInternalImporter;
   const location = useLocation();
   const currentPath = location.pathname.replace(/\/$/, ''); // Remove trailing slash
+
+  const [showAddEmployeeDialog, setShowAddEmployeeDialog] = useState(false);
 
   const newCustomerIsSelected = currentPath === UrlPathTemplate.BasicDataInstitutions && location.search === '?id=new';
 
@@ -120,9 +122,9 @@ const BasicDataPage = () => {
             <LinkCreateButton
               data-testid={dataTestId.basicData.addEmployeeLink}
               variant="outlined"
-              isSelected={currentPath === UrlPathTemplate.BasicDataAddEmployee}
+              isSelected={showAddEmployeeDialog}
               selectedColor="person.main"
-              to={UrlPathTemplate.BasicDataAddEmployee}
+              onClick={() => setShowAddEmployeeDialog(true)}
               title={t('basic_data.add_employee.add_employee')}
             />
           </NavigationListAccordion>
@@ -300,11 +302,13 @@ const BasicDataPage = () => {
             isAuthorized={isInternalImporter}>
             <CentralImportCandidateMerge />
           </PrivateRoute>
-          <PrivateRoute exact path={UrlPathTemplate.BasicDataAddEmployee} isAuthorized={isInstitutionAdmin}>
-            <AddEmployeePage />
-          </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataPersonRegister} isAuthorized={isInstitutionAdmin}>
             <PersonRegisterPage />
+            <UserFormDialog
+              existingPerson={''}
+              onClose={() => setShowAddEmployeeDialog(false)}
+              open={showAddEmployeeDialog}
+            />
           </PrivateRoute>
           <PrivateRoute path={UrlPathTemplate.BasicDataNvi} isAuthorized={isAppAdmin}>
             <NviPeriodsPage />
