@@ -279,46 +279,36 @@ const BasicDataPage = () => {
             ) : null}
           </PrivateRoute>
 
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.BasicDataInstitutions}
-            component={AdminCustomerInstitutionsContainer}
-            isAuthorized={isAppAdmin}
-          />
+          <PrivateRoute exact path={UrlPathTemplate.BasicDataInstitutions} isAuthorized={isAppAdmin}>
+            <AdminCustomerInstitutionsContainer />
+          </PrivateRoute>
           <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImport} isAuthorized={isInternalImporter}>
             <CentralImportPage statusFilter={selectedImportCandidateStatus} yearFilter={candidateYearFilter} />
           </PrivateRoute>
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.BasicDataCentralImportCandidate}
-            component={CentralImportDuplicationCheckPage}
-            isAuthorized={isInternalImporter}
-          />
+          <PrivateRoute exact path={UrlPathTemplate.BasicDataCentralImportCandidate} isAuthorized={isInternalImporter}>
+            <CentralImportDuplicationCheckPage />
+          </PrivateRoute>
           <PrivateRoute
             exact
             path={UrlPathTemplate.BasicDataCentralImportCandidateWizard}
-            component={CentralImportCandidateForm}
-            isAuthorized={isInternalImporter}
-          />
+            isAuthorized={isInternalImporter}>
+            <CentralImportCandidateForm />
+          </PrivateRoute>
           <PrivateRoute
             exact
             path={UrlPathTemplate.BasicDataCentralImportCandidateMerge}
-            component={CentralImportCandidateMerge}
-            isAuthorized={isInternalImporter}
-          />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.BasicDataAddEmployee}
-            component={AddEmployeePage}
-            isAuthorized={isInstitutionAdmin}
-          />
-          <PrivateRoute
-            exact
-            path={UrlPathTemplate.BasicDataPersonRegister}
-            component={PersonRegisterPage}
-            isAuthorized={isInstitutionAdmin}
-          />
-          <PrivateRoute path={UrlPathTemplate.BasicDataNvi} component={NviPeriodsPage} isAuthorized={isAppAdmin} />
+            isAuthorized={isInternalImporter}>
+            <CentralImportCandidateMerge />
+          </PrivateRoute>
+          <PrivateRoute exact path={UrlPathTemplate.BasicDataAddEmployee} isAuthorized={isInstitutionAdmin}>
+            <AddEmployeePage />
+          </PrivateRoute>
+          <PrivateRoute exact path={UrlPathTemplate.BasicDataPersonRegister} isAuthorized={isInstitutionAdmin}>
+            <PersonRegisterPage />
+          </PrivateRoute>
+          <PrivateRoute path={UrlPathTemplate.BasicDataNvi} isAuthorized={isAppAdmin}>
+            <NviPeriodsPage />
+          </PrivateRoute>
         </ErrorBoundary>
       </Switch>
     </StyledPageWithSideMenu>
