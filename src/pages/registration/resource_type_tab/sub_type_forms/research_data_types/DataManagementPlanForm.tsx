@@ -7,10 +7,8 @@ import { useParams } from 'react-router-dom';
 import { FetchResultsParams, fetchResults } from '../../../../../api/searchApi';
 import { EmphasizeSubstring } from '../../../../../components/EmphasizeSubstring';
 import { ResourceFieldNames } from '../../../../../types/publicationFieldNames';
-import {
-  ConfirmedDocument,
-  ResearchDataRegistration,
-} from '../../../../../types/publication_types/researchDataRegistration.types';
+import { ResearchDataRegistration } from '../../../../../types/publication_types/researchDataRegistration.types';
+import { ConfirmedDocument } from '../../../../../types/registration.types';
 import { API_URL } from '../../../../../utils/constants';
 import { dataTestId } from '../../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../../utils/hooks/useDebounce';

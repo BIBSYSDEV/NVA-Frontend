@@ -1,41 +1,11 @@
-import CancelIcon from '@mui/icons-material/Cancel';
 import EditIcon from '@mui/icons-material/Edit';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { LoadingButton } from '@mui/lab';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  IconButton,
-  TableCell,
-  TableRow,
-  TextField,
-  Tooltip,
-  Typography,
-} from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import { useQuery } from '@tanstack/react-query';
-import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { Box, IconButton, TableCell, TableRow, Tooltip, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { RoleApiPath } from '../../../../api/apiPaths';
-import { authenticatedApiRequest } from '../../../../api/apiRequest';
-import { fetchPositions } from '../../../../api/cristinApi';
-import { createUser, fetchUser } from '../../../../api/roleApi';
-import { ConfirmDialog } from '../../../../components/ConfirmDialog';
-import { NationalIdNumberField } from '../../../../components/NationalIdNumberField';
 import { AffiliationHierarchy } from '../../../../components/institution/AffiliationHierarchy';
-import { setNotification } from '../../../../redux/notificationSlice';
 import OrcidLogo from '../../../../resources/images/orcid_logo.svg';
-import { CristinPerson, Employment, InstitutionUser, RoleName, emptyEmployment } from '../../../../types/user.types';
-import { ORCID_BASE_URL, isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { CristinPerson, Employment, RoleName } from '../../../../types/user.types';
+import { ORCID_BASE_URL } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import {
   convertToFlatCristinPerson,
@@ -43,10 +13,7 @@ import {
   getMaskedNationalIdentityNumber,
   isActiveEmployment,
 } from '../../../../utils/user-helpers';
-import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
-import { PositionField } from '../../fields/PositionField';
-import { StartDateField } from '../../fields/StartDateField';
-import { UserRolesSelector } from '../UserRolesSelector';
+import { UserFormDialog } from '../edit_user/UserFormDialog';
 
 export interface PersonData {
   employments: Employment[];
@@ -56,27 +23,11 @@ export interface PersonData {
 interface PersonTableRowProps {
   cristinPerson: CristinPerson;
   topOrgCristinIdentifier: string;
-  customerId: string;
   refetchEmployees: () => void;
 }
 
-export const PersonTableRow = ({
-  cristinPerson,
-  topOrgCristinIdentifier,
-  customerId,
-  refetchEmployees,
-}: PersonTableRowProps) => {
+export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, refetchEmployees }: PersonTableRowProps) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-
-  const positionsQuery = useQuery({
-    queryKey: ['positions', true],
-    queryFn: () => fetchPositions(true),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_positions'), variant: 'error' })),
-    staleTime: Infinity,
-    cacheTime: 900_000, // 15 minutes
-  });
-  const hasFetchedPositions = positionsQuery.isFetched;
 
   const [openDialog, setOpenDialog] = useState(false);
   const toggleDialog = () => {
@@ -85,26 +36,11 @@ export const PersonTableRow = ({
     }
     setOpenDialog(!openDialog);
   };
-  const [openConfirmDeleteDialog, setOpenConfirmDeleteDialog] = useState(false);
-  const toggleConfirmDeleteDialog = () => setOpenConfirmDeleteDialog(!openConfirmDeleteDialog);
-  const [employmentIndex, setEmploymentIndex] = useState(0);
 
-  const { cristinIdentifier, firstName, lastName, employments, orcid, nationalId } =
-    convertToFlatCristinPerson(cristinPerson);
+  const { cristinIdentifier, employments, orcid, nationalId } = convertToFlatCristinPerson(cristinPerson);
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
 
   const fullName = getFullCristinName(cristinPerson.names);
-  const username = `${cristinIdentifier}@${topOrgCristinIdentifier}`;
-
-  const institutionUserQuery = useQuery({
-    enabled: openDialog,
-    queryKey: ['institutionUser', username],
-    queryFn: () => fetchUser(username),
-    meta: { errorMessage: false }, // No error message, since a Cristin Person will lack User if they have not logged in yet
-    retry: false,
-  });
-
-  const institutionUser = institutionUserQuery.data;
 
   const activeEmployments = employments.filter(isActiveEmployment);
   const employmentsInThisInstitution: Employment[] = [];
@@ -119,69 +55,6 @@ export const PersonTableRow = ({
       employmentsInOtherInstitutions.push(employment);
     }
   });
-
-  const updatePersonAndRoles = async (values: PersonData) => {
-    // Update Cristin Person
-    const updatedPerson: CristinPerson = {
-      ...cristinPerson,
-      employments: values.employments,
-      keywords: cristinPerson.verified ? cristinPerson.keywords : undefined,
-    };
-    const updateCristinPerson = await authenticatedApiRequest({
-      url: cristinPerson.id,
-      method: 'PATCH',
-      data: updatedPerson,
-    });
-    if (isSuccessStatus(updateCristinPerson.status)) {
-      if (cristinPerson.verified) {
-        // Update NVA User
-        const filteredRoles =
-          !values.roles.includes(RoleName.Curator) && !values.roles.includes(RoleName.PublishingCurator)
-            ? values.roles.filter((role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo)
-            : values.roles;
-
-        let updateUserResponse;
-        if (institutionUser) {
-          const updatedInstitutionUser: InstitutionUser = {
-            ...institutionUser,
-            roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
-          };
-
-          updateUserResponse = await authenticatedApiRequest<null>({
-            url: `${RoleApiPath.Users}/${username}`,
-            method: 'PUT',
-            data: updatedInstitutionUser,
-          });
-        } else {
-          updateUserResponse = await createUser({
-            nationalIdentityNumber: nationalId,
-            customerId,
-            roles: filteredRoles.map((role) => ({ type: 'Role', rolename: role })),
-          });
-        }
-        if (isSuccessStatus(updateUserResponse.status)) {
-          await institutionUserQuery.refetch();
-          await positionsQuery.refetch();
-          toggleDialog();
-          dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' }));
-        } else if (isErrorStatus(updateUserResponse.status)) {
-          dispatch(setNotification({ message: t('feedback.error.update_institution_user'), variant: 'error' }));
-        }
-      } else {
-        dispatch(setNotification({ message: t('feedback.success.update_person'), variant: 'success' }));
-        toggleDialog();
-      }
-    } else {
-      dispatch(setNotification({ message: t('feedback.error.update_person'), variant: 'error' }));
-    }
-  };
-
-  const initialValues: PersonData = {
-    roles: institutionUser ? institutionUser.roles.map((role) => role.rolename) : [RoleName.Creator],
-    employments: employmentsInThisInstitution.map((employment) => ({ ...emptyEmployment, ...employment })),
-  };
-
-  const employmentBaseFieldName = `employments[${employmentIndex}]`;
 
   return (
     <>
@@ -222,210 +95,7 @@ export const PersonTableRow = ({
         </TableCell>
       </TableRow>
 
-      <Dialog open={openDialog} onClose={toggleDialog} maxWidth="md" fullWidth transitionDuration={{ exit: 0 }}>
-        <DialogTitle>
-          <span id="edit-person-label">{t('basic_data.person_register.edit_person')}</span>
-        </DialogTitle>
-        <Formik
-          initialValues={initialValues}
-          enableReinitialize // Needed to update roles values when the institutionUser is recieved
-          onSubmit={updatePersonAndRoles}
-          validationSchema={personDataValidationSchema}>
-          {({ values, isSubmitting, setFieldValue, errors, touched }: FormikProps<PersonData>) => (
-            <Form noValidate>
-              <DialogContent>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: '1rem' }}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <TextField
-                      variant="filled"
-                      disabled
-                      value={firstName}
-                      label={t('common.first_name')}
-                      data-testid={dataTestId.basicData.personAdmin.firstName}
-                    />
-                    <TextField
-                      variant="filled"
-                      disabled
-                      value={lastName}
-                      label={t('common.last_name')}
-                      data-testid={dataTestId.basicData.personAdmin.lastName}
-                    />
-                    <NationalIdNumberField nationalId={nationalId} />
-                    {orcid && <TextField variant="filled" disabled value={orcid} label={t('common.orcid')} />}
-                    {employmentsInOtherInstitutions.some(isActiveEmployment) && (
-                      <div>
-                        <Typography variant="h3">{t('basic_data.person_register.other_employments')}</Typography>
-                        <Box component="ul" sx={{ my: 0, pl: '1rem' }}>
-                          {employmentsInOtherInstitutions.filter(isActiveEmployment).map((affiliation) => (
-                            <li key={affiliation.organization}>
-                              <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-                                <AffiliationHierarchy unitUri={affiliation.organization} commaSeparated />
-                              </Box>
-                            </li>
-                          ))}
-                        </Box>
-                      </div>
-                    )}
-                  </Box>
-                  <Divider flexItem orientation="vertical" />
-                  {institutionUserQuery.isLoading || !hasFetchedPositions ? (
-                    <CircularProgress sx={{ margin: 'auto' }} aria-labelledby="edit-person-label" />
-                  ) : (
-                    values.employments.length > 0 && (
-                      <div>
-                        <Typography variant="h3" gutterBottom>
-                          {t('common.employments')}
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                          <Field
-                            name={`${employmentBaseFieldName}.organization`}
-                            data-testid={dataTestId.basicData.personAdmin.employments()}>
-                            {({ field }: FieldProps<string>) => (
-                              <AffiliationHierarchy unitUri={field.value} commaSeparated />
-                            )}
-                          </Field>
-
-                          <Box display={{ display: 'flex', gap: '1rem' }}>
-                            <PositionField
-                              fieldName={`${employmentBaseFieldName}.type`}
-                              disabled={isSubmitting}
-                              includeDisabledPositions
-                            />
-
-                            <Field name={`${employmentBaseFieldName}.fullTimeEquivalentPercentage`}>
-                              {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                                <TextField
-                                  {...field}
-                                  value={field.value ?? ''}
-                                  disabled={isSubmitting}
-                                  fullWidth
-                                  type="number"
-                                  inputProps={{ min: '0', max: '100' }}
-                                  variant="filled"
-                                  label={t('basic_data.add_employee.position_percent')}
-                                  error={touched && !!error}
-                                  helperText={touched && error}
-                                  data-testid={dataTestId.basicData.personAdmin.positionPercent}
-                                />
-                              )}
-                            </Field>
-                          </Box>
-                          <Box display={{ display: 'flex', gap: '1rem' }}>
-                            <StartDateField
-                              fieldName={`${employmentBaseFieldName}.startDate`}
-                              disabled={isSubmitting}
-                              maxDate={
-                                values.employments[employmentIndex].endDate
-                                  ? new Date(values.employments[employmentIndex].endDate)
-                                  : undefined
-                              }
-                              dataTestId={dataTestId.basicData.personAdmin.startDate}
-                            />
-
-                            <Field
-                              name={`${employmentBaseFieldName}.endDate`}
-                              data-testid={dataTestId.basicData.personAdmin.endDate}>
-                              {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                                <DatePicker
-                                  disabled={isSubmitting}
-                                  label={t('common.end_date')}
-                                  value={field.value ? new Date(field.value) : null}
-                                  onChange={(date) => setFieldValue(field.name, date ?? '')}
-                                  format="dd.MM.yyyy"
-                                  views={['year', 'month', 'day']}
-                                  minDate={
-                                    values.employments[employmentIndex].startDate
-                                      ? new Date(values.employments[employmentIndex].startDate)
-                                      : undefined
-                                  }
-                                  slotProps={{
-                                    textField: {
-                                      inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
-                                      variant: 'filled',
-                                      error: touched && !!error,
-                                      helperText: <ErrorMessage name={field.name} />,
-                                    },
-                                  }}
-                                />
-                              )}
-                            </Field>
-                          </Box>
-                          <Button
-                            disabled={isSubmitting}
-                            color="error"
-                            variant="outlined"
-                            onClick={toggleConfirmDeleteDialog}
-                            endIcon={<CancelIcon />}
-                            data-testid={dataTestId.basicData.personAdmin.removeEmployment}>
-                            {t('basic_data.person_register.remove_employment')}
-                          </Button>
-                          {values.employments.length > 1 && (
-                            <Box sx={{ display: 'flex', gap: '0.5rem', alignItems: 'center', alignSelf: 'center' }}>
-                              <IconButton
-                                title={t('common.previous')}
-                                disabled={employmentIndex === 0}
-                                onClick={() => setEmploymentIndex(employmentIndex - 1)}>
-                                <NavigateBeforeIcon />
-                              </IconButton>
-                              <Typography>
-                                {t('basic_data.person_register.employment_x_of_y', {
-                                  selected: employmentIndex + 1,
-                                  total: values.employments.length,
-                                })}
-                              </Typography>
-                              <IconButton
-                                title={t('common.next')}
-                                disabled={employmentIndex === values.employments.length - 1}
-                                onClick={() => setEmploymentIndex(employmentIndex + 1)}>
-                                <NavigateNextIcon />
-                              </IconButton>
-                            </Box>
-                          )}
-                        </Box>
-                        {!!errors.employments && touched.employments && (
-                          <Typography color="error">{t('feedback.validation.employments_missing_data')}</Typography>
-                        )}
-
-                        <Box sx={{ mt: '1rem' }} data-testid={dataTestId.basicData.personAdmin.roleSelector}>
-                          <UserRolesSelector
-                            personHasNin={!!cristinPerson.verified}
-                            selectedRoles={values.roles}
-                            updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                            disabled={isSubmitting}
-                            canAddInternalRoles
-                          />
-                        </Box>
-                      </div>
-                    )
-                  )}
-                </Box>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={toggleDialog}>{t('common.cancel')}</Button>
-                <LoadingButton
-                  loading={isSubmitting}
-                  disabled={institutionUserQuery.isLoading || !hasFetchedPositions}
-                  variant="contained"
-                  type="submit">
-                  {t('common.save')}
-                </LoadingButton>
-              </DialogActions>
-              <ConfirmDialog
-                open={openConfirmDeleteDialog}
-                title={t('basic_data.person_register.remove_employment_title')}
-                onAccept={() => {
-                  const filteredEmployments = values.employments.filter((_, index) => index !== employmentIndex);
-                  setFieldValue('employments', filteredEmployments);
-                  setEmploymentIndex(employmentIndex !== 0 ? employmentIndex - 1 : 0);
-                  toggleConfirmDeleteDialog();
-                }}
-                onCancel={toggleConfirmDeleteDialog}>
-                <Typography>{t('basic_data.person_register.remove_employment_text')}</Typography>
-              </ConfirmDialog>
-            </Form>
-          )}
-        </Formik>
-      </Dialog>
+      <UserFormDialog open={openDialog} onClose={toggleDialog} existingPerson={cristinPerson} />
     </>
   );
 };

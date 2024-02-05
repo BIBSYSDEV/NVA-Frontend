@@ -1,7 +1,7 @@
 import { Auth } from '@aws-amplify/auth';
 import { Box } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +35,7 @@ const getLanguageTagValue = (language: string) => {
 };
 
 if (
-  window.location.pathname === UrlPathTemplate.MyPageMyPersonalia &&
+  window.location.pathname === UrlPathTemplate.MyPagePersonalia &&
   window.location.hash.startsWith('#access_token=')
 ) {
   // Workaround to allow adding orcid for aws-amplify > 4.2.2

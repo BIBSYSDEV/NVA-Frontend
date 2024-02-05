@@ -22,12 +22,18 @@ export const emptyBookPublicationInstance: BookPublicationInstance = {
   pages: emptyPagesMonograph,
 };
 
+export enum Revision {
+  Revised = 'Revised',
+  Unrevised = 'Unrevised',
+}
+
 export interface BookPublicationContext {
   type: PublicationType | '';
   isbnList: string[];
   publisher?: ContextPublisher;
   seriesNumber: string;
   series?: ContextSeries;
+  revision?: Revision | null;
 }
 
 interface BookReference extends BaseReference {

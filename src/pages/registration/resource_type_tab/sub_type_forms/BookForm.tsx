@@ -6,6 +6,7 @@ import { NviValidation } from '../components/NviValidation';
 import { PublisherField } from '../components/PublisherField';
 import { SeriesFields } from '../components/SeriesFields';
 import { IsbnAndPages } from '../components/isbn_and_pages/IsbnAndPages';
+import { RevisionField } from '../components/RevisionField';
 
 export const BookForm = () => {
   const { values } = useFormikContext<BookRegistration>();
@@ -18,6 +19,7 @@ export const BookForm = () => {
       <NpiDisciplineField />
 
       <IsbnAndPages />
+      <RevisionField />
 
       <SeriesFields />
 

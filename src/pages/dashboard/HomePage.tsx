@@ -57,6 +57,7 @@ const HomePage = () => {
 
   const registrationSearchTerm = params.get(ResultParam.Query);
   const registrationsQueryConfig: FetchResultsParams = {
+    aggregation: 'all',
     query: registrationSearchTerm,
     abstract: params.get(ResultParam.Abstract),
     category: params.get(ResultParam.Category) as PublicationInstanceType | null,
@@ -95,7 +96,7 @@ const HomePage = () => {
     keepPreviousData: true,
   });
 
-  const projectSearchTerm = params.get(ProjectSearchParameter.Title);
+  const projectSearchTerm = params.get(ProjectSearchParameter.Query);
   const projectQueryParams: ProjectsSearchParams = {
     coordinatingFacet: params.get(ProjectSearchParameter.CoordinatingFacet),
     categoryFacet: params.get(ProjectSearchParameter.CategoryFacet),
@@ -105,7 +106,8 @@ const HomePage = () => {
     participantOrgFacet: params.get(ProjectSearchParameter.ParticipantOrgFacet),
     responsibleFacet: params.get(ProjectSearchParameter.ResponsibleFacet),
     sectorFacet: params.get(ProjectSearchParameter.SectorFacet),
-    title: projectSearchTerm,
+    status: params.get(ProjectSearchParameter.Status),
+    query: projectSearchTerm,
   };
   const projectQuery = useQuery({
     enabled: projectIsSelected,

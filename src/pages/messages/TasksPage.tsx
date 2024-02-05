@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
 import { fetchUser } from '../../api/roleApi';
-import { fetchNviCandidates, fetchTickets } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchNviCandidates, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import { LinkButton, NavigationList, SideNavHeader, StyledPageWithSideMenu } from '../../components/PageWithSideMenu';
@@ -86,7 +86,9 @@ const TasksPage = () => {
     meta: { errorMessage: t('feedback.error.get_person') },
   });
 
-  const urlSearchQuery = new URLSearchParams(location.search).get('query');
+  const searchParams = new URLSearchParams(location.search);
+
+  const queryParam = searchParams.get(TicketSearchParam.Query);
 
   const [excludeSubunits, setExcludeSubunits] = useState(false);
   const excludeSubunitsQuery = excludeSubunits ? '&excludeSubUnits=true' : '';
@@ -140,24 +142,24 @@ const TasksPage = () => {
 
   const ticketViewedByQuery = ticketUnreadFilter && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
-  const ticketsSearchQuery = urlSearchQuery ?? '';
-
-  const ticketQueryString = [
-    ticketsSearchQuery,
-    ticketTypeQuery,
-    ticketStatusQuery,
-    ticketAssigneeQuery,
-    ticketViewedByQuery,
-  ]
+  const ticketQueryString = [queryParam, ticketTypeQuery, ticketStatusQuery, ticketAssigneeQuery, ticketViewedByQuery]
     .filter(Boolean)
     .join(' AND ');
 
-  const ticketQuery = `${ticketQueryString}&viewingScope=${organizationScope.join(',')}${excludeSubunitsQuery}`;
+  const ticketSearchParams: FetchTicketsParams = {
+    query: ticketQueryString,
+    results: rowsPerPage,
+    from: (page - 1) * rowsPerPage,
+    orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
+    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
+    viewingScope: organizationScope.length > 0 ? organizationScope.join(',') : null,
+    excludeSubUnits: excludeSubunits,
+  };
 
   const ticketsQuery = useQuery({
-    enabled: isOnTicketsPage,
-    queryKey: ['tickets', rowsPerPage, page, ticketQuery],
-    queryFn: () => fetchTickets(rowsPerPage, (page - 1) * rowsPerPage, ticketQuery),
+    enabled: isOnTicketsPage && !institutionUserQuery.isLoading,
+    queryKey: ['tickets', ticketSearchParams],
+    queryFn: () => fetchTickets(ticketSearchParams),
     meta: { errorMessage: t('feedback.error.get_messages') },
   });
 
@@ -176,7 +178,7 @@ const TasksPage = () => {
   const [nviStatusFilter, setNviStatusFilter] = useState<keyof NviCandidateAggregations>('pending');
   const [nviYearFilter, setNviYearFilter] = useState(nviYearFilterValues[1]);
 
-  const nviSearchQuery = urlSearchQuery ? `&query=${urlSearchQuery}` : '';
+  const nviSearchQuery = queryParam ? `&query=${queryParam}` : '';
 
   const nviAssigneeQuery = showOnlyMyTasks && nvaUsername ? `&assignee=${nvaUsername}` : '';
 

@@ -3,13 +3,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import NotesIcon from '@mui/icons-material/Notes';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import { Button, Divider, FormControlLabel, FormLabel } from '@mui/material';
+import { Button, Divider, FormControlLabel, FormLabel, Typography } from '@mui/material';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, Switch, useLocation } from 'react-router-dom';
-import { fetchTickets } from '../../api/searchApi';
+import { FetchTicketsParams, TicketSearchParam, fetchTickets } from '../../api/searchApi';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { NavigationListAccordion } from '../../components/NavigationListAccordion';
 import {
@@ -25,7 +25,6 @@ import { SideMenu, StyledMinimizedMenuButton } from '../../components/SideMenu';
 import { StyledStatusCheckbox, StyledTicketSearchFormGroup } from '../../components/styled/Wrappers';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import orcidIcon from '../../resources/images/orcid_logo.svg';
 import { TicketStatus } from '../../types/publication_types/ticket.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -105,16 +104,26 @@ const MyPagePage = () => {
       ? `(${selectedStatusesArray.map((status) => 'status:' + status).join(' OR ')})`
       : '';
 
-  const urlSearchQuery = new URLSearchParams(location.search).get('query');
-  const searchQuery = urlSearchQuery ?? '';
+  const searchParams = new URLSearchParams(location.search);
+  const queryParam = searchParams.get(TicketSearchParam.Query);
 
   const viewedByQuery = filterUnreadOnly && user ? `(NOT(viewedBy.username:"${user.nvaUsername}"))` : '';
 
-  const query = [searchQuery, typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
+  const query = [queryParam, typeQuery, statusQuery, viewedByQuery].filter(Boolean).join(' AND ');
+
+  const ticketSearchParams: FetchTicketsParams = {
+    query,
+    results: rowsPerPage,
+    from: apiPage * rowsPerPage,
+    role: 'creator',
+    orderBy: searchParams.get(TicketSearchParam.OrderBy) as 'createdDate' | null,
+    sortOrder: searchParams.get(TicketSearchParam.SortOrder) as 'asc' | 'desc' | null,
+  };
 
   const ticketsQuery = useQuery({
-    queryKey: ['tickets', rowsPerPage, apiPage, query],
-    queryFn: () => fetchTickets(rowsPerPage, apiPage * rowsPerPage, query, true),
+    enabled: !!user?.isCreator,
+    queryKey: ['tickets', ticketSearchParams],
+    queryFn: () => fetchTickets(ticketSearchParams),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_messages'), variant: 'error' })),
   });
 
@@ -149,6 +158,47 @@ const MyPagePage = () => {
           </Link>
         }>
         <SideNavHeader icon={FavoriteBorderIcon} text={t('my_page.my_page')} />
+        <NavigationListAccordion
+          title={t('my_page.research_profile')}
+          startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
+          accordionPath={UrlPathTemplate.MyPageProfile}
+          defaultPath={UrlPathTemplate.MyPageResearchProfile}
+          dataTestId={dataTestId.myPage.researchProfileAccordion}>
+          <NavigationList>
+            <Typography>{t('my_page.public_research_profile')}</Typography>
+            <LinkButton
+              data-testid={dataTestId.myPage.researchProfileLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageResearchProfile}
+              to={UrlPathTemplate.MyPageResearchProfile}>
+              {fullName}
+            </LinkButton>
+            <Typography>{t('my_page.my_profile.edit_research_profile')}</Typography>
+            <LinkButton
+              data-testid={dataTestId.myPage.myProfileLink}
+              isSelected={currentPath === UrlPathTemplate.MyPagePersonalia}
+              to={UrlPathTemplate.MyPagePersonalia}>
+              {t('my_page.my_profile.heading.personalia')}
+            </LinkButton>
+            <LinkButton
+              data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageFieldAndBackground}
+              to={UrlPathTemplate.MyPageFieldAndBackground}>
+              {t('my_page.my_profile.field_and_background.field_and_background')}
+            </LinkButton>
+            <LinkButton
+              data-testid={dataTestId.myPage.myResultsLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageResults}
+              to={UrlPathTemplate.MyPageResults}>
+              {t('my_page.my_profile.results')}
+            </LinkButton>
+            <LinkButton
+              data-testid={dataTestId.myPage.myProjectsLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
+              to={UrlPathTemplate.MyPageMyProjects}>
+              {t('my_page.my_profile.projects')}
+            </LinkButton>
+          </NavigationList>
+        </NavigationListAccordion>
 
         {user?.isCreator && [
           <NavigationListAccordion
@@ -388,65 +438,12 @@ const MyPagePage = () => {
             />
           </NavigationListAccordion>,
         ]}
-        <NavigationListAccordion
-          title={t('my_page.research_profile')}
-          startIcon={<img src={orcidIcon} alt={t('common.orcid')} />}
-          accordionPath={UrlPathTemplate.MyPageResearchProfile}
-          defaultPath={UrlPathTemplate.MyPageMyResearchProfile}
-          dataTestId={dataTestId.myPage.researchProfileAccordion}>
-          <NavigationList>
-            <LinkButton
-              data-testid={dataTestId.myPage.researchProfileLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyResearchProfile}
-              to={UrlPathTemplate.MyPageMyResearchProfile}>
-              {t('my_page.research_profile')}
-            </LinkButton>
-          </NavigationList>
-        </NavigationListAccordion>
-
-        <NavigationListAccordion
-          title={t('my_page.my_profile.user_profile')}
-          startIcon={<ProfilePicture personId={personId} fullName={fullName} />}
-          accordionPath={UrlPathTemplate.MyPageMyProfile}
-          defaultPath={UrlPathTemplate.MyPageMyPersonalia}
-          dataTestId={dataTestId.myPage.myProfileAccordion}>
-          <NavigationList>
-            <LinkButton
-              data-testid={dataTestId.myPage.myProfileLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyPersonalia}
-              to={UrlPathTemplate.MyPageMyPersonalia}>
-              {t('my_page.my_profile.heading.personalia')}
-            </LinkButton>
-            <LinkButton
-              data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyFieldAndBackground}
-              to={UrlPathTemplate.MyPageMyFieldAndBackground}>
-              {t('my_page.my_profile.field_and_background.field_and_background')}
-            </LinkButton>
-            <LinkButton
-              data-testid={dataTestId.myPage.myResultsLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyResults}
-              to={UrlPathTemplate.MyPageMyResults}>
-              {t('my_page.my_profile.results')}
-            </LinkButton>
-            <LinkButton
-              data-testid={dataTestId.myPage.myProjectsLink}
-              isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}
-              to={UrlPathTemplate.MyPageMyProjects}>
-              {t('my_page.my_profile.projects')}
-            </LinkButton>
-          </NavigationList>
-        </NavigationListAccordion>
       </SideMenu>
 
       <ErrorBoundary>
         <Switch>
           <PrivateRoute exact path={UrlPathTemplate.MyPage} isAuthorized={isAuthenticated}>
-            {isCreator ? (
-              <Redirect to={UrlPathTemplate.MyPageMyMessages} />
-            ) : (
-              <Redirect to={UrlPathTemplate.MyPageMyResearchProfile} />
-            )}
+            <Redirect to={UrlPathTemplate.MyPageResearchProfile} />
           </PrivateRoute>
 
           <PrivateRoute exact path={UrlPathTemplate.MyPageMyMessages} isAuthorized={isCreator}>
@@ -473,13 +470,13 @@ const MyPagePage = () => {
           </PrivateRoute>
           <PrivateRoute
             exact
-            path={UrlPathTemplate.MyPageMyPersonalia}
+            path={UrlPathTemplate.MyPagePersonalia}
             component={MyProfile}
             isAuthorized={isAuthenticated}
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.MyPageMyFieldAndBackground}
+            path={UrlPathTemplate.MyPageFieldAndBackground}
             component={MyFieldAndBackground}
             isAuthorized={isAuthenticated}
           />
@@ -491,13 +488,13 @@ const MyPagePage = () => {
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.MyPageMyResearchProfile}
+            path={UrlPathTemplate.MyPageResearchProfile}
             component={ResearchProfile}
             isAuthorized={isAuthenticated}
           />
           <PrivateRoute
             exact
-            path={UrlPathTemplate.MyPageMyResults}
+            path={UrlPathTemplate.MyPageResults}
             component={MyResults}
             isAuthorized={isAuthenticated}
           />

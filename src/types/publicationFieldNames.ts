@@ -105,6 +105,20 @@ export enum ResearchDataType {
   Dataset = 'DataSet',
 }
 
+export const allPublicationInstanceTypes = [
+  ...Object.values(JournalType),
+  ...Object.values(BookType),
+  ...Object.values(ReportType),
+  ...Object.values(DegreeType),
+  ...Object.values(ChapterType),
+  ...Object.values(PresentationType),
+  ...Object.values(ArtisticType),
+  ...Object.values(MediaType),
+  ...Object.values(ResearchDataType),
+  ...Object.values(ExhibitionContentType),
+  ...Object.values(OtherRegistrationType),
+];
+
 export enum RegistrationFieldName {
   Identifier = 'identifier',
   ModifiedDate = 'modifiedDate',
@@ -157,6 +171,7 @@ export enum ResourceFieldNames {
   PublicationInstanceReferencedBy = 'entityDescription.reference.publicationInstance.referencedBy',
   PublicationInstanceRelated = 'entityDescription.reference.publicationInstance.related',
   Reference = 'entityDescription.reference',
+  Revision = 'entityDescription.reference.publicationContext.revision',
   Series = 'entityDescription.reference.publicationContext.series',
   SeriesId = 'entityDescription.reference.publicationContext.series.id',
   SeriesNumber = 'entityDescription.reference.publicationContext.seriesNumber',
@@ -194,6 +209,7 @@ export enum SpecificFileFieldNames {
   PublisherAuthority = 'publisherAuthority',
   EmbargoDate = 'embargoDate',
   License = 'license',
+  LegalNote = 'legalNote',
 }
 
 // The following fields should be present in "associatedArtifacts[index].<KEY> for links"

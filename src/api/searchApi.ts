@@ -7,14 +7,50 @@ import { CristinPerson } from '../types/user.types';
 import { SearchApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest2 } from './apiRequest';
 
-export const fetchTickets = async (results: number, from: number, query = '', onlyCreator = false) => {
-  const paginationQuery = `results=${results}&from=${from}`;
-  const roleQuery = onlyCreator ? 'role=creator' : '';
-  const searchQuery = query ? `query=${query}` : '';
-  const fullQuery = [paginationQuery, roleQuery, searchQuery].filter(Boolean).join('&');
+export enum TicketSearchParam {
+  Query = 'query',
+  Role = 'role',
+  Results = 'results',
+  From = 'from',
+  OrderBy = 'orderBy',
+  SortOrder = 'sortOrder',
+  ViewingScope = 'viewingScope',
+  ExcludeSubUnits = 'excludeSubUnits',
+}
+
+export interface FetchTicketsParams {
+  [TicketSearchParam.Query]?: string | null;
+  [TicketSearchParam.Role]?: 'creator';
+  [TicketSearchParam.Results]?: number | null;
+  [TicketSearchParam.From]?: number | null;
+  [TicketSearchParam.OrderBy]?: 'createdDate' | null;
+  [TicketSearchParam.SortOrder]?: 'desc' | 'asc' | null;
+  [TicketSearchParam.ViewingScope]?: string | null;
+  [TicketSearchParam.ExcludeSubUnits]?: boolean | null;
+}
+
+export const fetchTickets = async (params: FetchTicketsParams) => {
+  const searchParams = new URLSearchParams();
+  if (params.query) {
+    searchParams.set(TicketSearchParam.Query, params.query);
+  }
+  if (params.role) {
+    searchParams.set(TicketSearchParam.Role, params.role);
+  }
+  if (params.viewingScope) {
+    searchParams.set(TicketSearchParam.ViewingScope, params.viewingScope);
+  }
+  if (params.excludeSubUnits) {
+    searchParams.set(TicketSearchParam.ExcludeSubUnits, 'true');
+  }
+
+  searchParams.set(TicketSearchParam.From, (params.from ?? 0).toString());
+  searchParams.set(TicketSearchParam.Results, (params.results ?? 10).toString());
+  searchParams.set(TicketSearchParam.OrderBy, params.orderBy || 'createdDate');
+  searchParams.set(TicketSearchParam.SortOrder, params.sortOrder || 'desc');
 
   const getTickets = await authenticatedApiRequest2<TicketSearchResponse>({
-    url: `${SearchApiPath.Tickets}?${fullQuery}`,
+    url: `${SearchApiPath.Tickets}?${searchParams.toString()}`,
   });
 
   return getTickets.data;
@@ -67,8 +103,9 @@ export const fetchEmployees = async (
   if (!organizationId) {
     return;
   }
+  const sortQueryParam = 'sort=name';
   const nameQueryParam = nameQuery ? `&name=${nameQuery}` : '';
-  const url = `${organizationId}/persons?page=${page}&results=${results}${nameQueryParam}`;
+  const url = `${organizationId}/persons?page=${page}&${sortQueryParam}&results=${results}${nameQueryParam}`;
 
   const getEmployees = await authenticatedApiRequest2<SearchResponse<CristinPerson>>({ url, signal });
 
@@ -100,6 +137,7 @@ export const fetchNviCandidate = async (identifier: string) => {
 
 export enum ResultParam {
   Abstract = 'abstract',
+  Aggregation = 'aggregation',
   Category = 'category',
   CategoryNot = 'categoryNot',
   CategoryShould = 'categoryShould',
@@ -127,6 +165,7 @@ export enum ResultParam {
 
 export interface FetchResultsParams {
   [ResultParam.Abstract]?: string | null;
+  [ResultParam.Aggregation]?: 'all' | 'none' | null;
   [ResultParam.Category]?: PublicationInstanceType | null;
   [ResultParam.CategoryNot]?: PublicationInstanceType | null;
   [ResultParam.CategoryShould]?: PublicationInstanceType[];
@@ -157,6 +196,11 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
 
   if (params.abstract) {
     searchParams.set(ResultParam.Abstract, encodeURIComponent(params.abstract));
+  }
+  if (params.aggregation) {
+    searchParams.set(ResultParam.Aggregation, params.aggregation);
+  } else {
+    searchParams.set(ResultParam.Aggregation, 'none');
   }
   if (params.category) {
     searchParams.set(ResultParam.Category, params.category);

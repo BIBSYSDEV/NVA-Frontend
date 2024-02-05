@@ -49,6 +49,7 @@ import {
   isPresentation,
   isReport,
 } from '../../utils/registration-helpers';
+import { ChapterPublisherInfo } from './ChapterPublisherInfo';
 import { PublicDoi } from './PublicDoi';
 import {
   PublicJournal,
@@ -58,6 +59,7 @@ import {
   PublicPublishedInContent,
   PublicPublisher,
   PublicSeries,
+  RevisionInformation,
 } from './PublicPublicationContext';
 import {
   PublicIsbnContent,
@@ -87,8 +89,9 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
   const cristinIdentifier = registration.additionalIdentifiers?.find(
     (identifier) => identifier.sourceName === 'Cristin'
   )?.value;
-  const scopusIdentifier = registration.additionalIdentifiers?.find((identifier) => identifier.sourceName === 'Scopus')
-    ?.value;
+  const scopusIdentifier = registration.additionalIdentifiers?.find(
+    (identifier) => identifier.sourceName === 'Scopus'
+  )?.value;
 
   return (
     <StyledGeneralInfo>
@@ -122,6 +125,7 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicIsbnContent
                 isbnList={(registration as BookRegistration).entityDescription.reference?.publicationContext.isbnList}
               />
+              <RevisionInformation revision={(publicationContext as BookPublicationContext).revision} />
             </>
           ) : isDegree(publicationInstance.type) ? (
             <>
@@ -239,7 +243,10 @@ export const PublicGeneralContent = ({ registration }: PublicRegistrationContent
               <PublicSeries publicationContext={publicationContext as ReportPublicationContext} />
             </>
           ) : isChapter(publicationInstance.type) ? (
-            <PublicPublishedInContent id={(publicationContext as ChapterPublicationContext).id} />
+            <>
+              <PublicPublishedInContent id={(publicationContext as ChapterPublicationContext).id} />
+              <ChapterPublisherInfo publicationContext={publicationContext as ChapterPublicationContext} />
+            </>
           ) : isPresentation(publicationInstance.type) ? (
             <PublicPresentation publicationContext={publicationContext as PresentationPublicationContext} />
           ) : isArtistic(publicationInstance.type) ? (
