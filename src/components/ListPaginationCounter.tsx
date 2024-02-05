@@ -11,7 +11,7 @@ export const ListPaginationCounter = ({ start, end, total }: ListPaginationCount
   const { t } = useTranslation();
 
   return (
-    <Typography aria-live="polite">
+    <Typography>
       {t('common.pagination_showing_interval', {
         start: start.toLocaleString(),
         end: end.toLocaleString(),

@@ -62,7 +62,16 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
           {tickets.length === 0 ? (
             <Typography>{t('my_page.messages.no_messages')}</Typography>
           ) : (
-            <>
+            <ListPagination
+              count={ticketsQuery.data?.size ?? 0}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(newPage) => setPage(newPage)}
+              onRowsPerPageChange={(newRowsPerPage) => {
+                setRowsPerPage(newRowsPerPage);
+                setPage(1);
+              }}
+              maxHits={10_000}>
               <List disablePadding sx={{ mb: '0.5rem' }}>
                 {tickets.map((ticket) => (
                   <ErrorBoundary key={ticket.id}>
@@ -70,18 +79,7 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
                   </ErrorBoundary>
                 ))}
               </List>
-              <ListPagination
-                count={ticketsQuery.data?.size ?? 0}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(newPage) => setPage(newPage)}
-                onRowsPerPageChange={(newRowsPerPage) => {
-                  setRowsPerPage(newRowsPerPage);
-                  setPage(1);
-                }}
-                maxHits={10_000}
-              />
-            </>
+            </ListPagination>
           )}
         </>
       )}

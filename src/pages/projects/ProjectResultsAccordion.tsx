@@ -2,7 +2,7 @@ import { CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FetchResultsParams, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
@@ -38,20 +38,18 @@ export const ProjectResultsAccordion = ({ projectId }: ProjectResultsProps) => {
       {resultsQuery.isLoading ? (
         <CircularProgress aria-label={t('project.results')} />
       ) : results && results.totalHits > 0 ? (
-        <>
+        <ListPagination
+          rowsPerPageOptions={itemsPerRowOptions}
+          count={results.totalHits}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(newPage) => setPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setPage(1);
+          }}>
           <RegistrationList registrations={results.hits} />
-          <ListPagination
-            rowsPerPageOptions={itemsPerRowOptions}
-            count={results.totalHits}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}
-          />
-        </>
+        </ListPagination>
       ) : (
         <Typography>{t('project.no_results')}</Typography>
       )}

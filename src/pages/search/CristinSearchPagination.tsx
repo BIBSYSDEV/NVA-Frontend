@@ -1,14 +1,16 @@
+import { ReactNode } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ListPagination } from '../../components/ListPagination';
 import { SearchParam } from '../../utils/searchHelpers';
 
 interface CristinSearchPaginationProps {
+  children: ReactNode;
   totalCount: number;
   page: number;
   rowsPerPage: number;
 }
 
-export const CristinSearchPagination = ({ totalCount, page, rowsPerPage }: CristinSearchPaginationProps) => {
+export const CristinSearchPagination = ({ children, totalCount, page, rowsPerPage }: CristinSearchPaginationProps) => {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
 
@@ -25,6 +27,8 @@ export const CristinSearchPagination = ({ totalCount, page, rowsPerPage }: Crist
       onPageChange={(newPage) => updatePath(newPage.toString(), rowsPerPage.toString())}
       rowsPerPage={rowsPerPage}
       onRowsPerPageChange={(newRowsPerPage) => updatePath('1', newRowsPerPage.toString())}
-    />
+      showPaginationTop={true}>
+      {children}
+    </ListPagination>
   );
 };

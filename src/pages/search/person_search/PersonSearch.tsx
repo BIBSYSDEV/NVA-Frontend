@@ -2,7 +2,6 @@ import { Box, List, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ListSkeleton } from '../../../components/ListSkeleton';
-import { ListPaginationTop } from '../../../components/ListPaginationTop';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { CristinSearchPagination } from '../CristinSearchPagination';
@@ -31,13 +30,13 @@ export const PersonSearch = ({ personQuery }: PersonSearchProps) => {
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : searchResults && searchResults.length > 0 ? (
         <div>
-          <ListPaginationTop count={totalHits} page={page} rowsPerPage={rowsPerPage} />
-          <List>
-            {searchResults.map((person) => (
-              <PersonListItem key={person.id} person={person} />
-            ))}
-          </List>
-          <CristinSearchPagination totalCount={totalHits} page={page} rowsPerPage={rowsPerPage} />
+          <CristinSearchPagination totalCount={totalHits} page={page} rowsPerPage={rowsPerPage}>
+            <List>
+              {searchResults.map((person) => (
+                <PersonListItem key={person.id} person={person} />
+              ))}
+            </List>
+          </CristinSearchPagination>
         </div>
       ) : (
         <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>
