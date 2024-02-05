@@ -40,12 +40,14 @@ export const UserRoleAndHelp = () => {
           <Divider sx={{ bgcolor: 'primary.main' }} />
         </>
       )}
-      {user ? (
-        <Box sx={{ maxWidth: '40rem' }}>
-          <UserRoles user={user} hasActiveEmployment={false} />
-        </Box>
-      ) : null}
-      <Divider sx={{ bgcolor: 'primary.main' }} />
+      {user && (
+        <>
+          <Box sx={{ maxWidth: '40rem' }}>
+            <UserRoles user={user} hasActiveEmployment={false} />
+          </Box>
+          <Divider sx={{ bgcolor: 'primary.main' }} />
+        </>
+      )}
       <Typography fontWeight="bold" fontSize={16}>
         {t('common.help')}
       </Typography>
