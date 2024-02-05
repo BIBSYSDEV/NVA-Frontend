@@ -71,9 +71,9 @@ export const MyProfile = () => {
         preferredFirstName: values.preferredFirstName === '' ? null : values.preferredFirstName?.trim(),
         preferredLastName: values.preferredLastName === '' ? null : values.preferredLastName?.trim(),
         contactDetails: {
-          telephone: values.contactDetails?.telephone === '' ? null : values.contactDetails?.telephone?.trim(),
-          email: values.contactDetails?.email === '' ? null : values.contactDetails?.email?.trim(),
-          webPage: values.contactDetails?.webPage === '' ? null : values.contactDetails?.webPage?.trim(),
+          telephone: values.contactDetails?.telephone?.trim(),
+          email: values.contactDetails?.email?.trim(),
+          webPage: values.contactDetails?.webPage?.trim(),
         },
       };
       const updatePersonResponse = await updateCristinPerson(user.cristinId, payload);
