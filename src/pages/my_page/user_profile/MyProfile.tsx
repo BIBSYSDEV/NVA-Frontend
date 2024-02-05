@@ -2,7 +2,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Grid, IconButton, TextField, Tooltip, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { Field, FieldProps, Form, Formik, FormikProps } from 'formik';
+import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,7 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getValueByKey } from '../../../utils/user-helpers';
+import { personaliaValidationSchema } from '../../../utils/validation/personalieValidation';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
 import { UserOrcid } from './UserOrcid';
 
@@ -87,9 +88,11 @@ export const MyProfile = () => {
     }
   };
 
-  const handleSaveAndView = async (values: CristinPersonFormData) => {
-    await updatePerson(values);
-    history.push(UrlPathTemplate.MyPageResearchProfile);
+  const handleSaveAndView = async (values: CristinPersonFormData, isValid: boolean) => {
+    if (isValid) {
+      await updatePerson(values);
+      history.push(UrlPathTemplate.MyPageResearchProfile);
+    }
   };
 
   return (
@@ -112,8 +115,12 @@ export const MyProfile = () => {
         {personQuery.isLoading && !person ? (
           <PageSpinner aria-labelledby="personalia-id" />
         ) : (
-          <Formik initialValues={initialValues} onSubmit={updatePerson} enableReinitialize>
-            {({ isSubmitting, dirty, resetForm, values }: FormikProps<CristinPersonFormData>) => (
+          <Formik
+            initialValues={initialValues}
+            validationSchema={personaliaValidationSchema}
+            onSubmit={updatePerson}
+            enableReinitialize>
+            {({ isSubmitting, dirty, resetForm, values, isValid }: FormikProps<CristinPersonFormData>) => (
               <Form>
                 <Box
                   sx={{
@@ -167,14 +174,16 @@ export const MyProfile = () => {
                           gridTemplateColumns: '1fr 1fr',
                           gap: '1rem',
                           justifyContent: 'space-evenly',
-                          alignItems: 'center',
+                          alignItems: 'top',
                         }}>
                         <Field name={'preferredFirstName'}>
-                          {({ field }: FieldProps<string>) => (
+                          {({ field, meta: { error, touched } }: FieldProps<string>) => (
                             <TextField
                               {...field}
                               data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
                               id={field.name}
+                              error={!!error && touched}
+                              helperText={<ErrorMessage name={field.name} />}
                               disabled={!editPreferredNames || isSubmitting}
                               label={t('my_page.my_profile.preferred_first_name')}
                               size="small"
@@ -183,11 +192,13 @@ export const MyProfile = () => {
                           )}
                         </Field>
                         <Field name={'preferredLastName'}>
-                          {({ field }: FieldProps<string>) => (
+                          {({ field, meta: { error, touched } }: FieldProps<string>) => (
                             <TextField
                               {...field}
                               data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
                               id={field.name}
+                              error={!!error && touched}
+                              helperText={<ErrorMessage name={field.name} />}
                               disabled={!editPreferredNames || isSubmitting}
                               label={t('my_page.my_profile.preferred_last_name')}
                               size="small"
@@ -263,12 +274,13 @@ export const MyProfile = () => {
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.telephone'}>
-                        {({ field }: FieldProps<string>) => (
+                        {({ field, meta: { error, touched } }: FieldProps<string>) => (
                           <TextField
                             {...field}
-                            type="tel"
                             data-testid={dataTestId.myPage.myProfile.telephoneField}
                             label={t('my_page.my_profile.telephone')}
+                            error={!!error && touched}
+                            helperText={<ErrorMessage name={field.name} />}
                             fullWidth
                             size="small"
                             variant="filled"
@@ -283,12 +295,13 @@ export const MyProfile = () => {
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.email'}>
-                        {({ field }: FieldProps<string>) => (
+                        {({ field, meta: { error, touched } }: FieldProps<string>) => (
                           <TextField
                             {...field}
-                            type="email"
                             data-testid={dataTestId.myPage.myProfile.emailField}
                             label={t('common.email')}
+                            error={!!error && touched}
+                            helperText={<ErrorMessage name={field.name} />}
                             fullWidth
                             size="small"
                             variant="filled"
@@ -303,13 +316,14 @@ export const MyProfile = () => {
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.webPage'}>
-                        {({ field }: FieldProps<string>) => (
+                        {({ field, meta: { error, touched } }: FieldProps<string>) => (
                           <TextField
                             {...field}
-                            type="url"
                             fullWidth
                             data-testid={dataTestId.myPage.myProfile.webPageField}
                             label={t('my_page.my_profile.personal_web_page')}
+                            error={!!error && touched}
+                            helperText={<ErrorMessage name={field.name} />}
                             size="small"
                             variant="filled"
                           />
@@ -345,7 +359,7 @@ export const MyProfile = () => {
                       disabled={!dirty}
                       sx={{ boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.20)' }}
                       data-testid={dataTestId.myPage.myProfile.saveAndViewResearchProfileButton}
-                      onClick={() => handleSaveAndView(values)}>
+                      onClick={() => handleSaveAndView(values, isValid)}>
                       {t('my_page.my_profile.save_and_view_research_profile')}
                     </LoadingButton>
                   </Grid>
