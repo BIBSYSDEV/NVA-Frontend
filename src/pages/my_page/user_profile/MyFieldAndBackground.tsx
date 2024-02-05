@@ -85,7 +85,7 @@ export const MyFieldAndBackground = () => {
       <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
         {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (
           <Form>
-            <Box sx={{ width: '80%', ml: '1rem', mt: '1rem' }}>
+            <Box sx={{ mx: '1rem', mt: '1rem', maxWidth: '60rem' }}>
               <div>
                 <Typography variant="h2">{t('my_page.my_profile.field_and_background.field')}</Typography>
                 <Typography variant="h3" sx={{ mb: '1rem', mt: '1.5rem' }}>
