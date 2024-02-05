@@ -72,10 +72,8 @@ export const mockRegistration: JournalRegistration = {
         type: 'Contributor',
         affiliations: [
           {
-            type: 'Organization',
-            labels: {
-              en: 'My institution',
-            },
+            type: 'UnconfirmedOrganization',
+            name: 'My institution',
           },
         ],
         correspondingAuthor: false,
@@ -175,4 +173,18 @@ export const mockPublishedRegistration = {
   ...mockRegistration,
   identifier: '123',
   status: RegistrationStatus.Published,
+};
+
+export const mockDeletedRegistration = {
+  ...mockRegistration,
+  identifier: 'dasdfasdf',
+  status: RegistrationStatus.DraftForDeletion,
+  associatedArtifacts: [],
+};
+
+export const mockDeletedRegistrationProblem = {
+  title: 'Gone',
+  status: 410,
+  requestId: 'dfadfkjasdf',
+  resource: mockDeletedRegistration,
 };

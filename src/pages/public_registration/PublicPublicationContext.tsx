@@ -20,7 +20,7 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { useQuery } from '@tanstack/react-query';
-import { hyphenate } from 'isbn-utils';
+import { hyphenate } from 'isbn3';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -49,7 +49,7 @@ import {
   OtherRelease,
   Venue,
 } from '../../types/publication_types/artisticRegistration.types';
-import { BookPublicationContext } from '../../types/publication_types/bookRegistration.types';
+import { BookPublicationContext, Revision } from '../../types/publication_types/bookRegistration.types';
 import { DegreePublicationContext } from '../../types/publication_types/degreeRegistration.types';
 import {
   ExhibitionBasic,
@@ -135,13 +135,18 @@ export const PublicPublishedInContent = ({ id }: { id: string | null }) => {
   const { t } = useTranslation();
 
   return id ? (
-    <>
+    <Box sx={{ mb: '0.5rem' }}>
       <Typography variant="h3" component="p">
         {t('registration.resource_type.chapter.published_in')}
       </Typography>
       <RegistrationSummary id={id} />
-    </>
+    </Box>
   ) : null;
+};
+
+export const RevisionInformation = ({ revision }: { revision?: Revision | null }) => {
+  const { t } = useTranslation();
+  return Revision.Revised === revision ? <Typography>{t('registration.is_revision')}</Typography> : null;
 };
 
 export const PublicSeries = ({
@@ -280,7 +285,13 @@ const PublicOutputRow = ({ output, showType }: PublicOutputRowProps) => {
     enabled: !!exhibitionCatalogIdentifier,
     queryKey: ['registration', exhibitionCatalogIdentifier],
     queryFn: () => fetchRegistration(exhibitionCatalogIdentifier),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
+    onError: () =>
+      dispatch(
+        setNotification({
+          message: t('feedback.error.get_registration'),
+          variant: 'error',
+        })
+      ),
   });
 
   const nameString = exhibitionCatalogIdentifier

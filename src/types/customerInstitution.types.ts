@@ -1,3 +1,6 @@
+import { allPublicationInstanceTypes } from './publicationFieldNames';
+import { PublicationInstanceType } from './registration.types';
+
 export interface SimpleCustomerInstitution {
   id: string;
   createdDate: string;
@@ -29,9 +32,11 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   rorId?: string;
   doiAgent: DoiAgent;
   sector: Sector;
+  inactiveFrom?: string;
   nviInstitution: boolean;
   rboInstitution: boolean;
   rightsRetentionStrategy: RightsRetentionStrategy;
+  allowFileUploadForTypes: PublicationInstanceType[];
 }
 
 interface RightsRetentionStrategy {
@@ -92,6 +97,7 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   nviInstitution: false,
   rboInstitution: false,
   rightsRetentionStrategy: { type: RightsRetentionStrategyTypes.NullRightsRetentionStrategy, id: '' },
+  allowFileUploadForTypes: allPublicationInstanceTypes,
 };
 
 export const emptyProtectedDoiAgent: ProtectedDoiAgent = {
@@ -110,6 +116,7 @@ export enum CustomerInstitutionFieldNames {
   DoiPrefix = 'doiAgent.prefix',
   FeideOrganizationDomain = 'customer.feideOrganizationDomain',
   Identifier = 'customer.identifier',
+  InactiveFrom = 'customer.inactiveFrom',
   InstitutionDns = 'customer.institutionDns',
   Name = 'customer.name',
   RorId = 'customer.rorId',

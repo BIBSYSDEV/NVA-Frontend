@@ -5,16 +5,15 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { FetchResultsParams, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { StyledPaperHeader } from '../../components/PageWithSideMenu';
 import { StructuredSeoData } from '../../components/StructuredSeoData';
 import { TruncatableTypography } from '../../components/TruncatableTypography';
 import { LandingPageAccordion } from '../../components/landing_page/LandingPageAccordion';
 import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
-import { ResearchDataType } from '../../types/publicationFieldNames';
-import { ConfirmedDocument, RelatedDocument } from '../../types/publication_types/researchDataRegistration.types';
-import { Registration, RegistrationStatus } from '../../types/registration.types';
+import { DegreeType, ResearchDataType } from '../../types/publicationFieldNames';
+import { ConfirmedDocument, Registration, RegistrationStatus, RelatedDocument } from '../../types/registration.types';
 import { API_URL } from '../../utils/constants';
 import { dataTestId } from '../../utils/dataTestIds';
 import { getTitleString, isResearchData, userCanEditRegistration } from '../../utils/registration-helpers';
@@ -29,7 +28,10 @@ import { ShareOptions } from './ShareOptions';
 import { FilesLandingPageAccordion } from './public_files/FilesLandingPageAccordion';
 import { ListExternalRelations } from './public_links/ListExternalRelations';
 import { ListRegistrationRelations } from './public_links/ListRegistrationRelations';
+import { ShowRelatedDocuments } from './public_links/ShowRelatedDocuments';
 import { ShowRelatedRegistrationUris } from './public_links/ShowRelatedRegistrationUris';
+import { DeletedPublicationInformation } from './DeletedPublicationInformation';
+import { visuallyHidden } from '@mui/utils';
 
 export interface PublicRegistrationContentProps {
   registration: Registration;
@@ -62,6 +64,9 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
       <Helmet>
         <title>{mainTitle}</title>
       </Helmet>
+      <Box sx={visuallyHidden}>
+        <DeletedPublicationInformation registration={registration} />
+      </Box>
       <StyledPaperHeader>
         {entityDescription?.reference?.publicationInstance?.type ? (
           <Typography data-testid={dataTestId.registrationLandingPage.registrationSubtype} sx={{ color: 'inherit' }}>
@@ -90,6 +95,7 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             registrationType={entityDescription.reference.publicationInstance.type}
           />
         )}
+        <DeletedPublicationInformation aria-hidden={true} registration={registration} />
 
         <PublicGeneralContent registration={registration} />
 
@@ -161,6 +167,17 @@ export const PublicRegistrationContent = ({ registration }: PublicRegistrationCo
             </LandingPageAccordion>
           </>
         )}
+
+        {entityDescription?.reference?.publicationInstance?.type === DegreeType.Phd &&
+          entityDescription.reference.publicationInstance.related &&
+          entityDescription.reference.publicationInstance.related.length > 0 && (
+            <LandingPageAccordion
+              dataTestId={dataTestId.registrationLandingPage.relatedPublicationsAccordion}
+              defaultExpanded
+              heading={t('registration.resource_type.related_results')}>
+              <ShowRelatedDocuments related={entityDescription.reference.publicationInstance.related} />
+            </LandingPageAccordion>
+          )}
 
         {entityDescription?.reference?.publicationInstance?.type === ResearchDataType.DataManagementPlan && (
           <LandingPageAccordion

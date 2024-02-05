@@ -2,6 +2,7 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ListPagination } from '../../../components/ListPagination';
+import { ListPaginationTop } from '../../../components/ListPaginationTop';
 import { ListSkeleton } from '../../../components/ListSkeleton';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
@@ -31,6 +32,7 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
         <>
+          <ListPaginationTop count={registrationQuery.data.totalHits} page={page + 1} rowsPerPage={rowsPerPage} />
           <RegistrationSearchResults searchResult={registrationQuery.data.hits} />
           <ListPagination
             count={registrationQuery.data.totalHits}

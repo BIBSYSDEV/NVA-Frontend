@@ -26,7 +26,7 @@ export const UserRolesSelector = ({
 
   return (
     <>
-      <Typography component="legend" variant="h3">
+      <Typography variant="h3" gutterBottom>
         {t('my_page.my_profile.heading.roles')}
       </Typography>
       {personHasNin ? (

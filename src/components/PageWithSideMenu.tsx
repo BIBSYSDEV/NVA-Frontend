@@ -57,7 +57,6 @@ export const NavigationList = ({ sx, ...props }: BoxProps) => (
       mb: '0.5rem',
       mx: '0.5rem',
       display: 'flex',
-      maxWidth: 'fit-content',
       flexDirection: 'column',
       gap: '0.5rem',
       a: { textTransform: 'none' },
@@ -73,7 +72,12 @@ interface LinkButtonProps extends ButtonProps, Partial<Pick<LinkProps, 'to'>> {
 
 export const LinkButton = ({ isSelected, sx, ...rest }: LinkButtonProps) => (
   <Button
-    sx={{ bgcolor: isSelected ? 'primary.main' : 'background.default', justifyContent: 'start', ...sx }}
+    sx={{
+      bgcolor: isSelected ? 'primary.main' : 'background.default',
+      justifyContent: 'start',
+      boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.20)',
+      ...sx,
+    }}
     variant={isSelected ? 'contained' : 'outlined'}
     LinkComponent={rest.to ? Link : undefined}
     {...rest}

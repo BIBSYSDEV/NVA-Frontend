@@ -1,7 +1,7 @@
 import * as LicenseImages from '../resources/images/licenses';
 import i18n from '../translations/i18n';
 
-enum LicenseUri {
+export enum LicenseUri {
   CC_BY_4 = 'https://creativecommons.org/licenses/by/4.0',
   CC_BY_3 = 'https://creativecommons.org/licenses/by/3.0',
   CC_BY_2 = 'https://creativecommons.org/licenses/by/2.0',

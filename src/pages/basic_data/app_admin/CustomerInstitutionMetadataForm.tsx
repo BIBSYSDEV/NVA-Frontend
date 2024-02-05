@@ -1,5 +1,5 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Checkbox, Chip, FormControlLabel, FormLabel, TextField } from '@mui/material';
+import { Box, Checkbox, Chip, Divider, FormControlLabel, FormLabel, TextField } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -16,9 +16,9 @@ import {
   CustomerInstitutionFieldNames,
   CustomerInstitutionFormData,
   DoiAgent,
-  Sector,
   emptyCustomerInstitution,
   emptyProtectedDoiAgent,
+  Sector,
 } from '../../../types/customerInstitution.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
@@ -220,6 +220,30 @@ export const CustomerInstitutionMetadataForm = ({
                 )}
               </Field>
             </div>
+
+            <Divider />
+
+            <Field name={CustomerInstitutionFieldNames.InactiveFrom}>
+              {({ field }: FieldProps<string | undefined>) => (
+                <FormControlLabel
+                  label={t('basic_data.institutions.institution_is_inactive')}
+                  control={
+                    <Checkbox
+                      onChange={(_event, checked) => {
+                        setFieldValue(
+                          CustomerInstitutionFieldNames.InactiveFrom,
+                          checked ? new Date().toISOString() : null
+                        );
+                      }}
+                      data-testid={dataTestId.basicData.institutionAdmin.inactiveCheckbox}
+                      checked={!!field.value}
+                    />
+                  }
+                />
+              )}
+            </Field>
+
+            <Divider />
 
             {editMode && (
               <div>

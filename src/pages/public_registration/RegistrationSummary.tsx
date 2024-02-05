@@ -2,7 +2,7 @@ import { Link, Skeleton } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { fetchResults } from '../../api/searchApi';
+import { fetchRegistration } from '../../api/registrationApi';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { getTitleString } from '../../utils/registration-helpers';
 import { getRegistrationLandingPagePath } from '../../utils/urlPaths';
@@ -17,20 +17,18 @@ export const RegistrationSummary = ({ id }: RegistrationSummaryProps) => {
   const identifier = getIdentifierFromId(id);
 
   const containerQuery = useQuery({
-    queryKey: ['container', identifier],
-    queryFn: () => fetchResults({ id: identifier, results: 1 }),
+    queryKey: ['registration', identifier],
+    queryFn: () => fetchRegistration(identifier),
     meta: { errorMessage: t('feedback.error.search') },
   });
 
-  const container = containerQuery && containerQuery.data?.hits.length === 1 ? containerQuery.data.hits[0] : null;
+  const container = containerQuery.data;
 
   return containerQuery.isLoading ? (
     <Skeleton width={400} />
-  ) : (
-    container && (
-      <Link component={RouterLink} to={getRegistrationLandingPagePath(identifier)}>
-        {getTitleString(container.entityDescription?.mainTitle)}
-      </Link>
-    )
-  );
+  ) : container ? (
+    <Link component={RouterLink} to={getRegistrationLandingPagePath(identifier)}>
+      {getTitleString(container.entityDescription?.mainTitle)}
+    </Link>
+  ) : null;
 };

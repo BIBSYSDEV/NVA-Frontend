@@ -31,11 +31,13 @@ import { ReportEntityDescription } from './publication_types/reportRegistration.
 import { ResearchDataEntityDescription } from './publication_types/researchDataRegistration.types';
 
 export enum RegistrationStatus {
-  Deleted = 'DRAFT_FOR_DELETION',
+  DraftForDeletion = 'DRAFT_FOR_DELETION',
+  Deleted = 'DELETED',
   Draft = 'DRAFT',
   New = 'NEW',
   Published = 'PUBLISHED',
   PublishedMetadata = 'PUBLISHED_METADATA',
+  Unpublished = 'UNPUBLISHED',
 }
 
 export enum RegistrationTab {
@@ -266,3 +268,15 @@ export interface RegistrationAggregations {
   fundingSource?: AggregationValue[];
   contributor?: AggregationValue[];
 }
+
+export interface ConfirmedDocument {
+  type: 'ConfirmedDocument';
+  identifier: string;
+}
+
+export interface UnconfirmedDocument {
+  type: 'UnconfirmedDocument';
+  text: string;
+}
+
+export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
