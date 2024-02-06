@@ -67,7 +67,15 @@ export const EditorCurators = () => {
           <i>{t('editor.curators.no_users_found')}</i>
         </Typography>
       ) : (
-        <>
+        <ListPagination
+          count={filteredCurators.length}
+          rowsPerPage={rowsPerPage}
+          page={validPage}
+          onPageChange={(newPage) => setPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setPage(1);
+          }}>
           <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
             <Table size="small" sx={alternatingTableRowColor}>
               <TableHead>
@@ -84,17 +92,7 @@ export const EditorCurators = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <ListPagination
-            count={filteredCurators.length}
-            rowsPerPage={rowsPerPage}
-            page={validPage}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}
-          />
-        </>
+        </ListPagination>
       )}
     </>
   );
