@@ -1,6 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Grid, IconButton, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, TextField, Tooltip, Typography, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useState } from 'react';
@@ -24,6 +24,13 @@ import { ProfilePictureUploader } from './ProfilePictureUploader';
 import { UserOrcid } from './UserOrcid';
 
 type CristinPersonFormData = Pick<FlatCristinPerson, 'preferredFirstName' | 'preferredLastName' | 'contactDetails'>;
+
+const StyledTypography = styled(Typography)({
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  fontWeight: 'bold',
+});
 
 export const MyProfile = () => {
   const { t } = useTranslation();
@@ -49,12 +56,6 @@ export const MyProfile = () => {
   const personPreferredLastName = getValueByKey('PreferredLastName', person?.names);
   const personTelephone = person?.contactDetails?.telephone;
   const [editPreferredNames, setEditPreferredNames] = useState(false);
-
-  const typographyStyling = {
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-  };
 
   const initialValues: CristinPersonFormData = {
     preferredFirstName: personPreferredFirstName ? personPreferredFirstName : firstName,
@@ -131,9 +132,7 @@ export const MyProfile = () => {
                   }}>
                   <Grid container gridColumn={1} rowGap={1} columns={16}>
                     <Grid item xs={16} md={3}>
-                      <Typography fontWeight="bold" sx={typographyStyling}>
-                        {t('my_page.my_profile.person_name')}
-                      </Typography>
+                      <StyledTypography>{t('my_page.my_profile.person_name')}</StyledTypography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Box
@@ -162,9 +161,7 @@ export const MyProfile = () => {
                       </Box>
                     </Grid>
                     <Grid item xs={12} md={3}>
-                      <Typography fontWeight="bold" sx={typographyStyling}>
-                        {t('my_page.my_profile.preferred_name')}
-                      </Typography>
+                      <StyledTypography>{t('my_page.my_profile.preferred_name')}</StyledTypography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Box
@@ -209,26 +206,16 @@ export const MyProfile = () => {
                       </Box>
                     </Grid>
                     <Grid item xs={1} md={1}>
-                      <Box
-                        sx={{
-                          height: '100%',
-                          display: 'flex',
-                          justifyContent: 'start',
-                          alignItems: 'center',
-                        }}>
-                        <Tooltip title={t('common.edit')}>
-                          <IconButton
-                            data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
-                            onClick={() => setEditPreferredNames(!editPreferredNames)}>
-                            <EditIcon sx={{ width: '1.2rem' }} />
-                          </IconButton>
-                        </Tooltip>
-                      </Box>
+                      <Tooltip title={t('common.edit')}>
+                        <IconButton
+                          data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
+                          onClick={() => setEditPreferredNames(!editPreferredNames)}>
+                          <EditIcon sx={{ width: '1.2rem' }} />
+                        </IconButton>
+                      </Tooltip>
                     </Grid>
                     <Grid item xs={16} md={3}>
-                      <Typography fontWeight="bold" sx={typographyStyling}>
-                        {t('my_page.my_profile.identity.identity_numbers')}
-                      </Typography>
+                      <StyledTypography>{t('my_page.my_profile.identity.identity_numbers')}</StyledTypography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Box
@@ -268,9 +255,7 @@ export const MyProfile = () => {
                       </Typography>
                     </Grid>
                     <Grid item xs={16} md={3}>
-                      <Typography fontWeight="bold" sx={typographyStyling}>
-                        {t('my_page.my_profile.telephone')}
-                      </Typography>
+                      <StyledTypography>{t('my_page.my_profile.telephone')}</StyledTypography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.telephone'}>
@@ -290,9 +275,7 @@ export const MyProfile = () => {
                       </Field>
                     </Grid>
                     <Grid item xs={16} md={3}>
-                      <Typography fontWeight="bold" sx={typographyStyling}>
-                        {t('common.email')}
-                      </Typography>
+                      <StyledTypography>{t('common.email')}</StyledTypography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.email'}>
@@ -312,9 +295,7 @@ export const MyProfile = () => {
                       </Field>
                     </Grid>
                     <Grid item xs={16} md={3}>
-                      <Typography fontWeight="bold" sx={typographyStyling}>
-                        {t('my_page.my_profile.personal_web_page')}
-                      </Typography>
+                      <StyledTypography>{t('my_page.my_profile.personal_web_page')}</StyledTypography>
                     </Grid>
                     <Grid item xs={14} md={12}>
                       <Field name={'contactDetails.webPage'}>
