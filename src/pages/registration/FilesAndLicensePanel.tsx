@@ -23,7 +23,7 @@ import { BackgroundDiv } from '../../components/styled/Wrappers';
 import { RootState } from '../../redux/store';
 import { alternatingTableRowColor } from '../../themes/mainTheme';
 import { AssociatedFile, AssociatedLink, NullAssociatedArtifact, Uppy } from '../../types/associatedArtifact.types';
-import { licenses } from '../../types/license.types';
+import { licenses, LicenseUri } from '../../types/license.types';
 import { FileFieldNames, SpecificLinkFieldNames } from '../../types/publicationFieldNames';
 import { Registration } from '../../types/registration.types';
 import { dataTestId } from '../../utils/dataTestIds';
@@ -277,20 +277,30 @@ export const FilesAndLicensePanel = ({ uppy }: FilesAndLicensePanelProps) => {
                                       modalTitle={t('registration.files_and_license.licenses')}
                                       modalDataTestId={dataTestId.registrationWizard.files.licenseModal}
                                       buttonDataTestId={dataTestId.registrationWizard.files.licenseHelpButton}>
-                                      {licenses.map((license) => (
-                                        <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
-                                          <Typography variant="h3" gutterBottom>
-                                            {license.name}
-                                          </Typography>
-                                          <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
-                                          <Typography paragraph>{license.description}</Typography>
-                                          {license.link && (
-                                            <Link href={license.link} target="blank">
-                                              {license.link}
-                                            </Link>
-                                          )}
-                                        </Box>
-                                      ))}
+                                      <Typography paragraph>
+                                        {t('registration.files_and_license.file_and_license_info')}
+                                      </Typography>
+                                      {licenses
+                                        .filter(
+                                          (license) =>
+                                            license.version === 4 ||
+                                            license.id === LicenseUri.CC0 ||
+                                            license.id === LicenseUri.RightsReserved
+                                        )
+                                        .map((license) => (
+                                          <Box key={license.id} sx={{ mb: '1rem', whiteSpace: 'pre-wrap' }}>
+                                            <Typography variant="h3" gutterBottom>
+                                              {license.name}
+                                            </Typography>
+                                            <Box component="img" src={license.logo} alt="" sx={{ width: '8rem' }} />
+                                            <Typography paragraph>{license.description}</Typography>
+                                            {license.link && (
+                                              <Link href={license.link} target="blank">
+                                                {license.link}
+                                              </Link>
+                                            )}
+                                          </Box>
+                                        ))}
                                     </HelperTextModal>
                                   </Box>
                                 </TableCell>
