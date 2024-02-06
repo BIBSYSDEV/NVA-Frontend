@@ -24,6 +24,7 @@ import { addEmployeeValidationSchema } from '../../../utils/validation/basic_dat
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { FindPersonPanel } from './FindPersonPanel';
 import { UserRolesSelector } from './UserRolesSelector';
+import { TasksFormSection } from './edit_user/TasksFormSection';
 
 export interface AddEmployeeData {
   user: FlatCristinPerson;
@@ -127,23 +128,24 @@ export const AddEmployeePage = () => {
             <Box
               sx={{
                 display: 'grid',
-                gridTemplateColumns: { xs: '1fr', md: '1fr auto 1fr' },
+                gridTemplateColumns: { xs: '1fr', lg: '1fr auto 1fr auto 1fr auto 1fr' },
                 gap: '1rem',
                 mt: '2rem',
               }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <FindPersonPanel />
-              </Box>
+              <FindPersonPanel />
               <Divider orientation="vertical" />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <AddAffiliationPanel />
+              <AddAffiliationPanel />
+              <Divider orientation="vertical" />
+              <div>
                 <UserRolesSelector
                   personHasNin={!values.user.nvi?.verifiedAt.id}
                   selectedRoles={values.roles}
                   updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
                   disabled={isSubmitting || !!errors.user || !!errors.affiliation}
                 />
-              </Box>
+              </div>
+              <Divider orientation="vertical" />
+              <TasksFormSection roles={values.roles} />
             </Box>
             <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'end' }}>
               <LoadingButton

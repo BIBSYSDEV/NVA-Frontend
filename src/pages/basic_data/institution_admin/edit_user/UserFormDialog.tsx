@@ -171,7 +171,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                   <Divider orientation="vertical" />
                   <RolesFormSection />
                   <Divider orientation="vertical" />
-                  <TasksFormSection />
+                  <TasksFormSection roles={values.user?.roles.map((role) => role.rolename)} />
                 </Box>
               )}
             </DialogContent>

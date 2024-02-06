@@ -12,10 +12,14 @@ export const rolesWithAreaOfResponsibility = [
   RoleName.NviCurator,
 ];
 
-export const TasksFormSection = () => {
+interface TasksFormSectionProps {
+  roles?: RoleName[];
+}
+
+export const TasksFormSection = ({ roles = [] }: TasksFormSectionProps) => {
   const { t } = useTranslation();
   const { values } = useFormikContext<UserFormData>();
-  const userIsCurator = values.user?.roles.some((role) => rolesWithAreaOfResponsibility.includes(role.rolename));
+  const userIsCurator = roles.some((rolename) => rolesWithAreaOfResponsibility.includes(rolename));
 
   return (
     <section>
@@ -25,7 +29,7 @@ export const TasksFormSection = () => {
       {!userIsCurator ? (
         <Typography>{t('basic_data.person_register.must_be_curator_to_have_area_of_responsibility')}</Typography>
       ) : (
-        <AreaOfResponsibility />
+        <AreaOfResponsibility organizationIds={values.user?.viewingScope?.includedUnits ?? []} />
       )}
     </section>
   );

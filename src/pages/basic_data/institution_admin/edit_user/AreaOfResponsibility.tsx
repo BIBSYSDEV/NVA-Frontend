@@ -10,16 +10,19 @@ import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { UserFormData, UserFormFieldName } from './UserFormDialog';
+import { UserFormFieldName } from './UserFormDialog';
 import { ViewingScopeChip } from './ViewingScopeChip';
 
-export const AreaOfResponsibility = () => {
+interface AreaOfResponsibilityProps {
+  organizationIds: string[];
+}
+
+export const AreaOfResponsibility = ({ organizationIds }: AreaOfResponsibilityProps) => {
   const { t } = useTranslation();
   const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
   const [addAreaOfResponsibility, setAddAreaOfResponsibility] = useState(false);
 
-  const { values, isSubmitting } = useFormikContext<UserFormData>();
-  const currentAreas = values.user?.viewingScope?.includedUnits ?? [];
+  const { isSubmitting } = useFormikContext();
 
   const organizationQuery = useQuery({
     enabled: !!topOrgCristinId,
@@ -37,13 +40,13 @@ export const AreaOfResponsibility = () => {
       <FieldArray name={UserFormFieldName.ViewingScope}>
         {({ push, remove }: FieldArrayRenderProps) => (
           <>
-            {currentAreas.length > 0 && (
+            {organizationIds.length > 0 && (
               <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '0.5rem' }}>
-                {currentAreas.map((organizationId, index) => (
+                {organizationIds.map((organizationId, index) => (
                   <ViewingScopeChip
                     key={organizationId}
                     organizationId={organizationId}
-                    onRemove={currentAreas.length > 1 ? () => remove(index) : undefined}
+                    onRemove={organizationIds.length > 1 ? () => remove(index) : undefined}
                     disabled={isSubmitting}
                   />
                 ))}

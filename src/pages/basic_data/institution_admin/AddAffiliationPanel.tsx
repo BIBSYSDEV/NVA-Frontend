@@ -1,4 +1,4 @@
-import { Autocomplete, Box, TextField } from '@mui/material';
+import { Autocomplete, Box, TextField, Typography } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,10 @@ export const AddAffiliationPanel = () => {
   const isDisabled = !!errors.user?.firstName || !!errors.user?.lastName || !!errors.user?.nationalId || isSubmitting;
 
   return (
-    <>
+    <section>
+      <Typography variant="h3" gutterBottom>
+        {t('common.employment')}
+      </Typography>
       <Field name="affiliation.organization">
         {({ field, meta: { error, touched } }: FieldProps<string>) => (
           <Autocomplete
@@ -110,6 +113,6 @@ export const AddAffiliationPanel = () => {
           )}
         </Field>
       </Box>
-    </>
+    </section>
   );
 };

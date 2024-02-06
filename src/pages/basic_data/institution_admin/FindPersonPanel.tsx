@@ -1,5 +1,5 @@
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { Button, Checkbox, FormControlLabel, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, TextField, Typography } from '@mui/material';
 import { ErrorMessage, Field, FieldProps, useFormikContext } from 'formik';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,11 @@ export const FindPersonPanel = () => {
   );
 
   return (
-    <>
+    <Box component="section" sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <Typography variant="h3" gutterBottom>
+        {t('common.person')}
+      </Typography>
+
       <SearchForCristinPerson
         selectedPerson={values.user}
         setSelectedPerson={setSelectedPerson}
@@ -105,6 +109,6 @@ export const FindPersonPanel = () => {
           )}
         </>
       )}
-    </>
+    </Box>
   );
 };
