@@ -1,15 +1,29 @@
 import { Registration } from '../../../types/registration.types';
-import { Box, Breadcrumbs, Button, DialogActions, Divider, TextField, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Breadcrumbs,
+  Button,
+  DialogActions,
+  Divider,
+  IconButton,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useState } from 'react';
 import { Modal } from '../../../components/Modal';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { SearchForm } from '../../../components/SearchForm';
 import { fetchResults } from '../../../api/searchApi';
 import { useQuery } from '@tanstack/react-query';
-import { useHistory } from 'react-router-dom';
 import { PageSpinner } from '../../../components/PageSpinner';
+import { RegistrationListItemContent } from '../../../components/RegistrationList';
+import { ErrorBoundary } from '../../../components/ErrorBoundary';
+import { SearchListItem } from '../../../components/styled/Wrappers';
+import { dataTestId } from '../../../utils/dataTestIds';
+import SearchIcon from '@mui/icons-material/Search';
+import { useDebounce } from '../../../utils/hooks/useDebounce';
 
 interface DeleteForm {
   deleteMessage: string;
@@ -28,24 +42,33 @@ const deleteValidationSchema = Yup.object().shape({
   searchDuplicate: Yup.string(),
 });
 
-function isTitle(query: string | null) {
-  return !isDoi(query);
+function isTitle(query: string) {
+  return !isDoi(query) && !isHandle(query);
 }
 
-function isDoi(query: string | null) {
-  return query?.includes('doi.org');
+function isDoi(query: string) {
+  return query.includes('https://doi.org/');
+}
+
+function isHandle(query: string) {
+  return query.includes('https://hdl.handle.net/');
 }
 
 export const DeletePublication = ({ registration, refetchData }: DeletePublicationProps) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { t } = useTranslation();
-  const history = useHistory();
-  const query = new URLSearchParams(history.location.search).get('query');
+  const [searchBeforeDebounce, setSearchBeforeDebounce] = useState('');
+  const debouncedSearch = useDebounce(searchBeforeDebounce);
+  const [selectedDuplicate, setSelectedDuplicate] = useState<Registration | null>(null);
 
-  const fetchQuery = { title: isTitle(query) ? query : null, doi: isDoi(query) ? query : null };
+  const fetchQuery = {
+    title: isTitle(debouncedSearch) ? debouncedSearch : null,
+    doi: isDoi(debouncedSearch) ? debouncedSearch : null,
+    query: isHandle(debouncedSearch) ? debouncedSearch : null,
+  };
 
   const duplicateRegistrationSearch = useQuery({
-    enabled: !!query,
+    enabled: debouncedSearch.length > 0,
     queryKey: ['duplicateRegistration', fetchQuery],
     queryFn: () => fetchResults(fetchQuery),
     meta: { errorMessage: t('feedback.error.get_import_candidates') },
@@ -60,6 +83,20 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
   const searchResultNotContainingToBeDeleted = searchResults.filter(
     (possibleDuplicate) => possibleDuplicate.identifier !== registration.identifier
   );
+
+  const handleSearchAutoCompleteChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setSearchBeforeDebounce(event.target.value);
+  };
+
+  const defaultProps = {
+    options: searchResultNotContainingToBeDeleted,
+    getOptionLabel: (option: Registration | string) => {
+      if (typeof option === 'string') {
+        return option;
+      }
+      return option.entityDescription?.mainTitle ?? '';
+    },
+  };
 
   return (
     <>
@@ -142,36 +179,78 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
                   </Box>
                   <Typography variant="h3">Søk etter registrert resultat</Typography>
                 </Box>
+                <Autocomplete
+                  {...defaultProps}
+                  freeSolo
+                  id="gurba gusdfasd"
+                  loading={duplicateRegistrationSearch.isLoading && !!debouncedSearch}
+                  value={selectedDuplicate}
+                  onChange={(_event, newValue, _reason) => {
+                    if (typeof newValue === 'string') {
+                      setSelectedDuplicate(null);
+                    } else {
+                      setSelectedDuplicate(newValue);
+                    }
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      placeholder={'Søk med DOI, handle eller tittel'}
+                      variant="filled"
+                      onChange={(event) => handleSearchAutoCompleteChange(event)}
+                      InputProps={{
+                        ...params.InputProps,
+                        type: 'search',
+                        startAdornment: (
+                          <IconButton
+                            type="submit"
+                            data-testid={dataTestId.startPage.searchButton}
+                            title={t('common.search')}
+                            size="large">
+                            <SearchIcon />
+                          </IconButton>
+                        ),
+                        endAdornment: (
+                          <>
+                            {duplicateRegistrationSearch.isLoading && !!debouncedSearch ? (
+                              <PageSpinner color="inherit" size={'1rem'} />
+                            ) : null}
+                            {params.InputProps.endAdornment}
+                          </>
+                        ),
+                      }}
+                    />
+                  )}
+                />
+                <Box aria-live="polite" aria-busy={duplicateRegistrationSearch.isLoading}>
+                  {duplicateRegistrationSearch.isLoading ? (
+                    <PageSpinner aria-label="Resultat" />
+                  ) : (
+                    <>
+                      {!!selectedDuplicate && (
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
+                          <Typography>Resultat</Typography>
+                          <ErrorBoundary key={selectedDuplicate.id}>
+                            <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
+                              <RegistrationListItemContent target="_blank" registration={selectedDuplicate} />
+                            </SearchListItem>
+                          </ErrorBoundary>
+                        </Box>
+                      )}
+                    </>
+                  )}
+                </Box>
+                <DialogActions>
+                  <Button data-testid={'close delete modal'} onClick={() => setShowDeleteModal(false)}>
+                    Angre
+                  </Button>
+                  <Button type="submit" data-testid={'delete-registration-button'} variant="outlined">
+                    Lagre
+                  </Button>
+                </DialogActions>
               </form>
             )}
           </Formik>
-          <SearchForm placeholder={'Søk med DOI, handle eller tittel'} />
-          <Box aria-busy={duplicateRegistrationSearch.isLoading}>
-            {duplicateRegistrationSearch.isLoading && !!query ? (
-              <PageSpinner />
-            ) : (
-              <>
-                {!!query && (
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
-                    <Typography>Resultat</Typography>
-                    {searchResultNotContainingToBeDeleted.map((result) => (
-                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
-                        <Typography id={result.identifier}>{JSON.stringify(result, null, 2)}</Typography>
-                      </Box>
-                    ))}
-                  </Box>
-                )}
-              </>
-            )}
-          </Box>
-          <DialogActions>
-            <Button data-testid={'close delete modal'} onClick={() => setShowDeleteModal(false)}>
-              Angre
-            </Button>
-            <Button type="submit" data-testid={'delete-registration-button'} variant="outlined">
-              Lagre
-            </Button>
-          </DialogActions>
         </Box>
       </Modal>
     </>
