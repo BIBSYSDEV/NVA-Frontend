@@ -30,7 +30,7 @@ export const UserRoleAndHelp = () => {
   return (
     <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {nvaUser?.viewingScope && (
-        <>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           <Typography fontWeight="bold">{t('my_page.my_profile.my_area_of_responsibility')}</Typography>
           <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             {nvaUser.viewingScope?.includedUnits.map((orgId) => (
@@ -38,7 +38,7 @@ export const UserRoleAndHelp = () => {
             ))}
           </Box>
           <Divider sx={{ bgcolor: 'primary.main' }} />
-        </>
+        </Box>
       )}
       {user && (
         <>
@@ -48,14 +48,14 @@ export const UserRoleAndHelp = () => {
           <Divider sx={{ bgcolor: 'primary.main' }} />
         </>
       )}
-      <Typography fontWeight="bold" fontSize={16}>
-        {t('common.help')}
-      </Typography>
+      <Typography variant="h3">{t('common.help')}</Typography>
       <Box sx={{ display: 'flex', gap: '2rem' }}>
         {customerServiceCenterUri && (
           <>
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              <Typography fontWeight="bold">Institusjonens hjelpeside</Typography>
+              <Typography fontWeight="bold">
+                {t('my_page.my_profile.user_role_and_help.institution_help_page')}
+              </Typography>
               <MuiLink
                 sx={{
                   fontWeight: 'bold',
