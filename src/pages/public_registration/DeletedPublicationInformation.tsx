@@ -55,7 +55,7 @@ export const DeletedPublicationInformation = ({ registration }: DeletePublicatio
                 my: '1rem',
               }}>
               {originalRegistrationQuery.isLoading ? (
-                <PageSpinner />
+                <PageSpinner aria-label={t('registration.citation_points_to')} />
               ) : (
                 <Typography>
                   {t('registration.citation_points_to')}
