@@ -30,89 +30,92 @@ export const AddAffiliationPanel = () => {
       <Typography variant="h3" gutterBottom>
         {t('common.employment')}
       </Typography>
-      <Field name="affiliation.organization">
-        {({ field, meta: { error, touched } }: FieldProps<string>) => (
-          <Autocomplete
-            disabled={isDisabled}
-            value={organizationOptions.find((option) => option.id === field.value) ?? null}
-            options={organizationOptions}
-            getOptionLabel={(option) => getLanguageString(option.labels)}
-            renderOption={(props, option) => (
-              <li {...props} key={option.id}>
-                {getLanguageString(option.labels)}
-              </li>
-            )}
-            loading={isLoadingCurrentOrganization}
-            onChange={(_, value) => setFieldValue(field.name, value?.id)}
-            renderInput={(params) => (
+
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <Field name="affiliation.organization">
+          {({ field, meta: { error, touched } }: FieldProps<string>) => (
+            <Autocomplete
+              disabled={isDisabled}
+              value={organizationOptions.find((option) => option.id === field.value) ?? null}
+              options={organizationOptions}
+              getOptionLabel={(option) => getLanguageString(option.labels)}
+              renderOption={(props, option) => (
+                <li {...props} key={option.id}>
+                  {getLanguageString(option.labels)}
+                </li>
+              )}
+              loading={isLoadingCurrentOrganization}
+              onChange={(_, value) => setFieldValue(field.name, value?.id)}
+              renderInput={(params) => (
+                <TextField
+                  type="search"
+                  {...field}
+                  {...params}
+                  required
+                  label={t('common.institution')}
+                  variant="filled"
+                  fullWidth
+                  error={touched && !!error}
+                  helperText={<ErrorMessage name={field.name} />}
+                  data-testid={dataTestId.basicData.personAdmin.institution}
+                />
+              )}
+            />
+          )}
+        </Field>
+        <Box display={{ display: 'flex', gap: '1rem' }}>
+          <PositionField fieldName="affiliation.type" disabled={isDisabled} />
+
+          <Field name="affiliation.fullTimeEquivalentPercentage">
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
               <TextField
-                type="search"
                 {...field}
-                {...params}
-                required
-                label={t('common.institution')}
-                variant="filled"
+                disabled={isDisabled}
                 fullWidth
+                type="number"
+                inputProps={{ min: '0', max: '100' }}
+                variant="filled"
+                label={t('basic_data.add_employee.position_percent')}
                 error={touched && !!error}
                 helperText={<ErrorMessage name={field.name} />}
-                data-testid={dataTestId.basicData.personAdmin.institution}
+                data-testid={dataTestId.basicData.personAdmin.positionPercent}
               />
             )}
+          </Field>
+        </Box>
+        <Box display={{ display: 'flex', gap: '1rem' }}>
+          <StartDateField
+            fieldName="affiliation.startDate"
+            disabled={isDisabled}
+            maxDate={values.affiliation.endDate ? new Date(values.affiliation.endDate) : undefined}
+            dataTestId={dataTestId.basicData.personAdmin.startDate}
           />
-        )}
-      </Field>
-      <Box display={{ display: 'flex', gap: '1rem' }}>
-        <PositionField fieldName="affiliation.type" disabled={isDisabled} />
 
-        <Field name="affiliation.fullTimeEquivalentPercentage">
-          {({ field, meta: { error, touched } }: FieldProps<string>) => (
-            <TextField
-              {...field}
-              disabled={isDisabled}
-              fullWidth
-              type="number"
-              inputProps={{ min: '0', max: '100' }}
-              variant="filled"
-              label={t('basic_data.add_employee.position_percent')}
-              error={touched && !!error}
-              helperText={<ErrorMessage name={field.name} />}
-              data-testid={dataTestId.basicData.personAdmin.positionPercent}
-            />
-          )}
-        </Field>
-      </Box>
-      <Box display={{ display: 'flex', gap: '1rem' }}>
-        <StartDateField
-          fieldName="affiliation.startDate"
-          disabled={isDisabled}
-          maxDate={values.affiliation.endDate ? new Date(values.affiliation.endDate) : undefined}
-          dataTestId={dataTestId.basicData.personAdmin.startDate}
-        />
-
-        <Field name="affiliation.endDate">
-          {({ field, meta: { error, touched } }: FieldProps<string>) => (
-            <DatePicker
-              disabled={isDisabled}
-              label={t('common.end_date')}
-              value={field.value ? new Date(field.value) : null}
-              onChange={(date) => {
-                !touched && setFieldTouched(field.name, true, false);
-                setFieldValue(field.name, date ?? '');
-              }}
-              format="dd.MM.yyyy"
-              views={['year', 'month', 'day']}
-              minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
-              slotProps={{
-                textField: {
-                  inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
-                  variant: 'filled',
-                  error: touched && !!error,
-                  helperText: <ErrorMessage name={field.name} />,
-                },
-              }}
-            />
-          )}
-        </Field>
+          <Field name="affiliation.endDate">
+            {({ field, meta: { error, touched } }: FieldProps<string>) => (
+              <DatePicker
+                disabled={isDisabled}
+                label={t('common.end_date')}
+                value={field.value ? new Date(field.value) : null}
+                onChange={(date) => {
+                  !touched && setFieldTouched(field.name, true, false);
+                  setFieldValue(field.name, date ?? '');
+                }}
+                format="dd.MM.yyyy"
+                views={['year', 'month', 'day']}
+                minDate={values.affiliation.startDate ? new Date(values.affiliation.startDate) : undefined}
+                slotProps={{
+                  textField: {
+                    inputProps: { 'data-testid': dataTestId.basicData.personAdmin.endDate },
+                    variant: 'filled',
+                    error: touched && !!error,
+                    helperText: <ErrorMessage name={field.name} />,
+                  },
+                }}
+              />
+            )}
+          </Field>
+        </Box>
       </Box>
     </section>
   );
