@@ -335,7 +335,7 @@ export const MyProfile = () => {
                 </Box>
 
                 <Grid container sx={{ bgcolor: 'secondary.dark', py: '1rem', mt: '1rem' }}>
-                  <Grid item xs={16} md={5} sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Grid item xs={16} md={5} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <LoadingButton
                       variant="outlined"
                       type="submit"
@@ -353,7 +353,7 @@ export const MyProfile = () => {
                         display: 'flex',
                         gap: '1rem',
                         justifyContent: { xs: 'center', md: 'start' },
-                        mt: { xs: '1rem' },
+                        mt: { xs: '1rem', md: 0 },
                       }}>
                       <Button
                         onClick={() => {
