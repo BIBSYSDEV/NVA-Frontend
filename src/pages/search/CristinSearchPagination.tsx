@@ -27,7 +27,7 @@ export const CristinSearchPagination = ({ children, totalCount, page, rowsPerPag
       onPageChange={(newPage) => updatePath(newPage.toString(), rowsPerPage.toString())}
       rowsPerPage={rowsPerPage}
       onRowsPerPageChange={(newRowsPerPage) => updatePath('1', newRowsPerPage.toString())}
-      showPaginationTop={true}>
+      showPaginationTop>
       {children}
     </ListPagination>
   );
