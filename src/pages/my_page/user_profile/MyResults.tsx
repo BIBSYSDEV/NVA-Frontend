@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { fetchPromotedPublicationsById } from '../../../api/preferencesApi';
-import { FetchResultsParams, fetchResults } from '../../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../../api/searchApi';
 import { ListPagination } from '../../../components/ListPagination';
 import { RootState } from '../../../redux/store';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
@@ -50,23 +50,21 @@ export const MyResults = () => {
           <CircularProgress aria-labelledby="registration-label" />
         </Box>
       ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
-        <>
+        <ListPagination
+          count={registrationsQuery.data.totalHits}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(newPage) => setPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setPage(1);
+          }}>
           <RegistrationSearchResults
             canEditRegistration={true}
             searchResult={registrationsQuery.data.hits}
             promotedPublications={promotedPublications}
           />
-          <ListPagination
-            count={registrationsQuery.data.totalHits}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}
-          />
-        </>
+        </ListPagination>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}
