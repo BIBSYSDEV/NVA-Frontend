@@ -151,7 +151,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
           }
         }}
         validationSchema={validationSchema}>
-        {({ isSubmitting, values }: FormikProps<UserFormData>) => (
+        {({ isSubmitting, values, setFieldValue }: FormikProps<UserFormData>) => (
           <Form noValidate>
             <DialogContent sx={{ minHeight: '30vh' }}>
               {(!values.person && personQuery.isLoading) || (!values.user && institutionUserQuery.isLoading) ? (
@@ -169,7 +169,11 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                   <Divider orientation="vertical" />
                   <AffiliationFormSection />
                   <Divider orientation="vertical" />
-                  <RolesFormSection />
+                  <RolesFormSection
+                    hasNin={!!values.person?.verified}
+                    roles={values.user?.roles.map((role) => role.rolename) ?? []}
+                    updateRoles={(newRoles) => setFieldValue(UserFormFieldName.Roles, newRoles)}
+                  />
                   <Divider orientation="vertical" />
                   <TasksFormSection roles={values.user?.roles.map((role) => role.rolename)} />
                 </Box>

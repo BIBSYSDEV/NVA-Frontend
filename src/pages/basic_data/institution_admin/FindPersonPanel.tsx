@@ -13,13 +13,13 @@ export const FindPersonPanel = () => {
   const { t } = useTranslation();
   const { values, setFieldValue, isSubmitting } = useFormikContext<AddEmployeeData>();
   const [showCreatePerson, setShowCreatePerson] = useState(false);
-  const confirmedIdentity = !!values.user.nvi?.verifiedAt.id && !!values.user.nvi?.verifiedBy.id;
+  const confirmedIdentity = !!values.person.nvi?.verifiedAt.id && !!values.person.nvi?.verifiedBy.id;
   const user = useSelector((store: RootState) => store.user);
   const userCristinId = user?.cristinId ?? '';
   const userTopLevelOrg = user?.topOrgCristinId ?? '';
 
   const setSelectedPerson = useCallback(
-    (person?: FlatCristinPerson) => setFieldValue('user', person ? person : emptyUser),
+    (person?: FlatCristinPerson) => setFieldValue('person', person ? person : emptyUser),
     [setFieldValue]
   );
 
@@ -30,11 +30,11 @@ export const FindPersonPanel = () => {
       </Typography>
 
       <SearchForCristinPerson
-        selectedPerson={values.user}
+        selectedPerson={values.person}
         setSelectedPerson={setSelectedPerson}
         disabled={isSubmitting}
       />
-      {!values.user.id && (
+      {!values.person.id && (
         <>
           <Typography>{t('basic_data.add_employee.no_matching_persons_found')}</Typography>
           {!showCreatePerson ? (
@@ -51,19 +51,19 @@ export const FindPersonPanel = () => {
               <FormControlLabel
                 onChange={() => {
                   const newPerson: FlatCristinPerson = {
-                    ...values.user,
+                    ...values.person,
                     nvi: {
                       verifiedAt: { id: !confirmedIdentity ? userTopLevelOrg : '' },
                       verifiedBy: { id: !confirmedIdentity ? userCristinId : '' },
                     },
                     nationalId: '',
                   };
-                  setFieldValue('user', newPerson);
+                  setFieldValue('person', newPerson);
                 }}
                 control={<Checkbox disabled={isSubmitting} checked={confirmedIdentity} />}
                 label={t('basic_data.add_employee.confirmed_identity')}
               />
-              <Field name="user.firstName">
+              <Field name="person.firstName">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
@@ -77,7 +77,7 @@ export const FindPersonPanel = () => {
                   />
                 )}
               </Field>
-              <Field name="user.lastName">
+              <Field name="person.lastName">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}
@@ -91,7 +91,7 @@ export const FindPersonPanel = () => {
                   />
                 )}
               </Field>
-              <Field name="user.nationalId">
+              <Field name="person.nationalId">
                 {({ field, meta: { touched, error } }: FieldProps<string>) => (
                   <TextField
                     {...field}

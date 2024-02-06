@@ -23,11 +23,11 @@ import { convertToCristinPerson } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { FindPersonPanel } from './FindPersonPanel';
-import { UserRolesSelector } from './UserRolesSelector';
+import { RolesFormSection } from './edit_user/RolesFormSection';
 import { TasksFormSection } from './edit_user/TasksFormSection';
 
 export interface AddEmployeeData {
-  user: FlatCristinPerson;
+  person: FlatCristinPerson;
   affiliation: Employment;
   roles: RoleName[];
 }
@@ -46,7 +46,7 @@ export const emptyUser: FlatCristinPerson = {
 };
 
 const initialValues: AddEmployeeData = {
-  user: emptyUser,
+  person: emptyUser,
   affiliation: emptyEmployment,
   roles: [RoleName.Creator],
 };
@@ -61,12 +61,12 @@ export const AddEmployeePage = () => {
       return;
     }
 
-    let personId = values.user.id;
-    const nationalId = values.user.nationalId;
-    const { nvi, ...personWithoutNvi } = values.user;
+    let personId = values.person.id;
+    const nationalId = values.person.nationalId;
+    const { nvi, ...personWithoutNvi } = values.person;
 
     if (!personId) {
-      const person = nationalId ? personWithoutNvi : values.user;
+      const person = nationalId ? personWithoutNvi : values.person;
       // Create Person if it does not yet exist in Cristin
       const cristinPerson: CreateCristinPerson = convertToCristinPerson({
         ...person,
@@ -136,14 +136,12 @@ export const AddEmployeePage = () => {
               <Divider orientation="vertical" />
               <AddAffiliationPanel />
               <Divider orientation="vertical" />
-              <div>
-                <UserRolesSelector
-                  personHasNin={!values.user.nvi?.verifiedAt.id}
-                  selectedRoles={values.roles}
-                  updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                  disabled={isSubmitting || !!errors.user || !!errors.affiliation}
-                />
-              </div>
+              <RolesFormSection
+                hasNin={!values.person.nvi?.verifiedAt.id}
+                roles={values.roles}
+                updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                disabled={isSubmitting || !!errors.person || !!errors.affiliation}
+              />
               <Divider orientation="vertical" />
               <TasksFormSection roles={values.roles} />
             </Box>

@@ -22,7 +22,8 @@ export const AddAffiliationPanel = () => {
   );
   const organizationOptions = currentOrganization ? getSortedSubUnits([currentOrganization]) : [];
 
-  const isDisabled = !!errors.user?.firstName || !!errors.user?.lastName || !!errors.user?.nationalId || isSubmitting;
+  const isDisabled =
+    !!errors.person?.firstName || !!errors.person?.lastName || !!errors.person?.nationalId || isSubmitting;
 
   return (
     <section>
