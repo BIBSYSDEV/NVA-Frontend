@@ -3,11 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../../api/searchApi';
+import { fetchResults, FetchResultsParams, ResultParam, SortOrder } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
-import { SortSelector } from '../../../components/SortSelector';
-import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { ExportResultsButton } from '../ExportResultsButton';
@@ -65,27 +63,6 @@ export const AdvancedSearchPage = () => {
             sx={{ flex: '1 0 15rem' }}
             paramName={ResultParam.Title}
             placeholder={t('search.search_for_title')}
-          />
-          <SortSelector
-            options={[
-              {
-                orderBy: RegistrationFieldName.ModifiedDate,
-                sortOrder: 'desc',
-                label: t('search.sort_by_modified_date'),
-              },
-              {
-                orderBy: RegistrationFieldName.PublishedDate,
-                sortOrder: 'desc',
-                label: t('search.sort_by_published_date_desc'),
-              },
-              {
-                orderBy: RegistrationFieldName.PublishedDate,
-                sortOrder: 'asc',
-                label: t('search.sort_by_published_date_asc'),
-              },
-            ]}
-            sortKey="sort"
-            orderKey="order"
           />
           <ExportResultsButton searchParams={params} />
         </Box>
