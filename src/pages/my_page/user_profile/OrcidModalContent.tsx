@@ -16,7 +16,7 @@ export const OrcidModalContent = ({ cancelFunction, cancelText }: OrcidModalCont
 
   const openORCID = () => {
     if (USE_MOCK_DATA) {
-      history.push(`${UrlPathTemplate.MyPageMyProfile}?access_token=123`);
+      history.push(`${UrlPathTemplate.MyPageProfile}?access_token=123`);
       cancelFunction();
     } else {
       window.location.assign(

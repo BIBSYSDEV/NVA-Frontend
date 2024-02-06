@@ -31,7 +31,6 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
         <>
-          <RegistrationSearchResults searchResult={registrationQuery.data.hits} />
           <ListPagination
             count={registrationQuery.data.totalHits}
             page={page + 1}
@@ -39,7 +38,9 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
             maxHits={10_000}
-          />
+            showPaginationTop={true}>
+            <RegistrationSearchResults searchResult={registrationQuery.data.hits} />
+          </ListPagination>
         </>
       ) : (
         <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>

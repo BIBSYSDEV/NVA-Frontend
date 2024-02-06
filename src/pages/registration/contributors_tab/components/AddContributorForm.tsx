@@ -15,7 +15,7 @@ import { RootState } from '../../../../redux/store';
 import { ContributorRole } from '../../../../types/contributor.types';
 import { Registration } from '../../../../types/registration.types';
 import { CristinPerson } from '../../../../types/user.types';
-import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../../../utils/constants';
+import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../../../utils/constants';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { useDebounce } from '../../../../utils/hooks/useDebounce';
 import { CristinPersonList } from './CristinPersonList';
@@ -107,24 +107,22 @@ export const AddContributorForm = ({
       {personQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={100} height={80} />
       ) : userSearch && personQuery.data && personQuery.data.size > 0 && debouncedSearchTerm ? (
-        <>
+        <ListPagination
+          count={personQuery.data?.size ?? 0}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(newPage) => setPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setPage(1);
+          }}>
           <CristinPersonList
             personSearch={personQuery.data}
             userId={selectedUser?.id}
             onSelectContributor={setSelectedUser}
             searchTerm={debouncedSearchTerm}
           />
-          <ListPagination
-            count={personQuery.data?.size ?? 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}
-          />
-        </>
+        </ListPagination>
       ) : (
         debouncedSearchTerm && <Typography>{t('common.no_hits')}</Typography>
       )}

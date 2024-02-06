@@ -1,5 +1,5 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Autocomplete, Box, Button, Chip, Skeleton, TextField } from '@mui/material';
+import { Autocomplete, Box, Button, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
 import { useState } from 'react';
@@ -11,6 +11,7 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
 import { UserFormData, UserFormFieldName } from './UserFormDialog';
+import { ViewingScopeChip } from './ViewingScopeChip';
 
 export const AreaOfResponsibility = () => {
   const { t } = useTranslation();
@@ -43,6 +44,7 @@ export const AreaOfResponsibility = () => {
                     key={organizationId}
                     organizationId={organizationId}
                     onRemove={currentAreas.length > 1 ? () => remove(index) : undefined}
+                    disabled={isSubmitting}
                   />
                 ))}
               </Box>
@@ -83,42 +85,5 @@ export const AreaOfResponsibility = () => {
         )}
       </FieldArray>
     </section>
-  );
-};
-
-interface ViewingScopeChipProps {
-  organizationId: string;
-  onRemove?: () => void;
-}
-
-const ViewingScopeChip = ({ organizationId, onRemove }: ViewingScopeChipProps) => {
-  const { t } = useTranslation();
-  const { isSubmitting } = useFormikContext<UserFormData>();
-
-  const organizationQuery = useQuery({
-    enabled: !!organizationId,
-    queryKey: [organizationId],
-    queryFn: organizationId ? () => fetchOrganization(organizationId) : undefined,
-    meta: { errorMessage: t('feedback.error.get_institution') },
-    staleTime: Infinity,
-    cacheTime: 1_800_000, // 30 minutes
-  });
-
-  return (
-    <Chip
-      key={organizationId}
-      color="primary"
-      disabled={isSubmitting}
-      label={
-        organizationQuery.isLoading ? (
-          <Skeleton sx={{ width: '15rem' }} />
-        ) : organizationQuery.data?.labels ? (
-          getLanguageString(organizationQuery.data.labels)
-        ) : (
-          t('common.unknown')
-        )
-      }
-      onDelete={onRemove}
-    />
   );
 };

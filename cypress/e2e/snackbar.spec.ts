@@ -1,9 +1,9 @@
 describe('Snackbar', () => {
-  before(() => {
+  beforeEach(() => {
     cy.visit('/');
   });
 
-  it('The user should be able to see their user details', () => {
+  it('The user should see snackbar info', () => {
     // Test error snackbar
     let notificationMessage = 'An error occurred';
     cy.setNotificationInRedux({ message: notificationMessage, variant: 'error' });
