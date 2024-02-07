@@ -30,9 +30,18 @@ export const UserRoleAndHelp = () => {
   return (
     <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {nvaUser?.viewingScope && (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-          <Typography fontWeight="bold">{t('my_page.my_profile.my_area_of_responsibility')}</Typography>
-          <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+        <Box sx={{ gap: '0.75rem' }}>
+          <Typography gutterBottom fontWeight="bold">
+            {t('my_page.my_profile.my_area_of_responsibility')}
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '0.5rem',
+              flexDirection: { xs: 'row', md: 'row' },
+              flexWrap: 'wrap',
+              mb: '0.5rem',
+            }}>
             {nvaUser.viewingScope?.includedUnits.map((orgId) => (
               <ViewingScopeChip key={orgId} organizationId={orgId} />
             ))}
