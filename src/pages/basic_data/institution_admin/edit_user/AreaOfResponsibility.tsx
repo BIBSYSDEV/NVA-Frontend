@@ -33,7 +33,9 @@ export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: Are
     cacheTime: 1_800_000, // 30 minutes
   });
   const currentOrganization = organizationQuery.data;
-  const options = currentOrganization ? getSortedSubUnits([currentOrganization]) : [];
+  const options = currentOrganization
+    ? getSortedSubUnits([currentOrganization]).filter((option) => !viewingScopes.includes(option.id))
+    : [];
 
   return (
     <section>
