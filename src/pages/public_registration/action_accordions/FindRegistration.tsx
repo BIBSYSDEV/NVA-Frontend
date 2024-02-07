@@ -2,7 +2,6 @@ import { Registration } from '../../../types/registration.types';
 import { Autocomplete, Box, IconButton, TextField, Typography } from '@mui/material';
 import { dataTestId } from '../../../utils/dataTestIds';
 import SearchIcon from '@mui/icons-material/Search';
-import { PageSpinner } from '../../../components/PageSpinner';
 import { useQuery } from '@tanstack/react-query';
 import { fetchResults } from '../../../api/searchApi';
 import { useState } from 'react';
@@ -97,20 +96,12 @@ export const FindRegistration = ({
               type: 'search',
               startAdornment: (
                 <IconButton
-                  type="submit"
+                  type="button"
                   data-testid={dataTestId.startPage.searchButton}
                   title={t('common.search')}
                   size="large">
                   <SearchIcon />
                 </IconButton>
-              ),
-              endAdornment: (
-                <>
-                  {duplicateRegistrationSearch.isLoading && !!debouncedSearch ? (
-                    <PageSpinner color="inherit" size={'1rem'} />
-                  ) : null}
-                  {params.InputProps.endAdornment}
-                </>
               ),
             }}
           />
