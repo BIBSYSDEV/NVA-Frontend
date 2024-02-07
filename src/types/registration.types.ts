@@ -108,7 +108,6 @@ export interface BaseRegistration {
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
   fundings: Funding[];
-  duplicateOf?: string;
   publicationNotes?: PublicationNote[];
 }
 
