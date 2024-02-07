@@ -1698,6 +1698,8 @@
     "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet.",
     "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
     "unpublish_registration_duplicate_citation_information": "For at alle siteringer skal bli videreført, må du søke opp den andre registreringen. Da vil alle siteringer fortsatt føre til den andre versjonen",
+    "unpublish_comment_min_length_feedback": "Begrunnelsen må minst være på 3 tegn",
+    "unpublish_comment_required": "Begrunnelse er påkrevt",
     "year_published": "Publiseringsår"
   },
   "search": {

@@ -28,10 +28,6 @@ interface DeletePublicationProps {
   refetchData: () => void;
 }
 
-const deleteValidationSchema = Yup.object().shape({
-  deleteMessage: Yup.string().min(3, 'Begrunnelsen må minst være på 3 tegn').required('Begrunnelse er påkrevt'),
-});
-
 export const DeletePublication = ({ registration, refetchData }: DeletePublicationProps) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { t } = useTranslation();
@@ -39,6 +35,11 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
   const [selectedDuplicate, setSelectedDuplicate] = useState<Registration | null>(null);
   const [awatingUnpublishedResponse, setAwaitingUnpublishingResponse] = useState(false);
 
+  const deleteValidationSchema = Yup.object().shape({
+    deleteMessage: Yup.string()
+      .min(3, t('registration.unpublish_comment_min_length_feedback'))
+      .required(t('registration.unpublish_comment_required')),
+  });
   const handleDelete = async (values: DeleteForm) => {
     const unpublishRequest = (): UnpublishPublicationRequest => {
       return selectedDuplicate
