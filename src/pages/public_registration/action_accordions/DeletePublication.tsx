@@ -6,11 +6,19 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { FindRegistration } from './FindRegistration';
+import { unpublishRegistration } from '../../../api/registrationApi';
+import { setNotification } from '../../../redux/notificationSlice';
+import { useDispatch } from 'react-redux';
+import { LoadingButton } from '@mui/lab';
+
+export interface UnpublishPublicationRequest {
+  type: 'UnpublishPublicationRequest';
+  duplicateOf?: string;
+  comment: string;
+}
 
 interface DeleteForm {
   deleteMessage: string;
-  duplicateOfUri: string;
-  searchDuplicate: string;
 }
 
 interface DeletePublicationProps {
@@ -20,19 +28,35 @@ interface DeletePublicationProps {
 
 const deleteValidationSchema = Yup.object().shape({
   deleteMessage: Yup.string().min(3, 'Begrunnelsen må minst være på 3 tegn').required('Begrunnelse er påkrevt'),
-  duplicateOfUri: Yup.string().url(),
-  searchDuplicate: Yup.string(),
 });
 
 export const DeletePublication = ({ registration, refetchData }: DeletePublicationProps) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [selectedDuplicate, setSelectedDuplicate] = useState<Registration | null>(null);
+  const [awatingUnpublishedResponse, setAwaitingUnpublishingResponse] = useState(false);
 
-  const handleDelete = (values: DeleteForm) => {
-    console.log('submitting');
-    //contact api
-    setShowDeleteModal(false);
+  const handleDelete = async (values: DeleteForm) => {
+    const unpublishRequest = (): UnpublishPublicationRequest => {
+      return selectedDuplicate
+        ? {
+            type: 'UnpublishPublicationRequest',
+            duplicateOf: selectedDuplicate.identifier,
+            comment: values.deleteMessage,
+          }
+        : { type: 'UnpublishPublicationRequest', comment: values.deleteMessage };
+    };
+    try {
+      setAwaitingUnpublishingResponse(true);
+      await unpublishRegistration(registration, unpublishRequest());
+      setShowDeleteModal(false);
+      refetchData();
+    } catch (e) {
+      dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
+    } finally {
+      setAwaitingUnpublishingResponse(false);
+    }
   };
 
   return (
@@ -124,9 +148,13 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
                   <Button data-testid={'close delete modal'} onClick={() => setShowDeleteModal(false)}>
                     Angre
                   </Button>
-                  <Button type="submit" data-testid={'delete-registration-button'} variant="outlined">
+                  <LoadingButton
+                    loading={awatingUnpublishedResponse}
+                    type="submit"
+                    data-testid={'delete-registration-button'}
+                    variant="outlined">
                     Lagre
-                  </Button>
+                  </LoadingButton>
                 </DialogActions>
               </form>
             )}

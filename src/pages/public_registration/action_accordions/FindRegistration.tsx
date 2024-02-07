@@ -76,7 +76,7 @@ export const FindRegistration = ({
         {...defaultProps}
         freeSolo
         id="gurba gusdfasd"
-        loading={duplicateRegistrationSearch.isLoading && !!debouncedSearch}
+        loading={duplicateRegistrationSearch.isLoading && debouncedSearch.length > 0}
         value={selectedRegistration}
         onChange={(_event, newValue, _reason) => {
           if (typeof newValue === 'string') {

@@ -21,8 +21,8 @@ import { ChapterEntityDescription } from './publication_types/chapterRegistratio
 import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
 import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
 import {
-  JournalEntityDescription,
   emptyRegistrationEntityDescription,
+  JournalEntityDescription,
 } from './publication_types/journalRegistration.types';
 import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration.types';
 import { MapEntityDescription } from './publication_types/otherRegistration.types';
@@ -83,6 +83,10 @@ interface AdditionalIdentifier {
   value: string;
 }
 
+interface PublicationNote {
+  publicationNoteMessage: string;
+}
+
 export interface BaseRegistration {
   readonly type: 'Publication' | 'ImportCandidate';
   readonly id: string;
@@ -103,6 +107,8 @@ export interface BaseRegistration {
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
   fundings: Funding[];
+  duplicateOf?: string;
+  publicationNotes?: PublicationNote[];
 }
 
 export interface Funding {

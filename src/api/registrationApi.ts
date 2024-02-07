@@ -3,6 +3,7 @@ import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/pub
 import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
+import { UnpublishPublicationRequest } from '../pages/public_registration/action_accordions/DeletePublication';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({
@@ -16,6 +17,23 @@ export const updateRegistration = async (registration: Registration) =>
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     data: registration,
+  });
+
+export const unpublishRegistration = async (
+  registration: Registration,
+  unpublishingRequest: UnpublishPublicationRequest
+) =>
+  await authenticatedApiRequest<Registration>({
+    url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
+    method: 'PUT',
+    data: unpublishingRequest,
+  });
+
+export const deleteUnpublishedRegistration = async (registration: Registration) =>
+  await authenticatedApiRequest<Registration>({
+    url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
+    method: 'PUT',
+    data: { type: 'DeletePublicationRequest' },
   });
 
 export const getRegistrationByDoi = async (doiUrl: string) => {
