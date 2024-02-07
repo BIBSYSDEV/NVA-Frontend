@@ -1,9 +1,7 @@
 import { Typography } from '@mui/material';
-import { useFormikContext } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { RoleName } from '../../../../types/user.types';
-import { AreaOfResponsibility } from './AreaOfResponsibility';
-import { UserFormData } from './UserFormDialog';
+import { AreaOfResponsibility, AreaOfResponsibilityProps } from './AreaOfResponsibility';
 
 export const rolesWithAreaOfResponsibility = [
   RoleName.DoiCurator,
@@ -12,13 +10,12 @@ export const rolesWithAreaOfResponsibility = [
   RoleName.NviCurator,
 ];
 
-interface TasksFormSectionProps {
+interface TasksFormSectionProps extends AreaOfResponsibilityProps {
   roles?: RoleName[];
 }
 
-export const TasksFormSection = ({ roles = [] }: TasksFormSectionProps) => {
+export const TasksFormSection = ({ roles = [], viewingScopes, updateViewingScopes }: TasksFormSectionProps) => {
   const { t } = useTranslation();
-  const { values } = useFormikContext<UserFormData>();
   const userIsCurator = roles.some((rolename) => rolesWithAreaOfResponsibility.includes(rolename));
 
   return (
@@ -29,7 +26,7 @@ export const TasksFormSection = ({ roles = [] }: TasksFormSectionProps) => {
       {!userIsCurator ? (
         <Typography>{t('basic_data.person_register.must_be_curator_to_have_area_of_responsibility')}</Typography>
       ) : (
-        <AreaOfResponsibility organizationIds={values.user?.viewingScope?.includedUnits ?? []} />
+        <AreaOfResponsibility viewingScopes={viewingScopes} updateViewingScopes={updateViewingScopes} />
       )}
     </section>
   );

@@ -175,7 +175,13 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                     updateRoles={(newRoles) => setFieldValue(UserFormFieldName.Roles, newRoles)}
                   />
                   <Divider orientation="vertical" />
-                  <TasksFormSection roles={values.user?.roles.map((role) => role.rolename)} />
+                  <TasksFormSection
+                    roles={values.user?.roles.map((role) => role.rolename)}
+                    viewingScopes={values.user?.viewingScope?.includedUnits ?? []}
+                    updateViewingScopes={(newViewingScopes) =>
+                      setFieldValue(UserFormFieldName.ViewingScope, newViewingScopes)
+                    }
+                  />
                 </Box>
               )}
             </DialogContent>

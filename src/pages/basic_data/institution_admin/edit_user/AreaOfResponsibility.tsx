@@ -1,7 +1,7 @@
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Autocomplete, Box, Button, TextField } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { FieldArray, FieldArrayRenderProps, useFormikContext } from 'formik';
+import { useFormikContext } from 'formik';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -10,14 +10,14 @@ import { RootState } from '../../../../redux/store';
 import { dataTestId } from '../../../../utils/dataTestIds';
 import { getSortedSubUnits } from '../../../../utils/institutions-helpers';
 import { getLanguageString } from '../../../../utils/translation-helpers';
-import { UserFormFieldName } from './UserFormDialog';
 import { ViewingScopeChip } from './ViewingScopeChip';
 
-interface AreaOfResponsibilityProps {
-  organizationIds: string[];
+export interface AreaOfResponsibilityProps {
+  viewingScopes: string[];
+  updateViewingScopes: (newViewingScopes: string[]) => void;
 }
 
-export const AreaOfResponsibility = ({ organizationIds }: AreaOfResponsibilityProps) => {
+export const AreaOfResponsibility = ({ viewingScopes, updateViewingScopes }: AreaOfResponsibilityProps) => {
   const { t } = useTranslation();
   const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
   const [addAreaOfResponsibility, setAddAreaOfResponsibility] = useState(false);
@@ -37,56 +37,54 @@ export const AreaOfResponsibility = ({ organizationIds }: AreaOfResponsibilityPr
 
   return (
     <section>
-      <FieldArray name={UserFormFieldName.ViewingScope}>
-        {({ push, remove }: FieldArrayRenderProps) => (
-          <>
-            {organizationIds.length > 0 && (
-              <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '0.5rem' }}>
-                {organizationIds.map((organizationId, index) => (
-                  <ViewingScopeChip
-                    key={organizationId}
-                    organizationId={organizationId}
-                    onRemove={organizationIds.length > 1 ? () => remove(index) : undefined}
-                    disabled={isSubmitting}
-                  />
-                ))}
-              </Box>
-            )}
+      {viewingScopes.length > 0 && (
+        <Box sx={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', mb: '0.5rem' }}>
+          {viewingScopes.map((organizationId) => (
+            <ViewingScopeChip
+              key={organizationId}
+              organizationId={organizationId}
+              onRemove={
+                viewingScopes.length > 1
+                  ? () => updateViewingScopes(viewingScopes.filter((scope) => scope !== organizationId))
+                  : undefined
+              }
+              disabled={isSubmitting}
+            />
+          ))}
+        </Box>
+      )}
 
-            {addAreaOfResponsibility ? (
-              <Autocomplete
-                aria-label={t('editor.curators.area_of_responsibility')}
-                fullWidth
-                data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
-                options={options}
-                getOptionLabel={(option) => getLanguageString(option.labels)}
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {getLanguageString(option.labels)}
-                  </li>
-                )}
-                disabled={isSubmitting}
-                onChange={(_, value) => {
-                  if (value) {
-                    push(value.id);
-                  }
-                  setAddAreaOfResponsibility(false);
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} fullWidth placeholder={t('basic_data.person_register.select_unit')} />
-                )}
-              />
-            ) : (
-              <Button
-                startIcon={<AddCircleOutlineIcon />}
-                disabled={isSubmitting}
-                onClick={() => setAddAreaOfResponsibility(true)}>
-                {t('common.add')}
-              </Button>
-            )}
-          </>
-        )}
-      </FieldArray>
+      {addAreaOfResponsibility ? (
+        <Autocomplete
+          aria-label={t('editor.curators.area_of_responsibility')}
+          fullWidth
+          data-testid={dataTestId.myInstitutionUsersPage.areaOfResponsibilityField}
+          options={options}
+          getOptionLabel={(option) => getLanguageString(option.labels)}
+          renderOption={(props, option) => (
+            <li {...props} key={option.id}>
+              {getLanguageString(option.labels)}
+            </li>
+          )}
+          disabled={isSubmitting}
+          onChange={(_, value) => {
+            if (value) {
+              updateViewingScopes([...viewingScopes, value.id]);
+            }
+            setAddAreaOfResponsibility(false);
+          }}
+          renderInput={(params) => (
+            <TextField {...params} fullWidth placeholder={t('basic_data.person_register.select_unit')} />
+          )}
+        />
+      ) : (
+        <Button
+          startIcon={<AddCircleOutlineIcon />}
+          disabled={isSubmitting}
+          onClick={() => setAddAreaOfResponsibility(true)}>
+          {t('common.add')}
+        </Button>
+      )}
     </section>
   );
 };

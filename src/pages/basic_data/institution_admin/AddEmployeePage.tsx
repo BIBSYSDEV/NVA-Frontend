@@ -30,6 +30,7 @@ export interface AddEmployeeData {
   person: FlatCristinPerson;
   affiliation: Employment;
   roles: RoleName[];
+  viewingScopes: string[];
 }
 
 export const emptyUser: FlatCristinPerson = {
@@ -49,6 +50,7 @@ const initialValues: AddEmployeeData = {
   person: emptyUser,
   affiliation: emptyEmployment,
   roles: [RoleName.Creator],
+  viewingScopes: [],
 };
 
 export const AddEmployeePage = () => {
@@ -143,7 +145,11 @@ export const AddEmployeePage = () => {
                 disabled={isSubmitting || !!errors.person || !!errors.affiliation}
               />
               <Divider orientation="vertical" />
-              <TasksFormSection roles={values.roles} />
+              <TasksFormSection
+                roles={values.roles}
+                viewingScopes={values.viewingScopes}
+                updateViewingScopes={(newViewingScopes) => setFieldValue('viewingScopes', newViewingScopes)}
+              />
             </Box>
             <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>
               <LoadingButton
