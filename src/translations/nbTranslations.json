@@ -1692,14 +1692,6 @@
       "PUBLISHED": "Publisert",
       "PUBLISHED_METADATA": "Metadata publisert"
     },
-    "unpublish_registration": "Avpubliser forskningsresultat",
-    "unpublish_registration_detail_1": "Ved avpublisering vil ikke forskningsresultatet være søkbare i NVA, men vil fortsatt være tilgjengelige ved oppslag av referanse.",
-    "unpublish_registration_detail_2": "Eventuelle filer vil fjernes fra forskningsresultatet av avpublisering, men blir ikke permanent slettet.",
-    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet.",
-    "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
-    "unpublish_registration_duplicate_citation_information": "For at alle siteringer skal bli videreført, må du søke opp den andre registreringen. Da vil alle siteringer fortsatt føre til den andre versjonen",
-    "unpublish_comment_min_length_feedback": "Begrunnelsen må minst være på 3 tegn",
-    "unpublish_comment_required": "Begrunnelse er påkrevt",
     "year_published": "Publiseringsår"
   },
   "search": {
@@ -1780,5 +1772,17 @@
     "status": "Status",
     "unread": "Uleste",
     "user_dialog": "Brukerdialog"
+  },
+  "unpublish_actions": {
+    "unpublish_registration": "Avpubliser forskningsresultat",
+    "unpublish_registration_detail_1": "Ved avpublisering vil ikke forskningsresultatet være søkbare i NVA, men vil fortsatt være tilgjengelige ved oppslag av referanse.",
+    "unpublish_registration_detail_2": "Eventuelle filer vil fjernes fra forskningsresultatet av avpublisering, men blir ikke permanent slettet.",
+    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet.",
+    "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
+    "unpublish_registration_duplicate_citation_information": "For at alle siteringer skal bli videreført, må du søke opp den andre registreringen. Da vil alle siteringer fortsatt føre til den andre versjonen",
+    "unpublish_comment_min_length_feedback": "Begrunnelsen må minst være på 3 tegn",
+    "unpublish_comment_required": "Begrunnelse er påkrevt",
+    "search_for_duplicate": "Søk etter registrert resultat",
+    "search_duplicate_facets": "Søk med DOI, handle eller tittel"
   }
 }

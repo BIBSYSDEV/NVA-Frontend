@@ -47,7 +47,7 @@ export const FindRegistration = ({
     enabled: debouncedSearch.length > 0,
     queryKey: ['duplicateRegistration', fetchQuery],
     queryFn: () => fetchResults(fetchQuery),
-    meta: { errorMessage: t('feedback.error.get_import_candidates') },
+    meta: { errorMessage: t('feedback.error.get_registrations') },
   });
 
   const handleSearchAutoCompleteChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -71,11 +71,11 @@ export const FindRegistration = ({
   };
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      <Typography variant="h3">Søk etter registrert resultat</Typography>
+      <Typography variant="h3">{t('unpublish_actions.search_for_duplicate')}</Typography>
       <Autocomplete
         {...defaultProps}
         freeSolo
-        id="gurba gusdfasd"
+        id="search-duplicate-autocomplete"
         loading={duplicateRegistrationSearch.isLoading && debouncedSearch.length > 0}
         value={selectedRegistration}
         onChange={(_event, newValue, _reason) => {
@@ -88,7 +88,7 @@ export const FindRegistration = ({
         renderInput={(params) => (
           <TextField
             {...params}
-            placeholder={'Søk med DOI, handle eller tittel'}
+            placeholder={t('unpublish_actions.search_duplicate_facets')}
             variant="filled"
             onChange={(event) => handleSearchAutoCompleteChange(event)}
             InputProps={{
@@ -109,7 +109,7 @@ export const FindRegistration = ({
       />
       {!!selectedRegistration && (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
-          <Typography>Resultat</Typography>
+          <Typography>{t('common.result')}</Typography>
           <ErrorBoundary>
             <SearchListItem sx={{ borderLeftColor: 'registration.main' }}>
               <RegistrationListItemContent target="_blank" registration={selectedRegistration} />
