@@ -16,14 +16,14 @@ interface TasksFormSectionProps extends AreaOfResponsibilityProps {
 
 export const TasksFormSection = ({ roles = [], viewingScopes, updateViewingScopes }: TasksFormSectionProps) => {
   const { t } = useTranslation();
-  const userIsCurator = roles.some((rolename) => rolesWithAreaOfResponsibility.includes(rolename));
+  const curatorRoleIsAdded = roles.some((rolename) => rolesWithAreaOfResponsibility.includes(rolename));
 
   return (
     <section>
       <Typography variant="h3" gutterBottom>
         {t('editor.curators.area_of_responsibility')}
       </Typography>
-      {!userIsCurator ? (
+      {!curatorRoleIsAdded ? (
         <Typography>{t('basic_data.person_register.must_be_curator_to_have_area_of_responsibility')}</Typography>
       ) : (
         <AreaOfResponsibility viewingScopes={viewingScopes} updateViewingScopes={updateViewingScopes} />

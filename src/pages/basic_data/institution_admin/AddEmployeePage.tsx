@@ -21,7 +21,7 @@ import {
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-import { AddAffiliationPanel } from './AddAffiliationPanel';
+import { AddAffiliationSection } from './AddAffiliationSection';
 import { FindPersonPanel } from './FindPersonPanel';
 import { RolesFormSection } from './edit_user/RolesFormSection';
 import { TasksFormSection, rolesWithAreaOfResponsibility } from './edit_user/TasksFormSection';
@@ -137,7 +137,7 @@ export const AddEmployeePage = () => {
               }}>
               <FindPersonPanel />
               <Divider orientation="vertical" />
-              <AddAffiliationPanel />
+              <AddAffiliationSection />
               <Divider orientation="vertical" />
               <RolesFormSection
                 personHasNin={!values.person.nvi?.verifiedAt.id}

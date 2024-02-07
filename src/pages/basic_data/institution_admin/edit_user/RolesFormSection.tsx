@@ -28,7 +28,6 @@ export const RolesFormSection = ({ roles, personHasNin, updateRoles, disabled }:
       ) : (
         <FormControl
           component="fieldset"
-          sx={{ width: '100%' }}
           onChange={(event: ChangeEvent<any>) => {
             const role = event.target.value as RoleName;
             const roleExists = roles.includes(role);
@@ -141,7 +140,7 @@ interface RoleLabelProps {
 
 const RoleLabel = ({ title, description }: RoleLabelProps) => (
   <>
-    <Typography sx={{ fontWeight: 600, lineHeight: '1' }}>{title}</Typography>
+    <Typography sx={{ fontWeight: 600 }}>{title}</Typography>
     <Typography>{description}</Typography>
   </>
 );

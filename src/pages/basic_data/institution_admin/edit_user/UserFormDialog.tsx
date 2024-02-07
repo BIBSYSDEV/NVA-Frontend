@@ -173,8 +173,8 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                     personHasNin={!!values.person?.verified}
                     roles={values.user?.roles.map((role) => role.rolename) ?? []}
                     updateRoles={(newRoles) => {
-                      const newRolesObjects: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
-                      setFieldValue(UserFormFieldName.Roles, newRolesObjects);
+                      const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
+                      setFieldValue(UserFormFieldName.Roles, newUserRoles);
                       const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
                       if (hasCuratorRole && !values.user?.viewingScope?.includedUnits.length && topOrgCristinId) {
                         setFieldValue(UserFormFieldName.ViewingScope, [topOrgCristinId]);

@@ -13,7 +13,7 @@ import { PositionField } from '../fields/PositionField';
 import { StartDateField } from '../fields/StartDateField';
 import { AddEmployeeData } from './AddEmployeePage';
 
-export const AddAffiliationPanel = () => {
+export const AddAffiliationSection = () => {
   const { t } = useTranslation();
   const { values, errors, setFieldValue, setFieldTouched, isSubmitting } = useFormikContext<AddEmployeeData>();
   const user = useSelector((store: RootState) => store.user);
