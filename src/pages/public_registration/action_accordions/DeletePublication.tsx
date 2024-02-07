@@ -13,6 +13,7 @@ import { LoadingButton } from '@mui/lab';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { RequiredDescription } from '../../../components/RequiredDescription';
 import { dataTestId } from '../../../utils/dataTestIds';
+import { useHistory } from 'react-router-dom';
 
 export interface UnpublishPublicationRequest {
   type: 'UnpublishPublicationRequest';
@@ -35,6 +36,7 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
   const dispatch = useDispatch();
   const [selectedDuplicate, setSelectedDuplicate] = useState<Registration | null>(null);
   const [awatingUnpublishedResponse, setAwaitingUnpublishingResponse] = useState(false);
+  const history = useHistory();
 
   const deleteValidationSchema = Yup.object().shape({
     deleteMessage: Yup.string()
@@ -61,7 +63,7 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
     }
     if (isSuccessStatus(unpublishingResponse.status)) {
       setShowDeleteModal(false);
-      refetchData();
+      history.push(`/registration/${registration.identifier}?shouldNotRedirect`);
     }
   };
 

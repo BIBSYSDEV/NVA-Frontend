@@ -89,9 +89,11 @@ export const createDraftDoi = async (registrationId: string) =>
     method: 'POST',
   });
 
-export const fetchRegistration = async (registrationIdentifier: string) => {
+export const fetchRegistration = async (registrationIdentifier: string, shouldNotRedirect?: boolean) => {
   const fetchRegistrationResponse = await apiRequest2<Registration>({
-    url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
+    url: shouldNotRedirect
+      ? `${PublicationsApiPath.Registration}/${registrationIdentifier}?doNotRedirect=true`
+      : `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
   });
   return fetchRegistrationResponse.data;
 };
