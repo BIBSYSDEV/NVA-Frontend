@@ -286,3 +286,9 @@ export interface UnconfirmedDocument {
 }
 
 export type RelatedDocument = ConfirmedDocument | UnconfirmedDocument;
+
+export interface UnpublishPublicationRequest {
+  type: 'UnpublishPublicationRequest';
+  duplicateOf?: string;
+  comment: string;
+}

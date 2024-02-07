@@ -307,9 +307,7 @@ export const PublishingAccordion = ({
             <MessageForm confirmAction={async (message) => await addMessage(publishingRequestTicket.id, message)} />
           </Box>
         )}
-        {registration.status === RegistrationStatus.Published && (
-          <DeletePublication refetchData={refetchData} registration={registration} />
-        )}
+        {registration.status === RegistrationStatus.Published && <DeletePublication registration={registration} />}
       </AccordionDetails>
     </Accordion>
   );

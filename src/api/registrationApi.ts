@@ -1,9 +1,8 @@
 import { ImportCandidate, ImportStatus } from '../types/importCandidate.types';
 import { Ticket, TicketCollection, TicketStatus, TicketType } from '../types/publication_types/ticket.types';
-import { Doi, MyRegistrationsResponse, Registration } from '../types/registration.types';
+import { Doi, MyRegistrationsResponse, Registration, UnpublishPublicationRequest } from '../types/registration.types';
 import { PublicationsApiPath } from './apiPaths';
 import { apiRequest2, authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
-import { UnpublishPublicationRequest } from '../pages/public_registration/action_accordions/DeletePublication';
 
 export const createRegistration = async (partialRegistration?: Partial<Registration>) =>
   await authenticatedApiRequest<Registration>({
@@ -27,13 +26,6 @@ export const unpublishRegistration = async (
     url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
     method: 'PUT',
     data: unpublishingRequest,
-  });
-
-export const deleteUnpublishedRegistration = async (registration: Registration) =>
-  await authenticatedApiRequest<Registration>({
-    url: `${PublicationsApiPath.Registration}/${registration.identifier}`,
-    method: 'PUT',
-    data: { type: 'DeletePublicationRequest' },
   });
 
 export const getRegistrationByDoi = async (doiUrl: string) => {

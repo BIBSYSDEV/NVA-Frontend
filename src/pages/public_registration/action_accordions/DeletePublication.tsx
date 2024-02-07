@@ -1,4 +1,4 @@
-import { Registration } from '../../../types/registration.types';
+import { Registration, UnpublishPublicationRequest } from '../../../types/registration.types';
 import { Box, Breadcrumbs, Button, DialogActions, Divider, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Modal } from '../../../components/Modal';
@@ -15,22 +15,15 @@ import { RequiredDescription } from '../../../components/RequiredDescription';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { useHistory } from 'react-router-dom';
 
-export interface UnpublishPublicationRequest {
-  type: 'UnpublishPublicationRequest';
-  duplicateOf?: string;
-  comment: string;
-}
-
 interface DeleteForm {
   deleteMessage: string;
 }
 
 interface DeletePublicationProps {
   registration: Registration;
-  refetchData: () => void;
 }
 
-export const DeletePublication = ({ registration, refetchData }: DeletePublicationProps) => {
+export const DeletePublication = ({ registration }: DeletePublicationProps) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
