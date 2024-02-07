@@ -37,7 +37,15 @@ export const MyProjects = () => {
       {projectsQuery.isLoading ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : projects && projects.length > 0 ? (
-        <>
+        <ListPagination
+          count={projectsQuery.data?.size ?? 0}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(newPage) => setPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setPage(1);
+          }}>
           <List>
             {projects.map((project) => (
               <ProjectListItem
@@ -48,17 +56,7 @@ export const MyProjects = () => {
               />
             ))}
           </List>
-          <ListPagination
-            count={projectsQuery.data?.size ?? 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}
-          />
-        </>
+        </ListPagination>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}

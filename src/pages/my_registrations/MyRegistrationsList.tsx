@@ -80,23 +80,21 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
   return (
     <>
       {registrationsCopy.length > 0 ? (
-        <>
+        <ListPagination
+          count={registrations.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(newPage) => setPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setPage(1);
+          }}>
           <RegistrationList
             onDeleteDraftRegistration={onClickDeleteRegistration}
             registrations={registrationsCopy}
             canEditRegistration={true}
           />
-          <ListPagination
-            count={registrations.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}
-          />
-        </>
+        </ListPagination>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}

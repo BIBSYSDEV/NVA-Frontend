@@ -103,6 +103,7 @@ export interface BaseRegistration {
   readonly publisher: RegistrationPublisher;
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
+  readonly duplicateOf?: string;
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];

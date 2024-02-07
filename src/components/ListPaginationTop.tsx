@@ -12,7 +12,7 @@ export const ListPaginationTop = ({ count, rowsPerPage, page }: ListPaginationTo
   const itemsEnd = Math.min(page * rowsPerPage, count);
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+    <Box sx={{ display: 'flex', justifyContent: 'end', mx: { xs: '0.5rem', md: 0 } }}>
       <ListPaginationCounter start={itemsStart} end={itemsEnd} total={count} />
     </Box>
   );

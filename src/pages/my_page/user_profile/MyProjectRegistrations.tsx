@@ -76,7 +76,15 @@ export const MyProjectRegistrations = ({
       {projectsQuery.isLoading || projectsQuery.isFetching ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : projectsQuery.data && projectsQuery.data.size > 0 ? (
-        <>
+        <ListPagination
+          count={filteredProjects.length}
+          rowsPerPage={rowsPerPage}
+          page={validPage}
+          onPageChange={(newPage) => setPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setPage(1);
+          }}>
           <List>
             {projectsToShow.map((project) => (
               <ProjectListItem
@@ -87,17 +95,7 @@ export const MyProjectRegistrations = ({
               />
             ))}
           </List>
-          <ListPagination
-            count={filteredProjects.length}
-            rowsPerPage={rowsPerPage}
-            page={validPage}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}
-          />
-        </>
+        </ListPagination>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}

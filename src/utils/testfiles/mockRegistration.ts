@@ -178,8 +178,9 @@ export const mockPublishedRegistration = {
 export const mockDeletedRegistration = {
   ...mockRegistration,
   identifier: 'dasdfasdf',
-  status: RegistrationStatus.DraftForDeletion,
+  status: RegistrationStatus.Unpublished,
   associatedArtifacts: [],
+  duplicateOf: 'https://api.dev.nva.aws.unit.no/publication/018d550eb538-395a6118-afb9-4b24-aa07-04b434457eb3',
 };
 
 export const mockDeletedRegistrationProblem = {
