@@ -24,7 +24,7 @@ import { addEmployeeValidationSchema } from '../../../utils/validation/basic_dat
 import { AddAffiliationPanel } from './AddAffiliationPanel';
 import { FindPersonPanel } from './FindPersonPanel';
 import { RolesFormSection } from './edit_user/RolesFormSection';
-import { TasksFormSection } from './edit_user/TasksFormSection';
+import { TasksFormSection, rolesWithAreaOfResponsibility } from './edit_user/TasksFormSection';
 
 export interface AddEmployeeData {
   person: FlatCristinPerson;
@@ -57,6 +57,7 @@ export const AddEmployeePage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customerId = useSelector((store: RootState) => store.user?.customerId);
+  const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
 
   const onSubmit = async (values: AddEmployeeData, { resetForm, validateForm }: FormikHelpers<AddEmployeeData>) => {
     if (!customerId) {
@@ -141,7 +142,15 @@ export const AddEmployeePage = () => {
               <RolesFormSection
                 personHasNin={!values.person.nvi?.verifiedAt.id}
                 roles={values.roles}
-                updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
+                updateRoles={(newRoles) => {
+                  setFieldValue('roles', newRoles);
+                  const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
+                  if (hasCuratorRole && values.viewingScopes.length === 0 && topOrgCristinId) {
+                    setFieldValue('viewingScopes', [topOrgCristinId]);
+                  } else if (!hasCuratorRole) {
+                    setFieldValue('viewingScopes', []);
+                  }
+                }}
                 disabled={isSubmitting || !!errors.person || !!errors.affiliation}
               />
               <Divider orientation="vertical" />

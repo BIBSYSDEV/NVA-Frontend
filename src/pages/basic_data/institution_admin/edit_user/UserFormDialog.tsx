@@ -21,14 +21,14 @@ import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
-import { CristinPerson, InstitutionUser, RoleName } from '../../../../types/user.types';
+import { CristinPerson, InstitutionUser, RoleName, UserRole } from '../../../../types/user.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getValueByKey } from '../../../../utils/user-helpers';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
 import { AffiliationFormSection } from './AffiliationFormSection';
 import { PersonFormSection } from './PersonFormSection';
 import { RolesFormSection } from './RolesFormSection';
-import { TasksFormSection } from './TasksFormSection';
+import { TasksFormSection, rolesWithAreaOfResponsibility } from './TasksFormSection';
 
 export enum UserFormFieldName {
   Employments = 'person.employments',
@@ -172,7 +172,16 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                   <RolesFormSection
                     personHasNin={!!values.person?.verified}
                     roles={values.user?.roles.map((role) => role.rolename) ?? []}
-                    updateRoles={(newRoles) => setFieldValue(UserFormFieldName.Roles, newRoles)}
+                    updateRoles={(newRoles) => {
+                      const newRolesObjects: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
+                      setFieldValue(UserFormFieldName.Roles, newRolesObjects);
+                      const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
+                      if (hasCuratorRole && !values.user?.viewingScope?.includedUnits.length && topOrgCristinId) {
+                        setFieldValue(UserFormFieldName.ViewingScope, [topOrgCristinId]);
+                      } else if (!hasCuratorRole) {
+                        setFieldValue(UserFormFieldName.ViewingScope, []);
+                      }
+                    }}
                   />
                   <Divider orientation="vertical" />
                   <TasksFormSection
