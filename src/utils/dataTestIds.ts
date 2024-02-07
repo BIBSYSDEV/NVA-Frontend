@@ -505,7 +505,6 @@ export const dataTestId = {
       updateProfilePictureButton: 'update-profile-picture-button',
       uploadProfilePictureButton: 'update-profile-picture-button',
       removeProfilePictureDialog: 'confirm-remove-profile-picture-dialog',
-      saveAndViewResearchProfileButton: 'save-and-view-research-profile-button',
       webPageField: 'web-page-field',
     },
     myFieldAndBackgroundLink: 'my-field-and-background-link',

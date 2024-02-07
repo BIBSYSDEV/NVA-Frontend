@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
 import { fetchPerson, updateCristinPerson } from '../../../api/cristinApi';
 import { NationalIdNumberField } from '../../../components/NationalIdNumberField';
 import { PageSpinner } from '../../../components/PageSpinner';
@@ -17,7 +16,6 @@ import { FlatCristinPerson } from '../../../types/user.types';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
-import { UrlPathTemplate } from '../../../utils/urlPaths';
 import { getValueByKey } from '../../../utils/user-helpers';
 import { personaliaValidationSchema } from '../../../utils/validation/personalieValidation';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
@@ -35,7 +33,6 @@ const StyledTypography = styled(Typography)({
 export const MyProfile = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const history = useHistory();
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
@@ -86,13 +83,6 @@ export const MyProfile = () => {
         setEditPreferredNames(false);
         personQuery.refetch();
       }
-    }
-  };
-
-  const handleSaveAndView = async (values: CristinPersonFormData, isValid: boolean) => {
-    if (isValid) {
-      await updatePerson(values);
-      history.push(UrlPathTemplate.MyPageResearchProfile);
     }
   };
 
@@ -334,44 +324,31 @@ export const MyProfile = () => {
                   </Grid>
                 </Box>
 
-                <Grid container sx={{ bgcolor: 'secondary.dark', py: '1rem', mt: '1rem' }}>
-                  <Grid item xs={16} md={5} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <LoadingButton
-                      variant="outlined"
-                      type="submit"
-                      loading={isSubmitting}
-                      disabled={!dirty}
-                      sx={{ boxShadow: '0px 3px 3px 0px rgba(0, 0, 0, 0.20)' }}
-                      data-testid={dataTestId.myPage.myProfile.saveAndViewResearchProfileButton}
-                      onClick={() => handleSaveAndView(values, isValid)}>
-                      {t('my_page.my_profile.save_and_view_research_profile')}
-                    </LoadingButton>
-                  </Grid>
-                  <Grid item xs={16} md={7}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        gap: '1rem',
-                        justifyContent: { xs: 'center', md: 'start' },
-                        mt: { xs: '1rem', md: 0 },
-                      }}>
-                      <Button
-                        onClick={() => {
-                          resetForm();
-                        }}>
-                        {t('common.cancel')}
-                      </Button>
-                      <LoadingButton
-                        data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
-                        loading={isSubmitting}
-                        disabled={!dirty}
-                        variant="contained"
-                        type="submit">
-                        {t('common.save')}
-                      </LoadingButton>
-                    </Box>
-                  </Grid>
-                </Grid>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: '1rem',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    bgcolor: 'secondary.dark',
+                    py: '1rem',
+                    mt: '1rem',
+                  }}>
+                  <Button
+                    onClick={() => {
+                      resetForm();
+                    }}>
+                    {t('common.cancel')}
+                  </Button>
+                  <LoadingButton
+                    data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
+                    loading={isSubmitting}
+                    disabled={!dirty}
+                    variant="contained"
+                    type="submit">
+                    {t('common.save')}
+                  </LoadingButton>
+                </Box>
               </Form>
             )}
           </Formik>
