@@ -161,6 +161,7 @@
     "end_date": "Sluttdato",
     "error_occurred": "En uventet feil har oppstått",
     "file": "Fil",
+    "fill_textfield": "skriv inn",
     "filter": "Filter",
     "first_name": "Fornavn",
     "funding": "Finansiering",
@@ -169,6 +170,7 @@
     "id": "ID",
     "institution": "Institusjon",
     "institutions": "Institusjoner",
+    "justification": "Begrunnelse",
     "last_name": "Etternavn",
     "link": "Lenke",
     "menu": "Meny",
@@ -228,6 +230,7 @@
     "show_details": "Vis detaljer",
     "show_fewer": "Vis færre",
     "show_more": "Vis flere",
+    "show_more_options": "Vis flere valg",
     "skip_to_main_content": "Hopp til hovedinnhold",
     "skip_to_schema": "Hopp til skjema",
     "sort_newest_first": "Nyeste først",
@@ -1146,6 +1149,7 @@
       "verify_person": "Verifiser person"
     },
     "curator_support_info": "Her kan du spørre din kurator om hjelp med alt som har med registrering og publisering av forskningsresultat. Du finner svar på dine spørsmål på \"Min side\" og på registreringens presentasjonsside.",
+    "delete_registration": "Slette resultat",
     "description": {
       "abstract": "Sammendrag",
       "add_vocabulary": "Legg til vokabular",
@@ -1228,6 +1232,7 @@
       "files_and_license": "Fil, lisens og lenke",
       "resource_type": "Kategori"
     },
+    "is_registration_error_question": "Er dette en feilregistrering?",
     "is_revision": "Arbeidet er en revisjon",
     "missing_title": "Mangler tittel",
     "modal_unsaved_changes_description": "Du har gjort endringer som ikke er lagret. Er du sikker på at du vil forlate denne siden?",
@@ -1687,6 +1692,12 @@
       "PUBLISHED": "Publisert",
       "PUBLISHED_METADATA": "Metadata publisert"
     },
+    "unpublish_registration": "Avpubliser forskningsresultat",
+    "unpublish_registration_detail_1": "Ved avpublisering vil ikke forskningsresultatet være søkbare i NVA, men vil fortsatt være tilgjengelige ved oppslag av referanse.",
+    "unpublish_registration_detail_2": "Eventuelle filer vil fjernes fra forskningsresultatet av avpublisering, men blir ikke permanent slettet.",
+    "unpublish_registration_reason": "Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert. Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet.",
+    "unpublish_registration_duplicate_question": "Finnes det en annen publisert versjon av samme forskningsresultat?",
+    "unpublish_registration_duplicate_citation_information": "For at alle siteringer skal bli videreført, må du søke opp den andre registreringen. Da vil alle siteringer fortsatt føre til den andre versjonen",
     "year_published": "Publiseringsår"
   },
   "search": {

@@ -10,6 +10,8 @@ import { unpublishRegistration } from '../../../api/registrationApi';
 import { setNotification } from '../../../redux/notificationSlice';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
+import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
+import { RequiredDescription } from '../../../components/RequiredDescription';
 
 export interface UnpublishPublicationRequest {
   type: 'UnpublishPublicationRequest';
@@ -47,15 +49,17 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
           }
         : { type: 'UnpublishPublicationRequest', comment: values.deleteMessage };
     };
-    try {
-      setAwaitingUnpublishingResponse(true);
-      await unpublishRegistration(registration, unpublishRequest());
+
+    setAwaitingUnpublishingResponse(true);
+
+    const unpublishingResponse = await unpublishRegistration(registration, unpublishRequest());
+    setAwaitingUnpublishingResponse(false);
+    if (isErrorStatus(unpublishingResponse.status)) {
+      dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
+    }
+    if (isSuccessStatus(unpublishingResponse.status)) {
       setShowDeleteModal(false);
       refetchData();
-    } catch (e) {
-      dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
-    } finally {
-      setAwaitingUnpublishingResponse(false);
     }
   };
 
@@ -68,37 +72,30 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
           itemsBeforeCollapse={0}
           itemsAfterCollapse={0}
           maxItems={0}
-          aria-label={'vis flere valg'}>
+          aria-label={t('common.show_more_options')}>
           <Button data-testid={'open delete modal'} variant="outlined" onClick={() => setShowDeleteModal(true)}>
-            Slette
+            {t('common.delete')}
           </Button>
         </Breadcrumbs>
       </Box>
       <Modal
-        dataTestId={'delete modal'}
-        headingText={'Slette resultat'}
+        dataTestId="delete-registration-modal"
+        headingText={t('registration.delete_registration')}
         open={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <Box>
-            <Typography variant="caption">* Felt med stjerne er obligatorisk</Typography>
+            <RequiredDescription />
           </Box>
           <Box sx={{ gap: '1rem' }}>
-            <Typography variant="h3">Avpubliser forskningsresultat</Typography>
-            <Typography>
-              Ved avpublisering vil ikke forskningsresultatet være søkbare i NVA, men vil fortsatt være tilgjengelige
-              ved oppslag av referanse.
-            </Typography>
-            <Typography>
-              Eventuelle filer vil fjernes fra forskningsresultatet av avpublisering, men blir ikke permanent slettet.
-            </Typography>
+            <Typography variant="h3">{t('registration.unpublish_registration')}</Typography>
+            <Typography>{t('registration.unpublish_registration_detail_1')}</Typography>
+            <Typography>{t('registration.unpublish_registration_detail_2')}</Typography>
           </Box>
 
           <Formik
             initialValues={{
               deleteMessage: '',
-              duplicateOfUri: '',
-              searchDuplicate: '',
             }}
             validationSchema={deleteValidationSchema}
             onSubmit={(values, formikHelpers) => {
@@ -107,18 +104,15 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
             {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
               <form onSubmit={handleSubmit}>
                 <Box sx={{ my: '1rem' }}>
-                  <Typography variant="h3">Er dette en feilregistrering?</Typography>
-                  <Typography gutterBottom={true}>
-                    Legg inn en kort begrunnelse for at dette forskningsresultatet ikke lenger skal være publisert.
-                    Begrunnelsen vil vises på forskningsresultatet ved oppslag av referanse til forskningsresultet.
-                  </Typography>
+                  <Typography variant="h3">{t('registration.is_registration_error_question')}</Typography>
+                  <Typography gutterBottom={true}>{t('registration.unpublish_registration_reason')}</Typography>
                   <TextField
                     variant="filled"
                     fullWidth
                     id="deleteMessageId"
                     name="deleteMessage"
-                    label={'Begrunnelse'}
-                    placeholder={'skriv inn'}
+                    label={t('common.justification')}
+                    placeholder={t('common.fill_textfield')}
                     required={true}
                     value={values.deleteMessage}
                     onChange={handleChange}
@@ -130,13 +124,8 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
                   <Box sx={{ gap: '1rem' }}>
-                    <Typography variant="h3">
-                      Finnes det en annen publisert versjon av samme forskningsresultat?
-                    </Typography>
-                    <Typography>
-                      For at alle siteringer skal bli videreført, må du søke opp den andre registreringen. Da vil alle
-                      siteringer fortsatt føre til den andre versjonen
-                    </Typography>
+                    <Typography variant="h3">{t('registration.unpublish_registration_duplicate_question')}</Typography>
+                    <Typography>{t('registration.unpublish_registration_duplicate_citation_information')}</Typography>
                   </Box>
                 </Box>
                 <FindRegistration
@@ -145,15 +134,15 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
                   filteredRegistrationIdentifier={registration.identifier}
                 />
                 <DialogActions>
-                  <Button data-testid={'close delete modal'} onClick={() => setShowDeleteModal(false)}>
-                    Angre
+                  <Button data-testid={'close-delete-modal'} onClick={() => setShowDeleteModal(false)}>
+                    {t('common.cancel')}
                   </Button>
                   <LoadingButton
                     loading={awatingUnpublishedResponse}
                     type="submit"
                     data-testid={'delete-registration-button'}
                     variant="outlined">
-                    Lagre
+                    {t('common.save')}
                   </LoadingButton>
                 </DialogActions>
               </form>
