@@ -1,4 +1,5 @@
 import { Checkbox, FormControl, FormControlLabel, FormGroup, Typography } from '@mui/material';
+import { useFormikContext } from 'formik';
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ interface RolesFormSectionProps {
 export const RolesFormSection = ({ roles, personHasNin, updateRoles, disabled }: RolesFormSectionProps) => {
   const { t } = useTranslation();
   const isAppAdmin = !!useSelector((store: RootState) => store.user?.isAppAdmin);
+  const { isSubmitting } = useFormikContext();
 
   return (
     <section>
@@ -38,7 +40,7 @@ export const RolesFormSection = ({ roles, personHasNin, updateRoles, disabled }:
             }
           }}
           data-testid={dataTestId.basicData.personAdmin.roleSelector}
-          disabled={disabled}>
+          disabled={disabled || isSubmitting}>
           <FormGroup sx={{ gap: '0.5rem' }}>
             <FormControlLabel
               disabled
