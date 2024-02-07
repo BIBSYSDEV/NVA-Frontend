@@ -137,7 +137,7 @@ export const AddEmployeePage = () => {
               <AddAffiliationPanel />
               <Divider orientation="vertical" />
               <RolesFormSection
-                hasNin={!values.person.nvi?.verifiedAt.id}
+                personHasNin={!values.person.nvi?.verifiedAt.id}
                 roles={values.roles}
                 updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
                 disabled={isSubmitting || !!errors.person || !!errors.affiliation}
@@ -145,7 +145,7 @@ export const AddEmployeePage = () => {
               <Divider orientation="vertical" />
               <TasksFormSection roles={values.roles} />
             </Box>
-            <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'end' }}>
+            <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>
               <LoadingButton
                 variant="contained"
                 size="large"

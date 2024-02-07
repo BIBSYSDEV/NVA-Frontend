@@ -8,12 +8,12 @@ import { dataTestId } from '../../../../utils/dataTestIds';
 
 interface RolesFormSectionProps {
   roles: RoleName[];
-  hasNin: boolean;
+  personHasNin: boolean;
   updateRoles: (roles: RoleName[]) => void;
   disabled?: boolean;
 }
 
-export const RolesFormSection = ({ roles, hasNin, updateRoles, disabled }: RolesFormSectionProps) => {
+export const RolesFormSection = ({ roles, personHasNin, updateRoles, disabled }: RolesFormSectionProps) => {
   const { t } = useTranslation();
   const isAppAdmin = !!useSelector((store: RootState) => store.user?.isAppAdmin);
 
@@ -23,7 +23,7 @@ export const RolesFormSection = ({ roles, hasNin, updateRoles, disabled }: Roles
         {t('my_page.my_profile.heading.roles')}
       </Typography>
 
-      {!hasNin ? (
+      {!personHasNin ? (
         <Typography>{t('basic_data.person_register.no_eligable_roles')}</Typography>
       ) : (
         <FormControl

@@ -170,7 +170,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                   <AffiliationFormSection />
                   <Divider orientation="vertical" />
                   <RolesFormSection
-                    hasNin={!!values.person?.verified}
+                    personHasNin={!!values.person?.verified}
                     roles={values.user?.roles.map((role) => role.rolename) ?? []}
                     updateRoles={(newRoles) => setFieldValue(UserFormFieldName.Roles, newRoles)}
                   />
