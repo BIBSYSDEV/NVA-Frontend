@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { LoadingButton } from '@mui/lab';
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { RequiredDescription } from '../../../components/RequiredDescription';
+import { dataTestId } from '../../../utils/dataTestIds';
 
 export interface UnpublishPublicationRequest {
   type: 'UnpublishPublicationRequest';
@@ -74,7 +75,10 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
           itemsAfterCollapse={0}
           maxItems={0}
           aria-label={t('common.show_more_options')}>
-          <Button data-testid={'open delete modal'} variant="outlined" onClick={() => setShowDeleteModal(true)}>
+          <Button
+            data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
+            variant="outlined"
+            onClick={() => setShowDeleteModal(true)}>
             {t('common.delete')}
           </Button>
         </Breadcrumbs>
@@ -99,10 +103,10 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
               deleteMessage: '',
             }}
             validationSchema={deleteValidationSchema}
-            onSubmit={(values, formikHelpers) => {
+            onSubmit={(values, _formikHelpers) => {
               handleDelete(values);
             }}>
-            {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+            {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
               <form onSubmit={handleSubmit}>
                 <Box sx={{ my: '1rem' }}>
                   <Typography variant="h3">{t('registration.is_registration_error_question')}</Typography>
@@ -112,6 +116,7 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
                     fullWidth
                     id="deleteMessageId"
                     name="deleteMessage"
+                    data-testid={dataTestId.unpublishActions.unpublishJustificationTextField}
                     label={t('common.justification')}
                     placeholder={t('common.fill_textfield')}
                     required={true}
@@ -141,7 +146,7 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
                   <LoadingButton
                     loading={awatingUnpublishedResponse}
                     type="submit"
-                    data-testid={'delete-registration-button'}
+                    data-testid={dataTestId.unpublishActions.submitButton}
                     variant="outlined">
                     {t('common.save')}
                   </LoadingButton>

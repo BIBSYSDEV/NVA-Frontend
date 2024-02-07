@@ -571,4 +571,9 @@ export const dataTestId = {
     },
     unreadSearchCheckbox: 'unread-search-checkbox',
   },
+  unpublishActions: {
+    openUnpublishModalButton: 'open-unpublish-modal-button',
+    unpublishJustificationTextField: 'unpublish-registration-justification-textfield',
+    submitButton: 'submit-unpublish-request-button',
+  },
 };
