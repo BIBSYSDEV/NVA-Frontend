@@ -38,8 +38,8 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
 
   const deleteValidationSchema = Yup.object().shape({
     deleteMessage: Yup.string()
-      .min(3, t('registration.unpublish_comment_min_length_feedback'))
-      .required(t('registration.unpublish_comment_required')),
+      .min(3, t('unpublish_actions.unpublish_comment_min_length_feedback'))
+      .required(t('unpublish_actions.unpublish_comment_required')),
   });
   const handleDelete = async (values: DeleteForm) => {
     const unpublishRequest = (): UnpublishPublicationRequest => {
@@ -93,9 +93,9 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
             <RequiredDescription />
           </Box>
           <Box sx={{ gap: '1rem' }}>
-            <Typography variant="h3">{t('registration.unpublish_registration')}</Typography>
-            <Typography>{t('registration.unpublish_registration_detail_1')}</Typography>
-            <Typography>{t('registration.unpublish_registration_detail_2')}</Typography>
+            <Typography variant="h3">{t('unpublish_actions.unpublish_registration')}</Typography>
+            <Typography>{t('unpublish_actions.unpublish_registration_detail_1')}</Typography>
+            <Typography>{t('unpublish_actions.unpublish_registration_detail_2')}</Typography>
           </Box>
 
           <Formik
@@ -110,7 +110,7 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
               <form onSubmit={handleSubmit}>
                 <Box sx={{ my: '1rem' }}>
                   <Typography variant="h3">{t('registration.is_registration_error_question')}</Typography>
-                  <Typography gutterBottom={true}>{t('registration.unpublish_registration_reason')}</Typography>
+                  <Typography gutterBottom={true}>{t('unpublish_actions.unpublish_registration_reason')}</Typography>
                   <TextField
                     variant="filled"
                     fullWidth
@@ -130,8 +130,12 @@ export const DeletePublication = ({ registration, refetchData }: DeletePublicati
 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', my: '1rem' }}>
                   <Box sx={{ gap: '1rem' }}>
-                    <Typography variant="h3">{t('registration.unpublish_registration_duplicate_question')}</Typography>
-                    <Typography>{t('registration.unpublish_registration_duplicate_citation_information')}</Typography>
+                    <Typography variant="h3">
+                      {t('unpublish_actions.unpublish_registration_duplicate_question')}
+                    </Typography>
+                    <Typography>
+                      {t('unpublish_actions.unpublish_registration_duplicate_citation_information')}
+                    </Typography>
                   </Box>
                 </Box>
                 <FindRegistration
