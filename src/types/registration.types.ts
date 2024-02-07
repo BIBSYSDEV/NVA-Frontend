@@ -21,8 +21,8 @@ import { ChapterEntityDescription } from './publication_types/chapterRegistratio
 import { DegreeEntityDescription } from './publication_types/degreeRegistration.types';
 import { ExhibitionEntityDescription } from './publication_types/exhibitionContent.types';
 import {
-  JournalEntityDescription,
   emptyRegistrationEntityDescription,
+  JournalEntityDescription,
 } from './publication_types/journalRegistration.types';
 import { MediaContributionEntityDescription } from './publication_types/mediaContributionRegistration.types';
 import { MapEntityDescription } from './publication_types/otherRegistration.types';
@@ -99,6 +99,7 @@ export interface BaseRegistration {
   readonly publisher: RegistrationPublisher;
   readonly handle?: string;
   readonly additionalIdentifiers?: AdditionalIdentifier[];
+  readonly duplicateOf?: string;
   subjects: string[];
   projects: ResearchProject[];
   associatedArtifacts: AssociatedArtifact[];
