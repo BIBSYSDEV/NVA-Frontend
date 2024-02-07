@@ -104,6 +104,10 @@ export const AddEmployeePage = () => {
         nationalIdentityNumber: nationalId,
         customerId,
         roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+        viewingScope: {
+          type: 'ViewingScope',
+          includedUnits: values.viewingScopes,
+        },
       });
       if (isSuccessStatus(createUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
