@@ -17,7 +17,7 @@ import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { getIdentifierFromId } from '../../../utils/general-helpers';
 import { getValueByKey } from '../../../utils/user-helpers';
-import { personaliaValidationSchema } from '../../../utils/validation/personalieValidation';
+import { personaliaValidationSchema } from '../../../utils/validation/personaliaValidation';
 import { ProfilePictureUploader } from './ProfilePictureUploader';
 import { UserOrcid } from './UserOrcid';
 
