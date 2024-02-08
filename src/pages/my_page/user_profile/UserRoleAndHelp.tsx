@@ -55,9 +55,7 @@ export const UserRoleAndHelp = () => {
       )}
       <Typography variant="h3">{t('common.help')}</Typography>
       <div>
-        <Typography fontWeight="bold">
-          {t('my_page.my_profile.user_role_and_help.customer_help_helper_text')}
-        </Typography>
+        <Typography fontWeight="bold">{t('my_page.my_profile.user_role_and_help.application_help_text')}</Typography>
         <MuiLink
           sx={{
             fontWeight: 'bold',
