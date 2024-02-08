@@ -41,7 +41,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
       return selectedDuplicate
         ? {
             type: 'UnpublishPublicationRequest',
-            duplicateOf: selectedDuplicate.identifier,
+            duplicateOf: selectedDuplicate.id,
             comment: values.deleteMessage,
           }
         : { type: 'UnpublishPublicationRequest', comment: values.deleteMessage };
