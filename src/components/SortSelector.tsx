@@ -46,6 +46,7 @@ export const SortSelector = ({
       size={size}
       value={selectedOption}
       label={showLabel ? t('search.sort_by') : undefined}
+      aria-label={t('search.sort_by')}
       variant={variant ? variant : 'standard'}
       onChange={(event) => {
         // These typing workarounds are needed because of the way MenuItem handle object values: https://github.com/mui/material-ui/issues/14286
