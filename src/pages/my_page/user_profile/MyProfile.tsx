@@ -290,10 +290,9 @@ export const MyProfile = () => {
                   <Box
                     sx={{
                       gridArea: 'profile-picture',
-                      height: '100%',
                       display: 'flex',
                       flexDirection: 'column',
-                      justifyContent: { xs: 'center', md: 'flex-start' },
+                      justifyContent: 'start',
                       alignItems: 'center',
                       mb: { xs: '1rem', lg: 0 },
                     }}>
