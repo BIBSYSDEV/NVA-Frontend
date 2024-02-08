@@ -37,7 +37,7 @@ export const MyProfile = () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const user = useSelector((store: RootState) => store.user)!; // If user has been empty this route would already be blocked
 
-  const personId = useSelector((store: RootState) => store.user?.cristinId) ?? '';
+  const personId = user?.cristinId ?? '';
 
   const personQuery = useQuery({
     queryKey: [personId],
@@ -65,13 +65,15 @@ export const MyProfile = () => {
 
   const updatePerson = async (values: CristinPersonFormData) => {
     if (user.cristinId) {
+      const trimValue = (value: string | undefined | null) => (value === '' ? null : value?.trim());
+
       const payload: CristinPersonFormData = {
-        preferredFirstName: values.preferredFirstName === '' ? null : values.preferredFirstName?.trim(),
-        preferredLastName: values.preferredLastName === '' ? null : values.preferredLastName?.trim(),
+        preferredFirstName: trimValue(values.preferredFirstName),
+        preferredLastName: trimValue(values.preferredLastName),
         contactDetails: {
-          telephone: values.contactDetails?.telephone === '' ? null : values.contactDetails?.telephone?.trim(),
-          email: values.contactDetails?.email === '' ? null : values.contactDetails?.email?.trim(),
-          webPage: values.contactDetails?.webPage === '' ? null : values.contactDetails?.webPage?.trim(),
+          telephone: trimValue(values.contactDetails?.telephone),
+          email: trimValue(values.contactDetails?.email),
+          webPage: trimValue(values.contactDetails?.webPage),
         },
       };
       const updatePersonResponse = await updateCristinPerson(user.cristinId, payload);
