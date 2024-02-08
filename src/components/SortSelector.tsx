@@ -1,4 +1,4 @@
-import { MenuItem, TextField, TextFieldProps, TextFieldVariants } from '@mui/material';
+import { MenuItem, TextField, TextFieldProps } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SortOrder } from '../api/searchApi';
@@ -10,19 +10,16 @@ interface SortSelectorOption {
   label: string;
 }
 
-interface SortSelectorProps extends Pick<TextFieldProps, 'sx'> {
+interface SortSelectorProps extends Pick<TextFieldProps, 'sx' | 'variant' | 'size' | 'label'> {
   orderKey: string;
   options: SortSelectorOption[];
-  showLabel?: boolean;
-  size?: 'small' | 'medium';
   sortKey: string;
-  variant?: TextFieldVariants;
 }
 
 export const SortSelector = ({
+  label,
   orderKey,
   options,
-  showLabel = true,
   size = 'medium',
   sortKey,
   variant = 'outlined',
@@ -40,14 +37,17 @@ export const SortSelector = ({
 
   return (
     <TextField
-      sx={{ minWidth: '16rem', ...sx }}
+      sx={{ ...sx }}
       data-testid={dataTestId.startPage.orderBySelect}
       select
       size={size}
       value={selectedOption}
-      label={showLabel ? t('search.sort_by') : undefined}
-      aria-label={t('search.sort_by')}
       variant={variant ? variant : 'standard'}
+      label={label ? label : undefined}
+      aria-label={label ? (label as string) : undefined}
+      inputProps={{
+        'aria-label': label ? (label as string) : t('search.sort_by'),
+      }}
       onChange={(event) => {
         // These typing workarounds are needed because of the way MenuItem handle object values: https://github.com/mui/material-ui/issues/14286
         const value = event.target.value as unknown as SortSelectorOption;

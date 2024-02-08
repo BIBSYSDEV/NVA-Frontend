@@ -82,8 +82,10 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
         }}>
         <SearchForm placeholder={t('tasks.search_placeholder')} />
         <SortSelector
+          sx={{ minWidth: '16rem' }}
           sortKey={SearchParam.SortOrder}
           orderKey={SearchParam.OrderBy}
+          label={t('search.sort_by')}
           options={[
             { orderBy: 'createdDate', sortOrder: 'desc', label: t('basic_data.central_import.sort_newest_first') },
             { orderBy: 'createdDate', sortOrder: 'asc', label: t('basic_data.central_import.sort_oldest_first') },

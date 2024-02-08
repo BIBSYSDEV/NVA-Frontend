@@ -27,34 +27,31 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
     history.push({ search: params.toString() });
   };
 
-  const sortingComponent = () => {
-    return (
-      <SortSelector
-        variant="standard"
-        size="small"
-        showLabel={false}
-        sortKey="sort"
-        orderKey="order"
-        options={[
-          {
-            orderBy: RegistrationFieldName.ModifiedDate,
-            sortOrder: 'desc',
-            label: t('search.sort_by_modified_date'),
-          },
-          {
-            orderBy: RegistrationFieldName.PublishedDate,
-            sortOrder: 'desc',
-            label: t('search.sort_by_published_date_desc'),
-          },
-          {
-            orderBy: RegistrationFieldName.PublishedDate,
-            sortOrder: 'asc',
-            label: t('search.sort_by_published_date_asc'),
-          },
-        ]}
-      />
-    );
-  };
+  const sortingComponent = (
+    <SortSelector
+      variant="standard"
+      size="small"
+      sortKey="sort"
+      orderKey="order"
+      options={[
+        {
+          orderBy: RegistrationFieldName.ModifiedDate,
+          sortOrder: 'desc',
+          label: t('search.sort_by_modified_date'),
+        },
+        {
+          orderBy: RegistrationFieldName.PublishedDate,
+          sortOrder: 'desc',
+          label: t('search.sort_by_published_date_desc'),
+        },
+        {
+          orderBy: RegistrationFieldName.PublishedDate,
+          sortOrder: 'asc',
+          label: t('search.sort_by_published_date_asc'),
+        },
+      ]}
+    />
+  );
 
   return (
     <section>
@@ -70,7 +67,7 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
             onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
             maxHits={10_000}
             showPaginationTop
-            sortingComponent={sortingComponent()}>
+            sortingComponent={sortingComponent}>
             <RegistrationSearchResults searchResult={registrationQuery.data.hits} />
           </ListPagination>
         </>
