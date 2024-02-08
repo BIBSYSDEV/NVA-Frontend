@@ -30,6 +30,12 @@ const StyledTypography = styled(Typography)({
   fontWeight: 'bold',
 });
 
+const StyledGridBox = styled(Box)({
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '1rem',
+});
+
 export const MyProfile = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -119,20 +125,14 @@ export const MyProfile = () => {
                       xs: '"profile-picture" "personalia-details"',
                       lg: '"personalia-details profile-picture"',
                     },
-                    columnGap: '2rem',
                     m: '1rem',
                   }}>
-                  <Grid container gridColumn={1} rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
+                  <Grid container rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
                     <Grid item xs={16} md={3}>
                       <StyledTypography>{t('my_page.my_profile.person_name')}</StyledTypography>
                     </Grid>
                     <Grid item xs={14} md={12}>
-                      <Box
-                        sx={{
-                          display: 'grid',
-                          gridTemplateColumns: '1fr 1fr',
-                          gap: '1rem',
-                        }}>
+                      <StyledGridBox>
                         <TextField
                           value={user.givenName}
                           disabled
@@ -147,18 +147,13 @@ export const MyProfile = () => {
                           size="small"
                           variant="filled"
                         />
-                      </Box>
+                      </StyledGridBox>
                     </Grid>
                     <Grid item xs={12} md={3}>
                       <StyledTypography>{t('my_page.my_profile.preferred_name')}</StyledTypography>
                     </Grid>
                     <Grid item xs={14} md={12}>
-                      <Box
-                        sx={{
-                          display: 'grid',
-                          gridTemplateColumns: '1fr 1fr',
-                          gap: '1rem',
-                        }}>
+                      <StyledGridBox>
                         <Field name={'preferredFirstName'}>
                           {({ field, meta: { error, touched } }: FieldProps<string>) => (
                             <TextField
@@ -189,7 +184,7 @@ export const MyProfile = () => {
                             />
                           )}
                         </Field>
-                      </Box>
+                      </StyledGridBox>
                     </Grid>
                     <Grid item xs={1} md={1}>
                       <Tooltip title={t('common.edit')}>
@@ -204,12 +199,7 @@ export const MyProfile = () => {
                       <StyledTypography>{t('my_page.my_profile.identity.identity_numbers')}</StyledTypography>
                     </Grid>
                     <Grid item xs={14} md={12}>
-                      <Box
-                        sx={{
-                          display: 'grid',
-                          gridTemplateColumns: '1fr 1fr',
-                          gap: '1rem',
-                        }}>
+                      <StyledGridBox>
                         <NationalIdNumberField nationalId={user.nationalIdNumber} />
                         <TextField
                           value={getIdentifierFromId(user.cristinId ?? '')}
@@ -218,7 +208,7 @@ export const MyProfile = () => {
                           size="small"
                           variant="filled"
                         />
-                      </Box>
+                      </StyledGridBox>
                     </Grid>
                     <Grid item md={13}>
                       <Box
