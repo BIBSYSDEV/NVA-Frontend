@@ -202,7 +202,7 @@ export const MyProfile = () => {
                       <StyledGridBox>
                         <NationalIdNumberField nationalId={user.nationalIdNumber} />
                         <TextField
-                          value={getIdentifierFromId(user.cristinId ?? '')}
+                          value={getIdentifierFromId(personId ?? '')}
                           disabled
                           label={t('common.id')}
                           size="small"
@@ -218,14 +218,12 @@ export const MyProfile = () => {
                           alignItems: 'start',
                           my: '0.5rem',
                         }}>
-                        <Typography fontWeight={600}>{t('common.orcid')}</Typography>
+                        <Typography fontWeight="bold">{t('common.orcid')}</Typography>
                         <UserOrcid user={user} />
                       </Box>
                     </Grid>
                     <Grid item xs={16}>
-                      <Typography fontWeight="bold" fontSize={15}>
-                        {t('my_page.my_profile.contact_information')}
-                      </Typography>
+                      <Typography fontWeight="bold">{t('my_page.my_profile.contact_information')}</Typography>
                     </Grid>
                     <Grid item xs={16} md={3}>
                       <StyledTypography>{t('my_page.my_profile.telephone')}</StyledTypography>
@@ -288,24 +286,22 @@ export const MyProfile = () => {
                       </Field>
                     </Grid>
                   </Grid>
-                  <Grid container sx={{ gridArea: 'profile-picture' }}>
-                    <Grid item xs={16}>
-                      <Box
-                        sx={{
-                          height: '100%',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: { xs: 'center', md: 'flex-start' },
-                          alignItems: 'center',
-                          mb: { xs: '1rem', lg: 0 },
-                        }}>
-                        <Typography variant="h3" sx={{ mb: '1rem' }}>
-                          {t('my_page.my_profile.profile_picture')}
-                        </Typography>
-                        <ProfilePictureUploader personId={personId} />
-                      </Box>
-                    </Grid>
-                  </Grid>
+
+                  <Box
+                    sx={{
+                      gridArea: 'profile-picture',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: { xs: 'center', md: 'flex-start' },
+                      alignItems: 'center',
+                      mb: { xs: '1rem', lg: 0 },
+                    }}>
+                    <Typography variant="h3" sx={{ mb: '1rem' }}>
+                      {t('my_page.my_profile.profile_picture')}
+                    </Typography>
+                    <ProfilePictureUploader personId={personId} />
+                  </Box>
                 </Box>
 
                 <Box
