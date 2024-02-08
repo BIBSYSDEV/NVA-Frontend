@@ -1,5 +1,16 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Checkbox, Chip, Divider, FormControlLabel, FormLabel, TextField } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from '@mui/material';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -139,38 +150,42 @@ export const CustomerInstitutionMetadataForm = ({
               label={t('basic_data.institutions.archive_name')}
               dataTestId={dataTestId.basicData.institutionAdmin.archiveNameField}
             />
+
+            <Field name={CustomerInstitutionFieldNames.Sector}>
+              {({ field }: FieldProps) => (
+                <FormControl>
+                  <InputLabel id="demo-simple-select-label"> {t('basic_data.institutions.sector')}</InputLabel>
+                  <Select
+                    required
+                    variant="filled"
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={field.value}
+                    onChange={(sector) => setFieldValue(field.name, sector.target.value)}>
+                    {Object.values(Sector).map((sector) => (
+                      <MenuItem
+                        key={sector}
+                        value={sector}
+                        data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}>
+                        {t(`basic_data.institutions.sector_values.${sector}`)}{' '}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
+            </Field>
+
             <CustomerInstitutionTextField
               name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
               label={t('basic_data.institutions.feide_organization_domain')}
               dataTestId={dataTestId.basicData.institutionAdmin.feideField}
             />
+
             <CustomerInstitutionTextField
               name={CustomerInstitutionFieldNames.RorId}
               label={t('basic_data.institutions.ror')}
               dataTestId={dataTestId.basicData.institutionAdmin.rorField}
             />
-
-            <Field name={CustomerInstitutionFieldNames.Sector}>
-              {({ field }: FieldProps) => (
-                <div>
-                  <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                    {t('basic_data.institutions.sector')}
-                  </FormLabel>
-                  <Box sx={{ display: 'flex', gap: '0.5rem', mt: '0.5rem' }}>
-                    {Object.values(Sector).map((sector) => (
-                      <Chip
-                        key={sector}
-                        data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}
-                        label={t(`basic_data.institutions.sector_values.${sector}`)}
-                        color="primary"
-                        variant={field.value === sector ? 'filled' : 'outlined'}
-                        onClick={() => setFieldValue(field.name, sector)}
-                      />
-                    ))}
-                  </Box>
-                </div>
-              )}
-            </Field>
 
             <div>
               <Field name={CustomerInstitutionFieldNames.NviInstitution}>

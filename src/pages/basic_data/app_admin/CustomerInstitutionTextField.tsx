@@ -23,7 +23,6 @@ export const CustomerInstitutionTextField = ({
         label={label}
         required={required}
         disabled={disabled}
-        fullWidth
         value={field.value ?? ''}
         variant="filled"
         error={touched && !!error}
