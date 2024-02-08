@@ -22,7 +22,7 @@ export const unpublishRegistration = async (
   registrationIdentifier: string,
   unpublishingRequest: UnpublishPublicationRequest
 ) =>
-  await authenticatedApiRequest<Registration>({
+  await authenticatedApiRequest2<Registration>({
     url: `${PublicationsApiPath.Registration}/${registrationIdentifier}`,
     method: 'PUT',
     data: unpublishingRequest,

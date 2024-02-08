@@ -2,7 +2,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import { Box, IconButton, Link as MuiLink, List, ListItemText, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Link as MuiLink, LinkProps, List, ListItemText, Tooltip, Typography } from '@mui/material';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,12 +26,11 @@ import { ErrorBoundary } from './ErrorBoundary';
 import { TruncatableTypography } from './TruncatableTypography';
 import { SearchListItem } from './styled/Wrappers';
 
-interface RegistrationListProps {
+interface RegistrationListProps extends Pick<LinkProps, 'target'> {
   registrations: Registration[];
   canEditRegistration?: boolean;
   onDeleteDraftRegistration?: (registration: Registration) => void;
   promotedPublications?: string[];
-  target?: string;
 }
 
 export const RegistrationList = ({ registrations, ...rest }: RegistrationListProps) => (
@@ -125,7 +124,7 @@ export const RegistrationListItemContent = ({
             getTitleString(entityDescription?.mainTitle)
           ) : (
             <MuiLink
-              target={target ?? ''}
+              target={target}
               component={Link}
               to={{
                 pathname: getRegistrationLandingPagePath(identifier),
@@ -149,10 +148,7 @@ export const RegistrationListItemContent = ({
                 sx={{ display: 'flex', alignItems: 'center', '&:not(:last-child)': { '&:after': { content: '";"' } } }}>
                 <Typography variant="body2">
                   {contributor.identity.id && !ticketView ? (
-                    <MuiLink
-                      target={target ?? ''}
-                      component={Link}
-                      to={getResearchProfilePath(contributor.identity.id)}>
+                    <MuiLink target={target} component={Link} to={getResearchProfilePath(contributor.identity.id)}>
                       {contributor.identity.name}
                     </MuiLink>
                   ) : (
@@ -204,7 +200,7 @@ export const RegistrationListItemContent = ({
             <IconButton
               data-testid={`edit-registration-${identifier}`}
               component={Link}
-              target={target ?? ''}
+              target={target}
               to={getRegistrationWizardPath(identifier)}
               size="small"
               sx={{ bgcolor: 'registration.main', width: '1.5rem', height: '1.5rem' }}>
