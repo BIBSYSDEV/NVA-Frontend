@@ -522,6 +522,11 @@ export const dataTestId = {
     registrationsAccordion: 'registrations-accordion',
     researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',
+    userRolesAndHelp: {
+      institutionHelpPage: 'institution-help-page',
+      applicationHelpPage: 'application-help-page',
+    },
+    userRolesAndHelpLink: 'user-roles-and-help-link',
   },
   tasksPage: {
     correctionList: {
