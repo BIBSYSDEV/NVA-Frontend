@@ -1,5 +1,5 @@
 import LaunchIcon from '@mui/icons-material/Launch';
-import { Box, Divider, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Divider, Link as MuiLink, Typography, styled } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -9,6 +9,15 @@ import { RootState } from '../../../redux/store';
 import { dataTestId } from '../../../utils/dataTestIds';
 import { ViewingScopeChip } from '../../basic_data/institution_admin/edit_user/ViewingScopeChip';
 import { UserRoles } from './UserRoles';
+
+const StyledMuiLink = styled(MuiLink)({
+  fontWeight: 'bold',
+  color: 'primary.main',
+  display: 'flex',
+  gap: '0.5rem',
+  py: '0.5rem',
+  justifyContent: 'space-between',
+});
 
 export const UserRoleAndHelp = () => {
   const { t } = useTranslation();
@@ -30,15 +39,14 @@ export const UserRoleAndHelp = () => {
   return (
     <BackgroundDiv sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {nvaUser?.viewingScope && (
-        <Box sx={{ gap: '0.75rem' }}>
+        <div>
           <Typography gutterBottom fontWeight="bold">
-            {t('my_page.my_profile.my_area_of_responsibility')}
+            {t('editor.curators.area_of_responsibility')}
           </Typography>
           <Box
             sx={{
               display: 'flex',
               gap: '0.5rem',
-              flexDirection: { xs: 'row', md: 'row' },
               flexWrap: 'wrap',
               mb: '0.5rem',
             }}>
@@ -47,7 +55,7 @@ export const UserRoleAndHelp = () => {
             ))}
           </Box>
           <Divider sx={{ bgcolor: 'primary.main' }} />
-        </Box>
+        </div>
       )}
       {user && (
         <>
@@ -59,28 +67,20 @@ export const UserRoleAndHelp = () => {
       )}
       <Typography variant="h3">{t('common.help')}</Typography>
       <Box sx={{ display: 'flex', gap: '2rem' }}>
-        {customerServiceCenterUri && (
+        {!customerServiceCenterUri && (
           <>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <Typography fontWeight="bold">
                 {t('my_page.my_profile.user_role_and_help.institution_help_page')}
               </Typography>
-              <MuiLink
-                sx={{
-                  fontWeight: 'bold',
-                  color: 'primary.main',
-                  display: 'flex',
-                  gap: '0.5rem',
-                  py: '0.5rem',
-                  justifyContent: 'space-between',
-                }}
+              <StyledMuiLink
                 data-testid={dataTestId.myPage.userRolesAndHelp.institutionHelpPage}
                 target="_blank"
                 rel="noopener noreferrer"
                 href={customerServiceCenterUri}>
                 {customer?.displayName} {t('common.help').toLowerCase()}
                 <LaunchIcon fontSize="small" />
-              </MuiLink>
+              </StyledMuiLink>
               <Typography fontStyle="italic">
                 {t('my_page.my_profile.user_role_and_help.customer_help_text')}
               </Typography>
@@ -88,26 +88,18 @@ export const UserRoleAndHelp = () => {
             <Divider orientation="vertical" />
           </>
         )}
-        <Box sx={{ display: 'flex', flexDirection: 'column', maxWidth: '15rem' }}>
+        <Box sx={{ maxWidth: '15rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           <Typography fontWeight="bold">
             {t('my_page.my_profile.user_role_and_help.customer_help_helper_text')}
           </Typography>
-          <MuiLink
-            sx={{
-              fontWeight: 'bold',
-              color: 'primary.main',
-              display: 'flex',
-              gap: '0.5rem',
-              py: '0.5rem',
-              justifyContent: 'space-between',
-            }}
+          <StyledMuiLink
             data-testid={dataTestId.myPage.userRolesAndHelp.applicationHelpPage}
             target="_blank"
             rel="noopener noreferrer"
             href={'https://sikt.no/tjenester/nasjonalt-vitenarkiv-nva/hjelpeside-nva'}>
             {t('footer.help_page')}
             <LaunchIcon fontSize="small" />
-          </MuiLink>
+          </StyledMuiLink>
           <Typography fontStyle="italic">
             {t('my_page.my_profile.user_role_and_help.application_help_helper_text')}
           </Typography>
