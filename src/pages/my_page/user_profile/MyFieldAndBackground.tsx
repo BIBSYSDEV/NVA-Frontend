@@ -7,14 +7,12 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPerson, searchForKeywords, updateCristinPerson } from '../../../api/cristinApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
-import { BackgroundDiv } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import { RootState } from '../../../redux/store';
 import { Keywords } from '../../../types/keywords.types';
 import { FlatCristinPerson } from '../../../types/user.types';
 import { useDebounce } from '../../../utils/hooks/useDebounce';
 import { getLanguageString } from '../../../utils/translation-helpers';
-import { ResearchProfilePanel } from './ResearchProfilePanel';
 
 type PersonBackgroundFormData = Pick<FlatCristinPerson, 'background' | 'keywords'>;
 
@@ -82,26 +80,13 @@ export const MyFieldAndBackground = () => {
   return (
     <Box
       sx={{
-        display: 'grid',
-        gridTemplateColumns: {
-          xs: '1fr',
-          md: '3fr 1fr',
-        },
-        columnGap: '1rem',
-        rowGap: '1rem',
-        gridTemplateAreas: {
-          xs: '"field-and-background" "research-profile"',
-          md: '"field-and-background research-profile"',
-        },
+        bgcolor: 'secondary.main',
       }}>
-      <BackgroundDiv
-        sx={{
-          bgcolor: 'info.light',
-        }}>
-        <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
-          {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (
-            <Form>
-              <Box>
+      <Formik initialValues={initialValues} onSubmit={(values) => updatePerson.mutate(values)} enableReinitialize>
+        {({ isSubmitting, dirty, setFieldValue, resetForm }: FormikProps<PersonBackgroundFormData>) => (
+          <Form>
+            <Box sx={{ mx: '1rem', mt: '1rem', maxWidth: '60rem' }}>
+              <div>
                 <Typography variant="h2">{t('my_page.my_profile.field_and_background.field')}</Typography>
                 <Typography variant="h3" sx={{ mb: '1rem', mt: '1.5rem' }}>
                   {t('my_page.my_profile.field_and_background.field_text')}
@@ -148,7 +133,7 @@ export const MyFieldAndBackground = () => {
                 <Typography variant="body1" fontStyle={'italic'} sx={{ mb: '2rem' }}>
                   {t('my_page.my_profile.field_and_background.keywords_search_text')}
                 </Typography>
-              </Box>
+              </div>
 
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', mt: '4rem' }}>
                 <Typography variant="h2" sx={{ mb: '1rem' }}>
@@ -189,24 +174,29 @@ export const MyFieldAndBackground = () => {
                   )}
                 </Field>
               </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'center', mt: '1rem', gap: '1rem' }}>
-                <Button
-                  onClick={() => {
-                    resetForm();
-                  }}>
-                  {t('common.cancel')}
-                </Button>
-                <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
-                  {t('common.save')}
-                </LoadingButton>
-              </Box>
-            </Form>
-          )}
-        </Formik>
-      </BackgroundDiv>
-      <Box sx={{ gridArea: 'research-profile' }}>
-        <ResearchProfilePanel person={person} isLoadingPerson={personQuery.isLoading} />
-      </Box>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                mt: '1rem',
+                gap: '1rem',
+                bgcolor: 'secondary.dark',
+                py: '1rem',
+              }}>
+              <Button
+                onClick={() => {
+                  resetForm();
+                }}>
+                {t('common.cancel')}
+              </Button>
+              <LoadingButton loading={isSubmitting} disabled={!dirty} variant="contained" type="submit">
+                {t('common.save')}
+              </LoadingButton>
+            </Box>
+          </Form>
+        )}
+      </Formik>
     </Box>
   );
 };

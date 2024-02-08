@@ -1049,6 +1049,7 @@
     "summary": "Sammendrag"
   },
   "registration": {
+    "citation_points_to": "Siteringen viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
       "add_contributor": "Legg til bidragsyter",
