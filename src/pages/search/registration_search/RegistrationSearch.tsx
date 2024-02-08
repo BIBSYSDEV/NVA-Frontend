@@ -29,10 +29,11 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
 
   const sortingComponent = (
     <SortSelector
-      variant="standard"
-      size="small"
       sortKey="sort"
       orderKey="order"
+      aria-label={t('search.sort_by')}
+      size="small"
+      variant="standard"
       options={[
         {
           orderBy: RegistrationFieldName.ModifiedDate,
