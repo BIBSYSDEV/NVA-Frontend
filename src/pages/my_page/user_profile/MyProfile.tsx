@@ -93,10 +93,7 @@ export const MyProfile = () => {
 
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
           bgcolor: 'secondary.main',
-          justifyContent: personQuery.isLoading ? 'start' : 'space-between',
         }}>
         <Typography variant="h2" sx={{ margin: '1rem' }}>
           {t('my_page.my_profile.heading.personalia')}
@@ -117,7 +114,7 @@ export const MyProfile = () => {
                     display: 'grid',
                     gridTemplateColumns: { xs: '1fr', md: '2fr 1fr' },
                     columnGap: '2rem',
-                    ml: '1rem',
+                    m: '1rem',
                   }}>
                   <Grid container gridColumn={1} rowGap={1} columns={16}>
                     <Grid item xs={16} md={3}>
@@ -126,12 +123,9 @@ export const MyProfile = () => {
                     <Grid item xs={14} md={12}>
                       <Box
                         sx={{
-                          height: '100%',
                           display: 'grid',
                           gridTemplateColumns: '1fr 1fr',
                           gap: '1rem',
-                          justifyContent: 'space-evenly',
-                          alignItems: 'center',
                         }}>
                         <TextField
                           value={user.givenName}
@@ -155,12 +149,9 @@ export const MyProfile = () => {
                     <Grid item xs={14} md={12}>
                       <Box
                         sx={{
-                          height: '100%',
                           display: 'grid',
                           gridTemplateColumns: '1fr 1fr',
                           gap: '1rem',
-                          justifyContent: 'space-evenly',
-                          alignItems: 'top',
                         }}>
                         <Field name={'preferredFirstName'}>
                           {({ field, meta: { error, touched } }: FieldProps<string>) => (
@@ -209,12 +200,9 @@ export const MyProfile = () => {
                     <Grid item xs={14} md={12}>
                       <Box
                         sx={{
-                          height: '100%',
                           display: 'grid',
                           gridTemplateColumns: '1fr 1fr',
                           gap: '1rem',
-                          justifyContent: 'space-evenly',
-                          alignItems: 'center',
                         }}>
                         <NationalIdNumberField nationalId={user.nationalIdNumber} />
                         <TextField
@@ -328,10 +316,8 @@ export const MyProfile = () => {
                     display: 'flex',
                     gap: '1rem',
                     justifyContent: 'center',
-                    alignItems: 'center',
                     bgcolor: 'secondary.dark',
                     py: '1rem',
-                    mt: '1rem',
                   }}>
                   <Button
                     onClick={() => {
