@@ -1,5 +1,4 @@
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SortOrder } from '../api/searchApi';
 import { dataTestId } from '../utils/dataTestIds';
@@ -10,15 +9,14 @@ interface SortSelectorOption {
   label: string;
 }
 
-interface SortSelectorProps extends Pick<TextFieldProps, 'sx'> {
+interface SortSelectorProps extends Pick<TextFieldProps, 'sx' | 'variant' | 'size' | 'label' | 'aria-label'> {
+  orderKey: string;
   options: SortSelectorOption[];
   sortKey: string;
-  orderKey: string;
 }
 
-export const SortSelector = ({ options, sortKey, orderKey, sx = {} }: SortSelectorProps) => {
+export const SortSelector = ({ orderKey, options, sortKey, ...textFieldProps }: SortSelectorProps) => {
   const history = useHistory();
-  const { t } = useTranslation();
   const params = new URLSearchParams(history.location.search);
 
   const orderBy = params.get(orderKey);
@@ -29,12 +27,13 @@ export const SortSelector = ({ options, sortKey, orderKey, sx = {} }: SortSelect
 
   return (
     <TextField
-      sx={{ minWidth: '16rem', ...sx }}
+      {...textFieldProps}
       data-testid={dataTestId.startPage.orderBySelect}
       select
       value={selectedOption}
-      label={t('search.sort_by')}
-      variant="outlined"
+      inputProps={{
+        'aria-label': textFieldProps['aria-label'],
+      }}
       onChange={(event) => {
         // These typing workarounds are needed because of the way MenuItem handle object values: https://github.com/mui/material-ui/issues/14286
         const value = event.target.value as unknown as SortSelectorOption;

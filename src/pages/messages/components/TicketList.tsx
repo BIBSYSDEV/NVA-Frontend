@@ -46,8 +46,10 @@ export const TicketList = ({ ticketsQuery, setRowsPerPage, rowsPerPage, setPage,
       <Box sx={{ mb: '1rem', display: 'flex', gap: '0.5rem' }}>
         <SearchForm sx={{ flex: '1 0 15rem' }} placeholder={t('tasks.search_placeholder')} />
         <SortSelector
+          sx={{ minWidth: '16rem' }}
           orderKey={TicketSearchParam.OrderBy}
           sortKey={TicketSearchParam.SortOrder}
+          label={t('search.sort_by')}
           options={[
             { label: t('common.sort_newest_first'), orderBy: 'createdDate', sortOrder: 'desc' },
             { label: t('common.sort_oldest_first'), orderBy: 'createdDate', sortOrder: 'asc' },

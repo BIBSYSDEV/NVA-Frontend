@@ -9,13 +9,11 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { fetchFundingSource, fetchOrganization, fetchPerson } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
-import { SortSelector } from '../../../components/SortSelector';
-import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { PublicationInstanceType } from '../../../types/registration.types';
 import { dataTestId } from '../../../utils/dataTestIds';
 import {
-  PropertySearch,
   createSearchConfigFromSearchParams,
+  PropertySearch,
   removeSearchParamValue,
 } from '../../../utils/searchHelpers';
 import { getLanguageString } from '../../../utils/translation-helpers';
@@ -141,28 +139,6 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
                 />
               )}
             </Field>
-
-            <SortSelector
-              sortKey="sort"
-              orderKey="order"
-              options={[
-                {
-                  orderBy: RegistrationFieldName.ModifiedDate,
-                  sortOrder: 'desc',
-                  label: t('search.sort_by_modified_date'),
-                },
-                {
-                  orderBy: RegistrationFieldName.PublishedDate,
-                  sortOrder: 'desc',
-                  label: t('search.sort_by_published_date_desc'),
-                },
-                {
-                  orderBy: RegistrationFieldName.PublishedDate,
-                  sortOrder: 'asc',
-                  label: t('search.sort_by_published_date_asc'),
-                },
-              ]}
-            />
 
             <ExportResultsButton searchParams={searchParams} />
           </Box>
