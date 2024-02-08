@@ -51,16 +51,15 @@ export const MyProfile = () => {
   const lastName = getValueByKey('LastName', person?.names);
   const personPreferredFirstName = getValueByKey('PreferredFirstName', person?.names);
   const personPreferredLastName = getValueByKey('PreferredLastName', person?.names);
-  const personTelephone = person?.contactDetails?.telephone;
   const [editPreferredNames, setEditPreferredNames] = useState(false);
 
   const initialValues: CristinPersonFormData = {
     preferredFirstName: personPreferredFirstName ? personPreferredFirstName : firstName,
     preferredLastName: personPreferredLastName ? personPreferredLastName : lastName,
     contactDetails: {
-      telephone: personTelephone ? personTelephone : '',
-      email: person?.contactDetails?.email ? person.contactDetails.email : '',
-      webPage: person?.contactDetails?.webPage ? person.contactDetails.webPage : '',
+      telephone: person?.contactDetails?.telephone ?? '',
+      email: person?.contactDetails?.email ?? '',
+      webPage: person?.contactDetails?.webPage ?? '',
     },
   };
 
@@ -70,9 +69,9 @@ export const MyProfile = () => {
         preferredFirstName: values.preferredFirstName === '' ? null : values.preferredFirstName?.trim(),
         preferredLastName: values.preferredLastName === '' ? null : values.preferredLastName?.trim(),
         contactDetails: {
-          telephone: values.contactDetails?.telephone?.trim(),
-          email: values.contactDetails?.email?.trim(),
-          webPage: values.contactDetails?.webPage?.trim(),
+          telephone: values.contactDetails?.telephone === '' ? null : values.contactDetails?.telephone?.trim(),
+          email: values.contactDetails?.email === '' ? null : values.contactDetails?.email?.trim(),
+          webPage: values.contactDetails?.webPage === '' ? null : values.contactDetails?.webPage?.trim(),
         },
       };
       const updatePersonResponse = await updateCristinPerson(user.cristinId, payload);
@@ -111,7 +110,7 @@ export const MyProfile = () => {
             validationSchema={personaliaValidationSchema}
             onSubmit={updatePerson}
             enableReinitialize>
-            {({ isSubmitting, dirty, resetForm, values, isValid }: FormikProps<CristinPersonFormData>) => (
+            {({ isSubmitting, dirty, resetForm }: FormikProps<CristinPersonFormData>) => (
               <Form>
                 <Box
                   sx={{

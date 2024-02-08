@@ -104,9 +104,9 @@ interface CristinPersonName extends CristinArrayValue {
 }
 
 interface CristinPersonContactDetails {
-  telephone?: string;
-  email?: string;
-  webPage?: string;
+  telephone?: string | null;
+  email?: string | null;
+  webPage?: string | null;
 }
 
 export interface CreateCristinPerson {
