@@ -47,7 +47,16 @@ export const NviCandidatesList = ({
           {nviCandidatesQuery.data?.hits.length === 0 ? (
             <Typography>{t('tasks.nvi.no_nvi_candidates')}</Typography>
           ) : (
-            <>
+            <ListPagination
+              count={nviCandidatesQuery.data?.totalHits ?? 0}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(newPage) => setPage(newPage)}
+              onRowsPerPageChange={(newRowsPerPage) => {
+                setRowsPerPage(newRowsPerPage);
+                setPage(1);
+              }}
+              maxHits={10_000}>
               <List data-testid={dataTestId.tasksPage.nvi.candidatesList} disablePadding sx={{ mb: '0.5rem' }}>
                 {nviCandidatesQuery.data?.hits.map((nviCandidate, index) => {
                   const currentOffset = (page - 1) * rowsPerPage + index;
@@ -62,18 +71,7 @@ export const NviCandidatesList = ({
                   );
                 })}
               </List>
-              <ListPagination
-                count={nviCandidatesQuery.data?.totalHits ?? 0}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(newPage) => setPage(newPage)}
-                onRowsPerPageChange={(newRowsPerPage) => {
-                  setRowsPerPage(newRowsPerPage);
-                  setPage(1);
-                }}
-                maxHits={10_000}
-              />
-            </>
+            </ListPagination>
           )}
         </>
       )}

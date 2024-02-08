@@ -41,6 +41,7 @@ export const dataTestId = {
       doiPrefixField: 'doi-prefix-field',
       doiUrlField: 'doi-url-field',
       feideField: 'feide-field',
+      inactiveCheckbox: 'inactive-checkbox',
       nameField: 'institution-name-field',
       nviInstitutionCheckbox: 'nvi-institution-checkbox',
       rboInstitutionCheckbox: 'rbo-institution-checkbox',
@@ -523,6 +524,11 @@ export const dataTestId = {
     registrationsAccordion: 'registrations-accordion',
     researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',
+    userRolesAndHelp: {
+      institutionHelpPage: 'institution-help-page',
+      applicationHelpPage: 'application-help-page',
+    },
+    userRolesAndHelpLink: 'user-roles-and-help-link',
   },
   tasksPage: {
     correctionList: {

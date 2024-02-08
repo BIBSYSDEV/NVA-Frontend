@@ -93,6 +93,7 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Institusjonens domene i Feide",
+      "institution_is_inactive": "Sett til inaktiv",
       "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
@@ -578,7 +579,7 @@
       "cc_by_nc_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
       "cc_by_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
       "cc_by_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
-      "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner."
+      "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner. \n\n\"Utgivers betingelser\" er ikke en lisens, men en erklæring om at noen rettigheter er forbeholdt utgiveren, forfatteren og muligens andre. Leseren må selv klargjøre hva loven tillater ham å gjøre med dette verket, utover å lese det."
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -669,6 +670,7 @@
         "remove_connection": "Fjern kobling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
+      "overview_and_settings": "Oversikt og innstillinger",
       "person_name": "Personnavn",
       "preferred_first_name": "Foretrukket fornavn",
       "preferred_last_name": "Foretrukket etternavn",
@@ -685,7 +687,12 @@
       "results": "Resultat",
       "telephone": "Telefon",
       "user_profile": "Brukerprofil",
-      "personal_web_page": "Personlig nettside"
+      "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil.",
+      "user_role_and_help": {
+        "application_help_helper_text": "Om du trenger veiledning til utfylling, kan denne være til hjelp.",
+        "application_help_text": "Veiledning for å registrere et resultat",
+        "user_role_and_help": "Brukerrolle og hjelp"
+      }
     },
     "no_employments": "Ingen ansettelser",
     "project_registration_status": {
@@ -1054,6 +1061,7 @@
     "summary": "Sammendrag"
   },
   "registration": {
+    "citation_points_to": "Siteringen viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
       "add_contributor": "Legg til bidragsyter",
@@ -1191,6 +1199,7 @@
       "administrative_contract": "Intern fil som aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
       "embargo": "Embargo/utsatt publisering",
+      "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "files": "Filer",
       "files_are_not_published": "Filer publiseres ikke",
@@ -1726,6 +1735,7 @@
     "sector": "Sektor",
     "select_one_or_more_categories": "Velg en eller flere kategorier",
     "sort_by": "Sorter etter",
+    "sorted_by": "Sortert etter",
     "sort_by_modified_date": "Sist endret",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
