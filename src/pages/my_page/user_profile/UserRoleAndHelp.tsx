@@ -54,7 +54,7 @@ export const UserRoleAndHelp = () => {
         </>
       )}
       <Typography variant="h3">{t('common.help')}</Typography>
-      <Box sx={{ maxWidth: '15rem' }}>
+      <div>
         <Typography fontWeight="bold">
           {t('my_page.my_profile.user_role_and_help.customer_help_helper_text')}
         </Typography>
@@ -65,7 +65,6 @@ export const UserRoleAndHelp = () => {
             display: 'flex',
             gap: '0.5rem',
             py: '0.5rem',
-            justifyContent: 'space-between',
           }}
           data-testid={dataTestId.myPage.userRolesAndHelp.applicationHelpPage}
           target="_blank"
@@ -77,7 +76,7 @@ export const UserRoleAndHelp = () => {
         <Typography fontStyle="italic">
           {t('my_page.my_profile.user_role_and_help.application_help_helper_text')}
         </Typography>
-      </Box>
+      </div>
     </BackgroundDiv>
   );
 };
