@@ -112,11 +112,15 @@ export const MyProfile = () => {
                 <Box
                   sx={{
                     display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', md: '2fr 1fr' },
+                    gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' },
+                    gridTemplateAreas: {
+                      xs: '"profile-picture" "personalia-details"',
+                      lg: '"personalia-details profile-picture"',
+                    },
                     columnGap: '2rem',
                     m: '1rem',
                   }}>
-                  <Grid container gridColumn={1} rowGap={1} columns={16}>
+                  <Grid container gridColumn={1} rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
                     <Grid item xs={16} md={3}>
                       <StyledTypography>{t('my_page.my_profile.person_name')}</StyledTypography>
                     </Grid>
@@ -292,7 +296,7 @@ export const MyProfile = () => {
                       </Field>
                     </Grid>
                   </Grid>
-                  <Grid container>
+                  <Grid container sx={{ gridArea: 'profile-picture' }}>
                     <Grid item xs={16}>
                       <Box
                         sx={{
@@ -301,6 +305,7 @@ export const MyProfile = () => {
                           flexDirection: 'column',
                           justifyContent: { xs: 'center', md: 'flex-start' },
                           alignItems: 'center',
+                          mb: { xs: '1rem', lg: 0 },
                         }}>
                         <Typography variant="h3" sx={{ mb: '1rem' }}>
                           {t('my_page.my_profile.profile_picture')}
