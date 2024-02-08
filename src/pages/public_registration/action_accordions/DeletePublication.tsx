@@ -49,7 +49,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
 
     setAwaitingUnpublishingResponse(true);
 
-    const unpublishingResponse = await unpublishRegistration(registration, unpublishRequest());
+    const unpublishingResponse = await unpublishRegistration(registration.identifier, unpublishRequest());
     setAwaitingUnpublishingResponse(false);
     if (isErrorStatus(unpublishingResponse.status)) {
       dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
