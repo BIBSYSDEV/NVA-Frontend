@@ -37,6 +37,7 @@ export const EditorCurators = () => {
     enabled: !!customerId,
     queryFn: () => (customerId ? fetchUsers(customerId, rolesWithAreaOfResponsibility) : undefined),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
+    refetchOnWindowFocus: true,
   });
   const curators = curatorsQuery.data ?? [];
   const filteredCurators = curators.filter((curator) => {
