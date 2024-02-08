@@ -1,5 +1,4 @@
 import { MenuItem, TextField, TextFieldProps } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { SortOrder } from '../api/searchApi';
 import { dataTestId } from '../utils/dataTestIds';
@@ -18,7 +17,6 @@ interface SortSelectorProps extends Pick<TextFieldProps, 'sx' | 'variant' | 'siz
 
 export const SortSelector = ({ orderKey, options, sortKey, ...textFieldProps }: SortSelectorProps) => {
   const history = useHistory();
-  const { t } = useTranslation();
   const params = new URLSearchParams(history.location.search);
 
   const orderBy = params.get(orderKey);
