@@ -100,7 +100,10 @@ export const CustomerDoiPasswordField = ({ doiAgentId, disabled }: CustomerDoiPa
           <Button data-testid="cancel-update-doi-password" onClick={cancelPasswordChange}>
             {t('common.cancel')}
           </Button>
-          <Button data-testid="connect-to-orcid" onClick={() => setShowPasswordInputModal(false)} variant="outlined">
+          <Button
+            data-testid="save-update-doi-password"
+            onClick={() => setShowPasswordInputModal(false)}
+            variant="outlined">
             {t('common.save')}
           </Button>
         </DialogActions>

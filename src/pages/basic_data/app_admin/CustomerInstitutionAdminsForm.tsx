@@ -2,26 +2,35 @@ import AddIcon from '@mui/icons-material/Add';
 import { Button, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { InstitutionUser, RoleName } from '../../../types/user.types';
+import { RoleName } from '../../../types/user.types';
 import { AddAdminDialog } from './AddAdminDialog';
 import { UserList } from './UserList';
+import { useQuery } from '@tanstack/react-query';
+import { fetchUsers } from '../../../api/roleApi';
 
 interface CustomerInstitutionAdminsFormProps {
-  admins: InstitutionUser[];
-  refetchInstitutionUsers: () => void;
   cristinInstitutionId: string;
+  customerInstitutionId: string | undefined;
 }
 
 export const CustomerInstitutionAdminsForm = ({
-  admins,
-  refetchInstitutionUsers,
   cristinInstitutionId,
+  customerInstitutionId,
 }: CustomerInstitutionAdminsFormProps) => {
   const { t } = useTranslation();
   const [openAddAdminModal, setOpenAddAdminModal] = useState(false);
   const toggleOpenAddAdminModal = () => {
     setOpenAddAdminModal((state) => !state);
   };
+
+  const adminsQuery = useQuery({
+    queryKey: ['institutionAdmins', customerInstitutionId],
+    enabled: !!customerInstitutionId,
+    queryFn: () => (customerInstitutionId ? fetchUsers(customerInstitutionId, RoleName.InstitutionAdmin) : undefined),
+    meta: { errorMessage: t('feedback.error.get_users_for_institution') },
+  });
+
+  const admins = adminsQuery.data ?? [];
 
   return (
     <>
@@ -32,7 +41,7 @@ export const CustomerInstitutionAdminsForm = ({
       <UserList
         userList={admins}
         roleToRemove={RoleName.InstitutionAdmin}
-        refetchUsers={refetchInstitutionUsers}
+        refetchUsers={adminsQuery.refetch}
         tableCaption={t('my_page.roles.institution_admins')}
       />
       <Button
@@ -47,7 +56,7 @@ export const CustomerInstitutionAdminsForm = ({
         open={openAddAdminModal}
         toggleOpen={toggleOpenAddAdminModal}
         cristinInstitutionId={cristinInstitutionId}
-        refetchInstitutionUsers={refetchInstitutionUsers}
+        refetchInstitutionUsers={adminsQuery.refetch}
       />
     </>
   );

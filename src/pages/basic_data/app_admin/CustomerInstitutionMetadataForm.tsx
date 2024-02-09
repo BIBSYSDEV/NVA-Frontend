@@ -41,9 +41,6 @@ import { CustomerDoiPasswordField } from './CustomerDoiPasswordField';
 import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
 import { OrganizationSearchField } from './OrganizationSearchField';
 import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
-import { useQuery } from '@tanstack/react-query';
-import { fetchUsers } from '../../../api/roleApi';
-import { RoleName } from '../../../types/user.types';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution?: CustomerInstitution;
@@ -91,14 +88,6 @@ export const CustomerInstitutionMetadataForm = ({
       }
     }
   };
-
-  const adminsQuery = useQuery({
-    queryKey: ['institutionAdmins', customerInstitution?.id],
-    enabled: !!customerInstitution?.id,
-    queryFn: () =>
-      customerInstitution?.id ? fetchUsers(customerInstitution?.id, RoleName.InstitutionAdmin) : undefined,
-    meta: { errorMessage: t('feedback.error.get_users_for_institution') },
-  });
 
   return (
     <Formik
@@ -345,9 +334,8 @@ export const CustomerInstitutionMetadataForm = ({
               <>
                 <Divider sx={{ my: '1rem' }} />
                 <CustomerInstitutionAdminsForm
-                  admins={adminsQuery.data ?? []}
-                  refetchInstitutionUsers={adminsQuery.refetch}
                   cristinInstitutionId={customerInstitution.cristinId}
+                  customerInstitutionId={customerInstitution.id}
                 />
               </>
             )}
