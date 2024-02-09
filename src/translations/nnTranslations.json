@@ -3,25 +3,25 @@
     "availability_statement": "Tilgjengelegheitserklæring",
     "description": {
       "paragraph0": {
-        "bullet_point0": "Innfri krav om open tilgang til artiklar og andre forskingsresultat gjennom deponering i eit opent vitenarkiv",
+        "bullet_point0": "Oppfyll krav om open tilgang til artiklar og andre forskingsresultat gjennom deponering i eit ope vitenarkiv.",
         "bullet_point1": "Publisere rapportar sjølv, studentoppgåver og anna materiale produsert ved institusjonen",
         "intro": "Med NVA får norske forskingsinstitusjonar ei teneste for å:"
       },
       "paragraph1": "NVA vert òg utvikla til bruk ved rapportering og vitskapeleg publisering til Kunnskapsdepartementet og Helse- og omsorgsdepartementet (NVI-rapportering), og for andre forskingsadministrative oppgåver.",
-      "paragraph2": "Sikt er databehandlar. Den enkelte Institusjon er handsamingsansvarleg og registrerer og vedlikeheld eiga innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett osv.). Tenesta får òg overført innhald frå andre datakjelder.",
-      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det betyr at ein registrering kan verte ferdigstilt slik at metadata om ressursen vert publisert, mens ressursen ikkje vert opent tilgjengeleg før angjeve dato. Tenesta tillèt ikkje handsaming av sensitive personopplysingar.",
-      "paragraph4": "NVA vil gjere institusjonen sitt opne innhald tilgjengeleg via opne grensesnitt, med hensikt å gjere dette kjend og søkbart for omverda og fremje indeksering i søkjemotorar og søkjeportalar.",
-      "paragraph5": "Sjølv om NVA er etablert og i bruk av fleire institusjonar, vil tenesta vere i kontinuerleg utvikling i heile sin levetid. Institusjonar som ikkje har eit vitenarkiv kan kontakte <0>Sikt</0> for å få nytte NVA som pilotinstitusjon."
+      "paragraph2": "Sikt er databehandlar. Den einskilde institusjon er behandlingsansvarleg, og registrerer og vedlikeheld eige innhald i tenesta og konfigurerer distribusjonsreglar for publiserte ressursar (artiklar, rapportar, datasett osv.). Tenesta får òg overført innhald frå andre datakjelder.",
+      "paragraph3": "NVA har støtte for utsett publisering av ressursar. Det innebér at ei registrering kan fullførast slik at metadata om ressursen blir publisert, medan ressursen ikkje blir ope tilgjengeleg før angitt dato. Tenesta tillèt ikkje handsaming av sensitive personopplysningar.",
+      "paragraph4": "NVA vil gjere institusjonen sitt opne innhald tilgjengeleg via opne grensesnitt, med intensjonen om å gjere det kjent og søkbart for omverda og fremje indeksering i søkjemotorar og søkjeportalar.",
+      "paragraph5": "Sjølv om NVA er etablert og i bruk av fleire institusjonar, vil tenesta vere i kontinuerleg utvikling i heile si levetid. Institusjonar som ikkje har eit vitenarkiv kan kontakte <0>Sikt</0> for å få ta i bruk NVA som pilotinstitusjon."
     },
-    "footer_text": "Tenesta er levert av Sikt - kunnskapssektorens tenesteleverandør",
-    "short_description": "Nasjonalt vitenarkiv (NVA) samlar informasjon om norsk forsking og gjer forskingsresultat og forskingsinformasjon opent tilgjengeleg."
+    "footer_text": "Tenesta blir levert av Sikt – Kunnskapssektorens tenesteleverandør. Sikt er leverandør av fellesstenester til norsk kunnskapssektor.",
+    "short_description": "Nasjonalt vitenarkiv (NVA) samlar informasjon om norsk forsking, og gjer forskingsresultat og forskingsinformasjon ope tilgjengeleg."
   },
   "authorization": {
-    "accept_terms_to_create_user": "Eg samtykker til å verte oppretta som brukar i NVA",
-    "back_to_home": "Attende til startsida",
-    "cancel_create_user_text": "Du må opprette brukar for å gå vidare. Viss du bryt av, vert du logga ut. Ønskjer du å bryte av?",
-    "cancel_create_user_title": "Ønskjer du å bryte av?",
-    "create_user_info": "Som brukar vert du tilgjengeleg for alle som skal leggje til forfattar eller anna bidragsytar på resultat.",
+    "accept_terms_to_create_user": "Eg samtykkjer til å bli oppretta som brukar i NVA",
+    "back_to_home": "Tilbake til startsida",
+    "cancel_create_user_text": "Du må opprette ein brukar for å gå vidare. Viss du avbryt, blir du logga ut. Ynskjer du å avbryte?",
+    "cancel_create_user_title": "Ynskjer du å avbryte?",
+    "create_user_info": "Som brukar vert du tilgjengeleg for alle som skal leggje til forfattar eller bidragsytar på resultat.",
     "expired_token_info": "Sesjonen din har gått ut. Ver venleg og logg inn på nytt.",
     "forbidden": "Forbode",
     "forbidden_description": "Du er ikkje autorisert til å sjå innhaldet på denne sida. Kontakt administrator viss dette ikkje stemmer.",
@@ -79,7 +79,7 @@
         "NOT_APPLICABLE": "Mangelfull",
         "NOT_IMPORTED": "Til import"
       },
-      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}})"
+      "verified_contributor_count": "({{verifiedContributorCount}} av {{contributorsCount}} verifisert)"
     },
     "institutions": {
       "add_institution": "Opprett institusjon",
@@ -93,6 +93,7 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Institusjonen sitt domene i Feide",
+      "institution_is_inactive": "Set til inaktiv",
       "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
       "invalid_doi_prefix": "Ugyldeg DOI prefiks. Eksempel med gyldeg format: 10.1234",
@@ -122,9 +123,10 @@
       "employee_table_caption": "Liste over alle tilsette",
       "employment_x_of_y": "Tilsetting {{selected}} av {{total}}",
       "hide_full_nin": "Gøym personnummer",
+      "must_be_curator_to_have_area_of_responsibility": "Må vere kurator for å ha ansvarsområde",
       "national_identity_number": "Fødselsnummer",
       "no_eligable_roles": "Personar utan fødselsnummer kan ikkje ha roller",
-      "no_employees_found": "Inga tilsette funne",
+      "no_employees_found": "Ingen tilsette funne",
       "other_employments": "Andre aktive tilsettingar",
       "person_id": "PersonID",
       "person_register": "Personregister",
@@ -132,6 +134,7 @@
       "remove_employment": "Fjern tilsetting",
       "remove_employment_text": "Er du sikker på at du ønskjer å fjerne denne tilsettinga?",
       "remove_employment_title": "Fjern tilsetting?",
+      "select_unit": "Vel eining",
       "show_full_nin": "Vis personnummer"
     }
   },
@@ -154,6 +157,7 @@
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
+    "employment": "",
     "employments": "Tilsettingar",
     "end_date": "Sluttdato",
     "error_occurred": "Ein uventa feil har oppstått",
@@ -174,7 +178,7 @@
     "name": "Namn",
     "next": "Neste",
     "no": "Nei",
-    "no_hits": "Inga treff",
+    "no_hits": "Ingen treff",
     "none": "Ingen",
     "not_decided": "Ikkje bestemd",
     "number_short": "Nr.",
@@ -183,14 +187,16 @@
     "open": "Opne",
     "orcid": "ORCID",
     "orcid_profile": "ORCID-profil",
-    "order": "Rekkjefølgje",
+    "order": "Rekkefølgje",
     "other": "Anna",
     "overview": "Oversyn",
     "page_title": "Nasjonalt Vitenarkiv",
     "pagination_rows_per_page": "Antal rader per side:",
     "pagination_showing_interval": "Viser {{start}}-{{end}} av {{total}}",
+    "person": "Person",
     "place": "Stad",
     "previous": "Førre",
+    "project_status": "Prosjektstatus",
     "publisher": "Utgjevar",
     "publishing_year": "",
     "rbo": "Resultatbasert omfordeling (RBO)",
@@ -346,15 +352,11 @@
     "1144": "Ernæring"
   },
   "editor": {
-    "categories_with_files": "",
-    "categories_with_files_description": "",
+    "categories_with_files": "Kategorier med filopplasting",
+    "categories_with_files_description": "Angje kategoriane der institusjonen din tillèt filopplasting",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
-      "area_of_responsibility_placeholder": "Ingen avgrensingar",
       "areas_of_responsibility": "Ansvarsområder",
-      "curator_has_extended_privileges": "Kurator har rettar til å redigere:",
-      "edit_extended_responsibility": "Endre utvida ansvarsområde",
-      "extended_area_of_resposibility": "Utvida ansvarsområde",
       "no_users_found": "Ingen brukarar funne"
     },
     "doi": {
@@ -363,8 +365,8 @@
       "institution_can_create_doi": "Institusjonen har ein profil hos DataCite som gjev Kurator tilgang til å tildele $t(common.doi_long) på resultat.",
       "institution_cannot_create_doi": "Ta kontakt med <0>Sikt</0> viss institusjonen vil tildele $t(common.doi_long)."
     },
-    "hrcs_activity": "Health Research Classification System - Activity",
-    "hrcs_categories": "Health Research Classification System - Categories",
+    "hrcs_activity": "Health Research Classification System — Activity",
+    "hrcs_categories": "Health Research Classification System Health Research Classification System — Categories Categories",
     "institution": {
       "institution_code": "Institusjonen sin kode",
       "institution_helper_text": "Kontakt <0>Sikt</0> om behov for endringar.",
@@ -394,7 +396,7 @@
       "rrs_override": "Registrator kan fråskrive seg RRS",
       "rrs_required_link": "*Felt med stjerne er obligatorisk"
     },
-    "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord ved registrering av nytt resultat",
+    "select_vocabulary_description": "Aktiver bruk av kontrollerte emneord når ein registrerer eit nytt resultat",
     "vocabulary": "Vokabular",
     "vocabulary_status": {
       "Allowed": "Tillate",
@@ -407,7 +409,7 @@
   },
   "feedback": {
     "error": {
-      "404_page": "Unnskyld, men vi kan ikkje finne sida du ser etter",
+      "404_page": "Orsak, men vi kan ikkje finne sida du leitar etter",
       "add_contributor": "Kunne ikkje leggje til bidragsytar",
       "add_employment": "Kunne ikkje leggje til tilsetting",
       "add_role": "Kunne ikkje leggje til rolle",
@@ -511,7 +513,7 @@
       "publish_as_curator": "Registrering vart publisering (ingen godkjenning nødvendig sidan du er kurator)",
       "publishing_request_approved": "Registreringa vart publisert",
       "publishing_request_rejected": "Publiseringsførespurnaden vart avvist",
-      "removed_role": "Rollen vart fjerna",
+      "removed_role": "Rolla vart fjerna",
       "reserve_doi": "DOI er reservert",
       "send_message": "Melding sendt",
       "update_customer": "Institusjon er oppdatert",
@@ -530,14 +532,14 @@
       "update_vocabulary": "{{vocabulary}} er no {{status}}"
     },
     "validation": {
-      "announcement_required": "Du må ha minst ein offentleggjering",
+      "announcement_required": "Du må ha minst ei offentleggjering",
       "author_required": "Du må ha minst ein forfattar på denne registreringa",
       "cannot_be_after": "{{field}} kan ikkje vere etter {{limitField}}",
       "cannot_be_before": "{{field}} kan ikkje være før {{limitField}}",
       "contributor_required": "Du må ha minst ein bidragsytar på denne registreringa",
       "editor_required": "Du må ha minst ein redaktør på denne registreringa",
       "employments_missing_data": "Alle tilsettingar må ha stilling, stillingsprosent og startdato",
-      "has_invalid_format": "{{field}} har ugyldeg format",
+      "has_invalid_format": "{{field}} har ugyldig format",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
       "invalid_symbol_in_name": "{{field}} kan ikkje innehalde tal eller spesialteikn",
       "is_required": "{{-field}} er obligatorisk",
@@ -566,14 +568,14 @@
   },
   "licenses": {
     "description": {
-      "cc0": "Den person som har knytt eit verk til dette aktstykke (deed) har, i den utstrekning lova tillèt, erklært dette verket er i det fri ved å seie frå seg alle dei opphavsrettar og nærståande rettar som vedkomande hadde til verket.",
-      "cc_by": "Dele - kopiere, distribuere og spre verket i kva for eit som helst medium eller format.\nBearbeide - remixe, endre og byggje vidare på materialet til kva for eit som helst føremål, inkludert kommersielle.\n\nDu må oppgje korrekt kredigering, oppgje ei lenkje til lisensen og indikere om endringar vart gjort.",
-      "cc_by_nc": "Dele - kopiere, distribuere og spre verket i kva for eit som helst medium eller format.\nTilarbeide - remixe, endre og byggje vidare på materialet.\n\nDu må oppgje korrekt kreditering, oppgje ei lenkje til lisensen og indikere om endringar vart gjort.\nDu kan ikkje nytte materialet til kommersielle føremål.",
-      "cc_by_nc_nd": "Dele - kopiere, distribuere og spre verket i kva for eit som helst medium eller format.\n\nDu må oppgje korrekt kreditering, oppgje ei lenkje til lisensen, og indikere om endringar vart gjort.\nDu kan ikkje nytte materialet til kommersielle føremål.\nViss du remixer, tilarbeider eller byggjer på materialet, kan du ikkje distribuere det endra materialet.",
-      "cc_by_nc_sa": "Dele - kopiere, distribuere og spre verket i kva for eit som helst medium eller format.\nBearbeide - remixe, endre og byggje vidare på materialet.\n\nDu må oppgje korrekt kreditering, oppgje ei lenkje til lisensen og indikere om endringar vart gjort.\nDu kan ikkje nytte materialet til kommersielle føremål.\nViss du remixer, tilarbeider eller byggjer på materialet, må du distribuere bidraga dine under same lisens som originalen.",
-      "cc_by_nd": "Dele - kopiere, distribuere og spre verket i kva for eit som helst medium eller format til eit kva for eit som helst føremål, inkludert kommersielle.\n\nDu må oppgje korrekt kreditering, oppgje ei lenkje til lisensen, og indikere om endringar vart gjort.\nViss du remixer, tilarbeider eller byggjer på materialet, kan du ikkje distribuere det endra materialet.",
-      "cc_by_sa": "Dele - kopiere, distribuere og spre verket i kva for eit som helst medium eller format.\nTilarbeide - remixe, endre og byggje vidare på materialet til et kva for eit som helst føremål, inkludert kommersielle.\n\nDu må oppgje korrekt kreditering, oppgje ei lenkje til lisensen, og indikere om endringar vart gjort.\nViss du remixer, tilarbeider eller byggjer på materialet, må du distribuere bidraga dine under same lisens som originalen.",
-      "rights_reserved": "Dette arbeidet er publisert her for personleg bruk og kun i samsvar med utgjevar sine reglar og føresetnadar for bruk av eigenaktiverte versjonar."
+      "cc0": "Den person som har knytt eit verk til dette aktstykke (deed) har, i den utstrekning lova tillèt, erklært at dette verket er i det fri ved å seie frå seg alle opphavsrettar og nærståande rettar som vedkomande hadde til verket.",
+      "cc_by": "Dele — kopiere, distribuere og spre verket i kva som helst medium eller format. \nBearbeide — remixe, endre, og byggje vidare på materialet til eit kva som helst føremål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi ei lenke til lisensen, og indikere om endringar er blitt gjort.",
+      "cc_by_nc": "Dele — kopiere, distribuere og spre verket i kva som helst medium eller format.\nTilarbeide — remixe, endre og byggje vidare på materialet.\n\nDu må oppgi korrekt kreditering, oppgi ei lenkje til lisensen og indikere om endringar vart gjort.\nDu kan ikkje nytte materialet til kommersielle føremål.",
+      "cc_by_nc_nd": "Dele — kopiere, distribuere og spre verket i kva som helst medium eller format.\n\nDu må oppgi korrekt kreditering, oppgi ei lenkje til lisensen, og indikere om endringar vart gjort.\nDu kan ikkje nytte materialet til kommersielle føremål.\nViss du remixer, tilarbeider eller byggjer på materialet, kan du ikkje distribuere det endra materialet.",
+      "cc_by_nc_sa": "Dele — kopiere, distribuere og spre verket i kva som helst medium eller format.\nBearbeide — remixe, endre og byggje vidare på materialet.\n\nDu må oppgi korrekt kreditering, oppgi ei lenkje til lisensen og indikere om endringar vart gjort.\nDu kan ikkje nytte materialet til kommersielle føremål.\nViss du remixer, tilarbeider eller byggjer på materialet, må du distribuere bidraga dine under same lisens som originalen.",
+      "cc_by_nd": "Dele — kopiere, distribuere og spre verket i kva som helst medium eller format til eit kva som helst føremål, inkludert kommersielle.\n\nDu må oppgi korrekt kreditering, oppgi ei lenkje til lisensen, og indikere om endringar vart gjort.\nViss du remixer, tilarbeider eller byggjer på materialet, kan du ikkje distribuere det endra materialet.",
+      "cc_by_sa": "Dele — kopiere, distribuere og spre verket i kva som helst medium eller format.\nTilarbeide — remixe, endre og byggje vidare på materialet til eit kva som helst føremål, inkludert kommersielle.\n\nDu må oppgi korrekt kreditering, oppgi ei lenkje til lisensen, og indikere om endringar vart gjort.\nViss du remixer, tilarbeider eller byggjer på materialet, må du distribuere bidraga dine under same lisens som originalen.",
+      "rights_reserved": "Dette arbeidet er publisert her for personleg bruk, og berre i samsvar med utgjevaren sine reglar og vilkår for bruk av egenarkiverte versjonar. \n\n\"Utgjevaren sine vilkår\" er ikkje ein lisens, men ei erklæring om at nokre rettar er forbeholdt utgjevaren, forfattaren og moglegvis andre. Lesaren må sjølv avklare kva lova tillèt hen å gjere med dette verket, utover å lese det."
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -608,7 +610,7 @@
       "files_rejected": "Fil(er) avvist",
       "general_support_pending": "Venter på oppfølging",
       "mark_as_completed": "Sett til ferdig",
-      "no_messages": "Du har inga meldingar",
+      "no_messages": "Du har ingen meldingar",
       "ticket_types": {
         "Closed": "Avvist",
         "Completed": "Ferdig",
@@ -625,6 +627,7 @@
     "my_profile": {
       "background": "Bakgrunn",
       "edit_promoted_publication": "Legg til/fjern som favoritt",
+      "edit_research_profile": "Rediger forskarprofil",
       "field_and_background": {
         "background_placeholder": "Skriv inn",
         "english": "Engelsk",
@@ -655,12 +658,13 @@
         "dialog": {
           "heading": "Kople eller opprette ORCID iD",
           "paragraph0": "Logg inn på din ORCID-konto eller registrer deg viss du ikkje har ein konto.",
-          "paragraph1": "ORCID gjev deg ein varig digital identifikator som du sjølv eig og kontrollerer, og som skil deg frå andre froskarar. Den kan vert brukast i fleire samanhengar. Ved å kople din ORCID iD er det enklare å identifisera deg som forfattar, og å hente og dele dine publikasjonar."
+          "paragraph1": "ORCID gjev deg ein varig digital identifikator som du sjølv eig og kontrollerer, og som skil deg frå andre froskarar. Den kan brukast i fleire samanhengar. Ved å kople din ORCID iD er det enklare å identifisere deg som forfattar, og å hente og dele dine publikasjonar."
         },
-        "orcid_description": "Kople din ORCID iD ved å logge på ORCID. Eller registrer deg for å få ein ORCID iD og kople denne. Då vert det enklare å identifisere deg",
+        "orcid_description": "Kople din ORCID iD ved å logge på ORCID. Eller registrer deg for å få ein ORCID iD og kople denne. Då blir det enklare å identifisere deg",
         "remove_connection": "Fjern kopling til ORCID",
-        "remove_connection_info": "Er du sikker på at du vil fjerne koplinga til ORCID?\n\nViss du ønskjer å trekkje Sikts godkjenning til å lese din ORCID attende, må du gå inn på din ORCID-profil."
+        "remove_connection_info": "Er du sikker på at du vil fjerne koplinga til ORCID?\n\nViss du ønskjer å trekkje Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
+      "overview_and_settings": "",
       "preferred_first_name": "Føretrekt fornamn",
       "preferred_last_name": "Føretrekt etternamn",
       "profile_picture": "Profilbilete",
@@ -675,7 +679,12 @@
       "results": "Resultat",
       "telephone": "Telefon",
       "user_profile": "Brukarprofil",
-      "user_profile_description": "Her kan du fylle inn og merke kva du ønskjer skal gå fram på din offisielle forskarprofil."
+      "user_profile_description": "Her kan du fylle inn og merke kva du ønskjer skal gå fram på din offisielle forskarprofil.",
+      "user_role_and_help": {
+        "application_help_helper_text": "",
+        "application_help_text": "",
+        "user_role_and_help": ""
+      }
     },
     "no_employments": "Ingen tilsettingar",
     "project_registration_status": {
@@ -684,6 +693,7 @@
       "ongoing": "Pågåande"
     },
     "project_registrations": "Prosjektregistreringar",
+    "public_research_profile": "Offentleg forskarprofil",
     "registrations": {
       "delete_all_draft_registrations": "Slett alle kladdar",
       "delete_all_draft_registrations_message": "Slett alle upubliserte registreringar?",
@@ -695,7 +705,7 @@
     "research_profile": "Forskarprofil",
     "roles": {
       "app_admin": "Systemadministrator",
-      "app_admin_description": "Registrerer nye institusjonar i tenesta og tildeler rollen Administrator.",
+      "app_admin_description": "Registrerer nye institusjonar i tenesta og tildeler rolla Administrator.",
       "creator": "Registrator",
       "creator_description": "Kan registrere publikasjonar og andre ressursar.",
       "curator": "Kurator",
@@ -704,13 +714,13 @@
       "editor": "Redaktør",
       "editor_description": "Bestemmer tilgang til kontrollerte vokabular og publiseringsstrategi for institusjonen.",
       "institution_admin": "Administrator",
-      "institution_admin_description": "Vedlikehaldar institusjonen sine opplysingar i personregisteret og tildeler roller i tenesta.",
+      "institution_admin_description": "Vedlikeheld institusjonen sine opplysingar i personregisteret og tildeler roller i tenesta.",
       "institution_admins": "Administratorar",
       "internal_importer": "Intern importør",
       "internal_importer_description": "Kan handsame importkandidatar",
       "no_active_employments": "Du har inga roller av di du ikkje har nokre aktive tilsettingar, og har ikkje tilgang til å registrere.",
-      "no_roles": "Du har inga roller av di du ikkje har fått tildelt roller av din adiminstrator",
-      "not_customer": "Du har inga roller av di din institusjon er ukjend for applikasjonen",
+      "no_roles": "Du har ingen roller fordi du ikkje har fått tildelt roller av administratoren din",
+      "not_customer": "Du har ingen roller fordi institusjonen din er ukjend for applikasjonen",
       "nvi_curator": "NVI-kurator",
       "nvi_curator_description": "Kan sjå og handsame NVI-kandidatar.",
       "publishing_curator": "",
@@ -722,22 +732,22 @@
   "privacy": {
     "about": {
       "heading": "Om denne personvernerklæringa",
-      "paragraph": "Denne personvernerklæringa beskriv korleis handsamingsansvarleg handterer dine personopplysingar i tenesta. Føremålet med denne personvernerklæringa er å informere deg om kva for nokre personopplysingar som vert handsama, korleis dei vert handsama, kven som er ansvarleg for handsaminga, kva for nokre rettar du har kven du kan kontakte."
+      "paragraph": "Denne personvernerklæringa beskriv korleis behandlingsansvarleg handterer dine personopplysingar i tenesta. Føremålet med denne personvernerklæringa er å informere deg om kva personopplysingar som blir behandla, korleis dei blir behandla, kven som er ansvarleg for behandlinga, kva rettar du har og kven du kan kontakte."
     },
     "automatic_case_processing": {
-      "heading": "Automatisk sakshandsaming.",
-      "paragraph0": "Personoppysingane knytt til systembrukarar vil ikkje vere gjenstand for automatisert sakshandsaming eller profilering.",
-      "paragraph1": "Opne personopplysingar knytt til ressursar registrert i tenesta kan verte utsett for profilering av andre tenester som kopierer og/eller indekser opplysingar i tenesta, men profileres ikkje som ein del av tenesta."
+      "heading": "Automatisk saksbehandling",
+      "paragraph0": "Personopplysingane knytta til systembrukarar vil ikkje vere gjenstand for automatisert saksbehandling eller profilering.",
+      "paragraph1": "Opne personopplysingar knytta til ressursar registrert i tenesta kan utsetjast profilering av andre tenester som kopierer og/eller indekser opplysingar i tenesta, men vert ikkje profilert som ein del av tenesta."
     },
     "contact": {
       "heading": "Kontakt",
       "section0": {
-        "heading": "Handsamingsansvarleg",
-        "paragraph": "Institusjonen er handsamingsansvarleg for personopplysingar i tenesta og er primært kontaktpunkt for brukarar."
+        "heading": "Behandlingsansvarleg",
+        "paragraph": "Institusjonen er behandlingsansvarleg for personopplysingar i tenesta og er primært kontaktpunkt for brukarar."
       },
       "section1": {
         "heading": "Databehandlar",
-        "paragraph": "Sikt utviklar og forvaltar tenesta på vegne av handsamingsansvarleg, og har rollen som databehandlar."
+        "paragraph": "Sikt utviklar og forvaltar tenesta på vegne av behandlingsansvarleg, og har rolla som databehandlar."
       },
       "section2": {
         "email": "Epost: <0><0></0></0>",
@@ -747,11 +757,11 @@
     },
     "disclosure_of_data": {
       "heading": "Utlevering av dine personopplysingar til andre",
-      "paragraph0": "Utlevering eller eksport av data vert definert som kvar og ein avgiving av data forutan til eiga system/handsaming eller til den registrerte sjølve, eller nokon som tek imot data på deira vegne.",
-      "paragraph1": "Personopplysingar knytt til brukarar vert ikkje overført til land utanfor EU/EØS.",
+      "paragraph0": "Utlevering eller eksport av data vert definert som å gje frå seg data til eit anna føremål enn til eige system/behandling, eller til den registrerte sjølv eller nokon som tar imot data på deira vegner.",
+      "paragraph1": "Personopplysingar knytt til brukarar blir ikkje overførte til land utanfor EU/EØS.",
       "paragraph2": "Tenesta er drifta på servere innanfor EU/EØS.",
       "paragraph3": {
-        "intro": "Dine personopplysingar vert levert ut til Sikt som er leverandør av tenesta, og til deira underleverandører:",
+        "intro": "Dine personopplysingar blir levert ut til Sikt, som er leverandør av tenesta, og til deira underleverandørar:",
         "table": {
           "caption": "Oversyn over underleverandører som kan ta imot personopplysingar",
           "header": {
@@ -772,8 +782,8 @@
           }
         }
       },
-      "paragraph4": "Tilsette hos underleverandørane, som har behov for det i sin jobb, vil ha tilpassa tilgang til dine persondata for å kunne gjere stedleg vedlikehald, brukarstøtte og eventuell retting av feil i tenesta.",
-      "paragraph5": "Opne personopplysingar knytt til ressursane vert delt opent med eksterne tenester. Dette inkluderer søkjetenester som Oria og OpenAIRE, samt søkjemotorar som indekserer data via nettstadene - til dømes Google, Baidu, Bing med fleire.",
+      "paragraph4": "Tilsette hos underleverandørane, som har behov for det i jobben sin, vil ha tilpassa tilgang til dine personopplysingar for å kunne utføre stedleg vedlikehald, brukarstøtte og eventuell retting av feil i tenesta.",
+      "paragraph5": "Opne personopplysingar knytt til ressursane vert delt opent med eksterne tenester. Dette inkluderer søkjetenester som Oria og OpenAIRE, samt søkjemotorar som indekserer data via nettstadene — til dømes Google, Baidu, Bing med fleire.",
       "paragraph6": {
         "intro": "Sjå følgjande tabell for tenesta sine integrasjonar:",
         "table": {
@@ -791,16 +801,16 @@
           "row1": {
             "col0": "Import av materiale til NVA frå eksterne tenester",
             "col1": "Registrering og publisering i NVA.",
-            "col2": "Kjelder definert av handsamingsansvarleg"
+            "col2": "Kjelder definert av behandlingsansvarleg"
           },
           "row2": {
             "col0": "Eksport av metadata frå NVA til ekstern teneste",
             "col1": "Eksport av metadata for ressursar til andre tenester for presentasjon eller kryssregistering. Til dømes Oria for å leggje til rette for attfinning.",
-            "col2": "Sikt for Oria. Kjelder definert av handsamingsansvarleg."
+            "col2": "Sikt for Oria. Kjelder definert av behandlingsansvarleg."
           },
           "row3": {
             "col0": "DOI og Datacite",
-            "col1": "Registrator kan be om tildeling av ein Document Object Identifier (DOI) til ein ressurs i NVA. Dette vil føre til at valde metadata vert publisert i DataCite - ein kjelde som vert indeksert regelmessig av søkjemotorar.",
+            "col1": "Registrator kan be om tildeling av ein Document Object Identifier (DOI) til ein ressurs i NVA. Dette vil føre til at utvalde metadata blir publisert i DataCite — ei kjelde som regelmessig blir indeksert av søkjemotorar.",
             "col2": "DataCite"
           },
           "row4": {
@@ -816,15 +826,15 @@
         }
       }
     },
-    "privacy_statement": "Personvernerklæring",
+    "privacy_statement": "Personvern og informasjonskapslar",
     "purpose": {
-      "heading": "Føremålet med handsaming av personopplysingar i tenesta",
-      "paragraph": "Tenesta handsamar ulike persontypar med følgjande føremål:",
+      "heading": "Føremålet med behandling av personopplysingar i tenesta",
+      "paragraph": "Tenesta behandlar ulike persontypar med følgjande føremål:",
       "table": {
         "header": {
           "col0": "Typer",
           "col1": "$t(common.description)",
-          "col2": "Føremål med registrering og handsaming"
+          "col2": "Føremål med registrering og behandling"
         },
         "row0": {
           "col0": "Administrative brukarar",
@@ -1043,6 +1053,7 @@
     "summary": "Samandrag"
   },
   "registration": {
+    "citation_points_to": "",
     "contributors": {
       "add_affiliation": "Legg til tilknyting",
       "add_contributor": "Legg til bidragsytar",
@@ -1180,6 +1191,7 @@
       "administrative_contract": "Intern fil som aldri skal publiserast. F.eks. forfattaravtale eller anna dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Føresetnad for bruk",
       "embargo": "Embargo",
+      "file_and_license_info": "Kvar fil i NVA må ha ein lisens, slik at lesaren er informert om kva dei har lov å gjere med innhaldet.",
       "file_publish_date_helper_text": "Fila er låst fram til angjeve dato",
       "files": "Filer",
       "files_are_not_published": "Filer vert ikkje publisert",
@@ -1206,14 +1218,14 @@
       "resource_has_no_files_or_links_paragraph1": "FAIR Data Principles (Findable, Accessible, Interoperable, and Reusable), er eit sett med prinsipp for å støtte gjenbruk av digitale ressursar. NFR og EC stiller krav til at data skal vere tilgjengeleg og deponert saman med metadata som avklarer eventuelle føresetnadar for tilgang.",
       "size": "Storleik",
       "version_accepted_helper_text": "",
-      "version_accepted_helper_text_metadata_only": "",
+      "version_accepted_helper_text_metadata_only": "<0>Akseptert versjon</0>: forfattaren sin siste gjennomarbeidde versjon etter at artikkelen har vore gjennom fagfellevurdering, slik den er sendt til forlaget. Denne versjonen har ikkje forlaget sine sidetal og grafiske stil, eller eventuelle redaksjonelle omskrivingar, som den publiserte versjonen har. Denne versjonen bør delast i NVA, helst i pdf-format, med ein CC-BY-lisens.",
       "version_embargo_helper_text": "",
       "version_helper_text": "",
       "version_helper_text_metadata_only": "",
       "version_published_helper_text": "",
       "version_published_helper_text_metadata_only": "",
       "version_publishing_agreement_helper_text": "",
-      "version_publishing_agreement_helper_text_metadata_only": ""
+      "version_publishing_agreement_helper_text_metadata_only": "<0>Forfattaravtalen</0> er ein kontrakt mellom ein utgjevar og ein artist eller forfattar. Den spesifiserer forhold som intellektuelt eigarskap, kor og korleis verket kan gjerast offentleg, betalingar, ansvarsvern, konfidensialitet og royalty. Dette dokumentet er til stor hjelp for kuratorar når dei gjer vurderingar om lisens og publiseringsdato (embargo). Slike dokument vil ikkje vere synleg for andre."
     },
     "heading": {
       "contributors": "Bidragsytere",
@@ -1273,6 +1285,7 @@
         "publish_metadata": "Publiser metadata",
         "publish_metadata_and_files": "Publiser metadata og fil(er)",
         "registration_is_published": "",
+        "registration_is_published_with_files": "Registreringa er publisert. Metadata og fil(er) er offentleg tilgjengelege.",
         "registration_will_soon_be_published": "Registreringa vil verte publisert om kort tid. Last inn siden på nytt om litt for å sjå oppdatert info.",
         "reload": "Last inn på nytt",
         "review_preview_before_publishing": "Sjå over utkast før du går vidare.",
@@ -1622,10 +1635,10 @@
       "place_for_event": "Stad for arrangement",
       "print_issn": "Print ISSN",
       "protected_degree_type": "Du manglar tilgang. Kontakt institusjonen som har gitt deg graden for å få den publisert. Viss den er utanlandsk, be om kuratorstøtte for hjelp til publiseringa.",
-      "protected_file_type": "",
+      "protected_file_type": "Din institusjon har valt å ikkje støtte opplasting av filer for denne kategorien.",
       "publisher_or_organizer": "Utgjevar/arrangør eller liknande",
-      "related_result": "",
-      "related_results": "",
+      "related_result": "Relatert resultat",
+      "related_results": "Relaterte resultat",
       "remove_doi": "Fjern DOI",
       "remove_doi_text": "Du kan fjerne DOI som vart nytta ved registeringsstart. Ønskjer du å fjerne kobling til original DOI?",
       "research_data": {
@@ -1671,6 +1684,7 @@
       "type_work_specified": "Eigendefinert type verk",
       "volume": "Volum"
     },
+    "result_is_deleted": "Resultatet er sletta",
     "status": {
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Sletta",
@@ -1708,14 +1722,17 @@
     "search_for_sub_unit": "",
     "search_for_title": "",
     "search_placeholder": "Søk etter tittel, bidragsytar, samandrag, osv.",
-    "search_project_placeholder": "",
+    "search_project_placeholder": "Søk etter tittel, prosjekt-ID, tilskot-ID eller deltakar",
     "search_term_label": "Verdi",
     "sector": "Sektor",
     "select_one_or_more_categories": "",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endra",
+    "sort_by_name_asc": "",
+    "sort_by_name_desc": "",
     "sort_by_published_date_asc": "Publiseringsdato (eldste fyrst)",
     "sort_by_published_date_desc": "Publiseringsdato (nyaste fyrst)",
+    "sorted_by": "",
     "year_from": "",
     "year_to": ""
   },
