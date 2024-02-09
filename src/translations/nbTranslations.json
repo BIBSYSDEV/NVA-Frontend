@@ -1729,6 +1729,8 @@
     "sort_by": "Sorter etter",
     "sorted_by": "Sortert etter",
     "sort_by_modified_date": "Sist endret",
+    "sort_by_name_asc": "Navn A-Å",
+    "sort_by_name_desc": "Navn Å-A",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
     "year_from": "Fra år",
