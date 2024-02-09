@@ -109,94 +109,99 @@ export const CustomerInstitutionMetadataForm = ({
       {({ values, isSubmitting, setValues, setFieldValue, resetForm }: FormikProps<CustomerInstitutionFormData>) => (
         <Form noValidate>
           <InputContainerBox>
-            <Field name={CustomerInstitutionFieldNames.Name}>
-              {({ field, meta: { touched, error } }: FieldProps<string>) =>
-                !editMode ? (
-                  <OrganizationSearchField
-                    onChange={(selectedInstitution) => {
-                      const name = selectedInstitution?.labels ? getLanguageString(selectedInstitution.labels) : '';
-                      setValues({
-                        canAssignDoi: false,
-                        customer: {
-                          ...emptyCustomerInstitution,
-                          name,
-                          displayName: name,
-                          cristinId: selectedInstitution?.id ?? '',
-                        },
-                        doiAgent: emptyProtectedDoiAgent,
-                      });
-                    }}
-                    errorMessage={touched && !!error ? error : undefined}
-                    fieldInputProps={field}
-                  />
-                ) : (
-                  <TextField
-                    variant="filled"
-                    label={t('common.institution')}
-                    data-testid={dataTestId.organization.searchField}
-                    required
-                    disabled
-                    {...field}
-                  />
-                )
-              }
-            </Field>
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.DisplayName}
-              label={t('basic_data.institutions.display_name')}
-              required
-              dataTestId={dataTestId.basicData.institutionAdmin.displayNameField}
-            />
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.ArchiveName}
-              label={t('basic_data.institutions.archive_name')}
-              dataTestId={dataTestId.basicData.institutionAdmin.archiveNameField}
-            />
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '1.5rem' }}>
+              <Field name={CustomerInstitutionFieldNames.Name}>
+                {({ field, meta: { touched, error } }: FieldProps<string>) =>
+                  !editMode ? (
+                    <OrganizationSearchField
+                      onChange={(selectedInstitution) => {
+                        const name = selectedInstitution?.labels ? getLanguageString(selectedInstitution.labels) : '';
+                        setValues({
+                          canAssignDoi: false,
+                          customer: {
+                            ...emptyCustomerInstitution,
+                            name,
+                            displayName: name,
+                            cristinId: selectedInstitution?.id ?? '',
+                          },
+                          doiAgent: emptyProtectedDoiAgent,
+                        });
+                      }}
+                      errorMessage={touched && !!error ? error : undefined}
+                      fieldInputProps={field}
+                    />
+                  ) : (
+                    <TextField
+                      fullWidth
+                      variant="filled"
+                      label={t('common.institution')}
+                      data-testid={dataTestId.organization.searchField}
+                      required
+                      disabled
+                      {...field}
+                    />
+                  )
+                }
+              </Field>
+              <CustomerInstitutionTextField
+                name={CustomerInstitutionFieldNames.DisplayName}
+                label={t('basic_data.institutions.display_name')}
+                required
+                dataTestId={dataTestId.basicData.institutionAdmin.displayNameField}
+              />
+              <CustomerInstitutionTextField
+                name={CustomerInstitutionFieldNames.ArchiveName}
+                label={t('basic_data.institutions.archive_name')}
+                dataTestId={dataTestId.basicData.institutionAdmin.archiveNameField}
+              />
+            </Box>
 
             <Divider />
 
-            <Field name={CustomerInstitutionFieldNames.Sector}>
-              {({ field }: FieldProps) => (
-                <FormControl>
-                  <InputLabel id="demo-simple-select-label"> {t('basic_data.institutions.sector')}</InputLabel>
-                  <Select
-                    required
-                    variant="filled"
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={field.value}
-                    onChange={(sector) => setFieldValue(field.name, sector.target.value)}>
-                    {Object.values(Sector).map((sector) => (
-                      <MenuItem
-                        key={sector}
-                        value={sector}
-                        data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}>
-                        {t(`basic_data.institutions.sector_values.${sector}`)}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              )}
-            </Field>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '1.5rem' }}>
+              <Field name={CustomerInstitutionFieldNames.Sector}>
+                {({ field }: FieldProps) => (
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label"> {t('basic_data.institutions.sector')}</InputLabel>
+                    <Select
+                      fullWidth
+                      required
+                      variant="filled"
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={field.value}
+                      onChange={(sector) => setFieldValue(field.name, sector.target.value)}>
+                      {Object.values(Sector).map((sector) => (
+                        <MenuItem
+                          key={sector}
+                          value={sector}
+                          data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}>
+                          {t(`basic_data.institutions.sector_values.${sector}`)}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
+              </Field>
 
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
-              label={t('basic_data.institutions.feide_organization_domain')}
-              dataTestId={dataTestId.basicData.institutionAdmin.feideField}
-            />
+              <CustomerInstitutionTextField
+                name={CustomerInstitutionFieldNames.FeideOrganizationDomain}
+                label={t('basic_data.institutions.feide_organization_domain')}
+                dataTestId={dataTestId.basicData.institutionAdmin.feideField}
+              />
 
-            <CustomerInstitutionTextField
-              name={CustomerInstitutionFieldNames.RorId}
-              label={t('basic_data.institutions.ror')}
-              dataTestId={dataTestId.basicData.institutionAdmin.rorField}
-            />
-
+              <CustomerInstitutionTextField
+                name={CustomerInstitutionFieldNames.RorId}
+                label={t('basic_data.institutions.ror')}
+                dataTestId={dataTestId.basicData.institutionAdmin.rorField}
+              />
+            </Box>
             <Divider />
 
-            <div>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '1.5rem' }}>
               <Field name={CustomerInstitutionFieldNames.NviInstitution}>
                 {({ field }: FieldProps<boolean>) => (
-                  <>
+                  <Box>
                     <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                       {t('common.nvi')}
                     </FormLabel>
@@ -216,13 +221,13 @@ export const CustomerInstitutionMetadataForm = ({
                         />
                       }
                     />
-                  </>
+                  </Box>
                 )}
               </Field>
 
               <Field name={CustomerInstitutionFieldNames.RboInstitution}>
                 {({ field }: FieldProps<boolean>) => (
-                  <>
+                  <Box>
                     <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                       {t('common.rbo')}
                     </FormLabel>
@@ -237,10 +242,10 @@ export const CustomerInstitutionMetadataForm = ({
                         />
                       }
                     />
-                  </>
+                  </Box>
                 )}
               </Field>
-            </div>
+            </Box>
 
             <Divider />
 
@@ -267,68 +272,68 @@ export const CustomerInstitutionMetadataForm = ({
             <Divider />
 
             {editMode && (
-              <div>
-                <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
-                  {t('common.doi_long')}
-                </FormLabel>
-                <Field name={CustomerInstitutionFieldNames.CanAssignDoi}>
-                  {({ field }: FieldProps<boolean>) => (
-                    <FormControlLabel
-                      label={t('basic_data.institutions.can_assign_doi')}
-                      control={
-                        <Checkbox
-                          data-testid={dataTestId.basicData.institutionAdmin.canAssignDoiCheckbox}
-                          {...field}
-                          onChange={(_event, checked) => {
-                            if (!checked) {
-                              setFieldValue(CustomerInstitutionFieldNames.DoiUsername, '');
-                              setFieldValue(CustomerInstitutionFieldNames.DoiPrefix, '');
-                              setFieldValue(CustomerInstitutionFieldNames.DoiPassword, undefined);
-                            }
-                            setFieldValue(CustomerInstitutionFieldNames.CanAssignDoi, checked);
-                          }}
-                          checked={field.value}
-                        />
-                      }
-                    />
-                  )}
-                </Field>
-
-                <Box sx={{ display: 'flex', gap: '1rem' }}>
-                  <Field name={CustomerInstitutionFieldNames.DoiUsername}>
-                    {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
-                      <TextField
-                        {...field}
-                        data-testid={dataTestId.basicData.institutionAdmin.doiUsernameField}
-                        label={t('basic_data.institutions.doi_repo_id')}
-                        required={values.canAssignDoi}
-                        disabled={!values.canAssignDoi}
-                        fullWidth
-                        onChange={(event) => {
-                          const inputValue = event.target.value;
-                          const formattedValue = inputValue.toUpperCase().replace(/[^A-Z.]/g, '');
-                          setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
-                        }}
-                        variant="filled"
-                        error={touched && !!error}
-                        helperText={<ErrorMessage name={field.name} />}
+              <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: '1.5rem', alignItems: 'flex-start' }}>
+                <Box>
+                  <FormLabel component="legend" sx={{ fontWeight: 'bold', minWidth: '18rem' }}>
+                    {t('common.doi_long')}
+                  </FormLabel>
+                  <Field fullwidt name={CustomerInstitutionFieldNames.CanAssignDoi}>
+                    {({ field }: FieldProps<boolean>) => (
+                      <FormControlLabel
+                        label={t('basic_data.institutions.can_assign_doi')}
+                        control={
+                          <Checkbox
+                            data-testid={dataTestId.basicData.institutionAdmin.canAssignDoiCheckbox}
+                            {...field}
+                            onChange={(_event, checked) => {
+                              if (!checked) {
+                                setFieldValue(CustomerInstitutionFieldNames.DoiUsername, '');
+                                setFieldValue(CustomerInstitutionFieldNames.DoiPrefix, '');
+                                setFieldValue(CustomerInstitutionFieldNames.DoiPassword, undefined);
+                              }
+                              setFieldValue(CustomerInstitutionFieldNames.CanAssignDoi, checked);
+                            }}
+                            checked={field.value}
+                          />
+                        }
                       />
                     )}
                   </Field>
-                  <CustomerInstitutionTextField
-                    disabled={!values.canAssignDoi}
-                    required={values.canAssignDoi}
-                    name={CustomerInstitutionFieldNames.DoiPrefix}
-                    label={t('basic_data.institutions.doi_prefix')}
-                    dataTestId={dataTestId.basicData.institutionAdmin.doiPrefixField}
-                  />
-
-                  <CustomerDoiPasswordField
-                    disabled={!values.canAssignDoi}
-                    doiAgentId={customerInstitution?.doiAgent.id ?? ''}
-                  />
                 </Box>
-              </div>
+
+                <Field name={CustomerInstitutionFieldNames.DoiUsername}>
+                  {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+                    <TextField
+                      {...field}
+                      data-testid={dataTestId.basicData.institutionAdmin.doiUsernameField}
+                      label={t('basic_data.institutions.doi_repo_id')}
+                      required={values.canAssignDoi}
+                      disabled={!values.canAssignDoi}
+                      fullWidth
+                      onChange={(event) => {
+                        const inputValue = event.target.value;
+                        const formattedValue = inputValue.toUpperCase().replace(/[^A-Z.]/g, '');
+                        setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
+                      }}
+                      variant="filled"
+                      error={touched && !!error}
+                      helperText={<ErrorMessage name={field.name} />}
+                    />
+                  )}
+                </Field>
+                <CustomerInstitutionTextField
+                  disabled={!values.canAssignDoi}
+                  required={values.canAssignDoi}
+                  name={CustomerInstitutionFieldNames.DoiPrefix}
+                  label={t('basic_data.institutions.doi_prefix')}
+                  dataTestId={dataTestId.basicData.institutionAdmin.doiPrefixField}
+                />
+
+                <CustomerDoiPasswordField
+                  disabled={!values.canAssignDoi}
+                  doiAgentId={customerInstitution?.doiAgent.id ?? ''}
+                />
+              </Box>
             )}
             {editMode && customerInstitution && (
               <>
