@@ -286,7 +286,6 @@ export const MyProfile = () => {
                     gridArea: 'profile-picture',
                     display: 'flex',
                     flexDirection: 'column',
-                    justifyContent: 'start',
                     alignItems: 'center',
                     mb: { xs: '1rem', lg: 0 },
                   }}>
