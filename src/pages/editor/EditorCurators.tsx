@@ -37,8 +37,8 @@ export const EditorCurators = () => {
     enabled: !!customerId,
     queryFn: () => (customerId ? fetchUsers(customerId, rolesWithAreaOfResponsibility) : undefined),
     meta: { errorMessage: t('feedback.error.get_users_for_institution') },
-    refetchOnWindowFocus: true,
   });
+
   const curators = curatorsQuery.data ?? [];
   const filteredCurators = curators.filter((curator) => {
     const name = `${curator.givenName} ${curator.familyName}`.toLowerCase();
@@ -88,7 +88,7 @@ export const EditorCurators = () => {
 
               <TableBody>
                 {curatorsOnPage.map((curator) => (
-                  <CuratorRow key={curator.username} curator={curator} />
+                  <CuratorRow key={curator.username} curator={curator} refetchCurators={curatorsQuery.refetch} />
                 ))}
               </TableBody>
             </Table>
