@@ -166,7 +166,6 @@
     "filter": "Filter",
     "first_name": "Fornavn",
     "funding": "Finansiering",
-    "project_status": "Prosjektstatus",
     "help": "Hjelp",
     "id": "ID",
     "institution": "Institusjon",
@@ -198,6 +197,7 @@
     "person": "Person",
     "place": "Sted",
     "previous": "Forrige",
+    "project_status": "Prosjektstatus",
     "publisher": "Utgiver",
     "publishing_year": "Publiseringsår",
     "rbo": "Resultatbasert omfordeling (RBO)",
@@ -698,8 +698,8 @@
       "not_started": "Ikke startet",
       "ongoing": "Pågående"
     },
-    "public_research_profile": "Offentlig forskerprofil",
     "project_registrations": "Prosjektregistreringer",
+    "public_research_profile": "Offentlig forskerprofil",
     "registrations": {
       "delete_all_draft_registrations": "Slett alle kladder",
       "delete_all_draft_registrations_message": "Slett alle upubliserte registreringer?",
@@ -1385,7 +1385,6 @@
       "start_with_uploading_file_description": "Last opp fil hvis ressursen ikke er publisert på Internett",
       "start_with_uploading_file_title": "Start med å laste opp fil"
     },
-    "result_is_deleted": "Resultatet er slettet",
     "resource_type": {
       "article_number": "Artikkelnummer",
       "artistic": {
@@ -1691,6 +1690,7 @@
       "type_work_specified": "Egendefinert type verk",
       "volume": "Volum"
     },
+    "result_is_deleted": "Resultatet er slettet",
     "status": {
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Slettet",
@@ -1733,12 +1733,12 @@
     "sector": "Sektor",
     "select_one_or_more_categories": "Velg en eller flere kategorier",
     "sort_by": "Sorter etter",
-    "sorted_by": "Sortert etter",
     "sort_by_modified_date": "Sist endret",
     "sort_by_name_asc": "Navn A-Å",
     "sort_by_name_desc": "Navn Å-A",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
+    "sorted_by": "Sortert etter",
     "year_from": "Fra år",
     "year_to": "Til år"
   },
