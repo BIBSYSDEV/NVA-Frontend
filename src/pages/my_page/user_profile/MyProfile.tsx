@@ -92,246 +92,236 @@ export const MyProfile = () => {
   };
 
   return (
-    <>
+    <Box sx={{ bgcolor: 'secondary.main' }}>
       <Helmet>
         <title>{t('my_page.my_profile.user_profile')}</title>
       </Helmet>
 
-      <Box
-        sx={{
-          bgcolor: 'secondary.main',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-        }}>
-        <Typography variant="h2" sx={{ margin: '1rem' }}>
-          {t('my_page.my_profile.heading.personalia')}
-        </Typography>
+      <Typography variant="h2" sx={{ margin: '1rem' }}>
+        {t('my_page.my_profile.heading.personalia')}
+      </Typography>
 
-        {personQuery.isLoading && !person ? (
-          <PageSpinner aria-labelledby="personalia-id" />
-        ) : (
-          <Formik
-            initialValues={initialValues}
-            validationSchema={personaliaValidationSchema}
-            onSubmit={updatePerson}
-            enableReinitialize>
-            {({ isSubmitting, dirty, resetForm }: FormikProps<CristinPersonFormData>) => (
-              <Form>
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' },
-                    gridTemplateAreas: {
-                      xs: '"profile-picture" "personalia-details"',
-                      lg: '"personalia-details profile-picture"',
-                    },
-                    m: '1rem',
-                  }}>
-                  <Grid container rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
-                    <Grid item xs={16} md={3}>
-                      <StyledTypography>{t('my_page.my_profile.person_name')}</StyledTypography>
-                    </Grid>
-                    <Grid item xs={14} md={12}>
-                      <StyledGridBox>
-                        <TextField
-                          value={user.givenName}
-                          disabled
-                          label={t('common.first_name')}
-                          size="small"
-                          variant="filled"
-                        />
-                        <TextField
-                          value={user.familyName}
-                          disabled
-                          label={t('common.last_name')}
-                          size="small"
-                          variant="filled"
-                        />
-                      </StyledGridBox>
-                    </Grid>
-                    <Grid item xs={12} md={3}>
-                      <StyledTypography>{t('my_page.my_profile.preferred_name')}</StyledTypography>
-                    </Grid>
-                    <Grid item xs={14} md={12}>
-                      <StyledGridBox>
-                        <Field name={'preferredFirstName'}>
-                          {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                            <TextField
-                              {...field}
-                              data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
-                              id={field.name}
-                              error={!!error && touched}
-                              helperText={<ErrorMessage name={field.name} />}
-                              disabled={!editPreferredNames || isSubmitting}
-                              label={t('my_page.my_profile.preferred_first_name')}
-                              size="small"
-                              variant="filled"
-                            />
-                          )}
-                        </Field>
-                        <Field name={'preferredLastName'}>
-                          {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                            <TextField
-                              {...field}
-                              data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
-                              id={field.name}
-                              error={!!error && touched}
-                              helperText={<ErrorMessage name={field.name} />}
-                              disabled={!editPreferredNames || isSubmitting}
-                              label={t('my_page.my_profile.preferred_last_name')}
-                              size="small"
-                              variant="filled"
-                            />
-                          )}
-                        </Field>
-                      </StyledGridBox>
-                    </Grid>
-                    <Grid item xs={1} md={1}>
-                      <Tooltip title={t('common.edit')}>
-                        <IconButton
-                          data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
-                          onClick={() => setEditPreferredNames(!editPreferredNames)}>
-                          <EditIcon sx={{ width: '1.2rem' }} />
-                        </IconButton>
-                      </Tooltip>
-                    </Grid>
-                    <Grid item xs={16} md={3}>
-                      <StyledTypography>{t('my_page.my_profile.identity.identity_numbers')}</StyledTypography>
-                    </Grid>
-                    <Grid item xs={14} md={12}>
-                      <StyledGridBox>
-                        <NationalIdNumberField nationalId={user.nationalIdNumber} />
-                        <TextField
-                          value={getIdentifierFromId(personId ?? '')}
-                          disabled
-                          label={t('common.id')}
-                          size="small"
-                          variant="filled"
-                        />
-                      </StyledGridBox>
-                    </Grid>
-                    <Grid item md={13}>
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'start',
-                          my: '0.5rem',
-                        }}>
-                        <Typography fontWeight="bold">{t('common.orcid')}</Typography>
-                        <UserOrcid user={user} />
-                      </Box>
-                    </Grid>
-                    <Grid item xs={16}>
-                      <Typography fontWeight="bold">{t('my_page.my_profile.contact_information')}</Typography>
-                    </Grid>
-                    <Grid item xs={16} md={3}>
-                      <StyledTypography>{t('my_page.my_profile.telephone')}</StyledTypography>
-                    </Grid>
-                    <Grid item xs={14} md={12}>
-                      <Field name={'contactDetails.telephone'}>
-                        {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                          <TextField
-                            {...field}
-                            data-testid={dataTestId.myPage.myProfile.telephoneField}
-                            label={t('my_page.my_profile.telephone')}
-                            error={!!error && touched}
-                            helperText={<ErrorMessage name={field.name} />}
-                            disabled={isSubmitting}
-                            fullWidth
-                            size="small"
-                            variant="filled"
-                          />
-                        )}
-                      </Field>
-                    </Grid>
-                    <Grid item xs={16} md={3}>
-                      <StyledTypography>{t('common.email')}</StyledTypography>
-                    </Grid>
-                    <Grid item xs={14} md={12}>
-                      <Field name={'contactDetails.email'}>
-                        {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                          <TextField
-                            {...field}
-                            data-testid={dataTestId.myPage.myProfile.emailField}
-                            label={t('common.email')}
-                            error={!!error && touched}
-                            helperText={<ErrorMessage name={field.name} />}
-                            disabled={isSubmitting}
-                            fullWidth
-                            size="small"
-                            variant="filled"
-                          />
-                        )}
-                      </Field>
-                    </Grid>
-                    <Grid item xs={16} md={3}>
-                      <StyledTypography>{t('my_page.my_profile.personal_web_page')}</StyledTypography>
-                    </Grid>
-                    <Grid item xs={14} md={12}>
-                      <Field name={'contactDetails.webPage'}>
-                        {({ field, meta: { error, touched } }: FieldProps<string>) => (
-                          <TextField
-                            {...field}
-                            fullWidth
-                            data-testid={dataTestId.myPage.myProfile.webPageField}
-                            label={t('my_page.my_profile.personal_web_page')}
-                            error={!!error && touched}
-                            helperText={<ErrorMessage name={field.name} />}
-                            disabled={isSubmitting}
-                            size="small"
-                            variant="filled"
-                          />
-                        )}
-                      </Field>
-                    </Grid>
+      {personQuery.isLoading && !person ? (
+        <PageSpinner aria-labelledby="personalia-id" />
+      ) : (
+        <Formik
+          initialValues={initialValues}
+          validationSchema={personaliaValidationSchema}
+          onSubmit={updatePerson}
+          enableReinitialize>
+          {({ isSubmitting, dirty, resetForm }: FormikProps<CristinPersonFormData>) => (
+            <Form>
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr', lg: '2fr 1fr' },
+                  gridTemplateAreas: {
+                    xs: '"profile-picture" "personalia-details"',
+                    lg: '"personalia-details profile-picture"',
+                  },
+                  m: '1rem',
+                }}>
+                <Grid container rowGap={1} columns={16} sx={{ gridArea: 'personalia-details' }}>
+                  <Grid item xs={16} md={3}>
+                    <StyledTypography>{t('my_page.my_profile.person_name')}</StyledTypography>
                   </Grid>
-
-                  <Box
-                    sx={{
-                      gridArea: 'profile-picture',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'start',
-                      alignItems: 'center',
-                      mb: { xs: '1rem', lg: 0 },
-                    }}>
-                    <Typography variant="h3" sx={{ mb: '1rem' }}>
-                      {t('my_page.my_profile.profile_picture')}
-                    </Typography>
-                    <ProfilePictureUploader personId={personId} />
-                  </Box>
-                </Box>
+                  <Grid item xs={14} md={12}>
+                    <StyledGridBox>
+                      <TextField
+                        value={user.givenName}
+                        disabled
+                        label={t('common.first_name')}
+                        size="small"
+                        variant="filled"
+                      />
+                      <TextField
+                        value={user.familyName}
+                        disabled
+                        label={t('common.last_name')}
+                        size="small"
+                        variant="filled"
+                      />
+                    </StyledGridBox>
+                  </Grid>
+                  <Grid item xs={12} md={3}>
+                    <StyledTypography>{t('my_page.my_profile.preferred_name')}</StyledTypography>
+                  </Grid>
+                  <Grid item xs={14} md={12}>
+                    <StyledGridBox>
+                      <Field name={'preferredFirstName'}>
+                        {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                          <TextField
+                            {...field}
+                            data-testid={dataTestId.myPage.myProfile.preferredFirstNameField}
+                            id={field.name}
+                            error={!!error && touched}
+                            helperText={<ErrorMessage name={field.name} />}
+                            disabled={!editPreferredNames || isSubmitting}
+                            label={t('my_page.my_profile.preferred_first_name')}
+                            size="small"
+                            variant="filled"
+                          />
+                        )}
+                      </Field>
+                      <Field name={'preferredLastName'}>
+                        {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                          <TextField
+                            {...field}
+                            data-testid={dataTestId.myPage.myProfile.preferredLastNameField}
+                            id={field.name}
+                            error={!!error && touched}
+                            helperText={<ErrorMessage name={field.name} />}
+                            disabled={!editPreferredNames || isSubmitting}
+                            label={t('my_page.my_profile.preferred_last_name')}
+                            size="small"
+                            variant="filled"
+                          />
+                        )}
+                      </Field>
+                    </StyledGridBox>
+                  </Grid>
+                  <Grid item xs={1} md={1}>
+                    <Tooltip title={t('common.edit')}>
+                      <IconButton
+                        data-testid={dataTestId.myPage.myProfile.editPreferredNameButton}
+                        onClick={() => setEditPreferredNames(!editPreferredNames)}>
+                        <EditIcon sx={{ width: '1.2rem' }} />
+                      </IconButton>
+                    </Tooltip>
+                  </Grid>
+                  <Grid item xs={16} md={3}>
+                    <StyledTypography>{t('my_page.my_profile.identity.identity_numbers')}</StyledTypography>
+                  </Grid>
+                  <Grid item xs={14} md={12}>
+                    <StyledGridBox>
+                      <NationalIdNumberField nationalId={user.nationalIdNumber} />
+                      <TextField
+                        value={getIdentifierFromId(personId ?? '')}
+                        disabled
+                        label={t('common.id')}
+                        size="small"
+                        variant="filled"
+                      />
+                    </StyledGridBox>
+                  </Grid>
+                  <Grid item md={13}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'start',
+                        my: '0.5rem',
+                      }}>
+                      <Typography fontWeight="bold">{t('common.orcid')}</Typography>
+                      <UserOrcid user={user} />
+                    </Box>
+                  </Grid>
+                  <Grid item xs={16}>
+                    <Typography fontWeight="bold">{t('my_page.my_profile.contact_information')}</Typography>
+                  </Grid>
+                  <Grid item xs={16} md={3}>
+                    <StyledTypography>{t('my_page.my_profile.telephone')}</StyledTypography>
+                  </Grid>
+                  <Grid item xs={14} md={12}>
+                    <Field name={'contactDetails.telephone'}>
+                      {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          data-testid={dataTestId.myPage.myProfile.telephoneField}
+                          label={t('my_page.my_profile.telephone')}
+                          error={!!error && touched}
+                          helperText={<ErrorMessage name={field.name} />}
+                          disabled={isSubmitting}
+                          fullWidth
+                          size="small"
+                          variant="filled"
+                        />
+                      )}
+                    </Field>
+                  </Grid>
+                  <Grid item xs={16} md={3}>
+                    <StyledTypography>{t('common.email')}</StyledTypography>
+                  </Grid>
+                  <Grid item xs={14} md={12}>
+                    <Field name={'contactDetails.email'}>
+                      {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          data-testid={dataTestId.myPage.myProfile.emailField}
+                          label={t('common.email')}
+                          error={!!error && touched}
+                          helperText={<ErrorMessage name={field.name} />}
+                          disabled={isSubmitting}
+                          fullWidth
+                          size="small"
+                          variant="filled"
+                        />
+                      )}
+                    </Field>
+                  </Grid>
+                  <Grid item xs={16} md={3}>
+                    <StyledTypography>{t('my_page.my_profile.personal_web_page')}</StyledTypography>
+                  </Grid>
+                  <Grid item xs={14} md={12}>
+                    <Field name={'contactDetails.webPage'}>
+                      {({ field, meta: { error, touched } }: FieldProps<string>) => (
+                        <TextField
+                          {...field}
+                          fullWidth
+                          data-testid={dataTestId.myPage.myProfile.webPageField}
+                          label={t('my_page.my_profile.personal_web_page')}
+                          error={!!error && touched}
+                          helperText={<ErrorMessage name={field.name} />}
+                          disabled={isSubmitting}
+                          size="small"
+                          variant="filled"
+                        />
+                      )}
+                    </Field>
+                  </Grid>
+                </Grid>
 
                 <Box
                   sx={{
+                    gridArea: 'profile-picture',
                     display: 'flex',
-                    gap: '1rem',
-                    justifyContent: 'center',
-                    bgcolor: 'secondary.dark',
-                    py: '1rem',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    mb: { xs: '1rem', lg: 0 },
                   }}>
-                  <Button
-                    onClick={() => {
-                      resetForm();
-                    }}>
-                    {t('common.cancel')}
-                  </Button>
-                  <LoadingButton
-                    data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
-                    loading={isSubmitting}
-                    disabled={!dirty}
-                    variant="contained"
-                    type="submit">
-                    {t('common.save')}
-                  </LoadingButton>
+                  <Typography variant="h3" sx={{ mb: '1rem' }}>
+                    {t('my_page.my_profile.profile_picture')}
+                  </Typography>
+                  <ProfilePictureUploader personId={personId} />
                 </Box>
-              </Form>
-            )}
-          </Formik>
-        )}
-      </Box>
-    </>
+              </Box>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: '1rem',
+                  justifyContent: 'center',
+                  py: '1rem',
+                }}>
+                <Button
+                  onClick={() => {
+                    resetForm();
+                  }}>
+                  {t('common.cancel')}
+                </Button>
+                <LoadingButton
+                  data-testid={dataTestId.myPage.myProfile.saveProfileChangesButton}
+                  loading={isSubmitting}
+                  disabled={!dirty}
+                  variant="contained"
+                  type="submit">
+                  {t('common.save')}
+                </LoadingButton>
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      )}
+    </Box>
   );
 };
