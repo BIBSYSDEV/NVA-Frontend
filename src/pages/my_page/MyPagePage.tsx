@@ -185,6 +185,18 @@ const MyPagePage = () => {
               isSelected={currentPath === UrlPathTemplate.MyPageFieldAndBackground}
               to={UrlPathTemplate.MyPageFieldAndBackground}>
               {t('my_page.my_profile.field_and_background.field_and_background')}
+            </LinkButton>{' '}
+            <LinkButton
+              data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageFieldAndBackground}
+              to={UrlPathTemplate.MyPageFieldAndBackground}>
+              {t('my_page.my_profile.field_and_background.field_and_background')}
+            </LinkButton>
+            <LinkButton
+              data-testid={dataTestId.myPage.myFieldAndBackgroundLink}
+              isSelected={currentPath === UrlPathTemplate.MyPageFieldAndBackground}
+              to={UrlPathTemplate.MyPageFieldAndBackground}>
+              {t('my_page.my_profile.field_and_background.field_and_background')}
             </LinkButton>
             <LinkButton
               data-testid={dataTestId.myPage.myResultsLink}
