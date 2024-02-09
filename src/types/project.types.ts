@@ -37,6 +37,8 @@ interface ProjectIdentifier {
 
 export type ProjectOrganization = Omit<Organization, 'partOf' | 'hasPart' | 'acronym'>;
 
+export type ProjectStatus = 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
+
 export interface ProjectContributorIdentity {
   type: 'Person';
   id: string;
@@ -86,7 +88,7 @@ export interface SaveCristinProject {
 export interface CristinProject extends SaveCristinProject {
   id: string;
   identifier: ProjectIdentifier[];
-  status: 'ACTIVE' | 'CONCLUDED' | 'NOTSTARTED';
+  status: ProjectStatus;
   alternativeTitles: LanguageString[];
   coordinatingInstitution: ProjectOrganization;
   contributors: ProjectContributor[];

@@ -52,6 +52,7 @@ export interface InstitutionUser {
   institution: string;
   roles: UserRole[];
   username: string;
+  cristinId?: string;
   viewingScope?: {
     type: 'ViewingScope';
     includedUnits: string[];
@@ -103,7 +104,9 @@ interface CristinPersonName extends CristinArrayValue {
 }
 
 interface CristinPersonContactDetails {
-  telephone: string;
+  telephone?: string | null;
+  email?: string | null;
+  webPage?: string | null;
 }
 
 export interface CreateCristinPerson {
@@ -149,6 +152,7 @@ export interface FlatCristinPerson {
   };
   keywords?: Keywords[];
   nvi?: NviVerification;
+  contactDetails?: CristinPersonContactDetails;
 }
 
 interface Position {

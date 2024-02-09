@@ -41,6 +41,7 @@ export const dataTestId = {
       doiPrefixField: 'doi-prefix-field',
       doiUrlField: 'doi-url-field',
       feideField: 'feide-field',
+      inactiveCheckbox: 'inactive-checkbox',
       nameField: 'institution-name-field',
       nviInstitutionCheckbox: 'nvi-institution-checkbox',
       rboInstitutionCheckbox: 'rbo-institution-checkbox',
@@ -153,6 +154,7 @@ export const dataTestId = {
     participantOrgFacets: 'participant-org-facets',
     personSearchButton: 'person-search-button',
     projectSearchButton: 'project-search-button',
+    projectStatusFilter: 'project-status-filter',
     publicationDateFilter: 'publication-date-filter',
     reportsClinicalTreatmentStudiesButton: 'reports-clinical-treatment-studies-button',
     reportsInternationalWorkButton: 'reports-international-work-button',
@@ -493,6 +495,7 @@ export const dataTestId = {
       cristinIdField: 'cristin-id-field',
       deleteProfilePictureButton: 'delete-profile-picture-button',
       editPreferredNameButton: 'edit-preferred-name-button',
+      emailField: 'email-field',
       fullNameField: 'full-name-field',
       noActiveEmploymentsText: 'no-active-employments-text',
       preferredFirstNameField: 'preferred-first-name-field',
@@ -503,6 +506,7 @@ export const dataTestId = {
       updateProfilePictureButton: 'update-profile-picture-button',
       uploadProfilePictureButton: 'update-profile-picture-button',
       removeProfilePictureDialog: 'confirm-remove-profile-picture-dialog',
+      webPageField: 'web-page-field',
     },
     myFieldAndBackgroundLink: 'my-field-and-background-link',
     myProfileAccordion: 'my-profile-accordion',
@@ -520,6 +524,11 @@ export const dataTestId = {
     registrationsAccordion: 'registrations-accordion',
     researchProfileAccordion: 'research-profile-accordion',
     researchProfileLink: 'research-profile-link',
+    userRolesAndHelp: {
+      institutionHelpPage: 'institution-help-page',
+      applicationHelpPage: 'application-help-page',
+    },
+    userRolesAndHelpLink: 'user-roles-and-help-link',
   },
   tasksPage: {
     correctionList: {

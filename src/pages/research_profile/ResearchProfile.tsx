@@ -1,4 +1,4 @@
-import { Box, Chip, CircularProgress, Divider, IconButton, List, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Chip, CircularProgress, Divider, IconButton, Link as MuiLink, List, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchPerson, searchForProjects } from '../../api/cristinApi';
 import { fetchPromotedPublicationsById } from '../../api/preferencesApi';
-import { FetchResultsParams, fetchResults } from '../../api/searchApi';
+import { fetchResults, FetchResultsParams } from '../../api/searchApi';
 import { ListPagination } from '../../components/ListPagination';
 import { PageSpinner } from '../../components/PageSpinner';
 import { ProfilePicture } from '../../components/ProfilePicture';
@@ -193,22 +193,20 @@ const ResearchProfile = () => {
         {registrationsQuery.isLoading || promotedPublicationsQuery.isLoading ? (
           <CircularProgress aria-labelledby="registration-label" />
         ) : registrationsQuery.data && registrationsQuery.data.totalHits > 0 ? (
-          <>
+          <ListPagination
+            count={registrationsQuery.data.totalHits}
+            rowsPerPage={registrationRowsPerPage}
+            page={registrationsPage}
+            onPageChange={(newPage) => setRegistrationsPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setRegistrationRowsPerPage(newRowsPerPage);
+              setRegistrationsPage(1);
+            }}>
             <RegistrationSearchResults
               searchResult={registrationsQuery.data.hits}
               promotedPublications={promotedPublications}
             />
-            <ListPagination
-              count={registrationsQuery.data.totalHits}
-              rowsPerPage={registrationRowsPerPage}
-              page={registrationsPage}
-              onPageChange={(newPage) => setRegistrationsPage(newPage)}
-              onRowsPerPageChange={(newRowsPerPage) => {
-                setRegistrationRowsPerPage(newRowsPerPage);
-                setRegistrationsPage(1);
-              }}
-            />
-          </>
+          </ListPagination>
         ) : (
           <Typography>{t('common.no_hits')}</Typography>
         )}
@@ -221,23 +219,21 @@ const ResearchProfile = () => {
         {projectsQuery.isLoading ? (
           <CircularProgress aria-labelledby="project-label" />
         ) : projects.length > 0 ? (
-          <>
+          <ListPagination
+            count={projectsQuery.data?.size ?? 0}
+            rowsPerPage={projectRowsPerPage}
+            page={projectsPage}
+            onPageChange={(newPage) => setProjectsPage(newPage)}
+            onRowsPerPageChange={(newRowsPerPage) => {
+              setProjectRowsPerPage(newRowsPerPage);
+              setProjectsPage(1);
+            }}>
             <List>
               {projects.map((project) => (
                 <ProjectListItem key={project.id} project={project} refetchProjects={projectsQuery.refetch} />
               ))}
             </List>
-            <ListPagination
-              count={projectsQuery.data?.size ?? 0}
-              rowsPerPage={projectRowsPerPage}
-              page={projectsPage}
-              onPageChange={(newPage) => setProjectsPage(newPage)}
-              onRowsPerPageChange={(newRowsPerPage) => {
-                setProjectRowsPerPage(newRowsPerPage);
-                setProjectsPage(1);
-              }}
-            />
-          </>
+          </ListPagination>
         ) : (
           <Typography>{t('common.no_hits')}</Typography>
         )}

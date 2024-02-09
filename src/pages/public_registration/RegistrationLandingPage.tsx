@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import { Query, useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -8,7 +9,8 @@ import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { PageSpinner } from '../../components/PageSpinner';
 import { setNotification } from '../../redux/notificationSlice';
 import { RootState } from '../../redux/store';
-import { RegistrationStatus } from '../../types/registration.types';
+import { DeletedRegistrationProblem } from '../../types/error_responses';
+import { Registration, RegistrationStatus } from '../../types/registration.types';
 import { userIsRegistrationCurator, userIsRegistrationOwner } from '../../utils/registration-helpers';
 import { IdentifierParams } from '../../utils/urlPaths';
 import NotFound from '../errorpages/NotFound';
@@ -25,7 +27,26 @@ export const RegistrationLandingPage = () => {
   const registrationQuery = useQuery({
     queryKey: ['registration', identifier],
     queryFn: () => fetchRegistration(identifier),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_registration'), variant: 'error' })),
+    meta: {
+      handleError: (
+        error: AxiosError<DeletedRegistrationProblem>,
+        query: Query<Registration, AxiosError<DeletedRegistrationProblem>>
+      ) => {
+        if (error.response?.status === 410) {
+          const errorRegistration = query.state.error?.response?.data?.resource;
+          if (errorRegistration) {
+            query.setData(errorRegistration);
+          }
+        } else {
+          dispatch(
+            setNotification({
+              message: t('feedback.error.get_registration'),
+              variant: 'error',
+            })
+          );
+        }
+      },
+    },
   });
 
   const registration = registrationQuery.data;
@@ -33,13 +54,17 @@ export const RegistrationLandingPage = () => {
 
   const isRegistrationAdmin =
     userIsRegistrationOwner(user, registration) || userIsRegistrationCurator(user, registration);
-  const isAllowedToSeePublicRegistration = registration?.status === RegistrationStatus.Published || isRegistrationAdmin;
+  const isAllowedToSeePublicRegistration =
+    registration?.status === RegistrationStatus.Published ||
+    isRegistrationAdmin ||
+    registration?.status === RegistrationStatus.DraftForDeletion ||
+    registration?.status === RegistrationStatus.Unpublished;
 
   const ticketsQuery = useQuery({
     enabled: isRegistrationAdmin,
     queryKey: ['registrationTickets', registrationId],
     queryFn: () => fetchRegistrationTickets(registrationId),
-    onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
+    meta: { errorMessage: t('feedback.error.get_tickets') },
   });
 
   const refetchRegistrationAndTickets = () => {

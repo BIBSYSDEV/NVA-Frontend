@@ -62,7 +62,7 @@ export const PersonRegisterPage = () => {
       </Helmet>
 
       <TextField
-        datatest-id={dataTestId.basicData.personRegisterSearchBar}
+        data-testid={dataTestId.basicData.personRegisterSearchBar}
         type="search"
         variant="filled"
         value={searchQuery}
@@ -84,52 +84,6 @@ export const PersonRegisterPage = () => {
         <Typography>{t('basic_data.person_register.no_employees_found')}</Typography>
       ) : (
         <>
-          <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
-            <Table size="small" sx={alternatingTableRowColor}>
-              <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
-              <TableHead>
-                <TableRow>
-                  <TableCell>{t('basic_data.person_register.person_id')}</TableCell>
-                  <TableCell>{t('basic_data.person_register.national_identity_number')}</TableCell>
-                  <TableCell>{t('common.name')}</TableCell>
-                  <TableCell>{t('common.employments')}</TableCell>
-                  <TableCell />
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {employeeSearchQuery.isLoading
-                  ? [...Array(5)].map((_, index) => (
-                      <TableRow key={index} sx={{ height: '4rem' }}>
-                        <TableCell>
-                          <Skeleton />
-                        </TableCell>
-                        <TableCell>
-                          <Skeleton />
-                        </TableCell>
-                        <TableCell width="25%">
-                          <Skeleton />
-                        </TableCell>
-                        <TableCell width="60%">
-                          <Skeleton />
-                        </TableCell>
-                        <TableCell></TableCell>
-                      </TableRow>
-                    ))
-                  : employees.map((person) => (
-                      <ErrorBoundary key={person.id}>
-                        <PersonTableRow
-                          cristinPerson={person}
-                          topOrgCristinIdentifier={
-                            user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''
-                          }
-                          customerId={user?.customerId ?? ''}
-                          refetchEmployees={employeeSearchQuery.refetch}
-                        />
-                      </ErrorBoundary>
-                    ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
           <ListPagination
             count={employeeSearchQuery.data?.size ?? 0}
             rowsPerPage={rowsPerPage}
@@ -138,8 +92,53 @@ export const PersonRegisterPage = () => {
             onRowsPerPageChange={(newRowsPerPage) => {
               setRowsPerPage(newRowsPerPage);
               setPage(1);
-            }}
-          />
+            }}>
+            <TableContainer component={Paper} sx={{ mb: '0.5rem' }}>
+              <Table size="small" sx={alternatingTableRowColor}>
+                <caption style={visuallyHidden}>{t('basic_data.person_register.employee_table_caption')}</caption>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>{t('basic_data.person_register.person_id')}</TableCell>
+                    <TableCell>{t('basic_data.person_register.national_identity_number')}</TableCell>
+                    <TableCell>{t('common.name')}</TableCell>
+                    <TableCell>{t('common.employments')}</TableCell>
+                    <TableCell />
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {employeeSearchQuery.isLoading
+                    ? [...Array(5)].map((_, index) => (
+                        <TableRow key={index} sx={{ height: '4rem' }}>
+                          <TableCell>
+                            <Skeleton />
+                          </TableCell>
+                          <TableCell>
+                            <Skeleton />
+                          </TableCell>
+                          <TableCell width="25%">
+                            <Skeleton />
+                          </TableCell>
+                          <TableCell width="60%">
+                            <Skeleton />
+                          </TableCell>
+                          <TableCell></TableCell>
+                        </TableRow>
+                      ))
+                    : employees.map((person) => (
+                        <ErrorBoundary key={person.id}>
+                          <PersonTableRow
+                            cristinPerson={person}
+                            topOrgCristinIdentifier={
+                              user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''
+                            }
+                            refetchEmployees={employeeSearchQuery.refetch}
+                          />
+                        </ErrorBoundary>
+                      ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </ListPagination>
         </>
       )}
     </BackgroundDiv>

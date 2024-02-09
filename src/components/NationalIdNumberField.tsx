@@ -18,6 +18,7 @@ export const NationalIdNumberField = ({ nationalId }: NationIdNumberFieldProps) 
   return (
     <TextField
       data-testid={dataTestId.basicData.nationalIdentityNumberField}
+      size="small"
       variant="filled"
       disabled
       value={showFullNin ? nationalId : getMaskedNationalIdentityNumber(nationalId)}

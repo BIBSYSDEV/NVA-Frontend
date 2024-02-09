@@ -93,6 +93,7 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Endre institusjon",
       "feide_organization_domain": "Institusjonens domene i Feide",
+      "institution_is_inactive": "Sett til inaktiv",
       "institution_is_nvi_applicable": "Institusjonen rapporterer publikasjonspoeng til NVI",
       "institution_receives_funding_via_rbo": "Får finansiering via Resultatbasert omfordeling (RBO)",
       "invalid_doi_prefix": "Ugyldig DOI prefiks. Eksempel med gyldig format: 10.1234",
@@ -122,6 +123,7 @@
       "employee_table_caption": "Liste over alle ansatte",
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
       "hide_full_nin": "Skjul personnummer",
+      "must_be_curator_to_have_area_of_responsibility": "Må være kurator for å ha ansvarsområde",
       "national_identity_number": "Fødselsnummer",
       "no_eligable_roles": "Personer uten fødselsnummer kan ikke ha roller",
       "no_employees_found": "Ingen ansatte funnet",
@@ -132,6 +134,7 @@
       "remove_employment": "Fjern ansettelse",
       "remove_employment_text": "Er du sikker på ar du ønsker å fjerne denne ansettelsen?",
       "remove_employment_title": "Fjern ansettelse?",
+      "select_unit": "Velg enhet",
       "show_full_nin": "Vis personnummer"
     }
   },
@@ -154,6 +157,8 @@
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
+    "email": "E-post",
+    "employment": "Ansettelse",
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
     "error_occurred": "En uventet feil har oppstått",
@@ -178,7 +183,7 @@
     "none": "Ingen",
     "not_decided": "Ikke bestemt",
     "number_short": "Nr.",
-    "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
+    "nva_tagline": "Nasjonalt vitenarkiv (NVA)",
     "nvi": "Norsk vitenskapsindeks (NVI)",
     "open": "Åpne",
     "orcid": "ORCID",
@@ -186,11 +191,13 @@
     "order": "Rekkefølge",
     "other": "Annet",
     "overview": "Oversikt",
-    "page_title": "Nasjonalt Vitenarkiv",
+    "page_title": "Nasjonalt vitenarkiv",
     "pagination_rows_per_page": "Antall rader per side:",
     "pagination_showing_interval": "Viser {{start}}-{{end}} av {{total}}",
+    "person": "Person",
     "place": "Sted",
     "previous": "Forrige",
+    "project_status": "Prosjektstatus",
     "publisher": "Utgiver",
     "publishing_year": "Publiseringsår",
     "rbo": "Resultatbasert omfordeling (RBO)",
@@ -350,11 +357,7 @@
     "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
-      "area_of_responsibility_placeholder": "Ingen avgrensninger",
       "areas_of_responsibility": "Ansvarsområder",
-      "curator_has_extended_privileges": "Kurator har rettigheter til å redigere:",
-      "edit_extended_responsibility": "Endre utvidet ansvarsområde",
-      "extended_area_of_resposibility": "Utvidet ansvarsområde",
       "no_users_found": "Ingen brukere funnet"
     },
     "doi": {
@@ -538,6 +541,7 @@
       "editor_required": "Du må ha minst en redaktør på denne registreringen",
       "employments_missing_data": "Alle ansettelser må ha stilling, stillingsprosent og startdato",
       "has_invalid_format": "{{field}} har ugyldig format",
+      "invalid_email": "Ugyldig epost",
       "invalid_number_of_digits": "{{field}} må ha {{digits}} siffer",
       "invalid_symbol_in_name": "{{field}} kan ikke inneholde tall eller spesialtegn",
       "is_required": "{{-field}} er obligatorisk",
@@ -573,7 +577,7 @@
       "cc_by_nc_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDu kan ikke benytte materialet til kommersielle formål. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
       "cc_by_nd": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, kan du ikke distribuere det endrede materialet.",
       "cc_by_sa": "Dele — kopiere, distribuere og spre verket i hvilket som helst medium eller format. \nBearbeide — remixe, endre, og bygge videre på materialet til et hvilket som helst formål, inkludert kommersielle. \n\nDu må oppgi korrekt kreditering, oppgi en lenke til lisensen, og indikere om endringer er blitt gjort. \nDersom du remixer, bearbeider eller bygger på materialet, må du distribuere dine bidrag under samme lisens som originalen.",
-      "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner."
+      "rights_reserved": "Dette arbeidet er publisert her for personlig bruk og kun i overensstemmelse med utgivers regler og betingelser for bruk av egenarkiverte versjoner. \n\n\"Utgivers betingelser\" er ikke en lisens, men en erklæring om at noen rettigheter er forbeholdt utgiveren, forfatteren og muligens andre. Leseren må selv klargjøre hva loven tillater ham å gjøre med dette verket, utover å lese det."
     },
     "labels": {
       "cc0": "CC0 ({{version}})",
@@ -624,7 +628,9 @@
     "my_page": "Min side",
     "my_profile": {
       "background": "Bakgrunn",
+      "contact_information": "Kontaktinformasjon",
       "edit_promoted_publication": "Legg til/fjern som favoritt",
+      "edit_research_profile": "Rediger forskerprofil",
       "field_and_background": {
         "background_placeholder": "Skriv inn",
         "english": "Engelsk",
@@ -643,6 +649,7 @@
         "cristin_id": "Cristin ID",
         "full_name": "Fullt navn",
         "identity": "Identitet",
+        "identity_numbers": "Identitetsnumre",
         "not_shown_publicly": "Vises ikke offentlig",
         "upload_profile_photo": "Last opp profilfoto",
         "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
@@ -661,8 +668,12 @@
         "remove_connection": "Fjern kobling til ORCID",
         "remove_connection_info": "Er du sikker på at du vil fjerne koblingen til ORCID? \n\nDersom du ønsker å trekke tilbake Sikts godkjenning til å lese din ORCID, må du gå inn på din ORCID-profil."
       },
+      "overview_and_settings": "Oversikt og innstillinger",
+      "person_name": "Personnavn",
+      "personal_web_page": "Personlig nettside",
       "preferred_first_name": "Foretrukket fornavn",
       "preferred_last_name": "Foretrukket etternavn",
+      "preferred_name": "Forfatternavn",
       "profile_picture": "Profilbilde",
       "projects": "Prosjekt",
       "remove_profile_picture": "Fjern profilbilde?",
@@ -675,7 +686,11 @@
       "results": "Resultat",
       "telephone": "Telefon",
       "user_profile": "Brukerprofil",
-      "user_profile_description": "Her kan du fylle inn og markere hva du ønsker skal framgå på din offisielle forskerprofil."
+      "user_role_and_help": {
+        "application_help_helper_text": "Om du trenger veiledning til utfylling, kan denne være til hjelp.",
+        "application_help_text": "Veiledning for å registrere et resultat",
+        "user_role_and_help": "Brukerrolle og hjelp"
+      }
     },
     "no_employments": "Ingen ansettelser",
     "project_registration_status": {
@@ -684,6 +699,7 @@
       "ongoing": "Pågående"
     },
     "project_registrations": "Prosjektregistreringer",
+    "public_research_profile": "Offentlig forskerprofil",
     "registrations": {
       "delete_all_draft_registrations": "Slett alle kladder",
       "delete_all_draft_registrations_message": "Slett alle upubliserte registreringer?",
@@ -1043,6 +1059,7 @@
     "summary": "Sammendrag"
   },
   "registration": {
+    "citation_points_to": "Siteringen viser til",
     "contributors": {
       "add_affiliation": "Legg til tilknytning",
       "add_contributor": "Legg til bidragsyter",
@@ -1180,6 +1197,7 @@
       "administrative_contract": "Intern fil som aldri skal publiseres. F.eks. forfatteravtale eller annen dokumentasjon for det registrerte resultatet",
       "conditions_for_using_file": "Betingelser for bruk",
       "embargo": "Embargo/utsatt publisering",
+      "file_and_license_info": "Enhver fil i NVA må ha en lisens, slik at leser er informert om hva som er tillatt å gjøre med innholdet.",
       "file_publish_date_helper_text": "Filen er låst fram til angitt dato",
       "files": "Filer",
       "files_are_not_published": "Filer publiseres ikke",
@@ -1272,7 +1290,8 @@
         "metadata_published_waiting_for_files_curator": "Alle filer og valgte lisenser blir publisert og vil umiddelbart bli tilgjengelig for andre.",
         "publish_metadata": "Publiser metadata",
         "publish_metadata_and_files": "Publiser metadata og fil(er)",
-        "registration_is_published": "Registreringen er publisert. Metadata og eventuelle filer er offentlig tilgjengelig.",
+        "registration_is_published": "Registreringen er publisert. Metadata er offentlig tilgjengelig.",
+        "registration_is_published_with_files": "Registreringen er publisert. Metadata og fil(er) er offentlig tilgjengelig.",
         "registration_will_soon_be_published": "Registreringen vil publiseres om kort tid. Last siden på nytt om litt for å se oppdatert info.",
         "reload": "Last på nytt",
         "review_preview_before_publishing": "Se over utkast før du går videre.",
@@ -1671,6 +1690,7 @@
       "type_work_specified": "Egendefinert type verk",
       "volume": "Volum"
     },
+    "result_is_deleted": "Resultatet er slettet",
     "status": {
       "DRAFT": "Kladd",
       "DRAFT_FOR_DELETION": "Slettet",
@@ -1714,8 +1734,11 @@
     "select_one_or_more_categories": "Velg en eller flere kategorier",
     "sort_by": "Sorter etter",
     "sort_by_modified_date": "Sist endret",
+    "sort_by_name_asc": "Navn A-Å",
+    "sort_by_name_desc": "Navn Å-A",
     "sort_by_published_date_asc": "Publiseringsdato (eldste først)",
     "sort_by_published_date_desc": "Publiseringsdato (nyeste først)",
+    "sorted_by": "Sortert etter",
     "year_from": "Fra år",
     "year_to": "Til år"
   },

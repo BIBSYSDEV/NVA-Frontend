@@ -7,8 +7,8 @@ import { ConfirmDialog } from '../../components/ConfirmDialog';
 import { ListPagination } from '../../components/ListPagination';
 import { RegistrationList } from '../../components/RegistrationList';
 import { setNotification } from '../../redux/notificationSlice';
-import { Registration, RegistrationPreview, emptyRegistration } from '../../types/registration.types';
-import { ROWS_PER_PAGE_OPTIONS, isErrorStatus, isSuccessStatus } from '../../utils/constants';
+import { emptyRegistration, Registration, RegistrationPreview } from '../../types/registration.types';
+import { isErrorStatus, isSuccessStatus, ROWS_PER_PAGE_OPTIONS } from '../../utils/constants';
 import { getIdentifierFromId } from '../../utils/general-helpers';
 import { stringIncludesMathJax, typesetMathJax } from '../../utils/mathJaxHelpers';
 import { getTitleString } from '../../utils/registration-helpers';
@@ -80,23 +80,21 @@ export const MyRegistrationsList = ({ registrations, refetchRegistrations }: MyR
   return (
     <>
       {registrationsCopy.length > 0 ? (
-        <>
+        <ListPagination
+          count={registrations.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={(newPage) => setPage(newPage)}
+          onRowsPerPageChange={(newRowsPerPage) => {
+            setRowsPerPage(newRowsPerPage);
+            setPage(1);
+          }}>
           <RegistrationList
             onDeleteDraftRegistration={onClickDeleteRegistration}
             registrations={registrationsCopy}
             canEditRegistration={true}
           />
-          <ListPagination
-            count={registrations.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(newPage) => setPage(newPage)}
-            onRowsPerPageChange={(newRowsPerPage) => {
-              setRowsPerPage(newRowsPerPage);
-              setPage(1);
-            }}
-          />
-        </>
+        </ListPagination>
       ) : (
         <Typography>{t('common.no_hits')}</Typography>
       )}
