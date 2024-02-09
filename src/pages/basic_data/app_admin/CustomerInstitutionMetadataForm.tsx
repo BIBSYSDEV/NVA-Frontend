@@ -1,6 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import {
   Box,
+  Button,
   Checkbox,
   Divider,
   FormControl,
@@ -104,7 +105,7 @@ export const CustomerInstitutionMetadataForm = ({
       validateOnChange
       validationSchema={customerInstitutionValidationSchema}
       onSubmit={handleSubmit}>
-      {({ values, isSubmitting, setValues, setFieldValue }: FormikProps<CustomerInstitutionFormData>) => (
+      {({ values, isSubmitting, setValues, setFieldValue, resetForm }: FormikProps<CustomerInstitutionFormData>) => (
         <Form noValidate>
           <InputContainerBox>
             <Field name={CustomerInstitutionFieldNames.Name}>
@@ -151,6 +152,8 @@ export const CustomerInstitutionMetadataForm = ({
               dataTestId={dataTestId.basicData.institutionAdmin.archiveNameField}
             />
 
+            <Divider />
+
             <Field name={CustomerInstitutionFieldNames.Sector}>
               {({ field }: FieldProps) => (
                 <FormControl>
@@ -167,7 +170,7 @@ export const CustomerInstitutionMetadataForm = ({
                         key={sector}
                         value={sector}
                         data-testid={dataTestId.basicData.institutionAdmin.sectorChip(sector)}>
-                        {t(`basic_data.institutions.sector_values.${sector}`)}{' '}
+                        {t(`basic_data.institutions.sector_values.${sector}`)}
                       </MenuItem>
                     ))}
                   </Select>
@@ -186,6 +189,8 @@ export const CustomerInstitutionMetadataForm = ({
               label={t('basic_data.institutions.ror')}
               dataTestId={dataTestId.basicData.institutionAdmin.rorField}
             />
+
+            <Divider />
 
             <div>
               <Field name={CustomerInstitutionFieldNames.NviInstitution}>
@@ -313,6 +318,9 @@ export const CustomerInstitutionMetadataForm = ({
               </div>
             )}
             <StyledRightAlignedWrapper>
+              <Button sx={{ marginRight: '1rem' }} onClick={() => resetForm()}>
+                {t('common.cancel')}
+              </Button>
               <LoadingButton
                 data-testid={dataTestId.basicData.institutionAdmin.saveButton}
                 variant="contained"
