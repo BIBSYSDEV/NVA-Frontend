@@ -38,15 +38,9 @@ export const CustomerInstitutionAdminsForm = ({
         {t('basic_data.institutions.administrators')}
       </Typography>
 
-      <UserList
-        userList={admins}
-        roleToRemove={RoleName.InstitutionAdmin}
-        refetchUsers={adminsQuery.refetch}
-        tableCaption={t('my_page.roles.institution_admins')}
-      />
+      <UserList userList={admins} refetchUsers={adminsQuery.refetch} />
       <Button
         sx={{ mt: '0.5rem', float: 'right' }}
-        variant="contained"
         startIcon={<AddIcon />}
         data-testid="button-open-add-admin"
         onClick={toggleOpenAddAdminModal}>
