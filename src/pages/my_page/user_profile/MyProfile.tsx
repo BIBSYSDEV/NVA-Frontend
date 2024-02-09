@@ -71,15 +71,13 @@ export const MyProfile = () => {
 
   const updatePerson = async (values: CristinPersonFormData) => {
     if (user.cristinId) {
-      const trimValue = (value: string | undefined | null) => (value === '' ? null : value?.trim());
-
       const payload: CristinPersonFormData = {
-        preferredFirstName: trimValue(values.preferredFirstName),
-        preferredLastName: trimValue(values.preferredLastName),
+        preferredFirstName: values.preferredFirstName?.trim() || null,
+        preferredLastName: values.preferredLastName?.trim() || null,
         contactDetails: {
-          telephone: trimValue(values.contactDetails?.telephone),
-          email: trimValue(values.contactDetails?.email),
-          webPage: trimValue(values.contactDetails?.webPage),
+          telephone: values.contactDetails?.telephone?.trim() || null,
+          email: values.contactDetails?.email?.trim() || null,
+          webPage: values.contactDetails?.webPage?.trim() || null,
         },
       };
       const updatePersonResponse = await updateCristinPerson(user.cristinId, payload);
@@ -102,6 +100,9 @@ export const MyProfile = () => {
       <Box
         sx={{
           bgcolor: 'secondary.main',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}>
         <Typography variant="h2" sx={{ margin: '1rem' }}>
           {t('my_page.my_profile.heading.personalia')}
