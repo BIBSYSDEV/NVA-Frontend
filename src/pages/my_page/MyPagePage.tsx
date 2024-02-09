@@ -192,6 +192,7 @@ const MyPagePage = () => {
               to={UrlPathTemplate.MyPageResults}>
               {t('my_page.my_profile.results')}
             </LinkButton>
+
             <LinkButton
               data-testid={dataTestId.myPage.myProjectsLink}
               isSelected={currentPath === UrlPathTemplate.MyPageMyProjects}

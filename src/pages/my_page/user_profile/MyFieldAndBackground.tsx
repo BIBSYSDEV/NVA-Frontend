@@ -179,10 +179,8 @@ export const MyFieldAndBackground = () => {
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
-                mt: '1rem',
+                my: '1rem',
                 gap: '1rem',
-                bgcolor: 'secondary.dark',
-                py: '1rem',
               }}>
               <Button
                 onClick={() => {
