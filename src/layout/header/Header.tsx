@@ -31,6 +31,7 @@ export const Header = () => {
   const institutionId = user?.topOrgCristinId ?? '';
 
   const organizationQuery = useQuery({
+    enabled: !!institutionId,
     queryKey: [institutionId],
     queryFn: () => getById<Organization>(institutionId),
     staleTime: Infinity,

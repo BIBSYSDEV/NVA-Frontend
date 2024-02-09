@@ -4,10 +4,10 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import {
+  fetchImportCandidates,
   FetchImportCandidatesParams,
   ImportCandidateOrderBy,
   SortOrder,
-  fetchImportCandidates,
 } from '../../../../api/searchApi';
 import { ErrorBoundary } from '../../../../components/ErrorBoundary';
 import { ListPagination } from '../../../../components/ListPagination';
@@ -82,8 +82,10 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
         }}>
         <SearchForm placeholder={t('tasks.search_placeholder')} />
         <SortSelector
+          sx={{ minWidth: '16rem' }}
           sortKey={SearchParam.SortOrder}
           orderKey={SearchParam.OrderBy}
+          label={t('search.sort_by')}
           options={[
             { orderBy: 'createdDate', sortOrder: 'desc', label: t('basic_data.central_import.sort_newest_first') },
             { orderBy: 'createdDate', sortOrder: 'asc', label: t('basic_data.central_import.sort_oldest_first') },
@@ -94,7 +96,12 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
       {importCandidateQuery.isLoading ? (
         <ListSkeleton minWidth={100} maxWidth={100} height={100} />
       ) : searchResults.length > 0 ? (
-        <>
+        <ListPagination
+          count={importCandidateQuery.data?.size ?? 0}
+          rowsPerPage={rowsPerPage}
+          page={page + 1}
+          onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
+          onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}>
           <List>
             {searchResults.map((importCandidate) => (
               <ErrorBoundary key={importCandidate.id}>
@@ -102,14 +109,7 @@ export const CentralImportPage = ({ statusFilter, yearFilter }: CentralImportPag
               </ErrorBoundary>
             ))}
           </List>
-          <ListPagination
-            count={importCandidateQuery.data?.size ?? 0}
-            rowsPerPage={rowsPerPage}
-            page={page + 1}
-            onPageChange={(newPage) => updatePath(((newPage - 1) * rowsPerPage).toString(), rowsPerPage.toString())}
-            onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
-          />
-        </>
+        </ListPagination>
       ) : (
         <Typography sx={{ mt: '1rem' }}>{t('common.no_hits')}</Typography>
       )}

@@ -18,7 +18,13 @@ import { mockOrganizationSearch } from '../utils/testfiles/mockOrganizationSearc
 import { mockPositionResponse } from '../utils/testfiles/mockPositions';
 import { mockProject, mockProjectSearch } from '../utils/testfiles/mockProjects';
 import { mockPublishersSearch } from '../utils/testfiles/mockPublishers';
-import { mockPublishedRegistration, mockRegistration, mockTicketCollection } from '../utils/testfiles/mockRegistration';
+import {
+  mockDeletedRegistration,
+  mockDeletedRegistrationProblem,
+  mockPublishedRegistration,
+  mockRegistration,
+  mockTicketCollection,
+} from '../utils/testfiles/mockRegistration';
 import { mockSearchImportCandidates, mockSearchResults, mockSearchTasks } from '../utils/testfiles/mockSearchResults';
 import { mockRoles, mockUser } from '../utils/testfiles/mock_feide_user';
 import {
@@ -74,6 +80,9 @@ export const interceptRequestsOnMock = () => {
   mock
     .onGet(new RegExp(`${PublicationsApiPath.Registration}/${mockPublishedRegistration.identifier}`))
     .reply(200, mockPublishedRegistration);
+  mock
+    .onGet(new RegExp(`${PublicationsApiPath.Registration}/${mockDeletedRegistration.identifier}`))
+    .reply(410, mockDeletedRegistrationProblem);
   mock.onGet(new RegExp(PublicationsApiPath.Registration)).reply(200, mockRegistration);
 
   // lookup DOI
@@ -107,6 +116,7 @@ export const interceptRequestsOnMock = () => {
 
   // Organizations
   mock.onGet(new RegExp(`${CristinApiPath.Organization}\\?query=*`)).reply(200, mockOrganizationSearch);
+  mock.onGet(new RegExp(`${CristinApiPath.Organization}.*/persons.*`)).reply(200, mockCristinPersonSearch);
   mock.onGet(mockOrganizationSearch.hits[0].id).reply(200, mockOrganizationSearch.hits[0]);
   mock.onGet(mockOrganizationSearch.hits[0].hasPart?.[0].id).reply(200, mockOrganizationSearch.hits[0].hasPart?.[0]);
 

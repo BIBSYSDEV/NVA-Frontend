@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ListPagination } from '../../../components/ListPagination';
 import { ListSkeleton } from '../../../components/ListSkeleton';
+import { SortSelector } from '../../../components/SortSelector';
+import { RegistrationFieldName } from '../../../types/publicationFieldNames';
 import { ROWS_PER_PAGE_OPTIONS } from '../../../utils/constants';
 import { SearchParam } from '../../../utils/searchHelpers';
 import { SearchPageProps } from '../SearchPage';
@@ -25,13 +27,39 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
     history.push({ search: params.toString() });
   };
 
+  const sortingComponent = (
+    <SortSelector
+      sortKey="sort"
+      orderKey="order"
+      aria-label={t('search.sort_by')}
+      size="small"
+      variant="standard"
+      options={[
+        {
+          orderBy: RegistrationFieldName.ModifiedDate,
+          sortOrder: 'desc',
+          label: t('search.sort_by_modified_date'),
+        },
+        {
+          orderBy: RegistrationFieldName.PublishedDate,
+          sortOrder: 'desc',
+          label: t('search.sort_by_published_date_desc'),
+        },
+        {
+          orderBy: RegistrationFieldName.PublishedDate,
+          sortOrder: 'asc',
+          label: t('search.sort_by_published_date_asc'),
+        },
+      ]}
+    />
+  );
+
   return (
     <section>
       {registrationQuery.isLoading ? (
         <ListSkeleton arrayLength={3} minWidth={40} height={100} />
       ) : registrationQuery.data?.hits && registrationQuery.data.hits.length > 0 ? (
         <>
-          <RegistrationSearchResults searchResult={registrationQuery.data.hits} />
           <ListPagination
             count={registrationQuery.data.totalHits}
             page={page + 1}
@@ -39,7 +67,10 @@ export const RegistrationSearch = ({ registrationQuery }: Pick<SearchPageProps, 
             rowsPerPage={rowsPerPage}
             onRowsPerPageChange={(newRowsPerPage) => updatePath('0', newRowsPerPage.toString())}
             maxHits={10_000}
-          />
+            showPaginationTop
+            sortingComponent={sortingComponent}>
+            <RegistrationSearchResults searchResult={registrationQuery.data.hits} />
+          </ListPagination>
         </>
       ) : (
         <Typography sx={{ mx: { xs: '0.5rem', md: 0 } }}>{t('common.no_hits')}</Typography>

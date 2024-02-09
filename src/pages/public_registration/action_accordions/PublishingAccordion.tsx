@@ -68,6 +68,8 @@ export const PublishingAccordion = ({
   const [isLoading, setIsLoading] = useState(LoadingState.None);
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
 
+  const registrationHasFile = registration.associatedArtifacts.some((artifact) => artifact.type === 'PublishedFile');
+
   const ticketMutation = useMutation({
     mutationFn: publishingRequestTicket
       ? (newTicketData: UpdateTicketData) => {
@@ -259,7 +261,9 @@ export const PublishingAccordion = ({
 
         {isPublishedRegistration && !isOnTasksPath && hasCompletedTicket && (
           <Typography sx={{ mt: '0.5rem' }}>
-            {t('registration.public_page.tasks_panel.registration_is_published')}
+            {registrationHasFile
+              ? t('registration.public_page.tasks_panel.registration_is_published_with_files')
+              : t('registration.public_page.tasks_panel.registration_is_published')}
           </Typography>
         )}
 
