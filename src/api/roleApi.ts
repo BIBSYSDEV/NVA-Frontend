@@ -1,11 +1,10 @@
-import { InstitutionUser, RoleName, UserList, UserRole } from '../types/user.types';
+import { InstitutionUser, RoleName, UserList } from '../types/user.types';
 import { getFullName } from '../utils/user-helpers';
 import { RoleApiPath } from './apiPaths';
 import { authenticatedApiRequest, authenticatedApiRequest2 } from './apiRequest';
 
-interface CreateUserPayload {
+interface CreateUserPayload extends Pick<InstitutionUser, 'roles' | 'viewingScope'> {
   nationalIdentityNumber: string;
-  roles: UserRole[];
   customerId: string;
 }
 

@@ -96,7 +96,7 @@ const employmentValidation = Yup.object<YupShape<Employment>>({
 });
 
 export const addEmployeeValidationSchema = Yup.object<YupShape<AddEmployeeData>>({
-  user: userValidationSchema,
+  person: userValidationSchema,
   affiliation: employmentValidation,
 });
 

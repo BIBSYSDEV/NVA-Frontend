@@ -21,14 +21,16 @@ import {
 import { isErrorStatus, isSuccessStatus } from '../../../utils/constants';
 import { convertToCristinPerson } from '../../../utils/user-helpers';
 import { addEmployeeValidationSchema } from '../../../utils/validation/basic_data/addEmployeeValidation';
-import { AddAffiliationPanel } from './AddAffiliationPanel';
+import { AddAffiliationSection } from './AddAffiliationSection';
 import { FindPersonPanel } from './FindPersonPanel';
-import { UserRolesSelector } from './UserRolesSelector';
+import { RolesFormSection } from './edit_user/RolesFormSection';
+import { TasksFormSection, rolesWithAreaOfResponsibility } from './edit_user/TasksFormSection';
 
 export interface AddEmployeeData {
-  user: FlatCristinPerson;
+  person: FlatCristinPerson;
   affiliation: Employment;
   roles: RoleName[];
+  viewingScopes: string[];
 }
 
 export const emptyUser: FlatCristinPerson = {
@@ -45,27 +47,29 @@ export const emptyUser: FlatCristinPerson = {
 };
 
 const initialValues: AddEmployeeData = {
-  user: emptyUser,
+  person: emptyUser,
   affiliation: emptyEmployment,
   roles: [RoleName.Creator],
+  viewingScopes: [],
 };
 
 export const AddEmployeePage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const customerId = useSelector((store: RootState) => store.user?.customerId);
+  const topOrgCristinId = useSelector((store: RootState) => store.user?.topOrgCristinId);
 
   const onSubmit = async (values: AddEmployeeData, { resetForm, validateForm }: FormikHelpers<AddEmployeeData>) => {
     if (!customerId) {
       return;
     }
 
-    let personId = values.user.id;
-    const nationalId = values.user.nationalId;
-    const { nvi, ...personWithoutNvi } = values.user;
+    let personId = values.person.id;
+    const nationalId = values.person.nationalId;
+    const { nvi, ...personWithoutNvi } = values.person;
 
     if (!personId) {
-      const person = nationalId ? personWithoutNvi : values.user;
+      const person = nationalId ? personWithoutNvi : values.person;
       // Create Person if it does not yet exist in Cristin
       const cristinPerson: CreateCristinPerson = convertToCristinPerson({
         ...person,
@@ -100,6 +104,10 @@ export const AddEmployeePage = () => {
         nationalIdentityNumber: nationalId,
         customerId,
         roles: values.roles.map((role) => ({ type: 'Role', rolename: role })),
+        viewingScope: {
+          type: 'ViewingScope',
+          includedUnits: values.viewingScopes,
+        },
       });
       if (isSuccessStatus(createUserResponse.status)) {
         dispatch(setNotification({ message: t('feedback.success.add_employment'), variant: 'success' }));
@@ -127,25 +135,36 @@ export const AddEmployeePage = () => {
             <Box
               sx={{
                 display: 'grid',
-                gridTemplateColumns: { xs: '1fr', md: '1fr auto 1fr' },
+                gridTemplateColumns: { xs: '1fr', lg: '1fr auto 1fr auto 1fr auto 1fr' },
                 gap: '1rem',
                 mt: '2rem',
               }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <FindPersonPanel />
-              </Box>
+              <FindPersonPanel />
               <Divider orientation="vertical" />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <AddAffiliationPanel />
-                <UserRolesSelector
-                  personHasNin={!values.user.nvi?.verifiedAt.id}
-                  selectedRoles={values.roles}
-                  updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
-                  disabled={isSubmitting || !!errors.user || !!errors.affiliation}
-                />
-              </Box>
+              <AddAffiliationSection />
+              <Divider orientation="vertical" />
+              <RolesFormSection
+                personHasNin={!values.person.nvi?.verifiedAt.id}
+                roles={values.roles}
+                updateRoles={(newRoles) => {
+                  setFieldValue('roles', newRoles);
+                  const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
+                  if (hasCuratorRole && values.viewingScopes.length === 0 && topOrgCristinId) {
+                    setFieldValue('viewingScopes', [topOrgCristinId]);
+                  } else if (!hasCuratorRole) {
+                    setFieldValue('viewingScopes', []);
+                  }
+                }}
+                disabled={isSubmitting || !!errors.person || !!errors.affiliation}
+              />
+              <Divider orientation="vertical" />
+              <TasksFormSection
+                roles={values.roles}
+                viewingScopes={values.viewingScopes}
+                updateViewingScopes={(newViewingScopes) => setFieldValue('viewingScopes', newViewingScopes)}
+              />
             </Box>
-            <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'end' }}>
+            <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>
               <LoadingButton
                 variant="contained"
                 size="large"

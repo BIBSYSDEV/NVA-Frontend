@@ -158,6 +158,7 @@
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Endre",
     "email": "E-post",
+    "employment": "Ansettelse",
     "employments": "Ansettelser",
     "end_date": "Sluttdato",
     "error_occurred": "En uventet feil har oppstått",
@@ -183,7 +184,7 @@
     "none": "Ingen",
     "not_decided": "Ikke bestemt",
     "number_short": "Nr.",
-    "nva_tagline": "NVA - Nasjonalt Vitenarkiv",
+    "nva_tagline": "Nasjonalt vitenarkiv (NVA)",
     "nvi": "Norsk vitenskapsindeks (NVI)",
     "open": "Åpne",
     "orcid": "ORCID",
@@ -191,7 +192,7 @@
     "order": "Rekkefølge",
     "other": "Annet",
     "overview": "Oversikt",
-    "page_title": "Nasjonalt Vitenarkiv",
+    "page_title": "Nasjonalt vitenarkiv",
     "pagination_rows_per_page": "Antall rader per side:",
     "pagination_showing_interval": "Viser {{start}}-{{end}} av {{total}}",
     "person": "Person",
@@ -356,10 +357,7 @@
     "categories_with_files_description": "Angi kategoriene hvor din institusjon tillater filopplasting",
     "curators": {
       "area_of_responsibility": "Ansvarsområde",
-      "area_of_responsibility_placeholder": "Ingen avgrensninger",
       "areas_of_responsibility": "Ansvarsområder",
-      "curator_has_extended_privileges": "Kurator har rettigheter til å redigere:",
-      "edit_extended_responsibility": "Endre utvidet ansvarsområde",
       "no_users_found": "Ingen brukere funnet"
     },
     "doi": {
