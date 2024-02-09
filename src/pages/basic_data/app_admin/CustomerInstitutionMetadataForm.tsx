@@ -233,7 +233,7 @@ export const CustomerInstitutionMetadataForm = ({
 
               <Field name={CustomerInstitutionFieldNames.RboInstitution}>
                 {({ field }: FieldProps<boolean>) => (
-                  <Box sx={{ ml: '2rem' }}>
+                  <>
                     <FormLabel component="legend" sx={{ fontWeight: 'bold' }}>
                       {t('common.rbo')}
                     </FormLabel>
@@ -248,7 +248,7 @@ export const CustomerInstitutionMetadataForm = ({
                         />
                       }
                     />
-                  </Box>
+                  </>
                 )}
               </Field>
             </div>
@@ -290,43 +290,55 @@ export const CustomerInstitutionMetadataForm = ({
                         <Checkbox
                           data-testid={dataTestId.basicData.institutionAdmin.canAssignDoiCheckbox}
                           {...field}
+                          onChange={(_event, checked) => {
+                            if (!checked) {
+                              setFieldValue(CustomerInstitutionFieldNames.DoiUsername, '');
+                              setFieldValue(CustomerInstitutionFieldNames.DoiPrefix, '');
+                              setFieldValue(CustomerInstitutionFieldNames.DoiPassword, undefined);
+                            }
+                            setFieldValue(CustomerInstitutionFieldNames.CanAssignDoi, checked);
+                          }}
                           checked={field.value}
                         />
                       }
                     />
                   )}
                 </Field>
-                {values.canAssignDoi && (
-                  <Box sx={{ display: 'flex', gap: '1rem' }}>
-                    <Field name={CustomerInstitutionFieldNames.DoiUsername}>
-                      {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
-                        <TextField
-                          {...field}
-                          data-testid={dataTestId.basicData.institutionAdmin.doiUsernameField}
-                          label={t('basic_data.institutions.doi_repo_id')}
-                          required
-                          fullWidth
-                          onChange={(event) => {
-                            const inputValue = event.target.value;
-                            const formattedValue = inputValue.toUpperCase().replace(/[^A-Z.]/g, '');
-                            setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
-                          }}
-                          variant="filled"
-                          error={touched && !!error}
-                          helperText={<ErrorMessage name={field.name} />}
-                        />
-                      )}
-                    </Field>
-                    <CustomerInstitutionTextField
-                      required
-                      name={CustomerInstitutionFieldNames.DoiPrefix}
-                      label={t('basic_data.institutions.doi_prefix')}
-                      dataTestId={dataTestId.basicData.institutionAdmin.doiPrefixField}
-                    />
 
-                    <CustomerDoiPasswordField doiAgentId={customerInstitution?.doiAgent.id ?? ''} />
-                  </Box>
-                )}
+                <Box sx={{ display: 'flex', gap: '1rem' }}>
+                  <Field name={CustomerInstitutionFieldNames.DoiUsername}>
+                    {({ field, form: { setFieldValue }, meta: { touched, error } }: FieldProps<string>) => (
+                      <TextField
+                        {...field}
+                        data-testid={dataTestId.basicData.institutionAdmin.doiUsernameField}
+                        label={t('basic_data.institutions.doi_repo_id')}
+                        required={values.canAssignDoi}
+                        disabled={!values.canAssignDoi}
+                        fullWidth
+                        onChange={(event) => {
+                          const inputValue = event.target.value;
+                          const formattedValue = inputValue.toUpperCase().replace(/[^A-Z.]/g, '');
+                          setFieldValue(CustomerInstitutionFieldNames.DoiUsername, formattedValue);
+                        }}
+                        variant="filled"
+                        error={touched && !!error}
+                        helperText={<ErrorMessage name={field.name} />}
+                      />
+                    )}
+                  </Field>
+                  <CustomerInstitutionTextField
+                    disabled={!values.canAssignDoi}
+                    required={values.canAssignDoi}
+                    name={CustomerInstitutionFieldNames.DoiPrefix}
+                    label={t('basic_data.institutions.doi_prefix')}
+                    dataTestId={dataTestId.basicData.institutionAdmin.doiPrefixField}
+                  />
+
+                  <CustomerDoiPasswordField
+                    disabled={!values.canAssignDoi}
+                    doiAgentId={customerInstitution?.doiAgent.id ?? ''}
+                  />
+                </Box>
               </div>
             )}
             {editMode && customerInstitution && (
