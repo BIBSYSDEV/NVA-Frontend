@@ -190,6 +190,10 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                     updateViewingScopes={(newViewingScopes) =>
                       setFieldValue(UserFormFieldName.ViewingScope, newViewingScopes)
                     }
+                    updateRoles={(newRoles) => {
+                      const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
+                      setFieldValue(UserFormFieldName.Roles, newUserRoles);
+                    }}
                   />
                 </Box>
               )}

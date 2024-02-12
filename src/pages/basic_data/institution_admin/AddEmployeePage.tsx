@@ -162,6 +162,7 @@ export const AddEmployeePage = () => {
                 roles={values.roles}
                 viewingScopes={values.viewingScopes}
                 updateViewingScopes={(newViewingScopes) => setFieldValue('viewingScopes', newViewingScopes)}
+                updateRoles={(newRoles) => setFieldValue('roles', newRoles)}
               />
             </Box>
             <Box sx={{ mt: '2rem', display: 'flex', justifyContent: 'center' }}>
