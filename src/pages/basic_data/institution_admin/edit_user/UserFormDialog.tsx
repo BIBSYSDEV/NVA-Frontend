@@ -173,7 +173,14 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                     personHasNin={!!values.person?.verified}
                     roles={values.user?.roles.map((role) => role.rolename) ?? []}
                     updateRoles={(newRoles) => {
+                      if (!newRoles.includes(RoleName.PublishingCurator)) {
+                        newRoles = newRoles.filter(
+                          (role) => role !== RoleName.CuratorThesis && role !== RoleName.CuratorThesisEmbargo
+                        );
+                      }
+
                       const newUserRoles: UserRole[] = newRoles.map((role) => ({ type: 'Role', rolename: role }));
+
                       setFieldValue(UserFormFieldName.Roles, newUserRoles);
                       const hasCuratorRole = newRoles.some((role) => rolesWithAreaOfResponsibility.includes(role));
                       if (hasCuratorRole && !values.user?.viewingScope?.includedUnits.length && topOrgCristinId) {
