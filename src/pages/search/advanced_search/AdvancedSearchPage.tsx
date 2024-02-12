@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { fetchResults, FetchResultsParams, ResultParam, SortOrder } from '../../../api/searchApi';
+import { FetchResultsParams, ResultParam, SortOrder, fetchResults } from '../../../api/searchApi';
 import { CategoryChip } from '../../../components/CategorySelector';
 import { SearchForm } from '../../../components/SearchForm';
 import { PublicationInstanceType } from '../../../types/registration.types';
@@ -39,6 +39,7 @@ export const AdvancedSearchPage = () => {
     results: Number(params.get(ResultParam.Results) ?? ROWS_PER_PAGE_OPTIONS[0]),
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
+    contributorName: params.get(ResultParam.ContributorName),
   };
 
   const resultSearchQuery = useQuery({
@@ -73,6 +74,10 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <OrganizationFilters topLevelOrganizationId={topLevelOrganizationId} unitId={unitId} />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
