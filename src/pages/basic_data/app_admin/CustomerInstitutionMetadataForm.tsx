@@ -21,7 +21,7 @@ import {
   updateCustomerInstitution,
   updateDoiAgent,
 } from '../../../api/customerInstitutionsApi';
-import { InputContainerBox, StyledRightAlignedWrapper } from '../../../components/styled/Wrappers';
+import { InputContainerBox } from '../../../components/styled/Wrappers';
 import { setNotification } from '../../../redux/notificationSlice';
 import {
   CustomerInstitution,
@@ -344,7 +344,8 @@ export const CustomerInstitutionMetadataForm = ({
                 />
               </>
             )}
-            <StyledRightAlignedWrapper>
+            <Divider />
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <Button sx={{ marginRight: '1rem' }} onClick={() => resetForm()}>
                 {t('common.cancel')}
               </Button>
@@ -355,7 +356,7 @@ export const CustomerInstitutionMetadataForm = ({
                 type="submit">
                 {editMode ? t('common.save') : t('common.create')}
               </LoadingButton>
-            </StyledRightAlignedWrapper>
+            </Box>
           </InputContainerBox>
         </Form>
       )}
