@@ -77,7 +77,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                         <TextField
                           value={funding.identifier}
                           disabled={hasSelectedNfrSource}
-                          label={t('common.id')}
+                          label={t('registration.description.funding.funding_id')}
                           fullWidth
                           variant="filled"
                           data-testid={dataTestId.registrationWizard.description.fundingIdField}
@@ -144,7 +144,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                             {...field}
                             value={field.value ?? ''}
                             disabled={hasSelectedNfrSource}
-                            label={t('common.id')}
+                            label={t('registration.description.funding.funding_id')}
                             fullWidth
                             variant="filled"
                             data-testid={dataTestId.registrationWizard.description.fundingIdField}

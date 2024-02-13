@@ -1,11 +1,20 @@
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Box, Button, Divider, Skeleton, Typography } from '@mui/material';
+import {
+  Link,
+  Paper,
+  Skeleton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import { CristinApiPath } from '../../api/apiPaths';
-import { FundingSources } from '../../types/project.types';
+import { fetchFundingSources } from '../../api/cristinApi';
 import { Funding } from '../../types/registration.types';
-import { getPeriodString } from '../../utils/general-helpers';
-import { useFetchResource } from '../../utils/hooks/useFetchResource';
 import { getLanguageString } from '../../utils/translation-helpers';
 import { fundingSourceIsNfr, getNfrProjectUrl } from '../registration/description_tab/projects_field/projectHelpers';
 
@@ -15,58 +24,77 @@ interface PublicFundingsContentProps {
 
 export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) => {
   const { t } = useTranslation();
-  const [fundingSources, isLoadingFundingSources] = useFetchResource<FundingSources>(CristinApiPath.FundingSources);
+
+  const fundingSourcesQuery = useQuery({
+    queryKey: ['fundingSources'],
+    queryFn: fetchFundingSources,
+    meta: { errorMessage: t('feedback.error.get_funding_sources') },
+    staleTime: Infinity,
+    cacheTime: 1_800_000, // 30 minutes
+  });
+  const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
   return (
     <>
-      {fundings.map((funding, index) => (
-        <Box
-          key={index}
-          sx={{
-            bgcolor: 'grey.400',
-            borderRadius: '4px',
-            p: '0.75rem 1rem',
-            alignItems: 'center',
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', md: '3fr auto 3fr auto 2fr auto 1fr' },
-            columnGap: '1rem',
-            ':not(:last-of-type)': { mb: '0.5rem' },
-          }}>
-          <Typography>{getLanguageString(funding.labels)}</Typography>
-          <Divider orientation="vertical" />
-          {isLoadingFundingSources ? (
-            <Skeleton />
-          ) : (
-            <Typography>
-              {getLanguageString(
-                fundingSources?.sources.find((fundingSource) => fundingSource.id === funding.source)?.name
-              )}
-            </Typography>
-          )}
-          <Divider orientation="vertical" />
-          {fundingSourceIsNfr(funding.source) ? (
-            <>
-              <Typography>{getPeriodString(funding.activeFrom, funding.activeTo)}</Typography>
-              <Divider orientation="vertical" />
-              {funding.identifier && (
-                <Button
-                  sx={{ width: 'min-content', justifySelf: { md: 'end' } }}
-                  size="small"
-                  endIcon={<OpenInNewIcon />}
-                  href={getNfrProjectUrl(funding.identifier)}
-                  target="_blank"
-                  rel="noopener noreferrer">
-                  {t('common.open')}
-                </Button>
-              )}
-            </>
-          ) : (
-            <Typography>
-              {funding.fundingAmount?.amount} {funding.fundingAmount?.currency}
-            </Typography>
-          )}
-        </Box>
-      ))}
+      <TableContainer component={Paper} elevation={3}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>{t('common.financier')}</TableCell>
+              <TableCell>{t('registration.description.funding.project')}</TableCell>
+              <TableCell>{t('registration.description.funding.funding_id')}</TableCell>
+              <TableCell>{t('registration.description.funding.funding_sum')}</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {fundings.map((funding, index) => (
+              <>
+                <TableRow key={funding.id}>
+                  <TableCell>
+                    {fundingSourcesQuery.isLoading ? (
+                      <Skeleton />
+                    ) : (
+                      <Typography>
+                        {getLanguageString(
+                          fundingSourcesList?.find((fundingSource) => fundingSource.id === funding.source)?.name
+                        )}
+                      </Typography>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <Typography>{getLanguageString(funding.labels)}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    {fundingSourceIsNfr(funding.source) && funding.identifier ? (
+                      <Link
+                        href={getNfrProjectUrl(funding.identifier)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.25rem',
+                        }}>
+                        {funding.identifier}
+                        <OpenInNewIcon />
+                      </Link>
+                    ) : (
+                      <Typography>{funding.identifier}</Typography>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {!fundingSourceIsNfr(funding.source) && (
+                      <Typography>
+                        {funding.fundingAmount?.amount} {funding.fundingAmount?.currency}
+                      </Typography>
+                    )}
+                  </TableCell>
+                </TableRow>
+              </>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 };
