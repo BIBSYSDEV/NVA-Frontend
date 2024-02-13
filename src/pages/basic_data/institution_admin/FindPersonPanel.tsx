@@ -90,7 +90,7 @@ export const FindPersonPanel = () => {
                       fullWidth
                       inputProps={{ maxLength: 11 }}
                       variant="filled"
-                      label={t('basic_data.person_register.national_identity_number')}
+                      label={t('common.national_id_number')}
                       error={touched && !!error}
                       helperText={<ErrorMessage name={field.name} />}
                     />
