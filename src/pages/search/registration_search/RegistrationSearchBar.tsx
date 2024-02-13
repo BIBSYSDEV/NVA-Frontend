@@ -27,6 +27,13 @@ import { AdvancedSearchRow } from '../registration_search/filters/AdvancedSearch
 const facetParams: string[] = [
   ResultParam.Category,
   ResultParam.Contributor,
+  ResultParam.CourseCode,
+  ResultParam.CristinId,
+  ResultParam.Doi,
+  ResultParam.GrantId,
+  ResultParam.Handle,
+  ResultParam.Isbn,
+  ResultParam.Issn,
   ResultParam.TopLevelOrganization,
   ResultParam.FundingSource,
 ];
@@ -53,6 +60,21 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
 
   const initialSearchParams = createSearchConfigFromSearchParams(searchParams);
 
+  function processSearchParamProperties(
+    values: { searchTerm: string; properties: { fieldName: ResultParam; value: string }[] },
+    searchParam: ResultParam
+  ) {
+    const paramValues =
+      values.properties
+        ?.filter((property) => property.fieldName === searchParam && property.value)
+        .map((property) => property.value) ?? [];
+    if (paramValues.length > 0) {
+      searchParams.set(searchParam, paramValues.join(','));
+    } else {
+      searchParams.delete(searchParam);
+    }
+  }
+
   return (
     <Formik
       enableReinitialize
@@ -68,45 +90,17 @@ export const RegistrationSearchBar = ({ registrationQuery }: Pick<SearchPageProp
           searchParams.delete(ResultParam.Query);
         }
 
-        const contributorNames =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.ContributorName && property.value)
-            .map((property) => property.value) ?? [];
-        if (contributorNames.length > 0) {
-          searchParams.set(ResultParam.ContributorName, contributorNames.join(','));
-        } else {
-          searchParams.delete(ResultParam.ContributorName);
-        }
-
-        const title =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Title && property.value)
-            .map((property) => property.value) ?? [];
-        if (title.length > 0) {
-          searchParams.set(ResultParam.Title, title.join(','));
-        } else {
-          searchParams.delete(ResultParam.Title);
-        }
-
-        const abstracts =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Abstract && property.value)
-            .map((property) => property.value) ?? [];
-        if (abstracts.length > 0) {
-          searchParams.set(ResultParam.Abstract, abstracts.join(','));
-        } else {
-          searchParams.delete(ResultParam.Abstract);
-        }
-
-        const tags =
-          values.properties
-            ?.filter((property) => property.fieldName === ResultParam.Tags && property.value)
-            .map((property) => property.value) ?? [];
-        if (tags.length > 0) {
-          searchParams.set(ResultParam.Tags, tags.join(','));
-        } else {
-          searchParams.delete(ResultParam.Tags);
-        }
+        processSearchParamProperties(values, ResultParam.ContributorName);
+        processSearchParamProperties(values, ResultParam.Title);
+        processSearchParamProperties(values, ResultParam.Abstract);
+        processSearchParamProperties(values, ResultParam.Tags);
+        processSearchParamProperties(values, ResultParam.Isbn);
+        processSearchParamProperties(values, ResultParam.Issn);
+        processSearchParamProperties(values, ResultParam.Doi);
+        processSearchParamProperties(values, ResultParam.Handle);
+        processSearchParamProperties(values, ResultParam.GrantId);
+        processSearchParamProperties(values, ResultParam.CourseCode);
+        processSearchParamProperties(values, ResultParam.CristinId);
 
         history.push({ search: searchParams.toString() });
       }}>

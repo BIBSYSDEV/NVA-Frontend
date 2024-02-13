@@ -15,6 +15,13 @@ const registrationFilters: FilterItem[] = [
   { field: ResultParam.ContributorName, i18nKey: 'registration.contributors.contributor' },
   { field: ResultParam.Abstract, i18nKey: 'registration.description.abstract' },
   { field: ResultParam.Tags, i18nKey: 'registration.description.keywords' },
+  // { field: ResultParam.Isbn, i18nKey: 'registration.resource_type.isbn' }, // TODO: Uncomment when implemented in api-search
+  // { field: ResultParam.Issn, i18nKey: 'registration.resource_type.issn' }, // TODO: Uncomment when implemented in api-search
+  { field: ResultParam.Doi, i18nKey: 'common.doi' },
+  { field: ResultParam.Handle, i18nKey: 'registration.public_page.handle' },
+  // { field: ResultParam.GrantId, i18nKey: 'project.grant_id' }, // TODO: Uncomment when implemented in api-search
+  // { field: ResultParam.CourseCode, i18nKey: 'registration.resource_type.course_code' }, // TODO: Uncomment when implemented in api-search
+  // { field: ResultParam.CristinId, i18nKey: 'registration.public_page.cristin_id' }, // TODO: Uncomment when implemented in api-search
 ];
 
 interface AdvancedSearchRowProps {
