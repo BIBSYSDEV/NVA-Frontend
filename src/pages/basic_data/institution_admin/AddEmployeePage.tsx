@@ -130,7 +130,7 @@ export const AddEmployeePage = () => {
         validationSchema={addEmployeeValidationSchema}
         onSubmit={onSubmit}
         validateOnMount>
-        {({ isSubmitting, values, setFieldValue, errors }: FormikProps<AddEmployeeData>) => (
+        {({ isSubmitting, values, setFieldValue, errors, isValid }: FormikProps<AddEmployeeData>) => (
           <Form noValidate>
             <Box
               sx={{
@@ -168,6 +168,7 @@ export const AddEmployeePage = () => {
               <LoadingButton
                 variant="contained"
                 size="large"
+                disabled={!isValid}
                 loading={isSubmitting}
                 type="submit"
                 startIcon={<AddCircleOutlineIcon />}>
