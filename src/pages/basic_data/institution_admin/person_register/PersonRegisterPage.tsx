@@ -126,13 +126,7 @@ export const PersonRegisterPage = () => {
                       ))
                     : employees.map((person) => (
                         <ErrorBoundary key={person.id}>
-                          <PersonTableRow
-                            cristinPerson={person}
-                            topOrgCristinIdentifier={
-                              user?.topOrgCristinId ? user.topOrgCristinId.split('/').pop() ?? '' : ''
-                            }
-                            refetchEmployees={employeeSearchQuery.refetch}
-                          />
+                          <PersonTableRow cristinPerson={person} refetchEmployees={employeeSearchQuery.refetch} />
                         </ErrorBoundary>
                       ))}
                 </TableBody>
