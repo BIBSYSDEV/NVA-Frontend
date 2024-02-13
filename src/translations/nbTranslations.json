@@ -119,6 +119,11 @@
     },
     "person_register": {
       "current_employments": "Nåværende ansettelser",
+      "degree_roles": {
+        "degree": "Studentoppgave",
+        "degree_tasks": "Særskilte oppgaver",
+        "embargo": "Embargo"
+      },
       "edit_person": "Rediger person",
       "employee_table_caption": "Liste over alle ansatte",
       "employment_x_of_y": "Ansettelse {{selected}} av {{total}}",
@@ -261,10 +266,6 @@
     "yes": "Ja"
   },
   "disciplines": {
-    "0001": "Humaniora",
-    "0002": "Samfunnsvitenskap",
-    "0003": "Medisin og helsefag",
-    "0004": "Realfag og teknologi",
     "1003": "Arkeologi og konservering",
     "1004": "Kunst, design og arkitektur",
     "1005": "Asiatiske og afrikanske studier",
@@ -350,7 +351,11 @@
     "1085": "Psykologi",
     "1086": "Sykepleie",
     "1087": "Veterinærmedisin",
-    "1144": "Ernæring"
+    "1144": "Ernæring",
+    "0001": "Humaniora",
+    "0002": "Samfunnsvitenskap",
+    "0003": "Medisin og helsefag",
+    "0004": "Realfag og teknologi"
   },
   "editor": {
     "categories_with_files": "Kategorier med filopplasting",
@@ -646,11 +651,8 @@
         "roles": "Roller"
       },
       "identity": {
-        "cristin_id": "Cristin ID",
-        "full_name": "Fullt navn",
         "identity": "Identitet",
         "identity_numbers": "Identitetsnumre",
-        "not_shown_publicly": "Vises ikke offentlig",
         "upload_profile_photo": "Last opp profilfoto",
         "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
       },
@@ -678,11 +680,6 @@
       "projects": "Prosjekt",
       "remove_profile_picture": "Fjern profilbilde?",
       "remove_profile_picture_info": "Er du sikker på at du vil fjerne profilbildet?",
-      "research_profile_summary": {
-        "affiliations": "Tilknytninger",
-        "preview": "Forhåndsvisning",
-        "research_profile": "Forskerprofil"
-      },
       "results": "Resultat",
       "telephone": "Telefon",
       "user_profile": "Brukerprofil",
@@ -1725,6 +1722,7 @@
     "reset_selection": "Nullstill valg",
     "responsible_institution": "Forskningsansvarlig institusjon",
     "result": "Resultat",
+    "search_for_contributor": "Søk etter bidragsyter",
     "search_for_sub_unit": "Søk etter underenhet",
     "search_for_title": "Søk etter tittel",
     "search_placeholder": "Søk etter tittel, bidragsyter, sammendrag, osv.",
