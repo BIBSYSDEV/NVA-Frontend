@@ -13,6 +13,7 @@ import { PublicationDateIntervalFilter } from '../PublicationDateIntervalFilter'
 import { RegistrationSearch } from '../registration_search/RegistrationSearch';
 import { CategoryFilterDialog } from './CategoryFilterDialog';
 import { OrganizationFilters } from './OrganizationFilters';
+import { PublisherFilters } from './PublisherFilters';
 
 export const AdvancedSearchPage = () => {
   const { t } = useTranslation();
@@ -78,6 +79,10 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <PublisherFilters />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
