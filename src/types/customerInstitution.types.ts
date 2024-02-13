@@ -98,7 +98,6 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   rorId: '',
   shortName: '',
-  alternativeNames: { eng: '' },
   sector: Sector.Uhi,
   nviInstitution: false,
   rboInstitution: false,
