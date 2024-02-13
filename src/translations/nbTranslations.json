@@ -33,15 +33,18 @@
   "basic_data": {
     "add_employee": {
       "add_employee": "Legg til ansatt",
-      "confirmed_identity": "Institusjonen bekrefter personens identitet. Gjelder personer uten fødselsnummer.",
       "create_person": "Opprett person",
+      "missing_nin_description": "<0>Vi trenger at du bekrefter identiteten på personen uten nasjonalt identitetsnummer som fødselsnummer eller D-nummer.</0><0>For å skille personen fra andre med liknende navn så må det registreres minst ett forskningsresultat tilknyttet denne personen.</0><0>Merk at du ikke bare bekrefter personen for din institusjon, men også for andre institusjoner i systemet.</0><0>Hvem som gir bekreftelse på unntak, vil derfor være synlig i systemet som dokumentasjon.</0><0>Bekrefter du at denne personen eksisterer og har bidratt på minst ett forskningsresultat ved din institusjon?</0>",
+      "missing_nin_title": "Bekrefte identitet for person uten nasjonalt identitetsnummer",
       "name_or_nin": "Navn eller fødselsnummer",
       "new_search": "Nytt søk",
       "no_matching_persons_found": "Hvis du ikke finner riktig person i Personregisteret kan du opprette ny person.",
+      "only_confirmed_user_qualify_for_nvi": "Det er kun personer med bekreftet identitet som kan gi NVI-uttelling.",
       "position": "Stilling",
       "position_percent": "Stillingsprosent",
       "search_for_person": "Søk etter person",
-      "update_person_registry": "Oppdater personregister"
+      "update_person_registry": "Oppdater personregister",
+      "without_nin": "Uten nasjonalt identitetsnummer"
     },
     "basic_data": "Grunndata",
     "central_import": {
