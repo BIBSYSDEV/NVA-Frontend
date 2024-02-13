@@ -127,6 +127,7 @@ export const AddEmployeePage = () => {
       <Typography variant="h2">{t('basic_data.add_employee.update_person_registry')}</Typography>
       <Formik
         initialValues={initialValues}
+        isInitialValid={false}
         validationSchema={addEmployeeValidationSchema}
         onSubmit={onSubmit}
         validateOnMount>
