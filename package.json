@@ -5,7 +5,7 @@
   "scripts": {
     "build": "react-scripts build",
     "pre-commit": "npx lint-staged && npm run unused-i18n-keys",
-    "prepare": "husky install",
+    "prepare": "husky",
     "start": "react-scripts -r @cypress/instrument-cra start",
     "start:mock": "set REACT_APP_USE_MOCK=true&& npm start",
     "test": "cypress run",
