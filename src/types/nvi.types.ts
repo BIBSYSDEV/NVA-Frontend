@@ -87,6 +87,7 @@ export interface Note {
 }
 
 export interface NviPeriod {
+  type: 'NviPeriod';
   publishingYear: string;
   reportingDate: string;
   startDate: string;
