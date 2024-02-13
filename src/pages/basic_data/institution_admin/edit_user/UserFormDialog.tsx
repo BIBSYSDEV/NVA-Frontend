@@ -21,7 +21,7 @@ import { createUser, fetchUser, updateUser } from '../../../../api/roleApi';
 import { PageSpinner } from '../../../../components/PageSpinner';
 import { setNotification } from '../../../../redux/notificationSlice';
 import { RootState } from '../../../../redux/store';
-import { CristinPerson, InstitutionUser, RoleName, UserRole } from '../../../../types/user.types';
+import { CristinPerson, Employment, InstitutionUser, RoleName, UserRole } from '../../../../types/user.types';
 import { getIdentifierFromId } from '../../../../utils/general-helpers';
 import { getValueByKey } from '../../../../utils/user-helpers';
 import { personDataValidationSchema } from '../../../../utils/validation/basic_data/addEmployeeValidation';
@@ -68,9 +68,23 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
     meta: { errorMessage: t('feedback.error.get_person') },
     initialData: existingPersonObject,
   });
+  const personEmployments = personQuery.data?.employments ?? [];
+
+  const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
+  const internalEmployments: Employment[] = [];
+  const externalEmployments: Employment[] = [];
+  const targetOrganizationIdStart = `${topOrgCristinIdentifier.split('.')[0]}.`;
+
+  personEmployments.forEach((employment) => {
+    const organizationIdentifier = employment.organization.split('/').pop();
+    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
+      internalEmployments.push(employment);
+    } else {
+      externalEmployments.push(employment);
+    }
+  });
 
   const personCristinIdentifier = getValueByKey('CristinIdentifier', personQuery.data?.identifiers);
-  const topOrgCristinIdentifier = topOrgCristinId ? getIdentifierFromId(topOrgCristinId) : '';
   const username =
     personCristinIdentifier && topOrgCristinIdentifier ? `${personCristinIdentifier}@${topOrgCristinIdentifier}` : '';
 
@@ -118,15 +132,24 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
       dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' })),
   });
 
+  const initialPerson: CristinPerson | undefined = personQuery.data
+    ? {
+        ...personQuery.data,
+        employments: internalEmployments,
+      }
+    : personQuery.data;
+
+  const initialUser: InstitutionUser | undefined = institutionUserQuery.isError
+    ? {
+        institution: customerId,
+        roles: [{ type: 'Role', rolename: RoleName.Creator }],
+        username: username,
+      }
+    : institutionUserQuery.data;
+
   const initialValues: UserFormData = {
-    person: personQuery.data,
-    user: institutionUserQuery.isError
-      ? {
-          institution: customerId,
-          roles: [{ type: 'Role', rolename: RoleName.Creator }],
-          username: username,
-        }
-      : institutionUserQuery.data,
+    person: initialPerson,
+    user: initialUser,
   };
 
   return (
@@ -165,7 +188,7 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
                     gridTemplateColumns: { xs: '1fr', lg: '1fr auto 1fr auto 1fr auto 1fr' },
                     gap: '1rem',
                   }}>
-                  <PersonFormSection />
+                  <PersonFormSection externalEmployments={externalEmployments} />
                   <Divider orientation="vertical" />
                   <AffiliationFormSection />
                   <Divider orientation="vertical" />

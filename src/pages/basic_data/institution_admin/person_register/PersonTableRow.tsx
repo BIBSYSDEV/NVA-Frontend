@@ -41,20 +41,7 @@ export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, refetch
   const orcidUrl = orcid ? `${ORCID_BASE_URL}/${orcid}` : '';
 
   const fullName = getFullCristinName(cristinPerson.names);
-
   const activeEmployments = employments.filter(isActiveEmployment);
-  const employmentsInThisInstitution: Employment[] = [];
-  const employmentsInOtherInstitutions: Employment[] = [];
-  const targetOrganizationIdStart = `${topOrgCristinIdentifier?.split('.')[0]}.`;
-
-  employments.forEach((employment) => {
-    const organizationIdentifier = employment.organization.split('/').pop();
-    if (organizationIdentifier?.startsWith(targetOrganizationIdStart)) {
-      employmentsInThisInstitution.push(employment);
-    } else {
-      employmentsInOtherInstitutions.push(employment);
-    }
-  });
 
   return (
     <>
