@@ -74,7 +74,7 @@ export interface NviCandidate {
   publicationId: string;
   approvals: (Approval | FinalizedApproval | RejectedApproval)[];
   notes: Note[];
-  periodStatus: {
+  period: {
     status: 'OpenPeriod' | 'ClosedPeriod' | 'NoPeriod';
   };
 }
