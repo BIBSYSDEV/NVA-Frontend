@@ -651,11 +651,8 @@
         "roles": "Roller"
       },
       "identity": {
-        "cristin_id": "Cristin ID",
-        "full_name": "Fullt navn",
         "identity": "Identitet",
         "identity_numbers": "Identitetsnumre",
-        "not_shown_publicly": "Vises ikke offentlig",
         "upload_profile_photo": "Last opp profilfoto",
         "upload_profile_photo_info": "Maksimum størrelse: 1 MB. Støttede filtyper: .jpg eller .jpeg"
       },
