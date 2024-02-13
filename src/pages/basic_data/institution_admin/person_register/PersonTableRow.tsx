@@ -22,11 +22,10 @@ export interface PersonData {
 
 interface PersonTableRowProps {
   cristinPerson: CristinPerson;
-  topOrgCristinIdentifier: string;
   refetchEmployees: () => void;
 }
 
-export const PersonTableRow = ({ cristinPerson, topOrgCristinIdentifier, refetchEmployees }: PersonTableRowProps) => {
+export const PersonTableRow = ({ cristinPerson, refetchEmployees }: PersonTableRowProps) => {
   const { t } = useTranslation();
 
   const [openDialog, setOpenDialog] = useState(false);
