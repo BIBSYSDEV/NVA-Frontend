@@ -17,8 +17,8 @@ export const SupportModalContent = ({ registration }: SupportModalContentProps) 
 
   const ticketsQuery = useQuery({
     enabled: !!registration,
-    queryKey: ['registrationTickets', registration.id],
-    queryFn: () => fetchRegistrationTickets(registration.id),
+    queryKey: ['registrationTickets', registration.identifier],
+    queryFn: () => fetchRegistrationTickets(registration.identifier),
     onError: () => dispatch(setNotification({ message: t('feedback.error.get_tickets'), variant: 'error' })),
   });
 

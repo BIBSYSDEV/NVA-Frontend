@@ -50,7 +50,6 @@ export const RegistrationLandingPage = () => {
   });
 
   const registration = registrationQuery.data;
-  const registrationId = registration?.id ?? '';
 
   const isRegistrationAdmin =
     userIsRegistrationOwner(user, registration) || userIsRegistrationCurator(user, registration);
@@ -62,8 +61,8 @@ export const RegistrationLandingPage = () => {
 
   const ticketsQuery = useQuery({
     enabled: isRegistrationAdmin,
-    queryKey: ['registrationTickets', registrationId],
-    queryFn: () => fetchRegistrationTickets(registrationId),
+    queryKey: ['registrationTickets', identifier],
+    queryFn: () => fetchRegistrationTickets(identifier),
     meta: { errorMessage: t('feedback.error.get_tickets') },
   });
 

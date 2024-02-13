@@ -86,7 +86,7 @@ export const fetchRegistrationsByOwner = async () => {
 };
 export const fetchRegistrationTickets = async (registrationId: string) => {
   const getTickets = await authenticatedApiRequest2<TicketCollection>({
-    url: `${registrationId}/tickets`,
+    url: `publication/${registrationId}/tickets`,
   });
   return getTickets.data;
 };
