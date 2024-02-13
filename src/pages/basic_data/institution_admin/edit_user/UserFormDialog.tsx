@@ -132,24 +132,20 @@ export const UserFormDialog = ({ open, onClose, existingUser, existingPerson }: 
       dispatch(setNotification({ message: t('feedback.success.update_institution_user'), variant: 'success' })),
   });
 
-  const initialPerson: CristinPerson | undefined = personQuery.data
-    ? {
-        ...personQuery.data,
-        employments: internalEmployments,
-      }
-    : personQuery.data;
-
-  const initialUser: InstitutionUser | undefined = institutionUserQuery.isError
-    ? {
-        institution: customerId,
-        roles: [{ type: 'Role', rolename: RoleName.Creator }],
-        username: username,
-      }
-    : institutionUserQuery.data;
-
   const initialValues: UserFormData = {
-    person: initialPerson,
-    user: initialUser,
+    person: personQuery.data
+      ? {
+          ...personQuery.data,
+          employments: internalEmployments,
+        }
+      : personQuery.data,
+    user: institutionUserQuery.isError
+      ? {
+          institution: customerId,
+          roles: [{ type: 'Role', rolename: RoleName.Creator }],
+          username: username,
+        }
+      : institutionUserQuery.data,
   };
 
   return (
