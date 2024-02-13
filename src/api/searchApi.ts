@@ -252,10 +252,10 @@ export const fetchResults = async (params: FetchResultsParams, signal?: AbortSig
     searchParams.set(ResultParam.IdentifierNot, params.idNot);
   }
   if (params.isbn) {
-    searchParams.set(ResultParam.Isbn, params.isbn.split('-').join());
+    searchParams.set(ResultParam.Isbn, params.isbn.replace(/-/g, ''));
   }
   if (params.issn) {
-    searchParams.set(ResultParam.Issn, params.issn.split('-').join());
+    searchParams.set(ResultParam.Issn, params.issn.replace(/-/g, ''));
   }
   if (params.project) {
     searchParams.set(ResultParam.Project, params.project);
