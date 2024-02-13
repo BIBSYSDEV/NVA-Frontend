@@ -14,7 +14,7 @@
       "paragraph5": "Although NVA has been established and in use by several institutions, the service will be in continuous development throughout its lifetime. Institutions that do not have a research archive can contact <0>Sikt</0> to use NVA as a pilot institution."
     },
     "footer_text": "The service is delivered by Sikt - Norwegian Agency for Shared Services in Education and Research",
-    "short_description": "The national research archive (NVA) collects information about Norwegian research and makes research results- and information openly available."
+    "short_description": "The National Research Archive (NVA) gathers information about Norwegian research, and makes research results and research information openly accessible."
   },
   "authorization": {
     "accept_terms_to_create_user": "I agree to be created as a user in NVA",
@@ -93,6 +93,7 @@
       "doi_repo_id": "Data Cite Repository ID",
       "edit_institution": "Edit institution",
       "feide_organization_domain": "The institution's domain in Feide",
+      "institution_is_inactive": "",
       "institution_is_nvi_applicable": "Institution reports publication points to NVI",
       "institution_receives_funding_via_rbo": "Receives funding via Results-based redistribution (RBO)",
       "invalid_doi_prefix": "Invalid DOI prefix. Example with valid format: 10.1234",
@@ -122,6 +123,7 @@
       "employee_table_caption": "List of all employees",
       "employment_x_of_y": "Employment {{selected}} of {{total}}",
       "hide_full_nin": "Hide national identity number",
+      "must_be_curator_to_have_area_of_responsibility": "",
       "national_identity_number": "National identity number",
       "no_eligable_roles": "Persons without a national identity number can not have any roles",
       "no_employees_found": "No employees found",
@@ -132,6 +134,7 @@
       "remove_employment": "Remove employment",
       "remove_employment_text": "Are you sure you want to remove this employment?",
       "remove_employment_title": "Remove employment?",
+      "select_unit": "",
       "show_full_nin": "Show national identity number"
     }
   },
@@ -154,6 +157,7 @@
     "doi": "DOI",
     "doi_long": "Digital Object Identifier (DOI)",
     "edit": "Edit",
+    "employment": "",
     "employments": "Employments",
     "end_date": "End date",
     "error_occurred": "An unexpected error has occurred",
@@ -189,8 +193,10 @@
     "page_title": "Nasjonalt Vitenarkiv",
     "pagination_rows_per_page": "Number of rows per page:",
     "pagination_showing_interval": "Showing {{start}}-{{end}} of {{total}}",
+    "person": "",
     "place": "Place",
     "previous": "Previous",
+    "project_status": "",
     "publisher": "Publisher",
     "publishing_year": "",
     "rbo": "Results-based redistribution (RBO)",
@@ -350,11 +356,7 @@
     "categories_with_files_description": "",
     "curators": {
       "area_of_responsibility": "Area of responsibility",
-      "area_of_responsibility_placeholder": "No limitations",
       "areas_of_responsibility": "Areas of responsibility",
-      "curator_has_extended_privileges": "Curator has the rights to edit:",
-      "edit_extended_responsibility": "Edit extended area of responsibility",
-      "extended_area_of_resposibility": "Extended area of responsibility",
       "no_users_found": "No users found"
     },
     "doi": {
@@ -625,6 +627,7 @@
     "my_profile": {
       "background": "Background",
       "edit_promoted_publication": "Add/remove favorite",
+      "edit_research_profile": "",
       "field_and_background": {
         "background_placeholder": "Fill in",
         "english": "English",
@@ -661,6 +664,7 @@
         "remove_connection": "Unlink ORCID",
         "remove_connection_info": "Are you sure you want to unlink ORCID? \n\nIf you want to revoke Sikt's access to read your ORCID, please go to your ORCID profile."
       },
+      "overview_and_settings": "",
       "preferred_first_name": "Preferred first name",
       "preferred_last_name": "Preferred last name",
       "profile_picture": "Profile picture",
@@ -675,7 +679,12 @@
       "results": "Results",
       "telephone": "Telephone",
       "user_profile": "User profile",
-      "user_profile_description": "Here you can fill in and mark what you wish to display on your public researcher profile."
+      "user_profile_description": "Here you can fill in and mark what you wish to display on your public researcher profile.",
+      "user_role_and_help": {
+        "application_help_helper_text": "",
+        "application_help_text": "",
+        "user_role_and_help": ""
+      }
     },
     "no_employments": "No employments",
     "project_registration_status": {
@@ -684,6 +693,7 @@
       "ongoing": "Ongoing"
     },
     "project_registrations": "Project registrations",
+    "public_research_profile": "",
     "registrations": {
       "delete_all_draft_registrations": "Delete all drafts",
       "delete_all_draft_registrations_message": "Delete all drafts?",
@@ -1043,6 +1053,7 @@
     "summary": "Summary"
   },
   "registration": {
+    "citation_points_to": "",
     "contributors": {
       "add_affiliation": "Add affiliation",
       "add_contributor": "Add contributor",
@@ -1180,6 +1191,7 @@
       "administrative_contract": "Internal file that should never be published. E.g. author agreement or other documentation for the registered result",
       "conditions_for_using_file": "Terms of use",
       "embargo": "Embargo",
+      "file_and_license_info": "",
       "file_publish_date_helper_text": "File is locked until the specified date",
       "files": "Files",
       "files_are_not_published": "Files are not published",
@@ -1211,7 +1223,7 @@
       "version_helper_text": "<0>Upload the accepted and/or published versions of the article. If the published version of the article is openly available, you don’t have to upload the accepted version.</0> <1>Include any publishing agreements, like formal contracts or other communication with the editor. The documents should specify conditions for embargo and licenses. <0>Remember to mark for “not publish”, to hide the documents from public view.</0></1>",
       "version_helper_text_metadata_only": "Upload the accepted and/or published versions of the article and any publishing agreements - formal contracts or other communication with the editor. A curator will check the details and ensure that only files legal to share is shared, and with correct licenses.",
       "version_published_helper_text": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The licence is normally decided by the publisher, so the safe option for a license is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY license.",
-      "version_published_helper_text_metadata_only": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The licence is normally decided by the publisher, so the safe option for a license is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY license.",
+      "version_published_helper_text_metadata_only": "<0>Published version</0>: Also known as VOR or the “version of record”. The published version of the article in a journal, in print and/or online. This version will include any editorial improvements such as copy editing, or typesetting, made after the peer review process is complete. It is usually available on a publisher website, in PDF format. The license is normally decided by the publisher, so the safe option for a license is “Publisher's conditions”. Many publishers support Open Access and allow use of the CC-BY license.",
       "version_publishing_agreement_helper_text": "<0>Publishing Agreement</0> is a contract between a publisher and the artist or author. It sets out things like intellectual property ownership, where and when the work can be published, payment terms, liability protections, confidentiality, and royalties. This document is of much help for the curators when questions about license and publications dates needs to be decided on, please deposit it. Such agreements will not be publicly displayed.",
       "version_publishing_agreement_helper_text_metadata_only": "<0>Publishing Agreement</0> is a contract between a publisher and the artist or author. It sets out things like intellectual property ownership, where and when the work can be published, payment terms, liability protections, confidentiality, and royalties. This document is of much help for the curators when questions about license and publications dates needs to be decided on, please deposit it. Such agreements will not be publicly displayed."
     },
@@ -1273,6 +1285,7 @@
         "publish_metadata": "Publish metadata",
         "publish_metadata_and_files": "Publish metadata and file(s)",
         "registration_is_published": "The registration has been published. Metadata and any files are publicly available.",
+        "registration_is_published_with_files": "",
         "registration_will_soon_be_published": "The registration will be published soon. Reload page to see updated status.",
         "reload": "Reload",
         "review_preview_before_publishing": "Review content before publishing.",
@@ -1671,6 +1684,7 @@
       "type_work_specified": "Custom work type",
       "volume": "Volume"
     },
+    "result_is_deleted": "",
     "status": {
       "DRAFT": "Draft",
       "DRAFT_FOR_DELETION": "Deleted",
@@ -1714,8 +1728,11 @@
     "select_one_or_more_categories": "Select one or more categories",
     "sort_by": "Order by",
     "sort_by_modified_date": "Last modified",
+    "sort_by_name_asc": "",
+    "sort_by_name_desc": "",
     "sort_by_published_date_asc": "Publication date (oldest first)",
     "sort_by_published_date_desc": "Publication date (newest first)",
+    "sorted_by": "",
     "year_from": "",
     "year_to": ""
   },

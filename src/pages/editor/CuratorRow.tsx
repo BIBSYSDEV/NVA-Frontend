@@ -6,11 +6,17 @@ import { ViewingScopeChip } from '../basic_data/institution_admin/edit_user/View
 
 interface CuratorRowProps {
   curator: InstitutionUser;
+  refetchCurators: () => void;
 }
 
-export const CuratorRow = ({ curator }: CuratorRowProps) => {
+export const CuratorRow = ({ curator, refetchCurators }: CuratorRowProps) => {
   const [openDialog, setOpenDialog] = useState(false);
-  const toggleDialog = () => setOpenDialog(!openDialog);
+  const toggleDialog = () => {
+    if (openDialog) {
+      refetchCurators();
+    }
+    setOpenDialog(!openDialog);
+  };
 
   return (
     <>
