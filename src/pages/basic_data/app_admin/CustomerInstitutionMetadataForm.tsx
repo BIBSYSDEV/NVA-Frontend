@@ -142,7 +142,10 @@ export const CustomerInstitutionMetadataForm = ({
             <CustomerInstitutionInformationFromCristin
               customerData={customerData}
               cristinId={values.customer.cristinId}
-              setDisplayName={(newName) => setFieldValue(CustomerInstitutionFieldNames.DisplayName, newName)}
+              setName={(newName) => {
+                setFieldValue(CustomerInstitutionFieldNames.DisplayName, newName);
+                setFieldValue(CustomerInstitutionFieldNames.Name, newName);
+              }}
               displayName={values.customer.displayName}
             />
 

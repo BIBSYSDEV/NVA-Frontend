@@ -8,14 +8,14 @@ import { PageSpinner } from '../../../components/PageSpinner';
 interface CustomerInstitutionInformationFromCristinProps {
   cristinId: string | undefined;
   customerData: Organization | null;
-  setDisplayName: (string: string) => void;
+  setName: (string: string) => void;
   displayName: string | undefined;
 }
 
 export const CustomerInstitutionInformationFromCristin = ({
   cristinId,
   customerData,
-  setDisplayName,
+  setName,
   displayName,
 }: CustomerInstitutionInformationFromCristinProps) => {
   const customerInformationFromCristinQuery = useQuery({
@@ -40,7 +40,7 @@ export const CustomerInstitutionInformationFromCristin = ({
   const customerInformation = customerData ?? customerInformationFromCristinQuery.data;
   const displayNameFromCristin = getLanguageString(customerData?.labels, 'nb');
   if (displayName !== displayNameFromCristin && displayNameFromCristin.length > 0) {
-    setDisplayName(displayNameFromCristin);
+    setName(displayNameFromCristin);
   }
 
   return (
