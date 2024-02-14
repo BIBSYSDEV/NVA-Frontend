@@ -41,6 +41,7 @@ export const AdvancedSearchPage = () => {
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
     contributorName: params.get(ResultParam.ContributorName),
+    fundingSource: params.get(ResultParam.FundingSource),
   };
 
   const resultSearchQuery = useQuery({
