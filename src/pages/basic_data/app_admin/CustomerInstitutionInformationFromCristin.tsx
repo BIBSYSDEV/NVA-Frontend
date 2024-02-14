@@ -23,7 +23,7 @@ export const CustomerInstitutionInformationFromCristin = ({
   const [topLevelCristinCode, setTopLevelCristinCode] = useState<string | null>();
   const customerInformationFromCristinQuery = useQuery({
     queryKey: ['organization', cristinId, customerData],
-    enabled: !!cristinId,
+    enabled: !!cristinId && !customerData,
     queryFn: () => {
       if (cristinId && !customerData) {
         return fetchOrganization(cristinId);
