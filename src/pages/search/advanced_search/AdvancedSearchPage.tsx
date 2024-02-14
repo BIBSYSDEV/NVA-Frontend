@@ -40,6 +40,7 @@ export const AdvancedSearchPage = () => {
     publicationYearSince: params.get(ResultParam.PublicationYearSince),
     publicationYearBefore: params.get(ResultParam.PublicationYearBefore),
     contributorName: params.get(ResultParam.ContributorName),
+    funding: params.get(ResultParam.Funding),
   };
 
   const resultSearchQuery = useQuery({
@@ -78,6 +79,10 @@ export const AdvancedSearchPage = () => {
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
           <SearchForm paramName={ResultParam.ContributorName} placeholder={t('search.search_for_contributor')} />
+
+          {showFilterDivider && <Divider orientation="vertical" flexItem />}
+
+          <SearchForm paramName={ResultParam.Funding} placeholder={t('common.search')} />
 
           {showFilterDivider && <Divider orientation="vertical" flexItem />}
 
