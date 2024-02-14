@@ -124,7 +124,6 @@ export enum CustomerInstitutionFieldNames {
   Sector = 'customer.sector',
   NviInstitution = 'customer.nviInstitution',
   CanAssignDoi = 'canAssignDoi',
-  ShortName = 'shortName',
   RboInstitution = 'customer.rboInstitution',
 }
 
