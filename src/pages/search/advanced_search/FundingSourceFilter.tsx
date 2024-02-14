@@ -1,4 +1,4 @@
-import { Autocomplete, Box } from '@mui/material';
+import { Autocomplete } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -7,6 +7,7 @@ import { fetchFundingSources } from '../../../api/cristinApi';
 import { ResultParam } from '../../../api/searchApi';
 import { AutocompleteTextField } from '../../../components/AutocompleteTextField';
 import { setNotification } from '../../../redux/notificationSlice';
+import { FundingSource } from '../../../types/project.types';
 import { getLanguageString } from '../../../utils/translation-helpers';
 
 export const FundingSourceFilter = () => {
@@ -26,9 +27,9 @@ export const FundingSourceFilter = () => {
   });
   const fundingSourcesList = fundingSourcesQuery.data?.sources ?? [];
 
-  const handleChange = (selectedValue: any) => {
+  const handleChange = (selectedValue: FundingSource | null) => {
     if (selectedValue) {
-      const value = selectedValue.id.split('/').pop();
+      const value = selectedValue.id.split('/').pop() ?? '';
       searchParams.set(paramName, value);
     } else {
       searchParams.delete(paramName);
@@ -38,37 +39,31 @@ export const FundingSourceFilter = () => {
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={(event) => {
-        event.preventDefault();
-      }}>
-      <Autocomplete
-        sx={{ minWidth: '15rem' }}
-        disabled={!fundingSourcesQuery.data}
-        value={
-          currentSearchTerm
-            ? fundingSourcesList.find(
-                (source) => source.id === `https://api.dev.nva.aws.unit.no/cristin/funding-sources/${currentSearchTerm}`
-              )
-            : null
-        }
-        onChange={(_, newValue) => {
-          handleChange(newValue);
-        }}
-        getOptionLabel={(option) => getLanguageString(option.name)}
-        options={fundingSourcesList}
-        renderInput={(params) => (
-          <AutocompleteTextField
-            isLoading={fundingSourcesQuery.isLoading}
-            {...params}
-            variant="outlined"
-            placeholder={t('search.search_for_funder')}
-            showSearchIcon={!currentSearchTerm}
-            multiline
-          />
-        )}
-      />
-    </Box>
+    <Autocomplete
+      sx={{ minWidth: '15rem' }}
+      disabled={!fundingSourcesQuery.data}
+      value={
+        currentSearchTerm
+          ? fundingSourcesList.find(
+              (source) => source.id === `https://api.dev.nva.aws.unit.no/cristin/funding-sources/${currentSearchTerm}`
+            )
+          : null
+      }
+      onChange={(_, newValue) => {
+        handleChange(newValue);
+      }}
+      options={fundingSourcesList}
+      getOptionLabel={(option) => getLanguageString(option.name)}
+      renderInput={(params) => (
+        <AutocompleteTextField
+          isLoading={fundingSourcesQuery.isLoading}
+          {...params}
+          variant="outlined"
+          placeholder={t('search.search_for_funder')}
+          showSearchIcon={!currentSearchTerm}
+          multiline
+        />
+      )}
+    />
   );
 };
