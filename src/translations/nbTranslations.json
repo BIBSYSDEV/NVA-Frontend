@@ -612,6 +612,9 @@
       "doi_closed": "DOI avvist",
       "doi_completed": "DOI tildelt",
       "doi_pending": "Venter på DOI-tildeling",
+      "files_published_one": "{{count}} fil publisert",
+      "files_published_other": "{{count}} filer publisert",
+      "files_published_unknown": "Fil(er) publisert",
       "files_rejected": "Fil(er) avvist",
       "general_support_pending": "Venter på oppfølging",
       "mark_as_completed": "Sett til ferdig",
@@ -626,10 +629,7 @@
         "DoiRequest": "DOI",
         "GeneralSupportCase": "Kuratorstøtte",
         "PublishingRequest": "Publisering"
-      },
-      "files_published_one": "{{count}} fil publisert",
-      "files_published_other": "{{count}} filer publisert",
-      "files_published_unknown": "Fil(er) publisert"
+      }
     },
     "my_page": "Min side",
     "my_profile": {
