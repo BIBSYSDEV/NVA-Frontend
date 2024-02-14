@@ -40,14 +40,14 @@ export const PublicFundingsContent = ({ fundings }: PublicFundingsContentProps) 
         <TableHead>
           <TableRow>
             <TableCell>{t('common.financier')}</TableCell>
-            <TableCell>{t('registration.description.funding.project')}</TableCell>
+            <TableCell>{t('registration.description.funding.funding_name')}</TableCell>
             <TableCell>{t('registration.description.funding.funding_id')}</TableCell>
             <TableCell>{t('registration.description.funding.funding_sum')}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {fundings.map((funding) => (
-            <TableRow key={funding.id}>
+            <TableRow key={funding.source + funding.identifier}>
               <TableCell>
                 {fundingSourcesQuery.isLoading ? (
                   <Skeleton />

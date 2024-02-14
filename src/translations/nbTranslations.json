@@ -1172,7 +1172,7 @@
         "funding_id": "Tilskudds ID",
         "nfr_project": "NFR-prosjekt",
         "nfr_project_search": "Søk etter prosjektnavn eller prosjektleder",
-        "project": "Tilskuddsnavn",
+        "funding_name": "Tilskuddsnavn",
         "remove_funding": "Fjern finansiering"
       },
       "hrcs_activities": "HRCS-aktiviteter",

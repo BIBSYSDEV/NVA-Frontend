@@ -68,7 +68,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                         <TextField
                           value={getLanguageString(funding.labels)}
                           disabled
-                          label={t('registration.description.funding.project')}
+                          label={t('registration.description.funding.funding_name')}
                           fullWidth
                           variant="filled"
                           multiline
@@ -126,7 +126,7 @@ export const RegistrationFunding = ({ currentFundings }: FundingsFieldProps) => 
                             {...field}
                             value={field.value ?? ''}
                             disabled={hasSelectedNfrSource}
-                            label={t('registration.description.funding.project')}
+                            label={t('registration.description.funding.funding_name')}
                             fullWidth
                             variant="filled"
                             multiline
