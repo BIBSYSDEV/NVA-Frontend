@@ -5,7 +5,7 @@ import { ExpandedPublishingTicket, PublishingTicket } from '../../../types/publi
 export const StyledMessagesContainer = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
-  gap: '0.1rem',
+  gap: '0.25rem',
 });
 
 export const StyledStatusMessageBox = styled(Box)({
@@ -23,41 +23,30 @@ interface PublishingRequestMessagesColumnProps {
 export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMessagesColumnProps) => {
   const { t } = useTranslation();
 
-  const registrationHasFiles =
-    (ticket.approvedFiles && ticket.approvedFiles.length > 0) ||
-    (ticket.filesForApproval && ticket.filesForApproval.length > 0);
-
   return (
     <StyledMessagesContainer>
-      {ticket.workflow === 'RegistratorPublishesMetadataOnly' ? (
-        <>
-          <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-            <Typography>{t('registration.status.PUBLISHED_METADATA')}</Typography>
-            {ticket.publication?.publishedDate ? (
-              <Typography>{new Date(ticket.publication.publishedDate).toLocaleDateString()}</Typography>
-            ) : (
-              <Typography>{new Date(ticket.createdDate).toLocaleDateString()}</Typography>
-            )}
-          </StyledStatusMessageBox>
-          {registrationHasFiles &&
-            (ticket.status === 'Pending' || ticket.status === 'New' ? (
-              <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
-                <Typography>
-                  {t('registration.files_and_license.files_awaits_approval_unknown')} {ticket.filesForApproval.length}
-                </Typography>
-              </StyledStatusMessageBox>
-            ) : (
-              <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
-                {ticket.status === 'Completed' ? (
-                  <Typography>{t('my_page.messages.files_published_unknown')}</Typography>
-                ) : (
-                  ticket.status === 'Closed' && <Typography>{t('my_page.messages.files_rejected')}</Typography>
-                )}
-                {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
-              </StyledStatusMessageBox>
-            ))}
-        </>
-      ) : null}
+      {ticket.status === 'Pending' || ticket.status === 'New' ? (
+        <StyledStatusMessageBox sx={{ bgcolor: 'secondary.dark' }}>
+          <Typography>
+            {ticket.filesForApproval.length
+              ? t('registration.files_and_license.files_awaits_approval', { count: ticket.filesForApproval.length })
+              : t('registration.files_and_license.files_awaits_approval_unknown')}
+          </Typography>
+        </StyledStatusMessageBox>
+      ) : (
+        <StyledStatusMessageBox sx={{ bgcolor: 'publishingRequest.main' }}>
+          {ticket.status === 'Completed' ? (
+            <Typography>
+              {ticket.approvedFiles.length
+                ? t('my_page.messages.files_published', { count: ticket.approvedFiles.length })
+                : t('my_page.messages.files_published_unknown')}
+            </Typography>
+          ) : (
+            ticket.status === 'Closed' && <Typography>{t('my_page.messages.files_rejected')}</Typography>
+          )}
+          {ticket.modifiedDate && <Typography>{new Date(ticket.modifiedDate).toLocaleDateString()}</Typography>}
+        </StyledStatusMessageBox>
+      )}
     </StyledMessagesContainer>
   );
 };
@@ -65,7 +54,7 @@ export const PublishingRequestMessagesColumn = ({ ticket }: PublishingRequestMes
 export const CompletedPublishingRequestStatusBox = ({ ticket }: { ticket: PublishingTicket }) => {
   const { t } = useTranslation();
 
-  if (ticket.status !== 'Completed' || !ticket.approvedFiles || ticket.approvedFiles.length === 0) {
+  if (ticket.status !== 'Completed' || ticket.approvedFiles.length === 0) {
     return null;
   }
 

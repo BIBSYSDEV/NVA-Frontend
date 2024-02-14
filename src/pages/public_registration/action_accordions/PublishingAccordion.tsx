@@ -208,7 +208,7 @@ export const PublishingAccordion = ({
               )}
             </StyledStatusMessageBox>
             {completedTickets.map((ticket) => (
-              <CompletedPublishingRequestStatusBox ticket={ticket} />
+              <CompletedPublishingRequestStatusBox key={ticket.id} ticket={ticket} />
             ))}
           </Box>
         )}
