@@ -6,6 +6,7 @@ import { getLanguageString } from '../../../utils/translation-helpers';
 import { PageSpinner } from '../../../components/PageSpinner';
 import { useEffect, useState } from 'react';
 import { getUnitTopLevelCode } from '../../../utils/institutions-helpers';
+import { useTranslation } from 'react-i18next';
 
 interface CustomerInstitutionInformationFromCristinProps {
   cristinId: string | undefined;
@@ -20,6 +21,7 @@ export const CustomerInstitutionInformationFromCristin = ({
   setName,
   displayName,
 }: CustomerInstitutionInformationFromCristinProps) => {
+  const { t } = useTranslation();
   const [topLevelCristinCode, setTopLevelCristinCode] = useState<string | null>();
   const customerInformationFromCristinQuery = useQuery({
     queryKey: ['organization', cristinId, customerData],
@@ -50,11 +52,17 @@ export const CustomerInstitutionInformationFromCristin = ({
       ) : (
         <>
           <Grid aria-live="polite" aria-busy={customerInformationFromCristinQuery.isFetching} item xs={12} md={3}>
-            <TextField label={'Norsk navn'} fullWidth disabled value={displayName ?? ''} variant="filled" />
+            <TextField
+              label={t('basic_data.institutions.institution_norwegian_name')}
+              fullWidth
+              disabled
+              value={displayName ?? ''}
+              variant="filled"
+            />
           </Grid>
           <Grid aria-live="polite" aria-busy={customerInformationFromCristinQuery.isFetching} item xs={12} md={3}>
             <TextField
-              label={'Engelsk navn'}
+              label={t('basic_data.institutions.institution_english_name')}
               fullWidth
               disabled
               value={customerInformation?.labels?.en ?? ''}
@@ -67,11 +75,17 @@ export const CustomerInstitutionInformationFromCristin = ({
               fullWidth
               value={customerInformation?.acronym ?? ''}
               variant="filled"
-              label={'Kortnavn'}
+              label={t('basic_data.institutions.short_name')}
             />
           </Grid>
           <Grid aria-live="polite" aria-busy={customerInformationFromCristinQuery.isFetching} item xs={12} md={3}>
-            <TextField disabled fullWidth value={topLevelCristinCode} variant="filled" label={'Kode'} />
+            <TextField
+              disabled
+              fullWidth
+              value={topLevelCristinCode}
+              variant="filled"
+              label={t('basic_data.institutions.institution_toplevel_code')}
+            />
           </Grid>
         </>
       )}

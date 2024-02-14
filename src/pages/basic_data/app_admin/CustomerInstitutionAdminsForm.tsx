@@ -39,7 +39,7 @@ export const CustomerInstitutionAdminsForm = ({
       </Typography>
 
       <UserList userList={admins} refetchUsers={adminsQuery.refetch} />
-      {admins.length > 0 && <Typography>Genereres fra Personregisteret og rolletildeling</Typography>}
+      {admins.length > 0 && <Typography>{t('basic_data.institutions.administators_list_explanation')}</Typography>}
       <div>
         <Button startIcon={<AddIcon />} data-testid="button-open-add-admin" onClick={toggleOpenAddAdminModal}>
           {t('common.add_custom', { name: t('my_page.roles.institution_admin') })}
