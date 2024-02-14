@@ -1,5 +1,5 @@
-import { Registration, UnpublishPublicationRequest } from '../../../types/registration.types';
-import { Box, Breadcrumbs, Button, DialogActions, Divider, TextField, Typography } from '@mui/material';
+import { Registration } from '../../../types/registration.types';
+import { Box, Button, DialogActions, Divider, IconButton, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Modal } from '../../../components/Modal';
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
@@ -15,6 +15,8 @@ import { dataTestId } from '../../../utils/dataTestIds';
 import { useHistory } from 'react-router-dom';
 import i18n from '../../../translations/i18n';
 import { useMutation } from '@tanstack/react-query';
+import { getRegistrationLandingPagePath } from '../../../utils/urlPaths';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 interface DeleteForm {
   deleteMessage: string;
@@ -25,6 +27,7 @@ interface DeletePublicationProps {
 }
 
 export const DeletePublication = ({ registration }: DeletePublicationProps) => {
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -38,47 +41,50 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
   });
 
   const unpublishRegistrationMutation = useMutation({
-    mutationFn: (unpublishRequest: UnpublishPublicationRequest) =>
-      unpublishRegistration(registration.identifier, unpublishRequest),
+    mutationFn: (values: DeleteForm) => {
+      if (selectedDuplicate) {
+        return unpublishRegistration(registration.identifier, {
+          type: 'UnpublishPublicationRequest',
+          duplicateOf: selectedDuplicate.id,
+          comment: values.deleteMessage,
+        });
+      } else {
+        return unpublishRegistration(registration.identifier, {
+          type: 'UnpublishPublicationRequest',
+          comment: values.deleteMessage,
+        });
+      }
+    },
     onSuccess: () => {
       setShowDeleteModal(false);
-      history.push(`/registration/${registration.identifier}?shouldNotRedirect`);
+      history.push(`${getRegistrationLandingPagePath(registration.identifier)}?shouldNotRedirect`);
     },
     onError: () => {
       dispatch(setNotification({ message: t('feedback.error.update_registration'), variant: 'error' }));
     },
   });
 
-  const handleDelete = async (values: DeleteForm) => {
-    const unpublishRequest = (): UnpublishPublicationRequest => {
-      return selectedDuplicate
-        ? {
-            type: 'UnpublishPublicationRequest',
-            duplicateOf: selectedDuplicate.id,
-            comment: values.deleteMessage,
-          }
-        : { type: 'UnpublishPublicationRequest', comment: values.deleteMessage };
-    };
-    unpublishRegistrationMutation.mutate(unpublishRequest());
-  };
-
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem', mt: '1rem' }}>
         <Divider />
-        <Breadcrumbs
-          sx={{ alignSelf: 'center' }}
-          itemsBeforeCollapse={0}
-          itemsAfterCollapse={0}
-          maxItems={0}
-          aria-label={t('common.show_more_options')}>
+        {!showDeleteButton && (
+          <IconButton
+            sx={{ alignSelf: 'center' }}
+            title={t('common.show_more_options')}
+            onClick={() => setShowDeleteButton(true)}>
+            <MoreHorizIcon />
+          </IconButton>
+        )}
+        {showDeleteButton && (
           <Button
+            sx={{ alignSelf: 'center' }}
             data-testid={dataTestId.unpublishActions.openUnpublishModalButton}
             variant="outlined"
             onClick={() => setShowDeleteModal(true)}>
             {t('common.delete')}
           </Button>
-        </Breadcrumbs>
+        )}
       </Box>
       <Modal
         dataTestId="delete-registration-modal"
@@ -96,7 +102,7 @@ export const DeletePublication = ({ registration }: DeletePublicationProps) => {
               deleteMessage: '',
             }}
             validationSchema={deleteValidationSchema}
-            onSubmit={handleDelete}>
+            onSubmit={(values) => unpublishRegistrationMutation.mutate(values)}>
             <Form noValidate>
               <Box sx={{ my: '1rem' }}>
                 <Typography variant="h3">{t('registration.is_registration_error_question')}</Typography>
