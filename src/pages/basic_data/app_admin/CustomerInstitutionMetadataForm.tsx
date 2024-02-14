@@ -7,7 +7,6 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
-  Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -42,6 +41,9 @@ import { CustomerInstitutionTextField } from './CustomerInstitutionTextField';
 import { OrganizationSearchField } from './OrganizationSearchField';
 import { CustomerInstitutionAdminsForm } from './CustomerInstitutionAdminsForm';
 import { getLanguageString } from '../../../utils/translation-helpers';
+import { CustomerInstitutionInformationFromCristin } from './CustomerInstitutionInformationFromCristin';
+import { useState } from 'react';
+import { Organization } from '../../../types/organization.types';
 
 interface CustomerInstitutionMetadataFormProps {
   customerInstitution?: CustomerInstitution;
@@ -57,15 +59,7 @@ export const CustomerInstitutionMetadataForm = ({
   const { t } = useTranslation();
   const history = useHistory();
   const dispatch = useDispatch();
-
-  const snipToplevelOrganization = (cristinId: string) => {
-    const cristinOrg = cristinId.replace('https://api.dev.nva.aws.unit.no/cristin/organization/', '');
-    return cristinOrg.replace('.0.0.0', '');
-  };
-
-  const extractInstitutionTopLevelCode = (cristinId: string | undefined) => {
-    return cristinId ? snipToplevelOrganization(cristinId) : undefined;
-  };
+  const [customerData, setCustomerData] = useState<Organization | null>(null);
 
   const handleSubmit = async ({ customer, doiAgent, canAssignDoi }: CustomerInstitutionFormData) => {
     if (!editMode) {
@@ -119,77 +113,38 @@ export const CustomerInstitutionMetadataForm = ({
       {({ values, isSubmitting, setValues, setFieldValue, resetForm }: FormikProps<CustomerInstitutionFormData>) => (
         <Form noValidate>
           <InputContainerBox>
-            <Grid container spacing={2}>
-              {!editMode && (
-                <Grid item xs={12}>
-                  <Field name={CustomerInstitutionFieldNames.Name}>
-                    {({ field, meta: { touched, error } }: FieldProps<string>) => (
-                      <Box sx={{ width: '100%' }}>
-                        <OrganizationSearchField
-                          onChange={(selectedInstitution) => {
-                            const name = getLanguageString(selectedInstitution?.labels, 'nb');
-                            const alternativeNames = selectedInstitution?.labels.en
-                              ? { eng: selectedInstitution?.labels.en }
-                              : undefined;
-                            setValues({
-                              canAssignDoi: false,
-                              customer: {
-                                ...emptyCustomerInstitution,
-                                name,
-                                displayName: name,
-                                alternativeNames: alternativeNames,
-                                shortName: selectedInstitution?.acronym ?? '',
-                                cristinId: selectedInstitution?.id ?? '',
-                              },
-                              doiAgent: emptyProtectedDoiAgent,
-                            });
-                          }}
-                          errorMessage={touched && !!error ? error : undefined}
-                          fieldInputProps={field}
-                        />
-                      </Box>
-                    )}
-                  </Field>
-                </Grid>
-              )}
-              <Grid item xs={12} md={3}>
-                <TextField
-                  label={'Norsk navn'}
-                  fullWidth
-                  disabled
-                  value={values.customer.name ?? ''}
-                  variant="filled"
-                />
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <TextField
-                  label={'Engelsk navn'}
-                  fullWidth
-                  disabled
-                  value={values.customer.alternativeNames?.eng ?? ''}
-                  variant="filled"
-                />
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <TextField
-                  disabled
-                  fullWidth
-                  name={CustomerInstitutionFieldNames.ShortName}
-                  value={values.customer.shortName}
-                  variant="filled"
-                  label={'Kortnavn'}
-                />
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <TextField
-                  label={'Kode'}
-                  fullWidth
-                  disabled
-                  value={extractInstitutionTopLevelCode(values.customer.cristinId ?? '')}
-                  variant="filled"
-                />
-              </Grid>
-            </Grid>
+            {!editMode && (
+              <Field name={CustomerInstitutionFieldNames.Name}>
+                {({ field, meta: { touched, error } }: FieldProps<string>) => (
+                  <Box sx={{ width: '100%' }}>
+                    <OrganizationSearchField
+                      onChange={(selectedInstitution) => {
+                        const name = getLanguageString(selectedInstitution?.labels, 'nb');
+                        setValues({
+                          canAssignDoi: false,
+                          customer: {
+                            ...emptyCustomerInstitution,
+                            name,
+                            displayName: name,
+                            cristinId: selectedInstitution?.id ?? '',
+                          },
+                          doiAgent: emptyProtectedDoiAgent,
+                        });
+                        setCustomerData(selectedInstitution);
+                      }}
+                      errorMessage={touched && !!error ? error : undefined}
+                      fieldInputProps={field}
+                    />
+                  </Box>
+                )}
+              </Field>
+            )}
+            <CustomerInstitutionInformationFromCristin
+              customerData={customerData}
+              cristinId={values.customer.cristinId}
+              setDisplayName={(newName) => setFieldValue(CustomerInstitutionFieldNames.DisplayName, newName)}
+              displayName={values.customer.displayName}
+            />
 
             <Divider />
 

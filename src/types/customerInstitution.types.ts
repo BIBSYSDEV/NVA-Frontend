@@ -1,6 +1,5 @@
 import { allPublicationInstanceTypes } from './publicationFieldNames';
 import { PublicationInstanceType } from './registration.types';
-import { LanguageString } from './common.types';
 
 export interface SimpleCustomerInstitution {
   id: string;
@@ -34,8 +33,6 @@ export interface CustomerInstitution extends Pick<SimpleCustomerInstitution, 'id
   doiAgent: DoiAgent;
   sector: Sector;
   inactiveFrom?: string;
-  shortName?: string;
-  alternativeNames?: LanguageString;
   serviceCenterUri?: string;
   nviInstitution: boolean;
   rboInstitution: boolean;
@@ -97,7 +94,6 @@ export const emptyCustomerInstitution: Omit<CustomerInstitution, 'doiAgent'> = {
   vocabularies: [],
   publicationWorkflow: 'RegistratorPublishesMetadataAndFiles',
   rorId: '',
-  shortName: '',
   sector: Sector.Uhi,
   nviInstitution: false,
   rboInstitution: false,
