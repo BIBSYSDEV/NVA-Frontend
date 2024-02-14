@@ -46,7 +46,7 @@ export const FundingSourceFilter = () => {
         currentSearchTerm
           ? fundingSourcesList.find(
               (source) => source.id === `https://api.dev.nva.aws.unit.no/cristin/funding-sources/${currentSearchTerm}`
-            )
+            ) || null
           : null
       }
       onChange={(_, newValue) => {
@@ -54,6 +54,11 @@ export const FundingSourceFilter = () => {
       }}
       options={fundingSourcesList}
       getOptionLabel={(option) => getLanguageString(option.name)}
+      renderOption={(props, option) => (
+        <li {...props} key={option.identifier}>
+          {getLanguageString(option.name)}
+        </li>
+      )}
       renderInput={(params) => (
         <AutocompleteTextField
           isLoading={fundingSourcesQuery.isLoading}
