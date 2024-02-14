@@ -40,7 +40,7 @@ import { TicketAssignee } from './TicketAssignee';
 interface PublishingAccordionProps {
   registration: Registration;
   refetchData: () => void;
-  publishingRequestTicket: PublishingTicket | null;
+  publishingRequestTickets: PublishingTicket[];
   userIsCurator: boolean;
   isLoadingData: boolean;
   addMessage: (ticketId: string, message: string) => Promise<unknown>;
@@ -54,7 +54,7 @@ enum LoadingState {
 }
 
 export const PublishingAccordion = ({
-  publishingRequestTicket,
+  publishingRequestTickets,
   registration,
   refetchData,
   userIsCurator,
@@ -69,6 +69,7 @@ export const PublishingAccordion = ({
   const [registrationIsValid, setRegistrationIsValid] = useState(false);
 
   const registrationHasFile = registration.associatedArtifacts.some((artifact) => artifact.type === 'PublishedFile');
+  const publishingRequestTicket = [...publishingRequestTickets].pop();
 
   const ticketMutation = useMutation({
     mutationFn: publishingRequestTicket
